@@ -27,15 +27,15 @@ import java.util.*;
 /**
  * A spreadsheet formula.
  */
-public final class SpreadsheetFormula implements HashCodeEqualsDefined, Value<ExpressionNode> {
+public final class SpreadsheetFormula implements HashCodeEqualsDefined, Value<String> {
 
-    public static SpreadsheetFormula with(final ExpressionNode value) {
+    public static SpreadsheetFormula with(final String value) {
         Objects.requireNonNull(value, "value");
 
         return new SpreadsheetFormula(value);
     }
 
-    private SpreadsheetFormula(final ExpressionNode value) {
+    private SpreadsheetFormula(final String value) {
         super();
 
         this.value = value;
@@ -44,11 +44,11 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined, Value<Ex
     // Value ....................................................................................................
 
     @Override
-    public ExpressionNode value() {
+    public String value() {
         return this.value;
     }
 
-    private ExpressionNode value;
+    private String value;
 
     // HashCodeEqualsDefined..........................................................................................
 
