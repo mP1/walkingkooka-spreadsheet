@@ -1,7 +1,6 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.Test;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
@@ -15,7 +14,6 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParsers;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
 import java.math.BigInteger;
@@ -33,11 +31,11 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
     }
 
     @Test
-    public void testSetAndLoad() {
+    public void testSaveAndLoad() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        engine.set(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
+        engine.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
 
         this.loadAndCheck(engine,
                 cellReference,
@@ -50,7 +48,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        engine.set(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
+        engine.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
 
         final SpreadsheetCell first = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
         final SpreadsheetCell second = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
@@ -63,7 +61,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        engine.set(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2+")));
+        engine.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2+")));
 
         final SpreadsheetCell first = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
         assertNotEquals("Expected error absent=" + first, SpreadsheetCell.NO_ERROR, first.error());
@@ -77,7 +75,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        engine.set(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
+        engine.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
 
         final SpreadsheetCell first = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.FORCE_RECOMPUTE);
         final SpreadsheetCell second = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.FORCE_RECOMPUTE);
@@ -90,7 +88,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        engine.set(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
+        engine.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
 
         final SpreadsheetCell first = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
         final SpreadsheetCell second = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.FORCE_RECOMPUTE);
@@ -99,16 +97,16 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
     }
 
     @Test
-    public void testSetAndLoadManyCells() {
+    public void testSaveAndLoadManyCells() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetCellReference a = this.cellReference(1, 1);
         final SpreadsheetCellReference b = this.cellReference(2, 1);
         final SpreadsheetCellReference c = this.cellReference(3, 1);
 
-        engine.set(SpreadsheetCell.with(a, SpreadsheetFormula.with("1+2")));
-        engine.set(SpreadsheetCell.with(b, SpreadsheetFormula.with("3+4")));
-        engine.set(SpreadsheetCell.with(c, SpreadsheetFormula.with("5+6")));
+        engine.save(SpreadsheetCell.with(a, SpreadsheetFormula.with("1+2")));
+        engine.save(SpreadsheetCell.with(b, SpreadsheetFormula.with("3+4")));
+        engine.save(SpreadsheetCell.with(c, SpreadsheetFormula.with("5+6")));
 
         this.loadAndCheck(engine,
                 a,
@@ -129,7 +127,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        engine.set(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
+        engine.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
 
         engine.delete(this.cellReference(99, 99));
 
@@ -147,9 +145,9 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         final SpreadsheetCellReference b = this.cellReference(2, 1);
         final SpreadsheetCellReference c = this.cellReference(3, 1);
 
-        engine.set(SpreadsheetCell.with(a, SpreadsheetFormula.with("1+2")));
-        engine.set(SpreadsheetCell.with(b, SpreadsheetFormula.with("3+4")));
-        engine.set(SpreadsheetCell.with(c, SpreadsheetFormula.with("5+6")));
+        engine.save(SpreadsheetCell.with(a, SpreadsheetFormula.with("1+2")));
+        engine.save(SpreadsheetCell.with(b, SpreadsheetFormula.with("3+4")));
+        engine.save(SpreadsheetCell.with(c, SpreadsheetFormula.with("5+6")));
 
         engine.delete(this.cellReference(99, 99));
 
@@ -175,9 +173,9 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         final SpreadsheetCellReference b = this.cellReference(2, 1);
         final SpreadsheetCellReference c = this.cellReference(3, 1);
 
-        engine.set(SpreadsheetCell.with(a, SpreadsheetFormula.with("1+2")));
-        engine.set(SpreadsheetCell.with(b, SpreadsheetFormula.with("3+4")));
-        engine.set(SpreadsheetCell.with(c, SpreadsheetFormula.with("5+6")));
+        engine.save(SpreadsheetCell.with(a, SpreadsheetFormula.with("1+2")));
+        engine.save(SpreadsheetCell.with(b, SpreadsheetFormula.with("3+4")));
+        engine.save(SpreadsheetCell.with(c, SpreadsheetFormula.with("5+6")));
 
         engine.delete(b);
 
