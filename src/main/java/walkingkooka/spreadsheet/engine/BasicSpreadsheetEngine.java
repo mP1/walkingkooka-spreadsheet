@@ -167,6 +167,15 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
     }
 
     /**
+     * Deletes a single cell, ignoring invalid requests.
+     */
+    @Override
+    public void delete(final SpreadsheetCellReference cell) {
+        Objects.requireNonNull(cell, "cell");
+        this.cells.remove(cell);
+    }
+
+    /**
      * The {@link Parser} that turns {@link SpreadsheetFormula} into a {@link ExpressionNode}.
      */
     private final Parser<SpreadsheetParserToken, SpreadsheetParserContext> parser;
