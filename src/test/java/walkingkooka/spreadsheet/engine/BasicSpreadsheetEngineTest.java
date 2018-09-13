@@ -26,192 +26,192 @@ import static org.junit.Assert.assertSame;
 public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<BasicSpreadsheetEngine> {
 
     @Test
-    public void testLoadWhenEmpty() {
-        this.loadFailCheck(cellReference(1, 1), SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
+    public void testLoadCellCellWhenEmpty() {
+        this.loadCellFailCheck(cellReference(1, 1), SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
     }
 
     @Test
-    public void testSaveAndLoadSkipEvaluate() {
+    public void testSaveCellAndLoadCellSkipEvaluate() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        engine.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
+        engine.saveCell(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
 
-        this.loadAndCheckWithoutValueOrError(engine,
+        this.loadCellAndCheckWithoutValueOrError(engine,
                 cellReference,
                 SpreadsheetEngineLoading.SKIP_EVALUATE);
     }
 
     @Test
-    public void testSaveAndLoad() {
+    public void testSaveCellAndLoadCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        engine.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
+        engine.saveCell(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
 
-        this.loadAndCheck(engine,
+        this.loadCellAndCheck(engine,
                 cellReference,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 BigInteger.valueOf(1+2));
     }
 
     @Test
-    public void testLoadComputeIfNecessaryCachesCell() {
+    public void testLoadCellComputeIfNecessaryCachesCell() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        engine.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
+        engine.saveCell(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
 
-        final SpreadsheetCell first = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
-        final SpreadsheetCell second = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
+        final SpreadsheetCell first = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
+        final SpreadsheetCell second = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
 
         assertSame("different instances of SpreadsheetCell returned not cached", first, second);
     }
 
     @Test
-    public void testLoadComputeIfNecessaryCachesCellWithInvalidFormulaAndErrorCached() {
+    public void testLoadCellComputeIfNecessaryCachesCellWithInvalidFormulaAndErrorCached() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        engine.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2+")));
+        engine.saveCell(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2+")));
 
-        final SpreadsheetCell first = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
+        final SpreadsheetCell first = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
         assertNotEquals("Expected error absent=" + first, SpreadsheetCell.NO_ERROR, first.error());
 
-        final SpreadsheetCell second = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
+        final SpreadsheetCell second = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
         assertSame("different instances of SpreadsheetCell returned not cached", first, second);
     }
 
     @Test
-    public void testLoadForceRecomputeIgnoresCache() {
+    public void testLoadCellForceRecomputeIgnoresCache() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        engine.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
+        engine.saveCell(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
 
-        final SpreadsheetCell first = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.FORCE_RECOMPUTE);
-        final SpreadsheetCell second = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.FORCE_RECOMPUTE);
+        final SpreadsheetCell first = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.FORCE_RECOMPUTE);
+        final SpreadsheetCell second = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.FORCE_RECOMPUTE);
 
         assertNotSame("different instances of SpreadsheetCell returned not cached", first, second);
     }
 
     @Test
-    public void testLoadForceRecomputeIgnoresCache2() {
+    public void testLoadCellForceRecomputeIgnoresCache2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        engine.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
+        engine.saveCell(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
 
-        final SpreadsheetCell first = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
-        final SpreadsheetCell second = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.FORCE_RECOMPUTE);
+        final SpreadsheetCell first = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
+        final SpreadsheetCell second = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.FORCE_RECOMPUTE);
 
         assertNotSame("different instances of SpreadsheetCell returned not cached", first, second);
     }
 
     @Test
-    public void testLoadComputeThenSkipEvaluate() {
+    public void testLoadCellComputeThenSkipEvaluate() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        engine.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
+        engine.saveCell(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
 
-        final SpreadsheetCell first = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
-        final SpreadsheetCell second = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.SKIP_EVALUATE);
+        final SpreadsheetCell first = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
+        final SpreadsheetCell second = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.SKIP_EVALUATE);
 
         assertSame("different instances of SpreadsheetCell returned not cached", first, second);
     }
 
     @Test
-    public void testSaveAndLoadManyCells() {
+    public void testSaveCellAndLoadCellMany() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetCellReference a = this.cellReference(1, 1);
         final SpreadsheetCellReference b = this.cellReference(2, 1);
         final SpreadsheetCellReference c = this.cellReference(3, 1);
 
-        engine.save(SpreadsheetCell.with(a, SpreadsheetFormula.with("1+2")));
-        engine.save(SpreadsheetCell.with(b, SpreadsheetFormula.with("3+4")));
-        engine.save(SpreadsheetCell.with(c, SpreadsheetFormula.with("5+6")));
+        engine.saveCell(SpreadsheetCell.with(a, SpreadsheetFormula.with("1+2")));
+        engine.saveCell(SpreadsheetCell.with(b, SpreadsheetFormula.with("3+4")));
+        engine.saveCell(SpreadsheetCell.with(c, SpreadsheetFormula.with("5+6")));
 
-        this.loadAndCheck(engine,
+        this.loadCellAndCheck(engine,
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 BigInteger.valueOf(1+2));
-        this.loadAndCheck(engine,
+        this.loadCellAndCheck(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 BigInteger.valueOf(3+4));
-        this.loadAndCheck(engine,
+        this.loadCellAndCheck(engine,
                 c,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 BigInteger.valueOf(5+6));
     }
 
     @Test
-    public void testDeleteUnknownCellIgnored() {
+    public void testDeleteCellUnknownIgnored() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        engine.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
+        engine.saveCell(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
 
-        engine.delete(this.cellReference(99, 99));
+        engine.deleteCell(this.cellReference(99, 99));
 
-        this.loadAndCheck(engine,
+        this.loadCellAndCheck(engine,
                 cellReference,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 BigInteger.valueOf(1+2));
     }
 
     @Test
-    public void testDeleteUnknownIgnored2() {
+    public void testDeleteCellUnknownIgnored2() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetCellReference a = this.cellReference(1, 1);
         final SpreadsheetCellReference b = this.cellReference(2, 1);
         final SpreadsheetCellReference c = this.cellReference(3, 1);
 
-        engine.save(SpreadsheetCell.with(a, SpreadsheetFormula.with("1+2")));
-        engine.save(SpreadsheetCell.with(b, SpreadsheetFormula.with("3+4")));
-        engine.save(SpreadsheetCell.with(c, SpreadsheetFormula.with("5+6")));
+        engine.saveCell(SpreadsheetCell.with(a, SpreadsheetFormula.with("1+2")));
+        engine.saveCell(SpreadsheetCell.with(b, SpreadsheetFormula.with("3+4")));
+        engine.saveCell(SpreadsheetCell.with(c, SpreadsheetFormula.with("5+6")));
 
-        engine.delete(this.cellReference(99, 99));
+        engine.deleteCell(this.cellReference(99, 99));
 
-        this.loadAndCheck(engine,
+        this.loadCellAndCheck(engine,
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 BigInteger.valueOf(1+2));
-        this.loadAndCheck(engine,
+        this.loadCellAndCheck(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 BigInteger.valueOf(3+4));
-        this.loadAndCheck(engine,
+        this.loadCellAndCheck(engine,
                 c,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 BigInteger.valueOf(5+6));
     }
 
     @Test
-    public void testDeleteExisting() {
+    public void testDeleteCellExisting() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
         final SpreadsheetCellReference a = this.cellReference(1, 1);
         final SpreadsheetCellReference b = this.cellReference(2, 1);
         final SpreadsheetCellReference c = this.cellReference(3, 1);
 
-        engine.save(SpreadsheetCell.with(a, SpreadsheetFormula.with("1+2")));
-        engine.save(SpreadsheetCell.with(b, SpreadsheetFormula.with("3+4")));
-        engine.save(SpreadsheetCell.with(c, SpreadsheetFormula.with("5+6")));
+        engine.saveCell(SpreadsheetCell.with(a, SpreadsheetFormula.with("1+2")));
+        engine.saveCell(SpreadsheetCell.with(b, SpreadsheetFormula.with("3+4")));
+        engine.saveCell(SpreadsheetCell.with(c, SpreadsheetFormula.with("5+6")));
 
-        engine.delete(b);
+        engine.deleteCell(b);
 
-        this.loadAndCheck(engine,
+        this.loadCellAndCheck(engine,
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 BigInteger.valueOf(1+2));
-        this.loadFailCheck(engine,
+        this.loadCellFailCheck(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
-        this.loadAndCheck(engine,
+        this.loadCellAndCheck(engine,
                 c,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 BigInteger.valueOf(5+6));
