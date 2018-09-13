@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 public final class SpreadsheetFormulaTest extends PublicClassTestCase<SpreadsheetFormula> {
 
-    private final static ExpressionNode VALUE = ExpressionNode.text("text");
+    private final static String VALUE = "a+2";
 
     @Test(expected = NullPointerException.class)
     public void testWithNullExpressionFails() {

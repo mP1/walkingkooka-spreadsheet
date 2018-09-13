@@ -8,11 +8,11 @@ public final class SpreadsheetFormulaEqualityTest extends HashCodeEqualsDefinedE
 
     @Test
     public void testDifferentSpreadsheetFormula() {
-        this.checkNotEquals(SpreadsheetFormula.with(ExpressionNode.text("different")));
+        this.checkNotEquals(SpreadsheetFormula.with("different"));
     }
 
     @Override
     protected SpreadsheetFormula createObject() {
-        return SpreadsheetFormula.with(ExpressionNode.text("text"));
+        return SpreadsheetFormula.with("text");
     }
 }
