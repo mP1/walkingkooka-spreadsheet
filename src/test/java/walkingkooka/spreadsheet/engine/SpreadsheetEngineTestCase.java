@@ -1,16 +1,12 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.*;
-import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.test.*;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -31,7 +27,7 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
 
     @Test(expected = NullPointerException.class)
     public final void testSetNullCellFails() {
-        this.createSpreadsheetEngine().set(null);
+        this.createSpreadsheetEngine().save(null);
     }
 
     abstract E createSpreadsheetEngine();
