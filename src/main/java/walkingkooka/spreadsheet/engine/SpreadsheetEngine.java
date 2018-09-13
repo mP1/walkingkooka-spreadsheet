@@ -26,4 +26,9 @@ public interface SpreadsheetEngine {
      * Updates a single cell.
      */
     void set(final SpreadsheetCell cell);
+
+    /**
+     * Deletes a single cell.
+     */
+    void delete(final SpreadsheetCellReference cell);
 }
