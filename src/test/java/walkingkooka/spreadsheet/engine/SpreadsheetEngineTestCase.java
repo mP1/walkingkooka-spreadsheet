@@ -13,22 +13,19 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.fail;
 
 public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> extends PackagePrivateClassTestCase<E> {
 
     @Test(expected = NullPointerException.class)
-    public final void testLoadNullCellsFails() {
+    public final void testLoadNullCellFails() {
         this.createSpreadsheetEngine().load(null, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public final void testLoadEmptyCellsFails() {
-        this.createSpreadsheetEngine().load(Sets.empty(), SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
     }
 
     @Test(expected = NullPointerException.class)
     public final void testLoadNullLoadingFails() {
-        this.createSpreadsheetEngine().load(Sets.of(SpreadsheetCellReference.with(SpreadsheetReferenceKind.ABSOLUTE.column(1), SpreadsheetReferenceKind.ABSOLUTE.row(2))),
+        this.createSpreadsheetEngine().load(SpreadsheetCellReference.with(SpreadsheetReferenceKind.ABSOLUTE.column(1), SpreadsheetReferenceKind.ABSOLUTE.row(2)),
                 null);
     }
 
@@ -39,19 +36,40 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
 
     abstract E createSpreadsheetEngine();
 
-    final void loadAndCheck(final Set<SpreadsheetCellReference> references, final SpreadsheetEngineLoading loading, final Object...values) {
-        this.loadAndCheck(this.createSpreadsheetEngine(), references, loading, values);
+    final SpreadsheetCell loadOrFail(final SpreadsheetEngine engine,
+                                     final SpreadsheetCellReference reference,
+                                     final SpreadsheetEngineLoading loading) {
+        final Optional<SpreadsheetCell> cell = engine.load(reference, loading);
+        if(!cell.isPresent()) {
+            fail("Loading " + reference + " should have succeeded");
+        }
+        return cell.get();
+    }
+
+    final void loadFailCheck(final SpreadsheetCellReference reference,
+                             final SpreadsheetEngineLoading loading) {
+        this.loadFailCheck(this.createSpreadsheetEngine(), reference, loading);
+    }
+
+    final void loadFailCheck(final SpreadsheetEngine engine,
+                             final SpreadsheetCellReference reference,
+                             final SpreadsheetEngineLoading loading) {
+        final Optional<SpreadsheetCell> cell = engine.load(reference, loading);
+        assertEquals("Expected reference " + reference + " to fail", Optional.empty(), cell);
+    }
+
+    final void loadAndCheck(final SpreadsheetCellReference reference, final SpreadsheetEngineLoading loading, final Object value) {
+        this.loadAndCheck(this.createSpreadsheetEngine(), reference, loading, value);
     }
 
     final void loadAndCheck(final SpreadsheetEngine engine,
-                            final Set<SpreadsheetCellReference> references,
+                            final SpreadsheetCellReference reference,
                             final SpreadsheetEngineLoading loading,
-                            final Object...values) {
-        final Set<SpreadsheetCell> cells = engine.load(references, loading);
-        assertEquals("cell count returned doesnt match expected value count=" + cells, values.length, cells.size());
-        assertEquals("values from returned cells=" + cells,
-                Lists.of(values),
-                cells.stream().map(this::valueOrError).collect(Collectors.toList()));
+                            final Object value) {
+        final SpreadsheetCell cell = this.loadOrFail(engine, reference, loading);
+        assertEquals("values from returned cells=" + cell,
+                value,
+                this.valueOrError(cell));
     }
 
     private Object valueOrError(final SpreadsheetCell cell) {

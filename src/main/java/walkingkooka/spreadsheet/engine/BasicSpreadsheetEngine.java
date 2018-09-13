@@ -68,21 +68,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
     private SpreadsheetId id;
 
     @Override
-    public Set<SpreadsheetCell> load(final Set<SpreadsheetCellReference> references, final SpreadsheetEngineLoading loading) {
-        Objects.requireNonNull(references, "references");
+    public Optional<SpreadsheetCell> load(final SpreadsheetCellReference reference, final SpreadsheetEngineLoading loading) {
+        Objects.requireNonNull(reference, "references");
         Objects.requireNonNull(loading, "loading");
 
-        final Set<SpreadsheetCellReference> copy = Sets.ordered();
-        copy.addAll(references);
-        if(copy.isEmpty()) {
-            throw new IllegalArgumentException("References must not be empty");
-        }
-
-        return copy.stream()
-                .map(r -> this.cells.get(r))
-                .filter(c -> null != c)
-                .map(c -> this.parseAndEvaluate(c, loading))
-                .collect(Collectors.toCollection(Sets::sorted));
+        final SpreadsheetCell cell = this.cells.get(reference);
+        return null != cell ?
+               Optional.of(this.parseAndEvaluate(cell, loading)) :
+               Optional.empty();
     }
 
     /**
