@@ -21,15 +21,15 @@ public interface SpreadsheetEngine {
      * Loads which includes parsing the formula as necessary and evaluating the value of the requested cells.
      * Invalid cell requests will be ignored and absent fromthe result. If parsing or evaluation fails the cell will have an error.
      */
-    Optional<SpreadsheetCell> load(final SpreadsheetCellReference cell, final SpreadsheetEngineLoading loading);
+    Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell, final SpreadsheetEngineLoading loading);
 
     /**
      * Updates a single cell.
      */
-    void save(final SpreadsheetCell cell);
+    void saveCell(final SpreadsheetCell cell);
 
     /**
      * Deletes a single cell.
      */
-    void delete(final SpreadsheetCellReference cell);
+    void deleteCell(final SpreadsheetCellReference cell);
 }
