@@ -29,7 +29,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
 
     @Test
     public void testLoadWhenEmpty() {
-        this.loadAndCheck(Sets.of(cellReference(1, 1)), SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
+        this.loadFailCheck(cellReference(1, 1), SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
     }
 
     @Test
@@ -40,7 +40,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         engine.set(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
 
         this.loadAndCheck(engine,
-                Sets.of(cellReference),
+                cellReference,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 BigInteger.valueOf(1+2));
     }
@@ -52,8 +52,8 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
         engine.set(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
 
-        final SpreadsheetCell first = this.loadFirst(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
-        final SpreadsheetCell second = this.loadFirst(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
+        final SpreadsheetCell first = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
+        final SpreadsheetCell second = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
 
         assertSame("different instances of SpreadsheetCell returned not cached", first, second);
     }
@@ -65,10 +65,10 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
         engine.set(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2+")));
 
-        final SpreadsheetCell first = this.loadFirst(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
+        final SpreadsheetCell first = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
         assertNotEquals("Expected error absent=" + first, SpreadsheetCell.NO_ERROR, first.error());
 
-        final SpreadsheetCell second = this.loadFirst(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
+        final SpreadsheetCell second = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
         assertSame("different instances of SpreadsheetCell returned not cached", first, second);
     }
 
@@ -79,8 +79,8 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
         engine.set(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
 
-        final SpreadsheetCell first = this.loadFirst(engine, cellReference, SpreadsheetEngineLoading.FORCE_RECOMPUTE);
-        final SpreadsheetCell second = this.loadFirst(engine, cellReference, SpreadsheetEngineLoading.FORCE_RECOMPUTE);
+        final SpreadsheetCell first = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.FORCE_RECOMPUTE);
+        final SpreadsheetCell second = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.FORCE_RECOMPUTE);
 
         assertNotSame("different instances of SpreadsheetCell returned not cached", first, second);
     }
@@ -92,17 +92,10 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
         engine.set(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
 
-        final SpreadsheetCell first = this.loadFirst(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
-        final SpreadsheetCell second = this.loadFirst(engine, cellReference, SpreadsheetEngineLoading.FORCE_RECOMPUTE);
+        final SpreadsheetCell first = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
+        final SpreadsheetCell second = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.FORCE_RECOMPUTE);
 
         assertNotSame("different instances of SpreadsheetCell returned not cached", first, second);
-    }
-
-    private SpreadsheetCell loadFirst(final BasicSpreadsheetEngine engine, final SpreadsheetCellReference reference, final SpreadsheetEngineLoading loading) {
-        return engine.load(Sets.of(reference),
-                loading)
-                .iterator()
-                .next();
     }
 
     @Test
@@ -118,9 +111,17 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         engine.set(SpreadsheetCell.with(c, SpreadsheetFormula.with("5+6")));
 
         this.loadAndCheck(engine,
-                Sets.of(a, b, c),
+                a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(1+2), BigInteger.valueOf(3+4), BigInteger.valueOf(5+6));
+                BigInteger.valueOf(1+2));
+        this.loadAndCheck(engine,
+                b,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                BigInteger.valueOf(3+4));
+        this.loadAndCheck(engine,
+                c,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                BigInteger.valueOf(5+6));
     }
 
     @Test
@@ -133,7 +134,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         engine.delete(this.cellReference(99, 99));
 
         this.loadAndCheck(engine,
-                Sets.of(cellReference),
+                cellReference,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 BigInteger.valueOf(1+2));
     }
@@ -153,9 +154,17 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         engine.delete(this.cellReference(99, 99));
 
         this.loadAndCheck(engine,
-                Sets.of(a, b, c),
+                a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(1+2), BigInteger.valueOf(3+4), BigInteger.valueOf(5+6));
+                BigInteger.valueOf(1+2));
+        this.loadAndCheck(engine,
+                b,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                BigInteger.valueOf(3+4));
+        this.loadAndCheck(engine,
+                c,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                BigInteger.valueOf(5+6));
     }
 
     @Test
@@ -173,9 +182,16 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         engine.delete(b);
 
         this.loadAndCheck(engine,
-                Sets.of(a, b, c),
+                a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(1+2), BigInteger.valueOf(5+6));
+                BigInteger.valueOf(1+2));
+        this.loadFailCheck(engine,
+                b,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
+        this.loadAndCheck(engine,
+                c,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                BigInteger.valueOf(5+6));
     }
 
     @Override
