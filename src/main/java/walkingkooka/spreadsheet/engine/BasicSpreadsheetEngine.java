@@ -154,7 +154,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
      * Accepts a potentially updated cell.
      */
     @Override
-    public void set(final SpreadsheetCell cell) {
+    public void save(final SpreadsheetCell cell) {
         Objects.requireNonNull(cell, "cell");
         this.cells.put(cell.reference(), cell);
     }
