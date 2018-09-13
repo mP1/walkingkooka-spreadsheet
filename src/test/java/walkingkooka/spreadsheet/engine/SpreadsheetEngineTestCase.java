@@ -54,6 +54,19 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
         assertEquals("Expected reference " + reference + " to fail", Optional.empty(), cell);
     }
 
+    final void loadAndCheckWithoutValueOrError(final SpreadsheetCellReference reference, final SpreadsheetEngineLoading loading) {
+        this.loadAndCheckWithoutValueOrError(this.createSpreadsheetEngine(), reference, loading);
+    }
+
+    final void loadAndCheckWithoutValueOrError(final SpreadsheetEngine engine,
+                                               final SpreadsheetCellReference reference,
+                                               final SpreadsheetEngineLoading loading) {
+        final SpreadsheetCell cell = this.loadOrFail(engine, reference, loading);
+        assertEquals("values from returned cells=" + cell,
+                null,
+                this.valueOrError(cell, null));
+    }
+
     final void loadAndCheck(final SpreadsheetCellReference reference, final SpreadsheetEngineLoading loading, final Object value) {
         this.loadAndCheck(this.createSpreadsheetEngine(), reference, loading, value);
     }
@@ -65,14 +78,14 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
         final SpreadsheetCell cell = this.loadOrFail(engine, reference, loading);
         assertEquals("values from returned cells=" + cell,
                 value,
-                this.valueOrError(cell));
+                this.valueOrError(cell, "Value and Error absent (" + cell + ")"));
     }
 
-    private Object valueOrError(final SpreadsheetCell cell) {
+    private Object valueOrError(final SpreadsheetCell cell, final Object bothAbsent) {
         return cell.value()
                 .map(v -> v)
                 .orElse(cell.error()
-                        .map(e -> e.value())
-                        .orElse("Value and Error absent (" + cell + ")"));
+                        .map(e -> (Object)e.value())
+                        .orElse(bothAbsent));
     }
 }
