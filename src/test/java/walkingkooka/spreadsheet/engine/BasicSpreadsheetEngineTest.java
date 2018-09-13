@@ -123,6 +123,61 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 BigInteger.valueOf(1+2), BigInteger.valueOf(3+4), BigInteger.valueOf(5+6));
     }
 
+    @Test
+    public void testDeleteUnknownCellIgnored() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
+        engine.set(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
+
+        engine.delete(this.cellReference(99, 99));
+
+        this.loadAndCheck(engine,
+                Sets.of(cellReference),
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                BigInteger.valueOf(1+2));
+    }
+
+    @Test
+    public void testDeleteUnknownIgnored2() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final SpreadsheetCellReference a = this.cellReference(1, 1);
+        final SpreadsheetCellReference b = this.cellReference(2, 1);
+        final SpreadsheetCellReference c = this.cellReference(3, 1);
+
+        engine.set(SpreadsheetCell.with(a, SpreadsheetFormula.with("1+2")));
+        engine.set(SpreadsheetCell.with(b, SpreadsheetFormula.with("3+4")));
+        engine.set(SpreadsheetCell.with(c, SpreadsheetFormula.with("5+6")));
+
+        engine.delete(this.cellReference(99, 99));
+
+        this.loadAndCheck(engine,
+                Sets.of(a, b, c),
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                BigInteger.valueOf(1+2), BigInteger.valueOf(3+4), BigInteger.valueOf(5+6));
+    }
+
+    @Test
+    public void testDeleteExisting() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final SpreadsheetCellReference a = this.cellReference(1, 1);
+        final SpreadsheetCellReference b = this.cellReference(2, 1);
+        final SpreadsheetCellReference c = this.cellReference(3, 1);
+
+        engine.set(SpreadsheetCell.with(a, SpreadsheetFormula.with("1+2")));
+        engine.set(SpreadsheetCell.with(b, SpreadsheetFormula.with("3+4")));
+        engine.set(SpreadsheetCell.with(c, SpreadsheetFormula.with("5+6")));
+
+        engine.delete(b);
+
+        this.loadAndCheck(engine,
+                Sets.of(a, b, c),
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                BigInteger.valueOf(1+2), BigInteger.valueOf(5+6));
+    }
+
     @Override
     BasicSpreadsheetEngine createSpreadsheetEngine() {
         return BasicSpreadsheetEngine.with(this.id(), this.parser(), this.parserContext(), this.evaluationContext());
