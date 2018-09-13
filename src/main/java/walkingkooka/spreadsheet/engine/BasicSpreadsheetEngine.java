@@ -68,7 +68,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
     private SpreadsheetId id;
 
     @Override
-    public Optional<SpreadsheetCell> load(final SpreadsheetCellReference reference, final SpreadsheetEngineLoading loading) {
+    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference reference, final SpreadsheetEngineLoading loading) {
         Objects.requireNonNull(reference, "references");
         Objects.requireNonNull(loading, "loading");
 
@@ -154,7 +154,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
      * Accepts a potentially updated cell.
      */
     @Override
-    public void save(final SpreadsheetCell cell) {
+    public void saveCell(final SpreadsheetCell cell) {
         Objects.requireNonNull(cell, "cell");
         this.cells.put(cell.reference(), cell);
     }
@@ -163,7 +163,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
      * Deletes a single cell, ignoring invalid requests.
      */
     @Override
-    public void delete(final SpreadsheetCellReference cell) {
+    public void deleteCell(final SpreadsheetCellReference cell) {
         Objects.requireNonNull(cell, "cell");
         this.cells.remove(cell);
     }
