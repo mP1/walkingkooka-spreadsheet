@@ -74,23 +74,23 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
 
         final SpreadsheetCell cell = this.cells.get(reference);
         return null != cell ?
-               Optional.of(this.parseAndEvaluate(cell, loading)) :
+               Optional.of(this.maybeParseAndEvaluate(cell, loading)) :
                Optional.empty();
     }
 
     /**
-     * Attempts to evaluate the cell, parsing and evaluating as necessary.
+     * Attempts to evaluate the cell, parsing and evaluating as necessary depending on the {@link SpreadsheetEngineLoading}
      */
-    private SpreadsheetCell parseAndEvaluate(final SpreadsheetCell cell, final SpreadsheetEngineLoading loading) {
-        final SpreadsheetCell reply = this.evaluateIfPossible(this.parseIfNecessary(loading.prepare(cell)));
-        this.cells.put(reply.reference(), reply); // update cells enabling caching of parsing and value and errors.
-        return reply;
+    private SpreadsheetCell maybeParseAndEvaluate(final SpreadsheetCell cell, final SpreadsheetEngineLoading loading) {
+        final SpreadsheetCell result = loading.process(cell, this);
+        this.cells.put(cell.reference(), result); // update cells enabling caching of parsing and value and errors.
+        return result;
     }
 
     /**
      * If an expression is not present, parse the formula.
      */
-    private SpreadsheetCell parseIfNecessary(final SpreadsheetCell cell) {
+    final SpreadsheetCell parseIfNecessary(final SpreadsheetCell cell) {
         return cell.expression().isPresent() ?
                cell :
                this.parse(cell);
@@ -125,7 +125,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
     /**
      * If a value is available try and re-use or if an expression is present evaluate it.
      */
-    private SpreadsheetCell evaluateIfPossible(final SpreadsheetCell cell) {
+    final SpreadsheetCell evaluateIfPossible(final SpreadsheetCell cell) {
         return cell.value().isPresent() || cell.error().isPresent() ?
                cell : // value present - using cached.
                this.evaluate(cell);

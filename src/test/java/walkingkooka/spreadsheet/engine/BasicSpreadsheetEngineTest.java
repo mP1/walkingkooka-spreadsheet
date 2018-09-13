@@ -31,6 +31,18 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
     }
 
     @Test
+    public void testSaveAndLoadSkipEvaluate() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
+        engine.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
+
+        this.loadAndCheckWithoutValueOrError(engine,
+                cellReference,
+                SpreadsheetEngineLoading.SKIP_EVALUATE);
+    }
+
+    @Test
     public void testSaveAndLoad() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
 
@@ -94,6 +106,19 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         final SpreadsheetCell second = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.FORCE_RECOMPUTE);
 
         assertNotSame("different instances of SpreadsheetCell returned not cached", first, second);
+    }
+
+    @Test
+    public void testLoadComputeThenSkipEvaluate() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+
+        final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
+        engine.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
+
+        final SpreadsheetCell first = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
+        final SpreadsheetCell second = this.loadOrFail(engine, cellReference, SpreadsheetEngineLoading.SKIP_EVALUATE);
+
+        assertSame("different instances of SpreadsheetCell returned not cached", first, second);
     }
 
     @Test
