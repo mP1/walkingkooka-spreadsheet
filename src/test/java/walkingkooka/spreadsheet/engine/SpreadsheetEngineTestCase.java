@@ -4,6 +4,8 @@ import org.junit.*;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.test.*;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 
 import java.util.Optional;
@@ -14,6 +16,9 @@ import static org.junit.Assert.fail;
 
 public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> extends PackagePrivateClassTestCase<E> {
 
+    final static SpreadsheetCellReference REFERENCE = SpreadsheetReferenceKind.ABSOLUTE.column(1).setRow(SpreadsheetReferenceKind.ABSOLUTE.row(2));
+    final static SpreadsheetLabelName LABEL = SpreadsheetLabelName.with("label123");
+
     @Test(expected = NullPointerException.class)
     public final void testLoadCellNullCellFails() {
         this.createSpreadsheetEngine().loadCell(null, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
@@ -21,13 +26,38 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
 
     @Test(expected = NullPointerException.class)
     public final void testLoadCellNullLoadingFails() {
-        this.createSpreadsheetEngine().loadCell(SpreadsheetCellReference.with(SpreadsheetReferenceKind.ABSOLUTE.column(1), SpreadsheetReferenceKind.ABSOLUTE.row(2)),
+        this.createSpreadsheetEngine().loadCell(REFERENCE,
                 null);
     }
 
     @Test(expected = NullPointerException.class)
-    public final void testSetNullCellFails() {
+    public final void testSaveCellNullFails() {
         this.createSpreadsheetEngine().saveCell(null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public final void testSetLabelNullLabelFails() {
+        this.createSpreadsheetEngine().setLabel(null, REFERENCE);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public final void testSetLabelNullReferenceFails() {
+        this.createSpreadsheetEngine().setLabel(LABEL, null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public final void testRemoveLabelNullLabelFails() {
+        this.createSpreadsheetEngine().removeLabel(null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public final void testLabelNullFails() {
+        this.createSpreadsheetEngine().label(null);
+    }
+
+    @Test
+    public final void testLabelUnknown() {
+        this.labelFails(LABEL);
     }
 
     abstract E createSpreadsheetEngine();
@@ -87,5 +117,17 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
                 .orElse(cell.error()
                         .map(e -> (Object)e.value())
                         .orElse(bothAbsent));
+    }
+
+    final void labelFails(final SpreadsheetLabelName label) {
+        this.labelFails(this.createSpreadsheetEngine(), label);
+    }
+
+    final void labelFails(final SpreadsheetEngine engine, final SpreadsheetLabelName label) {
+        assertEquals("label should have failed", Optional.empty(), engine.label(label));
+    }
+
+    final void labelAndCheck(final SpreadsheetEngine engine, final SpreadsheetLabelName label, final SpreadsheetCellReference reference) {
+        assertEquals("label failed", Optional.of(reference), engine.label(label));
     }
 }

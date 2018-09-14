@@ -13,6 +13,7 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -187,6 +188,38 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
      * The context used to evaluate {@link ExpressionNode} for each {@link SpreadsheetCell}.
      */
     private final ExpressionEvaluationContext evaluationContext;
+
+    /**
+     * Sets or replaces a label to reference mapping. It is acceptable to set to an non existing {@link SpreadsheetCellReference}
+     */
+    @Override
+    public void setLabel(final SpreadsheetLabelName label, final SpreadsheetCellReference reference) {
+        Objects.requireNonNull(label, "label");
+        Objects.requireNonNull(reference, "reference");
+
+        this.labelToReference.put(label, reference);
+    }
+
+    /**
+     * Removes the given label if it exists. Invalid or unknown names are ignored.
+     */
+    @Override
+    public void removeLabel(SpreadsheetLabelName label) {
+        Objects.requireNonNull(label, "label");
+
+        this.labelToReference.remove(label);
+    }
+
+    /**
+     * Retrieves the {@link SpreadsheetCellReference} if one is present for the given {@link SpreadsheetLabelName}
+     */
+    @Override
+    public Optional<SpreadsheetCellReference> label(final SpreadsheetLabelName label) {
+        Objects.requireNonNull(label, "label");
+        return Optional.ofNullable(this.labelToReference.get(label));
+    }
+
+    private final Map<SpreadsheetLabelName, SpreadsheetCellReference> labelToReference = Maps.sorted();
 
     @Override
     public String toString() {
