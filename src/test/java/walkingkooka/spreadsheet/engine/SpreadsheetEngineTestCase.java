@@ -1,17 +1,15 @@
 package walkingkooka.spreadsheet.engine;
 
-import org.junit.*;
+import org.junit.Test;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.test.*;
+import walkingkooka.test.PackagePrivateClassTestCase;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.fail;
 
 public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> extends PackagePrivateClassTestCase<E> {
@@ -28,11 +26,6 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
     public final void testLoadCellNullLoadingFails() {
         this.createSpreadsheetEngine().loadCell(REFERENCE,
                 null);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public final void testSaveCellNullFails() {
-        this.createSpreadsheetEngine().saveCell(null);
     }
 
     @Test(expected = NullPointerException.class)
