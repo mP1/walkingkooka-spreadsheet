@@ -1,11 +1,11 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.map.Maps;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
@@ -24,8 +24,6 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * The default or basic implementation of {@link SpreadsheetEngine} that includes support for evaluating nodes,
@@ -37,25 +35,29 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
      * Factory that creates a new {@link BasicSpreadsheetEngine}
      */
     static BasicSpreadsheetEngine with(final SpreadsheetId id,
-                                   final Parser<SpreadsheetParserToken, SpreadsheetParserContext> parser,
-                                   final SpreadsheetParserContext parserContext,
-                                   final ExpressionEvaluationContext evaluationContext) {
+                                       final SpreadsheetCellStore cellStore,
+                                       final Parser<SpreadsheetParserToken, SpreadsheetParserContext> parser,
+                                       final SpreadsheetParserContext parserContext,
+                                       final ExpressionEvaluationContext evaluationContext) {
         Objects.requireNonNull(id, "id");
+        Objects.requireNonNull(cellStore, "cellStore");
         Objects.requireNonNull(parser, "parser");
         Objects.requireNonNull(parserContext, "parserContext");
         Objects.requireNonNull(evaluationContext, "evaluationContext");
 
-        return new BasicSpreadsheetEngine(id, parser, parserContext, evaluationContext);
+        return new BasicSpreadsheetEngine(id, cellStore, parser, parserContext, evaluationContext);
     }
 
     /**
      * Private ctor.
      */
     private BasicSpreadsheetEngine(final SpreadsheetId id,
+                                   final SpreadsheetCellStore cellStore,
                                    final Parser<SpreadsheetParserToken, SpreadsheetParserContext> parser,
                                    final SpreadsheetParserContext parserContext,
                                    final ExpressionEvaluationContext evaluationContext) {
         this.id = id;
+        this.cellStore = cellStore;
         this.parser = parser;
         this.parserContext = parserContext;
         this.evaluationContext = evaluationContext;
@@ -73,18 +75,18 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
         Objects.requireNonNull(reference, "references");
         Objects.requireNonNull(loading, "loading");
 
-        final SpreadsheetCell cell = this.cells.get(reference);
-        return null != cell ?
-               Optional.of(this.maybeParseAndEvaluate(cell, loading)) :
-               Optional.empty();
+        final Optional<SpreadsheetCell> cell = this.cellStore.load(reference);
+        return cell.map(c -> this.maybeParseAndEvaluate(c, loading));
     }
+
+    private final SpreadsheetCellStore cellStore;
 
     /**
      * Attempts to evaluate the cell, parsing and evaluating as necessary depending on the {@link SpreadsheetEngineLoading}
      */
     private SpreadsheetCell maybeParseAndEvaluate(final SpreadsheetCell cell, final SpreadsheetEngineLoading loading) {
         final SpreadsheetCell result = loading.process(cell, this);
-        this.cells.put(cell.reference(), result); // update cells enabling caching of parsing and value and errors.
+        this.cellStore.save(result); // update cells enabling caching of parsing and value and errors.
         return result;
     }
 
@@ -152,24 +154,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
     }
 
     /**
-     * Accepts a potentially updated cell.
-     */
-    @Override
-    public void saveCell(final SpreadsheetCell cell) {
-        Objects.requireNonNull(cell, "cell");
-        this.cells.put(cell.reference(), cell);
-    }
-
-    /**
-     * Deletes a single cell, ignoring invalid requests.
-     */
-    @Override
-    public void deleteCell(final SpreadsheetCellReference cell) {
-        Objects.requireNonNull(cell, "cell");
-        this.cells.remove(cell);
-    }
-
-    /**
      * The {@link Parser} that turns {@link SpreadsheetFormula} into a {@link ExpressionNode}.
      */
     private final Parser<SpreadsheetParserToken, SpreadsheetParserContext> parser;
@@ -178,11 +162,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
      * Used during the parsing of expressions.
      */
     private final SpreadsheetParserContext parserContext;
-
-    /**
-     * All cells present in this spreadsheet
-     */
-    private final Map<SpreadsheetCellReference, SpreadsheetCell> cells = Maps.sorted();
 
     /**
      * The context used to evaluate {@link ExpressionNode} for each {@link SpreadsheetCell}.
@@ -223,6 +202,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
 
     @Override
     public String toString() {
-        return this.cells.toString();
+        return this.cellStore.toString();
     }
 }
