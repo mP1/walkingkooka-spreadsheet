@@ -1,13 +1,10 @@
-package walkingkooka.spreadsheet.store;
+package walkingkooka.spreadsheet.store.cell;
 
-import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
-
-import java.util.Optional;
+import walkingkooka.spreadsheet.store.cell.GuavaTableSpreadsheetCellStore;
 
 public final class GuavaTableSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase<GuavaTableSpreadsheetCellStore> {
     @Override
-    GuavaTableSpreadsheetCellStore createSpreadsheetCellStore() {
+    protected GuavaTableSpreadsheetCellStore createStore() {
         return GuavaTableSpreadsheetCellStore.create();
     }
 
