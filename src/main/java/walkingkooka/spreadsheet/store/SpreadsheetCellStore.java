@@ -24,4 +24,14 @@ public interface SpreadsheetCellStore {
      * Deletes a single cell.
      */
     void delete(final SpreadsheetCellReference reference);
+
+    /**
+     * The highest row number
+     */
+    int rows();
+
+    /**
+     * The highest column number
+     */
+    int columns();
 }
