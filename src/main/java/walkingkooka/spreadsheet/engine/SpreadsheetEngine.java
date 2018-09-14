@@ -6,7 +6,6 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * The engine or host for the active spreadsheet.
@@ -23,16 +22,6 @@ public interface SpreadsheetEngine {
      * Invalid cell requests will be ignored and absent fromthe result. If parsing or evaluation fails the cell will have an error.
      */
     Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell, final SpreadsheetEngineLoading loading);
-
-    /**
-     * Updates a single cell.
-     */
-    void saveCell(final SpreadsheetCell cell);
-
-    /**
-     * Deletes a single cell.
-     */
-    void deleteCell(final SpreadsheetCellReference cell);
 
     /**
      * Sets or replaces a label to reference mapping. It is acceptable to set to an non existing {@link SpreadsheetCellReference}
