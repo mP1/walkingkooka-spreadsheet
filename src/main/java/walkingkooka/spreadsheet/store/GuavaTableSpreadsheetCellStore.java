@@ -16,6 +16,8 @@ import java.util.Optional;
  */
 final class GuavaTableSpreadsheetCellStore implements SpreadsheetCellStore{
 
+    private final static int COMPUTE_AGAIN = -1;
+
     /**
      * Creates an empty {@link SpreadsheetCellStore} which uses a {@link Table}
      */
@@ -42,17 +44,45 @@ final class GuavaTableSpreadsheetCellStore implements SpreadsheetCellStore{
         Objects.requireNonNull(cell, "cell");
 
         final SpreadsheetCellReference reference = cell.reference();
-        this.cells.put(reference.row(), reference.column(), cell);
+        final SpreadsheetColumnReference column = reference.column();
+        this.cells.put(reference.row(), column, cell);
+
+        if(COMPUTE_AGAIN != this.columns) {
+            this.columns = Math.max(column.value(), this.columns);
+        }
     }
 
     @Override
     public void delete(final SpreadsheetCellReference reference) {
         Objects.requireNonNull(reference, "reference");
 
-        this.cells.remove(reference.row(), reference.column());
+        final SpreadsheetColumnReference column = reference.column();
+        if(column.value() != this.columns) {
+            this.columns = COMPUTE_AGAIN;
+        }
+        this.cells.remove(reference.row(), column);
     }
 
-    private Table<SpreadsheetRowReference, SpreadsheetColumnReference, SpreadsheetCell> cells = TreeBasedTable.create();
+    @Override
+    public int rows() {
+        return this.cells.rowKeySet().last().value();
+    }
+
+    @Override
+    public int columns() {
+        if(COMPUTE_AGAIN == this.columns) {
+            int columns = 0;
+            for(SpreadsheetColumnReference columnReference: this.cells.columnKeySet()) {
+                columns = Math.max(columns, columnReference.value());
+            }
+            this.columns = columns;
+        }
+        return this.columns;
+    }
+
+    private int columns = COMPUTE_AGAIN;
+
+    private TreeBasedTable<SpreadsheetRowReference, SpreadsheetColumnReference, SpreadsheetCell> cells = TreeBasedTable.create();
 
     @Override
     public String toString() {
