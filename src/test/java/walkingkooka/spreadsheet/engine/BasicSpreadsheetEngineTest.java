@@ -1,8 +1,10 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.Test;
+import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -10,16 +12,25 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserContexts;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParsers;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionEvaluationException;
+import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.expression.ExpressionNodeName;
+import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
 import java.math.BigInteger;
 import java.math.MathContext;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotSame;
@@ -29,26 +40,26 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
 
     @Test(expected = NullPointerException.class)
     public void testNullIdFails() {
-        BasicSpreadsheetEngine.with(null, this.cellStore(), this.parser(), this.parserContext(), this.evaluationContext());
+        BasicSpreadsheetEngine.with(null, this.cellStore(), this.parser(), this.parserContext(), this.evaluationContextFactory());
     }
 
     @Test(expected = NullPointerException.class)
     public void testNullCellStoreFails() {
-        BasicSpreadsheetEngine.with(this.id(), null, this.parser(), this.parserContext(), this.evaluationContext());
+        BasicSpreadsheetEngine.with(this.id(), null, this.parser(), this.parserContext(), this.evaluationContextFactory());
     }
 
     @Test(expected = NullPointerException.class)
     public void testNullParserFails() {
-        BasicSpreadsheetEngine.with(this.id(), this.cellStore(), null, this.parserContext(), this.evaluationContext());
+        BasicSpreadsheetEngine.with(this.id(), this.cellStore(), null, this.parserContext(), this.evaluationContextFactory());
     }
 
     @Test(expected = NullPointerException.class)
     public void testNullParserContextFails() {
-        BasicSpreadsheetEngine.with(this.id(), this.cellStore(), this.parser(), null, this.evaluationContext());
+        BasicSpreadsheetEngine.with(this.id(), this.cellStore(), this.parser(), null, this.evaluationContextFactory());
     }
 
     @Test(expected = NullPointerException.class)
-    public void testNullEvaluationContextFails() {
+    public void testNullEvaluationContextFactoryFails() {
         BasicSpreadsheetEngine.with(this.id(), this.cellStore(), this.parser(), this.parserContext(), null);
     }
 
@@ -183,6 +194,78 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
     }
 
     @Test
+    public void testLoadCellValueCellReferenceInvalidFails() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+
+        final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
+        cellStore.save(SpreadsheetCell.with(a, SpreadsheetFormula.with("X99")));
+
+        this.loadCellAndCheckError(engine, a, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY, "Unknown cell reference");
+    }
+
+    @Test
+    public void testLoadCellValueLabelInvalidFails() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+
+        final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
+        cellStore.save(SpreadsheetCell.with(a, SpreadsheetFormula.with("INVALIDLABEL")));
+
+        this.loadCellAndCheckError(engine, a, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY, "Unknown label");
+    }
+
+    @Test
+    public void testLoadCellValueIsCellReference() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+
+        final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
+        final SpreadsheetCellReference b = this.cellReference(1, 0); // B1
+
+        cellStore.save(SpreadsheetCell.with(a, SpreadsheetFormula.with("B1")));
+        cellStore.save(SpreadsheetCell.with(b, SpreadsheetFormula.with("3+4")));
+
+        // formula
+        this.loadCellAndCheck(engine,
+                b,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                BigInteger.valueOf(3+4));
+
+        // reference to B1 which has formula
+        this.loadCellAndCheck(engine,
+                a,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                BigInteger.valueOf(3+4));
+    }
+
+    @Test
+    public void testLoadCallValueIsLabel() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+
+        final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
+        final SpreadsheetCellReference b = this.cellReference(1, 0); // B1
+
+        cellStore.save(SpreadsheetCell.with(a, SpreadsheetFormula.with(LABEL.value())));
+        cellStore.save(SpreadsheetCell.with(b, SpreadsheetFormula.with("3+4")));
+
+        engine.setLabel(LABEL, b);
+
+        // formula
+        this.loadCellAndCheck(engine,
+                b,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                BigInteger.valueOf(3+4));
+
+        // reference to B1 which has formula
+        this.loadCellAndCheck(engine,
+                a,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                BigInteger.valueOf(3+4));
+    }
+
+    @Test
     public void testSetAndGetLabel() {
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
         engine.setLabel(LABEL, REFERENCE);
@@ -199,11 +282,11 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
 
     @Override
     BasicSpreadsheetEngine createSpreadsheetEngine() {
-        return BasicSpreadsheetEngine.with(this.id(), this.cellStore(), this.parser(), this.parserContext(), this.evaluationContext());
+        return this.createSpreadsheetEngine(this.cellStore());
     }
 
     private BasicSpreadsheetEngine createSpreadsheetEngine(final SpreadsheetCellStore cellStore) {
-        return BasicSpreadsheetEngine.with(this.id(), cellStore, this.parser(), this.parserContext(), this.evaluationContext());
+        return BasicSpreadsheetEngine.with(this.id(), cellStore, this.parser(), this.parserContext(), this.evaluationContextFactory());
     }
 
     private SpreadsheetId id() {
@@ -226,18 +309,14 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         return SpreadsheetParserContexts.basic();
     }
 
-    private ExpressionEvaluationContext evaluationContext() {
-        return new FakeExpressionEvaluationContext() {
-            @Override
-            public MathContext mathContext() {
-                return MathContext.DECIMAL32;
-            }
+    private Function<SpreadsheetEngine, ExpressionEvaluationContext> evaluationContextFactory() {
+        final BiFunction<ExpressionNodeName, List<Object>, Object> functions = (name, params) -> {throw new UnsupportedOperationException();};
 
-            @Override
-            public <T> T convert(final Object value, final Class<T> target) {
-                return Converters.simple().convert(value, target);
-            }
-        };
+        return SpreadsheetEngines.spreadsheetEngineExpressionEvaluationContextFunction(
+                functions,
+                MathContext.DECIMAL32,
+                Converters.simple()
+        );
     }
 
     private SpreadsheetCellReference cellReference(final int column, final int row) {
