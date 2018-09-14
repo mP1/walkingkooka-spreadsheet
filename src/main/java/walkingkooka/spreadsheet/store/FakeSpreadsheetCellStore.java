@@ -24,5 +24,16 @@ public class FakeSpreadsheetCellStore implements SpreadsheetCellStore, Fake {
     @Override
     public void delete(SpreadsheetCellReference reference) {
         Objects.requireNonNull(reference, "reference");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int rows() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int columns() {
+        throw new UnsupportedOperationException();
     }
 }
