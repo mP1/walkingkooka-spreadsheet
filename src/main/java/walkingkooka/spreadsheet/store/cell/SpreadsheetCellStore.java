@@ -1,6 +1,7 @@
-package walkingkooka.spreadsheet.store;
+package walkingkooka.spreadsheet.store.cell;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
 import java.util.Collection;
@@ -10,22 +11,7 @@ import java.util.Set;
 /**
  * A store that holds all cells for a spreadsheet. No additional actions are supported.
  */
-public interface SpreadsheetCellStore {
-
-    /**
-     * Fetches the cell using the reference.
-     */
-    Optional<SpreadsheetCell> load(final SpreadsheetCellReference reference);
-
-    /**
-     * Updates a single cell.
-     */
-    void save(final SpreadsheetCell cell);
-
-    /**
-     * Deletes a single cell.
-     */
-    void delete(final SpreadsheetCellReference reference);
+public interface SpreadsheetCellStore extends Store<SpreadsheetCellReference, SpreadsheetCell> {
 
     /**
      * The highest row number

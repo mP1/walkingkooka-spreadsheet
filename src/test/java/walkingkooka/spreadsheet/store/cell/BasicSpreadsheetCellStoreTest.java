@@ -1,16 +1,13 @@
-package walkingkooka.spreadsheet.store;
+package walkingkooka.spreadsheet.store.cell;
 
-import org.junit.Test;
-import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.store.cell.BasicSpreadsheetCellStore;
 
 import static org.junit.Assert.assertSame;
 
 public final class BasicSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase<BasicSpreadsheetCellStore> {
 
     @Override
-    BasicSpreadsheetCellStore createSpreadsheetCellStore() {
+    protected BasicSpreadsheetCellStore createStore() {
         return BasicSpreadsheetCellStore.create();
     }
 

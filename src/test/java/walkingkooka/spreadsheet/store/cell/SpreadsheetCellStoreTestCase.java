@@ -1,13 +1,13 @@
-package walkingkooka.spreadsheet.store;
+package walkingkooka.spreadsheet.store.cell;
 
 import org.junit.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.store.StoreTestCase;
 import walkingkooka.test.PackagePrivateClassTestCase;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 
@@ -19,25 +19,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
-public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStore> extends PackagePrivateClassTestCase<S> {
+public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStore> extends StoreTestCase<S, SpreadsheetCellReference, SpreadsheetCell> {
 
     final static SpreadsheetCellReference REFERENCE = SpreadsheetReferenceKind.ABSOLUTE.column(1).setRow(SpreadsheetReferenceKind.ABSOLUTE.row(2));
     final static SpreadsheetLabelName LABEL = SpreadsheetLabelName.with("label123");
-
-    @Test(expected = NullPointerException.class)
-    public final void testLoadNullCellFails() {
-        this.createSpreadsheetCellStore().load(null);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public final void testSaveNullFails() {
-        this.createSpreadsheetCellStore().save(null);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public final void testDeleteNullFails() {
-        this.createSpreadsheetCellStore().delete(null);
-    }
 
     @Test
     public final void testLoadUnknown() {
@@ -46,7 +31,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
     @Test
     public final void testSaveAndLoad() {
-        final S store = this.createSpreadsheetCellStore();
+        final S store = this.createStore();
 
         final SpreadsheetCellReference reference = this.cellReference(1, 2);
         final SpreadsheetCell cell = SpreadsheetCell.with(reference, this.formula());
@@ -57,7 +42,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
     @Test
     public final void testSaveDeleteLoad() {
-        final S store = this.createSpreadsheetCellStore();
+        final S store = this.createStore();
 
         final SpreadsheetCellReference reference = this.cellReference(1, 2);
         final SpreadsheetCell cell = SpreadsheetCell.with(reference, this.formula());
@@ -69,7 +54,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
     @Test
     public final void testRows() {
-        final S store = this.createSpreadsheetCellStore();
+        final S store = this.createStore();
 
         final SpreadsheetFormula formula = this.formula();
 
@@ -82,7 +67,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
     @Test
     public final void testColumns() {
-        final S store = this.createSpreadsheetCellStore();
+        final S store = this.createStore();
 
         final SpreadsheetFormula formula = this.formula();
 
@@ -95,12 +80,12 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
     @Test(expected = IllegalArgumentException.class)
     public final void testRowInvalidRowFails() {
-        this.createSpreadsheetCellStore().row(-1);
+        this.createStore().row(-1);
     }
 
     @Test
     public final void testRow() {
-        final S store = this.createSpreadsheetCellStore();
+        final S store = this.createStore();
 
         final SpreadsheetFormula formula = this.formula();
 
@@ -121,12 +106,12 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
     @Test(expected = IllegalArgumentException.class)
     public final void testColumnInvalidColumnFails() {
-        this.createSpreadsheetCellStore().column(-1);
+        this.createStore().column(-1);
     }
 
     @Test
     public final void testColumn() {
-        final S store = this.createSpreadsheetCellStore();
+        final S store = this.createStore();
 
         final SpreadsheetFormula formula = this.formula();
 
@@ -154,28 +139,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
         assertEquals(message, expectedSets, actual);
     }
-
-    abstract S createSpreadsheetCellStore();
-
-    final SpreadsheetCell loadOrFail(final SpreadsheetCellStore store,
-                                     final SpreadsheetCellReference reference) {
-        final Optional<SpreadsheetCell> cell = store.load(reference);
-        if(!cell.isPresent()) {
-            fail("Loading " + reference + " should have succeeded");
-        }
-        return cell.get();
-    }
-
-    final void loadFailCheck(final SpreadsheetCellReference reference) {
-        this.loadFailCheck(this.createSpreadsheetCellStore(), reference);
-    }
-
-    final void loadFailCheck(final SpreadsheetCellStore store,
-                                 final SpreadsheetCellReference reference) {
-        final Optional<SpreadsheetCell> cell = store.load(reference);
-        assertEquals("Expected reference " + reference + " to fail", Optional.empty(), cell);
-    }
-
+    
     final SpreadsheetCellReference cellReference(final int column, final int row) {
         return SpreadsheetCellReference.with(SpreadsheetReferenceKind.ABSOLUTE.column(column),
                 SpreadsheetReferenceKind.ABSOLUTE.row(row));

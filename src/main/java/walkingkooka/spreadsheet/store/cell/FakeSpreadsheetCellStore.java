@@ -1,4 +1,4 @@
-package walkingkooka.spreadsheet.store;
+package walkingkooka.spreadsheet.store.cell;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.test.Fake;
@@ -7,7 +7,6 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 public class FakeSpreadsheetCellStore implements SpreadsheetCellStore, Fake {
 
