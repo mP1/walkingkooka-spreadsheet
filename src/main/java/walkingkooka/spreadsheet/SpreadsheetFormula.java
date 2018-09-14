@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.*;
 import walkingkooka.test.*;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetFunctionName;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
 import walkingkooka.tree.expression.*;
 
 import java.util.*;
@@ -29,8 +31,21 @@ import java.util.*;
  */
 public final class SpreadsheetFormula implements HashCodeEqualsDefined, Value<String> {
 
+    /**
+     * A function that replaces cell references with expressions that become invalid due to a deleted row or column.
+     */
+    public final static SpreadsheetFunctionName INVALID_CELL_REFERENCE = SpreadsheetFunctionName.with("InvalidCellReference");
+
+    /**
+     * A {@link SpreadsheetParserToken} that holds the {@link #INVALID_CELL_REFERENCE} function name.
+     */
+    public final static SpreadsheetParserToken INVALID_CELL_REFERENCE_PARSER_TOKEN = SpreadsheetParserToken.functionName(INVALID_CELL_REFERENCE, INVALID_CELL_REFERENCE.toString());
+
+    /**
+     * Factory that creates a new {@link SpreadsheetFormula}
+     */
     public static SpreadsheetFormula with(final String value) {
-        Objects.requireNonNull(value, "value");
+        checkValue(value);
 
         return new SpreadsheetFormula(value);
     }
@@ -48,7 +63,22 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined, Value<St
         return this.value;
     }
 
+    public SpreadsheetFormula setValue(final String value) {
+        checkValue(value);
+        return this.value.equals(value) ?
+               this :
+               this.replace(value);
+    }
+
     private String value;
+
+    private static void checkValue(final String value) {
+        Objects.requireNonNull(value, "value");
+    }
+
+    private static SpreadsheetFormula replace(final String value) {
+        return new SpreadsheetFormula(value);
+    }
 
     // HashCodeEqualsDefined..........................................................................................
 

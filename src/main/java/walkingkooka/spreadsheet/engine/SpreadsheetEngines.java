@@ -23,10 +23,16 @@ public final class SpreadsheetEngines implements PublicStaticHelper {
      */
     public static SpreadsheetEngine basic(final SpreadsheetId id,
                                           final SpreadsheetCellStore cellStore,
+                                          final SpreadsheetLabelStore labelStore,
                                           final Parser<SpreadsheetParserToken, SpreadsheetParserContext> parser,
                                           final SpreadsheetParserContext parserContext,
                                           final Function<SpreadsheetEngine, ExpressionEvaluationContext> evaluationContextFactory) {
-        return BasicSpreadsheetEngine.with(id, cellStore, parser, parserContext, evaluationContextFactory);
+        return BasicSpreadsheetEngine.with(id,
+                cellStore,
+                labelStore,
+                parser,
+                parserContext,
+                evaluationContextFactory);
     }
 
     /**
