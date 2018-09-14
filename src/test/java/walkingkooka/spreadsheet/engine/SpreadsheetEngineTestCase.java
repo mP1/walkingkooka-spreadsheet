@@ -2,7 +2,9 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.Test;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.test.PackagePrivateClassTestCase;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
@@ -10,6 +12,8 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> extends PackagePrivateClassTestCase<E> {
@@ -110,6 +114,21 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
                 .orElse(cell.error()
                         .map(e -> (Object)e.value())
                         .orElse(bothAbsent));
+    }
+
+    final void loadCellAndCheckError(final SpreadsheetCellReference reference, final SpreadsheetEngineLoading loading, final String errorContains) {
+        this.loadCellAndCheck(this.createSpreadsheetEngine(), reference, loading, errorContains);
+    }
+
+    final void loadCellAndCheckError(final SpreadsheetEngine engine,
+                                final SpreadsheetCellReference reference,
+                                final SpreadsheetEngineLoading loading,
+                                final String errorContains) {
+        final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading);
+
+        final Optional<SpreadsheetError> error = cell.error();
+        assertNotEquals("Expected error missing=" + cell, SpreadsheetCell.NO_ERROR, error);
+        assertTrue("Error message " + error + " missing " + CharSequences.quoteAndEscape(errorContains), error.get().value().contains(errorContains));
     }
 
     final void labelFails(final SpreadsheetLabelName label) {
