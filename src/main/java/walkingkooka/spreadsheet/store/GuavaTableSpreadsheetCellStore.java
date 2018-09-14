@@ -8,13 +8,16 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * A {@link SpreadsheetCellStore} that is backed by a Guava {@link com.google.common.collect.Table}
  */
-final class GuavaTableSpreadsheetCellStore implements SpreadsheetCellStore{
+final class GuavaTableSpreadsheetCellStore extends SpreadsheetCellStoreTemplate {
 
     private final static int COMPUTE_AGAIN = -1;
 
@@ -33,47 +36,43 @@ final class GuavaTableSpreadsheetCellStore implements SpreadsheetCellStore{
     }
 
     @Override
-    public Optional<SpreadsheetCell> load(final SpreadsheetCellReference reference) {
-        Objects.requireNonNull(reference, "reference");
-
-        return Optional.ofNullable(this.cells.get(reference.row(), reference.column()));
+    Optional<SpreadsheetCell> load0(final SpreadsheetCellReference reference) {
+        return Optional.ofNullable(this.cells.get(reference.row().value(), reference.column().value()));
     }
 
     @Override
-    public void save(final SpreadsheetCell cell) {
-        Objects.requireNonNull(cell, "cell");
-
+    void save0(final SpreadsheetCell cell) {
         final SpreadsheetCellReference reference = cell.reference();
-        final SpreadsheetColumnReference column = reference.column();
-        this.cells.put(reference.row(), column, cell);
+        final int column = reference.column().value();
+        this.cells.put(reference.row().value(), column, cell);
 
         if(COMPUTE_AGAIN != this.columns) {
-            this.columns = Math.max(column.value(), this.columns);
+            this.columns = Math.max(column, this.columns);
         }
     }
 
     @Override
-    public void delete(final SpreadsheetCellReference reference) {
-        Objects.requireNonNull(reference, "reference");
-
-        final SpreadsheetColumnReference column = reference.column();
-        if(column.value() != this.columns) {
+    void delete0(final SpreadsheetCellReference reference) {
+        final int column = reference.column().value();
+        if(column != this.columns) {
             this.columns = COMPUTE_AGAIN;
         }
-        this.cells.remove(reference.row(), column);
+        this.cells.remove(reference.row().value(), column);
     }
 
     @Override
     public int rows() {
-        return this.cells.rowKeySet().last().value();
+        return this.cells.isEmpty() ?
+                0:
+                this.cells.rowKeySet().last();
     }
 
     @Override
     public int columns() {
         if(COMPUTE_AGAIN == this.columns) {
             int columns = 0;
-            for(SpreadsheetColumnReference columnReference: this.cells.columnKeySet()) {
-                columns = Math.max(columns, columnReference.value());
+            for(int c: this.cells.columnKeySet()) {
+                columns = Math.max(columns, c);
             }
             this.columns = columns;
         }
@@ -82,7 +81,20 @@ final class GuavaTableSpreadsheetCellStore implements SpreadsheetCellStore{
 
     private int columns = COMPUTE_AGAIN;
 
-    private TreeBasedTable<SpreadsheetRowReference, SpreadsheetColumnReference, SpreadsheetCell> cells = TreeBasedTable.create();
+    @Override
+    Collection<SpreadsheetCell> row0(final int row) {
+        return Collections.unmodifiableCollection(this.cells.row(row)
+                .values());
+    }
+
+    @Override
+    Collection<SpreadsheetCell> column0(final int column) {
+        return Collections.unmodifiableCollection(this.cells.column(column)
+                .values());
+    }
+
+    // row, column
+    private TreeBasedTable<Integer, Integer, SpreadsheetCell> cells = TreeBasedTable.create();
 
     @Override
     public String toString() {
