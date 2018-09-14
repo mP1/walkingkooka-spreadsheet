@@ -1,19 +1,25 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.collect.map.Maps;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.Set;
+import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
+import java.util.stream.Collectors;
 
 /**
  * A {@link SpreadsheetCellStore} that uses a {@link Map}.
  */
-final class BasicSpreadsheetCellStore implements SpreadsheetCellStore {
+final class BasicSpreadsheetCellStore extends SpreadsheetCellStoreTemplate {
 
     /**
      * Factory that creates a new {@link BasicSpreadsheetCellStore}
@@ -30,9 +36,7 @@ final class BasicSpreadsheetCellStore implements SpreadsheetCellStore {
     }
 
     @Override
-    public Optional<SpreadsheetCell> load(final SpreadsheetCellReference reference) {
-        Objects.requireNonNull(reference, "references");
-
+    Optional<SpreadsheetCell> load0(final SpreadsheetCellReference reference) {
         return Optional.ofNullable(this.cells.get(reference));
     }
 
@@ -40,8 +44,7 @@ final class BasicSpreadsheetCellStore implements SpreadsheetCellStore {
      * Accepts a potentially updated cell.
      */
     @Override
-    public void save(final SpreadsheetCell cell) {
-        Objects.requireNonNull(cell, "cell");
+    void save0(final SpreadsheetCell cell) {
         this.cells.put(cell.reference(), cell);
     }
 
@@ -49,8 +52,7 @@ final class BasicSpreadsheetCellStore implements SpreadsheetCellStore {
      * Deletes a single cell, ignoring invalid requests.
      */
     @Override
-    public void delete(final SpreadsheetCellReference reference) {
-        Objects.requireNonNull(reference, "reference");
+    void delete0(final SpreadsheetCellReference reference) {
         this.cells.remove(reference);
     }
 
@@ -70,6 +72,23 @@ final class BasicSpreadsheetCellStore implements SpreadsheetCellStore {
                 .mapToInt(value)
                 .max()
                 .orElse(0);
+    }
+
+    @Override
+    Collection<SpreadsheetCell> row0(final int row) {
+        return this.filter(c -> c.reference().row().value() == row);
+    }
+
+    @Override
+    Collection<SpreadsheetCell> column0(final int column) {
+        return this.filter(c -> c.reference().column().value() == column);
+    }
+
+    private Set<SpreadsheetCell> filter(final Predicate<SpreadsheetCell> filter) {
+        return this.cells.values()
+                .stream()
+                .filter(filter)
+                .collect(Collectors.toCollection(Sets::sorted));
     }
 
     /**
