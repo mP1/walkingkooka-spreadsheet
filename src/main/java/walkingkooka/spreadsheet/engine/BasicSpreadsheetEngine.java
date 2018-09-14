@@ -1,6 +1,5 @@
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.collect.map.Maps;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
@@ -14,14 +13,14 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionNode;
 
-import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
@@ -38,16 +37,23 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
      */
     static BasicSpreadsheetEngine with(final SpreadsheetId id,
                                        final SpreadsheetCellStore cellStore,
+                                       final SpreadsheetLabelStore labelStore,
                                        final Parser<SpreadsheetParserToken, SpreadsheetParserContext> parser,
                                        final SpreadsheetParserContext parserContext,
                                        final Function<SpreadsheetEngine, ExpressionEvaluationContext> evaluationContextFactory) {
         Objects.requireNonNull(id, "id");
         Objects.requireNonNull(cellStore, "cellStore");
+        Objects.requireNonNull(labelStore, "labelStore");
         Objects.requireNonNull(parser, "parser");
         Objects.requireNonNull(parserContext, "parserContext");
         Objects.requireNonNull(evaluationContextFactory, "evaluationContextFactory");
 
-        return new BasicSpreadsheetEngine(id, cellStore, parser, parserContext, evaluationContextFactory);
+        return new BasicSpreadsheetEngine(id,
+                cellStore,
+                labelStore,
+                parser,
+                parserContext,
+                evaluationContextFactory);
     }
 
     /**
@@ -55,11 +61,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
      */
     private BasicSpreadsheetEngine(final SpreadsheetId id,
                                    final SpreadsheetCellStore cellStore,
+                                   final SpreadsheetLabelStore labelStore,
                                    final Parser<SpreadsheetParserToken, SpreadsheetParserContext> parser,
                                    final SpreadsheetParserContext parserContext,
                                    final Function<SpreadsheetEngine, ExpressionEvaluationContext> evaluationContextFactory) {
         this.id = id;
         this.cellStore = cellStore;
+        this.labelStore = labelStore;
         this.parser = parser;
         this.parserContext = parserContext;
         this.evaluationContext = evaluationContextFactory.apply(this);
@@ -81,7 +89,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
         return cell.map(c -> this.maybeParseAndEvaluate(c, loading));
     }
 
-    private final SpreadsheetCellStore cellStore;
+    final SpreadsheetCellStore cellStore;
 
     /**
      * Attempts to evaluate the cell, parsing and evaluating as necessary depending on the {@link SpreadsheetEngineLoading}
@@ -95,23 +103,26 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
     /**
      * If an expression is not present, parse the formula.
      */
-    final SpreadsheetCell parseIfNecessary(final SpreadsheetCell cell) {
+    SpreadsheetCell parseIfNecessary(final SpreadsheetCell cell) {
         return cell.expression().isPresent() ?
                cell :
-               this.parse(cell);
+               this.parse(cell, Function.identity());
     }
 
     /**
      * Parsers the formula for this cell, and sets its expression or error if parsing fails.
      */
-    private SpreadsheetCell parse(final SpreadsheetCell cell) {
+    final SpreadsheetCell parse(final SpreadsheetCell cell,
+                                final Function<SpreadsheetParserToken, SpreadsheetParserToken> parsed) {
         SpreadsheetCell result = cell;
 
         try {
             final TextCursor formula = TextCursors.charSequence(cell.formula().value());
             final Optional<SpreadsheetParserToken> token = this.parser.parse(formula, this.parserContext);
             if(token.isPresent()) {
-                result = result.setExpression(token.get().expressionNode());
+                final SpreadsheetParserToken updatedToken = parsed.apply(token.get());
+                result = result.setFormula(result.formula().setValue(updatedToken.text()))
+                        .setExpression(updatedToken.expressionNode());
             } else {
                 // generic error message.
                 final TextCursorSavePoint save = formula.save();
@@ -155,6 +166,56 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
         return cell.setError(Optional.of(SpreadsheetError.with(message)));
     }
 
+    @Override
+    public void deleteColumns(final SpreadsheetColumnReference column, final int count) {
+        Objects.requireNonNull(column, "column");
+        checkCount(count);
+
+        if(count > 0) {
+            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn.with(column.value(), count, this)
+                    .delete();
+        }
+    }
+
+    @Override
+    public void deleteRows(final SpreadsheetRowReference row, final int count) {
+        Objects.requireNonNull(row, "row");
+        checkCount(count);
+
+        if(count > 0) {
+            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowRow.with(row.value(), count, this)
+                    .delete();
+        }
+    }
+
+    @Override
+    public void insertColumns(final SpreadsheetColumnReference column, final int count) {
+        Objects.requireNonNull(column, "column");
+        checkCount(count);
+
+        if(count > 0) {
+            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn.with(column.value(), count, this)
+                    .insert();
+        }
+    }
+
+    @Override
+    public void insertRows(final SpreadsheetRowReference row, final int count) {
+        Objects.requireNonNull(row, "row");
+        checkCount(count);
+
+        if(count > 0) {
+            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowRow.with(row.value(), count, this)
+                    .insert();
+        }
+    }
+
+    private static void checkCount(final int count) {
+        if(count < 0) {
+            throw new IllegalArgumentException("Count " + count + " < 0");
+        }
+    }
+    
     /**
      * The {@link Parser} that turns {@link SpreadsheetFormula} into a {@link ExpressionNode}.
      */
@@ -169,6 +230,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
      * The context used to evaluate {@link ExpressionNode} for each {@link SpreadsheetCell}.
      */
     private final ExpressionEvaluationContext evaluationContext;
+
+    final SpreadsheetLabelStore labelStore;
 
     @Override
     public String toString() {
