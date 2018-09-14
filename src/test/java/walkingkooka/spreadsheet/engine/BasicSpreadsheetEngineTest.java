@@ -8,6 +8,7 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserContexts;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
@@ -215,6 +216,21 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 c,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 BigInteger.valueOf(5+6));
+    }
+
+    @Test
+    public void testSetAndGetLabel() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        engine.setLabel(LABEL, REFERENCE);
+        this.labelAndCheck(engine, LABEL, REFERENCE);
+    }
+
+    @Test
+    public void testSetAndRemoveAndGetLabel() {
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
+        engine.setLabel(LABEL, REFERENCE);
+        engine.removeLabel(LABEL);
+        this.labelFails(engine, LABEL);
     }
 
     @Override
