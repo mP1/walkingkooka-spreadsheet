@@ -1,14 +1,19 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.Test;
+import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.test.PackagePrivateClassTestCase;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 
+import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
@@ -76,7 +81,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
 
     @Test
-    public final void testColumn() {
+    public final void testColumns() {
         final S store = this.createSpreadsheetCellStore();
 
         final SpreadsheetFormula formula = this.formula();
@@ -86,6 +91,68 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         store.save(SpreadsheetCell.with(this.cellReference(98, 2), formula));
 
         this.columnsAndCheck(store, 99);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void testRowInvalidRowFails() {
+        this.createSpreadsheetCellStore().row(-1);
+    }
+
+    @Test
+    public final void testRow() {
+        final S store = this.createSpreadsheetCellStore();
+
+        final SpreadsheetFormula formula = this.formula();
+
+        final SpreadsheetCell a = SpreadsheetCell.with(this.cellReference(11, 1), formula);
+        final SpreadsheetCell b = SpreadsheetCell.with(this.cellReference(22, 1), formula);
+        final SpreadsheetCell c = SpreadsheetCell.with(this.cellReference(11, 2), formula);
+        final SpreadsheetCell d = SpreadsheetCell.with(this.cellReference(22, 2), formula);
+
+        store.save(a);
+        store.save(b);
+        store.save(c);
+        store.save(d);
+
+        checkEquals("row 1", store.row(1), a, b);
+        checkEquals("row 2", store.row(2), c, d);
+        checkEquals("row 99", store.row(99));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public final void testColumnInvalidColumnFails() {
+        this.createSpreadsheetCellStore().column(-1);
+    }
+
+    @Test
+    public final void testColumn() {
+        final S store = this.createSpreadsheetCellStore();
+
+        final SpreadsheetFormula formula = this.formula();
+
+        final SpreadsheetCell a = SpreadsheetCell.with(this.cellReference(1, 11), formula);
+        final SpreadsheetCell b = SpreadsheetCell.with(this.cellReference(1, 22), formula);
+        final SpreadsheetCell c = SpreadsheetCell.with(this.cellReference(2, 11), formula);
+        final SpreadsheetCell d = SpreadsheetCell.with(this.cellReference(2, 22), formula);
+
+        store.save(a);
+        store.save(b);
+        store.save(c);
+        store.save(d);
+
+        checkEquals("column 1", store.column(1), a, b);
+        checkEquals("column 2", store.column(2), c, d);
+        checkEquals("column 99", store.column(99));
+    }
+
+    private void checkEquals(final String message, final Collection<SpreadsheetCell> cells, final SpreadsheetCell...expected) {
+        final Set<SpreadsheetCell> actual = Sets.sorted();
+        actual.addAll(cells);
+
+        final Set<SpreadsheetCell> expectedSets = Sets.sorted();
+        expectedSets.addAll(Lists.of(expected));
+
+        assertEquals(message, expectedSets, actual);
     }
 
     abstract S createSpreadsheetCellStore();
