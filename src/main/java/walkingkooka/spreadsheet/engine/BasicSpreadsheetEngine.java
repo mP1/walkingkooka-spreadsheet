@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * The default or basic implementation of {@link SpreadsheetEngine} that includes support for evaluating nodes,
@@ -38,14 +39,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
                                        final SpreadsheetCellStore cellStore,
                                        final Parser<SpreadsheetParserToken, SpreadsheetParserContext> parser,
                                        final SpreadsheetParserContext parserContext,
-                                       final ExpressionEvaluationContext evaluationContext) {
+                                       final Function<SpreadsheetEngine, ExpressionEvaluationContext> evaluationContextFactory) {
         Objects.requireNonNull(id, "id");
         Objects.requireNonNull(cellStore, "cellStore");
         Objects.requireNonNull(parser, "parser");
         Objects.requireNonNull(parserContext, "parserContext");
-        Objects.requireNonNull(evaluationContext, "evaluationContext");
+        Objects.requireNonNull(evaluationContextFactory, "evaluationContextFactory");
 
-        return new BasicSpreadsheetEngine(id, cellStore, parser, parserContext, evaluationContext);
+        return new BasicSpreadsheetEngine(id, cellStore, parser, parserContext, evaluationContextFactory);
     }
 
     /**
@@ -55,12 +56,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
                                    final SpreadsheetCellStore cellStore,
                                    final Parser<SpreadsheetParserToken, SpreadsheetParserContext> parser,
                                    final SpreadsheetParserContext parserContext,
-                                   final ExpressionEvaluationContext evaluationContext) {
+                                   final Function<SpreadsheetEngine, ExpressionEvaluationContext> evaluationContextFactory) {
         this.id = id;
         this.cellStore = cellStore;
         this.parser = parser;
         this.parserContext = parserContext;
-        this.evaluationContext = evaluationContext;
+        this.evaluationContext = evaluationContextFactory.apply(this);
     }
 
     @Override
