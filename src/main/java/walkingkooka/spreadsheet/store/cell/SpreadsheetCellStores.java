@@ -1,4 +1,4 @@
-package walkingkooka.spreadsheet.store;
+package walkingkooka.spreadsheet.store.cell;
 
 import walkingkooka.type.PublicStaticHelper;
 

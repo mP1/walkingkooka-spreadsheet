@@ -1,18 +1,13 @@
-package walkingkooka.spreadsheet.store;
+package walkingkooka.spreadsheet.store.cell;
 
 import com.google.common.collect.Table;
 import com.google.common.collect.TreeBasedTable;
-import org.checkerframework.checker.units.qual.C;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * A {@link SpreadsheetCellStore} that is backed by a Guava {@link com.google.common.collect.Table}

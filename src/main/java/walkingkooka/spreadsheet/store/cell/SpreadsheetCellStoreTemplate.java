@@ -1,4 +1,4 @@
-package walkingkooka.spreadsheet.store;
+package walkingkooka.spreadsheet.store.cell;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
@@ -6,7 +6,6 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.ToIntFunction;
 
 /**
  * Template for all {@link SpreadsheetCellStore}
