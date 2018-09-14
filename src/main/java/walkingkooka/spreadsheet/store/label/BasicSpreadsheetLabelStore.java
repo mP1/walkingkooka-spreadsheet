@@ -1,11 +1,13 @@
 package walkingkooka.spreadsheet.store.label;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -55,7 +57,9 @@ final class BasicSpreadsheetLabelStore implements SpreadsheetLabelStore {
 
     @Override
     public Collection<SpreadsheetLabelMapping> all() {
-        return Collections.unmodifiableCollection(this.mappings.values());
+        final List<SpreadsheetLabelMapping> copy = Lists.array();
+        copy.addAll(this.mappings.values());
+        return Collections.unmodifiableCollection(copy);
     }
 
     /**
