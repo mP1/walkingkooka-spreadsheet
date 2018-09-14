@@ -44,7 +44,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         final S store = this.createSpreadsheetCellStore();
 
         final SpreadsheetCellReference reference = this.cellReference(1, 2);
-        final SpreadsheetCell cell = SpreadsheetCell.with(reference, SpreadsheetFormula.with("1+2"));
+        final SpreadsheetCell cell = SpreadsheetCell.with(reference, this.formula());
         store.save(cell);
 
         assertSame(cell, this.loadOrFail(store, reference));
@@ -55,11 +55,37 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         final S store = this.createSpreadsheetCellStore();
 
         final SpreadsheetCellReference reference = this.cellReference(1, 2);
-        final SpreadsheetCell cell = SpreadsheetCell.with(reference, SpreadsheetFormula.with("1+2"));
+        final SpreadsheetCell cell = SpreadsheetCell.with(reference, this.formula());
         store.save(cell);
         store.delete(reference);
 
         this.loadFailCheck(store, reference);
+    }
+
+    @Test
+    public final void testRows() {
+        final S store = this.createSpreadsheetCellStore();
+
+        final SpreadsheetFormula formula = this.formula();
+
+        store.save(SpreadsheetCell.with(this.cellReference(1, 2), formula));
+        store.save(SpreadsheetCell.with(this.cellReference(1, 99), formula));
+        store.save(SpreadsheetCell.with(this.cellReference(1, 5), formula));
+
+        this.rowsAndCheck(store, 99);
+    }
+
+    @Test
+    public final void testColumn() {
+        final S store = this.createSpreadsheetCellStore();
+
+        final SpreadsheetFormula formula = this.formula();
+
+        store.save(SpreadsheetCell.with(this.cellReference(1, 1), formula));
+        store.save(SpreadsheetCell.with(this.cellReference(99, 1), formula));
+        store.save(SpreadsheetCell.with(this.cellReference(98, 2), formula));
+
+        this.columnsAndCheck(store, 99);
     }
 
     abstract S createSpreadsheetCellStore();
@@ -86,5 +112,17 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     final SpreadsheetCellReference cellReference(final int column, final int row) {
         return SpreadsheetCellReference.with(SpreadsheetReferenceKind.ABSOLUTE.column(column),
                 SpreadsheetReferenceKind.ABSOLUTE.row(row));
+    }
+    
+    final void rowsAndCheck(final SpreadsheetCellStore store, final int row) {
+        assertEquals("rows for store=" + store, row, store.rows());
+    }
+
+    final void columnsAndCheck(final SpreadsheetCellStore store, final int column) {
+        assertEquals("columns for store=" + store, column, store.columns());
+    }
+    
+    private SpreadsheetFormula formula() {
+        return SpreadsheetFormula.with("1+2");
     }
 }
