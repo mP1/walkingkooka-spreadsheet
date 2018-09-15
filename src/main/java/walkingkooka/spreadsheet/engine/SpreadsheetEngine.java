@@ -22,19 +22,4 @@ public interface SpreadsheetEngine {
      * Invalid cell requests will be ignored and absent fromthe result. If parsing or evaluation fails the cell will have an error.
      */
     Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell, final SpreadsheetEngineLoading loading);
-
-    /**
-     * Sets or replaces a label to reference mapping. It is acceptable to set to an non existing {@link SpreadsheetCellReference}
-     */
-    void setLabel(final SpreadsheetLabelName label, final SpreadsheetCellReference reference);
-
-    /**
-     * Removes the given label if it exists. Invalid or unknown names are ignored.
-     */
-    void removeLabel(SpreadsheetLabelName label);
-
-    /**
-     * Retrieves the {@link SpreadsheetCellReference} if one is present for the given {@link SpreadsheetLabelName}
-     */
-    Optional<SpreadsheetCellReference> label(final SpreadsheetLabelName label);
 }
