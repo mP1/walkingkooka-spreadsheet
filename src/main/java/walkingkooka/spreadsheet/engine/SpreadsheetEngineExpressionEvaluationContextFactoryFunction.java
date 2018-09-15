@@ -1,6 +1,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.convert.Converter;
+import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionNodeName;
@@ -20,19 +21,23 @@ final class SpreadsheetEngineExpressionEvaluationContextFactoryFunction implemen
      * Creates a new SpreadsheetEngineExpressionEvaluationContextFactoryFunction
      */
     static SpreadsheetEngineExpressionEvaluationContextFactoryFunction with(final BiFunction<ExpressionNodeName, List<Object>, Object> functions,
-                                                                        final MathContext mathContext,
-                                                                        final Converter converter) {
+                                                                            final SpreadsheetLabelStore labelStore,
+                                                                            final MathContext mathContext,
+                                                                            final Converter converter) {
         Objects.requireNonNull(functions, "functions");
+        Objects.requireNonNull(labelStore, "labelStore");
         Objects.requireNonNull(mathContext, "mathContext");
         Objects.requireNonNull(converter, "converter");
 
-        return new SpreadsheetEngineExpressionEvaluationContextFactoryFunction(functions, mathContext, converter);
+        return new SpreadsheetEngineExpressionEvaluationContextFactoryFunction(functions, labelStore, mathContext, converter);
     }
 
     private SpreadsheetEngineExpressionEvaluationContextFactoryFunction(final BiFunction<ExpressionNodeName, List<Object>, Object> functions,
-                                                                       final MathContext mathContext,
-                                                                       final Converter converter) {
+                                                                        final SpreadsheetLabelStore labelStore,
+                                                                        final MathContext mathContext,
+                                                                        final Converter converter) {
         this.functions = functions;
+        this.labelStore = labelStore;
         this.mathContext = mathContext;
         this.converter = converter;
     }
@@ -40,12 +45,13 @@ final class SpreadsheetEngineExpressionEvaluationContextFactoryFunction implemen
     @Override
     public ExpressionEvaluationContext apply(final SpreadsheetEngine engine) {
         return ExpressionEvaluationContexts.basic(this.functions,
-                SpreadsheetEngineExpressionEvaluationContextFactoryFunctionExpressionReferenceExpressionNodeFunction.with(engine),
+                SpreadsheetEngineExpressionEvaluationContextFactoryFunctionExpressionReferenceExpressionNodeFunction.with(engine, this.labelStore),
                 this.mathContext,
                 this.converter);
     }
 
     private final BiFunction<ExpressionNodeName, List<Object>, Object> functions;
+    private final SpreadsheetLabelStore labelStore;
     private final MathContext mathContext;
     private final Converter converter;
 

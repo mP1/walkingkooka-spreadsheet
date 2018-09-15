@@ -3,6 +3,8 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.Test;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
+import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStores;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNodeName;
 import walkingkooka.util.FunctionTestCase;
@@ -17,28 +19,37 @@ public final class SpreadsheetEngineExpressionEvaluationContextFactoryFunctionTe
 
     @Test(expected = NullPointerException.class)
     public void testWithNullFunctionsFails() {
-        SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(null, this.mathContext(), this.converter());
+        SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(null, this.labelStore(), this.mathContext(), this.converter());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testWithNullLabelStoreFails() {
+        SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(this.functions(),null, this.mathContext(), this.converter());
     }
 
     @Test(expected = NullPointerException.class)
     public void testWithNullMathContextFails() {
-        SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(this.functions(), null, this.converter());
+        SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(this.functions(), this.labelStore(),null, this.converter());
     }
 
     @Test(expected = NullPointerException.class)
     public void testWithNullConverterFails() {
-        SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(this.functions(), this.mathContext(), null);
+        SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(this.functions(), this.labelStore(), this.mathContext(), null);
     }
 
     @Override
     protected SpreadsheetEngineExpressionEvaluationContextFactoryFunction createFunction() {
-        return SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(this.functions(), this.mathContext(), this.converter());
+        return SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(this.functions(), this.labelStore(), this.mathContext(), this.converter());
     }
 
     private BiFunction<ExpressionNodeName, List<Object>, Object> functions() {
         return (name, params) -> {
             throw new UnsupportedOperationException();
         };
+    }
+
+    private SpreadsheetLabelStore labelStore() {
+        return SpreadsheetLabelStores.fake();
     }
 
     private MathContext mathContext() {

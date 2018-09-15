@@ -6,23 +6,18 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.store.StoreTestCase;
-import walkingkooka.test.PackagePrivateClassTestCase;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 
 import java.util.Collection;
-import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
 
 public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStore> extends StoreTestCase<S, SpreadsheetCellReference, SpreadsheetCell> {
 
     final static SpreadsheetCellReference REFERENCE = SpreadsheetReferenceKind.ABSOLUTE.column(1).setRow(SpreadsheetReferenceKind.ABSOLUTE.row(2));
-    final static SpreadsheetLabelName LABEL = SpreadsheetLabelName.with("label123");
 
     @Test
     public final void testLoadUnknown() {

@@ -18,19 +18,4 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell, final SpreadsheetEngineLoading loading) {
         throw new UnsupportedOperationException();
     }
-
-    @Override
-    public void setLabel(final SpreadsheetLabelName label, final SpreadsheetCellReference reference) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void removeLabel(final SpreadsheetLabelName label) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Optional<SpreadsheetCellReference> label(final SpreadsheetLabelName label) {
-        throw new UnsupportedOperationException();
-    }
 }

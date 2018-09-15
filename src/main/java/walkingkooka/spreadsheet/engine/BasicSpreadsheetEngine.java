@@ -6,6 +6,7 @@ import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
@@ -168,38 +169,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
      * The context used to evaluate {@link ExpressionNode} for each {@link SpreadsheetCell}.
      */
     private final ExpressionEvaluationContext evaluationContext;
-
-    /**
-     * Sets or replaces a label to reference mapping. It is acceptable to set to an non existing {@link SpreadsheetCellReference}
-     */
-    @Override
-    public void setLabel(final SpreadsheetLabelName label, final SpreadsheetCellReference reference) {
-        Objects.requireNonNull(label, "label");
-        Objects.requireNonNull(reference, "reference");
-
-        this.labelToReference.put(label, reference);
-    }
-
-    /**
-     * Removes the given label if it exists. Invalid or unknown names are ignored.
-     */
-    @Override
-    public void removeLabel(SpreadsheetLabelName label) {
-        Objects.requireNonNull(label, "label");
-
-        this.labelToReference.remove(label);
-    }
-
-    /**
-     * Retrieves the {@link SpreadsheetCellReference} if one is present for the given {@link SpreadsheetLabelName}
-     */
-    @Override
-    public Optional<SpreadsheetCellReference> label(final SpreadsheetLabelName label) {
-        Objects.requireNonNull(label, "label");
-        return Optional.ofNullable(this.labelToReference.get(label));
-    }
-
-    private final Map<SpreadsheetLabelName, SpreadsheetCellReference> labelToReference = Maps.sorted();
 
     @Override
     public String toString() {
