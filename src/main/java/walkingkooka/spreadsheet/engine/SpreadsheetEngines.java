@@ -3,6 +3,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
@@ -39,9 +40,10 @@ public final class SpreadsheetEngines implements PublicStaticHelper {
      * {@see SpreadsheetEngineExpressionEvaluationContextFactoryFunction}
      */
     public static Function<SpreadsheetEngine, ExpressionEvaluationContext> spreadsheetEngineExpressionEvaluationContextFunction(final BiFunction<ExpressionNodeName, List<Object>, Object> functions,
-                                                                            final MathContext mathContext,
-                                                                            final Converter converter) {
-        return SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(functions, mathContext, converter);
+                                                                                                                                final SpreadsheetLabelStore labelStore,
+                                                                                                                                final MathContext mathContext,
+                                                                                                                                final Converter converter) {
+        return SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(functions, labelStore, mathContext, converter);
     }
 
     /**
