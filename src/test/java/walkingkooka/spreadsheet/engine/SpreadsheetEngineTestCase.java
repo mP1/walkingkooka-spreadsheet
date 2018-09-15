@@ -32,31 +32,6 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
                 null);
     }
 
-    @Test(expected = NullPointerException.class)
-    public final void testSetLabelNullLabelFails() {
-        this.createSpreadsheetEngine().setLabel(null, REFERENCE);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public final void testSetLabelNullReferenceFails() {
-        this.createSpreadsheetEngine().setLabel(LABEL, null);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public final void testRemoveLabelNullLabelFails() {
-        this.createSpreadsheetEngine().removeLabel(null);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public final void testLabelNullFails() {
-        this.createSpreadsheetEngine().label(null);
-    }
-
-    @Test
-    public final void testLabelUnknown() {
-        this.labelFails(LABEL);
-    }
-
     abstract E createSpreadsheetEngine();
 
     final SpreadsheetCell loadCellOrFail(final SpreadsheetEngine engine,
@@ -129,17 +104,5 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
         final Optional<SpreadsheetError> error = cell.error();
         assertNotEquals("Expected error missing=" + cell, SpreadsheetCell.NO_ERROR, error);
         assertTrue("Error message " + error + " missing " + CharSequences.quoteAndEscape(errorContains), error.get().value().contains(errorContains));
-    }
-
-    final void labelFails(final SpreadsheetLabelName label) {
-        this.labelFails(this.createSpreadsheetEngine(), label);
-    }
-
-    final void labelFails(final SpreadsheetEngine engine, final SpreadsheetLabelName label) {
-        assertEquals("label should have failed", Optional.empty(), engine.label(label));
-    }
-
-    final void labelAndCheck(final SpreadsheetEngine engine, final SpreadsheetLabelName label, final SpreadsheetCellReference reference) {
-        assertEquals("label failed", Optional.of(reference), engine.label(label));
     }
 }
