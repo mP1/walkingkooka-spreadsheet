@@ -3,6 +3,8 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
@@ -24,17 +26,21 @@ final class SpreadsheetEngineExpressionEvaluationContextFactoryFunctionExpressio
     /**
      * Factory that creates a new {@link SpreadsheetEngineExpressionEvaluationContextFactoryFunctionExpressionReferenceExpressionNodeFunction}
      */
-    static SpreadsheetEngineExpressionEvaluationContextFactoryFunctionExpressionReferenceExpressionNodeFunction with(final SpreadsheetEngine engine) {
+    static SpreadsheetEngineExpressionEvaluationContextFactoryFunctionExpressionReferenceExpressionNodeFunction with(final SpreadsheetEngine engine,
+                                                                                                                     final SpreadsheetLabelStore labelStore) {
         Objects.requireNonNull(engine, "engine");
+        Objects.requireNonNull(labelStore, "labelStore");
 
-        return new SpreadsheetEngineExpressionEvaluationContextFactoryFunctionExpressionReferenceExpressionNodeFunction(engine);
+        return new SpreadsheetEngineExpressionEvaluationContextFactoryFunctionExpressionReferenceExpressionNodeFunction(engine, labelStore);
     }
 
     /**
      * Private ctor.
      */
-    private SpreadsheetEngineExpressionEvaluationContextFactoryFunctionExpressionReferenceExpressionNodeFunction(final SpreadsheetEngine engine) {
+    private SpreadsheetEngineExpressionEvaluationContextFactoryFunctionExpressionReferenceExpressionNodeFunction(final SpreadsheetEngine engine,
+                                                                                                                 final SpreadsheetLabelStore labelStore) {
         this.engine = engine;
+        this.labelStore = labelStore;
     }
 
     @Override
@@ -44,11 +50,11 @@ final class SpreadsheetEngineExpressionEvaluationContextFactoryFunctionExpressio
         SpreadsheetCellReference cellReference = null;
 
         if(reference instanceof SpreadsheetLabelName) {
-            final Optional<SpreadsheetCellReference> maybeCellReference = engine.label(SpreadsheetLabelName.class.cast(reference));
-            if(!maybeCellReference.isPresent()) {
+            final Optional<SpreadsheetLabelMapping> mapping = this.labelStore.load(SpreadsheetLabelName.class.cast(reference));
+            if(!mapping.isPresent()) {
                 throw new ExpressionEvaluationException("Unknown label reference=" + reference);
             }
-            cellReference = maybeCellReference.get();
+            cellReference = mapping.get().cell();
         }
         if(reference instanceof SpreadsheetCellReference) {
             cellReference = SpreadsheetCellReference.class.cast(reference);
@@ -72,6 +78,7 @@ final class SpreadsheetEngineExpressionEvaluationContextFactoryFunctionExpressio
     }
 
     private final SpreadsheetEngine engine;
+    private final SpreadsheetLabelStore labelStore;
 
     @Override
     public String toString() {

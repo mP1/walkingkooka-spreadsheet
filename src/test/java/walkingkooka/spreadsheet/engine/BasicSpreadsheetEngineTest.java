@@ -5,8 +5,11 @@ import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
+import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStores;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
@@ -234,7 +237,8 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
     @Test
     public void testLoadCallValueIsLabel() {
         final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
 
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
         final SpreadsheetCellReference b = this.cellReference(1, 0); // B1
@@ -242,7 +246,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         cellStore.save(SpreadsheetCell.with(a, SpreadsheetFormula.with(LABEL.value())));
         cellStore.save(SpreadsheetCell.with(b, SpreadsheetFormula.with("3+4")));
 
-        engine.setLabel(LABEL, b);
+        labelStore.save(SpreadsheetLabelMapping.with(LABEL, b));
 
         // formula
         this.loadCellAndCheck(engine,
@@ -257,28 +261,18 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 BigInteger.valueOf(3+4));
     }
 
-    @Test
-    public void testSetAndGetLabel() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        engine.setLabel(LABEL, REFERENCE);
-        this.labelAndCheck(engine, LABEL, REFERENCE);
-    }
-
-    @Test
-    public void testSetAndRemoveAndGetLabel() {
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine();
-        engine.setLabel(LABEL, REFERENCE);
-        engine.removeLabel(LABEL);
-        this.labelFails(engine, LABEL);
-    }
-
     @Override
     BasicSpreadsheetEngine createSpreadsheetEngine() {
         return this.createSpreadsheetEngine(this.cellStore());
     }
 
     private BasicSpreadsheetEngine createSpreadsheetEngine(final SpreadsheetCellStore cellStore) {
-        return BasicSpreadsheetEngine.with(this.id(), cellStore, this.parser(), this.parserContext(), this.evaluationContextFactory());
+        return this.createSpreadsheetEngine(cellStore, this.labelStore());
+    }
+
+    private BasicSpreadsheetEngine createSpreadsheetEngine(final SpreadsheetCellStore cellStore,
+                                                           final SpreadsheetLabelStore labelStore) {
+        return BasicSpreadsheetEngine.with(this.id(), cellStore, this.parser(), this.parserContext(), this.evaluationContextFactory(labelStore));
     }
 
     private SpreadsheetId id() {
@@ -287,6 +281,10 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
 
     private SpreadsheetCellStore cellStore() {
         return SpreadsheetCellStores.basic();
+    }
+
+    private SpreadsheetLabelStore labelStore() {
+        return SpreadsheetLabelStores.basic();
     }
 
     private Parser<SpreadsheetParserToken, SpreadsheetParserContext> parser() {
@@ -302,10 +300,15 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
     }
 
     private Function<SpreadsheetEngine, ExpressionEvaluationContext> evaluationContextFactory() {
+        return this.evaluationContextFactory(SpreadsheetLabelStores.fake());
+    }
+
+    private Function<SpreadsheetEngine, ExpressionEvaluationContext> evaluationContextFactory(final SpreadsheetLabelStore labelStore) {
         final BiFunction<ExpressionNodeName, List<Object>, Object> functions = (name, params) -> {throw new UnsupportedOperationException();};
 
         return SpreadsheetEngines.spreadsheetEngineExpressionEvaluationContextFunction(
                 functions,
+                labelStore,
                 MathContext.DECIMAL32,
                 Converters.simple()
         );
