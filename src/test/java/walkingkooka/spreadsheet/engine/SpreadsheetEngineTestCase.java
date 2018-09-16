@@ -81,10 +81,6 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
         assertEquals("Expected reference " + reference + " to fail", Optional.empty(), cell);
     }
 
-    final void loadCellAndCheckWithoutValueOrError(final SpreadsheetCellReference reference, final SpreadsheetEngineLoading loading) {
-        this.loadCellAndCheckWithoutValueOrError(this.createSpreadsheetEngine(), reference, loading);
-    }
-
     final void loadCellAndCheckWithoutValueOrError(final SpreadsheetEngine engine,
                                                    final SpreadsheetCellReference reference,
                                                    final SpreadsheetEngineLoading loading) {
@@ -92,10 +88,6 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
         assertEquals("values from returned cells=" + cell,
                 null,
                 this.valueOrError(cell, null));
-    }
-
-    final void loadCellAndCheck(final SpreadsheetCellReference reference, final SpreadsheetEngineLoading loading, final Object value) {
-        this.loadCellAndCheck(this.createSpreadsheetEngine(), reference, loading, value);
     }
 
     final void loadCellAndCheck(final SpreadsheetEngine engine,
@@ -114,10 +106,6 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
                 .orElse(cell.error()
                         .map(e -> (Object)e.value())
                         .orElse(bothAbsent));
-    }
-
-    final void loadCellAndCheckError(final SpreadsheetCellReference reference, final SpreadsheetEngineLoading loading, final String errorContains) {
-        this.loadCellAndCheck(this.createSpreadsheetEngine(), reference, loading, errorContains);
     }
 
     final void loadCellAndCheckError(final SpreadsheetEngine engine,
