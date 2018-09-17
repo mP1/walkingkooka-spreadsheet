@@ -48,6 +48,28 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
 
     @Test
+    public final void testCount() {
+        final S store = this.createStore();
+
+        store.save(SpreadsheetCell.with(this.cellReference(1, 2), this.formula()));
+        store.save(SpreadsheetCell.with(this.cellReference(3, 4), this.formula()));
+
+        this.countAndCheck(store, 2);
+    }
+
+    @Test
+    public final void testCount2() {
+        final S store = this.createStore();
+
+        final SpreadsheetCellReference cell = this.cellReference(1, 2);
+        store.save(SpreadsheetCell.with(cell, this.formula()));
+        store.save(SpreadsheetCell.with(this.cellReference(3, 4), this.formula()));
+        store.delete(cell);
+
+        this.countAndCheck(store, 2 - 1);
+    }
+
+    @Test
     public final void testRows() {
         final S store = this.createStore();
 
