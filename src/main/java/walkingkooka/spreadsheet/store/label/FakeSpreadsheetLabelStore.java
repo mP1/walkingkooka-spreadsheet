@@ -30,6 +30,11 @@ public class FakeSpreadsheetLabelStore implements SpreadsheetLabelStore, Fake {
     }
 
     @Override
+    public int count() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Collection<SpreadsheetLabelMapping> all() {
         throw new UnsupportedOperationException();
     }
