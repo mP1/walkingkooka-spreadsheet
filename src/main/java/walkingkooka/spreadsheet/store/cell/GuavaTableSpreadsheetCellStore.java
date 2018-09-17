@@ -56,6 +56,11 @@ final class GuavaTableSpreadsheetCellStore extends SpreadsheetCellStoreTemplate 
     }
 
     @Override
+    public int count() {
+        return this.cells.size();
+    }
+
+    @Override
     public int rows() {
         return this.cells.isEmpty() ?
                 0:

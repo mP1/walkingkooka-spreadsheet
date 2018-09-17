@@ -44,6 +44,20 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
         this.loadFailCheck(store, LABEL);
     }
 
+    public final void testCount() {
+        final S store = this.createStore();
+
+        final SpreadsheetLabelMapping a = this.mapping("a", 1, 2);
+        final SpreadsheetLabelMapping b = this.mapping("b", 4, 8);
+        final SpreadsheetLabelMapping c = this.mapping("c", 88, 99);
+
+        store.save(a);
+        store.save(b);
+        store.save(c);
+
+        this.countAndCheck(store, 3);
+    }
+
     @Test
     public final void testAll() {
         final S store = this.createStore();
