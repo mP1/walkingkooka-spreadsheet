@@ -29,6 +29,11 @@ public class FakeSpreadsheetCellStore implements SpreadsheetCellStore, Fake {
     }
 
     @Override
+    public int count() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public int rows() {
         throw new UnsupportedOperationException();
     }

@@ -55,4 +55,8 @@ public abstract class StoreTestCase<S extends Store<K, V>, K, V> extends Package
         final Optional<V> value = store.load(id);
         assertEquals("Expected id " + id + " to fail", Optional.empty(), value);
     }
+
+    protected final void countAndCheck(final S store, final int count) {
+        assertEquals("Wrong count " + store, count, store.count());
+    }
 }

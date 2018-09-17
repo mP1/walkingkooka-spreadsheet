@@ -54,6 +54,11 @@ final class BasicSpreadsheetCellStore extends SpreadsheetCellStoreTemplate {
     }
 
     @Override
+    public int count() {
+        return this.cells.size();
+    }
+
+    @Override
     public int rows() {
         return this.max(c -> c.row().value());
     }

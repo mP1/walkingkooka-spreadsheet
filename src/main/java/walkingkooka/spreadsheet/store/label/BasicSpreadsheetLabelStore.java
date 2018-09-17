@@ -30,22 +30,27 @@ final class BasicSpreadsheetLabelStore implements SpreadsheetLabelStore {
     }
 
     @Override
-    public final Optional<SpreadsheetLabelMapping> load(final SpreadsheetLabelName label) {
+    public Optional<SpreadsheetLabelMapping> load(final SpreadsheetLabelName label) {
         Objects.requireNonNull(label, "labels");
         return Optional.ofNullable(this.mappings.get(label));
     }
 
     @Override
-    public final void save(final SpreadsheetLabelMapping mapping) {
+    public void save(final SpreadsheetLabelMapping mapping) {
         Objects.requireNonNull(mapping, "mapping");
 
         this.mappings.put(mapping.label(), mapping);
     }
 
     @Override
-    public final void delete(final SpreadsheetLabelName label) {
+    public void delete(final SpreadsheetLabelName label) {
         Objects.requireNonNull(label, "label");
         this.mappings.remove(label);
+    }
+
+    @Override
+    public int count() {
+        return this.mappings.size();
     }
 
     @Override
