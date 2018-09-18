@@ -2,6 +2,8 @@ package walkingkooka.spreadsheet;
 
 import org.junit.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
 import walkingkooka.test.PublicClassTestCase;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
@@ -9,6 +11,7 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -141,7 +144,41 @@ public final class SpreadsheetRangeTest extends PublicClassTestCase<SpreadsheetR
         final List<Object> actual = stream.collect(Collectors.toList());
         assertEquals(range.toString(), Lists.of(expected), actual);
     }
-    
+
+    // clear....................................................................................................
+
+    @Test(expected = NullPointerException.class)
+    public void testClearWithNullStoreFails() {
+        this.range().clear(null);
+    }
+
+    @Test
+    public void testClear() {
+        final SpreadsheetCellStore store = SpreadsheetCellStores.basic();
+
+        final SpreadsheetCell a = spreadsheetCell(1, 1);
+        final SpreadsheetCell b = spreadsheetCell(2, 2);
+        final SpreadsheetCell c = spreadsheetCell(3, 10);
+        final SpreadsheetCell d = spreadsheetCell(4, 14);
+        final SpreadsheetCell e = spreadsheetCell(5, 15);
+
+        store.save(a);
+        store.save(b);
+        store.save(c);
+        store.save(d);
+        store.save(e);
+
+        this.range(2, 2, 4, 11).clear(store);
+
+        assertEquals("store record count", 3, store.count()); // a,d,e
+        assertEquals(Optional.empty(), store.load(b.reference()));
+        assertEquals(Optional.empty(), store.load(c.reference()));
+    }
+
+    private SpreadsheetCell spreadsheetCell(final int column, final int row) {
+        return SpreadsheetCell.with(this.cell(column, row), SpreadsheetFormula.with(column + "+" + row));
+    }
+
     //helper.................................................................................................
 
     private SpreadsheetRange range() {
