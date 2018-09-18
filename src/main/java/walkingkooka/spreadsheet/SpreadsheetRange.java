@@ -1,14 +1,15 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
-import walkingkooka.compare.ComparableTestCase;
-import walkingkooka.compare.Comparables;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 /**
  * Holds a range.
@@ -51,6 +52,40 @@ public final class SpreadsheetRange implements HashCodeEqualsDefined {
 
     private final SpreadsheetCellReference end;
 
+    /**
+     * Returns the width of this range.
+     */
+    public int width() {
+        return this.end().column().value() - this.begin().column().value();
+    }
+
+    /**
+     * Returns the height of this range.
+     */
+    public int height() {
+        return this.end().row().value() - this.begin().row().value();
+    }
+
+    /**
+     * A stream that provides all {@link SpreadsheetColumnReference}.
+     */
+    public Stream<SpreadsheetColumnReference> columnStream() {
+        return SpreadsheetRangeSpreadsheetColumnReferenceStreamList.with(this).stream();
+    }
+    
+    /**
+     * A stream that provides all {@link SpreadsheetRowReference}.
+     */
+    public Stream<SpreadsheetRowReference> rowStream() {
+        return SpreadsheetRangeSpreadsheetRowReferenceStreamList.with(this).stream();
+    }
+
+    /**
+     * A stream that provides all {@link SpreadsheetCellReference}.
+     */
+    public Stream<SpreadsheetCellReference> cellStream() {
+        return SpreadsheetRangeSpreadsheetCellReferenceStreamList.with(this).stream();
+    }
 
     // HashCodeEqualsDefined.......................................................................................
 
