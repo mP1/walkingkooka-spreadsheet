@@ -106,7 +106,10 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      * delete or insert. Note that references to deleted cells, will be replaced by a function that when executed
      * reports an error that the cell was deleted.
      */
-    abstract SpreadsheetParserToken fixCellReferencesWithinExpression(final SpreadsheetParserToken token);
+    private SpreadsheetParserToken fixCellReferencesWithinExpression(final SpreadsheetParserToken token) {
+        return BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.expressionFixReferences(token,
+                this);
+    }
 
     /**
      * Returned when the input reference was deleted.

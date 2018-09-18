@@ -1,11 +1,13 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
@@ -1523,6 +1525,327 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "5+0",
                 BigInteger.valueOf(5 + 0));
+    }
+
+    // copy....................................................................................................
+
+    @Test
+    public void testCopyOneCellInto1x1() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+
+        final SpreadsheetCellReference a = this.cellReference(10, 20);
+        final SpreadsheetCellReference b = this.cellReference(11, 21);
+        final SpreadsheetCellReference c = this.cellReference(12, 22);
+
+        final SpreadsheetCell cellA = this.cell(a, "1+0");
+        final SpreadsheetCell cellB = this.cell(b, "2+0");
+        final SpreadsheetCell cellC = this.cell(c, "3+0");
+
+        cellStore.save(cellA);
+        cellStore.save(cellB);
+        cellStore.save(cellC);
+
+        final SpreadsheetCellReference d = this.cellReference(30, 40);
+
+        engine.copy(Lists.of(cellA), SpreadsheetRange.with(d, d.add(1,1)));
+
+        this.countAndCheck(cellStore, 3 + 1);
+
+        this.loadCellAndCheckFormulaAndValue(engine,
+                d,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                "1+0",
+                BigInteger.valueOf(1 + 0));
+    }
+
+    @Test
+    public void testCopyOneCellInto2x2() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+
+        final SpreadsheetCellReference a = this.cellReference(10, 20);
+        final SpreadsheetCellReference b = this.cellReference(11, 21);
+        final SpreadsheetCellReference c = this.cellReference(12, 22);
+
+        final SpreadsheetCell cellA = this.cell(a, "1+0");
+        final SpreadsheetCell cellB = this.cell(b, "2+0");
+        final SpreadsheetCell cellC = this.cell(c, "3+0");
+
+        cellStore.save(cellA);
+        cellStore.save(cellB);
+        cellStore.save(cellC);
+
+        final SpreadsheetCellReference d = this.cellReference(30, 40);
+
+        engine.copy(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(2,2)));
+
+        this.countAndCheck(cellStore, 3+2);
+
+        this.loadCellAndCheckFormulaAndValue(engine,
+                d,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                "1+0",
+                BigInteger.valueOf(1 + 0));
+
+        this.loadCellAndCheckFormulaAndValue(engine,
+                d.add(1, 1),
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                "2+0",
+                BigInteger.valueOf(2 + 0));
+    }
+
+    @Test
+    public void testCopy2x2CellInto1x1() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+
+        final SpreadsheetCellReference a = this.cellReference(10, 20);
+        final SpreadsheetCellReference b = this.cellReference(11, 21);
+        final SpreadsheetCellReference c = this.cellReference(12, 22);
+
+        final SpreadsheetCell cellA = this.cell(a, "1+0");
+        final SpreadsheetCell cellB = this.cell(b, "2+0");
+        final SpreadsheetCell cellC = this.cell(c, "3+0");
+
+        cellStore.save(cellA);
+        cellStore.save(cellB);
+        cellStore.save(cellC);
+
+        final SpreadsheetCellReference d = this.cellReference(30, 40);
+
+        engine.copy(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(1,1)));
+
+        this.countAndCheck(cellStore, 3+2);
+
+        this.loadCellAndCheckFormulaAndValue(engine,
+                d,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                "1+0",
+                BigInteger.valueOf(1 + 0));
+
+        this.loadCellAndCheckFormulaAndValue(engine,
+                d.add(1, 1),
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                "2+0",
+                BigInteger.valueOf(2 + 0));
+    }
+
+    @Test
+    public void testCopy2x2CellInto2x2() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+
+        final SpreadsheetCellReference a = this.cellReference(10, 20);
+        final SpreadsheetCellReference b = this.cellReference(11, 21);
+        final SpreadsheetCellReference c = this.cellReference(12, 22);
+
+        final SpreadsheetCell cellA = this.cell(a, "1+0");
+        final SpreadsheetCell cellB = this.cell(b, "2+0");
+        final SpreadsheetCell cellC = this.cell(c, "3+0");
+
+        cellStore.save(cellA);
+        cellStore.save(cellB);
+        cellStore.save(cellC);
+
+        final SpreadsheetCellReference d = this.cellReference(30, 40);
+
+        engine.copy(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(2,2)));
+
+        this.countAndCheck(cellStore, 3+2);
+
+        this.loadCellAndCheckFormulaAndValue(engine,
+                d,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                "1+0",
+                BigInteger.valueOf(1 + 0));
+
+        this.loadCellAndCheckFormulaAndValue(engine,
+                d.add(1, 1),
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                "2+0",
+                BigInteger.valueOf(2 + 0));
+    }
+
+    @Test
+    public void testCopy2x2CellInto7x2Gives6x2() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+
+        final SpreadsheetCellReference a = this.cellReference(10, 20);
+        final SpreadsheetCellReference b = this.cellReference(11, 21);
+        final SpreadsheetCellReference c = this.cellReference(12, 22);
+
+        final SpreadsheetCell cellA = this.cell(a, "1+0");
+        final SpreadsheetCell cellB = this.cell(b, "2+0");
+        final SpreadsheetCell cellC = this.cell(c, "3+0");
+
+        cellStore.save(cellA);
+        cellStore.save(cellB);
+        cellStore.save(cellC);
+
+        final SpreadsheetCellReference d = this.cellReference(30, 40);
+
+        engine.copy(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(7,2)));
+
+        this.countAndCheck(cellStore, 3+6);
+
+        this.loadCellAndCheckFormulaAndValue(engine,
+                d,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                "1+0",
+                BigInteger.valueOf(1 + 0));
+
+        this.loadCellAndCheckFormulaAndValue(engine,
+                d.add(1, 1),
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                "2+0",
+                BigInteger.valueOf(2 + 0));
+
+        this.loadCellAndCheckFormulaAndValue(engine,
+                d.add(2, 0),
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                "1+0",
+                BigInteger.valueOf(1 + 0));
+
+        this.loadCellAndCheckFormulaAndValue(engine,
+                d.add(3, 1),
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                "2+0",
+                BigInteger.valueOf(2 + 0));
+
+        this.loadCellAndCheckFormulaAndValue(engine,
+                d.add(4, 0),
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                "1+0",
+                BigInteger.valueOf(1 + 0));
+
+        this.loadCellAndCheckFormulaAndValue(engine,
+                d.add(5, 1),
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                "2+0",
+                BigInteger.valueOf(2 + 0));
+    }
+
+    @Test
+    public void testCopy2x2CellInto2x7Gives2x6() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+
+        final SpreadsheetCellReference a = this.cellReference(10, 20);
+        final SpreadsheetCellReference b = this.cellReference(11, 21);
+        final SpreadsheetCellReference c = this.cellReference(12, 22);
+
+        final SpreadsheetCell cellA = this.cell(a, "1+0");
+        final SpreadsheetCell cellB = this.cell(b, "2+0");
+        final SpreadsheetCell cellC = this.cell(c, "3+0");
+
+        cellStore.save(cellA);
+        cellStore.save(cellB);
+        cellStore.save(cellC);
+
+        final SpreadsheetCellReference d = this.cellReference(30, 40);
+
+        engine.copy(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(2,7)));
+
+        this.countAndCheck(cellStore, 3+6);
+
+        this.loadCellAndCheckFormulaAndValue(engine,
+                d,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                "1+0",
+                BigInteger.valueOf(1 + 0));
+
+        this.loadCellAndCheckFormulaAndValue(engine,
+                d.add(1, 1),
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                "2+0",
+                BigInteger.valueOf(2 + 0));
+
+        this.loadCellAndCheckFormulaAndValue(engine,
+                d.add(0, 2),
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                "1+0",
+                BigInteger.valueOf(1 + 0));
+
+        this.loadCellAndCheckFormulaAndValue(engine,
+                d.add(1, 3),
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                "2+0",
+                BigInteger.valueOf(2 + 0));
+
+        this.loadCellAndCheckFormulaAndValue(engine,
+                d.add(0, 4),
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                "1+0",
+                BigInteger.valueOf(1 + 0));
+
+        this.loadCellAndCheckFormulaAndValue(engine,
+                d.add(1, 5),
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                "2+0",
+                BigInteger.valueOf(2 + 0));
+    }
+
+    @Test
+    public void testCopyAbsoluteReference() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+
+        final SpreadsheetCellReference a = this.cellReference(10, 20);
+        final SpreadsheetCellReference b = this.cellReference(11, 21);
+
+        final SpreadsheetCell cellA = this.cell(a, "1+0");
+        final SpreadsheetCell cellB = this.cell(b, "" + a);
+
+        cellStore.save(cellA);
+        cellStore.save(cellB);
+
+        final SpreadsheetCellReference d = this.cellReference(30, 40);
+
+        engine.copy(Lists.of(cellB), SpreadsheetRange.with(d, d.add(1,1)));
+
+        this.countAndCheck(cellStore, 2+1);
+
+        this.loadCellAndCheckFormulaAndValue(engine,
+                d,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                "" + a,
+                BigInteger.valueOf(1 + 0));
+    }
+
+    @Test
+    public void testCopyRelativeReferenceFixed() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+
+        final SpreadsheetCellReference a = this.cellReference(10, 20);
+        final SpreadsheetCellReference b = SpreadsheetReferenceKind.RELATIVE.column(11)
+                .setRow(SpreadsheetReferenceKind.RELATIVE.row(21));
+
+        final SpreadsheetCell cellA = this.cell(a, "" + b);
+        final SpreadsheetCell cellB = this.cell(b, "2+0");
+
+        cellStore.save(cellA);
+        cellStore.save(cellB);
+
+        final SpreadsheetCellReference d = SpreadsheetReferenceKind.RELATIVE.column(30)
+                .setRow(SpreadsheetReferenceKind.RELATIVE.row(40));
+
+        engine.copy(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(2,2)));
+
+        this.countAndCheck(cellStore, 2+2);
+
+        this.loadCellAndCheckFormulaAndValue(engine,
+                d,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                "" + d.add(1, 1),
+                BigInteger.valueOf(2 + 0));
+        this.loadCellAndCheckFormulaAndValue(engine,
+                d.add(1,1),
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                "2+0",
+                BigInteger.valueOf(2 + 0));
     }
 
     //  helpers.......................................................................................................

@@ -41,12 +41,6 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn extends BasicS
     }
 
     @Override
-    SpreadsheetParserToken fixCellReferencesWithinExpression(final SpreadsheetParserToken token) {
-        return BasicSpreadsheetEngineSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.expressionFixReferences(token,
-                this);
-    }
-
-    @Override
     Optional<SpreadsheetParserToken> fixCellReferencesWithinExpression(final SpreadsheetColumnReferenceParserToken token) {
         return this.deleteOrInsert.isDeletedReference(token) ?
                 INVALID_CELL_REFERENCE :
