@@ -8,6 +8,7 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -16,6 +17,28 @@ import java.util.stream.Stream;
  * Holds a range.
  */
 public final class SpreadsheetRange implements HashCodeEqualsDefined {
+
+    /**
+     * Computes the range of the given cells.
+     */
+    public static SpreadsheetRange from(final List<SpreadsheetCellReference> cells) {
+        Objects.requireNonNull(cells, "cells");
+
+        SpreadsheetCellReference topLeft = null;
+        SpreadsheetCellReference bottomRight = null;
+
+        for(SpreadsheetCellReference cell : cells) {
+            if(null==topLeft){
+                topLeft = cell;
+                bottomRight = cell;
+            } else {
+                topLeft = topLeft.lower(cell);
+                bottomRight = bottomRight.upper(cell);
+            }
+        }
+
+        return SpreadsheetRange.with(topLeft, bottomRight);
+    }
 
     /**
      * Factory that creates a {@link SpreadsheetRange}
