@@ -1,6 +1,7 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
+import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
@@ -85,6 +86,12 @@ public final class SpreadsheetRange implements HashCodeEqualsDefined {
      */
     public Stream<SpreadsheetCellReference> cellStream() {
         return SpreadsheetRangeSpreadsheetCellReferenceStreamList.with(this).stream();
+    }
+
+    public void clear(final SpreadsheetCellStore store) {
+        Objects.requireNonNull(store, "store");
+
+        this.cellStream().forEach(c -> store.delete(c));
     }
 
     // HashCodeEqualsDefined.......................................................................................
