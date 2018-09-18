@@ -11,6 +11,7 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -179,6 +180,37 @@ public final class SpreadsheetRangeTest extends PublicClassTestCase<SpreadsheetR
         return SpreadsheetCell.with(this.cell(column, row), SpreadsheetFormula.with(column + "+" + row));
     }
 
+    // from...............................................................................................
+
+    @Test(expected = NullPointerException.class)
+    public void testFromWithNullCellsFails() {
+        SpreadsheetRange.from(null);
+    }
+
+    @Test
+    public void testFrom() {
+        final SpreadsheetCellReference a = this.cell(111, 11);
+        final SpreadsheetCellReference b = this.cell(112, 12);
+        final SpreadsheetCellReference c = this.cell(113, 20);
+        final SpreadsheetCellReference d = this.cell(114, 24);
+        final SpreadsheetCellReference e = this.cell(115, 24);
+
+        final SpreadsheetRange range = SpreadsheetRange.from(Lists.of(a, b, c, d, e));
+        this.check(range,111, 11, 115, 24);
+    }
+
+    @Test
+    public void testFrom2() {
+        final SpreadsheetCellReference a = this.cell(111, 11);
+        final SpreadsheetCellReference b = this.cell(112, 12);
+        final SpreadsheetCellReference c = this.cell(113, 20);
+        final SpreadsheetCellReference d = this.cell(114, 24);
+        final SpreadsheetCellReference e = this.cell(115, 24);
+
+        final SpreadsheetRange range = SpreadsheetRange.from(Lists.of(e, d, c, b, a));
+        this.check(range,111, 11, 115, 24);
+    }
+
     //helper.................................................................................................
 
     private SpreadsheetRange range() {
@@ -222,11 +254,19 @@ public final class SpreadsheetRangeTest extends PublicClassTestCase<SpreadsheetR
                        final int column1,
                        final int row1,
                        final int column2,
+                       final int row2) {
+        this.checkBegin(range, column1, row1);
+        this.checkEnd(range, column2, row2);
+    }
+
+    private void check(final SpreadsheetRange range,
+                       final int column1,
+                       final int row1,
+                       final int column2,
                        final int row2,
                        final int width,
                        final int height) {
-        this.checkBegin(range, column1, row1);
-        this.checkEnd(range, column2, row2);
+        this.check(range, column1, row1, column2, row2);
         this.checkWidth(range, width);
         this.checkHeight(range, height);
     }
