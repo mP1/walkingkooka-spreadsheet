@@ -1,7 +1,6 @@
 package walkingkooka.spreadsheet.store.label;
 
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
-import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.test.Fake;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 

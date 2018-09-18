@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.store;
 
-import walkingkooka.spreadsheet.SpreadsheetException;
-
 /**
  * This exception is thrown with a load fails..
  */

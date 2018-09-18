@@ -1,19 +1,15 @@
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
-import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReferenceParserToken;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -128,19 +124,6 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      * It may be returned unmodified, replaced by a function if the reference was deleted or simply have the reference adjusted.
      */
     abstract Optional<SpreadsheetParserToken> fixCellReferencesWithinExpression(final SpreadsheetRowReferenceParserToken token);
-
-    /**
-     * Returns a function that when executed will report that the original cell reference was deleted.
-     */
-    final SpreadsheetParserToken cellReferenceDeleted(final SpreadsheetParserToken token) {
-        final String message = token.text();
-
-        final List<ParserToken> tokens = Lists.of(SpreadsheetFormula.INVALID_CELL_REFERENCE_PARSER_TOKEN,
-                SpreadsheetParserToken.openParenthesisSymbol("(", "("),
-                SpreadsheetParserToken.text(message, message),
-                SpreadsheetParserToken.openParenthesisSymbol(")", ")"));
-        return SpreadsheetParserToken.function(tokens, ParserToken.text(tokens));
-    }
 
     /**
      * Adjusts the reference to match the delete or insert column/row value to it still points to the "same" cell.
