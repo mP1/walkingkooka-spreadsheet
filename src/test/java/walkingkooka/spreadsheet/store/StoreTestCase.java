@@ -39,14 +39,6 @@ public abstract class StoreTestCase<S extends Store<K, V>, K, V> extends Package
 
     abstract protected S createStore();
 
-    protected final V loadOrFail(final S store, final K id) {
-        final Optional<V> value = store.load(id);
-        if(!value.isPresent()) {
-            fail("Loading " + id + " should have succeeded");
-        }
-        return value.get();
-    }
-
     protected final void loadFailCheck(final K id) {
         this.loadFailCheck(this.createStore(), id);
     }
