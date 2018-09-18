@@ -2,10 +2,13 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -43,4 +46,13 @@ public interface SpreadsheetEngine {
      * Inserts the identified rows, updates all absolute references as necessary in both formulas and label mappings.
      */
     void insertRows(final SpreadsheetRowReference row, final int count);
+
+    /**
+     * Copies the provided cells into this spreadsheet at the given range. The source range is smaller, where possible
+     * it will be duplicated along both axis or repeated into the target range.<br>
+     * This is ideal for a copy/paste function, where the pasted range must have all cells relative references fixed.
+     * Note prior to copying the area should be cleared, as this only copies the given it doesnt clear the entire range,
+     * before the actual copying.
+     */
+    void copy(final Collection<SpreadsheetCell> from, final SpreadsheetRange to);
 }
