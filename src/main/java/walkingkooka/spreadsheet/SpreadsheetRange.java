@@ -10,6 +10,7 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -71,21 +72,33 @@ public final class SpreadsheetRange implements HashCodeEqualsDefined {
      * A stream that provides all {@link SpreadsheetColumnReference}.
      */
     public Stream<SpreadsheetColumnReference> columnStream() {
-        return SpreadsheetRangeSpreadsheetColumnReferenceStreamList.with(this).stream();
+        return IntStream.range(this.begin().column().value(), this.end.column().value())
+                .mapToObj(i -> SpreadsheetReferenceKind.ABSOLUTE.column(i));
     }
     
     /**
      * A stream that provides all {@link SpreadsheetRowReference}.
      */
     public Stream<SpreadsheetRowReference> rowStream() {
-        return SpreadsheetRangeSpreadsheetRowReferenceStreamList.with(this).stream();
+        return IntStream.range(this.begin().row().value(), this.end.row().value())
+                .mapToObj(i -> SpreadsheetReferenceKind.ABSOLUTE.row(i));
     }
 
     /**
      * A stream that provides all {@link SpreadsheetCellReference}.
      */
     public Stream<SpreadsheetCellReference> cellStream() {
-        return SpreadsheetRangeSpreadsheetCellReferenceStreamList.with(this).stream();
+        final SpreadsheetCellReference begin = this.begin();
+        
+        final int rowOffset = begin.row().value();
+        final int width = this.width();
+        final int columnOffset = begin.column().value();
+
+        return IntStream.range(0, width * this.height())
+                .mapToObj(index -> {
+                        return SpreadsheetReferenceKind.ABSOLUTE.column(columnOffset + (index % width))
+                        .setRow(SpreadsheetReferenceKind.ABSOLUTE.row(rowOffset + (index / width)));}
+                        );
     }
 
     public void clear(final SpreadsheetCellStore store) {
