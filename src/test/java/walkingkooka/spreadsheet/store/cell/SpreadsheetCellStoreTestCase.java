@@ -32,7 +32,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         final SpreadsheetCell cell = SpreadsheetCell.with(reference, this.formula());
         store.save(cell);
 
-        assertSame(cell, this.loadOrFail(store, reference));
+        assertSame(cell, store.loadOrFail(reference));
     }
 
     @Test

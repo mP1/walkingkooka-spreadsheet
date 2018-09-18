@@ -30,7 +30,7 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(LABEL, REFERENCE);
         store.save(mapping);
 
-        assertSame(mapping, this.loadOrFail(store, LABEL));
+        assertSame(mapping, store.loadOrFail(LABEL));
     }
 
     @Test

@@ -8,9 +8,20 @@ import java.util.Optional;
 public interface Store<K, V> {
 
     /**
-     * Fetches the cell using the reference.
+     * Fetches the value using the reference.
      */
     Optional<V> load(final K id);
+
+    /**
+     * Fetches the value with the id or throws a {@link StoreException}.
+     */
+    default V loadOrFail(final K id) {
+        final Optional<V> value = this.load(id);
+        if(false==value.isPresent()) {
+            throw new LoadStoreException("Value with id " + id + " is absent");
+        }
+        return value.get();
+    }
 
     /**
      * Saves or updates a value.
