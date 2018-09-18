@@ -2,7 +2,6 @@ package walkingkooka.spreadsheet;
 
 import org.junit.*;
 import walkingkooka.test.*;
-import walkingkooka.tree.expression.*;
 
 import static org.junit.Assert.*;
 

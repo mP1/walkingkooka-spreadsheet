@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.store;
 
-import walkingkooka.SystemException;
 import walkingkooka.spreadsheet.SpreadsheetException;
 
 /**

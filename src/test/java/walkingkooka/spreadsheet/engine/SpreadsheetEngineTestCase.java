@@ -158,7 +158,6 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
 
     private Object valueOrError(final SpreadsheetCell cell, final Object bothAbsent) {
         return cell.value()
-                .map(v -> v)
                 .orElse(cell.error()
                         .map(e -> (Object)e.value())
                         .orElse(bothAbsent));

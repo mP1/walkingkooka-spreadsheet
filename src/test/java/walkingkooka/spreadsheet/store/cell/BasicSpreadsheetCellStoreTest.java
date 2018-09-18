@@ -2,8 +2,6 @@ package walkingkooka.spreadsheet.store.cell;
 
 import walkingkooka.spreadsheet.store.cell.BasicSpreadsheetCellStore;
 
-import static org.junit.Assert.assertSame;
-
 public final class BasicSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase<BasicSpreadsheetCellStore> {
 
     @Override
