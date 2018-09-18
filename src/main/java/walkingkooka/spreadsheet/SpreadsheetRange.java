@@ -37,7 +37,7 @@ public final class SpreadsheetRange implements HashCodeEqualsDefined {
             }
         }
 
-        return SpreadsheetRange.with(topLeft, bottomRight);
+        return SpreadsheetRange.with(topLeft, bottomRight.add(1, 1));
     }
 
     /**
