@@ -24,7 +24,6 @@ final class BasicSpreadsheetEngineDeleteColumnOrRow extends BasicSpreadsheetEngi
         this.columnOrRow.delete(this.columnOrRow.value, this.columnOrRow.count);
         this.move();
         this.columnOrRow.fixAllExpressionCellReferences();
-        ;
         this.columnOrRow.fixAllLabelMappings();
     }
 
