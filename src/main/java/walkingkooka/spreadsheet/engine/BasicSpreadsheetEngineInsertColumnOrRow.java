@@ -23,7 +23,6 @@ final class BasicSpreadsheetEngineInsertColumnOrRow extends BasicSpreadsheetEngi
     private void insert0() {
         this.move();
         this.columnOrRow.fixAllExpressionCellReferences();
-        ;
         this.columnOrRow.fixAllLabelMappings();
     }
 

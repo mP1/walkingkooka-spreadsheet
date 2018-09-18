@@ -22,7 +22,6 @@ import walkingkooka.*;
 import walkingkooka.test.*;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetFunctionName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
-import walkingkooka.tree.expression.*;
 
 import java.util.*;
 
@@ -76,7 +75,7 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined, Value<St
         Objects.requireNonNull(value, "value");
     }
 
-    private static SpreadsheetFormula replace(final String value) {
+    private SpreadsheetFormula replace(final String value) {
         return new SpreadsheetFormula(value);
     }
 
@@ -100,6 +99,6 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined, Value<St
 
     @Override
     public String toString() {
-        return this.value.toString();
+        return this.value;
     }
 }
