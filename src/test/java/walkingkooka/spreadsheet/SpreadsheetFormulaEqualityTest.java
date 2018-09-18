@@ -2,7 +2,6 @@ package walkingkooka.spreadsheet;
 
 import org.junit.*;
 import walkingkooka.test.*;
-import walkingkooka.tree.expression.*;
 
 public final class SpreadsheetFormulaEqualityTest extends HashCodeEqualsDefinedEqualityTestCase<SpreadsheetFormula> {
 

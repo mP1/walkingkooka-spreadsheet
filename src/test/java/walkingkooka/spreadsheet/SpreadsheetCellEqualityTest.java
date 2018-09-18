@@ -22,18 +22,18 @@ public final class SpreadsheetCellEqualityTest extends HashCodeEqualsDefinedEqua
 
     @Test
     public void testDifferentExpression() {
-        this.checkNotEquals(this.cell(reference(), this.formula(), this.expression("44"), this.value(), this.error()));
+        checkNotEquals(this.cell(reference(), this.formula(), this.expression("44"), this.value(), this.error()));
     }
 
     @Test
     public void testDifferentValue() {
-        this.checkNotEquals(this.cell(reference(), this.formula(), this.expression(), this.value(), SpreadsheetCell.NO_ERROR),
+        checkNotEquals(this.cell(reference(), this.formula(), this.expression(), this.value(), SpreadsheetCell.NO_ERROR),
                 this.cell(reference(), this.formula(), this.expression(), this.value("different-value"), SpreadsheetCell.NO_ERROR));
     }
 
     @Test
     public void testDifferentError() {
-        this.checkNotEquals(this.cell(reference(), this.formula(), this.expression(), this.value(), this.error("different error message")));
+        checkNotEquals(this.cell(reference(), this.formula(), this.expression(), this.value(), this.error("different error message")));
     }
 
     @Override

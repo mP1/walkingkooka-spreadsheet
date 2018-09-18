@@ -5,8 +5,6 @@ import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
 import java.util.Collection;
-import java.util.Optional;
-import java.util.Set;
 
 /**
  * A store that holds all cells for a spreadsheet. No additional actions are supported.
