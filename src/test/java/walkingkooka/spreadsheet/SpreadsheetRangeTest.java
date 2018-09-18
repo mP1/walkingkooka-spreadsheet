@@ -1,9 +1,16 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.test.PublicClassTestCase;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
@@ -43,7 +50,7 @@ public final class SpreadsheetRangeTest extends PublicClassTestCase<SpreadsheetR
         final int row2 = 4;
 
         final SpreadsheetRange range = this.range(column1, row1, column2, row2);
-        this.check(range, column2, row1, column1, row2);
+        this.check(range, column2, row1, column1, row2, 99-3, 4-2);
     }
 
     @Test
@@ -54,7 +61,7 @@ public final class SpreadsheetRangeTest extends PublicClassTestCase<SpreadsheetR
         final int row2 = 4;
 
         final SpreadsheetRange range = this.range(column1, row1, column2, row2);
-        this.check(range, column1, row2, column2, row1);
+        this.check(range, column1, row2, column2, row1, 3-1, 99-4);
     }
 
     @Test
@@ -65,9 +72,76 @@ public final class SpreadsheetRangeTest extends PublicClassTestCase<SpreadsheetR
         final int row2 = 4;
 
         final SpreadsheetRange range = this.range(column1, row1, column2, row2);
-        this.check(range, column2, row2, column1, row1);
+        this.check(range, column2, row2, column1, row1, 88-3, 99-4);
     }
 
+    // stream.................................................................................................
+    
+    @Test
+    public void testColumnStream() {
+        final SpreadsheetRange range = this.range(5, 10, 8, 10);
+
+        this.checkStream(range,
+                range.columnStream(),
+                this.column(5), this.column(6), this.column(7));
+    }
+
+    @Test
+    public void testColumnStreamFilterAndMapAndCollect() {
+        final SpreadsheetRange range = this.range(5, 10, 8, 10);
+        this.checkStream(range,
+                range.columnStream()
+                        .map( c -> c.value())
+                        .filter(c -> c >= 6),
+                6, 7);
+    }
+
+    @Test
+    public void testRowStream() {
+        final SpreadsheetRange range = this.range(10, 5, 10, 8);
+
+        this.checkStream(range,
+                range.rowStream(),
+                this.row(5), this.row(6), this.row(7));
+    }
+
+    @Test
+    public void testRowStreamFilterAndMapAndCollect() {
+        final SpreadsheetRange range = this.range(5, 10, 8, 20);
+        this.checkStream(range,
+                range.rowStream()
+                        .map( r -> r.value())
+                        .filter(r -> r < 13),
+                10, 11, 12);
+    }
+
+    @Test
+    public void testCellStream() {
+        final SpreadsheetRange range = this.range(3, 7, 6, 11);
+
+        this.checkStream(
+                range,
+                range.cellStream(),
+                this.cell(3, 7), this.cell(4, 7), this.cell(5, 7),
+                this.cell(3, 8), this.cell(4, 8), this.cell(5, 8),
+                this.cell(3, 9), this.cell(4, 9), this.cell(5, 9),
+                this.cell(3, 10), this.cell(4, 10), this.cell(5, 10));
+    }
+
+    @Test
+    public void testCellStreamFilterAndMapAndCollect() {
+        final SpreadsheetRange range = this.range(5, 10, 8, 20);
+        this.checkStream(range,
+                range.cellStream()
+                        .filter(cell -> cell.column().value() == 5 && cell.row().value() < 13),
+                this.cell(5, 10), this.cell(5, 11), this.cell(5, 12));
+    }
+
+    private <T> void checkStream(final SpreadsheetRange range, final Stream<?> stream, final Object...expected){
+        final List<Object> actual = stream.collect(Collectors.toList());
+        assertEquals(range.toString(), Lists.of(expected), actual);
+    }
+    
     //helper.................................................................................................
 
     private SpreadsheetRange range() {
@@ -95,12 +169,29 @@ public final class SpreadsheetRangeTest extends PublicClassTestCase<SpreadsheetR
     }
 
     private SpreadsheetCellReference cell(final int column, final int row) {
-        return SpreadsheetReferenceKind.ABSOLUTE.column(column).setRow(SpreadsheetReferenceKind.ABSOLUTE.row(row));
+        return this.column(column)
+                .setRow(this.row(row));
+    }
+    
+    private SpreadsheetColumnReference column(final int column) {
+        return SpreadsheetReferenceKind.ABSOLUTE.column(column);
     }
 
-    private void check(final SpreadsheetRange range, final int column1, final int row1, final int column2, final int row2) {
+    private SpreadsheetRowReference row(final int row) {
+        return SpreadsheetReferenceKind.ABSOLUTE.row(row);
+    }
+    
+    private void check(final SpreadsheetRange range,
+                       final int column1,
+                       final int row1,
+                       final int column2,
+                       final int row2,
+                       final int width,
+                       final int height) {
         this.checkBegin(range, column1, row1);
         this.checkEnd(range, column2, row2);
+        this.checkWidth(range, width);
+        this.checkHeight(range, height);
     }
 
     private void checkBegin(final SpreadsheetRange range, final int column, final int row) {
@@ -118,7 +209,15 @@ public final class SpreadsheetRangeTest extends PublicClassTestCase<SpreadsheetR
     private void checkEnd(final SpreadsheetRange range, final SpreadsheetCellReference end) {
         assertEquals("range end="+ range, end, range.end());
     }
-    
+
+    private void checkWidth(final SpreadsheetRange range, final int width) {
+        assertEquals("range width="+ range, width, range.width());
+    }
+
+    private void checkHeight(final SpreadsheetRange range, final int height) {
+        assertEquals("range height="+ range, height, range.height());
+    }
+
     @Override
     protected Class<SpreadsheetRange> type() {
         return SpreadsheetRange.class;
