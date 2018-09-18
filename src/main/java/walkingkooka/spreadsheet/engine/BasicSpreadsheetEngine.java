@@ -4,6 +4,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.text.CharSequences;
@@ -21,10 +22,13 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionNode;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * The default or basic implementation of {@link SpreadsheetEngine} that includes support for evaluating nodes,
@@ -215,7 +219,67 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
             throw new IllegalArgumentException("Count " + count + " < 0");
         }
     }
-    
+
+    @Override
+    public void copy(final Collection<SpreadsheetCell> from, final SpreadsheetRange to) {
+        Objects.requireNonNull(from, "from");
+        Objects.requireNonNull(to, "to");
+
+        if(!from.isEmpty()) {
+            this.copy0(from, to);
+        }
+    }
+
+    private void copy0(final Collection<SpreadsheetCell> from, final SpreadsheetRange to) {
+        final SpreadsheetRange fromRange = SpreadsheetRange.from(from.stream()
+                .map(c -> c.reference())
+                .collect(Collectors.toList()));
+
+        final int fromWidth = fromRange.width();
+        final int fromHeight = fromRange.height();
+
+        final int toWidth = to.width();
+        final int toHeight = to.height();
+
+        final int widthMultiple = fromWidth >= toWidth ?
+                1 :
+                toWidth / fromWidth;
+        final int heightMultiple = fromHeight >= toHeight ?
+                1 :
+                toHeight / fromHeight;
+
+        final SpreadsheetCellReference fromBegin = fromRange.begin();
+        final SpreadsheetCellReference toBegin = to.begin();
+
+        final int xOffset = toBegin.column().value() - fromBegin.column().value();
+        final int yOffset = toBegin.row().value() - fromBegin.row().value();
+
+        for(int h = 0; h < heightMultiple; h++) {
+            final int y = yOffset + h * fromHeight;
+
+            for(int w = 0; w < widthMultiple; w++) {
+                final int x = xOffset + w * fromWidth;
+                from.stream()
+                        .forEach(c -> this.copyCell(c, x, y));
+            }
+        }
+    }
+
+    /**
+     * Fixes any relative references within the formula belonging to the cell's expression. Absolute references are
+     * ignored and left unmodified.
+     */
+    private void copyCell(final SpreadsheetCell cell, final int xOffset, final int yOffset) {
+        final SpreadsheetCell updatedReference = cell.setReference(cell.reference().add(xOffset, yOffset));
+
+        final SpreadsheetCell save = this.parse(updatedReference,
+                token-> BasicSpreadsheetEngineCopySpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.expressionFixReferences(token,
+                        xOffset,
+                        yOffset)
+        );
+        this.cellStore.save(save);
+    }
+
     /**
      * The {@link Parser} that turns {@link SpreadsheetFormula} into a {@link ExpressionNode}.
      */
