@@ -1,24 +1,11 @@
 package walkingkooka.spreadsheet.store;
 
-import org.checkerframework.checker.units.qual.K;
 import org.junit.Test;
-import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.test.PackagePrivateClassTestCase;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 
-import java.util.Collection;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
 
 public abstract class StoreTestCase<S extends Store<K, V>, K, V> extends PackagePrivateClassTestCase<S> {
     
