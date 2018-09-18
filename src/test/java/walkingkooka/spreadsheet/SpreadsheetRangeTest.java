@@ -196,7 +196,7 @@ public final class SpreadsheetRangeTest extends PublicClassTestCase<SpreadsheetR
         final SpreadsheetCellReference e = this.cell(115, 24);
 
         final SpreadsheetRange range = SpreadsheetRange.from(Lists.of(a, b, c, d, e));
-        this.check(range,111, 11, 115, 24);
+        this.check(range,111, 11, 115+1, 24+1);
     }
 
     @Test
@@ -208,7 +208,15 @@ public final class SpreadsheetRangeTest extends PublicClassTestCase<SpreadsheetR
         final SpreadsheetCellReference e = this.cell(115, 24);
 
         final SpreadsheetRange range = SpreadsheetRange.from(Lists.of(e, d, c, b, a));
-        this.check(range,111, 11, 115, 24);
+        this.check(range,111, 11, 115+1, 24+1);
+    }
+
+    @Test
+    public void testFrom3() {
+        final SpreadsheetCellReference a = this.cell(111, 11);
+
+        final SpreadsheetRange range = SpreadsheetRange.from(Lists.of(a));
+        this.check(range,111, 11, 111+1, 11+1);
     }
 
     //helper.................................................................................................
