@@ -64,14 +64,14 @@ import java.util.Optional;
  * A {@link SpreadsheetParserTokenVisitor} that handles visiting and updating {@link SpreadsheetCellReferenceParserToken}
  * so cell references after an insert or delete row/column are corrected.
  */
-final class BasicSpreadsheetEngineSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVisitor {
+final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVisitor {
 
     /**
      * Accepts a token tree and updates rows and columns.
      */
     static SpreadsheetParserToken expressionFixReferences(final SpreadsheetParserToken token,
                                                           final BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow columnOrRow) {
-        final BasicSpreadsheetEngineSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor visitor = new BasicSpreadsheetEngineSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor(columnOrRow);
+        final BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor visitor = new BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor(columnOrRow);
         visitor.accept(token);
 
         final List<SpreadsheetParserToken> tokens = visitor.children;
@@ -87,7 +87,7 @@ final class BasicSpreadsheetEngineSpreadsheetCellReferenceFixerSpreadsheetParser
      * Package private ctor use static method.
      */
     // @VisibleForTesting
-    BasicSpreadsheetEngineSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor(final BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow columnOrRow) {
+    BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor(final BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow columnOrRow) {
         super();
         this.columnOrRow = columnOrRow;
     }
