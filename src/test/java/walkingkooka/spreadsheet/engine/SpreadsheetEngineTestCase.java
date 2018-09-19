@@ -146,8 +146,8 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
 
     private void checkFormula(final SpreadsheetCell cell, final String formula) {
         assertEquals("formula from returned cell=" + cell,
-                SpreadsheetFormula.with(formula),
-                cell.formula());
+                formula,
+                cell.formula().text());
     }
 
     private void checkValueOrError(final SpreadsheetCell cell, final Object value) {
@@ -157,8 +157,9 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
     }
 
     private Object valueOrError(final SpreadsheetCell cell, final Object bothAbsent) {
-        return cell.value()
-                .orElse(cell.error()
+        final SpreadsheetFormula formula = cell.formula();
+        return formula.value()
+                .orElse(formula.error()
                         .map(e -> (Object)e.value())
                         .orElse(bothAbsent));
     }
@@ -169,8 +170,8 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
                                 final String errorContains) {
         final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading);
 
-        final Optional<SpreadsheetError> error = cell.error();
-        assertNotEquals("Expected error missing=" + cell, SpreadsheetCell.NO_ERROR, error);
+        final Optional<SpreadsheetError> error = cell.formula().error();
+        assertNotEquals("Expected error missing=" + cell, SpreadsheetFormula.NO_ERROR, error);
         assertTrue("Error message " + error + " missing " + CharSequences.quoteAndEscape(errorContains), error.get().value().contains(errorContains));
     }
 

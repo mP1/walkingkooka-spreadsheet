@@ -23,7 +23,6 @@ import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionNode;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
@@ -99,7 +98,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
      * Attempts to evaluate the cell, parsing and evaluating as necessary depending on the {@link SpreadsheetEngineLoading}
      */
     private SpreadsheetCell maybeParseAndEvaluate(final SpreadsheetCell cell, final SpreadsheetEngineLoading loading) {
-        final SpreadsheetCell result = loading.process(cell, this);
+        final SpreadsheetCell result = cell.setFormula(loading.process(cell.formula(), this));
         this.cellStore.save(result); // update cells enabling caching of parsing and value and errors.
         return result;
     }
@@ -107,36 +106,36 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
     /**
      * If an expression is not present, parse the formula.
      */
-    SpreadsheetCell parseIfNecessary(final SpreadsheetCell cell) {
-        return cell.expression().isPresent() ?
-               cell :
-               this.parse(cell, Function.identity());
+    SpreadsheetFormula parseIfNecessary(final SpreadsheetFormula formula) {
+        return formula.expression().isPresent() ?
+               formula :
+               this.parse(formula, Function.identity());
     }
 
     /**
      * Parsers the formula for this cell, and sets its expression or error if parsing fails.
      */
-    final SpreadsheetCell parse(final SpreadsheetCell cell,
-                                final Function<SpreadsheetParserToken, SpreadsheetParserToken> parsed) {
-        SpreadsheetCell result = cell;
+    final SpreadsheetFormula parse(final SpreadsheetFormula formula,
+                                   final Function<SpreadsheetParserToken, SpreadsheetParserToken> parsed) {
+        SpreadsheetFormula result = formula;
 
         try {
-            final TextCursor formula = TextCursors.charSequence(cell.formula().value());
-            final Optional<SpreadsheetParserToken> token = this.parser.parse(formula, this.parserContext);
+            final TextCursor text = TextCursors.charSequence(formula.text());
+            final Optional<SpreadsheetParserToken> token = this.parser.parse(text, this.parserContext);
             if(token.isPresent()) {
                 final SpreadsheetParserToken updatedToken = parsed.apply(token.get());
-                result = result.setFormula(result.formula().setValue(updatedToken.text()))
+                result = result.setText(updatedToken.text())
                         .setExpression(updatedToken.expressionNode());
             } else {
                 // generic error message.
-                final TextCursorSavePoint save = formula.save();
-                formula.end();
+                final TextCursorSavePoint save = text.save();
+                text.end();
 
-                result = this.setError(cell, "Unable to parse entire expression=" + CharSequences.quoteAndEscape(save.textBetween()));
+                result = this.setError(formula, "Unable to parse entire expression=" + CharSequences.quoteAndEscape(save.textBetween()));
             }
         } catch (final ParserException failed) {
             // parsing failed set the error message
-            result = this.setError(cell, failed.getMessage());
+            result = this.setError(formula, failed.getMessage());
         }
 
         return result;
@@ -145,18 +144,18 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
     /**
      * If a value is available try and re-use or if an expression is present evaluate it.
      */
-    final SpreadsheetCell evaluateIfPossible(final SpreadsheetCell cell) {
-        return cell.value().isPresent() || cell.error().isPresent() ?
-               cell : // value present - using cached.
-               this.evaluate(cell);
+    final SpreadsheetFormula evaluateIfPossible(final SpreadsheetFormula formula) {
+        return formula.value().isPresent() || formula.error().isPresent() ?
+               formula : // value present - using cached.
+               this.evaluate(formula);
     }
 
-    private SpreadsheetCell evaluate(final SpreadsheetCell cell) {
-        SpreadsheetCell result;
+    private SpreadsheetFormula evaluate(final SpreadsheetFormula formula) {
+        SpreadsheetFormula result;
         try {
-            result = cell.setValue(Optional.of(cell.expression().get().toValue(this.evaluationContext)));
+            result = formula.setValue(Optional.of(formula.expression().get().toValue(this.evaluationContext)));
         } catch (final ExpressionEvaluationException cause) {
-            result = this.setError(cell, cause.getMessage());
+            result = this.setError(formula, cause.getMessage());
         } catch (final NoSuchElementException cause) {
             throw new BasicSpreadsheetEngineException("Cell missing value and error and expression: " + cause.getMessage(), cause);
         }
@@ -164,10 +163,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
     }
 
     /**
-     * Sets the error upon the cell.
+     * Sets the error upon the formula.
      */
-    private SpreadsheetCell setError(final SpreadsheetCell cell, final String message) {
-        return cell.setError(Optional.of(SpreadsheetError.with(message)));
+    private SpreadsheetFormula setError(final SpreadsheetFormula formula, final String message) {
+        return formula.setError(Optional.of(SpreadsheetError.with(message)));
     }
 
     @Override
@@ -271,12 +270,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine{
      */
     private void copyCell(final SpreadsheetCell cell, final int xOffset, final int yOffset) {
         final SpreadsheetCell updatedReference = cell.setReference(cell.reference().add(xOffset, yOffset));
+        final SpreadsheetFormula formula = updatedReference.formula();
 
-        final SpreadsheetCell save = this.parse(updatedReference,
+        final SpreadsheetCell save = updatedReference.setFormula(this.parse(formula,
                 token-> BasicSpreadsheetEngineCopySpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.expressionFixReferences(token,
                         xOffset,
                         yOffset)
-        );
+        ));
         this.cellStore.save(save);
     }
 

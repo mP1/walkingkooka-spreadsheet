@@ -1,16 +1,16 @@
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
 
 public enum SpreadsheetEngineLoading {
 
     /**
-     * Will return the cell in its current form without any attempt to parse or evaluate the formula.
+     * Will return the formula in its current form without any attempt to parse or evaluate the formula.
      */
     SKIP_EVALUATE {
         @Override
-        SpreadsheetCell process(final SpreadsheetCell cell, final BasicSpreadsheetEngine engine) {
-            return cell;
+        SpreadsheetFormula process(final SpreadsheetFormula formula, final BasicSpreadsheetEngine engine) {
+            return formula;
         }
     },
     /**
@@ -18,10 +18,10 @@ public enum SpreadsheetEngineLoading {
      */
     FORCE_RECOMPUTE {
         @Override
-        SpreadsheetCell process(final SpreadsheetCell cell, final BasicSpreadsheetEngine engine) {
+        SpreadsheetFormula process(final SpreadsheetFormula formula, final BasicSpreadsheetEngine engine) {
             return engine.evaluateIfPossible(
                    engine.parseIfNecessary(
-                   cell.setValue(SpreadsheetCell.NO_VALUE)));
+                   formula.setValue(SpreadsheetFormula.NO_VALUE)));
         }
     },
     /**
@@ -29,11 +29,11 @@ public enum SpreadsheetEngineLoading {
      */
     COMPUTE_IF_NECESSARY {
         @Override
-        SpreadsheetCell process(final SpreadsheetCell cell, final BasicSpreadsheetEngine engine) {
+        SpreadsheetFormula process(final SpreadsheetFormula formula, final BasicSpreadsheetEngine engine) {
             return engine.evaluateIfPossible(
-                   engine.parseIfNecessary(cell));
+                   engine.parseIfNecessary(formula));
         }
     };
 
-    abstract SpreadsheetCell process(final SpreadsheetCell cell, final BasicSpreadsheetEngine engine);
+    abstract SpreadsheetFormula process(final SpreadsheetFormula formula, final BasicSpreadsheetEngine engine);
 }
