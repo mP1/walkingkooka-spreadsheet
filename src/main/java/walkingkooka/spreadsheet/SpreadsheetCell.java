@@ -34,21 +34,6 @@ import java.util.Optional;
 public final class SpreadsheetCell implements HashCodeEqualsDefined, Comparable<SpreadsheetCell>, UsesToStringBuilder {
 
     /**
-     * No expression constant.
-     */
-    public final static Optional<ExpressionNode> NO_EXPRESSION = Optional.empty();
-
-    /**
-     * No error constant.
-     */
-    public final static Optional<SpreadsheetError> NO_ERROR = Optional.empty();
-
-    /**
-     * No value constant.
-     */
-    public final static Optional<Object> NO_VALUE = Optional.empty();
-
-    /**
      * Factory that creates a new {@link SpreadsheetCell}
      */
     public static SpreadsheetCell with(final SpreadsheetCellReference reference,
@@ -56,7 +41,7 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined, Comparable<
         checkReference(reference);
         checkFormula(formula);
 
-        return new SpreadsheetCell(reference, formula, NO_EXPRESSION, NO_VALUE, NO_ERROR);
+        return new SpreadsheetCell(reference, formula);
     }
 
     private static void checkReference(final SpreadsheetCellReference reference) {
@@ -67,30 +52,15 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined, Comparable<
         Objects.requireNonNull(formula, "formula");
     }
 
-    private static void checkExpression(final Optional<ExpressionNode> expression) {
-        Objects.requireNonNull(expression, "expression");
-    }
-
-    private static void checkError(final Optional<SpreadsheetError> error) {
-        Objects.requireNonNull(error, "error");
-    }
-
-    private static void checkValue(final Optional<Object> value) {
-        Objects.requireNonNull(value, "value");
-    }
-
+    /**
+     * Private ctor
+     */
     private SpreadsheetCell(final SpreadsheetCellReference reference,
-                            final SpreadsheetFormula formula,
-                            final Optional<ExpressionNode> expression,
-                            final Optional<Object> value,
-                            final Optional<SpreadsheetError> error) {
+                            final SpreadsheetFormula formula) {
         super();
 
         this.reference = reference;
         this.formula = formula;
-        this.expression = expression;
-        this.value = value;
-        this.error = error;
     }
 
     // reference .............................................................................................
@@ -104,7 +74,7 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined, Comparable<
 
         return this.reference.equals(reference) ?
                 this :
-                this.replace(reference, this.formula, NO_EXPRESSION, NO_VALUE, NO_ERROR);
+                this.replace(reference, this.formula);
     }
 
     private final SpreadsheetCellReference reference;
@@ -120,80 +90,14 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined, Comparable<
 
         return this.formula.equals(formula) ?
                 this :
-                this.replace(this.reference, formula, NO_EXPRESSION, NO_VALUE, NO_ERROR);
+                this.replace(this.reference, formula);
     }
 
     private final SpreadsheetFormula formula;
 
-    // expression .............................................................................................
 
-    public Optional<ExpressionNode> expression() {
-        return this.expression;
-    }
-
-    public SpreadsheetCell setExpression(final Optional<ExpressionNode> expression) {
-        checkExpression(expression);
-
-        return this.expression.equals(expression) ?
-                this :
-                this.replace(this.reference, this.formula, expression, NO_VALUE, NO_ERROR);
-    }
-
-    /**
-     * The expression parsed from the text form of this formula.
-     */
-    private Optional<ExpressionNode> expression;
-
-    // value .............................................................................................
-
-    public Optional<Object> value() {
-        return this.value;
-    }
-
-    public SpreadsheetCell setValue(final Optional<Object> value) {
-        checkValue(value);
-
-        return this.value.equals(value) ?
-                this :
-                this.replace(this.reference, this.formula, this.expression, value, NO_ERROR);
-    }
-
-    /**
-     * The value parsed from the text form of this formula.
-     */
-    private Optional<Object> value;
-    
-    // error .............................................................................................
-
-    public Optional<SpreadsheetError> error() {
-        return this.error;
-    }
-
-    public SpreadsheetCell setError(final Optional<SpreadsheetError> error) {
-        checkError(error);
-
-        return this.error.equals(error) ?
-                this :
-                this.replace(this.reference,
-                        this.formula,
-                        this.expression,
-                        error.isPresent() ? NO_VALUE : this.value, // if error is present clear the value.
-                        error);
-    }
-
-    /**
-     * The error parsed from the text form of this formula.
-     */
-    private Optional<SpreadsheetError> error;
-    
-    // internal factory .............................................................................................
-
-    private SpreadsheetCell replace(final SpreadsheetCellReference reference,
-                                    final SpreadsheetFormula formula,
-                                    final Optional<ExpressionNode> expression,
-                                    final Optional<Object> value,
-                                    final Optional<SpreadsheetError> error) {
-        return new SpreadsheetCell(reference, formula, expression, value, error);
+    private SpreadsheetCell replace(final SpreadsheetCellReference reference, final SpreadsheetFormula formula) {
+        return new SpreadsheetCell(reference, formula);
     }
 
     // Comparable.................................................................................................
@@ -219,10 +123,7 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined, Comparable<
 
     private boolean equals0(final SpreadsheetCell other) {
         return this.reference.equals(other.reference()) &&
-                this.formula.equals(other.formula()) &&
-                this.expression.equals((other.expression)) &&
-                this.value.equals((other.value)) &&
-                this.error.equals(other.error);
+                this.formula.equals(other.formula());
     }
 
     @Override
@@ -234,14 +135,5 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined, Comparable<
     public void buildToString(final ToStringBuilder builder) {
         builder.label(this.reference.toString())
                 .value(this.formula);
-
-        if(this.value.isPresent()) {
-            builder.surroundValues("(=", ")")
-                    .value(new Object[]{this.value});
-        }
-        if(this.error.isPresent()) {
-            builder.surroundValues("(", ")")
-                    .value(new Object[]{this.error});
-        }
     }
 }
