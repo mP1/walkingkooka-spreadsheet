@@ -98,7 +98,10 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      * delete or insert.
      */
     private SpreadsheetCell fixExpressionCellReferences(final SpreadsheetCell cell) {
-        return this.engine.parse(cell, this::fixCellReferencesWithinExpression);
+        return cell.setFormula(
+                this.engine.parse(
+                        cell.formula(),
+                        this::fixCellReferencesWithinExpression));
     }
 
     /**

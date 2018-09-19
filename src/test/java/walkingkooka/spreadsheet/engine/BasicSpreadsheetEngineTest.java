@@ -29,10 +29,12 @@ import walkingkooka.tree.expression.ExpressionNodeName;
 import java.math.BigInteger;
 import java.math.MathContext;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
@@ -124,7 +126,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         cellStore.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2+")));
 
         final SpreadsheetCell first = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
-        assertNotEquals("Expected error absent=" + first, SpreadsheetCell.NO_ERROR, first.error());
+        assertNotEquals("Expected error absent=" + first, SpreadsheetFormula.NO_ERROR, first.formula().error());
 
         final SpreadsheetCell second = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
         assertSame("different instances of SpreadsheetCell returned not cached", first, second);
@@ -135,27 +137,19 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
 
-        final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        cellStore.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
+        final SpreadsheetCellReference a = this.cellReference(1, 1);
+        cellStore.save(SpreadsheetCell.with(a, SpreadsheetFormula.with("1")));
 
-        final SpreadsheetCell first = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.FORCE_RECOMPUTE);
-        final SpreadsheetCell second = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.FORCE_RECOMPUTE);
+        final SpreadsheetCellReference b = this.cellReference(2, 2);
+        cellStore.save(SpreadsheetCell.with(b, SpreadsheetFormula.with("" + a)));
 
+        final SpreadsheetCell first = this.loadCellOrFail(engine, a, SpreadsheetEngineLoading.FORCE_RECOMPUTE);
+
+        cellStore.save(SpreadsheetCell.with(a, SpreadsheetFormula.with("999")));
+
+        final SpreadsheetCell second = this.loadCellOrFail(engine, a, SpreadsheetEngineLoading.FORCE_RECOMPUTE);
         assertNotSame("different instances of SpreadsheetCell returned not cached", first, second);
-    }
-
-    @Test
-    public void testLoadCellForceRecomputeIgnoresCache2() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
-
-        final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        cellStore.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
-
-        final SpreadsheetCell first = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
-        final SpreadsheetCell second = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.FORCE_RECOMPUTE);
-
-        assertNotSame("different instances of SpreadsheetCell returned not cached", first, second);
+        assertEquals("first should have value updated to 999 and not 1 the original value.", Optional.of(BigInteger.valueOf(999)), second.formula().value());
     }
 
     @Test
