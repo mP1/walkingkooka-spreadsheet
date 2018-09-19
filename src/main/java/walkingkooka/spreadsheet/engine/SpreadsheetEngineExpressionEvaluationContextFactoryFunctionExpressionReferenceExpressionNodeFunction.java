@@ -3,6 +3,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
@@ -64,13 +65,13 @@ final class SpreadsheetEngineExpressionEvaluationContextFactoryFunctionExpressio
         if(!maybeCell.isPresent()) {
             throw new ExpressionEvaluationException("Unknown cell reference " + reference);
         }
-        final SpreadsheetCell cell = maybeCell.get();
-        final Optional<SpreadsheetError> error = cell.error();
+        final SpreadsheetFormula formula  = maybeCell.get().formula();
+        final Optional<SpreadsheetError> error = formula.error();
         if(error.isPresent()) {
             throw new ExpressionEvaluationException(error.get().value());
         }
 
-        final Optional<ExpressionNode> expression = cell.expression();
+        final Optional<ExpressionNode> expression = formula.expression();
         if(!expression.isPresent()) {
             throw new ExpressionEvaluationException("Unknown cell reference " + reference);
         }
