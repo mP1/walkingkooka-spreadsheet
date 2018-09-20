@@ -259,6 +259,8 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined, UsesTo
 
         return this.equals0(merged) ?
                this :
+               other.equals0(merged) ?
+               other:
                merged;
     }
 
