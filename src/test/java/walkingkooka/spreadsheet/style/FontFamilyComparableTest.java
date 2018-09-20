@@ -14,9 +14,4 @@ public final class FontFamilyComparableTest extends ComparableTestCase<FontFamil
     protected FontFamilyName createComparable() {
         return FontFamilyName.with("Times New Roman");
     }
-
-    @Override
-    protected Class<FontFamilyName> type() {
-        return FontFamilyName.class;
-    }
 }

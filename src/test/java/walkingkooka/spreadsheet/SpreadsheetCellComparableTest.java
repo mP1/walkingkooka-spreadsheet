@@ -13,7 +13,7 @@ public final class SpreadsheetCellComparableTest extends ComparableTestCase<Spre
 
     @Test
     public void testDifferentFormulaEquals() {
-        this.compareToAndCheckEqual(this.createComparable(COLUMN, ROW, FORMULA + "99"));
+        this.checkNotEquals(this.createComparable(COLUMN, ROW, FORMULA + "99"));
     }
 
     @Test
@@ -37,10 +37,5 @@ public final class SpreadsheetCellComparableTest extends ComparableTestCase<Spre
 
     private SpreadsheetCellReference reference(final int column, final int row) {
         return SpreadsheetCellReference.with(SpreadsheetReferenceKind.ABSOLUTE.column(column), SpreadsheetReferenceKind.ABSOLUTE.row(row));
-    }
-
-    @Override
-    protected Class<SpreadsheetCell> type() {
-        return SpreadsheetCell.class;
     }
 }
