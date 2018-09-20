@@ -1,0 +1,322 @@
+package walkingkooka.spreadsheet.style;
+
+import walkingkooka.Cast;
+import walkingkooka.build.tostring.ToStringBuilder;
+import walkingkooka.build.tostring.ToStringBuilderOption;
+import walkingkooka.build.tostring.UsesToStringBuilder;
+import walkingkooka.color.Color;
+import walkingkooka.test.HashCodeEqualsDefined;
+
+import java.util.Objects;
+import java.util.Optional;
+
+/**
+ * A container holding various text-related style attributes.
+ */
+public final class SpreadsheetTextStyle implements HashCodeEqualsDefined, UsesToStringBuilder {
+
+    public final static Optional<FontFamilyName> NO_FONT_FAMILY = Optional.empty();
+    public final static Optional<FontSize> NO_FONT_SIZE = Optional.empty();
+    public final static Optional<Color> NO_COLOR = Optional.empty();
+    public final static Optional<Color> NO_BACKGROUND_COLOR = Optional.empty();
+
+    public final static Optional<Boolean> NO_BOLD = Optional.empty();
+    public final static Optional<Boolean> NO_ITALICS = Optional.empty();
+    public final static Optional<Boolean> NO_UNDERLINE = Optional.empty();
+    public final static Optional<Boolean> NO_STRIKETHRU = Optional.empty();
+
+    /**
+     * A {@link SpreadsheetTextStyle} without any properties.
+     */
+    public final static SpreadsheetTextStyle EMPTY = new SpreadsheetTextStyle(NO_FONT_FAMILY,
+            NO_FONT_SIZE,
+            NO_COLOR,
+            NO_BACKGROUND_COLOR,
+            NO_BOLD,
+            NO_ITALICS,
+            NO_UNDERLINE,
+            NO_STRIKETHRU);
+
+    /**
+     * Factory that creates a {@link SpreadsheetTextStyle}
+     */
+    public static SpreadsheetTextStyle with(final Optional<FontFamilyName> fontFamily,
+                                            final Optional<FontSize> fontSize,
+                                            final Optional<Color> color,
+                                            final Optional<Color> backgroundColor,
+                                            final Optional<Boolean> bold,
+                                            final Optional<Boolean> italics,
+                                            final Optional<Boolean> underline,
+                                            final Optional<Boolean> strikethru) {
+        checkFontFamily(fontFamily);
+        checkFontSize(fontSize);
+        checkColor(color);
+        checkBackgroundColor(backgroundColor);
+        checkBold(bold);
+        checkItalics(italics);
+        checkUnderline(underline);
+        checkStrikethru(strikethru);
+
+        return new SpreadsheetTextStyle(fontFamily, fontSize, color, backgroundColor, bold, italics, underline, strikethru);
+    }
+
+    /**
+     * Private ctor use static factory or constant.
+     */
+    private SpreadsheetTextStyle(final Optional<FontFamilyName> fontFamily,
+                                final Optional<FontSize> fontSize,
+                                final Optional<Color> color,
+                                final Optional<Color> backgroundColor,
+                                final Optional<Boolean> bold,
+                                final Optional<Boolean> italics,
+                                final Optional<Boolean> underline,
+                                final Optional<Boolean> strikethru) {
+        this.fontFamily = fontFamily;
+        this.fontSize = fontSize;
+        this.color = color;
+        this.backgroundColor = backgroundColor;
+        this.bold = bold;
+        this.italics = italics;
+        this.underline = underline;
+        this.strikethru = strikethru;
+    }
+
+    public Optional<FontFamilyName> fontFamily() {
+        return this.fontFamily;
+    }
+
+    public SpreadsheetTextStyle setFontFamily(final Optional<FontFamilyName> fontFamily) {
+        checkFontFamily(fontFamily);
+
+        return this.fontFamily.equals(fontFamily) ?
+               this :
+               this.replace(fontFamily, this.fontSize, this.color, this.backgroundColor, this.bold, this.italics, this.underline, this.strikethru);
+    }
+
+    private final Optional<FontFamilyName> fontFamily;
+
+    private static void checkFontFamily(final Optional<FontFamilyName> fontFamily) {
+        Objects.requireNonNull(fontFamily, "fontFamily");
+    }
+    
+    public Optional<FontSize> fontSize() {
+        return this.fontSize;
+    }
+
+    public SpreadsheetTextStyle setFontSize(final Optional<FontSize> fontSize) {
+        checkFontSize(fontSize);
+
+        return this.fontSize.equals(fontSize) ?
+                this :
+                this.replace(this.fontFamily, fontSize, this.color, this.backgroundColor, this.bold, this.italics, this.underline, this.strikethru);
+    }
+
+    private final Optional<FontSize> fontSize;
+
+    private static void checkFontSize(final Optional<FontSize> fontSize) {
+        Objects.requireNonNull(fontSize, "fontSize");
+    }
+
+    public Optional<Color> color() {
+        return this.color;
+    }
+
+    public SpreadsheetTextStyle setColor(final Optional<Color> color) {
+        checkColor(color);
+
+        return this.color.equals(color) ?
+                this :
+                this.replace(this.fontFamily, this.fontSize, color, this.backgroundColor, this.bold, this.italics, this.underline, this.strikethru);
+    }
+    
+    private final Optional<Color> color;
+
+    private static void checkColor(final Optional<Color> color) {
+        Objects.requireNonNull(color, "color");
+    }
+
+    public Optional<Color> backgroundColor() {
+        return this.backgroundColor;
+    }
+
+    public SpreadsheetTextStyle setBackgroundColor(final Optional<Color> backgroundColor) {
+        checkBackgroundColor(backgroundColor);
+
+        return this.backgroundColor.equals(backgroundColor) ?
+                this :
+                this.replace(this.fontFamily, this.fontSize, this.color, backgroundColor, this.bold, this.italics, this.underline, this.strikethru);
+    }
+    
+    private final Optional<Color> backgroundColor;
+
+    private static void checkBackgroundColor(final Optional<Color> backgroundColor) {
+        Objects.requireNonNull(backgroundColor, "backgroundColor");
+    }
+
+    public Optional<Boolean> bold() {
+        return this.bold;
+    }
+
+    public SpreadsheetTextStyle setBold(final Optional<Boolean> bold) {
+        checkBold(bold);
+
+        return this.bold.equals(bold) ?
+                this :
+                this.replace(this.fontFamily, this.fontSize, this.color, this.backgroundColor, bold, this.italics, this.underline, this.strikethru);
+    }
+    
+    private final Optional<Boolean> bold;
+
+    private static void checkBold(final Optional<Boolean> bold) {
+        Objects.requireNonNull(bold, "bold");
+    }
+
+    public Optional<Boolean> italics() {
+        return this.italics;
+    }
+
+    public SpreadsheetTextStyle setItalics(final Optional<Boolean> italics) {
+        checkItalics(italics);
+
+        return this.italics.equals(italics) ?
+                this :
+                this.replace(this.fontFamily, this.fontSize, this.color, this.backgroundColor, this.bold, italics, this.underline, this.strikethru);
+    }
+
+    private final Optional<Boolean> italics;
+
+    private static void checkItalics(final Optional<Boolean> italics) {
+        Objects.requireNonNull(italics, "italics");
+    }
+
+    public Optional<Boolean> underline() {
+        return this.underline;
+    }
+
+    public SpreadsheetTextStyle setUnderline(final Optional<Boolean> underline) {
+        checkUnderline(underline);
+
+        return this.underline.equals(underline) ?
+                this :
+                this.replace(this.fontFamily, this.fontSize, this.color, this.backgroundColor, this.bold, this.italics, underline, this.strikethru);
+    }
+
+    private final Optional<Boolean> underline;
+
+    private static void checkUnderline(final Optional<Boolean> underline) {
+        Objects.requireNonNull(underline, "underline");
+    }
+    
+    public Optional<Boolean> strikethru() {
+        return this.strikethru;
+    }
+
+    public SpreadsheetTextStyle setStrikethru(final Optional<Boolean> strikethru) {
+        checkStrikethru(strikethru);
+
+        return this.strikethru.equals(strikethru) ?
+                this :
+                this.replace(this.fontFamily, this.fontSize, this.color, this.backgroundColor, this.bold, this.italics, this.underline, strikethru);
+    }
+
+    private final Optional<Boolean> strikethru;
+    
+    private static void checkStrikethru(final Optional<Boolean> strikethru) {
+        Objects.requireNonNull(strikethru, "strikethru");
+    }
+
+    /**
+     * Factory that unconditionally creates a {@link SpreadsheetTextStyle}.
+     */
+    private SpreadsheetTextStyle replace(final Optional<FontFamilyName> fontFamily,
+                                         final Optional<FontSize> fontSize,
+                                         final Optional<Color> color,
+                                         final Optional<Color> backgroundColor,
+                                         final Optional<Boolean> bold,
+                                         final Optional<Boolean> italics,
+                                         final Optional<Boolean> underline,
+                                         final Optional<Boolean> strikethru) {
+        return new SpreadsheetTextStyle(fontFamily,
+                fontSize,
+                color,
+                backgroundColor, bold, italics, underline, strikethru);
+    }
+
+    /**
+     * Performs a cascading merge of all properties, if a property is absent in this then the property from other is used.
+     */
+    public SpreadsheetTextStyle merge(final SpreadsheetTextStyle other) {
+        Objects.requireNonNull(other,"other");
+
+        final SpreadsheetTextStyle merged = new SpreadsheetTextStyle(merge(this.fontFamily,  other.fontFamily),
+                merge(this.fontSize,  other.fontSize),
+                merge(this.color,  other.color),
+                merge(this.backgroundColor,  other.backgroundColor),
+                merge(this.bold,  other.bold),
+                merge(this.italics,  other.italics),
+                merge(this.underline,  other.underline),
+                merge(this.strikethru,  other.strikethru));
+
+        return this.equals0(merged) ?
+               this :
+               merged;
+    }
+
+    private static <T> Optional<T> merge(final Optional<T> first, final Optional<T> second) {
+        return first.isPresent() ?
+               first :
+               second;
+    }
+    
+    // HashCodeEqualsDefined.........................................................................................
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.fontFamily, this.fontSize, this.color, this.backgroundColor, this.bold, this.italics, this.underline, this.strikethru);
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+               other instanceof SpreadsheetTextStyle &&
+               this.equals0(Cast.to(other));
+    }
+
+    private boolean equals0(final SpreadsheetTextStyle other) {
+        return this.fontFamily.equals(other.fontFamily) &&
+                this.fontSize.equals(other.fontSize) &&
+                this.color.equals(other.color) &&
+                this.backgroundColor.equals(other.backgroundColor) &&
+                this.bold.equals(other.bold) &&
+                this.italics.equals(other.italics) &&
+                this.underline.equals(other.underline) &&
+                this.strikethru.equals(other.strikethru);
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.buildFrom(this);
+    }
+
+    @Override
+    public void buildToString(final ToStringBuilder builder) {
+        builder.disable(ToStringBuilderOption.QUOTE);
+        builder.separator(" ");
+        builder.value(this.fontFamily);
+        builder.value(this.fontSize);
+
+        builder.value(this.color);
+        builder.value(this.backgroundColor);
+
+        add(this.bold, "bold", builder);
+        add(this.italics, "italics", builder);
+        add(this.underline, "underline", builder);
+        add(this.strikethru, "strikethru", builder);
+    }
+
+    private static void add(final Optional<Boolean> value, final String label, final ToStringBuilder builder) {
+        if(value.isPresent() && value.get()) {
+            builder.value(label);
+        }
+    }
+}
