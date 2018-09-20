@@ -196,7 +196,7 @@ public final class SpreadsheetTextStyleTest extends PublicClassTestCase<Spreadsh
 
     @Test
     public void testSetColorDifferent2() {
-        final Optional<Color> different = Optional.of(Color.WHITE);
+        final Optional<Color> different = this.differentColor();
         final SpreadsheetTextStyle style = this.create().setColor(different);
 
         this.checkFontFamily(style, this.fontFamily());
@@ -240,7 +240,7 @@ public final class SpreadsheetTextStyleTest extends PublicClassTestCase<Spreadsh
 
     @Test
     public void testSetBackgroundColorDifferent2() {
-        final Optional<Color> different = Optional.of(Color.WHITE);
+        final Optional<Color> different = this.differentColor();
         final SpreadsheetTextStyle style = this.create().setBackgroundColor(different);
 
         this.checkFontFamily(style, this.fontFamily());
@@ -283,7 +283,7 @@ public final class SpreadsheetTextStyleTest extends PublicClassTestCase<Spreadsh
 
     @Test
     public void testSetBoldDifferent2() {
-        final Optional<Boolean> different = Optional.of(false);
+        final Optional<Boolean> different = this.falseValue();
         final SpreadsheetTextStyle style = this.create().setBold(different);
 
         this.checkFontFamily(style, this.fontFamily());
@@ -326,7 +326,7 @@ public final class SpreadsheetTextStyleTest extends PublicClassTestCase<Spreadsh
 
     @Test
     public void testSetItalicsDifferent2() {
-        final Optional<Boolean> different = Optional.of(false);
+        final Optional<Boolean> different = this.falseValue();
         final SpreadsheetTextStyle style = this.create().setItalics(different);
 
         this.checkFontFamily(style, this.fontFamily());
@@ -369,7 +369,7 @@ public final class SpreadsheetTextStyleTest extends PublicClassTestCase<Spreadsh
 
     @Test
     public void testSetUnderlineDifferent2() {
-        final Optional<Boolean> different = Optional.of(false);
+        final Optional<Boolean> different = this.falseValue();
         final SpreadsheetTextStyle style = this.create().setUnderline(different);
 
         this.checkFontFamily(style, this.fontFamily());
@@ -412,7 +412,7 @@ public final class SpreadsheetTextStyleTest extends PublicClassTestCase<Spreadsh
 
     @Test
     public void testSetStrikethruDifferent2() {
-        final Optional<Boolean> different = Optional.of(false);
+        final Optional<Boolean> different = this.falseValue();
         final SpreadsheetTextStyle style = this.create().setStrikethru(different);
 
         this.checkFontFamily(style, this.fontFamily());
@@ -423,6 +423,65 @@ public final class SpreadsheetTextStyleTest extends PublicClassTestCase<Spreadsh
         this.checkItalics(style, this.italics());
         this.checkUnderline(style, this.underline());
         this.checkStrikethru(style, different);
+    }
+
+    // merge.........................................................................................................
+
+    @Test(expected = NullPointerException.class)
+    public void testMergeNullFails() {
+        this.create().merge(null);
+    }
+
+    @Test
+    public void testMergeSelf() {
+        final SpreadsheetTextStyle style = this.create();
+        assertSame(style, style.merge(style));
+    }
+
+    @Test
+    public void testMergeWithEmpty() {
+        final SpreadsheetTextStyle style = this.create();
+        assertSame(style, style.merge(SpreadsheetTextStyle.EMPTY));
+    }
+
+    @Test
+    public void testMerge1() {
+        final SpreadsheetTextStyle style = this.create();
+        assertSame(style, SpreadsheetTextStyle.EMPTY.merge(style));
+    }
+
+    @Test
+    public void testMerge2() {
+        final SpreadsheetTextStyle style = SpreadsheetTextStyle.EMPTY
+                .setBold(this.bold())
+                .setItalics(this.falseValue());
+        final SpreadsheetTextStyle other = SpreadsheetTextStyle.EMPTY
+                .setBold(this.falseValue())
+                .setUnderline(this.underline());
+
+        this.mergeAndCheck(style, other, SpreadsheetTextStyle.EMPTY
+                .setBold(this.bold())
+                .setItalics(this.falseValue())
+                .setUnderline(this.underline()));
+    }
+
+    @Test
+    public void testMerge3() {
+        final SpreadsheetTextStyle style = SpreadsheetTextStyle.EMPTY
+                .setColor(this.differentColor())
+                .setBold(this.falseValue())
+                .setItalics(this.falseValue());
+        final SpreadsheetTextStyle other = this.create();
+
+        this.mergeAndCheck(style, other, this.create()
+                .setColor(this.differentColor())
+                .setBold(this.falseValue())
+                .setItalics(this.falseValue())
+                .setUnderline(this.underline()));
+    }
+    
+    private void mergeAndCheck(final SpreadsheetTextStyle style, final SpreadsheetTextStyle other, final SpreadsheetTextStyle expected) {
+        assertEquals(style + " merge " + other + " failed", expected, style.merge(other));
     }
 
     // toString.........................................................................................................
@@ -453,8 +512,8 @@ public final class SpreadsheetTextStyleTest extends PublicClassTestCase<Spreadsh
         assertEquals("Times New Roman #01E240 bold italics", SpreadsheetTextStyle.EMPTY
                 .setBold(Optional.of(true))
                 .setItalics(Optional.of(true))
-                .setStrikethru(Optional.of(false))
-                .setUnderline(Optional.of(false))
+                .setStrikethru(this.falseValue())
+                .setUnderline(this.falseValue())
                 .setFontFamily(this.fontFamily())
                 .setColor(Optional.of(Color.fromRgb(123456)))
                 .toString());
@@ -497,7 +556,15 @@ public final class SpreadsheetTextStyleTest extends PublicClassTestCase<Spreadsh
     private Optional<Boolean> strikethru() {
         return Optional.of(true);
     }
-    
+
+    private Optional<Color> differentColor() {
+        return Optional.of(Color.WHITE);
+    }
+
+    private Optional<Boolean> falseValue() {
+        return Optional.of(false);
+    }
+
     private void checkFontFamily(final SpreadsheetTextStyle style, final Optional<FontFamilyName> fontFamily) {
         assertEquals("fontFamily", fontFamily, style.fontFamily());
     }
