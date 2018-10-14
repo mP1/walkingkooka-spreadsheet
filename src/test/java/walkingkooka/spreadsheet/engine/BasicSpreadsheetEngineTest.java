@@ -13,6 +13,8 @@ import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStores;
 import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.ParserContext;
+import walkingkooka.text.cursor.parser.ParserContexts;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
@@ -1879,7 +1881,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
     }
 
     private SpreadsheetParserContext parserContext() {
-        return SpreadsheetParserContexts.basic();
+        return SpreadsheetParserContexts.basic(ParserContexts.basic('.', 'E', '-', '+'));
     }
 
     private Function<SpreadsheetEngine, ExpressionEvaluationContext> evaluationContextFactory() {
