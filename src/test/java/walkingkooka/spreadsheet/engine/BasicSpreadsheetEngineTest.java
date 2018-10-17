@@ -1,9 +1,12 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.Test;
+import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
@@ -12,6 +15,8 @@ import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStores;
+import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
+import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
@@ -21,6 +26,11 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParsers;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
+import walkingkooka.text.spreadsheetformat.SpreadsheetFormattedText;
+import walkingkooka.text.spreadsheetformat.SpreadsheetTextFormatContext;
+import walkingkooka.text.spreadsheetformat.SpreadsheetTextFormatContexts;
+import walkingkooka.text.spreadsheetformat.SpreadsheetTextFormatter;
+import walkingkooka.text.spreadsheetformat.SpreadsheetTextFormatters;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionNode;
@@ -34,11 +44,22 @@ import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 
 public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<BasicSpreadsheetEngine> {
+
+    private final static String PATTERN_SUFFIX = "PATTERN_SUFFIX";
+    private final static String DEFAULT_SUFFIX = "DEFAULT_SUFFIX";
+
+    private final static Optional<Color> COLOR = Optional.of(Color.BLACK);
+
+    private final static String PATTERN_DEFAULT = "$text+" + DEFAULT_SUFFIX;
+    private final static String PATTERN = "$text+" + PATTERN_SUFFIX;
+    private final static String PATTERN_COLOR = "$text+" + PATTERN_SUFFIX + "+" + COLOR.get();
+    private final static String PATTERN_FORMAT_FAIL = "<none>";
 
     @Test(expected = NullPointerException.class)
     public void testNullIdFails() {
@@ -67,7 +88,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        cellStore.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
+        cellStore.save(this.cell(cellReference, "1+2"));
 
         this.loadCellAndCheckWithoutValueOrError(engine,
                 cellReference,
@@ -76,19 +97,41 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
     }
 
     @Test
-    public void testSaveCellAndLoadCell() {
+    public void testSaveCellAndLoadCellWithoutPattern() {
+        this.saveCellAndLoadCellAndCheck(SpreadsheetCell.NO_FORMAT, DEFAULT_SUFFIX);
+    }
+
+    @Test
+    public void testSaveCellAndLoadCellWithPattern() {
+        this.saveCellAndLoadCellAndCheck(Optional.of(SpreadsheetCellFormat.with(PATTERN, SpreadsheetCellFormat.NO_FORMATTER)),
+                PATTERN_SUFFIX);
+    }
+
+    @Test
+    public void testSaveCellAndLoadCellWithPatternAndFormatter() {
+        final String pattern = "Custom";
+        final String suffix = "CustomSuffix";
+        this.saveCellAndLoadCellAndCheck(Optional.of(SpreadsheetCellFormat.with(pattern,
+                Optional.of(this.formatter(pattern, SpreadsheetFormattedText.WITHOUT_COLOR, suffix)))),
+                suffix);
+    }
+
+    private void saveCellAndLoadCellAndCheck(final Optional<SpreadsheetCellFormat> format,
+                                             final String patternSuffix) {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        cellStore.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
+        cellStore.save(this.cell(cellReference, "1+2")
+                .setFormat(format));
 
-        this.loadCellAndCheckValue(engine,
+        this.loadCellAndCheckFormatted2(engine,
                 cellReference,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(1+2));
+                BigDecimal.valueOf(1 + 2),
+                patternSuffix);
     }
 
     @Test
@@ -98,10 +141,16 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        cellStore.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
+        cellStore.save(this.cell(cellReference, "1+2"));
 
-        final SpreadsheetCell first = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY, context);
-        final SpreadsheetCell second = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY, context);
+        final SpreadsheetCell first = this.loadCellOrFail(engine,
+                cellReference,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                context);
+        final SpreadsheetCell second = this.loadCellOrFail(engine,
+                cellReference,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                context);
 
         assertSame("different instances of SpreadsheetCell returned not cached", first, second);
     }
@@ -113,9 +162,12 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        cellStore.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2+")));
+        cellStore.save(this.cell(cellReference, "1+2+"));
 
-        final SpreadsheetCell first = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY, context);
+        final SpreadsheetCell first = this.loadCellOrFail(engine,
+                cellReference,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                context);
         assertNotEquals("Expected error absent=" + first, SpreadsheetFormula.NO_ERROR, first.formula().error());
 
         final SpreadsheetCell second = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY, context);
@@ -129,14 +181,14 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference(1, 1);
-        cellStore.save(SpreadsheetCell.with(a, SpreadsheetFormula.with("1")));
+        cellStore.save(this.cell(a, "1"));
 
         final SpreadsheetCellReference b = this.cellReference(2, 2);
-        cellStore.save(SpreadsheetCell.with(b, SpreadsheetFormula.with("" + a)));
+        cellStore.save(this.cell(b, "" + a));
 
         final SpreadsheetCell first = this.loadCellOrFail(engine, a, SpreadsheetEngineLoading.FORCE_RECOMPUTE, context);
 
-        cellStore.save(SpreadsheetCell.with(a, SpreadsheetFormula.with("999")));
+        cellStore.save(this.cell(a, "999"));
 
         final SpreadsheetCell second = this.loadCellOrFail(engine, a, SpreadsheetEngineLoading.FORCE_RECOMPUTE, context);
         assertNotSame("different instances of SpreadsheetCell returned not cached", first, second);
@@ -150,10 +202,16 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        cellStore.save(SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2")));
+        cellStore.save(this.cell(cellReference, "1+2"));
 
-        final SpreadsheetCell first = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY, context);
-        final SpreadsheetCell second = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.SKIP_EVALUATE, context);
+        final SpreadsheetCell first = this.loadCellOrFail(engine,
+                cellReference,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                context);
+        final SpreadsheetCell second = this.loadCellOrFail(engine,
+                cellReference,
+                SpreadsheetEngineLoading.SKIP_EVALUATE,
+                context);
 
         assertSame("different instances of SpreadsheetCell returned not cached", first, second);
     }
@@ -168,25 +226,28 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         final SpreadsheetCellReference b = this.cellReference(2, 1);
         final SpreadsheetCellReference c = this.cellReference(3, 1);
 
-        cellStore.save(SpreadsheetCell.with(a, SpreadsheetFormula.with("1+2")));
-        cellStore.save(SpreadsheetCell.with(b, SpreadsheetFormula.with("3+4")));
-        cellStore.save(SpreadsheetCell.with(c, SpreadsheetFormula.with("5+6")));
+        cellStore.save(this.cell(a, "1+2"));
+        cellStore.save(this.cell(b, "3+4"));
+        cellStore.save(this.cell(c, "5+6"));
 
-        this.loadCellAndCheckValue(engine,
+        this.loadCellAndCheckFormatted2(engine,
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(1+2));
-        this.loadCellAndCheckValue(engine,
+                BigDecimal.valueOf(1+2),
+                DEFAULT_SUFFIX);
+        this.loadCellAndCheckFormatted2(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(3+4));
-        this.loadCellAndCheckValue(engine,
+                BigDecimal.valueOf(3+4),
+                DEFAULT_SUFFIX);
+        this.loadCellAndCheckFormatted2(engine,
                 c,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(5+6));
+                BigDecimal.valueOf(5+6),
+                DEFAULT_SUFFIX);
     }
 
     @Test
@@ -196,9 +257,13 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
-        cellStore.save(SpreadsheetCell.with(a, SpreadsheetFormula.with("X99")));
+        cellStore.save(this.cell(a, "X99"));
 
-        this.loadCellAndCheckError(engine, a, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY, context, "Unknown cell reference");
+        this.loadCellAndCheckError(engine,
+                a,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                context,
+                "Unknown cell reference");
     }
 
     @Test
@@ -209,9 +274,13 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
-        cellStore.save(SpreadsheetCell.with(a, SpreadsheetFormula.with("INVALIDLABEL")));
+        cellStore.save(this.cell(a, "INVALIDLABEL"));
 
-        this.loadCellAndCheckError(engine, a, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY, context,"Unknown label");
+        this.loadCellAndCheckError(engine,
+                a,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                context,
+                "Unknown label");
     }
 
     @Test
@@ -223,22 +292,24 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
         final SpreadsheetCellReference b = this.cellReference(1, 0); // B1
 
-        cellStore.save(SpreadsheetCell.with(a, SpreadsheetFormula.with("B1")));
-        cellStore.save(SpreadsheetCell.with(b, SpreadsheetFormula.with("3+4")));
+        cellStore.save(this.cell(a, "B1"));
+        cellStore.save(this.cell(b, "3+4"));
 
         // formula
-        this.loadCellAndCheckValue(engine,
+        this.loadCellAndCheckFormatted2(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(3+4));
+                BigDecimal.valueOf(3+4),
+                DEFAULT_SUFFIX);
 
         // reference to B1 which has formula
-        this.loadCellAndCheckValue(engine,
+        this.loadCellAndCheckFormatted2(engine,
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(3+4));
+                BigDecimal.valueOf(3+4),
+                DEFAULT_SUFFIX);
     }
 
     @Test
@@ -251,24 +322,26 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
         final SpreadsheetCellReference b = this.cellReference(1, 0); // B1
 
-        cellStore.save(SpreadsheetCell.with(a, SpreadsheetFormula.with(LABEL.value())));
-        cellStore.save(SpreadsheetCell.with(b, SpreadsheetFormula.with("3+4")));
+        cellStore.save(this.cell(a, LABEL.value()));
+        cellStore.save(this.cell(b, "3+4"));
 
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, b));
 
         // formula
-        this.loadCellAndCheckValue(engine,
+        this.loadCellAndCheckFormatted2(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(3+4));
+                BigDecimal.valueOf(3+4),
+                DEFAULT_SUFFIX);
 
         // reference to B1 which has formula
-        this.loadCellAndCheckValue(engine,
+        this.loadCellAndCheckFormatted2(engine,
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(3+4));
+                BigDecimal.valueOf(3+4),
+                DEFAULT_SUFFIX);
     }
 
     // deleteColumn....................................................................................................
@@ -487,17 +560,19 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 "1+" + d.add(-count, 0),
                 BigDecimal.valueOf(1 + 4)); // reference should have been fixed.
 
-        this.loadCellAndCheckValue(engine,
+        this.loadCellAndCheckFormatted2(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(2));
+                BigDecimal.valueOf(2),
+                DEFAULT_SUFFIX);
 
-        this.loadCellAndCheckValue(engine,
+        this.loadCellAndCheckFormatted2(engine,
                 d.add(-count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(4));
+                BigDecimal.valueOf(4),
+                DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 e.add(-count, 0),
@@ -538,17 +613,19 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 "1+" + d.add(-count, 0),
                 BigDecimal.valueOf(1 + 4)); // reference should have been fixed.
 
-        this.loadCellAndCheckValue(engine,
+        this.loadCellAndCheckFormatted2(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(2));
+                BigDecimal.valueOf(2),
+                DEFAULT_SUFFIX);
 
-        this.loadCellAndCheckValue(engine,
+        this.loadCellAndCheckFormatted2(engine,
                 d.add(-count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(4));
+                BigDecimal.valueOf(4),
+                DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 e.add(-count, 0),
@@ -610,29 +687,33 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
 
         this.countAndCheck(cellStore, 4);
 
-        this.loadCellAndCheckValue(engine,
+        this.loadCellAndCheckFormatted2(engine,
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(1));
+                BigDecimal.valueOf(1),
+                DEFAULT_SUFFIX);
 
-        this.loadCellAndCheckValue(engine,
+        this.loadCellAndCheckFormatted2(engine,
                 d.add(-count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(4));
+                BigDecimal.valueOf(4),
+                DEFAULT_SUFFIX);
 
-        this.loadCellAndCheckValue(engine,
+        this.loadCellAndCheckFormatted2(engine,
                 e.add(-count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(5));
+                BigDecimal.valueOf(5),
+                DEFAULT_SUFFIX);
 
-        this.loadCellAndCheckValue(engine,
+        this.loadCellAndCheckFormatted2(engine,
                 f.add(-count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(6));
+                BigDecimal.valueOf(6),
+                DEFAULT_SUFFIX);
     }
 
     // deleteRow....................................................................................................
@@ -854,17 +935,19 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 "1+" + d.add(0, -count),
                 BigDecimal.valueOf(1 + 4)); // reference should have been fixed.
 
-        this.loadCellAndCheckValue(engine,
+        this.loadCellAndCheckFormatted2(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(2));
+                BigDecimal.valueOf(2),
+                DEFAULT_SUFFIX);
 
-        this.loadCellAndCheckValue(engine,
+        this.loadCellAndCheckFormatted2(engine,
                 d.add(0, -count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(4));
+                BigDecimal.valueOf(4),
+                DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 e.add(0, -count),
@@ -905,17 +988,19 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 "1+" + d.add(0, -count),
                 BigDecimal.valueOf(1 + 4)); // reference should have been fixed.
 
-        this.loadCellAndCheckValue(engine,
+        this.loadCellAndCheckFormatted2(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(2));
+                BigDecimal.valueOf(2),
+                DEFAULT_SUFFIX);
 
-        this.loadCellAndCheckValue(engine,
+        this.loadCellAndCheckFormatted2(engine,
                 d.add(0, -count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(4));
+                BigDecimal.valueOf(4),
+                DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 e.add(0, -count),
@@ -977,29 +1062,33 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
 
         this.countAndCheck(cellStore, 4);
 
-        this.loadCellAndCheckValue(engine,
+        this.loadCellAndCheckFormatted2(engine,
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(1));
+                BigDecimal.valueOf(1),
+                DEFAULT_SUFFIX);
 
-        this.loadCellAndCheckValue(engine,
+        this.loadCellAndCheckFormatted2(engine,
                 d.add(0, -count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(4));
+                BigDecimal.valueOf(4),
+                DEFAULT_SUFFIX);
 
-        this.loadCellAndCheckValue(engine,
+        this.loadCellAndCheckFormatted2(engine,
                 e.add(0, -count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(5));
+                BigDecimal.valueOf(5),
+                DEFAULT_SUFFIX);
 
-        this.loadCellAndCheckValue(engine,
+        this.loadCellAndCheckFormatted2(engine,
                 f.add(0, -count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                BigDecimal.valueOf(6));
+                BigDecimal.valueOf(6),
+                DEFAULT_SUFFIX);
     }
 
     // insertColumn....................................................................................................
@@ -2032,6 +2121,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
     private SpreadsheetEngineContext createContext(final SpreadsheetLabelStore labelStore,
                                                    final BasicSpreadsheetEngine engine) {
         return new FakeSpreadsheetEngineContext() {
+
             @Override
             public SpreadsheetParserToken parseFormula(final String formula) {
                 return SpreadsheetParsers.expression()
@@ -2055,8 +2145,68 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                         MathContext.UNLIMITED,
                         Converters.simple(),
                         decimalNumberContext()));
-            };
+            }
+
+            @Override
+            public SpreadsheetTextFormatter<?> parseFormatPattern(final String pattern) {
+                if(PATTERN_COLOR.equals(pattern)){
+                    return formatter(pattern, COLOR, PATTERN_SUFFIX);
+                }
+                if(PATTERN.equals(pattern)) {
+                    return formatter(pattern, SpreadsheetFormattedText.WITHOUT_COLOR, PATTERN_SUFFIX);
+                }
+                if(PATTERN_FORMAT_FAIL.equals(pattern)) {
+                    return SpreadsheetTextFormatters.fixed(Object.class, Optional.empty());
+                }
+
+                throw new AssertionError("Unknown pattern=" + pattern + " expected one of " + PATTERN_FORMAT_FAIL + "|" + PATTERN + "|" + PATTERN_COLOR);
+            }
+
+            @Override
+            public SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter() {
+                return formatter(PATTERN_DEFAULT, SpreadsheetFormattedText.WITHOUT_COLOR, DEFAULT_SUFFIX);
+            }
+
+            @Override
+            public Optional<SpreadsheetFormattedText> format(final Object value,
+                                                             final SpreadsheetTextFormatter<?> formatter) {
+                assertFalse("Value must not be optional" + value, value instanceof Optional);
+                return formatter.format(Cast.to(value), SpreadsheetTextFormatContexts.fake());
+            }
         };
+    }
+
+    private SpreadsheetTextFormatter<?> formatter(final String pattern,
+                                                  final Optional<Color> color,
+                                                  final String suffix) {
+        return new SpreadsheetTextFormatter<Object>() {
+            @Override
+            public Class<Object> type() {
+                return Object.class;
+            }
+
+            @Override
+            public Optional<SpreadsheetFormattedText> format(final Object value,
+                                                             final SpreadsheetTextFormatContext context) {
+                return Optional.of(SpreadsheetFormattedText.with(color, value + " " + suffix));
+            }
+
+            @Override
+            public String toString() {
+                return pattern;
+            }
+        };
+    }
+
+    private SpreadsheetCell loadCellAndCheckFormatted2(final SpreadsheetEngine engine,
+                                                               final SpreadsheetCellReference reference,
+                                                               final SpreadsheetEngineLoading loading,
+                                                               final SpreadsheetEngineContext context,
+                                                               final Object value,
+                                                               final String suffix) {
+        final SpreadsheetCell cell = this.loadCellAndCheckValue(engine, reference, loading, context, value);
+        this.checkFormattedText(cell, value + " " + suffix);
+        return cell;
     }
 
     private SpreadsheetId id() {
@@ -2084,7 +2234,11 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
     }
 
     private SpreadsheetCell cell(final SpreadsheetCellReference reference, final String formula) {
-        return SpreadsheetCell.with(reference, SpreadsheetFormula.with(formula));
+        return SpreadsheetCell.with(reference, SpreadsheetFormula.with(formula), this.style(), SpreadsheetCell.NO_FORMAT, SpreadsheetCell.NO_FORMATTED_CELL);
+    }
+
+    private SpreadsheetCellStyle style() {
+        return SpreadsheetCellStyle.EMPTY.setText(SpreadsheetTextStyle.EMPTY.setBold(SpreadsheetTextStyle.BOLD));
     }
 
     @Override
