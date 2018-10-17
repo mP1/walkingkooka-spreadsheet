@@ -25,6 +25,10 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined, UsesTo
     public final static Optional<Boolean> NO_UNDERLINE = Optional.empty();
     public final static Optional<Boolean> NO_STRIKETHRU = Optional.empty();
 
+    public final static Optional<Boolean> BOLD = Optional.of(Boolean.TRUE);
+    public final static Optional<Boolean> ITALICS = Optional.of(Boolean.TRUE);
+    public final static Optional<Boolean> UNDERLINE = Optional.of(Boolean.TRUE);
+    public final static Optional<Boolean> STRIKETHRU = Optional.of(Boolean.TRUE);
     /**
      * A {@link SpreadsheetTextStyle} without any properties.
      */
