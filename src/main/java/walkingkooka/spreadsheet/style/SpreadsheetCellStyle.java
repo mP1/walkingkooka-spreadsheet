@@ -4,6 +4,8 @@ import walkingkooka.Cast;
 import walkingkooka.build.tostring.ToStringBuilder;
 import walkingkooka.build.tostring.ToStringBuilderOption;
 import walkingkooka.build.tostring.UsesToStringBuilder;
+import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetFormattedCell;
 import walkingkooka.test.HashCodeEqualsDefined;
 
 import java.util.Objects;
@@ -34,6 +36,15 @@ public final class SpreadsheetCellStyle implements HashCodeEqualsDefined, UsesTo
         super();
         this.text = text;
     }
+
+    /**
+     * Creates a new {@link SpreadsheetFormattedCell} with the given text and this {@link SpreadsheetCellStyle}.
+     */
+    public SpreadsheetFormattedCell setCellFormattedText(final String text) {
+        return SpreadsheetFormattedCell.with(text, this);
+    }
+
+    // text...................................................................................................
 
     public SpreadsheetTextStyle text() {
         return this.text;

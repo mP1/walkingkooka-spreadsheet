@@ -2,6 +2,7 @@ package walkingkooka.spreadsheet.style;
 
 import org.junit.Test;
 import walkingkooka.color.Color;
+import walkingkooka.spreadsheet.SpreadsheetFormattedCell;
 import walkingkooka.test.PublicClassTestCase;
 
 import java.util.Optional;
@@ -29,7 +30,18 @@ public final class SpreadsheetCellStyleTest extends PublicClassTestCase<Spreadsh
         this.checkText(style, SpreadsheetTextStyle.EMPTY);
     }
 
-    // setFontFamily......................................................................................................
+    // setCellFormattedText....................................................................................
+
+    @Test
+    public void testSetCellFormattedText() {
+        final SpreadsheetCellStyle style = this.create();
+        final String text = "abc123";
+        final SpreadsheetFormattedCell formatted = style.setCellFormattedText(text);
+        assertEquals("text", text, formatted.text());
+        assertEquals("style", style, formatted.style());
+    }
+
+    // setText......................................................................................................
 
     @Test
     public void testSetTextSame() {
