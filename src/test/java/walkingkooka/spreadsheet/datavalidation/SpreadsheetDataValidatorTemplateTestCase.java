@@ -2,6 +2,7 @@ package walkingkooka.spreadsheet.datavalidation;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -27,7 +28,7 @@ public abstract class SpreadsheetDataValidatorTemplateTestCase<V extends Spreads
         return new FakeExpressionEvaluationContext() {
             @Override
             public <T> T convert(final Object value, final Class<T> target) {
-                return all.convert(value, target);
+                return all.convert(value, target, ConverterContexts.basic(this));
             }
         };
     }
