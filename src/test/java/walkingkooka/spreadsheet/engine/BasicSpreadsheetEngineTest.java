@@ -1,6 +1,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.Test;
+import walkingkooka.DecimalNumberContexts;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -1881,7 +1882,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
     }
 
     private SpreadsheetParserContext parserContext() {
-        return SpreadsheetParserContexts.basic(ParserContexts.basic('.', 'E', '-', '+'));
+        return SpreadsheetParserContexts.basic(DecimalNumberContexts.basic('.', 'E', '-', '+'));
     }
 
     private Function<SpreadsheetEngine, ExpressionEvaluationContext> evaluationContextFactory() {
@@ -1900,7 +1901,8 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 functions,
                 labelStore,
                 MathContext.DECIMAL32,
-                Converters.simple()
+                Converters.simple(),
+                DecimalNumberContexts.fake()
         );
     }
 

@@ -1,5 +1,6 @@
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.DecimalNumberContext;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -23,23 +24,31 @@ final class SpreadsheetEngineExpressionEvaluationContextFactoryFunction implemen
     static SpreadsheetEngineExpressionEvaluationContextFactoryFunction with(final BiFunction<ExpressionNodeName, List<Object>, Object> functions,
                                                                             final SpreadsheetLabelStore labelStore,
                                                                             final MathContext mathContext,
-                                                                            final Converter converter) {
+                                                                            final Converter converter,
+                                                                            final DecimalNumberContext decimalNumberContext) {
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(labelStore, "labelStore");
         Objects.requireNonNull(mathContext, "mathContext");
         Objects.requireNonNull(converter, "converter");
+        Objects.requireNonNull(decimalNumberContext, "decimalNumberContext");
 
-        return new SpreadsheetEngineExpressionEvaluationContextFactoryFunction(functions, labelStore, mathContext, converter);
+        return new SpreadsheetEngineExpressionEvaluationContextFactoryFunction(functions,
+                labelStore,
+                mathContext,
+                converter,
+                decimalNumberContext);
     }
 
     private SpreadsheetEngineExpressionEvaluationContextFactoryFunction(final BiFunction<ExpressionNodeName, List<Object>, Object> functions,
                                                                         final SpreadsheetLabelStore labelStore,
                                                                         final MathContext mathContext,
-                                                                        final Converter converter) {
+                                                                        final Converter converter,
+                                                                        final DecimalNumberContext decimalNumberContext) {
         this.functions = functions;
         this.labelStore = labelStore;
         this.mathContext = mathContext;
         this.converter = converter;
+        this.decimalNumberContext = decimalNumberContext;
     }
 
     @Override
@@ -47,12 +56,14 @@ final class SpreadsheetEngineExpressionEvaluationContextFactoryFunction implemen
         return ExpressionEvaluationContexts.basic(this.functions,
                 SpreadsheetEngineExpressionEvaluationContextFactoryFunctionExpressionReferenceExpressionNodeFunction.with(engine, this.labelStore),
                 this.mathContext,
-                this.converter);
+                this.converter,
+                this.decimalNumberContext);
     }
 
     private final BiFunction<ExpressionNodeName, List<Object>, Object> functions;
     private final SpreadsheetLabelStore labelStore;
     private final MathContext mathContext;
     private final Converter converter;
+    private final DecimalNumberContext decimalNumberContext;
 
 }
