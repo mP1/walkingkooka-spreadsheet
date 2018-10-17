@@ -114,79 +114,120 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
 
     abstract protected SpreadsheetEngineContext createContext();
 
-    final SpreadsheetCell loadCellOrFail(final SpreadsheetEngine engine,
-                                         final SpreadsheetCellReference reference,
-                                         final SpreadsheetEngineLoading loading,
-                                         final SpreadsheetEngineContext context) {
+    protected final SpreadsheetCell loadCellOrFail(final SpreadsheetEngine engine,
+                                                   final SpreadsheetCellReference reference,
+                                                   final SpreadsheetEngineLoading loading,
+                                                   final SpreadsheetEngineContext context) {
         final Optional<SpreadsheetCell> cell = engine.loadCell(reference, loading, context);
-        if(!cell.isPresent()) {
+        if (!cell.isPresent()) {
             fail("Loading " + reference + " should have succeeded");
         }
         return cell.get();
     }
 
-    final void loadCellFailCheck(final SpreadsheetCellReference reference,
-                                 final SpreadsheetEngineLoading loading) {
+    protected final void loadCellFailCheck(final SpreadsheetCellReference reference,
+                                           final SpreadsheetEngineLoading loading) {
         this.loadCellFailCheck(reference, loading, this.createContext());
     }
 
-    final void loadCellFailCheck(final SpreadsheetCellReference reference,
-                                 final SpreadsheetEngineLoading loading,
-                                 final SpreadsheetEngineContext context) {
+    protected final void loadCellFailCheck(final SpreadsheetCellReference reference,
+                                           final SpreadsheetEngineLoading loading,
+                                           final SpreadsheetEngineContext context) {
         this.loadCellFailCheck(this.createSpreadsheetEngine(), reference, loading, context);
     }
 
-    final void loadCellFailCheck(final SpreadsheetEngine engine,
-                                 final SpreadsheetCellReference reference,
-                                 final SpreadsheetEngineContext context) {
+    protected final void loadCellFailCheck(final SpreadsheetEngine engine,
+                                           final SpreadsheetCellReference reference,
+                                           final SpreadsheetEngineContext context) {
         this.loadCellFailCheck(engine, reference, SpreadsheetEngineLoading.SKIP_EVALUATE, context);
     }
 
-    final void loadCellFailCheck(final SpreadsheetEngine engine,
-                                 final SpreadsheetCellReference reference,
-                                 final SpreadsheetEngineLoading loading,
-                                 final SpreadsheetEngineContext context) {
+    protected final void loadCellFailCheck(final SpreadsheetEngine engine,
+                                           final SpreadsheetCellReference reference,
+                                           final SpreadsheetEngineLoading loading,
+                                           final SpreadsheetEngineContext context) {
         final Optional<SpreadsheetCell> cell = engine.loadCell(reference, loading, context);
         assertEquals("Expected reference " + reference + " to fail", Optional.empty(), cell);
     }
 
-    final void loadCellAndCheckWithoutValueOrError(final SpreadsheetEngine engine,
-                                                   final SpreadsheetCellReference reference,
-                                                   final SpreadsheetEngineLoading loading,
-                                                   final SpreadsheetEngineContext context) {
+    protected final SpreadsheetCell loadCellAndCheckWithoutValueOrError(final SpreadsheetEngine engine,
+                                                                        final SpreadsheetCellReference reference,
+                                                                        final SpreadsheetEngineLoading loading,
+                                                                        final SpreadsheetEngineContext context) {
         final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading, context);
         assertEquals("values from returned cells=" + cell,
                 null,
                 this.valueOrError(cell, null));
+        return cell;
     }
 
-    final void loadCellAndCheckFormula(final SpreadsheetEngine engine,
-                                     final SpreadsheetCellReference reference,
-                                     final SpreadsheetEngineLoading loading,
-                                     final SpreadsheetEngineContext context,
-                                     final String formula) {
+    protected final SpreadsheetCell loadCellAndCheckFormula(final SpreadsheetEngine engine,
+                                                            final SpreadsheetCellReference reference,
+                                                            final SpreadsheetEngineLoading loading,
+                                                            final SpreadsheetEngineContext context,
+                                                            final String formula) {
         final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading, context);
         this.checkFormula(cell, formula);
+        return cell;
     }
 
-    final void loadCellAndCheckFormulaAndValue(final SpreadsheetEngine engine,
-                                       final SpreadsheetCellReference reference,
-                                       final SpreadsheetEngineLoading loading,
-                                       final SpreadsheetEngineContext context,
-                                       final String formula,
-                                       final Object value) {
-        final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading, context);
-        this.checkFormula(cell, formula);
+    protected final SpreadsheetCell loadCellAndCheckFormulaAndValue(final SpreadsheetEngine engine,
+                                                                    final SpreadsheetCellReference reference,
+                                                                    final SpreadsheetEngineLoading loading,
+                                                                    final SpreadsheetEngineContext context,
+                                                                    final String formula,
+                                                                    final Object value) {
+        final SpreadsheetCell cell = this.loadCellAndCheckFormula(engine, reference, loading, context, formula);
         this.checkValueOrError(cell, value);
+        return cell;
     }
 
-    final void loadCellAndCheckValue(final SpreadsheetEngine engine,
-                                     final SpreadsheetCellReference reference,
-                                     final SpreadsheetEngineLoading loading,
-                                     final SpreadsheetEngineContext context,
-                                     final Object value) {
+    protected final SpreadsheetCell loadCellAndCheckValue(final SpreadsheetEngine engine,
+                                                          final SpreadsheetCellReference reference,
+                                                          final SpreadsheetEngineLoading loading,
+                                                          final SpreadsheetEngineContext context,
+                                                          final Object value) {
         final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading, context);
         this.checkValueOrError(cell, value);
+        return cell;
+    }
+
+    protected final SpreadsheetCell loadCellAndCheckFormatted(final SpreadsheetEngine engine,
+                                                              final SpreadsheetCellReference reference,
+                                                              final SpreadsheetEngineLoading loading,
+                                                              final SpreadsheetEngineContext context,
+                                                              final Object value,
+                                                              final String text) {
+        final SpreadsheetCell cell = this.loadCellAndCheckValue(engine, reference, loading, context, value);
+        this.checkFormattedText(cell, text);
+        return cell;
+    }
+
+    protected final void loadCellAndCheckError(final SpreadsheetEngine engine,
+                                               final SpreadsheetCellReference reference,
+                                               final SpreadsheetEngineLoading loading,
+                                               final SpreadsheetEngineContext context,
+                                               final String errorContains) {
+        final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading, context);
+
+        final Optional<SpreadsheetError> error = cell.formula().error();
+        assertNotEquals("Expected error missing=" + cell, SpreadsheetFormula.NO_ERROR, error);
+        assertTrue("Error message " + error + " missing " + CharSequences.quoteAndEscape(errorContains), error.get().value().contains(errorContains));
+    }
+
+    protected final void loadLabelAndCheck(final SpreadsheetLabelStore labelStore,
+                                           final SpreadsheetLabelName label,
+                                           final SpreadsheetCellReference reference) {
+        assertEquals("label loaded", Optional.of(SpreadsheetLabelMapping.with(label, reference)), labelStore.load(label));
+    }
+
+    protected final void loadLabelFailCheck(final SpreadsheetLabelStore labelStore,
+                                            final SpreadsheetLabelName label) {
+        assertEquals("label loaded failed", Optional.empty(), labelStore.load(label));
+    }
+
+    protected final void countAndCheck(final Store<?, ?> store, final int count) {
+        assertEquals("record count in " + store, count, store.count());
     }
 
     private void checkFormula(final SpreadsheetCell cell, final String formula) {
@@ -205,35 +246,13 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
         final SpreadsheetFormula formula = cell.formula();
         return formula.value()
                 .orElse(formula.error()
-                        .map(e -> (Object)e.value())
+                        .map(e -> (Object) e.value())
                         .orElse(bothAbsent));
     }
 
-    final void loadCellAndCheckError(final SpreadsheetEngine engine,
-                                     final SpreadsheetCellReference reference,
-                                     final SpreadsheetEngineLoading loading,
-                                     final SpreadsheetEngineContext context,
-                                     final String errorContains) {
-        final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading, context);
-
-        final Optional<SpreadsheetError> error = cell.formula().error();
-        assertNotEquals("Expected error missing=" + cell, SpreadsheetFormula.NO_ERROR, error);
-        assertTrue("Error message " + error + " missing " + CharSequences.quoteAndEscape(errorContains), error.get().value().contains(errorContains));
-    }
-
-    final void loadLabelAndCheck(final SpreadsheetLabelStore labelStore,
-                                 final SpreadsheetLabelName label,
-                                 final SpreadsheetCellReference reference) {
-        assertEquals("label loaded", Optional.of(SpreadsheetLabelMapping.with(label, reference)), labelStore.load(label));
-    }
-
-    final void loadLabelFailCheck(final SpreadsheetLabelStore labelStore,
-                                 final SpreadsheetLabelName label) {
-        assertEquals("label loaded failed", Optional.empty(), labelStore.load(label));
-    }
-
-    final void countAndCheck(final Store<?, ?> store, final int count) {
-        assertEquals("record count in " + store, count, store.count());
+    protected void checkFormattedText(final SpreadsheetCell cell, final String text) {
+        assertNotEquals("formatted text absent", Optional.empty(), cell.formatted());
+        assertEquals("formattedText", text, cell.formatted().get().text());
     }
 
     protected DecimalNumberContext decimalNumberContext() {

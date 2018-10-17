@@ -1,0 +1,141 @@
+/*
+ * Copyright 2018 Miroslav Pokorny (github.com/mP1)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ */
+
+package walkingkooka.spreadsheet;
+
+import walkingkooka.Cast;
+import walkingkooka.build.tostring.ToStringBuilder;
+import walkingkooka.build.tostring.ToStringBuilderOption;
+import walkingkooka.build.tostring.UsesToStringBuilder;
+import walkingkooka.test.HashCodeEqualsDefined;
+import walkingkooka.text.spreadsheetformat.SpreadsheetTextFormatter;
+
+import java.util.Objects;
+import java.util.Optional;
+
+/**
+ * Holds the pattern and compiled formatter for a cell.
+ */
+public final class SpreadsheetCellFormat implements HashCodeEqualsDefined, UsesToStringBuilder {
+
+    /**
+     * A constant holding no formatter.
+     */
+    public final static Optional<SpreadsheetTextFormatter<?>> NO_FORMATTER = Optional.empty();
+
+    /**
+     * Creates a {@link SpreadsheetCellFormat}
+     */
+    public static SpreadsheetCellFormat with(final String pattern,
+                                             final Optional<SpreadsheetTextFormatter<?>> formatter) {
+        checkPattern(pattern);
+        checkFormatter(formatter);
+
+        return new SpreadsheetCellFormat(pattern, formatter);
+    }
+
+    private static void checkPattern(final String pattern) {
+        Objects.requireNonNull(pattern, "pattern");
+    }
+
+    private static void checkFormatter(final Optional<SpreadsheetTextFormatter<?>> formatter) {
+        Objects.requireNonNull(formatter, "formatter");
+    }
+
+    /**
+     * Private ctor use factory.
+     */
+    private SpreadsheetCellFormat(final String pattern,
+                                  final Optional<SpreadsheetTextFormatter<?>> formatter) {
+        super();
+        this.pattern = pattern;
+        this.formatter = formatter;
+    }
+
+    public String pattern() {
+        return this.pattern;
+    }
+
+    public SpreadsheetCellFormat setPattern(final String pattern) {
+        checkPattern(pattern);
+
+        return this.pattern.equals(pattern) ?
+                this :
+                this.replace(pattern, NO_FORMATTER);
+    }
+
+    private final String pattern;
+
+    // formatter...........................................................................
+
+    public Optional<SpreadsheetTextFormatter<?>> formatter() {
+        return this.formatter;
+    }
+
+    public SpreadsheetCellFormat setFormatter(final Optional<SpreadsheetTextFormatter<?>> formatter) {
+        checkFormatter(formatter);
+
+        return this.formatter.equals(formatter) ?
+                this :
+                this.replace(this.pattern, formatter);
+    }
+
+    private final Optional<SpreadsheetTextFormatter<?>> formatter;
+
+    // replace.............................................................................
+
+    /**
+     * Factory that creates a new {@link SpreadsheetCellFormat}
+     */
+    private SpreadsheetCellFormat replace(final String pattern,
+                                          final Optional<SpreadsheetTextFormatter<?>> formatter) {
+        return new SpreadsheetCellFormat(pattern, formatter);
+    }
+
+    // Object ............................................................................
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.pattern, this.formatter);
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+                other instanceof SpreadsheetCellFormat &&
+                        this.equals0(Cast.to(other));
+    }
+
+    private boolean equals0(final SpreadsheetCellFormat other) {
+        return this.pattern.equals(other.pattern) &&
+                this.formatter.equals(other.formatter);
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.buildFrom(this);
+    }
+
+    @Override
+    public void buildToString(ToStringBuilder builder) {
+        builder.separator(" ");
+        builder.enable(ToStringBuilderOption.QUOTE);
+        builder.value(this.pattern);
+        builder.value(this.formatter);
+    }
+}
