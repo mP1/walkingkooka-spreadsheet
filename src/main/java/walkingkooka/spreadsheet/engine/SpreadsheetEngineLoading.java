@@ -1,50 +1,47 @@
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 
 public enum SpreadsheetEngineLoading {
 
     /**
-     * Will return the formula in its current form without any attempt to parse or evaluate the formula.
+     * Performs no new evaluation of the formula, leaves the original value or error alone and does not change the style.
      */
     SKIP_EVALUATE {
         @Override
-        SpreadsheetFormula process(final SpreadsheetFormula formula,
-                                   final BasicSpreadsheetEngine engine,
-                                   final SpreadsheetEngineContext context) {
-            return formula;
+        SpreadsheetCell formulaEvaluateAndStyle(final SpreadsheetCell cell,
+                                                final BasicSpreadsheetEngine engine,
+                                                final SpreadsheetEngineContext context) {
+            return cell;
         }
     },
     /**
-     * Will parse if required and then evaluate the formula.
+     * Clears the value in the formula, evaluates the formula and value and applies styling.
      */
     FORCE_RECOMPUTE {
         @Override
-        SpreadsheetFormula process(final SpreadsheetFormula formula,
-                                   final BasicSpreadsheetEngine engine,
-                                   final SpreadsheetEngineContext context) {
-            return engine.evaluateIfPossible(
-                   engine.parseIfNecessary(
-                   formula.setValue(SpreadsheetFormula.NO_VALUE),
-                           context),
+        SpreadsheetCell formulaEvaluateAndStyle(final SpreadsheetCell cell,
+                                                final BasicSpreadsheetEngine engine,
+                                                final SpreadsheetEngineContext context) {
+            return engine.formulaEvaluateAndStyle(cell.setFormula(cell.formula().setValue(SpreadsheetFormula.NO_VALUE)),
                     context);
         }
     },
+
     /**
-     * Will only parse and evaluate as required if a value is absent.
+     * Evaluates the formula and value and applies styling.
      */
     COMPUTE_IF_NECESSARY {
         @Override
-        SpreadsheetFormula process(final SpreadsheetFormula formula,
-                                   final BasicSpreadsheetEngine engine,
-                                   final SpreadsheetEngineContext context) {
-            return engine.evaluateIfPossible(
-                   engine.parseIfNecessary(formula, context),
-                    context);
+        SpreadsheetCell formulaEvaluateAndStyle(final SpreadsheetCell cell,
+                                                final BasicSpreadsheetEngine engine,
+                                                final SpreadsheetEngineContext context) {
+            return engine.formulaEvaluateAndStyle(cell, context);
         }
     };
 
-    abstract SpreadsheetFormula process(final SpreadsheetFormula formula,
-                                        final BasicSpreadsheetEngine engine,
-                                        final SpreadsheetEngineContext context);
+    abstract SpreadsheetCell formulaEvaluateAndStyle(final SpreadsheetCell cell,
+                                                     final BasicSpreadsheetEngine engine,
+                                                     final SpreadsheetEngineContext context);
 }

@@ -19,9 +19,12 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Context;
-import walkingkooka.DecimalNumberContext;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
+import walkingkooka.text.spreadsheetformat.SpreadsheetFormattedText;
+import walkingkooka.text.spreadsheetformat.SpreadsheetTextFormatter;
 import walkingkooka.tree.expression.ExpressionNode;
+
+import java.util.Optional;
 
 /**
  * Context that accompanies a value format, holding local sensitive attributes such as the decimal point character.
@@ -37,4 +40,20 @@ public interface SpreadsheetEngineContext extends Context {
      * Evaluates the expression into a value.
      */
     Object evaluate(final ExpressionNode node);
+
+    /**
+     * Accepts a format pattern and returns the equivalent {@link SpreadsheetTextFormatter}.
+     */
+    SpreadsheetTextFormatter<?> parseFormatPattern(final String pattern);
+
+    /**
+     * The default {@link SpreadsheetTextFormatter} when no pattern is available for a cell.
+     */
+    SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter();
+
+    /**
+     * Formats the given value using the provided formatter.
+     */
+    Optional<SpreadsheetFormattedText> format(final Object value,
+                                              final SpreadsheetTextFormatter<?> formatter);
 }
