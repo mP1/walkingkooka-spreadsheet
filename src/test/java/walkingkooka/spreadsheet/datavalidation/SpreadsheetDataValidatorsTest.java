@@ -3,6 +3,7 @@ package walkingkooka.spreadsheet.datavalidation;
 import org.junit.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.test.PublicStaticHelperTestCase;
 import walkingkooka.text.CharSequences;
@@ -652,7 +653,7 @@ public final class SpreadsheetDataValidatorsTest extends PublicStaticHelperTestC
         return new FakeExpressionEvaluationContext() {
             @Override
             public <T> T convert(final Object value, final Class<T> target) {
-                return all.convert(value, target);
+                return all.convert(value, target, ConverterContexts.basic(this));
             }
         };
     }

@@ -1,6 +1,8 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.Test;
+import walkingkooka.DecimalNumberContext;
+import walkingkooka.DecimalNumberContexts;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
@@ -19,27 +21,56 @@ public final class SpreadsheetEngineExpressionEvaluationContextFactoryFunctionTe
 
     @Test(expected = NullPointerException.class)
     public void testWithNullFunctionsFails() {
-        SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(null, this.labelStore(), this.mathContext(), this.converter());
+        SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(null,
+                this.labelStore(),
+                this.mathContext(),
+                this.converter(),
+                this.decimalNumberContext());
     }
 
     @Test(expected = NullPointerException.class)
     public void testWithNullLabelStoreFails() {
-        SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(this.functions(),null, this.mathContext(), this.converter());
+        SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(this.functions(),
+                null,
+                this.mathContext(),
+                this.converter(),
+                this.decimalNumberContext());
     }
 
     @Test(expected = NullPointerException.class)
     public void testWithNullMathContextFails() {
-        SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(this.functions(), this.labelStore(),null, this.converter());
+        SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(this.functions(),
+                this.labelStore(),
+                null,
+                this.converter(),
+                this.decimalNumberContext());
     }
 
     @Test(expected = NullPointerException.class)
     public void testWithNullConverterFails() {
-        SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(this.functions(), this.labelStore(), this.mathContext(), null);
+        SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(this.functions(),
+                this.labelStore(),
+                this.mathContext(),
+                null,
+                this.decimalNumberContext());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testWithNullDecimalNumberContextFails() {
+        SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(this.functions(),
+                this.labelStore(),
+                this.mathContext(),
+                this.converter(),
+                null);
     }
 
     @Override
     protected SpreadsheetEngineExpressionEvaluationContextFactoryFunction createFunction() {
-        return SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(this.functions(), this.labelStore(), this.mathContext(), this.converter());
+        return SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(this.functions(),
+                this.labelStore(),
+                this.mathContext(),
+                this.converter(),
+                this.decimalNumberContext());
     }
 
     private BiFunction<ExpressionNodeName, List<Object>, Object> functions() {
@@ -58,6 +89,10 @@ public final class SpreadsheetEngineExpressionEvaluationContextFactoryFunctionTe
 
     private Converter converter() {
         return Converters.simple();
+    }
+
+    private DecimalNumberContext decimalNumberContext() {
+        return DecimalNumberContexts.fake();
     }
 
     @Override

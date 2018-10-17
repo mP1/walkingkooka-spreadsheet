@@ -41,6 +41,26 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     }
 
     @Override
+    public char decimalPoint() {
+        return this.context.decimalPoint();
+    }
+
+    @Override
+    public char exponentSymbol() {
+        return this.context.exponentSymbol();
+    }
+
+    @Override
+    public char minusSign() {
+        return this.context.minusSign();
+    }
+
+    @Override
+    public char plusSign() {
+        return this.context.plusSign();
+    }
+
+    @Override
     public ExpressionReference cellReference() {
         return this.cellReference;
     }

@@ -1,5 +1,6 @@
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.DecimalNumberContext;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
@@ -48,8 +49,13 @@ public final class SpreadsheetEngines implements PublicStaticHelper {
     public static Function<SpreadsheetEngine, ExpressionEvaluationContext> spreadsheetEngineExpressionEvaluationContextFunction(final BiFunction<ExpressionNodeName, List<Object>, Object> functions,
                                                                                                                                 final SpreadsheetLabelStore labelStore,
                                                                                                                                 final MathContext mathContext,
-                                                                                                                                final Converter converter) {
-        return SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(functions, labelStore, mathContext, converter);
+                                                                                                                                final Converter converter,
+                                                                                                                                final DecimalNumberContext decimalNumberContext) {
+        return SpreadsheetEngineExpressionEvaluationContextFactoryFunction.with(functions,
+                labelStore,
+                mathContext,
+                converter,
+                decimalNumberContext);
     }
 
     /**
