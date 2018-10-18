@@ -1882,7 +1882,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
     }
 
     private SpreadsheetParserContext parserContext() {
-        return SpreadsheetParserContexts.basic(DecimalNumberContexts.basic('.', 'E', '-', '+'));
+        return SpreadsheetParserContexts.basic(DecimalNumberContexts.basic("$", '.', 'E', ',', '-', '%', '+'));
     }
 
     private Function<SpreadsheetEngine, ExpressionEvaluationContext> evaluationContextFactory() {
