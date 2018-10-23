@@ -2,11 +2,9 @@ package walkingkooka.spreadsheet.style;
 
 import walkingkooka.Cast;
 import walkingkooka.Value;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.test.HashCodeEqualsDefined;
 
 import java.io.Serializable;
-import java.util.Map;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
