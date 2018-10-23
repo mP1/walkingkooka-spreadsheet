@@ -2036,7 +2036,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
             public SpreadsheetParserToken parseFormula(final String formula) {
                 return SpreadsheetParsers.expression()
                         .orFailIfCursorNotEmpty(ParserReporters.basic())
-                        .parse(TextCursors.charSequence(formula), SpreadsheetParserContexts.basic(this))
+                        .parse(TextCursors.charSequence(formula), SpreadsheetParserContexts.basic(decimalNumberContext()))
                         .get();
             }
 
@@ -2054,43 +2054,8 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                         SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(engine, labelStore, this),
                         MathContext.UNLIMITED,
                         Converters.simple(),
-                        this));
+                        decimalNumberContext()));
             };
-
-            @Override
-            public String currencySymbol() {
-                return "$";
-            }
-
-            @Override
-            public char decimalPoint() {
-                return '.';
-            }
-
-            @Override
-            public char exponentSymbol() {
-                return 'E';
-            }
-
-            @Override
-            public char groupingSeparator() {
-                return ',';
-            }
-
-            @Override
-            public char minusSign() {
-                return '-';
-            }
-
-            @Override
-            public char percentageSymbol() {
-                return '%';
-            }
-
-            @Override
-            public char plusSign() {
-                return '+';
-            }
         };
     }
 
