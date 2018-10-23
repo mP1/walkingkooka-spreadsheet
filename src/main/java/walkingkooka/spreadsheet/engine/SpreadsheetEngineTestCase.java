@@ -1,8 +1,8 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.Test;
-import walkingkooka.DecimalNumberContext;
-import walkingkooka.DecimalNumberContexts;
+import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
