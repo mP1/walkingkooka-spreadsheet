@@ -9,8 +9,9 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReferenceParser
  */
 final class BasicSpreadsheetEngineDeleteColumnOrRow extends BasicSpreadsheetEngineDeleteOrInsertColumnOrRow {
 
-    static void delete(final BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow columnOrRow) {
-        new BasicSpreadsheetEngineDeleteColumnOrRow(columnOrRow).delete0();
+    static void delete(final BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow columnOrRow,
+                       final SpreadsheetEngineContext context) {
+        new BasicSpreadsheetEngineDeleteColumnOrRow(columnOrRow).delete0(context);
     }
 
     private BasicSpreadsheetEngineDeleteColumnOrRow(final BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow columnOrRow) {
@@ -20,10 +21,10 @@ final class BasicSpreadsheetEngineDeleteColumnOrRow extends BasicSpreadsheetEngi
     /**
      * Delete the selected columns or rows.
      */
-    private void delete0() {
+    private void delete0(final SpreadsheetEngineContext context) {
         this.columnOrRow.delete(this.columnOrRow.value, this.columnOrRow.count);
         this.move();
-        this.columnOrRow.fixAllExpressionCellReferences();
+        this.columnOrRow.fixAllExpressionCellReferences(context);
         this.columnOrRow.fixAllLabelMappings();
     }
 
