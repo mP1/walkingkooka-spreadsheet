@@ -22,11 +22,13 @@ import walkingkooka.Cast;
 import walkingkooka.build.tostring.ToStringBuilder;
 import walkingkooka.build.tostring.ToStringBuilderOption;
 import walkingkooka.build.tostring.UsesToStringBuilder;
+import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.HasText;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Holds the text and style for a cell.
@@ -91,6 +93,16 @@ public final class SpreadsheetFormattedCell implements HasText, HashCodeEqualsDe
 
     private SpreadsheetFormattedCell replace(final String text, final SpreadsheetCellStyle style) {
         return new SpreadsheetFormattedCell(text, style);
+    }
+
+    /**
+     * Replaces the color property for the {@link walkingkooka.spreadsheet.style.SpreadsheetTextStyle}
+     */
+    public SpreadsheetFormattedCell setTextColor(final Color color) {
+        Objects.requireNonNull(color, "color");
+
+        final SpreadsheetCellStyle style = this.style();
+        return this.setStyle(style.setText(style.text().setColor(Optional.of(color))));
     }
 
     // Object ............................................................................
