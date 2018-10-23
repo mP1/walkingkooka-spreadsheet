@@ -9,7 +9,6 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {

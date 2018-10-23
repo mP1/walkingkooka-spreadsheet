@@ -18,10 +18,10 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.*;
-import walkingkooka.test.*;
+import walkingkooka.Cast;
+import walkingkooka.test.HashCodeEqualsDefined;
 
-import java.util.*;
+import java.util.Objects;
 
 /**
  * Metadata about a spreadsheet.
