@@ -1,12 +1,14 @@
 package walkingkooka.spreadsheet;
 
-import org.junit.*;
-import walkingkooka.test.*;
+import org.junit.Test;
+import walkingkooka.test.PublicClassTestCase;
 import walkingkooka.tree.expression.ExpressionNode;
 
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 
 public final class SpreadsheetFormulaTest extends PublicClassTestCase<SpreadsheetFormula> {
