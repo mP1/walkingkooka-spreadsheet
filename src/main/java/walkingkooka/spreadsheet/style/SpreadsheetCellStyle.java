@@ -4,7 +4,6 @@ import walkingkooka.Cast;
 import walkingkooka.build.tostring.ToStringBuilder;
 import walkingkooka.build.tostring.ToStringBuilderOption;
 import walkingkooka.build.tostring.UsesToStringBuilder;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormattedCell;
 import walkingkooka.test.HashCodeEqualsDefined;
 
