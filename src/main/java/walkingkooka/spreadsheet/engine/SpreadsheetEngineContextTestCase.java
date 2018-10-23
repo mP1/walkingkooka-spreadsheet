@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.Test;
 import walkingkooka.ContextTestCase;
-import walkingkooka.DecimalNumberContextTestCase;
 
 public abstract class SpreadsheetEngineContextTestCase<C extends SpreadsheetEngineContext> extends ContextTestCase<C> {
 
@@ -30,8 +29,13 @@ public abstract class SpreadsheetEngineContextTestCase<C extends SpreadsheetEngi
     }
 
     @Test(expected = NullPointerException.class)
-    public final void testEvaulateNullFails() {
+    public final void testEvaluateNullFails() {
         this.createContext().evaluate(null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public final void testParseFormatPatternNullFails() {
+        this.createContext().parseFormatPattern(null);
     }
 
     @Override

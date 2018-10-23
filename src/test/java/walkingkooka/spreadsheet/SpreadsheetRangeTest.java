@@ -4,6 +4,8 @@ import org.junit.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
+import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
+import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
 import walkingkooka.test.PublicClassTestCase;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
@@ -11,7 +13,6 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -177,7 +178,23 @@ public final class SpreadsheetRangeTest extends PublicClassTestCase<SpreadsheetR
     }
 
     private SpreadsheetCell spreadsheetCell(final int column, final int row) {
-        return SpreadsheetCell.with(this.cell(column, row), SpreadsheetFormula.with(column + "+" + row));
+        return SpreadsheetCell.with(this.cell(column, row),
+                SpreadsheetFormula.with(column + "+" + row),
+                this.style(),
+                this.format(),
+                this.formatted());
+    }
+
+    private SpreadsheetCellStyle style() {
+        return SpreadsheetCellStyle.EMPTY.setText(SpreadsheetTextStyle.EMPTY.setBold(SpreadsheetTextStyle.BOLD));
+    }
+
+    private Optional<SpreadsheetCellFormat> format() {
+        return SpreadsheetCell.NO_FORMAT;
+    }
+
+    private Optional<SpreadsheetFormattedCell> formatted() {
+        return SpreadsheetCell.NO_FORMATTED_CELL;
     }
 
     // from...............................................................................................

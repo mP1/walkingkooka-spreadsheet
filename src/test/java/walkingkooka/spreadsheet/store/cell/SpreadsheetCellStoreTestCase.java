@@ -4,12 +4,17 @@ import org.junit.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetCellFormat;
+import walkingkooka.spreadsheet.SpreadsheetFormattedCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.store.StoreTestCase;
+import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
+import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -29,7 +34,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         final S store = this.createStore();
 
         final SpreadsheetCellReference reference = this.cellReference(1, 2);
-        final SpreadsheetCell cell = SpreadsheetCell.with(reference, this.formula());
+        final SpreadsheetCell cell = this.cell(reference);
         store.save(cell);
 
         assertSame(cell, store.loadOrFail(reference));
@@ -40,7 +45,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         final S store = this.createStore();
 
         final SpreadsheetCellReference reference = this.cellReference(1, 2);
-        final SpreadsheetCell cell = SpreadsheetCell.with(reference, this.formula());
+        final SpreadsheetCell cell = this.cell(reference);
         store.save(cell);
         store.delete(reference);
 
@@ -51,8 +56,8 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     public final void testCount() {
         final S store = this.createStore();
 
-        store.save(SpreadsheetCell.with(this.cellReference(1, 2), this.formula()));
-        store.save(SpreadsheetCell.with(this.cellReference(3, 4), this.formula()));
+        store.save(this.cell(1, 2));
+        store.save(this.cell(3, 4));
 
         this.countAndCheck(store, 2);
     }
@@ -62,8 +67,8 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         final S store = this.createStore();
 
         final SpreadsheetCellReference cell = this.cellReference(1, 2);
-        store.save(SpreadsheetCell.with(cell, this.formula()));
-        store.save(SpreadsheetCell.with(this.cellReference(3, 4), this.formula()));
+        store.save(this.cell(cell));
+        store.save(this.cell(3, 4));
         store.delete(cell);
 
         this.countAndCheck(store, 2 - 1);
@@ -73,11 +78,9 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     public final void testRows() {
         final S store = this.createStore();
 
-        final SpreadsheetFormula formula = this.formula();
-
-        store.save(SpreadsheetCell.with(this.cellReference(1, 2), formula));
-        store.save(SpreadsheetCell.with(this.cellReference(1, 99), formula));
-        store.save(SpreadsheetCell.with(this.cellReference(1, 5), formula));
+        store.save(this.cell(1, 2));
+        store.save(this.cell(1, 99));
+        store.save(this.cell(1, 5));
 
         this.rowsAndCheck(store, 99);
     }
@@ -86,11 +89,9 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     public final void testColumns() {
         final S store = this.createStore();
 
-        final SpreadsheetFormula formula = this.formula();
-
-        store.save(SpreadsheetCell.with(this.cellReference(1, 1), formula));
-        store.save(SpreadsheetCell.with(this.cellReference(99, 1), formula));
-        store.save(SpreadsheetCell.with(this.cellReference(98, 2), formula));
+        store.save(this.cell(1, 1));
+        store.save(this.cell(99, 1));
+        store.save(this.cell(98, 2));
 
         this.columnsAndCheck(store, 99);
     }
@@ -104,12 +105,10 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     public final void testRow() {
         final S store = this.createStore();
 
-        final SpreadsheetFormula formula = this.formula();
-
-        final SpreadsheetCell a = SpreadsheetCell.with(this.cellReference(11, 1), formula);
-        final SpreadsheetCell b = SpreadsheetCell.with(this.cellReference(22, 1), formula);
-        final SpreadsheetCell c = SpreadsheetCell.with(this.cellReference(11, 2), formula);
-        final SpreadsheetCell d = SpreadsheetCell.with(this.cellReference(22, 2), formula);
+        final SpreadsheetCell a = this.cell(11, 1);
+        final SpreadsheetCell b = this.cell(22, 1);
+        final SpreadsheetCell c = this.cell(11, 2);
+        final SpreadsheetCell d = this.cell(22, 2);
 
         store.save(a);
         store.save(b);
@@ -130,12 +129,10 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     public final void testColumn() {
         final S store = this.createStore();
 
-        final SpreadsheetFormula formula = this.formula();
-
-        final SpreadsheetCell a = SpreadsheetCell.with(this.cellReference(1, 11), formula);
-        final SpreadsheetCell b = SpreadsheetCell.with(this.cellReference(1, 22), formula);
-        final SpreadsheetCell c = SpreadsheetCell.with(this.cellReference(2, 11), formula);
-        final SpreadsheetCell d = SpreadsheetCell.with(this.cellReference(2, 22), formula);
+        final SpreadsheetCell a = this.cell(1, 11);
+        final SpreadsheetCell b = this.cell(1, 22);
+        final SpreadsheetCell c = this.cell(2, 11);
+        final SpreadsheetCell d = this.cell(2, 22);
 
         store.save(a);
         store.save(b);
@@ -156,7 +153,15 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
         assertEquals(message, expectedSets, actual);
     }
-    
+
+    private SpreadsheetCell cell(final int column, final int row) {
+        return this.cell(this.cellReference(column, row));
+    }
+
+    private SpreadsheetCell cell(final SpreadsheetCellReference cellReference) {
+        return SpreadsheetCell.with(cellReference, this.formula(), this.style(), this.format(), this.formatted());
+    }
+
     final SpreadsheetCellReference cellReference(final int column, final int row) {
         return SpreadsheetCellReference.with(SpreadsheetReferenceKind.ABSOLUTE.column(column),
                 SpreadsheetReferenceKind.ABSOLUTE.row(row));
@@ -172,5 +177,17 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     
     private SpreadsheetFormula formula() {
         return SpreadsheetFormula.with("1+2");
+    }
+
+    private SpreadsheetCellStyle style() {
+        return SpreadsheetCellStyle.EMPTY.setText(SpreadsheetTextStyle.EMPTY.setBold(SpreadsheetTextStyle.BOLD));
+    }
+
+    private Optional<SpreadsheetCellFormat> format() {
+        return SpreadsheetCell.NO_FORMAT;
+    }
+
+    private Optional<SpreadsheetFormattedCell> formatted() {
+        return SpreadsheetCell.NO_FORMATTED_CELL;
     }
 }
