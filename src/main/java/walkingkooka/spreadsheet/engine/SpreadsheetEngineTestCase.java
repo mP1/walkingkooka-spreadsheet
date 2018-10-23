@@ -1,6 +1,8 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.Test;
+import walkingkooka.DecimalNumberContext;
+import walkingkooka.DecimalNumberContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
@@ -232,5 +234,9 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
 
     final void countAndCheck(final Store<?, ?> store, final int count) {
         assertEquals("record count in " + store, count, store.count());
+    }
+
+    protected DecimalNumberContext decimalNumberContext() {
+        return DecimalNumberContexts.basic("$", '.', 'E', ',', '-', '%', '+');
     }
 }
