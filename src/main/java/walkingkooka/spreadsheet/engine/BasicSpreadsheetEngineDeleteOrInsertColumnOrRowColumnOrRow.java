@@ -22,19 +22,21 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      */
     BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow(final int value,
                                                                final int count,
-                                                               final BasicSpreadsheetEngine engine) {
+                                                               final BasicSpreadsheetEngine engine,
+                                                               final SpreadsheetEngineContext context) {
         super();
         this.value = value;
         this.count = count;
         this.engine = engine;
+        this.context = context;
     }
 
     final void delete() {
-        BasicSpreadsheetEngineDeleteColumnOrRow.delete(this);
+        BasicSpreadsheetEngineDeleteColumnOrRow.delete(this, this.context);
     }
 
     final void insert() {
-        BasicSpreadsheetEngineInsertColumnOrRow.insert(this);
+        BasicSpreadsheetEngineInsertColumnOrRow.insert(this, this.context);
     }
 
     // delete....................................................................................................
@@ -80,16 +82,16 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
     /**
      * Scans all cell expressions for references and fixes those needing fixing.
      */
-    final void fixAllExpressionCellReferences() {
+    final void fixAllExpressionCellReferences(final SpreadsheetEngineContext context) {
         final int rows = this.maxRow();
         for (int i = 0; i <= rows; i++) {
-            this.fixRowCellReferences(i);
+            this.fixRowCellReferences(i, context);
         }
     }
 
-    private void fixRowCellReferences(final int row) {
+    private void fixRowCellReferences(final int row, final SpreadsheetEngineContext context) {
         this.rowCells(row).stream()
-                .map(this::fixExpressionCellReferences)
+                .map(r -> this.fixExpressionCellReferences(r, context))
                 .forEach(this::saveCell);
     }
 
@@ -97,11 +99,13 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      * Attempts to parse the formula if necessary and then update cell references that may have shifted due to a
      * delete or insert.
      */
-    private SpreadsheetCell fixExpressionCellReferences(final SpreadsheetCell cell) {
+    private SpreadsheetCell fixExpressionCellReferences(final SpreadsheetCell cell,
+                                                        final SpreadsheetEngineContext context) {
         return cell.setFormula(
                 this.engine.parse(
                         cell.formula(),
-                        this::fixCellReferencesWithinExpression));
+                        this::fixCellReferencesWithinExpression,
+                        context));
     }
 
     /**
@@ -244,6 +248,8 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
     }
 
     private final BasicSpreadsheetEngine engine;
+
+    private final SpreadsheetEngineContext context;
 
     BasicSpreadsheetEngineDeleteOrInsertColumnOrRow deleteOrInsert;
 }
