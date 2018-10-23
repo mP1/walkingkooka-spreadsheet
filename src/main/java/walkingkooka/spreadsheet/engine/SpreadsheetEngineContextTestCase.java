@@ -19,9 +19,10 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.Test;
+import walkingkooka.ContextTestCase;
 import walkingkooka.DecimalNumberContextTestCase;
 
-public abstract class SpreadsheetEngineContextTestCase<C extends SpreadsheetEngineContext> extends DecimalNumberContextTestCase<C> {
+public abstract class SpreadsheetEngineContextTestCase<C extends SpreadsheetEngineContext> extends ContextTestCase<C> {
 
     @Test(expected = NullPointerException.class)
     public final void testParseFormulaNullFails() {
