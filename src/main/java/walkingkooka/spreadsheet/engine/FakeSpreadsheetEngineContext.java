@@ -1,11 +1,13 @@
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.FakeDecimalNumberContext;
 import walkingkooka.test.Fake;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
+import walkingkooka.text.spreadsheetformat.SpreadsheetFormattedText;
+import walkingkooka.text.spreadsheetformat.SpreadsheetTextFormatter;
 import walkingkooka.tree.expression.ExpressionNode;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class FakeSpreadsheetEngineContext implements SpreadsheetEngineContext, Fake {
 
@@ -18,6 +20,23 @@ public class FakeSpreadsheetEngineContext implements SpreadsheetEngineContext, F
     @Override
     public Object evaluate(final ExpressionNode node) {
         Objects.requireNonNull(node, "node");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetTextFormatter<?> parseFormatPattern(final String pattern) {
+        Objects.requireNonNull(pattern, "pattern");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Optional<SpreadsheetFormattedText> format(final Object value,
+                                                     final SpreadsheetTextFormatter<?> formatter) {
         throw new UnsupportedOperationException();
     }
 }

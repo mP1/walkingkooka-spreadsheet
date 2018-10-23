@@ -1,0 +1,144 @@
+/*
+ * Copyright 2018 Miroslav Pokorny (github.com/mP1)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ *
+ */
+
+package walkingkooka.spreadsheet;
+
+import org.junit.Test;
+import walkingkooka.test.PublicClassTestCase;
+import walkingkooka.text.CharSequences;
+import walkingkooka.text.spreadsheetformat.SpreadsheetTextFormatter;
+import walkingkooka.text.spreadsheetformat.SpreadsheetTextFormatters;
+
+import java.util.Optional;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+
+public final class SpreadsheetCellFormatTest extends PublicClassTestCase<SpreadsheetCellFormat> {
+
+    private final static String PATTERN = "abc123";
+    private final static Optional<SpreadsheetTextFormatter<?>> FORMATTER = Optional.of(SpreadsheetTextFormatters.fake());
+
+    @Test(expected = NullPointerException.class)
+    public void testWithNullpatternFails() {
+        SpreadsheetCellFormat.with(null, FORMATTER);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testWithNullFormatterFails() {
+        SpreadsheetCellFormat.with(PATTERN, null);
+    }
+
+    @Test
+    public void testWith() {
+        final SpreadsheetCellFormat format = this.createFormat();
+        this.check(format, PATTERN, FORMATTER);
+    }
+
+    @Test
+    public void testWithEmptyPattern() {
+        this.createAndCheck("", FORMATTER);
+    }
+
+    private void createAndCheck(final String pattern,
+                                final Optional<SpreadsheetTextFormatter<?>> formatter) {
+        final SpreadsheetCellFormat format = SpreadsheetCellFormat.with(pattern, formatter);
+        this.check(format, pattern, formatter);
+    }
+
+    // setPattern...........................................................
+
+    @Test(expected = NullPointerException.class)
+    public void testSetPatternNullFails() {
+        this.createFormat().setPattern(null);
+    }
+
+    @Test
+    public void testSetPatternSame() {
+        final SpreadsheetCellFormat format = this.createFormat();
+        assertSame(format, format.setPattern(PATTERN));
+    }
+
+    @Test
+    public void testSetPatternDifferentClearsFormatter() {
+        final String differentPattern = "different";
+        final SpreadsheetCellFormat format = this.createFormat();
+        final SpreadsheetCellFormat different = format.setPattern(differentPattern);
+        assertNotSame(format, different);
+        this.check(different, differentPattern, SpreadsheetCellFormat.NO_FORMATTER);
+    }
+
+    // setFormatter...........................................................
+
+    @Test(expected = NullPointerException.class)
+    public void testSetFormatterNullFails() {
+        this.createFormat().setFormatter(null);
+    }
+
+    @Test
+    public void testSetFormatterSame() {
+        final SpreadsheetCellFormat format = this.createFormat();
+        assertSame(format, format.setFormatter(FORMATTER));
+    }
+
+    @Test
+    public void testSetFormatterDifferent() {
+        this.setFormatterDifferentAndCheck(Optional.of(SpreadsheetTextFormatters.general()));
+    }
+
+    @Test
+    public void testSetFormatterDifferentWithout() {
+        this.setFormatterDifferentAndCheck(SpreadsheetCellFormat.NO_FORMATTER);
+    }
+
+    private void setFormatterDifferentAndCheck(final Optional<SpreadsheetTextFormatter<?>> differentFormatter) {
+        final SpreadsheetCellFormat format = this.createFormat();
+        final SpreadsheetCellFormat different = format.setFormatter(differentFormatter);
+        assertNotSame(format, different);
+        this.check(different, PATTERN, differentFormatter);
+    }
+
+    private void check(final SpreadsheetCellFormat format,
+                       final String pattern,
+                       final Optional<SpreadsheetTextFormatter<?>> formatter) {
+        assertEquals("pattern", pattern, format.pattern());
+        assertEquals("formatter", formatter, format.formatter());
+    }
+
+    // toString................................................................................................
+
+    @Test
+    public void testToString() {
+        assertEquals(CharSequences.quote(PATTERN) + " " + FORMATTER.get(), this.createFormat().toString());
+    }
+
+    @Test
+    public void testToStringWithoutFormatter() {
+        assertEquals(CharSequences.quote(PATTERN).toString(), SpreadsheetCellFormat.with(PATTERN, SpreadsheetCellFormat.NO_FORMATTER).toString());
+    }
+
+    private SpreadsheetCellFormat createFormat() {
+        return SpreadsheetCellFormat.with(PATTERN, FORMATTER);
+    }
+
+    @Override
+    protected Class<SpreadsheetCellFormat> type() {
+        return SpreadsheetCellFormat.class;
+    }
+}
