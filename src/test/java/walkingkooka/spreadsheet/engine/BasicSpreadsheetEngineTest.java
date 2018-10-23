@@ -29,7 +29,7 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionNodeName;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.List;
 import java.util.Optional;
@@ -103,7 +103,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         this.loadCellAndCheckValue(engine,
                 cellReference,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(1+2));
+                BigDecimal.valueOf(1+2));
     }
 
     @Test
@@ -152,7 +152,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
 
         final SpreadsheetCell second = this.loadCellOrFail(engine, a, SpreadsheetEngineLoading.FORCE_RECOMPUTE);
         assertNotSame("different instances of SpreadsheetCell returned not cached", first, second);
-        assertEquals("first should have value updated to 999 and not 1 the original value.", Optional.of(BigInteger.valueOf(999)), second.formula().value());
+        assertEquals("first should have value updated to 999 and not 1 the original value.", Optional.of(BigDecimal.valueOf(999)), second.formula().value());
     }
 
     @Test
@@ -185,15 +185,15 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         this.loadCellAndCheckValue(engine,
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(1+2));
+                BigDecimal.valueOf(1+2));
         this.loadCellAndCheckValue(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(3+4));
+                BigDecimal.valueOf(3+4));
         this.loadCellAndCheckValue(engine,
                 c,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(5+6));
+                BigDecimal.valueOf(5+6));
     }
 
     @Test
@@ -233,13 +233,13 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         this.loadCellAndCheckValue(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(3+4));
+                BigDecimal.valueOf(3+4));
 
         // reference to B1 which has formula
         this.loadCellAndCheckValue(engine,
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(3+4));
+                BigDecimal.valueOf(3+4));
     }
 
     @Test
@@ -260,13 +260,13 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         this.loadCellAndCheckValue(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(3+4));
+                BigDecimal.valueOf(3+4));
 
         // reference to B1 which has formula
         this.loadCellAndCheckValue(engine,
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(3+4));
+                BigDecimal.valueOf(3+4));
     }
 
     // deleteColumn....................................................................................................
@@ -288,7 +288,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 reference,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "99+0",
-                BigInteger.valueOf(99));
+                BigDecimal.valueOf(99));
     }
 
     @Test
@@ -312,13 +312,13 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+2",
-                BigInteger.valueOf(1 + 2));
+                BigDecimal.valueOf(1 + 2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "5+6",
-                BigInteger.valueOf(5 + 6));
+                BigDecimal.valueOf(5 + 6));
     }
 
     @Test
@@ -345,19 +345,19 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+2",
-                BigInteger.valueOf(1 + 2));
+                BigDecimal.valueOf(1 + 2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "5+6",
-                BigInteger.valueOf(5 + 6));
+                BigDecimal.valueOf(5 + 6));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(-count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "7+8",
-                BigInteger.valueOf(7 + 8));
+                BigDecimal.valueOf(7 + 8));
     }
 
     @Test
@@ -391,25 +391,25 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+" + LABEL,
-                BigInteger.valueOf(1 + 99));
+                BigDecimal.valueOf(1 + 99));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "3+0",
-                BigInteger.valueOf(3));
+                BigDecimal.valueOf(3));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(-count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "4+" + LABEL,
-                BigInteger.valueOf(4 + 99));
+                BigDecimal.valueOf(4 + 99));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 e.add(-count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "99+0",
-                BigInteger.valueOf(99 + 0));
+                BigDecimal.valueOf(99 + 0));
     }
 
     @Test
@@ -435,7 +435,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+0",
-                BigInteger.valueOf(1 + 0));
+                BigDecimal.valueOf(1 + 0));
     }
 
     @Test
@@ -465,23 +465,23 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+" + d.add(-count, 0),
-                BigInteger.valueOf(1 + 4)); // reference should have been fixed.
+                BigDecimal.valueOf(1 + 4)); // reference should have been fixed.
 
         this.loadCellAndCheckValue(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(2));
+                BigDecimal.valueOf(2));
 
         this.loadCellAndCheckValue(engine,
                 d.add(-count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(4));
+                BigDecimal.valueOf(4));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 e.add(-count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "5+" + b,
-                BigInteger.valueOf(5 + 2));
+                BigDecimal.valueOf(5 + 2));
     }
 
     @Test
@@ -511,23 +511,23 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+" + d.add(-count, 0),
-                BigInteger.valueOf(1 + 4)); // reference should have been fixed.
+                BigDecimal.valueOf(1 + 4)); // reference should have been fixed.
 
         this.loadCellAndCheckValue(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(2));
+                BigDecimal.valueOf(2));
 
         this.loadCellAndCheckValue(engine,
                 d.add(-count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(4));
+                BigDecimal.valueOf(4));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 e.add(-count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "5+" + b,
-                BigInteger.valueOf(5 + 2));
+                BigDecimal.valueOf(5 + 2));
     }
 
     @Test
@@ -582,22 +582,22 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         this.loadCellAndCheckValue(engine,
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(1));
+                BigDecimal.valueOf(1));
 
         this.loadCellAndCheckValue(engine,
                 d.add(-count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(4));
+                BigDecimal.valueOf(4));
 
         this.loadCellAndCheckValue(engine,
                 e.add(-count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(5));
+                BigDecimal.valueOf(5));
 
         this.loadCellAndCheckValue(engine,
                 f.add(-count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(6));
+                BigDecimal.valueOf(6));
     }
 
     // deleteRow....................................................................................................
@@ -620,7 +620,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 reference,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "99+0",
-                BigInteger.valueOf(99));
+                BigDecimal.valueOf(99));
     }
 
     @Test
@@ -645,13 +645,13 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+2",
-                BigInteger.valueOf(1 + 2));
+                BigDecimal.valueOf(1 + 2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "5+6",
-                BigInteger.valueOf(5 + 6));
+                BigDecimal.valueOf(5 + 6));
     }
 
     @Test
@@ -679,19 +679,19 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+2",
-                BigInteger.valueOf(1 + 2));
+                BigDecimal.valueOf(1 + 2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "5+6",
-                BigInteger.valueOf(5 + 6));
+                BigDecimal.valueOf(5 + 6));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(0, -count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "7+8",
-                BigInteger.valueOf(7 + 8));
+                BigDecimal.valueOf(7 + 8));
     }
 
     @Test
@@ -725,25 +725,25 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+" + LABEL,
-                BigInteger.valueOf(1 + 99));
+                BigDecimal.valueOf(1 + 99));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "3+0",
-                BigInteger.valueOf(3));
+                BigDecimal.valueOf(3));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(0, -count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "4+" + LABEL,
-                BigInteger.valueOf(4 + 99));
+                BigDecimal.valueOf(4 + 99));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 e.add(0, -count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "99+0",
-                BigInteger.valueOf(99 + 0));
+                BigDecimal.valueOf(99 + 0));
     }
 
     @Test
@@ -769,7 +769,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+0",
-                BigInteger.valueOf(1 + 0));
+                BigDecimal.valueOf(1 + 0));
     }
 
     @Test
@@ -799,23 +799,23 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+" + d.add(0, -count),
-                BigInteger.valueOf(1 + 4)); // reference should have been fixed.
+                BigDecimal.valueOf(1 + 4)); // reference should have been fixed.
 
         this.loadCellAndCheckValue(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(2));
+                BigDecimal.valueOf(2));
 
         this.loadCellAndCheckValue(engine,
                 d.add(0, -count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(4));
+                BigDecimal.valueOf(4));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 e.add(0, -count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "5+" + b,
-                BigInteger.valueOf(5 + 2));
+                BigDecimal.valueOf(5 + 2));
     }
 
     @Test
@@ -845,23 +845,23 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+" + d.add(0, -count),
-                BigInteger.valueOf(1 + 4)); // reference should have been fixed.
+                BigDecimal.valueOf(1 + 4)); // reference should have been fixed.
 
         this.loadCellAndCheckValue(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(2));
+                BigDecimal.valueOf(2));
 
         this.loadCellAndCheckValue(engine,
                 d.add(0, -count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(4));
+                BigDecimal.valueOf(4));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 e.add(0, -count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "5+" + b,
-                BigInteger.valueOf(5 + 2));
+                BigDecimal.valueOf(5 + 2));
     }
 
     @Test
@@ -916,22 +916,22 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         this.loadCellAndCheckValue(engine,
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(1));
+                BigDecimal.valueOf(1));
 
         this.loadCellAndCheckValue(engine,
                 d.add(0, -count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(4));
+                BigDecimal.valueOf(4));
 
         this.loadCellAndCheckValue(engine,
                 e.add(0, -count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(5));
+                BigDecimal.valueOf(5));
 
         this.loadCellAndCheckValue(engine,
                 f.add(0, -count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                BigInteger.valueOf(6));
+                BigDecimal.valueOf(6));
     }
 
     // insertColumn....................................................................................................
@@ -954,7 +954,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 reference,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "99+0",
-                BigInteger.valueOf(99));
+                BigDecimal.valueOf(99));
     }
 
     @Test
@@ -980,19 +980,19 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+2",
-                BigInteger.valueOf(1 + 2));
+                BigDecimal.valueOf(1 + 2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b.add(count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "3+4",
-                BigInteger.valueOf(3 + 4));
+                BigDecimal.valueOf(3 + 4));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.add(count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "5+6",
-                BigInteger.valueOf(5 + 6));
+                BigDecimal.valueOf(5 + 6));
     }
 
     @Test
@@ -1018,19 +1018,19 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+2",
-                BigInteger.valueOf(1 + 2));
+                BigDecimal.valueOf(1 + 2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b.add(+count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "3+4",
-                BigInteger.valueOf(3 + 4));
+                BigDecimal.valueOf(3 + 4));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.add(+count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "5+6",
-                BigInteger.valueOf(5 + 6));
+                BigDecimal.valueOf(5 + 6));
     }
 
     @Test
@@ -1062,25 +1062,25 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+" + LABEL,
-                BigInteger.valueOf(1 + 99));
+                BigDecimal.valueOf(1 + 99));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b.add(+count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "2+0",
-                BigInteger.valueOf(2 + 0));
+                BigDecimal.valueOf(2 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.add(+count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "3+0+" + LABEL,
-                BigInteger.valueOf(3 + 99));
+                BigDecimal.valueOf(3 + 99));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(+count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "99+0",
-                BigInteger.valueOf(99 + 0));
+                BigDecimal.valueOf(99 + 0));
     }
 
     @Test
@@ -1108,25 +1108,25 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+0+" + d.add(+count, 0),
-                BigInteger.valueOf(1 + 0 + 4 + 2)); // reference should have been fixed.
+                BigDecimal.valueOf(1 + 0 + 4 + 2)); // reference should have been fixed.
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "2+0",
-                BigInteger.valueOf(2));
+                BigDecimal.valueOf(2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.add(+count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "3+0",
-                BigInteger.valueOf(3));
+                BigDecimal.valueOf(3));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(+count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "4+0+" + b,
-                BigInteger.valueOf(4 + 2));
+                BigDecimal.valueOf(4 + 2));
     }
 
     @Test
@@ -1154,25 +1154,25 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+0+" + d.add(+count, 0),
-                BigInteger.valueOf(1 + 0 + 4 + 2)); // reference should have been fixed.
+                BigDecimal.valueOf(1 + 0 + 4 + 2)); // reference should have been fixed.
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "2+0",
-                BigInteger.valueOf(2 + 0));
+                BigDecimal.valueOf(2 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.add(+count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "3+0",
-                BigInteger.valueOf(3 + 0));
+                BigDecimal.valueOf(3 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(+count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "4+0+" + b,
-                BigInteger.valueOf(4 + 0 + 2));
+                BigDecimal.valueOf(4 + 0 + 2));
     }
 
     @Test
@@ -1202,31 +1202,31 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+0",
-                BigInteger.valueOf(1 + 0));
+                BigDecimal.valueOf(1 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b.add(+count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "2+0",
-                BigInteger.valueOf(2 + 0));
+                BigDecimal.valueOf(2 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.add(+count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "3+0",
-                BigInteger.valueOf(3 + 0));
+                BigDecimal.valueOf(3 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(+count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "4+0",
-                BigInteger.valueOf(4 + 0));
+                BigDecimal.valueOf(4 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 e.add(+count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "5+0",
-                BigInteger.valueOf(5 + 0));
+                BigDecimal.valueOf(5 + 0));
     }
 
     // insertRow....................................................................................................
@@ -1249,7 +1249,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 reference,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "99+0",
-                BigInteger.valueOf(99));
+                BigDecimal.valueOf(99));
     }
 
     @Test
@@ -1275,19 +1275,19 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+2",
-                BigInteger.valueOf(1 + 2));
+                BigDecimal.valueOf(1 + 2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b.add(0, count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "3+4",
-                BigInteger.valueOf(3 + 4));
+                BigDecimal.valueOf(3 + 4));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.add(0, count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "5+6",
-                BigInteger.valueOf(5 + 6));
+                BigDecimal.valueOf(5 + 6));
     }
 
     @Test
@@ -1313,19 +1313,19 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+2",
-                BigInteger.valueOf(1 + 2));
+                BigDecimal.valueOf(1 + 2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b.add(0, +count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "3+4",
-                BigInteger.valueOf(3 + 4));
+                BigDecimal.valueOf(3 + 4));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.add(0, +count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "5+6",
-                BigInteger.valueOf(5 + 6));
+                BigDecimal.valueOf(5 + 6));
     }
 
     @Test
@@ -1357,25 +1357,25 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+" + LABEL,
-                BigInteger.valueOf(1 + 99));
+                BigDecimal.valueOf(1 + 99));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b.add(0, +count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "2+0",
-                BigInteger.valueOf(2 + 0));
+                BigDecimal.valueOf(2 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.add(0, +count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "3+0+" + LABEL,
-                BigInteger.valueOf(3 + 99));
+                BigDecimal.valueOf(3 + 99));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(0, +count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "99+0",
-                BigInteger.valueOf(99 + 0));
+                BigDecimal.valueOf(99 + 0));
     }
 
     @Test
@@ -1403,25 +1403,25 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+0+" + d.add(0, +count),
-                BigInteger.valueOf(1 + 0 + 4 + 2)); // reference should have been fixed.
+                BigDecimal.valueOf(1 + 0 + 4 + 2)); // reference should have been fixed.
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "2+0",
-                BigInteger.valueOf(2));
+                BigDecimal.valueOf(2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.add(0, +count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "3+0",
-                BigInteger.valueOf(3));
+                BigDecimal.valueOf(3));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(0, +count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "4+0+" + b,
-                BigInteger.valueOf(4 + 2));
+                BigDecimal.valueOf(4 + 2));
     }
 
     @Test
@@ -1449,25 +1449,25 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+0+" + d.add(0, +count),
-                BigInteger.valueOf(1 + 0 + 4 + 2)); // reference should have been fixed.
+                BigDecimal.valueOf(1 + 0 + 4 + 2)); // reference should have been fixed.
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "2+0",
-                BigInteger.valueOf(2 + 0));
+                BigDecimal.valueOf(2 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.add(0, +count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "3+0",
-                BigInteger.valueOf(3 + 0));
+                BigDecimal.valueOf(3 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(0, +count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "4+0+" + b,
-                BigInteger.valueOf(4 + 0 + 2));
+                BigDecimal.valueOf(4 + 0 + 2));
     }
 
     @Test
@@ -1497,31 +1497,31 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 a,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+0",
-                BigInteger.valueOf(1 + 0));
+                BigDecimal.valueOf(1 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b.add(0, +count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "2+0",
-                BigInteger.valueOf(2 + 0));
+                BigDecimal.valueOf(2 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.add(0, +count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "3+0",
-                BigInteger.valueOf(3 + 0));
+                BigDecimal.valueOf(3 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(0, +count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "4+0",
-                BigInteger.valueOf(4 + 0));
+                BigDecimal.valueOf(4 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 e.add(0, +count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "5+0",
-                BigInteger.valueOf(5 + 0));
+                BigDecimal.valueOf(5 + 0));
     }
 
     // copy....................................................................................................
@@ -1553,7 +1553,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 d,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+0",
-                BigInteger.valueOf(1 + 0));
+                BigDecimal.valueOf(1 + 0));
     }
 
     @Test
@@ -1583,13 +1583,13 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 d,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+0",
-                BigInteger.valueOf(1 + 0));
+                BigDecimal.valueOf(1 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(1, 1),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "2+0",
-                BigInteger.valueOf(2 + 0));
+                BigDecimal.valueOf(2 + 0));
     }
 
     @Test
@@ -1619,13 +1619,13 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 d,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+0",
-                BigInteger.valueOf(1 + 0));
+                BigDecimal.valueOf(1 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(1, 1),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "2+0",
-                BigInteger.valueOf(2 + 0));
+                BigDecimal.valueOf(2 + 0));
     }
 
     @Test
@@ -1655,13 +1655,13 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 d,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+0",
-                BigInteger.valueOf(1 + 0));
+                BigDecimal.valueOf(1 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(1, 1),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "2+0",
-                BigInteger.valueOf(2 + 0));
+                BigDecimal.valueOf(2 + 0));
     }
 
     @Test
@@ -1691,37 +1691,37 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 d,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+0",
-                BigInteger.valueOf(1 + 0));
+                BigDecimal.valueOf(1 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(1, 1),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "2+0",
-                BigInteger.valueOf(2 + 0));
+                BigDecimal.valueOf(2 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(2, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+0",
-                BigInteger.valueOf(1 + 0));
+                BigDecimal.valueOf(1 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(3, 1),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "2+0",
-                BigInteger.valueOf(2 + 0));
+                BigDecimal.valueOf(2 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(4, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+0",
-                BigInteger.valueOf(1 + 0));
+                BigDecimal.valueOf(1 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(5, 1),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "2+0",
-                BigInteger.valueOf(2 + 0));
+                BigDecimal.valueOf(2 + 0));
     }
 
     @Test
@@ -1751,37 +1751,37 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 d,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+0",
-                BigInteger.valueOf(1 + 0));
+                BigDecimal.valueOf(1 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(1, 1),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "2+0",
-                BigInteger.valueOf(2 + 0));
+                BigDecimal.valueOf(2 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(0, 2),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+0",
-                BigInteger.valueOf(1 + 0));
+                BigDecimal.valueOf(1 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(1, 3),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "2+0",
-                BigInteger.valueOf(2 + 0));
+                BigDecimal.valueOf(2 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(0, 4),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "1+0",
-                BigInteger.valueOf(1 + 0));
+                BigDecimal.valueOf(1 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(1, 5),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "2+0",
-                BigInteger.valueOf(2 + 0));
+                BigDecimal.valueOf(2 + 0));
     }
 
     @Test
@@ -1808,7 +1808,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 d,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "" + a,
-                BigInteger.valueOf(1 + 0));
+                BigDecimal.valueOf(1 + 0));
     }
 
     @Test
@@ -1837,12 +1837,12 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 d,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "" + d.add(1, 1),
-                BigInteger.valueOf(2 + 0));
+                BigDecimal.valueOf(2 + 0));
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.add(1,1),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 "2+0",
-                BigInteger.valueOf(2 + 0));
+                BigDecimal.valueOf(2 + 0));
     }
 
     //  helpers.......................................................................................................
@@ -1874,11 +1874,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
     }
 
     private Parser<SpreadsheetParserToken, SpreadsheetParserContext> parser() {
-        final Parser<SpreadsheetParserToken, SpreadsheetParserContext> number = Parsers.<SpreadsheetParserContext>bigInteger(10)
-                .transform((numberParserToken, parserContext) -> SpreadsheetParserToken.bigInteger(numberParserToken.value(), numberParserToken.text()))
-                .cast();
-
-        return SpreadsheetParsers.expression(number);
+        return SpreadsheetParsers.expression();
     }
 
     private SpreadsheetParserContext parserContext() {
