@@ -19,32 +19,44 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell, final SpreadsheetEngineLoading loading) {
+    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
+                                              final SpreadsheetEngineLoading loading,
+                                              final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
     
     @Override
-    public void deleteColumns(final SpreadsheetColumnReference column, final int count) {
+    public void deleteColumns(final SpreadsheetColumnReference column,
+                              final int count,
+                              final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void deleteRows(final SpreadsheetRowReference row, final int count) {
+    public void deleteRows(final SpreadsheetRowReference row,
+                           final int count,
+                           final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void insertColumns(final SpreadsheetColumnReference column, final int count) {
+    public void insertColumns(final SpreadsheetColumnReference column,
+                              final int count,
+                              final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void insertRows(final SpreadsheetRowReference row, final int count) {
+    public void insertRows(final SpreadsheetRowReference row,
+                           final int count,
+                           final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void copy(final Collection<SpreadsheetCell> from, final SpreadsheetRange to) {
+    public void copy(final Collection<SpreadsheetCell> from,
+                     final SpreadsheetRange to,
+                     final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 }

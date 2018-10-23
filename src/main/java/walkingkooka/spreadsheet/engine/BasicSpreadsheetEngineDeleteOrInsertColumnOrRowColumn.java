@@ -17,8 +17,9 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn extends BasicS
 
     static BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn with(final int value,
                                                                       final int count,
-                                                                      final BasicSpreadsheetEngine engine) {
-        return new BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn(value, count, engine);
+                                                                      final BasicSpreadsheetEngine engine,
+                                                                      final SpreadsheetEngineContext context) {
+        return new BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn(value, count, engine, context);
     }
 
     /**
@@ -26,8 +27,9 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn extends BasicS
      */
     private BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn(final int value,
                                                                   final int count,
-                                                                  final BasicSpreadsheetEngine engine) {
-        super(value, count, engine);
+                                                                  final BasicSpreadsheetEngine engine,
+                                                                  final SpreadsheetEngineContext context) {
+        super(value, count, engine, context);
     }
 
     @Override

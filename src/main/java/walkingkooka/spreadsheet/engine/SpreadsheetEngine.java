@@ -25,27 +25,37 @@ public interface SpreadsheetEngine {
      * Loads which includes parsing the formula as necessary and evaluating the value of the requested cells.
      * Invalid cell requests will be ignored and absent fromthe result. If parsing or evaluation fails the cell will have an error.
      */
-    Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell, final SpreadsheetEngineLoading loading);
+    Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
+                                       final SpreadsheetEngineLoading loading,
+                                       final SpreadsheetEngineContext context);
 
     /**
      * Deletes the identified columns, updates all absolute references as necessary in both formulas and label mappings.
      */
-    void deleteColumns(final SpreadsheetColumnReference column, final int count);
+    void deleteColumns(final SpreadsheetColumnReference column,
+                       final int count,
+                       final SpreadsheetEngineContext context);
 
     /**
      * Deletes the identified rows, updates all absolute references as necessary in both formulas and label mappings.
      */
-    void deleteRows(final SpreadsheetRowReference row, final int count);
+    void deleteRows(final SpreadsheetRowReference row,
+                    final int count,
+                    final SpreadsheetEngineContext context);
 
     /**
      * Inserts the identified columns, updates all absolute references as necessary in both formulas and label mappings.
      */
-    void insertColumns(final SpreadsheetColumnReference column, final int count);
+    void insertColumns(final SpreadsheetColumnReference column,
+                       final int count,
+                       final SpreadsheetEngineContext context);
 
     /**
      * Inserts the identified rows, updates all absolute references as necessary in both formulas and label mappings.
      */
-    void insertRows(final SpreadsheetRowReference row, final int count);
+    void insertRows(final SpreadsheetRowReference row,
+                    final int count,
+                    final SpreadsheetEngineContext context);
 
     /**
      * Copies the provided cells into this spreadsheet at the given range. The source range is smaller, where possible
@@ -54,5 +64,7 @@ public interface SpreadsheetEngine {
      * Note prior to copying the area should be cleared, as this only copies the given it doesnt clear the entire range,
      * before the actual copying.
      */
-    void copy(final Collection<SpreadsheetCell> from, final SpreadsheetRange to);
+    void copy(final Collection<SpreadsheetCell> from,
+              final SpreadsheetRange to,
+              final SpreadsheetEngineContext context);
 }

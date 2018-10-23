@@ -22,26 +22,30 @@ import java.util.function.Function;
  * A {@link Function} which may be passed to {@link walkingkooka.tree.expression.ExpressionEvaluationContexts#basic(BiFunction, Function, MathContext, Converter, walkingkooka.DecimalNumberContext)}
  * and acts as a bridge resolving references to a {@link SpreadsheetEngine}.
  */
-final class SpreadsheetEngineExpressionEvaluationContextFactoryFunctionExpressionReferenceExpressionNodeFunction implements Function<ExpressionReference, ExpressionNode> {
+final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction implements Function<ExpressionReference, ExpressionNode> {
 
     /**
-     * Factory that creates a new {@link SpreadsheetEngineExpressionEvaluationContextFactoryFunctionExpressionReferenceExpressionNodeFunction}
+     * Factory that creates a new {@link SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction}
      */
-    static SpreadsheetEngineExpressionEvaluationContextFactoryFunctionExpressionReferenceExpressionNodeFunction with(final SpreadsheetEngine engine,
-                                                                                                                     final SpreadsheetLabelStore labelStore) {
+    static SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction with(final SpreadsheetEngine engine,
+                                                                                                      final SpreadsheetLabelStore labelStore,
+                                                                                                      final SpreadsheetEngineContext context) {
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(labelStore, "labelStore");
+        Objects.requireNonNull(context, "context");
 
-        return new SpreadsheetEngineExpressionEvaluationContextFactoryFunctionExpressionReferenceExpressionNodeFunction(engine, labelStore);
+        return new SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction(engine, labelStore, context);
     }
 
     /**
      * Private ctor.
      */
-    private SpreadsheetEngineExpressionEvaluationContextFactoryFunctionExpressionReferenceExpressionNodeFunction(final SpreadsheetEngine engine,
-                                                                                                                 final SpreadsheetLabelStore labelStore) {
+    private SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction(final SpreadsheetEngine engine,
+                                                                                                  final SpreadsheetLabelStore labelStore,
+                                                                                                  final SpreadsheetEngineContext context) {
         this.engine = engine;
         this.labelStore = labelStore;
+        this.context = context;
     }
 
     @Override
@@ -61,7 +65,7 @@ final class SpreadsheetEngineExpressionEvaluationContextFactoryFunctionExpressio
             cellReference = SpreadsheetCellReference.class.cast(reference);
         }
 
-        final Optional<SpreadsheetCell> maybeCell = engine.loadCell(cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
+        final Optional<SpreadsheetCell> maybeCell = this.engine.loadCell(cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY, this.context);
         if(!maybeCell.isPresent()) {
             throw new ExpressionEvaluationException("Unknown cell reference " + reference);
         }
@@ -80,6 +84,7 @@ final class SpreadsheetEngineExpressionEvaluationContextFactoryFunctionExpressio
 
     private final SpreadsheetEngine engine;
     private final SpreadsheetLabelStore labelStore;
+    private final SpreadsheetEngineContext context;
 
     @Override
     public String toString() {
