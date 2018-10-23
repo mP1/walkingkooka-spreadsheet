@@ -31,61 +31,92 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
 
     @Test(expected = NullPointerException.class)
     public final void testLoadCellNullCellFails() {
-        this.createSpreadsheetEngine().loadCell(null, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
+        this.createSpreadsheetEngine().loadCell(null, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY, this.createContext());
     }
 
     @Test(expected = NullPointerException.class)
     public final void testLoadCellNullLoadingFails() {
         this.createSpreadsheetEngine().loadCell(REFERENCE,
+                null,
+                this.createContext());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public final void testLoadCellNullContextFails() {
+        this.createSpreadsheetEngine().loadCell(REFERENCE,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 null);
     }
 
     @Test(expected = NullPointerException.class)
     public final void testDeleteColumnsNullColumnFails() {
-        this.createSpreadsheetEngine().deleteColumns(null, 1);
+        this.createSpreadsheetEngine().deleteColumns(null, 1, this.createContext());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public final void testDeleteColumnsNegativeCountFails() {
-        this.createSpreadsheetEngine().deleteColumns(COLUMN, -1);
+        this.createSpreadsheetEngine().deleteColumns(COLUMN, -1, this.createContext());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public final void testDeleteColumnsNullContextFails() {
+        this.createSpreadsheetEngine().deleteColumns(COLUMN, 1, null);
     }
 
     @Test(expected = NullPointerException.class)
     public final void testDeleteRowsNullRowFails() {
-        this.createSpreadsheetEngine().deleteRows(null, 1);
+        this.createSpreadsheetEngine().deleteRows(null, 1, this.createContext());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public final void testDeleteRowsNegativeCountFails() {
-        this.createSpreadsheetEngine().deleteRows(ROW, -1);
+        this.createSpreadsheetEngine().deleteRows(ROW, -1, this.createContext());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public final void testDeleteRowsNullContextFails() {
+        this.createSpreadsheetEngine().deleteRows(ROW, 1, null);
     }
 
     @Test(expected = NullPointerException.class)
     public final void testInsertColumnsNullColumnFails() {
-        this.createSpreadsheetEngine().insertColumns(null, 1);
+        this.createSpreadsheetEngine().insertColumns(null, 1, this.createContext());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public final void testInsertColumnsNegativeCountFails() {
-        this.createSpreadsheetEngine().insertColumns(COLUMN, -1);
+        this.createSpreadsheetEngine().insertColumns(COLUMN, -1, this.createContext());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public final void testInsertColumnsNullContextFails() {
+        this.createSpreadsheetEngine().insertColumns(COLUMN, 1, null);
     }
 
     @Test(expected = NullPointerException.class)
     public final void testInsertRowsNullRowFails() {
-        this.createSpreadsheetEngine().insertRows(null, 1);
+        this.createSpreadsheetEngine().insertRows(null, 1, this.createContext());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public final void testInsertRowsNegativeCountFails() {
-        this.createSpreadsheetEngine().insertRows(ROW, -1);
+        this.createSpreadsheetEngine().insertRows(ROW, -1, this.createContext());
     }
-    
-    abstract E createSpreadsheetEngine();
+
+    @Test(expected = NullPointerException.class)
+    public final void testInsertRowsNullContextFails() {
+        this.createSpreadsheetEngine().insertRows(ROW, 1, null);
+    }
+
+    abstract protected E createSpreadsheetEngine();
+
+    abstract protected SpreadsheetEngineContext createContext();
 
     final SpreadsheetCell loadCellOrFail(final SpreadsheetEngine engine,
                                          final SpreadsheetCellReference reference,
-                                         final SpreadsheetEngineLoading loading) {
-        final Optional<SpreadsheetCell> cell = engine.loadCell(reference, loading);
+                                         final SpreadsheetEngineLoading loading,
+                                         final SpreadsheetEngineContext context) {
+        final Optional<SpreadsheetCell> cell = engine.loadCell(reference, loading, context);
         if(!cell.isPresent()) {
             fail("Loading " + reference + " should have succeeded");
         }
@@ -94,25 +125,34 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
 
     final void loadCellFailCheck(final SpreadsheetCellReference reference,
                                  final SpreadsheetEngineLoading loading) {
-        this.loadCellFailCheck(this.createSpreadsheetEngine(), reference, loading);
+        this.loadCellFailCheck(reference, loading, this.createContext());
     }
 
-    final void loadCellFailCheck(final SpreadsheetEngine engine,
-                                 final SpreadsheetCellReference reference) {
-        this.loadCellFailCheck(engine, reference, SpreadsheetEngineLoading.SKIP_EVALUATE);
+    final void loadCellFailCheck(final SpreadsheetCellReference reference,
+                                 final SpreadsheetEngineLoading loading,
+                                 final SpreadsheetEngineContext context) {
+        this.loadCellFailCheck(this.createSpreadsheetEngine(), reference, loading, context);
     }
 
     final void loadCellFailCheck(final SpreadsheetEngine engine,
                                  final SpreadsheetCellReference reference,
-                                 final SpreadsheetEngineLoading loading) {
-        final Optional<SpreadsheetCell> cell = engine.loadCell(reference, loading);
+                                 final SpreadsheetEngineContext context) {
+        this.loadCellFailCheck(engine, reference, SpreadsheetEngineLoading.SKIP_EVALUATE, context);
+    }
+
+    final void loadCellFailCheck(final SpreadsheetEngine engine,
+                                 final SpreadsheetCellReference reference,
+                                 final SpreadsheetEngineLoading loading,
+                                 final SpreadsheetEngineContext context) {
+        final Optional<SpreadsheetCell> cell = engine.loadCell(reference, loading, context);
         assertEquals("Expected reference " + reference + " to fail", Optional.empty(), cell);
     }
 
     final void loadCellAndCheckWithoutValueOrError(final SpreadsheetEngine engine,
                                                    final SpreadsheetCellReference reference,
-                                                   final SpreadsheetEngineLoading loading) {
-        final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading);
+                                                   final SpreadsheetEngineLoading loading,
+                                                   final SpreadsheetEngineContext context) {
+        final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading, context);
         assertEquals("values from returned cells=" + cell,
                 null,
                 this.valueOrError(cell, null));
@@ -121,17 +161,19 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
     final void loadCellAndCheckFormula(final SpreadsheetEngine engine,
                                      final SpreadsheetCellReference reference,
                                      final SpreadsheetEngineLoading loading,
+                                     final SpreadsheetEngineContext context,
                                      final String formula) {
-        final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading);
+        final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading, context);
         this.checkFormula(cell, formula);
     }
 
     final void loadCellAndCheckFormulaAndValue(final SpreadsheetEngine engine,
                                        final SpreadsheetCellReference reference,
                                        final SpreadsheetEngineLoading loading,
+                                       final SpreadsheetEngineContext context,
                                        final String formula,
                                        final Object value) {
-        final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading);
+        final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading, context);
         this.checkFormula(cell, formula);
         this.checkValueOrError(cell, value);
     }
@@ -139,13 +181,14 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
     final void loadCellAndCheckValue(final SpreadsheetEngine engine,
                                      final SpreadsheetCellReference reference,
                                      final SpreadsheetEngineLoading loading,
+                                     final SpreadsheetEngineContext context,
                                      final Object value) {
-        final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading);
+        final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading, context);
         this.checkValueOrError(cell, value);
     }
 
     private void checkFormula(final SpreadsheetCell cell, final String formula) {
-        assertEquals("formula from returned cell=" + cell,
+        assertEquals("formula.text from returned cell=" + cell,
                 formula,
                 cell.formula().text());
     }
@@ -165,10 +208,11 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
     }
 
     final void loadCellAndCheckError(final SpreadsheetEngine engine,
-                                final SpreadsheetCellReference reference,
-                                final SpreadsheetEngineLoading loading,
-                                final String errorContains) {
-        final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading);
+                                     final SpreadsheetCellReference reference,
+                                     final SpreadsheetEngineLoading loading,
+                                     final SpreadsheetEngineContext context,
+                                     final String errorContains) {
+        final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading, context);
 
         final Optional<SpreadsheetError> error = cell.formula().error();
         assertNotEquals("Expected error missing=" + cell, SpreadsheetFormula.NO_ERROR, error);
