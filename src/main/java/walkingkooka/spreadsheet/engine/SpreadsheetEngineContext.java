@@ -18,6 +18,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.Context;
 import walkingkooka.DecimalNumberContext;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
 import walkingkooka.tree.expression.ExpressionNode;
@@ -25,7 +26,7 @@ import walkingkooka.tree.expression.ExpressionNode;
 /**
  * Context that accompanies a value format, holding local sensitive attributes such as the decimal point character.
  */
-public interface SpreadsheetEngineContext extends DecimalNumberContext {
+public interface SpreadsheetEngineContext extends Context {
 
     /**
      * Parses the formula into an {@link ExpressionNode}.
