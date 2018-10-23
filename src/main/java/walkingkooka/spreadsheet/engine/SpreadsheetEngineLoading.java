@@ -9,7 +9,9 @@ public enum SpreadsheetEngineLoading {
      */
     SKIP_EVALUATE {
         @Override
-        SpreadsheetFormula process(final SpreadsheetFormula formula, final BasicSpreadsheetEngine engine) {
+        SpreadsheetFormula process(final SpreadsheetFormula formula,
+                                   final BasicSpreadsheetEngine engine,
+                                   final SpreadsheetEngineContext context) {
             return formula;
         }
     },
@@ -18,10 +20,14 @@ public enum SpreadsheetEngineLoading {
      */
     FORCE_RECOMPUTE {
         @Override
-        SpreadsheetFormula process(final SpreadsheetFormula formula, final BasicSpreadsheetEngine engine) {
+        SpreadsheetFormula process(final SpreadsheetFormula formula,
+                                   final BasicSpreadsheetEngine engine,
+                                   final SpreadsheetEngineContext context) {
             return engine.evaluateIfPossible(
                    engine.parseIfNecessary(
-                   formula.setValue(SpreadsheetFormula.NO_VALUE)));
+                   formula.setValue(SpreadsheetFormula.NO_VALUE),
+                           context),
+                    context);
         }
     },
     /**
@@ -29,11 +35,16 @@ public enum SpreadsheetEngineLoading {
      */
     COMPUTE_IF_NECESSARY {
         @Override
-        SpreadsheetFormula process(final SpreadsheetFormula formula, final BasicSpreadsheetEngine engine) {
+        SpreadsheetFormula process(final SpreadsheetFormula formula,
+                                   final BasicSpreadsheetEngine engine,
+                                   final SpreadsheetEngineContext context) {
             return engine.evaluateIfPossible(
-                   engine.parseIfNecessary(formula));
+                   engine.parseIfNecessary(formula, context),
+                    context);
         }
     };
 
-    abstract SpreadsheetFormula process(final SpreadsheetFormula formula, final BasicSpreadsheetEngine engine);
+    abstract SpreadsheetFormula process(final SpreadsheetFormula formula,
+                                        final BasicSpreadsheetEngine engine,
+                                        final SpreadsheetEngineContext context);
 }
