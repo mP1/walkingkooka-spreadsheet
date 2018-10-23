@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.*;
+import walkingkooka.SystemException;
 
 /**
  * Base class for all exceptions in this system.
