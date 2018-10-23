@@ -1,7 +1,7 @@
 package walkingkooka.spreadsheet;
 
-import org.junit.*;
-import walkingkooka.test.*;
+import org.junit.Test;
+import walkingkooka.test.HashCodeEqualsDefinedEqualityTestCase;
 
 public final class SpreadsheetMetadataEqualityTest extends HashCodeEqualsDefinedEqualityTestCase<SpreadsheetMetadata> {
 
