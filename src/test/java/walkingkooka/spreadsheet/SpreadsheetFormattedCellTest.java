@@ -19,10 +19,13 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.Test;
+import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
 import walkingkooka.test.PublicClassTestCase;
 import walkingkooka.text.CharSequences;
+
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
@@ -95,7 +98,7 @@ public final class SpreadsheetFormattedCellTest extends PublicClassTestCase<Spre
 
     @Test
     public void testSetStyleDifferent() {
-        final SpreadsheetCellStyle differentStyle = SpreadsheetCellStyle.EMPTY.setText(SpreadsheetTextStyle.EMPTY.setItalics(SpreadsheetTextStyle.ITALICS));
+        final SpreadsheetCellStyle differentStyle = this.style(SpreadsheetTextStyle.EMPTY.setItalics(SpreadsheetTextStyle.ITALICS));
         final SpreadsheetFormattedCell formatted = this.createFormattedText();
         final SpreadsheetFormattedCell different = formatted.setStyle(differentStyle);
         assertNotSame(formatted, different);
@@ -106,6 +109,43 @@ public final class SpreadsheetFormattedCellTest extends PublicClassTestCase<Spre
         assertEquals("text", text, formatted.text());
         assertEquals("style", style, formatted.style());
     }
+
+    // setColor.....................................................................
+
+    @Test(expected = NullPointerException.class)
+    public void testSetTextColorNullFails() {
+        this.createFormattedText().setTextColor(null);
+    }
+
+    @Test
+    public void testSetTextColorSame() {
+        final Color color = Color.fromRgb(123);
+        final SpreadsheetFormattedCell formattedCell = SpreadsheetFormattedCell.with(TEXT, this.style(color));
+        assertSame(formattedCell, formattedCell.setTextColor(color));
+    }
+
+    @Test
+    public void testSetTextColorDifferentColor() {
+        this.setTextColorAndCheck(SpreadsheetFormattedCell.with(TEXT, this.style(Color.BLACK)),
+                Color.fromRgb(123));
+    }
+
+    @Test
+    public void testSetTextColorReplaceNone() {
+        this.setTextColorAndCheck(SpreadsheetFormattedCell.with(TEXT, this.style()),
+                Color.fromRgb(123));
+    }
+
+    private void setTextColorAndCheck(final SpreadsheetFormattedCell formattedCell, final Color color) {
+        final SpreadsheetFormattedCell different = formattedCell.setTextColor(color);
+        assertNotSame(different, formattedCell);
+
+        assertEquals("textStyle " + formattedCell + " setColor " + color,
+                SpreadsheetFormattedCell.with(TEXT, this.style(color)),
+                different);
+    }
+
+    // toString ................................................................................................
 
     @Test
     public void testToString() {
@@ -122,7 +162,19 @@ public final class SpreadsheetFormattedCellTest extends PublicClassTestCase<Spre
     }
 
     private SpreadsheetCellStyle style() {
-        return SpreadsheetCellStyle.EMPTY.setText(SpreadsheetTextStyle.EMPTY.setBold(SpreadsheetTextStyle.BOLD));
+        return this.style(this.textStyle());
+    }
+
+    private SpreadsheetTextStyle textStyle() {
+        return SpreadsheetTextStyle.EMPTY.setBold(SpreadsheetTextStyle.BOLD);
+    }
+
+    private SpreadsheetCellStyle style(final SpreadsheetTextStyle textStyle) {
+        return SpreadsheetCellStyle.EMPTY.setText(textStyle);
+    }
+
+    private SpreadsheetCellStyle style(final Color color) {
+        return this.style(this.textStyle().setColor(Optional.of(color)));
     }
 
     @Override
