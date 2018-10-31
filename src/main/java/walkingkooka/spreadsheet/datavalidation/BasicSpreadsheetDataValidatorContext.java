@@ -8,6 +8,7 @@ import walkingkooka.tree.expression.ExpressionReference;
 import java.math.MathContext;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * A {@link SpreadsheetDataValidatorContext} which wraps a {@link ExpressionEvaluationContext}.
@@ -36,7 +37,7 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
                                                  final ExpressionEvaluationContext context) {
         super();
         this.cellReference = cellReference;
-        this.value = ExpressionNode.valueOrFail(value);
+        this.value = Optional.of(ExpressionNode.valueOrFail(value));
         this.context = context;
     }
 
@@ -88,13 +89,13 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     }
 
     @Override
-    public ExpressionNode reference(final ExpressionReference reference) {
+    public Optional<ExpressionNode> reference(final ExpressionReference reference) {
         return this.cellReference().equals(reference) ?
                 this.value :
                 this.context.reference(reference);
     }
 
-    private final ExpressionNode value;
+    private final Optional<ExpressionNode> value;
 
     @Override
     public MathContext mathContext() {
