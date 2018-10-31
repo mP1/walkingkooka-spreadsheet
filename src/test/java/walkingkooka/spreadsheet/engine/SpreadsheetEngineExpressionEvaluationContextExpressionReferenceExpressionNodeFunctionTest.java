@@ -7,9 +7,11 @@ import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.util.FunctionTestCase;
 
+import java.util.Optional;
+
 public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunctionTest extends FunctionTestCase<
         SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction,
-        ExpressionReference, ExpressionNode> {
+        ExpressionReference, Optional<ExpressionNode>> {
 
     @Test(expected = NullPointerException.class)
     public void testWithNullEngineFails() {
