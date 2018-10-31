@@ -7,6 +7,7 @@ import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.type.PublicStaticHelper;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 public final class SpreadsheetEngines implements PublicStaticHelper {
@@ -30,9 +31,9 @@ public final class SpreadsheetEngines implements PublicStaticHelper {
     /**
      * {@see SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction}
      */
-    public static Function<ExpressionReference, ExpressionNode> expressionEvaluationContextExpressionReferenceExpressionNodeFunction(final SpreadsheetEngine engine,
-                                                                                                                                     final SpreadsheetLabelStore labelStore,
-                                                                                                                                     final SpreadsheetEngineContext context) {
+    public static Function<ExpressionReference, Optional<ExpressionNode>> expressionEvaluationContextExpressionReferenceExpressionNodeFunction(final SpreadsheetEngine engine,
+                                                                                                                                               final SpreadsheetLabelStore labelStore,
+                                                                                                                                               final SpreadsheetEngineContext context) {
         return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(engine, labelStore, context);
     }
 

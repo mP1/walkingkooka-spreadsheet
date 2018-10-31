@@ -22,7 +22,7 @@ import java.util.function.Function;
  * A {@link Function} which may be passed to {@link walkingkooka.tree.expression.ExpressionEvaluationContexts#basic(BiFunction, Function, MathContext, Converter, walkingkooka.DecimalNumberContext)}
  * and acts as a bridge resolving references to a {@link SpreadsheetEngine}.
  */
-final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction implements Function<ExpressionReference, ExpressionNode> {
+final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction implements Function<ExpressionReference, Optional<ExpressionNode>> {
 
     /**
      * Factory that creates a new {@link SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction}
@@ -49,7 +49,7 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
     }
 
     @Override
-    public ExpressionNode apply(final ExpressionReference reference) {
+    public Optional<ExpressionNode> apply(final ExpressionReference reference) {
         Objects.requireNonNull(reference, "reference");
 
         SpreadsheetCellReference cellReference = null;
@@ -75,11 +75,7 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
             throw new ExpressionEvaluationException(error.get().value());
         }
 
-        final Optional<ExpressionNode> expression = formula.expression();
-        if(!expression.isPresent()) {
-            throw new ExpressionEvaluationException("Unknown cell reference " + reference);
-        }
-        return expression.get();
+        return formula.expression();
     }
 
     private final SpreadsheetEngine engine;
