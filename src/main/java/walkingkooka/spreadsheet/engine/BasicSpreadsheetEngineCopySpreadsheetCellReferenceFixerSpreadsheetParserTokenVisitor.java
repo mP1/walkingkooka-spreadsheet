@@ -1,6 +1,6 @@
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.ShouldNeverHappenError;
+import walkingkooka.NeverError;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.stack.Stack;
 import walkingkooka.collect.stack.Stacks;
@@ -336,7 +336,8 @@ final class BasicSpreadsheetEngineCopySpreadsheetCellReferenceFixerSpreadsheetPa
                 replacement = this.fixColumnReference(reference);
                 break;
             default:
-                throw new ShouldNeverHappenError("Unknown " + SpreadsheetColumnReferenceParserToken.class.getSimpleName() + " enum " + kind);
+                replacement = NeverError.unhandledEnum(kind, SpreadsheetReferenceKind.values());
+                break;
         }
 
         this.leaf(replacement);
@@ -470,7 +471,8 @@ final class BasicSpreadsheetEngineCopySpreadsheetCellReferenceFixerSpreadsheetPa
                 replacement = this.fixRowReference(reference);
                 break;
             default:
-                throw new ShouldNeverHappenError("Unknown " + SpreadsheetRowReferenceParserToken.class.getSimpleName() + " enum " + kind);
+                replacement = NeverError.unhandledEnum(kind, SpreadsheetReferenceKind.values());
+                break;
         }
 
         this.leaf(replacement);
