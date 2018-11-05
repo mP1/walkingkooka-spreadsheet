@@ -78,4 +78,14 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn extends BasicS
     int columnOrRowValue(final SpreadsheetCellReference cell) {
         return cell.column().value();
     }
+
+    @Override
+    SpreadsheetCellReference setColumnOrRowValue(final SpreadsheetCellReference cell, final int value) {
+        return cell.setColumn(cell.column().setValue(value));
+    }
+
+    @Override
+    SpreadsheetCellReference addColumnOrRowValue(final SpreadsheetCellReference cell, final int value) {
+        return cell.setColumn(cell.column().add(value));
+    }
 }
