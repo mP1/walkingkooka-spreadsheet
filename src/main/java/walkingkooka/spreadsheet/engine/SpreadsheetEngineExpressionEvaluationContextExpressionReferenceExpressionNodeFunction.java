@@ -1,10 +1,12 @@
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.NeverError;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
@@ -19,7 +21,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
- * A {@link Function} which may be passed to {@link walkingkooka.tree.expression.ExpressionEvaluationContexts#basic(BiFunction, Function, MathContext, Converter, walkingkooka.DecimalNumberContext)}
+ * A {@link Function} which may be passed to {@link walkingkooka.tree.expression.ExpressionEvaluationContexts#basic(BiFunction, Function, MathContext, Converter, walkingkooka.math.DecimalNumberContext)}
  * and acts as a bridge resolving references to a {@link SpreadsheetEngine}.
  */
 final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction implements Function<ExpressionReference, Optional<ExpressionNode>> {
@@ -55,11 +57,7 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
         SpreadsheetCellReference cellReference = null;
 
         if(reference instanceof SpreadsheetLabelName) {
-            final Optional<SpreadsheetLabelMapping> mapping = this.labelStore.load(SpreadsheetLabelName.class.cast(reference));
-            if(!mapping.isPresent()) {
-                throw new ExpressionEvaluationException("Unknown label reference=" + reference);
-            }
-            cellReference = mapping.get().cell();
+            cellReference = this.loadMappingCellReferenceOrFail(SpreadsheetLabelName.class.cast(reference));
         }
         if(reference instanceof SpreadsheetCellReference) {
             cellReference = SpreadsheetCellReference.class.cast(reference);
@@ -76,6 +74,27 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
         }
 
         return formula.expression();
+    }
+
+    private SpreadsheetCellReference loadMappingCellReferenceOrFail(final SpreadsheetLabelName label) {
+        final ExpressionReference reference = this.loadMappingReferenceOrFail(label);
+        return reference instanceof SpreadsheetCellReference ?
+                SpreadsheetCellReference.class.cast(reference) :
+                reference instanceof SpreadsheetRange ?
+                        SpreadsheetRange.class.cast(reference).begin() :
+                        failExpressionReference(reference);
+    }
+
+    private SpreadsheetCellReference failExpressionReference(final ExpressionReference reference) {
+        return NeverError.unhandledCase(reference, SpreadsheetCellReference.class, SpreadsheetRange.class);
+    }
+
+    private ExpressionReference loadMappingReferenceOrFail(final SpreadsheetLabelName label) {
+        final Optional<SpreadsheetLabelMapping> mapping = this.labelStore.load(label);
+        if (!mapping.isPresent()) {
+            throw new ExpressionEvaluationException("Unknown label " + label);
+        }
+        return mapping.get().reference();
     }
 
     private final SpreadsheetEngine engine;

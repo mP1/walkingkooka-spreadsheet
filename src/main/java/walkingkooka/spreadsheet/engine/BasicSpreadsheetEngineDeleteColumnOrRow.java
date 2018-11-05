@@ -24,7 +24,7 @@ final class BasicSpreadsheetEngineDeleteColumnOrRow extends BasicSpreadsheetEngi
     private void delete0(final SpreadsheetEngineContext context) {
         this.columnOrRow.delete(this.columnOrRow.value, this.columnOrRow.count);
         this.move();
-        this.columnOrRow.fixAllExpressionCellReferences(context);
+        this.columnOrRow.fixAllExpressionReferences(context);
         this.columnOrRow.fixAllLabelMappings();
     }
 
@@ -59,6 +59,6 @@ final class BasicSpreadsheetEngineDeleteColumnOrRow extends BasicSpreadsheetEngi
 
     @Override
     void fixLabelMapping(final SpreadsheetLabelMapping mapping) {
-        this.columnOrRow.deleteFixReference(mapping);
+        this.columnOrRow.deleteOrFixLabelMapping(mapping);
     }
 }

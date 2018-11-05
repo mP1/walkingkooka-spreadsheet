@@ -16,6 +16,7 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
+import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Optional;
 
@@ -217,7 +218,7 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
 
     protected final void loadLabelAndCheck(final SpreadsheetLabelStore labelStore,
                                            final SpreadsheetLabelName label,
-                                           final SpreadsheetCellReference reference) {
+                                           final ExpressionReference reference) {
         assertEquals("label loaded", Optional.of(SpreadsheetLabelMapping.with(label, reference)), labelStore.load(label));
     }
 

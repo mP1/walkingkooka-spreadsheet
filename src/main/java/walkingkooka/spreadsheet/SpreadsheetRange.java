@@ -7,6 +7,7 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
+import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.List;
 import java.util.Objects;
@@ -14,9 +15,9 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
- * Holds a range.
+ * Holds a range. Note the begin component is always before the end, with rows being the significant axis before column.
  */
-public final class SpreadsheetRange implements HashCodeEqualsDefined {
+public final class SpreadsheetRange implements ExpressionReference, HashCodeEqualsDefined {
 
     /**
      * Computes the range of the given cells.
