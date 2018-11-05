@@ -80,6 +80,73 @@ public final class SpreadsheetRangeTest extends PublicClassTestCase<SpreadsheetR
         this.check(range, column2, row2, column1, row1, 88-3, 99-4);
     }
 
+    // setBeginAndEnd.....................................................................................
+
+    @Test(expected = NullPointerException.class)
+    public void testSetBeginAndEndWithNullBeginFails() {
+        this.range().setBeginAndEnd(null, this.end());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testSetBeginAndEndWithNullEndFails() {
+        this.range().setBeginAndEnd(this.begin(), null);
+    }
+
+    @Test
+    public void testSetBeginAndEndWithSame() {
+        final SpreadsheetRange range = this.range();
+        assertSame(range, range.setBeginAndEnd(this.begin(), this.end()));
+    }
+
+    @Test
+    public void testSetBeginAndEndWithSame2() {
+        final SpreadsheetRange range = this.range();
+        assertSame(range, range.setBeginAndEnd(this.end(), this.begin()));
+    }
+
+    @Test
+    public void testSetBeginAndEndWithDifferent() {
+        final SpreadsheetRange range = this.range();
+        final SpreadsheetCellReference differentBegin = this.cell(1, 2);
+        final SpreadsheetRange different = range.setBeginAndEnd(differentBegin, this.end());
+        this.check(different, 1, 2, COLUMN2, ROW2);
+    }
+
+    @Test
+    public void testSetBeginAndEndWithDifferent2() {
+        final SpreadsheetRange range = this.range();
+        final SpreadsheetRange different = range.setBeginAndEnd(this.end(), this.cell(1, 2));
+        this.check(different, 1, 2, COLUMN2, ROW2);
+    }
+
+    @Test
+    public void testSetBeginAndEndWithDifferent3() {
+        final SpreadsheetRange range = this.range();
+        final SpreadsheetRange different = range.setBeginAndEnd(this.begin(), this.cell(88, 99));
+        this.check(different, COLUMN1, ROW1, 88, 99);
+    }
+
+    @Test
+    public void testSetBeginAndEndWithDifferent4() {
+        final SpreadsheetRange range = this.range();
+        final SpreadsheetRange different = range.setBeginAndEnd(this.cell(88, 99), this.begin());
+        this.check(different, COLUMN1, ROW1, 88, 99);
+    }
+
+    @Test
+    public void testSetBeginAndEndWithDifferent5() {
+        final SpreadsheetRange range = this.range();
+        final SpreadsheetRange different = range.setBeginAndEnd(this.cell(1, 2), this.cell(88, 99));
+        this.check(different, 1, 2, 88, 99);
+    }
+
+    @Test
+    public void testSetBeginAndEndWithDifferent6() {
+        final SpreadsheetRange range = this.range();
+        final SpreadsheetRange different = range.setBeginAndEnd(this.cell(88, 99), this.cell(1, 2));
+        this.check(different, 1, 2, 88, 99);
+    }
+
     // stream.................................................................................................
     
     @Test
