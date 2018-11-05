@@ -2,31 +2,31 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
 import walkingkooka.test.HashCodeEqualsDefined;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
+import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Objects;
 
 /**
- * Holds a label to cell mapping.
+ * Holds a {@link SpreadsheetLabelName label} to {@link ExpressionReference} mapping.
  */
 public final class SpreadsheetLabelMapping implements HashCodeEqualsDefined {
 
     /**
      * Creates a new {@link SpreadsheetLabelMapping}
      */
-    public static SpreadsheetLabelMapping with(final SpreadsheetLabelName label, final SpreadsheetCellReference cell) {
+    public static SpreadsheetLabelMapping with(final SpreadsheetLabelName label, final ExpressionReference reference) {
         checkLabel(label);
-        checkCell(cell);
-        return new SpreadsheetLabelMapping(label, cell);
+        checkReference(reference);
+        return new SpreadsheetLabelMapping(label, reference);
     }
 
     /**
      * Private ctor use factory
      */
-    private SpreadsheetLabelMapping(final SpreadsheetLabelName label, final SpreadsheetCellReference cell) {
+    private SpreadsheetLabelMapping(final SpreadsheetLabelName label, final ExpressionReference reference) {
         this.label = label;
-        this.cell = cell;
+        this.reference = reference;
     }
 
     public SpreadsheetLabelName label() {
@@ -37,7 +37,7 @@ public final class SpreadsheetLabelMapping implements HashCodeEqualsDefined {
         checkLabel(label);
         return this.label.equals(label) ?
                this :
-               this.replace(label, cell);
+               this.replace(label, reference);
     }
     
     private static void checkLabel(final SpreadsheetLabelName label) {
@@ -46,32 +46,32 @@ public final class SpreadsheetLabelMapping implements HashCodeEqualsDefined {
     
     private final SpreadsheetLabelName label;
 
-    public SpreadsheetCellReference cell() {
-        return this.cell;
+    public ExpressionReference reference() {
+        return this.reference;
     }
 
-    public SpreadsheetLabelMapping setCell(final SpreadsheetCellReference cell) {
-        checkCell(cell);
-        return this.cell.equals(cell) ?
+    public SpreadsheetLabelMapping setReference(final ExpressionReference reference) {
+        checkReference(reference);
+        return this.reference.equals(reference) ?
                 this :
-                this.replace(this.label, cell);
+                this.replace(this.label, reference);
     }
     
-    private final SpreadsheetCellReference cell;
+    private final ExpressionReference reference;
 
-    private static void checkCell(final SpreadsheetCellReference cell) {
-        Objects.requireNonNull(cell, "cell");
+    private static void checkReference(final ExpressionReference reference) {
+        Objects.requireNonNull(reference, "reference");
     }
 
-    private SpreadsheetLabelMapping replace(final SpreadsheetLabelName label, final SpreadsheetCellReference cell) {
-        return new SpreadsheetLabelMapping(label, cell);
+    private SpreadsheetLabelMapping replace(final SpreadsheetLabelName label, final ExpressionReference reference) {
+        return new SpreadsheetLabelMapping(label, reference);
     }
 
     // HashCodeEqualsDefined..........................................................................................
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.label, this.cell);
+        return Objects.hash(this.label, this.reference);
     }
 
     @Override
@@ -83,11 +83,11 @@ public final class SpreadsheetLabelMapping implements HashCodeEqualsDefined {
 
     private boolean equals0(final SpreadsheetLabelMapping other) {
         return this.label.equals(other.label) &
-               this.cell.equals(other.cell);
+               this.reference.equals(other.reference);
     }
 
     @Override
     public String toString() {
-        return this.label + "=" + this.cell;
+        return this.label + "=" + this.reference;
     }
 }
