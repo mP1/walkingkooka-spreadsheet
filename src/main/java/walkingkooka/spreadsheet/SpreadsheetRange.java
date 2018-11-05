@@ -44,18 +44,18 @@ public final class SpreadsheetRange implements HashCodeEqualsDefined {
      * Factory that creates a {@link SpreadsheetRange}
      */
     public static SpreadsheetRange with(final SpreadsheetCellReference begin, final SpreadsheetCellReference end) {
-        Objects.requireNonNull(begin, "begin");
-        Objects.requireNonNull(end, "end");
+        checkBegin(begin);
+        checkEnd(end);
 
-        return new SpreadsheetRange(begin, end);
+        return new SpreadsheetRange(begin.lower(end), end.upper(begin));
     }
 
     /**
      * Private ctor
      */
     private SpreadsheetRange(final SpreadsheetCellReference begin, final SpreadsheetCellReference end) {
-        this.begin = begin.lower(end);
-        this.end =  end.upper(begin);
+        this.begin = begin;
+        this.end =  end;
     }
 
     /**
@@ -76,6 +76,32 @@ public final class SpreadsheetRange implements HashCodeEqualsDefined {
 
     private final SpreadsheetCellReference end;
 
+
+    /**
+     * Would be setter that accepts a pair of coordinates, and returns a range with those values,
+     * creating a new instance if necessary.
+     */
+    public SpreadsheetRange setBeginAndEnd(final SpreadsheetCellReference begin,
+                                                   final SpreadsheetCellReference end) {
+        checkBegin(begin);
+        checkEnd(end);
+
+        final SpreadsheetCellReference begin0 = begin.lower(end);
+        final SpreadsheetCellReference end0 =  end.upper(begin);
+
+        return this.begin.equals(begin0) && this.end.equals(end0) ?
+               this :
+               new SpreadsheetRange(begin0, end0);
+    }
+    
+    private static void checkBegin(final SpreadsheetCellReference begin) {
+        Objects.requireNonNull(begin, "begin");   
+    }
+
+    private static void checkEnd(final SpreadsheetCellReference end) {
+        Objects.requireNonNull(end, "end");
+    }
+    
     /**
      * Returns the width of this range.
      */
