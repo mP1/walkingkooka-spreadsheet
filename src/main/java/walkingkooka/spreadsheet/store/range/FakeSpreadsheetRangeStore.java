@@ -1,0 +1,64 @@
+package walkingkooka.spreadsheet.store.range;
+
+import walkingkooka.spreadsheet.SpreadsheetRange;
+import walkingkooka.test.Fake;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+
+public class FakeSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V>, Fake {
+
+    @Override
+    public Optional<List<V>> load(final SpreadsheetRange range) {
+        Objects.requireNonNull(range, "range");
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<V> loadCellReference(final SpreadsheetCellReference cell) {
+        Objects.requireNonNull(cell, "cell");
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void saveValue(final SpreadsheetRange range, final V value) {
+        Objects.requireNonNull(range, "range");
+        Objects.requireNonNull(value, "value");
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean replaceValue(final SpreadsheetRange range, final V newValue, final V oldValue) {
+        Objects.requireNonNull(range, "range");
+        Objects.requireNonNull(newValue, "newValue");
+        Objects.requireNonNull(oldValue, "oldValue");
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void deleteValue(final SpreadsheetRange range, final V value) {
+        Objects.requireNonNull(range, "range");
+        Objects.requireNonNull(value, "value");
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void delete(final SpreadsheetRange range) {
+        Objects.requireNonNull(range, "range");
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int count() {
+        throw new UnsupportedOperationException();
+    }
+}
