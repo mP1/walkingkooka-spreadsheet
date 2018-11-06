@@ -1,13 +1,16 @@
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.NeverError;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReferenceParserToken;
+import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -82,16 +85,16 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
     /**
      * Scans all cell expressions for references and fixes those needing fixing.
      */
-    final void fixAllExpressionCellReferences(final SpreadsheetEngineContext context) {
+    final void fixAllExpressionReferences(final SpreadsheetEngineContext context) {
         final int rows = this.maxRow();
         for (int i = 0; i <= rows; i++) {
-            this.fixRowCellReferences(i, context);
+            this.fixRowReferences(i, context);
         }
     }
 
-    private void fixRowCellReferences(final int row, final SpreadsheetEngineContext context) {
+    private void fixRowReferences(final int row, final SpreadsheetEngineContext context) {
         this.rowCells(row).stream()
-                .map(r -> this.fixExpressionCellReferences(r, context))
+                .map(r -> this.fixExpressionReferences(r, context))
                 .forEach(this::saveCell);
     }
 
@@ -99,8 +102,8 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      * Attempts to parse the formula if necessary and then update cell references that may have shifted due to a
      * delete or insert.
      */
-    private SpreadsheetCell fixExpressionCellReferences(final SpreadsheetCell cell,
-                                                        final SpreadsheetEngineContext context) {
+    private SpreadsheetCell fixExpressionReferences(final SpreadsheetCell cell,
+                                                    final SpreadsheetEngineContext context) {
         return cell.setFormula(
                 this.engine.parse(
                         cell.formula(),
@@ -147,6 +150,16 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      */
     abstract int columnOrRowValue(final SpreadsheetCellReference cell);
 
+    /**
+     * Setter that updates the column or row value
+     */
+    abstract SpreadsheetCellReference setColumnOrRowValue(final SpreadsheetCellReference cell, final int value);
+
+    /**
+     * Adds a delta value to a column or row value
+     */
+    abstract SpreadsheetCellReference addColumnOrRowValue(final SpreadsheetCellReference cell, final int value);
+
     // label mappings............................................................................................
 
     // fix references in all label mappings .............................................................................
@@ -157,37 +170,146 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
     final void fixAllLabelMappings() {
         this.labelStore().all()
                 .stream()
-                .filter(this::shouldProcessLabelMapping)
                 .forEach(this.deleteOrInsert::fixLabelMapping);
     }
 
-    /**
-     * Filter only columns or rows that will be deleted or inserted.
-     */
-    private boolean shouldProcessLabelMapping(final SpreadsheetLabelMapping mapping) {
-        return this.columnOrRowValue(mapping.cell()) >= this.value;
-    }
+    // DELETE .......................................................................................................
 
     /**
      * Deletes the mapping because the target was deleted or fixes the reference.
      */
-    final void deleteFixReference(final SpreadsheetLabelMapping mapping) {
-        if (this.columnOrRowValue(mapping.cell()) >= this.value + this.count) {
-            this.fixReferenceAndSave(mapping);
-        } else {
-            this.labelStore().delete(mapping.label());
+    final void deleteOrFixLabelMapping(final SpreadsheetLabelMapping mapping) {
+        final ExpressionReference reference = mapping.reference();
+
+        for (; ; ) {
+            if (reference instanceof SpreadsheetCellReference) {
+                this.deleteOrFixSpreadsheetCellReference(SpreadsheetCellReference.class.cast(reference),
+                        mapping);
+                break;
+            }
+            if (reference instanceof SpreadsheetRange) {
+                this.deleteOrFixSpreadsheetRange(SpreadsheetRange.class.cast(reference), mapping);
+                break;
+            }
+            this.unhandledExpressionReference(reference);
         }
     }
+
+    private void deleteOrFixSpreadsheetCellReference(final SpreadsheetCellReference reference,
+                                                     final SpreadsheetLabelMapping mapping) {
+        final int diff = this.columnOrRowValue(reference) - this.value;
+        if (diff >= 0) {
+            if (diff >= this.count) {
+                this.fixCellReferenceAndSaveLabel(reference, mapping);
+            } else {
+                this.deleteLabel(mapping);
+            }
+        }
+    }
+
+    private void deleteOrFixSpreadsheetRange(final SpreadsheetRange range,
+                                             final SpreadsheetLabelMapping mapping) {
+
+        SpreadsheetCellReference rangeEnd = range.end();
+        final int rangeEndValue = this.columnOrRowValue(rangeEnd);
+        final int deleteBegin = this.value;
+
+        // deleted col/rows are after end of range.
+        if(deleteBegin < rangeEndValue) {
+
+            SpreadsheetCellReference rangeBegin = range.begin();
+            final int rangeBeginValue = this.columnOrRowValue(rangeBegin);
+            final int deleteEnd = deleteBegin + this.count;
+
+            do {
+                final int beginDiff = deleteBegin - rangeBeginValue;
+                final int endDiff = deleteEnd - rangeEndValue;
+
+                if(beginDiff <= 0 &&  endDiff >= 0) {
+                    this.deleteLabel(mapping);
+                    break;
+                }
+
+                final int deleteLength = deleteEnd - deleteBegin;
+                if(deleteEnd < rangeBeginValue){
+                    rangeBegin = this.addColumnOrRowValue(rangeBegin, -deleteLength);
+                    rangeEnd = this.addColumnOrRowValue(rangeEnd, -deleteLength);
+                    break;
+                }
+
+                if(beginDiff < 0 && endDiff < 0) {
+                    rangeBegin = this.setColumnOrRowValue(rangeBegin, deleteBegin);
+                    rangeEnd = this.setColumnOrRowValue(rangeBegin, deleteBegin + rangeEndValue - rangeBeginValue - deleteLength);
+                    break;
+                }
+
+                if(endDiff < 0) {
+                    rangeEnd = this.addColumnOrRowValue(rangeEnd, -deleteLength);
+                    break;
+                }
+
+                rangeEnd = this.setColumnOrRowValue(rangeBegin, deleteBegin);
+
+            } while(false);
+
+            this.saveLabelIfUpdated(
+                    range.setBeginAndEnd(rangeBegin, rangeEnd),
+                    mapping);
+        }
+    }
+
+    // INSERT .....................................................................................................
 
     /**
      * Fixes a mapping because the target was moved because of inserted columns or rows.
      */
-    final void insertFixReference(final SpreadsheetLabelMapping mapping) {
-        this.fixReferenceAndSave(mapping);
+    final void insertFixLabelMapping(final SpreadsheetLabelMapping mapping) {
+        final ExpressionReference reference = mapping.reference();
+
+        for (; ; ) {
+            if (reference instanceof SpreadsheetCellReference) {
+                this.insertFixSpreadsheetCellReference(SpreadsheetCellReference.class.cast(reference),
+                        mapping);
+                break;
+            }
+            if (reference instanceof SpreadsheetRange) {
+                this.insertFixSpreadsheetRange(SpreadsheetRange.class.cast(reference),
+                        mapping);
+                break;
+            }
+            this.unhandledExpressionReference(reference);
+        }
     }
 
-    private void fixReferenceAndSave(final SpreadsheetLabelMapping mapping) {
-        this.saveLabel(mapping.setCell(this.fixCellReference(mapping.cell())));
+    private void insertFixSpreadsheetCellReference(final SpreadsheetCellReference reference,
+                                                   final SpreadsheetLabelMapping mapping) {
+        final int diff = this.columnOrRowValue(reference) - this.value;
+        if (diff >= 0) {
+            this.fixCellReferenceAndSaveLabel(reference, mapping);
+        }
+    }
+
+    private void insertFixSpreadsheetRange(final SpreadsheetRange range,
+                                           final SpreadsheetLabelMapping mapping) {
+        SpreadsheetCellReference begin = range.begin();
+        SpreadsheetCellReference end = range.end();
+
+        if (this.columnOrRowValue(begin) >= this.value) {
+            begin = this.fixCellReference(begin);
+        }
+        if (this.columnOrRowValue(end) >= this.value) {
+            end = this.fixCellReference(end);
+        }
+
+        this.saveLabelIfUpdated(range.setBeginAndEnd(begin, end), mapping);
+    }
+
+    /**
+     * Reports a {@link ExpressionReference} other than a {@link SpreadsheetCellReference} or {@link SpreadsheetRange}.
+     */
+    private void unhandledExpressionReference(final ExpressionReference reference) {
+        NeverError.unhandledCase(reference,
+                SpreadsheetCellReference.class.getSimpleName(), SpreadsheetRange.class.getSimpleName());
     }
 
     // cells....................................................................................................
@@ -239,8 +361,24 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
 
     // labels....................................................................................................
 
+    final void fixCellReferenceAndSaveLabel(final SpreadsheetCellReference reference,
+                                            final SpreadsheetLabelMapping mapping) {
+        this.saveLabelIfUpdated(this.fixCellReference(reference), mapping);
+    }
+
+    final void saveLabelIfUpdated(final ExpressionReference reference, final SpreadsheetLabelMapping mapping) {
+        final SpreadsheetLabelMapping updated = mapping.setReference(reference);
+        if(mapping!=updated) {
+            this.labelStore().save(updated);
+        }
+    }
+
     final void saveLabel(final SpreadsheetLabelMapping mapping) {
         this.labelStore().save(mapping);
+    }
+
+    final void deleteLabel(final SpreadsheetLabelMapping mapping) {
+        this.labelStore().delete(mapping.label());
     }
 
     final SpreadsheetLabelStore labelStore() {
