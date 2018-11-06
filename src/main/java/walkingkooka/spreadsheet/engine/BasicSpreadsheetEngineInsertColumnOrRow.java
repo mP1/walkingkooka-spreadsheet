@@ -23,7 +23,7 @@ final class BasicSpreadsheetEngineInsertColumnOrRow extends BasicSpreadsheetEngi
      */
     private void insert0(final SpreadsheetEngineContext context) {
         this.move();
-        this.columnOrRow.fixAllExpressionCellReferences(context);
+        this.columnOrRow.fixAllExpressionReferences(context);
         this.columnOrRow.fixAllLabelMappings();
     }
 
@@ -54,6 +54,6 @@ final class BasicSpreadsheetEngineInsertColumnOrRow extends BasicSpreadsheetEngi
 
     @Override
     void fixLabelMapping(final SpreadsheetLabelMapping mapping) {
-        this.columnOrRow.insertFixReference(mapping);
+        this.columnOrRow.insertFixLabelMapping(mapping);
     }
 }
