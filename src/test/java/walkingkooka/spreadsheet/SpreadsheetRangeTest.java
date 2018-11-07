@@ -45,6 +45,7 @@ public final class SpreadsheetRangeTest extends PublicClassTestCase<SpreadsheetR
         final SpreadsheetRange range = SpreadsheetRange.with(begin, end);
         assertSame("begin", begin, range.begin());
         assertSame("end", end, range.end());
+        this.checkIsSingleCell(range, false);
     }
 
     @Test
@@ -56,6 +57,7 @@ public final class SpreadsheetRangeTest extends PublicClassTestCase<SpreadsheetR
 
         final SpreadsheetRange range = this.range(column1, row1, column2, row2);
         this.check(range, column2, row1, column1, row2, 99-3, 4-2);
+        this.checkIsSingleCell(range, false);
     }
 
     @Test
@@ -67,6 +69,7 @@ public final class SpreadsheetRangeTest extends PublicClassTestCase<SpreadsheetR
 
         final SpreadsheetRange range = this.range(column1, row1, column2, row2);
         this.check(range, column1, row2, column2, row1, 3-1, 99-4);
+        this.checkIsSingleCell(range, false);
     }
 
     @Test
@@ -78,6 +81,37 @@ public final class SpreadsheetRangeTest extends PublicClassTestCase<SpreadsheetR
 
         final SpreadsheetRange range = this.range(column1, row1, column2, row2);
         this.check(range, column2, row2, column1, row1, 88-3, 99-4);
+        this.checkIsSingleCell(range, false);
+    }
+
+    // cell...........................................................
+
+    @Test(expected = NullPointerException.class)
+    public void testCellNullFails() {
+        SpreadsheetRange.cell(null);
+    }
+
+    @Test
+    public void testCell() {
+        final int column = 88;
+        final int row = 99;
+        final SpreadsheetRange range = SpreadsheetRange.cell(this.cell(column, row));
+        this.check(range, column, row, column + 1, row + 1, 1, 1);
+        this.checkIsSingleCell(range, true);
+    }
+
+    // isSingleCell...........................................................
+
+    @Test
+    public void testIsSingleCell() {
+        final int column1 = 88;
+        final int row1 = 99;
+        final int column2 = column1 + 1;
+        final int row2 = row1 + 1;
+
+        final SpreadsheetRange range = this.range(column1, row1, column2, row2);
+        this.check(range, column1, row1, column2, row2, 1, 1);
+        this.checkIsSingleCell(range, true);
     }
 
     // setBeginAndEnd.....................................................................................
@@ -385,6 +419,10 @@ public final class SpreadsheetRangeTest extends PublicClassTestCase<SpreadsheetR
 
     private void checkHeight(final SpreadsheetRange range, final int height) {
         assertEquals("range height="+ range, height, range.height());
+    }
+
+    private void checkIsSingleCell(final SpreadsheetRange range, final boolean expected) {
+        assertEquals("range=" + range + " isSingleCell", expected, range.isSingleCell());
     }
 
     @Override
