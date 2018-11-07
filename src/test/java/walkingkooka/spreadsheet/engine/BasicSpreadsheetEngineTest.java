@@ -399,7 +399,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
 
     private void saveRule(final boolean result, final int priority, final SpreadsheetCellStyle style,
                           final SpreadsheetCellReference cell, final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rules) {
-        rules.saveValue(SpreadsheetRange.from(Lists.of(cell)), rule(result, priority, style));
+        rules.saveValue(SpreadsheetRange.cell(cell), rule(result, priority, style));
     }
 
     private SpreadsheetConditionalFormattingRule rule(final boolean result,
