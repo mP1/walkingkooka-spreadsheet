@@ -1,8 +1,10 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
 import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.type.PublicStaticHelper;
@@ -17,8 +19,9 @@ public final class SpreadsheetEngines implements PublicStaticHelper {
      */
     public static SpreadsheetEngine basic(final SpreadsheetId id,
                                           final SpreadsheetCellStore cellStore,
-                                          final SpreadsheetLabelStore labelStore) {
-        return BasicSpreadsheetEngine.with(id, cellStore, labelStore);
+                                          final SpreadsheetLabelStore labelStore,
+                                          final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> conditionalFormattingRules) {
+        return BasicSpreadsheetEngine.with(id, cellStore, labelStore, conditionalFormattingRules);
     }
 
     /**

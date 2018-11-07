@@ -1,5 +1,6 @@
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
@@ -8,8 +9,10 @@ import walkingkooka.spreadsheet.SpreadsheetFormattedCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetRange;
+import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
@@ -24,6 +27,7 @@ import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -38,12 +42,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      */
     static BasicSpreadsheetEngine with(final SpreadsheetId id,
                                        final SpreadsheetCellStore cellStore,
-                                       final SpreadsheetLabelStore labelStore) {
+                                       final SpreadsheetLabelStore labelStore,
+                                       final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> conditionalFormattingRules) {
         Objects.requireNonNull(id, "id");
         Objects.requireNonNull(cellStore, "cellStore");
         Objects.requireNonNull(labelStore, "labelStore");
+        Objects.requireNonNull(conditionalFormattingRules, "conditionalFormattingRules");
 
-        return new BasicSpreadsheetEngine(id, cellStore, labelStore);
+        return new BasicSpreadsheetEngine(id, cellStore, labelStore, conditionalFormattingRules);
     }
 
     /**
@@ -51,10 +57,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      */
     private BasicSpreadsheetEngine(final SpreadsheetId id,
                                    final SpreadsheetCellStore cellStore,
-                                   final SpreadsheetLabelStore labelStore) {
+                                   final SpreadsheetLabelStore labelStore,
+                                   final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> conditionalFormattingRules) {
         this.id = id;
         this.cellStore = cellStore;
         this.labelStore = labelStore;
+        this.conditionalFormattingRules = conditionalFormattingRules;
     }
 
     @Override
@@ -186,9 +194,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         final SpreadsheetFormula formula = cell.formula();
         final Optional<Object> value = formula.value();
-        return value.isPresent() ?
+        final SpreadsheetCell beforeConditionalRules = value.isPresent() ?
                 result.setFormatted(Optional.of(this.formatAndApplyStyle0(value.get(), formatter, result.style(), context))) :
                 this.formatAndApplyStyleValueAbsent(result, context);
+
+        return this.locateAndApplyConditionalFormattingRule(beforeConditionalRules, context);
     }
 
     /**
@@ -234,6 +244,36 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         return formattedCell;
     }
+
+    /**
+     * Locates and returns the first matching conditional rule style.
+     */
+    private SpreadsheetCell locateAndApplyConditionalFormattingRule(final SpreadsheetCell cell,
+                                                                    final SpreadsheetEngineContext context) {
+        SpreadsheetCell result = cell;
+
+        final Set<SpreadsheetConditionalFormattingRule> rules = Sets.sorted(SpreadsheetConditionalFormattingRule.PRIORITY_COMPARATOR);
+        rules.addAll(this.conditionalFormattingRules.loadCellReference(cell.reference()));
+        for (SpreadsheetConditionalFormattingRule rule : rules) {
+            final Object test = context.evaluate(rule.formula().expression().get());
+            final Boolean booleanResult = context.convert(test, Boolean.class);
+            if (Boolean.TRUE.equals(booleanResult)) {
+                final Optional<SpreadsheetFormattedCell> formatted = cell.formatted();
+                if(!formatted.isPresent()) {
+                    throw new BasicSpreadsheetEngineException("Missing formatted cell=" + cell);
+                }
+
+                result = cell.setFormatted(Optional.of(formatted.get().setStyle(rule.style().apply(cell))));
+                break;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Provides the conditional format rules for each cell.
+     */
+    private final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> conditionalFormattingRules;
 
     // FORMAT ERROR ....................................................................................................
 
