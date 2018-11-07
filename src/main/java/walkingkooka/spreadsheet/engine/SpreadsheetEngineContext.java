@@ -42,6 +42,11 @@ public interface SpreadsheetEngineContext extends Context {
     Object evaluate(final ExpressionNode node);
 
     /**
+     * Converts the value into the target type.
+     */
+    <T> T convert(Object value, Class<T> target);
+
+    /**
      * Accepts a format pattern and returns the equivalent {@link SpreadsheetTextFormatter}.
      */
     SpreadsheetTextFormatter<?> parseFormatPattern(final String pattern);
