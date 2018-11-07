@@ -7,14 +7,18 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
+import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.SpreadsheetRange;
+import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStores;
+import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
+import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStores;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
 import walkingkooka.text.cursor.TextCursors;
@@ -63,17 +67,22 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
 
     @Test(expected = NullPointerException.class)
     public void testNullIdFails() {
-        BasicSpreadsheetEngine.with(null, this.cellStore(), this.labelStore());
+        BasicSpreadsheetEngine.with(null, this.cellStore(), this.labelStore(), this.conditionalFormattingRules());
     }
 
     @Test(expected = NullPointerException.class)
     public void testNullCellStoreFails() {
-        BasicSpreadsheetEngine.with(this.id(), null, this.labelStore());
+        BasicSpreadsheetEngine.with(this.id(), null, this.labelStore(), this.conditionalFormattingRules());
     }
 
     @Test(expected = NullPointerException.class)
     public void testNullLabelStoreFails() {
-        BasicSpreadsheetEngine.with(this.id(), this.cellStore(), null);
+        BasicSpreadsheetEngine.with(this.id(), this.cellStore(), null, this.conditionalFormattingRules());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testNullConditionalFormattingRulesFails() {
+        BasicSpreadsheetEngine.with(this.id(), this.cellStore(), this.labelStore(), null);
     }
 
     @Test
@@ -342,6 +351,66 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 context,
                 BigDecimal.valueOf(3 + 4),
                 DEFAULT_SUFFIX);
+    }
+
+    @Test
+    public void testLoadCallWithConditionalFormattingRule() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+
+        final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rules = this.conditionalFormattingRules();
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore, rules);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
+
+        // rule 3 is ignored because it returns false, rule 2 short circuits the conditional testing ...
+        this.saveRule(true,
+                1,
+                style(SpreadsheetTextStyle.NO_BOLD, SpreadsheetTextStyle.ITALICS, SpreadsheetTextStyle.NO_UNDERLINE),
+                a,
+                rules);
+        this.saveRule(true,
+                2,
+                style(SpreadsheetTextStyle.NO_BOLD, SpreadsheetTextStyle.NO_ITALICS, SpreadsheetTextStyle.UNDERLINE),
+                a,
+                rules);
+        this.saveRule(false,
+                3,
+                style(SpreadsheetTextStyle.BOLD, SpreadsheetTextStyle.ITALICS, SpreadsheetTextStyle.UNDERLINE),
+                a,
+                rules);
+
+        cellStore.save(this.cell(a, "3+4"));
+
+        final SpreadsheetCell cell = this.loadCellAndCheckFormatted2(engine,
+                a,
+                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                context,
+                BigDecimal.valueOf(3 + 4),
+                DEFAULT_SUFFIX);
+        final SpreadsheetCellStyle style = cell.formatted().get().style();
+        // UNDERLINED from conditional formatting rule #2.
+        assertEquals("Style should include underline if correct rule was applied=" + cell,
+                style(SpreadsheetTextStyle.NO_BOLD, SpreadsheetTextStyle.NO_ITALICS, SpreadsheetTextStyle.UNDERLINE),
+                style);
+    }
+
+    private void saveRule(final boolean result, final int priority, final SpreadsheetCellStyle style,
+                          final SpreadsheetCellReference cell, final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rules) {
+        rules.saveValue(SpreadsheetRange.from(Lists.of(cell)), rule(result, priority, style));
+    }
+
+    private SpreadsheetConditionalFormattingRule rule(final boolean result,
+                                                      final int priority,
+                                                      final SpreadsheetCellStyle style) {
+
+
+        return SpreadsheetConditionalFormattingRule.with(SpreadsheetDescription.with(priority + "=" + result),
+                priority,
+                SpreadsheetFormula.with(String.valueOf(result)).setExpression(Optional.of(ExpressionNode.booleanNode(result))),
+                (c) -> style);
     }
 
     // deleteColumn....................................................................................................
@@ -3223,7 +3292,13 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
 
     private BasicSpreadsheetEngine createSpreadsheetEngine(final SpreadsheetCellStore cellStore,
                                                            final SpreadsheetLabelStore labelStore) {
-        return BasicSpreadsheetEngine.with(this.id(), cellStore, labelStore);
+        return this.createSpreadsheetEngine(cellStore, labelStore, this.conditionalFormattingRules());
+    }
+
+    private BasicSpreadsheetEngine createSpreadsheetEngine(final SpreadsheetCellStore cellStore,
+                                                           final SpreadsheetLabelStore labelStore,
+                                                           final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rules) {
+        return BasicSpreadsheetEngine.with(this.id(), cellStore, labelStore, rules);
     }
 
     @Override
@@ -3262,6 +3337,12 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                         MathContext.UNLIMITED,
                         Converters.simple(),
                         decimalNumberContext()));
+            }
+
+            @Override
+            public <T> T convert(final Object value, final Class<T> target) {
+                assertEquals("Only support converting to Boolean=" + value, Boolean.class, target);
+                return target.cast(Boolean.parseBoolean(String.valueOf(value)));
             }
 
             @Override
@@ -3338,6 +3419,10 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         return SpreadsheetLabelStores.basic();
     }
 
+    private SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> conditionalFormattingRules() {
+        return SpreadsheetRangeStores.basic();
+    }
+
     private SpreadsheetColumnReference column(final int column) {
         return SpreadsheetReferenceKind.ABSOLUTE.column(column);
     }
@@ -3367,7 +3452,18 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
     }
 
     private SpreadsheetCellStyle style() {
-        return SpreadsheetCellStyle.EMPTY.setText(SpreadsheetTextStyle.EMPTY.setBold(SpreadsheetTextStyle.BOLD));
+        return style(SpreadsheetTextStyle.BOLD,
+                SpreadsheetTextStyle.NO_ITALICS,
+                SpreadsheetTextStyle.NO_UNDERLINE);
+    }
+
+    private SpreadsheetCellStyle style(final Optional<Boolean> bold,
+                                       final Optional<Boolean> italics,
+                                       final Optional<Boolean> underline) {
+        return SpreadsheetCellStyle.EMPTY.setText(SpreadsheetTextStyle.EMPTY
+                .setBold(bold)
+                .setItalics(italics)
+                .setUnderline(underline));
     }
 
     @Override
