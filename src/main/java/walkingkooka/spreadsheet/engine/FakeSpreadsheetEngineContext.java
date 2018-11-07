@@ -24,6 +24,13 @@ public class FakeSpreadsheetEngineContext implements SpreadsheetEngineContext, F
     }
 
     @Override
+    public <T> T convert(Object value, Class<T> target) {
+        Objects.requireNonNull(value, "value");
+        Objects.requireNonNull(target, "target");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public SpreadsheetTextFormatter<?> parseFormatPattern(final String pattern) {
         Objects.requireNonNull(pattern, "pattern");
         throw new UnsupportedOperationException();
