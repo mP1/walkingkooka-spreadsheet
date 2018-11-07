@@ -44,6 +44,14 @@ public final class SpreadsheetRange implements ExpressionReference, HashCodeEqua
     /**
      * Factory that creates a {@link SpreadsheetRange}
      */
+    public static SpreadsheetRange cell(final SpreadsheetCellReference cell) {
+        Objects.requireNonNull(cell, "cell");
+        return new SpreadsheetRange(cell, cell.add(1, 1));
+    }
+
+    /**
+     * Factory that creates a {@link SpreadsheetRange}
+     */
     public static SpreadsheetRange with(final SpreadsheetCellReference begin, final SpreadsheetCellReference end) {
         checkBegin(begin);
         checkEnd(end);
@@ -102,7 +110,14 @@ public final class SpreadsheetRange implements ExpressionReference, HashCodeEqua
     private static void checkEnd(final SpreadsheetCellReference end) {
         Objects.requireNonNull(end, "end");
     }
-    
+
+    /**
+     * Returns true only if this range covers a single cell.
+     */
+    public boolean isSingleCell() {
+        return this.width() == 1 && this.height() == 1;
+    }
+
     /**
      * Returns the width of this range.
      */
