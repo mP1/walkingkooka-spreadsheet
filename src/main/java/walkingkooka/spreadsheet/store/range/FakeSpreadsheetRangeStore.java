@@ -1,6 +1,8 @@
 package walkingkooka.spreadsheet.store.range;
 
 import walkingkooka.spreadsheet.SpreadsheetRange;
+import walkingkooka.spreadsheet.store.FakeStore;
+import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.test.Fake;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
@@ -9,14 +11,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
-public class FakeSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V>, Fake {
-
-    @Override
-    public Optional<List<V>> load(final SpreadsheetRange range) {
-        Objects.requireNonNull(range, "range");
-
-        throw new UnsupportedOperationException();
-    }
+public class FakeSpreadsheetRangeStore<V> extends FakeStore<SpreadsheetRange, List<V>> implements SpreadsheetRangeStore<V>, Fake {
 
     @Override
     public Set<V> loadCellReference(final SpreadsheetCellReference cell) {
@@ -47,18 +42,6 @@ public class FakeSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V>, F
         Objects.requireNonNull(range, "range");
         Objects.requireNonNull(value, "value");
 
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void delete(final SpreadsheetRange range) {
-        Objects.requireNonNull(range, "range");
-
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public int count() {
         throw new UnsupportedOperationException();
     }
 }
