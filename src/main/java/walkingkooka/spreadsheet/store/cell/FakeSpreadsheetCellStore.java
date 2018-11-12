@@ -1,6 +1,7 @@
 package walkingkooka.spreadsheet.store.cell;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.store.FakeStore;
 import walkingkooka.test.Fake;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
@@ -8,30 +9,7 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
 
-public class FakeSpreadsheetCellStore implements SpreadsheetCellStore, Fake {
-
-    @Override
-    public Optional<SpreadsheetCell> load(final SpreadsheetCellReference reference) {
-        Objects.requireNonNull(reference, "reference");
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void save(final SpreadsheetCell cell) {
-        Objects.requireNonNull(cell, "cell");
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void delete(SpreadsheetCellReference reference) {
-        Objects.requireNonNull(reference, "reference");
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public int count() {
-        throw new UnsupportedOperationException();
-    }
+public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference, SpreadsheetCell> implements SpreadsheetCellStore, Fake {
 
     @Override
     public int rows() {
