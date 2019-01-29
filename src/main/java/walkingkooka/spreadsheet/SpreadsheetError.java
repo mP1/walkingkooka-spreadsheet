@@ -11,7 +11,7 @@ import walkingkooka.text.Whitespace;
 public final class SpreadsheetError implements HashCodeEqualsDefined, Value<String> {
 
     public static SpreadsheetError with(final String message) {
-        Whitespace.failIfNullOrWhitespace(message, "Message");
+        Whitespace.failIfNullOrEmptyOrWhitespace(message, "Message");
 
         return new SpreadsheetError(message);
     }

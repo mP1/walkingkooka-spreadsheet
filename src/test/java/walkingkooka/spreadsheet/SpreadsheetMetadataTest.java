@@ -1,21 +1,24 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.Test;
-import walkingkooka.test.PublicClassTestCase;
+import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.type.MemberVisibility;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 
 
-public final class SpreadsheetMetadataTest extends PublicClassTestCase<SpreadsheetMetadata> {
+public final class SpreadsheetMetadataTest extends ClassTestCase<SpreadsheetMetadata>
+        implements HashCodeEqualsDefinedTesting<SpreadsheetMetadata> {
 
     private final static int COLUMN = 12;
     private final static int ROW = 34;
     
     @Test
     public void testWith() {
-        final SpreadsheetMetadata meta = this.createSpreadsheetMeta();
+        final SpreadsheetMetadata meta = this.createObject();
         this.checkColumnCount(meta, COLUMN);
         this.checkRowCount(meta, ROW);
     }
@@ -31,18 +34,18 @@ public final class SpreadsheetMetadataTest extends PublicClassTestCase<Spreadshe
 
     @Test(expected = IllegalArgumentException.class)
     public void testSetColumnCountNegativeFails() {
-        this.createSpreadsheetMeta().setColumnCount(-1);
+        this.createObject().setColumnCount(-1);
     }
 
     @Test
     public void testSetColumnCountSame() {
-        final SpreadsheetMetadata meta = this.createSpreadsheetMeta();
+        final SpreadsheetMetadata meta = this.createObject();
         assertSame(meta, meta.setColumnCount(meta.columnCount()));
     }
 
     @Test
     public void testSetColumnCountDifferent() {
-        final SpreadsheetMetadata meta = this.createSpreadsheetMeta();
+        final SpreadsheetMetadata meta = this.createObject();
         final int differentColumnCount = 999;
         final SpreadsheetMetadata different = meta.setColumnCount(differentColumnCount);
         assertNotSame(meta, different);
@@ -55,18 +58,18 @@ public final class SpreadsheetMetadataTest extends PublicClassTestCase<Spreadshe
 
     @Test(expected = IllegalArgumentException.class)
     public void testSetRowCountNegativeFails() {
-        this.createSpreadsheetMeta().setRowCount(-1);
+        this.createObject().setRowCount(-1);
     }
 
     @Test
     public void testSetRowCountSame() {
-        final SpreadsheetMetadata meta = this.createSpreadsheetMeta();
+        final SpreadsheetMetadata meta = this.createObject();
         assertSame(meta, meta.setRowCount(meta.rowCount()));
     }
 
     @Test
     public void testSetRowCountDifferent() {
-        final SpreadsheetMetadata meta = this.createSpreadsheetMeta();
+        final SpreadsheetMetadata meta = this.createObject();
         final int differentRowCount = 999;
         final SpreadsheetMetadata different = meta.setRowCount(differentRowCount);
         assertNotSame(meta, different);
@@ -75,14 +78,30 @@ public final class SpreadsheetMetadataTest extends PublicClassTestCase<Spreadshe
         this.checkRowCount(different, differentRowCount);
     }
 
+    // equals...............................................................................................
+
+    @Test
+    public void testDifferentColumnCount() {
+        this.checkNotEquals(SpreadsheetMetadata.with(999, ROW));
+    }
+
+    @Test
+    public void testDifferentRowCount() {
+        this.checkNotEquals(SpreadsheetMetadata.with(COLUMN, 999));
+    }
+
     // toString ....................................................................................................
 
     @Test
     public void testToString() {
-        assertEquals("12x34", this.createSpreadsheetMeta().toString());
+        assertEquals("12x34", this.createObject().toString());
     }
 
-    private SpreadsheetMetadata createSpreadsheetMeta() {
+    // helpers ........................................................................................
+
+
+    @Override
+    public SpreadsheetMetadata createObject() {
         return SpreadsheetMetadata.with(COLUMN, ROW);
     }
 
@@ -95,7 +114,12 @@ public final class SpreadsheetMetadataTest extends PublicClassTestCase<Spreadshe
     }
     
     @Override
-    protected Class<SpreadsheetMetadata> type() {
+    public Class<SpreadsheetMetadata> type() {
         return SpreadsheetMetadata.class;
+    }
+
+    @Override
+    protected MemberVisibility typeVisibility() {
+        return MemberVisibility.PUBLIC;
     }
 }

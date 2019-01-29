@@ -1,10 +1,11 @@
 package walkingkooka.spreadsheet.security;
 
+import walkingkooka.Cast;
 import walkingkooka.naming.Name;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
-import walkingkooka.test.HashCodeEqualsDefined;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 
 import java.util.Objects;
@@ -13,7 +14,7 @@ import java.util.function.Predicate;
 /**
  * The name of a group.
  */
-final public class GroupName implements Name, HashCodeEqualsDefined, Comparable<GroupName> {
+final public class GroupName implements Name, Comparable<GroupName> {
 
     private final static CharPredicate LETTER = CharPredicates.range('A', 'Z').or(CharPredicates.range('a', 'z'));
 
@@ -63,31 +64,34 @@ final public class GroupName implements Name, HashCodeEqualsDefined, Comparable<
 
     final String name;
 
-    @Override
-    public int compareTo(final GroupName other) {
-        return this.name.compareTo(other.name);
-    }
+    // Object..................................................................................................
 
-    // Object
-
-    @Override
-    public int hashCode() {
-        return this.name.hashCode();
+    public final int hashCode() {
+        return CASE_SENSITITY.hash(this.name);
     }
 
     @Override
     public boolean equals(final Object other) {
-        return (this == other) ||
+        return this == other ||
                 other instanceof GroupName &&
-                        this.equals0((GroupName) other);
+                        this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final GroupName other) {
-        return this.name.equals(other.name);
+        return this.compareTo(other) == 0;
     }
 
     @Override
     public String toString() {
         return this.name;
     }
+
+    // Comparable ...................................................................................................
+
+    @Override
+    public int compareTo(final GroupName other) {
+        return CASE_SENSITITY.comparator().compare(this.name, other.name);
+    }
+
+    private final CaseSensitivity CASE_SENSITITY = CaseSensitivity.SENSITIVE;
 }

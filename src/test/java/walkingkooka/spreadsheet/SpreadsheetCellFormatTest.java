@@ -19,10 +19,12 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.Test;
-import walkingkooka.test.PublicClassTestCase;
+import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.spreadsheetformat.SpreadsheetTextFormatter;
 import walkingkooka.text.spreadsheetformat.SpreadsheetTextFormatters;
+import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
 
@@ -30,7 +32,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 
-public final class SpreadsheetCellFormatTest extends PublicClassTestCase<SpreadsheetCellFormat> {
+public final class SpreadsheetCellFormatTest extends ClassTestCase<SpreadsheetCellFormat>
+        implements HashCodeEqualsDefinedTesting<SpreadsheetCellFormat> {
 
     private final static String PATTERN = "abc123";
     private final static Optional<SpreadsheetTextFormatter<?>> FORMATTER = Optional.of(SpreadsheetTextFormatters.fake());
@@ -47,7 +50,7 @@ public final class SpreadsheetCellFormatTest extends PublicClassTestCase<Spreads
 
     @Test
     public void testWith() {
-        final SpreadsheetCellFormat format = this.createFormat();
+        final SpreadsheetCellFormat format = this.createObject();
         this.check(format, PATTERN, FORMATTER);
     }
 
@@ -66,19 +69,19 @@ public final class SpreadsheetCellFormatTest extends PublicClassTestCase<Spreads
 
     @Test(expected = NullPointerException.class)
     public void testSetPatternNullFails() {
-        this.createFormat().setPattern(null);
+        this.createObject().setPattern(null);
     }
 
     @Test
     public void testSetPatternSame() {
-        final SpreadsheetCellFormat format = this.createFormat();
+        final SpreadsheetCellFormat format = this.createObject();
         assertSame(format, format.setPattern(PATTERN));
     }
 
     @Test
     public void testSetPatternDifferentClearsFormatter() {
         final String differentPattern = "different";
-        final SpreadsheetCellFormat format = this.createFormat();
+        final SpreadsheetCellFormat format = this.createObject();
         final SpreadsheetCellFormat different = format.setPattern(differentPattern);
         assertNotSame(format, different);
         this.check(different, differentPattern, SpreadsheetCellFormat.NO_FORMATTER);
@@ -88,12 +91,12 @@ public final class SpreadsheetCellFormatTest extends PublicClassTestCase<Spreads
 
     @Test(expected = NullPointerException.class)
     public void testSetFormatterNullFails() {
-        this.createFormat().setFormatter(null);
+        this.createObject().setFormatter(null);
     }
 
     @Test
     public void testSetFormatterSame() {
-        final SpreadsheetCellFormat format = this.createFormat();
+        final SpreadsheetCellFormat format = this.createObject();
         assertSame(format, format.setFormatter(FORMATTER));
     }
 
@@ -108,7 +111,7 @@ public final class SpreadsheetCellFormatTest extends PublicClassTestCase<Spreads
     }
 
     private void setFormatterDifferentAndCheck(final Optional<SpreadsheetTextFormatter<?>> differentFormatter) {
-        final SpreadsheetCellFormat format = this.createFormat();
+        final SpreadsheetCellFormat format = this.createObject();
         final SpreadsheetCellFormat different = format.setFormatter(differentFormatter);
         assertNotSame(format, different);
         this.check(different, PATTERN, differentFormatter);
@@ -121,11 +124,33 @@ public final class SpreadsheetCellFormatTest extends PublicClassTestCase<Spreads
         assertEquals("formatter", formatter, format.formatter());
     }
 
+    // equals..................................................................................
+
+    @Test
+    public void testEqualsBothNoFormatter() {
+        this.checkEqualsAndHashCode(this.withoutFormatter(), this.withoutFormatter());
+    }
+
+    @Test
+    public void testEqualsDifferentText() {
+        this.checkNotEquals(SpreadsheetCellFormat.with("different", FORMATTER));
+    }
+
+    @Test
+    public void testEqualsDifferentFormatter() {
+        this.checkNotEquals(SpreadsheetCellFormat.with(PATTERN, Optional.of(SpreadsheetTextFormatters.general())));
+    }
+
+    @Test
+    public void tesEqualstDifferentNoFormatter() {
+        this.checkNotEquals(this.withoutFormatter());
+    }
+
     // toString................................................................................................
 
     @Test
     public void testToString() {
-        assertEquals(CharSequences.quote(PATTERN) + " " + FORMATTER.get(), this.createFormat().toString());
+        assertEquals(CharSequences.quote(PATTERN) + " " + FORMATTER.get(), this.createObject().toString());
     }
 
     @Test
@@ -133,12 +158,22 @@ public final class SpreadsheetCellFormatTest extends PublicClassTestCase<Spreads
         assertEquals(CharSequences.quote(PATTERN).toString(), SpreadsheetCellFormat.with(PATTERN, SpreadsheetCellFormat.NO_FORMATTER).toString());
     }
 
-    private SpreadsheetCellFormat createFormat() {
+    @Override
+    public SpreadsheetCellFormat createObject() {
         return SpreadsheetCellFormat.with(PATTERN, FORMATTER);
+    }
+    
+    private SpreadsheetCellFormat withoutFormatter() {
+        return SpreadsheetCellFormat.with(PATTERN, SpreadsheetCellFormat.NO_FORMATTER);
     }
 
     @Override
     protected Class<SpreadsheetCellFormat> type() {
         return SpreadsheetCellFormat.class;
+    }
+
+    @Override
+    protected MemberVisibility typeVisibility() {
+        return MemberVisibility.PUBLIC;
     }
 }
