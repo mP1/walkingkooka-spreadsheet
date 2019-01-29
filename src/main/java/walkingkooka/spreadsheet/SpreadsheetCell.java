@@ -214,9 +214,9 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined, Comparable<
     private boolean equals0(final SpreadsheetCell other) {
         return this.reference.equals(other.reference()) &&
                 this.formula.equals(other.formula()) &&
-                        this.style.equals(other.style) &&
-                        this.format.equals(other.format) &&
-                        this.formatted.equals(other.formatted);
+                this.style.equals(other.style) &&
+                this.format.equals(other.format) &&
+                this.formatted.equals(other.formatted);
     }
 
     @Override

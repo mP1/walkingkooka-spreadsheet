@@ -5,7 +5,6 @@ import walkingkooka.Cast;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
