@@ -9,7 +9,7 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
-import walkingkooka.test.PackagePrivateClassTestCase;
+import walkingkooka.test.ClassTestCase;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
@@ -17,6 +17,7 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
 
@@ -25,7 +26,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> extends PackagePrivateClassTestCase<E> {
+public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> extends ClassTestCase<E> {
 
     final static SpreadsheetColumnReference COLUMN = SpreadsheetReferenceKind.ABSOLUTE.column(1);
     final static SpreadsheetRowReference ROW = SpreadsheetReferenceKind.ABSOLUTE.row(2);
@@ -258,5 +259,10 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
 
     protected DecimalNumberContext decimalNumberContext() {
         return DecimalNumberContexts.basic("$", '.', 'E', ',', '-', '%', '+');
+    }
+
+    @Override
+    protected final MemberVisibility typeVisibility() {
+        return MemberVisibility.PACKAGE_PRIVATE;
     }
 }

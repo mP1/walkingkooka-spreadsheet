@@ -3,9 +3,9 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.spreadsheet.SpreadsheetException;
 import walkingkooka.test.PublicThrowableTestCase;
 
-public final class SpreadsheetEngineExceptionTest extends PublicThrowableTestCase<SpreadsheetException> {
+public final class SpreadsheetEngineExceptionTest extends PublicThrowableTestCase<SpreadsheetEngineException> {
     @Override
-    protected Class<SpreadsheetException> type() {
-        return SpreadsheetException.class;
+    protected Class<SpreadsheetEngineException> type() {
+        return SpreadsheetEngineException.class;
     }
 }

@@ -1,10 +1,16 @@
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.test.PackagePrivateClassTestCase;
+import walkingkooka.test.ClassTestCase;
+import walkingkooka.type.MemberVisibility;
 
-public final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnTest extends PackagePrivateClassTestCase<BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn> {
+public final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnTest extends ClassTestCase<BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn> {
     @Override
     protected Class<BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn> type() {
         return BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn.class;
+    }
+
+    @Override
+    protected MemberVisibility typeVisibility() {
+        return MemberVisibility.PACKAGE_PRIVATE;
     }
 }

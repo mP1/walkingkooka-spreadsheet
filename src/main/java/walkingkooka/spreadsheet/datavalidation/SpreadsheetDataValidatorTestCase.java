@@ -1,12 +1,13 @@
 package walkingkooka.spreadsheet.datavalidation;
 
 import org.junit.Test;
-import walkingkooka.test.PackagePrivateClassTestCase;
+import walkingkooka.test.ClassTestCase;
 import walkingkooka.text.CharSequences;
+import walkingkooka.type.MemberVisibility;
 
 import static org.junit.Assert.assertEquals;
 
-public abstract class SpreadsheetDataValidatorTestCase<V extends SpreadsheetDataValidator, T> extends PackagePrivateClassTestCase<V> {
+public abstract class SpreadsheetDataValidatorTestCase<V extends SpreadsheetDataValidator, T> extends ClassTestCase<V> {
 
     @Test
     public final void testValueType() {
@@ -82,5 +83,10 @@ public abstract class SpreadsheetDataValidatorTestCase<V extends SpreadsheetData
         assertEquals(validator + " " + CharSequences.quoteIfChars(value),
                 expected,
                 validator.validate(value, context));
+    }
+
+    @Override
+    protected final MemberVisibility typeVisibility() {
+        return MemberVisibility.PACKAGE_PRIVATE;
     }
 }

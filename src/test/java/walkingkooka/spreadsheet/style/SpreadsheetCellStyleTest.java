@@ -3,14 +3,17 @@ package walkingkooka.spreadsheet.style;
 import org.junit.Test;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.SpreadsheetFormattedCell;
-import walkingkooka.test.PublicClassTestCase;
+import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
-public final class SpreadsheetCellStyleTest extends PublicClassTestCase<SpreadsheetCellStyle> {
+public final class SpreadsheetCellStyleTest extends ClassTestCase<SpreadsheetCellStyle>
+        implements HashCodeEqualsDefinedTesting<SpreadsheetCellStyle> {
 
     @Test(expected = NullPointerException.class)
     public void testWithNullTextFails() {
@@ -19,9 +22,7 @@ public final class SpreadsheetCellStyleTest extends PublicClassTestCase<Spreadsh
 
     @Test
     public void testWith() {
-        final SpreadsheetCellStyle style = this.create();
-
-        this.checkText(style, this.text());
+        this.checkText(this.createObject(), this.text());
     }
 
     @Test
@@ -34,7 +35,7 @@ public final class SpreadsheetCellStyleTest extends PublicClassTestCase<Spreadsh
 
     @Test
     public void testSetCellFormattedText() {
-        final SpreadsheetCellStyle style = this.create();
+        final SpreadsheetCellStyle style = this.createObject();
         final String text = "abc123";
         final SpreadsheetFormattedCell formatted = style.setCellFormattedText(text);
         assertEquals("text", text, formatted.text());
@@ -45,19 +46,19 @@ public final class SpreadsheetCellStyleTest extends PublicClassTestCase<Spreadsh
 
     @Test
     public void testSetTextSame() {
-        final SpreadsheetCellStyle style = this.create();
+        final SpreadsheetCellStyle style = this.createObject();
         assertSame(style, style.setText(this.text()));
     }
 
     @Test(expected = NullPointerException.class)
     public void testSetTextNullFails() {
-        this.create().setText(null);
+        this.createObject().setText(null);
     }
 
     @Test
     public void testSetTextDifferent() {
         final SpreadsheetTextStyle different = SpreadsheetTextStyle.EMPTY.setItalics(SpreadsheetTextStyle.ITALICS);
-        final SpreadsheetCellStyle style = this.create().setText(different);
+        final SpreadsheetCellStyle style = this.createObject().setText(different);
 
         this.checkText(style, different);
     }
@@ -66,24 +67,24 @@ public final class SpreadsheetCellStyleTest extends PublicClassTestCase<Spreadsh
 
     @Test(expected = NullPointerException.class)
     public void testMergeNullFails() {
-        this.create().merge(null);
+        this.createObject().merge(null);
     }
 
     @Test
     public void testMergeSelf() {
-        final SpreadsheetCellStyle style = this.create();
+        final SpreadsheetCellStyle style = this.createObject();
         assertSame(style, style.merge(style));
     }
 
     @Test
     public void testMergeWithEmpty() {
-        final SpreadsheetCellStyle style = this.create();
+        final SpreadsheetCellStyle style = this.createObject();
         assertSame(style, style.merge(SpreadsheetCellStyle.EMPTY));
     }
 
     @Test
     public void testMerge1() {
-        final SpreadsheetCellStyle style = this.create();
+        final SpreadsheetCellStyle style = this.createObject();
         assertSame(style, SpreadsheetCellStyle.EMPTY.merge(style));
     }
 
@@ -129,7 +130,8 @@ public final class SpreadsheetCellStyleTest extends PublicClassTestCase<Spreadsh
 
     // helpers.........................................................................................................
 
-    private SpreadsheetCellStyle create() {
+    @Override
+    public SpreadsheetCellStyle createObject() {
         return SpreadsheetCellStyle.with(this.text());
     }
 
@@ -144,5 +146,10 @@ public final class SpreadsheetCellStyleTest extends PublicClassTestCase<Spreadsh
     @Override
     protected Class<SpreadsheetCellStyle> type() {
         return SpreadsheetCellStyle.class;
+    }
+
+    @Override
+    protected MemberVisibility typeVisibility() {
+        return MemberVisibility.PUBLIC;
     }
 }

@@ -2,13 +2,11 @@ package walkingkooka.spreadsheet.store.range;
 
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.store.FakeStore;
-import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.test.Fake;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 public class FakeSpreadsheetRangeStore<V> extends FakeStore<SpreadsheetRange, List<V>> implements SpreadsheetRangeStore<V>, Fake {

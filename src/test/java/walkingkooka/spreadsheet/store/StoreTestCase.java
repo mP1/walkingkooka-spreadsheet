@@ -1,13 +1,14 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.Test;
-import walkingkooka.test.PackagePrivateClassTestCase;
+import walkingkooka.test.ClassTestCase;
+import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
-public abstract class StoreTestCase<S extends Store<K, V>, K, V> extends PackagePrivateClassTestCase<S> {
+public abstract class StoreTestCase<S extends Store<K, V>, K, V> extends ClassTestCase<S> {
     
     @Test(expected = NullPointerException.class)
     public final void testLoadNullIdFails() {
@@ -37,5 +38,10 @@ public abstract class StoreTestCase<S extends Store<K, V>, K, V> extends Package
 
     protected final void countAndCheck(final S store, final int count) {
         assertEquals("Wrong count " + store, count, store.count());
+    }
+
+    @Override
+    protected final MemberVisibility typeVisibility() {
+        return MemberVisibility.PACKAGE_PRIVATE;
     }
 }

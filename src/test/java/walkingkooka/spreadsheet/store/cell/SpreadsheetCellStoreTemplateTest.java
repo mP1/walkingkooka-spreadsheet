@@ -1,10 +1,16 @@
 package walkingkooka.spreadsheet.store.cell;
 
-import walkingkooka.test.PackagePrivateClassTestCase;
+import walkingkooka.test.ClassTestCase;
+import walkingkooka.type.MemberVisibility;
 
-public final class SpreadsheetCellStoreTemplateTest extends PackagePrivateClassTestCase<SpreadsheetCellStoreTemplate> {
+public final class SpreadsheetCellStoreTemplateTest extends ClassTestCase<SpreadsheetCellStoreTemplate> {
     @Override
     protected Class<SpreadsheetCellStoreTemplate> type() {
         return SpreadsheetCellStoreTemplate.class;
+    }
+
+    @Override
+    protected MemberVisibility typeVisibility() {
+        return MemberVisibility.PACKAGE_PRIVATE;
     }
 }
