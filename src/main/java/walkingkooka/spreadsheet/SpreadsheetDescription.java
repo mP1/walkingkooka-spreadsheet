@@ -12,7 +12,7 @@ import walkingkooka.text.Whitespace;
 public final class SpreadsheetDescription implements HashCodeEqualsDefined, Value<String> {
 
     public static SpreadsheetDescription with(final String message) {
-        Whitespace.failIfNullOrWhitespace(message, "message");
+        Whitespace.failIfNullOrEmptyOrWhitespace(message, "message");
 
         return new SpreadsheetDescription(message);
     }

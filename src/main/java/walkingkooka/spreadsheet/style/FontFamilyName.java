@@ -3,8 +3,8 @@ package walkingkooka.spreadsheet.style;
 import walkingkooka.Cast;
 import walkingkooka.naming.Name;
 import walkingkooka.test.HashCodeEqualsDefined;
-
-import java.util.Objects;
+import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.CharSequences;
 
 /**
  * A font family name.
@@ -12,7 +12,7 @@ import java.util.Objects;
 public final class FontFamilyName implements Name, Comparable<FontFamilyName>, HashCodeEqualsDefined {
 
     public static FontFamilyName with(final String name) {
-        Objects.requireNonNull(name, "name");
+        CharSequences.failIfNullOrEmpty(name, "name");
         return new FontFamilyName(name);
     }
 
@@ -30,7 +30,7 @@ public final class FontFamilyName implements Name, Comparable<FontFamilyName>, H
     // Object..................................................................................................
 
     public final int hashCode() {
-        return this.name.hashCode();
+        return CASE_SENSITITY.hash(this.name);
     }
 
     @Override
@@ -41,7 +41,7 @@ public final class FontFamilyName implements Name, Comparable<FontFamilyName>, H
     }
 
     private boolean equals0(final FontFamilyName other) {
-        return this.name.equals(other.name);
+        return this.compareTo(other) == 0;
     }
 
     @Override
@@ -53,6 +53,8 @@ public final class FontFamilyName implements Name, Comparable<FontFamilyName>, H
 
     @Override
     public int compareTo(final FontFamilyName other) {
-        return this.name.compareTo(other.name);
+        return CASE_SENSITITY.comparator().compare(this.name, other.name);
     }
+
+    private final CaseSensitivity CASE_SENSITITY = CaseSensitivity.SENSITIVE;
 }

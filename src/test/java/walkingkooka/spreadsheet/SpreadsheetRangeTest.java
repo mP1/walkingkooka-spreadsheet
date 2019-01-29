@@ -6,11 +6,13 @@ import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
-import walkingkooka.test.PublicClassTestCase;
+import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
+import walkingkooka.type.MemberVisibility;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +22,8 @@ import java.util.stream.Stream;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
-public final class SpreadsheetRangeTest extends PublicClassTestCase<SpreadsheetRange> {
+public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
+        implements HashCodeEqualsDefinedTesting<SpreadsheetRange> {
 
     private final static int COLUMN1 = 10;
     private final static int ROW1 = 11;
@@ -278,6 +281,25 @@ public final class SpreadsheetRangeTest extends PublicClassTestCase<SpreadsheetR
         assertEquals(Optional.empty(), store.load(c.reference()));
     }
 
+    // equals...............................................................................
+
+    @Test
+    public void testEqualsDifferentBegin() {
+        this.checkNotEquals(this.range(9, ROW1, COLUMN2, ROW2));
+    }
+
+    @Test
+    public void testEqualsDifferentEnd() {
+        this.checkNotEquals(this.range(COLUMN1, ROW1, COLUMN2, 99));
+    }
+
+    // helpers .................................................................................
+
+    @Override
+    public SpreadsheetRange createObject() {
+        return this.range(COLUMN1, ROW1, COLUMN2, ROW2);
+    }
+
     private SpreadsheetCell spreadsheetCell(final int column, final int row) {
         return SpreadsheetCell.with(this.cell(column, row),
                 SpreadsheetFormula.with(column + "+" + row),
@@ -428,5 +450,10 @@ public final class SpreadsheetRangeTest extends PublicClassTestCase<SpreadsheetR
     @Override
     protected Class<SpreadsheetRange> type() {
         return SpreadsheetRange.class;
+    }
+
+    @Override
+    protected MemberVisibility typeVisibility() {
+        return MemberVisibility.PUBLIC;
     }
 }
