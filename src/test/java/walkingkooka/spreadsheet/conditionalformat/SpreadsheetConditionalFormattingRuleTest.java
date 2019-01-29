@@ -5,8 +5,10 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
-import walkingkooka.test.PublicClassTestCase;
+import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -15,7 +17,8 @@ import static junit.framework.TestCase.assertSame;
 import static org.junit.Assert.assertEquals;
 
 
-public final class SpreadsheetConditionalFormattingRuleTest extends PublicClassTestCase<SpreadsheetConditionalFormattingRule> {
+public final class SpreadsheetConditionalFormattingRuleTest extends ClassTestCase<SpreadsheetConditionalFormattingRule>
+        implements HashCodeEqualsDefinedTesting<SpreadsheetConditionalFormattingRule> {
 
     @Test(expected = NullPointerException.class)
     public void testWithNullDescriptionFails() {
@@ -47,18 +50,18 @@ public final class SpreadsheetConditionalFormattingRuleTest extends PublicClassT
 
     @Test(expected = NullPointerException.class)
     public void testSetDescriptionNullFails() {
-        this.createRule().setDescription(null);
+        this.createObject().setDescription(null);
     }
 
     @Test
     public void testSetDescriptionSame() {
-        final SpreadsheetConditionalFormattingRule rule = this.createRule();
+        final SpreadsheetConditionalFormattingRule rule = this.createObject();
         assertSame(rule, rule.setDescription(description()));
     }
 
     @Test
     public void testSetDescriptionDifferent() {
-        final SpreadsheetConditionalFormattingRule rule = this.createRule();
+        final SpreadsheetConditionalFormattingRule rule = this.createObject();
         final SpreadsheetDescription description = SpreadsheetDescription.with("different");
         final SpreadsheetConditionalFormattingRule different = rule.setDescription(description);
         checkDescription(different, description);
@@ -70,13 +73,13 @@ public final class SpreadsheetConditionalFormattingRuleTest extends PublicClassT
     // setPriority................................................................................
     @Test
     public void testSetPrioritySame() {
-        final SpreadsheetConditionalFormattingRule rule = this.createRule();
+        final SpreadsheetConditionalFormattingRule rule = this.createObject();
         assertSame(rule, rule.setPriority(priority()));
     }
 
     @Test
     public void testSetPriorityDifferent() {
-        final SpreadsheetConditionalFormattingRule rule = this.createRule();
+        final SpreadsheetConditionalFormattingRule rule = this.createObject();
         final int priority = 999;
         final SpreadsheetConditionalFormattingRule different = rule.setPriority(priority);
         checkDescription(different);
@@ -89,23 +92,23 @@ public final class SpreadsheetConditionalFormattingRuleTest extends PublicClassT
 
     @Test(expected = NullPointerException.class)
     public void testSetFormulaNullFails() {
-        this.createRule().setFormula(null);
+        this.createObject().setFormula(null);
     }
 
     @Test(expected = SpreadsheetConditionalFormattingException.class)
     public void testSetFormulaUncompiledFails() {
-        this.createRule().setFormula(this.formulaUncompiled());
+        this.createObject().setFormula(this.formulaUncompiled());
     }
 
     @Test
     public void testSetFormulaSame() {
-        final SpreadsheetConditionalFormattingRule rule = this.createRule();
+        final SpreadsheetConditionalFormattingRule rule = this.createObject();
         assertSame(rule, rule.setFormula(formula()));
     }
 
     @Test
     public void testSetFormulaDifferent() {
-        final SpreadsheetConditionalFormattingRule rule = this.createRule();
+        final SpreadsheetConditionalFormattingRule rule = this.createObject();
         final SpreadsheetFormula formula = SpreadsheetFormula.with("99").setExpression(Optional.of(ExpressionNode.text("\"99\"")));
         final SpreadsheetConditionalFormattingRule different = rule.setFormula(formula);
         checkDescription(different);
@@ -118,18 +121,18 @@ public final class SpreadsheetConditionalFormattingRuleTest extends PublicClassT
 
     @Test(expected = NullPointerException.class)
     public void testSetStyleNullFails() {
-        this.createRule().setStyle(null);
+        this.createObject().setStyle(null);
     }
 
     @Test
     public void testSetStyleSame() {
-        final SpreadsheetConditionalFormattingRule rule = this.createRule();
+        final SpreadsheetConditionalFormattingRule rule = this.createObject();
         assertSame(rule, rule.setStyle(style()));
     }
 
     @Test
     public void testSetStyleDifferent() {
-        final SpreadsheetConditionalFormattingRule rule = this.createRule();
+        final SpreadsheetConditionalFormattingRule rule = this.createObject();
         final Function<SpreadsheetCell, SpreadsheetCellStyle> style = (c) -> null;
         final SpreadsheetConditionalFormattingRule different = rule.setStyle(style);
         checkDescription(different);
@@ -138,14 +141,49 @@ public final class SpreadsheetConditionalFormattingRuleTest extends PublicClassT
         checkStyle(different, style);
     }
 
+    // equals ...........................................................................................
+
+    @Test
+    public void testEqualsDifferentDescription() {
+        this.checkNotEquals(SpreadsheetConditionalFormattingRule.with(SpreadsheetDescription.with("different description"),
+                priority(),
+                formula(),
+                style()));
+    }
+
+    @Test
+    public void testEqualsDifferentPriority() {
+        this.checkNotEquals(SpreadsheetConditionalFormattingRule.with(description(),
+                999,
+                formula(),
+                style()));
+    }
+
+    @Test
+    public void testEqualsDifferentFormula() {
+        this.checkNotEquals(SpreadsheetConditionalFormattingRule.with(description(),
+                priority(),
+                SpreadsheetFormula.with("999").setExpression(Optional.of(ExpressionNode.longNode(99))),
+                style()));
+    }
+
+    @Test
+    public void testEqualsDifferentStyle() {
+        this.checkNotEquals(SpreadsheetConditionalFormattingRule.with(description(),
+                priority(),
+                formula(),
+                (c) -> null));
+    }
+
     // toString...............................................................................................
 
     @Test
     public void testToString() {
-        assertEquals("\"description#\" 123 123 style", this.createRule().toString());
+        assertEquals("\"description#\" 123 123 style", this.createObject().toString());
     }
 
-    private SpreadsheetConditionalFormattingRule createRule() {
+    @Override
+    public SpreadsheetConditionalFormattingRule createObject() {
         return SpreadsheetConditionalFormattingRule.with(description(), priority(), formula(), style());
     }
 
@@ -231,5 +269,10 @@ public final class SpreadsheetConditionalFormattingRuleTest extends PublicClassT
     @Override
     protected Class<SpreadsheetConditionalFormattingRule> type() {
         return SpreadsheetConditionalFormattingRule.class;
+    }
+
+    @Override
+    protected MemberVisibility typeVisibility() {
+        return MemberVisibility.PUBLIC;
     }
 }

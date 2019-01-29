@@ -1,10 +1,13 @@
 package walkingkooka.spreadsheet.security;
 
 import org.junit.Test;
+import walkingkooka.net.email.EmailAddress;
 
 import static org.junit.Assert.assertEquals;
 
 public final class GroupTest extends IdentityTestCase<Group, GroupId> {
+
+    private final long ID_VALUE = 123;
 
     @Test(expected = NullPointerException.class)
     public void testWithNullNameFails() {
@@ -20,8 +23,18 @@ public final class GroupTest extends IdentityTestCase<Group, GroupId> {
     }
 
     @Test
+    public void testDifferentName() {
+        this.checkNotEquals(Group.with(GroupId.with(ID_VALUE), GroupName.with("different")));
+    }
+
+    @Test
+    public void testUser() {
+        this.checkNotEquals(User.with(UserId.with(ID_VALUE), EmailAddress.with("user@example.com")));
+    }
+
+    @Test
     public void testToString() {
-        assertEquals(name().toString(), Group.with(GroupId.with(1), name()).toString());
+        assertEquals(name().toString(), Group.with(GroupId.with(ID_VALUE), name()).toString());
     }
 
     @Override

@@ -1,8 +1,10 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.Test;
-import walkingkooka.test.PublicClassTestCase;
+import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
 
@@ -11,7 +13,8 @@ import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 
 
-public final class SpreadsheetFormulaTest extends PublicClassTestCase<SpreadsheetFormula> {
+public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormula>
+        implements HashCodeEqualsDefinedTesting<SpreadsheetFormula> {
 
     private final static String TEXT = "a+2";
     private final static String EXPRESSION = "1+2";
@@ -27,7 +30,7 @@ public final class SpreadsheetFormulaTest extends PublicClassTestCase<Spreadshee
 
     @Test
     public void testWith() {
-        final SpreadsheetFormula formula = this.create();
+        final SpreadsheetFormula formula = this.createObject();
         this.checkText(formula, TEXT);
         this.checkExpressionAbsent(formula);
         this.checkValueAbsent(formula);
@@ -43,12 +46,12 @@ public final class SpreadsheetFormulaTest extends PublicClassTestCase<Spreadshee
 
     @Test(expected = NullPointerException.class)
     public void testSetTextNullFails() {
-        this.create().setText(null);
+        this.createObject().setText(null);
     }
 
     @Test
     public void testSetTextSame() {
-        final SpreadsheetFormula formula = this.create();
+        final SpreadsheetFormula formula = this.createObject();
         assertSame(formula, formula.setText(TEXT));
     }
 
@@ -63,7 +66,7 @@ public final class SpreadsheetFormulaTest extends PublicClassTestCase<Spreadshee
     }
 
     private void setTextAndCheck(final String differentText) {
-        final SpreadsheetFormula formula = this.create();
+        final SpreadsheetFormula formula = this.createObject();
         final SpreadsheetFormula different = formula.setText(differentText);
         assertNotSame(formula, different);
         this.checkText(different, differentText);
@@ -73,18 +76,18 @@ public final class SpreadsheetFormulaTest extends PublicClassTestCase<Spreadshee
 
     @Test(expected = NullPointerException.class)
     public void testSetFormulaNullFails() {
-        this.create().setText(null);
+        this.createObject().setText(null);
     }
 
     @Test
     public void testSetFormulaSame() {
-        final SpreadsheetFormula formula = this.create();
+        final SpreadsheetFormula formula = this.createObject();
         assertSame(formula, formula.setText(formula.text()));
     }
 
     @Test
     public void testSetFormulaDifferent() {
-        final SpreadsheetFormula formula = this.create();
+        final SpreadsheetFormula formula = this.createObject();
         final String differentText = "different";
         final SpreadsheetFormula different = formula.setText(differentText);
         assertNotSame(formula, different);
@@ -97,7 +100,7 @@ public final class SpreadsheetFormulaTest extends PublicClassTestCase<Spreadshee
 
     @Test
     public void testSetFormulaAfterSetExpression() {
-        final SpreadsheetFormula formula = this.create()
+        final SpreadsheetFormula formula = this.createObject()
                 .setExpression(this.expression());
         final SpreadsheetFormula different = formula.setText(DIFFERENT_TEXT);
         assertNotSame(formula, different);
@@ -110,7 +113,7 @@ public final class SpreadsheetFormulaTest extends PublicClassTestCase<Spreadshee
 
     @Test
     public void testSetFormulaAfterSetExpressionSetValue() {
-        final SpreadsheetFormula formula = this.create()
+        final SpreadsheetFormula formula = this.createObject()
                 .setExpression(this.expression())
                 .setValue(this.value());
         final SpreadsheetFormula different = formula.setText(DIFFERENT_TEXT);
@@ -126,18 +129,18 @@ public final class SpreadsheetFormulaTest extends PublicClassTestCase<Spreadshee
 
     @Test(expected = NullPointerException.class)
     public void testSetExpressionNullFails() {
-        this.create().setExpression(null);
+        this.createObject().setExpression(null);
     }
 
     @Test
     public void testSetExpressionSame() {
-        final SpreadsheetFormula formula = this.create();
+        final SpreadsheetFormula formula = this.createObject();
         assertSame(formula, formula.setExpression(formula.expression()));
     }
 
     @Test
     public void testSetExpressionDifferent() {
-        final SpreadsheetFormula formula = this.create();
+        final SpreadsheetFormula formula = this.createObject();
         final Optional<ExpressionNode> differentExpression = Optional.of(ExpressionNode.text("different!"));
         final SpreadsheetFormula different = formula.setExpression(differentExpression);
         assertNotSame(formula, different);
@@ -150,7 +153,7 @@ public final class SpreadsheetFormulaTest extends PublicClassTestCase<Spreadshee
 
     @Test
     public void testSetExpressionDifferentAndClear() {
-        final SpreadsheetFormula formula = this.create()
+        final SpreadsheetFormula formula = this.createObject()
                 .setExpression(this.expression());
         final Optional<ExpressionNode> differentExpression = SpreadsheetFormula.NO_EXPRESSION;
         final SpreadsheetFormula different = formula.setExpression(differentExpression);
@@ -164,7 +167,7 @@ public final class SpreadsheetFormulaTest extends PublicClassTestCase<Spreadshee
 
     @Test
     public void testSetExpressionDifferentAfterSetValue() {
-        final SpreadsheetFormula formula = this.create()
+        final SpreadsheetFormula formula = this.createObject()
                 .setExpression(this.expression())
                 .setValue(this.value());
 
@@ -182,18 +185,18 @@ public final class SpreadsheetFormulaTest extends PublicClassTestCase<Spreadshee
 
     @Test(expected = NullPointerException.class)
     public void testSetErrorNullFails() {
-        this.create().setError(null);
+        this.createObject().setError(null);
     }
 
     @Test
     public void testSetErrorSame() {
-        final SpreadsheetFormula formula = this.create();
+        final SpreadsheetFormula formula = this.createObject();
         assertSame(formula, formula.setError(formula.error()));
     }
 
     @Test
     public void testSetErrorDifferent() {
-        final SpreadsheetFormula formula = this.create();
+        final SpreadsheetFormula formula = this.createObject();
         final Optional<SpreadsheetError> differentError = this.error("different");
         final SpreadsheetFormula different = formula.setError(differentError);
         assertNotSame(formula, different);
@@ -206,7 +209,7 @@ public final class SpreadsheetFormulaTest extends PublicClassTestCase<Spreadshee
 
     @Test
     public void testSetErrorDifferent2() {
-        final SpreadsheetFormula formula = this.create()
+        final SpreadsheetFormula formula = this.createObject()
                 .setError(this.error());
         final Optional<SpreadsheetError> differentError = this.error("different");
         final SpreadsheetFormula different = formula.setError(differentError);
@@ -220,7 +223,7 @@ public final class SpreadsheetFormulaTest extends PublicClassTestCase<Spreadshee
 
     @Test
     public void testSetErrorDifferentAfterSetValue() {
-        final SpreadsheetFormula formula = this.create()
+        final SpreadsheetFormula formula = this.createObject()
                 .setValue(this.value());
         final Optional<SpreadsheetError> differentError = this.error("different");
         final SpreadsheetFormula different = formula.setError(differentError);
@@ -232,22 +235,64 @@ public final class SpreadsheetFormulaTest extends PublicClassTestCase<Spreadshee
         this.checkError(different, differentError);
     }
 
+    // equals.......................................................................................................
+
+
+    @Test
+    public void testEqualsDifferentText() {
+        checkNotEquals(this.createFormula("99+88", this.expression(), this.value(), this.error()));
+    }
+
+    @Test
+    public void testEqualsDifferentExpression() {
+        checkNotEquals(this.createFormula(TEXT, this.expression("44"), this.value(), this.error()));
+    }
+
+    @Test
+    public void testEqualsDifferentValue() {
+        checkNotEquals(this.createFormula(TEXT, this.expression(), this.value(), SpreadsheetFormula.NO_ERROR),
+                this.createFormula(TEXT, this.expression(), this.value("different-value"), SpreadsheetFormula.NO_ERROR));
+    }
+
+    @Test
+    public void testEqualsDifferentError() {
+        checkNotEquals(this.createFormula(TEXT, this.expression(), this.value(), this.error("different error message")));
+    }
+
+    @Test
+    public void testEqualsDifferentSpreadsheetFormula() {
+        this.checkNotEquals(SpreadsheetFormula.with("different"));
+    }
+
+    private SpreadsheetFormula createFormula(final String formula,
+                                             final Optional<ExpressionNode> expression,
+                                             final Optional<Object> value,
+                                             final Optional<SpreadsheetError> error) {
+        return SpreadsheetFormula.with(formula)
+                .setExpression(expression)
+                .setValue(value)
+                .setError(error);
+    }
+
+    // toString...............................................................................................
+
     @Test
     public void testToStringWithValue() {
-        assertEquals(TEXT + " (=" + VALUE + ")", this.create().setValue(this.value(VALUE)).toString());
+        assertEquals(TEXT + " (=" + VALUE + ")", this.createObject().setValue(this.value(VALUE)).toString());
     }
 
     @Test
     public void testToStringWithError() {
-        assertEquals(TEXT + " (" + ERROR + ")", this.create().setError(this.error(ERROR)).toString());
+        assertEquals(TEXT + " (" + ERROR + ")", this.createObject().setError(this.error(ERROR)).toString());
     }
 
     @Test
     public void testToStringWithoutError() {
-        assertEquals(TEXT, this.create().toString());
+        assertEquals(TEXT, this.createObject().toString());
     }
-
-    private SpreadsheetFormula create() {
+    
+    @Override
+    public SpreadsheetFormula createObject() {
         return SpreadsheetFormula.with(TEXT);
     }
 
@@ -261,10 +306,6 @@ public final class SpreadsheetFormulaTest extends PublicClassTestCase<Spreadshee
 
     private Optional<ExpressionNode> expression(final String text) {
         return Optional.of(ExpressionNode.text(text));
-    }
-
-    private void checkExpression(final SpreadsheetFormula formula, final String expression) {
-        this.checkExpression(formula, this.expression(expression));
     }
 
     private void checkExpression(final SpreadsheetFormula formula, final Optional<ExpressionNode> expression) {
@@ -306,10 +347,14 @@ public final class SpreadsheetFormulaTest extends PublicClassTestCase<Spreadshee
     private void checkError(final SpreadsheetFormula formula, final Optional<SpreadsheetError> error) {
         assertEquals("formula", error, formula.error());
     }
-    
 
     @Override
     protected Class<SpreadsheetFormula> type() {
         return SpreadsheetFormula.class;
+    }
+
+    @Override
+    protected MemberVisibility typeVisibility() {
+        return MemberVisibility.PUBLIC;
     }
 }

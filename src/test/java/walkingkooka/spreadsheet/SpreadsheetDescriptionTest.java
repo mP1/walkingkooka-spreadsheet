@@ -1,13 +1,16 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.Test;
-import walkingkooka.test.PublicClassTestCase;
+import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.text.CharSequences;
+import walkingkooka.type.MemberVisibility;
 
 import static org.junit.Assert.assertEquals;
 
 
-public final class SpreadsheetDescriptionTest extends PublicClassTestCase<SpreadsheetDescription> {
+public final class SpreadsheetDescriptionTest extends ClassTestCase<SpreadsheetDescription>
+        implements HashCodeEqualsDefinedTesting<SpreadsheetDescription> {
 
     private final static String TEXT = "description #1";
 
@@ -32,14 +35,27 @@ public final class SpreadsheetDescriptionTest extends PublicClassTestCase<Spread
         this.checkValue(description, TEXT);
     }
 
+    // equals...............................................................................................
+
+    @Test
+    public void testEqualsDifferentValue() {
+        this.checkNotEquals(SpreadsheetDescription.with("different"));
+    }
+
+    @Test
+    public void testEqualsDifferentCase() {
+        this.checkNotEquals(SpreadsheetDescription.with(TEXT.toUpperCase()));
+    }
+
     // toString...............................................................................................
 
     @Test
     public void testToString() {
-        assertEquals(CharSequences.quote(TEXT).toString(), this.createDescription().toString());
+        assertEquals(CharSequences.quote(TEXT).toString(), this.createObject().toString());
     }
 
-    private SpreadsheetDescription createDescription() {
+    @Override
+    public SpreadsheetDescription createObject() {
         return SpreadsheetDescription.with(TEXT);
     }
 
@@ -50,5 +66,10 @@ public final class SpreadsheetDescriptionTest extends PublicClassTestCase<Spread
     @Override
     protected Class<SpreadsheetDescription> type() {
         return SpreadsheetDescription.class;
+    }
+
+    @Override
+    protected MemberVisibility typeVisibility() {
+        return MemberVisibility.PUBLIC;
     }
 }

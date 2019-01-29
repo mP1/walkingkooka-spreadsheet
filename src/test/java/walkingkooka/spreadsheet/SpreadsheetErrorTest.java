@@ -1,12 +1,15 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.Test;
-import walkingkooka.test.PublicClassTestCase;
+import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.type.MemberVisibility;
 
 import static org.junit.Assert.assertEquals;
 
 
-public final class SpreadsheetErrorTest extends PublicClassTestCase<SpreadsheetError> {
+public final class SpreadsheetErrorTest extends ClassTestCase<SpreadsheetError> 
+        implements HashCodeEqualsDefinedTesting<SpreadsheetError> {
 
     private final static String MESSAGE = "message #1";
 
@@ -30,15 +33,28 @@ public final class SpreadsheetErrorTest extends PublicClassTestCase<SpreadsheetE
         final SpreadsheetError error = SpreadsheetError.with(MESSAGE);
         this.checkValue(error, MESSAGE);
     }
+    
+    // equals...............................................................................................
+
+    @Test
+    public void testEqualsDifferentValue() {
+        this.checkNotEquals(SpreadsheetError.with("different"));
+    }
+
+    @Test
+    public void testEqualsDifferentCase() {
+        this.checkNotEquals(SpreadsheetError.with(MESSAGE.toUpperCase()));
+    }
 
     // toString...............................................................................................
 
     @Test
     public void testToString() {
-        assertEquals(MESSAGE, this.createError().toString());
+        assertEquals(MESSAGE, this.createObject().toString());
     }
 
-    private SpreadsheetError createError() {
+    @Override
+    public SpreadsheetError createObject() {
         return SpreadsheetError.with(MESSAGE);
     }
 
@@ -49,5 +65,10 @@ public final class SpreadsheetErrorTest extends PublicClassTestCase<SpreadsheetE
     @Override
     protected Class<SpreadsheetError> type() {
         return SpreadsheetError.class;
+    }
+
+    @Override
+    protected MemberVisibility typeVisibility() {
+        return MemberVisibility.PUBLIC;
     }
 }

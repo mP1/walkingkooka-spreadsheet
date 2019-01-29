@@ -1,10 +1,16 @@
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.test.EnumTestCase;
+import walkingkooka.test.ClassTestCase;
+import walkingkooka.type.MemberVisibility;
 
-public final class SpreadsheetEngineLoadingTest extends EnumTestCase<SpreadsheetEngineLoading> {
+public final class SpreadsheetEngineLoadingTest extends ClassTestCase<SpreadsheetEngineLoading> {
     @Override
     protected Class<SpreadsheetEngineLoading> type() {
         return SpreadsheetEngineLoading.class;
+    }
+
+    @Override
+    protected MemberVisibility typeVisibility() {
+        return MemberVisibility.PUBLIC;
     }
 }

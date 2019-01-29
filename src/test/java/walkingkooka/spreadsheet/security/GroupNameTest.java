@@ -3,10 +3,11 @@ package walkingkooka.spreadsheet.security;
 import org.junit.Test;
 import walkingkooka.naming.NameTestCase;
 import walkingkooka.naming.PropertiesPath;
+import walkingkooka.text.CaseSensitivity;
 
 import static org.junit.Assert.assertEquals;
 
-final public class GroupNameTest extends NameTestCase<GroupName> {
+final public class GroupNameTest extends NameTestCase<GroupName, GroupName> {
 
     @Test(expected = IllegalArgumentException.class)
     public void testCreateEmptyStringFails() {
@@ -76,6 +77,26 @@ final public class GroupNameTest extends NameTestCase<GroupName> {
     @Override
     protected GroupName createName(final String name) {
         return GroupName.with(name);
+    }
+
+    @Override
+    protected CaseSensitivity caseSensitivity() {
+        return CaseSensitivity.SENSITIVE;
+    }
+
+    @Override
+    protected String nameText() {
+        return "Group123";
+    }
+
+    @Override
+    protected String differentNameText() {
+        return "Different";
+    }
+
+    @Override
+    protected String nameTextLess() {
+        return "Abc-group";
     }
 
     @Override
