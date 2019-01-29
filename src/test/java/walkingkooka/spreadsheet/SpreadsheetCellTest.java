@@ -1,11 +1,13 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.Test;
+import walkingkooka.compare.ComparableTesting;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
-import walkingkooka.test.PublicClassTestCase;
+import walkingkooka.test.ClassTestCase;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
+import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
 
@@ -14,9 +16,13 @@ import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 
 
-public final class SpreadsheetCellTest extends PublicClassTestCase<SpreadsheetCell> {
+public final class SpreadsheetCellTest extends ClassTestCase<SpreadsheetCell>
+        implements ComparableTesting<SpreadsheetCell> {
 
-    private final static SpreadsheetCellReference REFERENCE = reference(12, 34);
+
+    private final static int COLUMN = 1;
+    private final static int ROW = 20;
+    private final static SpreadsheetCellReference REFERENCE = reference(COLUMN, ROW);
     private final static String FORMULA = "=1+2";
 
     @Test(expected = NullPointerException.class)
@@ -264,6 +270,42 @@ public final class SpreadsheetCellTest extends PublicClassTestCase<SpreadsheetCe
         this.checkFormatted(different);
     }
 
+    // equals .............................................................................................
+
+    @Test
+    public void testCompareDifferentFormulaEquals() {
+        this.checkNotEquals(this.createComparable(COLUMN, ROW, FORMULA + "99"));
+    }
+
+    @Test
+    public void testCompareDifferentColumn() {
+        this.compareToAndCheckLess(this.createComparable(99, ROW, FORMULA));
+    }
+
+    @Test
+    public void testCompareDifferentRow() {
+        this.compareToAndCheckLess(this.createComparable(COLUMN, 99, FORMULA));
+    }
+
+    @Test
+    public void testCompareDifferentStyle() {
+        this.compareToAndCheckEqual(this.createComparable()
+                .setStyle(SpreadsheetCellStyle.EMPTY
+                        .setText(SpreadsheetTextStyle.EMPTY
+                                .setItalics(SpreadsheetTextStyle.ITALICS))));
+    }
+
+    @Test
+    public void testCompareDifferentFormat() {
+        this.compareToAndCheckEqual(this.createComparable()
+                .setFormat(Optional.of(SpreadsheetCellFormat.with("different-pattern", SpreadsheetCellFormat.NO_FORMATTER))));
+    }
+
+    @Test
+    public void testCompareDifferentFormatted() {
+        this.compareToAndCheckEqual(this.createComparable().setFormatted(Optional.of(SpreadsheetFormattedCell.with("different-formatted", this.style()))));
+    }
+
     // toString...............................................................................................
 
     @Test
@@ -292,7 +334,20 @@ public final class SpreadsheetCellTest extends PublicClassTestCase<SpreadsheetCe
     }
 
     private SpreadsheetCell createCell() {
-        return SpreadsheetCell.with(REFERENCE, this.formula(FORMULA), this.style(), this.format(), this.formatted());
+        return this.createComparable();
+    }
+
+    @Override
+    public SpreadsheetCell createComparable() {
+        return this.createComparable(COLUMN, ROW, FORMULA);
+    }
+
+    private SpreadsheetCell createComparable(final int column, final int row, final String formula) {
+        return SpreadsheetCell.with(this.reference(column, row),
+                SpreadsheetFormula.with(formula),
+                this.style(),
+                this.format(),
+                this.formatted());
     }
 
     private static SpreadsheetCellReference differentReference() {
@@ -374,5 +429,15 @@ public final class SpreadsheetCellTest extends PublicClassTestCase<SpreadsheetCe
     @Override
     protected Class<SpreadsheetCell> type() {
         return SpreadsheetCell.class;
+    }
+
+    @Override
+    protected MemberVisibility typeVisibility() {
+        return MemberVisibility.PUBLIC;
+    }
+
+    @Override
+    public boolean compareAndEqualsMatch() {
+        return false; // comparing does not include all properties, so compareTo == 0 <> equals
     }
 }

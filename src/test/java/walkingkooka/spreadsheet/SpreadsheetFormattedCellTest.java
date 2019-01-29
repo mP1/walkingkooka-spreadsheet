@@ -22,8 +22,10 @@ import org.junit.Test;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
-import walkingkooka.test.PublicClassTestCase;
+import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.text.CharSequences;
+import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
 
@@ -31,7 +33,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 
-public final class SpreadsheetFormattedCellTest extends PublicClassTestCase<SpreadsheetFormattedCell> {
+public final class SpreadsheetFormattedCellTest extends ClassTestCase<SpreadsheetFormattedCell>
+        implements HashCodeEqualsDefinedTesting<SpreadsheetFormattedCell> {
 
     private final static String TEXT = "abc123";
 
@@ -47,7 +50,7 @@ public final class SpreadsheetFormattedCellTest extends PublicClassTestCase<Spre
 
     @Test
     public void testWith() {
-        final SpreadsheetFormattedCell formatted = this.createFormattedText();
+        final SpreadsheetFormattedCell formatted = this.createObject();
         this.check(formatted, TEXT, this.style());
     }
 
@@ -65,19 +68,19 @@ public final class SpreadsheetFormattedCellTest extends PublicClassTestCase<Spre
 
     @Test(expected = NullPointerException.class)
     public void testSetTextNullFails() {
-        this.createFormattedText().setText(null);
+        this.createObject().setText(null);
     }
 
     @Test
     public void testSetTextSame() {
-        final SpreadsheetFormattedCell formatted = this.createFormattedText();
+        final SpreadsheetFormattedCell formatted = this.createObject();
         assertSame(formatted, formatted.setText(TEXT));
     }
 
     @Test
     public void testSetTextDifferent() {
         final String differentText = "different";
-        final SpreadsheetFormattedCell formatted = this.createFormattedText();
+        final SpreadsheetFormattedCell formatted = this.createObject();
         final SpreadsheetFormattedCell different = formatted.setText(differentText);
         assertNotSame(formatted, different);
         this.check(different, differentText, this.style());
@@ -87,19 +90,19 @@ public final class SpreadsheetFormattedCellTest extends PublicClassTestCase<Spre
 
     @Test(expected = NullPointerException.class)
     public void testSetStyleNullFails() {
-        this.createFormattedText().setStyle(null);
+        this.createObject().setStyle(null);
     }
 
     @Test
     public void testSetStyleSame() {
-        final SpreadsheetFormattedCell formatted = this.createFormattedText();
+        final SpreadsheetFormattedCell formatted = this.createObject();
         assertSame(formatted, formatted.setStyle(this.style()));
     }
 
     @Test
     public void testSetStyleDifferent() {
         final SpreadsheetCellStyle differentStyle = this.style(SpreadsheetTextStyle.EMPTY.setItalics(SpreadsheetTextStyle.ITALICS));
-        final SpreadsheetFormattedCell formatted = this.createFormattedText();
+        final SpreadsheetFormattedCell formatted = this.createObject();
         final SpreadsheetFormattedCell different = formatted.setStyle(differentStyle);
         assertNotSame(formatted, different);
         this.check(different, TEXT, differentStyle);
@@ -114,7 +117,7 @@ public final class SpreadsheetFormattedCellTest extends PublicClassTestCase<Spre
 
     @Test(expected = NullPointerException.class)
     public void testSetTextColorNullFails() {
-        this.createFormattedText().setTextColor(null);
+        this.createObject().setTextColor(null);
     }
 
     @Test
@@ -145,19 +148,35 @@ public final class SpreadsheetFormattedCellTest extends PublicClassTestCase<Spre
                 different);
     }
 
+    // equals.....................................................................................
+
+    @Test
+    public void testDifferentText() {
+        this.checkNotEquals(SpreadsheetFormattedCell.with("different", this.style()));
+    }
+
+    @Test
+    public void testDifferentStyle() {
+        this.checkNotEquals(SpreadsheetFormattedCell.with(TEXT,
+                this.style().setText(SpreadsheetTextStyle.EMPTY.setItalics(SpreadsheetTextStyle.ITALICS))));
+    }
+
     // toString ................................................................................................
 
     @Test
     public void testToString() {
-        assertEquals(CharSequences.quote(TEXT) + " " + this.style(), this.createFormattedText().toString());
+        assertEquals(CharSequences.quote(TEXT) + " " + this.style(), this.createObject().toString());
     }
 
     @Test
     public void testToStringWithoutText() {
         assertEquals(this.style().toString(), SpreadsheetFormattedCell.with("", this.style()).toString());
     }
+    
+    // helpers ................................................................................
 
-    private SpreadsheetFormattedCell createFormattedText() {
+    @Override
+    public SpreadsheetFormattedCell createObject() {
         return SpreadsheetFormattedCell.with(TEXT, this.style());
     }
 
@@ -175,6 +194,11 @@ public final class SpreadsheetFormattedCellTest extends PublicClassTestCase<Spre
 
     private SpreadsheetCellStyle style(final Color color) {
         return this.style(this.textStyle().setColor(Optional.of(color)));
+    }
+
+    @Override
+    protected MemberVisibility typeVisibility() {
+        return MemberVisibility.PUBLIC;
     }
 
     @Override
