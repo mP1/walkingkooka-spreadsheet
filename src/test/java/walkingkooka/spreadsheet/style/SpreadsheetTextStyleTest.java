@@ -582,6 +582,97 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
         this.checkNotEquals(SpreadsheetTextStyle.with(this.fontFamily(), this.fontSize(), this.color(), this.backgroundColor(), this.bold(), this.italics(), this.underline(), SpreadsheetTextStyle.NO_STRIKETHRU));
     }
 
+    // isEmpty.........................................................................................................
+
+    @Test
+    public void testIsEmptyEmpty() {
+        this.isEmptyAndCheck(SpreadsheetTextStyle.EMPTY,
+                true);
+    }
+
+    @Test
+    public void testIsEmptyEmptyFontFamily() {
+        this.isEmptyAndCheck(SpreadsheetTextStyle.EMPTY.setFontFamily(SpreadsheetTextStyle.NO_FONT_FAMILY),
+                true);
+    }
+
+    @Test
+    public void testIsEmptyEmptyFontSize() {
+        this.isEmptyAndCheck(SpreadsheetTextStyle.EMPTY.setFontSize(SpreadsheetTextStyle.NO_FONT_SIZE),
+                true);
+    }
+
+    @Test
+    public void testIsEmptyEmptyBold() {
+        this.isEmptyAndCheck(SpreadsheetTextStyle.EMPTY.setBold(SpreadsheetTextStyle.NO_BOLD),
+                true);
+    }
+
+    @Test
+    public void testIsEmptyEmptyItalics() {
+        this.isEmptyAndCheck(SpreadsheetTextStyle.EMPTY.setItalics(SpreadsheetTextStyle.NO_ITALICS),
+                true);
+    }
+
+    @Test
+    public void testIsEmptyEmptyUnderline() {
+        this.isEmptyAndCheck(SpreadsheetTextStyle.EMPTY.setUnderline(SpreadsheetTextStyle.NO_UNDERLINE),
+                true);
+    }
+
+    @Test
+    public void testIsEmptyEmptyStrikethru() {
+        this.isEmptyAndCheck(SpreadsheetTextStyle.EMPTY.setStrikethru(SpreadsheetTextStyle.NO_STRIKETHRU),
+                true);
+    }
+
+    @Test
+    public void testIsEmptyNotEmpty() {
+        this.isEmptyAndCheck(this.createObject(), false);
+    }
+
+    @Test
+    public void testIsEmptyNotEmptyFontFamily() {
+        this.isEmptyAndCheck(SpreadsheetTextStyle.EMPTY.setFontFamily(Optional.of(FontFamilyName.with("Times New Roman"))),
+                false);
+    }
+
+    @Test
+    public void testIsEmptyNotEmptyFontSize() {
+        this.isEmptyAndCheck(SpreadsheetTextStyle.EMPTY.setFontSize(Optional.of(FontSize.with(10))),
+                false);
+    }
+
+    @Test
+    public void testIsEmptyNotEmptyBold() {
+        this.isEmptyAndCheck(SpreadsheetTextStyle.EMPTY.setBold(SpreadsheetTextStyle.BOLD),
+                false);
+    }
+
+    @Test
+    public void testIsEmptyNotEmptyItalics() {
+        this.isEmptyAndCheck(SpreadsheetTextStyle.EMPTY.setItalics(SpreadsheetTextStyle.ITALICS),
+                false);
+    }
+
+    @Test
+    public void testIsEmptyNotEmptyUnderline() {
+        this.isEmptyAndCheck(SpreadsheetTextStyle.EMPTY.setUnderline(SpreadsheetTextStyle.UNDERLINE),
+                false);
+    }
+
+    @Test
+    public void testIsEmptyNotEmptyStrikethru() {
+        this.isEmptyAndCheck(SpreadsheetTextStyle.EMPTY.setStrikethru(SpreadsheetTextStyle.STRIKETHRU),
+                false);
+    }
+
+    private void isEmptyAndCheck(final SpreadsheetTextStyle style, final boolean empty) {
+        assertEquals(style + " is empty",
+                empty,
+                style.isEmpty());
+    }
+
     // toString.........................................................................................................
 
     @Test
