@@ -4,11 +4,13 @@ import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.Whitespace;
+import walkingkooka.tree.json.HasJsonNode;
+import walkingkooka.tree.json.JsonNode;
 
 /**
  * An error for an individual cell or formula which may be a parsing or execution error.
  */
-public final class SpreadsheetError implements HashCodeEqualsDefined, Value<String> {
+public final class SpreadsheetError implements HashCodeEqualsDefined, Value<String>, HasJsonNode {
 
     public static SpreadsheetError with(final String message) {
         Whitespace.failIfNullOrEmptyOrWhitespace(message, "Message");
@@ -49,5 +51,12 @@ public final class SpreadsheetError implements HashCodeEqualsDefined, Value<Stri
     @Override
     public String toString() {
         return this.message;
+    }
+
+    // HasJsonNode......................................................................................................
+
+    @Override
+    public JsonNode toJsonNode() {
+        return JsonNode.string(this.message);
     }
 }

@@ -5,6 +5,8 @@ import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.SpreadsheetFormattedCell;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.tree.json.HasJsonNodeTesting;
+import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
@@ -13,7 +15,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
 public final class SpreadsheetCellStyleTest extends ClassTestCase<SpreadsheetCellStyle>
-        implements HashCodeEqualsDefinedTesting<SpreadsheetCellStyle> {
+        implements HashCodeEqualsDefinedTesting<SpreadsheetCellStyle>,
+        HasJsonNodeTesting<SpreadsheetCellStyle> {
 
     @Test(expected = NullPointerException.class)
     public void testWithNullTextFails() {
@@ -139,6 +142,20 @@ public final class SpreadsheetCellStyleTest extends ClassTestCase<SpreadsheetCel
         assertEquals(style + " is empty",
                 empty,
                 style.isEmpty());
+    }
+
+    // HasJsonNode.........................................................................................................
+
+    @Test
+    public void testToJsonNodeEmpty() {
+        this.toJsonNodeAndCheck(SpreadsheetCellStyle.EMPTY,
+                JsonNode.object());
+    }
+
+    @Test
+    public void testToJsonNode() {
+        this.toJsonNodeAndCheck(this.createObject(),
+                "{ \"text\": " + this.text().toJsonNode() + "}");
     }
 
     // toString.........................................................................................................
