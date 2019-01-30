@@ -120,7 +120,7 @@ public final class SpreadsheetCellStyleTest extends ClassTestCase<SpreadsheetCel
 
     @Test
     public void testToString() {
-        assertEquals("Times New Roman #01E240 bold", SpreadsheetCellStyle.EMPTY.setText(SpreadsheetTextStyle.EMPTY
+        assertEquals("Times New Roman #01e240 bold", SpreadsheetCellStyle.EMPTY.setText(SpreadsheetTextStyle.EMPTY
                 .setBold(Optional.of(true))
                 .setFontFamily(Optional.of(FontFamilyName.with("Times New Roman")))
                 .setColor(Optional.of(Color.fromRgb(123456))))
