@@ -1,12 +1,15 @@
 package walkingkooka.spreadsheet.style;
 
 import org.junit.Test;
-import walkingkooka.naming.NameTestCase;
+import walkingkooka.naming.NameTesting;
+import walkingkooka.test.ClassTestCase;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.type.MemberVisibility;
 
 import static org.junit.Assert.assertEquals;
 
-public final class FontFamilyNameTest extends NameTestCase<FontFamilyName, FontFamilyName> {
+public final class FontFamilyNameTest extends ClassTestCase<FontFamilyName>
+        implements NameTesting<FontFamilyName, FontFamilyName> {
 
     @Test
     public void testWith() {
@@ -19,32 +22,37 @@ public final class FontFamilyNameTest extends NameTestCase<FontFamilyName, FontF
     }
 
     @Override
-    protected FontFamilyName createName(final String name) {
+    public FontFamilyName createName(final String name) {
         return FontFamilyName.with(name);
     }
 
     @Override
-    protected CaseSensitivity caseSensitivity() {
+    public CaseSensitivity caseSensitivity() {
         return CaseSensitivity.SENSITIVE;
     }
 
     @Override
-    protected String nameText() {
+    public String nameText() {
         return "Times New Roman";
     }
 
     @Override
-    protected String differentNameText() {
+    public String differentNameText() {
         return "Different";
     }
 
     @Override
-    protected String nameTextLess() {
+    public String nameTextLess() {
         return "Antiqua";
     }
 
     @Override
     protected Class<FontFamilyName> type() {
         return FontFamilyName.class;
+    }
+
+    @Override
+    public MemberVisibility typeVisibility() {
+        return MemberVisibility.PUBLIC;
     }
 }
