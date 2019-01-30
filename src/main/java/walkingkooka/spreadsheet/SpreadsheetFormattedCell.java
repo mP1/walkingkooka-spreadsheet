@@ -26,6 +26,9 @@ import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.HasText;
+import walkingkooka.tree.json.HasJsonNode;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeName;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -33,7 +36,10 @@ import java.util.Optional;
 /**
  * Holds the text and style for a cell.
  */
-public final class SpreadsheetFormattedCell implements HasText, HashCodeEqualsDefined, UsesToStringBuilder {
+public final class SpreadsheetFormattedCell implements HasText,
+        HashCodeEqualsDefined,
+        HasJsonNode,
+        UsesToStringBuilder {
 
     /**
      * Creates a {@link SpreadsheetFormattedCell}
@@ -110,6 +116,17 @@ public final class SpreadsheetFormattedCell implements HasText, HashCodeEqualsDe
         final SpreadsheetCellStyle style = this.style();
         return this.setStyle(style.setText(style.text().setColor(Optional.of(color))));
     }
+
+    // HasJsonNode ...................................................................................................
+
+    @Override
+    public JsonNode toJsonNode() {
+        return JsonNode.object().set(TEXT_PROPERTY, JsonNode.string(this.text))
+                .set(STYLE_PROPERTY, this.style.toJsonNode());
+    }
+
+    private final static JsonNodeName TEXT_PROPERTY = JsonNodeName.with("text");
+    private final static JsonNodeName STYLE_PROPERTY = JsonNodeName.with("style");
 
     // Object ............................................................................
 

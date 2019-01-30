@@ -6,6 +6,10 @@ import walkingkooka.build.tostring.ToStringBuilderOption;
 import walkingkooka.build.tostring.UsesToStringBuilder;
 import walkingkooka.color.Color;
 import walkingkooka.test.HashCodeEqualsDefined;
+import walkingkooka.tree.json.HasJsonNode;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeName;
+import walkingkooka.tree.json.JsonObjectNode;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -13,7 +17,9 @@ import java.util.Optional;
 /**
  * A container holding various text-related style attributes.
  */
-public final class SpreadsheetTextStyle implements HashCodeEqualsDefined, UsesToStringBuilder {
+public final class SpreadsheetTextStyle implements HashCodeEqualsDefined,
+        HasJsonNode,
+        UsesToStringBuilder {
 
     public final static Optional<FontFamilyName> NO_FONT_FAMILY = Optional.empty();
     public final static Optional<FontSize> NO_FONT_SIZE = Optional.empty();
@@ -287,7 +293,51 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined, UsesTo
                 !this.underline.isPresent() &&
                 !this.strikethru.isPresent();
     }
-    
+
+    // HasJsonNode.........................................................................................
+
+    @Override
+    public JsonNode toJsonNode() {
+        JsonObjectNode object = JsonObjectNode.object();
+
+        object = add0(FONT_FAMILY_PROPERTY, this.fontFamily, object);
+        object = add0(FONT_SIZE_PROPERTY, this.fontSize, object);
+        object = add0(COLOR_PROPERTY, this.color, object);
+        object = add0(BACKGROUND_COLOR_PROPERTY, this.backgroundColor, object);
+
+        object = add1(BOLD_PROPERTY, this.bold, object);
+        object = add1(ITALICS_PROPERTY, this.italics, object);
+        object = add1(UNDERLINE_PROPERTY, this.underline, object);
+        object = add1(STRIKETHRU_PROPERTY, this.strikethru, object);
+
+        return object;
+    }
+
+    private static JsonObjectNode add0(final JsonNodeName property,
+                                      final Optional<? extends HasJsonNode> value,
+                                      final JsonObjectNode object) {
+        return value.isPresent() ?
+                object.set(property, value.get().toJsonNode()) :
+                object;
+    }
+
+    private static JsonObjectNode add1(final JsonNodeName property,
+                                      final Optional<Boolean> value,
+                                      final JsonObjectNode object) {
+        return value.isPresent() ?
+                object.set(property, JsonNode.booleanNode(value.get())) :
+                object;
+    }
+
+    private final static JsonNodeName FONT_FAMILY_PROPERTY = JsonNodeName.with("font-family");
+    private final static JsonNodeName FONT_SIZE_PROPERTY = JsonNodeName.with("font-size");
+    private final static JsonNodeName COLOR_PROPERTY = JsonNodeName.with("color");
+    private final static JsonNodeName BACKGROUND_COLOR_PROPERTY = JsonNodeName.with("background-color");
+    private final static JsonNodeName BOLD_PROPERTY = JsonNodeName.with("bold");
+    private final static JsonNodeName ITALICS_PROPERTY = JsonNodeName.with("italics");
+    private final static JsonNodeName UNDERLINE_PROPERTY = JsonNodeName.with("underline");
+    private final static JsonNodeName STRIKETHRU_PROPERTY = JsonNodeName.with("strikethru");
+
     // HashCodeEqualsDefined.........................................................................................
     
     @Override

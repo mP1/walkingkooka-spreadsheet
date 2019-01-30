@@ -5,11 +5,16 @@ import walkingkooka.naming.Name;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.json.HasJsonNode;
+import walkingkooka.tree.json.JsonNode;
 
 /**
  * A font family name.
  */
-public final class FontFamilyName implements Name, Comparable<FontFamilyName>, HashCodeEqualsDefined {
+public final class FontFamilyName implements Name,
+        Comparable<FontFamilyName>,
+        HashCodeEqualsDefined,
+        HasJsonNode {
 
     public static FontFamilyName with(final String name) {
         CharSequences.failIfNullOrEmpty(name, "name");
@@ -26,6 +31,13 @@ public final class FontFamilyName implements Name, Comparable<FontFamilyName>, H
     }
 
     private final String name;
+
+    // HasJsonNode ...................................................................................................
+
+    @Override
+    public JsonNode toJsonNode() {
+        return JsonNode.string(this.name);
+    }
 
     // Object..................................................................................................
 

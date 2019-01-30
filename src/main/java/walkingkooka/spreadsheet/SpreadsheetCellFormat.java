@@ -24,6 +24,8 @@ import walkingkooka.build.tostring.ToStringBuilderOption;
 import walkingkooka.build.tostring.UsesToStringBuilder;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.spreadsheetformat.SpreadsheetTextFormatter;
+import walkingkooka.tree.json.HasJsonNode;
+import walkingkooka.tree.json.JsonNode;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -31,7 +33,9 @@ import java.util.Optional;
 /**
  * Holds the pattern and compiled formatter for a cell.
  */
-public final class SpreadsheetCellFormat implements HashCodeEqualsDefined, UsesToStringBuilder {
+public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
+        UsesToStringBuilder,
+        HasJsonNode {
 
     /**
      * A constant holding no formatter.
@@ -108,6 +112,13 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined, UsesT
     private SpreadsheetCellFormat replace(final String pattern,
                                           final Optional<SpreadsheetTextFormatter<?>> formatter) {
         return new SpreadsheetCellFormat(pattern, formatter);
+    }
+
+    // HasJsonNode ...................................................................................................
+
+    @Override
+    public JsonNode toJsonNode() {
+        return JsonNode.string(this.pattern); // formatter not serialized.
     }
 
     // Object ............................................................................
