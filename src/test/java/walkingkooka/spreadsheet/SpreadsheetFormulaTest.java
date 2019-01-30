@@ -4,6 +4,7 @@ import org.junit.Test;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
@@ -14,7 +15,8 @@ import static org.junit.Assert.assertSame;
 
 
 public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormula>
-        implements HashCodeEqualsDefinedTesting<SpreadsheetFormula> {
+        implements HashCodeEqualsDefinedTesting<SpreadsheetFormula>,
+        HasJsonNodeTesting<SpreadsheetFormula> {
 
     private final static String TEXT = "a+2";
     private final static String EXPRESSION = "1+2";
@@ -272,6 +274,42 @@ public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormu
                 .setExpression(expression)
                 .setValue(value)
                 .setError(error);
+    }
+
+    // toJsonNode...............................................................................................
+
+    @Test
+    public void testToJsonNodeText() {
+        this.toJsonNodeAndCheck(SpreadsheetFormula.with(TEXT),
+                "{ \"text\": \"a+2\"}");
+    }
+
+    @Test
+    public void testToJsonNodeTextAndExpression() {
+        this.toJsonNodeAndCheck(SpreadsheetFormula.with(TEXT)
+                        .setExpression(this.expression()),
+                "{ \"text\": \"a+2\"}");
+    }
+
+    @Test
+    public void testToJsonNodeTextAndValue() {
+        this.toJsonNodeAndCheck(SpreadsheetFormula.with(TEXT)
+                        .setValue(Optional.of(123)),
+                "{ \"text\": \"a+2\", \"value\": 123}");
+    }
+
+    @Test
+    public void testToJsonNodeTextAndValue2() {
+        this.toJsonNodeAndCheck(SpreadsheetFormula.with(TEXT)
+                        .setValue(Optional.of("abc123")),
+                "{ \"text\": \"a+2\", \"value\": \"abc123\"}");
+    }
+
+    @Test
+    public void testToJsonNodeTextAndError() {
+        this.toJsonNodeAndCheck(SpreadsheetFormula.with(TEXT)
+                        .setError(Optional.of(SpreadsheetError.with("error123"))),
+                "{ \"text\": \"a+2\", \"error\": \"error123\"}");
     }
 
     // toString...............................................................................................
