@@ -586,7 +586,7 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
 
     @Test
     public void testToStringAll() {
-        assertEquals("Times New Roman 12 #11FF33 #11FF33 bold italics underline strikethru",
+        assertEquals("Times New Roman 12 #11ff33 #11ff33 bold italics underline strikethru",
                 this.createObject().toString());
     }
 
@@ -598,7 +598,7 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
 
     @Test
     public void testToString() {
-        assertEquals("Times New Roman #01E240 bold", SpreadsheetTextStyle.EMPTY
+        assertEquals("Times New Roman #01e240 bold", SpreadsheetTextStyle.EMPTY
                 .setBold(Optional.of(true))
                 .setFontFamily(this.fontFamily())
                 .setColor(Optional.of(Color.fromRgb(123456)))
@@ -607,7 +607,7 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
 
     @Test
     public void testToString2() {
-        assertEquals("Times New Roman #01E240 bold italics", SpreadsheetTextStyle.EMPTY
+        assertEquals("Times New Roman #01e240 bold italics", SpreadsheetTextStyle.EMPTY
                 .setBold(Optional.of(true))
                 .setItalics(Optional.of(true))
                 .setStrikethru(this.falseValue())
