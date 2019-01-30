@@ -1,6 +1,5 @@
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.spreadsheet.SpreadsheetException;
 import walkingkooka.test.PublicThrowableTestCase;
 
 public final class SpreadsheetEngineExceptionTest extends PublicThrowableTestCase<SpreadsheetEngineException> {
