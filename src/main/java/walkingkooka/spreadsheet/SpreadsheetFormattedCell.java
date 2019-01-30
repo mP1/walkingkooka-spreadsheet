@@ -75,6 +75,9 @@ public final class SpreadsheetFormattedCell implements HasText, HashCodeEqualsDe
                 this.replace(text, this.style);
     }
 
+    /**
+     * The text that is displayed to the user.
+     */
     private final String text;
 
     public SpreadsheetCellStyle style() {
@@ -89,6 +92,9 @@ public final class SpreadsheetFormattedCell implements HasText, HashCodeEqualsDe
                 this.replace(this.text, style);
     }
 
+    /**
+     * The cell style applied to the visible text
+     */
     private final SpreadsheetCellStyle style;
 
     private SpreadsheetFormattedCell replace(final String text, final SpreadsheetCellStyle style) {

@@ -25,6 +25,9 @@ public final class SpreadsheetError implements HashCodeEqualsDefined, Value<Stri
         return this.message;
     }
 
+    /**
+     * The error message text.
+     */
     private final String message;
 
     @Override
