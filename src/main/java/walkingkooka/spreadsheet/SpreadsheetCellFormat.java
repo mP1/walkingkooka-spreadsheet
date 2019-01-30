@@ -95,6 +95,9 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined, UsesT
                 this.replace(this.pattern, formatter);
     }
 
+    /**
+     * The cached or compiled form of the {@link #pattern}
+     */
     private final Optional<SpreadsheetTextFormatter<?>> formatter;
 
     // replace.............................................................................
