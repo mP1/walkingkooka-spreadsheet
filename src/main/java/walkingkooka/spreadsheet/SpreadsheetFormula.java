@@ -96,6 +96,10 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined, HasText,
                this.replace(text, NO_EXPRESSION, NO_VALUE, NO_ERROR);
     }
 
+    /**
+     * The plain text form of the formula. This may or may not be valid and thus may or may not be a {@link #expression}
+     * which may be executed.
+     */
     private String text;
 
     private static void checkText(final String text) {
@@ -117,7 +121,7 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined, HasText,
     }
 
     /**
-     * The expression parsed from the text form of this formula.
+     * The expression parsed from the text form of this formula. This can then be executed to produce a {@link #value}
      */
     private Optional<ExpressionNode> expression;
 
