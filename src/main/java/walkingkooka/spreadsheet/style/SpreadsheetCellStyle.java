@@ -57,6 +57,9 @@ public final class SpreadsheetCellStyle implements HashCodeEqualsDefined, UsesTo
                 this.replace(text);
     }
 
+    /**
+     * The style of the text within the cell.
+     */
     private final SpreadsheetTextStyle text;
 
     private static void checkText(final SpreadsheetTextStyle text) {

@@ -111,6 +111,9 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined, Comparable<
                 this.replace(reference, this.formula, this.style, this.format, NO_FORMATTED_CELL);
     }
 
+    /**
+     * The reference that identifies this cell.
+     */
     private final SpreadsheetCellReference reference;
 
     // formula .............................................................................................
@@ -127,6 +130,9 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined, Comparable<
                 this.replace(this.reference, formula, this.style, this.format, NO_FORMATTED_CELL);
     }
 
+    /**
+     * The formula that appears in this cell.
+     */
     private final SpreadsheetFormula formula;
 
     // style .............................................................................................
@@ -143,6 +149,9 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined, Comparable<
                 this.replace(this.reference, this.formula, style, this.format, NO_FORMATTED_CELL);
     }
 
+    /**
+     * The cell style that is used to format the output of the formula.
+     */
     private final SpreadsheetCellStyle style;
 
     // format .............................................................................................
@@ -159,6 +168,9 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined, Comparable<
                 this.replace(this.reference, this.formula, this.style, format, NO_FORMATTED_CELL);
     }
 
+    /**
+     * Used to format the output of the cell's formula.
+     */
     private final Optional<SpreadsheetCellFormat> format;
 
     // formatted .............................................................................................
@@ -175,6 +187,9 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined, Comparable<
                 this.replace(this.reference, this.formula, this.style, this.format, formatted);
     }
 
+    /**
+     * A cached form of the cell output formatted and formula executed.
+     */
     private final Optional<SpreadsheetFormattedCell> formatted;
 
     // replace..........................................................................................................
