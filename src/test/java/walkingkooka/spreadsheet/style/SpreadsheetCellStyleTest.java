@@ -110,6 +110,37 @@ public final class SpreadsheetCellStyleTest extends ClassTestCase<SpreadsheetCel
         assertEquals(style + " merge " + other + " failed", expected, style.merge(other));
     }
 
+    // isEmpty.........................................................................................................
+
+    @Test
+    public void testIsEmptyEmpty() {
+        this.isEmptyAndCheck(SpreadsheetCellStyle.EMPTY,
+                true);
+    }
+
+    @Test
+    public void testIsEmptyTextEmpty() {
+        this.isEmptyAndCheck(SpreadsheetCellStyle.EMPTY.setText(SpreadsheetTextStyle.EMPTY),
+                true);
+    }
+
+    @Test
+    public void testIsEmptyNotEmpty() {
+        this.isEmptyAndCheck(this.createObject(), false);
+    }
+
+    @Test
+    public void testIsEmptyNotEmpty2() {
+        this.isEmptyAndCheck(SpreadsheetCellStyle.EMPTY.setText(SpreadsheetTextStyle.EMPTY.setBold(Optional.of(true))),
+                false);
+    }
+
+    private void isEmptyAndCheck(final SpreadsheetCellStyle style, final boolean empty) {
+        assertEquals(style + " is empty",
+                empty,
+                style.isEmpty());
+    }
+
     // toString.........................................................................................................
 
     @Test
