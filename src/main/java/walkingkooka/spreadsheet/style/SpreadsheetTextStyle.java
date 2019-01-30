@@ -273,6 +273,20 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined, UsesTo
                first :
                second;
     }
+
+    /**
+     * Returns true if ALL properties are empty/ absent.
+     */
+    public boolean isEmpty() {
+        return !this.fontFamily.isPresent() &&
+                !this.fontSize.isPresent() &&
+                !this.color.isPresent() &&
+                !this.backgroundColor.isPresent() &&
+                !this.bold.isPresent() &&
+                !this.italics.isPresent() &&
+                !this.underline.isPresent() &&
+                !this.strikethru.isPresent();
+    }
     
     // HashCodeEqualsDefined.........................................................................................
     

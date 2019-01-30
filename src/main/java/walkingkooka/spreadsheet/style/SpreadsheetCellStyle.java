@@ -88,6 +88,13 @@ public final class SpreadsheetCellStyle implements HashCodeEqualsDefined, UsesTo
                         merged;
     }
 
+    /**
+     * Returns true if ALL properties are empty/ absent.
+     */
+    public boolean isEmpty() {
+        return this.text.isEmpty();
+    }
+
     // HashCodeEqualsDefined.........................................................................................
 
     @Override
