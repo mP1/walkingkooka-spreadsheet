@@ -24,6 +24,8 @@ import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.spreadsheetformat.SpreadsheetTextFormatter;
 import walkingkooka.text.spreadsheetformat.SpreadsheetTextFormatters;
+import walkingkooka.tree.json.HasJsonNodeTesting;
+import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
@@ -33,7 +35,8 @@ import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 
 public final class SpreadsheetCellFormatTest extends ClassTestCase<SpreadsheetCellFormat>
-        implements HashCodeEqualsDefinedTesting<SpreadsheetCellFormat> {
+        implements HashCodeEqualsDefinedTesting<SpreadsheetCellFormat>,
+        HasJsonNodeTesting<SpreadsheetCellFormat> {
 
     private final static String PATTERN = "abc123";
     private final static Optional<SpreadsheetTextFormatter<?>> FORMATTER = Optional.of(SpreadsheetTextFormatters.fake());
@@ -144,6 +147,13 @@ public final class SpreadsheetCellFormatTest extends ClassTestCase<SpreadsheetCe
     @Test
     public void tesEqualstDifferentNoFormatter() {
         this.checkNotEquals(this.withoutFormatter());
+    }
+
+    // HasJsonNode......................................................................................
+
+    @Test
+    public void testToJsonNode() {
+        this.toJsonNodeAndCheck(this.createObject(), JsonNode.string(PATTERN));
     }
 
     // toString................................................................................................

@@ -3,6 +3,8 @@ package walkingkooka.spreadsheet.style;
 import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.test.HashCodeEqualsDefined;
+import walkingkooka.tree.json.HasJsonNode;
+import walkingkooka.tree.json.JsonNode;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -11,7 +13,7 @@ import java.util.stream.IntStream;
 /**
  * Value class that holds a font size.
  */
-public final class FontSize implements Comparable<FontSize>, HashCodeEqualsDefined, Value<Integer>, Serializable {
+public final class FontSize implements Comparable<FontSize>, HashCodeEqualsDefined, Value<Integer>, Serializable, HasJsonNode {
 
     private final static int CONSTANT_COUNT = 40;
 
@@ -60,7 +62,14 @@ public final class FontSize implements Comparable<FontSize>, HashCodeEqualsDefin
 
     private final int value;
 
-    // Comparable
+    // HasJsonNode ...................................................................................................
+
+    @Override
+    public JsonNode toJsonNode() {
+        return JsonNode.number(this.value);
+    }
+
+    // Comparable ...................................................................................................
 
     @Override
     public int compareTo(final FontSize size) {

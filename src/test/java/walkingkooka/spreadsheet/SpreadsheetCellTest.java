@@ -7,6 +7,7 @@ import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
+import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
@@ -17,7 +18,8 @@ import static org.junit.Assert.assertSame;
 
 
 public final class SpreadsheetCellTest extends ClassTestCase<SpreadsheetCell>
-        implements ComparableTesting<SpreadsheetCell> {
+        implements ComparableTesting<SpreadsheetCell>,
+        HasJsonNodeTesting<SpreadsheetCell> {
 
 
     private final static int COLUMN = 1;
@@ -304,6 +306,27 @@ public final class SpreadsheetCellTest extends ClassTestCase<SpreadsheetCell>
     @Test
     public void testCompareDifferentFormatted() {
         this.compareToAndCheckEqual(this.createComparable().setFormatted(Optional.of(SpreadsheetFormattedCell.with("different-formatted", this.style()))));
+    }
+
+    // HasJsonNode...............................................................................................
+
+    @Test
+    public void testJsonNode() {
+        this.toJsonNodeAndCheck(SpreadsheetCell.with(this.reference(COLUMN, ROW),
+                SpreadsheetFormula.with(FORMULA),
+                this.style(),
+                SpreadsheetCell.NO_FORMAT,
+                SpreadsheetCell.NO_FORMATTED_CELL),
+                "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}, \"style\": " + this.style().toJsonNode() + "}");
+    }
+
+    @Test
+    public void testJsonNodeWithFormatted() {
+        this.toJsonNodeAndCheck(this.createCell(),
+                "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}, \"style\": " + this.style().toJsonNode() +
+                        ", \"format\": " + this.format().get().toJsonNode() +
+                        ", \"formatted\": " + this.formatted().get().toJsonNode() +
+                        "}");
     }
 
     // toString...............................................................................................

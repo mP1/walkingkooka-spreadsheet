@@ -27,6 +27,10 @@ import walkingkooka.text.HasText;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetFunctionName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
 import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.json.HasJsonNode;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeName;
+import walkingkooka.tree.json.JsonObjectNode;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -34,7 +38,10 @@ import java.util.Optional;
 /**
  * A spreadsheet formula, including its compiled {@link ExpressionNode} and possibly its {@link Object value} or {@link SpreadsheetError}.
  */
-public final class SpreadsheetFormula implements HashCodeEqualsDefined, HasText, UsesToStringBuilder {
+public final class SpreadsheetFormula implements HashCodeEqualsDefined,
+        HasJsonNode,
+        HasText,
+        UsesToStringBuilder {
 
     /**
      * No expression constant.
@@ -186,6 +193,38 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined, HasText,
                                        final Optional<SpreadsheetError> error) {
         return new SpreadsheetFormula(text, expression, value, error);
     }
+
+    // HasJsonNode..........................................................................................
+
+    /**
+     * Creates an object with potentially text, value and error but not the expression.
+     */
+    @Override
+    public JsonNode toJsonNode() {
+        JsonObjectNode object = JsonNode.object();
+
+        object = object.set(TEXT_PROPERTY, JsonNode.string(this.text));
+
+        final Optional<Object> value = this.value;
+        if (value.isPresent()) {
+            final Optional<JsonNode> valueJsonNode = JsonNode.wrap(value);
+            if (valueJsonNode.isPresent()) {
+                object = object.set(VALUE_PROPERTY, valueJsonNode.get());
+            }
+        }
+
+        final Optional<SpreadsheetError> error = this.error;
+        if (error.isPresent()) {
+            object = object.set(ERROR_PROPERTY, error.get().toJsonNode());
+        }
+
+        return object;
+    }
+
+
+    private final static JsonNodeName TEXT_PROPERTY = JsonNodeName.with("text");
+    private final static JsonNodeName VALUE_PROPERTY = JsonNodeName.with("value");
+    private final static JsonNodeName ERROR_PROPERTY = JsonNodeName.with("error");
 
     // HashCodeEqualsDefined..........................................................................................
 
