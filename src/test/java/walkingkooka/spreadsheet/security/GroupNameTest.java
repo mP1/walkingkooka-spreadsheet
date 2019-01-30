@@ -1,13 +1,16 @@
 package walkingkooka.spreadsheet.security;
 
 import org.junit.Test;
-import walkingkooka.naming.NameTestCase;
+import walkingkooka.naming.NameTesting;
 import walkingkooka.naming.PropertiesPath;
+import walkingkooka.test.ClassTestCase;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.type.MemberVisibility;
 
 import static org.junit.Assert.assertEquals;
 
-final public class GroupNameTest extends NameTestCase<GroupName, GroupName> {
+final public class GroupNameTest extends ClassTestCase<GroupName>
+        implements NameTesting<GroupName, GroupName> {
 
     @Test(expected = IllegalArgumentException.class)
     public void testCreateEmptyStringFails() {
@@ -75,32 +78,37 @@ final public class GroupNameTest extends NameTestCase<GroupName, GroupName> {
     }
 
     @Override
-    protected GroupName createName(final String name) {
+    public GroupName createName(final String name) {
         return GroupName.with(name);
     }
 
     @Override
-    protected CaseSensitivity caseSensitivity() {
+    public CaseSensitivity caseSensitivity() {
         return CaseSensitivity.SENSITIVE;
     }
 
     @Override
-    protected String nameText() {
+    public String nameText() {
         return "Group123";
     }
 
     @Override
-    protected String differentNameText() {
+    public String differentNameText() {
         return "Different";
     }
 
     @Override
-    protected String nameTextLess() {
+    public String nameTextLess() {
         return "Abc-group";
     }
 
     @Override
     protected Class<GroupName> type() {
         return GroupName.class;
+    }
+
+    @Override
+    public MemberVisibility typeVisibility() {
+        return MemberVisibility.PUBLIC;
     }
 }
