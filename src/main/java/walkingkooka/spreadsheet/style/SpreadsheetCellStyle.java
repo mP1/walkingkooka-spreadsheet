@@ -6,13 +6,19 @@ import walkingkooka.build.tostring.ToStringBuilderOption;
 import walkingkooka.build.tostring.UsesToStringBuilder;
 import walkingkooka.spreadsheet.SpreadsheetFormattedCell;
 import walkingkooka.test.HashCodeEqualsDefined;
+import walkingkooka.tree.json.HasJsonNode;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeName;
+import walkingkooka.tree.json.JsonObjectNode;
 
 import java.util.Objects;
 
 /**
  * A container holding various text-related style attributes.
  */
-public final class SpreadsheetCellStyle implements HashCodeEqualsDefined, UsesToStringBuilder {
+public final class SpreadsheetCellStyle implements HashCodeEqualsDefined,
+        HasJsonNode,
+        UsesToStringBuilder {
 
     /**
      * A {@link SpreadsheetCellStyle} without any properties.
@@ -94,6 +100,19 @@ public final class SpreadsheetCellStyle implements HashCodeEqualsDefined, UsesTo
     public boolean isEmpty() {
         return this.text.isEmpty();
     }
+
+    // HasJsonNode.........................................................................................
+
+    @Override
+    public JsonNode toJsonNode() {
+        final JsonObjectNode object = JsonNode.object();
+        final SpreadsheetTextStyle text = this.text;
+        return text.isEmpty() ?
+            object :
+            object.set(TEXT_PROPERTY, text.toJsonNode());
+    }
+
+    private final static JsonNodeName TEXT_PROPERTY = JsonNodeName.with("text");
 
     // HashCodeEqualsDefined.........................................................................................
 

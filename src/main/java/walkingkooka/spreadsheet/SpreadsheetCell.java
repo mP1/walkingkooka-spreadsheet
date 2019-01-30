@@ -18,12 +18,17 @@
 
 package walkingkooka.spreadsheet;
 
+import org.junit.Test;
 import walkingkooka.Cast;
 import walkingkooka.build.tostring.ToStringBuilder;
 import walkingkooka.build.tostring.UsesToStringBuilder;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.tree.json.HasJsonNode;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeName;
+import walkingkooka.tree.json.JsonObjectNode;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -31,7 +36,10 @@ import java.util.Optional;
 /**
  * A spreadsheet cell including its formula, and other attributes such as format, styles and more.
  */
-public final class SpreadsheetCell implements HashCodeEqualsDefined, Comparable<SpreadsheetCell>, UsesToStringBuilder {
+public final class SpreadsheetCell implements HashCodeEqualsDefined,
+        Comparable<SpreadsheetCell>,
+        HasJsonNode,
+        UsesToStringBuilder {
 
     /**
      * Holds an absent {@link SpreadsheetCellFormat}.
@@ -211,6 +219,32 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined, Comparable<
     public int compareTo(final SpreadsheetCell other) {
         return this.reference().compareTo(other.reference());
     }
+
+    // HasJsonNode..........................................................................................
+
+    @Override
+    public JsonNode toJsonNode() {
+        JsonObjectNode object = JsonNode.object();
+
+        object = object.set(REFERENCE_PROPERTY, this.reference.toJsonNode())
+                .set(FORMULA_PROPERTY, this.formula.toJsonNode())
+                .set(STYLE_PROPERTY, this.style.toJsonNode());
+
+        if(this.format.isPresent()) {
+            object = object.set(FORMAT_PROPERTY, this.format.get().toJsonNode());
+        }
+        if(this.formatted.isPresent()) {
+            object = object.set(FORMATTED_PROPERTY, this.formatted.get().toJsonNode());
+        }
+
+        return object;
+    }
+
+    private final static JsonNodeName REFERENCE_PROPERTY = JsonNodeName.with("reference");
+    private final static JsonNodeName FORMULA_PROPERTY = JsonNodeName.with("formula");
+    private final static JsonNodeName STYLE_PROPERTY = JsonNodeName.with("style");
+    private final static JsonNodeName FORMAT_PROPERTY = JsonNodeName.with("format");
+    private final static JsonNodeName FORMATTED_PROPERTY = JsonNodeName.with("formatted");
 
     // HashCodeEqualsDefined..........................................................................................
 

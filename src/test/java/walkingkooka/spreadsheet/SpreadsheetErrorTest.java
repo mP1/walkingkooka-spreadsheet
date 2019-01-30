@@ -3,13 +3,15 @@ package walkingkooka.spreadsheet;
 import org.junit.Test;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.tree.json.HasJsonNodeTesting;
+import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.MemberVisibility;
 
 import static org.junit.Assert.assertEquals;
 
 
 public final class SpreadsheetErrorTest extends ClassTestCase<SpreadsheetError> 
-        implements HashCodeEqualsDefinedTesting<SpreadsheetError> {
+        implements HashCodeEqualsDefinedTesting<SpreadsheetError>, HasJsonNodeTesting<SpreadsheetError> {
 
     private final static String MESSAGE = "message #1";
 
@@ -44,6 +46,13 @@ public final class SpreadsheetErrorTest extends ClassTestCase<SpreadsheetError>
     @Test
     public void testEqualsDifferentCase() {
         this.checkNotEquals(SpreadsheetError.with(MESSAGE.toUpperCase()));
+    }
+
+    // HasJsonNode...............................................................................................
+
+    @Test
+    public void testToJsonNode() {
+        this.toJsonNodeAndCheck(this.createObject(), JsonNode.string(MESSAGE));
     }
 
     // toString...............................................................................................
