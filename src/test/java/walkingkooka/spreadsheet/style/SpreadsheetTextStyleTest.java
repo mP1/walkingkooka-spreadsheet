@@ -4,6 +4,7 @@ import org.junit.Test;
 import walkingkooka.color.Color;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
@@ -12,7 +13,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
 public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTextStyle>
-        implements HashCodeEqualsDefinedTesting<SpreadsheetTextStyle> {
+        implements HashCodeEqualsDefinedTesting<SpreadsheetTextStyle>,
+        HasJsonNodeTesting<SpreadsheetTextStyle> {
 
     @Test(expected = NullPointerException.class)
     public void testWithNullFontFamilyFails() {
@@ -673,6 +675,47 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
                 style.isEmpty());
     }
 
+    // HasJsonNode ........................................................................................................
+
+    @Test
+    public void testToJsonNode() {
+        this.toJsonNodeAndCheck(this.createObject(),
+                "{\n" +
+                "\t\"font-family\": \"Times New Roman\",\n" +
+                "\t\"font-size\": 12,\n" +
+                "\t\"color\": \"#11ff33\",\n" +
+                "\t\"background-color\": \"#11ff33\",\n" +
+                "\t\"bold\": true,\n" +
+                "\t\"italics\": true,\n" +
+                "\t\"underline\": true,\n" +
+                "\t\"strikethru\": true\n" +
+                "}");
+    }
+
+    @Test
+    public void testToJsonNodeMissingSome() {
+        this.toJsonNodeAndCheck(SpreadsheetTextStyle.EMPTY.setFontFamily(this.fontFamily())
+                .setColor(this.color())
+                .setBold(this.bold())
+                .setItalics(this.italics()),
+                "{\n" +
+                        "\t\"font-family\": \"Times New Roman\",\n" +
+                        "\t\"color\": \"#11ff33\",\n" +
+                        "\t\"bold\": true,\n" +
+                        "\t\"italics\": true\n" +
+                        "}");
+    }
+
+    @Test
+    public void testToJsonNodeFalse() {
+        this.toJsonNodeAndCheck(SpreadsheetTextStyle.EMPTY.setFontFamily(this.fontFamily())
+                        .setBold(Optional.of(Boolean.FALSE)),
+                "{\n" +
+                        "\t\"font-family\": \"Times New Roman\",\n" +
+                        "\t\"bold\": false\n" +
+                        "}");
+    }
+
     // toString.........................................................................................................
 
     @Test
@@ -689,22 +732,22 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
 
     @Test
     public void testToString() {
-        assertEquals("Times New Roman #01e240 bold", SpreadsheetTextStyle.EMPTY
+        assertEquals("Times New Roman #123456 bold", SpreadsheetTextStyle.EMPTY
                 .setBold(Optional.of(true))
                 .setFontFamily(this.fontFamily())
-                .setColor(Optional.of(Color.fromRgb(123456)))
+                .setColor(Optional.of(Color.fromRgb(0x123456)))
                 .toString());
     }
 
     @Test
     public void testToString2() {
-        assertEquals("Times New Roman #01e240 bold italics", SpreadsheetTextStyle.EMPTY
+        assertEquals("Times New Roman #123456 bold italics", SpreadsheetTextStyle.EMPTY
                 .setBold(Optional.of(true))
                 .setItalics(Optional.of(true))
                 .setStrikethru(this.falseValue())
                 .setUnderline(this.falseValue())
                 .setFontFamily(this.fontFamily())
-                .setColor(Optional.of(Color.fromRgb(123456)))
+                .setColor(Optional.of(Color.fromRgb(0x123456)))
                 .toString());
     }
 
