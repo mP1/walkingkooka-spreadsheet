@@ -1,28 +1,35 @@
 package walkingkooka.spreadsheet.store;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class StoreTestCase<S extends Store<K, V>, K, V> extends ClassTestCase<S> {
     
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testLoadNullIdFails() {
-        this.createStore().load(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createStore().load(null);
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testSaveNullFails() {
-        this.createStore().save(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createStore().save(null);
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testDeleteNullFails() {
-        this.createStore().delete(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createStore().delete(null);
+        });
     }
 
     abstract protected S createStore();
@@ -33,11 +40,11 @@ public abstract class StoreTestCase<S extends Store<K, V>, K, V> extends ClassTe
 
     protected final void loadFailCheck(final S store, final K id) {
         final Optional<V> value = store.load(id);
-        assertEquals("Expected id " + id + " to fail", Optional.empty(), value);
+        assertEquals(Optional.empty(), value, ()-> "Expected id " + id + " to fail");
     }
 
     protected final void countAndCheck(final S store, final int count) {
-        assertEquals("Wrong count " + store, count, store.count());
+        assertEquals(count, store.count(), ()-> "Wrong count " + store);
     }
 
     @Override

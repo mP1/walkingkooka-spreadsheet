@@ -1,6 +1,6 @@
 package walkingkooka.spreadsheet.engine;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStores;
 import walkingkooka.tree.expression.ExpressionNode;
@@ -9,29 +9,37 @@ import walkingkooka.util.FunctionTestCase;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunctionTest extends FunctionTestCase<
         SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction,
         ExpressionReference, Optional<ExpressionNode>> {
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullEngineFails() {
-        SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(null,
-                this.labelStore(),
-                this.spreadsheetEngineContext());
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(null,
+                    this.labelStore(),
+                    this.spreadsheetEngineContext());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullLabelStoreFails() {
-        SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(this.engine(),
-                null,
-                this.spreadsheetEngineContext());
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(this.engine(),
+                    null,
+                    this.spreadsheetEngineContext());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullLabelSpreadsheetEngineContextFails() {
-        SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(this.engine(),
-                this.labelStore(),
-                null);
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(this.engine(),
+                    this.labelStore(),
+                    null);
+        });
     }
 
     @Override
