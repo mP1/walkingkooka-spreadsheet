@@ -18,7 +18,6 @@
 
 package walkingkooka.spreadsheet;
 
-import org.junit.Test;
 import walkingkooka.Cast;
 import walkingkooka.build.tostring.ToStringBuilder;
 import walkingkooka.build.tostring.UsesToStringBuilder;

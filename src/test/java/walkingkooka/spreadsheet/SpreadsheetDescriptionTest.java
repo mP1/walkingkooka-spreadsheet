@@ -1,12 +1,13 @@
 package walkingkooka.spreadsheet;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.type.MemberVisibility;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public final class SpreadsheetDescriptionTest extends ClassTestCase<SpreadsheetDescription>
@@ -14,19 +15,25 @@ public final class SpreadsheetDescriptionTest extends ClassTestCase<SpreadsheetD
 
     private final static String TEXT = "description #1";
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullValueFails() {
-        SpreadsheetDescription.with(null);
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetDescription.with(null);
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testWithEmptyValueFails() {
-        SpreadsheetDescription.with("");
+        assertThrows(IllegalArgumentException.class, () -> {
+            SpreadsheetDescription.with("");
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testWithWhitespaceValueFails() {
-        SpreadsheetDescription.with("   ");
+        assertThrows(IllegalArgumentException.class, () -> {
+            SpreadsheetDescription.with("   ");
+        });
     }
 
     @Test
@@ -60,7 +67,7 @@ public final class SpreadsheetDescriptionTest extends ClassTestCase<SpreadsheetD
     }
 
     private void checkValue(final SpreadsheetDescription description, final String value) {
-        assertEquals("value", value, description.value());
+        assertEquals(value, description.value(), "value");
     }
 
     @Override

@@ -1,13 +1,14 @@
 package walkingkooka.spreadsheet;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.MemberVisibility;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public final class SpreadsheetErrorTest extends ClassTestCase<SpreadsheetError> 
@@ -15,19 +16,25 @@ public final class SpreadsheetErrorTest extends ClassTestCase<SpreadsheetError>
 
     private final static String MESSAGE = "message #1";
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullValueFails() {
-        SpreadsheetError.with(null);
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetError.with(null);
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testWithEmptyValueFails() {
-        SpreadsheetError.with("");
+        assertThrows(IllegalArgumentException.class, () -> {
+            SpreadsheetError.with("");
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testWithWhitespaceValueFails() {
-        SpreadsheetError.with("   ");
+        assertThrows(IllegalArgumentException.class, () -> {
+            SpreadsheetError.with(" \t");
+        });
     }
 
     @Test
@@ -68,7 +75,7 @@ public final class SpreadsheetErrorTest extends ClassTestCase<SpreadsheetError>
     }
 
     private void checkValue(final SpreadsheetError error, final String value) {
-        assertEquals("formula", value, error.value());
+        assertEquals(value, error.value(), "error");
     }
 
     @Override

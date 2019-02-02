@@ -1,25 +1,28 @@
 package walkingkooka.spreadsheet.security;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.net.email.EmailAddress;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class GroupTest extends IdentityTestCase<Group, GroupId> {
 
     private final long ID_VALUE = 123;
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullNameFails() {
-        Group.with(GroupId.with(1), null);
+        assertThrows(NullPointerException.class, () -> {
+            Group.with(GroupId.with(1), null);
+        });
     }
 
     @Test
     public void testWith() {
         final GroupId id = GroupId.with(1);
         final Group group = Group.with(id, name());
-        assertEquals("id", id, group.value());
-        assertEquals("name", name(), group.name());
+        assertEquals(id, group.value(), "id");
+        assertEquals(name(), group.name(), "name");
     }
 
     @Test

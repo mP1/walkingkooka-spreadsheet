@@ -1,6 +1,6 @@
 package walkingkooka.spreadsheet.store.cell;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -17,8 +17,9 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStore> extends StoreTestCase<S, SpreadsheetCellReference, SpreadsheetCell> {
 
@@ -96,9 +97,11 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         this.columnsAndCheck(store, 99);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public final void testRowInvalidRowFails() {
-        this.createStore().row(-1);
+        assertThrows(IllegalArgumentException.class, () -> {
+            this.createStore().row(-1);
+        });
     }
 
     @Test
@@ -120,9 +123,11 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         checkEquals("row 99", store.row(99));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public final void testColumnInvalidColumnFails() {
-        this.createStore().column(-1);
+        assertThrows(IllegalArgumentException.class, () -> {
+            this.createStore().column(-1);
+        });
     }
 
     @Test
@@ -151,7 +156,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         final Set<SpreadsheetCell> expectedSets = Sets.sorted();
         expectedSets.addAll(Lists.of(expected));
 
-        assertEquals(message, expectedSets, actual);
+        assertEquals(expectedSets, actual, message);
     }
 
     private SpreadsheetCell cell(final int column, final int row) {
@@ -168,11 +173,11 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
     
     final void rowsAndCheck(final SpreadsheetCellStore store, final int row) {
-        assertEquals("rows for store=" + store, row, store.rows());
+        assertEquals(row, store.rows(), ()-> "rows for store=" + store);
     }
 
     final void columnsAndCheck(final SpreadsheetCellStore store, final int column) {
-        assertEquals("columns for store=" + store, column, store.columns());
+        assertEquals(column, store.columns(), ()-> "columns for store=" + store);
     }
     
     private SpreadsheetFormula formula() {

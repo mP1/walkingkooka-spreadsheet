@@ -18,7 +18,7 @@
 
 package walkingkooka.spreadsheet;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.text.CharSequences;
@@ -30,9 +30,10 @@ import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellFormatTest extends ClassTestCase<SpreadsheetCellFormat>
         implements HashCodeEqualsDefinedTesting<SpreadsheetCellFormat>,
@@ -41,14 +42,18 @@ public final class SpreadsheetCellFormatTest extends ClassTestCase<SpreadsheetCe
     private final static String PATTERN = "abc123";
     private final static Optional<SpreadsheetTextFormatter<?>> FORMATTER = Optional.of(SpreadsheetTextFormatters.fake());
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullpatternFails() {
-        SpreadsheetCellFormat.with(null, FORMATTER);
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetCellFormat.with(null, FORMATTER);
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullFormatterFails() {
-        SpreadsheetCellFormat.with(PATTERN, null);
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetCellFormat.with(PATTERN, null);
+        });
     }
 
     @Test
@@ -70,9 +75,11 @@ public final class SpreadsheetCellFormatTest extends ClassTestCase<SpreadsheetCe
 
     // setPattern...........................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetPatternNullFails() {
-        this.createObject().setPattern(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().setPattern(null);
+        });
     }
 
     @Test
@@ -92,9 +99,11 @@ public final class SpreadsheetCellFormatTest extends ClassTestCase<SpreadsheetCe
 
     // setFormatter...........................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetFormatterNullFails() {
-        this.createObject().setFormatter(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().setFormatter(null);
+        });
     }
 
     @Test
@@ -123,8 +132,8 @@ public final class SpreadsheetCellFormatTest extends ClassTestCase<SpreadsheetCe
     private void check(final SpreadsheetCellFormat format,
                        final String pattern,
                        final Optional<SpreadsheetTextFormatter<?>> formatter) {
-        assertEquals("pattern", pattern, format.pattern());
-        assertEquals("formatter", formatter, format.formatter());
+        assertEquals(pattern, format.pattern(), "pattern");
+        assertEquals(formatter, format.formatter(), "formatter");
     }
 
     // equals..................................................................................

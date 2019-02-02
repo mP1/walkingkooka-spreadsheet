@@ -1,6 +1,6 @@
 package walkingkooka.spreadsheet.style;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.SpreadsheetFormattedCell;
 import walkingkooka.test.ClassTestCase;
@@ -11,16 +11,19 @@ import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellStyleTest extends ClassTestCase<SpreadsheetCellStyle>
         implements HashCodeEqualsDefinedTesting<SpreadsheetCellStyle>,
         HasJsonNodeTesting<SpreadsheetCellStyle> {
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullTextFails() {
-        SpreadsheetCellStyle.with(null);
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetCellStyle.with(null);
+        });
     }
 
     @Test
@@ -41,8 +44,8 @@ public final class SpreadsheetCellStyleTest extends ClassTestCase<SpreadsheetCel
         final SpreadsheetCellStyle style = this.createObject();
         final String text = "abc123";
         final SpreadsheetFormattedCell formatted = style.setCellFormattedText(text);
-        assertEquals("text", text, formatted.text());
-        assertEquals("style", style, formatted.style());
+        assertEquals(text, formatted.text(), "text");
+        assertEquals(style, formatted.style(), "style");
     }
 
     // setText......................................................................................................
@@ -53,9 +56,11 @@ public final class SpreadsheetCellStyleTest extends ClassTestCase<SpreadsheetCel
         assertSame(style, style.setText(this.text()));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetTextNullFails() {
-        this.createObject().setText(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().setText(null);
+        });
     }
 
     @Test
@@ -68,9 +73,11 @@ public final class SpreadsheetCellStyleTest extends ClassTestCase<SpreadsheetCel
 
     // merge.........................................................................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testMergeNullFails() {
-        this.createObject().merge(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().merge(null);
+        });
     }
 
     @Test
@@ -110,7 +117,9 @@ public final class SpreadsheetCellStyleTest extends ClassTestCase<SpreadsheetCel
     }
 
     private void mergeAndCheck(final SpreadsheetCellStyle style, final SpreadsheetCellStyle other, final SpreadsheetCellStyle expected) {
-        assertEquals(style + " merge " + other + " failed", expected, style.merge(other));
+        assertEquals(expected,
+                style.merge(other),
+                ()-> style + " merge " + other + " failed");
     }
 
     // isEmpty.........................................................................................................
@@ -139,9 +148,9 @@ public final class SpreadsheetCellStyleTest extends ClassTestCase<SpreadsheetCel
     }
 
     private void isEmptyAndCheck(final SpreadsheetCellStyle style, final boolean empty) {
-        assertEquals(style + " is empty",
-                empty,
-                style.isEmpty());
+        assertEquals(empty,
+                style.isEmpty(),
+                ()-> style + " is empty");
     }
 
     // HasJsonNode.........................................................................................................
@@ -188,7 +197,7 @@ public final class SpreadsheetCellStyleTest extends ClassTestCase<SpreadsheetCel
     }
 
     private void checkText(final SpreadsheetCellStyle style, final SpreadsheetTextStyle text) {
-        assertEquals("text", text, style.text());
+        assertEquals(text, style.text(), "text");
     }
 
     @Override
