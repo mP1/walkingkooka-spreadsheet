@@ -1,6 +1,6 @@
 package walkingkooka.spreadsheet.style;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
@@ -9,51 +9,68 @@ import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTextStyle>
         implements HashCodeEqualsDefinedTesting<SpreadsheetTextStyle>,
         HasJsonNodeTesting<SpreadsheetTextStyle> {
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullFontFamilyFails() {
-        SpreadsheetTextStyle.with(null, this.fontSize(), this.color(), this.backgroundColor(), this.bold(), this.italics(), this.underline(), this.strikethru());
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetTextStyle.with(null, this.fontSize(), this.color(), this.backgroundColor(), this.bold(), this.italics(), this.underline(), this.strikethru());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullFontSizeFails() {
-        SpreadsheetTextStyle.with(this.fontFamily(), null, this.color(), this.backgroundColor(), this.bold(), this.italics(), this.underline(), this.strikethru());
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetTextStyle.with(this.fontFamily(), null, this.color(), this.backgroundColor(), this.bold(), this.italics(), this.underline(), this.strikethru());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullColorFails() {
-        SpreadsheetTextStyle.with(this.fontFamily(), this.fontSize(), null, this.backgroundColor(), this.bold(), this.italics(), this.underline(), this.strikethru());
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetTextStyle.with(this.fontFamily(), this.fontSize(), null, this.backgroundColor(), this.bold(), this.italics(), this.underline(), this.strikethru());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullBackgroundColorFails() {
-        SpreadsheetTextStyle.with(this.fontFamily(), this.fontSize(), this.color(), null, this.bold(), this.italics(), this.underline(), this.strikethru());
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetTextStyle.with(this.fontFamily(), this.fontSize(), this.color(), null, this.bold(), this.italics(), this.underline(), this.strikethru());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullBoldFails() {
-        SpreadsheetTextStyle.with(this.fontFamily(), this.fontSize(), this.color(), this.backgroundColor(), null, this.italics(), this.underline(), this.strikethru());
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetTextStyle.with(this.fontFamily(), this.fontSize(), this.color(), this.backgroundColor(), null, this.italics(), this.underline(), this.strikethru());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullItalicsFails() {
-        SpreadsheetTextStyle.with(this.fontFamily(), this.fontSize(), this.color(), this.backgroundColor(), this.bold(), null, this.underline(), this.strikethru());
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetTextStyle.with(this.fontFamily(), this.fontSize(), this.color(), this.backgroundColor(), this.bold(), null, this.underline(), this.strikethru());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullUnderlineFails() {
-        SpreadsheetTextStyle.with(this.fontFamily(), this.fontSize(), this.color(), this.backgroundColor(), this.bold(), this.italics(), null, this.strikethru());
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetTextStyle.with(this.fontFamily(), this.fontSize(), this.color(), this.backgroundColor(), this.bold(), this.italics(), null, this.strikethru());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullStrikethruFails() {
-        SpreadsheetTextStyle.with(this.fontFamily(), this.fontSize(), this.color(), this.backgroundColor(), this.bold(), this.italics(), this.underline(), null);
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetTextStyle.with(this.fontFamily(), this.fontSize(), this.color(), this.backgroundColor(), this.bold(), this.italics(), this.underline(), null);
+        });
     }
 
     @Test
@@ -92,9 +109,11 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
         assertSame(style, style.setFontFamily(this.fontFamily()));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetFontFamilyNullFails() {
-        this.createObject().setFontFamily(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().setFontFamily(null);
+        });
     }
     
     @Test
@@ -136,9 +155,11 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
         assertSame(style, style.setFontSize(this.fontSize()));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetFontSizeNullFails() {
-        this.createObject().setFontSize(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().setFontSize(null);
+        });
     }
 
     @Test
@@ -179,9 +200,11 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
         assertSame(style, style.setColor(this.color()));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetColorNullFails() {
-        this.createObject().setColor(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().setColor(null);
+        });
     }
 
     @Test
@@ -223,9 +246,11 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
         assertSame(style, style.setBackgroundColor(this.backgroundColor()));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetBackgroundColorNullFails() {
-        this.createObject().setBackgroundColor(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().setBackgroundColor(null);
+        });
     }
 
     @Test
@@ -266,9 +291,11 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
         assertSame(style, style.setBold(this.bold()));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetBoldNullFails() {
-        this.createObject().setBold(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().setBold(null);
+        });
     }
 
     @Test
@@ -309,9 +336,11 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
         assertSame(style, style.setItalics(this.bold()));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetItalicsNullFails() {
-        this.createObject().setItalics(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().setItalics(null);
+        });
     }
 
     @Test
@@ -352,9 +381,11 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
         assertSame(style, style.setUnderline(this.bold()));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetUnderlineNullFails() {
-        this.createObject().setUnderline(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().setUnderline(null);
+        });
     }
 
     @Test
@@ -395,9 +426,11 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
         assertSame(style, style.setStrikethru(this.bold()));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetStrikethruNullFails() {
-        this.createObject().setStrikethru(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().setStrikethru(null);
+        });
     }
 
     @Test
@@ -432,9 +465,11 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
 
     // merge.........................................................................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testMergeNullFails() {
-        this.createObject().merge(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().merge(null);
+        });
     }
 
     @Test
@@ -486,7 +521,9 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
     }
     
     private void mergeAndCheck(final SpreadsheetTextStyle style, final SpreadsheetTextStyle other, final SpreadsheetTextStyle expected) {
-        assertEquals(style + " merge " + other + " failed", expected, style.merge(other));
+        assertEquals(expected,
+                style.merge(other),
+                () -> style + " merge " + other + " failed");
     }
 
     // equals ........................................................................................................
@@ -670,9 +707,9 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
     }
 
     private void isEmptyAndCheck(final SpreadsheetTextStyle style, final boolean empty) {
-        assertEquals(style + " is empty",
-                empty,
-                style.isEmpty());
+        assertEquals(empty,
+                style.isEmpty(),
+                style + " is empty");
     }
 
     // HasJsonNode ........................................................................................................
@@ -807,35 +844,35 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
     }
 
     private void checkFontFamily(final SpreadsheetTextStyle style, final Optional<FontFamilyName> fontFamily) {
-        assertEquals("fontFamily", fontFamily, style.fontFamily());
+        assertEquals(fontFamily, style.fontFamily(), "fontFamily");
     }
 
     private void checkFontSize(final SpreadsheetTextStyle style, final Optional<FontSize> fontSize) {
-        assertEquals("fontSize", fontSize, style.fontSize());
+        assertEquals(fontSize, style.fontSize(), "fontSize");
     }
 
     private void checkColor(final SpreadsheetTextStyle style, final Optional<Color> color) {
-        assertEquals("color", color, style.color());
+        assertEquals(color, style.color(), "color");
     }
 
     private void checkBackgroundColor(final SpreadsheetTextStyle style, final Optional<Color> backgroundColor) {
-        assertEquals("backgroundColor", backgroundColor, style.backgroundColor());
+        assertEquals(backgroundColor, style.backgroundColor(), "backgroundColor");
     }
 
     private void checkBold(final SpreadsheetTextStyle style, final Optional<Boolean> bold) {
-        assertEquals("bold", bold, style.bold());
+        assertEquals(bold, style.bold(), "bold");
     }
 
     private void checkItalics(final SpreadsheetTextStyle style, final Optional<Boolean> italics) {
-        assertEquals("italics", italics, style.italics());
+        assertEquals(italics, style.italics(), "italics");
     }
 
     private void checkUnderline(final SpreadsheetTextStyle style, final Optional<Boolean> underline) {
-        assertEquals("underline", underline, style.underline());
+        assertEquals(underline, style.underline(), "underline");
     }
 
     private void checkStrikethru(final SpreadsheetTextStyle style, final Optional<Boolean> strikethru) {
-        assertEquals("strikethru", strikethru, style.strikethru());
+        assertEquals(strikethru, style.strikethru(), "strikethru");
     }
 
     @Override

@@ -1,9 +1,11 @@
 package walkingkooka.spreadsheet.security;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.type.MemberVisibility;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class IdentityTestCase<I extends Identity<ID>, ID extends IdentityId>
         extends ClassTestCase<I>
@@ -13,9 +15,11 @@ public abstract class IdentityTestCase<I extends Identity<ID>, ID extends Identi
         super();
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testWithNullIdFails() {
-        this.createIdentity(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createIdentity(null);
+        });
     }
 
     @Override

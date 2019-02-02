@@ -1,25 +1,28 @@
 package walkingkooka.spreadsheet.security;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.net.email.EmailAddress;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class UserTest extends IdentityTestCase<User, UserId> {
 
     private final static EmailAddress EMAIL = EmailAddress.with("user@example.com");
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullEmailFails() {
-        User.with(UserId.with(1), null);
+        assertThrows(NullPointerException.class, () -> {
+            User.with(UserId.with(1), null);
+        });
     }
 
     @Test
     public void testWith() {
         final UserId id = UserId.with(1);
         final User user = User.with(id, EMAIL);
-        assertEquals("id", id, user.value());
-        assertEquals("email", EMAIL, user.email());
+        assertEquals(id, user.value(),"id");
+        assertEquals(EMAIL, user.email(), "email");
     }
 
     @Test

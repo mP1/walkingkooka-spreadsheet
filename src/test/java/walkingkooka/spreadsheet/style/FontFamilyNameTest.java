@@ -1,6 +1,6 @@
 package walkingkooka.spreadsheet.style;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.naming.NameTesting;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.text.CaseSensitivity;
@@ -8,7 +8,7 @@ import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.MemberVisibility;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class FontFamilyNameTest extends ClassTestCase<FontFamilyName>
         implements NameTesting<FontFamilyName, FontFamilyName>,

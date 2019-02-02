@@ -1,6 +1,6 @@
 package walkingkooka.spreadsheet.store.label;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.store.StoreTestCase;
@@ -10,8 +10,8 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelStore> extends StoreTestCase<S, SpreadsheetLabelName, SpreadsheetLabelMapping> {
 
@@ -76,7 +76,7 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
     protected final void allAndCheck(final S store, final SpreadsheetLabelMapping...mappings) {
         final List<SpreadsheetLabelMapping> all = Lists.array();
         all.addAll(store.all());
-        assertEquals("all labels for " + mappings, Lists.of(mappings), all);
+        assertEquals(Lists.of(mappings), all, ()-> "all labels for " + mappings);
     }
     
     private SpreadsheetCellReference cell(final int column, final int row) {
