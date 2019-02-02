@@ -1,6 +1,6 @@
 package walkingkooka.spreadsheet.conditionalformat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
@@ -13,31 +13,39 @@ import walkingkooka.type.MemberVisibility;
 import java.util.Optional;
 import java.util.function.Function;
 
-import static junit.framework.TestCase.assertSame;
-import static org.junit.Assert.assertEquals;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetConditionalFormattingRuleTest extends ClassTestCase<SpreadsheetConditionalFormattingRule>
         implements HashCodeEqualsDefinedTesting<SpreadsheetConditionalFormattingRule> {
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullDescriptionFails() {
-        SpreadsheetConditionalFormattingRule.with(null, priority(), formula(), style());
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetConditionalFormattingRule.with(null, priority(), formula(), style());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullFormulaFails() {
-        SpreadsheetConditionalFormattingRule.with(description(), priority(), null, style());
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetConditionalFormattingRule.with(description(), priority(), null, style());
+        });
     }
 
-    @Test(expected = SpreadsheetConditionalFormattingException.class)
+    @Test
     public void testWithNullFormulaWithoutExpressionFails() {
-        SpreadsheetConditionalFormattingRule.with(description(), priority(), this.formulaUncompiled(), style());
+        assertThrows(SpreadsheetConditionalFormattingException.class, () -> {
+            SpreadsheetConditionalFormattingRule.with(description(), priority(), this.formulaUncompiled(), style());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullStyleFails() {
-        SpreadsheetConditionalFormattingRule.with(description(), priority(), formula(), null);
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetConditionalFormattingRule.with(description(), priority(), formula(), null);
+        });
     }
 
     @Test
@@ -48,9 +56,11 @@ public final class SpreadsheetConditionalFormattingRuleTest extends ClassTestCas
 
     // setDescription................................................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetDescriptionNullFails() {
-        this.createObject().setDescription(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().setDescription(null);
+        });
     }
 
     @Test
@@ -90,14 +100,18 @@ public final class SpreadsheetConditionalFormattingRuleTest extends ClassTestCas
 
     // setFormula................................................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetFormulaNullFails() {
-        this.createObject().setFormula(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().setFormula(null);
+        });
     }
 
-    @Test(expected = SpreadsheetConditionalFormattingException.class)
+    @Test
     public void testSetFormulaUncompiledFails() {
-        this.createObject().setFormula(this.formulaUncompiled());
+        assertThrows(SpreadsheetConditionalFormattingException.class, () -> {
+            this.createObject().setFormula(this.formulaUncompiled());
+        });
     }
 
     @Test
@@ -119,9 +133,11 @@ public final class SpreadsheetConditionalFormattingRuleTest extends ClassTestCas
 
     // setStyle................................................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetStyleNullFails() {
-        this.createObject().setStyle(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().setStyle(null);
+        });
     }
 
     @Test
@@ -179,7 +195,7 @@ public final class SpreadsheetConditionalFormattingRuleTest extends ClassTestCas
 
     @Test
     public void testToString() {
-        assertEquals("\"description#\" 123 123 style", this.createObject().toString());
+        assertEquals(this.createObject().toString(), "\"description#\" 123 123 style");
     }
 
     @Override
@@ -236,7 +252,7 @@ public final class SpreadsheetConditionalFormattingRuleTest extends ClassTestCas
 
     private void checkDescription(final SpreadsheetConditionalFormattingRule rule,
                                   final SpreadsheetDescription description) {
-        assertEquals("rule", description, rule.description());
+        assertEquals(description, rule.description(), "rule");
     }
 
     private void checkPriority(final SpreadsheetConditionalFormattingRule rule) {
@@ -245,7 +261,7 @@ public final class SpreadsheetConditionalFormattingRuleTest extends ClassTestCas
 
     private void checkPriority(final SpreadsheetConditionalFormattingRule rule,
                                final int priority) {
-        assertEquals("priority", priority, rule.priority());
+        assertEquals(priority, rule.priority(), "priority");
     }
 
     private void checkFormula(final SpreadsheetConditionalFormattingRule rule) {
@@ -254,7 +270,7 @@ public final class SpreadsheetConditionalFormattingRuleTest extends ClassTestCas
 
     private void checkFormula(final SpreadsheetConditionalFormattingRule rule,
                               final SpreadsheetFormula formula) {
-        assertEquals("formula", formula, rule.formula());
+        assertEquals( formula, rule.formula(), "formula");
     }
 
     private void checkStyle(final SpreadsheetConditionalFormattingRule rule) {
@@ -263,7 +279,7 @@ public final class SpreadsheetConditionalFormattingRuleTest extends ClassTestCas
 
     private void checkStyle(final SpreadsheetConditionalFormattingRule rule,
                             final Function<SpreadsheetCell, SpreadsheetCellStyle> style) {
-        assertEquals("style", style, rule.style());
+        assertEquals(style, rule.style(), "style");
     }
 
     @Override

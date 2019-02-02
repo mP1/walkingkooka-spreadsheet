@@ -1,35 +1,44 @@
 package walkingkooka.spreadsheet.security;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.naming.NameTesting;
 import walkingkooka.naming.PropertiesPath;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.type.MemberVisibility;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final public class GroupNameTest extends ClassTestCase<GroupName>
         implements NameTesting<GroupName, GroupName> {
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testCreateEmptyStringFails() {
-        GroupName.with("");
+        assertThrows(IllegalArgumentException.class, () -> {
+            GroupName.with("");
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testCreateContainsSeparatorFails() {
-        GroupName.with("xyz" + PropertiesPath.SEPARATOR.string());
+        assertThrows(IllegalArgumentException.class, () -> {
+            GroupName.with("xyz" + PropertiesPath.SEPARATOR.string());
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testWithInvalidInitialFails() {
-        GroupName.with("1abc");
+        assertThrows(IllegalArgumentException.class, () -> {
+            GroupName.with("1abc");
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testWithInvalidPartFails() {
-        GroupName.with("abc$def");
+        assertThrows(IllegalArgumentException.class, () -> {
+            GroupName.with("abc$def");
+        });
     }
 
     @Test

@@ -1,11 +1,11 @@
 package walkingkooka.spreadsheet;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.type.MemberVisibility;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public final class SpreadsheetIdTest extends ClassTestCase<SpreadsheetId>
@@ -16,7 +16,7 @@ public final class SpreadsheetIdTest extends ClassTestCase<SpreadsheetId>
     @Test
     public void testWith() {
         final SpreadsheetId id = SpreadsheetId.with(VALUE);
-        assertEquals("id", VALUE, id.value());
+        assertEquals(VALUE, id.value(), "id");
     }
 
     @Test

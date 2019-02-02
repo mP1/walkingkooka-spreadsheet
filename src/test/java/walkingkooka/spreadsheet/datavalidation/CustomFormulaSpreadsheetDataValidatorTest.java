@@ -1,9 +1,9 @@
 package walkingkooka.spreadsheet.datavalidation;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.tree.expression.ExpressionNode;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class CustomFormulaSpreadsheetDataValidatorTest extends SpreadsheetDataValidatorTemplateTestCase<CustomFormulaSpreadsheetDataValidator, Object> {
 

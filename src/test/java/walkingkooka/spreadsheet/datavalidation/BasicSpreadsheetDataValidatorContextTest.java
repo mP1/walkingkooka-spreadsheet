@@ -1,28 +1,35 @@
 package walkingkooka.spreadsheet.datavalidation;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionReference;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetDataValidatorContextTest extends SpreadsheetDataValidatorContextTestCase<BasicSpreadsheetDataValidatorContext> {
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullCellReferenceFails() {
-        BasicSpreadsheetDataValidatorContext.with(null, this.value(), this.expressionEvaluationContext());
+        assertThrows(NullPointerException.class, () -> {
+            BasicSpreadsheetDataValidatorContext.with(null, this.value(), this.expressionEvaluationContext());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullValueFails() {
-        BasicSpreadsheetDataValidatorContext.with(this.cellReference(), null, this.expressionEvaluationContext());
+        assertThrows(NullPointerException.class, () -> {
+            BasicSpreadsheetDataValidatorContext.with(this.cellReference(), null, this.expressionEvaluationContext());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullExpressionEvaluationContextFails() {
-        BasicSpreadsheetDataValidatorContext.with(this.cellReference(), this.value(), null);
+        assertThrows(NullPointerException.class, () -> {
+            BasicSpreadsheetDataValidatorContext.with(this.cellReference(), this.value(), null);
+        });
     }
 
     @Test

@@ -18,24 +18,32 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.ContextTestCase;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetEngineContextTestCase<C extends SpreadsheetEngineContext> extends ContextTestCase<C> {
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testParseFormulaNullFails() {
-        this.createContext().parseFormula(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createContext().parseFormula(null);
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testEvaluateNullFails() {
-        this.createContext().evaluate(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createContext().evaluate(null);
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testParseFormatPatternNullFails() {
-        this.createContext().parseFormatPattern(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createContext().parseFormatPattern(null);
+        });
     }
 
     @Override

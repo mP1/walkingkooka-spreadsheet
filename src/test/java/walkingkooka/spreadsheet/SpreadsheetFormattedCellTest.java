@@ -18,7 +18,7 @@
 
 package walkingkooka.spreadsheet;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
@@ -30,9 +30,10 @@ import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormattedCellTest extends ClassTestCase<SpreadsheetFormattedCell>
         implements HashCodeEqualsDefinedTesting<SpreadsheetFormattedCell>,
@@ -40,14 +41,18 @@ public final class SpreadsheetFormattedCellTest extends ClassTestCase<Spreadshee
 
     private final static String TEXT = "abc123";
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullTextFails() {
-        SpreadsheetFormattedCell.with(null, this.style());
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetFormattedCell.with(null, this.style());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullStyleFails() {
-        SpreadsheetFormattedCell.with(TEXT, null);
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetFormattedCell.with(TEXT, null);
+        });
     }
 
     @Test
@@ -68,9 +73,11 @@ public final class SpreadsheetFormattedCellTest extends ClassTestCase<Spreadshee
 
     // setText...........................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetTextNullFails() {
-        this.createObject().setText(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().setText(null);
+        });
     }
 
     @Test
@@ -90,9 +97,11 @@ public final class SpreadsheetFormattedCellTest extends ClassTestCase<Spreadshee
 
     // setStyle...........................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetStyleNullFails() {
-        this.createObject().setStyle(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().setStyle(null);
+        });
     }
 
     @Test
@@ -111,15 +120,17 @@ public final class SpreadsheetFormattedCellTest extends ClassTestCase<Spreadshee
     }
 
     private void check(final SpreadsheetFormattedCell formatted, final String text, final SpreadsheetCellStyle style) {
-        assertEquals("text", text, formatted.text());
-        assertEquals("style", style, formatted.style());
+        assertEquals(text, formatted.text(), "text");
+        assertEquals(style, formatted.style(), "style");
     }
 
     // setColor.....................................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetTextColorNullFails() {
-        this.createObject().setTextColor(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().setTextColor(null);
+        });
     }
 
     @Test
@@ -145,9 +156,9 @@ public final class SpreadsheetFormattedCellTest extends ClassTestCase<Spreadshee
         final SpreadsheetFormattedCell different = formattedCell.setTextColor(color);
         assertNotSame(different, formattedCell);
 
-        assertEquals("textStyle " + formattedCell + " setColor " + color,
-                SpreadsheetFormattedCell.with(TEXT, this.style(color)),
-                different);
+        assertEquals(SpreadsheetFormattedCell.with(TEXT, this.style(color)),
+                different,
+                ()-> "textStyle " + formattedCell + " setColor " + color);
     }
 
     // equals.....................................................................................
