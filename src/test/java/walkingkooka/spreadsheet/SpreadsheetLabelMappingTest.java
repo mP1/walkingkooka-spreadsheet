@@ -1,6 +1,6 @@
 package walkingkooka.spreadsheet;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
@@ -8,9 +8,10 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.type.MemberVisibility;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public final class SpreadsheetLabelMappingTest extends ClassTestCase<SpreadsheetLabelMapping>
@@ -19,14 +20,18 @@ public final class SpreadsheetLabelMappingTest extends ClassTestCase<Spreadsheet
     private final static SpreadsheetLabelName LABEL =SpreadsheetLabelName.with("label");
     private final static ExpressionReference REFERENCE = cell(1);
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullLabelFails() {
-        SpreadsheetLabelMapping.with(null, REFERENCE);
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetLabelMapping.with(null, REFERENCE);
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullReferenceFails() {
-        SpreadsheetLabelMapping.with(LABEL, null);
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetLabelMapping.with(LABEL, null);
+        });
     }
 
     @Test
@@ -38,9 +43,11 @@ public final class SpreadsheetLabelMappingTest extends ClassTestCase<Spreadsheet
     
     // setLabel.......................................................................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetLabelNullFails() {
-        this.createObject().setLabel(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().setLabel(null);
+        });
     }
 
     @Test
@@ -62,9 +69,11 @@ public final class SpreadsheetLabelMappingTest extends ClassTestCase<Spreadsheet
 
     // setReference.......................................................................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetReferenceNullFails() {
-        this.createObject().setReference(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().setReference(null);
+        });
     }
 
     @Test
@@ -111,11 +120,11 @@ public final class SpreadsheetLabelMappingTest extends ClassTestCase<Spreadsheet
     }
 
     private void checkLabel(final SpreadsheetLabelMapping mapping, final SpreadsheetLabelName label) {
-        assertEquals("label", label, mapping.label());
+        assertEquals(label, mapping.label(), "label");
     }
     
     private void checkReference(final SpreadsheetLabelMapping mapping, final ExpressionReference reference) {
-        assertEquals("reference", reference, mapping.reference());
+        assertEquals(reference, mapping.reference(), "reference");
     }
 
     private static ExpressionReference cell(final int column) {

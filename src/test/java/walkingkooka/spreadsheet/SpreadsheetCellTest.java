@@ -1,6 +1,6 @@
 package walkingkooka.spreadsheet;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
@@ -12,9 +12,10 @@ import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public final class SpreadsheetCellTest extends ClassTestCase<SpreadsheetCell>
@@ -27,29 +28,39 @@ public final class SpreadsheetCellTest extends ClassTestCase<SpreadsheetCell>
     private final static SpreadsheetCellReference REFERENCE = reference(COLUMN, ROW);
     private final static String FORMULA = "=1+2";
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullReferenceFails() {
-        SpreadsheetCell.with(null, this.formula(), this.style(), this.format(), this.formatted());
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetCell.with(null, this.formula(), this.style(), this.format(), this.formatted());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullFormulaFails() {
-        SpreadsheetCell.with(REFERENCE, null, this.style(), this.format(), this.formatted());
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetCell.with(REFERENCE, null, this.style(), this.format(), this.formatted());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullStyleFails() {
-        SpreadsheetCell.with(REFERENCE, this.formula(), null, this.format(), this.formatted());
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetCell.with(REFERENCE, this.formula(), null, this.format(), this.formatted());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullFormatFails() {
-        SpreadsheetCell.with(REFERENCE, this.formula(), this.style(), null, this.formatted());
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetCell.with(REFERENCE, this.formula(), this.style(), null, this.formatted());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullFormattedFails() {
-        SpreadsheetCell.with(REFERENCE, this.formula(), this.style(), this.format(), null);
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetCell.with(REFERENCE, this.formula(), this.style(), this.format(), null);
+        });
     }
 
     @Test
@@ -93,9 +104,11 @@ public final class SpreadsheetCellTest extends ClassTestCase<SpreadsheetCell>
 
     // SetReference.....................................................................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetReferenceNullFails() {
-        this.createCell().setReference(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createCell().setReference(null);
+        });
     }
 
     @Test
@@ -120,9 +133,11 @@ public final class SpreadsheetCellTest extends ClassTestCase<SpreadsheetCell>
 
     // SetFormula.....................................................................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetFormulaNullFails() {
-        this.createCell().setFormula(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createCell().setFormula(null);
+        });
     }
 
     @Test
@@ -159,9 +174,11 @@ public final class SpreadsheetCellTest extends ClassTestCase<SpreadsheetCell>
 
     // SetStyle.....................................................................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetStyleNullFails() {
-        this.createCell().setStyle(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createCell().setStyle(null);
+        });
     }
 
     @Test
@@ -186,9 +203,11 @@ public final class SpreadsheetCellTest extends ClassTestCase<SpreadsheetCell>
 
     // SetFormat.....................................................................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetFormatNullFails() {
-        this.createCell().setFormat(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createCell().setFormat(null);
+        });
     }
 
     @Test
@@ -230,9 +249,11 @@ public final class SpreadsheetCellTest extends ClassTestCase<SpreadsheetCell>
 
     // SetFormatted.....................................................................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetFormattedNullFails() {
-        this.createCell().setFormatted(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createCell().setFormatted(null);
+        });
     }
 
     @Test
@@ -386,7 +407,7 @@ public final class SpreadsheetCellTest extends ClassTestCase<SpreadsheetCell>
     }
 
     private void checkReference(final SpreadsheetCell cell, final SpreadsheetCellReference reference) {
-        assertEquals("reference", reference, cell.reference());
+        assertEquals(reference, cell.reference(), "reference");
     }
 
     private SpreadsheetFormula formula() {
@@ -402,7 +423,7 @@ public final class SpreadsheetCellTest extends ClassTestCase<SpreadsheetCell>
     }
 
     private void checkFormula(final SpreadsheetCell cell, final SpreadsheetFormula formula) {
-        assertEquals("formula", formula, cell.formula());
+        assertEquals(formula, cell.formula(), "formula");
     }
 
     private SpreadsheetCellStyle style() {
@@ -414,7 +435,7 @@ public final class SpreadsheetCellTest extends ClassTestCase<SpreadsheetCell>
     }
 
     private void checkStyle(final SpreadsheetCell cell, final SpreadsheetCellStyle style) {
-        assertEquals("style", style, cell.style());
+        assertEquals(style, cell.style(), "style");
     }
 
     private Optional<SpreadsheetCellFormat> format() {
@@ -430,7 +451,7 @@ public final class SpreadsheetCellTest extends ClassTestCase<SpreadsheetCell>
     }
 
     private void checkFormat(final SpreadsheetCell cell, final Optional<SpreadsheetCellFormat> format) {
-        assertEquals("format", format, cell.format());
+        assertEquals(format, cell.format(), "format");
     }
 
     private Optional<SpreadsheetFormattedCell> formatted() {
@@ -446,7 +467,7 @@ public final class SpreadsheetCellTest extends ClassTestCase<SpreadsheetCell>
     }
 
     private void checkFormatted(final SpreadsheetCell cell, final Optional<SpreadsheetFormattedCell> formatted) {
-        assertEquals("formatted", formatted, cell.formatted());
+        assertEquals(formatted, cell.formatted(), "formatted");
     }
 
     @Override

@@ -1,13 +1,14 @@
 package walkingkooka.spreadsheet;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.type.MemberVisibility;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public final class SpreadsheetMetadataTest extends ClassTestCase<SpreadsheetMetadata>
@@ -32,9 +33,11 @@ public final class SpreadsheetMetadataTest extends ClassTestCase<SpreadsheetMeta
     
     // setColumnCount ....................................................................................................
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testSetColumnCountNegativeFails() {
-        this.createObject().setColumnCount(-1);
+        assertThrows(IllegalArgumentException.class, () -> {
+            this.createObject().setColumnCount(-1);
+        });
     }
 
     @Test
@@ -56,9 +59,11 @@ public final class SpreadsheetMetadataTest extends ClassTestCase<SpreadsheetMeta
 
     // setRowCount ....................................................................................................
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testSetRowCountNegativeFails() {
-        this.createObject().setRowCount(-1);
+        assertThrows(IllegalArgumentException.class, () -> {
+            this.createObject().setRowCount(-1);
+        });
     }
 
     @Test
@@ -106,11 +111,11 @@ public final class SpreadsheetMetadataTest extends ClassTestCase<SpreadsheetMeta
     }
 
     private void checkColumnCount(final SpreadsheetMetadata meta, final int column) {
-        assertEquals("column", column, meta.columnCount());
+        assertEquals(column, meta.columnCount(), "column");
     }
 
     private void checkRowCount(final SpreadsheetMetadata meta, final int row) {
-        assertEquals("row", row, meta.rowCount());
+        assertEquals(row, meta.rowCount(), "row");
     }
     
     @Override

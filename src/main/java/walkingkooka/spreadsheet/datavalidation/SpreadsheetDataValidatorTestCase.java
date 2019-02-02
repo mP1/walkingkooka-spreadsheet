@@ -1,11 +1,12 @@
 package walkingkooka.spreadsheet.datavalidation;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.text.CharSequences;
 import walkingkooka.type.MemberVisibility;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetDataValidatorTestCase<V extends SpreadsheetDataValidator, T> extends ClassTestCase<V> {
 
@@ -14,14 +15,18 @@ public abstract class SpreadsheetDataValidatorTestCase<V extends SpreadsheetData
         assertEquals(this.valueType(), this.createSpreadsheetDataValidator().valueType());
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testValidateNullValueFails() {
-        this.createSpreadsheetDataValidator().validate(null, this.createContext());
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetDataValidator().validate(null, this.createContext());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testValidateNullContextFails() {
-        this.createSpreadsheetDataValidator().validate(this.value(), null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetDataValidator().validate(this.value(), null);
+        });
     }
 
     protected abstract V createSpreadsheetDataValidator();
@@ -80,9 +85,9 @@ public abstract class SpreadsheetDataValidatorTestCase<V extends SpreadsheetData
                                          final TT value,
                                          final SpreadsheetDataValidatorContext context,
                                          final boolean expected) {
-        assertEquals(validator + " " + CharSequences.quoteIfChars(value),
-                expected,
-                validator.validate(value, context));
+        assertEquals(expected,
+                validator.validate(value, context),
+                validator + " " + CharSequences.quoteIfChars(value));
     }
 
     @Override

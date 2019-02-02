@@ -1,6 +1,6 @@
 package walkingkooka.spreadsheet.style;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.ComparableTesting;
 import walkingkooka.test.ClassTestCase;
@@ -12,7 +12,8 @@ import walkingkooka.type.MemberVisibility;
 
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class FontSizeTest extends ClassTestCase<FontSize>
         implements ComparableTesting<FontSize>,
@@ -22,16 +23,18 @@ public final class FontSizeTest extends ClassTestCase<FontSize>
 
     private final static int VALUE = 10;
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testWithNegativeValueFails() {
-        FontSize.with(-1);
+        assertThrows(IllegalArgumentException.class, () -> {
+            FontSize.with(-1);
+        });
     }
 
     @Test
     public void testWith() {
         final Integer value = 10;
         final FontSize size = FontSize.with(value);
-        assertEquals("value", value, size.value());
+        assertEquals(value, size.value(), "value");
     }
 
     // HasJsonNode......................................................................................
@@ -65,7 +68,7 @@ public final class FontSizeTest extends ClassTestCase<FontSize>
 
     @Override
     public boolean serializableInstanceIsSingleton() {
-        return false;
+        return true;
     }
 
     @Override

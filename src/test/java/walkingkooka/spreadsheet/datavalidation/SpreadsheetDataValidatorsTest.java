@@ -1,6 +1,6 @@
 package walkingkooka.spreadsheet.datavalidation;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
@@ -17,7 +17,7 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class SpreadsheetDataValidatorsTest extends PublicStaticHelperTestCase<SpreadsheetDataValidators> {
 
@@ -632,9 +632,9 @@ public final class SpreadsheetDataValidatorsTest extends PublicStaticHelperTestC
     private <TT> void validateAndCheck(final SpreadsheetDataValidator<TT> validator,
                                        final TT value,
                                        final boolean expected) {
-        assertEquals(validator + " " + CharSequences.quoteIfChars(value),
-                expected,
-                validator.validate(value, this.createContext(value)));
+        assertEquals(expected,
+                validator.validate(value, this.createContext(value)),
+                ()-> validator + " " + CharSequences.quoteIfChars(value));
     }
 
     private SpreadsheetDataValidatorContext createContext(final Object value) {
