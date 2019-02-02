@@ -1,12 +1,12 @@
 package walkingkooka.spreadsheet.store.range;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class BasicSpreadsheetRangeStoreTest extends SpreadsheetRangeStoreTestCase<BasicSpreadsheetRangeStore<String>, String> {
 
@@ -189,8 +189,8 @@ public final class BasicSpreadsheetRangeStoreTest extends SpreadsheetRangeStoreT
         store.saveValue(RANGE1A, VALUE1);
 
         final SpreadsheetCellReference mid = RANGE1A.begin().add(1, 1);
-        assertTrue("RANGE1A.begin < mid", RANGE1A.begin().compareTo(mid) < 0);
-        assertTrue("mid< RANGE1A.end", mid.compareTo(RANGE1A.end()) < 0);
+        assertTrue(RANGE1A.begin().compareTo(mid) < 0, "RANGE1A.begin < mid");
+        assertTrue(mid.compareTo(RANGE1A.end()) < 0, "mid< RANGE1A.end");
 
         this.loadCellReferenceAndCheck(store, mid, VALUE1);
     }
@@ -206,8 +206,8 @@ public final class BasicSpreadsheetRangeStoreTest extends SpreadsheetRangeStoreT
 
     @Test
     public void testLoadCellBeginRange2() {
-        assertNotEquals("RANGE1A.begin() != RANGE1C.begin()", RANGE1A.begin(), RANGE1C.begin());
-        assertNotEquals("RANGE1A.begin() != RANGE2A.begin()", RANGE1A.begin(), RANGE2A.begin());
+        assertNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
+        assertNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
 
         final BasicSpreadsheetRangeStore<String> store = this.createStore();
 
@@ -220,8 +220,8 @@ public final class BasicSpreadsheetRangeStoreTest extends SpreadsheetRangeStoreT
 
     @Test
     public void testLoadCellBeginRange3() {
-        assertNotEquals("RANGE1A.begin() != RANGE1C.begin()", RANGE1A.begin(), RANGE1C.begin());
-        assertNotEquals("RANGE1A.begin() != RANGE2A.begin()", RANGE1A.begin(), RANGE2A.begin());
+        assertNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
+        assertNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
 
         final BasicSpreadsheetRangeStore<String> store = this.createStore();
 
@@ -234,8 +234,8 @@ public final class BasicSpreadsheetRangeStoreTest extends SpreadsheetRangeStoreT
 
     @Test
     public void testLoadCellBeginRange4() {
-        assertNotEquals("RANGE1A.begin() != RANGE1C.begin()", RANGE1A.begin(), RANGE1C.begin());
-        assertNotEquals("RANGE1A.begin() != RANGE2A.begin()", RANGE1A.begin(), RANGE2A.begin());
+        assertNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
+        assertNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
 
         final BasicSpreadsheetRangeStore<String> store = this.createStore();
 
@@ -248,8 +248,8 @@ public final class BasicSpreadsheetRangeStoreTest extends SpreadsheetRangeStoreT
 
     @Test
     public void testLoadCellEndRange2() {
-        assertNotEquals("RANGE1A.end() != RANGE1B.end()", RANGE1A.end(), RANGE1B.end());
-        assertNotEquals("RANGE1A.end() != RANGE1B.end()", RANGE1A.end(), RANGE2A.end());
+        assertNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
+        assertNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
 
         final BasicSpreadsheetRangeStore<String> store = this.createStore();
 
@@ -262,8 +262,8 @@ public final class BasicSpreadsheetRangeStoreTest extends SpreadsheetRangeStoreT
 
     @Test
     public void testLoadCellEndRange3() {
-        assertNotEquals("RANGE1A.end() != RANGE1B.end()", RANGE1A.end(), RANGE1B.end());
-        assertNotEquals("RANGE1A.end() != RANGE1B.end()", RANGE1A.end(), RANGE2A.end());
+        assertNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
+        assertNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
 
         final BasicSpreadsheetRangeStore<String> store = this.createStore();
 
@@ -276,8 +276,8 @@ public final class BasicSpreadsheetRangeStoreTest extends SpreadsheetRangeStoreT
 
     @Test
     public void testLoadCellEndRange4() {
-        assertNotEquals("RANGE1A.end() != RANGE1B.end()", RANGE1A.end(), RANGE1B.end());
-        assertNotEquals("RANGE1A.end() != RANGE1B.end()", RANGE1A.end(), RANGE2A.end());
+        assertNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
+        assertNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
 
         final BasicSpreadsheetRangeStore<String> store = this.createStore();
 
@@ -297,8 +297,8 @@ public final class BasicSpreadsheetRangeStoreTest extends SpreadsheetRangeStoreT
         store.saveValue(RANGE3, VALUE3);
 
         final SpreadsheetCellReference mid = RANGE1A.begin().add(1, 1);
-        assertTrue("RANGE1A.begin < mid", RANGE1A.begin().compareTo(mid) < 0);
-        assertTrue("mid< RANGE1A.end", mid.compareTo(RANGE1A.end()) < 0);
+        assertTrue(RANGE1A.begin().compareTo(mid) < 0, "RANGE1A.begin < mid");
+        assertTrue(mid.compareTo(RANGE1A.end()) < 0, "mid< RANGE1A.end");
 
         this.loadCellReferenceAndCheck(store, mid, VALUE1);
     }

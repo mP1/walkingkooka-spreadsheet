@@ -1,6 +1,6 @@
 package walkingkooka.spreadsheet;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
@@ -19,8 +19,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
         implements HashCodeEqualsDefinedTesting<SpreadsheetRange> {
@@ -30,14 +31,18 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
     private final static int COLUMN2 = 20;
     private final static int ROW2 = 21;
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullBeginFails() {
-        SpreadsheetRange.with(null, this.cell());
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetRange.with(null, this.cell());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullEndFails() {
-        SpreadsheetRange.with(this.cell(), null);
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetRange.with(this.cell(), null);
+        });
     }
 
     @Test
@@ -46,8 +51,8 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
         final SpreadsheetCellReference end =this.cell(3, 4);
 
         final SpreadsheetRange range = SpreadsheetRange.with(begin, end);
-        assertSame("begin", begin, range.begin());
-        assertSame("end", end, range.end());
+        assertSame(begin, range.begin(), "begin");
+        assertSame(end, range.end(), "end");
         this.checkIsSingleCell(range, false);
     }
 
@@ -89,9 +94,11 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
 
     // cell...........................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testCellNullFails() {
-        SpreadsheetRange.cell(null);
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetRange.cell(null);
+        });
     }
 
     @Test
@@ -119,14 +126,18 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
 
     // setBeginAndEnd.....................................................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetBeginAndEndWithNullBeginFails() {
-        this.range().setBeginAndEnd(null, this.end());
+        assertThrows(NullPointerException.class, () -> {
+            this.range().setBeginAndEnd(null, this.end());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetBeginAndEndWithNullEndFails() {
-        this.range().setBeginAndEnd(this.begin(), null);
+        assertThrows(NullPointerException.class, () -> {
+            this.range().setBeginAndEnd(this.begin(), null);
+        });
     }
 
     @Test
@@ -248,14 +259,16 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
 
     private <T> void checkStream(final SpreadsheetRange range, final Stream<?> stream, final Object...expected){
         final List<Object> actual = stream.collect(Collectors.toList());
-        assertEquals(range.toString(), Lists.of(expected), actual);
+        assertEquals(Lists.of(expected), actual, () -> range.toString());
     }
 
     // clear....................................................................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testClearWithNullStoreFails() {
-        this.range().clear(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.range().clear(null);
+        });
     }
 
     @Test
@@ -276,7 +289,7 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
 
         this.range(2, 2, 4, 11).clear(store);
 
-        assertEquals("store record count", 3, store.count()); // a,d,e
+        assertEquals(3, store.count(), "store record count"); // a,d,e
         assertEquals(Optional.empty(), store.load(b.reference()));
         assertEquals(Optional.empty(), store.load(c.reference()));
     }
@@ -322,9 +335,11 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
 
     // from...............................................................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testFromWithNullCellsFails() {
-        SpreadsheetRange.from(null);
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetRange.from(null);
+        });
     }
 
     @Test
@@ -424,7 +439,7 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
     }
 
     private void checkBegin(final SpreadsheetRange range, final SpreadsheetCellReference begin) {
-        assertEquals("range begin=" + range, begin, range.begin());
+        assertEquals(begin, range.begin(), ()-> "range begin=" + range);
     }
 
     private void checkEnd(final SpreadsheetRange range, final int column, final int row) {
@@ -432,19 +447,19 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
     }
 
     private void checkEnd(final SpreadsheetRange range, final SpreadsheetCellReference end) {
-        assertEquals("range end="+ range, end, range.end());
+        assertEquals(end, range.end(), ()-> "range end="+ range);
     }
 
     private void checkWidth(final SpreadsheetRange range, final int width) {
-        assertEquals("range width="+ range, width, range.width());
+        assertEquals(width, range.width(), ()-> "range width="+ range);
     }
 
     private void checkHeight(final SpreadsheetRange range, final int height) {
-        assertEquals("range height="+ range, height, range.height());
+        assertEquals(height, range.height(), ()-> "range height="+ range);
     }
 
     private void checkIsSingleCell(final SpreadsheetRange range, final boolean expected) {
-        assertEquals("range=" + range + " isSingleCell", expected, range.isSingleCell());
+        assertEquals(expected, range.isSingleCell(), ()-> "range=" + range + " isSingleCell");
     }
 
     @Override

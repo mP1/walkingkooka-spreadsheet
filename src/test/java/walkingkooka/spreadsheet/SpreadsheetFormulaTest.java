@@ -1,6 +1,6 @@
 package walkingkooka.spreadsheet;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.tree.expression.ExpressionNode;
@@ -9,9 +9,10 @@ import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormula>
@@ -25,9 +26,11 @@ public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormu
 
     private final static String DIFFERENT_TEXT = "99+99";
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testWithNullExpressionFails() {
-        SpreadsheetFormula.with(null);
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetFormula.with(null);
+        });
     }
 
     @Test
@@ -46,9 +49,11 @@ public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormu
         this.checkText(formula, text);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetTextNullFails() {
-        this.createObject().setText(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().setText(null);
+        });
     }
 
     @Test
@@ -76,9 +81,11 @@ public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormu
 
     // SetFormula.....................................................................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetFormulaNullFails() {
-        this.createObject().setText(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().setText(null);
+        });
     }
 
     @Test
@@ -129,9 +136,11 @@ public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormu
 
     // SetExpression.....................................................................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetExpressionNullFails() {
-        this.createObject().setExpression(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().setExpression(null);
+        });
     }
 
     @Test
@@ -185,9 +194,11 @@ public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormu
 
     // SetError.....................................................................................................
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testSetErrorNullFails() {
-        this.createObject().setError(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createObject().setError(null);
+        });
     }
 
     @Test
@@ -335,7 +346,7 @@ public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormu
     }
 
     private void checkText(final SpreadsheetFormula formula, final String text) {
-        assertEquals("text(ExpressionNode)", text, formula.text());
+        assertEquals(text, formula.text(), "text(ExpressionNode)");
     }
 
     private Optional<ExpressionNode> expression() {
@@ -347,7 +358,7 @@ public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormu
     }
 
     private void checkExpression(final SpreadsheetFormula formula, final Optional<ExpressionNode> expression) {
-        assertEquals("expression", expression, formula.expression());
+        assertEquals(expression, formula.expression(), "expression");
     }
 
     private void checkExpressionAbsent(final SpreadsheetFormula formula) {
@@ -363,7 +374,7 @@ public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormu
     }
 
     private void checkValue(final SpreadsheetFormula formula, final Optional<Object> value) {
-        assertEquals("value", value, formula.value());
+        assertEquals(value, formula.value(), "value");
     }
 
     private void checkValueAbsent(final SpreadsheetFormula formula) {
@@ -383,7 +394,7 @@ public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormu
     }
 
     private void checkError(final SpreadsheetFormula formula, final Optional<SpreadsheetError> error) {
-        assertEquals("formula", error, formula.error());
+        assertEquals(error, formula.error(), "formula");
     }
 
     @Override

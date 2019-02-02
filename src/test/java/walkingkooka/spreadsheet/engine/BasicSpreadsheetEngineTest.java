@@ -1,6 +1,6 @@
 package walkingkooka.spreadsheet.engine;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
@@ -47,11 +47,12 @@ import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<BasicSpreadsheetEngine> {
 
@@ -65,24 +66,32 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
     private final static String PATTERN_COLOR = "$text+" + PATTERN_SUFFIX + "+" + COLOR.get();
     private final static String PATTERN_FORMAT_FAIL = "<none>";
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testNullIdFails() {
-        BasicSpreadsheetEngine.with(null, this.cellStore(), this.labelStore(), this.conditionalFormattingRules());
+        assertThrows(NullPointerException.class, () -> {
+            BasicSpreadsheetEngine.with(null, this.cellStore(), this.labelStore(), this.conditionalFormattingRules());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testNullCellStoreFails() {
-        BasicSpreadsheetEngine.with(this.id(), null, this.labelStore(), this.conditionalFormattingRules());
+        assertThrows(NullPointerException.class, () -> {
+            BasicSpreadsheetEngine.with(this.id(), null, this.labelStore(), this.conditionalFormattingRules());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testNullLabelStoreFails() {
-        BasicSpreadsheetEngine.with(this.id(), this.cellStore(), null, this.conditionalFormattingRules());
+        assertThrows(NullPointerException.class, () -> {
+            BasicSpreadsheetEngine.with(this.id(), this.cellStore(), null, this.conditionalFormattingRules());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testNullConditionalFormattingRulesFails() {
-        BasicSpreadsheetEngine.with(this.id(), this.cellStore(), this.labelStore(), null);
+        assertThrows(NullPointerException.class, () -> {
+            BasicSpreadsheetEngine.with(this.id(), this.cellStore(), this.labelStore(), null);
+        });
     }
 
     @Test
@@ -161,7 +170,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context);
 
-        assertSame("different instances of SpreadsheetCell returned not cached", first, second);
+        assertSame(first, second, "different instances of SpreadsheetCell returned not cached");
     }
 
     @Test
@@ -177,10 +186,10 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 cellReference,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context);
-        assertNotEquals("Expected error absent=" + first, SpreadsheetFormula.NO_ERROR, first.formula().error());
+        assertNotEquals(SpreadsheetFormula.NO_ERROR, first.formula().error(), ()-> "Expected error absent=" + first);
 
         final SpreadsheetCell second = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY, context);
-        assertSame("different instances of SpreadsheetCell returned not cached", first, second);
+        assertSame(first, second, "different instances of SpreadsheetCell returned not cached");
     }
 
     @Test
@@ -200,8 +209,10 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         cellStore.save(this.cell(a, "999"));
 
         final SpreadsheetCell second = this.loadCellOrFail(engine, a, SpreadsheetEngineLoading.FORCE_RECOMPUTE, context);
-        assertNotSame("different instances of SpreadsheetCell returned not cached", first, second);
-        assertEquals("first should have value updated to 999 and not 1 the original value.", Optional.of(BigDecimal.valueOf(999)), second.formula().value());
+        assertNotSame(first, second, "different instances of SpreadsheetCell returned not cached");
+        assertEquals(Optional.of(BigDecimal.valueOf(999)),
+                second.formula().value(),
+                "first should have value updated to 999 and not 1 the original value.");
     }
 
     @Test
@@ -222,7 +233,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 SpreadsheetEngineLoading.SKIP_EVALUATE,
                 context);
 
-        assertSame("different instances of SpreadsheetCell returned not cached", first, second);
+        assertSame(first, second, "different instances of SpreadsheetCell returned not cached");
     }
 
     @Test
@@ -392,9 +403,9 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 DEFAULT_SUFFIX);
         final SpreadsheetCellStyle style = cell.formatted().get().style();
         // UNDERLINED from conditional formatting rule #2.
-        assertEquals("Style should include underline if correct rule was applied=" + cell,
-                style(SpreadsheetTextStyle.NO_BOLD, SpreadsheetTextStyle.NO_ITALICS, SpreadsheetTextStyle.UNDERLINE),
-                style);
+        assertEquals(style(SpreadsheetTextStyle.NO_BOLD, SpreadsheetTextStyle.NO_ITALICS, SpreadsheetTextStyle.UNDERLINE),
+                style,
+                ()-> "Style should include underline if correct rule was applied=" + cell);
     }
 
     private void saveRule(final boolean result, final int priority, final SpreadsheetCellStyle style,
@@ -3341,7 +3352,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
 
             @Override
             public <T> T convert(final Object value, final Class<T> target) {
-                assertEquals("Only support converting to Boolean=" + value, Boolean.class, target);
+                assertEquals(Boolean.class, target, "Only support converting to Boolean=" + value);
                 return target.cast(Boolean.parseBoolean(String.valueOf(value)));
             }
 
@@ -3368,7 +3379,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
             @Override
             public Optional<SpreadsheetFormattedText> format(final Object value,
                                                              final SpreadsheetTextFormatter<?> formatter) {
-                assertFalse("Value must not be optional" + value, value instanceof Optional);
+                assertFalse(value instanceof Optional, ()-> "Value must not be optional" + value);
                 return formatter.format(Cast.to(value), SpreadsheetTextFormatContexts.fake());
             }
         };

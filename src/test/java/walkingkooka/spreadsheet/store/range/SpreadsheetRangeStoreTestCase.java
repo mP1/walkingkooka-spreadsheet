@@ -1,6 +1,6 @@
 package walkingkooka.spreadsheet.store.range;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetRange;
@@ -12,9 +12,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetRangeStoreTestCase<S extends SpreadsheetRangeStore<V>, V> extends StoreTestCase<S, SpreadsheetRange, List<V>> {
 
@@ -33,9 +34,11 @@ public abstract class SpreadsheetRangeStoreTestCase<S extends SpreadsheetRangeSt
         this.loadFailCheck(RANGE);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testLoadCellNullCellReferenceFails() {
-        this.createStore().loadCellReference(null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createStore().loadCellReference(null);
+        });
     }
 
     @Test
@@ -43,39 +46,53 @@ public abstract class SpreadsheetRangeStoreTestCase<S extends SpreadsheetRangeSt
         this.loadCellReferenceFails(RANGE.begin());
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testSaveNullRangeFails() {
-        this.createStore().saveValue(null, this.value());
+        assertThrows(NullPointerException.class, () -> {
+            this.createStore().saveValue(null, this.value());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testSaveNullValueFails() {
-        this.createStore().saveValue(RANGE, null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createStore().saveValue(RANGE, null);
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testReplaceNullRangeFails() {
-        this.createStore().replaceValue(null, this.value(), this.value());
+        assertThrows(NullPointerException.class, () -> {
+            this.createStore().replaceValue(null, this.value(), this.value());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testReplaceNullNewValueFails() {
-        this.createStore().replaceValue(RANGE, null, this.value());
+        assertThrows(NullPointerException.class, () -> {
+            this.createStore().replaceValue(RANGE, null, this.value());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testReplaceNullOldValueFails() {
-        this.createStore().replaceValue(RANGE, this.value(), null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createStore().replaceValue(RANGE, this.value(), null);
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testDeleteNullRangeFails() {
-        this.createStore().deleteValue(null, this.value());
+        assertThrows(NullPointerException.class, () -> {
+            this.createStore().deleteValue(null, this.value());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testDeleteNullValueFails() {
-        this.createStore().deleteValue(RANGE, null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createStore().deleteValue(RANGE, null);
+        });
     }
 
     // helpers ............................................................
@@ -85,13 +102,15 @@ public abstract class SpreadsheetRangeStoreTestCase<S extends SpreadsheetRangeSt
     }
 
     protected void loadRangeFails(final SpreadsheetRangeStore<V> store, final SpreadsheetRange range) {
-        assertEquals("load range " + range + " should have returned no values", Optional.empty(), store.load(range));
+        assertEquals(Optional.empty(),
+                store.load(range),
+                ()-> "load range " + range + " should have returned no values");
     }
 
     protected void loadRangeAndCheck(final SpreadsheetRangeStore<V> store, final SpreadsheetRange range, final V... expected) {
         final Optional<List<V>> values = store.load(range);
-        assertNotEquals("load of " + range + " failed", Optional.empty(), values);
-        assertEquals("load range " + range, Lists.of(expected), values.get());
+        assertNotEquals(Optional.empty(), values, ()-> "load of " + range + " failed");
+        assertEquals(Lists.of(expected), values.get(), ()-> "load range " + range);
     }
 
     protected void loadCellReferenceFails(final SpreadsheetCellReference cell) {
@@ -99,16 +118,20 @@ public abstract class SpreadsheetRangeStoreTestCase<S extends SpreadsheetRangeSt
     }
 
     protected void loadCellReferenceFails(final SpreadsheetRangeStore<V> store, final SpreadsheetCellReference cell) {
-        assertEquals("load cell " + cell + " should have returned no values", Sets.empty(), this.loadCellReference(store, cell));
+        assertEquals( Sets.empty(),
+                this.loadCellReference(store, cell),
+                ()->"load cell " + cell + " should have returned no values");
     }
 
     protected void loadCellReferenceAndCheck(final SpreadsheetRangeStore<V> store, final SpreadsheetCellReference cell, final V... values) {
-        assertEquals("load cell " + cell, Sets.of(values), this.loadCellReference(store, cell));
+        assertEquals(Sets.of(values),
+                this.loadCellReference(store, cell),
+                ()->"load cell " + cell);
     }
 
     protected Set<V> loadCellReference(final SpreadsheetRangeStore<V> store, final SpreadsheetCellReference cell) {
         final Set<V> values = store.loadCellReference(cell);
-        assertNotNull("values", values);
+        assertNotNull(values, "values");
         return values;
     }
 

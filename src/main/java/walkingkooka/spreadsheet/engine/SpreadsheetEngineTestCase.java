@@ -1,6 +1,6 @@
 package walkingkooka.spreadsheet.engine;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -21,10 +21,11 @@ import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> extends ClassTestCase<E> {
 
@@ -33,83 +34,113 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
     final static SpreadsheetCellReference REFERENCE = COLUMN.setRow(ROW);
     final static SpreadsheetLabelName LABEL = SpreadsheetLabelName.with("LABEL123");
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testLoadCellNullCellFails() {
-        this.createSpreadsheetEngine().loadCell(null, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY, this.createContext());
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().loadCell(null, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY, this.createContext());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testLoadCellNullLoadingFails() {
-        this.createSpreadsheetEngine().loadCell(REFERENCE,
-                null,
-                this.createContext());
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().loadCell(REFERENCE,
+                    null,
+                    this.createContext());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testLoadCellNullContextFails() {
-        this.createSpreadsheetEngine().loadCell(REFERENCE,
-                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
-                null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().loadCell(REFERENCE,
+                    SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                    null);
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testDeleteColumnsNullColumnFails() {
-        this.createSpreadsheetEngine().deleteColumns(null, 1, this.createContext());
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().deleteColumns(null, 1, this.createContext());
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public final void testDeleteColumnsNegativeCountFails() {
-        this.createSpreadsheetEngine().deleteColumns(COLUMN, -1, this.createContext());
+        assertThrows(IllegalArgumentException.class, () -> {
+            this.createSpreadsheetEngine().deleteColumns(COLUMN, -1, this.createContext());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testDeleteColumnsNullContextFails() {
-        this.createSpreadsheetEngine().deleteColumns(COLUMN, 1, null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().deleteColumns(COLUMN, 1, null);
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testDeleteRowsNullRowFails() {
-        this.createSpreadsheetEngine().deleteRows(null, 1, this.createContext());
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().deleteRows(null, 1, this.createContext());
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public final void testDeleteRowsNegativeCountFails() {
-        this.createSpreadsheetEngine().deleteRows(ROW, -1, this.createContext());
+        assertThrows(IllegalArgumentException.class, () -> {
+            this.createSpreadsheetEngine().deleteRows(ROW, -1, this.createContext());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testDeleteRowsNullContextFails() {
-        this.createSpreadsheetEngine().deleteRows(ROW, 1, null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().deleteRows(ROW, 1, null);
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testInsertColumnsNullColumnFails() {
-        this.createSpreadsheetEngine().insertColumns(null, 1, this.createContext());
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().insertColumns(null, 1, this.createContext());
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public final void testInsertColumnsNegativeCountFails() {
-        this.createSpreadsheetEngine().insertColumns(COLUMN, -1, this.createContext());
+        assertThrows(IllegalArgumentException.class, () -> {
+            this.createSpreadsheetEngine().insertColumns(COLUMN, -1, this.createContext());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testInsertColumnsNullContextFails() {
-        this.createSpreadsheetEngine().insertColumns(COLUMN, 1, null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().insertColumns(COLUMN, 1, null);
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testInsertRowsNullRowFails() {
-        this.createSpreadsheetEngine().insertRows(null, 1, this.createContext());
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().insertRows(null, 1, this.createContext());
+        });
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public final void testInsertRowsNegativeCountFails() {
-        this.createSpreadsheetEngine().insertRows(ROW, -1, this.createContext());
+        assertThrows(IllegalArgumentException.class, () -> {
+            this.createSpreadsheetEngine().insertRows(ROW, -1, this.createContext());
+        });
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public final void testInsertRowsNullContextFails() {
-        this.createSpreadsheetEngine().insertRows(ROW, 1, null);
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().insertRows(ROW, 1, null);
+        });
     }
 
     abstract protected E createSpreadsheetEngine();
@@ -149,7 +180,9 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
                                            final SpreadsheetEngineLoading loading,
                                            final SpreadsheetEngineContext context) {
         final Optional<SpreadsheetCell> cell = engine.loadCell(reference, loading, context);
-        assertEquals("Expected reference " + reference + " to fail", Optional.empty(), cell);
+        assertEquals(Optional.empty(),
+                cell,
+                () -> "Expected reference " + reference + " to fail");
     }
 
     protected final SpreadsheetCell loadCellAndCheckWithoutValueOrError(final SpreadsheetEngine engine,
@@ -157,9 +190,9 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
                                                                         final SpreadsheetEngineLoading loading,
                                                                         final SpreadsheetEngineContext context) {
         final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading, context);
-        assertEquals("values from returned cells=" + cell,
-                null,
-                this.valueOrError(cell, null));
+        assertEquals(null,
+                this.valueOrError(cell, null),
+                ()-> "values from returned cells=" + cell);
         return cell;
     }
 
@@ -213,35 +246,44 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
         final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading, context);
 
         final Optional<SpreadsheetError> error = cell.formula().error();
-        assertNotEquals("Expected error missing=" + cell, SpreadsheetFormula.NO_ERROR, error);
-        assertTrue("Error message " + error + " missing " + CharSequences.quoteAndEscape(errorContains), error.get().value().contains(errorContains));
+        assertNotEquals(SpreadsheetFormula.NO_ERROR,
+                error,
+                ()-> "Expected error missing=" + cell);
+        assertTrue(error.get().value().contains(errorContains),
+                ()-> "Error message " + error + " missing " + CharSequences.quoteAndEscape(errorContains));
     }
 
     protected final void loadLabelAndCheck(final SpreadsheetLabelStore labelStore,
                                            final SpreadsheetLabelName label,
                                            final ExpressionReference reference) {
-        assertEquals("label loaded", Optional.of(SpreadsheetLabelMapping.with(label, reference)), labelStore.load(label));
+        assertEquals(Optional.of(SpreadsheetLabelMapping.with(label, reference)),
+                labelStore.load(label),
+                "label loaded");
     }
 
     protected final void loadLabelFailCheck(final SpreadsheetLabelStore labelStore,
                                             final SpreadsheetLabelName label) {
-        assertEquals("label loaded failed", Optional.empty(), labelStore.load(label));
+        assertEquals(Optional.empty(),
+                labelStore.load(label),
+                "label loaded failed");
     }
 
     protected final void countAndCheck(final Store<?, ?> store, final int count) {
-        assertEquals("record count in " + store, count, store.count());
+        assertEquals(count,
+                store.count(),
+                "record count in " + store);
     }
 
     private void checkFormula(final SpreadsheetCell cell, final String formula) {
-        assertEquals("formula.text from returned cell=" + cell,
-                formula,
-                cell.formula().text());
+        assertEquals(formula,
+                cell.formula().text(),
+                ()-> "formula.text from returned cell=" + cell);
     }
 
     private void checkValueOrError(final SpreadsheetCell cell, final Object value) {
-        assertEquals("values from returned cell=" + cell,
-                value,
-                this.valueOrError(cell, "Value and Error absent (" + cell + ")"));
+        assertEquals(value,
+                this.valueOrError(cell, "Value and Error absent (" + cell + ")"),
+                ()-> "values from returned cell=" + cell);
     }
 
     private Object valueOrError(final SpreadsheetCell cell, final Object bothAbsent) {
@@ -253,8 +295,8 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
     }
 
     protected void checkFormattedText(final SpreadsheetCell cell, final String text) {
-        assertNotEquals("formatted text absent", Optional.empty(), cell.formatted());
-        assertEquals("formattedText", text, cell.formatted().get().text());
+        assertNotEquals(Optional.empty(), cell.formatted(), "formatted text absent");
+        assertEquals(text, cell.formatted().get().text(), "formattedText");
     }
 
     protected DecimalNumberContext decimalNumberContext() {
