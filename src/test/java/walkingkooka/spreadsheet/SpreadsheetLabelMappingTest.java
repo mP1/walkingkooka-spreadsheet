@@ -19,7 +19,7 @@ public final class SpreadsheetLabelMappingTest extends ClassTestCase<Spreadsheet
         implements HashCodeEqualsDefinedTesting<SpreadsheetLabelMapping>,
         ToStringTesting<SpreadsheetLabelMapping> {
 
-    private final static SpreadsheetLabelName LABEL =SpreadsheetLabelName.with("label");
+    private final static SpreadsheetLabelName LABEL = SpreadsheetLabelName.with("label");
     private final static ExpressionReference REFERENCE = cell(1);
 
     @Test
@@ -42,7 +42,7 @@ public final class SpreadsheetLabelMappingTest extends ClassTestCase<Spreadsheet
         this.checkLabel(mapping, LABEL);
         this.checkReference(mapping, REFERENCE);
     }
-    
+
     // setLabel.......................................................................................................
 
     @Test
@@ -124,7 +124,7 @@ public final class SpreadsheetLabelMappingTest extends ClassTestCase<Spreadsheet
     private void checkLabel(final SpreadsheetLabelMapping mapping, final SpreadsheetLabelName label) {
         assertEquals(label, mapping.label(), "label");
     }
-    
+
     private void checkReference(final SpreadsheetLabelMapping mapping, final ExpressionReference reference) {
         assertEquals(reference, mapping.reference(), "reference");
     }

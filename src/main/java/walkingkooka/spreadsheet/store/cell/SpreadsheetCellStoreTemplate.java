@@ -44,8 +44,8 @@ abstract class SpreadsheetCellStoreTemplate implements SpreadsheetCellStore {
 
     @Override
     public final Collection<SpreadsheetCell> row(final int row) {
-        if(row < 0) {
-            throw new IllegalArgumentException("Row "+ row + " must be >= 0");
+        if (row < 0) {
+            throw new IllegalArgumentException("Row " + row + " must be >= 0");
         }
         return this.row0(row);
     }
@@ -54,8 +54,8 @@ abstract class SpreadsheetCellStoreTemplate implements SpreadsheetCellStore {
 
     @Override
     public final Collection<SpreadsheetCell> column(final int column) {
-        if(column < 0) {
-            throw new IllegalArgumentException("Column "+ column + " must be >= 0");
+        if (column < 0) {
+            throw new IllegalArgumentException("Column " + column + " must be >= 0");
         }
         return this.column0(column);
     }

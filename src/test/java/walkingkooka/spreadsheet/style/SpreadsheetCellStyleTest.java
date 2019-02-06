@@ -121,7 +121,7 @@ public final class SpreadsheetCellStyleTest extends ClassTestCase<SpreadsheetCel
     private void mergeAndCheck(final SpreadsheetCellStyle style, final SpreadsheetCellStyle other, final SpreadsheetCellStyle expected) {
         assertEquals(expected,
                 style.merge(other),
-                ()-> style + " merge " + other + " failed");
+                () -> style + " merge " + other + " failed");
     }
 
     // isEmpty.........................................................................................................
@@ -152,7 +152,7 @@ public final class SpreadsheetCellStyleTest extends ClassTestCase<SpreadsheetCel
     private void isEmptyAndCheck(final SpreadsheetCellStyle style, final boolean empty) {
         assertEquals(empty,
                 style.isEmpty(),
-                ()-> style + " is empty");
+                () -> style + " is empty");
     }
 
     // HasJsonNode.........................................................................................................
@@ -179,9 +179,9 @@ public final class SpreadsheetCellStyleTest extends ClassTestCase<SpreadsheetCel
     @Test
     public void testToString() {
         this.toStringAndCheck(SpreadsheetCellStyle.EMPTY.setText(SpreadsheetTextStyle.EMPTY
-                .setBold(Optional.of(true))
-                .setFontFamily(Optional.of(FontFamilyName.with("Times New Roman")))
-                .setColor(Optional.of(Color.fromRgb(123456)))),
+                        .setBold(Optional.of(true))
+                        .setFontFamily(Optional.of(FontFamilyName.with("Times New Roman")))
+                        .setColor(Optional.of(Color.fromRgb(123456)))),
                 "Times New Roman #01e240 bold");
     }
 

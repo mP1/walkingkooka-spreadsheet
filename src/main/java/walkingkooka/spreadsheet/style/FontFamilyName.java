@@ -48,8 +48,8 @@ public final class FontFamilyName implements Name,
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-               other instanceof FontFamilyName &&
-               this.equals0(Cast.to(other));
+                other instanceof FontFamilyName &&
+                        this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final FontFamilyName other) {

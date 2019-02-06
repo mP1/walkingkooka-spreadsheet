@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
-public final class SpreadsheetErrorTest extends ClassTestCase<SpreadsheetError> 
+public final class SpreadsheetErrorTest extends ClassTestCase<SpreadsheetError>
         implements HashCodeEqualsDefinedTesting<SpreadsheetError>,
         HasJsonNodeTesting<SpreadsheetError>,
         ToStringTesting<SpreadsheetError> {
@@ -45,7 +45,7 @@ public final class SpreadsheetErrorTest extends ClassTestCase<SpreadsheetError>
         final SpreadsheetError error = SpreadsheetError.with(MESSAGE);
         this.checkValue(error, MESSAGE);
     }
-    
+
     // equals...............................................................................................
 
     @Test

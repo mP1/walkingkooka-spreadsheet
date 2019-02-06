@@ -149,7 +149,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         checkEquals("column 99", store.column(99));
     }
 
-    private void checkEquals(final String message, final Collection<SpreadsheetCell> cells, final SpreadsheetCell...expected) {
+    private void checkEquals(final String message, final Collection<SpreadsheetCell> cells, final SpreadsheetCell... expected) {
         final Set<SpreadsheetCell> actual = Sets.sorted();
         actual.addAll(cells);
 
@@ -171,15 +171,15 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         return SpreadsheetCellReference.with(SpreadsheetReferenceKind.ABSOLUTE.column(column),
                 SpreadsheetReferenceKind.ABSOLUTE.row(row));
     }
-    
+
     final void rowsAndCheck(final SpreadsheetCellStore store, final int row) {
-        assertEquals(row, store.rows(), ()-> "rows for store=" + store);
+        assertEquals(row, store.rows(), () -> "rows for store=" + store);
     }
 
     final void columnsAndCheck(final SpreadsheetCellStore store, final int column) {
-        assertEquals(column, store.columns(), ()-> "columns for store=" + store);
+        assertEquals(column, store.columns(), () -> "columns for store=" + store);
     }
-    
+
     private SpreadsheetFormula formula() {
         return SpreadsheetFormula.with("1+2");
     }

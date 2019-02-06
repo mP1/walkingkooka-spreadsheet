@@ -8,8 +8,6 @@ import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.MemberVisibility;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class FontFamilyNameTest extends ClassTestCase<FontFamilyName>
         implements NameTesting<FontFamilyName, FontFamilyName>,
         HasJsonNodeTesting<FontFamilyName> {

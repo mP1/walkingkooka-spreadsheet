@@ -28,8 +28,8 @@ public final class SpreadsheetRange implements ExpressionReference, HashCodeEqua
         SpreadsheetCellReference topLeft = null;
         SpreadsheetCellReference bottomRight = null;
 
-        for(SpreadsheetCellReference cell : cells) {
-            if(null==topLeft){
+        for (SpreadsheetCellReference cell : cells) {
+            if (null == topLeft) {
                 topLeft = cell;
                 bottomRight = cell;
             } else {
@@ -64,7 +64,7 @@ public final class SpreadsheetRange implements ExpressionReference, HashCodeEqua
      */
     private SpreadsheetRange(final SpreadsheetCellReference begin, final SpreadsheetCellReference end) {
         this.begin = begin;
-        this.end =  end;
+        this.end = end;
     }
 
     /**
@@ -73,7 +73,7 @@ public final class SpreadsheetRange implements ExpressionReference, HashCodeEqua
     public SpreadsheetCellReference begin() {
         return this.begin;
     }
-    
+
     private final SpreadsheetCellReference begin;
 
     /**
@@ -91,20 +91,20 @@ public final class SpreadsheetRange implements ExpressionReference, HashCodeEqua
      * creating a new instance if necessary.
      */
     public SpreadsheetRange setBeginAndEnd(final SpreadsheetCellReference begin,
-                                                   final SpreadsheetCellReference end) {
+                                           final SpreadsheetCellReference end) {
         checkBegin(begin);
         checkEnd(end);
 
         final SpreadsheetCellReference begin0 = begin.lower(end);
-        final SpreadsheetCellReference end0 =  end.upper(begin);
+        final SpreadsheetCellReference end0 = end.upper(begin);
 
         return this.begin.equals(begin0) && this.end.equals(end0) ?
-               this :
-               new SpreadsheetRange(begin0, end0);
+                this :
+                new SpreadsheetRange(begin0, end0);
     }
-    
+
     private static void checkBegin(final SpreadsheetCellReference begin) {
-        Objects.requireNonNull(begin, "begin");   
+        Objects.requireNonNull(begin, "begin");
     }
 
     private static void checkEnd(final SpreadsheetCellReference end) {
@@ -139,7 +139,7 @@ public final class SpreadsheetRange implements ExpressionReference, HashCodeEqua
         return IntStream.range(this.begin().column().value(), this.end.column().value())
                 .mapToObj(i -> SpreadsheetReferenceKind.ABSOLUTE.column(i));
     }
-    
+
     /**
      * A stream that provides all {@link SpreadsheetRowReference}.
      */
@@ -153,16 +153,17 @@ public final class SpreadsheetRange implements ExpressionReference, HashCodeEqua
      */
     public Stream<SpreadsheetCellReference> cellStream() {
         final SpreadsheetCellReference begin = this.begin();
-        
+
         final int rowOffset = begin.row().value();
         final int width = this.width();
         final int columnOffset = begin.column().value();
 
         return IntStream.range(0, width * this.height())
                 .mapToObj(index -> {
-                        return SpreadsheetReferenceKind.ABSOLUTE.column(columnOffset + (index % width))
-                        .setRow(SpreadsheetReferenceKind.ABSOLUTE.row(rowOffset + (index / width)));}
-                        );
+                            return SpreadsheetReferenceKind.ABSOLUTE.column(columnOffset + (index % width))
+                                    .setRow(SpreadsheetReferenceKind.ABSOLUTE.row(rowOffset + (index / width)));
+                        }
+                );
     }
 
     public void clear(final SpreadsheetCellStore store) {
@@ -180,13 +181,13 @@ public final class SpreadsheetRange implements ExpressionReference, HashCodeEqua
 
     public boolean equals(final Object other) {
         return this == other ||
-               other instanceof SpreadsheetRange &&
-               this.equals0(Cast.to(other));
+                other instanceof SpreadsheetRange &&
+                        this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetRange other) {
         return this.begin.equals(other.begin) &&
-               this.end.equals(other.end);
+                this.end.equals(other.end);
     }
 
     @Override

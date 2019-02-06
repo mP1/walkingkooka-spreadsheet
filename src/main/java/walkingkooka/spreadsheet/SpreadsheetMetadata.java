@@ -44,7 +44,7 @@ public final class SpreadsheetMetadata implements HashCodeEqualsDefined {
     }
 
     private static void checkCount(final String label, final int count) {
-        if(count < 0) {
+        if (count < 0) {
             throw new IllegalArgumentException(label + "=" + count + " must be a positive number");
         }
     }
@@ -64,8 +64,8 @@ public final class SpreadsheetMetadata implements HashCodeEqualsDefined {
         checkColumnCount(columnCount);
 
         return this.columnCount == columnCount ?
-               this :
-               this.replace(columnCount, this.rowCount());
+                this :
+                this.replace(columnCount, this.rowCount());
     }
 
     private int columnCount;
@@ -98,13 +98,13 @@ public final class SpreadsheetMetadata implements HashCodeEqualsDefined {
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-               other instanceof SpreadsheetMetadata &&
-               this.equals0(Cast.to(other));
+                other instanceof SpreadsheetMetadata &&
+                        this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetMetadata info) {
-        return this.columnCount==info.columnCount() &&
-               this.rowCount==info.rowCount();
+        return this.columnCount == info.columnCount() &&
+                this.rowCount == info.rowCount();
     }
 
     @Override
