@@ -2,8 +2,6 @@ package walkingkooka.spreadsheet.security;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class GroupIdTest extends IdentityIdTestCase<GroupId> {
 
     @Test

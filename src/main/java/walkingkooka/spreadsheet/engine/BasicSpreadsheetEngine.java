@@ -259,7 +259,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             final Boolean booleanResult = context.convert(test, Boolean.class);
             if (Boolean.TRUE.equals(booleanResult)) {
                 final Optional<SpreadsheetFormattedCell> formatted = cell.formatted();
-                if(!formatted.isPresent()) {
+                if (!formatted.isPresent()) {
                     throw new BasicSpreadsheetEngineException("Missing formatted cell=" + cell);
                 }
 

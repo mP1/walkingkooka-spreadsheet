@@ -108,8 +108,8 @@ public final class SpreadsheetCellStyle implements HashCodeEqualsDefined,
         final JsonObjectNode object = JsonNode.object();
         final SpreadsheetTextStyle text = this.text;
         return text.isEmpty() ?
-            object :
-            object.set(TEXT_PROPERTY, text.toJsonNode());
+                object :
+                object.set(TEXT_PROPERTY, text.toJsonNode());
     }
 
     private final static JsonNodeName TEXT_PROPERTY = JsonNodeName.with("text");

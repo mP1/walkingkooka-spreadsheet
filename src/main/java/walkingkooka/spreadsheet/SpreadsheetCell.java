@@ -229,10 +229,10 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
                 .set(FORMULA_PROPERTY, this.formula.toJsonNode())
                 .set(STYLE_PROPERTY, this.style.toJsonNode());
 
-        if(this.format.isPresent()) {
+        if (this.format.isPresent()) {
             object = object.set(FORMAT_PROPERTY, this.format.get().toJsonNode());
         }
-        if(this.formatted.isPresent()) {
+        if (this.formatted.isPresent()) {
             object = object.set(FORMATTED_PROPERTY, this.formatted.get().toJsonNode());
         }
 

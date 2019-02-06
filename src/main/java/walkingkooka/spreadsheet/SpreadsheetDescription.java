@@ -36,8 +36,8 @@ public final class SpreadsheetDescription implements HashCodeEqualsDefined, Valu
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-               other instanceof SpreadsheetDescription &&
-               this.equals0(Cast.to(other));
+                other instanceof SpreadsheetDescription &&
+                        this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetDescription error) {

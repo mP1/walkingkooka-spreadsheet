@@ -102,7 +102,7 @@ public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormu
         final String differentText = "different";
         final SpreadsheetFormula different = formula.setText(differentText);
         assertNotSame(formula, different);
-        
+
         this.checkText(different, differentText);
         this.checkExpressionAbsent(different);
         this.checkValueAbsent(different);
@@ -115,7 +115,7 @@ public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormu
                 .setExpression(this.expression());
         final SpreadsheetFormula different = formula.setText(DIFFERENT_TEXT);
         assertNotSame(formula, different);
-        
+
         this.checkText(different, DIFFERENT_TEXT);
         this.checkExpressionAbsent(different);
         this.checkValueAbsent(different);
@@ -129,7 +129,7 @@ public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormu
                 .setValue(this.value());
         final SpreadsheetFormula different = formula.setText(DIFFERENT_TEXT);
         assertNotSame(formula, different);
-        
+
         this.checkText(different, DIFFERENT_TEXT);
         this.checkExpressionAbsent(different);
         this.checkValueAbsent(different);
@@ -157,7 +157,7 @@ public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormu
         final Optional<ExpressionNode> differentExpression = Optional.of(ExpressionNode.text("different!"));
         final SpreadsheetFormula different = formula.setExpression(differentExpression);
         assertNotSame(formula, different);
-        
+
         this.checkText(different, TEXT);
         this.checkExpression(different, differentExpression);
         this.checkValueAbsent(different);
@@ -171,7 +171,7 @@ public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormu
         final Optional<ExpressionNode> differentExpression = SpreadsheetFormula.NO_EXPRESSION;
         final SpreadsheetFormula different = formula.setExpression(differentExpression);
         assertNotSame(formula, different);
-        
+
         this.checkText(different, TEXT);
         this.checkExpressionAbsent(different);
         this.checkValueAbsent(different);
@@ -187,7 +187,7 @@ public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormu
         final Optional<ExpressionNode> differentExpression = Optional.of(ExpressionNode.text("different!"));
         final SpreadsheetFormula different = formula.setExpression(differentExpression);
         assertNotSame(formula, different);
-        
+
         this.checkText(different, TEXT);
         this.checkExpression(different, differentExpression);
         this.checkValueAbsent(different);
@@ -215,7 +215,7 @@ public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormu
         final Optional<SpreadsheetError> differentError = this.error("different");
         final SpreadsheetFormula different = formula.setError(differentError);
         assertNotSame(formula, different);
-        
+
         this.checkText(different, TEXT);
         this.checkExpressionAbsent(different);
         this.checkValueAbsent(different);
@@ -229,7 +229,7 @@ public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormu
         final Optional<SpreadsheetError> differentError = this.error("different");
         final SpreadsheetFormula different = formula.setError(differentError);
         assertNotSame(formula, different);
-        
+
         this.checkText(different, TEXT);
         this.checkExpressionAbsent(different);
         this.checkValueAbsent(different);
@@ -243,7 +243,7 @@ public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormu
         final Optional<SpreadsheetError> differentError = this.error("different");
         final SpreadsheetFormula different = formula.setError(differentError);
         assertNotSame(formula, different);
-        
+
         this.checkText(different, TEXT);
         this.checkExpressionAbsent(different);
         this.checkValueAbsent(different);
@@ -343,7 +343,7 @@ public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormu
     public void testToStringWithoutError() {
         this.toStringAndCheck(this.createObject(), TEXT);
     }
-    
+
     @Override
     public SpreadsheetFormula createObject() {
         return SpreadsheetFormula.with(TEXT);
