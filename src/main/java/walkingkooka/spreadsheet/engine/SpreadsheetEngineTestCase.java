@@ -192,7 +192,7 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
         final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading, context);
         assertEquals(null,
                 this.valueOrError(cell, null),
-                ()-> "values from returned cells=" + cell);
+                () -> "values from returned cells=" + cell);
         return cell;
     }
 
@@ -248,9 +248,9 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
         final Optional<SpreadsheetError> error = cell.formula().error();
         assertNotEquals(SpreadsheetFormula.NO_ERROR,
                 error,
-                ()-> "Expected error missing=" + cell);
+                () -> "Expected error missing=" + cell);
         assertTrue(error.get().value().contains(errorContains),
-                ()-> "Error message " + error + " missing " + CharSequences.quoteAndEscape(errorContains));
+                () -> "Error message " + error + " missing " + CharSequences.quoteAndEscape(errorContains));
     }
 
     protected final void loadLabelAndCheck(final SpreadsheetLabelStore labelStore,
@@ -277,13 +277,13 @@ public abstract class SpreadsheetEngineTestCase<E extends SpreadsheetEngine> ext
     private void checkFormula(final SpreadsheetCell cell, final String formula) {
         assertEquals(formula,
                 cell.formula().text(),
-                ()-> "formula.text from returned cell=" + cell);
+                () -> "formula.text from returned cell=" + cell);
     }
 
     private void checkValueOrError(final SpreadsheetCell cell, final Object value) {
         assertEquals(value,
                 this.valueOrError(cell, "Value and Error absent (" + cell + ")"),
-                ()-> "values from returned cell=" + cell);
+                () -> "values from returned cell=" + cell);
     }
 
     private Object valueOrError(final SpreadsheetCell cell, final Object bothAbsent) {

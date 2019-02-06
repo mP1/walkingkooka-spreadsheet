@@ -23,7 +23,7 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
                                               final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
-    
+
     @Override
     public void deleteColumns(final SpreadsheetColumnReference column,
                               final int count,

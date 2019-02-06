@@ -40,8 +40,8 @@ public final class SpreadsheetError implements HashCodeEqualsDefined, Value<Stri
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-               other instanceof SpreadsheetError &&
-               this.equals0(Cast.to(other));
+                other instanceof SpreadsheetError &&
+                        this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetError error) {

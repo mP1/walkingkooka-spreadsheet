@@ -56,20 +56,20 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
 
         SpreadsheetCellReference cellReference = null;
 
-        if(reference instanceof SpreadsheetLabelName) {
+        if (reference instanceof SpreadsheetLabelName) {
             cellReference = this.loadMappingCellReferenceOrFail(SpreadsheetLabelName.class.cast(reference));
         }
-        if(reference instanceof SpreadsheetCellReference) {
+        if (reference instanceof SpreadsheetCellReference) {
             cellReference = SpreadsheetCellReference.class.cast(reference);
         }
 
         final Optional<SpreadsheetCell> maybeCell = this.engine.loadCell(cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY, this.context);
-        if(!maybeCell.isPresent()) {
+        if (!maybeCell.isPresent()) {
             throw new ExpressionEvaluationException("Unknown cell reference " + reference);
         }
-        final SpreadsheetFormula formula  = maybeCell.get().formula();
+        final SpreadsheetFormula formula = maybeCell.get().formula();
         final Optional<SpreadsheetError> error = formula.error();
-        if(error.isPresent()) {
+        if (error.isPresent()) {
             throw new ExpressionEvaluationException(error.get().value());
         }
 

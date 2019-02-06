@@ -634,7 +634,7 @@ public final class SpreadsheetDataValidatorsTest extends PublicStaticHelperTestC
                                        final boolean expected) {
         assertEquals(expected,
                 validator.validate(value, this.createContext(value)),
-                ()-> validator + " " + CharSequences.quoteIfChars(value));
+                () -> validator + " " + CharSequences.quoteIfChars(value));
     }
 
     private SpreadsheetDataValidatorContext createContext(final Object value) {

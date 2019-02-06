@@ -22,9 +22,9 @@ public abstract class SpreadsheetRangeStoreTestCase<S extends SpreadsheetRangeSt
     /**
      * RANGE and RANGE1B share a common TOPLEFT.
      */
-    private final static SpreadsheetCellReference TOPLEFT = cell(10,20);
-    private final static SpreadsheetCellReference CENTER = TOPLEFT.add(1,1);
-    private final static SpreadsheetCellReference BOTTOMRIGHT = CENTER.add(1,1);
+    private final static SpreadsheetCellReference TOPLEFT = cell(10, 20);
+    private final static SpreadsheetCellReference CENTER = TOPLEFT.add(1, 1);
+    private final static SpreadsheetCellReference BOTTOMRIGHT = CENTER.add(1, 1);
     private final static SpreadsheetRange RANGE = SpreadsheetRange.with(TOPLEFT, BOTTOMRIGHT);
 
     // tests.......................................................................................................
@@ -104,13 +104,13 @@ public abstract class SpreadsheetRangeStoreTestCase<S extends SpreadsheetRangeSt
     protected void loadRangeFails(final SpreadsheetRangeStore<V> store, final SpreadsheetRange range) {
         assertEquals(Optional.empty(),
                 store.load(range),
-                ()-> "load range " + range + " should have returned no values");
+                () -> "load range " + range + " should have returned no values");
     }
 
     protected void loadRangeAndCheck(final SpreadsheetRangeStore<V> store, final SpreadsheetRange range, final V... expected) {
         final Optional<List<V>> values = store.load(range);
-        assertNotEquals(Optional.empty(), values, ()-> "load of " + range + " failed");
-        assertEquals(Lists.of(expected), values.get(), ()-> "load range " + range);
+        assertNotEquals(Optional.empty(), values, () -> "load of " + range + " failed");
+        assertEquals(Lists.of(expected), values.get(), () -> "load range " + range);
     }
 
     protected void loadCellReferenceFails(final SpreadsheetCellReference cell) {
@@ -118,15 +118,15 @@ public abstract class SpreadsheetRangeStoreTestCase<S extends SpreadsheetRangeSt
     }
 
     protected void loadCellReferenceFails(final SpreadsheetRangeStore<V> store, final SpreadsheetCellReference cell) {
-        assertEquals( Sets.empty(),
+        assertEquals(Sets.empty(),
                 this.loadCellReference(store, cell),
-                ()->"load cell " + cell + " should have returned no values");
+                () -> "load cell " + cell + " should have returned no values");
     }
 
     protected void loadCellReferenceAndCheck(final SpreadsheetRangeStore<V> store, final SpreadsheetCellReference cell, final V... values) {
         assertEquals(Sets.of(values),
                 this.loadCellReference(store, cell),
-                ()->"load cell " + cell);
+                () -> "load cell " + cell);
     }
 
     protected Set<V> loadCellReference(final SpreadsheetRangeStore<V> store, final SpreadsheetCellReference cell) {

@@ -29,5 +29,5 @@ public interface SpreadsheetCellStore extends Store<SpreadsheetCellReference, Sp
     /**
      * Returns a view of all cells in the given column.
      */
-    Collection<SpreadsheetCell> column( int column);
+    Collection<SpreadsheetCell> column(int column);
 }

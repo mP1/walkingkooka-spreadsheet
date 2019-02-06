@@ -184,7 +184,7 @@ public final class SpreadsheetCellFormatTest extends ClassTestCase<SpreadsheetCe
     public SpreadsheetCellFormat createObject() {
         return SpreadsheetCellFormat.with(PATTERN, FORMATTER);
     }
-    
+
     private SpreadsheetCellFormat withoutFormatter() {
         return SpreadsheetCellFormat.with(PATTERN, SpreadsheetCellFormat.NO_FORMATTER);
     }
