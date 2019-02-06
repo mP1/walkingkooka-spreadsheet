@@ -21,7 +21,7 @@ public final class CustomFormulaSpreadsheetDataValidatorTest extends Spreadsheet
 
     @Test
     public void testToString() {
-        assertEquals("B3>123", this.createSpreadsheetDataValidator().toString());
+        this.toStringAndCheck(this.createSpreadsheetDataValidator(), "B3>123");
     }
 
     @Override
@@ -41,12 +41,12 @@ public final class CustomFormulaSpreadsheetDataValidatorTest extends Spreadsheet
     }
 
     @Override
-    protected Class<Object> valueType() {
+    public Class<Object> valueType() {
         return Object.class;
     }
 
     @Override
-    protected Class<CustomFormulaSpreadsheetDataValidator> type() {
+    public Class<CustomFormulaSpreadsheetDataValidator> type() {
         return CustomFormulaSpreadsheetDataValidator.class;
     }
 }

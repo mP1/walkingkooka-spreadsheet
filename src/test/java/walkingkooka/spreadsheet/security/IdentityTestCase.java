@@ -3,13 +3,15 @@ package walkingkooka.spreadsheet.security;
 import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.ToStringTesting;
 import walkingkooka.type.MemberVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class IdentityTestCase<I extends Identity<ID>, ID extends IdentityId>
         extends ClassTestCase<I>
-        implements HashCodeEqualsDefinedTesting<I> {
+        implements HashCodeEqualsDefinedTesting<I>,
+        ToStringTesting<I> {
 
     IdentityTestCase() {
         super();

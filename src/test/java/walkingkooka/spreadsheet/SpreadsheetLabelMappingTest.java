@@ -3,6 +3,7 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -15,7 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public final class SpreadsheetLabelMappingTest extends ClassTestCase<SpreadsheetLabelMapping>
-        implements HashCodeEqualsDefinedTesting<SpreadsheetLabelMapping> {
+        implements HashCodeEqualsDefinedTesting<SpreadsheetLabelMapping>,
+        ToStringTesting<SpreadsheetLabelMapping> {
 
     private final static SpreadsheetLabelName LABEL =SpreadsheetLabelName.with("label");
     private final static ExpressionReference REFERENCE = cell(1);
@@ -109,7 +111,7 @@ public final class SpreadsheetLabelMappingTest extends ClassTestCase<Spreadsheet
 
     @Test
     public void testToString() {
-        assertEquals(LABEL + "=" + REFERENCE, this.createObject().toString());
+        this.toStringAndCheck(this.createObject(), LABEL + "=" + REFERENCE);
     }
 
     // helpers...............................................................................................
@@ -133,7 +135,7 @@ public final class SpreadsheetLabelMappingTest extends ClassTestCase<Spreadsheet
     }
 
     @Override
-    protected Class<SpreadsheetLabelMapping> type() {
+    public Class<SpreadsheetLabelMapping> type() {
         return SpreadsheetLabelMapping.class;
     }
 

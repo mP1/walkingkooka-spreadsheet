@@ -3478,7 +3478,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
     }
 
     @Override
-    protected Class<BasicSpreadsheetEngine> type() {
+    public Class<BasicSpreadsheetEngine> type() {
         return BasicSpreadsheetEngine.class;
     }
 }

@@ -3,6 +3,7 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.MemberVisibility;
@@ -12,7 +13,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public final class SpreadsheetErrorTest extends ClassTestCase<SpreadsheetError> 
-        implements HashCodeEqualsDefinedTesting<SpreadsheetError>, HasJsonNodeTesting<SpreadsheetError> {
+        implements HashCodeEqualsDefinedTesting<SpreadsheetError>,
+        HasJsonNodeTesting<SpreadsheetError>,
+        ToStringTesting<SpreadsheetError> {
 
     private final static String MESSAGE = "message #1";
 
@@ -66,7 +69,7 @@ public final class SpreadsheetErrorTest extends ClassTestCase<SpreadsheetError>
 
     @Test
     public void testToString() {
-        assertEquals(MESSAGE, this.createObject().toString());
+        this.toStringAndCheck(this.createObject(), MESSAGE);
     }
 
     @Override
@@ -79,7 +82,7 @@ public final class SpreadsheetErrorTest extends ClassTestCase<SpreadsheetError>
     }
 
     @Override
-    protected Class<SpreadsheetError> type() {
+    public Class<SpreadsheetError> type() {
         return SpreadsheetError.class;
     }
 

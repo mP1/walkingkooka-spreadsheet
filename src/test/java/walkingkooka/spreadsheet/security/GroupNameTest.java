@@ -81,11 +81,6 @@ final public class GroupNameTest extends ClassTestCase<GroupName>
         this.createNameAndCheck("ABCDEF");
     }
 
-    @Test
-    public void testToString() {
-        assertEquals("ABC-123", this.createName("ABC-123").toString());
-    }
-
     @Override
     public GroupName createName(final String name) {
         return GroupName.with(name);
@@ -112,7 +107,7 @@ final public class GroupNameTest extends ClassTestCase<GroupName>
     }
 
     @Override
-    protected Class<GroupName> type() {
+    public Class<GroupName> type() {
         return GroupName.class;
     }
 

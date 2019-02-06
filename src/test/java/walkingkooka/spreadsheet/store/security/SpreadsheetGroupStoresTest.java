@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 
 public final class SpreadsheetGroupStoresTest extends PublicStaticHelperTestCase<SpreadsheetGroupStores> {
     @Override
-    protected Class<SpreadsheetGroupStores> type() {
+    public Class<SpreadsheetGroupStores> type() {
         return SpreadsheetGroupStores.class;
     }
 

@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.type.MemberVisibility;
@@ -37,7 +38,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormattedCellTest extends ClassTestCase<SpreadsheetFormattedCell>
         implements HashCodeEqualsDefinedTesting<SpreadsheetFormattedCell>,
-        HasJsonNodeTesting<SpreadsheetFormattedCell> {
+        HasJsonNodeTesting<SpreadsheetFormattedCell>,
+        ToStringTesting<SpreadsheetFormattedCell> {
 
     private final static String TEXT = "abc123";
 
@@ -186,12 +188,14 @@ public final class SpreadsheetFormattedCellTest extends ClassTestCase<Spreadshee
 
     @Test
     public void testToString() {
-        assertEquals(CharSequences.quote(TEXT) + " " + this.style(), this.createObject().toString());
+        this.toStringAndCheck(this.createObject(),
+                CharSequences.quote(TEXT) + " " + this.style());
     }
 
     @Test
     public void testToStringWithoutText() {
-        assertEquals(this.style().toString(), SpreadsheetFormattedCell.with("", this.style()).toString());
+        this.toStringAndCheck(SpreadsheetFormattedCell.with("", this.style()),
+                this.style().toString());
     }
     
     // helpers ................................................................................
@@ -223,7 +227,7 @@ public final class SpreadsheetFormattedCellTest extends ClassTestCase<Spreadshee
     }
 
     @Override
-    protected Class<SpreadsheetFormattedCell> type() {
+    public Class<SpreadsheetFormattedCell> type() {
         return SpreadsheetFormattedCell.class;
     }
 }

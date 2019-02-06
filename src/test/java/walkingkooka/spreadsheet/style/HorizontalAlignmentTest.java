@@ -6,7 +6,7 @@ import walkingkooka.type.MemberVisibility;
 public final class HorizontalAlignmentTest extends ClassTestCase<HorizontalAlignment> {
 
     @Override
-    protected Class<HorizontalAlignment> type() {
+    public Class<HorizontalAlignment> type() {
         return HorizontalAlignment.class;
     }
 

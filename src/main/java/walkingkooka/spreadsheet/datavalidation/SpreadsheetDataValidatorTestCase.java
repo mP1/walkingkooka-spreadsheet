@@ -2,13 +2,15 @@ package walkingkooka.spreadsheet.datavalidation;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.type.MemberVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetDataValidatorTestCase<V extends SpreadsheetDataValidator, T> extends ClassTestCase<V> {
+public abstract class SpreadsheetDataValidatorTestCase<V extends SpreadsheetDataValidator, T> extends ClassTestCase<V>
+        implements ToStringTesting<V> {
 
     @Test
     public final void testValueType() {

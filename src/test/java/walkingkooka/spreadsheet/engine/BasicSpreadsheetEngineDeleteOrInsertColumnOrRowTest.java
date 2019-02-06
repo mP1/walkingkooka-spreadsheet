@@ -5,7 +5,7 @@ import walkingkooka.type.MemberVisibility;
 
 public final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowTest extends ClassTestCase<BasicSpreadsheetEngineDeleteOrInsertColumnOrRow> {
     @Override
-    protected Class<BasicSpreadsheetEngineDeleteOrInsertColumnOrRow> type() {
+    public Class<BasicSpreadsheetEngineDeleteOrInsertColumnOrRow> type() {
         return BasicSpreadsheetEngineDeleteOrInsertColumnOrRow.class;
     }
 
