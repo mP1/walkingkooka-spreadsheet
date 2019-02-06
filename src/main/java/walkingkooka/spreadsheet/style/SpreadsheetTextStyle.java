@@ -74,13 +74,13 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined,
      * Private ctor use static factory or constant.
      */
     private SpreadsheetTextStyle(final Optional<FontFamilyName> fontFamily,
-                                final Optional<FontSize> fontSize,
-                                final Optional<Color> color,
-                                final Optional<Color> backgroundColor,
-                                final Optional<Boolean> bold,
-                                final Optional<Boolean> italics,
-                                final Optional<Boolean> underline,
-                                final Optional<Boolean> strikethru) {
+                                 final Optional<FontSize> fontSize,
+                                 final Optional<Color> color,
+                                 final Optional<Color> backgroundColor,
+                                 final Optional<Boolean> bold,
+                                 final Optional<Boolean> italics,
+                                 final Optional<Boolean> underline,
+                                 final Optional<Boolean> strikethru) {
         this.fontFamily = fontFamily;
         this.fontSize = fontSize;
         this.color = color;
@@ -99,8 +99,8 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined,
         checkFontFamily(fontFamily);
 
         return this.fontFamily.equals(fontFamily) ?
-               this :
-               this.replace(fontFamily, this.fontSize, this.color, this.backgroundColor, this.bold, this.italics, this.underline, this.strikethru);
+                this :
+                this.replace(fontFamily, this.fontSize, this.color, this.backgroundColor, this.bold, this.italics, this.underline, this.strikethru);
     }
 
     private final Optional<FontFamilyName> fontFamily;
@@ -108,7 +108,7 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined,
     private static void checkFontFamily(final Optional<FontFamilyName> fontFamily) {
         Objects.requireNonNull(fontFamily, "fontFamily");
     }
-    
+
     public Optional<FontSize> fontSize() {
         return this.fontSize;
     }
@@ -138,7 +138,7 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined,
                 this :
                 this.replace(this.fontFamily, this.fontSize, color, this.backgroundColor, this.bold, this.italics, this.underline, this.strikethru);
     }
-    
+
     private final Optional<Color> color;
 
     private static void checkColor(final Optional<Color> color) {
@@ -156,7 +156,7 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined,
                 this :
                 this.replace(this.fontFamily, this.fontSize, this.color, backgroundColor, this.bold, this.italics, this.underline, this.strikethru);
     }
-    
+
     private final Optional<Color> backgroundColor;
 
     private static void checkBackgroundColor(final Optional<Color> backgroundColor) {
@@ -174,7 +174,7 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined,
                 this :
                 this.replace(this.fontFamily, this.fontSize, this.color, this.backgroundColor, bold, this.italics, this.underline, this.strikethru);
     }
-    
+
     private final Optional<Boolean> bold;
 
     private static void checkBold(final Optional<Boolean> bold) {
@@ -216,7 +216,7 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined,
     private static void checkUnderline(final Optional<Boolean> underline) {
         Objects.requireNonNull(underline, "underline");
     }
-    
+
     public Optional<Boolean> strikethru() {
         return this.strikethru;
     }
@@ -230,7 +230,7 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined,
     }
 
     private final Optional<Boolean> strikethru;
-    
+
     private static void checkStrikethru(final Optional<Boolean> strikethru) {
         Objects.requireNonNull(strikethru, "strikethru");
     }
@@ -256,28 +256,28 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined,
      * Performs a cascading merge of all properties, if a property is absent in this then the property from other is used.
      */
     public SpreadsheetTextStyle merge(final SpreadsheetTextStyle other) {
-        Objects.requireNonNull(other,"other");
+        Objects.requireNonNull(other, "other");
 
-        final SpreadsheetTextStyle merged = new SpreadsheetTextStyle(merge(this.fontFamily,  other.fontFamily),
-                merge(this.fontSize,  other.fontSize),
-                merge(this.color,  other.color),
-                merge(this.backgroundColor,  other.backgroundColor),
-                merge(this.bold,  other.bold),
-                merge(this.italics,  other.italics),
-                merge(this.underline,  other.underline),
-                merge(this.strikethru,  other.strikethru));
+        final SpreadsheetTextStyle merged = new SpreadsheetTextStyle(merge(this.fontFamily, other.fontFamily),
+                merge(this.fontSize, other.fontSize),
+                merge(this.color, other.color),
+                merge(this.backgroundColor, other.backgroundColor),
+                merge(this.bold, other.bold),
+                merge(this.italics, other.italics),
+                merge(this.underline, other.underline),
+                merge(this.strikethru, other.strikethru));
 
         return this.equals0(merged) ?
-               this :
-               other.equals0(merged) ?
-               other:
-               merged;
+                this :
+                other.equals0(merged) ?
+                        other :
+                        merged;
     }
 
     private static <T> Optional<T> merge(final Optional<T> first, final Optional<T> second) {
         return first.isPresent() ?
-               first :
-               second;
+                first :
+                second;
     }
 
     /**
@@ -314,16 +314,16 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined,
     }
 
     private static JsonObjectNode add0(final JsonNodeName property,
-                                      final Optional<? extends HasJsonNode> value,
-                                      final JsonObjectNode object) {
+                                       final Optional<? extends HasJsonNode> value,
+                                       final JsonObjectNode object) {
         return value.isPresent() ?
                 object.set(property, value.get().toJsonNode()) :
                 object;
     }
 
     private static JsonObjectNode add1(final JsonNodeName property,
-                                      final Optional<Boolean> value,
-                                      final JsonObjectNode object) {
+                                       final Optional<Boolean> value,
+                                       final JsonObjectNode object) {
         return value.isPresent() ?
                 object.set(property, JsonNode.booleanNode(value.get())) :
                 object;
@@ -339,7 +339,7 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined,
     private final static JsonNodeName STRIKETHRU_PROPERTY = JsonNodeName.with("strikethru");
 
     // HashCodeEqualsDefined.........................................................................................
-    
+
     @Override
     public int hashCode() {
         return Objects.hash(this.fontFamily, this.fontSize, this.color, this.backgroundColor, this.bold, this.italics, this.underline, this.strikethru);
@@ -348,8 +348,8 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined,
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-               other instanceof SpreadsheetTextStyle &&
-               this.equals0(Cast.to(other));
+                other instanceof SpreadsheetTextStyle &&
+                        this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetTextStyle other) {
@@ -385,7 +385,7 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined,
     }
 
     private static void add(final Optional<Boolean> value, final String label, final ToStringBuilder builder) {
-        if(value.isPresent() && value.get()) {
+        if (value.isPresent() && value.get()) {
             builder.value(label);
         }
     }

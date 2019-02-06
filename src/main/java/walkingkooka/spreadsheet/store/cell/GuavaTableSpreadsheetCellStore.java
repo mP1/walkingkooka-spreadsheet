@@ -41,7 +41,7 @@ final class GuavaTableSpreadsheetCellStore extends SpreadsheetCellStoreTemplate 
         final int column = reference.column().value();
         this.cells.put(reference.row().value(), column, cell);
 
-        if(COMPUTE_AGAIN != this.columns) {
+        if (COMPUTE_AGAIN != this.columns) {
             this.columns = Math.max(column, this.columns);
         }
     }
@@ -49,7 +49,7 @@ final class GuavaTableSpreadsheetCellStore extends SpreadsheetCellStoreTemplate 
     @Override
     void delete0(final SpreadsheetCellReference reference) {
         final int column = reference.column().value();
-        if(column != this.columns) {
+        if (column != this.columns) {
             this.columns = COMPUTE_AGAIN;
         }
         this.cells.remove(reference.row().value(), column);
@@ -63,15 +63,15 @@ final class GuavaTableSpreadsheetCellStore extends SpreadsheetCellStoreTemplate 
     @Override
     public int rows() {
         return this.cells.isEmpty() ?
-                0:
+                0 :
                 this.cells.rowKeySet().last();
     }
 
     @Override
     public int columns() {
-        if(COMPUTE_AGAIN == this.columns) {
+        if (COMPUTE_AGAIN == this.columns) {
             int columns = 0;
-            for(int c: this.cells.columnKeySet()) {
+            for (int c : this.cells.columnKeySet()) {
                 columns = Math.max(columns, c);
             }
             this.columns = columns;

@@ -73,12 +73,12 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
         this.allAndCheck(store, a, b, c);
     }
 
-    protected final void allAndCheck(final S store, final SpreadsheetLabelMapping...mappings) {
+    protected final void allAndCheck(final S store, final SpreadsheetLabelMapping... mappings) {
         final List<SpreadsheetLabelMapping> all = Lists.array();
         all.addAll(store.all());
-        assertEquals(Lists.of(mappings), all, ()-> "all labels for " + mappings);
+        assertEquals(Lists.of(mappings), all, () -> "all labels for " + mappings);
     }
-    
+
     private SpreadsheetCellReference cell(final int column, final int row) {
         return SpreadsheetReferenceKind.ABSOLUTE.column(column)
                 .setRow(SpreadsheetReferenceKind.ABSOLUTE.row(row));

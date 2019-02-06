@@ -160,7 +160,7 @@ public final class SpreadsheetFormattedCellTest extends ClassTestCase<Spreadshee
 
         assertEquals(SpreadsheetFormattedCell.with(TEXT, this.style(color)),
                 different,
-                ()-> "textStyle " + formattedCell + " setColor " + color);
+                () -> "textStyle " + formattedCell + " setColor " + color);
     }
 
     // equals.....................................................................................
@@ -197,7 +197,7 @@ public final class SpreadsheetFormattedCellTest extends ClassTestCase<Spreadshee
         this.toStringAndCheck(SpreadsheetFormattedCell.with("", this.style()),
                 this.style().toString());
     }
-    
+
     // helpers ................................................................................
 
     @Override

@@ -102,9 +102,9 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
         this.checkUnderline(style, SpreadsheetTextStyle.NO_UNDERLINE);
         this.checkStrikethru(style, SpreadsheetTextStyle.NO_STRIKETHRU);
     }
-    
+
     // setFontFamily......................................................................................................
-    
+
     @Test
     public void testSetFontFamilySame() {
         final SpreadsheetTextStyle style = this.createObject();
@@ -117,7 +117,7 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
             this.createObject().setFontFamily(null);
         });
     }
-    
+
     @Test
     public void testSetFontFamilyDifferent() {
         final Optional<FontFamilyName> different = SpreadsheetTextStyle.NO_FONT_FAMILY;
@@ -130,7 +130,7 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
         this.checkBold(style, this.bold());
         this.checkItalics(style, this.italics());
         this.checkUnderline(style, this.underline());
-        this.checkStrikethru(style, this.strikethru()); 
+        this.checkStrikethru(style, this.strikethru());
     }
 
     @Test
@@ -419,7 +419,7 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
         this.checkUnderline(style, different);
         this.checkStrikethru(style, this.strikethru());
     }
-    
+
     // setStrikethru......................................................................................................
 
     @Test
@@ -521,7 +521,7 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
                 .setItalics(this.falseValue())
                 .setUnderline(this.underline()));
     }
-    
+
     private void mergeAndCheck(final SpreadsheetTextStyle style, final SpreadsheetTextStyle other, final SpreadsheetTextStyle expected) {
         assertEquals(expected,
                 style.merge(other),
@@ -720,23 +720,23 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
     public void testToJsonNode() {
         this.toJsonNodeAndCheck(this.createObject(),
                 "{\n" +
-                "\t\"font-family\": \"Times New Roman\",\n" +
-                "\t\"font-size\": 12,\n" +
-                "\t\"color\": \"#11ff33\",\n" +
-                "\t\"background-color\": \"#11ff33\",\n" +
-                "\t\"bold\": true,\n" +
-                "\t\"italics\": true,\n" +
-                "\t\"underline\": true,\n" +
-                "\t\"strikethru\": true\n" +
-                "}");
+                        "\t\"font-family\": \"Times New Roman\",\n" +
+                        "\t\"font-size\": 12,\n" +
+                        "\t\"color\": \"#11ff33\",\n" +
+                        "\t\"background-color\": \"#11ff33\",\n" +
+                        "\t\"bold\": true,\n" +
+                        "\t\"italics\": true,\n" +
+                        "\t\"underline\": true,\n" +
+                        "\t\"strikethru\": true\n" +
+                        "}");
     }
 
     @Test
     public void testToJsonNodeMissingSome() {
         this.toJsonNodeAndCheck(SpreadsheetTextStyle.EMPTY.setFontFamily(this.fontFamily())
-                .setColor(this.color())
-                .setBold(this.bold())
-                .setItalics(this.italics()),
+                        .setColor(this.color())
+                        .setBold(this.bold())
+                        .setItalics(this.italics()),
                 "{\n" +
                         "\t\"font-family\": \"Times New Roman\",\n" +
                         "\t\"color\": \"#11ff33\",\n" +

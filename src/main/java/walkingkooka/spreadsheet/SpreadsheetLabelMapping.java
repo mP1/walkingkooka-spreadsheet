@@ -32,18 +32,18 @@ public final class SpreadsheetLabelMapping implements HashCodeEqualsDefined {
     public SpreadsheetLabelName label() {
         return this.label;
     }
-    
+
     public SpreadsheetLabelMapping setLabel(final SpreadsheetLabelName label) {
         checkLabel(label);
         return this.label.equals(label) ?
-               this :
-               this.replace(label, reference);
+                this :
+                this.replace(label, reference);
     }
-    
+
     private static void checkLabel(final SpreadsheetLabelName label) {
         Objects.requireNonNull(label, "label");
     }
-    
+
     private final SpreadsheetLabelName label;
 
     public ExpressionReference reference() {
@@ -56,7 +56,7 @@ public final class SpreadsheetLabelMapping implements HashCodeEqualsDefined {
                 this :
                 this.replace(this.label, reference);
     }
-    
+
     private final ExpressionReference reference;
 
     private static void checkReference(final ExpressionReference reference) {
@@ -83,7 +83,7 @@ public final class SpreadsheetLabelMapping implements HashCodeEqualsDefined {
 
     private boolean equals0(final SpreadsheetLabelMapping other) {
         return this.label.equals(other.label) &
-               this.reference.equals(other.reference);
+                this.reference.equals(other.reference);
     }
 
     @Override
