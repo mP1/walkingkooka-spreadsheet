@@ -40,8 +40,8 @@ public final class FontSize implements Comparable<FontSize>, HashCodeEqualsDefin
         }
 
         return value < CONSTANT_COUNT ?
-               CONSTANTS[value] :
-               new FontSize(value);
+                CONSTANTS[value] :
+                new FontSize(value);
     }
 
     /**
@@ -85,8 +85,8 @@ public final class FontSize implements Comparable<FontSize>, HashCodeEqualsDefin
      */
     public Object readResolve() {
         return this.value < CONSTANT_COUNT ?
-               CONSTANTS[this.value] :
-               this;
+                CONSTANTS[this.value] :
+                this;
     }
 
     // Object
@@ -99,8 +99,8 @@ public final class FontSize implements Comparable<FontSize>, HashCodeEqualsDefin
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-               other instanceof FontSize &&
-               this.equals0(Cast.to(other));
+                other instanceof FontSize &&
+                        this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final FontSize other) {

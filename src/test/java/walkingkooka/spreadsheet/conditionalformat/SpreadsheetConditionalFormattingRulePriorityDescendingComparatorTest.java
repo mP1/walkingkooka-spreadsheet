@@ -8,8 +8,6 @@ import walkingkooka.tree.expression.ExpressionNode;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class SpreadsheetConditionalFormattingRulePriorityDescendingComparatorTest extends ComparatorTestCase<SpreadsheetConditionalFormattingRulePriorityDescendingComparator,
         SpreadsheetConditionalFormattingRule> {
 

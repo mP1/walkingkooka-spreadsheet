@@ -13,25 +13,25 @@ public final class BasicSpreadsheetRangeStoreTest extends SpreadsheetRangeStoreT
     /**
      * RANGE1A and RANGE1B share a common TOPLEFT.
      */
-    private final static SpreadsheetCellReference TOPLEFT1 = cell(10,20);
-    private final static SpreadsheetCellReference CENTER1 = TOPLEFT1.add(1,1);
-    private final static SpreadsheetCellReference BOTTOMRIGHT1 = CENTER1.add(1,1);
+    private final static SpreadsheetCellReference TOPLEFT1 = cell(10, 20);
+    private final static SpreadsheetCellReference CENTER1 = TOPLEFT1.add(1, 1);
+    private final static SpreadsheetCellReference BOTTOMRIGHT1 = CENTER1.add(1, 1);
     private final static SpreadsheetRange RANGE1A = SpreadsheetRange.with(TOPLEFT1, BOTTOMRIGHT1);
     private final static SpreadsheetRange RANGE1B = SpreadsheetRange.with(TOPLEFT1, BOTTOMRIGHT1.add(1, 1));
     private final static SpreadsheetRange RANGE1C = SpreadsheetRange.with(CENTER1, BOTTOMRIGHT1);
 
     private final static SpreadsheetCellReference TOPLEFT2 = cell(30, 40);
-    private final static SpreadsheetCellReference CENTER2 = TOPLEFT2.add(1,1);
-    private final static SpreadsheetCellReference BOTTOMRIGHT2 = CENTER2.add(2,2);
+    private final static SpreadsheetCellReference CENTER2 = TOPLEFT2.add(1, 1);
+    private final static SpreadsheetCellReference BOTTOMRIGHT2 = CENTER2.add(2, 2);
     private final static SpreadsheetRange RANGE2A = SpreadsheetRange.with(TOPLEFT2, BOTTOMRIGHT2);
 
     private final static SpreadsheetRange RANGE2B = SpreadsheetRange.with(CENTER1, BOTTOMRIGHT2);
 
     private final static SpreadsheetCellReference TOPLEFT3 = cell(50, 60);
-    private final static SpreadsheetCellReference CENTER3 = TOPLEFT3.add(1,1);
-    private final static SpreadsheetCellReference BOTTOMRIGHT3 = CENTER3.add(2,2);
+    private final static SpreadsheetCellReference CENTER3 = TOPLEFT3.add(1, 1);
+    private final static SpreadsheetCellReference BOTTOMRIGHT3 = CENTER3.add(2, 2);
     private final static SpreadsheetRange RANGE3 = SpreadsheetRange.with(TOPLEFT3, BOTTOMRIGHT3);
-    
+
     private final static String VALUE1 = "value1";
     private final static String VALUE2 = "value2";
     private final static String VALUE3 = "value3";
@@ -172,7 +172,7 @@ public final class BasicSpreadsheetRangeStoreTest extends SpreadsheetRangeStoreT
     }
 
     // load cell.....................................................................................................
-    
+
     @Test
     public void testLoadCellBeginRange() {
         final BasicSpreadsheetRangeStore<String> store = this.createStore();

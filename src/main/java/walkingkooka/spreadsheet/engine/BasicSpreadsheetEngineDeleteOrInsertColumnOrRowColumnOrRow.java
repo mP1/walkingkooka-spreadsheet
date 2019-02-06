@@ -215,7 +215,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
         final int deleteBegin = this.value;
 
         // deleted col/rows are after end of range.
-        if(deleteBegin < rangeEndValue) {
+        if (deleteBegin < rangeEndValue) {
 
             SpreadsheetCellReference rangeBegin = range.begin();
             final int rangeBeginValue = this.columnOrRowValue(rangeBegin);
@@ -225,32 +225,32 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
                 final int beginDiff = deleteBegin - rangeBeginValue;
                 final int endDiff = deleteEnd - rangeEndValue;
 
-                if(beginDiff <= 0 &&  endDiff >= 0) {
+                if (beginDiff <= 0 && endDiff >= 0) {
                     this.deleteLabel(mapping);
                     break;
                 }
 
                 final int deleteLength = deleteEnd - deleteBegin;
-                if(deleteEnd < rangeBeginValue){
+                if (deleteEnd < rangeBeginValue) {
                     rangeBegin = this.addColumnOrRowValue(rangeBegin, -deleteLength);
                     rangeEnd = this.addColumnOrRowValue(rangeEnd, -deleteLength);
                     break;
                 }
 
-                if(beginDiff < 0 && endDiff < 0) {
+                if (beginDiff < 0 && endDiff < 0) {
                     rangeBegin = this.setColumnOrRowValue(rangeBegin, deleteBegin);
                     rangeEnd = this.setColumnOrRowValue(rangeBegin, deleteBegin + rangeEndValue - rangeBeginValue - deleteLength);
                     break;
                 }
 
-                if(endDiff < 0) {
+                if (endDiff < 0) {
                     rangeEnd = this.addColumnOrRowValue(rangeEnd, -deleteLength);
                     break;
                 }
 
                 rangeEnd = this.setColumnOrRowValue(rangeBegin, deleteBegin);
 
-            } while(false);
+            } while (false);
 
             this.saveLabelIfUpdated(
                     range.setBeginAndEnd(rangeBegin, rangeEnd),
@@ -368,7 +368,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
 
     final void saveLabelIfUpdated(final ExpressionReference reference, final SpreadsheetLabelMapping mapping) {
         final SpreadsheetLabelMapping updated = mapping.setReference(reference);
-        if(mapping!=updated) {
+        if (mapping != updated) {
             this.labelStore().save(updated);
         }
     }

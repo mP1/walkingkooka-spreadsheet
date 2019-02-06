@@ -21,7 +21,7 @@ public final class UserTest extends IdentityTestCase<User, UserId> {
     public void testWith() {
         final UserId id = UserId.with(1);
         final User user = User.with(id, EMAIL);
-        assertEquals(id, user.value(),"id");
+        assertEquals(id, user.value(), "id");
         assertEquals(EMAIL, user.email(), "email");
     }
 

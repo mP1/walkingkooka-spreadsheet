@@ -56,8 +56,8 @@ public final class SpreadsheetId implements HashCodeEqualsDefined, Value<Long> {
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-               other instanceof SpreadsheetId &&
-               this.equals0(Cast.to(other));
+                other instanceof SpreadsheetId &&
+                        this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetId id) {

@@ -17,7 +17,7 @@ public interface Store<K, V> {
      */
     default V loadOrFail(final K id) {
         final Optional<V> value = this.load(id);
-        if(false==value.isPresent()) {
+        if (false == value.isPresent()) {
             throw new LoadStoreException("Value with id " + id + " is absent");
         }
         return value.get();
@@ -32,7 +32,7 @@ public interface Store<K, V> {
      * Deletes a single value by id.
      */
     void delete(final K id);
-    
+
     /**
      * Returns the total number of records in the store.
      */
