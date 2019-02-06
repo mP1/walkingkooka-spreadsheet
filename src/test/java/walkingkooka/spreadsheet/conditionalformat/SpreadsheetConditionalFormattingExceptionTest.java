@@ -4,7 +4,7 @@ import walkingkooka.test.PublicThrowableTestCase;
 
 public final class SpreadsheetConditionalFormattingExceptionTest extends PublicThrowableTestCase<SpreadsheetConditionalFormattingException> {
     @Override
-    protected Class<SpreadsheetConditionalFormattingException> type() {
+    public Class<SpreadsheetConditionalFormattingException> type() {
         return SpreadsheetConditionalFormattingException.class;
     }
 }

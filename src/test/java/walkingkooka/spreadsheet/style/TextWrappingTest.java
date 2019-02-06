@@ -6,7 +6,7 @@ import walkingkooka.type.MemberVisibility;
 public final class TextWrappingTest extends ClassTestCase<TextWrapping> {
 
     @Override
-    protected Class<TextWrapping> type() {
+    public Class<TextWrapping> type() {
         return TextWrapping.class;
     }
 

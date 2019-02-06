@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class UserTest extends IdentityTestCase<User, UserId> {
 
-    private final static EmailAddress EMAIL = EmailAddress.with("user@example.com");
+    private final static EmailAddress EMAIL = EmailAddress.parse("user@example.com");
 
     @Test
     public void testWithNullEmailFails() {
@@ -27,7 +27,7 @@ public final class UserTest extends IdentityTestCase<User, UserId> {
 
     @Test
     public void testToString() {
-        assertEquals(EMAIL.toString(), User.with(UserId.with(1), EMAIL).toString());
+        this.toStringAndCheck(User.with(UserId.with(1), EMAIL), EMAIL.toString());
     }
 
     @Override
@@ -41,7 +41,7 @@ public final class UserTest extends IdentityTestCase<User, UserId> {
     }
 
     @Override
-    protected Class<User> type() {
+    public Class<User> type() {
         return User.class;
     }
 }

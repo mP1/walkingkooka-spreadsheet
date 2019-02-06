@@ -8,7 +8,7 @@ public final class BasicSpreadsheetLabelStoreTest extends SpreadsheetLabelStoreT
     }
 
     @Override
-    protected Class<BasicSpreadsheetLabelStore> type() {
+    public Class<BasicSpreadsheetLabelStore> type() {
         return BasicSpreadsheetLabelStore.class;
     }
 }

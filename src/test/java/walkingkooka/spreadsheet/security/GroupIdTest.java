@@ -8,11 +8,11 @@ public final class GroupIdTest extends IdentityIdTestCase<GroupId> {
 
     @Test
     public void testToString() {
-        assertEquals("123", GroupId.with(123).toString());
+        this.toStringAndCheck(GroupId.with(123).toString(), "123");
     }
 
     @Override
-    protected Class<GroupId> type() {
+    public Class<GroupId> type() {
         return GroupId.class;
     }
 }

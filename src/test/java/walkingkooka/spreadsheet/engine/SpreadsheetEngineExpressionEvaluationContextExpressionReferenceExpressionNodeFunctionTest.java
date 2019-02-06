@@ -62,7 +62,7 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
     }
 
     @Override
-    protected Class<SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction> type() {
+    public Class<SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction> type() {
         return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.class;
     }
 }

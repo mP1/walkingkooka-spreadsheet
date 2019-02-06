@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.type.MemberVisibility;
 
@@ -15,7 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTextStyle>
         implements HashCodeEqualsDefinedTesting<SpreadsheetTextStyle>,
-        HasJsonNodeTesting<SpreadsheetTextStyle> {
+        HasJsonNodeTesting<SpreadsheetTextStyle>,
+        ToStringTesting<SpreadsheetTextStyle> {
 
     @Test
     public void testWithNullFontFamilyFails() {
@@ -757,35 +759,34 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
 
     @Test
     public void testToStringAll() {
-        assertEquals("Times New Roman 12 #11ff33 #11ff33 bold italics underline strikethru",
-                this.createObject().toString());
+        this.toStringAndCheck(this.createObject(),
+                "Times New Roman 12 #11ff33 #11ff33 bold italics underline strikethru");
     }
 
     @Test
     public void testToStringEmpty() {
-        assertEquals("",
-                SpreadsheetTextStyle.EMPTY.toString());
+        this.toStringAndCheck(SpreadsheetTextStyle.EMPTY, "");
     }
 
     @Test
     public void testToString() {
-        assertEquals("Times New Roman #123456 bold", SpreadsheetTextStyle.EMPTY
-                .setBold(Optional.of(true))
-                .setFontFamily(this.fontFamily())
-                .setColor(Optional.of(Color.fromRgb(0x123456)))
-                .toString());
+        this.toStringAndCheck(SpreadsheetTextStyle.EMPTY
+                        .setBold(Optional.of(true))
+                        .setFontFamily(this.fontFamily())
+                        .setColor(Optional.of(Color.fromRgb(0x123456))),
+                "Times New Roman #123456 bold");
     }
 
     @Test
     public void testToString2() {
-        assertEquals("Times New Roman #123456 bold italics", SpreadsheetTextStyle.EMPTY
-                .setBold(Optional.of(true))
-                .setItalics(Optional.of(true))
-                .setStrikethru(this.falseValue())
-                .setUnderline(this.falseValue())
-                .setFontFamily(this.fontFamily())
-                .setColor(Optional.of(Color.fromRgb(0x123456)))
-                .toString());
+        this.toStringAndCheck(SpreadsheetTextStyle.EMPTY
+                        .setBold(Optional.of(true))
+                        .setItalics(Optional.of(true))
+                        .setStrikethru(this.falseValue())
+                        .setUnderline(this.falseValue())
+                        .setFontFamily(this.fontFamily())
+                        .setColor(Optional.of(Color.fromRgb(0x123456))),
+                "Times New Roman #123456 bold italics");
     }
 
     // helpers.........................................................................................................
@@ -876,7 +877,7 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
     }
 
     @Override
-    protected Class<SpreadsheetTextStyle> type() {
+    public Class<SpreadsheetTextStyle> type() {
         return SpreadsheetTextStyle.class;
     }
 

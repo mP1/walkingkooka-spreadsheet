@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 
 public final class SpreadsheetRangeStoresTest extends PublicStaticHelperTestCase<SpreadsheetRangeStores> {
     @Override
-    protected Class<SpreadsheetRangeStores> type() {
+    public Class<SpreadsheetRangeStores> type() {
         return SpreadsheetRangeStores.class;
     }
 
