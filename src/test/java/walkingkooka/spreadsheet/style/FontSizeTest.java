@@ -6,6 +6,7 @@ import walkingkooka.compare.ComparableTesting;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.ConstantsTesting;
 import walkingkooka.test.SerializationTesting;
+import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.MemberVisibility;
@@ -19,7 +20,8 @@ public final class FontSizeTest extends ClassTestCase<FontSize>
         implements ComparableTesting<FontSize>,
         ConstantsTesting<FontSize>,
         SerializationTesting<FontSize>,
-        HasJsonNodeTesting<FontSize> {
+        HasJsonNodeTesting<FontSize>,
+        ToStringTesting<FontSize> {
 
     private final static int VALUE = 10;
 
@@ -48,7 +50,7 @@ public final class FontSizeTest extends ClassTestCase<FontSize>
 
     @Test
     public void testToString() {
-        assertEquals("10", FontSize.with(10).toString());
+        this.toStringAndCheck(FontSize.with(10), "10");
     }
 
     @Override

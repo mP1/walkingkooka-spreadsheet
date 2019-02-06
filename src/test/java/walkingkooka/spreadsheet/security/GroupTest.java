@@ -32,12 +32,12 @@ public final class GroupTest extends IdentityTestCase<Group, GroupId> {
 
     @Test
     public void testUser() {
-        this.checkNotEquals(User.with(UserId.with(ID_VALUE), EmailAddress.with("user@example.com")));
+        this.checkNotEquals(User.with(UserId.with(ID_VALUE), EmailAddress.parse("user@example.com")));
     }
 
     @Test
     public void testToString() {
-        assertEquals(name().toString(), Group.with(GroupId.with(ID_VALUE), name()).toString());
+        this.toStringAndCheck(Group.with(GroupId.with(ID_VALUE), name()), name().toString());
     }
 
     @Override
@@ -55,7 +55,7 @@ public final class GroupTest extends IdentityTestCase<Group, GroupId> {
     }
 
     @Override
-    protected Class<Group> type() {
+    public Class<Group> type() {
         return Group.class;
     }
 }

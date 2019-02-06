@@ -4,7 +4,7 @@ import walkingkooka.test.PublicThrowableTestCase;
 
 public final class SpreadsheetEngineExceptionTest extends PublicThrowableTestCase<SpreadsheetEngineException> {
     @Override
-    protected Class<SpreadsheetEngineException> type() {
+    public Class<SpreadsheetEngineException> type() {
         return SpreadsheetEngineException.class;
     }
 }

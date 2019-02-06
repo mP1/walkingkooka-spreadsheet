@@ -7,7 +7,7 @@ public final class GuavaTableSpreadsheetCellStoreTest extends SpreadsheetCellSto
     }
 
     @Override
-    protected Class<GuavaTableSpreadsheetCellStore> type() {
+    public Class<GuavaTableSpreadsheetCellStore> type() {
         return GuavaTableSpreadsheetCellStore.class;
     }
 }

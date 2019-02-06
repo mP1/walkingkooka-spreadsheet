@@ -30,9 +30,9 @@ public final class SpreadsheetConditionalFormattingRulePriorityDescendingCompara
                 (c) -> null);
     }
 
-    @Override
+    @Test
     public void testToString() {
-        assertEquals("SpreadsheetConditionalFormattingRule.priority DESC", this.createComparator().toString());
+        this.toStringAndCheck(this.createComparator(), "SpreadsheetConditionalFormattingRule.priority DESC");
     }
 
     @Override
@@ -41,7 +41,7 @@ public final class SpreadsheetConditionalFormattingRulePriorityDescendingCompara
     }
 
     @Override
-    protected Class<SpreadsheetConditionalFormattingRulePriorityDescendingComparator> type() {
+    public Class<SpreadsheetConditionalFormattingRulePriorityDescendingComparator> type() {
         return SpreadsheetConditionalFormattingRulePriorityDescendingComparator.class;
     }
 }
