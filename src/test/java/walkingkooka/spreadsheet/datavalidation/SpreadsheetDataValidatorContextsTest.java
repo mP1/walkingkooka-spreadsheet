@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 
 public final class SpreadsheetDataValidatorContextsTest extends PublicStaticHelperTestCase<SpreadsheetDataValidatorContexts> {
     @Override
-    protected Class<SpreadsheetDataValidatorContexts> type() {
+    public Class<SpreadsheetDataValidatorContexts> type() {
         return SpreadsheetDataValidatorContexts.class;
     }
 

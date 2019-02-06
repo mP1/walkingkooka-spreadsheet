@@ -3,6 +3,7 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.type.MemberVisibility;
@@ -17,7 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormula>
         implements HashCodeEqualsDefinedTesting<SpreadsheetFormula>,
-        HasJsonNodeTesting<SpreadsheetFormula> {
+        HasJsonNodeTesting<SpreadsheetFormula>,
+        ToStringTesting<SpreadsheetFormula> {
 
     private final static String TEXT = "a+2";
     private final static String EXPRESSION = "1+2";
@@ -327,17 +329,19 @@ public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormu
 
     @Test
     public void testToStringWithValue() {
-        assertEquals(TEXT + " (=" + VALUE + ")", this.createObject().setValue(this.value(VALUE)).toString());
+        this.toStringAndCheck(this.createObject().setValue(this.value(VALUE)),
+                TEXT + " (=" + VALUE + ")");
     }
 
     @Test
     public void testToStringWithError() {
-        assertEquals(TEXT + " (" + ERROR + ")", this.createObject().setError(this.error(ERROR)).toString());
+        this.toStringAndCheck(this.createObject().setError(this.error(ERROR)),
+                TEXT + " (" + ERROR + ")");
     }
 
     @Test
     public void testToStringWithoutError() {
-        assertEquals(TEXT, this.createObject().toString());
+        this.toStringAndCheck(this.createObject(), TEXT);
     }
     
     @Override
@@ -398,7 +402,7 @@ public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormu
     }
 
     @Override
-    protected Class<SpreadsheetFormula> type() {
+    public Class<SpreadsheetFormula> type() {
         return SpreadsheetFormula.class;
     }
 

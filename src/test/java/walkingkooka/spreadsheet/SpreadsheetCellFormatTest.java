@@ -21,6 +21,7 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.spreadsheetformat.SpreadsheetTextFormatter;
 import walkingkooka.text.spreadsheetformat.SpreadsheetTextFormatters;
@@ -37,7 +38,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellFormatTest extends ClassTestCase<SpreadsheetCellFormat>
         implements HashCodeEqualsDefinedTesting<SpreadsheetCellFormat>,
-        HasJsonNodeTesting<SpreadsheetCellFormat> {
+        HasJsonNodeTesting<SpreadsheetCellFormat>,
+        ToStringTesting<SpreadsheetCellFormat> {
 
     private final static String PATTERN = "abc123";
     private final static Optional<SpreadsheetTextFormatter<?>> FORMATTER = Optional.of(SpreadsheetTextFormatters.fake());
@@ -169,7 +171,8 @@ public final class SpreadsheetCellFormatTest extends ClassTestCase<SpreadsheetCe
 
     @Test
     public void testToString() {
-        assertEquals(CharSequences.quote(PATTERN) + " " + FORMATTER.get(), this.createObject().toString());
+        this.toStringAndCheck(this.createObject(),
+                CharSequences.quote(PATTERN) + " " + FORMATTER.get());
     }
 
     @Test
@@ -187,7 +190,7 @@ public final class SpreadsheetCellFormatTest extends ClassTestCase<SpreadsheetCe
     }
 
     @Override
-    protected Class<SpreadsheetCellFormat> type() {
+    public Class<SpreadsheetCellFormat> type() {
         return SpreadsheetCellFormat.class;
     }
 

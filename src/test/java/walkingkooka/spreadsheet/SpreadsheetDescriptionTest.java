@@ -3,6 +3,7 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.type.MemberVisibility;
 
@@ -11,7 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public final class SpreadsheetDescriptionTest extends ClassTestCase<SpreadsheetDescription>
-        implements HashCodeEqualsDefinedTesting<SpreadsheetDescription> {
+        implements HashCodeEqualsDefinedTesting<SpreadsheetDescription>,
+        ToStringTesting<SpreadsheetDescription> {
 
     private final static String TEXT = "description #1";
 
@@ -58,7 +60,8 @@ public final class SpreadsheetDescriptionTest extends ClassTestCase<SpreadsheetD
 
     @Test
     public void testToString() {
-        assertEquals(CharSequences.quote(TEXT).toString(), this.createObject().toString());
+        this.toStringAndCheck(this.createObject(),
+                CharSequences.quote(TEXT).toString());
     }
 
     @Override
@@ -71,7 +74,7 @@ public final class SpreadsheetDescriptionTest extends ClassTestCase<SpreadsheetD
     }
 
     @Override
-    protected Class<SpreadsheetDescription> type() {
+    public Class<SpreadsheetDescription> type() {
         return SpreadsheetDescription.class;
     }
 

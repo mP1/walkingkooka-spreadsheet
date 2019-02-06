@@ -7,6 +7,7 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.type.MemberVisibility;
 
@@ -18,7 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetConditionalFormattingRuleTest extends ClassTestCase<SpreadsheetConditionalFormattingRule>
-        implements HashCodeEqualsDefinedTesting<SpreadsheetConditionalFormattingRule> {
+        implements HashCodeEqualsDefinedTesting<SpreadsheetConditionalFormattingRule>,
+        ToStringTesting<SpreadsheetConditionalFormattingRule> {
 
     @Test
     public void testWithNullDescriptionFails() {
@@ -195,7 +197,7 @@ public final class SpreadsheetConditionalFormattingRuleTest extends ClassTestCas
 
     @Test
     public void testToString() {
-        assertEquals(this.createObject().toString(), "\"description#\" 123 123 style");
+        this.toStringAndCheck(this.createObject(), "\"description#\" 123 123 style");
     }
 
     @Override
@@ -283,7 +285,7 @@ public final class SpreadsheetConditionalFormattingRuleTest extends ClassTestCas
     }
 
     @Override
-    protected Class<SpreadsheetConditionalFormattingRule> type() {
+    public Class<SpreadsheetConditionalFormattingRule> type() {
         return SpreadsheetConditionalFormattingRule.class;
     }
 

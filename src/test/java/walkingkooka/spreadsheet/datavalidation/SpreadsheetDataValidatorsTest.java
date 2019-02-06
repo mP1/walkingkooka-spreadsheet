@@ -659,7 +659,7 @@ public final class SpreadsheetDataValidatorsTest extends PublicStaticHelperTestC
     }
 
     @Override
-    protected Class<SpreadsheetDataValidators> type() {
+    public Class<SpreadsheetDataValidators> type() {
         return SpreadsheetDataValidators.class;
     }
 

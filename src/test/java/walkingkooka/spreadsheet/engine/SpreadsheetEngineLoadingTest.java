@@ -5,7 +5,7 @@ import walkingkooka.type.MemberVisibility;
 
 public final class SpreadsheetEngineLoadingTest extends ClassTestCase<SpreadsheetEngineLoading> {
     @Override
-    protected Class<SpreadsheetEngineLoading> type() {
+    public Class<SpreadsheetEngineLoading> type() {
         return SpreadsheetEngineLoading.class;
     }
 

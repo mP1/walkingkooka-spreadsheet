@@ -25,7 +25,7 @@ import java.lang.reflect.Method;
 public final class SpreadsheetEngineContextsTest extends PublicStaticHelperTestCase<SpreadsheetEngineContexts> {
 
     @Override
-    protected Class<SpreadsheetEngineContexts> type() {
+    public Class<SpreadsheetEngineContexts> type() {
         return SpreadsheetEngineContexts.class;
     }
 

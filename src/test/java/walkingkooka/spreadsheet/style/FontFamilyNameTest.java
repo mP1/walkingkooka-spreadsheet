@@ -21,11 +21,6 @@ public final class FontFamilyNameTest extends ClassTestCase<FontFamilyName>
         this.toJsonNodeAndCheck(this.createComparable(), JsonNode.string(TEXT));
     }
 
-    @Test
-    public void testToString() {
-        assertEquals("abc", this.createName("abc").toString());
-    }
-
     @Override
     public FontFamilyName createName(final String name) {
         return FontFamilyName.with(name);
@@ -52,7 +47,7 @@ public final class FontFamilyNameTest extends ClassTestCase<FontFamilyName>
     }
 
     @Override
-    protected Class<FontFamilyName> type() {
+    public Class<FontFamilyName> type() {
         return FontFamilyName.class;
     }
 
