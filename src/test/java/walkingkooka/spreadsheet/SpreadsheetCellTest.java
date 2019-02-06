@@ -5,6 +5,7 @@ import walkingkooka.compare.ComparableTesting;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
 import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.tree.json.HasJsonNodeTesting;
@@ -20,7 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellTest extends ClassTestCase<SpreadsheetCell>
         implements ComparableTesting<SpreadsheetCell>,
-        HasJsonNodeTesting<SpreadsheetCell> {
+        HasJsonNodeTesting<SpreadsheetCell>,
+        ToStringTesting<SpreadsheetCell> {
 
 
     private final static int COLUMN = 1;
@@ -354,27 +356,28 @@ public final class SpreadsheetCellTest extends ClassTestCase<SpreadsheetCell>
 
     @Test
     public void testToStringWithoutErrorWithoutFormatWithoutFormatted() {
-        assertEquals(REFERENCE + "=" + this.formula() + " bold", SpreadsheetCell.with(REFERENCE,
+        this.toStringAndCheck(SpreadsheetCell.with(REFERENCE,
                 this.formula(),
                 this.style(),
                 SpreadsheetCell.NO_FORMAT,
-                SpreadsheetCell.NO_FORMATTED_CELL)
-                .toString());
+                SpreadsheetCell.NO_FORMATTED_CELL),
+                REFERENCE + "=" + this.formula() + " bold");
     }
 
     @Test
     public void testToStringWithoutErrorWithFormatWithoutFormatted() {
-        assertEquals(REFERENCE + "=" + this.formula() + " bold \"pattern\"", SpreadsheetCell.with(REFERENCE,
+        this.toStringAndCheck(SpreadsheetCell.with(REFERENCE,
                 this.formula(),
                 this.style(),
                 this.format(),
-                SpreadsheetCell.NO_FORMATTED_CELL)
-                .toString());
+                SpreadsheetCell.NO_FORMATTED_CELL),
+                REFERENCE + "=" + this.formula() + " bold \"pattern\"");
     }
 
     @Test
     public void testToStringWithoutError() {
-        assertEquals(REFERENCE + "=" + this.formula() + " bold \"pattern\" \"formatted-text\"", this.createCell().toString());
+        this.toStringAndCheck(this.createCell(),
+                REFERENCE + "=" + this.formula() + " bold \"pattern\" \"formatted-text\"");
     }
 
     private SpreadsheetCell createCell() {
@@ -471,7 +474,7 @@ public final class SpreadsheetCellTest extends ClassTestCase<SpreadsheetCell>
     }
 
     @Override
-    protected Class<SpreadsheetCell> type() {
+    public Class<SpreadsheetCell> type() {
         return SpreadsheetCell.class;
     }
 

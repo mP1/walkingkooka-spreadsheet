@@ -560,7 +560,7 @@ public final class BasicSpreadsheetRangeStoreTest extends SpreadsheetRangeStoreT
     }
 
     @Override
-    protected Class<BasicSpreadsheetRangeStore<String>> type() {
+    public Class<BasicSpreadsheetRangeStore<String>> type() {
         return Cast.to(BasicSpreadsheetRangeStore.class);
     }
 

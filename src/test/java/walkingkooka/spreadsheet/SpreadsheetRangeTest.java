@@ -463,7 +463,7 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
     }
 
     @Override
-    protected Class<SpreadsheetRange> type() {
+    public Class<SpreadsheetRange> type() {
         return SpreadsheetRange.class;
     }
 

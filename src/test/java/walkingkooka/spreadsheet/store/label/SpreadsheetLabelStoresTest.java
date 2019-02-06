@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 
 public final class SpreadsheetLabelStoresTest extends PublicStaticHelperTestCase<SpreadsheetLabelStores> {
     @Override
-    protected Class<SpreadsheetLabelStores> type() {
+    public Class<SpreadsheetLabelStores> type() {
         return SpreadsheetLabelStores.class;
     }
 

@@ -40,7 +40,7 @@ public final class BasicSpreadsheetDataValidatorContextTest extends SpreadsheetD
     @Test
     public void testToString() {
         final ExpressionEvaluationContext context = this.expressionEvaluationContext();
-        assertEquals(context.toString(), this.createContext(context).toString());
+        this.toStringAndCheck(this.createContext(context), context.toString());
     }
 
     @Override
@@ -65,7 +65,7 @@ public final class BasicSpreadsheetDataValidatorContextTest extends SpreadsheetD
     }
 
     @Override
-    protected Class<BasicSpreadsheetDataValidatorContext> type() {
+    public Class<BasicSpreadsheetDataValidatorContext> type() {
         return BasicSpreadsheetDataValidatorContext.class;
     }
 }

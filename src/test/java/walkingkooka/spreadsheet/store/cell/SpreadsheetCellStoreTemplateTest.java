@@ -5,7 +5,7 @@ import walkingkooka.type.MemberVisibility;
 
 public final class SpreadsheetCellStoreTemplateTest extends ClassTestCase<SpreadsheetCellStoreTemplate> {
     @Override
-    protected Class<SpreadsheetCellStoreTemplate> type() {
+    public Class<SpreadsheetCellStoreTemplate> type() {
         return SpreadsheetCellStoreTemplate.class;
     }
 

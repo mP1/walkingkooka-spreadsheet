@@ -3,6 +3,7 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.ToStringTesting;
 import walkingkooka.type.MemberVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,7 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public final class SpreadsheetMetadataTest extends ClassTestCase<SpreadsheetMetadata>
-        implements HashCodeEqualsDefinedTesting<SpreadsheetMetadata> {
+        implements HashCodeEqualsDefinedTesting<SpreadsheetMetadata>,
+        ToStringTesting<SpreadsheetMetadata> {
 
     private final static int COLUMN = 12;
     private final static int ROW = 34;
@@ -99,7 +101,7 @@ public final class SpreadsheetMetadataTest extends ClassTestCase<SpreadsheetMeta
 
     @Test
     public void testToString() {
-        assertEquals("12x34", this.createObject().toString());
+        this.toStringAndCheck(this.createObject(), "12x34");
     }
 
     // helpers ........................................................................................

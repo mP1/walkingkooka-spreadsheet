@@ -5,6 +5,7 @@ import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.SpreadsheetFormattedCell;
 import walkingkooka.test.ClassTestCase;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.MemberVisibility;
@@ -17,7 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellStyleTest extends ClassTestCase<SpreadsheetCellStyle>
         implements HashCodeEqualsDefinedTesting<SpreadsheetCellStyle>,
-        HasJsonNodeTesting<SpreadsheetCellStyle> {
+        HasJsonNodeTesting<SpreadsheetCellStyle>,
+        ToStringTesting<SpreadsheetCellStyle> {
 
     @Test
     public void testWithNullTextFails() {
@@ -171,17 +173,16 @@ public final class SpreadsheetCellStyleTest extends ClassTestCase<SpreadsheetCel
 
     @Test
     public void testToStringEmpty() {
-        assertEquals("",
-                SpreadsheetCellStyle.EMPTY.toString());
+        this.toStringAndCheck(SpreadsheetCellStyle.EMPTY, "");
     }
 
     @Test
     public void testToString() {
-        assertEquals("Times New Roman #01e240 bold", SpreadsheetCellStyle.EMPTY.setText(SpreadsheetTextStyle.EMPTY
+        this.toStringAndCheck(SpreadsheetCellStyle.EMPTY.setText(SpreadsheetTextStyle.EMPTY
                 .setBold(Optional.of(true))
                 .setFontFamily(Optional.of(FontFamilyName.with("Times New Roman")))
-                .setColor(Optional.of(Color.fromRgb(123456))))
-                .toString());
+                .setColor(Optional.of(Color.fromRgb(123456)))),
+                "Times New Roman #01e240 bold");
     }
 
 
@@ -201,7 +202,7 @@ public final class SpreadsheetCellStyleTest extends ClassTestCase<SpreadsheetCel
     }
 
     @Override
-    protected Class<SpreadsheetCellStyle> type() {
+    public Class<SpreadsheetCellStyle> type() {
         return SpreadsheetCellStyle.class;
     }
 

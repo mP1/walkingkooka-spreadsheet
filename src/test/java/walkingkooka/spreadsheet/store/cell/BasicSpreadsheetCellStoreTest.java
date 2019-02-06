@@ -8,7 +8,7 @@ public final class BasicSpreadsheetCellStoreTest extends SpreadsheetCellStoreTes
     }
 
     @Override
-    protected Class<BasicSpreadsheetCellStore> type() {
+    public Class<BasicSpreadsheetCellStore> type() {
         return BasicSpreadsheetCellStore.class;
     }
 }

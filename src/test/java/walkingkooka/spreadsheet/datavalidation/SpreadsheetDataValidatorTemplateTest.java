@@ -5,7 +5,7 @@ import walkingkooka.type.MemberVisibility;
 
 public final class SpreadsheetDataValidatorTemplateTest extends ClassTestCase<SpreadsheetDataValidatorTemplate> {
     @Override
-    protected Class<SpreadsheetDataValidatorTemplate> type() {
+    public Class<SpreadsheetDataValidatorTemplate> type() {
         return SpreadsheetDataValidatorTemplate.class;
     }
 

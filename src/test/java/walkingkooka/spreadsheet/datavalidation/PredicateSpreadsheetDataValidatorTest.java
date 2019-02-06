@@ -24,7 +24,7 @@ public final class PredicateSpreadsheetDataValidatorTest extends SpreadsheetData
 
     @Test
     public void testToString() {
-        assertEquals(this.predicate().toString(), this.createSpreadsheetDataValidator().toString());
+        this.toStringAndCheck(this.createSpreadsheetDataValidator(), this.predicate().toString());
     }
 
     @Override
@@ -42,7 +42,7 @@ public final class PredicateSpreadsheetDataValidatorTest extends SpreadsheetData
     }
 
     @Override
-    protected Class<String> valueType() {
+    public Class<String> valueType() {
         return String.class;
     }
 
@@ -52,7 +52,7 @@ public final class PredicateSpreadsheetDataValidatorTest extends SpreadsheetData
     }
 
     @Override
-    protected Class<PredicateSpreadsheetDataValidator> type() {
+    public Class<PredicateSpreadsheetDataValidator> type() {
         return PredicateSpreadsheetDataValidator.class;
     }
 }
