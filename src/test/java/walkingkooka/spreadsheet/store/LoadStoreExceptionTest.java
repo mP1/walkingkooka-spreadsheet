@@ -4,7 +4,7 @@ import walkingkooka.test.PublicThrowableTestCase;
 
 public final class LoadStoreExceptionTest extends PublicThrowableTestCase<LoadStoreException> {
     @Override
-    protected Class<LoadStoreException> type() {
+    public Class<LoadStoreException> type() {
         return LoadStoreException.class;
     }
 }
