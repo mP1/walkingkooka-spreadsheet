@@ -99,8 +99,8 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
     public SpreadsheetFormula setText(final String text) {
         checkText(text);
         return this.text.equals(text) ?
-               this :
-               this.replace(text, NO_EXPRESSION, NO_VALUE, NO_ERROR);
+                this :
+                this.replace(text, NO_EXPRESSION, NO_VALUE, NO_ERROR);
     }
 
     /**
@@ -189,7 +189,7 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
 
     private SpreadsheetFormula replace(final String text,
                                        final Optional<ExpressionNode> expression,
-                                       final Optional<Object> value, 
+                                       final Optional<Object> value,
                                        final Optional<SpreadsheetError> error) {
         return new SpreadsheetFormula(text, expression, value, error);
     }
@@ -236,8 +236,8 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-               other instanceof SpreadsheetFormula &&
-               this.equals0(Cast.to(other));
+                other instanceof SpreadsheetFormula &&
+                        this.equals0(Cast.to(other));
     }
 
     private boolean equals0(final SpreadsheetFormula other) {
@@ -257,11 +257,11 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
         builder.disable(ToStringBuilderOption.QUOTE);
         builder.value(this.text);
 
-        if(this.value.isPresent()) {
+        if (this.value.isPresent()) {
             builder.surroundValues("(=", ")")
                     .value(new Object[]{this.value});
         }
-        if(this.error.isPresent()) {
+        if (this.error.isPresent()) {
             builder.surroundValues("(", ")")
                     .value(new Object[]{this.error});
         }

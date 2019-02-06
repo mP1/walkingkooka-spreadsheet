@@ -47,8 +47,8 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
 
     @Test
     public void testWith() {
-        final SpreadsheetCellReference begin =this.cell(1, 2);
-        final SpreadsheetCellReference end =this.cell(3, 4);
+        final SpreadsheetCellReference begin = this.cell(1, 2);
+        final SpreadsheetCellReference end = this.cell(3, 4);
 
         final SpreadsheetRange range = SpreadsheetRange.with(begin, end);
         assertSame(begin, range.begin(), "begin");
@@ -64,7 +64,7 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
         final int row2 = 4;
 
         final SpreadsheetRange range = this.range(column1, row1, column2, row2);
-        this.check(range, column2, row1, column1, row2, 99-3, 4-2);
+        this.check(range, column2, row1, column1, row2, 99 - 3, 4 - 2);
         this.checkIsSingleCell(range, false);
     }
 
@@ -76,7 +76,7 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
         final int row2 = 4;
 
         final SpreadsheetRange range = this.range(column1, row1, column2, row2);
-        this.check(range, column1, row2, column2, row1, 3-1, 99-4);
+        this.check(range, column1, row2, column2, row1, 3 - 1, 99 - 4);
         this.checkIsSingleCell(range, false);
     }
 
@@ -88,7 +88,7 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
         final int row2 = 4;
 
         final SpreadsheetRange range = this.range(column1, row1, column2, row2);
-        this.check(range, column2, row2, column1, row1, 88-3, 99-4);
+        this.check(range, column2, row2, column1, row1, 88 - 3, 99 - 4);
         this.checkIsSingleCell(range, false);
     }
 
@@ -196,7 +196,7 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
     }
 
     // stream.................................................................................................
-    
+
     @Test
     public void testColumnStream() {
         final SpreadsheetRange range = this.range(5, 10, 8, 10);
@@ -211,7 +211,7 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
         final SpreadsheetRange range = this.range(5, 10, 8, 10);
         this.checkStream(range,
                 range.columnStream()
-                        .map( c -> c.value())
+                        .map(c -> c.value())
                         .filter(c -> c >= 6),
                 6, 7);
     }
@@ -230,7 +230,7 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
         final SpreadsheetRange range = this.range(5, 10, 8, 20);
         this.checkStream(range,
                 range.rowStream()
-                        .map( r -> r.value())
+                        .map(r -> r.value())
                         .filter(r -> r < 13),
                 10, 11, 12);
     }
@@ -257,7 +257,7 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
                 this.cell(5, 10), this.cell(5, 11), this.cell(5, 12));
     }
 
-    private <T> void checkStream(final SpreadsheetRange range, final Stream<?> stream, final Object...expected){
+    private <T> void checkStream(final SpreadsheetRange range, final Stream<?> stream, final Object... expected) {
         final List<Object> actual = stream.collect(Collectors.toList());
         assertEquals(Lists.of(expected), actual, () -> range.toString());
     }
@@ -351,7 +351,7 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
         final SpreadsheetCellReference e = this.cell(115, 24);
 
         final SpreadsheetRange range = SpreadsheetRange.from(Lists.of(a, b, c, d, e));
-        this.check(range,111, 11, 115+1, 24+1);
+        this.check(range, 111, 11, 115 + 1, 24 + 1);
     }
 
     @Test
@@ -363,7 +363,7 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
         final SpreadsheetCellReference e = this.cell(115, 24);
 
         final SpreadsheetRange range = SpreadsheetRange.from(Lists.of(e, d, c, b, a));
-        this.check(range,111, 11, 115+1, 24+1);
+        this.check(range, 111, 11, 115 + 1, 24 + 1);
     }
 
     @Test
@@ -371,7 +371,7 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
         final SpreadsheetCellReference a = this.cell(111, 11);
 
         final SpreadsheetRange range = SpreadsheetRange.from(Lists.of(a));
-        this.check(range,111, 11, 111+1, 11+1);
+        this.check(range, 111, 11, 111 + 1, 11 + 1);
     }
 
     //helper.................................................................................................
@@ -404,7 +404,7 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
         return this.column(column)
                 .setRow(this.row(row));
     }
-    
+
     private SpreadsheetColumnReference column(final int column) {
         return SpreadsheetReferenceKind.ABSOLUTE.column(column);
     }
@@ -412,7 +412,7 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
     private SpreadsheetRowReference row(final int row) {
         return SpreadsheetReferenceKind.ABSOLUTE.row(row);
     }
-    
+
     private void check(final SpreadsheetRange range,
                        final int column1,
                        final int row1,
@@ -439,7 +439,7 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
     }
 
     private void checkBegin(final SpreadsheetRange range, final SpreadsheetCellReference begin) {
-        assertEquals(begin, range.begin(), ()-> "range begin=" + range);
+        assertEquals(begin, range.begin(), () -> "range begin=" + range);
     }
 
     private void checkEnd(final SpreadsheetRange range, final int column, final int row) {
@@ -447,19 +447,19 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
     }
 
     private void checkEnd(final SpreadsheetRange range, final SpreadsheetCellReference end) {
-        assertEquals(end, range.end(), ()-> "range end="+ range);
+        assertEquals(end, range.end(), () -> "range end=" + range);
     }
 
     private void checkWidth(final SpreadsheetRange range, final int width) {
-        assertEquals(width, range.width(), ()-> "range width="+ range);
+        assertEquals(width, range.width(), () -> "range width=" + range);
     }
 
     private void checkHeight(final SpreadsheetRange range, final int height) {
-        assertEquals(height, range.height(), ()-> "range height="+ range);
+        assertEquals(height, range.height(), () -> "range height=" + range);
     }
 
     private void checkIsSingleCell(final SpreadsheetRange range, final boolean expected) {
-        assertEquals(expected, range.isSingleCell(), ()-> "range=" + range + " isSingleCell");
+        assertEquals(expected, range.isSingleCell(), () -> "range=" + range + " isSingleCell");
     }
 
     @Override

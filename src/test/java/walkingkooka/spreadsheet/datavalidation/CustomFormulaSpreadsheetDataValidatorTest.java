@@ -3,8 +3,6 @@ package walkingkooka.spreadsheet.datavalidation;
 import org.junit.jupiter.api.Test;
 import walkingkooka.tree.expression.ExpressionNode;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class CustomFormulaSpreadsheetDataValidatorTest extends SpreadsheetDataValidatorTemplateTestCase<CustomFormulaSpreadsheetDataValidator, Object> {
 
     private final static long VALUE = 123;

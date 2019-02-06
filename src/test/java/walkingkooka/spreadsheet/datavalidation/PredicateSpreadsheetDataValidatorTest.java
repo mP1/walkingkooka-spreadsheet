@@ -6,8 +6,6 @@ import walkingkooka.predicate.Predicates;
 
 import java.util.function.Predicate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public final class PredicateSpreadsheetDataValidatorTest extends SpreadsheetDataValidatorTemplateTestCase<PredicateSpreadsheetDataValidator, String> {
 
     private final static String VALUE = "abc123";

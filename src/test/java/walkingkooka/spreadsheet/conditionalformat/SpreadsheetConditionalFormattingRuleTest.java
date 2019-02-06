@@ -272,7 +272,7 @@ public final class SpreadsheetConditionalFormattingRuleTest extends ClassTestCas
 
     private void checkFormula(final SpreadsheetConditionalFormattingRule rule,
                               final SpreadsheetFormula formula) {
-        assertEquals( formula, rule.formula(), "formula");
+        assertEquals(formula, rule.formula(), "formula");
     }
 
     private void checkStyle(final SpreadsheetConditionalFormattingRule rule) {

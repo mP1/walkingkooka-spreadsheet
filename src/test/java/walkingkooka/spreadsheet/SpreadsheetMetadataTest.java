@@ -18,7 +18,7 @@ public final class SpreadsheetMetadataTest extends ClassTestCase<SpreadsheetMeta
 
     private final static int COLUMN = 12;
     private final static int ROW = 34;
-    
+
     @Test
     public void testWith() {
         final SpreadsheetMetadata meta = this.createObject();
@@ -32,7 +32,7 @@ public final class SpreadsheetMetadataTest extends ClassTestCase<SpreadsheetMeta
         this.checkColumnCount(meta, 0);
         this.checkRowCount(meta, 0);
     }
-    
+
     // setColumnCount ....................................................................................................
 
     @Test
@@ -119,7 +119,7 @@ public final class SpreadsheetMetadataTest extends ClassTestCase<SpreadsheetMeta
     private void checkRowCount(final SpreadsheetMetadata meta, final int row) {
         assertEquals(row, meta.rowCount(), "row");
     }
-    
+
     @Override
     public Class<SpreadsheetMetadata> type() {
         return SpreadsheetMetadata.class;

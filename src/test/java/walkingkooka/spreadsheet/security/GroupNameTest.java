@@ -7,7 +7,6 @@ import walkingkooka.test.ClassTestCase;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.type.MemberVisibility;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final public class GroupNameTest extends ClassTestCase<GroupName>

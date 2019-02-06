@@ -186,7 +186,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
                 cellReference,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context);
-        assertNotEquals(SpreadsheetFormula.NO_ERROR, first.formula().error(), ()-> "Expected error absent=" + first);
+        assertNotEquals(SpreadsheetFormula.NO_ERROR, first.formula().error(), () -> "Expected error absent=" + first);
 
         final SpreadsheetCell second = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY, context);
         assertSame(first, second, "different instances of SpreadsheetCell returned not cached");
@@ -405,7 +405,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
         // UNDERLINED from conditional formatting rule #2.
         assertEquals(style(SpreadsheetTextStyle.NO_BOLD, SpreadsheetTextStyle.NO_ITALICS, SpreadsheetTextStyle.UNDERLINE),
                 style,
-                ()-> "Style should include underline if correct rule was applied=" + cell);
+                () -> "Style should include underline if correct rule was applied=" + cell);
     }
 
     private void saveRule(final boolean result, final int priority, final SpreadsheetCellStyle style,
@@ -3379,7 +3379,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
             @Override
             public Optional<SpreadsheetFormattedText> format(final Object value,
                                                              final SpreadsheetTextFormatter<?> formatter) {
-                assertFalse(value instanceof Optional, ()-> "Value must not be optional" + value);
+                assertFalse(value instanceof Optional, () -> "Value must not be optional" + value);
                 return formatter.format(Cast.to(value), SpreadsheetTextFormatContexts.fake());
             }
         };

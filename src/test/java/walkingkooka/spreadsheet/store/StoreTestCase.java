@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class StoreTestCase<S extends Store<K, V>, K, V> extends ClassTestCase<S> {
-    
+
     @Test
     public final void testLoadNullIdFails() {
         assertThrows(NullPointerException.class, () -> {
@@ -40,11 +40,11 @@ public abstract class StoreTestCase<S extends Store<K, V>, K, V> extends ClassTe
 
     protected final void loadFailCheck(final S store, final K id) {
         final Optional<V> value = store.load(id);
-        assertEquals(Optional.empty(), value, ()-> "Expected id " + id + " to fail");
+        assertEquals(Optional.empty(), value, () -> "Expected id " + id + " to fail");
     }
 
     protected final void countAndCheck(final S store, final int count) {
-        assertEquals(count, store.count(), ()-> "Wrong count " + store);
+        assertEquals(count, store.count(), () -> "Wrong count " + store);
     }
 
     @Override
