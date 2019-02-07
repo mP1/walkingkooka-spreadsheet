@@ -5,13 +5,15 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
-import walkingkooka.test.PublicStaticHelperTestCase;
+import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.PublicStaticHelperTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
+import walkingkooka.type.MemberVisibility;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -19,7 +21,8 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public final class SpreadsheetDataValidatorsTest extends PublicStaticHelperTestCase<SpreadsheetDataValidators> {
+public final class SpreadsheetDataValidatorsTest extends ClassTestCase<SpreadsheetDataValidators>
+        implements PublicStaticHelperTesting<SpreadsheetDataValidators> {
 
     private final static BigDecimal BIGDECIMAL_BELOW = BigDecimal.valueOf(5);
     private final static BigDecimal BIGDECIMAL_LOWER = BigDecimal.valueOf(10);
@@ -664,7 +667,12 @@ public final class SpreadsheetDataValidatorsTest extends PublicStaticHelperTestC
     }
 
     @Override
-    protected boolean canHavePublicTypes(final Method method) {
+    public boolean canHavePublicTypes(final Method method) {
         return false;
+    }
+
+    @Override
+    public MemberVisibility typeVisibility() {
+        return MemberVisibility.PUBLIC;
     }
 }
