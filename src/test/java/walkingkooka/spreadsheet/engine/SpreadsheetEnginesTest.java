@@ -1,17 +1,26 @@
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.test.PublicStaticHelperTestCase;
+import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.PublicStaticHelperTesting;
+import walkingkooka.type.MemberVisibility;
 
 import java.lang.reflect.Method;
 
-public final class SpreadsheetEnginesTest extends PublicStaticHelperTestCase<SpreadsheetEngines> {
+public final class SpreadsheetEnginesTest extends ClassTestCase<SpreadsheetEngines>
+        implements PublicStaticHelperTesting<SpreadsheetEngines> {
+
     @Override
     public Class<SpreadsheetEngines> type() {
         return SpreadsheetEngines.class;
     }
 
     @Override
-    protected boolean canHavePublicTypes(final Method method) {
+    public boolean canHavePublicTypes(final Method method) {
         return false;
+    }
+
+    @Override
+    public MemberVisibility typeVisibility() {
+        return MemberVisibility.PUBLIC;
     }
 }

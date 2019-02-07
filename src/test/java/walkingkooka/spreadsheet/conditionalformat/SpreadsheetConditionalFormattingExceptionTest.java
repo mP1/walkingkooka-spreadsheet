@@ -1,8 +1,11 @@
 package walkingkooka.spreadsheet.conditionalformat;
 
-import walkingkooka.test.PublicThrowableTestCase;
+import walkingkooka.test.StandardThrowableTesting;
+import walkingkooka.test.TestCase;
 
-public final class SpreadsheetConditionalFormattingExceptionTest extends PublicThrowableTestCase<SpreadsheetConditionalFormattingException> {
+public final class SpreadsheetConditionalFormattingExceptionTest extends TestCase
+        implements StandardThrowableTesting<SpreadsheetConditionalFormattingException> {
+
     @Override
     public Class<SpreadsheetConditionalFormattingException> type() {
         return SpreadsheetConditionalFormattingException.class;
