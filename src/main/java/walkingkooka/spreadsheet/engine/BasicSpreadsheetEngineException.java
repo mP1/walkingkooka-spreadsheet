@@ -18,8 +18,9 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.SystemException;
+import walkingkooka.spreadsheet.SpreadsheetException;
 
-public class BasicSpreadsheetEngineException extends SystemException {
+public class BasicSpreadsheetEngineException extends SpreadsheetException {
 
     private static final long serialVersionUID = 1L;
 
