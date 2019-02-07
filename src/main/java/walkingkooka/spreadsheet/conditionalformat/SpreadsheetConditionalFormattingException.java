@@ -18,11 +18,12 @@
 package walkingkooka.spreadsheet.conditionalformat;
 
 import walkingkooka.SystemException;
+import walkingkooka.spreadsheet.SpreadsheetException;
 
 /**
  * General purpose exception thrown when working with conditional formatting.
  */
-public class SpreadsheetConditionalFormattingException extends SystemException {
+public class SpreadsheetConditionalFormattingException extends SpreadsheetException {
 
     private static final long serialVersionUID = 1L;
 
