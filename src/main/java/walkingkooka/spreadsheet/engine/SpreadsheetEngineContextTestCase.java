@@ -46,8 +46,10 @@ public abstract class SpreadsheetEngineContextTestCase<C extends SpreadsheetEngi
         });
     }
 
+    // TypeNameTesting .........................................................................................
+
     @Override
-    protected String requiredNameSuffix() {
+    public final String typeNameSuffix() {
         return SpreadsheetEngineContext.class.getSimpleName();
     }
 }
