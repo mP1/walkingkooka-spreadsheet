@@ -10,7 +10,7 @@ public final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCel
     }
 
     @Override
-    protected String requiredNamePrefix() {
+    public String typeNamePrefix() {
         return BasicSpreadsheetEngine.class.getSimpleName();
     }
 
