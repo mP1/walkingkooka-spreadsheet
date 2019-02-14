@@ -6,7 +6,7 @@ import walkingkooka.net.email.EmailAddress;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class GroupTest extends IdentityTestCase<Group, GroupId> {
+public final class GroupTest implements IdentityTesting<Group, GroupId> {
 
     private final long ID_VALUE = 123;
 
@@ -41,12 +41,12 @@ public final class GroupTest extends IdentityTestCase<Group, GroupId> {
     }
 
     @Override
-    Group createIdentity(final GroupId id) {
+    public Group createIdentity(final GroupId id) {
         return Group.with(id, name());
     }
 
     @Override
-    GroupId createId() {
+    public GroupId createId() {
         return GroupId.with(1);
     }
 

@@ -1,9 +1,9 @@
 package walkingkooka.spreadsheet.style;
 
-import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.ClassTesting2;
 import walkingkooka.type.MemberVisibility;
 
-public final class TextWrappingTest extends ClassTestCase<TextWrapping> {
+public final class TextWrappingTest implements ClassTesting2<TextWrapping> {
 
     @Override
     public Class<TextWrapping> type() {
@@ -11,7 +11,7 @@ public final class TextWrappingTest extends ClassTestCase<TextWrapping> {
     }
 
     @Override
-    protected MemberVisibility typeVisibility() {
+    public MemberVisibility typeVisibility() {
         return MemberVisibility.PUBLIC;
     }
 }

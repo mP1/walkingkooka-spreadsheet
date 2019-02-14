@@ -39,6 +39,7 @@ import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.expression.ExpressionNodeName;
+import walkingkooka.type.MemberVisibility;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -54,7 +55,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<BasicSpreadsheetEngine> {
+public final class BasicSpreadsheetEngineTest implements SpreadsheetEngineTesting<BasicSpreadsheetEngine> {
 
     private final static String PATTERN_SUFFIX = "PATTERN_SUFFIX";
     private final static String DEFAULT_SUFFIX = "DEFAULT_SUFFIX";
@@ -3289,7 +3290,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
     //  helpers.......................................................................................................
 
     @Override
-    protected BasicSpreadsheetEngine createSpreadsheetEngine() {
+    public BasicSpreadsheetEngine createSpreadsheetEngine() {
         return this.createSpreadsheetEngine(this.cellStore());
     }
 
@@ -3313,7 +3314,7 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
     }
 
     @Override
-    protected SpreadsheetEngineContext createContext() {
+    public SpreadsheetEngineContext createContext() {
         return SpreadsheetEngineContexts.fake();
     }
 
@@ -3480,5 +3481,10 @@ public final class BasicSpreadsheetEngineTest extends SpreadsheetEngineTestCase<
     @Override
     public Class<BasicSpreadsheetEngine> type() {
         return BasicSpreadsheetEngine.class;
+    }
+
+    @Override
+    public MemberVisibility typeVisibility() {
+        return MemberVisibility.PACKAGE_PRIVATE;
     }
 }

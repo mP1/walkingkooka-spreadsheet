@@ -2,7 +2,7 @@ package walkingkooka.spreadsheet.style;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
-import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.HasJsonNodeTesting;
@@ -14,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTextStyle>
-        implements HashCodeEqualsDefinedTesting<SpreadsheetTextStyle>,
+public final class SpreadsheetTextStyleTest implements ClassTesting2<SpreadsheetTextStyle>,
+        HashCodeEqualsDefinedTesting<SpreadsheetTextStyle>,
         HasJsonNodeTesting<SpreadsheetTextStyle>,
         ToStringTesting<SpreadsheetTextStyle> {
 
@@ -882,7 +882,7 @@ public final class SpreadsheetTextStyleTest extends ClassTestCase<SpreadsheetTex
     }
 
     @Override
-    protected MemberVisibility typeVisibility() {
+    public MemberVisibility typeVisibility() {
         return MemberVisibility.PUBLIC;
     }
 }

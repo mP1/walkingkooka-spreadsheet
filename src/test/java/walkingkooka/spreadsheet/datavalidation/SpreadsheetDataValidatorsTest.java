@@ -5,7 +5,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
-import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.PublicStaticHelperTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
@@ -21,8 +21,8 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public final class SpreadsheetDataValidatorsTest extends ClassTestCase<SpreadsheetDataValidators>
-        implements PublicStaticHelperTesting<SpreadsheetDataValidators> {
+public final class SpreadsheetDataValidatorsTest implements ClassTesting2<SpreadsheetDataValidators>,
+        PublicStaticHelperTesting<SpreadsheetDataValidators> {
 
     private final static BigDecimal BIGDECIMAL_BELOW = BigDecimal.valueOf(5);
     private final static BigDecimal BIGDECIMAL_LOWER = BigDecimal.valueOf(10);

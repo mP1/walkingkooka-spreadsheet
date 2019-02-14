@@ -19,28 +19,28 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.ContextTestCase;
+import walkingkooka.ContextTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetEngineContextTestCase<C extends SpreadsheetEngineContext> extends ContextTestCase<C> {
+public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineContext> extends ContextTesting<C> {
 
     @Test
-    public final void testParseFormulaNullFails() {
+    default void testParseFormulaNullFails() {
         assertThrows(NullPointerException.class, () -> {
             this.createContext().parseFormula(null);
         });
     }
 
     @Test
-    public final void testEvaluateNullFails() {
+    default void testEvaluateNullFails() {
         assertThrows(NullPointerException.class, () -> {
             this.createContext().evaluate(null);
         });
     }
 
     @Test
-    public final void testParseFormatPatternNullFails() {
+    default void testParseFormatPatternNullFails() {
         assertThrows(NullPointerException.class, () -> {
             this.createContext().parseFormatPattern(null);
         });
@@ -49,7 +49,7 @@ public abstract class SpreadsheetEngineContextTestCase<C extends SpreadsheetEngi
     // TypeNameTesting .........................................................................................
 
     @Override
-    public final String typeNameSuffix() {
+    default String typeNameSuffix() {
         return SpreadsheetEngineContext.class.getSimpleName();
     }
 }

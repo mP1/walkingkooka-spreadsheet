@@ -6,7 +6,7 @@ import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
-import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
@@ -23,8 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
-        implements HashCodeEqualsDefinedTesting<SpreadsheetRange> {
+public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRange>,
+        HashCodeEqualsDefinedTesting<SpreadsheetRange> {
 
     private final static int COLUMN1 = 10;
     private final static int ROW1 = 11;
@@ -468,7 +468,7 @@ public final class SpreadsheetRangeTest extends ClassTestCase<SpreadsheetRange>
     }
 
     @Override
-    protected MemberVisibility typeVisibility() {
+    public MemberVisibility typeVisibility() {
         return MemberVisibility.PUBLIC;
     }
 }

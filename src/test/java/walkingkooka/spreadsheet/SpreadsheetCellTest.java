@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
-import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
@@ -19,8 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
-public final class SpreadsheetCellTest extends ClassTestCase<SpreadsheetCell>
-        implements ComparableTesting<SpreadsheetCell>,
+public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>,
+        ComparableTesting<SpreadsheetCell>,
         HasJsonNodeTesting<SpreadsheetCell>,
         ToStringTesting<SpreadsheetCell> {
 
@@ -479,7 +479,7 @@ public final class SpreadsheetCellTest extends ClassTestCase<SpreadsheetCell>
     }
 
     @Override
-    protected MemberVisibility typeVisibility() {
+    public MemberVisibility typeVisibility() {
         return MemberVisibility.PUBLIC;
     }
 

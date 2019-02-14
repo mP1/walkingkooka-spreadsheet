@@ -5,7 +5,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
-import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.expression.ExpressionNode;
@@ -18,8 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetConditionalFormattingRuleTest extends ClassTestCase<SpreadsheetConditionalFormattingRule>
-        implements HashCodeEqualsDefinedTesting<SpreadsheetConditionalFormattingRule>,
+public final class SpreadsheetConditionalFormattingRuleTest implements ClassTesting2<SpreadsheetConditionalFormattingRule>,
+        HashCodeEqualsDefinedTesting<SpreadsheetConditionalFormattingRule>,
         ToStringTesting<SpreadsheetConditionalFormattingRule> {
 
     @Test
@@ -290,7 +290,7 @@ public final class SpreadsheetConditionalFormattingRuleTest extends ClassTestCas
     }
 
     @Override
-    protected MemberVisibility typeVisibility() {
+    public MemberVisibility typeVisibility() {
         return MemberVisibility.PUBLIC;
     }
 }
