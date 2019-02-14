@@ -1,7 +1,7 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.expression.ExpressionNode;
@@ -16,8 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
-public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormula>
-        implements HashCodeEqualsDefinedTesting<SpreadsheetFormula>,
+public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFormula>,
+        HashCodeEqualsDefinedTesting<SpreadsheetFormula>,
         HasJsonNodeTesting<SpreadsheetFormula>,
         ToStringTesting<SpreadsheetFormula> {
 
@@ -407,7 +407,7 @@ public final class SpreadsheetFormulaTest extends ClassTestCase<SpreadsheetFormu
     }
 
     @Override
-    protected MemberVisibility typeVisibility() {
+    public MemberVisibility typeVisibility() {
         return MemberVisibility.PUBLIC;
     }
 }

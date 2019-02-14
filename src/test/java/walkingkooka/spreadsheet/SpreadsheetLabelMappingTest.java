@@ -1,7 +1,7 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
-public final class SpreadsheetLabelMappingTest extends ClassTestCase<SpreadsheetLabelMapping>
-        implements HashCodeEqualsDefinedTesting<SpreadsheetLabelMapping>,
+public final class SpreadsheetLabelMappingTest implements ClassTesting2<SpreadsheetLabelMapping>,
+        HashCodeEqualsDefinedTesting<SpreadsheetLabelMapping>,
         ToStringTesting<SpreadsheetLabelMapping> {
 
     private final static SpreadsheetLabelName LABEL = SpreadsheetLabelName.with("label");
@@ -140,7 +140,7 @@ public final class SpreadsheetLabelMappingTest extends ClassTestCase<Spreadsheet
     }
 
     @Override
-    protected MemberVisibility typeVisibility() {
+    public MemberVisibility typeVisibility() {
         return MemberVisibility.PUBLIC;
     }
 }

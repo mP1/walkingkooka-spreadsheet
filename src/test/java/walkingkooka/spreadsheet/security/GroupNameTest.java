@@ -3,14 +3,12 @@ package walkingkooka.spreadsheet.security;
 import org.junit.jupiter.api.Test;
 import walkingkooka.naming.NameTesting;
 import walkingkooka.naming.PropertiesPath;
-import walkingkooka.test.ClassTestCase;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.type.MemberVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-final public class GroupNameTest extends ClassTestCase<GroupName>
-        implements NameTesting<GroupName, GroupName> {
+final public class GroupNameTest implements NameTesting<GroupName, GroupName> {
 
     @Test
     public void testCreateEmptyStringFails() {

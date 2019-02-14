@@ -5,15 +5,14 @@ import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStores;
 import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.util.FunctionTestCase;
+import walkingkooka.util.FunctionTesting;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunctionTest extends FunctionTestCase<
-        SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction,
-        ExpressionReference, Optional<ExpressionNode>> {
+public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunctionTest
+        implements FunctionTesting<SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction, ExpressionReference, Optional<ExpressionNode>> {
 
     @Test
     public void testWithNullEngineFails() {
@@ -43,7 +42,7 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
     }
 
     @Override
-    protected SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction createFunction() {
+    public SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction createFunction() {
         return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(this.engine(),
                 this.labelStore(),
                 this.spreadsheetEngineContext());

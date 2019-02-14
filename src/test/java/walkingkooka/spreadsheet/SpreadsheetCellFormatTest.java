@@ -19,7 +19,7 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.CharSequences;
@@ -36,8 +36,8 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetCellFormatTest extends ClassTestCase<SpreadsheetCellFormat>
-        implements HashCodeEqualsDefinedTesting<SpreadsheetCellFormat>,
+public final class SpreadsheetCellFormatTest implements ClassTesting2<SpreadsheetCellFormat>,
+        HashCodeEqualsDefinedTesting<SpreadsheetCellFormat>,
         HasJsonNodeTesting<SpreadsheetCellFormat>,
         ToStringTesting<SpreadsheetCellFormat> {
 
@@ -195,7 +195,7 @@ public final class SpreadsheetCellFormatTest extends ClassTestCase<SpreadsheetCe
     }
 
     @Override
-    protected MemberVisibility typeVisibility() {
+    public MemberVisibility typeVisibility() {
         return MemberVisibility.PUBLIC;
     }
 }

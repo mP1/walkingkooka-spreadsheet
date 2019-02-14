@@ -1,14 +1,14 @@
 package walkingkooka.spreadsheet.conditionalformat;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.compare.ComparatorTestCase;
+import walkingkooka.compare.ComparatorTesting;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.tree.expression.ExpressionNode;
 
 import java.util.Optional;
 
-public final class SpreadsheetConditionalFormattingRulePriorityDescendingComparatorTest extends ComparatorTestCase<SpreadsheetConditionalFormattingRulePriorityDescendingComparator,
+public final class SpreadsheetConditionalFormattingRulePriorityDescendingComparatorTest implements ComparatorTesting<SpreadsheetConditionalFormattingRulePriorityDescendingComparator,
         SpreadsheetConditionalFormattingRule> {
 
     @Test
@@ -34,7 +34,7 @@ public final class SpreadsheetConditionalFormattingRulePriorityDescendingCompara
     }
 
     @Override
-    protected SpreadsheetConditionalFormattingRulePriorityDescendingComparator createComparator() {
+    public SpreadsheetConditionalFormattingRulePriorityDescendingComparator createComparator() {
         return SpreadsheetConditionalFormattingRulePriorityDescendingComparator.INSTANCE;
     }
 
