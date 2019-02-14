@@ -3,7 +3,7 @@ package walkingkooka.spreadsheet.style;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.ComparableTesting;
-import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ConstantsTesting;
 import walkingkooka.test.SerializationTesting;
 import walkingkooka.test.ToStringTesting;
@@ -16,8 +16,8 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class FontSizeTest extends ClassTestCase<FontSize>
-        implements ComparableTesting<FontSize>,
+public final class FontSizeTest implements ClassTesting2<FontSize>,
+        ComparableTesting<FontSize>,
         ConstantsTesting<FontSize>,
         SerializationTesting<FontSize>,
         HasJsonNodeTesting<FontSize>,
@@ -74,7 +74,7 @@ public final class FontSizeTest extends ClassTestCase<FontSize>
     }
 
     @Override
-    protected MemberVisibility typeVisibility() {
+    public MemberVisibility typeVisibility() {
         return MemberVisibility.PUBLIC;
     }
 

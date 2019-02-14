@@ -2,7 +2,7 @@ package walkingkooka.spreadsheet.store.cell;
 
 public final class GuavaTableSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase<GuavaTableSpreadsheetCellStore> {
     @Override
-    protected GuavaTableSpreadsheetCellStore createStore() {
+    public GuavaTableSpreadsheetCellStore createStore() {
         return GuavaTableSpreadsheetCellStore.create();
     }
 

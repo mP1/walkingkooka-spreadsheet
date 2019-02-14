@@ -1,44 +1,40 @@
 package walkingkooka.spreadsheet.security;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.type.MemberVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class IdentityTestCase<I extends Identity<ID>, ID extends IdentityId>
-        extends ClassTestCase<I>
-        implements HashCodeEqualsDefinedTesting<I>,
+public interface IdentityTesting<I extends Identity<ID>, ID extends IdentityId>
+        extends ClassTesting2<I>,
+        HashCodeEqualsDefinedTesting<I>,
         ToStringTesting<I> {
-
-    IdentityTestCase() {
-        super();
-    }
-
+    
     @Test
-    public final void testWithNullIdFails() {
+    default void testWithNullIdFails() {
         assertThrows(NullPointerException.class, () -> {
             this.createIdentity(null);
         });
     }
 
     @Override
-    public final I createObject() {
+    default I createObject() {
         return this.createIdentity();
     }
 
-    final I createIdentity() {
+    default I createIdentity() {
         return this.createIdentity(this.createId());
     }
 
-    abstract I createIdentity(final ID id);
+    I createIdentity(final ID id);
 
-    abstract ID createId();
+    ID createId();
 
     @Override
-    protected final MemberVisibility typeVisibility() {
+    default MemberVisibility typeVisibility() {
         return MemberVisibility.PUBLIC;
     }
 }

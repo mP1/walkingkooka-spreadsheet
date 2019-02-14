@@ -1,13 +1,13 @@
 package walkingkooka.spreadsheet.datavalidation;
 
-import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.PublicStaticHelperTesting;
 import walkingkooka.type.MemberVisibility;
 
 import java.lang.reflect.Method;
 
-public final class SpreadsheetDataValidatorContextsTest extends ClassTestCase<SpreadsheetDataValidatorContexts>
-        implements PublicStaticHelperTesting<SpreadsheetDataValidatorContexts> {
+public final class SpreadsheetDataValidatorContextsTest implements ClassTesting2<SpreadsheetDataValidatorContexts>,
+        PublicStaticHelperTesting<SpreadsheetDataValidatorContexts> {
 
     @Override
     public Class<SpreadsheetDataValidatorContexts> type() {

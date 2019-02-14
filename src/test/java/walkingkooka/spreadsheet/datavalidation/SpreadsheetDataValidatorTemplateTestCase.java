@@ -9,10 +9,14 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
-public abstract class SpreadsheetDataValidatorTemplateTestCase<V extends SpreadsheetDataValidatorTemplate, T> extends SpreadsheetDataValidatorTestCase<V, T> {
+public abstract class SpreadsheetDataValidatorTemplateTestCase<V extends SpreadsheetDataValidatorTemplate, T> implements SpreadsheetDataValidatorTesting<V, T> {
+
+    SpreadsheetDataValidatorTemplateTestCase() {
+        super();
+    }
 
     @Override
-    protected SpreadsheetDataValidatorContext createContext() {
+    public SpreadsheetDataValidatorContext createContext() {
         return BasicSpreadsheetDataValidatorContext.with(this.cellReference(), this.value(), this.expressionEvaluationContext());
     }
 

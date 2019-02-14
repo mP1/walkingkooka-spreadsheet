@@ -9,7 +9,7 @@ import walkingkooka.tree.expression.ExpressionReference;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetDataValidatorContextTest extends SpreadsheetDataValidatorContextTestCase<BasicSpreadsheetDataValidatorContext> {
+public final class BasicSpreadsheetDataValidatorContextTest implements SpreadsheetDataValidatorContextTesting<BasicSpreadsheetDataValidatorContext> {
 
     @Test
     public void testWithNullCellReferenceFails() {
@@ -44,7 +44,7 @@ public final class BasicSpreadsheetDataValidatorContextTest extends SpreadsheetD
     }
 
     @Override
-    protected BasicSpreadsheetDataValidatorContext createContext() {
+    public BasicSpreadsheetDataValidatorContext createContext() {
         return this.createContext(expressionEvaluationContext());
     }
 
