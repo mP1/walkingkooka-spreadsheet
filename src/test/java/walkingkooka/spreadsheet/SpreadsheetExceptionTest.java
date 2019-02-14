@@ -1,10 +1,8 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.test.StandardThrowableTesting;
-import walkingkooka.test.TestCase;
 
-public final class SpreadsheetExceptionTest extends TestCase
-        implements StandardThrowableTesting<SpreadsheetException> {
+public final class SpreadsheetExceptionTest implements StandardThrowableTesting<SpreadsheetException> {
 
     @Override
     public Class<SpreadsheetException> type() {
