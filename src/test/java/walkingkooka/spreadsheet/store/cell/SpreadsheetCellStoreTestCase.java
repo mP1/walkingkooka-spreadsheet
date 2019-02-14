@@ -7,7 +7,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetFormattedCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.store.StoreTestCase;
+import walkingkooka.spreadsheet.store.StoreTesting;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
@@ -21,9 +21,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStore> extends StoreTestCase<S, SpreadsheetCellReference, SpreadsheetCell> {
+public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStore> implements StoreTesting<S, SpreadsheetCellReference, SpreadsheetCell> {
 
     final static SpreadsheetCellReference REFERENCE = SpreadsheetReferenceKind.ABSOLUTE.column(1).setRow(SpreadsheetReferenceKind.ABSOLUTE.row(2));
+
+    SpreadsheetCellStoreTestCase() {
+        super();
+    }
 
     @Test
     public final void testLoadUnknown() {

@@ -1,9 +1,9 @@
 package walkingkooka.spreadsheet.style;
 
-import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.ClassTesting2;
 import walkingkooka.type.MemberVisibility;
 
-public final class VerticalAlignmentTest extends ClassTestCase<VerticalAlignment> {
+public final class VerticalAlignmentTest implements ClassTesting2<VerticalAlignment> {
 
     @Override
     public Class<VerticalAlignment> type() {
@@ -11,7 +11,7 @@ public final class VerticalAlignmentTest extends ClassTestCase<VerticalAlignment
     }
 
     @Override
-    protected MemberVisibility typeVisibility() {
+    public MemberVisibility typeVisibility() {
         return MemberVisibility.PUBLIC;
     }
 }

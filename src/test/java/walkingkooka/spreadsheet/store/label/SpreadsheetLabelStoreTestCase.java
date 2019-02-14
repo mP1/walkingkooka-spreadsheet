@@ -3,7 +3,7 @@ package walkingkooka.spreadsheet.store.label;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
-import walkingkooka.spreadsheet.store.StoreTestCase;
+import walkingkooka.spreadsheet.store.StoreTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
@@ -13,7 +13,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelStore> extends StoreTestCase<S, SpreadsheetLabelName, SpreadsheetLabelMapping> {
+public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelStore> implements StoreTesting<S, SpreadsheetLabelName, SpreadsheetLabelMapping> {
 
     final static SpreadsheetCellReference REFERENCE = SpreadsheetReferenceKind.ABSOLUTE.column(1).setRow(SpreadsheetReferenceKind.ABSOLUTE.row(2));
     final static SpreadsheetLabelName LABEL = SpreadsheetLabelName.with("label123");

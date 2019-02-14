@@ -1,11 +1,12 @@
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserTokenVisitorTestCase;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserTokenVisitorTesting;
+import walkingkooka.type.MemberVisibility;
 
-public final class BasicSpreadsheetEngineCopySpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitorTest extends SpreadsheetParserTokenVisitorTestCase<BasicSpreadsheetEngineCopySpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor> {
+public final class BasicSpreadsheetEngineCopySpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitorTest implements SpreadsheetParserTokenVisitorTesting<BasicSpreadsheetEngineCopySpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor> {
 
     @Override
-    protected BasicSpreadsheetEngineCopySpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor createParserTokenVisitor() {
+    public BasicSpreadsheetEngineCopySpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor createVisitor() {
         return new BasicSpreadsheetEngineCopySpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor(0, 0);
     }
 
@@ -15,7 +16,12 @@ public final class BasicSpreadsheetEngineCopySpreadsheetCellReferenceFixerSpread
     }
 
     @Override
-    protected Class<BasicSpreadsheetEngineCopySpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor> parserTokenVisitorType() {
+    public Class<BasicSpreadsheetEngineCopySpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor> type() {
         return BasicSpreadsheetEngineCopySpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.class;
+    }
+
+    @Override
+    public MemberVisibility typeVisibility() {
+        return MemberVisibility.PACKAGE_PRIVATE;
     }
 }

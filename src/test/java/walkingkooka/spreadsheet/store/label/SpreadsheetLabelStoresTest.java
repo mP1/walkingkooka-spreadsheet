@@ -1,13 +1,13 @@
 package walkingkooka.spreadsheet.store.label;
 
-import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.PublicStaticHelperTesting;
 import walkingkooka.type.MemberVisibility;
 
 import java.lang.reflect.Method;
 
-public final class SpreadsheetLabelStoresTest extends ClassTestCase<SpreadsheetLabelStores>
-        implements PublicStaticHelperTesting<SpreadsheetLabelStores> {
+public final class SpreadsheetLabelStoresTest implements ClassTesting2<SpreadsheetLabelStores>,
+        PublicStaticHelperTesting<SpreadsheetLabelStores> {
 
     @Override
     public Class<SpreadsheetLabelStores> type() {

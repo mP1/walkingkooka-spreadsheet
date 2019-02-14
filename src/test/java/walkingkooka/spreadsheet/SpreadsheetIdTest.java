@@ -1,7 +1,7 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.type.MemberVisibility;
@@ -9,8 +9,8 @@ import walkingkooka.type.MemberVisibility;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public final class SpreadsheetIdTest extends ClassTestCase<SpreadsheetId>
-        implements HashCodeEqualsDefinedTesting<SpreadsheetId>,
+public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
+        HashCodeEqualsDefinedTesting<SpreadsheetId>,
         ToStringTesting<SpreadsheetId> {
 
     private final static Long VALUE = 123L;
@@ -33,7 +33,7 @@ public final class SpreadsheetIdTest extends ClassTestCase<SpreadsheetId>
     }
 
     @Override
-    protected MemberVisibility typeVisibility() {
+    public MemberVisibility typeVisibility() {
         return MemberVisibility.PUBLIC;
     }
 

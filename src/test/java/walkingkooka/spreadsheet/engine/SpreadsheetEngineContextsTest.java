@@ -18,14 +18,14 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.PublicStaticHelperTesting;
 import walkingkooka.type.MemberVisibility;
 
 import java.lang.reflect.Method;
 
-public final class SpreadsheetEngineContextsTest extends ClassTestCase<SpreadsheetEngineContexts>
-        implements PublicStaticHelperTesting<SpreadsheetEngineContexts> {
+public final class SpreadsheetEngineContextsTest implements ClassTesting2<SpreadsheetEngineContexts>,
+        PublicStaticHelperTesting<SpreadsheetEngineContexts> {
 
     @Override
     public Class<SpreadsheetEngineContexts> type() {

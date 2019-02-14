@@ -6,7 +6,7 @@ import walkingkooka.net.email.EmailAddress;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class UserTest extends IdentityTestCase<User, UserId> {
+public final class UserTest implements IdentityTesting<User, UserId> {
 
     private final static EmailAddress EMAIL = EmailAddress.parse("user@example.com");
 
@@ -31,12 +31,12 @@ public final class UserTest extends IdentityTestCase<User, UserId> {
     }
 
     @Override
-    User createIdentity(final UserId id) {
+    public User createIdentity(final UserId id) {
         return User.with(id, EMAIL);
     }
 
     @Override
-    UserId createId() {
+    public UserId createId() {
         return UserId.with(1);
     }
 
