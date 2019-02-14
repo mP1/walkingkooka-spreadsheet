@@ -2,14 +2,14 @@ package walkingkooka.spreadsheet.style;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.naming.NameTesting;
-import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.ClassTesting2;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.MemberVisibility;
 
-public final class FontFamilyNameTest extends ClassTestCase<FontFamilyName>
-        implements NameTesting<FontFamilyName, FontFamilyName>,
+public final class FontFamilyNameTest implements ClassTesting2<FontFamilyName>,
+        NameTesting<FontFamilyName, FontFamilyName>,
         HasJsonNodeTesting<FontFamilyName> {
 
     private final static String TEXT = "Times New Roman";

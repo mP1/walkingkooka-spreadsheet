@@ -26,7 +26,7 @@ public final class PredicateSpreadsheetDataValidatorTest extends SpreadsheetData
     }
 
     @Override
-    protected PredicateSpreadsheetDataValidator createSpreadsheetDataValidator() {
+    public PredicateSpreadsheetDataValidator createSpreadsheetDataValidator() {
         return PredicateSpreadsheetDataValidator.with(String.class, this.predicate());
     }
 
@@ -35,7 +35,7 @@ public final class PredicateSpreadsheetDataValidatorTest extends SpreadsheetData
     }
 
     @Override
-    protected String value() {
+    public String value() {
         return VALUE;
     }
 
@@ -45,7 +45,7 @@ public final class PredicateSpreadsheetDataValidatorTest extends SpreadsheetData
     }
 
     @Override
-    protected SpreadsheetDataValidatorContext createContext() {
+    public SpreadsheetDataValidatorContext createContext() {
         return SpreadsheetDataValidatorContexts.fake();
     }
 

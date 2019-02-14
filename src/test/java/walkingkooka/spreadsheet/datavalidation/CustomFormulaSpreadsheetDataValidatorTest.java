@@ -23,7 +23,7 @@ public final class CustomFormulaSpreadsheetDataValidatorTest extends Spreadsheet
     }
 
     @Override
-    protected CustomFormulaSpreadsheetDataValidator createSpreadsheetDataValidator() {
+    public CustomFormulaSpreadsheetDataValidator createSpreadsheetDataValidator() {
         return CustomFormulaSpreadsheetDataValidator.with(this.expression());
     }
 
@@ -34,7 +34,7 @@ public final class CustomFormulaSpreadsheetDataValidatorTest extends Spreadsheet
     }
 
     @Override
-    protected Long value() {
+    public Long value() {
         return VALUE;
     }
 

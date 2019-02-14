@@ -1,14 +1,14 @@
 package walkingkooka.spreadsheet.datavalidation;
 
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
-import walkingkooka.tree.expression.ExpressionEvaluationContextTestCase;
+import walkingkooka.tree.expression.ExpressionEvaluationContextTesting;
 
-public abstract class SpreadsheetDataValidatorContextTestCase<C extends SpreadsheetDataValidatorContext> extends ExpressionEvaluationContextTestCase<C> {
+public interface SpreadsheetDataValidatorContextTesting<C extends SpreadsheetDataValidatorContext> extends ExpressionEvaluationContextTesting<C> {
 
     // TypeNameTesting .........................................................................................
 
     @Override
-    public final String typeNameSuffix() {
+    default String typeNameSuffix() {
         return SpreadsheetDataValidatorContext.class.getSimpleName();
     }
 }

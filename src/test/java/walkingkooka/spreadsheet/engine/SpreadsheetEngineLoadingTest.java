@@ -1,16 +1,16 @@
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.test.ClassTestCase;
+import walkingkooka.test.ClassTesting2;
 import walkingkooka.type.MemberVisibility;
 
-public final class SpreadsheetEngineLoadingTest extends ClassTestCase<SpreadsheetEngineLoading> {
+public final class SpreadsheetEngineLoadingTest implements ClassTesting2<SpreadsheetEngineLoading> {
     @Override
     public Class<SpreadsheetEngineLoading> type() {
         return SpreadsheetEngineLoading.class;
     }
 
     @Override
-    protected MemberVisibility typeVisibility() {
+    public MemberVisibility typeVisibility() {
         return MemberVisibility.PUBLIC;
     }
 }
