@@ -27,6 +27,8 @@ import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.HasJsonNodeTesting;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeName;
 import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
@@ -178,6 +180,63 @@ public final class SpreadsheetFormattedCellTest implements ClassTesting2<Spreads
 
     // HasJsonNode ................................................................................................
 
+    // HasJsonNode fromJsonNode........................................................................................................
+
+    @Test
+    public void testFromJsonNodeBooleanFails() {
+        this.fromJsonNodeFails(JsonNode.booleanNode(true));
+    }
+
+    @Test
+    public void testFromJsonNodeNullFails() {
+        this.fromJsonNodeFails(JsonNode.nullNode());
+    }
+
+    @Test
+    public void testFromJsonNodeNumberFails() {
+        this.fromJsonNodeFails(JsonNode.number(12));
+    }
+
+    @Test
+    public void testFromJsonNodeArrayFails() {
+        this.fromJsonNodeFails(JsonNode.array());
+    }
+
+    @Test
+    public void testFromJsonNodeStringFails() {
+        this.fromJsonNodeFails(JsonNode.string("fails"));
+    }
+
+    @Test
+    public void testFromJsonNodeObjectEmptyFails() {
+        this.fromJsonNodeFails(JsonNode.object());
+    }
+
+    @Test
+    public void testFromJsonNodeObjectMissingTextFails() {
+        this.fromJsonNodeFails(JsonNode.object().set(SpreadsheetFormattedCell.STYLE_PROPERTY, this.style().toJsonNode()));
+    }
+
+    @Test
+    public void testFromJsonNodeObjectMissingStyleFails() {
+        this.fromJsonNodeFails(JsonNode.object().set(SpreadsheetFormattedCell.TEXT_PROPERTY, JsonNode.string(TEXT)));
+    }
+
+    @Test
+    public void testFromJsonNodeObjectUnknownPropertyFails() {
+        this.fromJsonNodeFails(JsonNode.object().set(JsonNodeName.with("unknown-property-fails"), JsonNode.string("fails!")));
+    }
+
+    @Test
+    public void testFromJsonNode() {
+        this.fromJsonNodeAndCheck(JsonNode.object()
+                        .set(SpreadsheetFormattedCell.TEXT_PROPERTY, JsonNode.string(TEXT))
+                        .set(SpreadsheetFormattedCell.STYLE_PROPERTY, this.style().toJsonNode()),
+                SpreadsheetFormattedCell.with(TEXT, this.style()));
+    }
+
+    // HasJsonNode .toJsonNode ................................................................................................
+
     @Test
     public void testToJsonNode() {
         this.toJsonNodeAndCheck(this.createObject(),
@@ -229,5 +288,12 @@ public final class SpreadsheetFormattedCellTest implements ClassTesting2<Spreads
     @Override
     public Class<SpreadsheetFormattedCell> type() {
         return SpreadsheetFormattedCell.class;
+    }
+
+    // HasJsonNodeTesting............................................................
+
+    @Override
+    public SpreadsheetFormattedCell fromJsonNode(final JsonNode jsonNode) {
+        return SpreadsheetFormattedCell.fromJsonNode(jsonNode);
     }
 }

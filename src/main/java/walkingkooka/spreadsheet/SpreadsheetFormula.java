@@ -197,6 +197,55 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
     // HasJsonNode..........................................................................................
 
     /**
+     * Factory that creates a {@link SpreadsheetFormula} from a {@link JsonNode}.
+     */
+    public static SpreadsheetFormula fromJsonNode(final JsonNode node) {
+        Objects.requireNonNull(node, "node");
+
+        // object
+        if (!node.isObject()) {
+            throw new IllegalArgumentException("Node is not an object=" + node);
+        }
+
+        String text = null;
+        Object value = null;
+        SpreadsheetError error = null;
+
+        for (JsonNode child : node.children()) {
+            final JsonNodeName name = child.name();
+            switch (name.value()) {
+                case TEXT_PROPERTY_STRING:
+                    if (!child.isString()) {
+                        throw new IllegalArgumentException("Node " + TEXT_PROPERTY + " is not a string=" + node);
+                    }
+                    text = child.text();
+                    checkText(text);
+                    break;
+                case VALUE_PROPERTY_STRING:
+                    value = child.value();
+                    break;
+                case ERROR_PROPERTY_STRING:
+                    error = SpreadsheetError.fromJsonNode(child);
+                    break;
+                default:
+                    HasJsonNode.unknownPropertyPresent(name, node);
+            }
+        }
+
+        if(null==text) {
+            HasJsonNode.requiredPropertyMissing(TEXT_PROPERTY, node);
+        }
+        if (null != value && null != error) {
+            throw new IllegalArgumentException("Node contains both " + VALUE_PROPERTY + " and " + ERROR_PROPERTY + " set=" + node);
+        }
+
+        return new SpreadsheetFormula(text,
+                NO_EXPRESSION,
+                Optional.ofNullable(value),
+                Optional.ofNullable(error));
+    }
+
+    /**
      * Creates an object with potentially text, value and error but not the expression.
      */
     @Override
@@ -221,10 +270,15 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
         return object;
     }
 
+    private final static String TEXT_PROPERTY_STRING = "text";
+    private final static String VALUE_PROPERTY_STRING = "value";
+    private final static String ERROR_PROPERTY_STRING = "error";
 
-    private final static JsonNodeName TEXT_PROPERTY = JsonNodeName.with("text");
-    private final static JsonNodeName VALUE_PROPERTY = JsonNodeName.with("value");
-    private final static JsonNodeName ERROR_PROPERTY = JsonNodeName.with("error");
+    // @VisibleForTesting
+
+    final static JsonNodeName TEXT_PROPERTY = JsonNodeName.with("text");
+    final static JsonNodeName VALUE_PROPERTY = JsonNodeName.with("value");
+    final static JsonNodeName ERROR_PROPERTY = JsonNodeName.with("error");
 
     // HashCodeEqualsDefined..........................................................................................
 
