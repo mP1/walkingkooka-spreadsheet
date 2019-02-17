@@ -163,6 +163,37 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
     // HasJsonNode......................................................................................
 
     @Test
+    public void testFromJsonNodeBooleanFails() {
+        this.fromJsonNodeFails(JsonNode.booleanNode(true));
+    }
+
+    @Test
+    public void testFromJsonNodeNullFails() {
+        this.fromJsonNodeFails(JsonNode.nullNode());
+    }
+
+    @Test
+    public void testFromJsonNodeNumberFails() {
+        this.fromJsonNodeFails(JsonNode.number(12));
+    }
+
+    @Test
+    public void testFromJsonNodeArrayFails() {
+        this.fromJsonNodeFails(JsonNode.array());
+    }
+
+    @Test
+    public void testFromJsonNodeObjectFails() {
+        this.fromJsonNodeFails(JsonNode.object());
+    }
+
+    @Test
+    public void testFromJsonNodeString() {
+        this.fromJsonNodeAndCheck(JsonNode.string(PATTERN),
+                SpreadsheetCellFormat.with(PATTERN, SpreadsheetCellFormat.NO_FORMATTER));
+    }
+
+    @Test
     public void testToJsonNode() {
         this.toJsonNodeAndCheck(this.createObject(), JsonNode.string(PATTERN));
     }
@@ -197,5 +228,12 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
     @Override
     public MemberVisibility typeVisibility() {
         return MemberVisibility.PUBLIC;
+    }
+
+    // HasJsonNodeTesting............................................................
+
+    @Override
+    public SpreadsheetCellFormat fromJsonNode(final JsonNode jsonNode) {
+        return SpreadsheetCellFormat.fromJsonNode(jsonNode);
     }
 }

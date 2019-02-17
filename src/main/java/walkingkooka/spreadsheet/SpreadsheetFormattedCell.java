@@ -29,6 +29,7 @@ import walkingkooka.text.HasText;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeName;
+import walkingkooka.tree.json.JsonStringNode;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -119,14 +120,59 @@ public final class SpreadsheetFormattedCell implements HasText,
 
     // HasJsonNode ...................................................................................................
 
+    /**
+     * Factory that creates a {@link SpreadsheetFormattedCell} from a {@link JsonNode}.
+     */
+    public static SpreadsheetFormattedCell fromJsonNode(final JsonNode node) {
+        Objects.requireNonNull(node, "node");
+
+        // object
+        if (!node.isObject()) {
+            throw new IllegalArgumentException("Node is not an object=" + node);
+        }
+
+        String text = null;
+        SpreadsheetCellStyle style = null;
+
+        for (JsonNode child : node.children()) {
+            final JsonNodeName name = child.name();
+            switch (name.value()) {
+                case TEXT_PROPERTY_STRING:
+                    if (!child.isString()) {
+                        throw new IllegalArgumentException("Property " + name + " is not a String=" + node);
+                    }
+                    text = JsonStringNode.class.cast(child).value();
+                    break;
+                case STYLE_PROPERTY_STRING:
+                    style = SpreadsheetCellStyle.fromJsonNode(child);
+                    break;
+                default:
+                    HasJsonNode.unknownPropertyPresent(name, node);
+            }
+        }
+
+        if (null == text) {
+            HasJsonNode.requiredPropertyMissing(TEXT_PROPERTY, node);
+        }
+        if (null == style) {
+            HasJsonNode.requiredPropertyMissing(STYLE_PROPERTY, node);
+        }
+
+        return with(text, style);
+    }
+
     @Override
     public JsonNode toJsonNode() {
         return JsonNode.object().set(TEXT_PROPERTY, JsonNode.string(this.text))
                 .set(STYLE_PROPERTY, this.style.toJsonNode());
     }
 
-    private final static JsonNodeName TEXT_PROPERTY = JsonNodeName.with("text");
-    private final static JsonNodeName STYLE_PROPERTY = JsonNodeName.with("style");
+    private final static String TEXT_PROPERTY_STRING = "text";
+    private final static String STYLE_PROPERTY_STRING = "style";
+
+    // @VisibleForTesting
+    final static JsonNodeName TEXT_PROPERTY = JsonNodeName.with(TEXT_PROPERTY_STRING);
+    final static JsonNodeName STYLE_PROPERTY = JsonNodeName.with(STYLE_PROPERTY_STRING);
 
     // Object ............................................................................
 

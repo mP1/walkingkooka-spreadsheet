@@ -7,6 +7,7 @@ import walkingkooka.build.tostring.UsesToStringBuilder;
 import walkingkooka.color.Color;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.HasJsonNode;
+import walkingkooka.tree.json.JsonBooleanNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeName;
 import walkingkooka.tree.json.JsonObjectNode;
@@ -296,6 +297,84 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined,
 
     // HasJsonNode.........................................................................................
 
+    /**
+     * Factory that creates a {@link SpreadsheetTextStyle} from a {@link JsonNode}.
+     */
+    public static SpreadsheetTextStyle fromJsonNode(final JsonNode node) {
+        Objects.requireNonNull(node, "node");
+
+        // object
+        if (!node.isObject()) {
+            throw new IllegalArgumentException("Node is not an object=" + node);
+        }
+
+        FontFamilyName fontFamilyName = null;
+        FontSize fontSize = null;
+        Color color = null;
+        Color backgroundColor = null;
+        Boolean bold = null;
+        Boolean italics = null;
+        Boolean underline = null;
+        Boolean strikethru = null;
+
+        for (JsonNode child : node.children()) {
+            final JsonNodeName name = child.name();
+            switch (name.value()) {
+                case FONT_FAMILY_PROPERTY_STRING:
+                    fontFamilyName = FontFamilyName.fromJsonNode(child);
+                    break;
+                case FONT_SIZE_PROPERTY_STRING:
+                    fontSize = FontSize.fromJsonNode(child);
+                    break;
+                case COLOR_PROPERTY_STRING:
+                    color = Color.fromJsonNode(child);
+                    break;
+                case BACKGROUND_COLOR_PROPERTY_STRING:
+                    backgroundColor = Color.fromJsonNode(child);
+                    break;
+                case BOLD_PROPERTY_STRING:
+                    bold = booleanFromJsonNode(child);
+                    break;
+                case ITALICS_PROPERTY_STRING:
+                    italics = booleanFromJsonNode(child);
+                    break;
+                case UNDERLINE_PROPERTY_STRING:
+                    underline = booleanFromJsonNode(child);
+                    break;
+                case STRIKETHRU_PROPERTY_STRING:
+                    strikethru = booleanFromJsonNode(child);
+                    break;
+                default:
+                    HasJsonNode.unknownPropertyPresent(name, node);
+            }
+        }
+
+        return with(
+                Optional.ofNullable(fontFamilyName),
+                Optional.ofNullable(fontSize),
+                Optional.ofNullable(color),
+                Optional.ofNullable(backgroundColor),
+                Optional.ofNullable(bold),
+                Optional.ofNullable(italics),
+                Optional.ofNullable(underline),
+                Optional.ofNullable(strikethru));
+    }
+
+    /**
+     * Helper that fetches a property and complains if it is present but not a {@link Boolean}.
+     */
+    private static Boolean booleanFromJsonNode(final JsonNode value) {
+        if (!value.isBoolean()) {
+            throw new IllegalArgumentException(value.name() + " is not a boolean=" + value);
+        }
+        return JsonBooleanNode.class.cast(value).value();
+    }
+
+    // toJsonNode.................................................................................................
+
+    /**
+     * Creates the {@link JsonNode} equivalent of this object instance.
+     */
     @Override
     public JsonNode toJsonNode() {
         JsonObjectNode object = JsonObjectNode.object();
@@ -329,14 +408,25 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined,
                 object;
     }
 
-    private final static JsonNodeName FONT_FAMILY_PROPERTY = JsonNodeName.with("font-family");
-    private final static JsonNodeName FONT_SIZE_PROPERTY = JsonNodeName.with("font-size");
-    private final static JsonNodeName COLOR_PROPERTY = JsonNodeName.with("color");
-    private final static JsonNodeName BACKGROUND_COLOR_PROPERTY = JsonNodeName.with("background-color");
-    private final static JsonNodeName BOLD_PROPERTY = JsonNodeName.with("bold");
-    private final static JsonNodeName ITALICS_PROPERTY = JsonNodeName.with("italics");
-    private final static JsonNodeName UNDERLINE_PROPERTY = JsonNodeName.with("underline");
-    private final static JsonNodeName STRIKETHRU_PROPERTY = JsonNodeName.with("strikethru");
+    // @VisibleForTesting
+
+    private final static String FONT_FAMILY_PROPERTY_STRING = "font-family";
+    private final static String FONT_SIZE_PROPERTY_STRING = "font-size";
+    private final static String COLOR_PROPERTY_STRING = "color";
+    private final static String BACKGROUND_COLOR_PROPERTY_STRING = "background-color";
+    private final static String BOLD_PROPERTY_STRING = "bold";
+    private final static String ITALICS_PROPERTY_STRING = "italics";
+    private final static String UNDERLINE_PROPERTY_STRING = "underline";
+    private final static String STRIKETHRU_PROPERTY_STRING = "strikethru";
+    
+    final static JsonNodeName FONT_FAMILY_PROPERTY = JsonNodeName.with(FONT_FAMILY_PROPERTY_STRING);
+    final static JsonNodeName FONT_SIZE_PROPERTY = JsonNodeName.with(FONT_SIZE_PROPERTY_STRING);
+    final static JsonNodeName COLOR_PROPERTY = JsonNodeName.with(COLOR_PROPERTY_STRING);
+    final static JsonNodeName BACKGROUND_COLOR_PROPERTY = JsonNodeName.with(BACKGROUND_COLOR_PROPERTY_STRING);
+    final static JsonNodeName BOLD_PROPERTY = JsonNodeName.with(BOLD_PROPERTY_STRING);
+    final static JsonNodeName ITALICS_PROPERTY = JsonNodeName.with(ITALICS_PROPERTY_STRING);
+    final static JsonNodeName UNDERLINE_PROPERTY = JsonNodeName.with(UNDERLINE_PROPERTY_STRING);
+    final static JsonNodeName STRIKETHRU_PROPERTY = JsonNodeName.with(STRIKETHRU_PROPERTY_STRING);
 
     // HashCodeEqualsDefined.........................................................................................
 
