@@ -843,6 +843,11 @@ public final class SpreadsheetTextStyleTest implements ClassTesting2<Spreadsheet
                         "}");
     }
 
+    @Test
+    public void testToJsonNodeRoundtripTwice() {
+        this.toJsonNodeRoundTripTwiceAndCheck(this.createObject());
+    }
+
     // toString.........................................................................................................
 
     @Test
