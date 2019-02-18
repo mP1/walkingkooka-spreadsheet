@@ -1,13 +1,17 @@
 package walkingkooka.spreadsheet.security;
 
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.tree.json.HasJsonNode;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeName;
 
 import java.util.Objects;
 
 /**
  * A user in the system.
  */
-public final class User extends Identity<UserId> {
+public final class User extends Identity<UserId>
+        implements HasJsonNode {
 
     /**
      * Factory that creates a new {@link User}.
@@ -32,6 +36,61 @@ public final class User extends Identity<UserId> {
     }
 
     private final EmailAddress email;
+
+    // HasJsonNode..........................................................................................
+
+    /**
+     * Factory that creates a {@link User} from a {@link JsonNode}.
+     */
+    public static User fromJsonNode(final JsonNode node) {
+        Objects.requireNonNull(node, "node");
+
+        // object
+        if (!node.isObject()) {
+            throw new IllegalArgumentException("Node is not an object=" + node);
+        }
+
+        UserId id = null;
+        EmailAddress email = null;
+
+        for (JsonNode child : node.children()) {
+            final JsonNodeName name = child.name();
+            switch (name.value()) {
+                case ID_PROPERTY_STRING:
+                    id = UserId.fromJsonNode(child);
+                    break;
+                case EMAIL_PROPERTY_STRING:
+                    email = EmailAddress.fromJsonNode(child);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown property " + name + "=" + node);
+            }
+        }
+
+        if (null == id) {
+            HasJsonNode.requiredPropertyMissing(ID_PROPERTY, node);
+        }
+        if (null == email) {
+            HasJsonNode.requiredPropertyMissing(EMAIL_PROPERTY, node);
+        }
+
+        return new User(id, email);
+    }
+
+    @Override
+    public JsonNode toJsonNode() {
+        return JsonNode.object()
+                .set(ID_PROPERTY, this.id.toJsonNode())
+                .set(EMAIL_PROPERTY, this.email.toJsonNode());
+    }
+
+    private final static String ID_PROPERTY_STRING = "id";
+    private final static String EMAIL_PROPERTY_STRING = "email";
+
+    final static JsonNodeName ID_PROPERTY = JsonNodeName.with(ID_PROPERTY_STRING);
+    final static JsonNodeName EMAIL_PROPERTY = JsonNodeName.with(EMAIL_PROPERTY_STRING);
+
+    // Identity.................................................................................................
 
     @Override
     boolean canBeEqual(final Object other) {

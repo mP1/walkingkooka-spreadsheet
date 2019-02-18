@@ -43,7 +43,7 @@ public abstract class Identity<I extends IdentityId> implements Value<I>, HashCo
         return this.id;
     }
 
-    private final I id;
+    final I id;
 
     // Object.................................................
 
