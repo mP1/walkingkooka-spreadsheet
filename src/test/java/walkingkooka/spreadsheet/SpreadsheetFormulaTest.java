@@ -393,6 +393,11 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 "{ \"text\": \"a+2\", \"error\": \"error123\"}");
     }
 
+    @Test
+    public void testToJsonNodeRoundtripTwice() {
+        this.toJsonNodeRoundTripTwiceAndCheck(this.createObject());
+    }
+
     // toString...............................................................................................
 
     @Test
