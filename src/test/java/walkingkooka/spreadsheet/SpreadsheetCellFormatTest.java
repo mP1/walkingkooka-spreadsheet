@@ -198,6 +198,11 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
         this.toJsonNodeAndCheck(this.createObject(), JsonNode.string(PATTERN));
     }
 
+    @Test
+    public void testToJsonNodeRoundtripTwice() {
+        this.toJsonNodeRoundTripTwiceAndCheck(this.createObject());
+    }
+
     // toString................................................................................................
 
     @Test

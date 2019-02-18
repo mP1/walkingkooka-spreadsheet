@@ -101,6 +101,11 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
         this.toJsonNodeAndCheck(this.createObject(), JsonNode.string(MESSAGE));
     }
 
+    @Test
+    public void testToJsonNodeRoundtripTwice() {
+        this.toJsonNodeRoundTripTwiceAndCheck(this.createObject());
+    }
+
     // toString...............................................................................................
 
     @Test
