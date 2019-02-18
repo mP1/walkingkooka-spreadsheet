@@ -463,6 +463,11 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "}");
     }
 
+    @Test
+    public void testToJsonNodeRoundtripTwice() {
+        this.toJsonNodeRoundTripTwiceAndCheck(this.createObject());
+    }
+
     // toString...............................................................................................
 
     @Test
