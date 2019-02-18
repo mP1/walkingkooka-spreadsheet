@@ -21,11 +21,15 @@ package walkingkooka.spreadsheet;
 import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.test.HashCodeEqualsDefined;
+import walkingkooka.tree.json.HasJsonNode;
+import walkingkooka.tree.json.JsonNode;
 
 /**
  * Identifies a single spreadsheet.
  */
-public final class SpreadsheetId implements HashCodeEqualsDefined, Value<Long> {
+public final class SpreadsheetId implements HashCodeEqualsDefined,
+        HasJsonNode,
+        Value<Long> {
 
     public static SpreadsheetId with(final long value) {
         return new SpreadsheetId(value);
@@ -45,6 +49,20 @@ public final class SpreadsheetId implements HashCodeEqualsDefined, Value<Long> {
     }
 
     private Long value;
+
+    // HasJsonNode..........................................................................................
+
+    /**
+     * Factory that creates a {@link SpreadsheetId} from a {@link JsonNode}
+     */
+    public static SpreadsheetId fromJsonNode(final JsonNode node) {
+        return with(JsonNode.fromJsonNodeLong(node));
+    }
+
+    @Override
+    public JsonNode toJsonNode() {
+        return JsonNode.wrapLong(this.value);
+    }
 
     // HashCodeEqualsDefined..........................................................................................
 
