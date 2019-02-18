@@ -7,6 +7,9 @@ import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.json.HasJsonNode;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonStringNode;
 
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -14,7 +17,9 @@ import java.util.function.Predicate;
 /**
  * The name of a group.
  */
-final public class GroupName implements Name, Comparable<GroupName> {
+final public class GroupName implements Name,
+        Comparable<GroupName>,
+        HasJsonNode {
 
     private final static CharPredicate LETTER = CharPredicates.range('A', 'Z').or(CharPredicates.range('a', 'z'));
 
@@ -63,6 +68,26 @@ final public class GroupName implements Name, Comparable<GroupName> {
     }
 
     final String name;
+
+    // HasJsonNode...............................................................................
+
+    /**
+     * Accepts a json string holding the name string
+     */
+    public static GroupName fromJsonNode(final JsonNode node) {
+        Objects.requireNonNull(node, "node");
+
+        if (!node.isString()) {
+            throw new IllegalArgumentException("Node is not a string=" + node);
+        }
+
+        return with(JsonStringNode.class.cast(node).text());
+    }
+
+    @Override
+    public JsonNode toJsonNode() {
+        return JsonNode.string(this.toString());
+    }
 
     // Object..................................................................................................
 
