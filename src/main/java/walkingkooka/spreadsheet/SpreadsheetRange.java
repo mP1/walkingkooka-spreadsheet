@@ -9,6 +9,9 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.json.HasJsonNode;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonStringNode;
 
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +21,9 @@ import java.util.stream.Stream;
 /**
  * Holds a range. Note the begin component is always before the end, with rows being the significant axis before column.
  */
-public final class SpreadsheetRange implements ExpressionReference, HashCodeEqualsDefined {
+public final class SpreadsheetRange implements ExpressionReference, 
+        HashCodeEqualsDefined,
+        HasJsonNode {
 
     /**
      * Factory that parses some text holding a range.
@@ -206,6 +211,26 @@ public final class SpreadsheetRange implements ExpressionReference, HashCodeEqua
         Objects.requireNonNull(store, "store");
 
         this.cellStream().forEach(c -> store.delete(c));
+    }
+
+    // HasJsonNode...........................................................................................
+
+    /**
+     * Factory that creates a {@link SpreadsheetRange} from a {@link JsonNode} holding the range in string form.
+     */
+    public static SpreadsheetRange fromJsonNode(final JsonNode node) {
+        Objects.requireNonNull(node, "node");
+
+        if (!node.isString()) {
+            throw new IllegalArgumentException("Node is not an string=" + node);
+        }
+
+        return parse(JsonStringNode.class.cast(node).value());
+    }
+
+    @Override
+    public JsonNode toJsonNode() {
+        return JsonNode.string(this.toString());
     }
 
     // HashCodeEqualsDefined.......................................................................................
