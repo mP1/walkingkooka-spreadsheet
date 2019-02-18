@@ -1,11 +1,16 @@
 package walkingkooka.spreadsheet.security;
 
+import walkingkooka.tree.json.HasJsonNode;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeName;
+
 import java.util.Objects;
 
 /**
  * A group defined in the system.
  */
-public final class Group extends Identity<GroupId> {
+public final class Group extends Identity<GroupId> 
+        implements HasJsonNode {
 
     /**
      * Factory that creates a new {@link Group}.
@@ -30,6 +35,61 @@ public final class Group extends Identity<GroupId> {
     }
 
     private final GroupName name;
+
+    // HasJsonNode..........................................................................................
+
+    /**
+     * Factory that creates a {@link Group} from a {@link JsonNode}.
+     */
+    public static Group fromJsonNode(final JsonNode node) {
+        Objects.requireNonNull(node, "node");
+
+        // object
+        if (!node.isObject()) {
+            throw new IllegalArgumentException("Node is not an object=" + node);
+        }
+
+        GroupId id = null;
+        GroupName groupName = null;
+
+        for (JsonNode child : node.children()) {
+            final JsonNodeName name = child.name();
+            switch (name.value()) {
+                case ID_PROPERTY_STRING:
+                    id = GroupId.fromJsonNode(child);
+                    break;
+                case NAME_PROPERTY_STRING:
+                    groupName = GroupName.fromJsonNode(child);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown property " + name + "=" + node);
+            }
+        }
+
+        if (null == id) {
+            HasJsonNode.requiredPropertyMissing(ID_PROPERTY, node);
+        }
+        if (null == groupName) {
+            HasJsonNode.requiredPropertyMissing(NAME_PROPERTY, node);
+        }
+
+        return new Group(id, groupName);
+    }
+
+    @Override
+    public JsonNode toJsonNode() {
+        return JsonNode.object()
+                .set(ID_PROPERTY, this.id.toJsonNode())
+                .set(NAME_PROPERTY, this.name.toJsonNode());
+    }
+
+    private final static String ID_PROPERTY_STRING = "id";
+    private final static String NAME_PROPERTY_STRING = "name";
+
+    final static JsonNodeName ID_PROPERTY = JsonNodeName.with(ID_PROPERTY_STRING);
+    final static JsonNodeName NAME_PROPERTY = JsonNodeName.with(NAME_PROPERTY_STRING);
+
+    // Identity.................................................................................................
 
     @Override
     boolean canBeEqual(final Object other) {
