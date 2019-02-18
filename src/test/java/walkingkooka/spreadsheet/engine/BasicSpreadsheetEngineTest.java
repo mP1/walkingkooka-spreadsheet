@@ -3424,7 +3424,7 @@ public final class BasicSpreadsheetEngineTest implements SpreadsheetEngineTestin
     }
 
     private SpreadsheetCellStore cellStore() {
-        return SpreadsheetCellStores.basic();
+        return SpreadsheetCellStores.treeMap();
     }
 
     private SpreadsheetLabelStore labelStore() {

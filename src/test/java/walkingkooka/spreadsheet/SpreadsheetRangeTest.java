@@ -273,7 +273,7 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
 
     @Test
     public void testClear() {
-        final SpreadsheetCellStore store = SpreadsheetCellStores.basic();
+        final SpreadsheetCellStore store = SpreadsheetCellStores.treeMap();
 
         final SpreadsheetCell a = spreadsheetCell(1, 1);
         final SpreadsheetCell b = spreadsheetCell(2, 2);
