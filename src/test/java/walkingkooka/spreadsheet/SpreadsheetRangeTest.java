@@ -13,6 +13,8 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
+import walkingkooka.tree.json.HasJsonNodeTesting;
+import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.MemberVisibility;
 
 import java.util.List;
@@ -26,6 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRange>,
         HashCodeEqualsDefinedTesting<SpreadsheetRange>,
+        HasJsonNodeTesting<SpreadsheetRange>,
         ParseStringTesting<SpreadsheetRange> {
 
     private final static int COLUMN1 = 10;
@@ -413,6 +416,28 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
         this.parseAndCheck("A1..A2", SpreadsheetRange.with(SpreadsheetCellReference.parse("A1"), SpreadsheetCellReference.parse("A2")));
     }
 
+    // HasJsonNodeTesting...........................................................................................
+
+    @Test
+    public void testFromJsonNodeInvalidFails() {
+        this.fromJsonNodeFails(JsonNode.string("A1.."));
+    }
+
+    @Test
+    public void testFromJsonNode() {
+        this.fromJsonNodeAndCheck(JsonNode.string("A1..A2"), SpreadsheetRange.parse("A1..A2"));
+    }
+
+    @Test
+    public void testToJsonNode() {
+        this.toJsonNodeAndCheck(SpreadsheetRange.parse("A1..A2"), JsonNode.string("A1..A2"));
+    }
+
+    @Test
+    public void testToJsonNodeRoundtrip() {
+        this.toJsonNodeRoundTripTwiceAndCheck(SpreadsheetRange.parse("A1..A2"));
+    }
+
     //helper.................................................................................................
 
     private SpreadsheetRange range() {
@@ -511,6 +536,13 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
     @Override
     public MemberVisibility typeVisibility() {
         return MemberVisibility.PUBLIC;
+    }
+
+    // HasJsonNodeTesting...........................................................................................
+
+    @Override
+    public SpreadsheetRange fromJsonNode(final JsonNode node) {
+        return SpreadsheetRange.fromJsonNode(node);
     }
 
     // ParseStringTesting..................................................................................................
