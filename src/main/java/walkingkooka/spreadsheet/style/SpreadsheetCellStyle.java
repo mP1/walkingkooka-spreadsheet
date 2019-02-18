@@ -103,6 +103,33 @@ public final class SpreadsheetCellStyle implements HashCodeEqualsDefined,
 
     // HasJsonNode.........................................................................................
 
+    /**
+     * Factory that creates a {@link SpreadsheetCellStyle} from a {@link JsonNode}.
+     */
+    public static SpreadsheetCellStyle fromJsonNode(final JsonNode node) {
+        Objects.requireNonNull(node, "node");
+
+        // object
+        if (!node.isObject()) {
+            throw new IllegalArgumentException("Node is not an object=" + node);
+        }
+
+        SpreadsheetTextStyle text = SpreadsheetTextStyle.EMPTY;
+
+        for (JsonNode child : node.children()) {
+            final JsonNodeName name = child.name();
+            switch (name.value()) {
+                case TEXT_PROPERTY_STRING:
+                    text = SpreadsheetTextStyle.fromJsonNode(child);
+                    break;
+                default:
+                    HasJsonNode.unknownPropertyPresent(name, node);
+            }
+        }
+
+        return with(text);
+    }
+    
     @Override
     public JsonNode toJsonNode() {
         final JsonObjectNode object = JsonNode.object();
@@ -112,7 +139,10 @@ public final class SpreadsheetCellStyle implements HashCodeEqualsDefined,
                 object.set(TEXT_PROPERTY, text.toJsonNode());
     }
 
-    private final static JsonNodeName TEXT_PROPERTY = JsonNodeName.with("text");
+    private final static String TEXT_PROPERTY_STRING = "text";
+
+    // @VisibleForTesting
+    final static JsonNodeName TEXT_PROPERTY = JsonNodeName.with(TEXT_PROPERTY_STRING);
 
     // HashCodeEqualsDefined.........................................................................................
 

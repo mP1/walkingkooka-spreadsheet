@@ -61,6 +61,42 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     // HasJsonNode...............................................................................................
 
     @Test
+    public void testFromJsonNodeBooleanFails() {
+        this.fromJsonNodeFails(JsonNode.booleanNode(true));
+    }
+
+    @Test
+    public void testFromJsonNodeNullFails() {
+        this.fromJsonNodeFails(JsonNode.nullNode());
+    }
+
+    @Test
+    public void testFromJsonNodeNumberFails() {
+        this.fromJsonNodeFails(JsonNode.number(12));
+    }
+
+    @Test
+    public void testFromJsonNodeArrayFails() {
+        this.fromJsonNodeFails(JsonNode.array());
+    }
+
+    @Test
+    public void testFromJsonNodeObjectFails() {
+        this.fromJsonNodeFails(JsonNode.object());
+    }
+
+    @Test
+    public void testFromJsonNodeStringInvalidFails() {
+        this.fromJsonNodeFails(JsonNode.string(""));
+    }
+
+    @Test
+    public void testFromJsonNodeString() {
+        this.fromJsonNodeAndCheck(JsonNode.string(MESSAGE),
+                SpreadsheetError.with(MESSAGE));
+    }
+
+    @Test
     public void testToJsonNode() {
         this.toJsonNodeAndCheck(this.createObject(), JsonNode.string(MESSAGE));
     }
@@ -89,5 +125,12 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     @Override
     public MemberVisibility typeVisibility() {
         return MemberVisibility.PUBLIC;
+    }
+
+    // HasJsonNodeTesting............................................................
+
+    @Override
+    public SpreadsheetError fromJsonNode(final JsonNode jsonNode) {
+        return SpreadsheetError.fromJsonNode(jsonNode);
     }
 }

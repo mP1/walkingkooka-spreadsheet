@@ -5,6 +5,7 @@ import walkingkooka.Value;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNumberNode;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -63,6 +64,19 @@ public final class FontSize implements Comparable<FontSize>, HashCodeEqualsDefin
     private final int value;
 
     // HasJsonNode ...................................................................................................
+
+    /**
+     * Factory that creates a {@link FontSize} from the given node.
+     */
+    public static FontSize fromJsonNode(final JsonNode node) {
+        Objects.requireNonNull(node, "node");
+
+        if (!node.isNumber()) {
+            throw new IllegalArgumentException("Node is not a number=" + node);
+        }
+
+        return with(JsonNumberNode.class.cast(node).value().intValue());
+    }
 
     @Override
     public JsonNode toJsonNode() {

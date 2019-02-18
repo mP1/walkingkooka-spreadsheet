@@ -221,6 +221,59 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
 
     // HasJsonNode..........................................................................................
 
+    /**
+     * Factory that creates a {@link SpreadsheetCell} from a {@link JsonNode}.
+     */
+    public static SpreadsheetCell fromJsonNode(final JsonNode node) {
+        Objects.requireNonNull(node, "node");
+
+        // object
+        if (!node.isObject()) {
+            throw new IllegalArgumentException("Node is not an object=" + node);
+        }
+
+        SpreadsheetCellReference reference = null;
+        SpreadsheetFormula formula = null;
+        SpreadsheetCellStyle style = null;
+        SpreadsheetCellFormat format = null;
+        SpreadsheetFormattedCell formatted = null;
+
+        for (JsonNode child : node.children()) {
+            final JsonNodeName name = child.name();
+            switch (name.value()) {
+                case REFERENCE_PROPERTY_STRING:
+                    reference = SpreadsheetCellReference.fromJsonNode(child);
+                    break;
+                case FORMULA_PROPERTY_STRING:
+                    formula = SpreadsheetFormula.fromJsonNode(child);
+                    break;
+                case STYLE_PROPERTY_STRING:
+                    style = SpreadsheetCellStyle.fromJsonNode(child);
+                    break;
+                case FORMAT_PROPERTY_STRING:
+                    format = SpreadsheetCellFormat.fromJsonNode(child);
+                    break;
+                case FORMATTED_PROPERTY_STRING:
+                    formatted = SpreadsheetFormattedCell.fromJsonNode(child);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown property " + name + "=" + node);
+            }
+        }
+
+        if (null == reference) {
+            HasJsonNode.requiredPropertyMissing(REFERENCE_PROPERTY, node);
+        }
+        if (null == formula) {
+            HasJsonNode.requiredPropertyMissing(FORMULA_PROPERTY, node);
+        }
+        if (null == style) {
+            HasJsonNode.requiredPropertyMissing(STYLE_PROPERTY, node);
+        }
+
+        return with(reference, formula, style, Optional.ofNullable(format), Optional.ofNullable(formatted));
+    }
+
     @Override
     public JsonNode toJsonNode() {
         JsonObjectNode object = JsonNode.object();
@@ -239,11 +292,17 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
         return object;
     }
 
-    private final static JsonNodeName REFERENCE_PROPERTY = JsonNodeName.with("reference");
-    private final static JsonNodeName FORMULA_PROPERTY = JsonNodeName.with("formula");
-    private final static JsonNodeName STYLE_PROPERTY = JsonNodeName.with("style");
-    private final static JsonNodeName FORMAT_PROPERTY = JsonNodeName.with("format");
-    private final static JsonNodeName FORMATTED_PROPERTY = JsonNodeName.with("formatted");
+    private final static String REFERENCE_PROPERTY_STRING = "reference";
+    private final static String FORMULA_PROPERTY_STRING = "formula";
+    private final static String STYLE_PROPERTY_STRING = "style";
+    private final static String FORMAT_PROPERTY_STRING = "format";
+    private final static String FORMATTED_PROPERTY_STRING = "formatted";
+
+    final static JsonNodeName REFERENCE_PROPERTY = JsonNodeName.with(REFERENCE_PROPERTY_STRING);
+    final static JsonNodeName FORMULA_PROPERTY = JsonNodeName.with(FORMULA_PROPERTY_STRING);
+    final static JsonNodeName STYLE_PROPERTY = JsonNodeName.with(STYLE_PROPERTY_STRING);
+    final static JsonNodeName FORMAT_PROPERTY = JsonNodeName.with(FORMAT_PROPERTY_STRING);
+    final static JsonNodeName FORMATTED_PROPERTY = JsonNodeName.with(FORMATTED_PROPERTY_STRING);
 
     // HashCodeEqualsDefined..........................................................................................
 
