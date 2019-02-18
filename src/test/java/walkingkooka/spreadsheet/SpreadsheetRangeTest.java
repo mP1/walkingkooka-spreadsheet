@@ -8,6 +8,7 @@ import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
@@ -24,7 +25,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRange>,
-        HashCodeEqualsDefinedTesting<SpreadsheetRange> {
+        HashCodeEqualsDefinedTesting<SpreadsheetRange>,
+        ParseStringTesting<SpreadsheetRange> {
 
     private final static int COLUMN1 = 10;
     private final static int ROW1 = 11;
@@ -374,6 +376,43 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
         this.check(range, 111, 11, 111 + 1, 11 + 1);
     }
 
+    // ParseStringTesting.................................................................................
+
+    @Test
+    public void testParseMissingSeparatorFails() {
+        this.parseFails("A1", IllegalArgumentException.class);
+    }
+
+    @Test
+    public void testParseMissingSeparatorFails2() {
+        this.parseFails("A1.", IllegalArgumentException.class);
+    }
+
+    @Test
+    public void testParseMissingBeginFails() {
+        this.parseFails("..A2", IllegalArgumentException.class);
+    }
+
+    @Test
+    public void testParseMissingEndFails() {
+        this.parseFails("A2..", IllegalArgumentException.class);
+    }
+
+    @Test
+    public void testParseInvalidBeginFails() {
+        this.parseFails("##..A2", IllegalArgumentException.class);
+    }
+
+    @Test
+    public void testParseInvalidEndFails() {
+        this.parseFails("A1..##", IllegalArgumentException.class);
+    }
+
+    @Test
+    public void testParse() {
+        this.parseAndCheck("A1..A2", SpreadsheetRange.with(SpreadsheetCellReference.parse("A1"), SpreadsheetCellReference.parse("A2")));
+    }
+
     //helper.................................................................................................
 
     private SpreadsheetRange range() {
@@ -462,6 +501,8 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
         assertEquals(expected, range.isSingleCell(), () -> "range=" + range + " isSingleCell");
     }
 
+    // ClassTesting..................................................................................................
+
     @Override
     public Class<SpreadsheetRange> type() {
         return SpreadsheetRange.class;
@@ -470,5 +511,22 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
     @Override
     public MemberVisibility typeVisibility() {
         return MemberVisibility.PUBLIC;
+    }
+
+    // ParseStringTesting..................................................................................................
+
+    @Override
+    public SpreadsheetRange parse(final String text) {
+        return SpreadsheetRange.parse(text);
+    }
+
+    @Override
+    public Class<? extends RuntimeException> parseFailedExpected(final Class<? extends RuntimeException> classs) {
+        return classs;
+    }
+
+    @Override
+    public RuntimeException parseFailedExpected(final RuntimeException cause) {
+        return cause;
     }
 }
