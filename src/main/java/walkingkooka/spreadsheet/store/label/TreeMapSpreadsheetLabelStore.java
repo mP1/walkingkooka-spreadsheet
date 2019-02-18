@@ -15,19 +15,19 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetLabelStore} that uses a {@link Map}.
  */
-final class BasicSpreadsheetLabelStore implements SpreadsheetLabelStore {
+final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
 
     /**
-     * Factory that creates a new {@link BasicSpreadsheetLabelStore}
+     * Factory that creates a new {@link TreeMapSpreadsheetLabelStore}
      */
-    static BasicSpreadsheetLabelStore create() {
-        return new BasicSpreadsheetLabelStore();
+    static TreeMapSpreadsheetLabelStore create() {
+        return new TreeMapSpreadsheetLabelStore();
     }
 
     /**
      * Private ctor.
      */
-    private BasicSpreadsheetLabelStore() {
+    private TreeMapSpreadsheetLabelStore() {
         super();
     }
 

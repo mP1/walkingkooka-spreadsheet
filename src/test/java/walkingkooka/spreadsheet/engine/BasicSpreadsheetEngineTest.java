@@ -3428,7 +3428,7 @@ public final class BasicSpreadsheetEngineTest implements SpreadsheetEngineTestin
     }
 
     private SpreadsheetLabelStore labelStore() {
-        return SpreadsheetLabelStores.basic();
+        return SpreadsheetLabelStores.treeMap();
     }
 
     private SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> conditionalFormattingRules() {
