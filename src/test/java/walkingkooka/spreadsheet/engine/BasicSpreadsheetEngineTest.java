@@ -3432,7 +3432,7 @@ public final class BasicSpreadsheetEngineTest implements SpreadsheetEngineTestin
     }
 
     private SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> conditionalFormattingRules() {
-        return SpreadsheetRangeStores.basic();
+        return SpreadsheetRangeStores.treeMap();
     }
 
     private SpreadsheetColumnReference column(final int column) {
