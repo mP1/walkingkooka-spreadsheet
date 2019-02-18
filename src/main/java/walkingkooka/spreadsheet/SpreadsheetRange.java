@@ -3,6 +3,7 @@ package walkingkooka.spreadsheet;
 import walkingkooka.Cast;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.test.HashCodeEqualsDefined;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
@@ -18,6 +19,41 @@ import java.util.stream.Stream;
  * Holds a range. Note the begin component is always before the end, with rows being the significant axis before column.
  */
 public final class SpreadsheetRange implements ExpressionReference, HashCodeEqualsDefined {
+
+    /**
+     * Factory that parses some text holding a range.
+     */
+    public static SpreadsheetRange parse(final String text) {
+        CharSequences.failIfNullOrEmpty(text, "text");
+
+        final int dash = text.indexOf(SEPARATOR);
+        if (-1 == dash) {
+            throw new IllegalArgumentException("Missing begin and end separator " + CharSequences.quote(SEPARATOR) + "=" + CharSequences.quote(text));
+        }
+
+        if (0 == dash) {
+            throw new IllegalArgumentException("Missing begin =" + CharSequences.quote(text));
+        }
+
+        if (dash + SEPARATOR.length() == text.length() - 1) {
+            throw new IllegalArgumentException("Missing end =" + CharSequences.quote(text));
+        }
+
+        return with(parse0(text.substring(0, dash), "begin", text),
+                parse0(text.substring(dash + SEPARATOR.length()), "end", text));
+    }
+
+    private static SpreadsheetCellReference parse0(final String component,
+                                                   final String label,
+                                                   final String text) {
+        try {
+            return SpreadsheetCellReference.parse(component);
+        } catch (final IllegalArgumentException cause) {
+            throw new IllegalArgumentException("Invalid " + label + " in " + CharSequences.quote(text), cause);
+        }
+    }
+
+    private final static String SEPARATOR = "..";
 
     /**
      * Computes the range of the given cells.
@@ -192,6 +228,6 @@ public final class SpreadsheetRange implements ExpressionReference, HashCodeEqua
 
     @Override
     public String toString() {
-        return this.begin + ".." + this.end;
+        return this.begin + SEPARATOR + this.end;
     }
 }
