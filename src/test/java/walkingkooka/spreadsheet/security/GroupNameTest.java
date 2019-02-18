@@ -4,11 +4,14 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.naming.NameTesting;
 import walkingkooka.naming.PropertiesPath;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.tree.json.HasJsonNodeTesting;
+import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.MemberVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-final public class GroupNameTest implements NameTesting<GroupName, GroupName> {
+final public class GroupNameTest implements NameTesting<GroupName, GroupName>,
+        HasJsonNodeTesting<GroupName> {
 
     @Test
     public void testCreateEmptyStringFails() {
@@ -78,6 +81,49 @@ final public class GroupNameTest implements NameTesting<GroupName, GroupName> {
         this.createNameAndCheck("ABCDEF");
     }
 
+    // toJsonNode .......................................................................................
+
+    @Test
+    public void testFromJsonNodeBooleanFails() {
+        this.fromJsonNodeFails(JsonNode.booleanNode(true));
+    }
+
+    @Test
+    public void testFromJsonNodeNullFails() {
+        this.fromJsonNodeFails(JsonNode.nullNode());
+    }
+
+    @Test
+    public void testFromJsonNodeNumberFails() {
+        this.fromJsonNodeFails(JsonNode.number(123));
+    }
+
+    @Test
+    public void testFromJsonNodeArrayFails() {
+        this.fromJsonNodeFails(JsonNode.array());
+    }
+
+    @Test
+    public void testFromJsonNodeObjectFails() {
+        this.fromJsonNodeFails(JsonNode.object());
+    }
+
+    @Test
+    public void testFromJsonNodeInvalidEmailFails() {
+        this.fromJsonNodeFails(JsonNode.string("!"));
+    }
+
+    @Test
+    public void testFromJsonNode() {
+        final String value = "group123";
+        this.fromJsonNodeAndCheck(JsonNode.string(value), GroupName.with(value));
+    }
+
+    @Test
+    public void testToJsonNodeRoundtrip() {
+        this.toJsonNodeRoundTripTwiceAndCheck(GroupName.with("group123"));
+    }
+
     @Override
     public GroupName createName(final String name) {
         return GroupName.with(name);
@@ -111,5 +157,12 @@ final public class GroupNameTest implements NameTesting<GroupName, GroupName> {
     @Override
     public MemberVisibility typeVisibility() {
         return MemberVisibility.PUBLIC;
+    }
+
+    // HasJsonNodeTesting......................................................................................
+
+    @Override
+    public final GroupName fromJsonNode(final JsonNode from) {
+        return GroupName.fromJsonNode(from);
     }
 }
