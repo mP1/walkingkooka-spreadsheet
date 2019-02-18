@@ -8,7 +8,8 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeStoreTesting<BasicSpreadsheetRangeStore<String>, String> {
+public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRangeStoreTestCase<TreeMapSpreadsheetRangeStore<String>>
+        implements SpreadsheetRangeStoreTesting<TreeMapSpreadsheetRangeStore<String>, String> {
 
     /**
      * RANGE1A and RANGE1B share a common TOPLEFT.
@@ -43,7 +44,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testSaveAndLoadRange() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
 
@@ -54,7 +55,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testSaveAndLoadRangeSameValue() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE1A, VALUE1);
@@ -66,7 +67,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testSaveAndLoadRangeWithMultipleValues() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE1A, VALUE2);
@@ -78,7 +79,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testSaveAndLoadRangeWithMultipleValuesSameValue() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE1A, VALUE2);
@@ -91,7 +92,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testSaveAndLoadMultipleRanges() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE2A, VALUE2);
@@ -106,7 +107,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testSaveAndLoadMultipleRangesMultipleValues() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE1A, VALUE2);
@@ -121,7 +122,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testSaveAndLoadOverlappingRanges() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE1B, VALUE2);
@@ -134,7 +135,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testSaveAndLoadOverlappingRanges2() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE1C, VALUE2);
@@ -147,7 +148,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testSaveAndLoadOverlappingRanges3() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE1C, VALUE2);
@@ -160,7 +161,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testSaveAndLoadOverlappingRanges4() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE2A, VALUE1);
         store.saveValue(RANGE2B, VALUE2);
@@ -175,7 +176,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testLoadCellBeginRange() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
 
@@ -184,7 +185,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testLoadCellMidRange() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
 
@@ -197,7 +198,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testLoadCellEndRange() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
 
@@ -209,7 +210,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
         assertNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
         assertNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
 
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE1C, VALUE2);
@@ -223,7 +224,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
         assertNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
         assertNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
 
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE1C, VALUE2);
@@ -237,7 +238,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
         assertNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
         assertNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
 
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE1C, VALUE2);
@@ -251,7 +252,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
         assertNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
         assertNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
 
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE1B, VALUE2);
@@ -265,7 +266,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
         assertNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
         assertNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
 
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE1B, VALUE2);
@@ -279,7 +280,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
         assertNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
         assertNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
 
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE1B, VALUE2);
@@ -290,7 +291,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testLoadCellMidRange2() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE2A, VALUE2);
@@ -307,7 +308,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testDeleteRange() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
 
@@ -318,7 +319,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testDeleteRange2() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE1A, VALUE2);
@@ -332,7 +333,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testDelete3() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE1A, VALUE2);
@@ -348,7 +349,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testDelete4() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE1A, VALUE2);
@@ -372,7 +373,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testReplaceValueSame() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.replaceValue(RANGE1A, VALUE1, VALUE1);
@@ -384,7 +385,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testReplaceValueInvalidOldValue() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.replaceValue(RANGE1A, VALUE3, VALUE2);
@@ -396,7 +397,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testReplaceValue() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.replaceValue(RANGE1A, VALUE2, VALUE1);
@@ -408,7 +409,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testReplaceValueRangeMultipleValues() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE1A, VALUE2);
@@ -421,7 +422,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testReplaceValueRangeMultipleValues2() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE1A, VALUE2);
@@ -437,7 +438,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testReplaceValueMany() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE1A, VALUE2);
@@ -457,7 +458,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testDeleteValueUnknownIgnored() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.deleteValue(RANGE1A, VALUE3);
@@ -469,7 +470,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testDeleteValue() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.deleteValue(RANGE1A, VALUE1);
@@ -479,7 +480,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testDeleteValue2() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE2A, VALUE2);
@@ -493,7 +494,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testDeleteValueIgnored2() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE2A, VALUE2);
@@ -507,7 +508,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testDeleteValueRangeMultipleValues() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE1A, VALUE2);
@@ -521,7 +522,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testDeleteValueRangeMultipleValues2() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE1A, VALUE2);
@@ -537,7 +538,7 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
 
     @Test
     public void testDeleteValueDifferentRanges() {
-        final BasicSpreadsheetRangeStore<String> store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
         store.saveValue(RANGE2A, VALUE2);
@@ -555,17 +556,22 @@ public final class BasicSpreadsheetRangeStoreTest implements SpreadsheetRangeSto
     // helpers ...................................................................................................
 
     @Override
-    public BasicSpreadsheetRangeStore createStore() {
-        return BasicSpreadsheetRangeStore.create();
+    public TreeMapSpreadsheetRangeStore createStore() {
+        return TreeMapSpreadsheetRangeStore.create();
     }
 
     @Override
-    public Class<BasicSpreadsheetRangeStore<String>> type() {
-        return Cast.to(BasicSpreadsheetRangeStore.class);
+    public Class<TreeMapSpreadsheetRangeStore<String>> type() {
+        return Cast.to(TreeMapSpreadsheetRangeStore.class);
     }
 
     @Override
     public String value() {
         return VALUE1;
+    }
+
+    @Override
+    public String typeNameSuffix() {
+        return "";
     }
 }

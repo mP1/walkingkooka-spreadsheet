@@ -6,13 +6,13 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
 import java.util.Comparator;
 
-final class BasicSpreadsheetRangeStoreBottomRightEntry<V> extends BasicSpreadsheetRangeStoreEntry<V> {
+final class TreeMapSpreadsheetRangeStoreBottomRightEntry<V> extends TreeMapSpreadsheetRangeStoreEntry<V> {
 
-    static <V> BasicSpreadsheetRangeStoreBottomRightEntry<V> with(final SpreadsheetRange range, final V value) {
-        return new BasicSpreadsheetRangeStoreBottomRightEntry<V>(range, value);
+    static <V> TreeMapSpreadsheetRangeStoreBottomRightEntry<V> with(final SpreadsheetRange range, final V value) {
+        return new TreeMapSpreadsheetRangeStoreBottomRightEntry<V>(range, value);
     }
 
-    private BasicSpreadsheetRangeStoreBottomRightEntry(final SpreadsheetRange range, final V value) {
+    private TreeMapSpreadsheetRangeStoreBottomRightEntry(final SpreadsheetRange range, final V value) {
         super(range, value);
     }
 
