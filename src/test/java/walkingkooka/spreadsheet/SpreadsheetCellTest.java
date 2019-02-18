@@ -9,6 +9,7 @@ import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.tree.json.HasJsonNodeTesting;
+import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
@@ -333,6 +334,116 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     // HasJsonNode...............................................................................................
 
+    // HasJsonNode.fromJsonNode.......................................................................................
+
+    @Test
+    public void testFromJsonNodeBooleanFails() {
+        this.fromJsonNodeFails(JsonNode.booleanNode(true));
+    }
+
+    @Test
+    public void testFromJsonNodeNullFails() {
+        this.fromJsonNodeFails(JsonNode.nullNode());
+    }
+
+    @Test
+    public void testFromJsonNodeNumberFails() {
+        this.fromJsonNodeFails(JsonNode.number(12));
+    }
+
+    @Test
+    public void testFromJsonNodeArrayFails() {
+        this.fromJsonNodeFails(JsonNode.array());
+    }
+
+    @Test
+    public void testFromJsonNodeStringFails() {
+        this.fromJsonNodeFails(JsonNode.string("fails"));
+    }
+
+    @Test
+    public void testFromJsonNodeObjectEmptyFails() {
+        this.fromJsonNodeFails(JsonNode.object());
+    }
+
+    @Test
+    public void testFromJsonNodeObjectReferenceMissingFails() {
+        this.fromJsonNodeFails(JsonNode.object()
+                .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode())
+                .set(SpreadsheetCell.STYLE_PROPERTY, style().toJsonNode()));
+    }
+
+    @Test
+    public void testFromJsonNodeObjectFormulaMissingFails() {
+        this.fromJsonNodeFails(JsonNode.object()
+                .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode())
+                .set(SpreadsheetCell.STYLE_PROPERTY, style().toJsonNode()));
+    }
+
+    @Test
+    public void testFromJsonNodeObjectStyleMissingFails() {
+        this.fromJsonNodeFails(JsonNode.object()
+                .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode())
+                .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode()));
+    }
+
+    @Test
+    public void testFromJsonNodeObjectReferenceAndFormulaAndStyle() {
+        this.fromJsonNodeAndCheck(JsonNode.object()
+                        .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode())
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode())
+                        .set(SpreadsheetCell.STYLE_PROPERTY, style().toJsonNode()),
+                SpreadsheetCell.with(reference(),
+                        formula(),
+                        style(),
+                        SpreadsheetCell.NO_FORMAT,
+                        SpreadsheetCell.NO_FORMATTED_CELL));
+    }
+
+    @Test
+    public void testFromJsonNodeObjectReferenceAndFormulaAndStyleAndFormat() {
+        this.fromJsonNodeAndCheck(JsonNode.object()
+                        .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode())
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode())
+                        .set(SpreadsheetCell.STYLE_PROPERTY, style().toJsonNode())
+                        .set(SpreadsheetCell.FORMAT_PROPERTY, format().get().toJsonNode()),
+                SpreadsheetCell.with(reference(),
+                        formula(),
+                        style(),
+                        format(),
+                        SpreadsheetCell.NO_FORMATTED_CELL));
+    }
+
+    @Test
+    public void testFromJsonNodeObjectReferenceAndFormulaAndStyleAndFormattedCell() {
+        this.fromJsonNodeAndCheck(JsonNode.object()
+                        .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode())
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode())
+                        .set(SpreadsheetCell.STYLE_PROPERTY, style().toJsonNode())
+                        .set(SpreadsheetCell.FORMATTED_PROPERTY, formatted().get().toJsonNode()),
+                SpreadsheetCell.with(reference(),
+                        formula(),
+                        style(),
+                        SpreadsheetCell.NO_FORMAT,
+                        formatted()));
+    }
+
+    @Test
+    public void testFromJsonNodeObjectReferenceAndFormulaAndStyleAndFormatAndFormattedCell() {
+        this.fromJsonNodeAndCheck(JsonNode.object()
+                        .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode())
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode())
+                        .set(SpreadsheetCell.STYLE_PROPERTY, style().toJsonNode())
+                        .set(SpreadsheetCell.FORMAT_PROPERTY, format().get().toJsonNode())
+                        .set(SpreadsheetCell.FORMATTED_PROPERTY, formatted().get().toJsonNode()),
+                SpreadsheetCell.with(reference(),
+                        formula(),
+                        style(),
+                        format(),
+                        formatted()));
+    }
+
+    // HasJsonNode .toJsonNode.........................................................................
     @Test
     public void testJsonNode() {
         this.toJsonNodeAndCheck(SpreadsheetCell.with(this.reference(COLUMN, ROW),
@@ -399,6 +510,10 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     private static SpreadsheetCellReference differentReference() {
         return reference(99, 888);
+    }
+
+    private static SpreadsheetCellReference reference() {
+        return reference(COLUMN, ROW);
     }
 
     private static SpreadsheetCellReference reference(final int column, final int row) {
@@ -486,5 +601,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Override
     public boolean compareAndEqualsMatch() {
         return false; // comparing does not include all properties, so compareTo == 0 <> equals
+    }
+
+    // HasJsonNodeTesting............................................................
+
+    @Override
+    public SpreadsheetCell fromJsonNode(final JsonNode jsonNode) {
+        return SpreadsheetCell.fromJsonNode(jsonNode);
     }
 }

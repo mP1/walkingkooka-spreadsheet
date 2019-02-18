@@ -6,6 +6,7 @@ import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.json.HasJsonNodeTesting;
+import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
@@ -23,7 +24,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     private final static String TEXT = "a+2";
     private final static String EXPRESSION = "1+2";
-    private final static Object VALUE = 3;
+    private final static Double VALUE = 3.0;
     private final static String ERROR = "Message #1";
 
     private final static String DIFFERENT_TEXT = "99+99";
@@ -289,7 +290,74 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 .setError(error);
     }
 
-    // toJsonNode...............................................................................................
+    // HasJsonNode..............................................................................................
+
+    // HasJsonNode.fromJsonNode.......................................................................................
+
+    @Test
+    public void testFromJsonNodeBooleanFails() {
+        this.fromJsonNodeFails(JsonNode.booleanNode(true));
+    }
+
+    @Test
+    public void testFromJsonNodeNullFails() {
+        this.fromJsonNodeFails(JsonNode.nullNode());
+    }
+
+    @Test
+    public void testFromJsonNodeNumberFails() {
+        this.fromJsonNodeFails(JsonNode.number(12));
+    }
+
+    @Test
+    public void testFromJsonNodeArrayFails() {
+        this.fromJsonNodeFails(JsonNode.array());
+    }
+
+    @Test
+    public void testFromJsonNodeStringFails() {
+        this.fromJsonNodeFails(JsonNode.string("fails"));
+    }
+
+    @Test
+    public void testFromJsonNodeObjectEmptyFails() {
+        this.fromJsonNodeFails(JsonNode.object());
+    }
+
+    @Test
+    public void testFromJsonNodeText() {
+        this.fromJsonNodeAndCheck(JsonNode.object()
+                        .set(SpreadsheetFormula.TEXT_PROPERTY, JsonNode.string(TEXT)),
+                SpreadsheetFormula.with(TEXT));
+    }
+
+    @Test
+    public void testFromJsonNodeTextAndError() {
+        final SpreadsheetError error = SpreadsheetError.with(ERROR);
+
+        this.fromJsonNodeAndCheck(JsonNode.object()
+                        .set(SpreadsheetFormula.TEXT_PROPERTY, JsonNode.string(TEXT))
+                        .set(SpreadsheetFormula.ERROR_PROPERTY, error.toJsonNode()),
+                SpreadsheetFormula.with(TEXT).setError(Optional.of(error)));
+    }
+
+    @Test
+    public void testFromJsonNodeTextAndValue() {
+        this.fromJsonNodeAndCheck(JsonNode.object()
+                        .set(SpreadsheetFormula.TEXT_PROPERTY, JsonNode.string(TEXT))
+                        .set(SpreadsheetFormula.VALUE_PROPERTY, JsonNode.number(VALUE)),
+                SpreadsheetFormula.with(TEXT).setValue(Optional.of(VALUE)));
+    }
+
+    @Test
+    public void testFromJsonNodeTextAndErrorAndValueFails() {
+        this.fromJsonNodeFails(JsonNode.object()
+                .set(SpreadsheetFormula.TEXT_PROPERTY, JsonNode.string(TEXT))
+                .set(SpreadsheetFormula.VALUE_PROPERTY, JsonNode.string("1"))
+                .set(SpreadsheetFormula.ERROR_PROPERTY, SpreadsheetError.with(ERROR).toJsonNode()));
+    }
+
+    // HasJsonNode.toJsonNode..............................................................................................
 
     @Test
     public void testToJsonNodeText() {
@@ -409,5 +477,12 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Override
     public MemberVisibility typeVisibility() {
         return MemberVisibility.PUBLIC;
+    }
+
+    // HasJsonNodeTesting............................................................
+
+    @Override
+    public SpreadsheetFormula fromJsonNode(final JsonNode jsonNode) {
+        return SpreadsheetFormula.fromJsonNode(jsonNode);
     }
 }

@@ -14,6 +14,44 @@ public final class FontFamilyNameTest implements ClassTesting2<FontFamilyName>,
 
     private final static String TEXT = "Times New Roman";
 
+    // HasJsonNode.................................................
+
+    @Test
+    public void testFromJsonNodeBooleanFails() {
+        this.fromJsonNodeFails(JsonNode.booleanNode(true));
+    }
+
+    @Test
+    public void testFromJsonNodeNullFails() {
+        this.fromJsonNodeFails(JsonNode.nullNode());
+    }
+
+    @Test
+    public void testFromJsonNodeNumberFails() {
+        this.fromJsonNodeFails(JsonNode.number(12));
+    }
+
+    @Test
+    public void testFromJsonNodeArrayFails() {
+        this.fromJsonNodeFails(JsonNode.array());
+    }
+
+    @Test
+    public void testFromJsonNodeObjectFails() {
+        this.fromJsonNodeFails(JsonNode.object());
+    }
+
+    @Test
+    public void testFromJsonNodeStringInvalidFails() {
+        this.fromJsonNodeFails(JsonNode.string(""));
+    }
+
+    @Test
+    public void testFromJsonNodeString() {
+        this.fromJsonNodeAndCheck(JsonNode.string(TEXT),
+                FontFamilyName.with(TEXT));
+    }
+
     @Test
     public void testToJsonNode() {
         this.toJsonNodeAndCheck(this.createComparable(), JsonNode.string(TEXT));
@@ -52,5 +90,12 @@ public final class FontFamilyNameTest implements ClassTesting2<FontFamilyName>,
     @Override
     public MemberVisibility typeVisibility() {
         return MemberVisibility.PUBLIC;
+    }
+
+    // HasJsonNodeTesting............................................................
+
+    @Override
+    public FontFamilyName fromJsonNode(final JsonNode jsonNode) {
+        return FontFamilyName.fromJsonNode(jsonNode);
     }
 }

@@ -6,6 +6,9 @@ import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.Whitespace;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonStringNode;
+
+import java.util.Objects;
 
 /**
  * An error for an individual cell or formula which may be a parsing or execution error.
@@ -54,6 +57,19 @@ public final class SpreadsheetError implements HashCodeEqualsDefined, Value<Stri
     }
 
     // HasJsonNode......................................................................................................
+
+    /**
+     * Factory that creates a {@link SpreadsheetError} from a {@link JsonNode}.
+     */
+    public static SpreadsheetError fromJsonNode(final JsonNode node) {
+        Objects.requireNonNull(node, "node");
+
+        if (!node.isString()) {
+            throw new IllegalArgumentException("Node is not a string=" + node);
+        }
+
+        return with(JsonStringNode.class.cast(node).value());
+    }
 
     @Override
     public JsonNode toJsonNode() {

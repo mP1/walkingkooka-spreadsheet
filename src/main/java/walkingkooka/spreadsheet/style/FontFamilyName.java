@@ -7,6 +7,9 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonStringNode;
+
+import java.util.Objects;
 
 /**
  * A font family name.
@@ -33,6 +36,19 @@ public final class FontFamilyName implements Name,
     private final String name;
 
     // HasJsonNode ...................................................................................................
+
+    /**
+     * Factory that creates a {@link FontFamilyName} from a {@link JsonNode}.
+     */
+    public static FontFamilyName fromJsonNode(final JsonNode node) {
+        Objects.requireNonNull(node, "node");
+
+        if (!node.isString()) {
+            throw new IllegalArgumentException("Node is not a string=" + node);
+        }
+
+        return with(JsonStringNode.class.cast(node).value());
+    }
 
     @Override
     public JsonNode toJsonNode() {
