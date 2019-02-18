@@ -2,8 +2,13 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.tree.json.HasJsonNode;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonStringNode;
 
-public enum SpreadsheetEngineLoading {
+import java.util.Objects;
+
+public enum SpreadsheetEngineLoading implements HasJsonNode {
 
     /**
      * Performs no new evaluation of the formula, leaves the original value or error alone and does not change the style.
@@ -44,4 +49,25 @@ public enum SpreadsheetEngineLoading {
     abstract SpreadsheetCell formulaEvaluateAndStyle(final SpreadsheetCell cell,
                                                      final BasicSpreadsheetEngine engine,
                                                      final SpreadsheetEngineContext context);
+
+    // HasJsonNode...........................................................................................
+
+    /**
+     * Factory that creates a {@link SpreadsheetEngineLoading} from a {@link JsonNode}
+     */
+    public static SpreadsheetEngineLoading fromJsonNode(final JsonNode node) {
+        Objects.requireNonNull(node, "node");
+
+        if (!node.isString()) {
+            throw new IllegalArgumentException("Node is not an string=" + node);
+        }
+
+        return valueOf(JsonStringNode.class.cast(node).value());
+    }
+
+    @Override
+    public JsonNode toJsonNode() {
+        return JsonNode.string(this.name());
+    }
+
 }
