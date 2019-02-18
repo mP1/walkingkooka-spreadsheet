@@ -16,19 +16,19 @@ import java.util.TreeMap;
 /**
  * A {@link SpreadsheetRangeStore} that uses two {@link TreeMap} to navigate and store range to value mappings.
  */
-final class BasicSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> {
+final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> {
 
     /**
-     * Factory that creates a new {@link BasicSpreadsheetRangeStore}
+     * Factory that creates a new {@link TreeMapSpreadsheetRangeStore}
      */
-    static BasicSpreadsheetRangeStore create() {
-        return new BasicSpreadsheetRangeStore();
+    static TreeMapSpreadsheetRangeStore create() {
+        return new TreeMapSpreadsheetRangeStore();
     }
 
     /**
      * Private ctor.
      */
-    private BasicSpreadsheetRangeStore() {
+    private TreeMapSpreadsheetRangeStore() {
         super();
     }
 
@@ -38,7 +38,7 @@ final class BasicSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> {
     public Optional<List<V>> load(final SpreadsheetRange range) {
         Objects.requireNonNull(range, "range");
 
-        final BasicSpreadsheetRangeStoreTopLeftEntry<V> value = this.topLeft.get(range.begin());
+        final TreeMapSpreadsheetRangeStoreTopLeftEntry<V> value = this.topLeft.get(range.begin());
         return null != value ?
                 value.load(range) :
                 Optional.empty();
@@ -60,7 +60,7 @@ final class BasicSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> {
     private void loadCellReferenceTopLeft(final SpreadsheetCellReference cell, final Collection<V> values) {
 
         // loop over all entries until cell is after entry.
-        for (Map.Entry<SpreadsheetCellReference, BasicSpreadsheetRangeStoreTopLeftEntry<V>> refAndValues :
+        for (Map.Entry<SpreadsheetCellReference, TreeMapSpreadsheetRangeStoreTopLeftEntry<V>> refAndValues :
                 this.topLeft.tailMap(cell, true)
                         .entrySet()) {
             final SpreadsheetCellReference topLeft = refAndValues.getKey();
@@ -74,7 +74,7 @@ final class BasicSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> {
     private void loadCellReferenceBottomRight(final SpreadsheetCellReference cell, final Collection<V> values) {
 
         // loop over all entries until cell is after entry.
-        for (Map.Entry<SpreadsheetCellReference, BasicSpreadsheetRangeStoreBottomRightEntry<V>> refAndValues :
+        for (Map.Entry<SpreadsheetCellReference, TreeMapSpreadsheetRangeStoreBottomRightEntry<V>> refAndValues :
                 this.bottomRight.tailMap(cell, true)
                         .entrySet()) {
             final SpreadsheetCellReference bottomRight = refAndValues.getKey();
@@ -98,23 +98,23 @@ final class BasicSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> {
 
     private void saveTopLeft(final SpreadsheetRange range, final V value) {
         final SpreadsheetCellReference topLeft = range.begin();
-        final BasicSpreadsheetRangeStoreEntry<V> values = this.topLeft.get(topLeft);
+        final TreeMapSpreadsheetRangeStoreEntry<V> values = this.topLeft.get(topLeft);
         if (null != values) {
             values.save(range, value);
         } else {
             this.topLeft.put(topLeft,
-                    BasicSpreadsheetRangeStoreTopLeftEntry.with(range, value));
+                    TreeMapSpreadsheetRangeStoreTopLeftEntry.with(range, value));
         }
     }
 
     private void saveBottomRight(final SpreadsheetRange range, final V value) {
         final SpreadsheetCellReference bottomRight = range.end();
-        final BasicSpreadsheetRangeStoreEntry<V> values = this.bottomRight.get(bottomRight);
+        final TreeMapSpreadsheetRangeStoreEntry<V> values = this.bottomRight.get(bottomRight);
         if (null != values) {
             values.save(range, value);
         } else {
             this.bottomRight.put(bottomRight,
-                    BasicSpreadsheetRangeStoreBottomRightEntry.with(range, value));
+                    TreeMapSpreadsheetRangeStoreBottomRightEntry.with(range, value));
         }
     }
 
@@ -131,14 +131,14 @@ final class BasicSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> {
 
     private boolean replace0(final SpreadsheetRange range, final V newValue, final V oldValue) {
         final SpreadsheetCellReference topLeft = range.begin();
-        final BasicSpreadsheetRangeStoreEntry<V> values = this.topLeft.get(topLeft);
+        final TreeMapSpreadsheetRangeStoreEntry<V> values = this.topLeft.get(topLeft);
         return null != values &&
                 values.replace(range, newValue, oldValue);
     }
 
     private boolean replace1(final SpreadsheetRange range, final V newValue, final V oldValue) {
         final SpreadsheetCellReference bottomRight = range.end();
-        final BasicSpreadsheetRangeStoreEntry<V> values = this.bottomRight.get(bottomRight);
+        final TreeMapSpreadsheetRangeStoreEntry<V> values = this.bottomRight.get(bottomRight);
         return null != values &&
                 values.replace(range, newValue, oldValue);
     }
@@ -159,7 +159,7 @@ final class BasicSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> {
 
     private void deleteTopLeftValue(final SpreadsheetRange range, final V value) {
         final SpreadsheetCellReference topLeft = range.begin();
-        BasicSpreadsheetRangeStoreEntry<V> topLeftValues = this.topLeft.get(topLeft);
+        TreeMapSpreadsheetRangeStoreEntry<V> topLeftValues = this.topLeft.get(topLeft);
         if (null != topLeftValues) {
             if (topLeftValues.delete(range, value)) {
                 this.topLeft.remove(topLeft);
@@ -169,7 +169,7 @@ final class BasicSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> {
 
     private void deleteBottomRightValue(final SpreadsheetRange range, final V value) {
         final SpreadsheetCellReference bottomRight = range.begin();
-        BasicSpreadsheetRangeStoreEntry<V> bottomRightValues = this.bottomRight.get(bottomRight);
+        TreeMapSpreadsheetRangeStoreEntry<V> bottomRightValues = this.bottomRight.get(bottomRight);
         if (null != bottomRightValues) {
             if (bottomRightValues.delete(range, value)) {
                 this.bottomRight.remove(bottomRight);
@@ -203,9 +203,9 @@ final class BasicSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> {
      * The top left cell is the key, with the value holding all ranges that share the same top/left cell.
      * To locate matching values, all entries will be filtered.
      */
-    private NavigableMap<SpreadsheetCellReference, BasicSpreadsheetRangeStoreTopLeftEntry<V>> topLeft = new TreeMap<>();
+    private NavigableMap<SpreadsheetCellReference, TreeMapSpreadsheetRangeStoreTopLeftEntry<V>> topLeft = new TreeMap<>();
 
-    private NavigableMap<SpreadsheetCellReference, BasicSpreadsheetRangeStoreBottomRightEntry<V>> bottomRight = new TreeMap<>();
+    private NavigableMap<SpreadsheetCellReference, TreeMapSpreadsheetRangeStoreBottomRightEntry<V>> bottomRight = new TreeMap<>();
 
     // toString.........................................................................................................
 

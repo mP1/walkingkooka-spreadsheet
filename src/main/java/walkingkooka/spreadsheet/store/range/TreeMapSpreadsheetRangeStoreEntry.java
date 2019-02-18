@@ -18,12 +18,12 @@ import java.util.TreeMap;
 /**
  * Holds all the values that share a common range top left
  */
-abstract class BasicSpreadsheetRangeStoreEntry<V> implements Comparable<BasicSpreadsheetRangeStoreEntry<V>> {
+abstract class TreeMapSpreadsheetRangeStoreEntry<V> implements Comparable<TreeMapSpreadsheetRangeStoreEntry<V>> {
 
     /**
      * Package private ctor to limit subclassing.
      */
-    BasicSpreadsheetRangeStoreEntry(final SpreadsheetRange range, final V value) {
+    TreeMapSpreadsheetRangeStoreEntry(final SpreadsheetRange range, final V value) {
         this.primaryCellReference = this.primaryCellReference(range);
 
         this.secondaryCellReferenceToValues = new TreeMap<>(this.comparator());
@@ -141,7 +141,7 @@ abstract class BasicSpreadsheetRangeStoreEntry<V> implements Comparable<BasicSpr
      * Compares row then column.
      */
     @Override
-    public final int compareTo(final BasicSpreadsheetRangeStoreEntry<V> other) {
+    public final int compareTo(final TreeMapSpreadsheetRangeStoreEntry<V> other) {
         return this.compareTo0(other.primaryCellReference);
     }
 
