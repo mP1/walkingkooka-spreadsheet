@@ -8,13 +8,6 @@ import walkingkooka.type.PublicStaticHelper;
 public final class SpreadsheetCellStores implements PublicStaticHelper {
 
     /**
-     * {@see BasicSpreadsheetCellStore}
-     */
-    public static SpreadsheetCellStore basic() {
-        return BasicSpreadsheetCellStore.create();
-    }
-
-    /**
      * {@see FakeSpreadsheetCellStore}
      */
     public static SpreadsheetCellStore fake() {
@@ -26,6 +19,13 @@ public final class SpreadsheetCellStores implements PublicStaticHelper {
      */
     public static SpreadsheetCellStore guavaTable() {
         return GuavaTableSpreadsheetCellStore.create();
+    }
+
+    /**
+     * {@see TreeMapSpreadsheetCellStore}
+     */
+    public static SpreadsheetCellStore treeMap() {
+        return TreeMapSpreadsheetCellStore.create();
     }
 
     /**
