@@ -228,6 +228,11 @@ public final class SpreadsheetCellStyleTest implements ClassTesting2<Spreadsheet
                 "{ \"text\": " + this.text().toJsonNode() + "}");
     }
 
+    @Test
+    public void testToJsonNodeRoundtripTwice() {
+        this.toJsonNodeRoundTripTwiceAndCheck(this.createObject());
+    }
+
     // toString.........................................................................................................
 
     @Test

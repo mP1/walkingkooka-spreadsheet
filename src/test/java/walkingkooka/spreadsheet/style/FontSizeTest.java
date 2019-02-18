@@ -83,6 +83,11 @@ public final class FontSizeTest implements ClassTesting2<FontSize>,
         this.toJsonNodeAndCheck(this.createComparable(), JsonNode.number(VALUE));
     }
 
+    @Test
+    public void testToJsonNodeRoundtripTwice() {
+        this.toJsonNodeRoundTripTwiceAndCheck(this.createObject());
+    }
+
     // Object...........................................................................................
 
     @Test

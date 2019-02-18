@@ -57,6 +57,11 @@ public final class FontFamilyNameTest implements ClassTesting2<FontFamilyName>,
         this.toJsonNodeAndCheck(this.createComparable(), JsonNode.string(TEXT));
     }
 
+    @Test
+    public void testToJsonNodeRoundtripTwice() {
+        this.toJsonNodeRoundTripTwiceAndCheck(this.createObject());
+    }
+
     @Override
     public FontFamilyName createName(final String name) {
         return FontFamilyName.with(name);
