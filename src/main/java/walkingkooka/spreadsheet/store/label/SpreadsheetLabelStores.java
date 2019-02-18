@@ -8,17 +8,17 @@ import walkingkooka.type.PublicStaticHelper;
 public final class SpreadsheetLabelStores implements PublicStaticHelper {
 
     /**
-     * {@see BasicSpreadsheetLabelStore}
-     */
-    public static SpreadsheetLabelStore basic() {
-        return BasicSpreadsheetLabelStore.create();
-    }
-
-    /**
      * {@see FakeSpreadsheetLabelStore}
      */
     public static SpreadsheetLabelStore fake() {
         return new FakeSpreadsheetLabelStore();
+    }
+
+    /**
+     * {@see TreeMapSpreadsheetLabelStore}
+     */
+    public static SpreadsheetLabelStore treeMap() {
+        return TreeMapSpreadsheetLabelStore.create();
     }
 
     /**
