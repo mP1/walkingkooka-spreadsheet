@@ -42,6 +42,43 @@ public final class FontSizeTest implements ClassTesting2<FontSize>,
     // HasJsonNode......................................................................................
 
     @Test
+    public void testFromJsonNodeBooleanFails() {
+        this.fromJsonNodeFails(JsonNode.booleanNode(true));
+    }
+
+    @Test
+    public void testFromJsonNodeNullFails() {
+        this.fromJsonNodeFails(JsonNode.nullNode());
+    }
+
+    @Test
+    public void testFromJsonNodeStringFails() {
+        this.fromJsonNodeFails(JsonNode.string("fails!"));
+    }
+
+    @Test
+    public void testFromJsonNodeArrayFails() {
+        this.fromJsonNodeFails(JsonNode.array());
+    }
+
+    @Test
+    public void testFromJsonNodeObjectFails() {
+        this.fromJsonNodeFails(JsonNode.object());
+    }
+
+    @Test
+    public void testFromJsonNodeNumberInvalidFails() {
+        this.fromJsonNodeFails(JsonNode.number(-1));
+    }
+
+    @Test
+    public void testFromJsonNumber() {
+        final int value = 20;
+        this.fromJsonNodeAndCheck(JsonNode.number(value),
+                FontSize.with(value));
+    }
+
+    @Test
     public void testToJsonNode() {
         this.toJsonNodeAndCheck(this.createComparable(), JsonNode.number(VALUE));
     }
@@ -81,5 +118,12 @@ public final class FontSizeTest implements ClassTesting2<FontSize>,
     @Override
     public Class<FontSize> type() {
         return FontSize.class;
+    }
+
+    // HasJsonNodeTesting.....................................................................
+
+    @Override
+    public FontSize fromJsonNode(final JsonNode jsonNode) {
+        return FontSize.fromJsonNode(jsonNode);
     }
 }
