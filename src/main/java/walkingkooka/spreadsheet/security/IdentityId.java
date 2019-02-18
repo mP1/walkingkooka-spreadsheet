@@ -3,11 +3,15 @@ package walkingkooka.spreadsheet.security;
 import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.test.HashCodeEqualsDefined;
+import walkingkooka.tree.json.HasJsonNode;
+import walkingkooka.tree.json.JsonNode;
 
 /**
  * Base class for all ids.
  */
-public abstract class IdentityId implements Value<Long>, HashCodeEqualsDefined {
+public abstract class IdentityId implements Value<Long>,
+        HashCodeEqualsDefined,
+        HasJsonNode {
 
     /**
      * Package private to limit sub classing.
@@ -25,6 +29,15 @@ public abstract class IdentityId implements Value<Long>, HashCodeEqualsDefined {
     }
 
     private final long value;
+
+    // HasJsonNode.................................................
+
+    /**
+     * Stores the id.
+     */
+    public final JsonNode toJsonNode() {
+        return JsonNode.wrapLong(this.value);
+    }
 
     // Object.................................................
 
