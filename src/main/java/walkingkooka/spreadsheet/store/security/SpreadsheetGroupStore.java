@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * A {@link Store} that holds all {@link Group groups} for a spreadsheet.
  */
-public interface SpreadsheetGroupStore extends Store<Group, GroupId> {
+public interface SpreadsheetGroupStore extends Store<GroupId, Group> {
 
     /**
      * Loads all the groups for the provided {@link User}
