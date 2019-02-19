@@ -12,7 +12,7 @@ public class FakeStore<K, V> implements Store<K, V>, Fake {
     }
 
     @Override
-    public void save(final V value) {
+    public K save(final V value) {
         throw new UnsupportedOperationException();
     }
 

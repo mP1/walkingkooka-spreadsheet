@@ -41,8 +41,10 @@ final class TreeMapSpreadsheetCellStore extends SpreadsheetCellStoreTemplate {
      * Accepts a potentially updated cell.
      */
     @Override
-    void save0(final SpreadsheetCell cell) {
-        this.cells.put(cell.reference(), cell);
+    SpreadsheetCellReference save0(final SpreadsheetCell cell) {
+        final SpreadsheetCellReference key = cell.reference();
+        this.cells.put(key, cell);
+        return key;
     }
 
     /**
