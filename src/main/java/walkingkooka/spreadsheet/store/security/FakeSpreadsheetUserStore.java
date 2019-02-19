@@ -5,7 +5,7 @@ import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.spreadsheet.store.FakeStore;
 
-public class FakeSpreadsheetUserStore extends FakeStore<User, UserId> implements SpreadsheetUserStore {
+public class FakeSpreadsheetUserStore extends FakeStore<UserId, User> implements SpreadsheetUserStore {
 
     @Override
     public User loadWithEmail(final EmailAddress email) {

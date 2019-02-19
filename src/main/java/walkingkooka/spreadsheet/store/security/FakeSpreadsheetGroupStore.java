@@ -7,7 +7,7 @@ import walkingkooka.spreadsheet.store.FakeStore;
 
 import java.util.Set;
 
-public class FakeSpreadsheetGroupStore extends FakeStore<Group, GroupId> implements SpreadsheetGroupStore {
+public class FakeSpreadsheetGroupStore extends FakeStore<GroupId, Group> implements SpreadsheetGroupStore {
 
     @Override
     public Set<Group> loadUserGroups(final UserId id) {

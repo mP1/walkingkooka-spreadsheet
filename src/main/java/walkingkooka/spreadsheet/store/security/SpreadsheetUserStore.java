@@ -8,7 +8,7 @@ import walkingkooka.spreadsheet.store.Store;
 /**
  * A {@link Store} that holds all users.
  */
-public interface SpreadsheetUserStore extends Store<User, UserId> {
+public interface SpreadsheetUserStore extends Store<UserId, User> {
 
     /**
      * Loads the user with the provided {@link walkingkooka.net.email.EmailAddress}
