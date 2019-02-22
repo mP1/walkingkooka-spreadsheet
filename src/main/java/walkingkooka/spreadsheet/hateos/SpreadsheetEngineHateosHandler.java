@@ -1,0 +1,47 @@
+package walkingkooka.spreadsheet.hateos;
+
+import walkingkooka.net.http.server.hateos.HateosContentType;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.tree.Node;
+
+import java.util.Objects;
+import java.util.function.Supplier;
+
+/**
+ * An abstract hateos handler that includes uses a {@link SpreadsheetEngine} and {@link SpreadsheetEngineContext} to do things.
+ */
+abstract class SpreadsheetEngineHateosHandler<K extends Comparable<K>, V, N extends Node<N, ?, ?, ?>> extends SpreadsheetHateosHandler<K, V, N> {
+
+    /**
+     * Checks required factory method parameters are not null.
+     */
+    static <K extends Comparable<K>, V, N extends Node<N, ?, ?, ?>> void check(final SpreadsheetEngine engine,
+                                                                               final HateosContentType<N, V> contentType,
+                                                                               final Supplier<SpreadsheetEngineContext> context) {
+        Objects.requireNonNull(engine, "engine");
+        check(contentType);
+        Objects.requireNonNull(context, "context");
+    }
+
+    /**
+     * Package private to limit sub classing.
+     */
+    SpreadsheetEngineHateosHandler(final SpreadsheetEngine engine,
+                                   final HateosContentType<N, V> contentType,
+                                   final Supplier<SpreadsheetEngineContext> context) {
+        super(contentType);
+        this.engine = engine;
+        this.context = context;
+    }
+
+    final SpreadsheetEngine engine;
+    final Supplier<SpreadsheetEngineContext> context;
+
+    @Override
+    public final String toString() {
+        return SpreadsheetEngine.class.getSimpleName() + "." + this.operation();
+    }
+
+    abstract String operation();
+}
