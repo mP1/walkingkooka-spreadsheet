@@ -4,7 +4,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonStringNode;
+import walkingkooka.tree.json.JsonNodeException;
 
 import java.util.Objects;
 
@@ -58,11 +58,11 @@ public enum SpreadsheetEngineLoading implements HasJsonNode {
     public static SpreadsheetEngineLoading fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
-        if (!node.isString()) {
-            throw new IllegalArgumentException("Node is not an string=" + node);
+        try {
+            return valueOf(node.stringValueOrFail());
+        } catch (final JsonNodeException cause) {
+            throw new IllegalArgumentException(cause.getMessage(), cause);
         }
-
-        return valueOf(JsonStringNode.class.cast(node).value());
     }
 
     @Override

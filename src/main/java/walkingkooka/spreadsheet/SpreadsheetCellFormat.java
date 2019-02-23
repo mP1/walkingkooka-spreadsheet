@@ -22,12 +22,11 @@ import walkingkooka.Cast;
 import walkingkooka.build.tostring.ToStringBuilder;
 import walkingkooka.build.tostring.ToStringBuilderOption;
 import walkingkooka.build.tostring.UsesToStringBuilder;
-import walkingkooka.spreadsheet.style.FontFamilyName;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.spreadsheetformat.SpreadsheetTextFormatter;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonStringNode;
+import walkingkooka.tree.json.JsonNodeException;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -124,11 +123,11 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
     public static SpreadsheetCellFormat fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
-        if (!node.isString()) {
-            throw new IllegalArgumentException("Node is not a string=" + node);
+        try {
+            return with(node.stringValueOrFail(), NO_FORMATTER);
+        } catch (final JsonNodeException cause) {
+            throw new IllegalArgumentException(cause.getMessage(), cause);
         }
-
-        return with(JsonStringNode.class.cast(node).value(), NO_FORMATTER);
     }
 
     @Override
