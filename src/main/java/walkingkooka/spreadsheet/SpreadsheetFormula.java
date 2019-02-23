@@ -29,6 +29,7 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
 import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonNodeName;
 import walkingkooka.tree.json.JsonObjectNode;
 
@@ -215,10 +216,11 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
             final JsonNodeName name = child.name();
             switch (name.value()) {
                 case TEXT_PROPERTY_STRING:
-                    if (!child.isString()) {
-                        throw new IllegalArgumentException("Node " + TEXT_PROPERTY + " is not a string=" + node);
+                    try {
+                        text = child.stringValueOrFail();
+                    } catch (final JsonNodeException cause) {
+                        throw new IllegalArgumentException("Node " + TEXT_PROPERTY + " is not a string=" + child);
                     }
-                    text = child.text();
                     checkText(text);
                     break;
                 case VALUE_PROPERTY_STRING:
