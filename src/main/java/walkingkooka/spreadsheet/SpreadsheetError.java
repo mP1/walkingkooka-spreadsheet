@@ -6,7 +6,7 @@ import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.Whitespace;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonStringNode;
+import walkingkooka.tree.json.JsonNodeException;
 
 import java.util.Objects;
 
@@ -64,11 +64,11 @@ public final class SpreadsheetError implements HashCodeEqualsDefined, Value<Stri
     public static SpreadsheetError fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
-        if (!node.isString()) {
-            throw new IllegalArgumentException("Node is not a string=" + node);
+        try {
+            return with(node.stringValueOrFail());
+        } catch (final JsonNodeException cause) {
+            throw new IllegalArgumentException(cause.getMessage(), cause);
         }
-
-        return with(JsonStringNode.class.cast(node).value());
     }
 
     @Override

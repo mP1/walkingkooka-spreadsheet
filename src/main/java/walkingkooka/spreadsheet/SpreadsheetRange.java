@@ -11,6 +11,7 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonStringNode;
 
 import java.util.List;
@@ -221,11 +222,11 @@ public final class SpreadsheetRange implements ExpressionReference,
     public static SpreadsheetRange fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
-        if (!node.isString()) {
-            throw new IllegalArgumentException("Node is not an string=" + node);
+        try {
+            return parse(node.stringValueOrFail());
+        } catch (final JsonNodeException cause) {
+            throw new IllegalArgumentException(cause.getMessage(), cause);
         }
-
-        return parse(JsonStringNode.class.cast(node).value());
     }
 
     @Override
