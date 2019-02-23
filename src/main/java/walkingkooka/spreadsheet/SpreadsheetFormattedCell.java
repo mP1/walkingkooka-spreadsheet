@@ -28,6 +28,7 @@ import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.HasText;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonNodeName;
 import walkingkooka.tree.json.JsonStringNode;
 
@@ -138,10 +139,12 @@ public final class SpreadsheetFormattedCell implements HasText,
             final JsonNodeName name = child.name();
             switch (name.value()) {
                 case TEXT_PROPERTY_STRING:
-                    if (!child.isString()) {
+                    text = JsonStringNode.class.cast(child).value();
+                    try {
+                        text = child.stringValueOrFail();
+                    } catch (final JsonNodeException cause) {
                         throw new IllegalArgumentException("Property " + name + " is not a String=" + node);
                     }
-                    text = JsonStringNode.class.cast(child).value();
                     break;
                 case STYLE_PROPERTY_STRING:
                     style = SpreadsheetCellStyle.fromJsonNode(child);

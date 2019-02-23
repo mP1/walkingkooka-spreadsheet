@@ -7,8 +7,8 @@ import walkingkooka.build.tostring.UsesToStringBuilder;
 import walkingkooka.color.Color;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.HasJsonNode;
-import walkingkooka.tree.json.JsonBooleanNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonNodeName;
 import walkingkooka.tree.json.JsonObjectNode;
 
@@ -364,10 +364,11 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined,
      * Helper that fetches a property and complains if it is present but not a {@link Boolean}.
      */
     private static Boolean booleanFromJsonNode(final JsonNode value) {
-        if (!value.isBoolean()) {
+        try {
+            return value.booleanValueOrFail();
+        } catch (final JsonNodeException cause) {
             throw new IllegalArgumentException(value.name() + " is not a boolean=" + value);
         }
-        return JsonBooleanNode.class.cast(value).value();
     }
 
     // toJsonNode.................................................................................................
