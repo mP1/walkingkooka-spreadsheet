@@ -1,6 +1,8 @@
 package walkingkooka.spreadsheet.hateos;
 
 import walkingkooka.compare.Range;
+import walkingkooka.net.UrlParameterName;
+import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.HttpRequestParameterName;
 import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.net.http.server.hateos.HateosHandlerContext;
@@ -37,7 +39,7 @@ final class SpreadsheetEngineLoadCellHateosGetHandler<N extends Node<N, ?, ?, ?>
 
     @Override
     Optional<N> get0(final SpreadsheetCellReference id,
-                     final Map<HttpRequestParameterName, List<String>> parameters,
+                     final Map<HttpRequestAttribute<?>, Object> parameters,
                      final HateosHandlerContext<N> hateosHandlerContext,
                      final SpreadsheetEngine engine,
                      final SpreadsheetEngineContext engineContext) {
@@ -50,7 +52,7 @@ final class SpreadsheetEngineLoadCellHateosGetHandler<N extends Node<N, ?, ?, ?>
     /**
      * Loads the {@link SpreadsheetEngineLoading} from a request parameter.
      */
-    private SpreadsheetEngineLoading loading(final Map<HttpRequestParameterName, List<String>> parameters) {
+    private SpreadsheetEngineLoading loading(final Map<HttpRequestAttribute<?>, Object> parameters) {
         final Optional<List<String>> maybeValues = LOADING.parameterValue(parameters);
         if (!maybeValues.isPresent()) {
             throw new IllegalArgumentException("Required parameter " + LOADING + " missing");
@@ -62,11 +64,11 @@ final class SpreadsheetEngineLoadCellHateosGetHandler<N extends Node<N, ?, ?, ?>
         return SpreadsheetEngineLoading.valueOf(values.get(0));
     }
 
-    private final static HttpRequestParameterName LOADING = HttpRequestParameterName.with("loading");
+    private final static UrlParameterName LOADING = UrlParameterName.with("loading");
 
     @Override
     Optional<N> getCollection0(final Range<SpreadsheetCellReference> ids,
-                               final Map<HttpRequestParameterName, List<String>> parameters,
+                               final Map<HttpRequestAttribute<?>, Object> parameters,
                                final HateosHandlerContext<N> hateosHandlerContext,
                                final SpreadsheetEngine engine,
                                final SpreadsheetEngineContext engineContext) {
