@@ -3,8 +3,10 @@ package walkingkooka.spreadsheet.hateos;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.compare.Range;
+import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.net.http.server.hateos.HateosDeleteHandlerTesting;
+import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
@@ -16,6 +18,7 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -46,6 +49,7 @@ public final class SpreadsheetEngineRowHateosDeleteHandlerTest extends Spreadshe
         }).delete(
                 row,
                 resource,
+                HateosHandler.NO_PARAMETERS,
                 this.createContext());
         assertTrue(deleted.value());
     }
@@ -70,6 +74,7 @@ public final class SpreadsheetEngineRowHateosDeleteHandlerTest extends Spreadshe
         }).deleteCollection(
                 Range.greaterThanEquals(row).and(Range.lessThanEquals(SpreadsheetRowReference.parse("4"))), // 3 rows inclusive
                 resource,
+                HateosHandler.NO_PARAMETERS,
                 this.createContext());
         assertTrue(deleted.value());
     }
@@ -93,6 +98,7 @@ public final class SpreadsheetEngineRowHateosDeleteHandlerTest extends Spreadshe
         assertEquals("Range of rows required=" + rows,
                 this.deleteCollectionFails(rows,
                         this.resource(),
+                        HateosHandler.NO_PARAMETERS,
                         this.createContext(),
                         IllegalArgumentException.class).getMessage(),
                 "message");
@@ -128,6 +134,11 @@ public final class SpreadsheetEngineRowHateosDeleteHandlerTest extends Spreadshe
         return this.createHandler(engine,
                 this.contentType(),
                 this.engineContextSupplier());
+    }
+
+    @Override
+    public Map<HttpRequestAttribute<?>, Object> parameters() {
+        return HateosHandler.NO_PARAMETERS;
     }
 
     @Override
