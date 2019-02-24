@@ -1,12 +1,18 @@
 package walkingkooka.spreadsheet.hateos;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.net.header.Link;
+import walkingkooka.net.http.server.hateos.FakeHateosHandlerContext;
 import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.net.http.server.hateos.HateosHandler;
+import walkingkooka.net.http.server.hateos.HateosHandlerContext;
+import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeName;
+import walkingkooka.tree.json.JsonObjectNode;
 
 import java.util.function.Supplier;
 
@@ -42,9 +48,30 @@ public abstract class SpreadsheetEngineHateosHandlerTestCase<H extends HateosHan
                              final HateosContentType<JsonNode, HasJsonNode> contentType,
                              final Supplier<SpreadsheetEngineContext> context);
 
+    @Override
+    public HateosHandlerContext<JsonNode> createContext() {
+        return new FakeHateosHandlerContext<JsonNode>() {
+            @Override
+            public JsonNode addLinks(final HateosResourceName name,
+                                     final Comparable<?> id,
+                                     final JsonNode node) {
+                return SpreadsheetEngineHateosHandlerTestCase.this.addLinks(name,
+                        id,
+                        JsonObjectNode.class.cast(node));
+            }
+        };
+    }
+
+    private JsonNode addLinks(final HateosResourceName name,
+                              final Comparable<?> id,
+                              final JsonObjectNode node) {
+        return node.set(JsonNodeName.with("_links"),
+                Link.parse("<http://example.com/" + name + "/" + id + "/self>;type=text/plain").get(0).toJsonNode());
+    }
+
     abstract SpreadsheetEngine engine();
 
-    private Supplier<SpreadsheetEngineContext> engineContextSupplier() {
+    final Supplier<SpreadsheetEngineContext> engineContextSupplier() {
         return this::engineContext;
     }
 
