@@ -1,11 +1,13 @@
 package walkingkooka.spreadsheet.hateos;
 
+import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.tree.Node;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -33,6 +35,27 @@ abstract class SpreadsheetEngineHateosHandler<K extends Comparable<K>, V, N exte
         super(contentType);
         this.engine = engine;
         this.context = context;
+    }
+
+    /**
+     * Checks that the range bounds are not null and both are inclusive.
+     */
+    final void checkInclusiveRange(final Range<K> range, final String label) {
+        Objects.requireNonNull(range, label);
+
+        if (!range.lowerBound().isInclusive() || !range.upperBound().isInclusive()) {
+            throw new IllegalArgumentException("Range of " + label + " required=" + range);
+        }
+    }
+
+    /**
+     * Complains if the resource is null or present.
+     */
+    final void checkResourceEmpty(final Optional<N> resource) {
+        Objects.requireNonNull(resource, "resource");
+        if (resource.isPresent()) {
+            throw new IllegalArgumentException("Resource not allowed=" + resource);
+        }
     }
 
     final SpreadsheetEngine engine;
