@@ -51,6 +51,13 @@ abstract class SpreadsheetEngineHateosHandler<K extends Comparable<K>, V, N exte
     }
 
     /**
+     * Complains if the resource is null.
+     */
+    final void checkResource(final N resource) {
+        Objects.requireNonNull(resource, "resource");
+    }
+
+    /**
      * Complains if the resource is null or present.
      */
     final void checkResourceEmpty(final Optional<N> resource) {
