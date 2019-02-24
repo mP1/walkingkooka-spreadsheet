@@ -3,8 +3,11 @@ package walkingkooka.spreadsheet.hateos;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.compare.Range;
+import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosContentType;
+import walkingkooka.net.http.server.hateos.HateosDeleteHandler;
 import walkingkooka.net.http.server.hateos.HateosDeleteHandlerTesting;
+import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
@@ -15,6 +18,7 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -45,6 +49,7 @@ public final class SpreadsheetEngineColumnHateosDeleteHandlerTest extends Spread
         }).delete(
                 column,
                 resource,
+                HateosHandler.NO_PARAMETERS,
                 this.createContext());
         assertTrue(deleted.value());
     }
@@ -69,6 +74,7 @@ public final class SpreadsheetEngineColumnHateosDeleteHandlerTest extends Spread
         }).deleteCollection(
                 Range.greaterThanEquals(column).and(Range.lessThanEquals(SpreadsheetColumnReference.parse("D"))), // 3 inclusive
                 resource,
+                HateosHandler.NO_PARAMETERS,
                 this.createContext());
         assertTrue(deleted.value());
     }
@@ -92,6 +98,7 @@ public final class SpreadsheetEngineColumnHateosDeleteHandlerTest extends Spread
         assertEquals("Range of columns required=" + columns,
                 this.deleteCollectionFails(columns,
                         this.resource(),
+                        HateosHandler.NO_PARAMETERS,
                         this.createContext(),
                         IllegalArgumentException.class).getMessage(),
                 "message");
@@ -121,6 +128,11 @@ public final class SpreadsheetEngineColumnHateosDeleteHandlerTest extends Spread
     public Range<SpreadsheetColumnReference> collection() {
         return Range.greaterThanEquals(SpreadsheetColumnReference.parse("C"))
                 .and(Range.lessThanEquals(SpreadsheetColumnReference.parse("E"))); // C, D, E
+    }
+
+    @Override
+    public Map<HttpRequestAttribute<?>, Object> parameters() {
+        return HateosHandler.NO_PARAMETERS;
     }
 
     private SpreadsheetEngineColumnHateosDeleteHandler<JsonNode> createHandler(final SpreadsheetEngine engine) {

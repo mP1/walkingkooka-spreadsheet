@@ -1,11 +1,13 @@
 package walkingkooka.spreadsheet.hateos;
 
 import walkingkooka.compare.Range;
+import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.tree.Node;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -56,6 +58,10 @@ abstract class SpreadsheetEngineHateosHandler<K extends Comparable<K>, V, N exte
         if (resource.isPresent()) {
             throw new IllegalArgumentException("Resource not allowed=" + resource);
         }
+    }
+
+    final void checkParameters(Map<HttpRequestAttribute<?>, Object> parameters) {
+        Objects.requireNonNull(parameters, "parameters");
     }
 
     final SpreadsheetEngine engine;

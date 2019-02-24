@@ -5,7 +5,9 @@ import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.compare.Range;
+import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.header.Link;
+import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.HttpRequestParameterName;
 import walkingkooka.net.http.server.hateos.FakeHateosHandlerContext;
 import walkingkooka.net.http.server.hateos.HateosContentType;
@@ -126,12 +128,12 @@ public final class SpreadsheetEngineLoadCellHateosGetHandlerTest extends Spreads
     }
 
     @Override
-    public Map<HttpRequestParameterName, List<String>> parameters() {
+    public Map<HttpRequestAttribute<?>, Object> parameters() {
         return this.parameters(LOADING);
     }
 
-    private Map<HttpRequestParameterName, List<String>> parameters(final SpreadsheetEngineLoading loading) {
-        return Maps.one(HttpRequestParameterName.with("loading"), Lists.of(loading.toString()));
+    private Map<HttpRequestAttribute<?>, Object> parameters(final SpreadsheetEngineLoading loading) {
+        return Maps.one(UrlParameterName.with("loading"), Lists.of(loading.toString()));
     }
 
     @Override
