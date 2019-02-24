@@ -1,6 +1,7 @@
 package walkingkooka.spreadsheet.hateos;
 
 import walkingkooka.compare.Range;
+import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.net.http.server.hateos.HateosDeleteHandler;
 import walkingkooka.net.http.server.hateos.HateosHandlerContext;
@@ -10,6 +11,7 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.tree.Node;
 import walkingkooka.tree.json.HasJsonNode;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -39,9 +41,11 @@ final class SpreadsheetEngineColumnHateosDeleteHandler<N extends Node<N, ?, ?, ?
     @Override
     public void delete(final SpreadsheetColumnReference column,
                        final Optional<N> resource,
+                       final Map<HttpRequestAttribute<?>, Object> parameters,
                        final HateosHandlerContext<N> context) {
         Objects.requireNonNull(column, "column");
         checkResourceEmpty(resource);
+        checkParameters(parameters);
         Objects.requireNonNull(context, "context");
 
         this.engine.deleteColumns(column, 1, this.context.get());
@@ -50,9 +54,11 @@ final class SpreadsheetEngineColumnHateosDeleteHandler<N extends Node<N, ?, ?, ?
     @Override
     public void deleteCollection(final Range<SpreadsheetColumnReference> columns,
                                  final Optional<N> resource,
+                                 final Map<HttpRequestAttribute<?>, Object> parameters,
                                  final HateosHandlerContext<N> context) {
         checkInclusiveRange(columns, "columns");
         checkResourceEmpty(resource);
+        checkParameters(parameters);
         Objects.requireNonNull(context, "context");
 
         final SpreadsheetColumnReference lower = columns.lowerBound().value().get();
