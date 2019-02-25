@@ -24,9 +24,9 @@ import java.util.function.Supplier;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public final class SpreadsheetEngineRowHateosDeleteHandlerTest extends SpreadsheetEngineHateosHandlerTestCase<SpreadsheetEngineRowHateosDeleteHandler<JsonNode>, SpreadsheetRowReference>
-        implements HateosDeleteHandlerTesting<SpreadsheetEngineRowHateosDeleteHandler<JsonNode>, SpreadsheetRowReference, JsonNode>,
-        ToStringTesting<SpreadsheetEngineRowHateosDeleteHandler<JsonNode>> {
+public final class SpreadsheetEngineDeleteRowsHateosDeleteHandlerTest extends SpreadsheetEngineHateosHandlerTestCase<SpreadsheetEngineDeleteRowsHateosDeleteHandler<JsonNode>, SpreadsheetRowReference>
+        implements HateosDeleteHandlerTesting<SpreadsheetEngineDeleteRowsHateosDeleteHandler<JsonNode>, SpreadsheetRowReference, JsonNode>,
+        ToStringTesting<SpreadsheetEngineDeleteRowsHateosDeleteHandler<JsonNode>> {
 
     @Test
     public void testDeleteRow() {
@@ -113,8 +113,8 @@ public final class SpreadsheetEngineRowHateosDeleteHandlerTest extends Spreadshe
     }
 
     @Override
-    public Class<SpreadsheetEngineRowHateosDeleteHandler<JsonNode>> type() {
-        return Cast.to(SpreadsheetEngineRowHateosDeleteHandler.class);
+    public Class<SpreadsheetEngineDeleteRowsHateosDeleteHandler<JsonNode>> type() {
+        return Cast.to(SpreadsheetEngineDeleteRowsHateosDeleteHandler.class);
     }
 
     @Override
@@ -133,7 +133,7 @@ public final class SpreadsheetEngineRowHateosDeleteHandlerTest extends Spreadshe
                 .and(Range.lessThanEquals(SpreadsheetRowReference.parse("4"))); // 2, 3, 4
     }
 
-    private SpreadsheetEngineRowHateosDeleteHandler<JsonNode> createHandler(final SpreadsheetEngine engine) {
+    private SpreadsheetEngineDeleteRowsHateosDeleteHandler<JsonNode> createHandler(final SpreadsheetEngine engine) {
         return this.createHandler(engine,
                 this.contentType(),
                 this.engineContextSupplier());
@@ -145,10 +145,10 @@ public final class SpreadsheetEngineRowHateosDeleteHandlerTest extends Spreadshe
     }
 
     @Override
-    SpreadsheetEngineRowHateosDeleteHandler<JsonNode> createHandler(final SpreadsheetEngine engine,
-                                                                       final HateosContentType<JsonNode, HasJsonNode> contentType,
-                                                                       final Supplier<SpreadsheetEngineContext> context) {
-        return SpreadsheetEngineRowHateosDeleteHandler.with(engine, contentType, context);
+    SpreadsheetEngineDeleteRowsHateosDeleteHandler<JsonNode> createHandler(final SpreadsheetEngine engine,
+                                                                           final HateosContentType<JsonNode, HasJsonNode> contentType,
+                                                                           final Supplier<SpreadsheetEngineContext> context) {
+        return SpreadsheetEngineDeleteRowsHateosDeleteHandler.with(engine, contentType, context);
     }
 
     @Override
