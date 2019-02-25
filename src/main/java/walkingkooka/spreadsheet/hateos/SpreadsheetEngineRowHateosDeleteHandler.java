@@ -39,23 +39,25 @@ final class SpreadsheetEngineRowHateosDeleteHandler<N extends Node<N, ?, ?, ?>> 
     }
 
     @Override
-    public void delete(final SpreadsheetRowReference row,
-                       final Optional<N> resource,
-                       final Map<HttpRequestAttribute<?>, Object> parameters,
-                       final HateosHandlerContext<N> context) {
+    public Optional<N> delete(final SpreadsheetRowReference row,
+                              final Optional<N> resource,
+                              final Map<HttpRequestAttribute<?>, Object> parameters,
+                              final HateosHandlerContext<N> context) {
         Objects.requireNonNull(row, "row");
         checkResourceEmpty(resource);
         checkParameters(parameters);
         Objects.requireNonNull(context, "context");
 
         this.engine.deleteRows(row, 1, this.context.get());
+
+        return Optional.empty();
     }
 
     @Override
-    public void deleteCollection(final Range<SpreadsheetRowReference> rows,
-                                 final Optional<N> resource,
-                                 final Map<HttpRequestAttribute<?>, Object> parameters,
-                                 final HateosHandlerContext<N> context) {
+    public Optional<N> deleteCollection(final Range<SpreadsheetRowReference> rows,
+                                        final Optional<N> resource,
+                                        final Map<HttpRequestAttribute<?>, Object> parameters,
+                                        final HateosHandlerContext<N> context) {
         checkInclusiveRange(rows, "rows");
         checkResourceEmpty(resource);
         checkParameters(parameters);
@@ -65,6 +67,8 @@ final class SpreadsheetEngineRowHateosDeleteHandler<N extends Node<N, ?, ?, ?>> 
         final SpreadsheetRowReference upper = rows.upperBound().value().get();
 
         this.engine.deleteRows(lower, upper.value() - lower.value() + 1, this.context.get());
+
+        return Optional.empty();
     }
 
     @Override
