@@ -39,23 +39,25 @@ final class SpreadsheetEngineColumnHateosDeleteHandler<N extends Node<N, ?, ?, ?
     }
 
     @Override
-    public void delete(final SpreadsheetColumnReference column,
-                       final Optional<N> resource,
-                       final Map<HttpRequestAttribute<?>, Object> parameters,
-                       final HateosHandlerContext<N> context) {
+    public Optional<N> delete(final SpreadsheetColumnReference column,
+                              final Optional<N> resource,
+                              final Map<HttpRequestAttribute<?>, Object> parameters,
+                              final HateosHandlerContext<N> context) {
         Objects.requireNonNull(column, "column");
         checkResourceEmpty(resource);
         checkParameters(parameters);
         Objects.requireNonNull(context, "context");
 
         this.engine.deleteColumns(column, 1, this.context.get());
+
+        return Optional.empty();
     }
 
     @Override
-    public void deleteCollection(final Range<SpreadsheetColumnReference> columns,
-                                 final Optional<N> resource,
-                                 final Map<HttpRequestAttribute<?>, Object> parameters,
-                                 final HateosHandlerContext<N> context) {
+    public Optional<N> deleteCollection(final Range<SpreadsheetColumnReference> columns,
+                                        final Optional<N> resource,
+                                        final Map<HttpRequestAttribute<?>, Object> parameters,
+                                        final HateosHandlerContext<N> context) {
         checkInclusiveRange(columns, "columns");
         checkResourceEmpty(resource);
         checkParameters(parameters);
@@ -65,6 +67,8 @@ final class SpreadsheetEngineColumnHateosDeleteHandler<N extends Node<N, ?, ?, ?
         final SpreadsheetColumnReference upper = columns.upperBound().value().get();
 
         this.engine.deleteColumns(lower, upper.value() - lower.value() + 1, this.context.get());
+
+        return Optional.empty();
     }
 
     @Override
