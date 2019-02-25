@@ -13,7 +13,6 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.test.Latch;
 import walkingkooka.test.ToStringTesting;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
@@ -36,21 +35,24 @@ public final class SpreadsheetEngineRowHateosDeleteHandlerTest extends Spreadshe
         final SpreadsheetRowReference row = this.id();
         final Optional<JsonNode> resource = this.resource();
 
-        this.createHandler(new FakeSpreadsheetEngine() {
+        this.deleteAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
-            @Override
-            public void deleteRows(final SpreadsheetRowReference r,
-                                      final int count,
-                                      final SpreadsheetEngineContext context) {
-                assertEquals(row, r, "row");
-                assertEquals(1, count, "count");
-                deleted.set("Deleted");
-            }
-        }).delete(
+                    @Override
+                    public void deleteRows(final SpreadsheetRowReference r,
+                                           final int count,
+                                           final SpreadsheetEngineContext context) {
+                        assertEquals(row, r, "row");
+                        assertEquals(1, count, "count");
+                        deleted.set("Deleted");
+                    }
+                }),
                 row,
                 resource,
                 HateosHandler.NO_PARAMETERS,
-                this.createContext());
+                this.createContext(),
+                Optional.empty()
+        );
+
         assertTrue(deleted.value());
     }
 
@@ -61,21 +63,22 @@ public final class SpreadsheetEngineRowHateosDeleteHandlerTest extends Spreadshe
         final SpreadsheetRowReference row = this.id();
         final Optional<JsonNode> resource = this.resource();
 
-        this.createHandler(new FakeSpreadsheetEngine() {
+        this.deleteCollectionAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
-            @Override
-            public void deleteRows(final SpreadsheetRowReference r,
-                                      final int count,
-                                      final SpreadsheetEngineContext context) {
-                assertEquals(row, r, "row");
-                assertEquals(3, count, "count");
-                deleted.set("Deleted");
-            }
-        }).deleteCollection(
+                    @Override
+                    public void deleteRows(final SpreadsheetRowReference r,
+                                           final int count,
+                                           final SpreadsheetEngineContext context) {
+                        assertEquals(row, r, "row");
+                        assertEquals(3, count, "count");
+                        deleted.set("Deleted");
+                    }
+                }),
                 Range.greaterThanEquals(row).and(Range.lessThanEquals(SpreadsheetRowReference.parse("4"))), // 3 rows inclusive
                 resource,
                 HateosHandler.NO_PARAMETERS,
-                this.createContext());
+                this.createContext(),
+                Optional.empty());
         assertTrue(deleted.value());
     }
 
