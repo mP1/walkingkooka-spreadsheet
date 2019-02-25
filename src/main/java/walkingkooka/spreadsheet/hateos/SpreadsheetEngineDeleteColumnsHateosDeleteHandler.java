@@ -19,22 +19,22 @@ import java.util.function.Supplier;
 /**
  * A {@link HateosDeleteHandler} that handles deleting a single or range of columns.
  */
-final class SpreadsheetEngineColumnHateosDeleteHandler<N extends Node<N, ?, ?, ?>> extends SpreadsheetEngineColumnHateosHandler<N>
+final class SpreadsheetEngineDeleteColumnsHateosDeleteHandler<N extends Node<N, ?, ?, ?>> extends SpreadsheetEngineColumnHateosHandler<N>
         implements HateosDeleteHandler<SpreadsheetColumnReference, N> {
 
-    static <N extends Node<N, ?, ?, ?>> SpreadsheetEngineColumnHateosDeleteHandler<N> with(final SpreadsheetEngine engine,
-                                                                                           final HateosContentType<N, HasJsonNode> contentType,
-                                                                                           final Supplier<SpreadsheetEngineContext> context) {
+    static <N extends Node<N, ?, ?, ?>> SpreadsheetEngineDeleteColumnsHateosDeleteHandler<N> with(final SpreadsheetEngine engine,
+                                                                                                  final HateosContentType<N, HasJsonNode> contentType,
+                                                                                                  final Supplier<SpreadsheetEngineContext> context) {
         check(engine, contentType, context);
-        return new SpreadsheetEngineColumnHateosDeleteHandler<N>(engine, contentType, context);
+        return new SpreadsheetEngineDeleteColumnsHateosDeleteHandler<N>(engine, contentType, context);
     }
 
     /**
      * Private ctor
      */
-    private SpreadsheetEngineColumnHateosDeleteHandler(final SpreadsheetEngine engine,
-                                                       final HateosContentType<N, HasJsonNode> contentType,
-                                                       final Supplier<SpreadsheetEngineContext> context) {
+    private SpreadsheetEngineDeleteColumnsHateosDeleteHandler(final SpreadsheetEngine engine,
+                                                              final HateosContentType<N, HasJsonNode> contentType,
+                                                              final Supplier<SpreadsheetEngineContext> context) {
         super(engine, contentType, context);
     }
 
