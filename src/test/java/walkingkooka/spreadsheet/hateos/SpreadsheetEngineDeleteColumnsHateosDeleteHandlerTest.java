@@ -5,7 +5,6 @@ import walkingkooka.Cast;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosContentType;
-import walkingkooka.net.http.server.hateos.HateosDeleteHandler;
 import walkingkooka.net.http.server.hateos.HateosDeleteHandlerTesting;
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
@@ -25,9 +24,9 @@ import java.util.function.Supplier;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public final class SpreadsheetEngineColumnHateosDeleteHandlerTest extends SpreadsheetEngineHateosHandlerTestCase<SpreadsheetEngineColumnHateosDeleteHandler<JsonNode>, SpreadsheetColumnReference>
-        implements HateosDeleteHandlerTesting<SpreadsheetEngineColumnHateosDeleteHandler<JsonNode>, SpreadsheetColumnReference, JsonNode>,
-        ToStringTesting<SpreadsheetEngineColumnHateosDeleteHandler<JsonNode>> {
+public final class SpreadsheetEngineDeleteColumnsHateosDeleteHandlerTest extends SpreadsheetEngineHateosHandlerTestCase<SpreadsheetEngineDeleteColumnsHateosDeleteHandler<JsonNode>, SpreadsheetColumnReference>
+        implements HateosDeleteHandlerTesting<SpreadsheetEngineDeleteColumnsHateosDeleteHandler<JsonNode>, SpreadsheetColumnReference, JsonNode>,
+        ToStringTesting<SpreadsheetEngineDeleteColumnsHateosDeleteHandler<JsonNode>> {
 
     @Test
     public void testDeleteColumn() {
@@ -110,8 +109,8 @@ public final class SpreadsheetEngineColumnHateosDeleteHandlerTest extends Spread
     }
 
     @Override
-    public Class<SpreadsheetEngineColumnHateosDeleteHandler<JsonNode>> type() {
-        return Cast.to(SpreadsheetEngineColumnHateosDeleteHandler.class);
+    public Class<SpreadsheetEngineDeleteColumnsHateosDeleteHandler<JsonNode>> type() {
+        return Cast.to(SpreadsheetEngineDeleteColumnsHateosDeleteHandler.class);
     }
 
     @Override
@@ -135,17 +134,17 @@ public final class SpreadsheetEngineColumnHateosDeleteHandlerTest extends Spread
         return HateosHandler.NO_PARAMETERS;
     }
 
-    private SpreadsheetEngineColumnHateosDeleteHandler<JsonNode> createHandler(final SpreadsheetEngine engine) {
+    private SpreadsheetEngineDeleteColumnsHateosDeleteHandler<JsonNode> createHandler(final SpreadsheetEngine engine) {
         return this.createHandler(engine,
                 this.contentType(),
                 this.engineContextSupplier());
     }
 
     @Override
-    SpreadsheetEngineColumnHateosDeleteHandler<JsonNode> createHandler(final SpreadsheetEngine engine,
-                                                                       final HateosContentType<JsonNode, HasJsonNode> contentType,
-                                                                       final Supplier<SpreadsheetEngineContext> context) {
-        return SpreadsheetEngineColumnHateosDeleteHandler.with(engine, contentType, context);
+    SpreadsheetEngineDeleteColumnsHateosDeleteHandler<JsonNode> createHandler(final SpreadsheetEngine engine,
+                                                                              final HateosContentType<JsonNode, HasJsonNode> contentType,
+                                                                              final Supplier<SpreadsheetEngineContext> context) {
+        return SpreadsheetEngineDeleteColumnsHateosDeleteHandler.with(engine, contentType, context);
     }
 
     @Override
