@@ -26,7 +26,7 @@ import java.util.function.Supplier;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public final class SpreadsheetEngineInsertRowsHateosPutHandlerTest extends SpreadsheetEngineHateosHandlerTestCase<SpreadsheetEngineInsertRowsHateosPutHandler<JsonNode>, SpreadsheetRowReference>
+public final class SpreadsheetEngineInsertRowsHateosPutHandlerTest extends SpreadsheetEngineHateosHandlerTestCase<SpreadsheetEngineInsertRowsHateosPutHandler<JsonNode>, SpreadsheetRowReference, SpreadsheetRowReference>
         implements HateosPutHandlerTesting<SpreadsheetEngineInsertRowsHateosPutHandler<JsonNode>, SpreadsheetRowReference, JsonNode>,
         ToStringTesting<SpreadsheetEngineInsertRowsHateosPutHandler<JsonNode>> {
 
@@ -139,7 +139,7 @@ public final class SpreadsheetEngineInsertRowsHateosPutHandlerTest extends Sprea
 
     @Override
     SpreadsheetEngineInsertRowsHateosPutHandler<JsonNode> createHandler(final SpreadsheetEngine engine,
-                                                                        final HateosContentType<JsonNode, HasJsonNode> contentType,
+                                                                        final HateosContentType<JsonNode, SpreadsheetRowReference> contentType,
                                                                         final Supplier<SpreadsheetEngineContext> context) {
         return SpreadsheetEngineInsertRowsHateosPutHandler.with(engine, contentType, context);
     }
