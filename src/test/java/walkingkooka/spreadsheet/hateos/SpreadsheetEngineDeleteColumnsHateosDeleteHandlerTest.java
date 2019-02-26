@@ -24,7 +24,7 @@ import java.util.function.Supplier;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public final class SpreadsheetEngineDeleteColumnsHateosDeleteHandlerTest extends SpreadsheetEngineHateosHandlerTestCase<SpreadsheetEngineDeleteColumnsHateosDeleteHandler<JsonNode>, SpreadsheetColumnReference>
+public final class SpreadsheetEngineDeleteColumnsHateosDeleteHandlerTest extends SpreadsheetEngineHateosHandlerTestCase<SpreadsheetEngineDeleteColumnsHateosDeleteHandler<JsonNode>, SpreadsheetColumnReference, SpreadsheetColumnReference>
         implements HateosDeleteHandlerTesting<SpreadsheetEngineDeleteColumnsHateosDeleteHandler<JsonNode>, SpreadsheetColumnReference, JsonNode>,
         ToStringTesting<SpreadsheetEngineDeleteColumnsHateosDeleteHandler<JsonNode>> {
 
@@ -142,7 +142,7 @@ public final class SpreadsheetEngineDeleteColumnsHateosDeleteHandlerTest extends
 
     @Override
     SpreadsheetEngineDeleteColumnsHateosDeleteHandler<JsonNode> createHandler(final SpreadsheetEngine engine,
-                                                                              final HateosContentType<JsonNode, HasJsonNode> contentType,
+                                                                              final HateosContentType<JsonNode, SpreadsheetColumnReference> contentType,
                                                                               final Supplier<SpreadsheetEngineContext> context) {
         return SpreadsheetEngineDeleteColumnsHateosDeleteHandler.with(engine, contentType, context);
     }

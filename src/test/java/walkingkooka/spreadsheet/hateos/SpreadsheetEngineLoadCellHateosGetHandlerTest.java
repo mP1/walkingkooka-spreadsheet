@@ -112,7 +112,7 @@ public final class SpreadsheetEngineLoadCellHateosGetHandlerTest extends Spreads
 
     @Override
     SpreadsheetEngineLoadCellHateosGetHandler<JsonNode> createHandler(final SpreadsheetEngine engine,
-                                                                      final HateosContentType<JsonNode, HasJsonNode> contentType,
+                                                                      final HateosContentType<JsonNode, SpreadsheetCell> contentType,
                                                                       final Supplier<SpreadsheetEngineContext> context) {
         return SpreadsheetEngineLoadCellHateosGetHandler.with(engine, contentType, context);
     }

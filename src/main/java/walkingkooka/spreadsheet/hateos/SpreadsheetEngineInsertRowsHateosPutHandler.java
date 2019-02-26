@@ -25,7 +25,7 @@ final class SpreadsheetEngineInsertRowsHateosPutHandler<N extends Node<N, ?, ?, 
         implements HateosPutHandler<SpreadsheetRowReference, N> {
 
     static <N extends Node<N, ?, ?, ?>> SpreadsheetEngineInsertRowsHateosPutHandler<N> with(final SpreadsheetEngine engine,
-                                                                                            final HateosContentType<N, HasJsonNode> contentType,
+                                                                                            final HateosContentType<N, SpreadsheetRowReference> contentType,
                                                                                             final Supplier<SpreadsheetEngineContext> context) {
         check(engine, contentType, context);
         return new SpreadsheetEngineInsertRowsHateosPutHandler<N>(engine, contentType, context);
@@ -35,7 +35,7 @@ final class SpreadsheetEngineInsertRowsHateosPutHandler<N extends Node<N, ?, ?, 
      * Private ctor
      */
     private SpreadsheetEngineInsertRowsHateosPutHandler(final SpreadsheetEngine engine,
-                                                        final HateosContentType<N, HasJsonNode> contentType,
+                                                        final HateosContentType<N, SpreadsheetRowReference> contentType,
                                                         final Supplier<SpreadsheetEngineContext> context) {
         super(engine, contentType, context);
     }
