@@ -1,6 +1,7 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.compare.ComparableTesting;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
+        ComparableTesting<SpreadsheetId>,
         HashCodeEqualsDefinedTesting<SpreadsheetId>,
         HasJsonNodeTesting<SpreadsheetId>,
         ToStringTesting<SpreadsheetId> {
@@ -27,6 +29,11 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     @Test
     public void testDifferentSpreadsheetId() {
         this.checkNotEquals(SpreadsheetId.with(999));
+    }
+
+    @Test
+    public void testCompareLess() {
+        this.compareToAndCheckLess(SpreadsheetId.with(VALUE * 2));
     }
 
     @Test
@@ -48,6 +55,11 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     @Override
     public MemberVisibility typeVisibility() {
         return MemberVisibility.PUBLIC;
+    }
+
+    @Override
+    public SpreadsheetId createComparable() {
+        return this.createObject();
     }
 
     @Override
