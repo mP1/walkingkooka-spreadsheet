@@ -303,11 +303,6 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined,
     public static SpreadsheetTextStyle fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
-        // object
-        if (!node.isObject()) {
-            throw new IllegalArgumentException("Node is not an object=" + node);
-        }
-
         FontFamilyName fontFamilyName = null;
         FontSize fontSize = null;
         Color color = null;
@@ -317,36 +312,40 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined,
         Boolean underline = null;
         Boolean strikethru = null;
 
-        for (JsonNode child : node.children()) {
-            final JsonNodeName name = child.name();
-            switch (name.value()) {
-                case FONT_FAMILY_PROPERTY_STRING:
-                    fontFamilyName = FontFamilyName.fromJsonNode(child);
-                    break;
-                case FONT_SIZE_PROPERTY_STRING:
-                    fontSize = FontSize.fromJsonNode(child);
-                    break;
-                case COLOR_PROPERTY_STRING:
-                    color = Color.fromJsonNode(child);
-                    break;
-                case BACKGROUND_COLOR_PROPERTY_STRING:
-                    backgroundColor = Color.fromJsonNode(child);
-                    break;
-                case BOLD_PROPERTY_STRING:
-                    bold = booleanFromJsonNode(child);
-                    break;
-                case ITALICS_PROPERTY_STRING:
-                    italics = booleanFromJsonNode(child);
-                    break;
-                case UNDERLINE_PROPERTY_STRING:
-                    underline = booleanFromJsonNode(child);
-                    break;
-                case STRIKETHRU_PROPERTY_STRING:
-                    strikethru = booleanFromJsonNode(child);
-                    break;
-                default:
-                    HasJsonNode.unknownPropertyPresent(name, node);
+        try {
+            for (JsonNode child : node.objectOrFail().children()) {
+                final JsonNodeName name = child.name();
+                switch (name.value()) {
+                    case FONT_FAMILY_PROPERTY_STRING:
+                        fontFamilyName = FontFamilyName.fromJsonNode(child);
+                        break;
+                    case FONT_SIZE_PROPERTY_STRING:
+                        fontSize = FontSize.fromJsonNode(child);
+                        break;
+                    case COLOR_PROPERTY_STRING:
+                        color = Color.fromJsonNode(child);
+                        break;
+                    case BACKGROUND_COLOR_PROPERTY_STRING:
+                        backgroundColor = Color.fromJsonNode(child);
+                        break;
+                    case BOLD_PROPERTY_STRING:
+                        bold = booleanFromJsonNode(child);
+                        break;
+                    case ITALICS_PROPERTY_STRING:
+                        italics = booleanFromJsonNode(child);
+                        break;
+                    case UNDERLINE_PROPERTY_STRING:
+                        underline = booleanFromJsonNode(child);
+                        break;
+                    case STRIKETHRU_PROPERTY_STRING:
+                        strikethru = booleanFromJsonNode(child);
+                        break;
+                    default:
+                        HasJsonNode.unknownPropertyPresent(name, node);
+                }
             }
+        } catch (final JsonNodeException cause) {
+            throw new IllegalArgumentException(cause.getMessage(), cause);
         }
 
         return with(
