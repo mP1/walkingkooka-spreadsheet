@@ -8,6 +8,7 @@ import walkingkooka.spreadsheet.SpreadsheetFormattedCell;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonNodeName;
 import walkingkooka.tree.json.JsonObjectNode;
 
@@ -110,21 +111,21 @@ public final class SpreadsheetCellStyle implements HashCodeEqualsDefined,
         Objects.requireNonNull(node, "node");
 
         // object
-        if (!node.isObject()) {
-            throw new IllegalArgumentException("Node is not an object=" + node);
-        }
-
         SpreadsheetTextStyle text = SpreadsheetTextStyle.EMPTY;
 
-        for (JsonNode child : node.children()) {
-            final JsonNodeName name = child.name();
-            switch (name.value()) {
-                case TEXT_PROPERTY_STRING:
-                    text = SpreadsheetTextStyle.fromJsonNode(child);
-                    break;
-                default:
-                    HasJsonNode.unknownPropertyPresent(name, node);
+        try {
+            for (JsonNode child : node.objectOrFail().children()) {
+                final JsonNodeName name = child.name();
+                switch (name.value()) {
+                    case TEXT_PROPERTY_STRING:
+                        text = SpreadsheetTextStyle.fromJsonNode(child);
+                        break;
+                    default:
+                        HasJsonNode.unknownPropertyPresent(name, node);
+                }
             }
+        } catch (final JsonNodeException cause) {
+            throw new IllegalArgumentException(cause.getMessage(), cause);
         }
 
         return with(text);
