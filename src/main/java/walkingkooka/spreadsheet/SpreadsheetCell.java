@@ -26,6 +26,7 @@ import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonNodeName;
 import walkingkooka.tree.json.JsonObjectNode;
 
@@ -227,38 +228,37 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
     public static SpreadsheetCell fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
-        // object
-        if (!node.isObject()) {
-            throw new IllegalArgumentException("Node is not an object=" + node);
-        }
-
         SpreadsheetCellReference reference = null;
         SpreadsheetFormula formula = null;
         SpreadsheetCellStyle style = null;
         SpreadsheetCellFormat format = null;
         SpreadsheetFormattedCell formatted = null;
 
-        for (JsonNode child : node.children()) {
-            final JsonNodeName name = child.name();
-            switch (name.value()) {
-                case REFERENCE_PROPERTY_STRING:
-                    reference = SpreadsheetCellReference.fromJsonNode(child);
-                    break;
-                case FORMULA_PROPERTY_STRING:
-                    formula = SpreadsheetFormula.fromJsonNode(child);
-                    break;
-                case STYLE_PROPERTY_STRING:
-                    style = SpreadsheetCellStyle.fromJsonNode(child);
-                    break;
-                case FORMAT_PROPERTY_STRING:
-                    format = SpreadsheetCellFormat.fromJsonNode(child);
-                    break;
-                case FORMATTED_PROPERTY_STRING:
-                    formatted = SpreadsheetFormattedCell.fromJsonNode(child);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unknown property " + name + "=" + node);
+        try {
+            for (JsonNode child : node.objectOrFail().children()) {
+                final JsonNodeName name = child.name();
+                switch (name.value()) {
+                    case REFERENCE_PROPERTY_STRING:
+                        reference = SpreadsheetCellReference.fromJsonNode(child);
+                        break;
+                    case FORMULA_PROPERTY_STRING:
+                        formula = SpreadsheetFormula.fromJsonNode(child);
+                        break;
+                    case STYLE_PROPERTY_STRING:
+                        style = SpreadsheetCellStyle.fromJsonNode(child);
+                        break;
+                    case FORMAT_PROPERTY_STRING:
+                        format = SpreadsheetCellFormat.fromJsonNode(child);
+                        break;
+                    case FORMATTED_PROPERTY_STRING:
+                        formatted = SpreadsheetFormattedCell.fromJsonNode(child);
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Unknown property " + name + "=" + node);
+                }
             }
+        } catch (final JsonNodeException cause) {
+            throw new IllegalArgumentException(cause.getMessage(), cause);
         }
 
         if (null == reference) {

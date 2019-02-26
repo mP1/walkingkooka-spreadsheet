@@ -127,31 +127,30 @@ public final class SpreadsheetFormattedCell implements HasText,
     public static SpreadsheetFormattedCell fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
-        // object
-        if (!node.isObject()) {
-            throw new IllegalArgumentException("Node is not an object=" + node);
-        }
-
         String text = null;
         SpreadsheetCellStyle style = null;
 
-        for (JsonNode child : node.children()) {
-            final JsonNodeName name = child.name();
-            switch (name.value()) {
-                case TEXT_PROPERTY_STRING:
-                    text = JsonStringNode.class.cast(child).value();
-                    try {
-                        text = child.stringValueOrFail();
-                    } catch (final JsonNodeException cause) {
-                        throw new IllegalArgumentException("Property " + name + " is not a String=" + node);
-                    }
-                    break;
-                case STYLE_PROPERTY_STRING:
-                    style = SpreadsheetCellStyle.fromJsonNode(child);
-                    break;
-                default:
-                    HasJsonNode.unknownPropertyPresent(name, node);
+        try {
+            for (JsonNode child : node.objectOrFail().children()) {
+                final JsonNodeName name = child.name();
+                switch (name.value()) {
+                    case TEXT_PROPERTY_STRING:
+                        text = JsonStringNode.class.cast(child).value();
+                        try {
+                            text = child.stringValueOrFail();
+                        } catch (final JsonNodeException cause) {
+                            throw new IllegalArgumentException("Property " + name + " is not a String=" + node);
+                        }
+                        break;
+                    case STYLE_PROPERTY_STRING:
+                        style = SpreadsheetCellStyle.fromJsonNode(child);
+                        break;
+                    default:
+                        HasJsonNode.unknownPropertyPresent(name, node);
+                }
             }
+        } catch (final JsonNodeException cause) {
+            throw new IllegalArgumentException(cause.getMessage(), cause);
         }
 
         if (null == text) {
