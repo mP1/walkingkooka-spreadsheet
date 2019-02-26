@@ -18,8 +18,8 @@ import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetEngineHateosHandlerTestCase<H extends HateosHandler<I, JsonNode>, I extends Comparable<I>>
-        extends SpreadsheetHateosHandlerTestCase2<H, I> {
+public abstract class SpreadsheetEngineHateosHandlerTestCase<H extends HateosHandler<I, JsonNode>, I extends Comparable<I>, V extends HasJsonNode>
+        extends SpreadsheetHateosHandlerTestCase2<H, I, V> {
 
     SpreadsheetEngineHateosHandlerTestCase() {
         super();
@@ -40,12 +40,12 @@ public abstract class SpreadsheetEngineHateosHandlerTestCase<H extends HateosHan
     }
 
     @Override
-    final H createHandler(final HateosContentType<JsonNode, HasJsonNode> contentType) {
+    final H createHandler(final HateosContentType<JsonNode, V> contentType) {
         return this.createHandler(this.engine(), contentType, this.engineContextSupplier());
     }
 
     abstract H createHandler(final SpreadsheetEngine engine,
-                             final HateosContentType<JsonNode, HasJsonNode> contentType,
+                             final HateosContentType<JsonNode, V> contentType,
                              final Supplier<SpreadsheetEngineContext> context);
 
     @Override

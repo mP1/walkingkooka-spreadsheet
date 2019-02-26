@@ -23,7 +23,7 @@ final class SpreadsheetEngineDeleteRowsHateosDeleteHandler<N extends Node<N, ?, 
         implements HateosDeleteHandler<SpreadsheetRowReference, N> {
 
     static <N extends Node<N, ?, ?, ?>> SpreadsheetEngineDeleteRowsHateosDeleteHandler<N> with(final SpreadsheetEngine engine,
-                                                                                               final HateosContentType<N, HasJsonNode> contentType,
+                                                                                               final HateosContentType<N, SpreadsheetRowReference> contentType,
                                                                                                final Supplier<SpreadsheetEngineContext> context) {
         check(engine, contentType, context);
         return new SpreadsheetEngineDeleteRowsHateosDeleteHandler<N>(engine, contentType, context);
@@ -33,7 +33,7 @@ final class SpreadsheetEngineDeleteRowsHateosDeleteHandler<N extends Node<N, ?, 
      * Private ctor
      */
     private SpreadsheetEngineDeleteRowsHateosDeleteHandler(final SpreadsheetEngine engine,
-                                                           final HateosContentType<N, HasJsonNode> contentType,
+                                                           final HateosContentType<N, SpreadsheetRowReference> contentType,
                                                            final Supplier<SpreadsheetEngineContext> context) {
         super(engine, contentType, context);
     }
