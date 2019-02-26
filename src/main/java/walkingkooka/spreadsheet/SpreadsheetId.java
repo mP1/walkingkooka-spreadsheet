@@ -27,7 +27,8 @@ import walkingkooka.tree.json.JsonNode;
 /**
  * Identifies a single spreadsheet.
  */
-public final class SpreadsheetId implements HashCodeEqualsDefined,
+public final class SpreadsheetId implements Comparable<SpreadsheetId>,
+        HashCodeEqualsDefined,
         HasJsonNode,
         Value<Long> {
 
@@ -81,6 +82,15 @@ public final class SpreadsheetId implements HashCodeEqualsDefined,
     private boolean equals0(final SpreadsheetId id) {
         return this.value.equals(id.value());
     }
+
+    // Comparable....................................................................................................
+
+    @Override
+    public int compareTo(final SpreadsheetId other) {
+        return this.value.compareTo(other.value);
+    }
+
+    // Object........................................................................................................
 
     @Override
     public String toString() {
