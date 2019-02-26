@@ -3,6 +3,7 @@ package walkingkooka.spreadsheet.security;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonNodeName;
 
 import java.util.Objects;
@@ -45,26 +46,25 @@ public final class User extends Identity<UserId>
     public static User fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
-        // object
-        if (!node.isObject()) {
-            throw new IllegalArgumentException("Node is not an object=" + node);
-        }
-
         UserId id = null;
         EmailAddress email = null;
 
-        for (JsonNode child : node.children()) {
-            final JsonNodeName name = child.name();
-            switch (name.value()) {
-                case ID_PROPERTY_STRING:
-                    id = UserId.fromJsonNode(child);
-                    break;
-                case EMAIL_PROPERTY_STRING:
-                    email = EmailAddress.fromJsonNode(child);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unknown property " + name + "=" + node);
+        try {
+            for (JsonNode child : node.objectOrFail().children()) {
+                final JsonNodeName name = child.name();
+                switch (name.value()) {
+                    case ID_PROPERTY_STRING:
+                        id = UserId.fromJsonNode(child);
+                        break;
+                    case EMAIL_PROPERTY_STRING:
+                        email = EmailAddress.fromJsonNode(child);
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Unknown property " + name + "=" + node);
+                }
             }
+        } catch (final JsonNodeException cause) {
+            throw new IllegalArgumentException(cause.getMessage(), cause);
         }
 
         if (null == id) {

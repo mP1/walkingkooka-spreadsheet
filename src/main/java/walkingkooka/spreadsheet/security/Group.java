@@ -2,6 +2,7 @@ package walkingkooka.spreadsheet.security;
 
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonNodeName;
 
 import java.util.Objects;
@@ -44,26 +45,25 @@ public final class Group extends Identity<GroupId>
     public static Group fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
-        // object
-        if (!node.isObject()) {
-            throw new IllegalArgumentException("Node is not an object=" + node);
-        }
-
         GroupId id = null;
         GroupName groupName = null;
 
-        for (JsonNode child : node.children()) {
-            final JsonNodeName name = child.name();
-            switch (name.value()) {
-                case ID_PROPERTY_STRING:
-                    id = GroupId.fromJsonNode(child);
-                    break;
-                case NAME_PROPERTY_STRING:
-                    groupName = GroupName.fromJsonNode(child);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unknown property " + name + "=" + node);
+        try {
+            for (JsonNode child : node.objectOrFail().children()) {
+                final JsonNodeName name = child.name();
+                switch (name.value()) {
+                    case ID_PROPERTY_STRING:
+                        id = GroupId.fromJsonNode(child);
+                        break;
+                    case NAME_PROPERTY_STRING:
+                        groupName = GroupName.fromJsonNode(child);
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Unknown property " + name + "=" + node);
+                }
             }
+        } catch (final JsonNodeException cause) {
+            throw new IllegalArgumentException(cause.getMessage(), cause);
         }
 
         if (null == id) {
