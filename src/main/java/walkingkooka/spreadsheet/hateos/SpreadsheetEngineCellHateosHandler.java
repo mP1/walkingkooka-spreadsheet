@@ -15,10 +15,10 @@ import java.util.function.Supplier;
  * A handler for cells.
  */
 abstract class SpreadsheetEngineCellHateosHandler<N extends Node<N, ?, ?, ?>> extends
-        SpreadsheetEngineHateosHandler<SpreadsheetCellReference, HasJsonNode, N> {
+        SpreadsheetEngineHateosHandler<SpreadsheetCellReference, SpreadsheetCell, N> {
 
     SpreadsheetEngineCellHateosHandler(final SpreadsheetEngine engine,
-                                       final HateosContentType<N, HasJsonNode> contentType,
+                                       final HateosContentType<N, SpreadsheetCell> contentType,
                                        final Supplier<SpreadsheetEngineContext> context) {
         super(engine, contentType, context);
     }

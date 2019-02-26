@@ -28,7 +28,7 @@ abstract class SpreadsheetEngineCellHateosGetHandler<N extends Node<N, ?, ?, ?>>
      * Package private to limit sub classing.
      */
     SpreadsheetEngineCellHateosGetHandler(final SpreadsheetEngine engine,
-                                          final HateosContentType<N, HasJsonNode> contentType,
+                                          final HateosContentType<N, SpreadsheetCell> contentType,
                                           final Supplier<SpreadsheetEngineContext> context) {
         super(engine, contentType, context);
     }

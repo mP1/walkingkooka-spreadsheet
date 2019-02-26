@@ -10,7 +10,8 @@ import walkingkooka.tree.json.JsonNode;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetHateosHandlerTestCase2<H extends HateosHandler<I, JsonNode>, I extends Comparable<I>> extends SpreadsheetHateosHandlerTestCase<H>
+public abstract class SpreadsheetHateosHandlerTestCase2<H extends HateosHandler<I, JsonNode>, I extends Comparable<I>, V extends HasJsonNode>
+        extends SpreadsheetHateosHandlerTestCase<H>
         implements HateosHandlerTesting<H, I, JsonNode> {
 
     SpreadsheetHateosHandlerTestCase2() {
@@ -29,9 +30,9 @@ public abstract class SpreadsheetHateosHandlerTestCase2<H extends HateosHandler<
         return this.createHandler(this.contentType());
     }
 
-    final HateosContentType<JsonNode, HasJsonNode> contentType() {
-        return HateosContentType.JSON;
+    final HateosContentType<JsonNode, V> contentType() {
+        return HateosContentType.json();
     }
 
-    abstract H createHandler(final HateosContentType<JsonNode, HasJsonNode> type);
+    abstract H createHandler(final HateosContentType<JsonNode, V> type);
 }
