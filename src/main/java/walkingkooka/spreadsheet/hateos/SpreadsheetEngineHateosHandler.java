@@ -6,6 +6,7 @@ import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.tree.Node;
+import walkingkooka.tree.json.HasJsonNode;
 
 import java.util.Map;
 import java.util.Objects;
@@ -15,7 +16,8 @@ import java.util.function.Supplier;
 /**
  * An abstract hateos handler that includes uses a {@link SpreadsheetEngine} and {@link SpreadsheetEngineContext} to do things.
  */
-abstract class SpreadsheetEngineHateosHandler<K extends Comparable<K>, V, N extends Node<N, ?, ?, ?>> extends SpreadsheetHateosHandler<K, V, N> {
+abstract class SpreadsheetEngineHateosHandler<K extends Comparable<K>, V, N extends Node<N, ?, ?, ?>>
+        extends SpreadsheetHateosHandler<K, V, N> {
 
     /**
      * Checks required factory method parameters are not null.

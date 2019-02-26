@@ -14,10 +14,10 @@ import java.util.function.Supplier;
  * A handler for rows.
  */
 abstract class SpreadsheetEngineRowHateosHandler<N extends Node<N, ?, ?, ?>> extends
-        SpreadsheetEngineHateosHandler<SpreadsheetRowReference, HasJsonNode, N> {
+        SpreadsheetEngineHateosHandler<SpreadsheetRowReference, SpreadsheetRowReference, N> {
 
     SpreadsheetEngineRowHateosHandler(final SpreadsheetEngine engine,
-                                      final HateosContentType<N, HasJsonNode> contentType,
+                                      final HateosContentType<N, SpreadsheetRowReference> contentType,
                                       final Supplier<SpreadsheetEngineContext> context) {
         super(engine, contentType, context);
     }

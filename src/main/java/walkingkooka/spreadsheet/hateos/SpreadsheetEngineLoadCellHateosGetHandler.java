@@ -25,14 +25,14 @@ import java.util.function.Supplier;
 final class SpreadsheetEngineLoadCellHateosGetHandler<N extends Node<N, ?, ?, ?>> extends SpreadsheetEngineCellHateosGetHandler<N> {
 
     static <N extends Node<N, ?, ?, ?>> SpreadsheetEngineLoadCellHateosGetHandler<N> with(final SpreadsheetEngine engine,
-                                                                                          final HateosContentType<N, HasJsonNode> contentType,
+                                                                                          final HateosContentType<N, SpreadsheetCell> contentType,
                                                                                           final Supplier<SpreadsheetEngineContext> context) {
         check(engine, contentType, context);
         return new SpreadsheetEngineLoadCellHateosGetHandler<N>(engine, contentType, context);
     }
 
     private SpreadsheetEngineLoadCellHateosGetHandler(final SpreadsheetEngine engine,
-                                                      final HateosContentType<N, HasJsonNode> contentType,
+                                                      final HateosContentType<N, SpreadsheetCell> contentType,
                                                       final Supplier<SpreadsheetEngineContext> context) {
         super(engine, contentType, context);
     }
