@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.compare.Range;
 import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosContentType;
@@ -16,6 +17,7 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.test.Latch;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 
@@ -115,6 +117,11 @@ public final class SpreadsheetEngineInsertColumnsHateosPutHandlerTest extends Sp
     @Override
     public SpreadsheetColumnReference id() {
         return SpreadsheetColumnReference.parse("D");
+    }
+
+    @Override
+    public Range<SpreadsheetColumnReference> collection() {
+        return Range.greaterThanEquals(this.id()).and(Range.lessThanEquals(SpreadsheetColumnReference.parse("G")));
     }
 
     @Override
