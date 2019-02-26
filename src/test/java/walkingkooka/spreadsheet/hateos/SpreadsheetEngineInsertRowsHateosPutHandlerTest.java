@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.compare.Range;
 import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosContentType;
@@ -115,6 +116,11 @@ public final class SpreadsheetEngineInsertRowsHateosPutHandlerTest extends Sprea
     @Override
     public SpreadsheetRowReference id() {
         return SpreadsheetRowReference.parse("2");
+    }
+
+    @Override
+    public Range<SpreadsheetRowReference> collection() {
+        return Range.greaterThanEquals(this.id()).and(Range.lessThanEquals(SpreadsheetRowReference.parse("4")));
     }
 
     @Override

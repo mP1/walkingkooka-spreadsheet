@@ -1,5 +1,6 @@
 package walkingkooka.spreadsheet.hateos;
 
+import walkingkooka.compare.Range;
 import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosContentType;
@@ -8,6 +9,7 @@ import walkingkooka.net.http.server.hateos.HateosHandlerContext;
 import walkingkooka.net.http.server.hateos.HateosPutHandler;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.tree.Node;
 import walkingkooka.tree.json.HasJsonNode;
@@ -72,6 +74,19 @@ final class SpreadsheetEngineInsertRowsHateosPutHandler<N extends Node<N, ?, ?, 
     }
 
     private final UrlParameterName COUNT = UrlParameterName.with("count");
+
+    @Override
+    public Optional<N> putCollection(final Range<SpreadsheetRowReference> rows,
+                                     final Optional<N> resource,
+                                     final Map<HttpRequestAttribute<?>, Object> parameters,
+                                     final HateosHandlerContext<N> context) {
+        Objects.requireNonNull(rows, "rows");
+        Objects.requireNonNull(resource, "resource");
+        checkParameters(parameters);
+        Objects.requireNonNull(context, "context");
+
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     String operation() {
