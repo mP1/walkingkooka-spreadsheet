@@ -278,6 +278,11 @@ public final class SpreadsheetCellStyleTest implements ClassTesting2<Spreadsheet
     // HasJsonNodeTesting............................................................
 
     @Override
+    public SpreadsheetCellStyle createHasJsonNode() {
+        return this.createObject();
+    }
+
+    @Override
     public SpreadsheetCellStyle fromJsonNode(final JsonNode jsonNode) {
         return SpreadsheetCellStyle.fromJsonNode(jsonNode);
     }

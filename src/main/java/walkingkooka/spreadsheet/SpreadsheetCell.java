@@ -304,6 +304,10 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
     final static JsonNodeName FORMAT_PROPERTY = JsonNodeName.with(FORMAT_PROPERTY_STRING);
     final static JsonNodeName FORMATTED_PROPERTY = JsonNodeName.with(FORMATTED_PROPERTY_STRING);
 
+    static {
+        HasJsonNode.register(SpreadsheetCell.class, SpreadsheetCell::fromJsonNode);
+    }
+
     // HashCodeEqualsDefined..........................................................................................
 
     @Override

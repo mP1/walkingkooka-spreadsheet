@@ -135,6 +135,11 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     // HasJsonNodeTesting............................................................
 
     @Override
+    public SpreadsheetError createHasJsonNode() {
+        return this.createObject();
+    }
+
+    @Override
     public SpreadsheetError fromJsonNode(final JsonNode jsonNode) {
         return SpreadsheetError.fromJsonNode(jsonNode);
     }
