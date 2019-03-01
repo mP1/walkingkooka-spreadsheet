@@ -162,6 +162,11 @@ final public class GroupNameTest implements NameTesting<GroupName, GroupName>,
     // HasJsonNodeTesting......................................................................................
 
     @Override
+    public final GroupName createHasJsonNode() {
+        return this.createObject();
+    }
+
+    @Override
     public final GroupName fromJsonNode(final JsonNode from) {
         return GroupName.fromJsonNode(from);
     }

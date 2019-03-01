@@ -176,6 +176,10 @@ public final class SpreadsheetFormattedCell implements HasText,
     final static JsonNodeName TEXT_PROPERTY = JsonNodeName.with(TEXT_PROPERTY_STRING);
     final static JsonNodeName STYLE_PROPERTY = JsonNodeName.with(STYLE_PROPERTY_STRING);
 
+    static {
+        HasJsonNode.register(SpreadsheetFormattedCell.class, SpreadsheetFormattedCell::fromJsonNode);
+    }
+
     // Object ............................................................................
 
     @Override

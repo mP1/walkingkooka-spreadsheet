@@ -281,6 +281,10 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
     final static JsonNodeName VALUE_PROPERTY = JsonNodeName.with("value");
     final static JsonNodeName ERROR_PROPERTY = JsonNodeName.with("error");
 
+    static {
+        HasJsonNode.register(SpreadsheetFormula.class, SpreadsheetFormula::fromJsonNode);
+    }
+
     // HashCodeEqualsDefined..........................................................................................
 
     @Override

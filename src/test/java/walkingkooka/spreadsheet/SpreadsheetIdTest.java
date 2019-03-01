@@ -75,6 +75,11 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     // HasJsonNodeTesting..............................................................................
 
     @Override
+    public SpreadsheetId createHasJsonNode() {
+        return this.createObject();
+    }
+
+    @Override
     public SpreadsheetId fromJsonNode(final JsonNode node) {
         return SpreadsheetId.fromJsonNode(node);
     }

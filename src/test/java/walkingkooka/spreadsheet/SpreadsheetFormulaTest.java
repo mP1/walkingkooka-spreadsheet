@@ -487,6 +487,11 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     // HasJsonNodeTesting............................................................
 
     @Override
+    public SpreadsheetFormula createHasJsonNode() {
+        return this.createObject();
+    }
+
+    @Override
     public SpreadsheetFormula fromJsonNode(final JsonNode jsonNode) {
         return SpreadsheetFormula.fromJsonNode(jsonNode);
     }

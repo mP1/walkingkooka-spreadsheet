@@ -234,6 +234,10 @@ public final class SpreadsheetRange implements ExpressionReference,
         return JsonNode.string(this.toString());
     }
 
+    static {
+        HasJsonNode.register(SpreadsheetRange.class, SpreadsheetRange::fromJsonNode);
+    }
+
     // HashCodeEqualsDefined.......................................................................................
 
     @Override
