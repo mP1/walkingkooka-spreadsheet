@@ -428,6 +428,10 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined,
     final static JsonNodeName UNDERLINE_PROPERTY = JsonNodeName.with(UNDERLINE_PROPERTY_STRING);
     final static JsonNodeName STRIKETHRU_PROPERTY = JsonNodeName.with(STRIKETHRU_PROPERTY_STRING);
 
+    static {
+        HasJsonNode.register(SpreadsheetTextStyle.class, SpreadsheetTextStyle::fromJsonNode);
+    }
+
     // HashCodeEqualsDefined.........................................................................................
 
     @Override

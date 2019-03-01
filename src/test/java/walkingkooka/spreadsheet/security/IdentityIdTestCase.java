@@ -40,4 +40,9 @@ public abstract class IdentityIdTestCase<I extends IdentityId> implements ClassT
     }
 
     abstract I createId(long value);
+
+    @Override
+    public I createHasJsonNode() {
+        return this.createId(1L);
+    }
 }
