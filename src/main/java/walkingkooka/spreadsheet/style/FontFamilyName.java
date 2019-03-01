@@ -56,6 +56,10 @@ public final class FontFamilyName implements Name,
         return JsonNode.string(this.name);
     }
 
+    static {
+        HasJsonNode.register(FontFamilyName.class, FontFamilyName::fromJsonNode);
+    }
+
     // Object..................................................................................................
 
     public final int hashCode() {

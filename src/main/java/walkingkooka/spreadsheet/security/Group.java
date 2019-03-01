@@ -89,6 +89,10 @@ public final class Group extends Identity<GroupId>
     final static JsonNodeName ID_PROPERTY = JsonNodeName.with(ID_PROPERTY_STRING);
     final static JsonNodeName NAME_PROPERTY = JsonNodeName.with(NAME_PROPERTY_STRING);
 
+    static {
+        HasJsonNode.register(Group.class, Group::fromJsonNode);
+    }
+
     // Identity.................................................................................................
 
     @Override

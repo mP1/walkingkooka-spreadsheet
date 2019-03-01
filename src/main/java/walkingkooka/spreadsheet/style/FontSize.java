@@ -83,6 +83,10 @@ public final class FontSize implements Comparable<FontSize>, HashCodeEqualsDefin
         return JsonNode.number(this.value);
     }
 
+    static {
+        HasJsonNode.register(FontSize.class, FontSize::fromJsonNode);
+    }
+
     // Comparable ...................................................................................................
 
     @Override

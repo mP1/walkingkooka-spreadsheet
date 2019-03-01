@@ -135,6 +135,10 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
         return JsonNode.string(this.pattern); // formatter not serialized.
     }
 
+    static {
+        HasJsonNode.register(SpreadsheetCellFormat.class, SpreadsheetCellFormat::fromJsonNode);
+    }
+
     // Object ............................................................................
 
     @Override

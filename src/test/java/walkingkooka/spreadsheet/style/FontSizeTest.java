@@ -128,6 +128,11 @@ public final class FontSizeTest implements ClassTesting2<FontSize>,
     // HasJsonNodeTesting.....................................................................
 
     @Override
+    public FontSize createHasJsonNode() {
+        return this.createObject();
+    }
+
+    @Override
     public FontSize fromJsonNode(final JsonNode jsonNode) {
         return FontSize.fromJsonNode(jsonNode);
     }
