@@ -67,6 +67,11 @@ public final class SpreadsheetEngineLoadingTest implements ClassTesting2<Spreads
     // HasJsonNodeTesting..................................................................
 
     @Override
+    public SpreadsheetEngineLoading createHasJsonNode() {
+        return SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY;
+    }
+
+    @Override
     public SpreadsheetEngineLoading fromJsonNode(final JsonNode node) {
         return SpreadsheetEngineLoading.fromJsonNode(node);
     }

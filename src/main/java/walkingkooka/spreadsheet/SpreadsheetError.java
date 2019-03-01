@@ -75,4 +75,8 @@ public final class SpreadsheetError implements HashCodeEqualsDefined, Value<Stri
     public JsonNode toJsonNode() {
         return JsonNode.string(this.message);
     }
+
+    static {
+        HasJsonNode.register(SpreadsheetError.class, SpreadsheetError::fromJsonNode);
+    }
 }

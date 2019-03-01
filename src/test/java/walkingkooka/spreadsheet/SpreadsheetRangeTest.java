@@ -541,6 +541,11 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
     // HasJsonNodeTesting...........................................................................................
 
     @Override
+    public SpreadsheetRange createHasJsonNode() {
+        return this.createObject();
+    }
+
+    @Override
     public SpreadsheetRange fromJsonNode(final JsonNode node) {
         return SpreadsheetRange.fromJsonNode(node);
     }
