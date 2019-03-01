@@ -145,6 +145,10 @@ public final class SpreadsheetCellStyle implements HashCodeEqualsDefined,
     // @VisibleForTesting
     final static JsonNodeName TEXT_PROPERTY = JsonNodeName.with(TEXT_PROPERTY_STRING);
 
+    static {
+        HasJsonNode.register(SpreadsheetCellStyle.class, SpreadsheetCellStyle::fromJsonNode);
+    }
+
     // HashCodeEqualsDefined.........................................................................................
 
     @Override

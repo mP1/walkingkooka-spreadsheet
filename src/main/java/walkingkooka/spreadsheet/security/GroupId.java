@@ -1,5 +1,6 @@
 package walkingkooka.spreadsheet.security;
 
+import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 
 /**
@@ -22,5 +23,11 @@ public final class GroupId extends IdentityId {
     @Override
     boolean canBeEqual(final Object other) {
         return other instanceof GroupId;
+    }
+
+    // HasJsonNode.......................................................................................
+
+    static {
+        HasJsonNode.register(GroupId.class, GroupId::fromJsonNode);
     }
 }

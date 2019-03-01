@@ -100,6 +100,11 @@ public final class FontFamilyNameTest implements ClassTesting2<FontFamilyName>,
     // HasJsonNodeTesting............................................................
 
     @Override
+    public FontFamilyName createHasJsonNode() {
+        return this.createObject();
+    }
+
+    @Override
     public FontFamilyName fromJsonNode(final JsonNode jsonNode) {
         return FontFamilyName.fromJsonNode(jsonNode);
     }

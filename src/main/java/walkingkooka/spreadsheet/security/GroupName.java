@@ -90,6 +90,10 @@ final public class GroupName implements Name,
         return JsonNode.string(this.toString());
     }
 
+    static {
+        HasJsonNode.register(GroupName.class, GroupName::fromJsonNode);
+    }
+
     // Object..................................................................................................
 
     public final int hashCode() {
