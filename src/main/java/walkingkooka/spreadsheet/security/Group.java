@@ -90,7 +90,9 @@ public final class Group extends Identity<GroupId>
     final static JsonNodeName NAME_PROPERTY = JsonNodeName.with(NAME_PROPERTY_STRING);
 
     static {
-        HasJsonNode.register(Group.class, Group::fromJsonNode);
+        HasJsonNode.register("group",
+                Group::fromJsonNode,
+                Group.class);
     }
 
     // Identity.................................................................................................
