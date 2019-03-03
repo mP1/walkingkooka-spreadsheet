@@ -57,7 +57,9 @@ public final class FontFamilyName implements Name,
     }
 
     static {
-        HasJsonNode.register(FontFamilyName.class, FontFamilyName::fromJsonNode);
+        HasJsonNode.register("font-family-name",
+                FontFamilyName::fromJsonNode,
+                FontFamilyName.class);
     }
 
     // Object..................................................................................................

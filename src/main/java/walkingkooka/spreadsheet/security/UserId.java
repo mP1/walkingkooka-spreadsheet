@@ -28,6 +28,8 @@ public final class UserId extends IdentityId {
     // HasJsonNode.......................................................................................
 
     static {
-        HasJsonNode.register(UserId.class, UserId::fromJsonNode);
+        HasJsonNode.register("user-id",
+                UserId::fromJsonNode,
+                UserId.class);
     }
 }

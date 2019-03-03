@@ -28,6 +28,8 @@ public final class GroupId extends IdentityId {
     // HasJsonNode.......................................................................................
 
     static {
-        HasJsonNode.register(GroupId.class, GroupId::fromJsonNode);
+        HasJsonNode.register("group-id",
+                GroupId::fromJsonNode,
+                GroupId.class);
     }
 }
