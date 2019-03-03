@@ -136,7 +136,9 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
     }
 
     static {
-        HasJsonNode.register(SpreadsheetCellFormat.class, SpreadsheetCellFormat::fromJsonNode);
+        HasJsonNode.register("spreadsheet-cell-format",
+                SpreadsheetCellFormat::fromJsonNode,
+                SpreadsheetCellFormat.class);
     }
 
     // Object ............................................................................
