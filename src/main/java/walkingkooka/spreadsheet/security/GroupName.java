@@ -91,7 +91,9 @@ final public class GroupName implements Name,
     }
 
     static {
-        HasJsonNode.register(GroupName.class, GroupName::fromJsonNode);
+        HasJsonNode.register("group-name",
+                GroupName::fromJsonNode,
+                GroupName.class);
     }
 
     // Object..................................................................................................

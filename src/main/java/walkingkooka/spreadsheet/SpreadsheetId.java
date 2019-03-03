@@ -66,7 +66,9 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
     }
 
     static {
-        HasJsonNode.register(SpreadsheetId.class, SpreadsheetId::fromJsonNode);
+        HasJsonNode.register("spreadsheet-id",
+                SpreadsheetId::fromJsonNode,
+                SpreadsheetId.class);
     }
 
     // HashCodeEqualsDefined..........................................................................................

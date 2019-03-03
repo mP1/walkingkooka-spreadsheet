@@ -235,7 +235,9 @@ public final class SpreadsheetRange implements ExpressionReference,
     }
 
     static {
-        HasJsonNode.register(SpreadsheetRange.class, SpreadsheetRange::fromJsonNode);
+        HasJsonNode.register("spreadsheet-range",
+                SpreadsheetRange::fromJsonNode,
+                SpreadsheetRange.class);
     }
 
     // HashCodeEqualsDefined.......................................................................................
