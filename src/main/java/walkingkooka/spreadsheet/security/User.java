@@ -91,7 +91,9 @@ public final class User extends Identity<UserId>
     final static JsonNodeName EMAIL_PROPERTY = JsonNodeName.with(EMAIL_PROPERTY_STRING);
 
     static {
-        HasJsonNode.register(User.class, User::fromJsonNode);
+        HasJsonNode.register("user",
+                User::fromJsonNode,
+                User.class);
     }
 
     // Identity.................................................................................................

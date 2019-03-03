@@ -429,7 +429,9 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined,
     final static JsonNodeName STRIKETHRU_PROPERTY = JsonNodeName.with(STRIKETHRU_PROPERTY_STRING);
 
     static {
-        HasJsonNode.register(SpreadsheetTextStyle.class, SpreadsheetTextStyle::fromJsonNode);
+        HasJsonNode.register("spreadsheet-text-style",
+                SpreadsheetTextStyle::fromJsonNode,
+                SpreadsheetTextStyle.class);
     }
 
     // HashCodeEqualsDefined.........................................................................................
