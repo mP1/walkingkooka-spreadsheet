@@ -6,7 +6,9 @@ import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
 
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public enum SpreadsheetEngineLoading implements HasJsonNode {
 
@@ -65,18 +67,14 @@ public enum SpreadsheetEngineLoading implements HasJsonNode {
         }
     }
 
-
-    @Override
-    public Class<?> toJsonNodeType() {
-        return SpreadsheetEngineLoading.class;
-    }
-
     @Override
     public JsonNode toJsonNode() {
         return JsonNode.string(this.name());
     }
 
     static {
-        HasJsonNode.register(SpreadsheetEngineLoading.class, SpreadsheetEngineLoading::fromJsonNode);
+        HasJsonNode.register("spreadsheet-engine-loading",
+                SpreadsheetEngineLoading::fromJsonNode,
+                Arrays.stream(values()).map(e -> e.getClass()).toArray(Class[]::new));
     }
 }
