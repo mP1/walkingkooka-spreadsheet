@@ -5,8 +5,10 @@ import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeName;
 import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
@@ -369,14 +371,22 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public void testToJsonNodeTextAndExpression() {
         this.toJsonNodeAndCheck(SpreadsheetFormula.with(TEXT)
                         .setExpression(this.expression()),
-                "{ \"text\": \"a+2\"}");
+                "{\n" +
+                        "  \"text\": \"a+2\",\n" +
+                        "  \"expression\": {\n" +
+                        "    \"type\": \"expression-text\",\n" +
+                        "    \"value\": \"1+2\"\n" +
+                        "  }\n" +
+                        "}");
     }
 
     @Test
     public void testToJsonNodeTextAndValue() {
         this.toJsonNodeAndCheck(SpreadsheetFormula.with(TEXT)
-                        .setValue(Optional.of(123)),
-                "{ \"text\": \"a+2\", \"value\": 123}");
+                        .setValue(Optional.of(123L)),
+                        JsonNode.object()
+                                .set(JsonNodeName.with("text"), JsonNode.string("a+2"))
+                                .set(JsonNodeName.with("value"), HasJsonNode.toJsonNodeWithType(123L)));
     }
 
     @Test

@@ -36,7 +36,7 @@ public abstract class IdentityId implements Value<Long>,
      * Stores the id.
      */
     public final JsonNode toJsonNode() {
-        return JsonNode.wrapLong(this.value);
+        return HasJsonNode.toJsonNodeObject(this.value);
     }
 
     // Object.................................................
