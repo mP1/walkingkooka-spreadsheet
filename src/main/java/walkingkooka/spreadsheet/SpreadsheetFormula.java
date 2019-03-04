@@ -204,6 +204,7 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
         Objects.requireNonNull(node, "node");
 
         String text = null;
+        ExpressionNode expression = null;
         Object value = null;
         SpreadsheetError error = null;
 
@@ -218,6 +219,9 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
                             throw new IllegalArgumentException("Node " + TEXT_PROPERTY + " is not a string=" + child);
                         }
                         checkText(text);
+                        break;
+                    case EXPRESSION_PROPERTY_STRING:
+                        value = HasJsonNode.fromJsonNodeWithType(child);
                         break;
                     case VALUE_PROPERTY_STRING:
                         value = child.value();
@@ -241,7 +245,7 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
         }
 
         return new SpreadsheetFormula(text,
-                NO_EXPRESSION,
+                Optional.ofNullable(expression),
                 Optional.ofNullable(value),
                 Optional.ofNullable(error));
     }
@@ -255,12 +259,14 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
 
         object = object.set(TEXT_PROPERTY, JsonNode.string(this.text));
 
+        final Optional<ExpressionNode> expression = this.expression;
+        if (expression.isPresent()) {
+            object = object.set(EXPRESSION_STRING, expression.get().toJsonNodeWithType());
+        }
+
         final Optional<Object> value = this.value;
         if (value.isPresent()) {
-            final Optional<JsonNode> valueJsonNode = JsonNode.wrap(value);
-            if (valueJsonNode.isPresent()) {
-                object = object.set(VALUE_PROPERTY, valueJsonNode.get());
-            }
+            object = object.set(VALUE_PROPERTY, HasJsonNode.toJsonNodeWithType(value.get()));
         }
 
         final Optional<SpreadsheetError> error = this.error;
@@ -272,14 +278,16 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
     }
 
     private final static String TEXT_PROPERTY_STRING = "text";
+    private final static String EXPRESSION_PROPERTY_STRING = "expression";
     private final static String VALUE_PROPERTY_STRING = "value";
     private final static String ERROR_PROPERTY_STRING = "error";
 
     // @VisibleForTesting
 
-    final static JsonNodeName TEXT_PROPERTY = JsonNodeName.with("text");
-    final static JsonNodeName VALUE_PROPERTY = JsonNodeName.with("value");
-    final static JsonNodeName ERROR_PROPERTY = JsonNodeName.with("error");
+    final static JsonNodeName TEXT_PROPERTY = JsonNodeName.with(TEXT_PROPERTY_STRING);
+    final static JsonNodeName EXPRESSION_STRING = JsonNodeName.with(EXPRESSION_PROPERTY_STRING);
+    final static JsonNodeName VALUE_PROPERTY = JsonNodeName.with(VALUE_PROPERTY_STRING);
+    final static JsonNodeName ERROR_PROPERTY = JsonNodeName.with(ERROR_PROPERTY_STRING);
 
     static {
         HasJsonNode.register("spreadsheet-formula",
