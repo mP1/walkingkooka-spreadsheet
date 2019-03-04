@@ -3,6 +3,7 @@ package walkingkooka.spreadsheet.security;
 import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ToStringTesting;
+import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.MemberVisibility;
@@ -26,7 +27,7 @@ public abstract class IdentityIdTestCase<I extends IdentityId> implements ClassT
 
     @Test
     public final void testToJson() {
-        this.toJsonNodeAndCheck(this.createId(123L), JsonNode.wrapLong(123L));
+        this.toJsonNodeAndCheck(this.createId(123L), HasJsonNode.toJsonNodeObject(123L));
     }
 
     @Test
