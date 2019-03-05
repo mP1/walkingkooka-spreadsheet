@@ -221,7 +221,7 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
                         checkText(text);
                         break;
                     case EXPRESSION_PROPERTY_STRING:
-                        value = HasJsonNode.fromJsonNodeWithType(child);
+                        value = child.fromJsonNodeWithType();
                         break;
                     case VALUE_PROPERTY_STRING:
                         value = child.value();

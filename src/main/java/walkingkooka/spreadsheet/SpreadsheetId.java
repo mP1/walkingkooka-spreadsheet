@@ -57,7 +57,7 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
      * Factory that creates a {@link SpreadsheetId} from a {@link JsonNode}
      */
     public static SpreadsheetId fromJsonNode(final JsonNode node) {
-        return with(HasJsonNode.fromJsonNode(node, Long.class));
+        return with(node.fromJsonNode(Long.class));
     }
 
     @Override
