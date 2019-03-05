@@ -46,27 +46,22 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
     /**
      * Creates a {@link SpreadsheetCellFormat}
      */
-    public static SpreadsheetCellFormat with(final String pattern,
-                                             final Optional<SpreadsheetTextFormatter<?>> formatter) {
+    public static SpreadsheetCellFormat with(final String pattern) {
         checkPattern(pattern);
-        checkFormatter(formatter);
 
-        return new SpreadsheetCellFormat(pattern, formatter);
+        return new SpreadsheetCellFormat(pattern, NO_FORMATTER);
     }
 
     private static void checkPattern(final String pattern) {
         Objects.requireNonNull(pattern, "pattern");
     }
 
-    private static void checkFormatter(final Optional<SpreadsheetTextFormatter<?>> formatter) {
-        Objects.requireNonNull(formatter, "formatter");
-    }
-
     /**
      * Private ctor use factory.
      */
-    private SpreadsheetCellFormat(final String pattern,
-                                  final Optional<SpreadsheetTextFormatter<?>> formatter) {
+    // @VisibleForTesting
+    SpreadsheetCellFormat(final String pattern,
+                          final Optional<SpreadsheetTextFormatter<?>> formatter) {
         super();
         this.pattern = pattern;
         this.formatter = formatter;
@@ -93,7 +88,7 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
     }
 
     public SpreadsheetCellFormat setFormatter(final Optional<SpreadsheetTextFormatter<?>> formatter) {
-        checkFormatter(formatter);
+        Objects.requireNonNull(formatter, "formatter");
 
         return this.formatter.equals(formatter) ?
                 this :
@@ -124,7 +119,7 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
         Objects.requireNonNull(node, "node");
 
         try {
-            return with(node.stringValueOrFail(), NO_FORMATTER);
+            return with(node.stringValueOrFail());
         } catch (final JsonNodeException cause) {
             throw new IllegalArgumentException(cause.getMessage(), cause);
         }
