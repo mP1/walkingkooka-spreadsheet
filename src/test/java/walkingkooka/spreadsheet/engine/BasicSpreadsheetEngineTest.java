@@ -122,7 +122,7 @@ public final class BasicSpreadsheetEngineTest implements SpreadsheetEngineTestin
 
     @Test
     public void testSaveCellAndLoadCellWithPattern() {
-        this.saveCellAndLoadCellAndCheck(Optional.of(SpreadsheetCellFormat.with(PATTERN, SpreadsheetCellFormat.NO_FORMATTER)),
+        this.saveCellAndLoadCellAndCheck(Optional.of(SpreadsheetCellFormat.with(PATTERN)),
                 PATTERN_SUFFIX);
     }
 
@@ -130,8 +130,8 @@ public final class BasicSpreadsheetEngineTest implements SpreadsheetEngineTestin
     public void testSaveCellAndLoadCellWithPatternAndFormatter() {
         final String pattern = "Custom";
         final String suffix = "CustomSuffix";
-        this.saveCellAndLoadCellAndCheck(Optional.of(SpreadsheetCellFormat.with(pattern,
-                Optional.of(this.formatter(pattern, SpreadsheetFormattedText.WITHOUT_COLOR, suffix)))),
+        this.saveCellAndLoadCellAndCheck(Optional.of(SpreadsheetCellFormat.with(pattern)
+                        .setFormatter(Optional.of(this.formatter(pattern, SpreadsheetFormattedText.WITHOUT_COLOR, suffix)))),
                 suffix);
     }
 
