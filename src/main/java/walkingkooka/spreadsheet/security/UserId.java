@@ -9,7 +9,7 @@ import walkingkooka.tree.json.JsonNode;
 public final class UserId extends IdentityId {
 
     public static UserId fromJsonNode(final JsonNode node) {
-        return with(HasJsonNode.fromJsonNode(node, Long.class));
+        return with(node.fromJsonNode(Long.class));
     }
 
     static UserId with(final long value) {
