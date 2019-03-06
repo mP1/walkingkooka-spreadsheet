@@ -222,7 +222,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testSetFormatDifferent() {
         final SpreadsheetCell cell = this.createCell();
-        final Optional<SpreadsheetCellFormat> differentFormat = Optional.of(SpreadsheetCellFormat.with("different-pattern", SpreadsheetCellFormat.NO_FORMATTER));
+        final Optional<SpreadsheetCellFormat> differentFormat = Optional.of(SpreadsheetCellFormat.with("different-pattern"));
         final SpreadsheetCell different = cell.setFormat(differentFormat);
         assertNotSame(cell, different);
 
@@ -324,7 +324,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testCompareDifferentFormat() {
         this.compareToAndCheckEqual(this.createComparable()
-                .setFormat(Optional.of(SpreadsheetCellFormat.with("different-pattern", SpreadsheetCellFormat.NO_FORMATTER))));
+                .setFormat(Optional.of(SpreadsheetCellFormat.with("different-pattern"))));
     }
 
     @Test
@@ -562,7 +562,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     private Optional<SpreadsheetCellFormat> format() {
-        return Optional.of(SpreadsheetCellFormat.with("pattern", SpreadsheetCellFormat.NO_FORMATTER));
+        return Optional.of(SpreadsheetCellFormat.with("pattern"));
     }
 
     private void checkNoFormat(final SpreadsheetCell cell) {
