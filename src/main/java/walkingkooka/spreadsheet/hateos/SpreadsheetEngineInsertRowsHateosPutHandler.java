@@ -51,7 +51,7 @@ final class SpreadsheetEngineInsertRowsHateosPutHandler<N extends Node<N, ?, ?, 
         Objects.requireNonNull(row, "row");
         checkResourceEmpty(resource);
         checkParameters(parameters);
-        Objects.requireNonNull(context, "context");
+        checkContext(context);
 
         this.engine.insertRows(row,
                 this.count(parameters),
@@ -81,9 +81,9 @@ final class SpreadsheetEngineInsertRowsHateosPutHandler<N extends Node<N, ?, ?, 
                                      final Map<HttpRequestAttribute<?>, Object> parameters,
                                      final HateosHandlerContext<N> context) {
         Objects.requireNonNull(rows, "rows");
-        Objects.requireNonNull(resource, "resource");
+        checkResource(resource);
         checkParameters(parameters);
-        Objects.requireNonNull(context, "context");
+        checkContext(context);
 
         throw new UnsupportedOperationException();
     }
