@@ -45,34 +45,23 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
     private final static Optional<SpreadsheetTextFormatter<?>> FORMATTER = Optional.of(SpreadsheetTextFormatters.fake());
 
     @Test
-    public void testWithNullpatternFails() {
+    public void testWithNullPatternFails() {
         assertThrows(NullPointerException.class, () -> {
-            SpreadsheetCellFormat.with(null, FORMATTER);
+            SpreadsheetCellFormat.with(null);
         });
-    }
-
-    @Test
-    public void testWithNullFormatterFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetCellFormat.with(PATTERN, null);
-        });
-    }
-
-    @Test
-    public void testWith() {
-        final SpreadsheetCellFormat format = this.createObject();
-        this.check(format, PATTERN, FORMATTER);
     }
 
     @Test
     public void testWithEmptyPattern() {
-        this.createAndCheck("", FORMATTER);
+        final String pattern = "";
+        final SpreadsheetCellFormat format = SpreadsheetCellFormat.with(pattern);
+        this.check(format, pattern, SpreadsheetCellFormat.NO_FORMATTER);
     }
 
-    private void createAndCheck(final String pattern,
-                                final Optional<SpreadsheetTextFormatter<?>> formatter) {
-        final SpreadsheetCellFormat format = SpreadsheetCellFormat.with(pattern, formatter);
-        this.check(format, pattern, formatter);
+    @Test
+    public void testWith() {
+        final SpreadsheetCellFormat format = SpreadsheetCellFormat.with(PATTERN);
+        this.check(format, PATTERN, SpreadsheetCellFormat.NO_FORMATTER);
     }
 
     // setPattern...........................................................
@@ -147,12 +136,12 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
 
     @Test
     public void testEqualsDifferentText() {
-        this.checkNotEquals(SpreadsheetCellFormat.with("different", FORMATTER));
+        this.checkNotEquals(SpreadsheetCellFormat.with("different").setFormatter(FORMATTER));
     }
 
     @Test
     public void testEqualsDifferentFormatter() {
-        this.checkNotEquals(SpreadsheetCellFormat.with(PATTERN, Optional.of(SpreadsheetTextFormatters.general())));
+        this.checkNotEquals(SpreadsheetCellFormat.with(PATTERN).setFormatter(Optional.of(SpreadsheetTextFormatters.general())));
     }
 
     @Test
@@ -190,7 +179,7 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
     @Test
     public void testFromJsonNodeString() {
         this.fromJsonNodeAndCheck(JsonNode.string(PATTERN),
-                SpreadsheetCellFormat.with(PATTERN, SpreadsheetCellFormat.NO_FORMATTER));
+                SpreadsheetCellFormat.with(PATTERN));
     }
 
     @Test
@@ -213,16 +202,17 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
 
     @Test
     public void testToStringWithoutFormatter() {
-        assertEquals(CharSequences.quote(PATTERN).toString(), SpreadsheetCellFormat.with(PATTERN, SpreadsheetCellFormat.NO_FORMATTER).toString());
+        assertEquals(CharSequences.quote(PATTERN).toString(),
+                SpreadsheetCellFormat.with(PATTERN).toString());
     }
 
     @Override
     public SpreadsheetCellFormat createObject() {
-        return SpreadsheetCellFormat.with(PATTERN, FORMATTER);
+        return new SpreadsheetCellFormat(PATTERN, FORMATTER);
     }
 
     private SpreadsheetCellFormat withoutFormatter() {
-        return SpreadsheetCellFormat.with(PATTERN, SpreadsheetCellFormat.NO_FORMATTER);
+        return SpreadsheetCellFormat.with(PATTERN);
     }
 
     @Override
@@ -239,7 +229,7 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
 
     @Override
     public SpreadsheetCellFormat createHasJsonNode() {
-        return SpreadsheetCellFormat.with(PATTERN, SpreadsheetCellFormat.NO_FORMATTER);
+        return SpreadsheetCellFormat.with(PATTERN);
     }
 
     @Override
