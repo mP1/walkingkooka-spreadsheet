@@ -321,9 +321,9 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
     private SpreadsheetCell spreadsheetCell(final int column, final int row) {
         return SpreadsheetCell.with(this.cell(column, row),
                 SpreadsheetFormula.with(column + "+" + row),
-                this.style(),
-                this.format(),
-                this.formatted());
+                this.style())
+                .setFormat(this.format())
+                .setFormatted(this.formatted());
     }
 
     private SpreadsheetCellStyle style() {

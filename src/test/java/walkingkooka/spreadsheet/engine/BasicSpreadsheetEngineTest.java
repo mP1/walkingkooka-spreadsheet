@@ -3460,7 +3460,7 @@ public final class BasicSpreadsheetEngineTest implements SpreadsheetEngineTestin
     }
 
     private SpreadsheetCell cell(final SpreadsheetCellReference reference, final String formula) {
-        return SpreadsheetCell.with(reference, SpreadsheetFormula.with(formula), this.style(), SpreadsheetCell.NO_FORMAT, SpreadsheetCell.NO_FORMATTED_CELL);
+        return SpreadsheetCell.with(reference, SpreadsheetFormula.with(formula), this.style());
     }
 
     private SpreadsheetCellStyle style() {
