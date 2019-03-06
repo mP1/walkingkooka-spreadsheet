@@ -56,16 +56,12 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
      */
     public static SpreadsheetCell with(final SpreadsheetCellReference reference,
                                        final SpreadsheetFormula formula,
-                                       final SpreadsheetCellStyle style,
-                                       final Optional<SpreadsheetCellFormat> format,
-                                       final Optional<SpreadsheetFormattedCell> formatted) {
+                                       final SpreadsheetCellStyle style) {
         checkReference(reference);
         checkFormula(formula);
         checkStyle(style);
-        checkFormat(format);
-        checkFormatted(formatted);
 
-        return new SpreadsheetCell(reference, formula, style, format, formatted);
+        return new SpreadsheetCell(reference, formula, style, NO_FORMAT, NO_FORMATTED_CELL);
     }
 
     private static void checkReference(final SpreadsheetCellReference reference) {
@@ -78,14 +74,6 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
 
     private static void checkStyle(final SpreadsheetCellStyle style) {
         Objects.requireNonNull(style, "style");
-    }
-
-    private static void checkFormat(final Optional<SpreadsheetCellFormat> format) {
-        Objects.requireNonNull(format, "format");
-    }
-
-    private static void checkFormatted(final Optional<SpreadsheetFormattedCell> formatted) {
-        Objects.requireNonNull(formatted, "formatted");
     }
 
     /**
@@ -169,7 +157,7 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
     }
 
     public SpreadsheetCell setFormat(final Optional<SpreadsheetCellFormat> format) {
-        checkFormat(format);
+        Objects.requireNonNull(format, "format");
 
         return this.format.equals(format) ?
                 this :
@@ -188,7 +176,7 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
     }
 
     public SpreadsheetCell setFormatted(final Optional<SpreadsheetFormattedCell> formatted) {
-        checkFormatted(formatted);
+        Objects.requireNonNull(formatted, "formatted");
 
         return this.formatted.equals(formatted) ?
                 this :
@@ -271,7 +259,7 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
             HasJsonNode.requiredPropertyMissing(STYLE_PROPERTY, node);
         }
 
-        return with(reference, formula, style, Optional.ofNullable(format), Optional.ofNullable(formatted));
+        return new SpreadsheetCell(reference, formula, style, Optional.ofNullable(format), Optional.ofNullable(formatted));
     }
 
     @Override

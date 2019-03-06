@@ -179,7 +179,7 @@ public final class SpreadsheetEngineLoadCellHateosGetHandlerTest extends Spreads
     }
 
     private SpreadsheetCell cell() {
-        return SpreadsheetCell.with(this.id(), SpreadsheetFormula.with("1+2"), SpreadsheetCellStyle.EMPTY, SpreadsheetCell.NO_FORMAT, SpreadsheetCell.NO_FORMATTED_CELL);
+        return SpreadsheetCell.with(this.id(), SpreadsheetFormula.with("1+2"), SpreadsheetCellStyle.EMPTY);
     }
 
     @Override
