@@ -46,7 +46,7 @@ final class SpreadsheetEngineDeleteColumnsHateosDeleteHandler<N extends Node<N, 
         Objects.requireNonNull(column, "column");
         checkResourceEmpty(resource);
         checkParameters(parameters);
-        Objects.requireNonNull(context, "context");
+        checkContext(context);
 
         this.engine.deleteColumns(column, 1, this.context.get());
 
@@ -61,7 +61,7 @@ final class SpreadsheetEngineDeleteColumnsHateosDeleteHandler<N extends Node<N, 
         checkInclusiveRange(columns, "columns");
         checkResourceEmpty(resource);
         checkParameters(parameters);
-        Objects.requireNonNull(context, "context");
+        checkContext(context);
 
         final SpreadsheetColumnReference lower = columns.lowerBound().value().get();
         final SpreadsheetColumnReference upper = columns.upperBound().value().get();
