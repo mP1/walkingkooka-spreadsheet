@@ -34,35 +34,21 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testWithNullReferenceFails() {
         assertThrows(NullPointerException.class, () -> {
-            SpreadsheetCell.with(null, this.formula(), this.style(), this.format(), this.formatted());
+            SpreadsheetCell.with(null, this.formula(), this.style());
         });
     }
 
     @Test
     public void testWithNullFormulaFails() {
         assertThrows(NullPointerException.class, () -> {
-            SpreadsheetCell.with(REFERENCE, null, this.style(), this.format(), this.formatted());
+            SpreadsheetCell.with(REFERENCE, null, this.style());
         });
     }
 
     @Test
     public void testWithNullStyleFails() {
         assertThrows(NullPointerException.class, () -> {
-            SpreadsheetCell.with(REFERENCE, this.formula(), null, this.format(), this.formatted());
-        });
-    }
-
-    @Test
-    public void testWithNullFormatFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetCell.with(REFERENCE, this.formula(), this.style(), null, this.formatted());
-        });
-    }
-
-    @Test
-    public void testWithNullFormattedFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetCell.with(REFERENCE, this.formula(), this.style(), this.format(), null);
+            SpreadsheetCell.with(REFERENCE, this.formula(), null);
         });
     }
 
@@ -81,27 +67,11 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testWithFormula() {
         final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE,
                 this.formula(),
-                this.style(),
-                SpreadsheetCell.NO_FORMAT,
-                SpreadsheetCell.NO_FORMATTED_CELL);
+                this.style());
         this.checkReference(cell);
         this.checkFormula(cell);
         this.checkStyle(cell);
         this.checkNoFormat(cell);
-        this.checkNoFormatted(cell);
-    }
-
-    @Test
-    public void testWithFormulaAndFormat() {
-        final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE,
-                this.formula(),
-                this.style(),
-                this.format(),
-                SpreadsheetCell.NO_FORMATTED_CELL);
-        this.checkReference(cell);
-        this.checkFormula(cell);
-        this.checkStyle(cell);
-        this.checkFormat(cell);
         this.checkNoFormatted(cell);
     }
 
@@ -237,9 +207,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testSetFormatWhenWithout() {
         final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE,
                 this.formula(),
-                this.style(),
-                SpreadsheetCell.NO_FORMAT,
-                SpreadsheetCell.NO_FORMATTED_CELL);
+                this.style());
         final SpreadsheetCell different = cell.setFormat(this.format());
         assertNotSame(cell, different);
 
@@ -283,9 +251,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testSetFormattedWhenWithout() {
         final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE,
                 this.formula(),
-                this.style(),
-                SpreadsheetCell.NO_FORMAT,
-                SpreadsheetCell.NO_FORMATTED_CELL);
+                this.style());
         final SpreadsheetCell different = cell.setFormatted(this.formatted());
         assertNotSame(cell, different);
 
@@ -395,9 +361,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         .set(SpreadsheetCell.STYLE_PROPERTY, style().toJsonNode()),
                 SpreadsheetCell.with(reference(),
                         formula(),
-                        style(),
-                        SpreadsheetCell.NO_FORMAT,
-                        SpreadsheetCell.NO_FORMATTED_CELL));
+                        style()));
     }
 
     @Test
@@ -409,9 +373,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         .set(SpreadsheetCell.FORMAT_PROPERTY, format().get().toJsonNode()),
                 SpreadsheetCell.with(reference(),
                         formula(),
-                        style(),
-                        format(),
-                        SpreadsheetCell.NO_FORMATTED_CELL));
+                        style())
+                        .setFormat(format()));
     }
 
     @Test
@@ -423,9 +386,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         .set(SpreadsheetCell.FORMATTED_PROPERTY, formatted().get().toJsonNode()),
                 SpreadsheetCell.with(reference(),
                         formula(),
-                        style(),
-                        SpreadsheetCell.NO_FORMAT,
-                        formatted()));
+                        style())
+                        .setFormatted(formatted()));
     }
 
     @Test
@@ -438,9 +400,9 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         .set(SpreadsheetCell.FORMATTED_PROPERTY, formatted().get().toJsonNode()),
                 SpreadsheetCell.with(reference(),
                         formula(),
-                        style(),
-                        format(),
-                        formatted()));
+                        style())
+                        .setFormat(format())
+                        .setFormatted(formatted()));
     }
 
     // HasJsonNode .toJsonNode.........................................................................
@@ -448,9 +410,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testJsonNode() {
         this.toJsonNodeAndCheck(SpreadsheetCell.with(this.reference(COLUMN, ROW),
                 SpreadsheetFormula.with(FORMULA),
-                this.style(),
-                SpreadsheetCell.NO_FORMAT,
-                SpreadsheetCell.NO_FORMATTED_CELL),
+                this.style()),
                 "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}, \"style\": " + this.style().toJsonNode() + "}");
     }
 
@@ -474,9 +434,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testToStringWithoutErrorWithoutFormatWithoutFormatted() {
         this.toStringAndCheck(SpreadsheetCell.with(REFERENCE,
                 this.formula(),
-                this.style(),
-                SpreadsheetCell.NO_FORMAT,
-                SpreadsheetCell.NO_FORMATTED_CELL),
+                this.style()),
                 REFERENCE + "=" + this.formula() + " bold");
     }
 
@@ -484,9 +442,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testToStringWithoutErrorWithFormatWithoutFormatted() {
         this.toStringAndCheck(SpreadsheetCell.with(REFERENCE,
                 this.formula(),
-                this.style(),
-                this.format(),
-                SpreadsheetCell.NO_FORMATTED_CELL),
+                this.style())
+                .setFormat(this.format()),
                 REFERENCE + "=" + this.formula() + " bold \"pattern\"");
     }
 
@@ -508,9 +465,9 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     private SpreadsheetCell createComparable(final int column, final int row, final String formula) {
         return SpreadsheetCell.with(this.reference(column, row),
                 SpreadsheetFormula.with(formula),
-                this.style(),
-                this.format(),
-                this.formatted());
+                this.style())
+                .setFormat(this.format())
+                .setFormatted(this.formatted());
     }
 
     private static SpreadsheetCellReference differentReference() {
