@@ -1,6 +1,7 @@
 package walkingkooka.spreadsheet.hateos;
 
 import walkingkooka.net.http.server.hateos.HateosContentType;
+import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.net.http.server.hateos.HateosHandlerContext;
 import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.tree.Node;
@@ -10,7 +11,7 @@ import java.util.Objects;
 /**
  * Base class for all handlers.
  */
-abstract class SpreadsheetHateosHandler<K extends Comparable<K>, V, N extends Node<N, ?, ?, ?>> {
+abstract class SpreadsheetHateosHandler<K extends Comparable<K>, V, N extends Node<N, ?, ?, ?>> implements HateosHandler<K, N> {
 
     static <K extends Comparable<K>, V, N extends Node<N, ?, ?, ?>> void check(final HateosContentType<N, V> contentType) {
         Objects.requireNonNull(contentType, "contentType");
@@ -41,4 +42,8 @@ abstract class SpreadsheetHateosHandler<K extends Comparable<K>, V, N extends No
     final HateosContentType<N, V> contentType;
 
     abstract HateosResourceName resourceName();
+
+    final void checkContext(final HateosHandlerContext<N> context) {
+        Objects.requireNonNull(context, "context");
+    }
 }
