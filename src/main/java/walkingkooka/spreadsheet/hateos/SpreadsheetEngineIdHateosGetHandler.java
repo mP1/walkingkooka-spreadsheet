@@ -43,7 +43,7 @@ final class SpreadsheetEngineIdHateosGetHandler<N extends Node<N, ?, ?, ?>> exte
                            final HateosHandlerContext<N> context) {
         Objects.requireNonNull(id, "id");
         checkParameters(parameters);
-        Objects.requireNonNull(context, "context");
+        checkContext(context);
 
         return Optional.of(this.contentType.toNode(this.engine.id()));
     }
@@ -54,7 +54,7 @@ final class SpreadsheetEngineIdHateosGetHandler<N extends Node<N, ?, ?, ?>> exte
                                      final HateosHandlerContext<N> context) {
         Objects.requireNonNull(ids, "ids");
         checkParameters(parameters);
-        Objects.requireNonNull(context, "context");
+        checkContext(context);
 
         throw new UnsupportedOperationException();
     }
