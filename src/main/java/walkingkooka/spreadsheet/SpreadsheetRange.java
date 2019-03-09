@@ -32,21 +32,21 @@ public final class SpreadsheetRange implements ExpressionReference,
     public static SpreadsheetRange parse(final String text) {
         CharSequences.failIfNullOrEmpty(text, "text");
 
-        final int dash = text.indexOf(SEPARATOR);
-        if (-1 == dash) {
+        final int colon = text.indexOf(SEPARATOR);
+        if (-1 == colon) {
             throw new IllegalArgumentException("Missing begin and end separator " + CharSequences.quote(SEPARATOR) + "=" + CharSequences.quote(text));
         }
 
-        if (0 == dash) {
+        if (0 == colon) {
             throw new IllegalArgumentException("Missing begin =" + CharSequences.quote(text));
         }
 
-        if (dash + SEPARATOR.length() == text.length() - 1) {
+        if (colon + SEPARATOR.length() == text.length() - 1) {
             throw new IllegalArgumentException("Missing end =" + CharSequences.quote(text));
         }
 
-        return with(parse0(text.substring(0, dash), "begin", text),
-                parse0(text.substring(dash + SEPARATOR.length()), "end", text));
+        return with(parse0(text.substring(0, colon), "begin", text),
+                parse0(text.substring(colon + SEPARATOR.length()), "end", text));
     }
 
     private static SpreadsheetCellReference parse0(final String component,
@@ -59,7 +59,7 @@ public final class SpreadsheetRange implements ExpressionReference,
         }
     }
 
-    private final static String SEPARATOR = "..";
+    private final static String SEPARATOR = ":";
 
     /**
      * Computes the range of the given cells.

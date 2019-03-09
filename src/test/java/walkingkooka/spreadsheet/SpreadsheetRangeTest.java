@@ -393,12 +393,12 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
 
     @Test
     public void testParseMissingBeginFails() {
-        this.parseFails("..A2", IllegalArgumentException.class);
+        this.parseFails(":A2", IllegalArgumentException.class);
     }
 
     @Test
     public void testParseMissingEndFails() {
-        this.parseFails("A2..", IllegalArgumentException.class);
+        this.parseFails("A2:", IllegalArgumentException.class);
     }
 
     @Test
@@ -408,34 +408,34 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
 
     @Test
     public void testParseInvalidEndFails() {
-        this.parseFails("A1..##", IllegalArgumentException.class);
+        this.parseFails("A1:##", IllegalArgumentException.class);
     }
 
     @Test
     public void testParse() {
-        this.parseAndCheck("A1..A2", SpreadsheetRange.with(SpreadsheetCellReference.parse("A1"), SpreadsheetCellReference.parse("A2")));
+        this.parseAndCheck("A1:A2", SpreadsheetRange.with(SpreadsheetCellReference.parse("A1"), SpreadsheetCellReference.parse("A2")));
     }
 
     // HasJsonNodeTesting...........................................................................................
 
     @Test
     public void testFromJsonNodeInvalidFails() {
-        this.fromJsonNodeFails(JsonNode.string("A1.."));
+        this.fromJsonNodeFails(JsonNode.string("A1:"));
     }
 
     @Test
     public void testFromJsonNode() {
-        this.fromJsonNodeAndCheck(JsonNode.string("A1..A2"), SpreadsheetRange.parse("A1..A2"));
+        this.fromJsonNodeAndCheck(JsonNode.string("A1:A2"), SpreadsheetRange.parse("A1:A2"));
     }
 
     @Test
     public void testToJsonNode() {
-        this.toJsonNodeAndCheck(SpreadsheetRange.parse("A1..A2"), JsonNode.string("A1..A2"));
+        this.toJsonNodeAndCheck(SpreadsheetRange.parse("A1:A2"), JsonNode.string("A1:A2"));
     }
 
     @Test
     public void testToJsonNodeRoundtrip() {
-        this.toJsonNodeRoundTripTwiceAndCheck(SpreadsheetRange.parse("A1..A2"));
+        this.toJsonNodeRoundTripTwiceAndCheck(SpreadsheetRange.parse("A1:A2"));
     }
 
     //helper.................................................................................................
