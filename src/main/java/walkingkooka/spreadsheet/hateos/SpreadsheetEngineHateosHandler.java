@@ -2,12 +2,11 @@ package walkingkooka.spreadsheet.hateos;
 
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
-import walkingkooka.net.http.server.hateos.HateosContentType;
+import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
-import walkingkooka.tree.Node;
-import walkingkooka.tree.json.HasJsonNode;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -16,17 +15,15 @@ import java.util.function.Supplier;
 /**
  * An abstract hateos handler that includes uses a {@link SpreadsheetEngine} and {@link SpreadsheetEngineContext} to do things.
  */
-abstract class SpreadsheetEngineHateosHandler<K extends Comparable<K>, V, N extends Node<N, ?, ?, ?>>
-        extends SpreadsheetHateosHandler<K, V, N> {
+abstract class SpreadsheetEngineHateosHandler<I extends Comparable<I>, R extends HateosResource<I>>
+        extends SpreadsheetHateosHandler<I, R> {
 
     /**
      * Checks required factory method parameters are not null.
      */
-    static <K extends Comparable<K>, V, N extends Node<N, ?, ?, ?>> void check(final SpreadsheetEngine engine,
-                                                                               final HateosContentType<N, V> contentType,
-                                                                               final Supplier<SpreadsheetEngineContext> context) {
+    static void check(final SpreadsheetEngine engine,
+                      final Supplier<SpreadsheetEngineContext> context) {
         Objects.requireNonNull(engine, "engine");
-        check(contentType);
         Objects.requireNonNull(context, "context");
     }
 
@@ -34,9 +31,8 @@ abstract class SpreadsheetEngineHateosHandler<K extends Comparable<K>, V, N exte
      * Package private to limit sub classing.
      */
     SpreadsheetEngineHateosHandler(final SpreadsheetEngine engine,
-                                   final HateosContentType<N, V> contentType,
                                    final Supplier<SpreadsheetEngineContext> context) {
-        super(contentType);
+        super();
         this.engine = engine;
         this.context = context;
     }
@@ -44,7 +40,7 @@ abstract class SpreadsheetEngineHateosHandler<K extends Comparable<K>, V, N exte
     /**
      * Checks that the range bounds are not null and both are inclusive.
      */
-    final void checkInclusiveRange(final Range<K> range, final String label) {
+    final void checkInclusiveRange(final Range<I> range, final String label) {
         Objects.requireNonNull(range, label);
 
         if (!range.lowerBound().isInclusive() || !range.upperBound().isInclusive()) {
@@ -55,28 +51,45 @@ abstract class SpreadsheetEngineHateosHandler<K extends Comparable<K>, V, N exte
     /**
      * Complains if the resource is null.
      */
-    final void checkResource(final N resource) {
+    final void checkResource(final R resource) {
         Objects.requireNonNull(resource, "resource");
     }
 
     /**
      * Complains if the resource is null.
      */
-    final void checkResource(final Optional<N> resource) {
+    final void checkResource(final Optional<R> resource) {
         Objects.requireNonNull(resource, "resource");
     }
 
     /**
      * Complains if the resource is null or present.
      */
-    final void checkResourceEmpty(final Optional<N> resource) {
+    final void checkResourceEmpty(final Optional<R> resource) {
         Objects.requireNonNull(resource, "resource");
         if (resource.isPresent()) {
             throw new IllegalArgumentException("Resource not allowed=" + resource);
         }
     }
 
-    final void checkParameters(Map<HttpRequestAttribute<?>, Object> parameters) {
+    /**
+     * Complains if the resource is null.
+     */
+    final void checkResources(final List<R> resources) {
+        Objects.requireNonNull(resources, "resources");
+    }
+
+    /**
+     * Complains if the resource is null or present.
+     */
+    final void checkResourcesEmpty(final List<R> resources) {
+        Objects.requireNonNull(resources, "resources");
+        if (resources.size() > 0) {
+            throw new IllegalArgumentException("Resources not allowed=" + resources);
+        }
+    }
+
+    final void checkParameters(final Map<HttpRequestAttribute<?>, Object> parameters) {
         Objects.requireNonNull(parameters, "parameters");
     }
 

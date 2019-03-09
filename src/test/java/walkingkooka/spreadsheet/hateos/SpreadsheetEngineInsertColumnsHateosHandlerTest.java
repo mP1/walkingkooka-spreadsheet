@@ -7,20 +7,16 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.compare.Range;
 import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.http.server.HttpRequestAttribute;
-import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.net.http.server.hateos.HateosHandler;
-import walkingkooka.net.http.server.hateos.HateosPutHandlerTesting;
+import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.test.Latch;
-import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
-import walkingkooka.tree.json.HasJsonNode;
-import walkingkooka.tree.json.JsonNode;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -28,25 +24,21 @@ import java.util.function.Supplier;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public final class SpreadsheetEngineInsertColumnsHateosPutHandlerTest extends SpreadsheetEngineHateosHandlerTestCase<SpreadsheetEngineInsertColumnsHateosPutHandler<JsonNode>, SpreadsheetColumnReference, SpreadsheetColumnReference>
-        implements HateosPutHandlerTesting<SpreadsheetEngineInsertColumnsHateosPutHandler<JsonNode>, SpreadsheetColumnReference, JsonNode>,
-        ToStringTesting<SpreadsheetEngineInsertColumnsHateosPutHandler<JsonNode>> {
+public final class SpreadsheetEngineInsertColumnsHateosHandlerTest extends SpreadsheetEngineHateosHandlerTestCase<SpreadsheetEngineInsertColumnsHateosHandler, SpreadsheetColumnReference, SpreadsheetColumn> {
 
     @Test
     public void testInsertMissingCountParametersFails() {
-        this.putFails(this.id(),
+        this.handleFails(this.id(),
                 this.resource(),
                 HateosHandler.NO_PARAMETERS,
-                this.createContext(),
                 IllegalArgumentException.class);
     }
 
     @Test
     public void testInsertInvalidCountParametersFails() {
-        this.putFails(this.id(),
+        this.handleFails(this.id(),
                 this.resource(),
                 this.parameters("1", "2"),
-                this.createContext(),
                 IllegalArgumentException.class);
     }
 
@@ -55,9 +47,9 @@ public final class SpreadsheetEngineInsertColumnsHateosPutHandlerTest extends Sp
         final Latch inserted = Latch.create();
 
         final SpreadsheetColumnReference column = this.id();
-        final Optional<JsonNode> resource = this.resource();
+        final Optional<SpreadsheetColumn> resource = this.resource();
 
-        this.putAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
+        this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
                     public void insertColumns(final SpreadsheetColumnReference r,
@@ -71,7 +63,6 @@ public final class SpreadsheetEngineInsertColumnsHateosPutHandlerTest extends Sp
                 column,
                 resource,
                 parameters("1"),
-                this.createContext(),
                 Optional.empty()
         );
 
@@ -83,9 +74,9 @@ public final class SpreadsheetEngineInsertColumnsHateosPutHandlerTest extends Sp
         final Latch inserted = Latch.create();
 
         final SpreadsheetColumnReference column = this.id();
-        final Optional<JsonNode> resource = this.resource();
+        final Optional<SpreadsheetColumn> resource = this.resource();
 
-        this.putAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
+        this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
                     public void insertColumns(final SpreadsheetColumnReference r,
@@ -99,7 +90,6 @@ public final class SpreadsheetEngineInsertColumnsHateosPutHandlerTest extends Sp
                 this.id(),
                 resource,
                 parameters("3"),
-                this.createContext(),
                 Optional.empty());
         assertTrue(inserted.value());
     }
@@ -110,8 +100,8 @@ public final class SpreadsheetEngineInsertColumnsHateosPutHandlerTest extends Sp
     }
 
     @Override
-    public Class<SpreadsheetEngineInsertColumnsHateosPutHandler<JsonNode>> type() {
-        return Cast.to(SpreadsheetEngineInsertColumnsHateosPutHandler.class);
+    public Class<SpreadsheetEngineInsertColumnsHateosHandler> type() {
+        return Cast.to(SpreadsheetEngineInsertColumnsHateosHandler.class);
     }
 
     @Override
@@ -125,13 +115,17 @@ public final class SpreadsheetEngineInsertColumnsHateosPutHandlerTest extends Sp
     }
 
     @Override
-    public Optional<JsonNode> resource() {
+    public Optional<SpreadsheetColumn> resource() {
         return Optional.empty();
     }
 
-    private SpreadsheetEngineInsertColumnsHateosPutHandler<JsonNode> createHandler(final SpreadsheetEngine engine) {
+    @Override
+    public List<SpreadsheetColumn> resourceCollection() {
+        return Lists.empty();
+    }
+
+    private SpreadsheetEngineInsertColumnsHateosHandler createHandler(final SpreadsheetEngine engine) {
         return this.createHandler(engine,
-                this.contentType(),
                 this.engineContextSupplier());
     }
 
@@ -145,10 +139,9 @@ public final class SpreadsheetEngineInsertColumnsHateosPutHandlerTest extends Sp
     }
 
     @Override
-    SpreadsheetEngineInsertColumnsHateosPutHandler<JsonNode> createHandler(final SpreadsheetEngine engine,
-                                                                           final HateosContentType<JsonNode, SpreadsheetColumnReference> contentType,
-                                                                           final Supplier<SpreadsheetEngineContext> context) {
-        return SpreadsheetEngineInsertColumnsHateosPutHandler.with(engine, contentType, context);
+    SpreadsheetEngineInsertColumnsHateosHandler createHandler(final SpreadsheetEngine engine,
+                                                              final Supplier<SpreadsheetEngineContext> context) {
+        return SpreadsheetEngineInsertColumnsHateosHandler.with(engine, context);
     }
 
     @Override

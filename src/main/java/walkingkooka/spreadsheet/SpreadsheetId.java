@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
 import walkingkooka.Value;
+import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
@@ -30,6 +31,7 @@ import walkingkooka.tree.json.JsonNode;
 public final class SpreadsheetId implements Comparable<SpreadsheetId>,
         HashCodeEqualsDefined,
         HasJsonNode,
+        HateosResource<Long>,
         Value<Long> {
 
     public static SpreadsheetId with(final long value) {
@@ -40,6 +42,13 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
         super();
 
         this.value = value;
+    }
+
+    // HateosResource ....................................................................................................
+
+    @Override
+    public Long id() {
+        return this.value();
     }
 
     // Value ....................................................................................................
