@@ -40,9 +40,10 @@ final class SpreadsheetEngineLoadCellHateosHandler extends SpreadsheetEngineCell
         checkParameters(parameters);
 
         return this.engine.loadCell(cellReference,
-                LOADING.parameterValueOrFail(parameters, SpreadsheetEngineLoading::valueOf),
+                this.parameterValueOrFail(parameters, LOADING, SpreadsheetEngineLoading::valueOf),
                 this.context.get());
     }
+
     private final static UrlParameterName LOADING = UrlParameterName.with("loading");
 
     @Override
