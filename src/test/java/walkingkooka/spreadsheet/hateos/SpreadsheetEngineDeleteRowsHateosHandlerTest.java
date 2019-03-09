@@ -2,21 +2,19 @@ package walkingkooka.spreadsheet.hateos;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
-import walkingkooka.net.http.server.hateos.HateosContentType;
-import walkingkooka.net.http.server.hateos.HateosDeleteHandlerTesting;
 import walkingkooka.net.http.server.hateos.HateosHandler;
+import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.test.Latch;
-import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
-import walkingkooka.tree.json.HasJsonNode;
-import walkingkooka.tree.json.JsonNode;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -24,18 +22,16 @@ import java.util.function.Supplier;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public final class SpreadsheetEngineDeleteRowsHateosDeleteHandlerTest extends SpreadsheetEngineHateosHandlerTestCase<SpreadsheetEngineDeleteRowsHateosDeleteHandler<JsonNode>, SpreadsheetRowReference, SpreadsheetRowReference>
-        implements HateosDeleteHandlerTesting<SpreadsheetEngineDeleteRowsHateosDeleteHandler<JsonNode>, SpreadsheetRowReference, JsonNode>,
-        ToStringTesting<SpreadsheetEngineDeleteRowsHateosDeleteHandler<JsonNode>> {
+public final class SpreadsheetEngineDeleteRowsHateosHandlerTest extends SpreadsheetEngineHateosHandlerTestCase<SpreadsheetEngineDeleteRowsHateosHandler, SpreadsheetRowReference, SpreadsheetRow> {
 
     @Test
     public void testDeleteRow() {
         final Latch deleted = Latch.create();
 
         final SpreadsheetRowReference row = this.id();
-        final Optional<JsonNode> resource = this.resource();
+        final Optional<SpreadsheetRow> resource = this.resource();
 
-        this.deleteAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
+        this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
                     public void deleteRows(final SpreadsheetRowReference r,
@@ -49,7 +45,6 @@ public final class SpreadsheetEngineDeleteRowsHateosDeleteHandlerTest extends Sp
                 row,
                 resource,
                 HateosHandler.NO_PARAMETERS,
-                this.createContext(),
                 Optional.empty()
         );
 
@@ -61,9 +56,9 @@ public final class SpreadsheetEngineDeleteRowsHateosDeleteHandlerTest extends Sp
         final Latch deleted = Latch.create();
 
         final SpreadsheetRowReference row = this.id();
-        final Optional<JsonNode> resource = this.resource();
+        final List<SpreadsheetRow> resources = this.resourceCollection();
 
-        this.deleteCollectionAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
+        this.handleCollectionAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
                     public void deleteRows(final SpreadsheetRowReference r,
@@ -75,34 +70,32 @@ public final class SpreadsheetEngineDeleteRowsHateosDeleteHandlerTest extends Sp
                     }
                 }),
                 Range.greaterThanEquals(row).and(Range.lessThanEquals(SpreadsheetRowReference.parse("4"))), // 3 rows inclusive
-                resource,
+                resources,
                 HateosHandler.NO_PARAMETERS,
-                this.createContext(),
-                Optional.empty());
+                Lists.empty());
         assertTrue(deleted.value());
     }
 
     @Test
     public void testDeleteAllRowsFails() {
-        this.deleteCollectionFails2(Range.all());
+        this.handleCollectionFails2(Range.all());
     }
 
     @Test
     public void testDeleteOpenRangeBeginFails() {
-        this.deleteCollectionFails2(Range.lessThanEquals(SpreadsheetRowReference.parse("2")));
+        this.handleCollectionFails2(Range.lessThanEquals(SpreadsheetRowReference.parse("2")));
     }
 
     @Test
     public void testDeleteOpenRangeEndFails() {
-        this.deleteCollectionFails2(Range.greaterThanEquals(SpreadsheetRowReference.parse("2")));
+        this.handleCollectionFails2(Range.greaterThanEquals(SpreadsheetRowReference.parse("2")));
     }
 
-    private void deleteCollectionFails2(final Range<SpreadsheetRowReference> rows) {
+    private void handleCollectionFails2(final Range<SpreadsheetRowReference> rows) {
         assertEquals("Range of rows required=" + rows,
-                this.deleteCollectionFails(rows,
-                        this.resource(),
+                this.handleCollectionFails(rows,
+                        this.resourceCollection(),
                         HateosHandler.NO_PARAMETERS,
-                        this.createContext(),
                         IllegalArgumentException.class).getMessage(),
                 "message");
     }
@@ -113,8 +106,8 @@ public final class SpreadsheetEngineDeleteRowsHateosDeleteHandlerTest extends Sp
     }
 
     @Override
-    public Class<SpreadsheetEngineDeleteRowsHateosDeleteHandler<JsonNode>> type() {
-        return Cast.to(SpreadsheetEngineDeleteRowsHateosDeleteHandler.class);
+    public Class<SpreadsheetEngineDeleteRowsHateosHandler> type() {
+        return Cast.to(SpreadsheetEngineDeleteRowsHateosHandler.class);
     }
 
     @Override
@@ -123,8 +116,13 @@ public final class SpreadsheetEngineDeleteRowsHateosDeleteHandlerTest extends Sp
     }
 
     @Override
-    public Optional<JsonNode> resource() {
+    public Optional<SpreadsheetRow> resource() {
         return Optional.empty();
+    }
+
+    @Override
+    public List<SpreadsheetRow> resourceCollection() {
+        return Lists.empty();
     }
 
     @Override
@@ -133,9 +131,8 @@ public final class SpreadsheetEngineDeleteRowsHateosDeleteHandlerTest extends Sp
                 .and(Range.lessThanEquals(SpreadsheetRowReference.parse("4"))); // 2, 3, 4
     }
 
-    private SpreadsheetEngineDeleteRowsHateosDeleteHandler<JsonNode> createHandler(final SpreadsheetEngine engine) {
+    private SpreadsheetEngineDeleteRowsHateosHandler createHandler(final SpreadsheetEngine engine) {
         return this.createHandler(engine,
-                this.contentType(),
                 this.engineContextSupplier());
     }
 
@@ -145,10 +142,9 @@ public final class SpreadsheetEngineDeleteRowsHateosDeleteHandlerTest extends Sp
     }
 
     @Override
-    SpreadsheetEngineDeleteRowsHateosDeleteHandler<JsonNode> createHandler(final SpreadsheetEngine engine,
-                                                                           final HateosContentType<JsonNode, SpreadsheetRowReference> contentType,
-                                                                           final Supplier<SpreadsheetEngineContext> context) {
-        return SpreadsheetEngineDeleteRowsHateosDeleteHandler.with(engine, contentType, context);
+    SpreadsheetEngineDeleteRowsHateosHandler createHandler(final SpreadsheetEngine engine,
+                                                           final Supplier<SpreadsheetEngineContext> context) {
+        return SpreadsheetEngineDeleteRowsHateosHandler.with(engine, context);
     }
 
     @Override
