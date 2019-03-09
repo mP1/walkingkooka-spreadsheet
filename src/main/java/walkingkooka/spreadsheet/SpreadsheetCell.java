@@ -21,6 +21,7 @@ package walkingkooka.spreadsheet;
 import walkingkooka.Cast;
 import walkingkooka.build.tostring.ToStringBuilder;
 import walkingkooka.build.tostring.UsesToStringBuilder;
+import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
@@ -38,7 +39,7 @@ import java.util.Optional;
  */
 public final class SpreadsheetCell implements HashCodeEqualsDefined,
         Comparable<SpreadsheetCell>,
-        HasJsonNode,
+        HateosResource<SpreadsheetCellReference>,
         UsesToStringBuilder {
 
     /**
@@ -91,6 +92,12 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
         this.style = style;
         this.format = format;
         this.formatted = formatted;
+    }
+
+    // HasId .......................................................................................
+
+    public SpreadsheetCellReference id() {
+        return this.reference();
     }
 
     // reference .............................................................................................

@@ -1,8 +1,6 @@
 package walkingkooka.spreadsheet.hateos;
 
 import walkingkooka.net.http.server.hateos.HateosHandler;
-import walkingkooka.test.ClassTesting;
-import walkingkooka.type.MemberVisibility;
 
 public final class SpreadsheetEngineHateosHandlerTest extends SpreadsheetHateosHandlerTestCase<SpreadsheetEngineHateosHandler> {
 

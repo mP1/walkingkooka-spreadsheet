@@ -7,19 +7,16 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.compare.Range;
 import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.http.server.HttpRequestAttribute;
-import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.net.http.server.hateos.HateosHandler;
-import walkingkooka.net.http.server.hateos.HateosPutHandlerTesting;
+import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.test.Latch;
-import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
-import walkingkooka.tree.json.HasJsonNode;
-import walkingkooka.tree.json.JsonNode;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -27,25 +24,21 @@ import java.util.function.Supplier;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public final class SpreadsheetEngineInsertRowsHateosPutHandlerTest extends SpreadsheetEngineHateosHandlerTestCase<SpreadsheetEngineInsertRowsHateosPutHandler<JsonNode>, SpreadsheetRowReference, SpreadsheetRowReference>
-        implements HateosPutHandlerTesting<SpreadsheetEngineInsertRowsHateosPutHandler<JsonNode>, SpreadsheetRowReference, JsonNode>,
-        ToStringTesting<SpreadsheetEngineInsertRowsHateosPutHandler<JsonNode>> {
+public final class SpreadsheetEngineInsertRowsHateosHandlerTest extends SpreadsheetEngineHateosHandlerTestCase<SpreadsheetEngineInsertRowsHateosHandler, SpreadsheetRowReference, SpreadsheetRow> {
 
     @Test
     public void testInsertMissingCountParametersFails() {
-        this.putFails(this.id(),
+        this.handleFails(this.id(),
                 this.resource(),
                 HateosHandler.NO_PARAMETERS,
-                this.createContext(),
                 IllegalArgumentException.class);
     }
 
     @Test
     public void testInsertInvalidCountParametersFails() {
-        this.putFails(this.id(),
+        this.handleFails(this.id(),
                 this.resource(),
                 this.parameters("1", "2"),
-                this.createContext(),
                 IllegalArgumentException.class);
     }
 
@@ -54,9 +47,9 @@ public final class SpreadsheetEngineInsertRowsHateosPutHandlerTest extends Sprea
         final Latch inserted = Latch.create();
 
         final SpreadsheetRowReference row = this.id();
-        final Optional<JsonNode> resource = this.resource();
+        final Optional<SpreadsheetRow> resource = this.resource();
 
-        this.putAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
+        this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
                     public void insertRows(final SpreadsheetRowReference r,
@@ -70,7 +63,6 @@ public final class SpreadsheetEngineInsertRowsHateosPutHandlerTest extends Sprea
                 row,
                 resource,
                 parameters("1"),
-                this.createContext(),
                 Optional.empty()
         );
 
@@ -82,9 +74,9 @@ public final class SpreadsheetEngineInsertRowsHateosPutHandlerTest extends Sprea
         final Latch inserted = Latch.create();
 
         final SpreadsheetRowReference row = this.id();
-        final Optional<JsonNode> resource = this.resource();
+        final Optional<SpreadsheetRow> resource = this.resource();
 
-        this.putAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
+        this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
                     public void insertRows(final SpreadsheetRowReference r,
@@ -98,7 +90,6 @@ public final class SpreadsheetEngineInsertRowsHateosPutHandlerTest extends Sprea
                 this.id(),
                 resource,
                 parameters("3"),
-                this.createContext(),
                 Optional.empty());
         assertTrue(inserted.value());
     }
@@ -109,8 +100,8 @@ public final class SpreadsheetEngineInsertRowsHateosPutHandlerTest extends Sprea
     }
 
     @Override
-    public Class<SpreadsheetEngineInsertRowsHateosPutHandler<JsonNode>> type() {
-        return Cast.to(SpreadsheetEngineInsertRowsHateosPutHandler.class);
+    public Class<SpreadsheetEngineInsertRowsHateosHandler> type() {
+        return Cast.to(SpreadsheetEngineInsertRowsHateosHandler.class);
     }
 
     @Override
@@ -124,13 +115,17 @@ public final class SpreadsheetEngineInsertRowsHateosPutHandlerTest extends Sprea
     }
 
     @Override
-    public Optional<JsonNode> resource() {
+    public Optional<SpreadsheetRow> resource() {
         return Optional.empty();
     }
 
-    private SpreadsheetEngineInsertRowsHateosPutHandler<JsonNode> createHandler(final SpreadsheetEngine engine) {
+    @Override
+    public List<SpreadsheetRow> resourceCollection() {
+        return Lists.empty();
+    }
+
+    private SpreadsheetEngineInsertRowsHateosHandler createHandler(final SpreadsheetEngine engine) {
         return this.createHandler(engine,
-                this.contentType(),
                 this.engineContextSupplier());
     }
 
@@ -139,15 +134,14 @@ public final class SpreadsheetEngineInsertRowsHateosPutHandlerTest extends Sprea
         return HateosHandler.NO_PARAMETERS;
     }
 
-    private Map<HttpRequestAttribute<?>, Object> parameters(final String...count) {
+    private Map<HttpRequestAttribute<?>, Object> parameters(final String... count) {
         return Maps.one(UrlParameterName.with("count"), Lists.of(count));
     }
 
     @Override
-    SpreadsheetEngineInsertRowsHateosPutHandler<JsonNode> createHandler(final SpreadsheetEngine engine,
-                                                                        final HateosContentType<JsonNode, SpreadsheetRowReference> contentType,
-                                                                        final Supplier<SpreadsheetEngineContext> context) {
-        return SpreadsheetEngineInsertRowsHateosPutHandler.with(engine, contentType, context);
+    SpreadsheetEngineInsertRowsHateosHandler createHandler(final SpreadsheetEngine engine,
+                                                           final Supplier<SpreadsheetEngineContext> context) {
+        return SpreadsheetEngineInsertRowsHateosHandler.with(engine, context);
     }
 
     @Override
