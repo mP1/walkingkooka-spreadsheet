@@ -40,25 +40,9 @@ final class SpreadsheetEngineLoadCellHateosHandler extends SpreadsheetEngineCell
         checkParameters(parameters);
 
         return this.engine.loadCell(cellReference,
-                this.loading(parameters),
+                LOADING.parameterValueOrFail(parameters, SpreadsheetEngineLoading::valueOf),
                 this.context.get());
     }
-
-    /**
-     * Loads the {@link SpreadsheetEngineLoading} from a request parameter.
-     */
-    private SpreadsheetEngineLoading loading(final Map<HttpRequestAttribute<?>, Object> parameters) {
-        final Optional<List<String>> maybeValues = LOADING.parameterValue(parameters);
-        if (!maybeValues.isPresent()) {
-            throw new IllegalArgumentException("Required parameter " + LOADING + " missing");
-        }
-        final List<String> values = maybeValues.get();
-        if (values.size() != 1) {
-            throw new IllegalArgumentException("Required parameter " + LOADING + " incorrect=" + values);
-        }
-        return SpreadsheetEngineLoading.valueOf(values.get(0));
-    }
-
     private final static UrlParameterName LOADING = UrlParameterName.with("loading");
 
     @Override
