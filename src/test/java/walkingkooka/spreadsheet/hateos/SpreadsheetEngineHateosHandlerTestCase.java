@@ -1,73 +1,47 @@
 package walkingkooka.spreadsheet.hateos;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.net.header.Link;
-import walkingkooka.net.http.server.hateos.FakeHateosHandlerContext;
-import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.net.http.server.hateos.HateosHandler;
-import walkingkooka.net.http.server.hateos.HateosHandlerContext;
-import walkingkooka.net.http.server.hateos.HateosResourceName;
+import walkingkooka.net.http.server.hateos.HateosHandlerTesting;
+import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
-import walkingkooka.tree.json.HasJsonNode;
-import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeName;
-import walkingkooka.tree.json.JsonObjectNode;
+import walkingkooka.test.ToStringTesting;
 
 import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetEngineHateosHandlerTestCase<H extends HateosHandler<I, JsonNode>, I extends Comparable<I>, V extends HasJsonNode>
-        extends SpreadsheetHateosHandlerTestCase2<H, I, V> {
+public abstract class SpreadsheetEngineHateosHandlerTestCase<H extends HateosHandler<I, R>, I extends Comparable<I>, R extends HateosResource<I>>
+        extends SpreadsheetHateosHandlerTestCase2<H, I, R>
+        implements HateosHandlerTesting<H, I, R>,
+        ToStringTesting<H> {
 
     SpreadsheetEngineHateosHandlerTestCase() {
         super();
     }
 
     @Test
-    public void testWithNullEngineFails() {
+    public final void testWithNullEngineFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.createHandler(this.engine(), null, this.engineContextSupplier());
+            this.createHandler(null, this.engineContextSupplier());
         });
     }
 
     @Test
-    public void testWithNullEngineContextSupplierFails() {
+    public final void testWithNullEngineContextSupplierFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.createHandler(this.engine(), this.contentType(), null);
+            this.createHandler(this.engine(), null);
         });
     }
 
     @Override
-    final H createHandler(final HateosContentType<JsonNode, V> contentType) {
-        return this.createHandler(this.engine(), contentType, this.engineContextSupplier());
+    public final H createHandler() {
+        return this.createHandler(this.engine(), this.engineContextSupplier());
     }
 
     abstract H createHandler(final SpreadsheetEngine engine,
-                             final HateosContentType<JsonNode, V> contentType,
                              final Supplier<SpreadsheetEngineContext> context);
-
-    @Override
-    public HateosHandlerContext<JsonNode> createContext() {
-        return new FakeHateosHandlerContext<JsonNode>() {
-            @Override
-            public JsonNode addLinks(final HateosResourceName name,
-                                     final Comparable<?> id,
-                                     final JsonNode node) {
-                return SpreadsheetEngineHateosHandlerTestCase.this.addLinks(name,
-                        id,
-                        JsonObjectNode.class.cast(node));
-            }
-        };
-    }
-
-    private JsonNode addLinks(final HateosResourceName name,
-                              final Comparable<?> id,
-                              final JsonObjectNode node) {
-        return node.set(JsonNodeName.with("_links"),
-                Link.parse("<http://example.com/" + name + "/" + id + "/self>;type=text/plain").get(0).toJsonNode());
-    }
 
     abstract SpreadsheetEngine engine();
 
