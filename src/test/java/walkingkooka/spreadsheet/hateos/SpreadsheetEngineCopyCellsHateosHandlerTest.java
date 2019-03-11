@@ -47,7 +47,7 @@ public final class SpreadsheetEngineCopyCellsHateosHandlerTest extends Spreadshe
                              final SpreadsheetRange to,
                              final SpreadsheetEngineContext context) {
                 assertEquals(SpreadsheetEngineCopyCellsHateosHandlerTest.this.resourceCollection(), from, "from");
-                assertEquals(SpreadsheetEngineCopyCellsHateosHandlerTest.this.resourceCollection(), SpreadsheetRange.parse("E1:F2"), "to");
+                assertEquals(SpreadsheetRange.parse(TO), to, "to");
 
                 SpreadsheetEngineCopyCellsHateosHandlerTest.this.copied = true;
             }
@@ -63,8 +63,10 @@ public final class SpreadsheetEngineCopyCellsHateosHandlerTest extends Spreadshe
 
     @Override
     public Map<HttpRequestAttribute<?>, Object> parameters() {
-        return Maps.one(SpreadsheetEngineCopyCellsHateosHandler.TO, Lists.of("E1:F2"));
+        return Maps.one(SpreadsheetEngineCopyCellsHateosHandler.TO, Lists.of(TO));
     }
+
+    private final static String TO = "E1:F2";
 
     @Override
     public SpreadsheetCellReference id() {
