@@ -5,15 +5,15 @@ import walkingkooka.net.http.server.hateos.HateosHandlerTesting;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 
-public abstract class SpreadsheetEngineHateosHandlerTestCase<T>
+public abstract class SpreadsheetStoreHateosHandlerTestCase<T>
         extends SpreadsheetHateosHandlerTestCase<T> {
 
-    SpreadsheetEngineHateosHandlerTestCase() {
+    SpreadsheetStoreHateosHandlerTestCase() {
         super();
     }
 
     @Override
     public final String typeNamePrefix() {
-        return SpreadsheetEngine.class.getSimpleName();
+        return "SpreadsheetStore";
     }
 }
