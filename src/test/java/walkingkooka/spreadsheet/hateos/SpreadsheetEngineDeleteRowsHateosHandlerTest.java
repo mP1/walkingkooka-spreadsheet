@@ -22,7 +22,7 @@ import java.util.function.Supplier;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public final class SpreadsheetEngineDeleteRowsHateosHandlerTest extends SpreadsheetEngineHateosHandlerTestCase<SpreadsheetEngineDeleteRowsHateosHandler, SpreadsheetRowReference, SpreadsheetRow> {
+public final class SpreadsheetEngineDeleteRowsHateosHandlerTest extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineDeleteRowsHateosHandler, SpreadsheetRowReference, SpreadsheetRow> {
 
     @Test
     public void testDeleteRow() {
