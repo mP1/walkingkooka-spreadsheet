@@ -89,10 +89,6 @@ abstract class SpreadsheetEngineHateosHandler<I extends Comparable<I>, R extends
         }
     }
 
-    final void checkParameters(final Map<HttpRequestAttribute<?>, Object> parameters) {
-        Objects.requireNonNull(parameters, "parameters");
-    }
-
     final SpreadsheetEngine engine;
     final Supplier<SpreadsheetEngineContext> context;
 

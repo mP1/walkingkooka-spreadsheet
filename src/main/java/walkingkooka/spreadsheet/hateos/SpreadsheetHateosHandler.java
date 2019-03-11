@@ -8,6 +8,7 @@ import walkingkooka.text.CharSequences;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -21,6 +22,10 @@ abstract class SpreadsheetHateosHandler<I extends Comparable<I>, R extends Hateo
      */
     SpreadsheetHateosHandler() {
         super();
+    }
+
+    final void checkParameters(final Map<HttpRequestAttribute<?>, Object> parameters) {
+        Objects.requireNonNull(parameters, "parameters");
     }
 
     /**
