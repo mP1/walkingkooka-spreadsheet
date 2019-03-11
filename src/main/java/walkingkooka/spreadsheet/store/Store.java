@@ -26,7 +26,7 @@ public interface Store<K, V> {
     /**
      * Saves or updates a value.
      */
-    K save(final V value);
+    V save(final V value);
 
     /**
      * Deletes a single value by id.
