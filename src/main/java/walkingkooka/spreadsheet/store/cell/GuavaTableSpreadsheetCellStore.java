@@ -36,7 +36,7 @@ final class GuavaTableSpreadsheetCellStore extends SpreadsheetCellStoreTemplate 
     }
 
     @Override
-    SpreadsheetCellReference save0(final SpreadsheetCell cell) {
+    SpreadsheetCell save0(final SpreadsheetCell cell) {
         final SpreadsheetCellReference reference = cell.reference();
         final int column = reference.column().value();
         this.cells.put(reference.row().value(), column, cell);
@@ -44,7 +44,7 @@ final class GuavaTableSpreadsheetCellStore extends SpreadsheetCellStoreTemplate 
         if (COMPUTE_AGAIN != this.columns) {
             this.columns = Math.max(column, this.columns);
         }
-        return reference;
+        return cell;
     }
 
     @Override

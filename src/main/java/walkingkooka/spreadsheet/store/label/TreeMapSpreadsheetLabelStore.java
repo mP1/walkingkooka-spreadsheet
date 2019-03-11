@@ -38,12 +38,12 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
     }
 
     @Override
-    public SpreadsheetLabelName save(final SpreadsheetLabelMapping mapping) {
+    public SpreadsheetLabelMapping save(final SpreadsheetLabelMapping mapping) {
         Objects.requireNonNull(mapping, "mapping");
 
         final SpreadsheetLabelName key = mapping.label();
         this.mappings.put(key, mapping);
-        return key;
+        return mapping;
     }
 
     @Override
