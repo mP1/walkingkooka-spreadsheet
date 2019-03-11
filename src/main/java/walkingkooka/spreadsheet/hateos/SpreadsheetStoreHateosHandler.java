@@ -61,6 +61,16 @@ abstract class SpreadsheetStoreHateosHandler<I extends Comparable<I>, R extends 
     }
 
     /**
+     * Complains if the value is NOT present.
+     */
+    final void checkValuePresent(final Optional<R> value) {
+        this.checkValue(value);
+        if (!value.isPresent()) {
+            throw new IllegalArgumentException("Required not present=" + value);
+        }
+    }
+
+    /**
      * Complains if the ids is null.
      */
     final void checkIds(final Range<I> ids) {
