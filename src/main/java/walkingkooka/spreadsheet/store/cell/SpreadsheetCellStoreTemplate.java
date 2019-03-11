@@ -26,13 +26,13 @@ abstract class SpreadsheetCellStoreTemplate implements SpreadsheetCellStore {
     abstract Optional<SpreadsheetCell> load0(final SpreadsheetCellReference reference);
 
     @Override
-    public final SpreadsheetCellReference save(final SpreadsheetCell cell) {
+    public final SpreadsheetCell save(final SpreadsheetCell cell) {
         Objects.requireNonNull(cell, "cell");
 
         return this.save0(cell);
     }
 
-    abstract SpreadsheetCellReference save0(final SpreadsheetCell cell);
+    abstract SpreadsheetCell save0(final SpreadsheetCell cell);
 
     @Override
     public final void delete(final SpreadsheetCellReference reference) {

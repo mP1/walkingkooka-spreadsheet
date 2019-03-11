@@ -17,7 +17,7 @@ public interface SpreadsheetRangeStore<V> extends Store<SpreadsheetRange, List<V
      * Values dont include the actual range, thereore this {@link Store} method is invalid.
      */
     @Override
-    default SpreadsheetRange save(final List<V> value) {
+    default List<V> save(final List<V> value) {
         Objects.requireNonNull(value, "value");
         throw new UnsupportedOperationException();
     }
