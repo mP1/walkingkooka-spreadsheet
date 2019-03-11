@@ -12,12 +12,7 @@ public abstract class SpreadsheetHateosHandlerTestCase<T> implements ClassTestin
     }
 
     @Override
-    public MemberVisibility typeVisibility() {
+    public final MemberVisibility typeVisibility() {
         return MemberVisibility.PACKAGE_PRIVATE;
-    }
-
-    @Override
-    public String typeNamePrefix() {
-        return SpreadsheetEngine.class.getSimpleName();
     }
 }
