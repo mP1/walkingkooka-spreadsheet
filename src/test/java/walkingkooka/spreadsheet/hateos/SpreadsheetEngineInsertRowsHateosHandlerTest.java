@@ -24,7 +24,7 @@ import java.util.function.Supplier;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public final class SpreadsheetEngineInsertRowsHateosHandlerTest extends SpreadsheetEngineHateosHandlerTestCase<SpreadsheetEngineInsertRowsHateosHandler, SpreadsheetRowReference, SpreadsheetRow> {
+public final class SpreadsheetEngineInsertRowsHateosHandlerTest extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineInsertRowsHateosHandler, SpreadsheetRowReference, SpreadsheetRow> {
 
     @Test
     public void testInsertMissingCountParametersFails() {
