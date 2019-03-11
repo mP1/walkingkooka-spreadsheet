@@ -40,7 +40,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
         final SpreadsheetCellReference reference = this.cellReference(1, 2);
         final SpreadsheetCell cell = this.cell(reference);
-        assertEquals(reference, store.save(cell), "incorrect key returned");
+        assertEquals(cell, store.save(cell), "incorrect key returned");
 
         assertSame(cell, store.loadOrFail(reference));
     }
