@@ -2,12 +2,13 @@ package walkingkooka.spreadsheet.store.cell;
 
 import com.google.common.collect.Table;
 import com.google.common.collect.TreeBasedTable;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * A {@link SpreadsheetCellStore} that is backed by a Guava {@link com.google.common.collect.Table}
@@ -83,15 +84,21 @@ final class GuavaTableSpreadsheetCellStore extends SpreadsheetCellStoreTemplate 
     private int columns = COMPUTE_AGAIN;
 
     @Override
-    Collection<SpreadsheetCell> row0(final int row) {
-        return Collections.unmodifiableCollection(this.cells.row(row)
+    Set<SpreadsheetCell> row0(final int row) {
+        return this.set(this.cells.row(row)
                 .values());
     }
 
     @Override
-    Collection<SpreadsheetCell> column0(final int column) {
-        return Collections.unmodifiableCollection(this.cells.column(column)
+    Set<SpreadsheetCell> column0(final int column) {
+        return this.set(this.cells.column(column)
                 .values());
+    }
+
+    private Set<SpreadsheetCell> set(final Collection<SpreadsheetCell> cells) {
+        final Set<SpreadsheetCell> read = Sets.ordered();
+        read.addAll(cells);
+        return Sets.readOnly(read);
     }
 
     // row, column

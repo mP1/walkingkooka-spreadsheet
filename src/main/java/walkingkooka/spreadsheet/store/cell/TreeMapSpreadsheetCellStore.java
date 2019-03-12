@@ -79,12 +79,12 @@ final class TreeMapSpreadsheetCellStore extends SpreadsheetCellStoreTemplate {
     }
 
     @Override
-    Collection<SpreadsheetCell> row0(final int row) {
+    Set<SpreadsheetCell> row0(final int row) {
         return this.filter(c -> c.reference().row().value() == row);
     }
 
     @Override
-    Collection<SpreadsheetCell> column0(final int column) {
+    Set<SpreadsheetCell> column0(final int column) {
         return this.filter(c -> c.reference().column().value() == column);
     }
 
