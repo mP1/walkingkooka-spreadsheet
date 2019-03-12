@@ -1,6 +1,7 @@
 package walkingkooka.spreadsheet.hateos;
 
 import walkingkooka.compare.Range;
+import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.store.Store;
 
@@ -9,10 +10,10 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * An abstract hateos handler that includes uses a {@link Store}
+ * An abstract {@link HateosHandler} that includes uses a {@link Store}
  */
 abstract class SpreadsheetStoreHateosHandler<I extends Comparable<I>, R extends HateosResource<I>, S extends Store<I, R>>
-        extends SpreadsheetHateosHandler<I, R> {
+        extends SpreadsheetHateosHandler {
 
     /**
      * Checks required factory method parameters are not null.
