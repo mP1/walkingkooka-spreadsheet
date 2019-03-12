@@ -1,8 +1,8 @@
 package walkingkooka.spreadsheet.hateos;
 
-import org.checkerframework.checker.nullness.Opt;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
+import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.store.Store;
 
@@ -11,9 +11,10 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * A {@link walkingkooka.net.http.server.hateos.HateosHandler} that deletes a value from a {@link Store}.
+ * A {@link HateosHandler} that deletes a value from a {@link Store}.
  */
-final class SpreadsheetStoreDeleteHateosHandler<I extends Comparable<I>, R extends HateosResource<I>, S extends Store<I, R>> extends SpreadsheetStoreHateosHandler<I, R, S> {
+final class SpreadsheetStoreDeleteHateosHandler<I extends Comparable<I>, R extends HateosResource<I>, S extends Store<I, R>> extends SpreadsheetStoreHateosHandler<I, R, S>
+        implements HateosHandler<I, R> {
 
     static <I extends Comparable<I>, R extends HateosResource<I>, S extends Store<I, R>> SpreadsheetStoreDeleteHateosHandler<I, R, S> with(final S store) {
         check(store);
