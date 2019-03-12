@@ -6,6 +6,7 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Template for all {@link SpreadsheetCellStore}
@@ -43,24 +44,24 @@ abstract class SpreadsheetCellStoreTemplate implements SpreadsheetCellStore {
     abstract void delete0(final SpreadsheetCellReference reference);
 
     @Override
-    public final Collection<SpreadsheetCell> row(final int row) {
+    public final Set<SpreadsheetCell> row(final int row) {
         if (row < 0) {
             throw new IllegalArgumentException("Row " + row + " must be >= 0");
         }
         return this.row0(row);
     }
 
-    abstract Collection<SpreadsheetCell> row0(final int row);
+    abstract Set<SpreadsheetCell> row0(final int row);
 
     @Override
-    public final Collection<SpreadsheetCell> column(final int column) {
+    public final Set<SpreadsheetCell> column(final int column) {
         if (column < 0) {
             throw new IllegalArgumentException("Column " + column + " must be >= 0");
         }
         return this.column0(column);
     }
 
-    abstract Collection<SpreadsheetCell> column0(final int column);
+    abstract Set<SpreadsheetCell> column0(final int column);
 
     @Override
     abstract public String toString();
