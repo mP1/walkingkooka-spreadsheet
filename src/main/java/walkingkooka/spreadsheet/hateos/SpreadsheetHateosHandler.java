@@ -2,8 +2,6 @@ package walkingkooka.spreadsheet.hateos;
 
 import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.http.server.HttpRequestAttribute;
-import walkingkooka.net.http.server.hateos.HateosHandler;
-import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.text.CharSequences;
 
 import java.util.List;
@@ -15,7 +13,7 @@ import java.util.function.Function;
 /**
  * Base class for all handlers.
  */
-abstract class SpreadsheetHateosHandler<I extends Comparable<I>, R extends HateosResource<I>> implements HateosHandler<I, R> {
+abstract class SpreadsheetHateosHandler {
 
     /**
      * Package private to limit sub classing.

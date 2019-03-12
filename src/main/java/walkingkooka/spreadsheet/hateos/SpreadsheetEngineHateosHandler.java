@@ -1,22 +1,22 @@
 package walkingkooka.spreadsheet.hateos;
 
 import walkingkooka.compare.Range;
-import walkingkooka.net.http.server.HttpRequestAttribute;
+import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
- * An abstract hateos handler that includes uses a {@link SpreadsheetEngine} and {@link SpreadsheetEngineContext} to do things.
+ * An abstract {@link HateosHandler} that includes uses a {@link SpreadsheetEngine} and {@link SpreadsheetEngineContext} to do things.
  */
 abstract class SpreadsheetEngineHateosHandler<I extends Comparable<I>, R extends HateosResource<I>>
-        extends SpreadsheetHateosHandler<I, R> {
+        extends SpreadsheetHateosHandler
+        implements HateosHandler<I, R> {
 
     /**
      * Checks required factory method parameters are not null.
