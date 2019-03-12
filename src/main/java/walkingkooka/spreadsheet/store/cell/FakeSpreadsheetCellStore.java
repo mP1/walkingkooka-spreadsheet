@@ -6,6 +6,7 @@ import walkingkooka.test.Fake;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
 import java.util.Collection;
+import java.util.Set;
 
 public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference, SpreadsheetCell> implements SpreadsheetCellStore, Fake {
 
@@ -23,7 +24,7 @@ public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference
      * Returns a view of all cells in the given row.
      */
     @Override
-    public Collection<SpreadsheetCell> row(final int row) {
+    public Set<SpreadsheetCell> row(final int row) {
         throw new UnsupportedOperationException();
     }
 
@@ -31,7 +32,7 @@ public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference
      * Returns a view of all cells in the given column.
      */
     @Override
-    public Collection<SpreadsheetCell> column(final int column) {
+    public Set<SpreadsheetCell> column(final int column) {
         throw new UnsupportedOperationException();
     }
 }
