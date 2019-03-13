@@ -14,8 +14,7 @@ public abstract class SpreadsheetStoreHateosHandlerTestCase2<H extends HateosHan
         R extends HateosResource<I>,
         S extends Store<I, R>>
         extends SpreadsheetStoreHateosHandlerTestCase<H>
-        implements HateosHandlerTesting<H, I, R>,
-        ToStringTesting<H> {
+        implements ToStringTesting<H> {
 
     SpreadsheetStoreHateosHandlerTestCase2() {
         super();
@@ -28,7 +27,6 @@ public abstract class SpreadsheetStoreHateosHandlerTestCase2<H extends HateosHan
         });
     }
 
-    @Override
     public final H createHandler() {
         return this.createHandler(this.store());
     }

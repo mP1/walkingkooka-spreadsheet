@@ -13,8 +13,7 @@ import java.util.Optional;
  * An abstract {@link HateosHandler} that includes uses a {@link Store}
  */
 abstract class SpreadsheetStoreHateosHandler<I extends Comparable<I>, R extends HateosResource<I>, S extends Store<I, R>>
-        extends SpreadsheetHateosHandler
-        implements HateosHandler<I, R> {
+        extends SpreadsheetHateosHandler {
 
     /**
      * Checks required factory method parameters are not null.
