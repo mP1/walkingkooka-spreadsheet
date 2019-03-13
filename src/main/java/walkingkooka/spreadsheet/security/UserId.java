@@ -13,7 +13,7 @@ public final class UserId extends IdentityId
         return with(node.fromJsonNode(Long.class));
     }
 
-    static UserId with(final long value) {
+    public static UserId with(final long value) {
         return new UserId(value);
     }
 
