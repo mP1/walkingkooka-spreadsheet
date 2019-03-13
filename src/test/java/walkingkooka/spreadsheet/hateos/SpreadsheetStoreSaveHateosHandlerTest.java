@@ -6,6 +6,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
+import walkingkooka.net.http.server.hateos.HateosHandlerTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.store.cell.FakeSpreadsheetCellStore;
@@ -25,7 +26,10 @@ public final class SpreadsheetStoreSaveHateosHandlerTest extends SpreadsheetStor
         SpreadsheetCellStore>,
         SpreadsheetCellReference,
         SpreadsheetCell,
-        SpreadsheetCellStore> {
+        SpreadsheetCellStore>
+        implements HateosHandlerTesting<SpreadsheetStoreSaveHateosHandler<SpreadsheetCellReference,
+                SpreadsheetCell,
+                SpreadsheetCellStore>, SpreadsheetCellReference, SpreadsheetCell> {
 
     @Test
     public void testSave() {
