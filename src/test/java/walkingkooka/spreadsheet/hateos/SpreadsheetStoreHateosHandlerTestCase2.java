@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetStoreHateosHandlerTestCase2<H extends HateosHandler<I, R>,
         I extends Comparable<I>,
-        R extends HateosResource<I>,
-        S extends Store<I, R>>
+        R extends HateosResource<?>,
+        S extends Store<?, ?>>
         extends SpreadsheetStoreHateosHandlerTestCase<H>
         implements ToStringTesting<H> {
 
@@ -36,7 +36,7 @@ public abstract class SpreadsheetStoreHateosHandlerTestCase2<H extends HateosHan
     abstract S store();
 
     @Override
-    public final String typeNamePrefix() {
+    public String typeNamePrefix() {
         return "SpreadsheetStore";
     }
 }
