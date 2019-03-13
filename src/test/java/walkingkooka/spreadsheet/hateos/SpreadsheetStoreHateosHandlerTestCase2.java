@@ -34,4 +34,9 @@ public abstract class SpreadsheetStoreHateosHandlerTestCase2<H extends HateosHan
     abstract H createHandler(final S store);
 
     abstract S store();
+
+    @Override
+    public final String typeNamePrefix() {
+        return "SpreadsheetStore";
+    }
 }
