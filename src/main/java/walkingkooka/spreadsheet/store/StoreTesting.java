@@ -34,6 +34,12 @@ public interface StoreTesting<S extends Store<K, V>, K, V> extends ClassTesting2
 
     S createStore();
 
+    default void loadAndCheck(final S store, final K id, final V value) {
+        assertEquals(Optional.of(value),
+                store.load(id),
+                () -> " store load " + id);
+    }
+
     default void loadFailCheck(final K id) {
         this.loadFailCheck(this.createStore(), id);
     }

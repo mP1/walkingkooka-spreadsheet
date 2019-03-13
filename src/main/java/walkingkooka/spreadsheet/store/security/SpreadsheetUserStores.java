@@ -15,6 +15,13 @@ public final class SpreadsheetUserStores implements PublicStaticHelper {
     }
 
     /**
+     * {@see TreeMapSpreadsheetUserStore}
+     */
+    public static SpreadsheetUserStore treeMap() {
+        return TreeMapSpreadsheetUserStore.with();
+    }
+
+    /**
      * Stop creation
      */
     private SpreadsheetUserStores() {
