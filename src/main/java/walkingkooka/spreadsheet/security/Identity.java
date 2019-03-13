@@ -3,6 +3,7 @@ package walkingkooka.spreadsheet.security;
 import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.test.HashCodeEqualsDefined;
 
 import java.util.Objects;
@@ -10,7 +11,9 @@ import java.util.Objects;
 /**
  * Base class for all security related identifies
  */
-public abstract class Identity<I extends IdentityId> implements Value<I>, HashCodeEqualsDefined {
+public abstract class Identity<I extends IdentityId> implements Value<I>,
+        HashCodeEqualsDefined,
+        HateosResource<I> {
 
     /**
      * Factory that creates a new {@link Group}.
@@ -37,6 +40,14 @@ public abstract class Identity<I extends IdentityId> implements Value<I>, HashCo
         super();
         this.id = id;
     }
+
+    // HateosResource ....................................................................................
+
+    public final I id() {
+        return this.id;
+    }
+
+    // Identity...................................................
 
     @Override
     public final I value() {
