@@ -1,6 +1,7 @@
 package walkingkooka.spreadsheet.security;
 
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
@@ -12,7 +13,7 @@ import java.util.Objects;
  * A user in the system.
  */
 public final class User extends Identity<UserId>
-        implements HasJsonNode {
+        implements HasJsonNode, HateosResource<UserId> {
 
     /**
      * Factory that creates a new {@link User}.
