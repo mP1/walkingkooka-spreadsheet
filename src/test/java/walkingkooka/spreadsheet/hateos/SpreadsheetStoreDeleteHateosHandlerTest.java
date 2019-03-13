@@ -6,11 +6,10 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
+import walkingkooka.net.http.server.hateos.HateosHandlerTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.store.cell.FakeSpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
-import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
 import java.util.List;
@@ -24,7 +23,10 @@ public final class SpreadsheetStoreDeleteHateosHandlerTest extends SpreadsheetSt
         SpreadsheetCellStore>,
         SpreadsheetCellReference,
         SpreadsheetCell,
-        SpreadsheetCellStore> {
+        SpreadsheetCellStore>
+        implements HateosHandlerTesting<SpreadsheetStoreDeleteHateosHandler<SpreadsheetCellReference,
+        SpreadsheetCell,
+        SpreadsheetCellStore>, SpreadsheetCellReference, SpreadsheetCell> {
 
     @Test
     public void testHandleDeletes() {
