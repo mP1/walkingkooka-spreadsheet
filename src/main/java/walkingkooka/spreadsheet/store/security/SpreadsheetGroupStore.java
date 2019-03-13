@@ -14,7 +14,17 @@ import java.util.Set;
 public interface SpreadsheetGroupStore extends Store<GroupId, Group> {
 
     /**
+     * Adds a user to an existing group.
+     */
+    void addUser(final UserId userId, final GroupId groupId);
+
+    /**
+     * Adds a user from an existing group.
+     */
+    void removeUser(final UserId userId, final GroupId groupId);
+
+    /**
      * Loads all the groups for the provided {@link User}
      */
-    public Set<Group> loadUserGroups(final UserId id);
+    Set<Group> loadUserGroups(final UserId userId);
 }
