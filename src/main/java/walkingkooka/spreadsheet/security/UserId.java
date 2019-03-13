@@ -6,7 +6,8 @@ import walkingkooka.tree.json.JsonNode;
 /**
  * The primary key for a {@link User}.
  */
-public final class UserId extends IdentityId {
+public final class UserId extends IdentityId
+        implements Comparable<UserId> {
 
     public static UserId fromJsonNode(final JsonNode node) {
         return with(node.fromJsonNode(Long.class));
@@ -31,5 +32,12 @@ public final class UserId extends IdentityId {
         HasJsonNode.register("user-id",
                 UserId::fromJsonNode,
                 UserId.class);
+    }
+
+    // Comparable..............................................................................................
+
+    @Override
+    public int compareTo(final UserId other) {
+        return this.compareTo0(other);
     }
 }
