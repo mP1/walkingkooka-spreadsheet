@@ -7,6 +7,8 @@ import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.json.HasJsonNodeTesting;
+import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.MemberVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetLabelMappingTest implements ClassTesting2<SpreadsheetLabelMapping>,
         HashCodeEqualsDefinedTesting<SpreadsheetLabelMapping>,
+        HasJsonNodeTesting<SpreadsheetLabelMapping>,
         ToStringTesting<SpreadsheetLabelMapping> {
 
     private final static SpreadsheetLabelName LABEL = SpreadsheetLabelName.with("label");
@@ -95,6 +98,13 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         this.checkReference(different, differentReference);
     }
 
+    // HasJsonNode................................................................................
+
+    @Test
+    public void testFromJsonNodeEmptyObjectFails() {
+        this.fromJsonNodeFails(JsonNode.object());
+    }
+
     // equals................................................................................
 
     @Test
@@ -134,6 +144,8 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
                 .setRow(SpreadsheetReferenceKind.RELATIVE.row(2));
     }
 
+    // ClassTesting...............................................................................................
+
     @Override
     public Class<SpreadsheetLabelMapping> type() {
         return SpreadsheetLabelMapping.class;
@@ -142,5 +154,17 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
     @Override
     public MemberVisibility typeVisibility() {
         return MemberVisibility.PUBLIC;
+    }
+
+    // HasJsonNodeTesting...............................................................................................
+
+    @Override
+    public SpreadsheetLabelMapping fromJsonNode(final JsonNode node) {
+        return SpreadsheetLabelMapping.fromJsonNode(node);
+    }
+
+    @Override
+    public SpreadsheetLabelMapping createHasJsonNode() {
+        return this.createObject();
     }
 }
