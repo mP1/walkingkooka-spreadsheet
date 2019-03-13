@@ -66,4 +66,10 @@ public abstract class IdentityId implements Value<Long>,
     public final String toString() {
         return String.valueOf(this.value);
     }
+
+    // Comparable..............................................................................................
+
+    final int compareTo0(final IdentityId other) {
+        return Long.compare(this.value, other.value());
+    }
 }
