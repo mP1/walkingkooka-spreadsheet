@@ -13,8 +13,7 @@ import java.util.Optional;
 /**
  * A {@link HateosHandler} that deletes a value from a {@link Store}.
  */
-final class SpreadsheetStoreDeleteHateosHandler<I extends Comparable<I>, R extends HateosResource<I>, S extends Store<I, R>> extends SpreadsheetStoreHateosHandler<I, R, S>
-        implements HateosHandler<I, R> {
+final class SpreadsheetStoreDeleteHateosHandler<I extends Comparable<I>, R extends HateosResource<I>, S extends Store<I, R>> extends SpreadsheetStoreHateosHandler<I, R, S> {
 
     static <I extends Comparable<I>, R extends HateosResource<I>, S extends Store<I, R>> SpreadsheetStoreDeleteHateosHandler<I, R, S> with(final S store) {
         check(store);
