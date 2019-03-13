@@ -1,9 +1,16 @@
 package walkingkooka.spreadsheet.security;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.compare.ComparableTesting;
+import walkingkooka.compare.ComparatorTesting;
 import walkingkooka.tree.json.JsonNode;
 
-public final class UserIdTest extends IdentityIdTestCase<UserId> {
+public final class UserIdTest extends IdentityIdTestCase<UserId> implements ComparableTesting<UserId> {
+
+    @Test
+    public void testCompareLess() {
+        this.compareToAndCheckLess(UserId.with(999));
+    }
 
     @Test
     public void testToString() {
@@ -18,6 +25,13 @@ public final class UserIdTest extends IdentityIdTestCase<UserId> {
     @Override
     public Class<UserId> type() {
         return UserId.class;
+    }
+
+    // ComparableTesting....................................................................
+
+    @Override
+    public UserId createComparable() {
+        return UserId.with(99);
     }
 
     // HasJsonNodeTesting..................................................................
