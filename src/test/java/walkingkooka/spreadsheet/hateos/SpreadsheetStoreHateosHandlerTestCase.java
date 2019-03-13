@@ -11,9 +11,4 @@ public abstract class SpreadsheetStoreHateosHandlerTestCase<T>
     SpreadsheetStoreHateosHandlerTestCase() {
         super();
     }
-
-    @Override
-    public final String typeNamePrefix() {
-        return "SpreadsheetStore";
-    }
 }
