@@ -15,6 +15,13 @@ public final class SpreadsheetGroupStores implements PublicStaticHelper {
     }
 
     /**
+     * {@see TreeMapSpreadsheetGroupStore}
+     */
+    public static SpreadsheetGroupStore treeMap() {
+        return TreeMapSpreadsheetGroupStore.with();
+    }
+
+    /**
      * Stop creation
      */
     private SpreadsheetGroupStores() {
