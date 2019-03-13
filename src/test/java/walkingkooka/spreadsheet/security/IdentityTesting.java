@@ -1,6 +1,7 @@
 package walkingkooka.spreadsheet.security;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
