@@ -33,7 +33,7 @@ abstract class SpreadsheetStoreHateosHandler<I extends Comparable<I>, R extends 
     /**
      * Complains if the id is null.
      */
-    final void checkId(final I id) {
+    final void checkId(final Comparable<?> id) {
         Objects.requireNonNull(id, "id");
     }
 
@@ -74,7 +74,7 @@ abstract class SpreadsheetStoreHateosHandler<I extends Comparable<I>, R extends 
     /**
      * Complains if the ids is null.
      */
-    final void checkIds(final Range<I> ids) {
+    final void checkIds(final Range<?> ids) {
         Objects.requireNonNull(ids, "ids");
     }
 
