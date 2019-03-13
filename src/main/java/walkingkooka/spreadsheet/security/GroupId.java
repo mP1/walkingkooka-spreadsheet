@@ -13,7 +13,7 @@ public final class GroupId extends IdentityId
         return with(node.fromJsonNode(Long.class));
     }
 
-    static GroupId with(final long value) {
+    public static GroupId with(final long value) {
         return new GroupId(value);
     }
 
