@@ -382,13 +382,8 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
     // ParseStringTesting.................................................................................
 
     @Test
-    public void testParseMissingSeparatorFails() {
-        this.parseFails("A1", IllegalArgumentException.class);
-    }
-
-    @Test
-    public void testParseMissingSeparatorFails2() {
-        this.parseFails("A1.", IllegalArgumentException.class);
+    public void testParseMissingSeparatorSingleton() {
+        this.parseAndCheck("A1", SpreadsheetRange.cell(SpreadsheetCellReference.parse("A1")));
     }
 
     @Test
