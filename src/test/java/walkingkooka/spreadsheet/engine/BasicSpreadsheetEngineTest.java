@@ -2958,7 +2958,7 @@ public final class BasicSpreadsheetEngineTest implements SpreadsheetEngineTestin
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        engine.copy(Lists.of(cellA), SpreadsheetRange.with(d, d.add(1, 1)), context);
+        engine.copy(Lists.of(cellA), SpreadsheetRange.cell(d), context);
 
         this.countAndCheck(cellStore, 3 + 1);
 
@@ -3107,7 +3107,7 @@ public final class BasicSpreadsheetEngineTest implements SpreadsheetEngineTestin
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        engine.copy(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(7, 2)), context);
+        engine.copy(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(6, 1)), context);
 
         this.countAndCheck(cellStore, 3 + 6);
 
@@ -3174,7 +3174,7 @@ public final class BasicSpreadsheetEngineTest implements SpreadsheetEngineTestin
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        engine.copy(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(2, 7)), context);
+        engine.copy(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(1, 6)), context);
 
         this.countAndCheck(cellStore, 3 + 6);
 
@@ -3238,7 +3238,7 @@ public final class BasicSpreadsheetEngineTest implements SpreadsheetEngineTestin
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        engine.copy(Lists.of(cellB), SpreadsheetRange.with(d, d.add(1, 1)), context);
+        engine.copy(Lists.of(cellB), SpreadsheetRange.cell(d), context);
 
         this.countAndCheck(cellStore, 2 + 1);
 
