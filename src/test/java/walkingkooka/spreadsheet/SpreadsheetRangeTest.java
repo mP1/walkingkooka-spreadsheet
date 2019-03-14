@@ -202,6 +202,175 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
         this.check(different, 1, 2, 88, 99);
     }
 
+    // contains.................................................................................................
+
+    @Test
+    public void testContainsNullFails() {
+        assertThrows(NullPointerException.class, () -> {
+           this.range().contains(null);
+        });
+    }
+
+    @Test
+    public void testContainsSingletonTopLeft() {
+        this.containsAndCheckFalse("C3", "B2");
+    }
+
+    @Test
+    public void testContainsSingletonTop() {
+        this.containsAndCheckFalse("C3", "B3");
+    }
+
+    @Test
+    public void testContainsSingletonTopRight() {
+        this.containsAndCheckFalse("C3", "B4");
+    }
+
+    @Test
+    public void testContainsSingletonLeft() {
+        this.containsAndCheckFalse("C3", "B3");
+    }
+
+    @Test
+    public void testContainsSingleton() {
+        this.containsAndCheckTrue("C3", "C3");
+    }
+
+    @Test
+    public void testContainsSingletonRight() {
+        this.containsAndCheckFalse("C3", "D3");
+    }
+
+    @Test
+    public void testContainsSingletonBottomLeft() {
+        this.containsAndCheckFalse("C3", "D2");
+    }
+
+    @Test
+    public void testContainsSingletonBottom() {
+        this.containsAndCheckFalse("C3", "D3");
+    }
+
+    @Test
+    public void testContainsSingletonBottomRight() {
+        this.containsAndCheckFalse("C3", "D4");
+    }
+
+    @Test
+    public void testContainsTopLeft() {
+        this.containsAndCheckFalse("C3:E5", "B2");
+    }
+
+    @Test
+    public void testContainsTop() {
+        this.containsAndCheckFalse("C3:E5", "B2");
+    }
+
+    @Test
+    public void testContainsTopRight() {
+        this.containsAndCheckFalse("C3:E5", "B6");
+    }
+
+    @Test
+    public void testContainsLeft() {
+        this.containsAndCheckFalse("C3:E5", "B4");
+    }
+
+    @Test
+    public void testContains() {
+        this.containsAndCheckTrue("C3:E5", "C3");
+    }
+
+    @Test
+    public void testContains2() {
+        this.containsAndCheckTrue("C3:E5", "D3");
+    }
+
+    @Test
+    public void testContains3() {
+        this.containsAndCheckTrue("C3:E5", "E3");
+    }
+
+    @Test
+    public void testContains4() {
+        this.containsAndCheckTrue("C3:E5", "C4");
+    }
+
+    @Test
+    public void testContains5() {
+        this.containsAndCheckTrue("C3:E5", "D4");
+    }
+
+    @Test
+    public void testContains6() {
+        this.containsAndCheckTrue("C3:E5", "E4");
+    }
+
+    @Test
+    public void testContains7() {
+        this.containsAndCheckTrue("C3:E5", "C5");
+    }
+
+    @Test
+    public void testContains8() {
+        this.containsAndCheckTrue("C3:E5", "D5");
+    }
+
+    @Test
+    public void testContains9() {
+        this.containsAndCheckTrue("C3:E5", "E5");
+    }
+
+    @Test
+    public void testContainsRight() {
+        this.containsAndCheckFalse("C3:E5", "D6");
+    }
+
+    @Test
+    public void testContainsBottomLeft() {
+        this.containsAndCheckFalse("C3:E5", "F2");
+    }
+
+    @Test
+    public void testContainsBottom() {
+        this.containsAndCheckFalse("C3:E5", "F4");
+    }
+
+    @Test
+    public void testContainsBottomRight() {
+        this.containsAndCheckFalse("C3:E5", "F6");
+    }
+
+    private void containsAndCheckTrue(final String range,
+                                      final String cell) {
+        this.containsAndCheckTrue(SpreadsheetRange.parse(range),
+                SpreadsheetCellReference.parse(cell));
+    }
+
+    private void containsAndCheckTrue(final SpreadsheetRange range,
+                                      final SpreadsheetCellReference cell) {
+        this.containsAndCheck(range, cell, true);
+    }
+
+    private void containsAndCheckFalse(final String range,
+                                       final String cell) {
+        this.containsAndCheckFalse(SpreadsheetRange.parse(range),
+                SpreadsheetCellReference.parse(cell));
+    }
+
+    private void containsAndCheckFalse(final SpreadsheetRange range,
+                                       final SpreadsheetCellReference cell) {
+        this.containsAndCheck(range, cell, false);
+    }
+
+    private void containsAndCheck(final SpreadsheetRange range,
+                                  final SpreadsheetCellReference cell,
+                                  final boolean value) {
+        assertEquals(value,
+                range.contains(cell),
+                () -> range + " contains " + cell);
+    }
+
     // stream.................................................................................................
 
     @Test
