@@ -83,7 +83,7 @@ public final class SpreadsheetRange implements ExpressionReference,
             }
         }
 
-        return SpreadsheetRange.with(topLeft, bottomRight.add(1, 1));
+        return SpreadsheetRange.with(topLeft, bottomRight);
     }
 
     /**
@@ -95,7 +95,7 @@ public final class SpreadsheetRange implements ExpressionReference,
     }
 
     private static SpreadsheetRange cell0(final SpreadsheetCellReference cell) {
-        return new SpreadsheetRange(cell, cell.add(1, 1));
+        return new SpreadsheetRange(cell, cell);
     }
 
     /**
@@ -171,14 +171,14 @@ public final class SpreadsheetRange implements ExpressionReference,
      * Returns the width of this range.
      */
     public int width() {
-        return this.end().column().value() - this.begin().column().value();
+        return this.end().column().value() - this.begin().column().value() +1;
     }
 
     /**
      * Returns the height of this range.
      */
     public int height() {
-        return this.end().row().value() - this.begin().row().value();
+        return this.end().row().value() - this.begin().row().value() +1;
     }
 
     /**
@@ -267,6 +267,8 @@ public final class SpreadsheetRange implements ExpressionReference,
 
     @Override
     public String toString() {
-        return this.begin + SEPARATOR + this.end;
+        return this.isSingleCell() ?
+                this.begin.toString() :
+                this.begin + SEPARATOR + this.end;
     }
 }
