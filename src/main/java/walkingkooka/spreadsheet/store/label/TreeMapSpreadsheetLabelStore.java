@@ -2,8 +2,12 @@ package walkingkooka.spreadsheet.store.label;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.SpreadsheetRange;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
+import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -11,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * A {@link SpreadsheetLabelStore} that uses a {@link Map}.
@@ -62,6 +67,13 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
         final List<SpreadsheetLabelMapping> copy = Lists.array();
         copy.addAll(this.mappings.values());
         return Collections.unmodifiableCollection(copy);
+    }
+
+    @Override
+    public Set<? super ExpressionReference> loadCellReferencesOrRanges(final SpreadsheetLabelName label) {
+        Objects.requireNonNull(label, "label");
+
+        return Sets.readOnly(TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVisitor.gather(label, this.mappings));
     }
 
     /**
