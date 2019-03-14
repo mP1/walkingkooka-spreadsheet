@@ -9,6 +9,7 @@ import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ParseStringTesting;
+import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
@@ -29,7 +30,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRange>,
         HashCodeEqualsDefinedTesting<SpreadsheetRange>,
         HasJsonNodeTesting<SpreadsheetRange>,
-        ParseStringTesting<SpreadsheetRange> {
+        ParseStringTesting<SpreadsheetRange>,
+        ToStringTesting<SpreadsheetRange> {
 
     private final static int COLUMN1 = 10;
     private final static int ROW1 = 11;
@@ -69,7 +71,7 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
         final int row2 = 4;
 
         final SpreadsheetRange range = this.range(column1, row1, column2, row2);
-        this.check(range, column2, row1, column1, row2, 99 - 3, 4 - 2);
+        this.check(range, column2, row1, column1, row2, 99 - 3 + 1, 4 - 2 + 1);
         this.checkIsSingleCell(range, false);
     }
 
@@ -81,7 +83,7 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
         final int row2 = 4;
 
         final SpreadsheetRange range = this.range(column1, row1, column2, row2);
-        this.check(range, column1, row2, column2, row1, 3 - 1, 99 - 4);
+        this.check(range, column1, row2, column2, row1, 3 - 1 + 1, 99 - 4 + 1);
         this.checkIsSingleCell(range, false);
     }
 
@@ -93,7 +95,7 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
         final int row2 = 4;
 
         final SpreadsheetRange range = this.range(column1, row1, column2, row2);
-        this.check(range, column2, row2, column1, row1, 88 - 3, 99 - 4);
+        this.check(range, column2, row2, column1, row1, 88 - 3 + 1, 99 - 4 + 1);
         this.checkIsSingleCell(range, false);
     }
 
@@ -111,7 +113,7 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
         final int column = 88;
         final int row = 99;
         final SpreadsheetRange range = SpreadsheetRange.cell(this.cell(column, row));
-        this.check(range, column, row, column + 1, row + 1, 1, 1);
+        this.check(range, column, row, column, row, 1, 1);
         this.checkIsSingleCell(range, true);
     }
 
@@ -121,8 +123,8 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
     public void testIsSingleCell() {
         final int column1 = 88;
         final int row1 = 99;
-        final int column2 = column1 + 1;
-        final int row2 = row1 + 1;
+        final int column2 = column1;
+        final int row2 = row1;
 
         final SpreadsheetRange range = this.range(column1, row1, column2, row2);
         this.check(range, column1, row1, column2, row2, 1, 1);
@@ -242,7 +244,7 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
 
     @Test
     public void testCellStream() {
-        final SpreadsheetRange range = this.range(3, 7, 6, 11);
+        final SpreadsheetRange range = this.range(3, 7, 5, 10);
 
         this.checkStream(
                 range,
@@ -311,6 +313,18 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
         this.checkNotEquals(this.range(COLUMN1, ROW1, COLUMN2, 99));
     }
 
+    // toString...............................................................................
+
+    @Test
+    public void testToStringSingleton() {
+        this.toStringAndCheck(SpreadsheetRange.parse("Z9"), "Z9");
+    }
+
+    @Test
+    public void testString() {
+        this.toStringAndCheck(SpreadsheetRange.parse("C3:D4"), "C3:D4");
+    }
+
     // helpers .................................................................................
 
     @Override
@@ -356,7 +370,7 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
         final SpreadsheetCellReference e = this.cell(115, 24);
 
         final SpreadsheetRange range = SpreadsheetRange.from(Lists.of(a, b, c, d, e));
-        this.check(range, 111, 11, 115 + 1, 24 + 1);
+        this.check(range, 111, 11, 115, 24);
     }
 
     @Test
@@ -368,7 +382,7 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
         final SpreadsheetCellReference e = this.cell(115, 24);
 
         final SpreadsheetRange range = SpreadsheetRange.from(Lists.of(e, d, c, b, a));
-        this.check(range, 111, 11, 115 + 1, 24 + 1);
+        this.check(range, 111, 11, 115, 24);
     }
 
     @Test
@@ -376,7 +390,7 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
         final SpreadsheetCellReference a = this.cell(111, 11);
 
         final SpreadsheetRange range = SpreadsheetRange.from(Lists.of(a));
-        this.check(range, 111, 11, 111 + 1, 11 + 1);
+        this.check(range, 111, 11, 111, 11);
     }
 
     // ParseStringTesting.................................................................................
