@@ -172,19 +172,19 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
         this.loadRangeAndCheck(store, RANGE2B, VALUE2);
     }
 
-    // load cell.....................................................................................................
+    // load cell reference ranges....................................................................................
 
     @Test
-    public void testLoadCellReferenceBeginRange() {
+    public void testLoadCellReferenceRangesBeginRange() {
         final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
 
-        this.loadCellReferenceAndCheck(store, RANGE1A.begin(), VALUE1);
+        this.loadCellReferenceRangesAndCheck(store, RANGE1A.begin(), RANGE1A);
     }
 
     @Test
-    public void testLoadCellReferenceMidRange() {
+    public void testLoadCellReferenceRangesMidRange() {
         final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
@@ -193,20 +193,20 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
         assertTrue(RANGE1A.begin().compareTo(mid) < 0, "RANGE1A.begin < mid");
         assertTrue(mid.compareTo(RANGE1A.end()) < 0, "mid< RANGE1A.end");
 
-        this.loadCellReferenceAndCheck(store, mid, VALUE1);
+        this.loadCellReferenceRangesAndCheck(store, mid, RANGE1A);
     }
 
     @Test
-    public void testLoadCellReferenceEndRange() {
+    public void testLoadCellReferenceRangesEndRange() {
         final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
 
-        this.loadCellReferenceAndCheck(store, RANGE1A.end(), VALUE1);
+        this.loadCellReferenceRangesAndCheck(store, RANGE1A.end(), RANGE1A);
     }
 
     @Test
-    public void testLoadCellReferenceBeginRange2() {
+    public void testLoadCellReferenceRangesBeginRange2() {
         assertNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
         assertNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
 
@@ -216,11 +216,11 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
         store.saveValue(RANGE1C, VALUE2);
         store.saveValue(RANGE2A, VALUE3);
 
-        this.loadCellReferenceAndCheck(store, RANGE1A.begin(), VALUE1);
+        this.loadCellReferenceRangesAndCheck(store, RANGE1A.begin(), RANGE1A);
     }
 
     @Test
-    public void testLoadCellReferenceBeginRange3() {
+    public void testLoadCellReferenceRangesBeginRange3() {
         assertNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
         assertNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
 
@@ -230,11 +230,11 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
         store.saveValue(RANGE1C, VALUE2);
         store.saveValue(RANGE2A, VALUE3);
 
-        this.loadCellReferenceAndCheck(store, RANGE1C.begin(), VALUE1, VALUE2);
+        this.loadCellReferenceRangesAndCheck(store, RANGE1C.begin(), RANGE1A, RANGE1C);
     }
 
     @Test
-    public void testLoadCellReferenceBeginRange4() {
+    public void testLoadCellReferenceRangesBeginRange4() {
         assertNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
         assertNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
 
@@ -244,11 +244,11 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
         store.saveValue(RANGE1C, VALUE2);
         store.saveValue(RANGE2A, VALUE3);
 
-        this.loadCellReferenceAndCheck(store, RANGE2A.begin(), VALUE3);
+        this.loadCellReferenceRangesAndCheck(store, RANGE2A.begin(), RANGE2A);
     }
 
     @Test
-    public void testLoadCellReferenceEndRange2() {
+    public void testLoadCellReferenceRangesEndRange2() {
         assertNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
         assertNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
 
@@ -258,11 +258,11 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
         store.saveValue(RANGE1B, VALUE2);
         store.saveValue(RANGE2A, VALUE3);
 
-        this.loadCellReferenceAndCheck(store, RANGE1A.end(), VALUE1, VALUE2);
+        this.loadCellReferenceRangesAndCheck(store, RANGE1A.end(), RANGE1A, RANGE1B);
     }
 
     @Test
-    public void testLoadCellReferenceEndRange3() {
+    public void testLoadCellReferenceRangesEndRange3() {
         assertNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
         assertNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
 
@@ -272,11 +272,11 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
         store.saveValue(RANGE1B, VALUE2);
         store.saveValue(RANGE2A, VALUE3);
 
-        this.loadCellReferenceAndCheck(store, RANGE1B.end(), VALUE2);
+        this.loadCellReferenceRangesAndCheck(store, RANGE1B.end(), RANGE1B);
     }
 
     @Test
-    public void testLoadCellReferenceEndRange4() {
+    public void testLoadCellReferenceRangesEndRange4() {
         assertNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
         assertNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
 
@@ -286,11 +286,11 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
         store.saveValue(RANGE1B, VALUE2);
         store.saveValue(RANGE2A, VALUE3);
 
-        this.loadCellReferenceAndCheck(store, RANGE2A.end(), VALUE3);
+        this.loadCellReferenceRangesAndCheck(store, RANGE2A.end(), RANGE2A);
     }
 
     @Test
-    public void testLoadCellReferenceMidRange2() {
+    public void testLoadCellReferenceRangesMidRange2() {
         final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
@@ -301,7 +301,139 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
         assertTrue(RANGE1A.begin().compareTo(mid) < 0, "RANGE1A.begin < mid");
         assertTrue(mid.compareTo(RANGE1A.end()) < 0, "mid< RANGE1A.end");
 
-        this.loadCellReferenceAndCheck(store, mid, VALUE1);
+        this.loadCellReferenceRangesAndCheck(store, mid, RANGE1A);
+    }
+
+    // load cell reference ranges....................................................................................
+
+    @Test
+    public void testLoadCellReferenceValuesBeginRange() {
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
+
+        store.saveValue(RANGE1A, VALUE1);
+
+        this.loadCellReferenceValuesAndCheck(store, RANGE1A.begin(), VALUE1);
+    }
+
+    @Test
+    public void testLoadCellReferenceValuesMidRange() {
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
+
+        store.saveValue(RANGE1A, VALUE1);
+
+        final SpreadsheetCellReference mid = RANGE1A.begin().add(1, 1);
+        assertTrue(RANGE1A.begin().compareTo(mid) < 0, "RANGE1A.begin < mid");
+        assertTrue(mid.compareTo(RANGE1A.end()) < 0, "mid< RANGE1A.end");
+
+        this.loadCellReferenceValuesAndCheck(store, mid, VALUE1);
+    }
+
+    @Test
+    public void testLoadCellReferenceValuesEndRange() {
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
+
+        store.saveValue(RANGE1A, VALUE1);
+
+        this.loadCellReferenceValuesAndCheck(store, RANGE1A.end(), VALUE1);
+    }
+
+    @Test
+    public void testLoadCellReferenceValuesBeginRange2() {
+        assertNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
+        assertNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
+
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
+
+        store.saveValue(RANGE1A, VALUE1);
+        store.saveValue(RANGE1C, VALUE2);
+        store.saveValue(RANGE2A, VALUE3);
+
+        this.loadCellReferenceValuesAndCheck(store, RANGE1A.begin(), VALUE1);
+    }
+
+    @Test
+    public void testLoadCellReferenceValuesBeginRange3() {
+        assertNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
+        assertNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
+
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
+
+        store.saveValue(RANGE1A, VALUE1);
+        store.saveValue(RANGE1C, VALUE2);
+        store.saveValue(RANGE2A, VALUE3);
+
+        this.loadCellReferenceValuesAndCheck(store, RANGE1C.begin(), VALUE1, VALUE2);
+    }
+
+    @Test
+    public void testLoadCellReferenceValuesBeginRange4() {
+        assertNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
+        assertNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
+
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
+
+        store.saveValue(RANGE1A, VALUE1);
+        store.saveValue(RANGE1C, VALUE2);
+        store.saveValue(RANGE2A, VALUE3);
+
+        this.loadCellReferenceValuesAndCheck(store, RANGE2A.begin(), VALUE3);
+    }
+
+    @Test
+    public void testLoadCellReferenceValuesEndRange2() {
+        assertNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
+        assertNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
+
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
+
+        store.saveValue(RANGE1A, VALUE1);
+        store.saveValue(RANGE1B, VALUE2);
+        store.saveValue(RANGE2A, VALUE3);
+
+        this.loadCellReferenceValuesAndCheck(store, RANGE1A.end(), VALUE1, VALUE2);
+    }
+
+    @Test
+    public void testLoadCellReferenceValuesEndRange3() {
+        assertNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
+        assertNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
+
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
+
+        store.saveValue(RANGE1A, VALUE1);
+        store.saveValue(RANGE1B, VALUE2);
+        store.saveValue(RANGE2A, VALUE3);
+
+        this.loadCellReferenceValuesAndCheck(store, RANGE1B.end(), VALUE2);
+    }
+
+    @Test
+    public void testLoadCellReferenceValuesEndRange4() {
+        assertNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
+        assertNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
+
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
+
+        store.saveValue(RANGE1A, VALUE1);
+        store.saveValue(RANGE1B, VALUE2);
+        store.saveValue(RANGE2A, VALUE3);
+
+        this.loadCellReferenceValuesAndCheck(store, RANGE2A.end(), VALUE3);
+    }
+
+    @Test
+    public void testLoadCellReferenceValuesMidRange2() {
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
+
+        store.saveValue(RANGE1A, VALUE1);
+        store.saveValue(RANGE2A, VALUE2);
+        store.saveValue(RANGE3, VALUE3);
+
+        final SpreadsheetCellReference mid = RANGE1A.begin().add(1, 1);
+        assertTrue(RANGE1A.begin().compareTo(mid) < 0, "RANGE1A.begin < mid");
+        assertTrue(mid.compareTo(RANGE1A.end()) < 0, "mid< RANGE1A.end");
+
+        this.loadCellReferenceValuesAndCheck(store, mid, VALUE1);
     }
 
     // delete range.....................................................................
@@ -552,6 +684,8 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
         this.loadRangeAndCheck(store, RANGE2A, VALUE2);
         this.loadRangeAndCheck(store, RANGE3, VALUE3);
     }
+
+    // loadRanges ...................................................................................................
 
     // helpers ...................................................................................................
 
