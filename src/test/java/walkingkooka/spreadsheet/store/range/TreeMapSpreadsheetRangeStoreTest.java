@@ -175,7 +175,7 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
     // load cell.....................................................................................................
 
     @Test
-    public void testLoadCellBeginRange() {
+    public void testLoadCellReferenceBeginRange() {
         final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
@@ -184,7 +184,7 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
     }
 
     @Test
-    public void testLoadCellMidRange() {
+    public void testLoadCellReferenceMidRange() {
         final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
@@ -197,7 +197,7 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
     }
 
     @Test
-    public void testLoadCellEndRange() {
+    public void testLoadCellReferenceEndRange() {
         final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
@@ -206,7 +206,7 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
     }
 
     @Test
-    public void testLoadCellBeginRange2() {
+    public void testLoadCellReferenceBeginRange2() {
         assertNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
         assertNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
 
@@ -220,7 +220,7 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
     }
 
     @Test
-    public void testLoadCellBeginRange3() {
+    public void testLoadCellReferenceBeginRange3() {
         assertNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
         assertNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
 
@@ -234,7 +234,7 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
     }
 
     @Test
-    public void testLoadCellBeginRange4() {
+    public void testLoadCellReferenceBeginRange4() {
         assertNotEquals(RANGE1A.begin(), RANGE1C.begin(), "RANGE1A.begin() != RANGE1C.begin()");
         assertNotEquals(RANGE1A.begin(), RANGE2A.begin(), "RANGE1A.begin() != RANGE2A.begin()");
 
@@ -248,7 +248,7 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
     }
 
     @Test
-    public void testLoadCellEndRange2() {
+    public void testLoadCellReferenceEndRange2() {
         assertNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
         assertNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
 
@@ -262,7 +262,7 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
     }
 
     @Test
-    public void testLoadCellEndRange3() {
+    public void testLoadCellReferenceEndRange3() {
         assertNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
         assertNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
 
@@ -276,7 +276,7 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
     }
 
     @Test
-    public void testLoadCellEndRange4() {
+    public void testLoadCellReferenceEndRange4() {
         assertNotEquals(RANGE1A.end(), RANGE1B.end(), "RANGE1A.end() != RANGE1B.end()");
         assertNotEquals(RANGE1A.end(), RANGE2A.end(), "RANGE1A.end() != RANGE1B.end()");
 
@@ -290,7 +290,7 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
     }
 
     @Test
-    public void testLoadCellMidRange2() {
+    public void testLoadCellReferenceMidRange2() {
         final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.saveValue(RANGE1A, VALUE1);
@@ -556,7 +556,7 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
     // helpers ...................................................................................................
 
     @Override
-    public TreeMapSpreadsheetRangeStore createStore() {
+    public TreeMapSpreadsheetRangeStore<String> createStore() {
         return TreeMapSpreadsheetRangeStore.create();
     }
 
