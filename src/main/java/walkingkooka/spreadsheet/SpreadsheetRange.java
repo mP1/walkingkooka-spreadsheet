@@ -12,7 +12,6 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
-import walkingkooka.tree.json.JsonStringNode;
 
 import java.util.List;
 import java.util.Objects;
@@ -33,10 +32,14 @@ public final class SpreadsheetRange implements ExpressionReference,
         CharSequences.failIfNullOrEmpty(text, "text");
 
         final int colon = text.indexOf(SEPARATOR);
-        if (-1 == colon) {
-            throw new IllegalArgumentException("Missing begin and end separator " + CharSequences.quote(SEPARATOR) + "=" + CharSequences.quote(text));
-        }
 
+        return -1 == colon ?
+                cell0(parse1(text, "range", text)) :
+                parse0(text, colon);
+    }
+
+    private static SpreadsheetRange parse0(final String text,
+                                           final int colon) {
         if (0 == colon) {
             throw new IllegalArgumentException("Missing begin =" + CharSequences.quote(text));
         }
@@ -45,11 +48,11 @@ public final class SpreadsheetRange implements ExpressionReference,
             throw new IllegalArgumentException("Missing end =" + CharSequences.quote(text));
         }
 
-        return with(parse0(text.substring(0, colon), "begin", text),
-                parse0(text.substring(colon + SEPARATOR.length()), "end", text));
+        return with(parse1(text.substring(0, colon), "begin", text),
+                parse1(text.substring(colon + SEPARATOR.length()), "end", text));
     }
 
-    private static SpreadsheetCellReference parse0(final String component,
+    private static SpreadsheetCellReference parse1(final String component,
                                                    final String label,
                                                    final String text) {
         try {
@@ -88,6 +91,10 @@ public final class SpreadsheetRange implements ExpressionReference,
      */
     public static SpreadsheetRange cell(final SpreadsheetCellReference cell) {
         Objects.requireNonNull(cell, "cell");
+        return cell0(cell);
+    }
+
+    private static SpreadsheetRange cell0(final SpreadsheetCellReference cell) {
         return new SpreadsheetRange(cell, cell.add(1, 1));
     }
 
