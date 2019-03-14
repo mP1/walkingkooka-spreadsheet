@@ -253,7 +253,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         SpreadsheetCell result = cell;
 
         final Set<SpreadsheetConditionalFormattingRule> rules = Sets.sorted(SpreadsheetConditionalFormattingRule.PRIORITY_COMPARATOR);
-        rules.addAll(this.conditionalFormattingRules.loadCellReference(cell.reference()));
+        rules.addAll(this.conditionalFormattingRules.loadCellReferenceValues(cell.reference()));
         for (SpreadsheetConditionalFormattingRule rule : rules) {
             final Object test = context.evaluate(rule.formula().expression().get());
             final Boolean booleanResult = context.convert(test, Boolean.class);
