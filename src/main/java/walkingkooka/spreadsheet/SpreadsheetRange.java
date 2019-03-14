@@ -182,6 +182,24 @@ public final class SpreadsheetRange implements ExpressionReference,
     }
 
     /**
+     * Tests if this range contains the given {@link SpreadsheetCellReference}.
+     */
+    public boolean contains(final SpreadsheetCellReference reference) {
+        Objects.requireNonNull(reference, "reference");
+
+        final SpreadsheetRowReference row = reference.row();
+        final SpreadsheetColumnReference column = reference.column();
+
+        final SpreadsheetCellReference begin = this.begin;
+        final SpreadsheetCellReference end = this.end;
+
+        return row.compareTo(begin.row()) >= 0 &&
+                column.compareTo(begin.column()) >= 0 &&
+                row.compareTo(end.row()) <= 0 &&
+                column.compareTo(end.column()) <= 0;
+    }
+
+    /**
      * A stream that provides all {@link SpreadsheetColumnReference}.
      */
     public Stream<SpreadsheetColumnReference> columnStream() {
