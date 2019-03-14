@@ -13,7 +13,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelStore> implements StoreTesting<S, SpreadsheetLabelName, SpreadsheetLabelMapping> {
+public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelStore> implements SpreadsheetLabelStoreTesting<S> {
 
     final static SpreadsheetCellReference REFERENCE = SpreadsheetReferenceKind.ABSOLUTE.column(1).setRow(SpreadsheetReferenceKind.ABSOLUTE.row(2));
     final static SpreadsheetLabelName LABEL = SpreadsheetLabelName.with("label123");
@@ -44,6 +44,7 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
         this.loadFailCheck(store, LABEL);
     }
 
+    @Test
     public final void testCount() {
         final S store = this.createStore();
 
