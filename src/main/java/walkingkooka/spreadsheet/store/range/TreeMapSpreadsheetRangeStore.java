@@ -4,7 +4,6 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.NavigableMap;
@@ -12,6 +11,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 /**
  * A {@link SpreadsheetRangeStore} that uses two {@link TreeMap} to navigate and store range to value mappings.
@@ -44,44 +45,66 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
                 Optional.empty();
     }
 
-    // loadCell .....................................................................................................
+    // loadRanges .....................................................................................................
 
     @Override
-    public Set<V> loadCellReference(final SpreadsheetCellReference cell) {
+    public Set<SpreadsheetRange> loadCellReferenceRanges(final SpreadsheetCellReference cell) {
         Objects.requireNonNull(cell, "cell");
 
-        final Set<V> values = Sets.ordered();
-        this.loadCellReferenceTopLeft(cell, values);
-        this.loadCellReferenceBottomRight(cell, values);
+        final Set<SpreadsheetRange> values = Sets.ordered();
+
+//        this.gatherTopLeft(cell, entry -> values.add(entry.range));
+//        this.gatherBottomRight(cell, entry -> values.add(entry.range));
+
+        this.gatherTopLeft(cell, entry -> entry.loadCellReferenceRanges(cell, values));
+        this.gatherBottomRight(cell, entry -> entry.loadCellReferenceRanges(cell, values));
 
         return Sets.readOnly(values);
     }
 
-    private void loadCellReferenceTopLeft(final SpreadsheetCellReference cell, final Collection<V> values) {
+    // loadCellReferences .....................................................................................................
 
-        // loop over all entries until cell is after entry.
-        for (Map.Entry<SpreadsheetCellReference, TreeMapSpreadsheetRangeStoreTopLeftEntry<V>> refAndValues :
-                this.topLeft.tailMap(cell, true)
-                        .entrySet()) {
-            final SpreadsheetCellReference topLeft = refAndValues.getKey();
-            if (topLeft.compareTo(cell) > 0) {
-                break;
-            }
-            refAndValues.getValue().loadCellReference(cell, values);
-        }
+    @Override
+    public Set<V> loadCellReferenceValues(final SpreadsheetCellReference cell) {
+        Objects.requireNonNull(cell, "cell");
+
+        final Set<V> values = Sets.ordered();
+
+        this.gatherTopLeft(cell, entry -> entry.loadCellReferenceValues(cell, values));
+        this.gatherBottomRight(cell, entry -> entry.loadCellReferenceValues(cell, values));
+
+        return Sets.readOnly(values);
     }
 
-    private void loadCellReferenceBottomRight(final SpreadsheetCellReference cell, final Collection<V> values) {
+    // loadCellReferenceRanges & loadCellReferences ................................................................................
 
+    private void gatherTopLeft(final SpreadsheetCellReference cell,
+                               final Consumer<TreeMapSpreadsheetRangeStoreTopLeftEntry<V>> values) {
+        this.gather(this.topLeft,
+                cell,
+                cellReference -> cellReference.compareTo(cell) > 0,
+                values);
+    }
+
+    private void gatherBottomRight(final SpreadsheetCellReference cell,
+                                   final Consumer<TreeMapSpreadsheetRangeStoreBottomRightEntry<V>> values) {
+        this.gather(this.bottomRight,
+                cell,
+                cellReference -> cellReference.compareTo(cell) < 0,
+                values);
+    }
+
+    private <E extends TreeMapSpreadsheetRangeStoreEntry<V>> void gather(final NavigableMap<SpreadsheetCellReference, E> cellReferenceToEntry,
+                                                                         final SpreadsheetCellReference cell,
+                                                                         final Predicate<SpreadsheetCellReference> stop,
+                                                                         final Consumer<E> values) {
         // loop over all entries until cell is after entry.
-        for (Map.Entry<SpreadsheetCellReference, TreeMapSpreadsheetRangeStoreBottomRightEntry<V>> refAndValues :
-                this.bottomRight.tailMap(cell, true)
-                        .entrySet()) {
-            final SpreadsheetCellReference bottomRight = refAndValues.getKey();
-            if (bottomRight.compareTo(cell) < 0) {
+        for (Map.Entry<SpreadsheetCellReference, E> refAndValues : cellReferenceToEntry.tailMap(cell, true)
+                .entrySet()) {
+            if (stop.test(refAndValues.getKey())) {
                 break;
             }
-            refAndValues.getValue().loadCellReference(cell, values);
+            values.accept(refAndValues.getValue());
         }
     }
 
