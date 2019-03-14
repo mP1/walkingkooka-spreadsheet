@@ -12,7 +12,14 @@ import java.util.Set;
 public class FakeSpreadsheetRangeStore<V> extends FakeStore<SpreadsheetRange, List<V>> implements SpreadsheetRangeStore<V>, Fake {
 
     @Override
-    public Set<V> loadCellReference(final SpreadsheetCellReference cell) {
+    public Set<SpreadsheetRange> loadCellReferenceRanges(final SpreadsheetCellReference cell) {
+        Objects.requireNonNull(cell, "cell");
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<V> loadCellReferenceValues(final SpreadsheetCellReference cell) {
         Objects.requireNonNull(cell, "cell");
 
         throw new UnsupportedOperationException();

@@ -24,13 +24,17 @@ abstract class TreeMapSpreadsheetRangeStoreEntry<V> implements Comparable<TreeMa
      * Package private ctor to limit subclassing.
      */
     TreeMapSpreadsheetRangeStoreEntry(final SpreadsheetRange range, final V value) {
-        this.primaryCellReference = this.primaryCellReference(range);
+        super();
+
+        this.range = range;
 
         this.secondaryCellReferenceToValues = new TreeMap<>(this.comparator());
         final Set<V> values = Sets.ordered();
         values.add(value);
         this.secondaryCellReferenceToValues.put(this.secondaryCellReference(range), values);
     }
+
+    final SpreadsheetRange range;
 
     abstract Comparator<SpreadsheetCellReference> comparator();
 
@@ -51,13 +55,26 @@ abstract class TreeMapSpreadsheetRangeStoreEntry<V> implements Comparable<TreeMa
         return Optional.of(Lists.readOnly(list));
     }
 
-    // load cell............................................................................................
+    // load cell reference values............................................................................................
 
     /**
      * Add values for entries that include the given cell.
      */
-    final void loadCellReference(final SpreadsheetCellReference cell, final Collection<V> values) {
-        Objects.requireNonNull(cell, "cell");
+    final void loadCellReferenceRanges(final SpreadsheetCellReference cell,
+                                       final Collection<SpreadsheetRange> ranges) {
+
+        if(this.range.contains(cell)) {
+            ranges.add(this.range);
+        }
+    }
+
+    // load cell reference values............................................................................................
+
+    /**
+     * Add values for entries that include the given cell.
+     */
+    final void loadCellReferenceValues(final SpreadsheetCellReference cell,
+                                       final Collection<V> values) {
 
         // loop over all entries until cell is after entry.
         final Comparator<SpreadsheetCellReference> comparator = this.comparator();
@@ -119,6 +136,10 @@ abstract class TreeMapSpreadsheetRangeStoreEntry<V> implements Comparable<TreeMa
         return empty;
     }
 
+    private SpreadsheetCellReference primaryCellReference() {
+        return this.primaryCellReference(this.range);
+    }
+
     abstract SpreadsheetCellReference primaryCellReference(final SpreadsheetRange range);
 
     abstract SpreadsheetCellReference secondaryCellReference(final SpreadsheetRange range);
@@ -142,11 +163,11 @@ abstract class TreeMapSpreadsheetRangeStoreEntry<V> implements Comparable<TreeMa
      */
     @Override
     public final int compareTo(final TreeMapSpreadsheetRangeStoreEntry<V> other) {
-        return this.compareTo0(other.primaryCellReference);
+        return this.compareTo0(other.primaryCellReference());
     }
 
     private int compareTo0(final SpreadsheetCellReference other) {
-        final SpreadsheetCellReference ref = this.primaryCellReference;
+        final SpreadsheetCellReference ref = this.primaryCellReference();
         int result = ref.row().compareTo(other.row());
         if (0 != result) {
             result = ref.column().compareTo(other.column());
@@ -154,13 +175,13 @@ abstract class TreeMapSpreadsheetRangeStoreEntry<V> implements Comparable<TreeMa
         return result;
     }
 
-    private final SpreadsheetCellReference primaryCellReference;
+    //private final SpreadsheetCellReference primaryCellReference;
 
     // toString....................................................................................................
 
     @Override
     public final String toString() {
-        return this.primaryCellReference + "=" + this.secondaryCellReferenceToValues;
+        return this.primaryCellReference() + "=" + this.secondaryCellReferenceToValues;
     }
 
     /**
