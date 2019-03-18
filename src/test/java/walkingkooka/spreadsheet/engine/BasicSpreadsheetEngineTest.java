@@ -3331,7 +3331,7 @@ public final class BasicSpreadsheetEngineTest implements SpreadsheetEngineTestin
                 return SpreadsheetParsers.expression()
                         .orFailIfCursorNotEmpty(ParserReporters.basic())
                         .parse(TextCursors.charSequence(formula), SpreadsheetParserContexts.basic(decimalNumberContext()))
-                        .get();
+                        .get().cast();
             }
 
             @Override
