@@ -10,6 +10,7 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 
 public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     @Override
@@ -21,6 +22,12 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
                                               final SpreadsheetEngineLoading loading,
                                               final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<SpreadsheetCell> saveCell(final SpreadsheetCell cell,
+                                         final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 

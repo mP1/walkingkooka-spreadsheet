@@ -3,11 +3,14 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
+import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetFormattedCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
@@ -19,12 +22,16 @@ import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStores;
+import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStore;
+import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStores;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserContexts;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParsers;
@@ -71,30 +78,93 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static SpreadsheetTextFormatContext SPREADSHEET_TEXT_FORMAT_CONTEXT = SpreadsheetTextFormatContexts.fake();
 
     @Test
-    public void testNullIdFails() {
+    public void testWithNullIdFails() {
         assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetEngine.with(null, this.cellStore(), this.labelStore(), this.conditionalFormattingRules());
+            BasicSpreadsheetEngine.with(null,
+                    this.cellStore(),
+                    this.labelStore(),
+                    this.conditionalFormattingRules(),
+                    this.cellReferencesStore(),
+                    this.labelReferencesStore(),
+                    this.rangeToCellStore());
         });
     }
 
     @Test
-    public void testNullCellStoreFails() {
+    public void testWithNullCellStoreFails() {
         assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetEngine.with(this.id(), null, this.labelStore(), this.conditionalFormattingRules());
+            BasicSpreadsheetEngine.with(this.id(),
+                    null,
+                    this.labelStore(),
+                    this.conditionalFormattingRules(),
+                    this.cellReferencesStore(),
+                    this.labelReferencesStore(),
+                    this.rangeToCellStore());
         });
     }
 
     @Test
-    public void testNullLabelStoreFails() {
+    public void testWithNullLabelStoreFails() {
         assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetEngine.with(this.id(), this.cellStore(), null, this.conditionalFormattingRules());
+            BasicSpreadsheetEngine.with(this.id(),
+                    this.cellStore(),
+                    null,
+                    this.conditionalFormattingRules(),
+                    this.cellReferencesStore(),
+                    this.labelReferencesStore(),
+                    this.rangeToCellStore());
         });
     }
 
     @Test
-    public void testNullConditionalFormattingRulesFails() {
+    public void testWithNullConditionalFormattingRulesFails() {
         assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetEngine.with(this.id(), this.cellStore(), this.labelStore(), null);
+            BasicSpreadsheetEngine.with(this.id(),
+                    this.cellStore(),
+                    this.labelStore(),
+                    null,
+                    this.cellReferencesStore(),
+                    this.labelReferencesStore(),
+                    this.rangeToCellStore());
+        });
+    }
+
+    @Test
+    public void testWithNullCellReferencesStoreFails() {
+        assertThrows(NullPointerException.class, () -> {
+            BasicSpreadsheetEngine.with(this.id(),
+                    this.cellStore(),
+                    this.labelStore(),
+                    this.conditionalFormattingRules(),
+                    null,
+                    this.labelReferencesStore(),
+                    this.rangeToCellStore());
+        });
+    }
+
+    @Test
+    public void testWithNullLabelReferencesStoreFails() {
+        assertThrows(NullPointerException.class, () -> {
+            BasicSpreadsheetEngine.with(this.id(),
+                    this.cellStore(),
+                    this.labelStore(),
+                    this.conditionalFormattingRules(),
+                    this.cellReferencesStore(),
+                    null,
+                    this.rangeToCellStore());
+        });
+    }
+
+    @Test
+    public void testWithNullRangeToCellStoreFails() {
+        assertThrows(NullPointerException.class, () -> {
+            BasicSpreadsheetEngine.with(this.id(),
+                    this.cellStore(),
+                    this.labelStore(),
+                    this.conditionalFormattingRules(),
+                    this.cellReferencesStore(),
+                    this.labelReferencesStore(),
+                    null);
         });
     }
 
@@ -428,6 +498,110 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 priority,
                 SpreadsheetFormula.with(String.valueOf(result)).setExpression(Optional.of(ExpressionNode.booleanNode(result))),
                 (c) -> style);
+    }
+
+    // saveCell....................................................................................................
+
+    @Test
+    public void testSaveCellWithoutReferences() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore, cellReferenceStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetCell a1 = this.cell("a1", "1+2");
+        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(a1, BigDecimal.valueOf(3));
+        this.saveCellAndCheck(engine,
+                a1,
+                context,
+                a1Formatted);
+
+        this.loadCellStoreAndCheck(cellStore, a1Formatted);
+        this.loadLabelStoreAndCheck(labelStore);
+        this.countAndCheck(cellReferenceStore, 0);
+    }
+
+    @Test
+    public void testSaveCellWithUnknownReference() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
+                labelStore,
+                cellReferenceStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetCell a1 = this.cell("a1", "$B$2+99");
+        final SpreadsheetCell a1Formatted = this.formattedCellWithError(a1, "Unknown cell reference $B$2");
+                this.saveCellAndCheck(engine,
+                a1,
+                context,
+                a1Formatted);
+
+        this.loadCellStoreAndCheck(cellStore, a1Formatted);
+        this.loadLabelStoreAndCheck(labelStore);
+
+        // verify references all ways are present in the store.
+        final SpreadsheetCellReference b2 = SpreadsheetCellReference.parse("$B$2");
+
+        this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), b2); // references from A1 -> B2
+        this.loadReferrersAndCheck(cellReferenceStore, a1.reference()); // references to A1 -> none
+
+        this.loadReferencesAndCheck(cellReferenceStore, b2); // references to B2 -> none
+        this.loadReferrersAndCheck(cellReferenceStore, b2, a1.reference()); // references from B2 -> A1
+    }
+
+    @Test
+    public void testSaveCellMultipleIndependentUnreferenced() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
+                labelStore,
+                cellReferenceStore);
+
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetCell a1 = this.cell("$A$1", "1+2");
+        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(a1, BigDecimal.valueOf(3));
+
+        this.saveCellAndCheck(engine,
+                a1,
+                context,
+                a1Formatted);
+
+        final SpreadsheetCell b2 = this.cell("$B$2", "3+4");
+        final SpreadsheetCell b2Formatted = this.formattedCellWithValue(b2, BigDecimal.valueOf(7));
+
+        this.saveCellAndCheck(engine,
+                b2,
+                context,
+                b2Formatted);
+
+        final SpreadsheetCell c3 = this.cell("$C$3", "5+6");
+        final SpreadsheetCell c3Formatted = this.formattedCellWithValue(c3, BigDecimal.valueOf(11));
+
+        this.saveCellAndCheck(engine,
+                c3,
+                context,
+                c3Formatted);
+
+        this.loadCellStoreAndCheck(cellStore, a1Formatted, b2Formatted, c3Formatted);
+        this.loadLabelStoreAndCheck(labelStore);
+        this.countAndCheck(cellReferenceStore, 0);
+
+        this.loadReferencesAndCheck(cellReferenceStore, a1.reference()); // references to A1 -> none
+        this.loadReferrersAndCheck(cellReferenceStore, a1.reference()); // references from A1 -> none
+
+        this.loadReferencesAndCheck(cellReferenceStore, b2.reference()); // references to B2 -> none
+        this.loadReferrersAndCheck(cellReferenceStore, b2.reference()); // references from B2 -> none
+
+        this.loadReferencesAndCheck(cellReferenceStore, c3.reference()); // references to C3 -> none
+        this.loadReferrersAndCheck(cellReferenceStore, c3.reference()); // references from C3 -> none
     }
 
     // deleteColumn....................................................................................................
@@ -3319,7 +3493,25 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private BasicSpreadsheetEngine createSpreadsheetEngine(final SpreadsheetCellStore cellStore,
                                                            final SpreadsheetLabelStore labelStore,
                                                            final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rules) {
-        return BasicSpreadsheetEngine.with(this.id(), cellStore, labelStore, rules);
+        return  BasicSpreadsheetEngine.with(this.id(),
+                cellStore,
+                labelStore,
+                rules,
+                this.cellReferencesStore(),
+                SpreadsheetReferenceStores.readOnly(this.labelReferencesStore()),
+                SpreadsheetRangeStores.readOnly(this.rangeToCellStore()));
+    }
+
+    private BasicSpreadsheetEngine createSpreadsheetEngine(final SpreadsheetCellStore cellStore,
+                                                           final SpreadsheetLabelStore labelStore,
+                                                           final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferencesStore) {
+        return BasicSpreadsheetEngine.with(this.id(),
+                cellStore,
+                labelStore,
+                this.conditionalFormattingRules(),
+                cellReferencesStore,
+                SpreadsheetReferenceStores.readOnly(this.labelReferencesStore()),
+                SpreadsheetRangeStores.readOnly(this.rangeToCellStore()));
     }
 
     @Override
@@ -3437,6 +3629,79 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return cell;
     }
 
+    /**
+     * Makes a {@link SpreadsheetCell} updating the formula expression and expected value and then formats the cell adding styling etc,
+     * mimicking the very actions that happen during evaluation.
+     */
+    private SpreadsheetCell formattedCellWithValue(final SpreadsheetCell cell,
+                                                   final Object value) {
+
+        final SpreadsheetFormattedText formattedText = this.defaultSpreadsheetTextFormatter().format(value, SPREADSHEET_TEXT_FORMAT_CONTEXT)
+                .orElseThrow(() -> new AssertionError("Failed to format " + CharSequences.quoteIfChars(value)));
+        final Optional<SpreadsheetFormattedCell> formattedCell = Optional.of(SpreadsheetFormattedCell.with(formattedText.text(), this.style()));
+
+        return cell.setFormula(cell.formula()
+                .setExpression(this.parseFormula(cell.formula()))
+                .setValue(Optional.of(value)))
+                .setFormatted(formattedCell);
+    }
+
+    /**
+     * Makes a {@link SpreadsheetCell} updating the formula expression and setting the error and formatted cell and style.
+     */
+    private SpreadsheetCell formattedCellWithError(final SpreadsheetCell cell,
+                                                   final String errorMessage) {
+        final Optional<SpreadsheetFormattedCell> formattedCell = Optional.of(SpreadsheetFormattedCell.with(errorMessage, this.style()));
+
+        return cell.setFormula(cell.formula()
+                .setExpression(this.parseFormula(cell.formula()))
+                .setError(Optional.of(SpreadsheetError.with(errorMessage))))
+                .setFormatted(formattedCell);
+    }
+
+    /**
+     * Assumes the formula is syntactically correct and updates the cell.
+     */
+    private Optional<ExpressionNode> parseFormula(final SpreadsheetFormula formula) {
+        final String formulaText = formula.text();
+        final SpreadsheetParserToken token = SpreadsheetParsers.expression()
+                .parse(TextCursors.charSequence(formulaText),
+                        SpreadsheetParserContexts.basic(decimalNumberContext()))
+                .orElseThrow(() -> new AssertionError("Failed to parse " + CharSequences.quote(formulaText)))
+                .cast();
+        return token.expressionNode();
+    }
+
+    private void loadCellStoreAndCheck(final SpreadsheetCellStore store,
+                                       final SpreadsheetCell...cells) {
+        assertEquals(Lists.of(cells),
+                store.all(),
+                () -> "all cells in " + store);
+    }
+
+    private void loadLabelStoreAndCheck(final SpreadsheetLabelStore store,
+                                        final SpreadsheetLabelMapping...mappings) {
+        assertEquals(Lists.of(mappings),
+                store.all(),
+                () -> "all mappings in " + store);
+    }
+
+    private void loadReferencesAndCheck(final SpreadsheetReferenceStore<SpreadsheetCellReference> store,
+                                        final SpreadsheetCellReference cell,
+                                        final SpreadsheetCellReference...out) {
+        assertEquals(Optional.ofNullable(out.length == 0 ? null : Sets.of(out)),
+                store.load(cell),
+                "references to " + cell);
+    }
+
+    private void loadReferrersAndCheck(final SpreadsheetReferenceStore<SpreadsheetCellReference> store,
+                                       final SpreadsheetCellReference cell,
+                                       final SpreadsheetCellReference...out) {
+        assertEquals(Sets.of(out),
+                store.loadReferred(cell),
+                "referrers from " + cell);
+    }
+
     private SpreadsheetId id() {
         return SpreadsheetId.with(123);
     }
@@ -3450,6 +3715,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     private SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> conditionalFormattingRules() {
+        return SpreadsheetRangeStores.treeMap();
+    }
+
+    private SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferencesStore() {
+        return SpreadsheetReferenceStores.treeMap();
+    }
+
+    private SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore() {
+        return SpreadsheetReferenceStores.treeMap();
+    }
+
+    private SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore() {
         return SpreadsheetRangeStores.treeMap();
     }
 
@@ -3475,6 +3752,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private SpreadsheetRange range(final SpreadsheetCellReference begin, final SpreadsheetCellReference end) {
         return SpreadsheetRange.with(begin, end);
+    }
+
+    private SpreadsheetCell cell(final String reference, final String formula) {
+        return this.cell(SpreadsheetCellReference.parse(reference), formula);
     }
 
     private SpreadsheetCell cell(final SpreadsheetCellReference reference, final String formula) {
