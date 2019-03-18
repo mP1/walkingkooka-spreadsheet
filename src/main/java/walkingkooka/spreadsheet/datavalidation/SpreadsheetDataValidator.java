@@ -11,7 +11,7 @@ public interface SpreadsheetDataValidator<T> {
     /**
      * The type of the value being validated. This is intended as a hint to a support conversion prior to calling the validate method.
      */
-    abstract Class<T> valueType();
+    Class<T> valueType();
 
     /**
      * Accepts a value and returns true if it is a valid value.

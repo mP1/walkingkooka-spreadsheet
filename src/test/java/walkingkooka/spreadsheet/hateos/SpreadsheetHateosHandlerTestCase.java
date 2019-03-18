@@ -1,6 +1,5 @@
 package walkingkooka.spreadsheet.hateos;
 
-import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.test.ClassTesting;
 import walkingkooka.test.TypeNameTesting;
 import walkingkooka.type.MemberVisibility;

@@ -22,10 +22,10 @@ public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>
     /**
      * RANGE and RANGE1B share a common TOPLEFT.
      */
-    static SpreadsheetCellReference TOPLEFT = cell(10, 20);
-    static SpreadsheetCellReference CENTER = TOPLEFT.add(1, 1);
-    static SpreadsheetCellReference BOTTOMRIGHT = CENTER.add(1, 1);
-    static SpreadsheetRange RANGE = SpreadsheetRange.with(TOPLEFT, BOTTOMRIGHT);
+    SpreadsheetCellReference TOPLEFT = cell(10, 20);
+    SpreadsheetCellReference CENTER = TOPLEFT.add(1, 1);
+    SpreadsheetCellReference BOTTOMRIGHT = CENTER.add(1, 1);
+    SpreadsheetRange RANGE = SpreadsheetRange.with(TOPLEFT, BOTTOMRIGHT);
 
     // tests.......................................................................................................
 

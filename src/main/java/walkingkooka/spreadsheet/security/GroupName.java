@@ -10,7 +10,6 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
-import walkingkooka.tree.json.JsonStringNode;
 
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -24,15 +23,15 @@ final public class GroupName implements Name,
 
     private final static CharPredicate LETTER = CharPredicates.range('A', 'Z').or(CharPredicates.range('a', 'z'));
 
-    final static CharPredicate INITIAL = LETTER;
+    private final static CharPredicate INITIAL = LETTER;
 
     private final static CharPredicate DIGIT = CharPredicates.range('0', '9');
 
-    final static CharPredicate PART = INITIAL.or(DIGIT.or(CharPredicates.is('-')));
+    private final static CharPredicate PART = INITIAL.or(DIGIT.or(CharPredicates.is('-')));
 
-    final static Predicate<CharSequence> PREDICATE = Predicates.initialAndPart(INITIAL, PART);
+    private final static Predicate<CharSequence> PREDICATE = Predicates.initialAndPart(INITIAL, PART);
 
-    final static int MAX_LENGTH = 255;
+    private final static int MAX_LENGTH = 255;
 
     /**
      * Factory that creates a {@link GroupName}
@@ -51,7 +50,7 @@ final public class GroupName implements Name,
         return new GroupName(name);
     }
 
-    static boolean isAcceptableLength(final String name) {
+    private static boolean isAcceptableLength(final String name) {
         return name.length() < MAX_LENGTH;
     }
 
@@ -68,7 +67,7 @@ final public class GroupName implements Name,
         return this.name;
     }
 
-    final String name;
+    private final String name;
 
     // HasJsonNode...............................................................................
 

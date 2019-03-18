@@ -70,7 +70,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return this.id;
     }
 
-    private SpreadsheetId id;
+    private final SpreadsheetId id;
 
     @Override
     public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference reference,
@@ -113,8 +113,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * If an expression is not present, parse the formula.
      */
-    SpreadsheetFormula parseIfNecessary(final SpreadsheetFormula formula,
-                                        final SpreadsheetEngineContext context) {
+    private SpreadsheetFormula parseIfNecessary(final SpreadsheetFormula formula,
+                                                final SpreadsheetEngineContext context) {
         return formula.expression().isPresent() ?
                 formula :
                 this.parse(formula, Function.identity(), context);
@@ -145,7 +145,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * If a value is available try and re-use or if an expression is present evaluate it.
      */
-    final SpreadsheetFormula evaluateIfPossible(final SpreadsheetFormula formula, final SpreadsheetEngineContext context) {
+    private SpreadsheetFormula evaluateIfPossible(final SpreadsheetFormula formula,
+                                                  final SpreadsheetEngineContext context) {
         return formula.error().isPresent() ?
                 formula : // value present - using cached.
                 this.evaluate(formula, context);
@@ -400,8 +401,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
             for (int w = 0; w < widthMultiple; w++) {
                 final int x = xOffset + w * fromWidth;
-                from.stream()
-                        .forEach(c -> this.copyCell(c, x, y, context));
+                from.forEach(c -> this.copyCell(c, x, y, context));
             }
         }
     }

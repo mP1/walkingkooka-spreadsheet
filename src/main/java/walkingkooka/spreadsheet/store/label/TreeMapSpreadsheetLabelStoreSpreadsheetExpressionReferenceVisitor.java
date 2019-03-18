@@ -5,7 +5,6 @@ import walkingkooka.spreadsheet.SpreadsheetExpressionReferenceVisitor;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.tree.expression.ExpressionReference;
 
@@ -19,14 +18,13 @@ final class TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVisitor ex
 
     static Set<? super ExpressionReference> gather(final SpreadsheetLabelName label,
                                                    final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings) {
-        final TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVisitor visitor = new TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVisitor(label, mappings);
+        final TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVisitor visitor = new TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVisitor(mappings);
         visitor.accept(label);
         return visitor.references;
     }
 
     // VisibleForTesting
-    TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVisitor(final SpreadsheetLabelName label,
-                                                                      final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings) {
+    TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVisitor(final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings) {
         super();
 
         this.mappings = mappings;

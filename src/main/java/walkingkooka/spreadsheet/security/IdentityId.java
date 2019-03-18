@@ -15,8 +15,6 @@ public abstract class IdentityId implements Value<Long>,
 
     /**
      * Package private to limit sub classing.
-     *
-     * @param value
      */
     IdentityId(final long value) {
         super();
@@ -25,7 +23,7 @@ public abstract class IdentityId implements Value<Long>,
 
     @Override
     public final Long value() {
-        return Long.valueOf(this.value);
+        return this.value;
     }
 
     private final long value;
