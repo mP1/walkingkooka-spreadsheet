@@ -4,7 +4,6 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.security.Group;
 import walkingkooka.spreadsheet.security.GroupId;
-import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
 
 import java.util.Map;

@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.conditionalformat;
 
-import walkingkooka.SystemException;
 import walkingkooka.spreadsheet.SpreadsheetException;
 
 /**

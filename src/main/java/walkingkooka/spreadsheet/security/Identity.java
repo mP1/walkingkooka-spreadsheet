@@ -75,7 +75,7 @@ public abstract class Identity<I extends IdentityId> implements Value<I>,
      */
     abstract boolean canBeEqual(final Object other);
 
-    private final boolean equals0(final Identity<?> other) {
+    private boolean equals0(final Identity<?> other) {
         return this.id.equals(other.id) &&
                 this.equals1(other);
     }

@@ -2,7 +2,6 @@ package walkingkooka.spreadsheet.hateos;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.net.http.server.hateos.HateosHandler;
-import walkingkooka.net.http.server.hateos.HateosHandlerTesting;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.test.ToStringTesting;

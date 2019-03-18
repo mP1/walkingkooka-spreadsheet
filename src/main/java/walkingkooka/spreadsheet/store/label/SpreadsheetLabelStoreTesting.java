@@ -1,9 +1,7 @@
 package walkingkooka.spreadsheet.store.label;
 
-import org.checkerframework.checker.units.qual.K;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
-import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.spreadsheet.store.StoreTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.tree.expression.ExpressionReference;

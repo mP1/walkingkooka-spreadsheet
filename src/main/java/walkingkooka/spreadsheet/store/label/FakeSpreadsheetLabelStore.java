@@ -3,7 +3,6 @@ package walkingkooka.spreadsheet.store.label;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.store.FakeStore;
 import walkingkooka.test.Fake;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.tree.expression.ExpressionReference;
 

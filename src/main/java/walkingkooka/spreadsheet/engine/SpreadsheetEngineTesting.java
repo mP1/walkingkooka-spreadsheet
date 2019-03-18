@@ -29,10 +29,10 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends ClassTesting2<E> {
 
-    final static SpreadsheetColumnReference COLUMN = SpreadsheetReferenceKind.ABSOLUTE.column(1);
-    final static SpreadsheetRowReference ROW = SpreadsheetReferenceKind.ABSOLUTE.row(2);
-    final static SpreadsheetCellReference REFERENCE = COLUMN.setRow(ROW);
-    final static SpreadsheetLabelName LABEL = SpreadsheetLabelName.with("LABEL123");
+    SpreadsheetColumnReference COLUMN = SpreadsheetReferenceKind.ABSOLUTE.column(1);
+    SpreadsheetRowReference ROW = SpreadsheetReferenceKind.ABSOLUTE.row(2);
+    SpreadsheetCellReference REFERENCE = COLUMN.setRow(ROW);
+    SpreadsheetLabelName LABEL = SpreadsheetLabelName.with("LABEL123");
 
     @Test
     default void testLoadCellNullCellFails() {

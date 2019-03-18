@@ -57,7 +57,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      * Delete all the cells in the selected row/column.
      */
     final void delete(final int columnOrRow) {
-        this.cells(columnOrRow).stream()
+        this.cells(columnOrRow)
                 .forEach(c -> this.cellStore().delete(c.reference()));
     }
 
