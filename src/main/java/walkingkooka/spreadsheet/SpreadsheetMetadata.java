@@ -68,7 +68,7 @@ public final class SpreadsheetMetadata implements HashCodeEqualsDefined {
                 this.replace(columnCount, this.rowCount());
     }
 
-    private int columnCount;
+    private final int columnCount;
 
     public int rowCount() {
         return this.rowCount;
@@ -82,7 +82,7 @@ public final class SpreadsheetMetadata implements HashCodeEqualsDefined {
                 this.replace(this.columnCount(), rowCount);
     }
 
-    private int rowCount;
+    private final int rowCount;
 
     private SpreadsheetMetadata replace(final int columnCount, final int rowCount) {
         return new SpreadsheetMetadata(columnCount, rowCount);

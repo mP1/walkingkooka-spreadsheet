@@ -1,12 +1,9 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.net.Url;
-import walkingkooka.net.header.Link;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeName;
 import walkingkooka.type.MemberVisibility;
 
 public final class SpreadsheetEngineLoadingTest implements ClassTesting2<SpreadsheetEngineLoading>,

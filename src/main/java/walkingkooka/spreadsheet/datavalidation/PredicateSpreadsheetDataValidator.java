@@ -12,13 +12,13 @@ final class PredicateSpreadsheetDataValidator<T> extends SpreadsheetDataValidato
         Objects.requireNonNull(valueType, "valueType");
         Objects.requireNonNull(condition, "condition");
 
-        return new PredicateSpreadsheetDataValidator(valueType, condition);
+        return new PredicateSpreadsheetDataValidator<>(valueType, condition);
     }
 
     /**
      * Private ctor
      */
-    private PredicateSpreadsheetDataValidator(final Class<T> valueType, final Predicate<T> condition) {
+    private PredicateSpreadsheetDataValidator(final Class<T> valueType, final Predicate<? super T> condition) {
         super();
         this.valueType = valueType;
         this.condition = condition;
@@ -41,5 +41,5 @@ final class PredicateSpreadsheetDataValidator<T> extends SpreadsheetDataValidato
         return this.condition.toString();
     }
 
-    private final Predicate<T> condition;
+    private final Predicate<? super T> condition;
 }
