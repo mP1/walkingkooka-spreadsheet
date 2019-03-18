@@ -23,7 +23,8 @@ import java.util.stream.Stream;
  */
 public final class SpreadsheetRange implements ExpressionReference, 
         HashCodeEqualsDefined,
-        HasJsonNode {
+        HasJsonNode,
+        Comparable<SpreadsheetRange> {
 
     /**
      * Factory that parses some text holding a range.
@@ -288,5 +289,12 @@ public final class SpreadsheetRange implements ExpressionReference,
         return this.isSingleCell() ?
                 this.begin.toString() :
                 this.begin + SEPARATOR + this.end;
+    }
+
+    // Comparable.......................................................................................
+
+    @Override
+    public int compareTo(final SpreadsheetRange other) {
+        throw new UnsupportedOperationException();
     }
 }

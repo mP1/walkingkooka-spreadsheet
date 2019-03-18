@@ -1,6 +1,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -9,6 +10,7 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
@@ -20,6 +22,7 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -55,6 +58,24 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         assertThrows(NullPointerException.class, () -> {
             this.createSpreadsheetEngine().loadCell(REFERENCE,
                     SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                    null);
+        });
+    }
+
+    @Test
+    default void testSaveCellNullCellFails() {
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().saveCell(null,
+                    this.createContext());
+        });
+    }
+
+    @Test
+    default void testSaveCellNullContextFails() {
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().saveCell(SpreadsheetCell.with(REFERENCE,
+                    SpreadsheetFormula.with("1"),
+                    SpreadsheetCellStyle.EMPTY),
                     null);
         });
     }
@@ -266,6 +287,22 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         assertEquals(Optional.empty(),
                 labelStore.load(label),
                 "label loaded failed");
+    }
+
+    default void saveCellAndCheck(final SpreadsheetEngine engine,
+                                  final SpreadsheetCell save,
+                                  final SpreadsheetEngineContext context,
+                                  final SpreadsheetCell... updated) {
+        this.saveCellAndCheck(engine, save, context, Sets.of(updated));
+    }
+
+    default void saveCellAndCheck(final SpreadsheetEngine engine,
+                                  final SpreadsheetCell save,
+                                  final SpreadsheetEngineContext context,
+                                  final Set<SpreadsheetCell> updated) {
+        assertEquals(updated,
+                engine.saveCell(save, context),
+                () -> "saveCell " + save);
     }
 
     default void countAndCheck(final Store<?, ?> store, final int count) {
