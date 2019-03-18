@@ -3,11 +3,11 @@ package walkingkooka.spreadsheet.store.label;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
-import walkingkooka.spreadsheet.store.StoreTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -77,7 +77,7 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
     protected final void allAndCheck(final S store, final SpreadsheetLabelMapping... mappings) {
         final List<SpreadsheetLabelMapping> all = Lists.array();
         all.addAll(store.all());
-        assertEquals(Lists.of(mappings), all, () -> "all labels for " + mappings);
+        assertEquals(Lists.of(mappings), all, () -> "all labels for " + Arrays.toString(mappings));
     }
 
     private SpreadsheetCellReference cell(final int column, final int row) {

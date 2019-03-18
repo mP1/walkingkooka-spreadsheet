@@ -2,7 +2,6 @@ package walkingkooka.spreadsheet.security;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting;
-import walkingkooka.net.header.Link;
 import walkingkooka.tree.json.JsonNode;
 
 public final class GroupIdTest extends IdentityIdTestCase<GroupId> implements ComparableTesting<GroupId> {

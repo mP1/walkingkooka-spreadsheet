@@ -31,7 +31,7 @@ public abstract class SpreadsheetDataValidatorTemplateTestCase<V extends Spreads
 
         return new FakeExpressionEvaluationContext() {
             @Override
-            public <T> T convert(final Object value, final Class<T> target) {
+            public <TT> TT convert(final Object value, final Class<TT> target) {
                 return all.convert(value, target, ConverterContexts.basic(this));
             }
         };

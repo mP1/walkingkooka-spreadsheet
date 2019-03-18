@@ -102,7 +102,7 @@ final class GuavaTableSpreadsheetCellStore extends SpreadsheetCellStoreTemplate 
     }
 
     // row, column
-    private TreeBasedTable<Integer, Integer, SpreadsheetCell> cells = TreeBasedTable.create();
+    private final TreeBasedTable<Integer, Integer, SpreadsheetCell> cells = TreeBasedTable.create();
 
     @Override
     public String toString() {

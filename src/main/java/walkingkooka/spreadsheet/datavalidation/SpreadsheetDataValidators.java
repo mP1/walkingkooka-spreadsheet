@@ -24,42 +24,42 @@ public final class SpreadsheetDataValidators implements PublicStaticHelper {
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link BigDecimal} equal to the given value.
      */
-    public static SpreadsheetDataValidator bigDecimalEquals(final BigDecimal value) {
+    public static SpreadsheetDataValidator<BigDecimal> bigDecimalEquals(final BigDecimal value) {
         return bigDecimal(ComparisonRelation.EQ, value);
     }
 
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link BigDecimal} greater than the given value.
      */
-    public static SpreadsheetDataValidator bigDecimalGreaterThan(final BigDecimal value) {
+    public static SpreadsheetDataValidator<BigDecimal> bigDecimalGreaterThan(final BigDecimal value) {
         return bigDecimal(ComparisonRelation.GT, value);
     }
 
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link BigDecimal} greater than equals the given value.
      */
-    public static SpreadsheetDataValidator bigDecimalGreaterThanEquals(final BigDecimal value) {
+    public static SpreadsheetDataValidator<BigDecimal> bigDecimalGreaterThanEquals(final BigDecimal value) {
         return bigDecimal(ComparisonRelation.GTE, value);
     }
 
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link BigDecimal} less than the given value.
      */
-    public static SpreadsheetDataValidator bigDecimalLessThan(final BigDecimal value) {
+    public static SpreadsheetDataValidator<BigDecimal> bigDecimalLessThan(final BigDecimal value) {
         return bigDecimal(ComparisonRelation.LT, value);
     }
 
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link BigDecimal} less than equals the given value.
      */
-    public static SpreadsheetDataValidator bigDecimalLessThanEquals(final BigDecimal value) {
+    public static SpreadsheetDataValidator<BigDecimal> bigDecimalLessThanEquals(final BigDecimal value) {
         return bigDecimal(ComparisonRelation.LTE, value);
     }
 
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link BigDecimal} not equal to the given value.
      */
-    public static SpreadsheetDataValidator bigDecimalNotEquals(final BigDecimal value) {
+    public static SpreadsheetDataValidator<BigDecimal> bigDecimalNotEquals(final BigDecimal value) {
         return bigDecimal(ComparisonRelation.NE, value);
     }
 
@@ -67,7 +67,7 @@ public final class SpreadsheetDataValidators implements PublicStaticHelper {
      * Factory that creates a {@link SpreadsheetDataValidator} that converts text into a {@link BigDecimal} and tests
      * the given {@link Predicate condition}.
      */
-    private static SpreadsheetDataValidator bigDecimal(final ComparisonRelation comparison,
+    private static SpreadsheetDataValidator<BigDecimal> bigDecimal(final ComparisonRelation comparison,
                                                        final BigDecimal value) {
         return bigDecimal(comparison.predicate(value));
     }
@@ -75,21 +75,21 @@ public final class SpreadsheetDataValidators implements PublicStaticHelper {
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link BigDecimal} between the given range.
      */
-    public static SpreadsheetDataValidator bigDecimalBetween(final BigDecimal lower, final BigDecimal upper) {
+    public static SpreadsheetDataValidator<BigDecimal> bigDecimalBetween(final BigDecimal lower, final BigDecimal upper) {
         return bigDecimal(range(lower, upper));
     }
 
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link BigDecimal} outside the given range.
      */
-    public static SpreadsheetDataValidator bigDecimalNotBetween(final BigDecimal lower, final BigDecimal upper) {
+    public static SpreadsheetDataValidator<BigDecimal> bigDecimalNotBetween(final BigDecimal lower, final BigDecimal upper) {
         return bigDecimal(range(lower, upper).negate());
     }
 
     /**
      * Creates a {@link SpreadsheetDataValidator} using the {@link Predicate condition}.
      */
-    private static SpreadsheetDataValidator bigDecimal(final Predicate<BigDecimal> condition) {
+    private static SpreadsheetDataValidator<BigDecimal> bigDecimal(final Predicate<BigDecimal> condition) {
         return PredicateSpreadsheetDataValidator.with(BigDecimal.class, condition);
     }
 
@@ -98,7 +98,7 @@ public final class SpreadsheetDataValidators implements PublicStaticHelper {
     /**
      * Creates a {@link SpreadsheetDataValidator} using the {@link Predicate condition}.
      */
-    public static SpreadsheetDataValidator customFormula(final ExpressionNode customFormula) {
+    public static SpreadsheetDataValidator<Object> customFormula(final ExpressionNode customFormula) {
         return CustomFormulaSpreadsheetDataValidator.with(customFormula);
     }
 
@@ -107,35 +107,35 @@ public final class SpreadsheetDataValidators implements PublicStaticHelper {
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link LocalDate} equal to the given value.
      */
-    public static SpreadsheetDataValidator localDateEquals(final LocalDate value) {
+    public static SpreadsheetDataValidator<LocalDate> localDateEquals(final LocalDate value) {
         return localDate(ComparisonRelation.EQ, value);
     }
 
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link LocalDate} before the given value.
      */
-    public static SpreadsheetDataValidator localDateBefore(final LocalDate value) {
+    public static SpreadsheetDataValidator<LocalDate> localDateBefore(final LocalDate value) {
         return localDate(ComparisonRelation.LT, value);
     }
 
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link LocalDate} before or on the given value.
      */
-    public static SpreadsheetDataValidator localDateBeforeOrOn(final LocalDate value) {
+    public static SpreadsheetDataValidator<LocalDate> localDateBeforeOrOn(final LocalDate value) {
         return localDate(ComparisonRelation.LTE, value);
     }
 
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link LocalDate} after the given value.
      */
-    public static SpreadsheetDataValidator localDateAfter(final LocalDate value) {
+    public static SpreadsheetDataValidator<LocalDate> localDateAfter(final LocalDate value) {
         return localDate(ComparisonRelation.GT, value);
     }
 
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link LocalDate} after or on the given value.
      */
-    public static SpreadsheetDataValidator localDateAfterOrOn(final LocalDate value) {
+    public static SpreadsheetDataValidator<LocalDate> localDateAfterOrOn(final LocalDate value) {
         return localDate(ComparisonRelation.GTE, value);
     }
 
@@ -143,29 +143,31 @@ public final class SpreadsheetDataValidators implements PublicStaticHelper {
      * Factory that creates a {@link SpreadsheetDataValidator} that converts text into a {@link LocalDate} and tests
      * the given {@link Predicate condition}.
      */
-    private static SpreadsheetDataValidator localDate(final ComparisonRelation comparison,
-                                                      final LocalDate value) {
+    private static SpreadsheetDataValidator<LocalDate> localDate(final ComparisonRelation comparison,
+                                                                 final LocalDate value) {
         return localDate(comparison.predicate(value));
     }
 
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link LocalDate} between the given range.
      */
-    public static SpreadsheetDataValidator localDateBetween(final LocalDate lower, final LocalDate upper) {
+    public static SpreadsheetDataValidator<LocalDate> localDateBetween(final LocalDate lower,
+                                                                       final LocalDate upper) {
         return localDate(range(lower, upper));
     }
 
     /**
      * A {@link SpreadsheetDataValidator} that only accepts {@link LocalDate} outside the given range.
      */
-    public static SpreadsheetDataValidator localDateNotBetween(final LocalDate lower, final LocalDate upper) {
+    public static SpreadsheetDataValidator<LocalDate> localDateNotBetween(final LocalDate lower,
+                                                                          final LocalDate upper) {
         return localDate(range(lower, upper).negate());
     }
 
     /**
      * Creates a {@link SpreadsheetDataValidator} using the {@link Predicate condition}.
      */
-    private static SpreadsheetDataValidator localDate(final Predicate<ChronoLocalDate> condition) {
+    private static SpreadsheetDataValidator<LocalDate> localDate(final Predicate<ChronoLocalDate> condition) {
         return PredicateSpreadsheetDataValidator.with(LocalDate.class, condition);
     }
 
@@ -237,7 +239,7 @@ public final class SpreadsheetDataValidators implements PublicStaticHelper {
     /**
      * Creates a range including the lower and upper bounds.
      */
-    private static <C extends Comparable<C>> Range range(final C lower, final C upper) {
+    private static <C extends Comparable<C>> Range<C> range(final C lower, final C upper) {
         return Range.greaterThanEquals(lower).and(Range.lessThanEquals(upper));
     }
 

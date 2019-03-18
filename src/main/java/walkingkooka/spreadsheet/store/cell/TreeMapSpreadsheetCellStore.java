@@ -5,7 +5,6 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
