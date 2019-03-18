@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.SystemException;
 import walkingkooka.spreadsheet.SpreadsheetException;
 
 public class BasicSpreadsheetEngineException extends SpreadsheetException {

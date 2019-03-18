@@ -408,7 +408,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     // HasJsonNode .toJsonNode.........................................................................
     @Test
     public void testJsonNode() {
-        this.toJsonNodeAndCheck(SpreadsheetCell.with(this.reference(COLUMN, ROW),
+        this.toJsonNodeAndCheck(SpreadsheetCell.with(reference(COLUMN, ROW),
                 SpreadsheetFormula.with(FORMULA),
                 this.style()),
                 "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}, \"style\": " + this.style().toJsonNode() + "}");
@@ -463,7 +463,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     private SpreadsheetCell createComparable(final int column, final int row, final String formula) {
-        return SpreadsheetCell.with(this.reference(column, row),
+        return SpreadsheetCell.with(reference(column, row),
                 SpreadsheetFormula.with(formula),
                 this.style())
                 .setFormat(this.format())
