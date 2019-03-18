@@ -10,7 +10,7 @@ public final class TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVis
 
     @Override
     public TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVisitor createVisitor() {
-        return new TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVisitor(null, null);
+        return new TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVisitor(null);
     }
 
     @Override

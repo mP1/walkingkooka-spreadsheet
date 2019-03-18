@@ -21,12 +21,12 @@ public final class FontSize implements Comparable<FontSize>, HashCodeEqualsDefin
     /**
      * A read only cache of already prepared {@link FontSize sizes}.
      */
-    final static FontSize[] CONSTANTS = registerConstants();
+    private final static FontSize[] CONSTANTS = registerConstants();
 
     /**
      * Creates and adds a new {@link FontSize} to the cache being built.
      */
-    static FontSize[] registerConstants() {
+    private static FontSize[] registerConstants() {
         return IntStream.rangeClosed(0, CONSTANT_COUNT)
                 .mapToObj(value -> new FontSize(value))
                 .toArray(FontSize[]::new);

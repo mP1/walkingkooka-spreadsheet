@@ -30,7 +30,6 @@ import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonNodeName;
-import walkingkooka.tree.json.JsonStringNode;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -135,7 +134,6 @@ public final class SpreadsheetFormattedCell implements HasText,
                 final JsonNodeName name = child.name();
                 switch (name.value()) {
                     case TEXT_PROPERTY_STRING:
-                        text = JsonStringNode.class.cast(child).value();
                         try {
                             text = child.stringValueOrFail();
                         } catch (final JsonNodeException cause) {

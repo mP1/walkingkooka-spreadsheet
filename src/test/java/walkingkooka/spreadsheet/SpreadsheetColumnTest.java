@@ -110,7 +110,7 @@ public final class SpreadsheetColumnTest implements ClassTesting2<SpreadsheetCol
     // HasJsonNode .toJsonNode.........................................................................
     @Test
     public void testJsonNode() {
-        final SpreadsheetColumnReference reference = this.reference(COLUMN);
+        final SpreadsheetColumnReference reference = reference(COLUMN);
         this.toJsonNodeAndCheck(reference, reference.toJsonNode());
     }
 
@@ -131,7 +131,7 @@ public final class SpreadsheetColumnTest implements ClassTesting2<SpreadsheetCol
     }
 
     private SpreadsheetColumn createComparable(final int column) {
-        return SpreadsheetColumn.with(this.reference(column));
+        return SpreadsheetColumn.with(reference(column));
     }
 
     private static SpreadsheetColumnReference differentReference() {

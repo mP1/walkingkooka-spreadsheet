@@ -2,7 +2,6 @@ package walkingkooka.spreadsheet.store.security;
 
 import walkingkooka.spreadsheet.security.Group;
 import walkingkooka.spreadsheet.security.GroupId;
-import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.spreadsheet.store.FakeStore;
 
