@@ -35,4 +35,11 @@ public class FakeSpreadsheetReferenceStore<T extends ExpressionReference & Compa
 
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public Set<T> loadReferred(final SpreadsheetCellReference reference) {
+        Objects.requireNonNull(reference, "reference");
+
+        throw new UnsupportedOperationException();
+    }
 }

@@ -37,7 +37,18 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
     @Override
     public void delete(final T id) {
         checkId(id);
-        this.targetToReferences.remove(id);
+        this.deleteAll(id);
+    }
+
+    /**
+     * Delete the reference and all referrers to that reference.
+     */
+    private void deleteAll(final T id) {
+        // where id=label remove label to cells, then remove cell to label.
+        final Set<SpreadsheetCellReference> referrers = this.targetToReferences.remove(id);
+        if (null != referrers) {
+            this.removeAllReferences(referrers, id);
+        }
     }
 
     @Override
@@ -53,14 +64,34 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
         final Set<SpreadsheetCellReference> copy = Sets.sorted();
         copy.addAll(referrers);
 
+        // complain if adding a reference to self
         if (copy.contains(id)) {
             throw new IllegalArgumentException("referrer includes " + id + "=" + referrers);
         }
 
         if (copy.isEmpty()) {
-            this.targetToReferences.remove(id);
+            // save is actually a delete...
+            this.deleteAll(id);
         } else {
-            this.targetToReferences.put(id, copy);
+            final Set<SpreadsheetCellReference> previousReferrers = this.targetToReferences.put(id, copy);
+            if (null != previousReferrers) {
+
+                for (SpreadsheetCellReference reference : previousReferrers) {
+                    if (copy.contains(reference)) {
+                        continue;
+                    }
+                    this.removeReference0(id, reference);
+                }
+
+                for (SpreadsheetCellReference reference : copy) {
+                    if (previousReferrers.contains(reference)) {
+                        continue;
+                    }
+                    this.addReference0(id, reference);
+                }
+            } else {
+                copy.forEach(r -> this.addReference0(id, r));
+            }
         }
     }
 
@@ -69,20 +100,30 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
         checkId(id);
         checkReferrer(referrer);
 
-        if(id instanceof SpreadsheetCellReference) {
+        // complain if adding a reference to self
+        if (id instanceof SpreadsheetCellReference) {
             if (referrer.compareTo(SpreadsheetCellReference.class.cast(id)) == 0) {
                 throw new IllegalArgumentException("referrer includes " + id + "=" + referrer);
             }
         }
 
         Set<SpreadsheetCellReference> referrers = this.targetToReferences.get(id);
-        if (null != referrer) {
-            referrers.add(referrer);
-        } else {
-            referrers = Sets.ordered();
-            referrers.add(referrer);
+        if (null == referrers) {
+            referrers = Sets.sorted();
             this.targetToReferences.put(id, referrers);
         }
+        referrers.add(referrer);
+
+        this.addReference0(id, referrer);
+    }
+
+    private void addReference0(final T id, final SpreadsheetCellReference referrer) {
+        Set<T> targets = this.referenceToTargets.get(referrer);
+        if (null == targets) {
+            targets = Sets.sorted();
+            this.referenceToTargets.put(referrer, targets);
+        }
+        targets.add(id);
     }
 
     @Override
@@ -90,14 +131,48 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
         checkId(id);
         checkReferrer(referrer);
 
+        if(this.removeReference0(id, referrer)) {
+            final Set<T> ids = this.referenceToTargets.get(referrer);
+            if(null!=ids) {
+                if(ids.remove(id)){
+                    if(ids.isEmpty()) {
+                        this.referenceToTargets.remove(referrer);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Remove all mappings between a reference and the target(id).
+     */
+    private void removeAllReferences(Set<SpreadsheetCellReference> referrers, final T id) {
+        referrers.forEach(r -> this.removeReference0(id, r));
+    }
+
+    private boolean removeReference0(final T id, final SpreadsheetCellReference referrer) {
         final Set<SpreadsheetCellReference> referrers = this.targetToReferences.get(id);
-        if (null != referrer) {
+        final boolean removed = null != referrers;
+        if (removed) {
             referrers.remove(referrer);
             if (referrers.isEmpty()) {
                 this.targetToReferences.remove(id);
             }
         }
+        return removed;
     }
+
+    @Override
+    public Set<T> loadReferred(final SpreadsheetCellReference referrer) {
+        checkReferrer(referrer);
+
+        final Set<T> targets = this.referenceToTargets.get(referrer);
+        return null != targets ?
+                Sets.readOnly(targets) :
+                Sets.empty();
+    }
+
+    // helpers..........................................................................................
 
     private void checkId(final T id) {
         Objects.requireNonNull(id, "id");
@@ -107,7 +182,15 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
         Objects.requireNonNull(referrer, "referrer");
     }
 
+    /**
+     * Something like labels and the cell references expressions containing the label.
+     */
     private final Map<T, Set<SpreadsheetCellReference>> targetToReferences = Maps.sorted();
+
+    /**
+     * The inverse of {@link #targetToReferences}
+     */
+    private final Map<SpreadsheetCellReference, Set<T>> referenceToTargets = Maps.sorted();
 
     @Override
     public String toString() {
