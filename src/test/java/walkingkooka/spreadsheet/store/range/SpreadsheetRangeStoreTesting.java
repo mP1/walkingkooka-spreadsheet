@@ -47,16 +47,16 @@ public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>
     }
 
     @Test
-    default void testSaveNullRangeFails() {
+    default void testAddValueNullRangeFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.createStore().saveValue(null, this.value());
+            this.createStore().addValue(null, this.value());
         });
     }
 
     @Test
-    default void testSaveNullValueFails() {
+    default void testAddValueNullValueFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.createStore().saveValue(RANGE, null);
+            this.createStore().addValue(RANGE, null);
         });
     }
 
@@ -82,16 +82,16 @@ public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>
     }
 
     @Test
-    default void testDeleteNullRangeFails() {
+    default void testRemoveValueNullRangeFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.createStore().deleteValue(null, this.value());
+            this.createStore().removeValue(null, this.value());
         });
     }
 
     @Test
-    default void testDeleteNullValueFails() {
+    default void testRemoveValueNullValueFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.createStore().deleteValue(RANGE, null);
+            this.createStore().removeValue(RANGE, null);
         });
     }
 
