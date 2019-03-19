@@ -1,16 +1,17 @@
-package walkingkooka.spreadsheet.store.cellreferences;
+package walkingkooka.spreadsheet.store.reference;
 
 import walkingkooka.spreadsheet.store.FakeStore;
 import walkingkooka.test.Fake;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Objects;
 import java.util.Set;
 
-public class FakeSpreadsheetCellReferenceStore extends FakeStore<SpreadsheetCellReference, Set<SpreadsheetCellReference>> implements SpreadsheetCellReferenceStore, Fake {
+public class FakeSpreadsheetReferenceStore<T extends ExpressionReference & Comparable<T>> extends FakeStore<T, Set<SpreadsheetCellReference>> implements SpreadsheetReferenceStore<T>, Fake {
 
     @Override
-    public void saveReferences(final SpreadsheetCellReference id, final Set<SpreadsheetCellReference> targets) {
+    public void saveReferences(final T id, final Set<SpreadsheetCellReference> targets) {
         Objects.requireNonNull(id, "id");
         Objects.requireNonNull(targets, "targets");
 
@@ -18,7 +19,7 @@ public class FakeSpreadsheetCellReferenceStore extends FakeStore<SpreadsheetCell
     }
 
     @Override
-    public void addReference(final SpreadsheetCellReference id,
+    public void addReference(final T id,
                              final SpreadsheetCellReference target) {
         Objects.requireNonNull(id, "id");
         Objects.requireNonNull(target, "target");
@@ -27,7 +28,7 @@ public class FakeSpreadsheetCellReferenceStore extends FakeStore<SpreadsheetCell
     }
 
     @Override
-    public void removeReference(final SpreadsheetCellReference id,
+    public void removeReference(final T id,
                                 final SpreadsheetCellReference target) {
         Objects.requireNonNull(id, "id");
         Objects.requireNonNull(target, "target");
