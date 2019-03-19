@@ -35,7 +35,7 @@ public interface SpreadsheetRangeStore<V> extends Store<SpreadsheetRange, List<V
     /**
      * Add a single value to the given {@link SpreadsheetRange}. If the mapping exists nothing happens.
      */
-    void saveValue(final SpreadsheetRange range, final V value);
+    void addValue(final SpreadsheetRange range, final V value);
 
     /**
      * If the old value exists replace it with the new value. If old does not exist the replace fails.
@@ -43,7 +43,7 @@ public interface SpreadsheetRangeStore<V> extends Store<SpreadsheetRange, List<V
     boolean replaceValue(final SpreadsheetRange range, final V newValue, final V oldValue);
 
     /**
-     * Delete a single value if it exists for the given {@link SpreadsheetRange}
+     * Removes a single value if it exists for the given {@link SpreadsheetRange}
      */
-    void deleteValue(final SpreadsheetRange range, final V value);
+    void removeValue(final SpreadsheetRange range, final V value);
 }
