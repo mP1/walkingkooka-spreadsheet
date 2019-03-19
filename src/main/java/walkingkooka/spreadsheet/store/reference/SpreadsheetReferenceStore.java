@@ -25,4 +25,9 @@ public interface SpreadsheetReferenceStore<T extends ExpressionReference & Compa
      * Removes a reference from the given id.
      */
     void removeReference(final T id, final SpreadsheetCellReference target);
+
+    /**
+     * Loads the referred id given a {@link SpreadsheetCellReference}.
+     */
+    Set<T> loadReferred(final SpreadsheetCellReference reference);
 }
