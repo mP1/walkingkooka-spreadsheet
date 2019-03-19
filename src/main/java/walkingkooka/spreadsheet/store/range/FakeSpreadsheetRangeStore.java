@@ -26,7 +26,7 @@ public class FakeSpreadsheetRangeStore<V> extends FakeStore<SpreadsheetRange, Li
     }
 
     @Override
-    public void saveValue(final SpreadsheetRange range, final V value) {
+    public void addValue(final SpreadsheetRange range, final V value) {
         Objects.requireNonNull(range, "range");
         Objects.requireNonNull(value, "value");
 
@@ -43,7 +43,7 @@ public class FakeSpreadsheetRangeStore<V> extends FakeStore<SpreadsheetRange, Li
     }
 
     @Override
-    public void deleteValue(final SpreadsheetRange range, final V value) {
+    public void removeValue(final SpreadsheetRange range, final V value) {
         Objects.requireNonNull(range, "range");
         Objects.requireNonNull(value, "value");
 
