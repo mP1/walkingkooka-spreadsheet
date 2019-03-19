@@ -1,0 +1,28 @@
+package walkingkooka.spreadsheet.store.reference;
+
+import walkingkooka.spreadsheet.store.Store;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.tree.expression.ExpressionReference;
+
+import java.util.Set;
+
+/**
+ * A {@link Store} that holds one or more references for every {@link SpreadsheetCellReference}.
+ */
+public interface SpreadsheetReferenceStore<T extends ExpressionReference & Comparable<T>> extends Store<T, Set<SpreadsheetCellReference>> {
+
+    /**
+     * Saves many references to the given id.
+     */
+    void saveReferences(final T id, final Set<SpreadsheetCellReference> targets);
+
+    /**
+     * Adds a reference to the given id.
+     */
+    void addReference(final T id, final SpreadsheetCellReference target);
+
+    /**
+     * Removes a reference from the given id.
+     */
+    void removeReference(final T id, final SpreadsheetCellReference target);
+}
