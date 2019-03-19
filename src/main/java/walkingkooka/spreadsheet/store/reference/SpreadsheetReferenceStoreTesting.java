@@ -1,17 +1,18 @@
-package walkingkooka.spreadsheet.store.cellreferences;
+package walkingkooka.spreadsheet.store.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.store.StoreTesting;
 import walkingkooka.test.TypeNameTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetCellReferenceStoreTesting<S extends SpreadsheetCellReferenceStore>
-        extends StoreTesting<S, SpreadsheetCellReference, Set<SpreadsheetCellReference>>, TypeNameTesting<S> {
+public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReferenceStore<T>, T extends ExpressionReference & Comparable<T>>
+        extends StoreTesting<S, T, Set<SpreadsheetCellReference>>, TypeNameTesting<S> {
 
     @Test
     default void testSaveNullFails() {
@@ -32,23 +33,7 @@ public interface SpreadsheetCellReferenceStoreTesting<S extends SpreadsheetCellR
     @Test
     default void testAddReferenceNullTargetFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.createStore().addReference(SpreadsheetCellReference.parse("A1"), null);
-        });
-    }
-
-    @Test
-    default void testAddReferenceIdEqualsTargetFails() {
-        final SpreadsheetCellReference a1 = SpreadsheetCellReference.parse("A1");
-
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createStore().addReference(a1, a1);
-        });
-    }
-
-    @Test
-    default void testAddReferenceIdEqualsTargetFails2() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createStore().addReference(SpreadsheetCellReference.parse("A1"), SpreadsheetCellReference.parse("$A$1"));
+            this.createStore().addReference(this.id(), null);
         });
     }
 
@@ -64,7 +49,7 @@ public interface SpreadsheetCellReferenceStoreTesting<S extends SpreadsheetCellR
     @Test
     default void testRemoveReferenceNullTargetFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.createStore().removeReference(SpreadsheetCellReference.parse("A1"), null);
+            this.createStore().removeReference(this.id(), null);
         });
     }
 
@@ -80,30 +65,19 @@ public interface SpreadsheetCellReferenceStoreTesting<S extends SpreadsheetCellR
     @Test
     default void testSaveReferencesNullTargetFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.createStore().saveReferences(SpreadsheetCellReference.parse("A1"), null);
+            this.createStore().saveReferences(this.id(), null);
         });
     }
 
-    @Test
-    default void testSaveReferencesIncludesTargetFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createStore().saveReferences(SpreadsheetCellReference.parse("A1"),
-                    Sets.of(SpreadsheetCellReference.parse("A1"), SpreadsheetCellReference.parse("B1")));
-        });
-    }
-
-    @Test
-    default void testSaveReferencesIncludesTargetFails2() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createStore().saveReferences(SpreadsheetCellReference.parse("A1"),
-                    Sets.of(SpreadsheetCellReference.parse("$A$1"), SpreadsheetCellReference.parse("B1")));
-        });
-    }
+    /**
+     * The key
+     */
+    T id();
 
     // TypeNameTesting...........................................................................................
 
     @Override
     default String typeNameSuffix() {
-        return SpreadsheetCellReferenceStore.class.getSimpleName();
+        return SpreadsheetReferenceStore.class.getSimpleName();
     }
 }
