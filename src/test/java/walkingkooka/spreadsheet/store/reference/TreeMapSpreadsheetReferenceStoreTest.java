@@ -1,16 +1,17 @@
-package walkingkooka.spreadsheet.store.cellreferences;
+package walkingkooka.spreadsheet.store.reference;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
 import java.util.TreeMap;
 
-public class TreeMapSpreadsheetCellReferenceStoreTest extends SpreadsheetCellReferenceStoreTestCase<TreeMapSpreadsheetCellReferenceStore> {
+public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceStoreTestCase<TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference>, SpreadsheetCellReference> {
 
     @Test
     public void testSaveAndLoad() {
-        final TreeMapSpreadsheetCellReferenceStore store = this.createStore();
+        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = SpreadsheetCellReference.parse("A1");
         final SpreadsheetCellReference b1 = SpreadsheetCellReference.parse("B1");
@@ -21,7 +22,7 @@ public class TreeMapSpreadsheetCellReferenceStoreTest extends SpreadsheetCellRef
 
     @Test
     public void testSaveAndLoad2() {
-        final TreeMapSpreadsheetCellReferenceStore store = this.createStore();
+        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = SpreadsheetCellReference.parse("A1");
         final SpreadsheetCellReference b1 = SpreadsheetCellReference.parse("B1");
@@ -38,7 +39,7 @@ public class TreeMapSpreadsheetCellReferenceStoreTest extends SpreadsheetCellRef
 
     @Test
     public void testSaveReferencesAddReferenceAndLoad() {
-        final TreeMapSpreadsheetCellReferenceStore store = this.createStore();
+        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = SpreadsheetCellReference.parse("A1");
         final SpreadsheetCellReference b1 = SpreadsheetCellReference.parse("B1");
@@ -54,7 +55,7 @@ public class TreeMapSpreadsheetCellReferenceStoreTest extends SpreadsheetCellRef
 
     @Test
     public void testSaveReferencesAddReferenceAndLoad2() {
-        final TreeMapSpreadsheetCellReferenceStore store = this.createStore();
+        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = SpreadsheetCellReference.parse("A1");
         final SpreadsheetCellReference b1 = SpreadsheetCellReference.parse("B1");
@@ -75,7 +76,7 @@ public class TreeMapSpreadsheetCellReferenceStoreTest extends SpreadsheetCellRef
 
     @Test
     public void testSaveReferencesRemoveReferenceAndLoad() {
-        final TreeMapSpreadsheetCellReferenceStore store = this.createStore();
+        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = SpreadsheetCellReference.parse("A1");
         final SpreadsheetCellReference b1 = SpreadsheetCellReference.parse("B1");
@@ -93,7 +94,7 @@ public class TreeMapSpreadsheetCellReferenceStoreTest extends SpreadsheetCellRef
 
     @Test
     public void testSaveReferencesAddReferenceRemoveReferenceAndCount() {
-        final TreeMapSpreadsheetCellReferenceStore store = this.createStore();
+        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = SpreadsheetCellReference.parse("A1");
         final SpreadsheetCellReference b1 = SpreadsheetCellReference.parse("B1");
@@ -106,16 +107,23 @@ public class TreeMapSpreadsheetCellReferenceStoreTest extends SpreadsheetCellRef
         this.countAndCheck(store, 1);
     }
 
+    // SpreadsheetReferenceStoreTesting.............................................................
+
+    @Override
+    public SpreadsheetCellReference id() {
+        return SpreadsheetCellReference.parse("A1");
+    }
+
     // StoreTesting.................................................................................
 
     @Override
-    public TreeMapSpreadsheetCellReferenceStore createStore() {
-        return TreeMapSpreadsheetCellReferenceStore.create();
+    public TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> createStore() {
+        return TreeMapSpreadsheetReferenceStore.create();
     }
 
     @Override
-    public Class<TreeMapSpreadsheetCellReferenceStore> type() {
-        return TreeMapSpreadsheetCellReferenceStore.class;
+    public Class<TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference>> type() {
+        return Cast.to(TreeMapSpreadsheetReferenceStore.class);
     }
 
     // TypeNameTesting.................................................................................
