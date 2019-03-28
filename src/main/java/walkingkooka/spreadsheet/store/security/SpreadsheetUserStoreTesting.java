@@ -5,4 +5,10 @@ import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.spreadsheet.store.StoreTesting;
 
 public interface SpreadsheetUserStoreTesting<S extends SpreadsheetUserStore> extends StoreTesting<S, UserId, User> {
+
+    // StoreTesting...........................................................
+
+    default UserId id() {
+        return UserId.with(1);
+    }
 }

@@ -185,5 +185,5 @@ abstract class TreeMapSpreadsheetRangeStoreEntry<V> implements Comparable<TreeMa
     /**
      * The bottom right of the range to its values. This entire entry is sorted using the range begin and so is not used here.
      */
-    private final NavigableMap<SpreadsheetCellReference, Set<V>> secondaryCellReferenceToValues;
+    final NavigableMap<SpreadsheetCellReference, Set<V>> secondaryCellReferenceToValues;
 }

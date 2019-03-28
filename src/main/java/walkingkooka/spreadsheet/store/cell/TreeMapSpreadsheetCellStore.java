@@ -1,10 +1,13 @@
 package walkingkooka.spreadsheet.store.cell;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -63,6 +66,31 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     @Override
     public int count() {
         return this.cells.size();
+    }
+
+    @Override
+    public Set<SpreadsheetCellReference> ids(final int from,
+                                             final int count) {
+        Store.checkFromAndTo(from, count);
+
+        return this.cells.keySet()
+                .stream()
+                .skip(from)
+                .limit(count)
+                .collect(Collectors.toCollection(Sets::ordered));
+    }
+
+    @Override
+    public List<SpreadsheetCell> values(final SpreadsheetCellReference from,
+                                        final int count) {
+        Store.checkFromAndToIds(from, count);
+
+        return this.cells.entrySet()
+                .stream()
+                .filter(e -> e.getKey().compareTo(from) >= 0)
+                .map(e -> e.getValue())
+                .limit(count)
+                .collect(Collectors.toCollection(Lists::array));
     }
 
     @Override

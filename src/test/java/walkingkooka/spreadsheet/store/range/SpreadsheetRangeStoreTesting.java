@@ -170,4 +170,10 @@ public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>
     }
 
     V value();
+
+    // StoreTesting...........................................................
+
+    default SpreadsheetRange id() {
+        return SpreadsheetRange.parse("A1:B2");
+    }
 }
