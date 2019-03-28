@@ -5,7 +5,10 @@ import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
+import java.util.Set;
 import java.util.TreeMap;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceStoreTestCase<TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference>, SpreadsheetCellReference> {
 
@@ -235,6 +238,24 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
         this.loadReferredAndCheck(store, c1, a1);
         this.loadReferredAndCheck(store, d1);
         this.loadReferredAndCheck(store, e1);
+    }
+
+    @Test
+    public void testLoadReferredDefensivelyCopied() {
+        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+
+        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference b1 = this.b1();
+        final SpreadsheetCellReference c1 = this.c1();
+
+        store.addReference(b1, a1);
+        store.addReference(c1, a1);
+
+        final Set<SpreadsheetCellReference> referred = store.loadReferred(a1);
+        assertEquals(Sets.of(b1, c1), referred, "Incorrect load referred.");
+
+        store.removeReference(b1, a1);
+        assertEquals(Sets.of(b1, c1), referred, "Past referred snapshot should not have changed.");
     }
 
     // count.................................................................................
