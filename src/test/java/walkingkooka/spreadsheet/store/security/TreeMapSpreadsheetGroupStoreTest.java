@@ -5,7 +5,6 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.security.Group;
 import walkingkooka.spreadsheet.security.GroupId;
 import walkingkooka.spreadsheet.security.GroupName;
-import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.test.ToStringTesting;
 
@@ -14,17 +13,17 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
 
     @Test
     public void testLoad1() {
-        this.loadAndCheck(this.createStore(), this.group2().id(), this.group2());
+        this.loadAndCheck(this.createNotEmptyStore(), this.group2().id(), this.group2());
     }
 
     @Test
     public void testLoad2() {
-        this.loadAndCheck(this.createStore(), this.group3().id(), this.group3());
+        this.loadAndCheck(this.createNotEmptyStore(), this.group3().id(), this.group3());
     }
 
     @Test
     public void testSave() {
-        final TreeMapSpreadsheetGroupStore store = this.createStore();
+        final TreeMapSpreadsheetGroupStore store = this.createNotEmptyStore();
 
         final Group saved = Group.with(GroupId.with(2), GroupName.with("saved"));
         store.save(saved);
@@ -34,7 +33,7 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
 
     @Test
     public void testSaveReplaces() {
-        final TreeMapSpreadsheetGroupStore store = this.createStore();
+        final TreeMapSpreadsheetGroupStore store = this.createNotEmptyStore();
 
         final Group replace = Group.with(this.group3().id(), GroupName.with("replaced"));
         store.save(replace);
@@ -44,7 +43,7 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
 
     @Test
     public void testDelete() {
-        final TreeMapSpreadsheetGroupStore store = this.createStore();
+        final TreeMapSpreadsheetGroupStore store = this.createNotEmptyStore();
 
         final Group group1 = this.group1();
         store.delete(group1.id());
@@ -54,12 +53,12 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
 
     @Test
     public void testCount() {
-        this.countAndCheck(this.createStore(), 3);
+        this.countAndCheck(this.createNotEmptyStore(), 3);
     }
 
     @Test
     public void testCountAfterSave() {
-        final TreeMapSpreadsheetGroupStore store = this.createStore();
+        final TreeMapSpreadsheetGroupStore store = this.createNotEmptyStore();
 
         store.save(Group.with(GroupId.with(999), GroupName.with("saved")));
 
@@ -132,7 +131,7 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
 
     @Test
     public void testAddUserAndLoadUserGroups() {
-        final TreeMapSpreadsheetGroupStore store = createStore();
+        final TreeMapSpreadsheetGroupStore store = this.createNotEmptyStore();
 
         final Group group1 = this.group1();
         final Group group2 = this.group2();
@@ -150,7 +149,7 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
 
     @Test
     public void testAddUserRemoveUserAndLoadUserGroups() {
-        final TreeMapSpreadsheetGroupStore store = createStore();
+        final TreeMapSpreadsheetGroupStore store = this.createNotEmptyStore();
 
         final Group group1 = this.group1();
         final Group group2 = this.group2();
@@ -171,7 +170,7 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
 
     @Test
     public void testToString() {
-        final TreeMapSpreadsheetGroupStore store = createStore();
+        final TreeMapSpreadsheetGroupStore store = this.createNotEmptyStore();
         this.toStringAndCheck(store, store.groupIdToGroup.toString());
     }
 
@@ -209,7 +208,11 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
 
     @Override
     public TreeMapSpreadsheetGroupStore createStore() {
-        final TreeMapSpreadsheetGroupStore store = TreeMapSpreadsheetGroupStore.with();
+        return TreeMapSpreadsheetGroupStore.with();
+    }
+
+    private TreeMapSpreadsheetGroupStore createNotEmptyStore() {
+        final TreeMapSpreadsheetGroupStore store = this.createStore();
 
         store.groupIdToGroup.put(this.group1().id(), this.group1());
         store.groupIdToGroup.put(this.group2().id(), this.group2());
