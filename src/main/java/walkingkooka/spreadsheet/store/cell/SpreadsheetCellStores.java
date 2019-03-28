@@ -15,13 +15,6 @@ public final class SpreadsheetCellStores implements PublicStaticHelper {
     }
 
     /**
-     * {@see GuavaTableSpreadsheetCellStore}
-     */
-    public static SpreadsheetCellStore guavaTable() {
-        return GuavaTableSpreadsheetCellStore.create();
-    }
-
-    /**
      * {@see TreeMapSpreadsheetCellStore}
      */
     public static SpreadsheetCellStore treeMap() {
