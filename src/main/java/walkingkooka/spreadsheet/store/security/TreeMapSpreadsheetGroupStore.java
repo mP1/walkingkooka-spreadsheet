@@ -1,15 +1,19 @@
 package walkingkooka.spreadsheet.store.security;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.security.Group;
 import walkingkooka.spreadsheet.security.GroupId;
 import walkingkooka.spreadsheet.security.UserId;
+import walkingkooka.spreadsheet.store.Store;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A {@link SpreadsheetGroupStore} backed by a {@link java.util.TreeMap}.
@@ -50,6 +54,31 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
     @Override
     public int count() {
         return this.groupIdToGroup.size();
+    }
+
+    @Override
+    public Set<GroupId> ids(final int from,
+                            final int count) {
+        Store.checkFromAndTo(from, count);
+
+        return this.groupIdToGroup.keySet()
+                .stream()
+                .skip(from)
+                .limit(count)
+                .collect(Collectors.toCollection(Sets::ordered));
+    }
+
+    @Override
+    public List<Group> values(final GroupId from,
+                              final int count) {
+        Store.checkFromAndToIds(from, count);
+
+        return this.groupIdToGroup.entrySet()
+                .stream()
+                .filter(e -> e.getKey().compareTo(from) >= 0)
+                .map(e -> e.getValue())
+                .limit(count)
+                .collect(Collectors.toCollection(Lists::array));
     }
 
     @Override

@@ -5,6 +5,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.security.Group;
 import walkingkooka.spreadsheet.security.GroupId;
 import walkingkooka.spreadsheet.security.GroupName;
+import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.test.ToStringTesting;
 
@@ -66,6 +67,70 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
     }
 
     @Test
+    public final void testIds() {
+        final TreeMapSpreadsheetGroupStore store = this.createStore();
+
+        final Group a = this.group1();
+        final Group b = this.group2();
+        final Group c = this.group3();
+
+        store.save(a);
+        store.save(b);
+        store.save(c);
+
+        this.idsAndCheck(store, 0, 3, a.id(), b.id(), c.id());
+    }
+
+    @Test
+    public final void testIdsWindow() {
+        final TreeMapSpreadsheetGroupStore store = this.createStore();
+
+        final Group a = this.group1();
+        final Group b = this.group2();
+        final Group c = this.group3();
+        final Group d = this.group4();
+
+        store.save(a);
+        store.save(b);
+        store.save(c);
+        store.save(d);
+
+        this.idsAndCheck(store, 1, 2, b.id(), c.id());
+    }
+
+    @Test
+    public final void testValues() {
+        final TreeMapSpreadsheetGroupStore store = this.createStore();
+
+        final Group a = this.group1();
+        final Group b = this.group2();
+        final Group c = this.group3();
+
+        store.save(a);
+        store.save(b);
+        store.save(c);
+
+        this.valuesAndCheck(store, a.id(), 3, a, b, c);
+    }
+
+    @Test
+    public final void testValuesWindow() {
+        final TreeMapSpreadsheetGroupStore store = this.createStore();
+
+        final Group a = this.group1();
+        final Group b = this.group2();
+        final Group c = this.group3();
+        final Group d = this.group4();
+
+        store.save(a);
+        store.save(b);
+        store.save(c);
+        store.save(d);
+
+        this.valuesAndCheck(store, b.id(), 2, b, c);
+    }
+
+    @Test
     public void testAddUserAndLoadUserGroups() {
         final TreeMapSpreadsheetGroupStore store = createStore();
 
@@ -121,7 +186,11 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
     }
 
     private Group group3() {
-        return Group.with(GroupId.with(333), GroupName.with("group3"));
+        return Group.with(GroupId.with(33), GroupName.with("group33"));
+    }
+
+    private Group group4() {
+        return Group.with(GroupId.with(444), GroupName.with("group444"));
     }
 
     private UserId user1() {

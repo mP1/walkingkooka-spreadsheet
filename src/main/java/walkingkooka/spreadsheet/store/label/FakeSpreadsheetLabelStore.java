@@ -12,11 +12,6 @@ import java.util.Set;
 public class FakeSpreadsheetLabelStore extends FakeStore<SpreadsheetLabelName, SpreadsheetLabelMapping> implements SpreadsheetLabelStore, Fake {
 
     @Override
-    public Collection<SpreadsheetLabelMapping> all() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Set<? super ExpressionReference> loadCellReferencesOrRanges(final SpreadsheetLabelName label) {
         throw new UnsupportedOperationException();
     }
