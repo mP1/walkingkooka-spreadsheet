@@ -7,6 +7,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetFormattedCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.store.StoreTesting;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
@@ -153,6 +154,75 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         checkEquals("column 99", store.column(99));
     }
 
+    @Test
+    public final void testIds() {
+        final S store = this.createStore();
+
+        final SpreadsheetCell a = this.cell("a1");
+        final SpreadsheetCell b = this.cell("b2");
+        final SpreadsheetCell c = this.cell("c3");
+
+        store.save(a);
+        store.save(b);
+        store.save(c);
+
+        this.idsAndCheck(store, 0, 3, a.id(), b.id(), c.id());
+    }
+
+    @Test
+    public final void testIdsWindow() {
+        final S store = this.createStore();
+
+        final SpreadsheetCell a = this.cell("a1");
+        final SpreadsheetCell b = this.cell("b2");
+        final SpreadsheetCell c = this.cell("c3");
+        final SpreadsheetCell d = this.cell("d4");
+
+        store.save(a);
+        store.save(b);
+        store.save(c);
+        store.save(d);
+
+        this.idsAndCheck(store, 1, 2, b.id(), c.id());
+    }
+
+    @Test
+    public final void testValues() {
+        final S store = this.createStore();
+
+        final SpreadsheetCell a = this.cell("a1");
+        final SpreadsheetCell b = this.cell("b2");
+        final SpreadsheetCell c = this.cell("c3");
+
+        store.save(a);
+        store.save(b);
+        store.save(c);
+
+        this.valuesAndCheck(store, a.id(), 3, a, b, c);
+    }
+
+    @Test
+    public final void testValuesWindow() {
+        final S store = this.createStore();
+
+        final SpreadsheetCell a = this.cell("a1");
+        final SpreadsheetCell b = this.cell("b2");
+        final SpreadsheetCell c = this.cell("c3");
+        final SpreadsheetCell d = this.cell("d4");
+
+        store.save(a);
+        store.save(b);
+        store.save(c);
+        store.save(d);
+
+        this.valuesAndCheck(store, b.id(), 2, b, c);
+    }
+    
+    @Override
+    public final SpreadsheetCellReference id() {
+        return SpreadsheetCellReference.parse("A1");
+    }
+
     private void checkEquals(final String message, final Collection<SpreadsheetCell> cells, final SpreadsheetCell... expected) {
         final Set<SpreadsheetCell> actual = Sets.sorted();
         actual.addAll(cells);
@@ -165,6 +235,10 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
     private SpreadsheetCell cell(final int column, final int row) {
         return this.cell(this.cellReference(column, row));
+    }
+
+    private SpreadsheetCell cell(final String reference) {
+        return this.cell(SpreadsheetCellReference.parse(reference));
     }
 
     private SpreadsheetCell cell(final SpreadsheetCellReference cellReference) {

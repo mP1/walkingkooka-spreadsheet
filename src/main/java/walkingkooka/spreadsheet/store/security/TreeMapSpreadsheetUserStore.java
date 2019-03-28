@@ -1,13 +1,19 @@
 package walkingkooka.spreadsheet.store.security;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
+import walkingkooka.spreadsheet.store.Store;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A {@link SpreadsheetUserStore} backed by a {@link java.util.TreeMap}.
@@ -46,6 +52,31 @@ final class TreeMapSpreadsheetUserStore implements SpreadsheetUserStore {
     @Override
     public int count() {
         return this.userIdToUser.size();
+    }
+
+    @Override
+    public Set<UserId> ids(final int from,
+                           final int count) {
+        Store.checkFromAndTo(from, count);
+
+        return this.userIdToUser.keySet()
+                .stream()
+                .skip(from)
+                .limit(count)
+                .collect(Collectors.toCollection(Sets::ordered));
+    }
+
+    @Override
+    public List<User> values(final UserId from,
+                             final int count) {
+        Store.checkFromAndToIds(from, count);
+
+        return this.userIdToUser.entrySet()
+                .stream()
+                .filter(e -> e.getKey().compareTo(from) >= 0)
+                .map(e -> e.getValue())
+                .limit(count)
+                .collect(Collectors.toCollection(Lists::array));
     }
 
     @Override

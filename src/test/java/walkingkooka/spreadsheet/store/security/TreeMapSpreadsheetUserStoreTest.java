@@ -68,6 +68,70 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
     }
 
     @Test
+    public final void testIds() {
+        final TreeMapSpreadsheetUserStore store = this.createStore();
+
+        final User a = this.user1();
+        final User b = this.user2();
+        final User c = this.user3();
+
+        store.save(a);
+        store.save(b);
+        store.save(c);
+
+        this.idsAndCheck(store, 0, 3, a.id(), b.id(), c.id());
+    }
+
+    @Test
+    public final void testIdsWindow() {
+        final TreeMapSpreadsheetUserStore store = this.createStore();
+
+        final User a = this.user1();
+        final User b = this.user2();
+        final User c = this.user3();
+        final User d = this.user4();
+
+        store.save(a);
+        store.save(b);
+        store.save(c);
+        store.save(d);
+
+        this.idsAndCheck(store, 1, 2, b.id(), c.id());
+    }
+
+    @Test
+    public final void testValues() {
+        final TreeMapSpreadsheetUserStore store = this.createStore();
+
+        final User a = this.user1();
+        final User b = this.user2();
+        final User c = this.user3();
+
+        store.save(a);
+        store.save(b);
+        store.save(c);
+
+        this.valuesAndCheck(store, a.id(), 3, a, b, c);
+    }
+
+    @Test
+    public final void testValuesWindow() {
+        final TreeMapSpreadsheetUserStore store = this.createStore();
+
+        final User a = this.user1();
+        final User b = this.user2();
+        final User c = this.user3();
+        final User d = this.user4();
+
+        store.save(a);
+        store.save(b);
+        store.save(c);
+        store.save(d);
+
+        this.valuesAndCheck(store, b.id(), 2, b, c);
+    }
+
+    @Test
     public void testLoadWithEmail() {
         final TreeMapSpreadsheetUserStore store = this.createStore();
 
@@ -91,7 +155,11 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
     }
 
     private User user3() {
-        return User.with(UserId.with(333), EmailAddress.parse("user3@example.com"));
+        return User.with(UserId.with(333), EmailAddress.parse("user333@example.com"));
+    }
+
+    private User user4() {
+        return User.with(UserId.with(444), EmailAddress.parse("user444@example.com"));
     }
 
     // SpreadsheetUserStoreTesting............................................................................
