@@ -2,6 +2,8 @@ package walkingkooka.spreadsheet.store.range;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.collect.list.Lists;
+import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
@@ -33,8 +35,12 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
     private final static SpreadsheetCellReference BOTTOMRIGHT3 = CENTER3.add(2, 2);
     private final static SpreadsheetRange RANGE3 = SpreadsheetRange.with(TOPLEFT3, BOTTOMRIGHT3);
 
+    private final static SpreadsheetRange RANGE4 = SpreadsheetRange.with(SpreadsheetRangeStoreTesting.cell(70, 70),
+            SpreadsheetRangeStoreTesting.cell(80, 80));
+
     private final static String VALUE1 = "value1";
     private final static String VALUE2 = "value2";
+    private final static String VALUE2B = "value2!!!!";
     private final static String VALUE3 = "value3";
     private final static String VALUE4 = "value4";
     private final static String VALUE5 = "value5";
@@ -170,6 +176,63 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
 
         this.loadRangeAndCheck(store, RANGE2A, VALUE1);
         this.loadRangeAndCheck(store, RANGE2B, VALUE2);
+    }
+
+    // ids....................................................................................
+
+    @Test
+    public final void testIds() {
+        final TreeMapSpreadsheetRangeStore store = this.createStore();
+
+        store.addValue(RANGE1A, VALUE1); // 0
+        store.addValue(RANGE1B, VALUE2); // 1
+        store.addValue(RANGE1B, VALUE2B);
+        store.addValue(RANGE2A, VALUE3); // 2
+        store.addValue(RANGE3, VALUE4); // 3
+
+        this.idsAndCheck(store, 0, 4, RANGE1A, RANGE1B, RANGE2A, RANGE3);
+    }
+
+    @Test
+    public final void testIdsWindow() {
+        final TreeMapSpreadsheetRangeStore store = this.createStore();
+
+        store.addValue(RANGE1A, VALUE1); // 0
+        store.addValue(RANGE1B, VALUE2); // 1
+        store.addValue(RANGE1B, VALUE2B);
+        store.addValue(RANGE2A, VALUE3); // 2
+        store.addValue(RANGE2B, VALUE4); // 3
+        store.addValue(RANGE3, VALUE5); // 4
+        store.addValue(RANGE4, VALUE6); // 5
+
+        this.idsAndCheck(store, 1, 4, RANGE1B, RANGE2A, RANGE2B, RANGE3);
+    }
+
+    // values....................................................................................
+
+    @Test
+    public final void testValues() {
+        final TreeMapSpreadsheetRangeStore store = this.createStore();
+
+        store.addValue(RANGE1A, VALUE1);
+        store.addValue(RANGE1B, VALUE2);
+        store.addValue(RANGE1B, VALUE2B);
+        store.addValue(RANGE2A, VALUE3);
+
+        this.valuesAndCheck(store, RANGE1A, 3, Lists.of(VALUE1), Lists.of(VALUE2, VALUE2B), Lists.of(VALUE3));
+    }
+
+    @Test
+    public final void testValuesWindow() {
+        final TreeMapSpreadsheetRangeStore store = this.createStore();
+
+        store.addValue(RANGE1A, VALUE1); // 0
+        store.addValue(RANGE1B, VALUE2); // 1
+        store.addValue(RANGE1B, VALUE2B);
+        store.addValue(RANGE2A, VALUE3); // 3
+        store.addValue(RANGE2B, VALUE4); // 2
+
+        this.valuesAndCheck(store, RANGE1B, 2, Lists.of(VALUE2, VALUE2B), Lists.of(VALUE4));
     }
 
     // load cell reference ranges....................................................................................

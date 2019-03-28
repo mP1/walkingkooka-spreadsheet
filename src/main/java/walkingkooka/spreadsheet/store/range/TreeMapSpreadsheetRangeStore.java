@@ -1,7 +1,9 @@
 package walkingkooka.spreadsheet.store.range;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetRange;
+import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
 import java.util.List;
@@ -219,6 +221,59 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
                 .stream()
                 .mapToInt(e -> e.count())
                 .sum();
+    }
+
+    @Override
+    public Set<SpreadsheetRange> ids(final int from,
+                                     final int count) {
+        Store.checkFromAndTo(from, count);
+
+        final Set<SpreadsheetRange> ids = Sets.ordered();
+        int i = 0;
+
+        Exit:
+        for (TreeMapSpreadsheetRangeStoreTopLeftEntry<V> entry : this.topLeft.values()) {
+            for (SpreadsheetRange range : entry.ranges()) {
+                if (i >= from) {
+                    ids.add(range);
+
+                    if (ids.size() == count) {
+                        break Exit;
+                    }
+                }
+                i++;
+            }
+        }
+
+        return Sets.readOnly(ids);
+    }
+
+    @Override
+    public List<List<V>> values(final SpreadsheetRange from,
+                                final int count) {
+        Store.checkFromAndToIds(from, count);
+
+        final List<List<V>> values = Lists.array();
+        boolean copy = false;
+
+        Exit://
+        for(TreeMapSpreadsheetRangeStoreTopLeftEntry<V> entry : this.topLeft.values()) {
+            for (SpreadsheetRange range : entry.ranges()) {
+                copy = copy | range.equals(from); // doesnt find > from must be ==
+
+                if (copy) {
+                    if (values.size() == count) {
+                        break Exit;
+                    }
+
+                    final List<V> v = Lists.array();
+                    v.addAll(entry.secondaryCellReferenceToValues.get(range.end()));
+                    values.add(v);
+                }
+            }
+        }
+
+        return Lists.readOnly(values);
     }
 
     /**

@@ -2,7 +2,10 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.test.Fake;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class FakeStore<K, V> implements Store<K, V>, Fake {
 
@@ -23,6 +26,18 @@ public class FakeStore<K, V> implements Store<K, V>, Fake {
 
     @Override
     public int count() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Set<K> ids(final int from, final int count) {
+        Store.checkFromAndTo(from, count);
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<V> values(final K from, final int count) {
+        Store.checkFromAndToIds(from, count);
         throw new UnsupportedOperationException();
     }
 }

@@ -18,4 +18,10 @@ public interface SpreadsheetGroupStoreTesting<S extends SpreadsheetGroupStore> e
                 store.loadUserGroups(userId),
                 "store loadUserGroups " + userId + " incorrect result");
     }
+
+    // StoreTesting...........................................................
+
+    default GroupId id() {
+        return GroupId.with(1);
+    }
 }
