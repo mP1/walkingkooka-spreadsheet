@@ -168,8 +168,17 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
 
         final Set<T> targets = this.referenceToTargets.get(referrer);
         return null != targets ?
-                Sets.readOnly(targets) :
+                this.copy(targets) :
                 Sets.empty();
+    }
+
+    /**
+     * Make a defensive copy so future updates do not affect this copy.
+     */
+    private Set<T> copy(final Set<T> source) {
+        final Set<T> copy = Sets.ordered();
+        copy.addAll(source);
+        return Sets.readOnly(copy);
     }
 
     // helpers..........................................................................................
