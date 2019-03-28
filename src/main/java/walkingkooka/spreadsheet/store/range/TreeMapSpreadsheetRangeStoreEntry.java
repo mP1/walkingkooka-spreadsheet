@@ -175,8 +175,6 @@ abstract class TreeMapSpreadsheetRangeStoreEntry<V> implements Comparable<TreeMa
         return result;
     }
 
-    //private final SpreadsheetCellReference primaryCellReference;
-
     // toString....................................................................................................
 
     @Override
