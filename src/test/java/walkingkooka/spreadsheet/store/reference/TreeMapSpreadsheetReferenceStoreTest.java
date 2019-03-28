@@ -64,6 +64,89 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
         this.loadReferredAndCheck(store, c1, a1, b1);
     }
 
+    // ids.................................................................................
+
+    @Test
+    public final void testIds() {
+        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+
+        final SpreadsheetCellReference a = this.a1();
+        final SpreadsheetCellReference b = this.b1();
+        final SpreadsheetCellReference c = this.c1();
+        final SpreadsheetCellReference f = this.f99();
+
+        store.saveReferences(a, Sets.of(f));
+        store.saveReferences(b, Sets.of(f));
+        store.saveReferences(c, Sets.of(f));
+
+        this.idsAndCheck(store, 0, 3, a, b, c);
+    }
+
+    @Test
+    public final void testIdsWindow() {
+        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+
+        final SpreadsheetCellReference a = this.a1();
+        final SpreadsheetCellReference b = this.b1();
+        final SpreadsheetCellReference c = this.c1();
+        final SpreadsheetCellReference d = this.d1();
+
+        final SpreadsheetCellReference f = this.f99();
+        final SpreadsheetCellReference g = this.g99();
+        final SpreadsheetCellReference h = this.h99();
+        final SpreadsheetCellReference i = this.i99();
+
+        store.saveReferences(a, Sets.of(f));
+        store.saveReferences(b, Sets.of(g));
+        store.saveReferences(c, Sets.of(h));
+        store.saveReferences(d, Sets.of(i));
+
+        this.idsAndCheck(store, 1, 2, b, c);
+    }
+
+    // values.................................................................................
+
+    @Test
+    public final void testValues() {
+        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+
+        final SpreadsheetCellReference a = this.a1();
+        final SpreadsheetCellReference b = this.b1();
+        final SpreadsheetCellReference c = this.c1();
+
+        final Set<SpreadsheetCellReference> f = Sets.of(this.f99());
+        final Set<SpreadsheetCellReference> g = Sets.of(this.g99());
+        final Set<SpreadsheetCellReference> hi = Sets.of(this.h99(), this.i99());
+
+        store.saveReferences(a, f);
+        store.saveReferences(b, g);
+        store.saveReferences(c, hi);
+
+        this.valuesAndCheck(store, a, 3, f, g, hi);
+    }
+
+    @Test
+    public final void testValuesWindow() {
+        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+
+        final SpreadsheetCellReference a = this.a1();
+        final SpreadsheetCellReference b = this.b1();
+        final SpreadsheetCellReference c = this.c1();
+        final SpreadsheetCellReference d = this.d1();
+
+        final Set<SpreadsheetCellReference> f = Sets.of(this.f99());
+        final Set<SpreadsheetCellReference> g = Sets.of(this.g99());
+        final Set<SpreadsheetCellReference> h = Sets.of(this.h99());
+        final Set<SpreadsheetCellReference> i = Sets.of(this.i99());
+
+        store.saveReferences(a, f);
+        store.saveReferences(b, g);
+        store.saveReferences(c, h);
+        store.saveReferences(d, i);
+
+        this.valuesAndCheck(store, b, 2, g, h);
+    }
+
     // addReference.................................................................................
 
     @Test
@@ -300,6 +383,26 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     private SpreadsheetCellReference e1() {
         return SpreadsheetCellReference.parse("e1");
+    }
+
+    private SpreadsheetCellReference f99() {
+        return SpreadsheetCellReference.parse("f99");
+    }
+
+    private SpreadsheetCellReference g99() {
+        return SpreadsheetCellReference.parse("g99");
+    }
+
+    private SpreadsheetCellReference h99() {
+        return SpreadsheetCellReference.parse("h99");
+    }
+
+    private SpreadsheetCellReference i99() {
+        return SpreadsheetCellReference.parse("i99");
+    }
+
+    private SpreadsheetCellReference j99() {
+        return SpreadsheetCellReference.parse("j99");
     }
 
     // StoreTesting.................................................................................
