@@ -15,11 +15,6 @@ import java.util.Set;
 public interface SpreadsheetLabelStore extends Store<SpreadsheetLabelName, SpreadsheetLabelMapping> {
 
     /**
-     * Returns a view of all mappings in the given row.
-     */
-    Collection<SpreadsheetLabelMapping> all();
-
-    /**
      * Returns all {@link SpreadsheetCellReference} for the given {@link SpreadsheetLabelName}, including resolving
      * label to label references until they resolve to cells.
      */

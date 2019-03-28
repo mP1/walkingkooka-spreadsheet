@@ -1,14 +1,18 @@
 package walkingkooka.spreadsheet.store.reference;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.tree.expression.ExpressionReference;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A {@link SpreadsheetReferenceStore} that uses a {@link Map} to store an entity to {@link SpreadsheetCellReference}
@@ -54,6 +58,31 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
     @Override
     public int count() {
         return this.targetToReferences.size();
+    }
+
+    @Override
+    public Set<T> ids(final int from,
+                      final int count) {
+        Store.checkFromAndTo(from, count);
+
+        return this.targetToReferences.keySet()
+                .stream()
+                .skip(from)
+                .limit(count)
+                .collect(Collectors.toCollection(Sets::ordered));
+    }
+
+    @Override
+    public List<Set<SpreadsheetCellReference>> values(final T from,
+                                                      final int count) {
+        Store.checkFromAndToIds(from, count);
+
+        return this.targetToReferences.entrySet()
+                .stream()
+                .filter(e -> e.getKey().compareTo(from) >= 0)
+                .map(e -> e.getValue())
+                .limit(count)
+                .collect(Collectors.toCollection(Lists::array));
     }
 
     @Override

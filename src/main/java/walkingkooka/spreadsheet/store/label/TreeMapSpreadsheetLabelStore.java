@@ -4,16 +4,16 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.tree.expression.ExpressionReference;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A {@link SpreadsheetLabelStore} that uses a {@link Map}.
@@ -61,10 +61,31 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
     }
 
     @Override
-    public Collection<SpreadsheetLabelMapping> all() {
-        final List<SpreadsheetLabelMapping> copy = Lists.array();
-        copy.addAll(this.mappings.values());
-        return Collections.unmodifiableCollection(copy);
+    public Set<SpreadsheetLabelName> ids(final int from,
+                                         final int count) {
+        Store.checkFromAndTo(from, count);
+
+        return this.mappings.keySet()
+                .stream()
+                .skip(from)
+                .limit(count)
+                .collect(Collectors.toCollection(Sets::ordered));
+    }
+
+    /**
+     * Find the first mapping at or after the from {@link SpreadsheetLabelName} and then gather the required count.
+     */
+    @Override
+    public List<SpreadsheetLabelMapping> values(final SpreadsheetLabelName from,
+                                                final int count) {
+        Store.checkFromAndToIds(from, count);
+
+        return this.mappings.entrySet()
+                .stream()
+                .filter(e -> e.getKey().compareTo(from) >= 0)
+                .map(e -> e.getValue())
+                .limit(count)
+                .collect(Collectors.toCollection(Lists::array));
     }
 
     @Override

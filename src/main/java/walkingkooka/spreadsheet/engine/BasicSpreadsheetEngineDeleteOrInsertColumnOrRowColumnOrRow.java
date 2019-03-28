@@ -8,12 +8,14 @@ import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReferenceParserToken;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReferenceParserToken;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Base class that acts as a bridge to either columns or rows.
@@ -168,9 +170,13 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      * Visits all label mappings and adjusts the given references.
      */
     final void fixAllLabelMappings() {
-        this.labelStore().all()
-                .stream()
-                .forEach(this.deleteOrInsert::fixLabelMapping);
+        final SpreadsheetLabelStore store = this.labelStore();
+        final Set<SpreadsheetLabelName> firstLabel = store.ids(0, 1);
+        if (firstLabel.size() > 0) {
+            store.values(firstLabel.iterator().next(), Integer.MAX_VALUE)
+                    .stream()
+                    .forEach(this.deleteOrInsert::fixLabelMapping);
+        }
     }
 
     // DELETE .......................................................................................................
