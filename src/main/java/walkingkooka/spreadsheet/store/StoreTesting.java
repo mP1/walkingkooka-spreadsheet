@@ -73,7 +73,25 @@ public interface StoreTesting<S extends Store<K, V>, K, V> extends ClassTesting2
     default void testValueFromAndZeroCount() {
         this.valuesAndCheck(this.createStore(), this.id(), 0);
     }
-    
+
+    @Test
+    default void testFirstIdWhenEmpty() {
+        assertEquals(Optional.empty(),
+                this.createStore().firstId());
+    }
+
+    @Test
+    default void testFirstValueWhenEmpty() {
+        assertEquals(Optional.empty(),
+                this.createStore().firstValue());
+    }
+
+    @Test
+    default void testAllWhenEmpty() {
+        assertEquals(Lists.empty(),
+                this.createStore().all());
+    }
+
     S createStore();
 
     K id();

@@ -15,17 +15,17 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
 
     @Test
     public void testLoad1() {
-        this.loadAndCheck(this.createStore(), this.user2().id(), this.user2());
+        this.loadAndCheck(this.createNotEmptyStore(), this.user2().id(), this.user2());
     }
 
     @Test
     public void testLoad2() {
-        this.loadAndCheck(this.createStore(), this.user3().id(), this.user3());
+        this.loadAndCheck(this.createNotEmptyStore(), this.user3().id(), this.user3());
     }
 
     @Test
     public void testSave() {
-        final TreeMapSpreadsheetUserStore store = this.createStore();
+        final TreeMapSpreadsheetUserStore store = this.createNotEmptyStore();
 
         final User saved = User.with(UserId.with(2), EmailAddress.parse("saved@example.com"));
         store.save(saved);
@@ -35,7 +35,7 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
 
     @Test
     public void testSaveReplaces() {
-        final TreeMapSpreadsheetUserStore store = this.createStore();
+        final TreeMapSpreadsheetUserStore store = this.createNotEmptyStore();
 
         final User replace = User.with(this.user3().id(), EmailAddress.parse("replaced@example.com"));
         store.save(replace);
@@ -45,7 +45,7 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
 
     @Test
     public void testDelete() {
-        final TreeMapSpreadsheetUserStore store = this.createStore();
+        final TreeMapSpreadsheetUserStore store = this.createNotEmptyStore();
 
         final User user1 = this.user1();
         store.delete(user1.id());
@@ -55,12 +55,12 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
 
     @Test
     public void testCount() {
-        this.countAndCheck(this.createStore(), 3);
+        this.countAndCheck(this.createNotEmptyStore(), 3);
     }
 
     @Test
     public void testCountAfterSave() {
-        final TreeMapSpreadsheetUserStore store = this.createStore();
+        final TreeMapSpreadsheetUserStore store = this.createNotEmptyStore();
 
         store.save(User.with(UserId.with(999), EmailAddress.parse("saved@example.com")));
 
@@ -133,14 +133,14 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
 
     @Test
     public void testLoadWithEmail() {
-        final TreeMapSpreadsheetUserStore store = this.createStore();
+        final TreeMapSpreadsheetUserStore store = this.createNotEmptyStore();
 
         assertEquals(Optional.of(this.user1()), store.loadWithEmail(this.user1().email()));
     }
 
     @Test
     public void testToString() {
-        final TreeMapSpreadsheetUserStore store = createStore();
+        final TreeMapSpreadsheetUserStore store = createNotEmptyStore();
         this.toStringAndCheck(store, store.userIdToUser.toString());
     }
 
@@ -166,7 +166,11 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
 
     @Override
     public TreeMapSpreadsheetUserStore createStore() {
-        final TreeMapSpreadsheetUserStore store = TreeMapSpreadsheetUserStore.with();
+        return TreeMapSpreadsheetUserStore.with();
+    }
+
+    private TreeMapSpreadsheetUserStore createNotEmptyStore() {
+        final TreeMapSpreadsheetUserStore store = this.createStore();
 
         store.userIdToUser.put(this.user1().id(), this.user1());
         store.userIdToUser.put(this.user2().id(), this.user2());
