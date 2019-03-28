@@ -6,6 +6,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 /**
  * A {@link SpreadsheetCellStore} that uses a {@link Map}.
  */
-final class TreeMapSpreadsheetCellStore extends SpreadsheetCellStoreTemplate {
+final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
 
     /**
      * Factory that creates a new {@link TreeMapSpreadsheetCellStore}
@@ -32,7 +33,9 @@ final class TreeMapSpreadsheetCellStore extends SpreadsheetCellStoreTemplate {
     }
 
     @Override
-    Optional<SpreadsheetCell> load0(final SpreadsheetCellReference reference) {
+    public final Optional<SpreadsheetCell> load(final SpreadsheetCellReference reference) {
+        Objects.requireNonNull(reference, "references");
+
         return Optional.ofNullable(this.cells.get(reference));
     }
 
@@ -40,7 +43,9 @@ final class TreeMapSpreadsheetCellStore extends SpreadsheetCellStoreTemplate {
      * Accepts a potentially updated cell.
      */
     @Override
-    SpreadsheetCell save0(final SpreadsheetCell cell) {
+    public final SpreadsheetCell save(final SpreadsheetCell cell) {
+        Objects.requireNonNull(cell, "cell");
+
         final SpreadsheetCellReference key = cell.reference();
         this.cells.put(key, cell);
         return cell;
@@ -50,7 +55,8 @@ final class TreeMapSpreadsheetCellStore extends SpreadsheetCellStoreTemplate {
      * Deletes a single cell, ignoring invalid requests.
      */
     @Override
-    void delete0(final SpreadsheetCellReference reference) {
+    public final void delete(final SpreadsheetCellReference reference) {
+        Objects.requireNonNull(reference, "reference");
         this.cells.remove(reference);
     }
 
@@ -78,12 +84,20 @@ final class TreeMapSpreadsheetCellStore extends SpreadsheetCellStoreTemplate {
     }
 
     @Override
-    Set<SpreadsheetCell> row0(final int row) {
+    public final Set<SpreadsheetCell> row(final int row) {
+        if (row < 0) {
+            throw new IllegalArgumentException("Row " + row + " must be >= 0");
+        }
+
         return this.filter(c -> c.reference().row().value() == row);
     }
 
     @Override
-    Set<SpreadsheetCell> column0(final int column) {
+    public final Set<SpreadsheetCell> column(final int column) {
+        if (column < 0) {
+            throw new IllegalArgumentException("Column " + column + " must be >= 0");
+        }
+
         return this.filter(c -> c.reference().column().value() == column);
     }
 
