@@ -92,10 +92,11 @@ public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReference
 
     default void loadAndCheck(final S store, final T id, final Set<SpreadsheetCellReference> references) {
         if(references.isEmpty()) {
-            fail("References is empty");
-        }
+            this.loadFailCheck(store, id);
+        } else {
+            StoreTesting.super.loadAndCheck(store, id, references);
 
-        StoreTesting.super.loadAndCheck(store, id, references);
+        }
 
         for (SpreadsheetCellReference reference : references) {
             final Set<T> referred = store.loadReferred(reference);
