@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  */
 final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Comparable<T>> implements SpreadsheetReferenceStore<T> {
 
-    static TreeMapSpreadsheetReferenceStore create() {
+    static <T extends ExpressionReference & Comparable<T>> TreeMapSpreadsheetReferenceStore<T> create() {
         return new TreeMapSpreadsheetReferenceStore();
     }
 
