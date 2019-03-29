@@ -19,7 +19,7 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
     }
 
     @Test
-    public final void testSaveAndLoad() {
+    public void testSaveAndLoad() {
         final S store = this.createStore();
 
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(LABEL, REFERENCE);
@@ -29,7 +29,7 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
     }
 
     @Test
-    public final void testSaveDeleteLoad() {
+    public void testSaveDeleteLoad() {
         final S store = this.createStore();
 
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(LABEL, REFERENCE);
@@ -40,7 +40,7 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
     }
 
     @Test
-    public final void testCount() {
+    public void testCount() {
         final S store = this.createStore();
 
         final SpreadsheetLabelMapping a = this.mapping("a", 1, 2);
@@ -55,7 +55,7 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
     }
 
     @Test
-    public final void testIds() {
+    public void testIds() {
         final S store = this.createStore();
 
         final SpreadsheetLabelMapping a = this.mapping("a", 1, 2);
@@ -70,7 +70,7 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
     }
 
     @Test
-    public final void testIdsWindow() {
+    public void testIdsWindow() {
         final S store = this.createStore();
 
         final SpreadsheetLabelMapping a = this.mapping("a", 1, 2);
@@ -87,7 +87,7 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
     }
 
     @Test
-    public final void testValues() {
+    public void testValues() {
         final S store = this.createStore();
 
         final SpreadsheetLabelMapping a = this.mapping("a", 1, 2);
@@ -102,7 +102,7 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
     }
 
     @Test
-    public final void testValuesWindow() {
+    public void testValuesWindow() {
         final S store = this.createStore();
 
         final SpreadsheetLabelMapping a = this.mapping("a", 1, 2);
@@ -118,12 +118,12 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
         this.valuesAndCheck(store, b.id(), 2, b, c);
     }
 
-    private SpreadsheetCellReference cell(final int column, final int row) {
+    final SpreadsheetCellReference cell(final int column, final int row) {
         return SpreadsheetReferenceKind.ABSOLUTE.column(column)
                 .setRow(SpreadsheetReferenceKind.ABSOLUTE.row(row));
     }
 
-    private SpreadsheetLabelMapping mapping(final String label, final int column, final int row) {
+    final SpreadsheetLabelMapping mapping(final String label, final int column, final int row) {
         return SpreadsheetLabelMapping.with(SpreadsheetLabelName.with(label), cell(column, row));
     }
 

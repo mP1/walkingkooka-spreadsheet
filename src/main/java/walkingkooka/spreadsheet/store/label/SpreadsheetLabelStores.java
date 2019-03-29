@@ -15,6 +15,13 @@ public final class SpreadsheetLabelStores implements PublicStaticHelper {
     }
 
     /**
+     * {@see ReadOnlySpreadsheetLabelStore}
+     */
+    public static SpreadsheetLabelStore readOnly(final SpreadsheetLabelStore store) {
+        return ReadOnlySpreadsheetLabelStore.with(store);
+    }
+
+    /**
      * {@see TreeMapSpreadsheetLabelStore}
      */
     public static SpreadsheetLabelStore treeMap() {
