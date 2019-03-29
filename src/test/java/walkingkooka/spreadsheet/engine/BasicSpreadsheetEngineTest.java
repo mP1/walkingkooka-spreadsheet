@@ -3295,16 +3295,20 @@ public final class BasicSpreadsheetEngineTest implements SpreadsheetEngineTestin
     }
 
     private BasicSpreadsheetEngine createSpreadsheetEngine(final SpreadsheetCellStore cellStore) {
-        return this.createSpreadsheetEngine(cellStore, this.labelStore());
+        return this.createSpreadsheetEngine(cellStore,
+                SpreadsheetLabelStores.readOnly(this.labelStore()));
     }
 
     private BasicSpreadsheetEngine createSpreadsheetEngine(final SpreadsheetLabelStore labelStore) {
-        return this.createSpreadsheetEngine(this.cellStore(), labelStore);
+        return this.createSpreadsheetEngine(this.cellStore(),
+                labelStore);
     }
 
     private BasicSpreadsheetEngine createSpreadsheetEngine(final SpreadsheetCellStore cellStore,
                                                            final SpreadsheetLabelStore labelStore) {
-        return this.createSpreadsheetEngine(cellStore, labelStore, this.conditionalFormattingRules());
+        return this.createSpreadsheetEngine(cellStore,
+                labelStore,
+                this.conditionalFormattingRules());
     }
 
     private BasicSpreadsheetEngine createSpreadsheetEngine(final SpreadsheetCellStore cellStore,
