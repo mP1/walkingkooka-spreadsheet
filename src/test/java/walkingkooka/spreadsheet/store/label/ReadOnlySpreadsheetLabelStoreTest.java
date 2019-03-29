@@ -2,12 +2,22 @@ package walkingkooka.spreadsheet.store.label;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
+import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelStoreTestCase<ReadOnlySpreadsheetLabelStore> {
+public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelStoreTestCase<ReadOnlySpreadsheetLabelStore>
+        implements ToStringTesting<ReadOnlySpreadsheetLabelStore> {
+
+    @Test
+    public void testWithNullStoreFails() {
+        assertThrows(NullPointerException.class, () -> {
+            ReadOnlySpreadsheetLabelStore.with(null);
+        });
+    }
 
     @Test
     public void testSaveAndLoad() {
@@ -21,6 +31,13 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
 
     @Override
     public void testSaveDeleteLoad() {
+    }
+
+    @Test
+    public void testDeleteFails() {
+        assertThrows(UnsupportedOperationException.class, () -> {
+            this.createStore().delete(LABEL);
+        });
     }
 
     @Test
@@ -64,6 +81,12 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
 
     @Override
     public void testValuesWindow() {
+    }
+
+    @Test
+    public void testToString() {
+        final SpreadsheetLabelStore store = SpreadsheetLabelStores.fake();
+        this.toStringAndCheck(ReadOnlySpreadsheetLabelStore.with(store), store.toString());
     }
 
     @Override
