@@ -2,12 +2,14 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.NeverError;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetExpressionReferenceVisitor;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReferenceParserToken;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReferenceParserToken;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -179,20 +181,22 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      * Deletes the mapping because the target was deleted or fixes the reference.
      */
     final void deleteOrFixLabelMapping(final SpreadsheetLabelMapping mapping) {
-        final ExpressionReference reference = mapping.reference();
+        new SpreadsheetExpressionReferenceVisitor() {
+            @Override
+            protected void visit(final SpreadsheetCellReference reference) {
+                BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow.this.deleteOrFixSpreadsheetCellReference(reference, mapping);
+            }
 
-        for (; ; ) {
-            if (reference instanceof SpreadsheetCellReference) {
-                this.deleteOrFixSpreadsheetCellReference(SpreadsheetCellReference.class.cast(reference),
-                        mapping);
-                break;
+            @Override
+            protected void visit(final SpreadsheetLabelName label) {
+                throw new UnsupportedOperationException(mapping.toString());
             }
-            if (reference instanceof SpreadsheetRange) {
-                this.deleteOrFixSpreadsheetRange(SpreadsheetRange.class.cast(reference), mapping);
-                break;
+
+            @Override
+            protected void visit(final SpreadsheetRange range) {
+                BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow.this.deleteOrFixSpreadsheetRange(range, mapping);
             }
-            this.unhandledExpressionReference(reference);
-        }
+        }.accept(mapping.reference());
     }
 
     private void deleteOrFixSpreadsheetCellReference(final SpreadsheetCellReference reference,
@@ -264,21 +268,22 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      * Fixes a mapping because the target was moved because of inserted columns or rows.
      */
     final void insertFixLabelMapping(final SpreadsheetLabelMapping mapping) {
-        final ExpressionReference reference = mapping.reference();
+        new SpreadsheetExpressionReferenceVisitor() {
+            @Override
+            protected void visit(final SpreadsheetCellReference reference) {
+                BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow.this.insertFixSpreadsheetCellReference(reference, mapping);
+            }
 
-        for (; ; ) {
-            if (reference instanceof SpreadsheetCellReference) {
-                this.insertFixSpreadsheetCellReference(SpreadsheetCellReference.class.cast(reference),
-                        mapping);
-                break;
+            @Override
+            protected void visit(final SpreadsheetLabelName label) {
+                throw new UnsupportedOperationException(mapping.toString());
             }
-            if (reference instanceof SpreadsheetRange) {
-                this.insertFixSpreadsheetRange(SpreadsheetRange.class.cast(reference),
-                        mapping);
-                break;
+
+            @Override
+            protected void visit(final SpreadsheetRange range) {
+                BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow.this.insertFixSpreadsheetRange(range, mapping);
             }
-            this.unhandledExpressionReference(reference);
-        }
+        }.accept(mapping.reference());
     }
 
     private void insertFixSpreadsheetCellReference(final SpreadsheetCellReference reference,
@@ -302,14 +307,6 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
         }
 
         this.saveLabelIfUpdated(range.setBeginAndEnd(begin, end), mapping);
-    }
-
-    /**
-     * Reports a {@link ExpressionReference} other than a {@link SpreadsheetCellReference} or {@link SpreadsheetRange}.
-     */
-    private void unhandledExpressionReference(final ExpressionReference reference) {
-        NeverError.unhandledCase(reference,
-                SpreadsheetCellReference.class.getSimpleName(), SpreadsheetRange.class.getSimpleName());
     }
 
     // cells....................................................................................................
