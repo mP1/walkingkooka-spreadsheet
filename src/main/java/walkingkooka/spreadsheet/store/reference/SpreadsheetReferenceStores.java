@@ -16,6 +16,13 @@ public final class SpreadsheetReferenceStores implements PublicStaticHelper {
     }
 
     /**
+     * {@see ReadOnlySpreadsheetReferenceStore}
+     */
+    public static <T extends ExpressionReference & Comparable<T>> SpreadsheetReferenceStore<T> readOnly(final SpreadsheetReferenceStore<T> store) {
+        return ReadOnlySpreadsheetReferenceStore.with(store);
+    }
+
+    /**
      * {@see TreeMapSpreadsheetReferenceStore}
      */
     public static <T extends ExpressionReference & Comparable<T>> SpreadsheetReferenceStore<T> treeMap() {
