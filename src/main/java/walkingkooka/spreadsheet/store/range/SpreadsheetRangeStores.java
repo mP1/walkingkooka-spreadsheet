@@ -15,6 +15,13 @@ public final class SpreadsheetRangeStores implements PublicStaticHelper {
     }
 
     /**
+     * {@see ReadOnlySpreadsheetRangeStore}
+     */
+    public static <V> SpreadsheetRangeStore<V> readOnly(final SpreadsheetRangeStore<V> store) {
+        return ReadOnlySpreadsheetRangeStore.with(store);
+    }
+
+    /**
      * {@see TreeMapSpreadsheetRangeStore}
      */
     public static <V> SpreadsheetRangeStore<V> treeMap() {
