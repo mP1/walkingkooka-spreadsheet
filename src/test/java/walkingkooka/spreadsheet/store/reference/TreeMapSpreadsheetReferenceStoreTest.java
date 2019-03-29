@@ -2,6 +2,7 @@ package walkingkooka.spreadsheet.store.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
@@ -21,9 +22,11 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
         store.saveReferences(a1, Sets.of(b1));
 
-        this.loadAndCheck(store, a1, b1);
-        this.loadReferredAndCheck(store, b1, a1);
-        this.loadReferredAndCheck(store, a1);
+        this.loadAndCheck(store, a1, b1); // a1 --> b1
+        this.loadReferredAndCheck(store, b1, a1); // b1 --> a1
+
+        this.loadAndCheck(store, b1); // b1 -> nothing
+        this.loadReferredAndCheck(store, a1); // a1 --> nothing
     }
 
     @Test
@@ -104,6 +107,24 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
         this.idsAndCheck(store, 1, 2, b, c);
     }
 
+    @Test
+    public void testIdsWithoutReferences() {
+        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+
+        final SpreadsheetCellReference a1 = this.a1();;
+        final SpreadsheetCellReference b1 = this.b1();
+
+        store.saveReferences(a1, Sets.of(b1));
+
+        this.loadAndCheck(store, a1, b1); // a1 --> b1
+        this.loadReferredAndCheck(store, b1, a1); // b1 --> a1
+
+        this.loadAndCheck(store, b1); // b1 -> nothing
+        this.loadReferredAndCheck(store, a1); // a1 --> nothing
+
+        this.idsAndCheck(store, 0, 2, a1); // b1 doesnt exist because it has 0 references to it
+    }
+
     // values.................................................................................
 
     @Test
@@ -145,6 +166,24 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
         store.saveReferences(d, i);
 
         this.valuesAndCheck(store, b, 2, g, h);
+    }
+
+    @Test
+    public void testValuesWithoutReferences() {
+        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+
+        final SpreadsheetCellReference a1 = this.a1();;
+        final SpreadsheetCellReference b1 = this.b1();
+
+        store.saveReferences(a1, Sets.of(b1));
+
+        this.loadAndCheck(store, a1, b1); // a1 --> b1
+        this.loadReferredAndCheck(store, b1, a1); // b1 --> a1
+
+        this.loadAndCheck(store, b1); // b1 -> nothing
+        this.loadReferredAndCheck(store, a1); // a1 --> nothing
+
+        this.valuesAndCheck(store, a1, 2, Sets.of(b1));
     }
 
     // addReference.................................................................................
