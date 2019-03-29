@@ -15,6 +15,7 @@ import java.util.Set;
 final class ReadOnlySpreadsheetLabelStore implements SpreadsheetLabelStore {
 
     static ReadOnlySpreadsheetLabelStore with(final SpreadsheetLabelStore store) {
+        Objects.requireNonNull(store, "store");
         return new ReadOnlySpreadsheetLabelStore(store);
     }
 
