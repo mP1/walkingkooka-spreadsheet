@@ -111,7 +111,7 @@ public interface StoreTesting<S extends Store<K, V>, K, V> extends ClassTesting2
         assertEquals(Optional.empty(), value, () -> "Expected id " + id + " to fail");
     }
 
-    default void countAndCheck(final S store, final int count) {
+    default void countAndCheck(final Store<?, ?> store, final int count) {
         assertEquals(count, store.count(), () -> "Wrong count " + store);
     }
 
