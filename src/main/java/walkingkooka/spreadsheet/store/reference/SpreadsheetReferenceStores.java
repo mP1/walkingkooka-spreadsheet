@@ -1,5 +1,6 @@
 package walkingkooka.spreadsheet.store.reference;
 
+import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.type.PublicStaticHelper;
 
 /**
@@ -17,7 +18,7 @@ public final class SpreadsheetReferenceStores implements PublicStaticHelper {
     /**
      * {@see TreeMapSpreadsheetReferenceStore}
      */
-    public static SpreadsheetReferenceStore treeMap() {
+    public static <T extends ExpressionReference & Comparable<T>> SpreadsheetReferenceStore<T> treeMap() {
         return TreeMapSpreadsheetReferenceStore.create();
     }
 
