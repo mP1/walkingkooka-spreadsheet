@@ -5,6 +5,9 @@ import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormatti
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
+import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStore;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.type.PublicStaticHelper;
@@ -20,8 +23,17 @@ public final class SpreadsheetEngines implements PublicStaticHelper {
     public static SpreadsheetEngine basic(final SpreadsheetId id,
                                           final SpreadsheetCellStore cellStore,
                                           final SpreadsheetLabelStore labelStore,
-                                          final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> conditionalFormattingRules) {
-        return BasicSpreadsheetEngine.with(id, cellStore, labelStore, conditionalFormattingRules);
+                                          final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> conditionalFormattingRules,
+                                          final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferencesStore,
+                                          final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore,
+                                          final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore) {
+        return BasicSpreadsheetEngine.with(id,
+                cellStore,
+                labelStore,
+                conditionalFormattingRules,
+                cellReferencesStore,
+                labelReferencesStore,
+                rangeToCellStore);
     }
 
     /**
