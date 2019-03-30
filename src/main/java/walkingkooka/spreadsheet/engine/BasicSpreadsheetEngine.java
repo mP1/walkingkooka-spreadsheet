@@ -416,9 +416,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
-    public void copy(final Collection<SpreadsheetCell> from,
-                     final SpreadsheetRange to,
-                     final SpreadsheetEngineContext context) {
+    public void copyCells(final Collection<SpreadsheetCell> from,
+                          final SpreadsheetRange to,
+                          final SpreadsheetEngineContext context) {
         Objects.requireNonNull(from, "from");
         Objects.requireNonNull(to, "to");
         checkContext(context);

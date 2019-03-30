@@ -43,9 +43,9 @@ public final class SpreadsheetEngineCopyCellsHateosHandlerTest extends Spreadshe
     SpreadsheetEngine engine() {
         return new FakeSpreadsheetEngine() {
             @Override
-            public void copy(final Collection<SpreadsheetCell> from,
-                             final SpreadsheetRange to,
-                             final SpreadsheetEngineContext context) {
+            public void copyCells(final Collection<SpreadsheetCell> from,
+                                  final SpreadsheetRange to,
+                                  final SpreadsheetEngineContext context) {
                 assertEquals(SpreadsheetEngineCopyCellsHateosHandlerTest.this.resourceCollection(), from, "from");
                 assertEquals(SpreadsheetRange.parse(TO), to, "to");
 
