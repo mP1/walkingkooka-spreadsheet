@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 /**
  * A {@link walkingkooka.net.http.server.hateos.HateosHandler} that calls {@link SpreadsheetEngine#id()}.
  */
-final class SpreadsheetEngineIdHateosHandler extends SpreadsheetEngineHateosHandler<Long, SpreadsheetId> {
+final class SpreadsheetEngineIdHateosHandler extends SpreadsheetEngineHateosHandler<Long, SpreadsheetId, SpreadsheetId> {
 
     static SpreadsheetEngineIdHateosHandler with(final SpreadsheetEngine engine,
                                                  final Supplier<SpreadsheetEngineContext> context) {

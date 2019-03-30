@@ -11,7 +11,7 @@ import java.util.function.Supplier;
  * A handler for cells.
  */
 abstract class SpreadsheetEngineCellHateosHandler extends
-        SpreadsheetEngineHateosHandler<SpreadsheetCellReference, SpreadsheetCell> {
+        SpreadsheetEngineHateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetCell> {
 
     SpreadsheetEngineCellHateosHandler(final SpreadsheetEngine engine,
                                        final Supplier<SpreadsheetEngineContext> context) {

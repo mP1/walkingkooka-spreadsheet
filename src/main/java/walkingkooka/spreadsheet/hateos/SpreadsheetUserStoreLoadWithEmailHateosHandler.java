@@ -16,7 +16,7 @@ import java.util.Optional;
  * A {@link HateosHandler} that performs a {@link SpreadsheetUserStore#loadWithEmail(EmailAddress)}
  */
 final class SpreadsheetUserStoreLoadWithEmailHateosHandler extends SpreadsheetStoreHateosHandler<UserId, User, SpreadsheetUserStore>
-        implements HateosHandler<EmailAddress, User> {
+        implements HateosHandler<EmailAddress, User, User> {
 
     static SpreadsheetUserStoreLoadWithEmailHateosHandler with(final SpreadsheetUserStore store) {
         check(store);

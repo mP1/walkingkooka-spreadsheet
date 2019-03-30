@@ -29,7 +29,10 @@ public final class SpreadsheetStoreSaveHateosHandlerTest extends SpreadsheetStor
         SpreadsheetCellStore>
         implements HateosHandlerTesting<SpreadsheetStoreSaveHateosHandler<SpreadsheetCellReference,
                 SpreadsheetCell,
-                SpreadsheetCellStore>, SpreadsheetCellReference, SpreadsheetCell> {
+                SpreadsheetCellStore>,
+        SpreadsheetCellReference,
+        SpreadsheetCell,
+        SpreadsheetCell> {
 
     @Test
     public void testSave() {

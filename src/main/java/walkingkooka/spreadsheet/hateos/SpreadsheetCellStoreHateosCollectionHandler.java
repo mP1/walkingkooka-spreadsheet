@@ -16,7 +16,7 @@ import java.util.Set;
  * A base {@link HateosCollectionHandler} for several {@link SpreadsheetCellStore} methods.
  */
 abstract class SpreadsheetCellStoreHateosCollectionHandler extends SpreadsheetStoreHateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetCellStore>
-        implements HateosCollectionHandler<Integer, SpreadsheetCell> {
+        implements HateosCollectionHandler<Integer, SpreadsheetCell, SpreadsheetCell> {
 
     SpreadsheetCellStoreHateosCollectionHandler(final SpreadsheetCellStore store) {
         super(store);
