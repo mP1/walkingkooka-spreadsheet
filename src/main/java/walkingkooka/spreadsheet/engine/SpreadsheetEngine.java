@@ -9,6 +9,7 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * The engine or host for the active spreadsheet.
@@ -27,6 +28,12 @@ public interface SpreadsheetEngine {
     Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
                                        final SpreadsheetEngineLoading loading,
                                        final SpreadsheetEngineContext context);
+
+    /**
+     * Saves the cell, and updates all affected (referenced cells) returning all updated cells.
+     */
+    Set<SpreadsheetCell> saveCell(final SpreadsheetCell cell,
+                                  final SpreadsheetEngineContext context);
 
     /**
      * Deletes the identified columns, updates all absolute references as necessary in both formulas and label mappings.

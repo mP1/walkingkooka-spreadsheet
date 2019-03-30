@@ -13,10 +13,12 @@ import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormatti
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
+import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.text.spreadsheetformat.SpreadsheetFormattedText;
@@ -43,13 +45,25 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     static BasicSpreadsheetEngine with(final SpreadsheetId id,
                                        final SpreadsheetCellStore cellStore,
                                        final SpreadsheetLabelStore labelStore,
-                                       final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> conditionalFormattingRules) {
+                                       final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> conditionalFormattingRules,
+                                       final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferencesStore,
+                                       final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore,
+                                       final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore) {
         Objects.requireNonNull(id, "id");
         Objects.requireNonNull(cellStore, "cellStore");
         Objects.requireNonNull(labelStore, "labelStore");
         Objects.requireNonNull(conditionalFormattingRules, "conditionalFormattingRules");
+        Objects.requireNonNull(cellReferencesStore, "cellReferencesStore");
+        Objects.requireNonNull(labelReferencesStore, "labelReferencesStore");
+        Objects.requireNonNull(rangeToCellStore, "rangeToCellStore");
 
-        return new BasicSpreadsheetEngine(id, cellStore, labelStore, conditionalFormattingRules);
+        return new BasicSpreadsheetEngine(id,
+                cellStore,
+                labelStore,
+                conditionalFormattingRules,
+                cellReferencesStore,
+                labelReferencesStore,
+                rangeToCellStore);
     }
 
     /**
@@ -58,11 +72,17 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private BasicSpreadsheetEngine(final SpreadsheetId id,
                                    final SpreadsheetCellStore cellStore,
                                    final SpreadsheetLabelStore labelStore,
-                                   final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> conditionalFormattingRules) {
+                                   final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> conditionalFormattingRules,
+                                   final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferencesStore,
+                                   final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore,
+                                   final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore) {
         this.id = id;
         this.cellStore = cellStore;
         this.labelStore = labelStore;
         this.conditionalFormattingRules = conditionalFormattingRules;
+        this.cellReferencesStore = cellReferencesStore;
+        this.labelReferencesStore = labelReferencesStore;
+        this.rangeToCellStore = rangeToCellStore;
     }
 
     @Override
@@ -72,6 +92,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     private final SpreadsheetId id;
 
+    // LOAD CELL, SAVE CELL..........................................................................................
+
+    /**
+     * Loads the requested cell, which may also involve re-evaluating the formula.
+     */
     @Override
     public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference reference,
                                               final SpreadsheetEngineLoading loading,
@@ -84,14 +109,26 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return cell.map(c -> this.maybeParseAndEvaluateAndFormat(c, loading, context));
     }
 
+    /**
+     * Saves the cell, and updates all affected (referenced cells) returning all updated cells.
+     */
+    @Override
+    public Set<SpreadsheetCell> saveCell(final SpreadsheetCell cell,
+                                         final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(cell, "cell");
+        Objects.requireNonNull(context, "context");
+
+        return BasicSpreadsheetEngineSaveCell.execute(cell, this, context);
+    }
+
     final SpreadsheetCellStore cellStore;
 
     /**
      * Attempts to evaluate the cell, parsing and evaluating as necessary depending on the {@link SpreadsheetEngineLoading}
      */
-    private SpreadsheetCell maybeParseAndEvaluateAndFormat(final SpreadsheetCell cell,
-                                                           final SpreadsheetEngineLoading loading,
-                                                           final SpreadsheetEngineContext context) {
+    SpreadsheetCell maybeParseAndEvaluateAndFormat(final SpreadsheetCell cell,
+                                                   final SpreadsheetEngineLoading loading,
+                                                   final SpreadsheetEngineContext context) {
         final SpreadsheetCell result = loading.formulaEvaluateAndStyle(cell, this, context);
         this.cellStore.save(result); // update cells enabling caching of parsing and value and errors.
         return result;
@@ -290,6 +327,17 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 error.get().value() :
                 "")));
     }
+
+    /**
+     * Tracks all references to a single cell.
+     */
+    final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferencesStore;
+    final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore;
+
+    /**
+     * Used to track ranges to cells references.
+     */
+    final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore;
 
     // DELETE / INSERT / COLUMN / ROW ..................................................................................
 
