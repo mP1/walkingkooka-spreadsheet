@@ -22,8 +22,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-public final class SpreadsheetEngineIdHateosHandlerTest extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineIdHateosHandler, Long, SpreadsheetId>
-        implements HateosHandlerTesting<SpreadsheetEngineIdHateosHandler, Long, SpreadsheetId>,
+public final class SpreadsheetEngineIdHateosHandlerTest extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineIdHateosHandler,
+        Long,
+        SpreadsheetId,
+        SpreadsheetId>
+        implements HateosHandlerTesting<SpreadsheetEngineIdHateosHandler, Long, SpreadsheetId, SpreadsheetId>,
         ToStringTesting<SpreadsheetEngineIdHateosHandler> {
 
     @Test
