@@ -29,7 +29,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public final class SpreadsheetEngineLoadCellHateosHandlerTest
-        extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineLoadCellHateosHandler, SpreadsheetCellReference, SpreadsheetCell> {
+        extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineLoadCellHateosHandler,
+        SpreadsheetCellReference,
+        SpreadsheetCell,
+        SpreadsheetCell> {
 
     private final static SpreadsheetEngineLoading LOADING = SpreadsheetEngineLoading.FORCE_RECOMPUTE;
 

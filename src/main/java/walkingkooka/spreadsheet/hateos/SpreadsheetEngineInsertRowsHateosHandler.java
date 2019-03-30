@@ -4,6 +4,7 @@ import walkingkooka.compare.Range;
 import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosHandler;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
@@ -36,9 +37,9 @@ final class SpreadsheetEngineInsertRowsHateosHandler extends SpreadsheetEngineRo
 
 
     @Override
-    public Optional<SpreadsheetRow> handle(final SpreadsheetRowReference row,
-                                           final Optional<SpreadsheetRow> resource,
-                                           final Map<HttpRequestAttribute<?>, Object> parameters) {
+    public Optional<SpreadsheetCell> handle(final SpreadsheetRowReference row,
+                                            final Optional<SpreadsheetRow> resource,
+                                            final Map<HttpRequestAttribute<?>, Object> parameters) {
         Objects.requireNonNull(row, "row");
         checkResourceEmpty(resource);
         checkParameters(parameters);
@@ -66,9 +67,9 @@ final class SpreadsheetEngineInsertRowsHateosHandler extends SpreadsheetEngineRo
     private final UrlParameterName COUNT = UrlParameterName.with("count");
 
     @Override
-    public List<SpreadsheetRow> handleCollection(final Range<SpreadsheetRowReference> rows,
-                                                 final List<SpreadsheetRow> resources,
-                                                 final Map<HttpRequestAttribute<?>, Object> parameters) {
+    public List<SpreadsheetCell> handleCollection(final Range<SpreadsheetRowReference> rows,
+                                                  final List<SpreadsheetRow> resources,
+                                                  final Map<HttpRequestAttribute<?>, Object> parameters) {
         Objects.requireNonNull(rows, "rows");
         checkResourcesEmpty(resources);
         checkParameters(parameters);
