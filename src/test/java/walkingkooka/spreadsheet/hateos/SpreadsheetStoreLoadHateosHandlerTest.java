@@ -28,7 +28,10 @@ public final class SpreadsheetStoreLoadHateosHandlerTest extends SpreadsheetStor
         SpreadsheetCellStore>
         implements HateosHandlerTesting<SpreadsheetStoreLoadHateosHandler<SpreadsheetCellReference,
         SpreadsheetCell,
-        SpreadsheetCellStore>, SpreadsheetCellReference, SpreadsheetCell> {
+        SpreadsheetCellStore>,
+        SpreadsheetCellReference,
+        SpreadsheetCell,
+        SpreadsheetCell> {
 
     @Test
     public void testLoad() {
