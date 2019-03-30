@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
- * A {@link HateosHandler} that calls {@link SpreadsheetEngine#copy(Collection, SpreadsheetRange, SpreadsheetEngineContext)}.
+ * A {@link HateosHandler} that calls {@link SpreadsheetEngine#copyCells(Collection, SpreadsheetRange, SpreadsheetEngineContext)}.
  */
 final class SpreadsheetEngineCopyCellsHateosHandler extends SpreadsheetEngineCellHateosHandler {
 
@@ -53,7 +53,7 @@ final class SpreadsheetEngineCopyCellsHateosHandler extends SpreadsheetEngineCel
         checkResources(cells);
         checkParameters(parameters);
 
-        this.engine.copy(cells,
+        this.engine.copyCells(cells,
                 this.parameterValueOrFail(parameters, TO, SpreadsheetRange::parse),
                 this.context.get());
 
