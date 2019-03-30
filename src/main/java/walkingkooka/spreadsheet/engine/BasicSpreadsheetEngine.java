@@ -31,7 +31,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * The default or basic implementation of {@link SpreadsheetEngine} that includes support for evaluating nodes,
@@ -118,7 +117,18 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(context, "context");
 
-        return BasicSpreadsheetEngineSaveCell.execute(cell, this, context);
+        return this.saveCell0(cell,
+                SpreadsheetEngineLoading.FORCE_RECOMPUTE,
+                context);
+    }
+
+    Set<SpreadsheetCell> saveCell0(final SpreadsheetCell cell,
+                                   final SpreadsheetEngineLoading loading,
+                                   final SpreadsheetEngineContext context) {
+        return BasicSpreadsheetEngineSaveCell.execute(cell,
+                loading,
+                this,
+                context);
     }
 
     final SpreadsheetCellStore cellStore;
@@ -414,63 +424,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         if (!from.isEmpty()) {
-            this.copy0(from, to, context);
+            BasicSpreadsheetEngineCopyCells.execute(from, to, this, context);
         }
-    }
-
-    private void copy0(final Collection<SpreadsheetCell> from,
-                       final SpreadsheetRange to,
-                       final SpreadsheetEngineContext context) {
-        final SpreadsheetRange fromRange = SpreadsheetRange.from(from.stream()
-                .map(c -> c.reference())
-                .collect(Collectors.toList()));
-
-        final int fromWidth = fromRange.width();
-        final int fromHeight = fromRange.height();
-
-        final int toWidth = to.width();
-        final int toHeight = to.height();
-
-        final int widthMultiple = fromWidth >= toWidth ?
-                1 :
-                toWidth / fromWidth;
-        final int heightMultiple = fromHeight >= toHeight ?
-                1 :
-                toHeight / fromHeight;
-
-        final SpreadsheetCellReference fromBegin = fromRange.begin();
-        final SpreadsheetCellReference toBegin = to.begin();
-
-        final int xOffset = toBegin.column().value() - fromBegin.column().value();
-        final int yOffset = toBegin.row().value() - fromBegin.row().value();
-
-        for (int h = 0; h < heightMultiple; h++) {
-            final int y = yOffset + h * fromHeight;
-
-            for (int w = 0; w < widthMultiple; w++) {
-                final int x = xOffset + w * fromWidth;
-                from.forEach(c -> this.copyCell(c, x, y, context));
-            }
-        }
-    }
-
-    /**
-     * Fixes any relative references within the formula belonging to the cell's expression. Absolute references are
-     * ignored and left unmodified.
-     */
-    private void copyCell(final SpreadsheetCell cell,
-                          final int xOffset,
-                          final int yOffset,
-                          final SpreadsheetEngineContext context) {
-        final SpreadsheetCell updatedReference = cell.setReference(cell.reference().add(xOffset, yOffset));
-        final SpreadsheetFormula formula = updatedReference.formula();
-
-        final SpreadsheetCell save = updatedReference.setFormula(this.parse(formula,
-                token -> BasicSpreadsheetEngineCopySpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.expressionFixReferences(token,
-                        xOffset,
-                        yOffset),
-                context));
-        this.cellStore.save(save);
     }
 
     final SpreadsheetLabelStore labelStore;
