@@ -65,7 +65,7 @@ import java.util.Objects;
  * A {@link SpreadsheetParserTokenVisitor} that handles visiting and updating {@link SpreadsheetCellReferenceParserToken}
  * so cell references after an insert or delete row/column are corrected.
  */
-final class BasicSpreadsheetEngineCopySpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVisitor {
+final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVisitor {
 
     /**
      * Accepts a token tree and updates rows and columns.
@@ -73,7 +73,7 @@ final class BasicSpreadsheetEngineCopySpreadsheetCellReferenceFixerSpreadsheetPa
     static SpreadsheetParserToken expressionFixReferences(final SpreadsheetParserToken token,
                                                           final int xOffset,
                                                           final int yOffset) {
-        final BasicSpreadsheetEngineCopySpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor visitor = new BasicSpreadsheetEngineCopySpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor(xOffset, yOffset);
+        final BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor visitor = new BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor(xOffset, yOffset);
         visitor.accept(token);
 
         final List<SpreadsheetParserToken> tokens = visitor.children;
@@ -89,7 +89,7 @@ final class BasicSpreadsheetEngineCopySpreadsheetCellReferenceFixerSpreadsheetPa
      * Package private ctor use static method.
      */
     // @VisibleForTesting
-    BasicSpreadsheetEngineCopySpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor(final int xOffset, final int yOffset) {
+    BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor(final int xOffset, final int yOffset) {
         super();
         this.xOffset = xOffset;
         this.yOffset = yOffset;
