@@ -55,7 +55,8 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicSpreadsheetEngineTest implements SpreadsheetEngineTesting<BasicSpreadsheetEngine> {
+public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngine>
+        implements SpreadsheetEngineTesting<BasicSpreadsheetEngine> {
 
     private final static String PATTERN_SUFFIX = "PATTERN_SUFFIX";
     private final static String DEFAULT_SUFFIX = "DEFAULT_SUFFIX";
@@ -3488,7 +3489,7 @@ public final class BasicSpreadsheetEngineTest implements SpreadsheetEngineTestin
     }
 
     @Override
-    public MemberVisibility typeVisibility() {
-        return MemberVisibility.PACKAGE_PRIVATE;
+    public String typeNameSuffix() {
+        return "";
     }
 }

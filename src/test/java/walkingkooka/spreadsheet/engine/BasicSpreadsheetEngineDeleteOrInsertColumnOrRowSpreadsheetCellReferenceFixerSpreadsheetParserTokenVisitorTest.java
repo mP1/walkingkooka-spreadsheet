@@ -1,9 +1,12 @@
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserTokenVisitor;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserTokenVisitorTesting;
+import walkingkooka.tree.expression.ExpressionNodeVisitor;
 import walkingkooka.type.MemberVisibility;
 
-public final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitorTest implements SpreadsheetParserTokenVisitorTesting<BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor> {
+public final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitorTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor>
+        implements SpreadsheetParserTokenVisitorTesting<BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor> {
 
     @Override
     public BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor createVisitor() {
@@ -11,17 +14,14 @@ public final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCel
     }
 
     @Override
-    public String typeNamePrefix() {
-        return BasicSpreadsheetEngine.class.getSimpleName();
-    }
-
-    @Override
     public Class<BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor> type() {
         return BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.class;
     }
 
+    // TypeNameTesting..........................................................................
+
     @Override
-    public MemberVisibility typeVisibility() {
-        return MemberVisibility.PACKAGE_PRIVATE;
+    public String typeNameSuffix() {
+        return SpreadsheetParserTokenVisitor.class.getSimpleName();
     }
 }
