@@ -3439,27 +3439,31 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b = SpreadsheetReferenceKind.RELATIVE.column(11)
                 .setRow(SpreadsheetReferenceKind.RELATIVE.row(21));
 
+        final SpreadsheetCellReference c = SpreadsheetReferenceKind.RELATIVE.column(30)
+                .setRow(SpreadsheetReferenceKind.RELATIVE.row(40));
+        final SpreadsheetCellReference d = this.cellReference(30+11, 40+21);
+        System.out.println("d::"+c);
+
         final SpreadsheetCell cellA = this.cell(a, "" + b);
         final SpreadsheetCell cellB = this.cell(b, "2+0");
+        final SpreadsheetCell cellD = this.cell(d, "99");
 
         cellStore.save(cellA);
         cellStore.save(cellB);
+        cellStore.save(cellD);
 
-        final SpreadsheetCellReference d = SpreadsheetReferenceKind.RELATIVE.column(30)
-                .setRow(SpreadsheetReferenceKind.RELATIVE.row(40));
+        engine.copy(Lists.of(cellA, cellB), SpreadsheetRange.with(c, c.add(2, 2)), context);
 
-        engine.copy(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(2, 2)), context);
-
-        this.countAndCheck(cellStore, 2 + 2);
+        this.countAndCheck(cellStore, 3 + 2);
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                d,
+                c,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
-                "" + d.add(1, 1),
+                "" + c.add(1, 1),
                 BigDecimal.valueOf(2 + 0));
         this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(1, 1),
+                c.add(1, 1),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 "2+0",
