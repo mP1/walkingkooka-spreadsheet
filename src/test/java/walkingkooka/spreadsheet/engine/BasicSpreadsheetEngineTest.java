@@ -39,7 +39,6 @@ import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.expression.ExpressionNodeName;
-import walkingkooka.type.MemberVisibility;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -51,6 +50,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -58,15 +58,17 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngine>
         implements SpreadsheetEngineTesting<BasicSpreadsheetEngine> {
 
-    private final static String PATTERN_SUFFIX = "PATTERN_SUFFIX";
-    private final static String DEFAULT_SUFFIX = "DEFAULT_SUFFIX";
+    private final static String FORMATTED_PATTERN_SUFFIX = "FORMATTED_PATTERN_SUFFIX";
+    private final static String FORMATTED_DEFAULT_SUFFIX = "FORMATTED_DEFAULT_SUFFIX";
 
     private final static Optional<Color> COLOR = Optional.of(Color.BLACK);
 
-    private final static String PATTERN_DEFAULT = "$text+" + DEFAULT_SUFFIX;
-    private final static String PATTERN = "$text+" + PATTERN_SUFFIX;
-    private final static String PATTERN_COLOR = "$text+" + PATTERN_SUFFIX + "+" + COLOR.get();
+    private final static String PATTERN_DEFAULT = "$text+" + FORMATTED_DEFAULT_SUFFIX;
+    private final static String PATTERN = "$text+" + FORMATTED_PATTERN_SUFFIX;
+    private final static String PATTERN_COLOR = "$text+" + FORMATTED_PATTERN_SUFFIX + "+" + COLOR.get();
     private final static String PATTERN_FORMAT_FAIL = "<none>";
+
+    private final static SpreadsheetTextFormatContext SPREADSHEET_TEXT_FORMAT_CONTEXT = SpreadsheetTextFormatContexts.fake();
 
     @Test
     public void testNullIdFails() {
@@ -96,6 +98,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         });
     }
 
+    // loadCell................................................................................................
+
     @Test
     public void testLoadCellCellWhenEmpty() {
         this.loadCellFailCheck(cellReference(1, 1), SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
@@ -118,13 +122,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testSaveCellAndLoadCellWithoutPattern() {
-        this.saveCellAndLoadCellAndCheck(SpreadsheetCell.NO_FORMAT, DEFAULT_SUFFIX);
+        this.saveCellAndLoadCellAndCheck(SpreadsheetCell.NO_FORMAT, FORMATTED_DEFAULT_SUFFIX);
     }
 
     @Test
     public void testSaveCellAndLoadCellWithPattern() {
         this.saveCellAndLoadCellAndCheck(Optional.of(SpreadsheetCellFormat.with(PATTERN)),
-                PATTERN_SUFFIX);
+                FORMATTED_PATTERN_SUFFIX);
     }
 
     @Test
@@ -257,19 +261,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(1 + 2),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
         this.loadCellAndCheckFormatted2(engine,
                 b,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(3 + 4),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
         this.loadCellAndCheckFormatted2(engine,
                 c,
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(5 + 6),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
     }
 
     @Test
@@ -323,7 +327,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(3 + 4),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
 
         // reference to B1 which has formula
         this.loadCellAndCheckFormatted2(engine,
@@ -331,7 +335,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(3 + 4),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
     }
 
     @Test
@@ -355,7 +359,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(3 + 4),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
 
         // reference to B1 which has formula
         this.loadCellAndCheckFormatted2(engine,
@@ -363,7 +367,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(3 + 4),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
     }
 
     @Test
@@ -402,7 +406,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(3 + 4),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
         final SpreadsheetCellStyle style = cell.formatted().get().style();
         // UNDERLINED from conditional formatting rule #2.
         assertEquals(style(SpreadsheetTextStyle.NO_BOLD, SpreadsheetTextStyle.NO_ITALICS, SpreadsheetTextStyle.UNDERLINE),
@@ -684,14 +688,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(2),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormatted2(engine,
                 d.add(-count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(4),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 e.add(-count, 0),
@@ -737,14 +741,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(2),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormatted2(engine,
                 d.add(-count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(4),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 e.add(-count, 0),
@@ -811,28 +815,28 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(1),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormatted2(engine,
                 d.add(-count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(4),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormatted2(engine,
                 e.add(-count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(5),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormatted2(engine,
                 f.add(-count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(6),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
     }
 
     // deleteRow....................................................................................................
@@ -1121,14 +1125,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(2),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormatted2(engine,
                 d.add(0, -count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(4),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 e.add(0, -count),
@@ -1174,14 +1178,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(2),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormatted2(engine,
                 d.add(0, -count),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(4),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 e.add(0, -count),
@@ -1729,14 +1733,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(2),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormatted2(engine,
                 d.add(-count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(4),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 e.add(-count, 0),
@@ -1782,14 +1786,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(2),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormatted2(engine,
                 d.add(-count, 0),
                 SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
                 context,
                 BigDecimal.valueOf(4),
-                DEFAULT_SUFFIX);
+                FORMATTED_DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 e.add(-count, 0),
@@ -3365,10 +3369,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             @Override
             public SpreadsheetTextFormatter<?> parseFormatPattern(final String pattern) {
                 if (PATTERN_COLOR.equals(pattern)) {
-                    return formatter(pattern, COLOR, PATTERN_SUFFIX);
+                    return formatter(pattern, COLOR, FORMATTED_PATTERN_SUFFIX);
                 }
                 if (PATTERN.equals(pattern)) {
-                    return formatter(pattern, SpreadsheetFormattedText.WITHOUT_COLOR, PATTERN_SUFFIX);
+                    return formatter(pattern, SpreadsheetFormattedText.WITHOUT_COLOR, FORMATTED_PATTERN_SUFFIX);
                 }
                 if (PATTERN_FORMAT_FAIL.equals(pattern)) {
                     return SpreadsheetTextFormatters.fixed(Object.class, Optional.empty());
@@ -3379,21 +3383,27 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
             @Override
             public SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter() {
-                return formatter(PATTERN_DEFAULT, SpreadsheetFormattedText.WITHOUT_COLOR, DEFAULT_SUFFIX);
+                return BasicSpreadsheetEngineTest.this.defaultSpreadsheetTextFormatter();
             }
 
             @Override
             public Optional<SpreadsheetFormattedText> format(final Object value,
                                                              final SpreadsheetTextFormatter<?> formatter) {
                 assertFalse(value instanceof Optional, () -> "Value must not be optional" + value);
-                return formatter.format(Cast.to(value), SpreadsheetTextFormatContexts.fake());
+                return formatter.format(Cast.to(value), SPREADSHEET_TEXT_FORMAT_CONTEXT);
             }
         };
     }
 
-    private SpreadsheetTextFormatter<?> formatter(final String pattern,
-                                                  final Optional<Color> color,
-                                                  final String suffix) {
+    private SpreadsheetTextFormatter<Object> defaultSpreadsheetTextFormatter() {
+        return this.formatter(PATTERN_DEFAULT,
+                SpreadsheetFormattedText.WITHOUT_COLOR,
+                FORMATTED_DEFAULT_SUFFIX);
+    }
+
+    private SpreadsheetTextFormatter<Object> formatter(final String pattern,
+                                                       final Optional<Color> color,
+                                                       final String suffix) {
         return new SpreadsheetTextFormatter<Object>() {
             @Override
             public Class<Object> type() {
@@ -3403,6 +3413,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             @Override
             public Optional<SpreadsheetFormattedText> format(final Object value,
                                                              final SpreadsheetTextFormatContext context) {
+                assertNotNull(value, "value");
+                assertSame(SPREADSHEET_TEXT_FORMAT_CONTEXT, context, "Wrong SpreadsheetTextFormatContext passed");
+
                 return Optional.of(SpreadsheetFormattedText.with(color, value + " " + suffix));
             }
 
@@ -3487,6 +3500,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public Class<BasicSpreadsheetEngine> type() {
         return BasicSpreadsheetEngine.class;
     }
+
+    // TypeNameTesting..........................................................................................
 
     @Override
     public String typeNameSuffix() {
