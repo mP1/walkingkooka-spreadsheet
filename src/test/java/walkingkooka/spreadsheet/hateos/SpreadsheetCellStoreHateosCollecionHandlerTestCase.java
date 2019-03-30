@@ -18,9 +18,9 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetCellStoreHateosCollecionHandlerTestCase<H extends HateosCollectionHandler<Integer, SpreadsheetCell>>
+public abstract class SpreadsheetCellStoreHateosCollecionHandlerTestCase<H extends HateosCollectionHandler<Integer, SpreadsheetCell, SpreadsheetCell>>
         extends SpreadsheetStoreHateosHandlerTestCase<H>
-        implements HateosCollectionHandlerTesting<H, Integer, SpreadsheetCell>,
+        implements HateosCollectionHandlerTesting<H, Integer, SpreadsheetCell, SpreadsheetCell>,
         ToStringTesting<H>,
         TypeNameTesting<H> {
 

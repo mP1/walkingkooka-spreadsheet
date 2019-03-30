@@ -26,7 +26,10 @@ public final class SpreadsheetStoreDeleteHateosHandlerTest extends SpreadsheetSt
         SpreadsheetCellStore>
         implements HateosHandlerTesting<SpreadsheetStoreDeleteHateosHandler<SpreadsheetCellReference,
         SpreadsheetCell,
-        SpreadsheetCellStore>, SpreadsheetCellReference, SpreadsheetCell> {
+        SpreadsheetCellStore>,
+        SpreadsheetCellReference,
+        SpreadsheetCell,
+        SpreadsheetCell> {
 
     @Test
     public void testHandleDeletes() {
