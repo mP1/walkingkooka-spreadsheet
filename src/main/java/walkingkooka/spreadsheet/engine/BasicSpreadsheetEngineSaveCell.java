@@ -16,19 +16,26 @@ import java.util.Set;
 final class BasicSpreadsheetEngineSaveCell {
 
     static Set<SpreadsheetCell> execute(final SpreadsheetCell cell,
+                                        final SpreadsheetEngineLoading loading,
                                         final BasicSpreadsheetEngine engine,
                                         final SpreadsheetEngineContext context) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(context, "context");
 
-        return Sets.of(new BasicSpreadsheetEngineSaveCell(cell, engine, context).saved);
+        return Sets.of(new BasicSpreadsheetEngineSaveCell(cell,
+                loading,
+                engine,
+                context)
+                .saved);
     }
 
     private BasicSpreadsheetEngineSaveCell(final SpreadsheetCell unsaved,
+                                           final SpreadsheetEngineLoading loading,
                                            final BasicSpreadsheetEngine engine,
                                            final SpreadsheetEngineContext context) {
         super();
         this.reference = unsaved.reference();
+        this.loading = loading;
 
         this.engine = engine;
         this.context = context;
@@ -46,6 +53,10 @@ final class BasicSpreadsheetEngineSaveCell {
      */
     final SpreadsheetCellReference reference;
 
+    /**
+     * Allows control over loading evaluation.
+     */
+    final SpreadsheetEngineLoading loading;
 
     final BasicSpreadsheetEngine engine;
 
@@ -73,7 +84,7 @@ final class BasicSpreadsheetEngineSaveCell {
      */
     private SpreadsheetCell evaluateAndSaveCell(final SpreadsheetCell cell) {
         final SpreadsheetCell evaluatedAndSaved = this.engine.maybeParseAndEvaluateAndFormat(cell,
-                SpreadsheetEngineLoading.FORCE_RECOMPUTE,
+                this.loading,
                 this.context);
         this.addNewExpressionReferences(evaluatedAndSaved.formula());
         return evaluatedAndSaved;
