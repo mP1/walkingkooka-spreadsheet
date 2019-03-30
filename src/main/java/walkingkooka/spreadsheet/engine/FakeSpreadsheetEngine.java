@@ -60,9 +60,9 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public void copy(final Collection<SpreadsheetCell> from,
-                     final SpreadsheetRange to,
-                     final SpreadsheetEngineContext context) {
+    public void copyCells(final Collection<SpreadsheetCell> from,
+                          final SpreadsheetRange to,
+                          final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 }

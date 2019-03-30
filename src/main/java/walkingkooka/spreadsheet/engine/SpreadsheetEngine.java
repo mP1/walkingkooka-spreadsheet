@@ -70,7 +70,7 @@ public interface SpreadsheetEngine {
      * Note prior to copying the area should be cleared, as this only copies the given it doesnt clear the entire range,
      * before the actual copying.
      */
-    void copy(final Collection<SpreadsheetCell> from,
-              final SpreadsheetRange to,
-              final SpreadsheetEngineContext context);
+    void copyCells(final Collection<SpreadsheetCell> from,
+                   final SpreadsheetRange to,
+                   final SpreadsheetEngineContext context);
 }
