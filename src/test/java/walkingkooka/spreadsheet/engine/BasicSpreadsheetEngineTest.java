@@ -3118,7 +3118,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // copy....................................................................................................
 
     @Test
-    public void testCopyOneCellInto1x1() {
+    public void testCopyCellsOneCellInto1x1() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -3137,7 +3137,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        engine.copy(Lists.of(cellA), SpreadsheetRange.cell(d), context);
+        engine.copyCells(Lists.of(cellA), SpreadsheetRange.cell(d), context);
 
         this.countAndCheck(cellStore, 3 + 1);
 
@@ -3150,7 +3150,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testCopyOneCellInto2x2() {
+    public void testCopyCellsOneCellInto2x2() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -3169,7 +3169,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        engine.copy(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(2, 2)), context);
+        engine.copyCells(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(2, 2)), context);
 
         this.countAndCheck(cellStore, 3 + 2);
 
@@ -3189,7 +3189,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testCopy2x2CellInto1x1() {
+    public void testCopyCells2x2CellInto1x1() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -3208,7 +3208,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        engine.copy(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(1, 1)), context);
+        engine.copyCells(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(1, 1)), context);
 
         this.countAndCheck(cellStore, 3 + 2);
 
@@ -3228,7 +3228,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testCopy2x2CellInto2x2() {
+    public void testCopyCells2x2CellInto2x2() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -3247,7 +3247,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        engine.copy(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(2, 2)), context);
+        engine.copyCells(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(2, 2)), context);
 
         this.countAndCheck(cellStore, 3 + 2);
 
@@ -3267,7 +3267,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testCopy2x2CellInto7x2Gives6x2() {
+    public void testCopyCells2x2CellInto7x2Gives6x2() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -3286,7 +3286,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        engine.copy(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(6, 1)), context);
+        engine.copyCells(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(6, 1)), context);
 
         this.countAndCheck(cellStore, 3 + 6);
 
@@ -3334,7 +3334,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testCopy2x2CellInto2x7Gives2x6() {
+    public void testCopyCells2x2CellInto2x7Gives2x6() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -3353,7 +3353,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        engine.copy(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(1, 6)), context);
+        engine.copyCells(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(1, 6)), context);
 
         this.countAndCheck(cellStore, 3 + 6);
 
@@ -3401,7 +3401,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testCopyAbsoluteReference() {
+    public void testCopyCellsAbsoluteReference() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -3417,7 +3417,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        engine.copy(Lists.of(cellB), SpreadsheetRange.cell(d), context);
+        engine.copyCells(Lists.of(cellB), SpreadsheetRange.cell(d), context);
 
         this.countAndCheck(cellStore, 2 + 1);
 
@@ -3430,7 +3430,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testCopyRelativeReferenceFixed() {
+    public void testCopyCellsRelativeReferenceFixed() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -3452,7 +3452,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         cellStore.save(cellB);
         cellStore.save(cellD);
 
-        engine.copy(Lists.of(cellA, cellB), SpreadsheetRange.with(c, c.add(2, 2)), context);
+        engine.copyCells(Lists.of(cellA, cellB), SpreadsheetRange.with(c, c.add(2, 2)), context);
 
         this.countAndCheck(cellStore, 3 + 2);
 
