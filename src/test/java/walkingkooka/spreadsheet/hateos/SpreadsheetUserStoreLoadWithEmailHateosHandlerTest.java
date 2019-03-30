@@ -22,7 +22,7 @@ public final class SpreadsheetUserStoreLoadWithEmailHateosHandlerTest extends Sp
         EmailAddress,
         User,
         SpreadsheetUserStore>
-        implements HateosHandlerTesting<SpreadsheetUserStoreLoadWithEmailHateosHandler, EmailAddress, User> {
+        implements HateosHandlerTesting<SpreadsheetUserStoreLoadWithEmailHateosHandler, EmailAddress, User, User> {
 
     @Test
     public void testLoadWithEmail() {

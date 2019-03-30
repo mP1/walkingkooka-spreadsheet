@@ -8,10 +8,10 @@ import walkingkooka.test.ToStringTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetStoreHateosHandlerTestCase2<H extends HateosHandler<I, R>,
+public abstract class SpreadsheetStoreHateosHandlerTestCase2<H extends HateosHandler<I, R, R>,
         I extends Comparable<I>,
         R extends HateosResource<?>,
-        S extends Store<?, ?>>
+        S extends Store<?, R>>
         extends SpreadsheetStoreHateosHandlerTestCase<H>
         implements ToStringTesting<H> {
 

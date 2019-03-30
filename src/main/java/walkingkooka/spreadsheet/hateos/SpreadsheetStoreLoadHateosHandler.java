@@ -14,7 +14,7 @@ import java.util.Optional;
  * A {@link HateosHandler} that loads a value from a {@link Store}.
  */
 final class SpreadsheetStoreLoadHateosHandler<I extends Comparable<I>, R extends HateosResource<I>, S extends Store<I, R>> extends SpreadsheetStoreHateosHandler<I, R, S>
-        implements HateosHandler<I, R>{
+        implements HateosHandler<I, R, R>{
 
     static <I extends Comparable<I>, R extends HateosResource<I>, S extends Store<I, R>> SpreadsheetStoreLoadHateosHandler<I, R, S> with(final S store) {
         check(store);

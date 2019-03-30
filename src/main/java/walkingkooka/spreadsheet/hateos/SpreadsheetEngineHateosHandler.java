@@ -14,9 +14,11 @@ import java.util.function.Supplier;
 /**
  * An abstract {@link HateosHandler} that includes uses a {@link SpreadsheetEngine} and {@link SpreadsheetEngineContext} to do things.
  */
-abstract class SpreadsheetEngineHateosHandler<I extends Comparable<I>, R extends HateosResource<I>>
+abstract class SpreadsheetEngineHateosHandler<I extends Comparable<I>,
+        R extends HateosResource<I>,
+        S extends HateosResource<?>>
         extends SpreadsheetHateosHandler
-        implements HateosHandler<I, R> {
+        implements HateosHandler<I, R, S> {
 
     /**
      * Checks required factory method parameters are not null.
