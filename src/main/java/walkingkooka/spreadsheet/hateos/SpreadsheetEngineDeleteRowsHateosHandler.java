@@ -40,7 +40,7 @@ final class SpreadsheetEngineDeleteRowsHateosHandler extends SpreadsheetEngineRo
                                             final Optional<SpreadsheetRow> resource,
                                             final Map<HttpRequestAttribute<?>, Object> parameters) {
         Objects.requireNonNull(row, "row");
-        checkResourceEmpty(resource);
+        this.checkResourceEmpty(resource);
         checkParameters(parameters);
 
         this.engine.deleteRows(row, 1, this.context.get());
@@ -52,7 +52,7 @@ final class SpreadsheetEngineDeleteRowsHateosHandler extends SpreadsheetEngineRo
     public List<SpreadsheetCell> handleCollection(final Range<SpreadsheetRowReference> rows,
                                                   final List<SpreadsheetRow> resources,
                                                   final Map<HttpRequestAttribute<?>, Object> parameters) {
-        checkInclusiveRange(rows, "rows");
+        checkIdsInclusive(rows, "rows");
         checkResourcesEmpty(resources);
         checkParameters(parameters);
 

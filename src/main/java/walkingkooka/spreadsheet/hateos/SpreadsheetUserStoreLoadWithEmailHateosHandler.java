@@ -32,7 +32,7 @@ final class SpreadsheetUserStoreLoadWithEmailHateosHandler extends SpreadsheetSt
                                  final Optional<User> user,
                                  final Map<HttpRequestAttribute<?>, Object> parameters) {
         checkId(email);
-        checkValueEmpty(user);
+        checkResourceEmpty(user);
         checkParameters(parameters);
 
         return this.store.loadWithEmail(email);
@@ -43,7 +43,7 @@ final class SpreadsheetUserStoreLoadWithEmailHateosHandler extends SpreadsheetSt
                                        final List<User> users,
                                        final Map<HttpRequestAttribute<?>, Object> parameters) {
         checkIds(email);
-        checkValues(users);
+        checkResourcesEmpty(users);
         checkParameters(parameters);
 
         throw new UnsupportedOperationException();

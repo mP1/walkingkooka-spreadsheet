@@ -1,5 +1,6 @@
 package walkingkooka.spreadsheet.hateos;
 
+import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
@@ -11,9 +12,8 @@ import java.util.function.Supplier;
 /**
  * A handler for rows.
  */
-abstract class SpreadsheetEngineRowHateosHandler extends SpreadsheetEngineHateosHandler<SpreadsheetRowReference,
-        SpreadsheetRow,
-        SpreadsheetCell> {
+abstract class SpreadsheetEngineRowHateosHandler extends SpreadsheetEngineHateos
+        implements HateosHandler<SpreadsheetRowReference, SpreadsheetRow, SpreadsheetCell> {
 
     SpreadsheetEngineRowHateosHandler(final SpreadsheetEngine engine,
                                       final Supplier<SpreadsheetEngineContext> context) {

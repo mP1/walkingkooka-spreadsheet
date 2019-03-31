@@ -33,7 +33,7 @@ final class SpreadsheetStoreDeleteHateosHandler<I extends Comparable<I>,
                               final Optional<R> value,
                               final Map<HttpRequestAttribute<?>, Object> parameters) {
         checkId(id);
-        checkValueEmpty(value);
+        checkResourceEmpty(value);
         checkParameters(parameters);
 
         this.store.delete(id);
@@ -45,7 +45,7 @@ final class SpreadsheetStoreDeleteHateosHandler<I extends Comparable<I>,
                                     final List<R> values,
                                     final Map<HttpRequestAttribute<?>, Object> parameters) {
         checkIds(ids);
-        checkValues(values);
+        checkResourcesEmpty(values);
         checkParameters(parameters);
 
         throw new UnsupportedOperationException();

@@ -12,15 +12,15 @@ import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetEngineHateosHandlerTestCase2<H extends HateosHandler<I, R, S>,
+public abstract class SpreadsheetEngineHateosTestCase2<H extends HateosHandler<I, R, S>,
         I extends Comparable<I>,
         R extends HateosResource<I>,
         S extends HateosResource<?>>
-        extends SpreadsheetEngineHateosHandlerTestCase<H>
+        extends SpreadsheetEngineHateosTestCase<H>
         implements HateosHandlerTesting<H, I, R, S>,
         ToStringTesting<H> {
 
-    SpreadsheetEngineHateosHandlerTestCase2() {
+    SpreadsheetEngineHateosTestCase2() {
         super();
     }
 
