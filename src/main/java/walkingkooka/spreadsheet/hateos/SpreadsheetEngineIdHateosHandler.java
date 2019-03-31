@@ -3,6 +3,7 @@ package walkingkooka.spreadsheet.hateos;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
+import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
@@ -16,7 +17,8 @@ import java.util.function.Supplier;
 /**
  * A {@link walkingkooka.net.http.server.hateos.HateosHandler} that calls {@link SpreadsheetEngine#id()}.
  */
-final class SpreadsheetEngineIdHateosHandler extends SpreadsheetEngineHateosHandler<Long, SpreadsheetId, SpreadsheetId> {
+final class SpreadsheetEngineIdHateosHandler extends SpreadsheetEngineHateos
+        implements HateosHandler<Long, SpreadsheetId, SpreadsheetId> {
 
     static SpreadsheetEngineIdHateosHandler with(final SpreadsheetEngine engine,
                                                  final Supplier<SpreadsheetEngineContext> context) {

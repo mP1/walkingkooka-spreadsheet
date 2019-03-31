@@ -4,9 +4,9 @@ import walkingkooka.test.ClassTesting;
 import walkingkooka.test.TypeNameTesting;
 import walkingkooka.type.MemberVisibility;
 
-public abstract class SpreadsheetHateosHandlerTestCase<T> implements ClassTesting<T>, TypeNameTesting<T> {
+public abstract class SpreadsheetHateosTestCase<T> implements ClassTesting<T>, TypeNameTesting<T> {
 
-    SpreadsheetHateosHandlerTestCase() {
+    SpreadsheetHateosTestCase() {
         super();
     }
 
