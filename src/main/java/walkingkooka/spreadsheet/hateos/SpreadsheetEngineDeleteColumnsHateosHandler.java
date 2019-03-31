@@ -52,7 +52,7 @@ final class SpreadsheetEngineDeleteColumnsHateosHandler extends SpreadsheetEngin
     public List<SpreadsheetCell> handleCollection(final Range<SpreadsheetColumnReference> columns,
                                                   final List<SpreadsheetColumn> resources,
                                                   final Map<HttpRequestAttribute<?>, Object> parameters) {
-        checkInclusiveRange(columns, "columns");
+        checkIdsInclusive(columns, "columns");
         checkResourcesEmpty(resources);
         checkParameters(parameters);
 
