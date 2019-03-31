@@ -2,7 +2,7 @@ package walkingkooka.spreadsheet.hateos;
 
 import walkingkooka.net.http.server.hateos.HateosHandler;
 
-public final class SpreadsheetEngineCellHateosHandlerTest extends SpreadsheetEngineHateosHandlerTestCase<SpreadsheetEngineCellHateosHandler> {
+public final class SpreadsheetEngineCellHateosHandlerTest extends SpreadsheetEngineHateosTestCase<SpreadsheetEngineCellHateosHandler> {
 
     @Override
     public Class<SpreadsheetEngineCellHateosHandler> type() {
