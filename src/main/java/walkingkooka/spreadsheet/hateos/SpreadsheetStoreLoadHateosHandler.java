@@ -30,7 +30,7 @@ final class SpreadsheetStoreLoadHateosHandler<I extends Comparable<I>, R extends
                               final Optional<R> value,
                               final Map<HttpRequestAttribute<?>, Object> parameters) {
         checkId(id);
-        checkValueEmpty(value);
+        checkResourceEmpty(value);
         checkParameters(parameters);
 
         return this.store.load(id);
@@ -40,8 +40,8 @@ final class SpreadsheetStoreLoadHateosHandler<I extends Comparable<I>, R extends
     public List<R> handleCollection(final Range<I> ids,
                                     final List<R> values,
                                     final Map<HttpRequestAttribute<?>, Object> parameters) {
-        checkIds(ids);
-        checkValues(values);
+        checkIds(ids, "ids");
+        checkResourcesEmpty(values);
         checkParameters(parameters);
 
         throw new UnsupportedOperationException();

@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-public final class SpreadsheetEngineIdHateosHandlerTest extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineIdHateosHandler,
+public final class SpreadsheetEngineIdHateosHandlerTest extends SpreadsheetEngineHateosTestCase2<SpreadsheetEngineIdHateosHandler,
         Long,
         SpreadsheetId,
         SpreadsheetId>

@@ -2,10 +2,10 @@ package walkingkooka.spreadsheet.hateos;
 
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 
-public abstract class SpreadsheetEngineHateosHandlerTestCase<T>
-        extends SpreadsheetHateosHandlerTestCase<T> {
+public abstract class SpreadsheetEngineHateosTestCase<T>
+        extends SpreadsheetHateosTestCase<T> {
 
-    SpreadsheetEngineHateosHandlerTestCase() {
+    SpreadsheetEngineHateosTestCase() {
         super();
     }
 
