@@ -10,9 +10,9 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import java.util.function.Supplier;
 
 /**
- * A handler for columns.
+ * A {@link HateosHandler} for columns.
  */
-abstract class SpreadsheetEngineColumnHateosHandler extends SpreadsheetEngineHateos
+abstract class SpreadsheetEngineColumnHateosHandler extends SpreadsheetEngineHateosHandler
         implements HateosHandler<SpreadsheetColumnReference, SpreadsheetColumn, SpreadsheetCell> {
 
     SpreadsheetEngineColumnHateosHandler(final SpreadsheetEngine engine,
