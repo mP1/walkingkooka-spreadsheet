@@ -27,7 +27,7 @@ abstract class SpreadsheetCellStoreHateosCollectionHandler extends SpreadsheetSt
                                               final List<SpreadsheetCell> cells,
                                               final Map<HttpRequestAttribute<?>, Object> parameters) {
         Objects.requireNonNull(id, this.operation());
-        checkValuesEmpty(cells);
+        checkResourcesEmpty(cells);
         checkParameters(parameters);
 
         final List<SpreadsheetCell> cellsResponse = Lists.array();
