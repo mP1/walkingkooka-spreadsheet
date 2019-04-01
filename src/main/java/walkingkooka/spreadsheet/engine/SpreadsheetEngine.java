@@ -38,30 +38,30 @@ public interface SpreadsheetEngine {
     /**
      * Deletes the identified columns, updates all absolute references as necessary in both formulas and label mappings.
      */
-    void deleteColumns(final SpreadsheetColumnReference column,
-                       final int count,
-                       final SpreadsheetEngineContext context);
+    Set<SpreadsheetCell> deleteColumns(final SpreadsheetColumnReference column,
+                                       final int count,
+                                       final SpreadsheetEngineContext context);
 
     /**
      * Deletes the identified rows, updates all absolute references as necessary in both formulas and label mappings.
      */
-    void deleteRows(final SpreadsheetRowReference row,
-                    final int count,
-                    final SpreadsheetEngineContext context);
+    Set<SpreadsheetCell> deleteRows(final SpreadsheetRowReference row,
+                                    final int count,
+                                    final SpreadsheetEngineContext context);
 
     /**
      * Inserts the identified columns, updates all absolute references as necessary in both formulas and label mappings.
      */
-    void insertColumns(final SpreadsheetColumnReference column,
-                       final int count,
-                       final SpreadsheetEngineContext context);
+    Set<SpreadsheetCell> insertColumns(final SpreadsheetColumnReference column,
+                                       final int count,
+                                       final SpreadsheetEngineContext context);
 
     /**
      * Inserts the identified rows, updates all absolute references as necessary in both formulas and label mappings.
      */
-    void insertRows(final SpreadsheetRowReference row,
-                    final int count,
-                    final SpreadsheetEngineContext context);
+    Set<SpreadsheetCell> insertRows(final SpreadsheetRowReference row,
+                                    final int count,
+                                    final SpreadsheetEngineContext context);
 
     /**
      * Copies the provided cells into this spreadsheet at the given range. The source range is smaller, where possible
@@ -70,7 +70,7 @@ public interface SpreadsheetEngine {
      * Note prior to copying the area should be cleared, as this only copies the given it doesnt clear the entire range,
      * before the actual copying.
      */
-    void copyCells(final Collection<SpreadsheetCell> from,
-                   final SpreadsheetRange to,
-                   final SpreadsheetEngineContext context);
+    Set<SpreadsheetCell> copyCells(final Collection<SpreadsheetCell> from,
+                                   final SpreadsheetRange to,
+                                   final SpreadsheetEngineContext context);
 }
