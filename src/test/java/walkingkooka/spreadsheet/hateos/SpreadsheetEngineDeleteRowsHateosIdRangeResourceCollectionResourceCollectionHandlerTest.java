@@ -2,6 +2,7 @@ package walkingkooka.spreadsheet.hateos;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosHandler;
@@ -12,15 +13,14 @@ import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
-import walkingkooka.test.Latch;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class SpreadsheetEngineDeleteRowsHateosIdRangeResourceCollectionResourceCollectionHandlerTest extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineDeleteRowsHateosIdRangeResourceCollectionResourceCollectionHandler,
         SpreadsheetRowReference,
@@ -33,27 +33,28 @@ public final class SpreadsheetEngineDeleteRowsHateosIdRangeResourceCollectionRes
 
     @Test
     public void testDeleteSeveralRows() {
-        final Latch deleted = Latch.create();
-
         final SpreadsheetRowReference row = this.id();
         final List<SpreadsheetRow> resources = this.resourceCollection();
 
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
-                    public void deleteRows(final SpreadsheetRowReference r,
-                                           final int count,
-                                           final SpreadsheetEngineContext context) {
+                    public Set<SpreadsheetCell> deleteRows(final SpreadsheetRowReference r,
+                                                           final int count,
+                                                           final SpreadsheetEngineContext context) {
                         assertEquals(row, r, "row");
                         assertEquals(3, count, "count");
-                        deleted.set("Deleted");
+                        return Sets.of(cell());
                     }
                 }),
                 Range.greaterThanEquals(row).and(Range.lessThanEquals(SpreadsheetRowReference.parse("4"))), // 3 rows inclusive
                 resources,
                 HateosHandler.NO_PARAMETERS,
-                Lists.empty());
-        assertTrue(deleted.value());
+                Lists.of(this.cell()));
+    }
+
+    private SpreadsheetCell cell() {
+        return this.cell("A99", "1+2");
     }
 
     @Test
@@ -117,7 +118,7 @@ public final class SpreadsheetEngineDeleteRowsHateosIdRangeResourceCollectionRes
 
     @Override
     SpreadsheetEngineDeleteRowsHateosIdRangeResourceCollectionResourceCollectionHandler createHandler(final SpreadsheetEngine engine,
-                                                                             final Supplier<SpreadsheetEngineContext> context) {
+                                                                                                      final Supplier<SpreadsheetEngineContext> context) {
         return SpreadsheetEngineDeleteRowsHateosIdRangeResourceCollectionResourceCollectionHandler.with(engine, context);
     }
 

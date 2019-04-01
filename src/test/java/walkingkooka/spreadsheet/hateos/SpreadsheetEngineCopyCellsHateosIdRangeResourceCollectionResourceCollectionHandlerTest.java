@@ -3,6 +3,7 @@ package walkingkooka.spreadsheet.hateos;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosIdRangeResourceCollectionResourceCollectionHandlerTesting;
@@ -18,6 +19,7 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,15 +29,14 @@ public final class SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionReso
         implements HateosIdRangeResourceCollectionResourceCollectionHandlerTesting<SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionResourceCollectionHandler,
         SpreadsheetCellReference,
         SpreadsheetCell,
-                SpreadsheetCell> {
+        SpreadsheetCell> {
 
     @Test
     public void testCopy() {
         this.handleAndCheck(this.collection(),
                 this.resourceCollection(),
                 this.parameters(),
-                Lists.empty());
-        assertEquals(true, this.copied, "BasicEngine.copy not invoked");
+                Lists.of(this.cell()));
     }
 
     @Test
@@ -53,18 +54,19 @@ public final class SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionReso
     SpreadsheetEngine engine() {
         return new FakeSpreadsheetEngine() {
             @Override
-            public void copyCells(final Collection<SpreadsheetCell> from,
-                                  final SpreadsheetRange to,
-                                  final SpreadsheetEngineContext context) {
+            public Set<SpreadsheetCell> copyCells(final Collection<SpreadsheetCell> from,
+                                                  final SpreadsheetRange to,
+                                                  final SpreadsheetEngineContext context) {
                 assertEquals(SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionResourceCollectionHandlerTest.this.resourceCollection(), from, "from");
                 assertEquals(SpreadsheetRange.parse(TO), to, "to");
-
-                SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionResourceCollectionHandlerTest.this.copied = true;
+                return Sets.of(cell());
             }
         };
     }
 
-    private boolean copied = false;
+    private SpreadsheetCell cell() {
+        return this.cell("A99", "1+2");
+    }
 
     @Override
     SpreadsheetEngineContext engineContext() {
