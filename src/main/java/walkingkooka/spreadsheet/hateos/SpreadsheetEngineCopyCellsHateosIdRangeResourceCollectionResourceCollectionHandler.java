@@ -42,11 +42,11 @@ final class SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionResourceCol
         checkResources(cells);
         checkParameters(parameters);
 
-        this.engine.copyCells(cells,
+        final List<SpreadsheetCell> updated = Lists.array();
+        updated.addAll(this.engine.copyCells(cells,
                 this.parameterValueOrFail(parameters, TO, SpreadsheetRange::parse),
-                this.context.get());
-
-        return Lists.empty();
+                this.context.get()));
+        return Lists.readOnly(updated);
     }
 
     // @VisibleForTesting

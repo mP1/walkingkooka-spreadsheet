@@ -4,31 +4,31 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosHandler;
-import walkingkooka.net.http.server.hateos.HateosIdResourceResourceHandlerTesting;
+import walkingkooka.net.http.server.hateos.HateosIdResourceCollectionResourceCollectionHandlerTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
-import walkingkooka.test.Latch;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
+import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Set;
 import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public final class SpreadsheetEngineInsertRowsHateosIdResourceResourceHandlerTest extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineInsertRowsHateosIdResourceResourceHandler,
+public final class SpreadsheetEngineInsertRowsHateosIdResourceCollectionResourceCollectionHandlerTest extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineInsertRowsHateosIdResourceCollectionResourceCollectionHandler,
         SpreadsheetRowReference,
         SpreadsheetRow,
         SpreadsheetCell>
-        implements HateosIdResourceResourceHandlerTesting<SpreadsheetEngineInsertRowsHateosIdResourceResourceHandler,
+        implements HateosIdResourceCollectionResourceCollectionHandlerTesting<SpreadsheetEngineInsertRowsHateosIdResourceCollectionResourceCollectionHandler,
         SpreadsheetRowReference,
         SpreadsheetRow,
         SpreadsheetCell> {
@@ -36,7 +36,7 @@ public final class SpreadsheetEngineInsertRowsHateosIdResourceResourceHandlerTes
     @Test
     public void testInsertMissingCountParametersFails() {
         this.handleFails(this.id(),
-                this.resource(),
+                this.resourceCollection(),
                 HateosHandler.NO_PARAMETERS,
                 IllegalArgumentException.class);
     }
@@ -44,61 +44,58 @@ public final class SpreadsheetEngineInsertRowsHateosIdResourceResourceHandlerTes
     @Test
     public void testInsertInvalidCountParametersFails() {
         this.handleFails(this.id(),
-                this.resource(),
+                this.resourceCollection(),
                 this.parameters("1", "2"),
                 IllegalArgumentException.class);
     }
 
     @Test
     public void testInsertOneRow() {
-        final Latch inserted = Latch.create();
-
         final SpreadsheetRowReference row = this.id();
-        final Optional<SpreadsheetRow> resource = this.resource();
+        final List<SpreadsheetRow> resources = this.resourceCollection();
 
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
-                    public void insertRows(final SpreadsheetRowReference r,
-                                           final int count,
-                                           final SpreadsheetEngineContext context) {
+                    public Set<SpreadsheetCell> insertRows(final SpreadsheetRowReference r,
+                                                           final int count,
+                                                           final SpreadsheetEngineContext context) {
                         assertEquals(row, r, "row");
                         assertEquals(1, count, "count");
-                        inserted.set("inserted");
+                        return Sets.of(cell());
                     }
                 }),
                 row,
-                resource,
+                resources,
                 parameters("1"),
-                Optional.empty()
+                Lists.of(cell())
         );
-
-        assertTrue(inserted.value());
     }
 
     @Test
     public void testInsertSeveralRows() {
-        final Latch inserted = Latch.create();
-
         final SpreadsheetRowReference row = this.id();
-        final Optional<SpreadsheetRow> resource = this.resource();
+        final List<SpreadsheetRow> resources = this.resourceCollection();
 
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
-                    public void insertRows(final SpreadsheetRowReference r,
-                                           final int count,
-                                           final SpreadsheetEngineContext context) {
+                    public Set<SpreadsheetCell> insertRows(final SpreadsheetRowReference r,
+                                                           final int count,
+                                                           final SpreadsheetEngineContext context) {
                         assertEquals(row, r, "row");
                         assertEquals(3, count, "count");
-                        inserted.set("Deleted");
+                        return Sets.of(cell());
                     }
                 }),
                 this.id(),
-                resource,
+                resources,
                 parameters("3"),
-                Optional.empty());
-        assertTrue(inserted.value());
+                Lists.of(this.cell()));
+    }
+
+    private SpreadsheetCell cell() {
+        return this.cell("A99", "1+2");
     }
 
     @Test
@@ -107,8 +104,8 @@ public final class SpreadsheetEngineInsertRowsHateosIdResourceResourceHandlerTes
     }
 
     @Override
-    public Class<SpreadsheetEngineInsertRowsHateosIdResourceResourceHandler> type() {
-        return Cast.to(SpreadsheetEngineInsertRowsHateosIdResourceResourceHandler.class);
+    public Class<SpreadsheetEngineInsertRowsHateosIdResourceCollectionResourceCollectionHandler> type() {
+        return Cast.to(SpreadsheetEngineInsertRowsHateosIdResourceCollectionResourceCollectionHandler.class);
     }
 
     @Override
@@ -117,11 +114,11 @@ public final class SpreadsheetEngineInsertRowsHateosIdResourceResourceHandlerTes
     }
 
     @Override
-    public Optional<SpreadsheetRow> resource() {
-        return Optional.empty();
+    public List<SpreadsheetRow> resourceCollection() {
+        return Lists.empty();
     }
 
-    private SpreadsheetEngineInsertRowsHateosIdResourceResourceHandler createHandler(final SpreadsheetEngine engine) {
+    private SpreadsheetEngineInsertRowsHateosIdResourceCollectionResourceCollectionHandler createHandler(final SpreadsheetEngine engine) {
         return this.createHandler(engine,
                 this.engineContextSupplier());
     }
@@ -136,9 +133,9 @@ public final class SpreadsheetEngineInsertRowsHateosIdResourceResourceHandlerTes
     }
 
     @Override
-    SpreadsheetEngineInsertRowsHateosIdResourceResourceHandler createHandler(final SpreadsheetEngine engine,
-                                                                             final Supplier<SpreadsheetEngineContext> context) {
-        return SpreadsheetEngineInsertRowsHateosIdResourceResourceHandler.with(engine, context);
+    SpreadsheetEngineInsertRowsHateosIdResourceCollectionResourceCollectionHandler createHandler(final SpreadsheetEngine engine,
+                                                                                                 final Supplier<SpreadsheetEngineContext> context) {
+        return SpreadsheetEngineInsertRowsHateosIdResourceCollectionResourceCollectionHandler.with(engine, context);
     }
 
     @Override
