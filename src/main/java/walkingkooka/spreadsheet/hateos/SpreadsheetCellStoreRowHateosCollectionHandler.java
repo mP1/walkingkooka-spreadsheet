@@ -1,14 +1,16 @@
 package walkingkooka.spreadsheet.hateos;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.Set;
 
 /**
- * A {@link walkingkooka.net.http.server.hateos.HateosCollectionHandler} for {@link SpreadsheetCellStore#row(int)}
+ * A {@link walkingkooka.net.http.server.hateos.HateosCollectionHandler} for {@link SpreadsheetCellStore#row}
  */
-final class SpreadsheetCellStoreRowHateosCollectionHandler extends SpreadsheetCellStoreHateosCollectionHandler {
+final class SpreadsheetCellStoreRowHateosCollectionHandler extends SpreadsheetCellStoreHateosCollectionHandler<SpreadsheetRowReference, SpreadsheetRow> {
 
     static SpreadsheetCellStoreRowHateosCollectionHandler with(final SpreadsheetCellStore store) {
         check(store);
@@ -20,7 +22,7 @@ final class SpreadsheetCellStoreRowHateosCollectionHandler extends SpreadsheetCe
     }
 
     @Override
-    Set<SpreadsheetCell> handle0(final Integer row) {
+    Set<SpreadsheetCell> handle0(final SpreadsheetRowReference row) {
         return this.store.row(row);
     }
 

@@ -3,6 +3,7 @@ package walkingkooka.spreadsheet.hateos;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosCollectionHandler;
+import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
@@ -15,16 +16,16 @@ import java.util.Set;
 /**
  * A base {@link HateosCollectionHandler} for several {@link SpreadsheetCellStore} methods.
  */
-abstract class SpreadsheetCellStoreHateosCollectionHandler extends SpreadsheetStoreHateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetCellStore>
-        implements HateosCollectionHandler<Integer, SpreadsheetCell, SpreadsheetCell> {
+abstract class SpreadsheetCellStoreHateosCollectionHandler<I extends Comparable<I>, R extends HateosResource<I>> extends SpreadsheetStoreHateosHandler<I, R, SpreadsheetCellStore>
+        implements HateosCollectionHandler<I, R, SpreadsheetCell> {
 
     SpreadsheetCellStoreHateosCollectionHandler(final SpreadsheetCellStore store) {
         super(store);
     }
 
     @Override
-    public final List<SpreadsheetCell> handle(final Integer id,
-                                              final List<SpreadsheetCell> cells,
+    public final List<SpreadsheetCell> handle(final I id,
+                                              final List<R> cells,
                                               final Map<HttpRequestAttribute<?>, Object> parameters) {
         Objects.requireNonNull(id, this.operation());
         checkResourcesEmpty(cells);
@@ -35,7 +36,7 @@ abstract class SpreadsheetCellStoreHateosCollectionHandler extends SpreadsheetSt
         return cellsResponse;
     }
 
-    abstract Set<SpreadsheetCell> handle0(final Integer id);
+    abstract Set<SpreadsheetCell> handle0(final I id);
 
     abstract String operation();
 
