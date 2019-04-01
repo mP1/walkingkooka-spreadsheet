@@ -352,9 +352,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     // DELETE / INSERT / COLUMN / ROW ..................................................................................
 
     @Override
-    public void deleteColumns(final SpreadsheetColumnReference column,
-                              final int count,
-                              final SpreadsheetEngineContext context) {
+    public Set<SpreadsheetCell> deleteColumns(final SpreadsheetColumnReference column,
+                                              final int count,
+                                              final SpreadsheetEngineContext context) {
         Objects.requireNonNull(column, "column");
         checkCount(count);
         checkContext(context);
@@ -363,12 +363,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn.with(column.value(), count, this, context)
                     .delete();
         }
+        return Sets.empty();
     }
 
     @Override
-    public void deleteRows(final SpreadsheetRowReference row,
-                           final int count,
-                           final SpreadsheetEngineContext context) {
+    public Set<SpreadsheetCell> deleteRows(final SpreadsheetRowReference row,
+                                           final int count,
+                                           final SpreadsheetEngineContext context) {
         Objects.requireNonNull(row, "row");
         checkCount(count);
         checkContext(context);
@@ -377,12 +378,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             BasicSpreadsheetEngineDeleteOrInsertColumnOrRowRow.with(row.value(), count, this, context)
                     .delete();
         }
+        return Sets.empty();
     }
 
     @Override
-    public void insertColumns(final SpreadsheetColumnReference column,
-                              final int count,
-                              final SpreadsheetEngineContext context) {
+    public Set<SpreadsheetCell> insertColumns(final SpreadsheetColumnReference column,
+                                              final int count,
+                                              final SpreadsheetEngineContext context) {
         Objects.requireNonNull(column, "column");
         checkCount(count);
         checkContext(context);
@@ -393,12 +395,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     context)
                     .insert();
         }
+        return Sets.empty();
     }
 
     @Override
-    public void insertRows(final SpreadsheetRowReference row,
-                           final int count,
-                           final SpreadsheetEngineContext context) {
+    public Set<SpreadsheetCell> insertRows(final SpreadsheetRowReference row,
+                                           final int count,
+                                           final SpreadsheetEngineContext context) {
         Objects.requireNonNull(row, "row");
         checkCount(count);
         checkContext(context);
@@ -407,6 +410,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             BasicSpreadsheetEngineDeleteOrInsertColumnOrRowRow.with(row.value(), count, this, context)
                     .insert();
         }
+        return Sets.empty();
     }
 
     private static void checkCount(final int count) {
@@ -416,9 +420,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
-    public void copyCells(final Collection<SpreadsheetCell> from,
-                          final SpreadsheetRange to,
-                          final SpreadsheetEngineContext context) {
+    public Set<SpreadsheetCell> copyCells(final Collection<SpreadsheetCell> from,
+                                          final SpreadsheetRange to,
+                                          final SpreadsheetEngineContext context) {
         Objects.requireNonNull(from, "from");
         Objects.requireNonNull(to, "to");
         checkContext(context);
@@ -426,6 +430,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         if (!from.isEmpty()) {
             BasicSpreadsheetEngineCopyCells.execute(from, to, this, context);
         }
+        return Sets.empty();
     }
 
     final SpreadsheetLabelStore labelStore;

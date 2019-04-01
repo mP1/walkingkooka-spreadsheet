@@ -4,8 +4,12 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.net.http.server.hateos.HateosHandlerTesting;
 import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
 import java.util.function.Supplier;
 
@@ -51,4 +55,10 @@ public abstract class SpreadsheetEngineHateosHandlerTestCase2<H extends HateosHa
     }
 
     abstract SpreadsheetEngineContext engineContext();
+
+    final SpreadsheetCell cell(final String reference, final String formula) {
+        return SpreadsheetCell.with(SpreadsheetCellReference.parse(reference),
+                SpreadsheetFormula.with(formula),
+                SpreadsheetCellStyle.EMPTY);
+    }
 }

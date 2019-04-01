@@ -32,37 +32,37 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public void deleteColumns(final SpreadsheetColumnReference column,
-                              final int count,
-                              final SpreadsheetEngineContext context) {
+    public Set<SpreadsheetCell> deleteColumns(final SpreadsheetColumnReference column,
+                                              final int count,
+                                              final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void deleteRows(final SpreadsheetRowReference row,
-                           final int count,
-                           final SpreadsheetEngineContext context) {
+    public Set<SpreadsheetCell> deleteRows(final SpreadsheetRowReference row,
+                                           final int count,
+                                           final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void insertColumns(final SpreadsheetColumnReference column,
-                              final int count,
-                              final SpreadsheetEngineContext context) {
+    public Set<SpreadsheetCell> insertColumns(final SpreadsheetColumnReference column,
+                                              final int count,
+                                              final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void insertRows(final SpreadsheetRowReference row,
-                           final int count,
-                           final SpreadsheetEngineContext context) {
+    public Set<SpreadsheetCell> insertRows(final SpreadsheetRowReference row,
+                                           final int count,
+                                           final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void copyCells(final Collection<SpreadsheetCell> from,
-                          final SpreadsheetRange to,
-                          final SpreadsheetEngineContext context) {
+    public Set<SpreadsheetCell> copyCells(final Collection<SpreadsheetCell> from,
+                                          final SpreadsheetRange to,
+                                          final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 }
