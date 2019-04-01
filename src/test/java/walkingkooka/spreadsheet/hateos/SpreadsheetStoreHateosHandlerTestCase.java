@@ -1,7 +1,9 @@
 package walkingkooka.spreadsheet.hateos;
 
-public abstract class SpreadsheetStoreHateosHandlerTestCase<T>
-        extends SpreadsheetHateosTestCase<T> {
+import walkingkooka.net.http.server.hateos.HateosHandler;
+
+public abstract class SpreadsheetStoreHateosHandlerTestCase<H>
+        extends SpreadsheetHateosTestCase<H> {
 
     SpreadsheetStoreHateosHandlerTestCase() {
         super();

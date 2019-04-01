@@ -5,6 +5,7 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReferenceParserToken;
 
 import java.util.Collection;
@@ -39,7 +40,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn extends BasicS
 
     @Override
     Collection<SpreadsheetCell> cells(final int column) {
-        return this.cellStore().column(column);
+        return this.cellStore().column(SpreadsheetReferenceKind.ABSOLUTE.column(column));
     }
 
     @Override

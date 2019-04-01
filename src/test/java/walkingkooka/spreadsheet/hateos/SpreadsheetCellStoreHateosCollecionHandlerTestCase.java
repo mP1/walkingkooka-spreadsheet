@@ -5,6 +5,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosCollectionHandler;
 import walkingkooka.net.http.server.hateos.HateosCollectionHandlerTesting;
+import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
@@ -18,9 +19,11 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetCellStoreHateosCollecionHandlerTestCase<H extends HateosCollectionHandler<Integer, SpreadsheetCell, SpreadsheetCell>>
+public abstract class SpreadsheetCellStoreHateosCollecionHandlerTestCase<H extends HateosCollectionHandler<I, R, SpreadsheetCell>,
+        I extends Comparable<I>,
+        R extends HateosResource<I>>
         extends SpreadsheetStoreHateosHandlerTestCase<H>
-        implements HateosCollectionHandlerTesting<H, Integer, SpreadsheetCell, SpreadsheetCell>,
+        implements HateosCollectionHandlerTesting<H, I, R, SpreadsheetCell>,
         ToStringTesting<H>,
         TypeNameTesting<H> {
 
@@ -66,7 +69,7 @@ public abstract class SpreadsheetCellStoreHateosCollecionHandlerTestCase<H exten
 
 
     @Override
-    public final List<SpreadsheetCell> resourceCollection() {
+    public final List<R> resourceCollection() {
         return Lists.empty();
     }
 
