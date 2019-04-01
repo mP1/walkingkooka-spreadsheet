@@ -2,16 +2,21 @@ package walkingkooka.spreadsheet.hateos;
 
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.store.cell.FakeSpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public final class SpreadsheetCellStoreColumnHateosCollectionHandlerTest extends SpreadsheetCellStoreHateosCollecionHandlerTestCase<SpreadsheetCellStoreColumnHateosCollectionHandler> {
+public final class SpreadsheetCellStoreColumnHateosCollectionHandlerTest extends SpreadsheetCellStoreHateosCollecionHandlerTestCase<SpreadsheetCellStoreColumnHateosCollectionHandler,
+        SpreadsheetColumnReference,
+        SpreadsheetColumn> {
 
-    private final static int COLUMN = 123;
+    private final static SpreadsheetColumnReference COLUMN = SpreadsheetReferenceKind.ABSOLUTE.column(123);
 
     @Override
     SpreadsheetCellStoreColumnHateosCollectionHandler createHandler(final SpreadsheetCellStore store) {
@@ -22,7 +27,7 @@ public final class SpreadsheetCellStoreColumnHateosCollectionHandlerTest extends
     SpreadsheetCellStore store() {
         return new FakeSpreadsheetCellStore() {
             @Override
-            public Set<SpreadsheetCell> column(final int column) {
+            public Set<SpreadsheetCell> column(final SpreadsheetColumnReference column) {
                 assertEquals(COLUMN, column, "column");
 
                 return Sets.of(cell1(), cell2());
@@ -31,7 +36,7 @@ public final class SpreadsheetCellStoreColumnHateosCollectionHandlerTest extends
     }
 
     @Override
-    public Integer id() {
+    public SpreadsheetColumnReference id() {
         return COLUMN;
     }
 

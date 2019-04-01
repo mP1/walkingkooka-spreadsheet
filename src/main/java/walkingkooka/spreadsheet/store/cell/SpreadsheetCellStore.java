@@ -1,8 +1,11 @@
 package walkingkooka.spreadsheet.store.cell;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.Set;
 
@@ -24,10 +27,10 @@ public interface SpreadsheetCellStore extends Store<SpreadsheetCellReference, Sp
     /**
      * Returns a view of all cells in the given row.
      */
-    Set<SpreadsheetCell> row(int row);
+    Set<SpreadsheetCell> row(SpreadsheetRowReference row);
 
     /**
      * Returns a view of all cells in the given column.
      */
-    Set<SpreadsheetCell> column(int column);
+    Set<SpreadsheetCell> column(SpreadsheetColumnReference column);
 }

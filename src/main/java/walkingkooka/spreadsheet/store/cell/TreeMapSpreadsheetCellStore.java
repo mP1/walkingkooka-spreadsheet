@@ -6,6 +6,8 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.List;
 import java.util.Map;
@@ -112,21 +114,17 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     }
 
     @Override
-    public final Set<SpreadsheetCell> row(final int row) {
-        if (row < 0) {
-            throw new IllegalArgumentException("Row " + row + " must be >= 0");
-        }
+    public final Set<SpreadsheetCell> row(final SpreadsheetRowReference row) {
+        Objects.requireNonNull(row, "row");
 
-        return this.filter(c -> c.reference().row().value() == row);
+        return this.filter(c -> row.compareTo(c.reference().row()) == 0);
     }
 
     @Override
-    public final Set<SpreadsheetCell> column(final int column) {
-        if (column < 0) {
-            throw new IllegalArgumentException("Column " + column + " must be >= 0");
-        }
+    public final Set<SpreadsheetCell> column(final SpreadsheetColumnReference column) {
+        Objects.requireNonNull(column, "column");
 
-        return this.filter(c -> c.reference().column().value() == column);
+        return this.filter(c -> column.compareTo(c.reference().column()) == 0);
     }
 
     private Set<SpreadsheetCell> filter(final Predicate<SpreadsheetCell> filter) {
