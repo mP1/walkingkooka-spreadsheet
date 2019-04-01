@@ -12,7 +12,9 @@ import walkingkooka.spreadsheet.store.StoreTesting;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -103,9 +105,9 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
 
     @Test
-    public final void testRowInvalidRowFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createStore().row(-1);
+    public final void testRowNullFails() {
+        assertThrows(NullPointerException.class, () -> {
+            this.createStore().row(null);
         });
     }
 
@@ -123,15 +125,15 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         store.save(c);
         store.save(d);
 
-        checkEquals("row 1", store.row(1), a, b);
-        checkEquals("row 2", store.row(2), c, d);
-        checkEquals("row 99", store.row(99));
+        checkEquals("row 1", store.row(a.reference().row()), a, b);
+        checkEquals("row 2", store.row(c.reference().row()), c, d);
+        checkEquals("row 99", store.row(SpreadsheetRowReference.parse("99")));
     }
 
     @Test
-    public final void testColumnInvalidColumnFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createStore().column(-1);
+    public final void testColumnNullFails() {
+        assertThrows(NullPointerException.class, () -> {
+            this.createStore().column(null);
         });
     }
 
@@ -149,9 +151,9 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         store.save(c);
         store.save(d);
 
-        checkEquals("column 1", store.column(1), a, b);
-        checkEquals("column 2", store.column(2), c, d);
-        checkEquals("column 99", store.column(99));
+        checkEquals("column 1", store.column(a.reference().column()), a, b);
+        checkEquals("column 2", store.column(c.reference().column()), c, d);
+        checkEquals("column 99", store.column(SpreadsheetColumnReference.parse("ZZ")));
     }
 
     @Test

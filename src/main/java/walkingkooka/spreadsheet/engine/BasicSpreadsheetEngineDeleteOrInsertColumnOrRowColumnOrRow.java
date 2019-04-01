@@ -11,6 +11,8 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReferenceParserToken;
 import walkingkooka.tree.expression.ExpressionReference;
 
@@ -20,7 +22,7 @@ import java.util.Optional;
 /**
  * Base class that acts as a bridge to either columns or rows.
  */
-abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
+abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow<V extends Comparable<V>> {
 
     /**
      * Package private to limit sub classing.
@@ -90,11 +92,11 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
     final void fixAllExpressionReferences(final SpreadsheetEngineContext context) {
         final int rows = this.maxRow();
         for (int i = 0; i <= rows; i++) {
-            this.fixRowReferences(i, context);
+            this.fixRowReferences(SpreadsheetReferenceKind.ABSOLUTE.row(i), context);
         }
     }
 
-    private void fixRowReferences(final int row, final SpreadsheetEngineContext context) {
+    private void fixRowReferences(final SpreadsheetRowReference row, final SpreadsheetEngineContext context) {
         this.rowCells(row).stream()
                 .map(r -> this.fixExpressionReferences(r, context))
                 .forEach(this::saveCell);
@@ -331,7 +333,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
     /**
      * Returns all the cells for the requested row.
      */
-    final Collection<SpreadsheetCell> rowCells(final int row) {
+    final Collection<SpreadsheetCell> rowCells(final SpreadsheetRowReference row) {
         return this.cellStore().row(row);
     }
 
