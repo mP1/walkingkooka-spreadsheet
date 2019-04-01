@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 /**
  * A handler for rows.
  */
-abstract class SpreadsheetEngineRowHateosHandler extends SpreadsheetEngineHateos
+abstract class SpreadsheetEngineRowHateosHandler extends SpreadsheetEngineHateosHandler
         implements HateosHandler<SpreadsheetRowReference, SpreadsheetRow, SpreadsheetCell> {
 
     SpreadsheetEngineRowHateosHandler(final SpreadsheetEngine engine,
