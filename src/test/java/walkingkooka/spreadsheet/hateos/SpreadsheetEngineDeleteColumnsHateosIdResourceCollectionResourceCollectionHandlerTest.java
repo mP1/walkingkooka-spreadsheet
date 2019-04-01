@@ -3,10 +3,9 @@ package walkingkooka.spreadsheet.hateos;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosHandler;
-import walkingkooka.net.http.server.hateos.HateosIdRangeResourceCollectionResourceCollectionHandlerTesting;
+import walkingkooka.net.http.server.hateos.HateosIdResourceCollectionResourceCollectionHandlerTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
@@ -22,17 +21,17 @@ import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public final class SpreadsheetEngineDeleteColumnsHateosIdRangeResourceCollectionResourceCollectionHandlerTest extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineDeleteColumnsHateosIdRangeResourceCollectionResourceCollectionHandler,
+public final class SpreadsheetEngineDeleteColumnsHateosIdResourceCollectionResourceCollectionHandlerTest extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineDeleteColumnsHateosIdResourceCollectionResourceCollectionHandler,
         SpreadsheetColumnReference,
         SpreadsheetColumn,
         SpreadsheetCell>
-        implements HateosIdRangeResourceCollectionResourceCollectionHandlerTesting<SpreadsheetEngineDeleteColumnsHateosIdRangeResourceCollectionResourceCollectionHandler,
+        implements HateosIdResourceCollectionResourceCollectionHandlerTesting<SpreadsheetEngineDeleteColumnsHateosIdResourceCollectionResourceCollectionHandler,
         SpreadsheetColumnReference,
         SpreadsheetColumn,
         SpreadsheetCell> {
 
     @Test
-    public void testDeleteSeveralColumns() {
+    public void testDeleteColumn() {
         final SpreadsheetColumnReference column = this.id();
         final List<SpreadsheetColumn> resources = this.resourceCollection();
 
@@ -43,41 +42,18 @@ public final class SpreadsheetEngineDeleteColumnsHateosIdRangeResourceCollection
                                                               final int count,
                                                               final SpreadsheetEngineContext context) {
                         assertEquals(column, c, "column");
-                        assertEquals(3, count, "count");
+                        assertEquals(1, count, "count");
                         return Sets.of(cell());
                     }
-                }), Range.greaterThanEquals(column).and(Range.lessThanEquals(SpreadsheetColumnReference.parse("D"))), // 3 inclusive
+                }),
+                column,
                 resources,
                 HateosHandler.NO_PARAMETERS,
-                Lists.of(cell()));
+                Lists.of(this.cell()));
     }
 
     private SpreadsheetCell cell() {
         return this.cell("A99", "1+2");
-    }
-
-    @Test
-    public void testDeleteAllColumnsFails() {
-        this.handleCollectionFails2(Range.all());
-    }
-
-    @Test
-    public void testDeleteOpenRangeBeginFails() {
-        this.handleCollectionFails2(Range.lessThanEquals(SpreadsheetColumnReference.parse("A")));
-    }
-
-    @Test
-    public void testDeleteOpenRangeEndFails() {
-        this.handleCollectionFails2(Range.greaterThanEquals(SpreadsheetColumnReference.parse("A")));
-    }
-
-    private void handleCollectionFails2(final Range<SpreadsheetColumnReference> columns) {
-        assertEquals("Range of columns required=" + columns,
-                this.handleFails(columns,
-                        this.resourceCollection(),
-                        HateosHandler.NO_PARAMETERS,
-                        IllegalArgumentException.class).getMessage(),
-                "message");
     }
 
     @Test
@@ -86,8 +62,8 @@ public final class SpreadsheetEngineDeleteColumnsHateosIdRangeResourceCollection
     }
 
     @Override
-    public Class<SpreadsheetEngineDeleteColumnsHateosIdRangeResourceCollectionResourceCollectionHandler> type() {
-        return SpreadsheetEngineDeleteColumnsHateosIdRangeResourceCollectionResourceCollectionHandler.class;
+    public Class<SpreadsheetEngineDeleteColumnsHateosIdResourceCollectionResourceCollectionHandler> type() {
+        return SpreadsheetEngineDeleteColumnsHateosIdResourceCollectionResourceCollectionHandler.class;
     }
 
     @Override
@@ -101,25 +77,19 @@ public final class SpreadsheetEngineDeleteColumnsHateosIdRangeResourceCollection
     }
 
     @Override
-    public Range<SpreadsheetColumnReference> collection() {
-        return Range.greaterThanEquals(SpreadsheetColumnReference.parse("C"))
-                .and(Range.lessThanEquals(SpreadsheetColumnReference.parse("E"))); // C, D, E
-    }
-
-    @Override
     public Map<HttpRequestAttribute<?>, Object> parameters() {
         return HateosHandler.NO_PARAMETERS;
     }
 
-    private SpreadsheetEngineDeleteColumnsHateosIdRangeResourceCollectionResourceCollectionHandler createHandler(final SpreadsheetEngine engine) {
+    private SpreadsheetEngineDeleteColumnsHateosIdResourceCollectionResourceCollectionHandler createHandler(final SpreadsheetEngine engine) {
         return this.createHandler(engine,
                 this.engineContextSupplier());
     }
 
     @Override
-    SpreadsheetEngineDeleteColumnsHateosIdRangeResourceCollectionResourceCollectionHandler createHandler(final SpreadsheetEngine engine,
-                                                                                                         final Supplier<SpreadsheetEngineContext> context) {
-        return SpreadsheetEngineDeleteColumnsHateosIdRangeResourceCollectionResourceCollectionHandler.with(engine, context);
+    SpreadsheetEngineDeleteColumnsHateosIdResourceCollectionResourceCollectionHandler createHandler(final SpreadsheetEngine engine,
+                                                                                                    final Supplier<SpreadsheetEngineContext> context) {
+        return SpreadsheetEngineDeleteColumnsHateosIdResourceCollectionResourceCollectionHandler.with(engine, context);
     }
 
     @Override
