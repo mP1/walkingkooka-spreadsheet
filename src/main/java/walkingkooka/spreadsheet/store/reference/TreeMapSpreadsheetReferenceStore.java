@@ -4,7 +4,9 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.store.Store;
+import walkingkooka.spreadsheet.store.Watchers;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -34,7 +37,8 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
     }
 
     @Override
-    public Set<SpreadsheetCellReference> save(final Set<SpreadsheetCellReference> value) {
+    public Runnable addSaveWatcher(final Consumer<Set<SpreadsheetCellReference>> saved) {
+        Objects.requireNonNull(saved, "saved");
         throw new UnsupportedOperationException();
     }
 
@@ -52,8 +56,16 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
         final Set<SpreadsheetCellReference> referrers = this.targetToReferences.remove(id);
         if (null != referrers) {
             this.removeAllReferences(referrers, id);
+            this.deleteWatchers.accept(id);
         }
     }
+
+    @Override
+    public Runnable addDeleteWatcher(final Consumer<T> deleted) {
+        return this.deleteWatchers.addWatcher(deleted);
+    }
+
+    private final Watchers<T> deleteWatchers = Watchers.create();
 
     @Override
     public int count() {

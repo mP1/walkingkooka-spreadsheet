@@ -3,16 +3,20 @@ package walkingkooka.spreadsheet.store.security;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.security.Group;
 import walkingkooka.spreadsheet.security.GroupId;
 import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.spreadsheet.store.Store;
+import walkingkooka.spreadsheet.store.Watchers;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -38,9 +42,18 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
     @Override
     public Group save(final Group group) {
         Objects.requireNonNull(group, "group");
+
         this.groupIdToGroup.put(group.id(), group);
+        this.saveWatchers.accept(group);
+
         return group;
     }
+
+    public Runnable addSaveWatcher(final Consumer<Group> saved) {
+        return this.saveWatchers.addWatcher(saved);
+    }
+
+    private final Watchers<Group> saveWatchers = Watchers.create();
 
     @Override
     public void delete(final GroupId id) {
@@ -48,8 +61,16 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
 
         if(null!=this.groupIdToGroup.remove(id)) {
             this.groupIdToUserIds.remove(id);
+            this.deleteWatchers.accept(id);
         }
     }
+
+    @Override
+    public Runnable addDeleteWatcher(final Consumer<GroupId> deleted) {
+        return this.deleteWatchers.addWatcher(deleted);
+    }
+
+    private final Watchers<GroupId> deleteWatchers = Watchers.create();
 
     @Override
     public int count() {

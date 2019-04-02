@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
 import java.util.Set;
@@ -12,6 +13,10 @@ import java.util.TreeMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceStoreTestCase<TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference>, SpreadsheetCellReference> {
+
+    @Override
+    public void testAddSaveWatcherAndSave() {
+    }
 
     @Test
     public void testSaveAndLoad() {
@@ -442,6 +447,11 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     private SpreadsheetCellReference j99() {
         return SpreadsheetCellReference.parse("j99");
+    }
+
+    @Override
+    public Set<SpreadsheetCellReference> value() {
+        return Sets.of(this.f99(), this.g99(), this.i99(), this.j99());
     }
 
     // StoreTesting.................................................................................

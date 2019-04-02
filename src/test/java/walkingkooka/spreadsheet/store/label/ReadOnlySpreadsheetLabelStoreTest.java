@@ -33,11 +33,20 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
     public void testSaveDeleteLoad() {
     }
 
-    @Test
-    public void testDeleteFails() {
-        assertThrows(UnsupportedOperationException.class, () -> {
-            this.createStore().delete(LABEL);
-        });
+    @Override
+    public void testAddSaveWatcherAndSave() {
+    }
+
+    @Override
+    public void testAddSaveWatcherAndRemove() {
+    }
+
+    @Override
+    public void testAddDeleteWatcherAndDelete() {
+    }
+
+    @Override
+    public void testAddDeleteWatcherAndRemove() {
     }
 
     @Test
