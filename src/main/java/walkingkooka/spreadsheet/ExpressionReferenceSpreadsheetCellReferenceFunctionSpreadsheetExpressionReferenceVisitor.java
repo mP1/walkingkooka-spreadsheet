@@ -1,7 +1,5 @@
-package walkingkooka.spreadsheet.engine;
+package walkingkooka.spreadsheet;
 
-import walkingkooka.spreadsheet.SpreadsheetExpressionReferenceVisitor;
-import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.tree.expression.ExpressionReference;

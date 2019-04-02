@@ -1,8 +1,6 @@
-package walkingkooka.spreadsheet.engine;
+package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
-import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
