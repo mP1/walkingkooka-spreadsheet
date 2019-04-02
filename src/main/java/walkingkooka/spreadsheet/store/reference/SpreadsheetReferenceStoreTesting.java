@@ -88,6 +88,23 @@ public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReference
         });
     }
 
+    @Test
+    default void testRemoveLastReferenceAddDeleteWatcher() {
+        final Set<SpreadsheetCellReference> references = this.value();
+
+        final S store = this.createStore();
+
+        final List<T> fired = Lists.array();
+        store.addDeleteWatcher((d) -> fired.add(d));
+
+        final T id = this.id();
+
+        references.forEach(v -> store.addReference(id, v));
+        references.forEach(v -> store.removeReference(id, v));
+
+        assertEquals(Lists.of(id), fired, "fired values");
+    }
+
     // saveReferences...........................................................................................
 
     @Test

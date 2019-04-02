@@ -198,6 +198,7 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
             referrers.remove(referrer);
             if (referrers.isEmpty()) {
                 this.targetToReferences.remove(id);
+                this.deleteWatchers.accept(id);
             }
         }
         return removed;
