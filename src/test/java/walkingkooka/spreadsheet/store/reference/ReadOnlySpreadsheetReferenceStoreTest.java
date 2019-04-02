@@ -47,6 +47,10 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
     public void testAddDeleteWatcherAndRemove() {
     }
 
+    @Override
+    public void testRemoveLastReferenceAddDeleteWatcher() {
+    }
+
     // ids.................................................................................
 
     @Test
