@@ -126,8 +126,4 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
     final SpreadsheetLabelMapping mapping(final String label, final int column, final int row) {
         return SpreadsheetLabelMapping.with(SpreadsheetLabelName.with(label), cell(column, row));
     }
-
-    public SpreadsheetLabelName id() {
-        return SpreadsheetLabelName.with("abc123456789");
-    }
 }

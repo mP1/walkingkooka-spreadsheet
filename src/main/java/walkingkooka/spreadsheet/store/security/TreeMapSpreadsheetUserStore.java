@@ -7,12 +7,14 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.spreadsheet.store.Store;
+import walkingkooka.spreadsheet.store.Watchers;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -38,16 +40,35 @@ final class TreeMapSpreadsheetUserStore implements SpreadsheetUserStore {
     @Override
     public User save(final User user) {
         Objects.requireNonNull(user, "user");
+
         this.userIdToUser.put(user.id(), user);
+        this.saveWatchers.accept(user);
+
         return user;
     }
+
+    @Override
+    public Runnable addSaveWatcher(final Consumer<User> saved) {
+        return this.saveWatchers.addWatcher(saved);
+    }
+
+    private final Watchers<User> saveWatchers = Watchers.create();
 
     @Override
     public void delete(final UserId id) {
         Objects.requireNonNull(id, "id");
 
-        this.userIdToUser.remove(id);
+        if (null != this.userIdToUser.remove(id)) {
+            this.deleteWatchers.accept(id);
+        }
     }
+
+    @Override
+    public Runnable addDeleteWatcher(final Consumer<UserId> deleted) {
+        return this.deleteWatchers.addWatcher(deleted);
+    }
+
+    private final Watchers<UserId> deleteWatchers = Watchers.create();
 
     @Override
     public int count() {

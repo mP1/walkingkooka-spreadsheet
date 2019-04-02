@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * A store that holds a value with an id (K).
@@ -34,9 +35,19 @@ public interface Store<K, V> {
     V save(final V value);
 
     /**
+     * Adds a watcher that will receive values after a save.
+     */
+    Runnable addSaveWatcher(final Consumer<V> saved);
+
+    /**
      * Deletes a single value by id.
      */
     void delete(final K id);
+
+    /**
+     * Adds a watcher that will receive values after a deleted.
+     */
+    Runnable addDeleteWatcher(final Consumer<K> deleted);
 
     /**
      * Returns the total number of records in the store.

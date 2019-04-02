@@ -46,6 +46,10 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
     private final static String VALUE5 = "value5";
     private final static String VALUE6 = "value6";
 
+
+
+
+
     // save and load range ...................................................................................................
 
     @Test
@@ -763,7 +767,7 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
     }
 
     @Override
-    public String value() {
+    public String valueValue() {
         return VALUE1;
     }
 

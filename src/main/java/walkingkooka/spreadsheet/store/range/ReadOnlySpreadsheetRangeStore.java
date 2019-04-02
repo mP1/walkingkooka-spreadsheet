@@ -7,10 +7,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 
 final class ReadOnlySpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> {
 
-    static <V> ReadOnlySpreadsheetRangeStore<V> with(SpreadsheetRangeStore<V> store) {
+    static <V> ReadOnlySpreadsheetRangeStore<V> with(final SpreadsheetRangeStore<V> store) {
         Objects.requireNonNull(store, "store");
         return new ReadOnlySpreadsheetRangeStore<>(store);
     }
@@ -28,8 +29,20 @@ final class ReadOnlySpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V>
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public Runnable addSaveWatcher(final Consumer<List<V>> saved) {
+        Objects.requireNonNull(saved, "saved");
+        throw new UnsupportedOperationException();
+    }
+
     public void delete(final SpreadsheetRange id) {
         Objects.requireNonNull(id, "id");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Runnable addDeleteWatcher(final Consumer<SpreadsheetRange> deleted) {
+        Objects.requireNonNull(deleted, "saved");
         throw new UnsupportedOperationException();
     }
 
