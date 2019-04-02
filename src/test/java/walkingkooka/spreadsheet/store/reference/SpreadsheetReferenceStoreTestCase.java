@@ -8,4 +8,8 @@ public abstract class SpreadsheetReferenceStoreTestCase<S extends SpreadsheetRef
     SpreadsheetReferenceStoreTestCase() {
         super();
     }
+
+    @Override
+    public final void testAddDeleteWatcherAndDelete() {
+    }
 }

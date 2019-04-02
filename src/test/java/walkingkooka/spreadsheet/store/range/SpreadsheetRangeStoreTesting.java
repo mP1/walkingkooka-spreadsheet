@@ -46,10 +46,43 @@ public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>
         this.loadCellReferenceValuesFails(RANGE.begin());
     }
 
+    @Override
+    default void testAddSaveWatcherAndRemove() {
+    }
+
+    @Override
+    default void testAddSaveWatcherAndSave() {
+    }
+
+    @Test
+    default void testAddSaveWatcherFails() {
+        assertThrows(UnsupportedOperationException.class, () -> {
+            this.createStore().addSaveWatcher((a) -> {
+            });
+        });
+    }
+
+    @Test
+    default void testAddDeleteWatcherAndDelete() {
+        final SpreadsheetRange range = this.id();
+        final V value = this.valueValue();
+
+        final S store = this.createStore();
+
+        final List<SpreadsheetRange> fired = Lists.array();
+        store.addDeleteWatcher((d) -> fired.add(d));
+
+        store.addValue(range, value);
+
+        store.delete(range);
+
+        assertEquals(Lists.of(range), fired, "fired values");
+    }
+
     @Test
     default void testAddValueNullRangeFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.createStore().addValue(null, this.value());
+            this.createStore().addValue(null, this.valueValue());
         });
     }
 
@@ -63,28 +96,28 @@ public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>
     @Test
     default void testReplaceNullRangeFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.createStore().replaceValue(null, this.value(), this.value());
+            this.createStore().replaceValue(null, this.valueValue(), this.valueValue());
         });
     }
 
     @Test
     default void testReplaceNullNewValueFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.createStore().replaceValue(RANGE, null, this.value());
+            this.createStore().replaceValue(RANGE, null, this.valueValue());
         });
     }
 
     @Test
     default void testReplaceNullOldValueFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.createStore().replaceValue(RANGE, this.value(), null);
+            this.createStore().replaceValue(RANGE, this.valueValue(), null);
         });
     }
 
     @Test
     default void testRemoveValueNullRangeFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.createStore().removeValue(null, this.value());
+            this.createStore().removeValue(null, this.valueValue());
         });
     }
 
@@ -169,11 +202,17 @@ public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>
         return values;
     }
 
-    V value();
+    V valueValue();
 
     // StoreTesting...........................................................
 
+    @Override
     default SpreadsheetRange id() {
         return SpreadsheetRange.parse("A1:B2");
+    }
+
+    @Override
+    default List<V> value() {
+        return Lists.of(this.valueValue());
     }
 }

@@ -225,6 +225,11 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         return SpreadsheetCellReference.parse("A1");
     }
 
+    @Override
+    public SpreadsheetCell value() {
+        return this.cell(this.id());
+    }
+
     private void checkEquals(final String message, final Collection<SpreadsheetCell> cells, final SpreadsheetCell... expected) {
         final Set<SpreadsheetCell> actual = Sets.sorted();
         actual.addAll(cells);

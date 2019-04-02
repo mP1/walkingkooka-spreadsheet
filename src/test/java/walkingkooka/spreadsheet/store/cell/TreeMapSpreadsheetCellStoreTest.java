@@ -1,6 +1,6 @@
 package walkingkooka.spreadsheet.store.cell;
 
-public final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase<TreeMapSpreadsheetCellStore> {
+final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase<TreeMapSpreadsheetCellStore> {
 
     @Override
     public TreeMapSpreadsheetCellStore createStore() {

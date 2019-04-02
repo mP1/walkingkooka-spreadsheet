@@ -1,5 +1,6 @@
 package walkingkooka.spreadsheet.store.range;
 
+import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
@@ -7,6 +8,7 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * A store that holds one or more values for {@link SpreadsheetRange}.
@@ -19,6 +21,12 @@ public interface SpreadsheetRangeStore<V> extends Store<SpreadsheetRange, List<V
     @Override
     default List<V> save(final List<V> value) {
         Objects.requireNonNull(value, "value");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    default Runnable addSaveWatcher(final Consumer<List<V>> saved) {
+        Objects.requireNonNull(saved, "saved");
         throw new UnsupportedOperationException();
     }
 
