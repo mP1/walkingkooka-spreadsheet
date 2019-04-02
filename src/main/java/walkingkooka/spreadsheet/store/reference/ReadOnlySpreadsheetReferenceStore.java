@@ -1,12 +1,15 @@
 package walkingkooka.spreadsheet.store.reference;
 
+import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * A read only wrapper around a {@link SpreadsheetReferenceStore}
@@ -34,8 +37,20 @@ final class ReadOnlySpreadsheetReferenceStore<T extends ExpressionReference & Co
     }
 
     @Override
+    public Runnable addSaveWatcher(final Consumer<Set<SpreadsheetCellReference>> saved) {
+        Objects.requireNonNull(saved, "saved");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void delete(final T id) {
         checkId(id);
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Runnable addDeleteWatcher(final Consumer<T> deleted) {
+        Objects.requireNonNull(deleted, "deleted");
         throw new UnsupportedOperationException();
     }
 

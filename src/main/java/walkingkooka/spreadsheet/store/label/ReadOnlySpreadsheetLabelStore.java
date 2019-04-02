@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * Wraps another store and presents a readonly view.
@@ -35,8 +36,20 @@ final class ReadOnlySpreadsheetLabelStore implements SpreadsheetLabelStore {
     }
 
     @Override
+    public Runnable addSaveWatcher(final Consumer<SpreadsheetLabelMapping> saved) {
+        Objects.requireNonNull(saved, "saved");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void delete(final SpreadsheetLabelName id) {
         Objects.requireNonNull(id, "id");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Runnable addDeleteWatcher(final Consumer<SpreadsheetLabelName> deleted) {
+        Objects.requireNonNull(deleted, "deleted");
         throw new UnsupportedOperationException();
     }
 
