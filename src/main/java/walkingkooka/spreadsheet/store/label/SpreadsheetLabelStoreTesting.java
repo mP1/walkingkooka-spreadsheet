@@ -3,6 +3,7 @@ package walkingkooka.spreadsheet.store.label;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.store.StoreTesting;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.tree.expression.ExpressionReference;
 
@@ -26,5 +27,15 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
         assertEquals(referencesOrRanges,
                 store.loadCellReferencesOrRanges(label),
                 ()-> "loadCellReferencesOrRanges for " + label);
+    }
+
+    @Override
+    default SpreadsheetLabelName id() {
+        return SpreadsheetLabelName.with("abc123456789");
+    }
+
+    @Override
+    default SpreadsheetLabelMapping value() {
+        return SpreadsheetLabelMapping.with(this.id(), SpreadsheetCellReference.parse("A1"));
     }
 }

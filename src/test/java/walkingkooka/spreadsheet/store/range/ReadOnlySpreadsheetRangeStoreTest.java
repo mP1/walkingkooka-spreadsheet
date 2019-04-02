@@ -3,11 +3,15 @@ package walkingkooka.spreadsheet.store.range;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.spreadsheet.SpreadsheetRange;
+import walkingkooka.spreadsheet.store.ReadOnlyStoreTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ReadOnlySpreadsheetRangeStoreTest implements SpreadsheetRangeStoreTesting<ReadOnlySpreadsheetRangeStore<String>, String> {
+public final class ReadOnlySpreadsheetRangeStoreTest implements SpreadsheetRangeStoreTesting<ReadOnlySpreadsheetRangeStore<String>, String>,
+        ReadOnlyStoreTesting<ReadOnlySpreadsheetRangeStore<String>, SpreadsheetRange, List<String>> {
 
     private final static SpreadsheetRange RANGE = SpreadsheetRange.with(SpreadsheetCellReference.parse("a1"), SpreadsheetCellReference.parse("b2"));
     private final static String VALUE = "value";
@@ -23,11 +27,20 @@ public final class ReadOnlySpreadsheetRangeStoreTest implements SpreadsheetRange
         this.loadRangeAndCheck(ReadOnlySpreadsheetRangeStore.with(store), RANGE, VALUE);
     }
 
-    @Test
-    public void testDeleteFails() {
-        assertThrows(UnsupportedOperationException.class, () -> {
-            this.createStore().delete(RANGE);
-        });
+    @Override
+    public void testAddSaveWatcherAndSave() {
+    }
+
+    @Override
+    public void testAddSaveWatcherAndRemove() {
+    }
+
+    @Override
+    public void testAddDeleteWatcherAndDelete() {
+    }
+
+    @Override
+    public void testAddDeleteWatcherAndRemove() {
     }
 
     @Test
@@ -52,7 +65,7 @@ public final class ReadOnlySpreadsheetRangeStoreTest implements SpreadsheetRange
     }
 
     @Override
-    public String value() {
+    public String valueValue() {
         return "hello";
     }
 

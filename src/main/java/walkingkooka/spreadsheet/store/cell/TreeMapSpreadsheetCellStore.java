@@ -4,9 +4,12 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.store.Store;
+import walkingkooka.spreadsheet.store.Watchers;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.List;
@@ -14,6 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
@@ -53,8 +57,17 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
 
         final SpreadsheetCellReference key = cell.reference();
         this.cells.put(key, cell);
+        this.saveWatchers.accept(cell);
+
         return cell;
     }
+
+    @Override
+    public Runnable addSaveWatcher(final Consumer<SpreadsheetCell> saved) {
+        return this.saveWatchers.addWatcher(saved);
+    }
+
+    private final Watchers<SpreadsheetCell> saveWatchers = Watchers.create();
 
     /**
      * Deletes a single cell, ignoring invalid requests.
@@ -62,8 +75,19 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     @Override
     public final void delete(final SpreadsheetCellReference reference) {
         Objects.requireNonNull(reference, "reference");
-        this.cells.remove(reference);
+
+        if(null!=this.cells.remove(reference)) {
+            this.deleteWatchers.accept(reference);
+        }
     }
+
+    @Override
+    public Runnable addDeleteWatcher(final Consumer<SpreadsheetCellReference> deleted) {
+        return this.deleteWatchers.addWatcher(deleted);
+    }
+
+    private final Watchers<SpreadsheetCellReference> deleteWatchers = Watchers.create();
+
 
     @Override
     public int count() {
