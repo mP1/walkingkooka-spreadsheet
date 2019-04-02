@@ -1,13 +1,8 @@
-package walkingkooka.spreadsheet.engine;
+package walkingkooka.spreadsheet;
 
-import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
-import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
-import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStore;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Objects;
@@ -18,7 +13,6 @@ import java.util.function.Function;
  * Resolves an {@link ExpressionReference} to a {@link SpreadsheetCellReference}.
  */
 final class ExpressionReferenceSpreadsheetCellReferenceFunction implements Function<ExpressionReference, Optional<SpreadsheetCellReference>> {
-
 
     static ExpressionReferenceSpreadsheetCellReferenceFunction with(final SpreadsheetLabelStore labelStore,
                                                                 final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore) {
