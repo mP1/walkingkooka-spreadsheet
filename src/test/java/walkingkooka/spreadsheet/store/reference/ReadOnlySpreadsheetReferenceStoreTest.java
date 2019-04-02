@@ -3,14 +3,15 @@ package walkingkooka.spreadsheet.store.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.store.ReadOnlyStoreTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
 import java.util.Set;
-import java.util.TreeMap;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceStoreTestCase<ReadOnlySpreadsheetReferenceStore<SpreadsheetCellReference>, SpreadsheetCellReference> {
+public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceStoreTestCase<ReadOnlySpreadsheetReferenceStore<SpreadsheetCellReference>, SpreadsheetCellReference>
+        implements ReadOnlyStoreTesting<ReadOnlySpreadsheetReferenceStore<SpreadsheetCellReference>, SpreadsheetCellReference, Set<SpreadsheetCellReference>> {
 
     @Test
     public void testSaveAndLoad() {
@@ -30,11 +31,20 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
         this.loadReferredAndCheck(readOnly, a1); // a1 --> nothing
     }
 
-    @Test
-    public void testSaveFails() {
-        assertThrows(UnsupportedOperationException.class, () -> {
-            this.createStore().save(Sets.of(this.a1()));
-        });
+    @Override
+    public void testAddSaveWatcherAndSave() {
+    }
+
+    @Override
+    public void testAddSaveWatcherAndRemove() {
+    }
+
+    @Override
+    public void testAddDeleteWatcherAndDelete2() {
+    }
+
+    @Override
+    public void testAddDeleteWatcherAndRemove() {
     }
 
     // ids.................................................................................
@@ -159,6 +169,11 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
 
     private SpreadsheetCellReference j99() {
         return SpreadsheetCellReference.parse("j99");
+    }
+
+    @Override
+    public Set<SpreadsheetCellReference> value() {
+        return Sets.of(this.a1(), this.b1(), this.c1());
     }
 
     // StoreTesting.................................................................................

@@ -4,7 +4,9 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.store.Store;
+import walkingkooka.spreadsheet.store.Watchers;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 
 import java.util.List;
 import java.util.Map;
@@ -210,8 +212,16 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
 
         if (null != this.topLeft.remove(range.begin())) {
             this.bottomRight.remove(range.end());
+            this.deleteWatchers.accept(range);
         }
     }
+
+    @Override
+    public Runnable addDeleteWatcher(final Consumer<SpreadsheetRange> deleted) {
+        return this.deleteWatchers.addWatcher(deleted);
+    }
+
+    private final Watchers<SpreadsheetRange> deleteWatchers = Watchers.create();
 
     // count.........................................................................................................
 

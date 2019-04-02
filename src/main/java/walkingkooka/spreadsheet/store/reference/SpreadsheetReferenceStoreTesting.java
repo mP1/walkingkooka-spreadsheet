@@ -1,12 +1,14 @@
 package walkingkooka.spreadsheet.store.reference;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.store.StoreTesting;
 import walkingkooka.test.TypeNameTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.tree.expression.ExpressionReference;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -22,6 +24,36 @@ public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReference
         assertThrows(UnsupportedOperationException.class, () -> {
             this.createStore().save(Sets.of(SpreadsheetCellReference.parse("A1")));
         });
+    }
+
+    @Test
+    default void testAddSaveWatcherFails() {
+        assertThrows(UnsupportedOperationException.class, () -> {
+            this.createStore().addSaveWatcher((a) -> {
+            });
+        });
+    }
+
+    @Override
+    default void testAddSaveWatcherAndRemove() {
+    }
+
+    @Test
+    default void testAddDeleteWatcherAndDelete2() {
+        final Set<SpreadsheetCellReference> references = this.value();
+
+        final S store = this.createStore();
+
+        final List<T> fired = Lists.array();
+        store.addDeleteWatcher((d) -> fired.add(d));
+
+        final T id = this.id();
+
+        references.forEach(v -> store.addReference(id, v));
+
+        store.delete(id);
+
+        assertEquals(Lists.of(id), fired, "fired values");
     }
 
     // addReference...........................................................................................
@@ -122,6 +154,8 @@ public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReference
             }
         }
     }
+
+
 
     // TypeNameTesting...........................................................................................
 
