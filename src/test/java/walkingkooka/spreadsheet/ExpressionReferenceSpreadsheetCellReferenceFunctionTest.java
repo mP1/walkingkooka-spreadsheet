@@ -87,6 +87,7 @@ public final class ExpressionReferenceSpreadsheetCellReferenceFunctionTest imple
 
         final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore = SpreadsheetRangeStores.treeMap();
         rangeToCellStore.addValue(this.rangeC1C2(), this.cellC1());
+        rangeToCellStore.addValue(this.rangeC1C2(), this.cellC2());
 
         return ExpressionReferenceSpreadsheetCellReferenceFunction.with(SpreadsheetLabelStores.readOnly(labelStore),
                 SpreadsheetRangeStores.readOnly(rangeToCellStore));
