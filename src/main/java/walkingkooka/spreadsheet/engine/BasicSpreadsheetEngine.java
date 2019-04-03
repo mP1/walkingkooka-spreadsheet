@@ -118,23 +118,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(context, "context");
 
         try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCells.with(this, context)) {
-            this.saveCell0(cell,
+            BasicSpreadsheetEngineSaveCell.execute(cell,
                     SpreadsheetEngineLoading.FORCE_RECOMPUTE,
+                    this,
                     context);
             return updated.refreshUpdated();
         }
     }
-
-    Set<SpreadsheetCell> saveCell0(final SpreadsheetCell cell,
-                                   final SpreadsheetEngineLoading loading,
-                                   final SpreadsheetEngineContext context) {
-        return BasicSpreadsheetEngineSaveCell.execute(cell,
-                loading,
-                this,
-                context);
-    }
-
-    final SpreadsheetCellStore cellStore;
 
     /**
      * Attempts to evaluate the cell, parsing and evaluating as necessary depending on the {@link SpreadsheetEngineLoading}
@@ -341,17 +331,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 "")));
     }
 
-    /**
-     * Tracks all references to a single cell.
-     */
-    final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferencesStore;
-    final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore;
-
-    /**
-     * Used to track ranges to cells references.
-     */
-    final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore;
-
     // DELETE / INSERT / COLUMN / ROW ..................................................................................
 
     @Override
@@ -436,8 +415,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return Sets.empty();
     }
 
-    final SpreadsheetLabelStore labelStore;
-
     private static void checkContext(final SpreadsheetEngineContext context) {
         Objects.requireNonNull(context, "context");
     }
@@ -446,4 +423,18 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public String toString() {
         return this.cellStore.toString();
     }
+
+    final SpreadsheetCellStore cellStore;
+    final SpreadsheetLabelStore labelStore;
+
+    /**
+     * Tracks all references to a single cell.
+     */
+    final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferencesStore;
+    final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore;
+
+    /**
+     * Used to track ranges to cells references.
+     */
+    final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore;
 }
