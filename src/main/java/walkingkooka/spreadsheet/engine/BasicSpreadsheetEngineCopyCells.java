@@ -84,7 +84,7 @@ final class BasicSpreadsheetEngineCopyCells {
         final BasicSpreadsheetEngine engine = this.engine;
         final SpreadsheetEngineContext context = this.context;
 
-        final SpreadsheetCell save = updatedReference.s etFormula(engine.parse(formula,
+        final SpreadsheetCell save = updatedReference.setFormula(engine.parse(formula,
                 token -> BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.expressionFixReferences(token,
                         xOffset,
                         yOffset),
