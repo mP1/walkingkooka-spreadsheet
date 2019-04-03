@@ -6,6 +6,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.spreadsheet.store.Watchers;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.tree.expression.ExpressionReference;
 
@@ -114,7 +115,14 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
     public Set<? super ExpressionReference> loadCellReferencesOrRanges(final SpreadsheetLabelName label) {
         Objects.requireNonNull(label, "label");
 
-        return Sets.readOnly(TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVisitor.gather(label, this.mappings));
+        return Sets.readOnly(TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitor.gather(label, this.mappings));
+    }
+
+    @Override
+    public Set<SpreadsheetLabelName> labels(final SpreadsheetCellReference cell) {
+        Objects.requireNonNull(cell, "cell");
+
+        return Sets.readOnly(TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor.gather(cell, this.mappings));
     }
 
     /**
