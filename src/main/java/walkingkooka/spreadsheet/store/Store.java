@@ -35,7 +35,9 @@ public interface Store<K, V> {
     V save(final V value);
 
     /**
-     * Adds a watcher that will receive values after a save.
+     * Adds a watcher that will receive values after a save.<br>
+     * Note the watcher will only be fired when new or different values are saved. Saving the same value twice in succession
+     * should only fire the first time, ignoring the second because it is identical.
      */
     Runnable addSaveWatcher(final Consumer<V> saved);
 

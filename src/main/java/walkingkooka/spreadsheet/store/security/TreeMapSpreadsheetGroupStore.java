@@ -3,13 +3,11 @@ package walkingkooka.spreadsheet.store.security;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.security.Group;
 import walkingkooka.spreadsheet.security.GroupId;
 import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.spreadsheet.store.Watchers;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 
 import java.util.List;
 import java.util.Map;
@@ -43,8 +41,9 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
     public Group save(final Group group) {
         Objects.requireNonNull(group, "group");
 
-        this.groupIdToGroup.put(group.id(), group);
-        this.saveWatchers.accept(group);
+        if (false == group.equals(this.groupIdToGroup.put(group.id(), group))) {
+            this.saveWatchers.accept(group);
+        }
 
         return group;
     }
