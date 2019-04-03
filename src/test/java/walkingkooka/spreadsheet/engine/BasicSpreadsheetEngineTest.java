@@ -677,6 +677,168 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadReferencesAndCheck(labelReferenceStore, labelB2, a1.reference());
     }
 
+    @Test
+    public void testSaveCellTwiceLaterReferencesPrevious() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
+                labelStore,
+                cellReferenceStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetCell a1 = this.cell("$A$1", "1+2");
+        engine.saveCell(a1, context);
+
+        final SpreadsheetCell b2 = this.cell("$B$2", "5+$A$1");
+
+        this.saveCellAndCheck(engine,
+                b2,
+                context,
+                this.formattedCellWithValue(b2, BigDecimal.valueOf(5 + 3)));
+
+        this.loadReferencesAndCheck(cellReferenceStore, a1.reference());
+        this.loadReferrersAndCheck(cellReferenceStore, a1.reference(), b2.reference());
+
+        this.loadReferencesAndCheck(cellReferenceStore, b2.reference(), a1.reference());
+        this.loadReferrersAndCheck(cellReferenceStore, b2.reference());
+    }
+
+    @Test
+    public void testSaveCellTwiceLaterReferencesPrevious2() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
+                labelStore,
+                cellReferenceStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetCell a1 = this.cell("$A$1", "1+C3");
+        engine.saveCell(a1, context);
+
+        final SpreadsheetCell b2 = this.cell("$B$2", "5+A1");
+        engine.saveCell(b2, context);
+
+        final SpreadsheetCell c3 = this.cell("$C$3", "10");
+
+        this.saveCellAndCheck(engine,
+                c3,
+                context,
+                this.formattedCellWithValue(a1, BigDecimal.valueOf(1 + 10)),
+                this.formattedCellWithValue(b2, BigDecimal.valueOf(5 + 1 + 10)),
+                this.formattedCellWithValue(c3, BigDecimal.valueOf(10)));
+    }
+
+    @Test
+    public void testSaveCellTwiceLaterReferencesPreviousAgain() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
+                labelStore,
+                cellReferenceStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetCell a1 = this.cell("$A$1", "1+2");
+        engine.saveCell(a1, context);
+
+        final SpreadsheetCell b2 = this.cell("$B$2", "5+$A$1");
+        final SpreadsheetCell b2Formatted = this.formattedCellWithValue(b2, BigDecimal.valueOf(5 + 1 + 2));
+
+        this.saveCellAndCheck(engine,
+                b2,
+                context,
+                b2Formatted);
+
+        this.saveCellAndCheck(engine,
+                b2Formatted,
+                context);
+    }
+
+    @Test
+    public void testSaveCellReferencesUpdated() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
+                labelStore,
+                cellReferenceStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetCell a1 = this.cell("$A$1", "$B$2+5");
+        engine.saveCell(a1, context);
+
+        final SpreadsheetCell b2 = this.cell("$B$2", "1+2");
+        this.saveCellAndCheck(engine,
+                b2,
+                context,
+                this.formattedCellWithValue(a1, BigDecimal.valueOf(1 + 2 + 5)),
+                this.formattedCellWithValue(b2, BigDecimal.valueOf(1 + 2)));
+
+        this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), b2.reference());
+        this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
+
+        this.loadReferencesAndCheck(cellReferenceStore, b2.reference());
+        this.loadReferrersAndCheck(cellReferenceStore, b2.reference(), a1.reference());
+    }
+
+    @Test
+    public void testSaveCellLabelReference() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
+        final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore = this.labelReferencesStore();
+
+        labelStore.save(SpreadsheetLabelMapping.with(SpreadsheetLabelName.with("LABELA1"), this.cellReference("A1")));
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
+                labelStore,
+                cellReferenceStore,
+                labelReferencesStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetCell a1 = this.cell("$A$1", "10");
+        engine.saveCell(a1, context);
+
+        final SpreadsheetCell b2 = this.cell("$B$2", "5+LABELA1");
+        this.saveCellAndCheck(engine,
+                b2,
+                context,
+                this.formattedCellWithValue(b2, BigDecimal.valueOf(5 + 10)));
+    }
+
+    @Test
+    public void testSaveCellLabelReference2() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
+        final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore = this.labelReferencesStore();
+
+        final SpreadsheetLabelName labelB2 = SpreadsheetLabelName.with("LABELB2");
+        labelStore.save(SpreadsheetLabelMapping.with(labelB2, this.cellReference("B2")));
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
+                labelStore,
+                cellReferenceStore,
+                labelReferencesStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetCell a1 = this.cell("$A$1", "10+" + labelB2);
+        engine.saveCell(a1, context);
+
+        final SpreadsheetCell b2 = this.cell("$B$2", "5");
+        this.saveCellAndCheck(engine,
+                b2,
+                context,
+                this.formattedCellWithValue(a1, BigDecimal.valueOf(10 + 5)),
+                this.formattedCellWithValue(b2, BigDecimal.valueOf(5)));
+    }
+
     // deleteColumn....................................................................................................
 
     @Test
@@ -3515,7 +3677,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference c = SpreadsheetReferenceKind.RELATIVE.column(30)
                 .setRow(SpreadsheetReferenceKind.RELATIVE.row(40));
         final SpreadsheetCellReference d = this.cellReference(30+11, 40+21);
-        System.out.println("d::"+c);
 
         final SpreadsheetCell cellA = this.cell(a, "" + b);
         final SpreadsheetCell cellB = this.cell(b, "2+0");
