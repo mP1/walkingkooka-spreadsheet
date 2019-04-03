@@ -51,6 +51,21 @@ public interface StoreTesting<S extends Store<K, V>, K, V> extends ClassTesting2
     }
 
     @Test
+    default void testAddSaveWatcherAndSaveTwiceFiresOnce() {
+        final V value = this.value();
+
+        final S store = this.createStore();
+
+        final List<V> fired = Lists.array();
+        store.addSaveWatcher((s) -> fired.add(s));
+
+        final V saved = store.save(value);
+        store.save(value);
+
+        assertEquals(Lists.of(saved), fired, "fired values");
+    }
+
+    @Test
     default void testAddSaveWatcherAndRemove() {
         this.createStore().addSaveWatcher((v) -> {
         }).run();

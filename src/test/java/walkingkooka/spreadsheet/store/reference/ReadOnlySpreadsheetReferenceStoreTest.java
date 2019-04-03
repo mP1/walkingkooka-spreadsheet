@@ -36,6 +36,10 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
     }
 
     @Override
+    public void testAddSaveWatcherAndSaveTwiceFiresOnce() {
+    }
+
+    @Override
     public void testAddSaveWatcherAndRemove() {
     }
 
