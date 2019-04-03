@@ -32,6 +32,10 @@ public final class ReadOnlySpreadsheetRangeStoreTest implements SpreadsheetRange
     }
 
     @Override
+    public void testAddSaveWatcherAndSaveTwiceFiresOnce() {
+    }
+
+    @Override
     public void testAddSaveWatcherAndRemove() {
     }
 

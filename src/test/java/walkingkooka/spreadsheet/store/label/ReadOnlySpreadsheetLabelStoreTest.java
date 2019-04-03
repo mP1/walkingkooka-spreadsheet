@@ -38,6 +38,10 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
     }
 
     @Override
+    public void testAddSaveWatcherAndSaveTwiceFiresOnce() {
+    }
+
+    @Override
     public void testAddSaveWatcherAndRemove() {
     }
 
