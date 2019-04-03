@@ -46,6 +46,7 @@ import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.expression.ExpressionNodeName;
+import walkingkooka.tree.expression.ExpressionReference;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -646,6 +647,34 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadReferencesAndCheck(cellReferenceStore, c3.reference()); // references to C3 -> none
         this.loadReferrersAndCheck(cellReferenceStore, c3.reference()); // references from C3 -> none
+    }
+
+    @Test
+    public void testSaveCellWithLabelReference() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
+        final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferenceStore = this.labelReferencesStore();
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
+                labelStore,
+                cellReferenceStore,
+                labelReferenceStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetCell a1 = this.cell("a1", "1+LABELB2");
+        final SpreadsheetCell a1Formatted = this.formattedCellWithError(a1, "Unknown label LABELB2");
+        this.saveCellAndCheck(engine,
+                a1,
+                context,
+                a1Formatted);
+
+        this.loadCellStoreAndCheck(cellStore, a1Formatted);
+        this.loadLabelStoreAndCheck(labelStore);
+        this.countAndCheck(cellReferenceStore, 0);
+
+        final SpreadsheetLabelName labelB2 = SpreadsheetLabelName.with("LABELB2");
+        this.loadReferencesAndCheck(labelReferenceStore, labelB2, a1.reference());
     }
 
     // deleteColumn....................................................................................................
@@ -3553,12 +3582,22 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private BasicSpreadsheetEngine createSpreadsheetEngine(final SpreadsheetCellStore cellStore,
                                                            final SpreadsheetLabelStore labelStore,
                                                            final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferencesStore) {
+        return this.createSpreadsheetEngine(cellStore,
+                labelStore,
+                cellReferencesStore,
+                SpreadsheetReferenceStores.readOnly(this.labelReferencesStore()));
+    }
+
+    private BasicSpreadsheetEngine createSpreadsheetEngine(final SpreadsheetCellStore cellStore,
+                                                           final SpreadsheetLabelStore labelStore,
+                                                           final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferencesStore,
+                                                           final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore) {
         return BasicSpreadsheetEngine.with(this.id(),
                 cellStore,
                 labelStore,
                 this.conditionalFormattingRules(),
                 cellReferencesStore,
-                SpreadsheetReferenceStores.readOnly(this.labelReferencesStore()),
+                labelReferencesStore,
                 SpreadsheetRangeStores.readOnly(this.rangeToCellStore()));
     }
 
@@ -3734,9 +3773,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 () -> "all mappings in " + store);
     }
 
-    private void loadReferencesAndCheck(final SpreadsheetReferenceStore<SpreadsheetCellReference> store,
-                                        final SpreadsheetCellReference cell,
-                                        final SpreadsheetCellReference...out) {
+    private <E extends ExpressionReference & Comparable<E>> void loadReferencesAndCheck(final SpreadsheetReferenceStore<E> store,
+                                                                                        final E cell,
+                                                                                        final SpreadsheetCellReference... out) {
         assertEquals(Optional.ofNullable(out.length == 0 ? null : Sets.of(out)),
                 store.load(cell),
                 "references to " + cell);
@@ -3744,7 +3783,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private void loadReferrersAndCheck(final SpreadsheetReferenceStore<SpreadsheetCellReference> store,
                                        final SpreadsheetCellReference cell,
-                                       final SpreadsheetCellReference...out) {
+                                       final SpreadsheetCellReference... out) {
         assertEquals(Sets.of(out),
                 store.loadReferred(cell),
                 "referrers from " + cell);
