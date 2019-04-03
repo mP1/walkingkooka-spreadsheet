@@ -355,7 +355,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public Set<SpreadsheetCell> deleteColumns(final SpreadsheetColumnReference column,
                                               final int count,
                                               final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(column, "column");
+        checkColumn(column);
         checkCount(count);
         checkContext(context);
 
@@ -370,7 +370,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public Set<SpreadsheetCell> deleteRows(final SpreadsheetRowReference row,
                                            final int count,
                                            final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(row, "row");
+        checkRow(row);
         checkCount(count);
         checkContext(context);
 
@@ -385,7 +385,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public Set<SpreadsheetCell> insertColumns(final SpreadsheetColumnReference column,
                                               final int count,
                                               final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(column, "column");
+        checkColumn(column);
         checkCount(count);
         checkContext(context);
 
@@ -402,7 +402,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public Set<SpreadsheetCell> insertRows(final SpreadsheetRowReference row,
                                            final int count,
                                            final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(row, "row");
+        checkRow(row);
         checkCount(count);
         checkContext(context);
 
@@ -434,7 +434,15 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     final SpreadsheetLabelStore labelStore;
+    
+    private static void checkColumn(final SpreadsheetColumnReference column) {
+        Objects.requireNonNull(column, "column");
+    }
 
+    private static void checkRow(final SpreadsheetRowReference row) {
+        Objects.requireNonNull(row, "row");
+    }
+    
     private static void checkContext(final SpreadsheetEngineContext context) {
         Objects.requireNonNull(context, "context");
     }

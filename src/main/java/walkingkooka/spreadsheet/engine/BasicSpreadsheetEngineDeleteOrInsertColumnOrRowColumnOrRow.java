@@ -22,7 +22,7 @@ import java.util.Optional;
 /**
  * Base class that acts as a bridge to either columns or rows.
  */
-abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow<V extends Comparable<V>> {
+abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
 
     /**
      * Package private to limit sub classing.
@@ -65,7 +65,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow<V exte
                 .forEach(c -> this.cellStore().delete(c.reference()));
     }
 
-    // copy .............................................................................................................
+    // move .............................................................................................................
 
     /**
      * Moves all the cells in the selected row/column.
