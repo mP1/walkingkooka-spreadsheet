@@ -51,6 +51,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
@@ -289,6 +290,49 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         assertEquals(Optional.of(BigDecimal.valueOf(999)),
                 second.formula().value(),
                 "first should have value updated to 999 and not 1 the original value.");
+    }
+
+    @Test
+    public void testSaveCellIgnoresErrorComputesValue() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
+
+        final SpreadsheetCell cell = SpreadsheetCell.with(cellReference,
+                SpreadsheetFormula.with("1+2")
+                        .setError(Optional.of(SpreadsheetError.with("error!"))),
+                this.style());
+
+        this.saveCellAndCheck(engine,
+                cell,
+                context,
+                this.formattedCellWithValue(cell, BigDecimal.valueOf(1 + 2)));
+    }
+
+    @Test
+    public void testLoadCellForceRecomputeIgnoresPreviousError() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a = this.cellReference("A1");
+        final Set<SpreadsheetCell> saved = engine.saveCell(this.cell(a, "1+$B$2"), context);
+
+        final SpreadsheetCell withError = saved.iterator().next();
+        assertNotEquals(SpreadsheetFormula.NO_ERROR,
+                withError.formula().error(),
+                () -> "cell should have error because B2 reference is unknown=" + withError);
+
+        final SpreadsheetCellReference b = this.cellReference("B2");
+        cellStore.save(this.cell(b, "99"));
+
+        this.loadCellAndCheckValue(engine,
+                a,
+                SpreadsheetEngineLoading.FORCE_RECOMPUTE,
+                context,
+                BigDecimal.valueOf(1 + 99));
     }
 
     @Test
@@ -3740,6 +3784,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private SpreadsheetRowReference row(final int row) {
         return SpreadsheetReferenceKind.ABSOLUTE.row(row);
+    }
+
+    private SpreadsheetCellReference cellReference(final String reference) {
+        return SpreadsheetCellReference.parse(reference);
     }
 
     private SpreadsheetCellReference cellReference(final int column, final int row) {
