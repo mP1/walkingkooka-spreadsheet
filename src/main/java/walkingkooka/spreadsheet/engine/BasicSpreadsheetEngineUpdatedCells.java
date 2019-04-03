@@ -65,7 +65,7 @@ final class BasicSpreadsheetEngineUpdatedCells implements Closeable {
 
         final Set<SpreadsheetCell> updated = Sets.sorted();
         updated.addAll(this.updated.values());
-        return updated;
+        return Sets.readOnly(updated);
     }
 
     private void batchCell(final SpreadsheetCellReference reference) {
