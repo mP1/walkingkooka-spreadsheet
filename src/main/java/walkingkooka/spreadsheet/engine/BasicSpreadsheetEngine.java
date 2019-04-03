@@ -109,24 +109,6 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     /**
-     * Saves the cell, and updates all affected (referenced cells) returning all updated cells.
-     */
-    @Override
-    public Set<SpreadsheetCell> saveCell(final SpreadsheetCell cell,
-                                         final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(cell, "cell");
-        Objects.requireNonNull(context, "context");
-
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCells.with(this, context)) {
-            BasicSpreadsheetEngineSaveCell.execute(cell,
-                    SpreadsheetEngineLoading.FORCE_RECOMPUTE,
-                    this,
-                    context);
-            return updated.refreshUpdated();
-        }
-    }
-
-    /**
      * Attempts to evaluate the cell, parsing and evaluating as necessary depending on the {@link SpreadsheetEngineLoading}
      */
     SpreadsheetCell maybeParseAndEvaluateAndFormat(final SpreadsheetCell cell,
@@ -144,7 +126,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 context);
     }
 
-    private SpreadsheetFormula parseFormulaAndEvaluate(final SpreadsheetFormula formula, final SpreadsheetEngineContext context) {
+    private SpreadsheetFormula parseFormulaAndEvaluate(final SpreadsheetFormula formula,
+                                                       final SpreadsheetEngineContext context) {
         return this.evaluateIfPossible(this.parseIfNecessary(formula, context), context);
     }
 
@@ -192,7 +175,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 this.evaluate(formula, context);
     }
 
-    private SpreadsheetFormula evaluate(final SpreadsheetFormula formula, final SpreadsheetEngineContext context) {
+    private SpreadsheetFormula evaluate(final SpreadsheetFormula formula,
+                                        final SpreadsheetEngineContext context) {
         SpreadsheetFormula result;
         try {
             result = formula.setValue(Optional.of(context.evaluate(formula.expression().get())));
@@ -209,7 +193,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * Sets the error upon the formula.
      */
-    private SpreadsheetFormula setError(final SpreadsheetFormula formula, final String message) {
+    private SpreadsheetFormula setError(final SpreadsheetFormula formula,
+                                        final String message) {
         return formula.setError(Optional.of(SpreadsheetError.with(message)));
     }
 
@@ -218,7 +203,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * If a value is present use the pattern to format and apply the styling.
      */
-    private SpreadsheetCell formatAndApplyStyle(final SpreadsheetCell cell, final SpreadsheetEngineContext context) {
+    private SpreadsheetCell formatAndApplyStyle(final SpreadsheetCell cell,
+                                                final SpreadsheetEngineContext context) {
         SpreadsheetCell result = cell;
 
         SpreadsheetTextFormatter<?> formatter = context.defaultSpreadsheetTextFormatter();
@@ -331,13 +317,33 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 "")));
     }
 
+    // SAVE CELL....................................................................................................
+
+    /**
+     * Saves the cell, and updates all affected (referenced cells) returning all updated cells.
+     */
+    @Override
+    public Set<SpreadsheetCell> saveCell(final SpreadsheetCell cell,
+                                         final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(cell, "cell");
+        Objects.requireNonNull(context, "context");
+
+        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCells.with(this, context)) {
+            BasicSpreadsheetEngineSaveCell.execute(cell,
+                    SpreadsheetEngineLoading.FORCE_RECOMPUTE,
+                    this,
+                    context);
+            return updated.refreshUpdated();
+        }
+    }
+
     // DELETE / INSERT / COLUMN / ROW ..................................................................................
 
     @Override
     public Set<SpreadsheetCell> deleteColumns(final SpreadsheetColumnReference column,
                                               final int count,
                                               final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(column, "column");
+        checkColumn(column);
         checkCount(count);
         checkContext(context);
 
@@ -352,7 +358,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public Set<SpreadsheetCell> deleteRows(final SpreadsheetRowReference row,
                                            final int count,
                                            final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(row, "row");
+        checkRow(row);
         checkCount(count);
         checkContext(context);
 
@@ -367,7 +373,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public Set<SpreadsheetCell> insertColumns(final SpreadsheetColumnReference column,
                                               final int count,
                                               final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(column, "column");
+        checkColumn(column);
         checkCount(count);
         checkContext(context);
 
@@ -384,7 +390,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public Set<SpreadsheetCell> insertRows(final SpreadsheetRowReference row,
                                            final int count,
                                            final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(row, "row");
+        checkRow(row);
         checkCount(count);
         checkContext(context);
 
@@ -417,6 +423,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     private static void checkContext(final SpreadsheetEngineContext context) {
         Objects.requireNonNull(context, "context");
+    }
+
+    private void checkColumn(SpreadsheetColumnReference column) {
+        Objects.requireNonNull(column, "column");
+    }
+
+    private void checkRow(SpreadsheetRowReference row) {
+        Objects.requireNonNull(row, "row");
     }
 
     @Override
