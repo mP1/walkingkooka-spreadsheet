@@ -1,11 +1,15 @@
 package walkingkooka.spreadsheet.store.label;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -94,6 +98,30 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
 
     @Override
     public void testValuesWindow() {
+    }
+
+    @Override
+    public void testLabelsWithCellReference() {
+        final SpreadsheetLabelName label = SpreadsheetLabelName.with("LabelZ99");
+        final SpreadsheetCellReference reference = SpreadsheetCellReference.parse("Z99");
+
+        this.labelsAndCheck(ReadOnlySpreadsheetLabelStore.with(new FakeSpreadsheetLabelStore() {
+                    @Override
+                    public Set<SpreadsheetLabelName> labels(SpreadsheetCellReference c) {
+                        assertEquals(reference, c);
+                        return Sets.of(label);
+                    }
+                }),
+                reference,
+                label);
+    }
+
+    @Override
+    public void testLabelsWithCellReference2() {
+    }
+
+    @Override
+    public void testLabelsWithCellIndirectReference() {
     }
 
     @Test

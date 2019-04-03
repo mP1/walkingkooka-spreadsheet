@@ -14,17 +14,17 @@ import java.util.Set;
 /**
  * A {@link SpreadsheetExpressionReferenceVisitor} that visits all label targets, and aims to return only {@link SpreadsheetCellReference} and {@link SpreadsheetRange}.
  */
-final class TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpressionReferenceVisitor {
+final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpressionReferenceVisitor {
 
     static Set<? super ExpressionReference> gather(final SpreadsheetLabelName label,
                                                    final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings) {
-        final TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVisitor visitor = new TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVisitor(mappings);
+        final TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitor visitor = new TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitor(mappings);
         visitor.accept(label);
         return visitor.references;
     }
 
     // VisibleForTesting
-    TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVisitor(final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings) {
+    TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitor(final Map<SpreadsheetLabelName, SpreadsheetLabelMapping> mappings) {
         super();
 
         this.mappings = mappings;

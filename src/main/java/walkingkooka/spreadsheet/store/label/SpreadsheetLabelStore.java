@@ -19,4 +19,10 @@ public interface SpreadsheetLabelStore extends Store<SpreadsheetLabelName, Sprea
      * label to label references until they resolve to cells.
      */
     Set<? super ExpressionReference> loadCellReferencesOrRanges(final SpreadsheetLabelName label);
+
+    /**
+     * Returns all {@link SpreadsheetLabelName} that eventually map to the {@link SpreadsheetCellReference}, including resolving
+     * label to label references until they resolve to cells.
+     */
+    Set<SpreadsheetLabelName> labels(final SpreadsheetCellReference cell);
 }
