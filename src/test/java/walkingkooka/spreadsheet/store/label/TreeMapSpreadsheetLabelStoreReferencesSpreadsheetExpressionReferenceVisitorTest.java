@@ -5,12 +5,12 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.visit.VisitorTesting;
 import walkingkooka.type.MemberVisibility;
 
-public final class TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVisitorTest implements VisitorTesting<TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVisitor,
+public final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitorTest implements VisitorTesting<TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitor,
         ExpressionReference> {
 
     @Override
-    public TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVisitor createVisitor() {
-        return new TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVisitor(null);
+    public TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitor createVisitor() {
+        return new TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitor(null);
     }
 
     @Override
@@ -29,7 +29,7 @@ public final class TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVis
     }
 
     @Override
-    public Class<TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVisitor> type() {
-        return TreeMapSpreadsheetLabelStoreSpreadsheetExpressionReferenceVisitor.class;
+    public Class<TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitor> type() {
+        return TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitor.class;
     }
 }
