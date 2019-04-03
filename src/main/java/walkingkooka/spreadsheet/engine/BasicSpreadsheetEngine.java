@@ -117,9 +117,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(context, "context");
 
-        return this.saveCell0(cell,
-                SpreadsheetEngineLoading.FORCE_RECOMPUTE,
-                context);
+        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCells.with(this, context)) {
+            this.saveCell0(cell,
+                    SpreadsheetEngineLoading.FORCE_RECOMPUTE,
+                    context);
+            return updated.refreshUpdated();
+        }
     }
 
     Set<SpreadsheetCell> saveCell0(final SpreadsheetCell cell,
