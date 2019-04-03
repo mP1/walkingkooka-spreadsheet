@@ -47,8 +47,9 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
         Objects.requireNonNull(mapping, "mapping");
 
         final SpreadsheetLabelName key = mapping.label();
-        this.mappings.put(key, mapping);
-        this.saveWatchers.accept(mapping);
+        if (false == mapping.equals(this.mappings.put(key, mapping))) {
+            this.saveWatchers.accept(mapping);
+        }
 
         return mapping;
     }

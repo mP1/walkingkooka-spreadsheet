@@ -4,12 +4,10 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.spreadsheet.store.Watchers;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.List;
@@ -56,8 +54,9 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
         Objects.requireNonNull(cell, "cell");
 
         final SpreadsheetCellReference key = cell.reference();
-        this.cells.put(key, cell);
-        this.saveWatchers.accept(cell);
+        if (false == cell.equals(this.cells.put(key, cell))) {
+            this.saveWatchers.accept(cell);
+        }
 
         return cell;
     }

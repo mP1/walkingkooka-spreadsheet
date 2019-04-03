@@ -18,6 +18,10 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
     public void testAddSaveWatcherAndSave() {
     }
 
+    @Override
+    public void testAddSaveWatcherAndSaveTwiceFiresOnce() {
+    }
+
     @Test
     public void testSaveAndLoad() {
         final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();

@@ -41,8 +41,9 @@ final class TreeMapSpreadsheetUserStore implements SpreadsheetUserStore {
     public User save(final User user) {
         Objects.requireNonNull(user, "user");
 
-        this.userIdToUser.put(user.id(), user);
-        this.saveWatchers.accept(user);
+        if (false == user.equals(this.userIdToUser.put(user.id(), user))) {
+            this.saveWatchers.accept(user);
+        }
 
         return user;
     }
