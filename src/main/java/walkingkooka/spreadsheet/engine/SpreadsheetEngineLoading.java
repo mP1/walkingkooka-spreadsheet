@@ -30,7 +30,10 @@ public enum SpreadsheetEngineLoading implements HasJsonNode {
         SpreadsheetCell formulaEvaluateAndStyle(final SpreadsheetCell cell,
                                                 final BasicSpreadsheetEngine engine,
                                                 final SpreadsheetEngineContext context) {
-            return engine.formulaEvaluateAndStyle(cell.setFormula(cell.formula().setValue(SpreadsheetFormula.NO_VALUE)),
+            // clear value and error to allow evaluation to continue.
+            return engine.formulaEvaluateAndStyle(cell.setFormula(cell.formula()
+                            .setValue(SpreadsheetFormula.NO_VALUE)
+                            .setError(SpreadsheetFormula.NO_ERROR)),
                     context);
         }
     },
