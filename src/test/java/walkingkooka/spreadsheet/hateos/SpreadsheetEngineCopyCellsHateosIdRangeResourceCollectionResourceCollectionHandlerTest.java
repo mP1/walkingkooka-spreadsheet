@@ -75,7 +75,7 @@ public final class SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionReso
 
     @Override
     public Map<HttpRequestAttribute<?>, Object> parameters() {
-        return Maps.one(SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionResourceCollectionHandler.TO, Lists.of(TO));
+        return Maps.of(SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionResourceCollectionHandler.TO, Lists.of(TO));
     }
 
     private final static String TO = "E1:F2";
