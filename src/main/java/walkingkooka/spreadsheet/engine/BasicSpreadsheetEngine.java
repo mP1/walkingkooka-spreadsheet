@@ -100,9 +100,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference reference,
                                               final SpreadsheetEngineLoading loading,
                                               final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(reference, "references");
+        checkReference(reference);
         Objects.requireNonNull(loading, "loading");
-        Objects.requireNonNull(context, "context");
+        checkContext(context);
 
         final Optional<SpreadsheetCell> cell = this.cellStore.load(reference);
         return cell.map(c -> this.maybeParseAndEvaluateAndFormat(c, loading, context));
@@ -223,7 +223,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         final Optional<Object> value = formula.value();
         final SpreadsheetCell beforeConditionalRules = value.isPresent() ?
                 result.setFormatted(Optional.of(this.formatAndApplyStyle0(value.get(), formatter, result.style(), context))) :
-                this.formatAndApplyStyleValueAbsent(result, context);
+                this.formatAndApplyStyleValueAbsent(result);
 
         return this.locateAndApplyConditionalFormattingRule(beforeConditionalRules, context);
     }
@@ -308,8 +308,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * Handles apply style to the error if present or defaulting to empty {@link String}.
      * The error becomes the text and no formatting or color is applied.
      */
-    private SpreadsheetCell formatAndApplyStyleValueAbsent(final SpreadsheetCell cell,
-                                                           final SpreadsheetEngineContext context) {
+    private SpreadsheetCell formatAndApplyStyleValueAbsent(final SpreadsheetCell cell) {
         final Optional<SpreadsheetError> error = cell.formula().error();
 
         return cell.setFormatted(Optional.of(cell.style().setCellFormattedText(error.isPresent() ?
@@ -326,7 +325,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public Set<SpreadsheetCell> saveCell(final SpreadsheetCell cell,
                                          final SpreadsheetEngineContext context) {
         Objects.requireNonNull(cell, "cell");
-        Objects.requireNonNull(context, "context");
+        checkContext(context);
 
         try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCells.with(this, context)) {
             BasicSpreadsheetEngineSaveCell.execute(cell,
@@ -421,16 +420,20 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return Sets.empty();
     }
 
-    private static void checkContext(final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(context, "context");
+    private static void checkReference(final SpreadsheetCellReference reference) {
+        Objects.requireNonNull(reference, "reference");
     }
 
-    private void checkColumn(SpreadsheetColumnReference column) {
+    private static void checkColumn(SpreadsheetColumnReference column) {
         Objects.requireNonNull(column, "column");
     }
 
-    private void checkRow(SpreadsheetRowReference row) {
+    private static void checkRow(SpreadsheetRowReference row) {
         Objects.requireNonNull(row, "row");
+    }
+
+    private static void checkContext(final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(context, "context");
     }
 
     @Override
