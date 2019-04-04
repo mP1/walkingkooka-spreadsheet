@@ -6,9 +6,9 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.spreadsheet.store.Watchers;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.tree.expression.ExpressionReference;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -45,17 +45,28 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
     @Override
     public void delete(final T id) {
         checkId(id);
-        this.deleteAll(id);
+        this.removeAllWithTarget(id);
     }
 
     /**
      * Delete the reference and all referrers to that reference.
      */
-    private void deleteAll(final T id) {
+    private void removeAllWithTarget(final T id) {
         // where id=label remove label to cells, then remove cell to label.
         final Set<SpreadsheetCellReference> referrers = this.targetToReferences.remove(id);
         if (null != referrers) {
-            this.removeAllReferences(referrers, id);
+            for (Iterator<SpreadsheetCellReference> i = referrers.iterator(); i.hasNext(); ) {
+                final SpreadsheetCellReference referrer = i.next();
+                final Set<T> targets = this.referenceToTargets.get(referrer);
+                if (null != targets) {
+                    if (targets.remove(id)) {
+                        if (targets.isEmpty()) {
+                            this.referenceToTargets.remove(referrer);
+                        }
+                    }
+                }
+            }
+
             this.deleteWatchers.accept(id);
         }
     }
@@ -110,28 +121,10 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
             throw new IllegalArgumentException("referrer includes " + id + "=" + referrers);
         }
 
-        if (copy.isEmpty()) {
-            // save is actually a delete...
-            this.deleteAll(id);
-        } else {
-            final Set<SpreadsheetCellReference> previousReferrers = this.targetToReferences.put(id, copy);
-            if (null != previousReferrers) {
-
-                for (SpreadsheetCellReference reference : previousReferrers) {
-                    if (copy.contains(reference)) {
-                        continue;
-                    }
-                    this.removeReference0(id, reference);
-                }
-
-                for (SpreadsheetCellReference reference : copy) {
-                    if (previousReferrers.contains(reference)) {
-                        continue;
-                    }
-                    this.addReference0(id, reference);
-                }
-            } else {
-                copy.forEach(r -> this.addReference0(id, r));
+        this.removeAllWithTarget(id);
+        if (!copy.isEmpty()) {
+            for (SpreadsheetCellReference reference : copy) {
+                this.addReference(id, reference);
             }
         }
     }
@@ -184,14 +177,8 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
         }
     }
 
-    /**
-     * Remove all mappings between a reference and the target(id).
-     */
-    private void removeAllReferences(Set<SpreadsheetCellReference> referrers, final T id) {
-        referrers.forEach(r -> this.removeReference0(id, r));
-    }
-
-    private boolean removeReference0(final T id, final SpreadsheetCellReference referrer) {
+    private boolean removeReference0(final T id,
+                                     final SpreadsheetCellReference referrer) {
         final Set<SpreadsheetCellReference> referrers = this.targetToReferences.get(id);
         final boolean removed = null != referrers;
         if (removed) {
@@ -236,12 +223,14 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
     /**
      * Something like labels and the cell references expressions containing the label.
      */
-    private final Map<T, Set<SpreadsheetCellReference>> targetToReferences = Maps.sorted();
+    // VisibleForTesting
+    final Map<T, Set<SpreadsheetCellReference>> targetToReferences = Maps.sorted();
 
     /**
      * The inverse of {@link #targetToReferences}
      */
-    private final Map<SpreadsheetCellReference, Set<T>> referenceToTargets = Maps.sorted();
+    // VisibleForTesting
+    final Map<SpreadsheetCellReference, Set<T>> referenceToTargets = Maps.sorted();
 
     @Override
     public String toString() {
