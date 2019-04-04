@@ -129,7 +129,7 @@ public final class SpreadsheetEngineInsertRowsHateosIdResourceCollectionResource
     }
 
     private Map<HttpRequestAttribute<?>, Object> parameters(final String... count) {
-        return Maps.one(UrlParameterName.with("count"), Lists.of(count));
+        return Maps.of(UrlParameterName.with("count"), Lists.of(count));
     }
 
     @Override
