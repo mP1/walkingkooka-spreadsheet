@@ -42,7 +42,7 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
 
     @Override
     public Optional<List<V>> load(final SpreadsheetRange range) {
-        Objects.requireNonNull(range, "range");
+        checkRange(range);
 
         final TreeMapSpreadsheetRangeStoreTopLeftEntry<V> value = this.topLeft.get(range.begin());
         return null != value ?
@@ -54,7 +54,7 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
 
     @Override
     public Set<SpreadsheetRange> loadCellReferenceRanges(final SpreadsheetCellReference cell) {
-        Objects.requireNonNull(cell, "cell");
+        checkCell(cell);
 
         final Set<SpreadsheetRange> values = Sets.ordered();
 
@@ -68,7 +68,7 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
 
     @Override
     public Set<V> loadCellReferenceValues(final SpreadsheetCellReference cell) {
-        Objects.requireNonNull(cell, "cell");
+        checkCell(cell);
 
         final Set<V> values = Sets.ordered();
 
@@ -114,8 +114,8 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
 
     @Override
     public void addValue(final SpreadsheetRange range, final V value) {
-        Objects.requireNonNull(range, "range");
-        Objects.requireNonNull(value, "value");
+        checkRange(range);
+        checkValue(value);
 
         this.addTopLeft(range, value);
         this.addBottomRight(range, value);
@@ -146,7 +146,7 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
 
     @Override
     public boolean replaceValue(final SpreadsheetRange range, final V newValue, final V oldValue) {
-        Objects.requireNonNull(range, "range");
+        checkRange(range);
         Objects.requireNonNull(newValue, "newValue");
         Objects.requireNonNull(oldValue, "oldValue");
 
@@ -196,8 +196,8 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
      */
     @Override
     public void removeValue(final SpreadsheetRange range, final V value) {
-        Objects.requireNonNull(range, "range");
-        Objects.requireNonNull(value, "value");
+        checkRange(range);
+        checkValue(value);
 
         this.removeTopLeftValue(range, value);
         this.removeBottomRightValue(range, value);
@@ -231,7 +231,7 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
      */
     @Override
     public void delete(final SpreadsheetRange range) {
-        Objects.requireNonNull(range, "range");
+        checkRange(range);
 
         if (null != this.topLeft.remove(range.begin())) {
             this.bottomRight.remove(range.end());
@@ -328,7 +328,7 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
     
     @Override
     public Set<SpreadsheetRange> rangesWithValue(final V value) {
-        Objects.requireNonNull(value, "value");
+        checkValue(value);
 
         Set<SpreadsheetRange> ranges;
 
@@ -362,5 +362,17 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
     @Override
     public String toString() {
         return this.topLeft.toString();
+    }
+
+    private static void checkCell(final SpreadsheetCellReference cell) {
+        Objects.requireNonNull(cell, "cell");
+    }
+
+    private static void checkRange(final SpreadsheetRange range) {
+        Objects.requireNonNull(range, "range");
+    }
+
+    private void checkValue(final V value) {
+        Objects.requireNonNull(value, "value");
     }
 }
