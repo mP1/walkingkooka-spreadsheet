@@ -96,6 +96,13 @@ final class ReadOnlySpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V>
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public Set<SpreadsheetRange> rangesWithValue(final V value) {
+        Objects.requireNonNull(value, "value");
+
+        return this.store.rangesWithValue(value);
+    }
+
     private final SpreadsheetRangeStore<V> store;
 
     @Override

@@ -128,6 +128,26 @@ public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>
         });
     }
 
+    @Test
+    default void testRangesNullValueFails() {
+        assertThrows(NullPointerException.class, () -> {
+            this.createStore().rangesWithValue(null);
+        });
+    }
+
+    @Test
+    default void testRangesWithValue() {
+        final S store = this.createStore();
+
+        final SpreadsheetRange range = this.id();
+        final V value = this.valueValue();
+        this.rangesWithValuesAndCheck(store, value);
+
+        store.addValue(range, value);
+
+        this.rangesWithValuesAndCheck(store, value, range);
+    }
+
     // helpers ............................................................
 
     static SpreadsheetCellReference cell(final int column, final int row) {
@@ -200,6 +220,21 @@ public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>
         final Set<V> values = store.loadCellReferenceValues(cell);
         assertNotNull(values, "values");
         return values;
+    }
+
+    default void rangesWithValuesAndCheck(final SpreadsheetRangeStore<V> store,
+                                          final V value,
+                                          final SpreadsheetRange... ranges) {
+        assertEquals(Sets.of(ranges),
+                this.rangesWithValues(store, value),
+                () -> "ranges with values for " + value);
+    }
+
+    default Set<SpreadsheetRange> rangesWithValues(final SpreadsheetRangeStore<V> store,
+                                                   final V value) {
+        final Set<SpreadsheetRange> ranges = store.rangesWithValue(value);
+        assertNotNull(ranges, "ranges");
+        return ranges;
     }
 
     V valueValue();
