@@ -335,6 +335,23 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
+    // DELETE CELL....................................................................................................
+
+    /**
+     * DELETE the cell, and updates all affected (referenced cells) returning all updated cells.
+     */
+    @Override
+    public Set<SpreadsheetCell> deleteCell(final SpreadsheetCellReference reference,
+                                           final SpreadsheetEngineContext context) {
+        checkReference(reference);
+        checkContext(context);
+
+        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCells.with(this, context)) {
+            this.cellStore.delete(reference);
+            return updated.refreshUpdated();
+        }
+    }
+
     // DELETE / INSERT / COLUMN / ROW ..................................................................................
 
     @Override
