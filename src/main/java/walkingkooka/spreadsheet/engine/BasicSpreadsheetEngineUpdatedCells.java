@@ -3,6 +3,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
@@ -10,7 +11,6 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 
 import java.io.Closeable;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -37,15 +37,45 @@ final class BasicSpreadsheetEngineUpdatedCells implements Closeable {
         this.context = context;
     }
 
+    /**
+     * Accepts a just saved cell, parsing the formula adding external references and then batching references to this cell.
+     */
     private void saved(final SpreadsheetCell saved) {
         final SpreadsheetCellReference reference = saved.reference();
         if (null == this.updated.put(reference, saved)) {
+            this.removePreviousExpressionReferences(reference);
+            this.addNewExpressionReferences(reference, saved.formula());
             this.batchReferrers(reference);
         }
     }
 
+    /**
+     * Removes any existing references by this cell and replaces them with new references if any are present.
+     */
+    private void addNewExpressionReferences(final SpreadsheetCellReference cell,
+                                            final SpreadsheetFormula formula) {
+        formula.expression()
+                .ifPresent(e -> BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitor.processReferences(e,
+                        cell,
+                        this.engine));
+    }
+
+    /**
+     * Invoked whenever a cell is deleted or replaced.
+     */
     private void deleted(final SpreadsheetCellReference deleted) {
+        this.removePreviousExpressionReferences(deleted);
         this.batchReferrers(deleted);
+    }
+
+    private void removePreviousExpressionReferences(final SpreadsheetCellReference cell) {
+        final BasicSpreadsheetEngine engine = this.engine;
+
+        engine.cellReferencesStore.delete(cell);
+        engine.labelReferencesStore.loadReferred(cell)
+                .forEach(l -> engine.labelReferencesStore.removeReference(l, cell));
+        engine.rangeToCellStore.rangesWithValue(cell)
+                .forEach(r -> engine.rangeToCellStore.removeValue(r, cell));
     }
 
     Set<SpreadsheetCell> refreshUpdated() {
@@ -58,7 +88,7 @@ final class BasicSpreadsheetEngineUpdatedCells implements Closeable {
                 continue;
             }
 
-            final Optional<SpreadsheetCell> c = this.engine.loadCell(potential,
+            this.engine.loadCell(potential,
                     SpreadsheetEngineLoading.FORCE_RECOMPUTE,
                     this.context);
         }
@@ -76,7 +106,8 @@ final class BasicSpreadsheetEngineUpdatedCells implements Closeable {
     }
 
     private void batchLabel(final SpreadsheetLabelName label) {
-        this.engine.labelReferencesStore.load(label).ifPresent(r -> r.forEach(this::batchCell));
+        this.engine.labelReferencesStore.load(label)
+                .ifPresent(r -> r.forEach(this::batchCell));
     }
 
     private void batchRange(final SpreadsheetRange range) {
@@ -102,11 +133,6 @@ final class BasicSpreadsheetEngineUpdatedCells implements Closeable {
      * Holds a queue of cell references that need to be updated.
      */
     private final Queue<SpreadsheetCellReference> queue = new ConcurrentLinkedQueue<>();
-
-    /**
-     * Tracks all the seen cells, this helps avoided cycles and unnecessary re-computations.
-     */
-//    private final Set<SpreadsheetCellReference> seen = Sets.sorted();
 
     /**
      * Records all updated cells. This can then be returned by the {@link BasicSpreadsheetEngine} method.

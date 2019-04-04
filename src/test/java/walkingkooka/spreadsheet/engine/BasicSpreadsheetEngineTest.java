@@ -820,7 +820,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore = this.labelReferencesStore();
 
         final SpreadsheetLabelName labelB2 = SpreadsheetLabelName.with("LABELB2");
-        labelStore.save(SpreadsheetLabelMapping.with(labelB2, this.cellReference("B2")));
+        final SpreadsheetCell b2 = this.cell("$B$2", "5");
+
+        labelStore.save(SpreadsheetLabelMapping.with(labelB2, b2.reference()));
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
                 labelStore,
@@ -831,7 +833,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell a1 = this.cell("$A$1", "10+" + labelB2);
         engine.saveCell(a1, context);
 
-        final SpreadsheetCell b2 = this.cell("$B$2", "5");
+        this.loadReferencesAndCheck(cellReferenceStore, a1.reference());
+        this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
+
+        this.loadReferencesAndCheck(cellReferenceStore, b2.reference());
+        this.loadReferrersAndCheck(cellReferenceStore, b2.reference());
+
+        this.loadReferencesAndCheck(labelReferencesStore, labelB2, a1.reference());
+
         this.saveCellAndCheck(engine,
                 b2,
                 context,
@@ -858,7 +867,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         engine.saveCell(this.cell("$A$1", "10+d4"), context);
 
-        final SpreadsheetCell a1 = this.cell("$A$1", "40+$E$5");
+        final SpreadsheetCell a1 = this.cell("$A$1", "40+" + e5.reference());
         this.saveCellAndCheck(engine,
                 a1,
                 context,
@@ -919,7 +928,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore = this.labelReferencesStore();
 
         final SpreadsheetLabelName labelB2 = SpreadsheetLabelName.with("LABELB2");
-        labelStore.save(SpreadsheetLabelMapping.with(labelB2, this.cellReference("B2")));
+        final SpreadsheetCellReference b2Reference = this.cellReference("B2");
+        labelStore.save(SpreadsheetLabelMapping.with(labelB2, b2Reference));
 
         final SpreadsheetLabelName labelD4 = SpreadsheetLabelName.with("LABELD4");
         labelStore.save(SpreadsheetLabelMapping.with(labelD4, this.cellReference("D4")));

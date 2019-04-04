@@ -89,9 +89,8 @@ final class BasicSpreadsheetEngineCopyCells {
                         xOffset,
                         yOffset),
                 context));
-        BasicSpreadsheetEngineSaveCell.execute(save,
+        this.engine.maybeParseAndEvaluateAndFormat(save,
                 SpreadsheetEngineLoading.FORCE_RECOMPUTE,
-                this.engine,
                 context);
         return save.reference();
     }
