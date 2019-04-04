@@ -328,9 +328,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCells.with(this, context)) {
-            BasicSpreadsheetEngineSaveCell.execute(cell,
+            this.maybeParseAndEvaluateAndFormat(cell,
                     SpreadsheetEngineLoading.FORCE_RECOMPUTE,
-                    this,
                     context);
             return updated.refreshUpdated();
         }
