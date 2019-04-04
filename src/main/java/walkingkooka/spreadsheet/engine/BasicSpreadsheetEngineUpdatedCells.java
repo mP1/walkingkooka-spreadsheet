@@ -5,7 +5,6 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRange;
-import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.reference.TargetAndSpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
@@ -30,9 +29,9 @@ final class BasicSpreadsheetEngineUpdatedCells implements Closeable {
                                                final SpreadsheetEngineContext context) {
         super();
 
-        final SpreadsheetCellStore cellStore = engine.cellStore;
-        this.save = cellStore.addSaveWatcher(this::saved);
-        this.delete = cellStore.addDeleteWatcher(this::deleted);
+        this.saveCell = engine.cellStore.addSaveWatcher(this::onCellSaved);
+        this.deleteCell = engine.cellStore.addDeleteWatcher(this::onCellDeleted);
+        this.deleteCellReferences = engine.cellReferencesStore.addRemoveReferenceWatcher(this::onCellReferenceDeleted);
 
         this.engine = engine;
         this.context = context;
@@ -41,11 +40,11 @@ final class BasicSpreadsheetEngineUpdatedCells implements Closeable {
     /**
      * Accepts a just saved cell, parsing the formula adding external references and then batching references to this cell.
      */
-    private void saved(final SpreadsheetCell saved) {
-        final SpreadsheetCellReference reference = saved.reference();
-        if (null == this.updated.put(reference, saved)) {
+    private void onCellSaved(final SpreadsheetCell cell) {
+        final SpreadsheetCellReference reference = cell.reference();
+        if (null == this.updated.put(reference, cell)) {
             this.removePreviousExpressionReferences(reference);
-            this.addNewExpressionReferences(reference, saved.formula());
+            this.addNewExpressionReferences(reference, cell.formula());
             this.batchReferrers(reference);
         }
     }
@@ -64,9 +63,11 @@ final class BasicSpreadsheetEngineUpdatedCells implements Closeable {
     /**
      * Invoked whenever a cell is deleted or replaced.
      */
-    private void deleted(final SpreadsheetCellReference deleted) {
-        this.removePreviousExpressionReferences(deleted);
-        this.batchReferrers(deleted);
+    private void onCellDeleted(final SpreadsheetCellReference cell) {
+        final BasicSpreadsheetEngine engine = this.engine;
+
+        this.removePreviousExpressionReferences(cell);
+        this.batchReferrers(cell);
     }
 
     private void removePreviousExpressionReferences(final SpreadsheetCellReference cell) {
@@ -77,6 +78,10 @@ final class BasicSpreadsheetEngineUpdatedCells implements Closeable {
                 .forEach(l -> engine.labelReferencesStore.removeReference(TargetAndSpreadsheetCellReference.with(l, cell)));
         engine.rangeToCellStore.rangesWithValue(cell)
                 .forEach(r -> engine.rangeToCellStore.removeValue(r, cell));
+    }
+
+    private void onCellReferenceDeleted(final TargetAndSpreadsheetCellReference<SpreadsheetCellReference> targetAndReference) {
+        this.batchReferrers(targetAndReference.target());
     }
 
     Set<SpreadsheetCell> refreshUpdated() {
@@ -153,14 +158,19 @@ final class BasicSpreadsheetEngineUpdatedCells implements Closeable {
     @Override
     public void close() {
         try {
-            this.save.run();
+            this.saveCell.run();
         } finally {
-            this.delete.run();
+            try {
+                this.deleteCell.run();
+            } finally {
+                this.deleteCellReferences.run();
+            }
         }
     }
 
-    private final Runnable save;
-    private final Runnable delete;
+    private final Runnable saveCell;
+    private final Runnable deleteCell;
+    private final Runnable deleteCellReferences;
 
     @Override
     public String toString() {

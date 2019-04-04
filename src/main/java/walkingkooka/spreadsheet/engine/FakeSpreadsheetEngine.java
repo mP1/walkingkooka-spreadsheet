@@ -32,6 +32,12 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
+    public Set<SpreadsheetCell> deleteCell(final SpreadsheetCellReference cell,
+                                           final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Set<SpreadsheetCell> deleteColumns(final SpreadsheetColumnReference column,
                                               final int count,
                                               final SpreadsheetEngineContext context) {
