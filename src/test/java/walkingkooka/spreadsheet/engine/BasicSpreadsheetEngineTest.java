@@ -839,6 +839,121 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue(b2, BigDecimal.valueOf(5)));
     }
 
+    @Test
+    public void testSaveCellReplacesCellReferences() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
+                labelStore,
+                cellReferenceStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetCell d4 = this.cell("$D$4", "20");
+        engine.saveCell(d4, context);
+
+        final SpreadsheetCell e5 = this.cell("$E$5", "30");
+        engine.saveCell(e5, context);
+
+        engine.saveCell(this.cell("$A$1", "10+d4"), context);
+
+        final SpreadsheetCell a1 = this.cell("$A$1", "40+$E$5");
+        this.saveCellAndCheck(engine,
+                a1,
+                context,
+                this.formattedCellWithValue(a1, BigDecimal.valueOf(40 + 30)));
+
+        this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), e5.reference());
+        this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
+
+        this.loadReferencesAndCheck(cellReferenceStore, d4.reference());
+        this.loadReferrersAndCheck(cellReferenceStore, d4.reference());
+    }
+
+    @Test
+    public void testSaveCellReplacesLabelReferences() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
+        final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore = this.labelReferencesStore();
+
+        final SpreadsheetLabelName labelB2 = SpreadsheetLabelName.with("LABELB2");
+        labelStore.save(SpreadsheetLabelMapping.with(labelB2, this.cellReference("B2")));
+
+        final SpreadsheetLabelName labelD4 = SpreadsheetLabelName.with("LABELD4");
+        labelStore.save(SpreadsheetLabelMapping.with(labelD4, this.cellReference("D4")));
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
+                labelStore,
+                cellReferenceStore,
+                labelReferencesStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetCell d4 = this.cell("$D$4", "20");
+        engine.saveCell(d4, context);
+
+        engine.saveCell(this.cell("$A$1", "10+" + labelB2), context);
+
+        final SpreadsheetCell a1 = this.cell("$A$1", "40+" + labelD4);
+        this.saveCellAndCheck(engine,
+                a1,
+                context,
+                this.formattedCellWithValue(a1, BigDecimal.valueOf(40 + 20)));
+
+        this.loadReferencesAndCheck(cellReferenceStore, a1.reference());
+        this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
+
+        this.loadReferencesAndCheck(cellReferenceStore, d4.reference());
+        this.loadReferrersAndCheck(cellReferenceStore, d4.reference());
+
+        this.loadReferencesAndCheck(labelReferencesStore, labelB2);
+        this.loadReferencesAndCheck(labelReferencesStore, labelD4, a1.reference());
+    }
+
+    @Test
+    public void testSaveCellReplacesCellAndLabelReferences() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
+        final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore = this.labelReferencesStore();
+
+        final SpreadsheetLabelName labelB2 = SpreadsheetLabelName.with("LABELB2");
+        labelStore.save(SpreadsheetLabelMapping.with(labelB2, this.cellReference("B2")));
+
+        final SpreadsheetLabelName labelD4 = SpreadsheetLabelName.with("LABELD4");
+        labelStore.save(SpreadsheetLabelMapping.with(labelD4, this.cellReference("D4")));
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
+                labelStore,
+                cellReferenceStore,
+                labelReferencesStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetCell d4 = this.cell("$D$4", "20");
+        engine.saveCell(d4, context);
+
+        final SpreadsheetCell e5 = this.cell("$E$5", "30");
+        engine.saveCell(e5, context);
+
+        engine.saveCell(this.cell("$A$1", "10+" + labelB2 + "+C2"), context);
+
+        final SpreadsheetCell a1 = this.cell("$A$1", "40+" + labelD4 + "+$E$5");
+        this.saveCellAndCheck(engine,
+                a1,
+                context,
+                this.formattedCellWithValue(a1, BigDecimal.valueOf(40 + 20 + 30)));
+
+        this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), e5.reference());
+        this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
+
+        this.loadReferencesAndCheck(cellReferenceStore, d4.reference());
+        this.loadReferrersAndCheck(cellReferenceStore, d4.reference());
+
+        this.loadReferencesAndCheck(labelReferencesStore, labelB2);
+        this.loadReferencesAndCheck(labelReferencesStore, labelD4, a1.reference());
+    }
+
     // deleteColumn....................................................................................................
 
     @Test
