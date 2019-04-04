@@ -81,6 +81,22 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     @Test
+    default void testDeleteCellNullCellFails() {
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().deleteCell(null,
+                    this.createContext());
+        });
+    }
+
+    @Test
+    default void testDeleteCellNullContextFails() {
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().deleteCell(REFERENCE,
+                    null);
+        });
+    }
+    
+    @Test
     default void testDeleteColumnsNullColumnFails() {
         assertThrows(NullPointerException.class, () -> {
             this.createSpreadsheetEngine().deleteColumns(null, 1, this.createContext());
@@ -303,6 +319,22 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         assertEquals(updated,
                 engine.saveCell(save, context),
                 () -> "saveCell " + save);
+    }
+
+    default void deleteCellAndCheck(final SpreadsheetEngine engine,
+                                    final SpreadsheetCellReference delete,
+                                    final SpreadsheetEngineContext context,
+                                    final SpreadsheetCell... updated) {
+        this.deleteCellAndCheck(engine, delete, context, Sets.of(updated));
+    }
+
+    default void deleteCellAndCheck(final SpreadsheetEngine engine,
+                                    final SpreadsheetCellReference delete,
+                                    final SpreadsheetEngineContext context,
+                                    final Set<SpreadsheetCell> updated) {
+        assertEquals(updated,
+                engine.deleteCell(delete, context),
+                () -> "deleteCell " + delete);
     }
 
     default void countAndCheck(final Store<?, ?> store, final int count) {
