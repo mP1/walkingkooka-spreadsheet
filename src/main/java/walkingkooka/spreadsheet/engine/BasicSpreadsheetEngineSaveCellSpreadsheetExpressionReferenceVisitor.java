@@ -19,7 +19,7 @@ abstract class BasicSpreadsheetEngineSaveCellSpreadsheetExpressionReferenceVisit
     @Override
     final protected void visit(final SpreadsheetCellReference reference) {
         final BasicSpreadsheetEngineSaveCell saveCell = this.saveCell;
-        this.visit(saveCell.reference, reference, saveCell.engine);
+        this.visit(saveCell.unsaved.reference(), reference, saveCell.engine);
     }
 
     abstract void visit(final SpreadsheetCellReference reference, final SpreadsheetCellReference target, final BasicSpreadsheetEngine engine);
@@ -27,7 +27,7 @@ abstract class BasicSpreadsheetEngineSaveCellSpreadsheetExpressionReferenceVisit
     @Override
     final protected void visit(final SpreadsheetLabelName label) {
         final BasicSpreadsheetEngineSaveCell saveCell = this.saveCell;
-        this.visit(saveCell.reference, label, saveCell.engine);
+        this.visit(saveCell.unsaved.reference(), label, saveCell.engine);
     }
 
     abstract void visit(final SpreadsheetCellReference reference, final SpreadsheetLabelName target, final BasicSpreadsheetEngine engine);
@@ -35,7 +35,7 @@ abstract class BasicSpreadsheetEngineSaveCellSpreadsheetExpressionReferenceVisit
     @Override
     final protected void visit(final SpreadsheetRange range) {
         final BasicSpreadsheetEngineSaveCell saveCell = this.saveCell;
-        this.visit(saveCell.reference, range, saveCell.engine);
+        this.visit(saveCell.unsaved.reference(), range, saveCell.engine);
     }
 
     abstract void visit(final SpreadsheetCellReference reference, final SpreadsheetRange target, final BasicSpreadsheetEngine engine);
