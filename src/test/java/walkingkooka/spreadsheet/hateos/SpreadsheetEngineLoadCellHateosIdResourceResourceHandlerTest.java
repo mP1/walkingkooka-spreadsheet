@@ -51,7 +51,7 @@ implements HateosIdResourceResourceHandlerTesting<SpreadsheetEngineLoadCellHateo
     public void testLoadCellInvalidLoadingParameterFails2() {
         this.handleFails(this.id(),
                 this.resource(),
-                Maps.one(HttpRequestParameterName.with("loading"), Lists.of("a", "b")),
+                Maps.of(HttpRequestParameterName.with("loading"), Lists.of("a", "b")),
                 IllegalArgumentException.class);
     }
 
@@ -92,7 +92,7 @@ implements HateosIdResourceResourceHandlerTesting<SpreadsheetEngineLoadCellHateo
     }
 
     private Map<HttpRequestAttribute<?>, Object> parameters(final SpreadsheetEngineLoading loading) {
-        return Maps.one(UrlParameterName.with("loading"), Lists.of(loading.toString()));
+        return Maps.of(UrlParameterName.with("loading"), Lists.of(loading.toString()));
     }
 
     @Override
