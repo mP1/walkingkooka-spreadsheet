@@ -70,7 +70,7 @@ public final class SpreadsheetEngineIdHateosIdRangeResourceCollectionResourceCol
     }
 
     private Map<HttpRequestAttribute<?>, Object> parameters(final SpreadsheetEngineLoading loading) {
-        return Maps.one(UrlParameterName.with("loading"), Lists.of(loading.toString()));
+        return Maps.of(UrlParameterName.with("loading"), Lists.of(loading.toString()));
     }
 
     @Override
