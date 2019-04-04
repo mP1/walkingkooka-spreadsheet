@@ -1,13 +1,11 @@
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * An action that coordinates the process of saving a cell. First all old references are removed then new ones saved.
@@ -15,18 +13,17 @@ import java.util.Set;
  */
 final class BasicSpreadsheetEngineSaveCell {
 
-    static Set<SpreadsheetCell> execute(final SpreadsheetCell cell,
-                                        final SpreadsheetEngineLoading loading,
-                                        final BasicSpreadsheetEngine engine,
-                                        final SpreadsheetEngineContext context) {
+    static void execute(final SpreadsheetCell cell,
+                        final SpreadsheetEngineLoading loading,
+                        final BasicSpreadsheetEngine engine,
+                        final SpreadsheetEngineContext context) {
         Objects.requireNonNull(cell, "cell");
         Objects.requireNonNull(context, "context");
 
-        return Sets.of(new BasicSpreadsheetEngineSaveCell(cell,
+        new BasicSpreadsheetEngineSaveCell(cell,
                 loading,
                 engine,
-                context)
-                .saved);
+                context);
     }
 
     private BasicSpreadsheetEngineSaveCell(final SpreadsheetCell unsaved,
@@ -45,7 +42,7 @@ final class BasicSpreadsheetEngineSaveCell {
         if (before.isPresent()) {
             this.removePreviousExpressionReferences(before.get().formula());
         }
-        this.saved = this.evaluateAndSaveCell(unsaved);
+        this.evaluateAndSaveCell(unsaved);
     }
 
     /**
@@ -64,11 +61,6 @@ final class BasicSpreadsheetEngineSaveCell {
      * Used during cell re-evaluation.
      */
     private final SpreadsheetEngineContext context;
-
-    /**
-     * The evaluated and saved cell.
-     */
-    private final SpreadsheetCell saved;
 
     /**
      * Removes any existing references by this cell and replaces them with new references if any are present.
@@ -98,7 +90,7 @@ final class BasicSpreadsheetEngineSaveCell {
                 .ifPresent(e -> BasicSpreadsheetEngineSaveCellReferencesExpressionNodeVisitor.processReferences(e,
                         BasicSpreadsheetEngineSaveCellAddReferencesSpreadsheetExpressionReferenceVisitor.with(this)));
     }
-
+    
     @Override
     public String toString() {
         return this.reference.toString();
