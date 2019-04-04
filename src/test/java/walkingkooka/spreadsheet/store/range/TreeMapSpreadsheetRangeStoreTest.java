@@ -751,7 +751,188 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
         this.loadRangeAndCheck(store, RANGE3, VALUE3);
     }
 
-    // loadRanges ...................................................................................................
+    // rangesWithValue....................................................................................................
+
+    @Test
+    public void testRangesWithValueUnknownValue() {
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
+
+        final SpreadsheetRange range1 = SpreadsheetRange.parse("A1:A1");
+        final String value1 = "value1";
+        store.addValue(range1, value1);
+
+        this.rangesWithValuesAndCheck(store, "unknown!");
+    }
+
+    @Test
+    public void testRangesWithValue2() {
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
+
+        final SpreadsheetRange range1 = SpreadsheetRange.parse("A1:A1");
+        final String value1 = "value1";
+        store.addValue(range1, value1);
+
+        final SpreadsheetRange range2 = SpreadsheetRange.parse("A2:A2");
+        final String value2 = "value2";
+        store.addValue(range2, value2);
+
+        this.rangesWithValuesAndCheck(store, value1, range1);
+        this.rangesWithValuesAndCheck(store, value2, range2);
+    }
+
+    @Test
+    public void testRangesWithValueAddValueRemoveValue() {
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
+
+        final SpreadsheetRange range1 = SpreadsheetRange.parse("A1:A1");
+        final String value1 = "value1";
+        store.addValue(range1, value1);
+        store.removeValue(range1, value1);
+
+        this.rangesWithValuesAndCheck(store, value1);
+    }
+
+    @Test
+    public void testRangesWithValueAddValueRemoveValueAddValue() {
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
+
+        final SpreadsheetRange range1 = SpreadsheetRange.parse("A1:A1");
+        final String value1 = "value1";
+        store.addValue(range1, value1);
+        store.removeValue(range1, value1);
+
+        this.rangesWithValuesAndCheck(store, value1);
+
+        store.addValue(range1, value1);
+        this.rangesWithValuesAndCheck(store, value1, range1);
+    }
+
+    @Test
+    public void testRangesWithValueAddValueReplaceValue() {
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
+
+        final SpreadsheetRange range1 = SpreadsheetRange.parse("A1:A1");
+        final String value1 = "value1";
+        store.addValue(range1, value1);
+
+        final String value2 = "value2";
+        store.replaceValue(range1, value2, value1);
+
+        this.rangesWithValuesAndCheck(store, value1);
+        this.rangesWithValuesAndCheck(store, value2, range1);
+    }
+
+    @Test
+    public void testRangesWithValueAddValueRemoveValue2() {
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
+
+        final SpreadsheetRange range1 = SpreadsheetRange.parse("A1:A1");
+        final SpreadsheetRange range2 = SpreadsheetRange.parse("A2:A2");
+
+        final String value1 = "value1";
+        store.addValue(range1, value1);
+        store.removeValue(range1, value1);
+
+        this.rangesWithValuesAndCheck(store, value1);
+    }
+
+    @Test
+    public void testRangesWithValueAddValueManyRanges() {
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
+
+        final SpreadsheetRange range1 = SpreadsheetRange.parse("A1:A1");
+        final String value1 = "value1";
+        store.addValue(range1, value1);
+
+        final SpreadsheetRange range2 = SpreadsheetRange.parse("A2:A2");
+        store.addValue(range2, value1);
+
+        this.rangesWithValuesAndCheck(store, value1, range1, range2);
+        this.rangesWithValuesAndCheck(store, "???");
+    }
+
+    @Test
+    public void testRangesWithValueAddValueManyRanges2() {
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
+
+        final SpreadsheetRange range1 = SpreadsheetRange.parse("A1:A1");
+        final String value1 = "value1";
+        store.addValue(range1, value1);
+
+        final SpreadsheetRange range2 = SpreadsheetRange.parse("A2:A2");
+        store.addValue(range2, value1);
+
+        final String value2 = "value2";
+        store.addValue(range2, value2);
+
+        this.rangesWithValuesAndCheck(store, value1, range1, range2);
+        this.rangesWithValuesAndCheck(store, value2, range2);
+        this.rangesWithValuesAndCheck(store, "???");
+    }
+
+    @Test
+    public void testRangesWithValueAddValueReplaceValueManyRanges() {
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
+
+        final SpreadsheetRange range1 = SpreadsheetRange.parse("A1:A1");
+        final String value1 = "value1";
+        store.addValue(range1, value1);
+
+        final SpreadsheetRange range2 = SpreadsheetRange.parse("A2:A2");
+        final String value2 = "value2";
+        store.addValue(range2, value2);
+
+        final String value3 = "value3";
+        store.replaceValue(range1, value3, value1);
+
+        this.rangesWithValuesAndCheck(store, value1); // was removed by replace(value3
+        this.rangesWithValuesAndCheck(store, value2, range2);
+        this.rangesWithValuesAndCheck(store, value3, range1);
+    }
+
+    @Test
+    public void testRangesWithValueAddValueReplaceValueManyRanges2() {
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
+
+        final SpreadsheetRange range1 = SpreadsheetRange.parse("A1:A1");
+        final String value1 = "value1";
+        store.addValue(range1, value1);
+
+        final SpreadsheetRange range2 = SpreadsheetRange.parse("A2:A2");
+        final String value2 = "value2";
+        store.addValue(range2, value2);
+
+        final String value3 = "value3";
+        store.addValue(range1, value3);
+
+        final String value4 = "value4";
+        store.replaceValue(range1, value4, value3);
+
+        this.rangesWithValuesAndCheck(store, value1, range1);
+        this.rangesWithValuesAndCheck(store, value2, range2);
+        this.rangesWithValuesAndCheck(store, value3);
+        this.rangesWithValuesAndCheck(store, value4, range1);
+    }
+
+    @Test
+    public void testRangesWithValueAddValueRemoveValueManyRanges() {
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
+
+        final SpreadsheetRange range1 = SpreadsheetRange.parse("A1:A1");
+        final String value1 = "value1";
+        store.addValue(range1, value1);
+
+        final SpreadsheetRange range2 = SpreadsheetRange.parse("A2:A2");
+        final String value2 = "value2";
+        store.addValue(range2, value2);
+
+        final String value3 = "value3";
+        store.addValue(range1, value3);
+
+        this.rangesWithValuesAndCheck(store, value1, range1);
+        this.rangesWithValuesAndCheck(store, value2, range2);
+        this.rangesWithValuesAndCheck(store, value3, range1);
+    }
 
     // helpers ...................................................................................................
 

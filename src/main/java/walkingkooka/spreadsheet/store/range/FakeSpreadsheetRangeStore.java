@@ -49,4 +49,11 @@ public class FakeSpreadsheetRangeStore<V> extends FakeStore<SpreadsheetRange, Li
 
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public Set<SpreadsheetRange> rangesWithValue(final V value) {
+        Objects.requireNonNull(value, "value");
+
+        throw new UnsupportedOperationException();
+    }
 }
