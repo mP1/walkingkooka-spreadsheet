@@ -23,32 +23,25 @@ final class BasicSpreadsheetEngineSaveCell {
         new BasicSpreadsheetEngineSaveCell(cell,
                 loading,
                 engine,
-                context);
+                context).save();
     }
 
-    private BasicSpreadsheetEngineSaveCell(final SpreadsheetCell unsaved,
-                                           final SpreadsheetEngineLoading loading,
-                                           final BasicSpreadsheetEngine engine,
-                                           final SpreadsheetEngineContext context) {
+    // VisibleForTesting
+    BasicSpreadsheetEngineSaveCell(final SpreadsheetCell unsaved,
+                                   final SpreadsheetEngineLoading loading,
+                                   final BasicSpreadsheetEngine engine,
+                                   final SpreadsheetEngineContext context) {
         super();
-        this.reference = unsaved.reference();
+        this.unsaved = unsaved;
         this.loading = loading;
-
         this.engine = engine;
         this.context = context;
-
-        final SpreadsheetCellReference reference = unsaved.reference();
-        final Optional<SpreadsheetCell> before = this.engine.cellStore.load(reference);
-        if (before.isPresent()) {
-            this.removePreviousExpressionReferences(before.get().formula());
-        }
-        this.evaluateAndSaveCell(unsaved);
     }
 
     /**
-     * The reference of the cell being saved.
+     * The cell about to be saved.
      */
-    final SpreadsheetCellReference reference;
+    final SpreadsheetCell unsaved;
 
     /**
      * Allows control over loading evaluation.
@@ -61,6 +54,19 @@ final class BasicSpreadsheetEngineSaveCell {
      * Used during cell re-evaluation.
      */
     private final SpreadsheetEngineContext context;
+
+    /**
+     * Executes the save.
+     */
+    void save() {
+        final SpreadsheetCell unsaved = this.unsaved;
+        final SpreadsheetCellReference reference = unsaved.reference();
+        final Optional<SpreadsheetCell> before = this.engine.cellStore.load(reference);
+        if (before.isPresent()) {
+            this.removePreviousExpressionReferences(before.get().formula());
+        }
+        this.evaluateAndSaveCell(unsaved);
+    }
 
     /**
      * Removes any existing references by this cell and replaces them with new references if any are present.
@@ -90,9 +96,9 @@ final class BasicSpreadsheetEngineSaveCell {
                 .ifPresent(e -> BasicSpreadsheetEngineSaveCellReferencesExpressionNodeVisitor.processReferences(e,
                         BasicSpreadsheetEngineSaveCellAddReferencesSpreadsheetExpressionReferenceVisitor.with(this)));
     }
-    
+
     @Override
     public String toString() {
-        return this.reference.toString();
+        return this.unsaved.toString();
     }
 }
