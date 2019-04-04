@@ -68,6 +68,13 @@ public final class ReadOnlySpreadsheetRangeStoreTest implements SpreadsheetRange
         });
     }
 
+    @Test
+    public void testRangesWithValue() {
+        final SpreadsheetRangeStore<String> store = SpreadsheetRangeStores.treeMap();
+        store.addValue(RANGE, VALUE);
+        this.rangesWithValuesAndCheck(ReadOnlySpreadsheetRangeStore.with(store), VALUE, RANGE);
+    }
+
     @Override
     public String valueValue() {
         return "hello";

@@ -54,4 +54,9 @@ public interface SpreadsheetRangeStore<V> extends Store<SpreadsheetRange, List<V
      * Removes a single value if it exists for the given {@link SpreadsheetRange}
      */
     void removeValue(final SpreadsheetRange range, final V value);
+
+    /**
+     * Returns all the {@link SpreadsheetRange ranges} containing the given value.
+     */
+    Set<SpreadsheetRange> rangesWithValue(final V value);
 }
