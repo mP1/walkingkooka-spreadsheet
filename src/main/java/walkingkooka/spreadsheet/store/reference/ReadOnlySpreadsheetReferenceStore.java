@@ -1,8 +1,6 @@
 package walkingkooka.spreadsheet.store.reference;
 
-import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.List;
@@ -78,17 +76,29 @@ final class ReadOnlySpreadsheetReferenceStore<T extends ExpressionReference & Co
     }
 
     @Override
-    public void addReference(final T id, final SpreadsheetCellReference target) {
-        checkId(id);
-        checkTarget(target);
+    public void addReference(final TargetAndSpreadsheetCellReference<T> targetedReference) {
+        checkTargetedReference(targetedReference);
 
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void removeReference(final T id, final SpreadsheetCellReference target) {
-        checkId(id);
-        checkTarget(target);
+    public Runnable addAddReferenceWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher) {
+        Objects.requireNonNull(watcher, "watcher");
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void removeReference(final TargetAndSpreadsheetCellReference<T> targetedReference) {
+        checkTargetedReference(targetedReference);
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Runnable addRemoveReferenceWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher) {
+        Objects.requireNonNull(watcher, "watcher");
 
         throw new UnsupportedOperationException();
     }
@@ -109,7 +119,7 @@ final class ReadOnlySpreadsheetReferenceStore<T extends ExpressionReference & Co
         Objects.requireNonNull(id, "id");
     }
 
-    private static void checkTarget(final SpreadsheetCellReference target) {
-        Objects.requireNonNull(target, "target");
+    private static void checkTargetedReference(final TargetAndSpreadsheetCellReference targetedReference) {
+        Objects.requireNonNull(targetedReference, "targetedReference");
     }
 }

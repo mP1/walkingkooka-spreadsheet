@@ -7,6 +7,7 @@ import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Consumer;
 
 public class FakeSpreadsheetReferenceStore<T extends ExpressionReference & Comparable<T>> extends FakeStore<T, Set<SpreadsheetCellReference>> implements SpreadsheetReferenceStore<T>, Fake {
 
@@ -19,19 +20,29 @@ public class FakeSpreadsheetReferenceStore<T extends ExpressionReference & Compa
     }
 
     @Override
-    public void addReference(final T id,
-                             final SpreadsheetCellReference target) {
-        Objects.requireNonNull(id, "id");
-        Objects.requireNonNull(target, "target");
+    public void addReference(final TargetAndSpreadsheetCellReference<T> targetAndReference) {
+        Objects.requireNonNull(targetAndReference, "targetAndReference");
 
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void removeReference(final T id,
-                                final SpreadsheetCellReference target) {
-        Objects.requireNonNull(id, "id");
-        Objects.requireNonNull(target, "target");
+    public Runnable addAddReferenceWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher) {
+        Objects.requireNonNull(watcher, "watcher");
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void removeReference(final TargetAndSpreadsheetCellReference<T> targetAndReference) {
+        Objects.requireNonNull(targetAndReference, "targetAndReference");
+
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Runnable addRemoveReferenceWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher) {
+        Objects.requireNonNull(watcher, "watcher");
 
         throw new UnsupportedOperationException();
     }
