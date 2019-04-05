@@ -45,16 +45,27 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
     @Override
     public void delete(final T id) {
         checkId(id);
-        this.removeAllWithTarget(id);
+        this.removeAllWithTargetAndFireDeleteWatchers(id);
     }
 
     /**
      * Delete the reference and all referrers to that reference.
      */
-    private void removeAllWithTarget(final T id) {
+    private void removeAllWithTargetAndFireDeleteWatchers(final T id) {
+        if (this.removeAllWithTarget(id)) {
+            this.deleteWatchers.accept(id);
+        }
+    }
+
+    /**
+     * Delete the reference and all referrers to that reference.
+     */
+    private boolean removeAllWithTarget(final T id) {
         // where id=label remove label to cells, then remove cell to label.
         final Set<SpreadsheetCellReference> referrers = this.targetToReferences.remove(id);
-        if (null != referrers) {
+
+        final boolean needsFire = null != referrers;
+        if (needsFire) {
             for (Iterator<SpreadsheetCellReference> i = referrers.iterator(); i.hasNext(); ) {
                 final SpreadsheetCellReference referrer = i.next();
                 final Set<T> targets = this.referenceToTargets.get(referrer);
@@ -66,9 +77,8 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
                     }
                 }
             }
-
-            this.deleteWatchers.accept(id);
         }
+        return needsFire;
     }
 
     @Override

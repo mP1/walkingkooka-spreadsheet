@@ -121,6 +121,21 @@ public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReference
         });
     }
 
+    @Test
+    default void testSaveReferences() {
+        final S store = this.createStore();
+        store.saveReferences(this.id(), this.value());
+    }
+
+    @Test
+    default void testSaveReferencesDoesntFireDeleteWatchers() {
+        final S store = this.createStore();
+        store.addDeleteWatcher((v) -> {
+            throw new UnsupportedOperationException();
+        });
+        store.saveReferences(this.id(), this.value());
+    }
+
     // loadReferred...........................................................................................
 
     @Test
