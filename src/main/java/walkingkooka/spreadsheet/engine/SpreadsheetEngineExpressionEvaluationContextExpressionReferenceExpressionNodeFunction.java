@@ -50,7 +50,7 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
         Objects.requireNonNull(reference, "reference");
 
         final Optional<SpreadsheetCell> maybeCell = this.engine.loadCell(SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunctionSpreadsheetExpressionReferenceVisitor.reference(reference, this.labelStore),
-                SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY, this.context);
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, this.context);
         if (!maybeCell.isPresent()) {
             throw new ExpressionEvaluationException("Unknown cell reference " + reference);
         }
