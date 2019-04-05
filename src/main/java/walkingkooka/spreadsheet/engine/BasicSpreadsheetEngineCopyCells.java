@@ -90,13 +90,13 @@ final class BasicSpreadsheetEngineCopyCells {
                         yOffset),
                 context));
         this.engine.maybeParseAndEvaluateAndFormat(save,
-                SpreadsheetEngineLoading.FORCE_RECOMPUTE,
+                SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                 context);
         return save.reference();
     }
 
     private void recomputeCopiedCells(final List<SpreadsheetCellReference> references) {
-        references.forEach(r -> this.engine.loadCell(r, SpreadsheetEngineLoading.FORCE_RECOMPUTE, this.context));
+        references.forEach(r -> this.engine.loadCell(r, SpreadsheetEngineEvaluation.FORCE_RECOMPUTE, this.context));
     }
 
     private final BasicSpreadsheetEngine engine;

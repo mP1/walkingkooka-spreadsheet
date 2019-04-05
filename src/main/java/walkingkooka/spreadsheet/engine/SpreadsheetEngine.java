@@ -26,7 +26,7 @@ public interface SpreadsheetEngine {
      * Invalid cell requests will be ignored and absent fromthe result. If parsing or evaluation fails the cell will have an error.
      */
     Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
-                                       final SpreadsheetEngineLoading loading,
+                                       final SpreadsheetEngineEvaluation evaluation,
                                        final SpreadsheetEngineContext context);
 
     /**
