@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.test.ClassTesting2;
+import walkingkooka.test.ToStringTesting;
+import walkingkooka.test.TypeNameTesting;
 import walkingkooka.type.MemberVisibility;
 
 import java.util.List;
@@ -13,7 +15,8 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface StoreTesting<S extends Store<K, V>, K, V> extends ClassTesting2<S> {
+public interface StoreTesting<S extends Store<K, V>, K, V> extends ClassTesting2<S>,
+        ToStringTesting<S> {
 
     @Test
     default void testLoadNullIdFails() {

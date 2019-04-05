@@ -19,7 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReferenceStore<T>, T extends ExpressionReference & Comparable<T>>
-        extends StoreTesting<S, T, Set<SpreadsheetCellReference>>, TypeNameTesting<S> {
+        extends StoreTesting<S, T, Set<SpreadsheetCellReference>>,
+        TypeNameTesting<S>{
 
     @Test
     default void testSaveNullFails() {
@@ -315,8 +316,6 @@ public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReference
             }
         }
     }
-
-
 
     // TypeNameTesting...........................................................................................
 
