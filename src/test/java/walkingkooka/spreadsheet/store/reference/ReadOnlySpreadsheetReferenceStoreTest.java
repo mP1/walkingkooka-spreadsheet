@@ -2,12 +2,16 @@ package walkingkooka.spreadsheet.store.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.store.ReadOnlyStoreTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 
+import java.util.List;
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceStoreTestCase<ReadOnlySpreadsheetReferenceStore<SpreadsheetCellReference>, SpreadsheetCellReference>
@@ -109,18 +113,46 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
     public void testSaveReferencesDoesntFireDeleteWatchers() {
     }
 
+    @Override
+    public void testSaveReferencesAddReferenceWatcher() {
+    }
+
+    @Override
+    public void testSaveReferencesReplaceAddReferenceWatcher() {
+    }
+
+    @Override
+    public void testSaveReferencesReplaceNoneAddReferenceWatcher() {
+    }
+
+    @Override
+    public void testSaveReferencesReplaceAddReferenceWatcher2() {
+    }
+
     @Test
     public void testAddReferenceFails() {
         assertThrows(UnsupportedOperationException.class, () -> {
-            this.createStore().addReference(this.id(), this.a1());
+            this.createStore().addReference(TargetAndSpreadsheetCellReference.with(this.id(), this.b1()));
         });
+    }
+
+    @Override
+    public void testAddReferenceWithWatcher() {
     }
 
     @Test
     public void testRemoveReferenceFails() {
         assertThrows(UnsupportedOperationException.class, () -> {
-            this.createStore().removeReference(this.id(), this.a1());
+            this.createStore().removeReference(TargetAndSpreadsheetCellReference.with(this.id(), this.b1()));
         });
+    }
+
+    @Override
+    public void testRemoveReferenceWithWatcher() {
+    }
+
+    @Override
+    public void testDeleteWithRemoveReferenceWatcher() {
     }
 
     // count.................................................................................
@@ -134,8 +166,9 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
         final SpreadsheetCellReference c1 = this.c1();
         store.saveReferences(a1, Sets.of(b1, c1));
 
-        store.removeReference(a1, c1);
-        store.addReference(a1, c1);
+        final TargetAndSpreadsheetCellReference<SpreadsheetCellReference> and = TargetAndSpreadsheetCellReference.with(a1, c1);
+        store.removeReference(and);
+        store.addReference(and);
 
         this.countAndCheck(ReadOnlySpreadsheetReferenceStore.with(store), 1);
     }

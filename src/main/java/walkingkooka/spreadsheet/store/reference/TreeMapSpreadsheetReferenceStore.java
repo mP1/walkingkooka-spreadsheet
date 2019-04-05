@@ -74,6 +74,7 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
                         if (targets.isEmpty()) {
                             this.referenceToTargets.remove(referrer);
                         }
+                        this.removeReferenceWatchers.accept(TargetAndSpreadsheetCellReference.with(id, referrer));
                     }
                 }
             }
@@ -120,86 +121,101 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
 
     @Override
     public void saveReferences(final T id, final Set<SpreadsheetCellReference> referrers) {
-        Objects.requireNonNull(id, "id");
+        checkId(id);
         Objects.requireNonNull(referrers, "referrers");
 
-        final Set<SpreadsheetCellReference> copy = Sets.sorted();
-        copy.addAll(referrers);
+        final Set<SpreadsheetCellReference> previous = this.targetToReferences.get(id);
+        if (null == previous) {
+            referrers.forEach(r -> this.addReference0(TargetAndSpreadsheetCellReference.with(id, r)));
+        } else {
+            final Set<SpreadsheetCellReference> copy = Sets.ordered();
+            copy.addAll(previous);
 
-        // complain if adding a reference to self
-        if (copy.contains(id)) {
-            throw new IllegalArgumentException("referrer includes " + id + "=" + referrers);
-        }
+            referrers.stream()
+                    .filter(r -> !copy.contains(r))
+                    .forEach(r -> this.addReference0(TargetAndSpreadsheetCellReference.with(id, r)));
 
-        this.removeAllWithTarget(id);
-        if (!copy.isEmpty()) {
-            for (SpreadsheetCellReference reference : copy) {
-                this.addReference(id, reference);
-            }
+            copy.stream()
+                    .filter(r -> !referrers.contains(r))
+                    .forEach(r -> this.removeReference0(TargetAndSpreadsheetCellReference.with(id, r)));
         }
     }
 
     @Override
-    public void addReference(final T id, final SpreadsheetCellReference referrer) {
-        checkId(id);
-        checkReferrer(referrer);
+    public void addReference(final TargetAndSpreadsheetCellReference<T> targetAndReference) {
+        checkReferrerAndReference(targetAndReference);
 
-        // complain if adding a reference to self
-        if (id instanceof SpreadsheetCellReference) {
-            if (referrer.compareTo(SpreadsheetCellReference.class.cast(id)) == 0) {
-                throw new IllegalArgumentException("referrer includes " + id + "=" + referrer);
-            }
-        }
+        this.addReference0(targetAndReference);
+    }
+
+    private void addReference0(final TargetAndSpreadsheetCellReference<T> targetAndReference) {
+        final T id = targetAndReference.target();
+        final SpreadsheetCellReference reference = targetAndReference.reference();
 
         Set<SpreadsheetCellReference> referrers = this.targetToReferences.get(id);
         if (null == referrers) {
             referrers = Sets.sorted();
             this.targetToReferences.put(id, referrers);
         }
-        referrers.add(referrer);
+        referrers.add(reference);
 
-        this.addReference0(id, referrer);
-    }
-
-    private void addReference0(final T id, final SpreadsheetCellReference referrer) {
-        Set<T> targets = this.referenceToTargets.get(referrer);
+        Set<T> targets = this.referenceToTargets.get(reference);
         if (null == targets) {
             targets = Sets.sorted();
-            this.referenceToTargets.put(referrer, targets);
+            this.referenceToTargets.put(reference, targets);
         }
         targets.add(id);
+
+        this.addReferenceWatchers.accept(targetAndReference);
     }
 
     @Override
-    public void removeReference(final T id, final SpreadsheetCellReference referrer) {
-        checkId(id);
-        checkReferrer(referrer);
-
-        if(this.removeReference0(id, referrer)) {
-            final Set<T> ids = this.referenceToTargets.get(referrer);
-            if(null!=ids) {
-                if(ids.remove(id)){
-                    if(ids.isEmpty()) {
-                        this.referenceToTargets.remove(referrer);
-                    }
-                }
-            }
-        }
+    public Runnable addAddReferenceWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher) {
+        return this.addReferenceWatchers.addWatcher(watcher);
     }
 
-    private boolean removeReference0(final T id,
-                                     final SpreadsheetCellReference referrer) {
+    private final Watchers<TargetAndSpreadsheetCellReference<T>> addReferenceWatchers = Watchers.create();
+
+    @Override
+    public void removeReference(final TargetAndSpreadsheetCellReference<T> targetAndReference) {
+        checkReferrerAndReference(targetAndReference);
+
+        this.removeReference0(targetAndReference);
+    }
+
+    private void removeReference0(final TargetAndSpreadsheetCellReference<T> targetAndReference) {
+        final T id = targetAndReference.target();
+        final SpreadsheetCellReference reference = targetAndReference.reference();
+
         final Set<SpreadsheetCellReference> referrers = this.targetToReferences.get(id);
         final boolean removed = null != referrers;
         if (removed) {
-            referrers.remove(referrer);
+            referrers.remove(reference);
             if (referrers.isEmpty()) {
                 this.targetToReferences.remove(id);
                 this.deleteWatchers.accept(id);
             }
         }
-        return removed;
+
+        if(removed) {
+            final Set<T> ids = this.referenceToTargets.get(reference);
+            if(null!=ids) {
+                if(ids.remove(id)){
+                    if(ids.isEmpty()) {
+                        this.referenceToTargets.remove(reference);
+                    }
+                }
+            }
+            this.removeReferenceWatchers.accept(targetAndReference);
+        }
     }
+
+    @Override
+    public Runnable addRemoveReferenceWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher) {
+        return this.removeReferenceWatchers.addWatcher(watcher);
+    }
+
+    private final Watchers<TargetAndSpreadsheetCellReference<T>> removeReferenceWatchers = Watchers.create();
 
     @Override
     public Set<T> loadReferred(final SpreadsheetCellReference referrer) {
@@ -228,6 +244,10 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
 
     private static void checkReferrer(final SpreadsheetCellReference referrer) {
         Objects.requireNonNull(referrer, "referrer");
+    }
+
+    private static void checkReferrerAndReference(final TargetAndSpreadsheetCellReference targetAndReference) {
+        Objects.requireNonNull(targetAndReference, "targetAndReference");
     }
 
     /**

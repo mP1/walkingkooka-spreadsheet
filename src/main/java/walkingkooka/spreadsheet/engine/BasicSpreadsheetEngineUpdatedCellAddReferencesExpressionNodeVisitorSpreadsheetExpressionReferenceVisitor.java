@@ -2,6 +2,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetExpressionReferenceVisitor;
 import walkingkooka.spreadsheet.SpreadsheetRange;
+import walkingkooka.spreadsheet.store.reference.TargetAndSpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 
@@ -25,12 +26,12 @@ final class BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitorS
 
     @Override
     final protected void visit(final SpreadsheetCellReference reference) {
-        this.engine.cellReferencesStore.addReference(this.target, reference);
+        this.engine.cellReferencesStore.addReference(TargetAndSpreadsheetCellReference.with(this.target, reference));
     }
 
     @Override
     final protected void visit(final SpreadsheetLabelName label) {
-        this.engine.labelReferencesStore.addReference(label, this.target);
+        this.engine.labelReferencesStore.addReference(TargetAndSpreadsheetCellReference.with(label, this.target));
     }
 
     @Override
