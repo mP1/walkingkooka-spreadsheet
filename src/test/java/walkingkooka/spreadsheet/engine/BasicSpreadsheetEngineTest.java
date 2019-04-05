@@ -865,7 +865,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell e5 = this.cell("$E$5", "30");
         engine.saveCell(e5, context);
 
-        engine.saveCell(this.cell("$A$1", "10+d4"), context);
+        engine.saveCell(this.cell("$A$1", "10+" + d4.reference()), context);
 
         final SpreadsheetCell a1 = this.cell("$A$1", "40+" + e5.reference());
         this.saveCellAndCheck(engine,
@@ -962,6 +962,132 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadReferencesAndCheck(labelReferencesStore, labelB2);
         this.loadReferencesAndCheck(labelReferencesStore, labelD4, a1.reference());
+    }
+
+    // deleteCell....................................................................................................
+
+    @Test
+    public void testDeleteCellWithReferences() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
+                labelStore,
+                cellReferenceStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetCellReference a1 = SpreadsheetCellReference.parse("$A$1");
+        final SpreadsheetCellReference b2 = SpreadsheetCellReference.parse("$B$2");
+
+        engine.saveCell(this.cell(a1, "99+" + b2), context);
+        this.deleteCellAndCheck(engine, a1, context);
+
+        this.loadReferencesAndCheck(cellReferenceStore, a1);
+        this.loadReferrersAndCheck(cellReferenceStore, a1);
+
+        this.loadReferencesAndCheck(cellReferenceStore, b2);
+        this.loadReferrersAndCheck(cellReferenceStore, b2);
+    }
+
+    @Test
+    public void testDeleteCellWithCellReferrers() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
+                labelStore,
+                cellReferenceStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetCell a1 = this.cell("$A$1", "1+$B$2");
+        engine.saveCell(a1, context);
+
+        final SpreadsheetCell b2 = this.cell("$B$2", "20");
+        engine.saveCell(b2, context);
+
+        this.deleteCellAndCheck(engine,
+                b2.reference(),
+                context,
+                this.formattedCellWithError(a1, "Unknown cell reference $B$2"));
+
+        this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), b2.reference());
+        this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
+
+        this.loadReferencesAndCheck(cellReferenceStore, b2.reference());
+        this.loadReferrersAndCheck(cellReferenceStore, b2.reference(), a1.reference());
+    }
+
+    @Test
+    public void testDeleteCellWithLabelReferences() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
+        final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore = this.labelReferencesStore();
+
+        final SpreadsheetLabelName labelB2 = SpreadsheetLabelName.with("LABELB2");
+        final SpreadsheetCell b2 = this.cell("$B$2", "20");
+        labelStore.save(SpreadsheetLabelMapping.with(labelB2, b2.reference()));
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
+                labelStore,
+                cellReferenceStore,
+                labelReferencesStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetCell a1 = this.cell("$A$1", "1+" + labelB2);
+        engine.saveCell(a1, context);
+
+        engine.saveCell(b2, context);
+
+        this.deleteCellAndCheck(engine,
+                a1.reference(),
+                context);
+
+        this.loadReferencesAndCheck(cellReferenceStore, a1.reference());
+        this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
+
+        this.loadReferencesAndCheck(cellReferenceStore, b2.reference());
+        this.loadReferrersAndCheck(cellReferenceStore, b2.reference());
+
+        this.loadReferencesAndCheck(labelReferencesStore, labelB2);
+    }
+
+    @Test
+    public void testDeleteCellWithLabelReferrers() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
+        final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore = this.labelReferencesStore();
+
+        final SpreadsheetLabelName labelB2 = SpreadsheetLabelName.with("LABELB2");
+        final SpreadsheetCell b2 = this.cell("$B$2", "20");
+        labelStore.save(SpreadsheetLabelMapping.with(labelB2, b2.reference()));
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
+                labelStore,
+                cellReferenceStore,
+                labelReferencesStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetCell a1 = this.cell("$A$1", "1+" + labelB2);
+        engine.saveCell(a1, context);
+
+        engine.saveCell(b2, context);
+
+        this.deleteCellAndCheck(engine,
+                b2.reference(),
+                context,
+                this.formattedCellWithError(a1, "Unknown cell reference " + labelB2));
+
+        this.loadReferencesAndCheck(cellReferenceStore, a1.reference());
+        this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
+
+        this.loadReferencesAndCheck(cellReferenceStore, b2.reference());
+        this.loadReferrersAndCheck(cellReferenceStore, b2.reference());
+
+        this.loadReferencesAndCheck(labelReferencesStore, labelB2, a1.reference());
     }
 
     // deleteColumn....................................................................................................
@@ -3861,7 +3987,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 labelStore,
                 rules,
                 this.cellReferencesStore(),
-                SpreadsheetReferenceStores.readOnly(this.labelReferencesStore()),
+                this.labelReferencesStore(),
                 SpreadsheetRangeStores.readOnly(this.rangeToCellStore()));
     }
 
@@ -3871,7 +3997,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return this.createSpreadsheetEngine(cellStore,
                 labelStore,
                 cellReferencesStore,
-                SpreadsheetReferenceStores.readOnly(this.labelReferencesStore()));
+                this.labelReferencesStore());
     }
 
     private BasicSpreadsheetEngine createSpreadsheetEngine(final SpreadsheetCellStore cellStore,
