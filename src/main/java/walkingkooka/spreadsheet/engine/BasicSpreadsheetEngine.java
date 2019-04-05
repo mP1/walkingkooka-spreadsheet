@@ -98,23 +98,23 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      */
     @Override
     public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference reference,
-                                              final SpreadsheetEngineLoading loading,
+                                              final SpreadsheetEngineEvaluation evaluation,
                                               final SpreadsheetEngineContext context) {
         checkReference(reference);
-        Objects.requireNonNull(loading, "loading");
+        Objects.requireNonNull(evaluation, "evaluation");
         checkContext(context);
 
         final Optional<SpreadsheetCell> cell = this.cellStore.load(reference);
-        return cell.map(c -> this.maybeParseAndEvaluateAndFormat(c, loading, context));
+        return cell.map(c -> this.maybeParseAndEvaluateAndFormat(c, evaluation, context));
     }
 
     /**
-     * Attempts to evaluate the cell, parsing and evaluating as necessary depending on the {@link SpreadsheetEngineLoading}
+     * Attempts to evaluate the cell, parsing and evaluating as necessary depending on the {@link SpreadsheetEngineEvaluation}
      */
     SpreadsheetCell maybeParseAndEvaluateAndFormat(final SpreadsheetCell cell,
-                                                   final SpreadsheetEngineLoading loading,
+                                                   final SpreadsheetEngineEvaluation evaluation,
                                                    final SpreadsheetEngineContext context) {
-        final SpreadsheetCell result = loading.formulaEvaluateAndStyle(cell, this, context);
+        final SpreadsheetCell result = evaluation.formulaEvaluateAndStyle(cell, this, context);
         this.cellStore.save(result); // update cells enabling caching of parsing and value and errors.
         return result;
     }
@@ -329,7 +329,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCells.with(this, context)) {
             this.maybeParseAndEvaluateAndFormat(cell,
-                    SpreadsheetEngineLoading.FORCE_RECOMPUTE,
+                    SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                     context);
             return updated.refreshUpdated();
         }

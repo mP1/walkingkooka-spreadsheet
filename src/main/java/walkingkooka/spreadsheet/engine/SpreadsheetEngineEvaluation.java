@@ -9,7 +9,7 @@ import walkingkooka.tree.json.JsonNodeException;
 import java.util.Arrays;
 import java.util.Objects;
 
-public enum SpreadsheetEngineLoading implements HasJsonNode {
+public enum SpreadsheetEngineEvaluation implements HasJsonNode {
 
     /**
      * Performs no new evaluation of the formula, leaves the original value or error alone and does not change the style.
@@ -57,9 +57,9 @@ public enum SpreadsheetEngineLoading implements HasJsonNode {
     // HasJsonNode...........................................................................................
 
     /**
-     * Factory that creates a {@link SpreadsheetEngineLoading} from a {@link JsonNode}
+     * Factory that creates a {@link SpreadsheetEngineEvaluation} from a {@link JsonNode}
      */
-    public static SpreadsheetEngineLoading fromJsonNode(final JsonNode node) {
+    public static SpreadsheetEngineEvaluation fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
         try {
@@ -75,8 +75,8 @@ public enum SpreadsheetEngineLoading implements HasJsonNode {
     }
 
     static {
-        HasJsonNode.register("spreadsheet-engine-loading",
-                SpreadsheetEngineLoading::fromJsonNode,
+        HasJsonNode.register("spreadsheet-engine-evaluation",
+                SpreadsheetEngineEvaluation::fromJsonNode,
                 Arrays.stream(values()).map(e -> e.getClass()).toArray(Class[]::new));
     }
 }
