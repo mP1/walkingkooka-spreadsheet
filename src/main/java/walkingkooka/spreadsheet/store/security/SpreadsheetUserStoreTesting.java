@@ -4,8 +4,10 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.spreadsheet.store.StoreTesting;
+import walkingkooka.test.TypeNameTesting;
 
-public interface SpreadsheetUserStoreTesting<S extends SpreadsheetUserStore> extends StoreTesting<S, UserId, User> {
+public interface SpreadsheetUserStoreTesting<S extends SpreadsheetUserStore> extends StoreTesting<S, UserId, User>,
+        TypeNameTesting<S> {
 
     // StoreTesting...........................................................
 
@@ -17,5 +19,12 @@ public interface SpreadsheetUserStoreTesting<S extends SpreadsheetUserStore> ext
     @Override
     default User value() {
         return User.with(this.id(), EmailAddress.parse("user@example.com"));
+    }
+
+    // TypeNameTesting..................................................................
+
+    @Override
+    default String typeNameSuffix() {
+        return SpreadsheetUserStore.class.getSimpleName();
     }
 }

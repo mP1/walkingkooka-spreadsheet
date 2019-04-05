@@ -9,8 +9,10 @@ import walkingkooka.spreadsheet.SpreadsheetFormattedCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.store.StoreTesting;
+import walkingkooka.spreadsheet.store.security.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
+import walkingkooka.test.TypeNameTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
@@ -24,7 +26,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStore> implements StoreTesting<S, SpreadsheetCellReference, SpreadsheetCell> {
+public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStore> implements StoreTesting<S, SpreadsheetCellReference, SpreadsheetCell>,
+        TypeNameTesting<S> {
 
     final static SpreadsheetCellReference REFERENCE = SpreadsheetReferenceKind.ABSOLUTE.column(1).setRow(SpreadsheetReferenceKind.ABSOLUTE.row(2));
 
@@ -281,5 +284,12 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
     private Optional<SpreadsheetFormattedCell> formatted() {
         return SpreadsheetCell.NO_FORMATTED_CELL;
+    }
+
+    // TypeNameTesting..................................................................
+
+    @Override
+    public String typeNameSuffix() {
+        return SpreadsheetCellStore.class.getSimpleName();
     }
 }

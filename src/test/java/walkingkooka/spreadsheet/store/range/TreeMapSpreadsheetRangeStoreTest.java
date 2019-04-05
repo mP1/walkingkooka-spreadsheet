@@ -934,6 +934,23 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
         this.rangesWithValuesAndCheck(store, value3, range1);
     }
 
+    // ToStringTesting ...................................................................................................
+
+    @Test
+    public void testToString() {
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
+
+        final SpreadsheetRange range1 = SpreadsheetRange.parse("A1:A1");
+        final String value1 = "value1";
+        store.addValue(range1, value1);
+
+        final SpreadsheetRange range2 = SpreadsheetRange.parse("A2:A2");
+        final String value2 = "value2";
+        store.addValue(range2, value2);
+
+        this.toStringAndCheck(store, "{A1=A1={A1=[value1]}, A2=A2={A2=[value2]}}");
+    }
+
     // helpers ...................................................................................................
 
     @Override
