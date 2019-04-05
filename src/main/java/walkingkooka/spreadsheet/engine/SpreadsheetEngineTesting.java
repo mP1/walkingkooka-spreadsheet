@@ -40,12 +40,12 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     @Test
     default void testLoadCellNullCellFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().loadCell(null, SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY, this.createContext());
+            this.createSpreadsheetEngine().loadCell(null, SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, this.createContext());
         });
     }
 
     @Test
-    default void testLoadCellNullLoadingFails() {
+    default void testLoadCellNullEvaluationFails() {
         assertThrows(NullPointerException.class, () -> {
             this.createSpreadsheetEngine().loadCell(REFERENCE,
                     null,
@@ -57,7 +57,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     default void testLoadCellNullContextFails() {
         assertThrows(NullPointerException.class, () -> {
             this.createSpreadsheetEngine().loadCell(REFERENCE,
-                    SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY,
+                    SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                     null);
         });
     }
@@ -186,9 +186,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     default SpreadsheetCell loadCellOrFail(final SpreadsheetEngine engine,
                                            final SpreadsheetCellReference reference,
-                                           final SpreadsheetEngineLoading loading,
+                                           final SpreadsheetEngineEvaluation evaluation,
                                            final SpreadsheetEngineContext context) {
-        final Optional<SpreadsheetCell> cell = engine.loadCell(reference, loading, context);
+        final Optional<SpreadsheetCell> cell = engine.loadCell(reference, evaluation, context);
         if (!cell.isPresent()) {
             fail("Loading " + reference + " should have succeeded");
         }
@@ -196,27 +196,27 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void loadCellFailCheck(final SpreadsheetCellReference reference,
-                                   final SpreadsheetEngineLoading loading) {
-        this.loadCellFailCheck(reference, loading, this.createContext());
+                                   final SpreadsheetEngineEvaluation evaluation) {
+        this.loadCellFailCheck(reference, evaluation, this.createContext());
     }
 
     default void loadCellFailCheck(final SpreadsheetCellReference reference,
-                                   final SpreadsheetEngineLoading loading,
+                                   final SpreadsheetEngineEvaluation evaluation,
                                    final SpreadsheetEngineContext context) {
-        this.loadCellFailCheck(this.createSpreadsheetEngine(), reference, loading, context);
+        this.loadCellFailCheck(this.createSpreadsheetEngine(), reference, evaluation, context);
     }
 
     default void loadCellFailCheck(final SpreadsheetEngine engine,
                                    final SpreadsheetCellReference reference,
                                    final SpreadsheetEngineContext context) {
-        this.loadCellFailCheck(engine, reference, SpreadsheetEngineLoading.SKIP_EVALUATE, context);
+        this.loadCellFailCheck(engine, reference, SpreadsheetEngineEvaluation.SKIP_EVALUATE, context);
     }
 
     default void loadCellFailCheck(final SpreadsheetEngine engine,
                                    final SpreadsheetCellReference reference,
-                                   final SpreadsheetEngineLoading loading,
+                                   final SpreadsheetEngineEvaluation evaluation,
                                    final SpreadsheetEngineContext context) {
-        final Optional<SpreadsheetCell> cell = engine.loadCell(reference, loading, context);
+        final Optional<SpreadsheetCell> cell = engine.loadCell(reference, evaluation, context);
         assertEquals(Optional.empty(),
                 cell,
                 () -> "Expected reference " + reference + " to fail");
@@ -224,9 +224,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     default SpreadsheetCell loadCellAndCheckWithoutValueOrError(final SpreadsheetEngine engine,
                                                                 final SpreadsheetCellReference reference,
-                                                                final SpreadsheetEngineLoading loading,
+                                                                final SpreadsheetEngineEvaluation evaluation,
                                                                 final SpreadsheetEngineContext context) {
-        final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading, context);
+        final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, evaluation, context);
         assertEquals(null,
                 this.valueOrError(cell, null),
                 () -> "values from returned cells=" + cell);
@@ -235,52 +235,52 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     default SpreadsheetCell loadCellAndCheckFormula(final SpreadsheetEngine engine,
                                                     final SpreadsheetCellReference reference,
-                                                    final SpreadsheetEngineLoading loading,
+                                                    final SpreadsheetEngineEvaluation evaluation,
                                                     final SpreadsheetEngineContext context,
                                                     final String formula) {
-        final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading, context);
+        final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, evaluation, context);
         this.checkFormula(cell, formula);
         return cell;
     }
 
     default SpreadsheetCell loadCellAndCheckFormulaAndValue(final SpreadsheetEngine engine,
                                                             final SpreadsheetCellReference reference,
-                                                            final SpreadsheetEngineLoading loading,
+                                                            final SpreadsheetEngineEvaluation evaluation,
                                                             final SpreadsheetEngineContext context,
                                                             final String formula,
                                                             final Object value) {
-        final SpreadsheetCell cell = this.loadCellAndCheckFormula(engine, reference, loading, context, formula);
+        final SpreadsheetCell cell = this.loadCellAndCheckFormula(engine, reference, evaluation, context, formula);
         this.checkValueOrError(cell, value);
         return cell;
     }
 
     default SpreadsheetCell loadCellAndCheckValue(final SpreadsheetEngine engine,
                                                   final SpreadsheetCellReference reference,
-                                                  final SpreadsheetEngineLoading loading,
+                                                  final SpreadsheetEngineEvaluation evaluation,
                                                   final SpreadsheetEngineContext context,
                                                   final Object value) {
-        final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading, context);
+        final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, evaluation, context);
         this.checkValueOrError(cell, value);
         return cell;
     }
 
     default SpreadsheetCell loadCellAndCheckFormatted(final SpreadsheetEngine engine,
                                                       final SpreadsheetCellReference reference,
-                                                      final SpreadsheetEngineLoading loading,
+                                                      final SpreadsheetEngineEvaluation evaluation,
                                                       final SpreadsheetEngineContext context,
                                                       final Object value,
                                                       final String text) {
-        final SpreadsheetCell cell = this.loadCellAndCheckValue(engine, reference, loading, context, value);
+        final SpreadsheetCell cell = this.loadCellAndCheckValue(engine, reference, evaluation, context, value);
         this.checkFormattedText(cell, text);
         return cell;
     }
 
     default void loadCellAndCheckError(final SpreadsheetEngine engine,
                                        final SpreadsheetCellReference reference,
-                                       final SpreadsheetEngineLoading loading,
+                                       final SpreadsheetEngineEvaluation evaluation,
                                        final SpreadsheetEngineContext context,
                                        final String errorContains) {
-        final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, loading, context);
+        final SpreadsheetCell cell = this.loadCellOrFail(engine, reference, evaluation, context);
 
         final Optional<SpreadsheetError> error = cell.formula().error();
         assertNotEquals(SpreadsheetFormula.NO_ERROR,
