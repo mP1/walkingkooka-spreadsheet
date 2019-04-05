@@ -101,6 +101,14 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
         });
     }
 
+    @Override
+    public void testSaveReferences() {
+    }
+
+    @Override
+    public void testSaveReferencesDoesntFireDeleteWatchers() {
+    }
+
     @Test
     public void testAddReferenceFails() {
         assertThrows(UnsupportedOperationException.class, () -> {
