@@ -6,7 +6,7 @@ import walkingkooka.net.http.server.hateos.HateosIdResourceResourceHandler;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngineLoading;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
 import java.util.Map;
@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
- * A {@link HateosIdResourceResourceHandler} that calls {@link SpreadsheetEngine#loadCell(SpreadsheetCellReference, SpreadsheetEngineLoading, SpreadsheetEngineContext)}.
+ * A {@link HateosIdResourceResourceHandler} that calls {@link SpreadsheetEngine#loadCell(SpreadsheetCellReference, SpreadsheetEngineEvaluation, SpreadsheetEngineContext)}.
  */
 final class SpreadsheetEngineLoadCellHateosIdResourceResourceHandler extends SpreadsheetEngineHateosHandler
         implements HateosIdResourceResourceHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetCell> {
@@ -40,11 +40,11 @@ final class SpreadsheetEngineLoadCellHateosIdResourceResourceHandler extends Spr
         checkParameters(parameters);
 
         return this.engine.loadCell(cellReference,
-                this.parameterValueOrFail(parameters, LOADING, SpreadsheetEngineLoading::valueOf),
+                this.parameterValueOrFail(parameters, EVALUATION, SpreadsheetEngineEvaluation::valueOf),
                 this.context.get());
     }
 
-    private final static UrlParameterName LOADING = UrlParameterName.with("loading");
+    private final static UrlParameterName EVALUATION = UrlParameterName.with("evaluation");
 
     @Override
     String operation() {
