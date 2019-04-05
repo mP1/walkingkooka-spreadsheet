@@ -36,6 +36,12 @@ public interface SpreadsheetEngine {
                                   final SpreadsheetEngineContext context);
 
     /**
+     * Deletes the cell, removing references and updates and returns all affected (referenced cells).
+     */
+    Set<SpreadsheetCell> deleteCell(final SpreadsheetCellReference cell,
+                                    final SpreadsheetEngineContext context);
+
+    /**
      * Deletes the identified columns, updates all absolute references as necessary in both formulas and label mappings.
      */
     Set<SpreadsheetCell> deleteColumns(final SpreadsheetColumnReference column,
