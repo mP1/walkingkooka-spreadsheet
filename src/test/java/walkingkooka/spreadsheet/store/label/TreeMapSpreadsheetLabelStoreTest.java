@@ -7,6 +7,8 @@ import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 
+import java.util.TreeMap;
+
 public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStoreTestCase<TreeMapSpreadsheetLabelStore> {
 
     @Test
@@ -75,6 +77,15 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
                 Sets.of(this.range1()));
     }
 
+    @Test
+    public void testToString() {
+        final TreeMapSpreadsheetLabelStore store = this.createStore();
+        store.save(SpreadsheetLabelMapping.with(this.label1(), this.range1()));
+        store.save(SpreadsheetLabelMapping.with(this.label2(), this.a2()));
+
+        this.toStringAndCheck(store, "[label1=A1:A3, label2=A2]");
+    }
+
     private SpreadsheetLabelName label1() {
         return SpreadsheetLabelName.with("label1");
     }
@@ -107,5 +118,12 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     @Override
     public Class<TreeMapSpreadsheetLabelStore> type() {
         return TreeMapSpreadsheetLabelStore.class;
+    }
+
+    // TypeNameTesting..................................................................
+
+    @Override
+    public String typeNamePrefix() {
+        return TreeMap.class.getSimpleName();
     }
 }

@@ -164,6 +164,6 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
 
     @Override
     public String toString() {
-        return this.cells.toString();
+        return this.cells.values().toString();
     }
 }
