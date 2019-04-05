@@ -7,11 +7,11 @@ import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.test.ToStringTesting;
 
 import java.util.Optional;
+import java.util.TreeMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserStoreTesting<TreeMapSpreadsheetUserStore>,
-        ToStringTesting<TreeMapSpreadsheetUserStore> {
+public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserStoreTesting<TreeMapSpreadsheetUserStore> {
 
     @Test
     public void testLoad1() {
@@ -180,6 +180,11 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
     }
 
     // ClassTesting..........................................................................................
+
+    @Override
+    public String typeNamePrefix() {
+        return TreeMap.class.getSimpleName();
+    }
 
     @Override
     public Class<TreeMapSpreadsheetUserStore> type() {

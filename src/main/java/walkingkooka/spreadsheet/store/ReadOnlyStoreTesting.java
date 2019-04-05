@@ -1,13 +1,16 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.store.security.SpreadsheetGroupStore;
+import walkingkooka.test.TypeNameTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Stores tests that are readonly must also implement this interface(mixin).
  */
-public interface ReadOnlyStoreTesting<S extends Store<K, V>, K, V> extends StoreTesting<S, K, V> {
+public interface ReadOnlyStoreTesting<S extends Store<K, V>, K, V> extends StoreTesting<S, K, V>,
+        TypeNameTesting<S> {
 
     @Test
     default void testSaveFails() {
@@ -41,5 +44,12 @@ public interface ReadOnlyStoreTesting<S extends Store<K, V>, K, V> extends Store
             this.createStore().addDeleteWatcher((a) -> {
             });
         });
+    }
+
+    // TypeNameTesting..................................................................
+
+    @Override
+    default String typeNamePrefix() {
+        return "ReadOnly";
     }
 }

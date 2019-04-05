@@ -677,6 +677,21 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
         this.countAndCheck(store, 1);
     }
 
+    // ToStringTesting.............................................................
+
+    @Test
+    public void testToString() {
+        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+
+        final SpreadsheetCellReference a1 = this.a1();
+        ;
+        final SpreadsheetCellReference b1 = this.b1();
+        final SpreadsheetCellReference c1 = this.c1();
+        store.saveReferences(a1, Sets.of(b1, c1));
+
+        this.toStringAndCheck(store, "{A1=[B1, C1]}");
+    }
+
     // SpreadsheetReferenceStoreTesting.............................................................
 
     @Override

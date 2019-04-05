@@ -152,6 +152,6 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
 
     @Override
     public String toString() {
-        return this.groupIdToGroup.toString();
+        return this.groupIdToGroup.values().toString();
     }
 }
