@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.store.StoreTesting;
+import walkingkooka.spreadsheet.store.security.SpreadsheetGroupStore;
+import walkingkooka.test.TypeNameTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -13,7 +15,8 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> extends StoreTesting<S, SpreadsheetLabelName, SpreadsheetLabelMapping> {
+public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> extends StoreTesting<S, SpreadsheetLabelName, SpreadsheetLabelMapping>,
+        TypeNameTesting<S> {
 
     @Test
     default void testLoadCellReferencesOrRangesNullLabelFails() {
@@ -109,5 +112,12 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
     @Override
     default SpreadsheetLabelMapping value() {
         return SpreadsheetLabelMapping.with(this.id(), SpreadsheetCellReference.parse("A1"));
+    }
+
+    // TypeNameTesting..................................................................
+
+    @Override
+    default String typeNameSuffix() {
+        return SpreadsheetLabelStore.class.getSimpleName();
     }
 }

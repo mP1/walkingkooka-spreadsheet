@@ -75,6 +75,16 @@ public final class ReadOnlySpreadsheetRangeStoreTest implements SpreadsheetRange
         this.rangesWithValuesAndCheck(ReadOnlySpreadsheetRangeStore.with(store), VALUE, RANGE);
     }
 
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(ReadOnlySpreadsheetRangeStore.with(new FakeSpreadsheetRangeStore<String>() {
+            @Override
+            public String toString() {
+                return "ABC";
+            }
+        }), "ABC");
+    }
+
     @Override
     public String valueValue() {
         return "hello";
