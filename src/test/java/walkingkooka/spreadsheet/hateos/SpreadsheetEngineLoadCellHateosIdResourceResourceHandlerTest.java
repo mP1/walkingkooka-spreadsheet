@@ -15,7 +15,7 @@ import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngineLoading;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
@@ -37,10 +37,10 @@ implements HateosIdResourceResourceHandlerTesting<SpreadsheetEngineLoadCellHateo
         SpreadsheetCell,
         SpreadsheetCell> {
 
-    private final static SpreadsheetEngineLoading LOADING = SpreadsheetEngineLoading.FORCE_RECOMPUTE;
+    private final static SpreadsheetEngineEvaluation EVALUATION = SpreadsheetEngineEvaluation.FORCE_RECOMPUTE;
 
     @Test
-    public void testLoadCellInvalidLoadingParameterFails() {
+    public void testLoadCellInvalidevaluationParameterFails() {
         this.handleFails(this.id(),
                 this.resource(),
                 HateosHandler.NO_PARAMETERS,
@@ -48,10 +48,10 @@ implements HateosIdResourceResourceHandlerTesting<SpreadsheetEngineLoadCellHateo
     }
 
     @Test
-    public void testLoadCellInvalidLoadingParameterFails2() {
+    public void testLoadCellInvalidevaluationParameterFails2() {
         this.handleFails(this.id(),
                 this.resource(),
-                Maps.of(HttpRequestParameterName.with("loading"), Lists.of("a", "b")),
+                Maps.of(HttpRequestParameterName.with("evaluation"), Lists.of("a", "b")),
                 IllegalArgumentException.class);
     }
 
@@ -88,11 +88,11 @@ implements HateosIdResourceResourceHandlerTesting<SpreadsheetEngineLoadCellHateo
 
     @Override
     public Map<HttpRequestAttribute<?>, Object> parameters() {
-        return this.parameters(LOADING);
+        return this.parameters(EVALUATION);
     }
 
-    private Map<HttpRequestAttribute<?>, Object> parameters(final SpreadsheetEngineLoading loading) {
-        return Maps.of(UrlParameterName.with("loading"), Lists.of(loading.toString()));
+    private Map<HttpRequestAttribute<?>, Object> parameters(final SpreadsheetEngineEvaluation evaluation) {
+        return Maps.of(UrlParameterName.with("evaluation"), Lists.of(evaluation.toString()));
     }
 
     @Override
@@ -100,15 +100,15 @@ implements HateosIdResourceResourceHandlerTesting<SpreadsheetEngineLoadCellHateo
         return new FakeSpreadsheetEngine() {
             @Override
             public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference id,
-                                                      final SpreadsheetEngineLoading loading,
+                                                      final SpreadsheetEngineEvaluation evaluation,
                                                       final SpreadsheetEngineContext context) {
                 Objects.requireNonNull(id, "id");
-                Objects.requireNonNull(loading, "loading");
+                Objects.requireNonNull(evaluation, "evaluation");
                 Objects.requireNonNull(context, "context");
 
 
                 assertEquals(SpreadsheetEngineLoadCellHateosIdResourceResourceHandlerTest.this.id(), id, "id");
-                assertEquals(LOADING, loading, "loading");
+                assertEquals(EVALUATION, evaluation, "evaluation");
                 assertNotEquals(null, context, "context");
 
                 return Optional.of(SpreadsheetEngineLoadCellHateosIdResourceResourceHandlerTest.this.cell());

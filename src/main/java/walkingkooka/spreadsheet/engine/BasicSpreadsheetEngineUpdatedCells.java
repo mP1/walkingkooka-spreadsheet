@@ -9,7 +9,6 @@ import walkingkooka.spreadsheet.store.reference.TargetAndSpreadsheetCellReferenc
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 
-import java.io.Closeable;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
@@ -95,7 +94,7 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
             }
 
             this.engine.loadCell(potential,
-                    SpreadsheetEngineLoading.FORCE_RECOMPUTE,
+                    SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                     this.context);
         }
 

@@ -6,8 +6,8 @@ import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.MemberVisibility;
 
-public final class SpreadsheetEngineLoadingTest implements ClassTesting2<SpreadsheetEngineLoading>,
-        HasJsonNodeTesting<SpreadsheetEngineLoading> {
+public final class SpreadsheetEngineEvaluationTest implements ClassTesting2<SpreadsheetEngineEvaluation>,
+        HasJsonNodeTesting<SpreadsheetEngineEvaluation> {
 
     // HasJsonNode..........................................................................
 
@@ -43,17 +43,17 @@ public final class SpreadsheetEngineLoadingTest implements ClassTesting2<Spreads
 
     @Test
     public void testToJsonRoundtrip() {
-        this.toJsonNodeRoundTripTwiceAndCheck(SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY);
+        this.toJsonNodeRoundTripTwiceAndCheck(SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY);
     }
 
     @Test
     public void testToJsonRoundtrip2() {
-        this.toJsonNodeRoundTripTwiceAndCheck(SpreadsheetEngineLoading.SKIP_EVALUATE);
+        this.toJsonNodeRoundTripTwiceAndCheck(SpreadsheetEngineEvaluation.SKIP_EVALUATE);
     }
 
     @Override
-    public Class<SpreadsheetEngineLoading> type() {
-        return SpreadsheetEngineLoading.class;
+    public Class<SpreadsheetEngineEvaluation> type() {
+        return SpreadsheetEngineEvaluation.class;
     }
 
     @Override
@@ -64,12 +64,12 @@ public final class SpreadsheetEngineLoadingTest implements ClassTesting2<Spreads
     // HasJsonNodeTesting..................................................................
 
     @Override
-    public SpreadsheetEngineLoading createHasJsonNode() {
-        return SpreadsheetEngineLoading.COMPUTE_IF_NECESSARY;
+    public SpreadsheetEngineEvaluation createHasJsonNode() {
+        return SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY;
     }
 
     @Override
-    public SpreadsheetEngineLoading fromJsonNode(final JsonNode node) {
-        return SpreadsheetEngineLoading.fromJsonNode(node);
+    public SpreadsheetEngineEvaluation fromJsonNode(final JsonNode node) {
+        return SpreadsheetEngineEvaluation.fromJsonNode(node);
     }
 }

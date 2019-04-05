@@ -14,7 +14,7 @@ import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
-import walkingkooka.spreadsheet.engine.SpreadsheetEngineLoading;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 
 import java.util.List;
 import java.util.Map;
@@ -69,8 +69,8 @@ public final class SpreadsheetEngineIdHateosIdRangeResourceCollectionResourceCol
         return HateosHandler.NO_PARAMETERS;
     }
 
-    private Map<HttpRequestAttribute<?>, Object> parameters(final SpreadsheetEngineLoading loading) {
-        return Maps.of(UrlParameterName.with("loading"), Lists.of(loading.toString()));
+    private Map<HttpRequestAttribute<?>, Object> parameters(final SpreadsheetEngineEvaluation evaluation) {
+        return Maps.of(UrlParameterName.with("evaluation"), Lists.of(evaluation.toString()));
     }
 
     @Override
