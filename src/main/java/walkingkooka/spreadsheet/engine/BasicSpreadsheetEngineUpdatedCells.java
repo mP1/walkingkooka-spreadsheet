@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 /**
  * Aggregates all the updated cells that result from an operation by {@link BasicSpreadsheetEngine}.
  */
-final class BasicSpreadsheetEngineUpdatedCells implements Closeable {
+final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
 
     static BasicSpreadsheetEngineUpdatedCells with(final BasicSpreadsheetEngine engine,
                                                    final SpreadsheetEngineContext context) {
