@@ -6,6 +6,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.store.reference.TargetAndSpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 
@@ -73,7 +74,7 @@ final class BasicSpreadsheetEngineUpdatedCells implements Closeable {
 
         engine.cellReferencesStore.delete(cell);
         engine.labelReferencesStore.loadReferred(cell)
-                .forEach(l -> engine.labelReferencesStore.removeReference(l, cell));
+                .forEach(l -> engine.labelReferencesStore.removeReference(TargetAndSpreadsheetCellReference.with(l, cell)));
         engine.rangeToCellStore.rangesWithValue(cell)
                 .forEach(r -> engine.rangeToCellStore.removeValue(r, cell));
     }
