@@ -132,6 +132,6 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
 
     @Override
     public String toString() {
-        return this.mappings.toString();
+        return this.mappings.values().toString();
     }
 }

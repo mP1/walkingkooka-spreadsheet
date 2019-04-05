@@ -2,16 +2,12 @@ package walkingkooka.spreadsheet.store.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.store.ReadOnlyStoreTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 
-import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceStoreTestCase<ReadOnlySpreadsheetReferenceStore<SpreadsheetCellReference>, SpreadsheetCellReference>
@@ -173,6 +169,21 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
         this.countAndCheck(ReadOnlySpreadsheetReferenceStore.with(store), 1);
     }
 
+    // ToStringTesting.............................................................
+
+    @Test
+    public void testToString() {
+        final SpreadsheetReferenceStore<SpreadsheetCellReference> store = SpreadsheetReferenceStores.treeMap();
+
+        final SpreadsheetCellReference a1 = this.a1();
+        ;
+        final SpreadsheetCellReference b1 = this.b1();
+        final SpreadsheetCellReference c1 = this.c1();
+        store.saveReferences(a1, Sets.of(b1, c1));
+
+        this.toStringAndCheck(ReadOnlySpreadsheetReferenceStore.with(store), store.toString());
+    }
+
     // SpreadsheetReferenceStoreTesting.............................................................
 
     @Override
@@ -236,12 +247,5 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
     @Override
     public Class<ReadOnlySpreadsheetReferenceStore<SpreadsheetCellReference>> type() {
         return Cast.to(ReadOnlySpreadsheetReferenceStore.class);
-    }
-
-    // TypeNameTesting.................................................................................
-
-    @Override
-    public String typeNamePrefix() {
-        return "ReadOnly";
     }
 }

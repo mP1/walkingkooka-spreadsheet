@@ -5,6 +5,8 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.store.StoreTesting;
+import walkingkooka.spreadsheet.store.security.SpreadsheetGroupStore;
+import walkingkooka.test.TypeNameTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 
@@ -17,7 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>, V> extends StoreTesting<S, SpreadsheetRange, List<V>> {
+public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>, V> extends StoreTesting<S, SpreadsheetRange, List<V>>,
+        TypeNameTesting<S> {
 
     /**
      * RANGE and RANGE1B share a common TOPLEFT.
@@ -249,5 +252,12 @@ public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>
     @Override
     default List<V> value() {
         return Lists.of(this.valueValue());
+    }
+
+    // TypeNameTesting..................................................................
+
+    @Override
+    default String typeNameSuffix() {
+        return SpreadsheetRangeStore.class.getSimpleName();
     }
 }

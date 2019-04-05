@@ -8,6 +8,8 @@ import walkingkooka.spreadsheet.security.GroupName;
 import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.test.ToStringTesting;
 
+import java.util.TreeMap;
+
 public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupStoreTesting<TreeMapSpreadsheetGroupStore>,
         ToStringTesting<TreeMapSpreadsheetGroupStore> {
 
@@ -171,7 +173,7 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
     @Test
     public void testToString() {
         final TreeMapSpreadsheetGroupStore store = this.createNotEmptyStore();
-        this.toStringAndCheck(store, store.groupIdToGroup.toString());
+        this.toStringAndCheck(store, "[group1, group2, group33]");
     }
 
     // helpers........................................................................................
@@ -200,10 +202,6 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
         return UserId.with(2);
     }
 
-    private UserId user3() {
-        return UserId.with(3);
-    }
-
     // SpreadsheetGroupStoreTesting............................................................................
 
     @Override
@@ -226,5 +224,12 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
     @Override
     public Class<TreeMapSpreadsheetGroupStore> type() {
         return TreeMapSpreadsheetGroupStore.class;
+    }
+
+    // TypeNameTesting..................................................................
+
+    @Override
+    public String typeNamePrefix() {
+        return TreeMap.class.getSimpleName();
     }
 }
