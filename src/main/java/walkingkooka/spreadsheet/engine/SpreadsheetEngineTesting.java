@@ -8,6 +8,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
@@ -21,6 +22,7 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.type.MemberVisibility;
 
+import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 
@@ -290,6 +292,16 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> "Error message " + error + " missing " + CharSequences.quoteAndEscape(errorContains));
     }
 
+    default void loadCellAndCheck(final SpreadsheetEngine engine,
+                                  final SpreadsheetCellReference reference,
+                                  final SpreadsheetEngineEvaluation evaluation,
+                                  final SpreadsheetEngineContext context,
+                                  final SpreadsheetCell cell) {
+        assertEquals(Optional.of(cell),
+                engine.loadCell(reference, evaluation, context),
+                () -> "loadCell " + reference);
+    }
+
     default void loadLabelAndCheck(final SpreadsheetLabelStore labelStore,
                                    final SpreadsheetLabelName label,
                                    final ExpressionReference reference) {
@@ -341,6 +353,31 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         assertEquals(count,
                 store.count(),
                 "record count in " + store);
+    }
+
+    default void copyCellsAndCheck(final SpreadsheetEngine engine,
+                                   final Collection<SpreadsheetCell> from,
+                                   final SpreadsheetRange to,
+                                   final SpreadsheetEngineContext context,
+                                   final SpreadsheetCell... updated) {
+        this.copyCellsAndCheck(engine, from, to, context, Sets.of(updated));
+    }
+
+    default void copyCellsAndCheck(final SpreadsheetEngine engine,
+                                   final Collection<SpreadsheetCell> from,
+                                   final SpreadsheetRange to,
+                                   final SpreadsheetEngineContext context,
+                                   final Set<SpreadsheetCell> updated) {
+        assertEquals(updated,
+                engine.copyCells(from, to, context),
+                () -> "copyCells " + from + " to " + to);
+
+        // load and check updated cells again...
+        updated.forEach(c -> this.loadCellAndCheck(engine,
+                c.reference(),
+                SpreadsheetEngineEvaluation.SKIP_EVALUATE,
+                context,
+                c));
     }
 
     default void checkFormula(final SpreadsheetCell cell, final String formula) {
