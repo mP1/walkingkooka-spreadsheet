@@ -178,7 +178,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellAndLoadCellSkipEvaluate() {
+    public void testLoadCellSkipEvaluate() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -193,27 +193,27 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellAndLoadCellWithoutPattern() {
-        this.saveCellAndLoadCellAndCheck(SpreadsheetCell.NO_FORMAT, FORMATTED_DEFAULT_SUFFIX);
+    public void testLoadCellWithoutFormatPattern() {
+        this.cellStoreSaveAndLoadCellAndCheck(SpreadsheetCell.NO_FORMAT, FORMATTED_DEFAULT_SUFFIX);
     }
 
     @Test
-    public void testSaveCellAndLoadCellWithPattern() {
-        this.saveCellAndLoadCellAndCheck(Optional.of(SpreadsheetCellFormat.with(PATTERN)),
+    public void testLoadCellWithFormatPattern() {
+        this.cellStoreSaveAndLoadCellAndCheck(Optional.of(SpreadsheetCellFormat.with(PATTERN)),
                 FORMATTED_PATTERN_SUFFIX);
     }
 
     @Test
-    public void testSaveCellAndLoadCellWithPatternAndFormatter() {
+    public void testLoadCellWithFormatPatternAndFormatter() {
         final String pattern = "Custom";
         final String suffix = "CustomSuffix";
-        this.saveCellAndLoadCellAndCheck(Optional.of(SpreadsheetCellFormat.with(pattern)
+        this.cellStoreSaveAndLoadCellAndCheck(Optional.of(SpreadsheetCellFormat.with(pattern)
                         .setFormatter(Optional.of(this.formatter(pattern, SpreadsheetFormattedText.WITHOUT_COLOR, suffix)))),
                 suffix);
     }
 
-    private void saveCellAndLoadCellAndCheck(final Optional<SpreadsheetCellFormat> format,
-                                             final String patternSuffix) {
+    private void cellStoreSaveAndLoadCellAndCheck(final Optional<SpreadsheetCellFormat> format,
+                                                  final String patternSuffix) {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -294,25 +294,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellIgnoresErrorComputesValue() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-
-        final SpreadsheetCell cell = SpreadsheetCell.with(cellReference,
-                SpreadsheetFormula.with("1+2")
-                        .setError(Optional.of(SpreadsheetError.with("error!"))),
-                this.style());
-
-        this.saveCellAndCheck(engine,
-                cell,
-                context,
-                this.formattedCellWithValue(cell, BigDecimal.valueOf(1 + 2)));
-    }
-
-    @Test
     public void testLoadCellForceRecomputeIgnoresPreviousError() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
@@ -358,7 +339,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testSaveCellAndLoadCellMany() {
+    public void testLoadCellManyWithoutCrossReferences() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -597,6 +578,25 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.loadReferencesAndCheck(cellReferenceStore, b2); // references to B2 -> none
         this.loadReferrersAndCheck(cellReferenceStore, b2, a1.reference()); // references from B2 -> A1
+    }
+
+    @Test
+    public void testSaveCellIgnoresPreviousErrorComputesValue() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
+
+        final SpreadsheetCell cell = SpreadsheetCell.with(cellReference,
+                SpreadsheetFormula.with("1+2")
+                        .setError(Optional.of(SpreadsheetError.with("error!"))),
+                this.style());
+
+        this.saveCellAndCheck(engine,
+                cell,
+                context,
+                this.formattedCellWithValue(cell, BigDecimal.valueOf(1 + 2)));
     }
 
     @Test
