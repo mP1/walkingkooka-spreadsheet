@@ -430,10 +430,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(to, "to");
         checkContext(context);
 
-        if (!from.isEmpty()) {
+        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCells.with(this, context)) {
             BasicSpreadsheetEngineCopyCells.execute(from, to, this, context);
+            return updated.refreshUpdated();
         }
-        return Sets.empty();
     }
 
     private static void checkReference(final SpreadsheetCellReference reference) {

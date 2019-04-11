@@ -3601,7 +3601,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(5 + 0));
     }
 
-    // copy....................................................................................................
+    // copyCells....................................................................................................
 
     @Test
     public void testCopyCellsOneCellInto1x1() {
@@ -3623,16 +3623,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        engine.copyCells(Lists.of(cellA), SpreadsheetRange.cell(d), context);
+        this.copyCellsAndCheck(engine,
+                Lists.of(cellA),
+                SpreadsheetRange.cell(d),
+                context,
+                this.formattedCellWithValue(d, "1+0", BigDecimal.valueOf(1 + 0)));
 
         this.countAndCheck(cellStore, 3 + 1);
-
-        this.loadCellAndCheckFormulaAndValue(engine,
-                d,
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context,
-                "1+0",
-                BigDecimal.valueOf(1 + 0));
     }
 
     @Test
@@ -3655,23 +3652,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        engine.copyCells(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(2, 2)), context);
+        this.copyCellsAndCheck(engine,
+                Lists.of(cellA, cellB),
+                SpreadsheetRange.with(d, d.add(2, 2)),
+                context,
+                this.formattedCellWithValue(d, "1+0", BigDecimal.valueOf(1 + 0)),
+                this.formattedCellWithValue(d.add(1, 1), "2+0", BigDecimal.valueOf(2 + 0)));
 
         this.countAndCheck(cellStore, 3 + 2);
-
-        this.loadCellAndCheckFormulaAndValue(engine,
-                d,
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context,
-                "1+0",
-                BigDecimal.valueOf(1 + 0));
-
-        this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(1, 1),
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context,
-                "2+0",
-                BigDecimal.valueOf(2 + 0));
     }
 
     @Test
@@ -3694,23 +3682,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        engine.copyCells(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(1, 1)), context);
+        this.copyCellsAndCheck(engine,
+                Lists.of(cellA, cellB),
+                SpreadsheetRange.with(d, d.add(1, 1)),
+                context,
+                this.formattedCellWithValue(d, "1+0", BigDecimal.valueOf(1 + 0)),
+                this.formattedCellWithValue(d.add(1, 1), "2+0", BigDecimal.valueOf(2 + 0)));
 
         this.countAndCheck(cellStore, 3 + 2);
-
-        this.loadCellAndCheckFormulaAndValue(engine,
-                d,
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context,
-                "1+0",
-                BigDecimal.valueOf(1 + 0));
-
-        this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(1, 1),
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context,
-                "2+0",
-                BigDecimal.valueOf(2 + 0));
     }
 
     @Test
@@ -3733,23 +3712,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        engine.copyCells(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(2, 2)), context);
+        this.copyCellsAndCheck(
+                engine,
+                Lists.of(cellA, cellB),
+                SpreadsheetRange.with(d, d.add(2, 2)),
+                context,
+                this.formattedCellWithValue(d, "1+0", BigDecimal.valueOf(1 + 0)),
+                this.formattedCellWithValue(d.add(1, 1), "2+0", BigDecimal.valueOf(2 + 0)));
 
         this.countAndCheck(cellStore, 3 + 2);
-
-        this.loadCellAndCheckFormulaAndValue(engine,
-                d,
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context,
-                "1+0",
-                BigDecimal.valueOf(1 + 0));
-
-        this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(1, 1),
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context,
-                "2+0",
-                BigDecimal.valueOf(2 + 0));
     }
 
     @Test
@@ -3772,51 +3743,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        engine.copyCells(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(6, 1)), context);
+        this.copyCellsAndCheck(engine,
+                Lists.of(cellA, cellB),
+                SpreadsheetRange.with(d, d.add(6, 1)),
+                context,
+                this.formattedCellWithValue(d, "1+0", BigDecimal.valueOf(1 + 0)),
+                this.formattedCellWithValue(d.add(1, 1), "2+0", BigDecimal.valueOf(2 + 0)),
+                this.formattedCellWithValue(d.add(2, 0), "1+0", BigDecimal.valueOf(1 + 0)),
+                this.formattedCellWithValue(d.add(3, 1), "2+0", BigDecimal.valueOf(2 + 0)),
+                this.formattedCellWithValue(d.add(4, 0), "1+0", BigDecimal.valueOf(1 + 0)),
+                this.formattedCellWithValue(d.add(5, 1), "2+0", BigDecimal.valueOf(2 + 0)));
 
         this.countAndCheck(cellStore, 3 + 6);
-
-        this.loadCellAndCheckFormulaAndValue(engine,
-                d,
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context,
-                "1+0",
-                BigDecimal.valueOf(1 + 0));
-
-        this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(1, 1),
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context,
-                "2+0",
-                BigDecimal.valueOf(2 + 0));
-
-        this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(2, 0),
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context,
-                "1+0",
-                BigDecimal.valueOf(1 + 0));
-
-        this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(3, 1),
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context,
-                "2+0",
-                BigDecimal.valueOf(2 + 0));
-
-        this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(4, 0),
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context,
-                "1+0",
-                BigDecimal.valueOf(1 + 0));
-
-        this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(5, 1),
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context,
-                "2+0",
-                BigDecimal.valueOf(2 + 0));
     }
 
     @Test
@@ -3839,51 +3777,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        engine.copyCells(Lists.of(cellA, cellB), SpreadsheetRange.with(d, d.add(1, 6)), context);
+        this.copyCellsAndCheck(engine,
+                Lists.of(cellA, cellB),
+                SpreadsheetRange.with(d, d.add(1, 6)),
+                context,
+                this.formattedCellWithValue(d, "1+0", BigDecimal.valueOf(1 + 0)),
+                this.formattedCellWithValue(d.add(1, 1), "2+0", BigDecimal.valueOf(2 + 0)),
+                this.formattedCellWithValue(d.add(0, 2), "1+0", BigDecimal.valueOf(1 + 0)),
+                this.formattedCellWithValue(d.add(1, 3), "2+0", BigDecimal.valueOf(2 + 0)),
+                this.formattedCellWithValue(d.add(0, 4), "1+0", BigDecimal.valueOf(1 + 0)),
+                this.formattedCellWithValue(d.add(1, 5), "2+0", BigDecimal.valueOf(2 + 0)));
 
         this.countAndCheck(cellStore, 3 + 6);
-
-        this.loadCellAndCheckFormulaAndValue(engine,
-                d,
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context,
-                "1+0",
-                BigDecimal.valueOf(1 + 0));
-
-        this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(1, 1),
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context,
-                "2+0",
-                BigDecimal.valueOf(2 + 0));
-
-        this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(0, 2),
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context,
-                "1+0",
-                BigDecimal.valueOf(1 + 0));
-
-        this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(1, 3),
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context,
-                "2+0",
-                BigDecimal.valueOf(2 + 0));
-
-        this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(0, 4),
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context,
-                "1+0",
-                BigDecimal.valueOf(1 + 0));
-
-        this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(1, 5),
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context,
-                "2+0",
-                BigDecimal.valueOf(2 + 0));
     }
 
     @Test
@@ -3903,56 +3808,59 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        engine.copyCells(Lists.of(cellB), SpreadsheetRange.cell(d), context);
+        this.copyCellsAndCheck(engine,
+                Lists.of(cellB),
+                SpreadsheetRange.cell(d),
+                context,
+                this.formattedCellWithValue(a, "1+0", BigDecimal.valueOf(1 + 0)),
+                this.formattedCellWithValue(d, "" + a, BigDecimal.valueOf(1 + 0)));
 
         this.countAndCheck(cellStore, 2 + 1);
-
-        this.loadCellAndCheckFormulaAndValue(engine,
-                d,
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                context,
-                "" + a,
-                BigDecimal.valueOf(1 + 0));
     }
 
     @Test
-    public void testCopyCellsRelativeReferenceFixed() {
+    public void testCopyCellsExpressionRelativeReferenceFixed() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCellReference a = this.cellReference(10, 20);
-        final SpreadsheetCellReference b = SpreadsheetReferenceKind.RELATIVE.column(11)
-                .setRow(SpreadsheetReferenceKind.RELATIVE.row(21));
+        final SpreadsheetCell cellB = this.cell("B2", "2");
+        final SpreadsheetCell cellC = this.cell("C3", "3+B2");
 
-        final SpreadsheetCellReference c = SpreadsheetReferenceKind.RELATIVE.column(30)
-                .setRow(SpreadsheetReferenceKind.RELATIVE.row(40));
-        final SpreadsheetCellReference d = this.cellReference(30+11, 40+21);
-
-        final SpreadsheetCell cellA = this.cell(a, "" + b);
-        final SpreadsheetCell cellB = this.cell(b, "2+0");
-        final SpreadsheetCell cellD = this.cell(d, "99");
-
-        cellStore.save(cellA);
         cellStore.save(cellB);
-        cellStore.save(cellD);
+        cellStore.save(cellC);
 
-        engine.copyCells(Lists.of(cellA, cellB), SpreadsheetRange.with(c, c.add(2, 2)), context);
-
-        this.countAndCheck(cellStore, 3 + 2);
-
-        this.loadCellAndCheckFormulaAndValue(engine,
-                c,
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+        this.copyCellsAndCheck(engine,
+                Lists.of(cellB, cellC),
+                SpreadsheetRange.parse("E5:F6"),
                 context,
-                "" + c.add(1, 1),
-                BigDecimal.valueOf(2 + 0));
-        this.loadCellAndCheckFormulaAndValue(engine,
-                c.add(1, 1),
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                this.formattedCellWithValue("E5", "2", BigDecimal.valueOf(2 + 0)),
+                this.formattedCellWithValue("F6", "3+E5", BigDecimal.valueOf(3 + 2)));
+
+        this.countAndCheck(cellStore, 2 + 2);
+    }
+
+    @Test
+    public void testCopyCellsExternalReferencesRefreshed() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell cellB = this.cell("b1", "2+0"); // copied to C1
+        final SpreadsheetCellReference c = this.cellReference("C1"); // copyCell dest...
+        final SpreadsheetCell cellA = this.cell("a1", "10+" + c);
+
+        engine.saveCell(cellA, context);
+        engine.saveCell(cellB, context);
+
+        this.copyCellsAndCheck(engine,
+                Lists.of(cellB),
+                SpreadsheetRange.with(c, c),
                 context,
-                "2+0",
-                BigDecimal.valueOf(2 + 0));
+                this.formattedCellWithValue(cellA.reference(), "10+" + c, BigDecimal.valueOf(10 + 2 + 0)), // external reference to copied
+                this.formattedCellWithValue(c, "2+0", BigDecimal.valueOf(2 + 0))); // copied
+
+        this.countAndCheck(cellStore, 2 + 1);
     }
 
     //  helpers.......................................................................................................
@@ -4126,6 +4034,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell cell = this.loadCellAndCheckValue(engine, reference, evaluation, context, value);
         this.checkFormattedText(cell, value + " " + suffix);
         return cell;
+    }
+
+    private SpreadsheetCell formattedCellWithValue(final String reference,
+                                                   final String formulaText,
+                                                   final Object value) {
+        return this.formattedCellWithValue(SpreadsheetCellReference.parse(reference),
+                formulaText,
+                value);
+    }
+
+    private SpreadsheetCell formattedCellWithValue(final SpreadsheetCellReference reference,
+                                                   final String formulaText,
+                                                   final Object value) {
+        return this.formattedCellWithValue(this.cell(reference, formulaText),
+                value);
     }
 
     /**
