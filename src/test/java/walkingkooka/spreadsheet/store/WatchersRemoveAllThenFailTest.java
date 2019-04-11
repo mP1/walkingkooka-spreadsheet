@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class RemoveWatchersTest implements ClassTesting2<RemoveWatchers> {
+public final class WatchersRemoveAllThenFailTest implements ClassTesting2<WatchersRemoveAllThenFail> {
 
     @BeforeEach
     public void beforeEachTest() {
@@ -20,20 +20,20 @@ public final class RemoveWatchersTest implements ClassTesting2<RemoveWatchers> {
     @Test
     public void testNullFails() {
         assertThrows(NullPointerException.class, () -> {
-            RemoveWatchers.executeOrFail((Runnable[]) null);
+            WatchersRemoveAllThenFail.executeOrFail((Runnable[]) null);
         });
     }
 
     @Test
     public void testAllSuccessful() {
-        RemoveWatchers.executeOrFail(() -> this.counter++, () -> this.counter++);
+        WatchersRemoveAllThenFail.executeOrFail(() -> this.counter++, () -> this.counter++);
 
         this.check(2);
     }
 
     @Test
     public void testSkipsNulls() {
-        RemoveWatchers.executeOrFail(null, null, () -> this.counter++);
+        WatchersRemoveAllThenFail.executeOrFail(null, null, () -> this.counter++);
 
         this.check(1);
     }
@@ -44,7 +44,7 @@ public final class RemoveWatchersTest implements ClassTesting2<RemoveWatchers> {
 
         assertSame(thrown, assertThrows(RuntimeException.class, () -> {
 
-            RemoveWatchers.executeOrFail(
+            WatchersRemoveAllThenFail.executeOrFail(
                     () -> {
                         throw thrown;
                     },
@@ -61,7 +61,7 @@ public final class RemoveWatchersTest implements ClassTesting2<RemoveWatchers> {
 
         assertSame(first, assertThrows(RuntimeException.class, () -> {
 
-            RemoveWatchers.executeOrFail(
+            WatchersRemoveAllThenFail.executeOrFail(
                     () -> {
                         throw first;
                     },
@@ -83,7 +83,7 @@ public final class RemoveWatchersTest implements ClassTesting2<RemoveWatchers> {
 
         assertSame(first, assertThrows(RuntimeException.class, () -> {
 
-            RemoveWatchers.executeOrFail(
+            WatchersRemoveAllThenFail.executeOrFail(
                     () -> {
                         throw first;
                     },
@@ -108,8 +108,8 @@ public final class RemoveWatchersTest implements ClassTesting2<RemoveWatchers> {
     private int counter;
 
     @Override
-    public Class<RemoveWatchers> type() {
-        return RemoveWatchers.class;
+    public Class<WatchersRemoveAllThenFail> type() {
+        return WatchersRemoveAllThenFail.class;
     }
 
     @Override

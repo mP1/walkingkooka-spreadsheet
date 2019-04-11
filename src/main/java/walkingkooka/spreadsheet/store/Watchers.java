@@ -15,7 +15,7 @@ public final class Watchers<T> implements Consumer<T> {
      * Removes all watchers, skipping nulls, and adding additional {@link RuntimeException} to the first and throwing that at the end.
      */
     public static void removeAllThenFail(final Runnable... removers) {
-        RemoveWatchers.executeOrFail(removers);
+        WatchersRemoveAllThenFail.executeOrFail(removers);
     }
 
     /**
