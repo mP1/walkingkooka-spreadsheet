@@ -5,6 +5,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRange;
+import walkingkooka.spreadsheet.store.Watchers;
 import walkingkooka.spreadsheet.store.reference.TargetAndSpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
@@ -156,15 +157,7 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
      */
     @Override
     public void close() {
-        try {
-            this.saveCell.run();
-        } finally {
-            try {
-                this.deleteCell.run();
-            } finally {
-                this.deleteCellReferences.run();
-            }
-        }
+        Watchers.removeAllThenFail(this.saveCell, this.deleteCell, this.deleteCellReferences);
     }
 
     private final Runnable saveCell;
