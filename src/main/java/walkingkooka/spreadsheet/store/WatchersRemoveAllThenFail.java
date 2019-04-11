@@ -6,18 +6,18 @@ import java.util.Objects;
 /**
  * Executes all {@link Runnable} throwing a {@link Throwable} with all additional failures as supressed exceptions.
  */
-final class RemoveWatchers {
+final class WatchersRemoveAllThenFail {
 
     static void executeOrFail(final Runnable... removers) {
         Objects.requireNonNull(removers, "removers");
 
-        final RuntimeException failure = new RemoveWatchers(removers).fail;
+        final RuntimeException failure = new WatchersRemoveAllThenFail(removers).fail;
         if (null != failure) {
             throw failure;
         }
     }
 
-    private RemoveWatchers(final Runnable... removers) {
+    private WatchersRemoveAllThenFail(final Runnable... removers) {
         super();
 
         this.fail = null;
