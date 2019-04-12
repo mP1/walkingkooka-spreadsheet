@@ -327,7 +327,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(cell, "cell");
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCells.with(this, context)) {
+        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
             this.maybeParseAndEvaluateAndFormat(cell,
                     SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                     context);
@@ -346,7 +346,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkReference(reference);
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCells.with(this, context)) {
+        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
             this.cellStore.delete(reference);
             return updated.refreshUpdated();
         }
@@ -430,7 +430,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(to, "to");
         checkContext(context);
 
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCells.with(this, context)) {
+        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
             BasicSpreadsheetEngineCopyCells.execute(from, to, this, context);
             return updated.refreshUpdated();
         }
