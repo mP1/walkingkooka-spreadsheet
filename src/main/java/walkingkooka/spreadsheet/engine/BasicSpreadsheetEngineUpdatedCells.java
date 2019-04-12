@@ -21,26 +21,46 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
 
     static BasicSpreadsheetEngineUpdatedCells with(final BasicSpreadsheetEngine engine,
-                                                   final SpreadsheetEngineContext context) {
-        return new BasicSpreadsheetEngineUpdatedCells(engine, context);
+                                                   final SpreadsheetEngineContext context,
+                                                   final BasicSpreadsheetEngineUpdatedCellsMode mode) {
+        return new BasicSpreadsheetEngineUpdatedCells(engine, context, mode);
     }
 
     private BasicSpreadsheetEngineUpdatedCells(final BasicSpreadsheetEngine engine,
-                                               final SpreadsheetEngineContext context) {
+                                               final SpreadsheetEngineContext context,
+                                               final BasicSpreadsheetEngineUpdatedCellsMode mode) {
         super();
 
-        this.saveCell = engine.cellStore.addSaveWatcher(this::onCellSaved);
-        this.deleteCell = engine.cellStore.addDeleteWatcher(this::onCellDeleted);
-        this.deleteCellReferences = engine.cellReferencesStore.addRemoveReferenceWatcher(this::onCellReferenceDeleted);
+        this.mode = mode;
+
+        this.onSaveCell = engine.cellStore.addSaveWatcher(this::onCellSaved);
+        this.onDeleteCell = engine.cellStore.addDeleteWatcher(this::onCellDeleted);
+        this.onDeleteCellReferences = engine.cellReferencesStore.addRemoveReferenceWatcher(this::onCellReferenceDeleted);
 
         this.engine = engine;
         this.context = context;
     }
 
+    // dispatch using mode to the final target.
+
+    private void onCellSaved(final SpreadsheetCell cell) {
+        this.mode.onCellSaved(cell, this);
+    }
+
+    private void onCellDeleted(final SpreadsheetCellReference cell) {
+        this.mode.onCellDeleted(cell, this);
+    }
+
+    private void onCellReferenceDeleted(final TargetAndSpreadsheetCellReference<SpreadsheetCellReference> targetAndReference) {
+        this.mode.onCellReferenceDeleted(targetAndReference, this);
+    }
+
+    // IMMEDIATE.......................................................................................................
+
     /**
      * Accepts a just saved cell, parsing the formula adding external references and then batching references to this cell.
      */
-    private void onCellSaved(final SpreadsheetCell cell) {
+    void onCellSavedImmediate(final SpreadsheetCell cell) {
         final SpreadsheetCellReference reference = cell.reference();
         if (null == this.updated.put(reference, cell)) {
             this.removePreviousExpressionReferences(reference);
@@ -63,9 +83,7 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
     /**
      * Invoked whenever a cell is deleted or replaced.
      */
-    private void onCellDeleted(final SpreadsheetCellReference cell) {
-        final BasicSpreadsheetEngine engine = this.engine;
-
+    void onCellDeletedImmediate(final SpreadsheetCellReference cell) {
         this.removePreviousExpressionReferences(cell);
         this.batchReferrers(cell);
     }
@@ -80,11 +98,32 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
                 .forEach(r -> engine.rangeToCellStore.removeValue(r, cell));
     }
 
-    private void onCellReferenceDeleted(final TargetAndSpreadsheetCellReference<SpreadsheetCellReference> targetAndReference) {
+    void onCellReferenceDeletedImmediate(final TargetAndSpreadsheetCellReference<SpreadsheetCellReference> targetAndReference) {
         this.batchReferrers(targetAndReference.target());
     }
 
+    // BATCH MODE....................................................................................................
+
+    void onCellSavedBatch(final SpreadsheetCell cell) {
+        this.batchCell(cell.reference());
+    }
+
+    void onCellDeletedBatch(final SpreadsheetCellReference cell) {
+        this.batchCell(cell);
+    }
+
+    void onCellReferenceDeletedBatch(final TargetAndSpreadsheetCellReference<SpreadsheetCellReference> targetAndReference) {
+        throw new UnsupportedOperationException();
+    }
+
+    // REFRESH UPDATED ................................................................................................
+
+    /**
+     * Completes any outstanding refreshes.
+     */
     Set<SpreadsheetCell> refreshUpdated() {
+        this.mode = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE;
+
         for (; ; ) {
             final SpreadsheetCellReference potential = this.queue.poll();
             if (null == potential) {
@@ -136,6 +175,11 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
     }
 
     /**
+     * The current mode.
+     */
+    private volatile BasicSpreadsheetEngineUpdatedCellsMode mode;
+
+    /**
      * Holds a queue of cell references that need to be updated.
      */
     private final Queue<SpreadsheetCellReference> queue = new ConcurrentLinkedQueue<>();
@@ -157,12 +201,12 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
      */
     @Override
     public void close() {
-        Watchers.removeAllThenFail(this.saveCell, this.deleteCell, this.deleteCellReferences);
+        Watchers.removeAllThenFail(this.onSaveCell, this.onDeleteCell, this.onDeleteCellReferences);
     }
 
-    private final Runnable saveCell;
-    private final Runnable deleteCell;
-    private final Runnable deleteCellReferences;
+    private final Runnable onSaveCell;
+    private final Runnable onDeleteCell;
+    private final Runnable onDeleteCellReferences;
 
     @Override
     public String toString() {
