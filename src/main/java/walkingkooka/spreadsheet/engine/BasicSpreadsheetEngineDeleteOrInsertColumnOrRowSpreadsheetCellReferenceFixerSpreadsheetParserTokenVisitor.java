@@ -4,6 +4,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.stack.Stack;
 import walkingkooka.collect.stack.Stacks;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.ParentParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetAdditionParserToken;
@@ -471,13 +472,14 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
 
     /**
      * Returns a function that when executed will report that the original cell reference was deleted.
+     * The replaced token will appear to be invocation of a function with the reference in quotes.
      */
     private SpreadsheetParserToken cellReferenceDeleted(final SpreadsheetParserToken token) {
-        final String message = token.text();
+        final String text = token.text();
 
         final List<ParserToken> tokens = Lists.of(SpreadsheetFormula.INVALID_CELL_REFERENCE_PARSER_TOKEN,
                 SpreadsheetParserToken.openParenthesisSymbol("(", "("),
-                SpreadsheetParserToken.text(message, message),
+                SpreadsheetParserToken.text(text, CharSequences.quote(text).toString()),
                 SpreadsheetParserToken.openParenthesisSymbol(")", ")"));
         return SpreadsheetParserToken.function(tokens, ParserToken.text(tokens));
     }
