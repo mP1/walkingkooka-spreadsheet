@@ -253,8 +253,30 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.checkError(different, differentError);
     }
 
-    // equals.......................................................................................................
+    // clear.......................................................................................................
 
+    @Test
+    public void testClearWithoutValueAndError() {
+        this.checkClear(SpreadsheetFormula.with("1+99"));
+    }
+
+    @Test
+    public void testClearValue() {
+        this.checkClear(this.createObject().setValue(this.value()));
+    }
+
+    @Test
+    public void testClearError() {
+        this.checkClear(this.createObject().setError(this.error()));
+    }
+
+    private void checkClear(final SpreadsheetFormula formula) {
+        final SpreadsheetFormula cleared = formula.clear();
+        this.checkValueAbsent(cleared);
+        this.checkErrorAbsent(cleared);
+    }
+
+    // equals.......................................................................................................
 
     @Test
     public void testEqualsDifferentText() {
