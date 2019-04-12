@@ -1353,7 +1353,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithError(a, "1+InvalidCellReference(\""+b+"\")", "Invalid cell reference " + b)); // $b delete
+                this.formattedCellWithError(a, "1+InvalidCellReference(\""+b+"\")", "Invalid cell reference: " + b)); // $b delete
 
         this.countAndCheck(cellStore, 1);
     }
@@ -1630,7 +1630,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.row(),
                 1,
                 context,
-                this.formattedCellWithError(a, "1+InvalidCellReference(\""+b+ "\")", "Invalid cell reference $A$6"));
+                this.formattedCellWithError(a, "1+InvalidCellReference(\""+b+ "\")", "Invalid cell reference: $A$6"));
 
         this.countAndCheck(cellStore, 1);
 
@@ -1639,7 +1639,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "1+InvalidCellReference(\"" + b + "\")",
-                "Invalid cell reference " + b); // reference should have been fixed.
+                "Invalid cell reference: " + b); // reference should have been fixed.
     }
 
     @Test
@@ -2302,7 +2302,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.column(),
                 1,
                 context,
-                this.formattedCellWithError(a, "1+InvalidCellReference(\""+b+"\")", "Invalid cell reference $E$1")); // $v delete
+                this.formattedCellWithError(a, "1+InvalidCellReference(\""+b+"\")", "Invalid cell reference: $E$1")); // $v delete
 
         this.countAndCheck(cellStore, 1);
 
@@ -2311,7 +2311,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "1+InvalidCellReference(\"" + b + "\")",
-                "Invalid cell reference " + b); // reference should have been fixed.
+                "Invalid cell reference: " + b); // reference should have been fixed.
     }
 
     @Test
@@ -3936,7 +3936,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 // throw an exception which is an "error" when the invalidCellReference function appears in a formula and executed
                 final BiFunction<ExpressionNodeName, List<Object>, Object> functions = (name, params) -> {
                     if (name.value().equals(SpreadsheetFormula.INVALID_CELL_REFERENCE.value())) {
-                        throw new ExpressionEvaluationException("Invalid cell reference " + params.get(0).toString());
+                        throw new ExpressionEvaluationException("Invalid cell reference: " + params.get(0).toString());
                     }
                     throw new UnsupportedOperationException(name + "(" + params.stream().map(p -> p.toString()).collect(Collectors.joining(",")) + ")");
                 };
