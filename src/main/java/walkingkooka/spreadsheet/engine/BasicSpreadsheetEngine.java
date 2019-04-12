@@ -362,11 +362,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkCount(count);
         checkContext(context);
 
-        if (count > 0) {
+        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
             BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn.with(column.value(), count, this, context)
                     .delete();
+            return updated.refreshUpdated();
         }
-        return Sets.empty();
     }
 
     @Override
@@ -377,11 +377,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkCount(count);
         checkContext(context);
 
-        if (count > 0) {
+        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
             BasicSpreadsheetEngineDeleteOrInsertColumnOrRowRow.with(row.value(), count, this, context)
                     .delete();
+            return updated.refreshUpdated();
         }
-        return Sets.empty();
     }
 
     @Override
