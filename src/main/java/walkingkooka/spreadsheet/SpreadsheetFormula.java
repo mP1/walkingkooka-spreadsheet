@@ -186,6 +186,16 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
         Objects.requireNonNull(error, "error");
     }
 
+    // clear ....................................................................................................
+
+    /**
+     * Clears the value or error or formatted.
+     */
+    public SpreadsheetFormula clear() {
+        return this.setValue(NO_VALUE)
+                .setError(NO_ERROR);
+    }
+
     // internal factory .............................................................................................
 
     private SpreadsheetFormula replace(final String text,
