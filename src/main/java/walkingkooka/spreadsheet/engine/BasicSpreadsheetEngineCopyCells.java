@@ -1,13 +1,11 @@
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 
 final class BasicSpreadsheetEngineCopyCells {
@@ -52,9 +50,6 @@ final class BasicSpreadsheetEngineCopyCells {
         final int xOffset = toBegin.column().value() - fromBegin.column().value();
         final int yOffset = toBegin.row().value() - fromBegin.row().value();
 
-        // load & force recompute after all cells copied.
-        final List<SpreadsheetCellReference> copied = Lists.array();
-
         for (int h = 0; h < heightMultiple; h++) {
             final int y = yOffset + h * fromHeight;
 
@@ -62,22 +57,19 @@ final class BasicSpreadsheetEngineCopyCells {
                 final int x = xOffset + w * fromWidth;
 
                 for (SpreadsheetCell c : from) {
-                    copied.add(this.copyCell(c, x, y));
+                    this.copyCell(c, x, y);
                 }
             }
         }
-
-        // because relative references may exist within the copy block, recompute once all cells are copied.
-        this.recomputeCopiedCells(copied);
     }
 
     /**
      * Fixes any relative references within the formula belonging to the cell's expression. Absolute references are
      * ignored and left unmodified.
      */
-    private SpreadsheetCellReference copyCell(final SpreadsheetCell cell,
-                                              final int xOffset,
-                                              final int yOffset) {
+    private void copyCell(final SpreadsheetCell cell,
+                          final int xOffset,
+                          final int yOffset) {
         final SpreadsheetCell updatedReference = cell.setReference(cell.reference().add(xOffset, yOffset));
         final SpreadsheetFormula formula = updatedReference.formula();
 
@@ -90,13 +82,8 @@ final class BasicSpreadsheetEngineCopyCells {
                         yOffset),
                 context));
         this.engine.maybeParseAndEvaluateAndFormat(save,
-                SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                SpreadsheetEngineEvaluation.CLEAR_VALUE_ERROR_SKIP_EVALUATE,
                 context);
-        return save.reference();
-    }
-
-    private void recomputeCopiedCells(final List<SpreadsheetCellReference> references) {
-        references.forEach(r -> this.engine.loadCell(r, SpreadsheetEngineEvaluation.FORCE_RECOMPUTE, this.context));
     }
 
     private final BasicSpreadsheetEngine engine;

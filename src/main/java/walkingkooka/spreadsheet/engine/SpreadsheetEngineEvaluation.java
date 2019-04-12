@@ -1,7 +1,6 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
@@ -10,6 +9,18 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public enum SpreadsheetEngineEvaluation implements HasJsonNode {
+
+    /**
+     * Clears any value and error and formatting.
+     */
+    CLEAR_VALUE_ERROR_SKIP_EVALUATE {
+        @Override
+        SpreadsheetCell formulaEvaluateAndStyle(final SpreadsheetCell cell,
+                                                final BasicSpreadsheetEngine engine,
+                                                final SpreadsheetEngineContext context) {
+            return engine.cellStore.save(cell.setFormula(cell.formula().clear()));
+        }
+    },
 
     /**
      * Performs no new evaluation of the formula, leaves the original value or error alone and does not change the style.
