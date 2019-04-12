@@ -72,7 +72,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowRow extends BasicSpre
 
     @Override
     SpreadsheetCellReference fixCellReference(final SpreadsheetCellReference reference) {
-        return reference.add(0, this.deleteOrInsert.fixReferenceOffset(this.count));
+        return reference.addRow(this.deleteOrInsert.fixReferenceOffset(this.count));
     }
 
     @Override

@@ -1207,7 +1207,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.column().add(-1),
                 count,
                 context,
-                this.formattedCellWithValue(b.add(-1, 0), "2+0+"+ LABEL, BigDecimal.valueOf(2 + 99)));
+                this.formattedCellWithValue(b.addColumn(-1), "2+0+"+ LABEL, BigDecimal.valueOf(2 + 99)));
 
         this.countAndCheck(cellStore, 2);
 
@@ -1241,11 +1241,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 count,
                 context,
                 this.formattedCellWithValue(a, "1+" +LABEL,BigDecimal.valueOf(1 + 99 + 0)),
-                this.formattedCellWithValue(c.add(-count, 0), "3+0",BigDecimal.valueOf(3 + 0)),
-                this.formattedCellWithValue(d.add(-count, 0), "4+" + LABEL,BigDecimal.valueOf(4 + 99 + 0)),
-                this.formattedCellWithValue(e.add(-count, 0), "99+0",BigDecimal.valueOf(99+0))); // old $b delete, $c,$d columns -1.
+                this.formattedCellWithValue(c.addColumn(-count), "3+0",BigDecimal.valueOf(3 + 0)),
+                this.formattedCellWithValue(d.addColumn(-count), "4+" + LABEL,BigDecimal.valueOf(4 + 99 + 0)),
+                this.formattedCellWithValue(e.addColumn(-count), "99+0",BigDecimal.valueOf(99+0))); // old $b delete, $c,$d columns -1.
 
-        this.loadLabelAndCheck(labelStore, LABEL, e.add(-count, 0));
+        this.loadLabelAndCheck(labelStore, LABEL, e.addColumn(-count));
 
         this.countAndCheck(cellStore, 4);
     }
@@ -1298,9 +1298,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 c.column(),
                 count,
                 context,
-                this.formattedCellWithValue(a, "1+" + d.add(-count, 0), BigDecimal.valueOf(1 + 4)),
-                this.formattedCellWithValue(d.add(-count, 0), "4", BigDecimal.valueOf(4)),
-                this.formattedCellWithValue(e.add(-count, 0), "5+" + b, BigDecimal.valueOf(5 + 2))); // $c delete
+                this.formattedCellWithValue(a, "1+" + d.addColumn(-count), BigDecimal.valueOf(1 + 4)),
+                this.formattedCellWithValue(d.addColumn(-count), "4", BigDecimal.valueOf(4)),
+                this.formattedCellWithValue(e.addColumn(-count), "5+" + b, BigDecimal.valueOf(5 + 2))); // $c delete
 
         this.countAndCheck(cellStore, 4);
     }
@@ -1329,9 +1329,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 c.column(),
                 count,
                 context,
-                this.formattedCellWithValue(a, "1+" + d.add(-count, 0), BigDecimal.valueOf(1 + 4)),
-                this.formattedCellWithValue(d.add(-count, 0), "4", BigDecimal.valueOf(4)),
-                this.formattedCellWithValue(e.add(-count, 0), "5+" + b, BigDecimal.valueOf(5+ 2))); // $c deleted, old-d & old-e refreshed
+                this.formattedCellWithValue(a, "1+" + d.addColumn(-count), BigDecimal.valueOf(1 + 4)),
+                this.formattedCellWithValue(d.addColumn(-count), "4", BigDecimal.valueOf(4)),
+                this.formattedCellWithValue(e.addColumn(-count), "5+" + b, BigDecimal.valueOf(5+ 2))); // $c deleted, old-d & old-e refreshed
 
         this.countAndCheck(cellStore, 4);
     }
@@ -1385,9 +1385,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.column(7),
                 count,
                 context,
-                this.formattedCellWithValue(d.add(-count, 0), "4", BigDecimal.valueOf(4)),
-                this.formattedCellWithValue(e.add(-count, 0), "5", BigDecimal.valueOf(5)),
-                this.formattedCellWithValue(f.add(-count, 0), "6", BigDecimal.valueOf(6))); // $b & $c
+                this.formattedCellWithValue(d.addColumn(-count), "4", BigDecimal.valueOf(4)),
+                this.formattedCellWithValue(e.addColumn(-count), "5", BigDecimal.valueOf(5)),
+                this.formattedCellWithValue(f.addColumn(-count), "6", BigDecimal.valueOf(6))); // $b & $c
 
         this.countAndCheck(cellStore, 4);
     }
@@ -1432,12 +1432,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.row(),
                 1,
                 context,
-                this.formattedCellWithValue(c.add(0, -1), "5+6", BigDecimal.valueOf(5+6)));
+                this.formattedCellWithValue(c.addRow( -1), "5+6", BigDecimal.valueOf(5+6)));
 
         this.countAndCheck(cellStore, 2);
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                c.add(0, -1),
+                c.addRow(-1),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "5+6",
@@ -1466,8 +1466,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.row(),
                 count,
                 context,
-                this.formattedCellWithValue(c.add(0, - count), "5+6", BigDecimal.valueOf(5+6) ),
-                this.formattedCellWithValue(d.add(0, - count), "7+8", BigDecimal.valueOf(7+8) )); // $b delete
+                this.formattedCellWithValue(c.addRow(-count), "5+6", BigDecimal.valueOf(5+6) ),
+                this.formattedCellWithValue(d.addRow(-count), "7+8", BigDecimal.valueOf(7+8) )); // $b delete
 
         this.countAndCheck(cellStore, 3);
 
@@ -1501,7 +1501,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.row(),
                 count,
                 context,
-                this.formattedCellWithValue(d.add(0, - count), "7+8", BigDecimal.valueOf(7+8) ));
+                this.formattedCellWithValue(d.addRow(-count), "7+8", BigDecimal.valueOf(7+8) ));
 
         this.countAndCheck(cellStore, 2);
 
@@ -1513,7 +1513,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(1 + 2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(0, -count),
+                d.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "7+8",
@@ -1565,7 +1565,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(20+0+1));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                c.add(0, -count),
+                c.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "99+0",
@@ -1593,11 +1593,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 count,
                 context,
                 this.formattedCellWithValue(a, "1+0+"+ LABEL, BigDecimal.valueOf(1+0+2+0)),
-                this.formattedCellWithValue(b.add(0, -count), "2+0", BigDecimal.valueOf(2+0))); // $b moved
+                this.formattedCellWithValue(b.addRow(-count), "2+0", BigDecimal.valueOf(2+0))); // $b moved
 
         this.countAndCheck(cellStore, 2);
 
-        this.loadLabelAndCheck(labelStore, LABEL, b.add(0, -count));
+        this.loadLabelAndCheck(labelStore, LABEL, b.addRow(-count));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 a,
@@ -1607,7 +1607,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(3));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                b.add(0, -count),
+                b.addRow(-count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "2+0",
@@ -1677,7 +1677,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+" + d.add(0, -count),
+                "1+" + d.addRow(-count),
                 BigDecimal.valueOf(1 + 4)); // reference should have been fixed.
 
         this.loadCellAndCheckFormatted2(engine,
@@ -1688,14 +1688,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 FORMATTED_DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormatted2(engine,
-                d.add(0, -count),
+                d.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 BigDecimal.valueOf(4),
                 FORMATTED_DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                e.add(0, -count),
+                e.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "5+" + b,
@@ -1736,7 +1736,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+" + d.add(0, -count),
+                "1+" + d.addRow(-count),
                 BigDecimal.valueOf(1 + 4)); // reference should have been fixed.
 
         this.loadCellAndCheckFormatted2(engine,
@@ -1747,14 +1747,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 FORMATTED_DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormatted2(engine,
-                d.add(0, -count),
+                d.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 BigDecimal.valueOf(4),
                 FORMATTED_DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                e.add(0, -count),
+                e.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "5+" + b,
@@ -1864,7 +1864,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.row(),
                 count,
                 context,
-                this.formattedCellWithValue(d.add(0, -count), "20+0", BigDecimal.valueOf(20+0))); // b..c deleted, d moved
+                this.formattedCellWithValue(d.addRow(-count), "20+0", BigDecimal.valueOf(20+0))); // b..c deleted, d moved
 
         this.countAndCheck(cellStore, 2); // a&d
         this.countAndCheck(labelStore, 0);
@@ -1877,7 +1877,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(1));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(0, -count),
+                d.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "20+0",
@@ -1943,7 +1943,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.row(),
                 count,
                 context,
-                this.formattedCellWithValue(d.add(0, -count), "20+0", BigDecimal.valueOf(20+0))); // b..c deleted, d moved
+                this.formattedCellWithValue(d.addRow(-count), "20+0", BigDecimal.valueOf(20+0))); // b..c deleted, d moved
 
         this.countAndCheck(cellStore, 2); // a&d
 
@@ -1955,14 +1955,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(1 + 20));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(0, -count),
+                d.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "20+0",
                 BigDecimal.valueOf(20));
 
         this.countAndCheck(labelStore, 1);
-        this.loadLabelAndCheck(labelStore, LABEL, range(d.add(0, -count), e.add(0, -count)));
+        this.loadLabelAndCheck(labelStore, LABEL, range(d.addRow(-count), e.addRow(-count)));
     }
 
     @Test
@@ -2011,7 +2011,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(labelStore, 1);
 
-        this.loadLabelAndCheck(labelStore, LABEL, range(b, d.add(0, -count)));
+        this.loadLabelAndCheck(labelStore, LABEL, range(b, d.addRow(-count)));
     }
 
     @Test
@@ -2145,7 +2145,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(5 + 6));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(-count, 0),
+                d.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "7+8",
@@ -2186,7 +2186,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(1 + 2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(-count, 0),
+                d.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "7+8",
@@ -2238,7 +2238,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(21));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                c.add(-count, 0),
+                c.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "99+0",
@@ -2269,7 +2269,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(cellStore, 2);
 
-        this.loadLabelAndCheck(labelStore, LABEL, b.add(-count, 0));
+        this.loadLabelAndCheck(labelStore, LABEL, b.addColumn(-count));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 a,
@@ -2279,7 +2279,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(3));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                b.add(-count, 0),
+                b.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "2+0",
@@ -2349,7 +2349,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+" + d.add(-count, 0),
+                "1+" + d.addColumn(-count),
                 BigDecimal.valueOf(1 + 4)); // reference should have been fixed.
 
         this.loadCellAndCheckFormatted2(engine,
@@ -2360,14 +2360,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 FORMATTED_DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormatted2(engine,
-                d.add(-count, 0),
+                d.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 BigDecimal.valueOf(4),
                 FORMATTED_DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                e.add(-count, 0),
+                e.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "5+" + b,
@@ -2408,7 +2408,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+" + d.add(-count, 0),
+                "1+" + d.addColumn(-count),
                 BigDecimal.valueOf(1 + 4)); // reference should have been fixed.
 
         this.loadCellAndCheckFormatted2(engine,
@@ -2419,14 +2419,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 FORMATTED_DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormatted2(engine,
-                d.add(-count, 0),
+                d.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 BigDecimal.valueOf(4),
                 FORMATTED_DEFAULT_SUFFIX);
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                e.add(-count, 0),
+                e.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "5+" + b,
@@ -2536,7 +2536,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithValue(d.add(-count, 0), "20+0", BigDecimal.valueOf(20+0))); // b..c deleted, d moved
+                this.formattedCellWithValue(d.addColumn(-count), "20+0", BigDecimal.valueOf(20+0))); // b..c deleted, d moved
 
         this.countAndCheck(cellStore, 2); // a&d
         this.countAndCheck(labelStore, 0);
@@ -2608,7 +2608,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithValue(d.add(-count, 0), "20+0", BigDecimal.valueOf(20+0))); // b..c deleted, d moved
+                this.formattedCellWithValue(d.addColumn(-count), "20+0", BigDecimal.valueOf(20+0))); // b..c deleted, d moved
 
         this.countAndCheck(cellStore, 2); // a&d
 
@@ -2620,14 +2620,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(1 + 20));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(-count, 0),
+                d.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "20+0",
                 BigDecimal.valueOf(20));
 
         this.countAndCheck(labelStore, 1);
-        this.loadLabelAndCheck(labelStore, LABEL, range(d.add(-count, 0), e.add(-count, 0)));
+        this.loadLabelAndCheck(labelStore, LABEL, range(d.addColumn(-count), e.addColumn(-count)));
     }
 
     @Test
@@ -2676,7 +2676,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(labelStore, 1);
 
-        this.loadLabelAndCheck(labelStore, LABEL, range(b, d.add(-count, 0)));
+        this.loadLabelAndCheck(labelStore, LABEL, range(b, d.addColumn(-count)));
     }
 
     @Test
@@ -2758,14 +2758,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(1 + 2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                b.add(count, 0),
+                b.addColumn(count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "3+4",
                 BigDecimal.valueOf(3 + 4));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                c.add(count, 0),
+                c.addColumn(count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "5+6",
@@ -2800,14 +2800,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(1 + 2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                b.add(count, 0),
+                b.addColumn(count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "3+4",
                 BigDecimal.valueOf(3 + 4));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                c.add(count, 0),
+                c.addColumn(count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "5+6",
@@ -2844,7 +2844,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(100));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                b.add(count, 0),
+                b.addColumn(count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "2+" + LABEL,
@@ -2873,7 +2873,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final int count = 1;
         engine.insertColumns(b.column(), count, context); // $b insert
 
-        this.loadLabelAndCheck(labelStore, LABEL, d.add(count, 0));
+        this.loadLabelAndCheck(labelStore, LABEL, d.addColumn(count));
 
         this.countAndCheck(cellStore, 4);
 
@@ -2885,21 +2885,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(1 + 99));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                b.add(count, 0),
+                b.addColumn(count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "2+0",
                 BigDecimal.valueOf(2 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                c.add(count, 0),
+                c.addColumn(count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "3+0+" + LABEL,
                 BigDecimal.valueOf(3 + 99));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(count, 0),
+                d.addColumn(count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "99+0",
@@ -2939,7 +2939,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(99 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                b.add(count, 0),
+                b.addColumn(count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "2+0+" + LABEL,
@@ -3012,7 +3012,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                "1+0+" + d.add(count, 0),
+                "1+0+" + d.addColumn(count),
                 BigDecimal.valueOf(1 + 0 + 4 + 2)); // reference should have been fixed.
 
         this.loadCellAndCheckFormulaAndValue(engine,
@@ -3023,14 +3023,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                c.add(count, 0),
+                c.addColumn(count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "3+0",
                 BigDecimal.valueOf(3));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(count, 0),
+                d.addColumn(count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "4+0+" + b,
@@ -3063,7 +3063,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                "1+0+" + d.add(count, 0),
+                "1+0+" + d.addColumn(count),
                 BigDecimal.valueOf(1 + 0 + 4 + 2)); // reference should have been fixed.
 
         this.loadCellAndCheckFormulaAndValue(engine,
@@ -3074,14 +3074,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(2 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                c.add(count, 0),
+                c.addColumn(count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "3+0",
                 BigDecimal.valueOf(3 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(count, 0),
+                d.addColumn(count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "4+0+" + b,
@@ -3120,28 +3120,28 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(1 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                b.add(count, 0),
+                b.addColumn(count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "2+0",
                 BigDecimal.valueOf(2 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                c.add(count, 0),
+                c.addColumn(count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "3+0",
                 BigDecimal.valueOf(3 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(count, 0),
+                d.addColumn(count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "4+0",
                 BigDecimal.valueOf(4 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                e.add(count, 0),
+                e.addColumn(count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "5+0",
@@ -3201,14 +3201,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(1 + 2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                b.add(0, count),
+                b.addRow(count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "3+4",
                 BigDecimal.valueOf(3 + 4));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                c.add(0, count),
+                c.addRow(count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "5+6",
@@ -3243,14 +3243,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(1 + 2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                b.add(0, +count),
+                b.addRow(+count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "3+4",
                 BigDecimal.valueOf(3 + 4));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                c.add(0, +count),
+                c.addRow(+count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "5+6",
@@ -3287,7 +3287,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(100));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                b.add(0, +count),
+                b.addRow(+count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "2+" + LABEL,
@@ -3316,7 +3316,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final int count = 1;
         engine.insertRows(b.row(), count, context); // $b insert
 
-        this.loadLabelAndCheck(labelStore, LABEL, d.add(0, +count));
+        this.loadLabelAndCheck(labelStore, LABEL, d.addRow(+count));
 
         this.countAndCheck(cellStore, 4);
 
@@ -3328,21 +3328,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(1 + 99));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                b.add(0, +count),
+                b.addRow(+count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "2+0",
                 BigDecimal.valueOf(2 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                c.add(0, +count),
+                c.addRow(+count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "3+0+" + LABEL,
                 BigDecimal.valueOf(3 + 99));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(0, +count),
+                d.addRow(+count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "99+0",
@@ -3382,7 +3382,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(99 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                b.add(0, +count),
+                b.addRow(+count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "2+0+" + LABEL,
@@ -3455,7 +3455,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                "1+0+" + d.add(0, +count),
+                "1+0+" + d.addRow(+count),
                 BigDecimal.valueOf(1 + 0 + 4 + 2)); // reference should have been fixed.
 
         this.loadCellAndCheckFormulaAndValue(engine,
@@ -3466,14 +3466,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                c.add(0, +count),
+                c.addRow(+count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "3+0",
                 BigDecimal.valueOf(3));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(0, +count),
+                d.addRow(+count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "4+0+" + b,
@@ -3506,7 +3506,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                "1+0+" + d.add(0, +count),
+                "1+0+" + d.addRow(+count),
                 BigDecimal.valueOf(1 + 0 + 4 + 2)); // reference should have been fixed.
 
         this.loadCellAndCheckFormulaAndValue(engine,
@@ -3517,14 +3517,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(2 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                c.add(0, +count),
+                c.addRow(+count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "3+0",
                 BigDecimal.valueOf(3 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(0, +count),
+                d.addRow(+count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "4+0+" + b,
@@ -3563,28 +3563,28 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(1 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                b.add(0, +count),
+                b.addRow(+count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "2+0",
                 BigDecimal.valueOf(2 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                c.add(0, +count),
+                c.addRow(+count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "3+0",
                 BigDecimal.valueOf(3 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                d.add(0, +count),
+                d.addRow(+count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "4+0",
                 BigDecimal.valueOf(4 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
-                e.add(0, +count),
+                e.addRow(+count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
                 "5+0",
@@ -3773,9 +3773,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 this.formattedCellWithValue(d, "1+0", BigDecimal.valueOf(1 + 0)),
                 this.formattedCellWithValue(d.add(1, 1), "2+0", BigDecimal.valueOf(2 + 0)),
-                this.formattedCellWithValue(d.add(0, 2), "1+0", BigDecimal.valueOf(1 + 0)),
+                this.formattedCellWithValue(d.addRow(2), "1+0", BigDecimal.valueOf(1 + 0)),
                 this.formattedCellWithValue(d.add(1, 3), "2+0", BigDecimal.valueOf(2 + 0)),
-                this.formattedCellWithValue(d.add(0, 4), "1+0", BigDecimal.valueOf(1 + 0)),
+                this.formattedCellWithValue(d.addRow(4), "1+0", BigDecimal.valueOf(1 + 0)),
                 this.formattedCellWithValue(d.add(1, 5), "2+0", BigDecimal.valueOf(2 + 0)));
 
         this.countAndCheck(cellStore, 3 + 6);
