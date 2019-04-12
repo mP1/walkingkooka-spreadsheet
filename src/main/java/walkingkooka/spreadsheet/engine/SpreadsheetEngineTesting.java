@@ -398,7 +398,51 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 engine.deleteRows(column, count, context),
                 () -> "deleteRows column: " + column + " count: " + count);
     }
-    
+
+    default void insertColumnsAndCheck(final SpreadsheetEngine engine,
+                                       final SpreadsheetColumnReference column,
+                                       final int count,
+                                       final SpreadsheetEngineContext context,
+                                       final SpreadsheetCell... updated) {
+        this.insertColumnsAndCheck(engine,
+                column,
+                count,
+                context,
+                Sets.of(updated));
+    }
+
+    default void insertColumnsAndCheck(final SpreadsheetEngine engine,
+                                       final SpreadsheetColumnReference column,
+                                       final int count,
+                                       final SpreadsheetEngineContext context,
+                                       final Set<SpreadsheetCell> updated) {
+        assertEquals(updated,
+                engine.insertColumns(column, count, context),
+                () -> "insertColumns column: " + column + " count: " + count);
+    }
+
+    default void insertRowsAndCheck(final SpreadsheetEngine engine,
+                                    final SpreadsheetRowReference column,
+                                    final int count,
+                                    final SpreadsheetEngineContext context,
+                                    final SpreadsheetCell... updated) {
+        this.insertRowsAndCheck(engine,
+                column,
+                count,
+                context,
+                Sets.of(updated));
+    }
+
+    default void insertRowsAndCheck(final SpreadsheetEngine engine,
+                                    final SpreadsheetRowReference column,
+                                    final int count,
+                                    final SpreadsheetEngineContext context,
+                                    final Set<SpreadsheetCell> updated) {
+        assertEquals(updated,
+                engine.insertRows(column, count, context),
+                () -> "insertRows column: " + column + " count: " + count);
+    }
+
     default void copyCellsAndCheck(final SpreadsheetEngine engine,
                                    final Collection<SpreadsheetCell> from,
                                    final SpreadsheetRange to,
