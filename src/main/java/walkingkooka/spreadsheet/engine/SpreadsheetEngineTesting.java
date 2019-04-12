@@ -355,6 +355,50 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 "record count in " + store);
     }
 
+    default void deleteColumnsAndCheck(final SpreadsheetEngine engine,
+                                       final SpreadsheetColumnReference column,
+                                       final int count,
+                                       final SpreadsheetEngineContext context,
+                                       final SpreadsheetCell... updated) {
+        this.deleteColumnsAndCheck(engine,
+                column,
+                count,
+                context,
+                Sets.of(updated));
+    }
+
+    default void deleteColumnsAndCheck(final SpreadsheetEngine engine,
+                                       final SpreadsheetColumnReference column,
+                                       final int count,
+                                       final SpreadsheetEngineContext context,
+                                       final Set<SpreadsheetCell> updated) {
+        assertEquals(updated,
+                engine.deleteColumns(column, count, context),
+                () -> "deleteColumns column: " + column + " count: " + count);
+    }
+
+    default void deleteRowsAndCheck(final SpreadsheetEngine engine,
+                                       final SpreadsheetRowReference column,
+                                       final int count,
+                                       final SpreadsheetEngineContext context,
+                                       final SpreadsheetCell... updated) {
+        this.deleteRowsAndCheck(engine,
+                column,
+                count,
+                context,
+                Sets.of(updated));
+    }
+
+    default void deleteRowsAndCheck(final SpreadsheetEngine engine,
+                                       final SpreadsheetRowReference column,
+                                       final int count,
+                                       final SpreadsheetEngineContext context,
+                                       final Set<SpreadsheetCell> updated) {
+        assertEquals(updated,
+                engine.deleteRows(column, count, context),
+                () -> "deleteRows column: " + column + " count: " + count);
+    }
+    
     default void copyCellsAndCheck(final SpreadsheetEngine engine,
                                    final Collection<SpreadsheetCell> from,
                                    final SpreadsheetRange to,
