@@ -662,8 +662,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 labelReferenceStore);
         final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
-        final SpreadsheetCell a1 = this.cell("a1", "1+LABELB2");
-        final SpreadsheetCell a1Formatted = this.formattedCellWithError(a1, "Unknown label LABELB2");
+        final SpreadsheetLabelName unknown = SpreadsheetLabelName.with("LABELXYZ");
+
+        final SpreadsheetCell a1 = this.cell("a1", "1+" + unknown);
+        final SpreadsheetCell a1Formatted = this.formattedCellWithError(a1, "Unknown label: " + unknown);
         this.saveCellAndCheck(engine,
                 a1,
                 context,
@@ -673,8 +675,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadLabelStoreAndCheck(labelStore);
         this.countAndCheck(cellReferenceStore, 0);
 
-        final SpreadsheetLabelName labelB2 = SpreadsheetLabelName.with("LABELB2");
-        this.loadReferencesAndCheck(labelReferenceStore, labelB2, a1.reference());
+        this.loadReferencesAndCheck(labelReferenceStore, unknown, a1.reference());
     }
 
     @Test
@@ -1905,7 +1906,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.row(),
                 count,
                 context,
-                formattedCellWithError(a, "1+0+"+LABEL, "Unknown label " + LABEL)); // b..c deleted
+                formattedCellWithError(a, "1+0+"+LABEL, "Unknown label: " + LABEL)); // b..c deleted
 
         this.countAndCheck(cellStore, 1); // a
         this.countAndCheck(labelStore, 0);
@@ -1915,7 +1916,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "1+0+" + LABEL,
-                "Unknown label " + LABEL);
+                "Unknown label: " + LABEL);
     }
 
     @Test
@@ -2570,7 +2571,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithError("$A$1", "1+0+" + LABEL, "Unknown label " + LABEL)); // b..c deleted
+                this.formattedCellWithError("$A$1", "1+0+" + LABEL, "Unknown label: " + LABEL)); // b..c deleted
 
         this.countAndCheck(cellStore, 1); // a
         this.countAndCheck(labelStore, 0);
@@ -2580,7 +2581,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
                 "1+0+" + LABEL,
-                "Unknown label " + LABEL);
+                "Unknown label: " + LABEL);
     }
 
     @Test
