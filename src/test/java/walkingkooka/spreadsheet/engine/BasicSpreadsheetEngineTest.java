@@ -300,7 +300,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("A1");
-        final Set<SpreadsheetCell> saved = engine.saveCell(this.cell(a, "1+$B$2"), context);
+        final Set<SpreadsheetCell> saved = engine.saveCell(this.cell(a, "1+$B$2"), context)
+                .cells();
 
         final SpreadsheetCell withError = saved.iterator().next();
         assertNotEquals(SpreadsheetFormula.NO_ERROR,

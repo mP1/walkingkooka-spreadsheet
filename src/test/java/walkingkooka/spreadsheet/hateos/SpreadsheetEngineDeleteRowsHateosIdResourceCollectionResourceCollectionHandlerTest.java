@@ -7,6 +7,8 @@ import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.net.http.server.hateos.HateosIdResourceCollectionResourceCollectionHandlerTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetDelta;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
@@ -39,15 +41,19 @@ public final class SpreadsheetEngineDeleteRowsHateosIdResourceCollectionResource
         final List<SpreadsheetRow> resources = this.resourceCollection();
 
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
+                    @Override
+                    public SpreadsheetId id() {
+                        return spreadsheetId();
+                    }
 
                     @Override
-                    public Set<SpreadsheetCell> deleteRows(final SpreadsheetRowReference r,
-                                                           final int count,
-                                                           final SpreadsheetEngineContext context) {
+                    public SpreadsheetDelta deleteRows(final SpreadsheetRowReference r,
+                                                       final int count,
+                                                       final SpreadsheetEngineContext context) {
                         assertEquals(row, r, "row");
                         assertEquals(1, count, "count");
 
-                        return Sets.of(cell());
+                        return SpreadsheetDelta.with(id(), Sets.of(cell()));
                     }
                 }),
                 row,

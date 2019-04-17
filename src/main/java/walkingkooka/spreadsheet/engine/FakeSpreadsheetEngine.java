@@ -1,6 +1,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetDelta;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.test.Fake;
@@ -10,7 +11,6 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.Set;
 
 public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     @Override
@@ -26,49 +26,49 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public Set<SpreadsheetCell> saveCell(final SpreadsheetCell cell,
-                                         final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta saveCell(final SpreadsheetCell cell,
+                                     final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Set<SpreadsheetCell> deleteCell(final SpreadsheetCellReference cell,
-                                           final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta deleteCell(final SpreadsheetCellReference cell,
+                                       final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Set<SpreadsheetCell> deleteColumns(final SpreadsheetColumnReference column,
-                                              final int count,
-                                              final SpreadsheetEngineContext context) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Set<SpreadsheetCell> deleteRows(final SpreadsheetRowReference row,
-                                           final int count,
-                                           final SpreadsheetEngineContext context) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Set<SpreadsheetCell> insertColumns(final SpreadsheetColumnReference column,
-                                              final int count,
-                                              final SpreadsheetEngineContext context) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Set<SpreadsheetCell> insertRows(final SpreadsheetRowReference row,
-                                           final int count,
-                                           final SpreadsheetEngineContext context) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Set<SpreadsheetCell> copyCells(final Collection<SpreadsheetCell> from,
-                                          final SpreadsheetRange to,
+    public SpreadsheetDelta deleteColumns(final SpreadsheetColumnReference column,
+                                          final int count,
                                           final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetDelta deleteRows(final SpreadsheetRowReference row,
+                                       final int count,
+                                       final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetDelta insertColumns(final SpreadsheetColumnReference column,
+                                          final int count,
+                                          final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetDelta insertRows(final SpreadsheetRowReference row,
+                                       final int count,
+                                       final SpreadsheetEngineContext context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetDelta copyCells(final Collection<SpreadsheetCell> from,
+                                      final SpreadsheetRange to,
+                                      final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 }
