@@ -8,6 +8,8 @@ import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.net.http.server.hateos.HateosIdResourceCollectionResourceCollectionHandlerTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
+import walkingkooka.spreadsheet.SpreadsheetDelta;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
@@ -38,12 +40,17 @@ public final class SpreadsheetEngineDeleteColumnsHateosIdResourceCollectionResou
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
-                    public Set<SpreadsheetCell> deleteColumns(final SpreadsheetColumnReference c,
-                                                              final int count,
-                                                              final SpreadsheetEngineContext context) {
+                    public SpreadsheetId id() {
+                        return spreadsheetId();
+                    }
+
+                    @Override
+                    public SpreadsheetDelta deleteColumns(final SpreadsheetColumnReference c,
+                                                          final int count,
+                                                          final SpreadsheetEngineContext context) {
                         assertEquals(column, c, "column");
                         assertEquals(1, count, "count");
-                        return Sets.of(cell());
+                        return SpreadsheetDelta.with(id(), Sets.of(cell()));
                     }
                 }),
                 column,
