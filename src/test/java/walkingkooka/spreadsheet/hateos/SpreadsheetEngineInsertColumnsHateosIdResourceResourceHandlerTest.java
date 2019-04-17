@@ -9,6 +9,7 @@ import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.net.http.server.hateos.HateosIdResourceCollectionResourceCollectionHandlerTesting;
+import walkingkooka.net.http.server.hateos.HateosIdResourceResourceHandlerTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.SpreadsheetDelta;
@@ -21,23 +22,24 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public final class SpreadsheetEngineInsertColumnsHateosIdResourceCollectionResourceCollectionHandlerTest extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineInsertColumnsHateosIdResourceCollectionResourceCollectionHandler,
+public final class SpreadsheetEngineInsertColumnsHateosIdResourceResourceHandlerTest extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineInsertColumnsHateosIdResourceResourceHandler,
         SpreadsheetColumnReference,
-        SpreadsheetColumn,
-        SpreadsheetCell>
-        implements HateosIdResourceCollectionResourceCollectionHandlerTesting<SpreadsheetEngineInsertColumnsHateosIdResourceCollectionResourceCollectionHandler,
-        SpreadsheetColumnReference,
-        SpreadsheetColumn,
-        SpreadsheetCell> {
+        SpreadsheetDelta,
+        SpreadsheetDelta>
+        implements HateosIdResourceResourceHandlerTesting<SpreadsheetEngineInsertColumnsHateosIdResourceResourceHandler,
+                SpreadsheetColumnReference,
+                SpreadsheetDelta,
+                SpreadsheetDelta> {
 
     @Test
     public void testInsertMissingCountParametersFails() {
         this.handleFails(this.id(),
-                this.resourceCollection(),
+                this.resource(),
                 HateosHandler.NO_PARAMETERS,
                 IllegalArgumentException.class);
     }
@@ -45,7 +47,7 @@ public final class SpreadsheetEngineInsertColumnsHateosIdResourceCollectionResou
     @Test
     public void testInsertInvalidCountParametersFails() {
         this.handleFails(this.id(),
-                this.resourceCollection(),
+                this.resource(),
                 this.parameters("1", "2"),
                 IllegalArgumentException.class);
     }
@@ -55,7 +57,7 @@ public final class SpreadsheetEngineInsertColumnsHateosIdResourceCollectionResou
         final SpreadsheetCell cell = this.cell();
 
         final SpreadsheetColumnReference column = this.id();
-        final List<SpreadsheetColumn> resources = this.resourceCollection();
+        final Optional<SpreadsheetDelta> resource = this.resource();
 
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
@@ -70,20 +72,20 @@ public final class SpreadsheetEngineInsertColumnsHateosIdResourceCollectionResou
                                                           final SpreadsheetEngineContext context) {
                         assertEquals(column, r, "column");
                         assertEquals(1, count, "count");
-                        return SpreadsheetDelta.with(id(), Sets.of(cell));
+                        return delta();
                     }
                 }),
                 column,
-                resources,
+                resource,
                 parameters("1"),
-                Lists.of(cell)
+                Optional.of(delta())
         );
     }
 
     @Test
     public void testInsertSeveralColumns() {
         final SpreadsheetColumnReference column = this.id();
-        final List<SpreadsheetColumn> resources = this.resourceCollection();
+        final Optional<SpreadsheetDelta> resource = this.resource();
 
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
@@ -98,17 +100,13 @@ public final class SpreadsheetEngineInsertColumnsHateosIdResourceCollectionResou
                                                           final SpreadsheetEngineContext context) {
                         assertEquals(column, r, "column");
                         assertEquals(3, count, "count");
-                        return SpreadsheetDelta.with(id(), Sets.of(cell()));
+                        return delta();
                     }
                 }),
                 this.id(),
-                resources,
+                resource,
                 parameters("3"),
-                Lists.of(cell()));
-    }
-
-    private SpreadsheetCell cell() {
-        return this.cell("A99", "1+2");
+                Optional.of(delta()));
     }
 
     @Test
@@ -117,8 +115,8 @@ public final class SpreadsheetEngineInsertColumnsHateosIdResourceCollectionResou
     }
 
     @Override
-    public Class<SpreadsheetEngineInsertColumnsHateosIdResourceCollectionResourceCollectionHandler> type() {
-        return Cast.to(SpreadsheetEngineInsertColumnsHateosIdResourceCollectionResourceCollectionHandler.class);
+    public Class<SpreadsheetEngineInsertColumnsHateosIdResourceResourceHandler> type() {
+        return Cast.to(SpreadsheetEngineInsertColumnsHateosIdResourceResourceHandler.class);
     }
 
     @Override
@@ -127,11 +125,11 @@ public final class SpreadsheetEngineInsertColumnsHateosIdResourceCollectionResou
     }
 
     @Override
-    public List<SpreadsheetColumn> resourceCollection() {
-        return Lists.empty();
+    public Optional<SpreadsheetDelta> resource() {
+        return Optional.empty();
     }
 
-    private SpreadsheetEngineInsertColumnsHateosIdResourceCollectionResourceCollectionHandler createHandler(final SpreadsheetEngine engine) {
+    private SpreadsheetEngineInsertColumnsHateosIdResourceResourceHandler createHandler(final SpreadsheetEngine engine) {
         return this.createHandler(engine,
                 this.engineContextSupplier());
     }
@@ -146,9 +144,9 @@ public final class SpreadsheetEngineInsertColumnsHateosIdResourceCollectionResou
     }
 
     @Override
-    SpreadsheetEngineInsertColumnsHateosIdResourceCollectionResourceCollectionHandler createHandler(final SpreadsheetEngine engine,
-                                                                                                    final Supplier<SpreadsheetEngineContext> context) {
-        return SpreadsheetEngineInsertColumnsHateosIdResourceCollectionResourceCollectionHandler.with(engine, context);
+    SpreadsheetEngineInsertColumnsHateosIdResourceResourceHandler createHandler(final SpreadsheetEngine engine,
+                                                                                final Supplier<SpreadsheetEngineContext> context) {
+        return SpreadsheetEngineInsertColumnsHateosIdResourceResourceHandler.with(engine, context);
     }
 
     @Override
