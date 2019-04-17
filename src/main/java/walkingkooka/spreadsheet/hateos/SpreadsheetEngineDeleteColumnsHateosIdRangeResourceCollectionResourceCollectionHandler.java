@@ -46,7 +46,8 @@ final class SpreadsheetEngineDeleteColumnsHateosIdRangeResourceCollectionResourc
         final SpreadsheetColumnReference upper = columns.upperBound().value().get();
 
         final List<SpreadsheetCell> cells = Lists.array();
-        cells.addAll(this.engine.deleteColumns(lower, upper.value() - lower.value() + 1, this.context.get()));
+        cells.addAll(this.engine.deleteColumns(lower, upper.value() - lower.value() + 1, this.context.get())
+                .cells());
         return Lists.readOnly(cells);
     }
 

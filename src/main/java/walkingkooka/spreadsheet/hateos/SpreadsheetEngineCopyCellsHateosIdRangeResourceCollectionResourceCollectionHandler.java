@@ -45,7 +45,8 @@ final class SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionResourceCol
         final List<SpreadsheetCell> updated = Lists.array();
         updated.addAll(this.engine.copyCells(cells,
                 this.parameterValueOrFail(parameters, TO, SpreadsheetRange::parse),
-                this.context.get()));
+                this.context.get())
+                .cells());
         return Lists.readOnly(updated);
     }
 
