@@ -1,13 +1,9 @@
 package walkingkooka.spreadsheet.hateos;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosHandler;
-import walkingkooka.net.http.server.hateos.HateosIdResourceCollectionResourceCollectionHandlerTesting;
-import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetColumn;
+import walkingkooka.net.http.server.hateos.HateosIdResourceResourceHandlerTesting;
 import walkingkooka.spreadsheet.SpreadsheetDelta;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
@@ -16,26 +12,25 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public final class SpreadsheetEngineDeleteColumnsHateosIdResourceCollectionResourceCollectionHandlerTest extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineDeleteColumnsHateosIdResourceCollectionResourceCollectionHandler,
+public final class SpreadsheetEngineDeleteColumnsHateosIdResourceResourceHandlerTest extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineDeleteColumnsHateosIdResourceResourceHandler,
         SpreadsheetColumnReference,
-        SpreadsheetColumn,
-        SpreadsheetCell>
-        implements HateosIdResourceCollectionResourceCollectionHandlerTesting<SpreadsheetEngineDeleteColumnsHateosIdResourceCollectionResourceCollectionHandler,
+        SpreadsheetDelta,
+        SpreadsheetDelta>
+        implements HateosIdResourceResourceHandlerTesting<SpreadsheetEngineDeleteColumnsHateosIdResourceResourceHandler,
         SpreadsheetColumnReference,
-        SpreadsheetColumn,
-        SpreadsheetCell> {
+        SpreadsheetDelta,
+        SpreadsheetDelta> {
 
     @Test
     public void testDeleteColumn() {
         final SpreadsheetColumnReference column = this.id();
-        final List<SpreadsheetColumn> resources = this.resourceCollection();
+        final Optional<SpreadsheetDelta> resource = this.resource();
 
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
@@ -50,17 +45,13 @@ public final class SpreadsheetEngineDeleteColumnsHateosIdResourceCollectionResou
                                                           final SpreadsheetEngineContext context) {
                         assertEquals(column, c, "column");
                         assertEquals(1, count, "count");
-                        return SpreadsheetDelta.with(id(), Sets.of(cell()));
+                        return delta();
                     }
                 }),
                 column,
-                resources,
+                resource,
                 HateosHandler.NO_PARAMETERS,
-                Lists.of(this.cell()));
-    }
-
-    private SpreadsheetCell cell() {
-        return this.cell("A99", "1+2");
+                Optional.of(this.delta()));
     }
 
     @Test
@@ -69,8 +60,8 @@ public final class SpreadsheetEngineDeleteColumnsHateosIdResourceCollectionResou
     }
 
     @Override
-    public Class<SpreadsheetEngineDeleteColumnsHateosIdResourceCollectionResourceCollectionHandler> type() {
-        return SpreadsheetEngineDeleteColumnsHateosIdResourceCollectionResourceCollectionHandler.class;
+    public Class<SpreadsheetEngineDeleteColumnsHateosIdResourceResourceHandler> type() {
+        return SpreadsheetEngineDeleteColumnsHateosIdResourceResourceHandler.class;
     }
 
     @Override
@@ -79,8 +70,8 @@ public final class SpreadsheetEngineDeleteColumnsHateosIdResourceCollectionResou
     }
 
     @Override
-    public List<SpreadsheetColumn> resourceCollection() {
-        return Lists.empty();
+    public Optional<SpreadsheetDelta> resource() {
+        return Optional.empty();
     }
 
     @Override
@@ -88,15 +79,15 @@ public final class SpreadsheetEngineDeleteColumnsHateosIdResourceCollectionResou
         return HateosHandler.NO_PARAMETERS;
     }
 
-    private SpreadsheetEngineDeleteColumnsHateosIdResourceCollectionResourceCollectionHandler createHandler(final SpreadsheetEngine engine) {
+    private SpreadsheetEngineDeleteColumnsHateosIdResourceResourceHandler createHandler(final SpreadsheetEngine engine) {
         return this.createHandler(engine,
                 this.engineContextSupplier());
     }
 
     @Override
-    SpreadsheetEngineDeleteColumnsHateosIdResourceCollectionResourceCollectionHandler createHandler(final SpreadsheetEngine engine,
-                                                                                                    final Supplier<SpreadsheetEngineContext> context) {
-        return SpreadsheetEngineDeleteColumnsHateosIdResourceCollectionResourceCollectionHandler.with(engine, context);
+    SpreadsheetEngineDeleteColumnsHateosIdResourceResourceHandler createHandler(final SpreadsheetEngine engine,
+                                                                                final Supplier<SpreadsheetEngineContext> context) {
+        return SpreadsheetEngineDeleteColumnsHateosIdResourceResourceHandler.with(engine, context);
     }
 
     @Override

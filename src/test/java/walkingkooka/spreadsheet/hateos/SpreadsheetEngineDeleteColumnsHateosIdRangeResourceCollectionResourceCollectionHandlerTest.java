@@ -59,10 +59,6 @@ public final class SpreadsheetEngineDeleteColumnsHateosIdRangeResourceCollection
                 Lists.of(cell()));
     }
 
-    private SpreadsheetCell cell() {
-        return this.cell("A99", "1+2");
-    }
-
     @Test
     public void testDeleteAllColumnsFails() {
         this.handleCollectionFails2(Range.all());
