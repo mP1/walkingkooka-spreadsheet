@@ -67,13 +67,9 @@ public final class SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionReso
                                               final SpreadsheetEngineContext context) {
                 assertEquals(SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionResourceCollectionHandlerTest.this.resourceCollection(), from, "from");
                 assertEquals(SpreadsheetRange.parse(TO), to, "to");
-                return SpreadsheetDelta.with(id(), Sets.of(cell()));
+                return delta();
             }
         };
-    }
-
-    private SpreadsheetCell cell() {
-        return this.cell("A99", "1+2");
     }
 
     @Override

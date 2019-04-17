@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetEngineHateosHandlerTestCase2<H extends HateosHandler<I, R, S>,
         I extends Comparable<I>,
-        R extends HateosResource<I>,
+        R extends HateosResource<?>,
         S extends HateosResource<?>>
         extends SpreadsheetEngineHateosHandlerTestCase<H>
         implements HateosHandlerTesting<H, I, R, S>{
