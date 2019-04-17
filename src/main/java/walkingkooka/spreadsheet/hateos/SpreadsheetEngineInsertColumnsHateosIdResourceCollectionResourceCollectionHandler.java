@@ -47,7 +47,8 @@ final class SpreadsheetEngineInsertColumnsHateosIdResourceCollectionResourceColl
         final List<SpreadsheetCell> cells = Lists.array();
         cells.addAll(this.engine.insertColumns(column,
                 this.count(parameters),
-                this.context.get()));
+                this.context.get())
+                .cells());
         return Lists.readOnly(cells);
     }
 

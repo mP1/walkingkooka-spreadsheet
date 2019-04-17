@@ -1,6 +1,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetDelta;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
@@ -9,7 +10,6 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * The engine or host for the active spreadsheet.
@@ -32,42 +32,42 @@ public interface SpreadsheetEngine {
     /**
      * Saves the cell, and updates all affected (referenced cells) returning all updated cells.
      */
-    Set<SpreadsheetCell> saveCell(final SpreadsheetCell cell,
-                                  final SpreadsheetEngineContext context);
+    SpreadsheetDelta saveCell(final SpreadsheetCell cell,
+                              final SpreadsheetEngineContext context);
 
     /**
      * Deletes the cell, removing references and updates and returns all affected (referenced cells).
      */
-    Set<SpreadsheetCell> deleteCell(final SpreadsheetCellReference cell,
-                                    final SpreadsheetEngineContext context);
+    SpreadsheetDelta deleteCell(final SpreadsheetCellReference cell,
+                                final SpreadsheetEngineContext context);
 
     /**
      * Deletes the identified columns, updates all absolute references as necessary in both formulas and label mappings.
      */
-    Set<SpreadsheetCell> deleteColumns(final SpreadsheetColumnReference column,
-                                       final int count,
-                                       final SpreadsheetEngineContext context);
+    SpreadsheetDelta deleteColumns(final SpreadsheetColumnReference column,
+                                   final int count,
+                                   final SpreadsheetEngineContext context);
 
     /**
      * Deletes the identified rows, updates all absolute references as necessary in both formulas and label mappings.
      */
-    Set<SpreadsheetCell> deleteRows(final SpreadsheetRowReference row,
-                                    final int count,
-                                    final SpreadsheetEngineContext context);
+    SpreadsheetDelta deleteRows(final SpreadsheetRowReference row,
+                                final int count,
+                                final SpreadsheetEngineContext context);
 
     /**
      * Inserts the identified columns, updates all absolute references as necessary in both formulas and label mappings.
      */
-    Set<SpreadsheetCell> insertColumns(final SpreadsheetColumnReference column,
-                                       final int count,
-                                       final SpreadsheetEngineContext context);
+    SpreadsheetDelta insertColumns(final SpreadsheetColumnReference column,
+                                   final int count,
+                                   final SpreadsheetEngineContext context);
 
     /**
      * Inserts the identified rows, updates all absolute references as necessary in both formulas and label mappings.
      */
-    Set<SpreadsheetCell> insertRows(final SpreadsheetRowReference row,
-                                    final int count,
-                                    final SpreadsheetEngineContext context);
+    SpreadsheetDelta insertRows(final SpreadsheetRowReference row,
+                                final int count,
+                                final SpreadsheetEngineContext context);
 
     /**
      * Copies the provided cells into this spreadsheet at the given range. The source range is smaller, where possible
@@ -76,7 +76,7 @@ public interface SpreadsheetEngine {
      * Note prior to copying the area should be cleared, as this only copies the given it doesnt clear the entire range,
      * before the actual copying.
      */
-    Set<SpreadsheetCell> copyCells(final Collection<SpreadsheetCell> from,
-                                   final SpreadsheetRange to,
-                                   final SpreadsheetEngineContext context);
+    SpreadsheetDelta copyCells(final Collection<SpreadsheetCell> from,
+                               final SpreadsheetRange to,
+                               final SpreadsheetEngineContext context);
 }

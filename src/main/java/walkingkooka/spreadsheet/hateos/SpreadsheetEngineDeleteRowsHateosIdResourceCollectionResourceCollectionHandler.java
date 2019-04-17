@@ -43,7 +43,8 @@ final class SpreadsheetEngineDeleteRowsHateosIdResourceCollectionResourceCollect
         checkParameters(parameters);
 
         final List<SpreadsheetCell> cells = Lists.array();
-        cells.addAll(this.engine.deleteRows(row, 1, this.context.get()));
+        cells.addAll(this.engine.deleteRows(row, 1, this.context.get())
+                .cells());
         return Lists.readOnly(cells);
     }
 

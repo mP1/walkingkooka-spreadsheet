@@ -8,6 +8,8 @@ import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.net.http.server.hateos.HateosIdRangeResourceCollectionResourceCollectionHandlerTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetDelta;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetRow;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
@@ -17,7 +19,6 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -39,12 +40,17 @@ public final class SpreadsheetEngineDeleteRowsHateosIdRangeResourceCollectionRes
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
-                    public Set<SpreadsheetCell> deleteRows(final SpreadsheetRowReference r,
-                                                           final int count,
-                                                           final SpreadsheetEngineContext context) {
+                    public SpreadsheetId id() {
+                        return spreadsheetId();
+                    }
+
+                    @Override
+                    public SpreadsheetDelta deleteRows(final SpreadsheetRowReference r,
+                                                       final int count,
+                                                       final SpreadsheetEngineContext context) {
                         assertEquals(row, r, "row");
                         assertEquals(3, count, "count");
-                        return Sets.of(cell());
+                        return SpreadsheetDelta.with(id(), Sets.of(cell()));
                     }
                 }),
                 Range.greaterThanEquals(row).and(Range.lessThanEquals(SpreadsheetRowReference.parse("4"))), // 3 rows inclusive
