@@ -36,7 +36,6 @@ final class SpreadsheetEngineInsertRowsHateosIdResourceCollectionResourceCollect
         super(engine, context);
     }
 
-
     @Override
     public List<SpreadsheetCell> handle(final SpreadsheetRowReference row,
                                         final List<SpreadsheetRow> resources,
