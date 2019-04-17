@@ -60,9 +60,7 @@ implements HateosIdResourceResourceHandlerTesting<SpreadsheetEngineLoadCellHateo
         this.handleAndCheck(this.id(),
                 this.resource(),
                 this.parameters(),
-                Optional.of(SpreadsheetCell.with(SpreadsheetCellReference.parse("A1"),
-                        SpreadsheetFormula.with("1+2"),
-                        SpreadsheetCellStyle.EMPTY)));
+                Optional.of(this.cell()));
     }
 
     @Test
@@ -111,13 +109,9 @@ implements HateosIdResourceResourceHandlerTesting<SpreadsheetEngineLoadCellHateo
                 assertEquals(EVALUATION, evaluation, "evaluation");
                 assertNotEquals(null, context, "context");
 
-                return Optional.of(SpreadsheetEngineLoadCellHateosIdResourceResourceHandlerTest.this.cell());
+                return Optional.of(cell());
             }
         };
-    }
-
-    private SpreadsheetCell cell() {
-        return SpreadsheetCell.with(this.id(), SpreadsheetFormula.with("1+2"), SpreadsheetCellStyle.EMPTY);
     }
 
     @Override
