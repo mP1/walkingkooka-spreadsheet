@@ -50,10 +50,6 @@ public final class SpreadsheetEngineIdHateosIdRangeResourceCollectionResourceCol
         return 123L;
     }
 
-    private SpreadsheetId spreadsheetId() {
-        return SpreadsheetId.with(this.id());
-    }
-
     @Override
     public Range<Long> collection() {
         return Range.all();

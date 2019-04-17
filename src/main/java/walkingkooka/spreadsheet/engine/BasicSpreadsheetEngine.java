@@ -4,6 +4,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
+import walkingkooka.spreadsheet.SpreadsheetDelta;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormattedCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
@@ -322,7 +323,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * Saves the cell, and updates all affected (referenced cells) returning all updated cells.
      */
     @Override
-    public Set<SpreadsheetCell> saveCell(final SpreadsheetCell cell,
+    public SpreadsheetDelta saveCell(final SpreadsheetCell cell,
                                          final SpreadsheetEngineContext context) {
         Objects.requireNonNull(cell, "cell");
         checkContext(context);
@@ -331,7 +332,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             this.maybeParseAndEvaluateAndFormat(cell,
                     SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                     context);
-            return updated.refreshUpdated();
+            return this.delta(updated.refreshUpdated());
         }
     }
 
@@ -341,21 +342,21 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * DELETE the cell, and updates all affected (referenced cells) returning all updated cells.
      */
     @Override
-    public Set<SpreadsheetCell> deleteCell(final SpreadsheetCellReference reference,
+    public SpreadsheetDelta deleteCell(final SpreadsheetCellReference reference,
                                            final SpreadsheetEngineContext context) {
         checkReference(reference);
         checkContext(context);
 
         try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
             this.cellStore.delete(reference);
-            return updated.refreshUpdated();
+            return this.delta(updated.refreshUpdated());
         }
     }
 
     // DELETE / INSERT / COLUMN / ROW ..................................................................................
 
     @Override
-    public Set<SpreadsheetCell> deleteColumns(final SpreadsheetColumnReference column,
+    public SpreadsheetDelta deleteColumns(final SpreadsheetColumnReference column,
                                               final int count,
                                               final SpreadsheetEngineContext context) {
         checkColumn(column);
@@ -365,12 +366,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
             BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn.with(column.value(), count, this, context)
                     .delete();
-            return updated.refreshUpdated();
+            return this.delta(updated.refreshUpdated());
         }
     }
 
     @Override
-    public Set<SpreadsheetCell> deleteRows(final SpreadsheetRowReference row,
+    public SpreadsheetDelta deleteRows(final SpreadsheetRowReference row,
                                            final int count,
                                            final SpreadsheetEngineContext context) {
         checkRow(row);
@@ -380,14 +381,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
             BasicSpreadsheetEngineDeleteOrInsertColumnOrRowRow.with(row.value(), count, this, context)
                     .delete();
-            return updated.refreshUpdated();
+            return this.delta(updated.refreshUpdated());
         }
     }
 
     @Override
-    public Set<SpreadsheetCell> insertColumns(final SpreadsheetColumnReference column,
-                                              final int count,
-                                              final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta insertColumns(final SpreadsheetColumnReference column,
+                                          final int count,
+                                          final SpreadsheetEngineContext context) {
         checkColumn(column);
         checkCount(count);
         checkContext(context);
@@ -397,12 +398,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                     this,
                     context)
                     .insert();
-            return updated.refreshUpdated();
+            return this.delta(updated.refreshUpdated());
         }
     }
 
     @Override
-    public Set<SpreadsheetCell> insertRows(final SpreadsheetRowReference row,
+    public SpreadsheetDelta insertRows(final SpreadsheetRowReference row,
                                            final int count,
                                            final SpreadsheetEngineContext context) {
         checkRow(row);
@@ -412,7 +413,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
             BasicSpreadsheetEngineDeleteOrInsertColumnOrRowRow.with(row.value(), count, this, context)
                     .insert();
-            return updated.refreshUpdated();
+            return this.delta(updated.refreshUpdated());
         }
     }
 
@@ -423,7 +424,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
-    public Set<SpreadsheetCell> copyCells(final Collection<SpreadsheetCell> from,
+    public SpreadsheetDelta copyCells(final Collection<SpreadsheetCell> from,
                                           final SpreadsheetRange to,
                                           final SpreadsheetEngineContext context) {
         Objects.requireNonNull(from, "from");
@@ -432,8 +433,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
             BasicSpreadsheetEngineCopyCells.execute(from, to, this, context);
-            return updated.refreshUpdated();
+            return this.delta(updated.refreshUpdated());
         }
+    }
+
+    private SpreadsheetDelta delta(final Set<SpreadsheetCell> cells) {
+        return SpreadsheetDelta.with(this.id(), cells);
     }
 
     private static void checkReference(final SpreadsheetCellReference reference) {

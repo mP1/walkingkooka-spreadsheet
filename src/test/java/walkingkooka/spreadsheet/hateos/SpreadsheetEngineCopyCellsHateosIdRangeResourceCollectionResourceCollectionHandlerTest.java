@@ -8,7 +8,9 @@ import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosIdRangeResourceCollectionResourceCollectionHandlerTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetDelta;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
@@ -53,13 +55,19 @@ public final class SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionReso
     @Override
     SpreadsheetEngine engine() {
         return new FakeSpreadsheetEngine() {
+
             @Override
-            public Set<SpreadsheetCell> copyCells(final Collection<SpreadsheetCell> from,
-                                                  final SpreadsheetRange to,
-                                                  final SpreadsheetEngineContext context) {
+            public SpreadsheetId id() {
+                return spreadsheetId();
+            }
+
+            @Override
+            public SpreadsheetDelta copyCells(final Collection<SpreadsheetCell> from,
+                                              final SpreadsheetRange to,
+                                              final SpreadsheetEngineContext context) {
                 assertEquals(SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionResourceCollectionHandlerTest.this.resourceCollection(), from, "from");
                 assertEquals(SpreadsheetRange.parse(TO), to, "to");
-                return Sets.of(cell());
+                return SpreadsheetDelta.with(id(), Sets.of(cell()));
             }
         };
     }
