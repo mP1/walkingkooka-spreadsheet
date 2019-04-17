@@ -50,17 +50,13 @@ public final class SpreadsheetEngineDeleteRowsHateosIdRangeResourceCollectionRes
                                                        final SpreadsheetEngineContext context) {
                         assertEquals(row, r, "row");
                         assertEquals(3, count, "count");
-                        return SpreadsheetDelta.with(id(), Sets.of(cell()));
+                        return delta();
                     }
                 }),
                 Range.greaterThanEquals(row).and(Range.lessThanEquals(SpreadsheetRowReference.parse("4"))), // 3 rows inclusive
                 resources,
                 HateosHandler.NO_PARAMETERS,
                 Lists.of(this.cell()));
-    }
-
-    private SpreadsheetCell cell() {
-        return this.cell("A99", "1+2");
     }
 
     @Test

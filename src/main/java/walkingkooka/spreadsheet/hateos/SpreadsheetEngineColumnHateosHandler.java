@@ -12,8 +12,7 @@ import java.util.function.Supplier;
 /**
  * A {@link HateosHandler} for columns.
  */
-abstract class SpreadsheetEngineColumnHateosHandler extends SpreadsheetEngineHateosHandler
-        implements HateosHandler<SpreadsheetColumnReference, SpreadsheetColumn, SpreadsheetCell> {
+abstract class SpreadsheetEngineColumnHateosHandler extends SpreadsheetEngineHateosHandler {
 
     SpreadsheetEngineColumnHateosHandler(final SpreadsheetEngine engine,
                                          final Supplier<SpreadsheetEngineContext> context) {
