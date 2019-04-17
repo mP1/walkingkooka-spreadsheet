@@ -6,6 +6,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.net.http.server.hateos.HateosIdResourceCollectionResourceCollectionHandlerTesting;
+import walkingkooka.net.http.server.hateos.HateosIdResourceResourceHandlerTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetDelta;
 import walkingkooka.spreadsheet.SpreadsheetId;
@@ -19,26 +20,26 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public final class SpreadsheetEngineDeleteRowsHateosIdResourceCollectionResourceCollectionHandlerTest extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineDeleteRowsHateosIdResourceCollectionResourceCollectionHandler,
+public final class SpreadsheetEngineDeleteRowsHateosIdResourceResourceHandlerTest extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineDeleteRowsHateosIdResourceResourceHandler,
         SpreadsheetRowReference,
-        SpreadsheetRow,
-        SpreadsheetCell>
-        implements HateosIdResourceCollectionResourceCollectionHandlerTesting<SpreadsheetEngineDeleteRowsHateosIdResourceCollectionResourceCollectionHandler,
-        SpreadsheetRowReference,
-        SpreadsheetRow,
-        SpreadsheetCell> {
+        SpreadsheetDelta,
+        SpreadsheetDelta>
+        implements HateosIdResourceResourceHandlerTesting<SpreadsheetEngineDeleteRowsHateosIdResourceResourceHandler,
+                SpreadsheetRowReference,
+                SpreadsheetDelta,
+                SpreadsheetDelta> {
 
     @Test
     public void testDeleteRow() {
         final Latch deleted = Latch.create();
 
         final SpreadsheetRowReference row = this.id();
-        final List<SpreadsheetRow> resources = this.resourceCollection();
+        final Optional<SpreadsheetDelta> resource = this.resource();
 
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
                     @Override
@@ -53,18 +54,14 @@ public final class SpreadsheetEngineDeleteRowsHateosIdResourceCollectionResource
                         assertEquals(row, r, "row");
                         assertEquals(1, count, "count");
 
-                        return SpreadsheetDelta.with(id(), Sets.of(cell()));
+                        return delta();
                     }
                 }),
                 row,
-                resources,
+                resource,
                 HateosHandler.NO_PARAMETERS,
-                Lists.of(this.cell())
+                Optional.of(delta())
         );
-    }
-
-    private SpreadsheetCell cell() {
-        return this.cell("A99", "1+2");
     }
 
     @Test
@@ -73,8 +70,8 @@ public final class SpreadsheetEngineDeleteRowsHateosIdResourceCollectionResource
     }
 
     @Override
-    public Class<SpreadsheetEngineDeleteRowsHateosIdResourceCollectionResourceCollectionHandler> type() {
-        return SpreadsheetEngineDeleteRowsHateosIdResourceCollectionResourceCollectionHandler.class;
+    public Class<SpreadsheetEngineDeleteRowsHateosIdResourceResourceHandler> type() {
+        return SpreadsheetEngineDeleteRowsHateosIdResourceResourceHandler.class;
     }
 
     @Override
@@ -83,11 +80,11 @@ public final class SpreadsheetEngineDeleteRowsHateosIdResourceCollectionResource
     }
 
     @Override
-    public List<SpreadsheetRow> resourceCollection() {
-        return Lists.empty();
+    public Optional<SpreadsheetDelta> resource() {
+        return Optional.empty();
     }
 
-    private SpreadsheetEngineDeleteRowsHateosIdResourceCollectionResourceCollectionHandler createHandler(final SpreadsheetEngine engine) {
+    private SpreadsheetEngineDeleteRowsHateosIdResourceResourceHandler createHandler(final SpreadsheetEngine engine) {
         return this.createHandler(engine,
                 this.engineContextSupplier());
     }
@@ -98,9 +95,9 @@ public final class SpreadsheetEngineDeleteRowsHateosIdResourceCollectionResource
     }
 
     @Override
-    SpreadsheetEngineDeleteRowsHateosIdResourceCollectionResourceCollectionHandler createHandler(final SpreadsheetEngine engine,
-                                                                                                 final Supplier<SpreadsheetEngineContext> context) {
-        return SpreadsheetEngineDeleteRowsHateosIdResourceCollectionResourceCollectionHandler.with(engine, context);
+    SpreadsheetEngineDeleteRowsHateosIdResourceResourceHandler createHandler(final SpreadsheetEngine engine,
+                                                                             final Supplier<SpreadsheetEngineContext> context) {
+        return SpreadsheetEngineDeleteRowsHateosIdResourceResourceHandler.with(engine, context);
     }
 
     @Override
