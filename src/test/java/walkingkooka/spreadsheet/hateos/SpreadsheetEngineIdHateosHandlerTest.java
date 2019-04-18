@@ -8,7 +8,7 @@ import walkingkooka.compare.Range;
 import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosHandler;
-import walkingkooka.net.http.server.hateos.HateosIdRangeResourceCollectionResourceCollectionHandlerTesting;
+import walkingkooka.spreadsheet.SpreadsheetDelta;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
@@ -16,22 +16,29 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 
-public final class SpreadsheetEngineIdHateosIdRangeResourceCollectionResourceCollectionHandlerTest extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineIdHateosIdRangeResourceCollectionResourceCollectionHandler,
-        Long,
+public final class SpreadsheetEngineIdHateosHandlerTest extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineIdHateosHandler,
         SpreadsheetId,
-        SpreadsheetId>
-        implements HateosIdRangeResourceCollectionResourceCollectionHandlerTesting<SpreadsheetEngineIdHateosIdRangeResourceCollectionResourceCollectionHandler, Long, SpreadsheetId, SpreadsheetId> {
+        SpreadsheetDelta,
+        SpreadsheetDelta> {
 
     @Test
-    public void testHandleCollectionUnsupportedOperationException() {
-        this.handleAndCheck(Range.all(),
-                this.resourceCollection(),
+    public void testHandle() {
+        this.handleCollectionAndCheck(Range.all(),
+                this.resource(),
                 this.parameters(),
-                Lists.of(this.spreadsheetId()));
+                Optional.of(SpreadsheetDelta.with(this.spreadsheetId(), SpreadsheetDelta.NO_CELLS)));
+    }
+
+    @Test
+    public void testHandleCollection() {
+        this.handleCollectionAndCheck(Range.all(),
+                this.resource(),
+                this.parameters(),
+                Optional.of(SpreadsheetDelta.with(this.spreadsheetId(), SpreadsheetDelta.NO_CELLS)));
     }
 
     @Test
@@ -40,24 +47,24 @@ public final class SpreadsheetEngineIdHateosIdRangeResourceCollectionResourceCol
     }
 
     @Override
-    SpreadsheetEngineIdHateosIdRangeResourceCollectionResourceCollectionHandler createHandler(final SpreadsheetEngine engine,
-                                                                                              final Supplier<SpreadsheetEngineContext> context) {
-        return SpreadsheetEngineIdHateosIdRangeResourceCollectionResourceCollectionHandler.with(engine, context);
+    SpreadsheetEngineIdHateosHandler createHandler(final SpreadsheetEngine engine,
+                                                   final Supplier<SpreadsheetEngineContext> context) {
+        return SpreadsheetEngineIdHateosHandler.with(engine, context);
     }
 
     @Override
-    public Long id() {
-        return 123L;
+    public SpreadsheetId id() {
+        return this.spreadsheetId();
     }
 
     @Override
-    public Range<Long> collection() {
-        return Range.all();
+    public Range<SpreadsheetId> collection() {
+        return Range.greaterThanEquals(this.spreadsheetId());
     }
 
     @Override
-    public List<SpreadsheetId> resourceCollection() {
-        return Lists.empty();
+    public Optional<SpreadsheetDelta> resource() {
+        return Optional.empty();
     }
 
     @Override
@@ -74,7 +81,7 @@ public final class SpreadsheetEngineIdHateosIdRangeResourceCollectionResourceCol
         return new FakeSpreadsheetEngine() {
             @Override
             public SpreadsheetId id() {
-                return SpreadsheetEngineIdHateosIdRangeResourceCollectionResourceCollectionHandlerTest.this.spreadsheetId();
+                return SpreadsheetEngineIdHateosHandlerTest.this.spreadsheetId();
             }
         };
     }
@@ -85,7 +92,7 @@ public final class SpreadsheetEngineIdHateosIdRangeResourceCollectionResourceCol
     }
 
     @Override
-    public Class<SpreadsheetEngineIdHateosIdRangeResourceCollectionResourceCollectionHandler> type() {
-        return Cast.to(SpreadsheetEngineIdHateosIdRangeResourceCollectionResourceCollectionHandler.class);
+    public Class<SpreadsheetEngineIdHateosHandler> type() {
+        return Cast.to(SpreadsheetEngineIdHateosHandler.class);
     }
 }
