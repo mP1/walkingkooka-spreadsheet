@@ -1,9 +1,11 @@
 package walkingkooka.spreadsheet.hateos;
 
+import walkingkooka.compare.Range;
 import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.http.server.HttpRequestAttribute;
-import walkingkooka.net.http.server.hateos.HateosIdResourceResourceHandler;
+import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
@@ -15,19 +17,19 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
- * A {@link HateosIdResourceResourceHandler} that calls {@link SpreadsheetEngine#loadCell(SpreadsheetCellReference, SpreadsheetEngineEvaluation, SpreadsheetEngineContext)}.
+ * A {@link HateosHandler} that calls {@link SpreadsheetEngine#loadCell(SpreadsheetCellReference, SpreadsheetEngineEvaluation, SpreadsheetEngineContext)}.
  */
-final class SpreadsheetEngineLoadCellHateosIdResourceResourceHandler extends SpreadsheetEngineHateosHandler
-        implements HateosIdResourceResourceHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetCell> {
+final class SpreadsheetEngineLoadCellHateosHandler extends SpreadsheetEngineHateosHandler
+        implements HateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetCell> {
 
-    static SpreadsheetEngineLoadCellHateosIdResourceResourceHandler with(final SpreadsheetEngine engine,
-                                                                         final Supplier<SpreadsheetEngineContext> context) {
+    static SpreadsheetEngineLoadCellHateosHandler with(final SpreadsheetEngine engine,
+                                                       final Supplier<SpreadsheetEngineContext> context) {
         check(engine, context);
-        return new SpreadsheetEngineLoadCellHateosIdResourceResourceHandler(engine, context);
+        return new SpreadsheetEngineLoadCellHateosHandler(engine, context);
     }
 
-    private SpreadsheetEngineLoadCellHateosIdResourceResourceHandler(final SpreadsheetEngine engine,
-                                                                     final Supplier<SpreadsheetEngineContext> context) {
+    private SpreadsheetEngineLoadCellHateosHandler(final SpreadsheetEngine engine,
+                                                   final Supplier<SpreadsheetEngineContext> context) {
         super(engine, context);
     }
 
@@ -42,6 +44,17 @@ final class SpreadsheetEngineLoadCellHateosIdResourceResourceHandler extends Spr
         return this.engine.loadCell(cellReference,
                 this.parameterValueOrFail(parameters, EVALUATION, SpreadsheetEngineEvaluation::valueOf),
                 this.context.get());
+    }
+
+    @Override
+    public Optional<SpreadsheetCell> handleCollection(final Range<SpreadsheetCellReference> ids,
+                                                      final Optional<SpreadsheetCell> resource,
+                                                      final Map<HttpRequestAttribute<?>, Object> parameters) {
+        Objects.requireNonNull(ids, "ids");
+        checkResource(resource);
+        checkParameters(parameters);
+
+        throw new UnsupportedOperationException();
     }
 
     private final static UrlParameterName EVALUATION = UrlParameterName.with("evaluation");

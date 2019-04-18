@@ -17,6 +17,8 @@ import java.util.Set;
  */
 public final class SpreadsheetDelta implements HashCodeEqualsDefined, HateosResource<SpreadsheetId> {
 
+    public final static Set<SpreadsheetCell> NO_CELLS = Sets.empty();
+
     public static SpreadsheetDelta with(final SpreadsheetId id, final Set<SpreadsheetCell> cells) {
         Objects.requireNonNull(id, "id");
         Objects.requireNonNull(cells, "cells");
