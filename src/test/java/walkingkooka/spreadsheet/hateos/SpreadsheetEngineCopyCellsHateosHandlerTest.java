@@ -3,42 +3,43 @@ package walkingkooka.spreadsheet.hateos;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
-import walkingkooka.net.http.server.hateos.HateosIdRangeResourceCollectionResourceCollectionHandlerTesting;
+import walkingkooka.net.http.server.hateos.HateosHandlerTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetDelta;
-import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
-import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public final class SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionResourceCollectionHandlerTest extends
-        SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionResourceCollectionHandler, SpreadsheetCellReference, SpreadsheetCell, SpreadsheetCell>
-        implements HateosIdRangeResourceCollectionResourceCollectionHandlerTesting<SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionResourceCollectionHandler,
+public final class SpreadsheetEngineCopyCellsHateosHandlerTest extends
+        SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineCopyCellsHateosHandler, SpreadsheetCellReference, SpreadsheetDelta, SpreadsheetDelta>
+        implements HateosHandlerTesting<SpreadsheetEngineCopyCellsHateosHandler,
         SpreadsheetCellReference,
-        SpreadsheetCell,
-        SpreadsheetCell> {
+        SpreadsheetDelta,
+        SpreadsheetDelta> {
+
+    @Test
+    public void testHandleUnsupported() {
+        this.handleUnsupported(this.createHandler());
+    }
 
     @Test
     public void testCopy() {
-        this.handleAndCheck(this.collection(),
-                this.resourceCollection(),
+        this.handleCollectionAndCheck(this.collection(),
+                this.resource(),
                 this.parameters(),
-                Lists.of(this.cell()));
+                Optional.of(this.delta()));
     }
 
     @Test
@@ -47,9 +48,9 @@ public final class SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionReso
     }
 
     @Override
-    SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionResourceCollectionHandler createHandler(final SpreadsheetEngine engine,
-                                                                                                     final Supplier<SpreadsheetEngineContext> context) {
-        return SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionResourceCollectionHandler.with(engine, context);
+    SpreadsheetEngineCopyCellsHateosHandler createHandler(final SpreadsheetEngine engine,
+                                                          final Supplier<SpreadsheetEngineContext> context) {
+        return SpreadsheetEngineCopyCellsHateosHandler.with(engine, context);
     }
 
     @Override
@@ -65,7 +66,7 @@ public final class SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionReso
             public SpreadsheetDelta copyCells(final Collection<SpreadsheetCell> from,
                                               final SpreadsheetRange to,
                                               final SpreadsheetEngineContext context) {
-                assertEquals(SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionResourceCollectionHandlerTest.this.resourceCollection(), from, "from");
+                assertEquals(resource().get().cells(), from, "from");
                 assertEquals(SpreadsheetRange.parse(TO), to, "to");
                 return delta();
             }
@@ -79,7 +80,7 @@ public final class SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionReso
 
     @Override
     public Map<HttpRequestAttribute<?>, Object> parameters() {
-        return Maps.of(SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionResourceCollectionHandler.TO, Lists.of(TO));
+        return Maps.of(SpreadsheetEngineCopyCellsHateosHandler.TO, Lists.of(TO));
     }
 
     private final static String TO = "E1:F2";
@@ -96,14 +97,12 @@ public final class SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionReso
     }
 
     @Override
-    public List<SpreadsheetCell> resourceCollection() {
-        return Lists.of(SpreadsheetCell.with(SpreadsheetCellReference.parse("A1"),
-                SpreadsheetFormula.with("1+2"),
-                SpreadsheetCellStyle.EMPTY));
+    public Optional<SpreadsheetDelta> resource() {
+        return Optional.of(this.delta());
     }
 
     @Override
-    public Class<SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionResourceCollectionHandler> type() {
-        return SpreadsheetEngineCopyCellsHateosIdRangeResourceCollectionResourceCollectionHandler.class;
+    public Class<SpreadsheetEngineCopyCellsHateosHandler> type() {
+        return SpreadsheetEngineCopyCellsHateosHandler.class;
     }
 }

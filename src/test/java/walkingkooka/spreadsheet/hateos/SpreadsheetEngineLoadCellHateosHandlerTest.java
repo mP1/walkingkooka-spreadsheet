@@ -4,19 +4,17 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.compare.Range;
 import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.HttpRequestParameterName;
 import walkingkooka.net.http.server.hateos.HateosHandler;
-import walkingkooka.net.http.server.hateos.HateosIdResourceResourceHandlerTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
-import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
 import java.util.Map;
@@ -27,12 +25,8 @@ import java.util.function.Supplier;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-public final class SpreadsheetEngineLoadCellHateosIdResourceResourceHandlerTest
-        extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineLoadCellHateosIdResourceResourceHandler,
-                        SpreadsheetCellReference,
-                        SpreadsheetCell,
-                        SpreadsheetCell>
-implements HateosIdResourceResourceHandlerTesting<SpreadsheetEngineLoadCellHateosIdResourceResourceHandler,
+public final class SpreadsheetEngineLoadCellHateosHandlerTest
+        extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineLoadCellHateosHandler,
         SpreadsheetCellReference,
         SpreadsheetCell,
         SpreadsheetCell> {
@@ -40,7 +34,7 @@ implements HateosIdResourceResourceHandlerTesting<SpreadsheetEngineLoadCellHateo
     private final static SpreadsheetEngineEvaluation EVALUATION = SpreadsheetEngineEvaluation.FORCE_RECOMPUTE;
 
     @Test
-    public void testLoadCellInvalidevaluationParameterFails() {
+    public void testLoadCellInvalidEvaluationParameterFails() {
         this.handleFails(this.id(),
                 this.resource(),
                 HateosHandler.NO_PARAMETERS,
@@ -48,7 +42,7 @@ implements HateosIdResourceResourceHandlerTesting<SpreadsheetEngineLoadCellHateo
     }
 
     @Test
-    public void testLoadCellInvalidevaluationParameterFails2() {
+    public void testLoadCellInvalidEvaluationParameterFails2() {
         this.handleFails(this.id(),
                 this.resource(),
                 Maps.of(HttpRequestParameterName.with("evaluation"), Lists.of("a", "b")),
@@ -69,14 +63,20 @@ implements HateosIdResourceResourceHandlerTesting<SpreadsheetEngineLoadCellHateo
     }
 
     @Override
-    SpreadsheetEngineLoadCellHateosIdResourceResourceHandler createHandler(final SpreadsheetEngine engine,
-                                                                           final Supplier<SpreadsheetEngineContext> context) {
-        return SpreadsheetEngineLoadCellHateosIdResourceResourceHandler.with(engine, context);
+    SpreadsheetEngineLoadCellHateosHandler createHandler(final SpreadsheetEngine engine,
+                                                         final Supplier<SpreadsheetEngineContext> context) {
+        return SpreadsheetEngineLoadCellHateosHandler.with(engine, context);
     }
 
     @Override
     public SpreadsheetCellReference id() {
         return SpreadsheetCellReference.parse("A1");
+    }
+
+    @Override
+    public Range<SpreadsheetCellReference> collection() {
+        return Range.greaterThanEquals(SpreadsheetCellReference.parse("B2"))
+                .and(Range.lessThanEquals(SpreadsheetCellReference.parse("D4")));
     }
 
     @Override
@@ -105,7 +105,7 @@ implements HateosIdResourceResourceHandlerTesting<SpreadsheetEngineLoadCellHateo
                 Objects.requireNonNull(context, "context");
 
 
-                assertEquals(SpreadsheetEngineLoadCellHateosIdResourceResourceHandlerTest.this.id(), id, "id");
+                assertEquals(SpreadsheetEngineLoadCellHateosHandlerTest.this.id(), id, "id");
                 assertEquals(EVALUATION, evaluation, "evaluation");
                 assertNotEquals(null, context, "context");
 
@@ -120,7 +120,7 @@ implements HateosIdResourceResourceHandlerTesting<SpreadsheetEngineLoadCellHateo
     }
 
     @Override
-    public Class<SpreadsheetEngineLoadCellHateosIdResourceResourceHandler> type() {
-        return Cast.to(SpreadsheetEngineLoadCellHateosIdResourceResourceHandler.class);
+    public Class<SpreadsheetEngineLoadCellHateosHandler> type() {
+        return Cast.to(SpreadsheetEngineLoadCellHateosHandler.class);
     }
 }
