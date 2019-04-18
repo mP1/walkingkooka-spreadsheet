@@ -75,8 +75,7 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
 
     @Override
     public Range<SpreadsheetCellReference> collection() {
-        return Range.greaterThanEquals(SpreadsheetCellReference.parse("B2"))
-                .and(Range.lessThanEquals(SpreadsheetCellReference.parse("D4")));
+        return SpreadsheetCellReference.parseRange("B2:D4");
     }
 
     @Override

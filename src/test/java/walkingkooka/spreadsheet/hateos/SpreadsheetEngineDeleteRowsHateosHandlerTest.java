@@ -119,8 +119,7 @@ public final class SpreadsheetEngineDeleteRowsHateosHandlerTest extends Spreadsh
 
     @Override
     public Range<SpreadsheetRowReference> collection() {
-        return Range.greaterThanEquals(SpreadsheetRowReference.parse("2"))
-                .and(Range.lessThanEquals(SpreadsheetRowReference.parse("4")));
+        return SpreadsheetRowReference.parseRange("2:4");
     }
 
     @Override
