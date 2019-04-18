@@ -117,8 +117,7 @@ public final class SpreadsheetEngineDeleteColumnsHateosHandlerTest extends Sprea
 
     @Override
     public Range<SpreadsheetColumnReference> collection() {
-        return Range.greaterThanEquals(SpreadsheetColumnReference.parse("B"))
-                .and(Range.lessThanEquals(SpreadsheetColumnReference.parse("D")));
+        return SpreadsheetColumnReference.parseRange("B:D");
     }
 
     @Override
