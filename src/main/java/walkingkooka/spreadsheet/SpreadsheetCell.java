@@ -334,7 +334,8 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
 
     @Override
     public void buildToString(final ToStringBuilder builder) {
-        builder.label(this.reference.toString())
+        builder.labelSeparator("=")
+                .label(this.reference.toString())
                 .value(this.formula)
                 .value(this.style)
                 .value(this.format)
