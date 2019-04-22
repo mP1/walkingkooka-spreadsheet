@@ -20,7 +20,7 @@ public abstract class SpreadsheetEngineHateosHandlerTestCase2<H extends HateosHa
         R extends HateosResource<?>,
         S extends HateosResource<?>>
         extends SpreadsheetEngineHateosHandlerTestCase<H>
-        implements HateosHandlerTesting<H, I, R, S>{
+        implements HateosHandlerTesting<H, I, R, S> {
 
     SpreadsheetEngineHateosHandlerTestCase2() {
         super();

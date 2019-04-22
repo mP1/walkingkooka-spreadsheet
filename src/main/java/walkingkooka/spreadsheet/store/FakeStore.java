@@ -2,7 +2,6 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.test.Fake;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;

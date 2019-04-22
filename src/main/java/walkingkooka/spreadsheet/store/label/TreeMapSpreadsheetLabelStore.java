@@ -66,7 +66,7 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
     public void delete(final SpreadsheetLabelName label) {
         Objects.requireNonNull(label, "label");
 
-        if(null!=this.mappings.remove(label)) {
+        if (null != this.mappings.remove(label)) {
             this.deleteWatchers.accept(label);
         }
     }

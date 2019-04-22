@@ -418,7 +418,7 @@ public final class SpreadsheetTextStyle implements HashCodeEqualsDefined,
     private final static String ITALICS_PROPERTY_STRING = "italics";
     private final static String UNDERLINE_PROPERTY_STRING = "underline";
     private final static String STRIKETHRU_PROPERTY_STRING = "strikethru";
-    
+
     final static JsonNodeName FONT_FAMILY_PROPERTY = JsonNodeName.with(FONT_FAMILY_PROPERTY_STRING);
     final static JsonNodeName FONT_SIZE_PROPERTY = JsonNodeName.with(FONT_SIZE_PROPERTY_STRING);
     final static JsonNodeName COLOR_PROPERTY = JsonNodeName.with(COLOR_PROPERTY_STRING);

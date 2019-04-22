@@ -1,6 +1,5 @@
 package walkingkooka.spreadsheet.store.range;
 
-import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;

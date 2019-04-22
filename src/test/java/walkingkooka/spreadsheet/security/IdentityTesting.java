@@ -15,7 +15,7 @@ public interface IdentityTesting<I extends Identity<ID> & HasJsonNode, ID extend
         HasJsonNodeTesting<I>,
         HashCodeEqualsDefinedTesting<I>,
         ToStringTesting<I> {
-    
+
     @Test
     default void testWithNullIdFails() {
         assertThrows(NullPointerException.class, () -> {
