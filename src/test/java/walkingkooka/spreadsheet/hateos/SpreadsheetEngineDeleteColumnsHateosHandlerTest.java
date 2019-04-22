@@ -122,7 +122,7 @@ public final class SpreadsheetEngineDeleteColumnsHateosHandlerTest extends Sprea
 
     @Override
     public Optional<SpreadsheetDelta> resource() {
-        return Optional.empty();
+        return this.spreadsheetDeltaWithoutCells();
     }
 
     @Override

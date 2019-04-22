@@ -9,13 +9,12 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
  * A {@link HateosHandler} for {@link SpreadsheetEngine#deleteRows(SpreadsheetRowReference, int, SpreadsheetEngineContext)}.
  */
-final class SpreadsheetEngineDeleteRowsHateosHandler extends SpreadsheetEngineHateosHandler3<SpreadsheetRowReference> {
+final class SpreadsheetEngineDeleteRowsHateosHandler extends SpreadsheetEngineHateosHandler2<SpreadsheetRowReference> {
 
     static SpreadsheetEngineDeleteRowsHateosHandler with(final SpreadsheetEngine engine,
                                                          final Supplier<SpreadsheetEngineContext> context) {
@@ -35,7 +34,7 @@ final class SpreadsheetEngineDeleteRowsHateosHandler extends SpreadsheetEngineHa
 
     @Override
     SpreadsheetDelta handle0(final SpreadsheetRowReference row,
-                             final Optional<SpreadsheetDelta> resource,
+                             final SpreadsheetDelta resource,
                              final Map<HttpRequestAttribute<?>, Object> parameters) {
         return this.engine.deleteRows(row, 1, this.context.get());
     }
@@ -47,7 +46,7 @@ final class SpreadsheetEngineDeleteRowsHateosHandler extends SpreadsheetEngineHa
 
     @Override
     SpreadsheetDelta handleCollection0(final Range<SpreadsheetRowReference> rows,
-                                       final Optional<SpreadsheetDelta> resource,
+                                       final SpreadsheetDelta resource,
                                        final Map<HttpRequestAttribute<?>, Object> parameters) {
         final SpreadsheetRowReference lower = rows.lowerBound().value().get();
         final SpreadsheetRowReference upper = rows.upperBound().value().get();
