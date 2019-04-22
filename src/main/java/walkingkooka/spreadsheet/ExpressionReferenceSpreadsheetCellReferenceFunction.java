@@ -15,7 +15,7 @@ import java.util.function.Function;
 final class ExpressionReferenceSpreadsheetCellReferenceFunction implements Function<ExpressionReference, Optional<SpreadsheetCellReference>> {
 
     static ExpressionReferenceSpreadsheetCellReferenceFunction with(final SpreadsheetLabelStore labelStore,
-                                                                final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore) {
+                                                                    final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore) {
         Objects.requireNonNull(labelStore, "labelStore");
         Objects.requireNonNull(rangeToCellStore, "rangeToCellStore");
 

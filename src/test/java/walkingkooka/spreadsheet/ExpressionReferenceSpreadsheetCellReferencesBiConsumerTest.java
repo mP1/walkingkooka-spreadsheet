@@ -12,10 +12,8 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.type.MemberVisibility;
-import walkingkooka.util.FunctionTesting;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -40,7 +38,8 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerTest im
     @Test
     public void testAcceptNullExpressionReferenceFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.createBiConsumer().accept(null, (c) -> {});
+            this.createBiConsumer().accept(null, (c) -> {
+            });
         });
     }
 
@@ -78,7 +77,7 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerTest im
     }
 
     private void acceptAndCheck(final ExpressionReference reference,
-                               final SpreadsheetCellReference...references) {
+                                final SpreadsheetCellReference... references) {
         final List<SpreadsheetCellReference> actual = Lists.array();
         this.createBiConsumer().accept(reference, actual::add);
         assertEquals(Lists.of(references), actual);

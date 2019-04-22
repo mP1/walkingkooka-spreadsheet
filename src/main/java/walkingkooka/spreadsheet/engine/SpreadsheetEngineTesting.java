@@ -25,7 +25,6 @@ import walkingkooka.type.MemberVisibility;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -98,7 +97,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                     null);
         });
     }
-    
+
     @Test
     default void testDeleteColumnsNullColumnFails() {
         assertThrows(NullPointerException.class, () -> {
@@ -379,10 +378,10 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void deleteRowsAndCheck(final SpreadsheetEngine engine,
-                                       final SpreadsheetRowReference column,
-                                       final int count,
-                                       final SpreadsheetEngineContext context,
-                                       final SpreadsheetCell... updated) {
+                                    final SpreadsheetRowReference column,
+                                    final int count,
+                                    final SpreadsheetEngineContext context,
+                                    final SpreadsheetCell... updated) {
         this.deleteRowsAndCheck(engine,
                 column,
                 count,
@@ -391,10 +390,10 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void deleteRowsAndCheck(final SpreadsheetEngine engine,
-                                       final SpreadsheetRowReference column,
-                                       final int count,
-                                       final SpreadsheetEngineContext context,
-                                       final SpreadsheetDelta delta) {
+                                    final SpreadsheetRowReference column,
+                                    final int count,
+                                    final SpreadsheetEngineContext context,
+                                    final SpreadsheetDelta delta) {
         assertEquals(delta,
                 engine.deleteRows(column, count, context),
                 () -> "deleteRows column: " + column + " count: " + count);

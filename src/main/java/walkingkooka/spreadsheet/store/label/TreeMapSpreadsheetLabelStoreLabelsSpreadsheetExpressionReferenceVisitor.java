@@ -38,7 +38,7 @@ final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisi
     private void acceptMapping(final SpreadsheetLabelMapping mapping) {
         this.add = false;
         this.accept(mapping.reference());
-        if(this.add) {
+        if (this.add) {
             this.labels.add(mapping.label());
         }
     }

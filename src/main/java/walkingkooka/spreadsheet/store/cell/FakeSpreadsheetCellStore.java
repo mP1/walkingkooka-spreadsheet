@@ -1,7 +1,6 @@
 package walkingkooka.spreadsheet.store.cell;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetColumn;
 import walkingkooka.spreadsheet.store.FakeStore;
 import walkingkooka.test.Fake;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;

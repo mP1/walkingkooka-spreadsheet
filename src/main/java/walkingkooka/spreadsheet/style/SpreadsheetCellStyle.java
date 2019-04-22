@@ -130,7 +130,7 @@ public final class SpreadsheetCellStyle implements HashCodeEqualsDefined,
 
         return with(text);
     }
-    
+
     @Override
     public JsonNode toJsonNode() {
         final JsonObjectNode object = JsonNode.object();

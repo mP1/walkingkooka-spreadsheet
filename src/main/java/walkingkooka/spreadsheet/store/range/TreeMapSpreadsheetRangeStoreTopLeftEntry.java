@@ -41,7 +41,7 @@ final class TreeMapSpreadsheetRangeStoreTopLeftEntry<V> extends TreeMapSpreadshe
 
         final SpreadsheetCellReference topLeft = this.range.begin();
 
-        for(SpreadsheetCellReference bottomRight: this.secondaryCellReferenceToValues.keySet()){
+        for (SpreadsheetCellReference bottomRight : this.secondaryCellReferenceToValues.keySet()) {
             ranges.add(SpreadsheetRange.with(topLeft, bottomRight));
         }
         return ranges;

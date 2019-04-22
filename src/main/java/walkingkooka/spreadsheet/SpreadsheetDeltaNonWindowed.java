@@ -1,6 +1,5 @@
 package walkingkooka.spreadsheet;
 
-import walkingkooka.build.tostring.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.Range;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
