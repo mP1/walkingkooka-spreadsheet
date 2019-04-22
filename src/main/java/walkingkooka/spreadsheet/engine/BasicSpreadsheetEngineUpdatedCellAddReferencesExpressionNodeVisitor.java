@@ -28,7 +28,7 @@ final class BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitor 
 
     @Override
     protected void visit(final ExpressionReferenceNode node) {
-        if(null==this.visitor) {
+        if (null == this.visitor) {
             this.visitor = BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitorSpreadsheetExpressionReferenceVisitor.with(this.target,
                     this.engine);
         }

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
-import walkingkooka.test.ToStringTesting;
 
 import java.util.Optional;
 import java.util.TreeMap;

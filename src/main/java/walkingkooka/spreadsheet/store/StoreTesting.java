@@ -5,7 +5,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ToStringTesting;
-import walkingkooka.test.TypeNameTesting;
 import walkingkooka.type.MemberVisibility;
 
 import java.util.List;

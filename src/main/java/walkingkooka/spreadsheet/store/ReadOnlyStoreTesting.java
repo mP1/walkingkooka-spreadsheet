@@ -1,7 +1,6 @@
 package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.store.security.SpreadsheetGroupStore;
 import walkingkooka.test.TypeNameTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;

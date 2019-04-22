@@ -324,7 +324,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      */
     @Override
     public SpreadsheetDelta saveCell(final SpreadsheetCell cell,
-                                         final SpreadsheetEngineContext context) {
+                                     final SpreadsheetEngineContext context) {
         Objects.requireNonNull(cell, "cell");
         checkContext(context);
 
@@ -343,7 +343,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      */
     @Override
     public SpreadsheetDelta deleteCell(final SpreadsheetCellReference reference,
-                                           final SpreadsheetEngineContext context) {
+                                       final SpreadsheetEngineContext context) {
         checkReference(reference);
         checkContext(context);
 
@@ -357,8 +357,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     @Override
     public SpreadsheetDelta deleteColumns(final SpreadsheetColumnReference column,
-                                              final int count,
-                                              final SpreadsheetEngineContext context) {
+                                          final int count,
+                                          final SpreadsheetEngineContext context) {
         checkColumn(column);
         checkCount(count);
         checkContext(context);
@@ -372,8 +372,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     @Override
     public SpreadsheetDelta deleteRows(final SpreadsheetRowReference row,
-                                           final int count,
-                                           final SpreadsheetEngineContext context) {
+                                       final int count,
+                                       final SpreadsheetEngineContext context) {
         checkRow(row);
         checkCount(count);
         checkContext(context);
@@ -404,8 +404,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     @Override
     public SpreadsheetDelta insertRows(final SpreadsheetRowReference row,
-                                           final int count,
-                                           final SpreadsheetEngineContext context) {
+                                       final int count,
+                                       final SpreadsheetEngineContext context) {
         checkRow(row);
         checkCount(count);
         checkContext(context);
@@ -425,8 +425,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     @Override
     public SpreadsheetDelta copyCells(final Collection<SpreadsheetCell> from,
-                                          final SpreadsheetRange to,
-                                          final SpreadsheetEngineContext context) {
+                                      final SpreadsheetRange to,
+                                      final SpreadsheetEngineContext context) {
         Objects.requireNonNull(from, "from");
         Objects.requireNonNull(to, "to");
         checkContext(context);

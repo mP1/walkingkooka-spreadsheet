@@ -7,7 +7,6 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.test.HashCodeEqualsDefined;
-import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
@@ -111,7 +110,7 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosR
      * Filters the cells using the assumed window of {@link Range cell reference ranges}.
      */
     static Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
-                                                    final List<Range<SpreadsheetCellReference>> window) {
+                                            final List<Range<SpreadsheetCellReference>> window) {
         return cells.stream()
                 .filter(c -> window.stream().anyMatch(r -> r.test(c.reference())))
                 .collect(Collectors.toCollection(Sets::ordered));
@@ -131,7 +130,7 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosR
         final List<Range<SpreadsheetCellReference>> copy = copyWindow(window);
 
         return this.window().equals(copy) ?
-               this :
+                this :
                 filterCellsIfNecessaryAndCreate(this.id, this.cells, copy);
     }
 
@@ -205,7 +204,7 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosR
                 .set(CELLS_PROPERTY, HasJsonNode.toJsonNodeSet(this.cells));
     }
 
-    final static String WINDOW_SEPARATOR =",";
+    final static String WINDOW_SEPARATOR = ",";
 
     private final static String ID_PROPERTY_STRING = "id";
     private final static String CELLS_PROPERTY_STRING = "cells";
