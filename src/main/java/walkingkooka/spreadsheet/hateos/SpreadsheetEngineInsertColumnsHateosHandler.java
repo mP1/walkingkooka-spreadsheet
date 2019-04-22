@@ -9,13 +9,12 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
  * A {@link HateosHandler} that handles inserting a single or range of columns.
  */
-final class SpreadsheetEngineInsertColumnsHateosHandler extends SpreadsheetEngineHateosHandler3<SpreadsheetColumnReference> {
+final class SpreadsheetEngineInsertColumnsHateosHandler extends SpreadsheetEngineHateosHandler2<SpreadsheetColumnReference> {
 
     static SpreadsheetEngineInsertColumnsHateosHandler with(final SpreadsheetEngine engine,
                                                             final Supplier<SpreadsheetEngineContext> context) {
@@ -38,7 +37,7 @@ final class SpreadsheetEngineInsertColumnsHateosHandler extends SpreadsheetEngin
 
     @Override
     SpreadsheetDelta handle0(final SpreadsheetColumnReference column,
-                             final Optional<SpreadsheetDelta> resource,
+                             final SpreadsheetDelta resource,
                              final Map<HttpRequestAttribute<?>, Object> parameters) {
         return this.engine.insertColumns(column,
                 this.count(parameters),
@@ -52,12 +51,8 @@ final class SpreadsheetEngineInsertColumnsHateosHandler extends SpreadsheetEngin
 
     @Override
     SpreadsheetDelta handleCollection0(final Range<SpreadsheetColumnReference> columns,
-                                       final Optional<SpreadsheetDelta> resource,
+                                       final SpreadsheetDelta resource,
                                        final Map<HttpRequestAttribute<?>, Object> parameters) {
-        checkIdsInclusive(columns, "columns");
-        checkResourceEmpty(resource);
-        checkParameters(parameters);
-
         throw new UnsupportedOperationException();
     }
 

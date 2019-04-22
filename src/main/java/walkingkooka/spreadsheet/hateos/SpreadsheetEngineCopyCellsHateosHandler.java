@@ -39,7 +39,7 @@ final class SpreadsheetEngineCopyCellsHateosHandler extends SpreadsheetEngineHat
 
     @Override
     SpreadsheetDelta handle0(final SpreadsheetCellReference id,
-                             final Optional<SpreadsheetDelta> resource,
+                             final SpreadsheetDelta resource,
                              final Map<HttpRequestAttribute<?>, Object> parameters) {
         throw new UnsupportedOperationException();
     }
@@ -51,20 +51,15 @@ final class SpreadsheetEngineCopyCellsHateosHandler extends SpreadsheetEngineHat
 
     @Override
     SpreadsheetDelta handleCollection0(final Range<SpreadsheetCellReference> cells,
-                                       final Optional<SpreadsheetDelta> resource,
+                                       final SpreadsheetDelta resource,
                                        final Map<HttpRequestAttribute<?>, Object> parameters) {
-        return this.engine.copyCells(resource.get().cells(),
+        return this.engine.copyCells(resource.cells(),
                 this.parameterValueOrFail(parameters, TO, SpreadsheetRange::parse),
                 this.context.get());
     }
 
     // @VisibleForTesting
     final static UrlParameterName TO = UrlParameterName.with("to");
-
-    @Override
-    void checkSpreadsheetDelta(final Optional<SpreadsheetDelta> delta) {
-        checkResource(delta);
-    }
 
     @Override
     String operation() {

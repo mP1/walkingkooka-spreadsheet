@@ -9,13 +9,12 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
  * A {@link HateosHandler} for {@link SpreadsheetEngine#deleteColumns(SpreadsheetColumnReference, int, SpreadsheetEngineContext)}.
  */
-final class SpreadsheetEngineDeleteColumnsHateosHandler extends SpreadsheetEngineHateosHandler3<SpreadsheetColumnReference> {
+final class SpreadsheetEngineDeleteColumnsHateosHandler extends SpreadsheetEngineHateosHandler2<SpreadsheetColumnReference> {
 
     static SpreadsheetEngineDeleteColumnsHateosHandler with(final SpreadsheetEngine engine,
                                                             final Supplier<SpreadsheetEngineContext> context) {
@@ -35,7 +34,7 @@ final class SpreadsheetEngineDeleteColumnsHateosHandler extends SpreadsheetEngin
 
     @Override
     SpreadsheetDelta handle0(final SpreadsheetColumnReference column,
-                             final Optional<SpreadsheetDelta> resource,
+                             final SpreadsheetDelta resource,
                              final Map<HttpRequestAttribute<?>, Object> parameters) {
         return this.engine.deleteColumns(column, 1, this.context.get());
     }
@@ -47,7 +46,7 @@ final class SpreadsheetEngineDeleteColumnsHateosHandler extends SpreadsheetEngin
 
     @Override
     SpreadsheetDelta handleCollection0(final Range<SpreadsheetColumnReference> columns,
-                                       final Optional<SpreadsheetDelta> resource,
+                                       final SpreadsheetDelta resource,
                                        final Map<HttpRequestAttribute<?>, Object> parameters) {
         final SpreadsheetColumnReference lower = columns.lowerBound().value().get();
         final SpreadsheetColumnReference upper = columns.upperBound().value().get();

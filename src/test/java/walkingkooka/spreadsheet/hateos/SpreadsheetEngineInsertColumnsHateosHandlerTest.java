@@ -123,7 +123,7 @@ public final class SpreadsheetEngineInsertColumnsHateosHandlerTest extends Sprea
 
     @Override
     public Optional<SpreadsheetDelta> resource() {
-        return Optional.empty();
+        return this.spreadsheetDeltaWithoutCells();
     }
 
     private SpreadsheetEngineInsertColumnsHateosHandler createHandler(final SpreadsheetEngine engine) {
