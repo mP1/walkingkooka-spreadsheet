@@ -40,7 +40,7 @@ final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReference
         final SpreadsheetLabelMapping mapping = this.mappings.get(label);
         if (null != mapping) {
             final ExpressionReference reference = mapping.reference();
-            if(this.seen.add(reference)){
+            if (this.seen.add(reference)) {
                 this.accept(mapping.reference());
             }
         }

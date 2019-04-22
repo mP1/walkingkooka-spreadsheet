@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.store.StoreTesting;
-import walkingkooka.spreadsheet.store.security.SpreadsheetGroupStore;
 import walkingkooka.test.TypeNameTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
@@ -87,7 +86,7 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
                                                     final Set<? super ExpressionReference> referencesOrRanges) {
         assertEquals(referencesOrRanges,
                 store.loadCellReferencesOrRanges(label),
-                ()-> "loadCellReferencesOrRanges for " + label);
+                () -> "loadCellReferencesOrRanges for " + label);
     }
 
     default void labelsAndCheck(final SpreadsheetLabelStore store,

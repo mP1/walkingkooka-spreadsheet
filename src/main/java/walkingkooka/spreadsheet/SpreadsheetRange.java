@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 /**
  * Holds a range. Note the begin component is always before the end, with rows being the significant axis before column.
  */
-public final class SpreadsheetRange implements ExpressionReference, 
+public final class SpreadsheetRange implements ExpressionReference,
         HashCodeEqualsDefined,
         HasJsonNode,
         Comparable<SpreadsheetRange> {
@@ -172,14 +172,14 @@ public final class SpreadsheetRange implements ExpressionReference,
      * Returns the width of this range.
      */
     public int width() {
-        return this.end().column().value() - this.begin().column().value() +1;
+        return this.end().column().value() - this.begin().column().value() + 1;
     }
 
     /**
      * Returns the height of this range.
      */
     public int height() {
-        return this.end().row().value() - this.begin().row().value() +1;
+        return this.end().row().value() - this.begin().row().value() + 1;
     }
 
     /**

@@ -2,7 +2,6 @@ package walkingkooka.spreadsheet.store.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.store.StoreTesting;
 import walkingkooka.test.TypeNameTesting;
@@ -20,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReferenceStore<T>, T extends ExpressionReference & Comparable<T>>
         extends StoreTesting<S, T, Set<SpreadsheetCellReference>>,
-        TypeNameTesting<S>{
+        TypeNameTesting<S> {
 
     @Test
     default void testSaveNullFails() {
@@ -285,7 +284,7 @@ public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReference
     }
 
     default void loadAndCheck(final S store, final T id, final Set<SpreadsheetCellReference> references) {
-        if(references.isEmpty()) {
+        if (references.isEmpty()) {
             this.loadFailCheck(store, id);
         } else {
             StoreTesting.super.loadAndCheck(store, id, references);

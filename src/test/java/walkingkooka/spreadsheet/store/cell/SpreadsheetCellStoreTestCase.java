@@ -7,9 +7,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetFormattedCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.store.StoreTesting;
-import walkingkooka.spreadsheet.store.security.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
 import walkingkooka.test.TypeNameTesting;
@@ -222,7 +220,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
         this.valuesAndCheck(store, b.id(), 2, b, c);
     }
-    
+
     @Override
     public final SpreadsheetCellReference id() {
         return SpreadsheetCellReference.parse("A1");

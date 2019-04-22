@@ -68,7 +68,7 @@ public final class SpreadsheetDataValidators implements PublicStaticHelper {
      * the given {@link Predicate condition}.
      */
     private static SpreadsheetDataValidator<BigDecimal> bigDecimal(final ComparisonRelation comparison,
-                                                       final BigDecimal value) {
+                                                                   final BigDecimal value) {
         return bigDecimal(comparison.predicate(value));
     }
 

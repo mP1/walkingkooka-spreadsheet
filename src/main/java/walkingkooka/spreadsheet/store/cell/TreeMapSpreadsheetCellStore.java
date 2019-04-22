@@ -75,7 +75,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     public final void delete(final SpreadsheetCellReference reference) {
         Objects.requireNonNull(reference, "reference");
 
-        if(null!=this.cells.remove(reference)) {
+        if (null != this.cells.remove(reference)) {
             this.deleteWatchers.accept(reference);
         }
     }
