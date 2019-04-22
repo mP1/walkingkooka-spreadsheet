@@ -9,15 +9,13 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
  * A {@link HateosHandler} that handles inserting a single or range of rows.
  */
-final class SpreadsheetEngineInsertRowsHateosHandler extends SpreadsheetEngineHateosHandler
-        implements HateosHandler<SpreadsheetRowReference, SpreadsheetDelta, SpreadsheetDelta> {
+final class SpreadsheetEngineInsertRowsHateosHandler extends SpreadsheetEngineHateosHandler3<SpreadsheetRowReference> {
 
     static SpreadsheetEngineInsertRowsHateosHandler with(final SpreadsheetEngine engine,
                                                          final Supplier<SpreadsheetEngineContext> context) {
@@ -34,25 +32,28 @@ final class SpreadsheetEngineInsertRowsHateosHandler extends SpreadsheetEngineHa
     }
 
     @Override
-    public Optional<SpreadsheetDelta> handle(final SpreadsheetRowReference row,
-                                             final Optional<SpreadsheetDelta> resource,
-                                             final Map<HttpRequestAttribute<?>, Object> parameters) {
-        Objects.requireNonNull(row, "row");
-        checkResourceEmpty(resource);
-        checkParameters(parameters);
-
-        return Optional.of(this.engine.insertRows(row,
-                this.count(parameters),
-                this.context.get()));
+    String id() {
+        return "row";
     }
 
     @Override
-    public Optional<SpreadsheetDelta> handleCollection(final Range<SpreadsheetRowReference> rows,
-                                                       final Optional<SpreadsheetDelta> resource,
-                                                       final Map<HttpRequestAttribute<?>, Object> parameters) {
+    SpreadsheetDelta handle0(final SpreadsheetRowReference row,
+                             final Optional<SpreadsheetDelta> resource,
+                             final Map<HttpRequestAttribute<?>, Object> parameters) {
+        return this.engine.insertRows(row,
+                this.count(parameters),
+                this.context.get());
+    }
+
+    @Override
+    void checkRange(final Range<SpreadsheetRowReference> rows) {
         checkIdsInclusive(rows, "rows");
-        checkResourceEmpty(resource);
-        checkParameters(parameters);
+    }
+
+    @Override
+    SpreadsheetDelta handleCollection0(final Range<SpreadsheetRowReference> rows,
+                                       final Optional<SpreadsheetDelta> resource,
+                                       final Map<HttpRequestAttribute<?>, Object> parameters) {
         throw new UnsupportedOperationException();
     }
 
