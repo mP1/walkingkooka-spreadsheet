@@ -406,9 +406,9 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public void testToJsonNodeTextAndValue() {
         this.toJsonNodeAndCheck(SpreadsheetFormula.with(TEXT)
                         .setValue(Optional.of(123L)),
-                        JsonNode.object()
-                                .set(JsonNodeName.with("text"), JsonNode.string("a+2"))
-                                .set(JsonNodeName.with("value"), HasJsonNode.toJsonNodeWithType(123L)));
+                JsonNode.object()
+                        .set(JsonNodeName.with("text"), JsonNode.string("a+2"))
+                        .set(JsonNodeName.with("value"), HasJsonNode.toJsonNodeWithType(123L)));
     }
 
     @Test

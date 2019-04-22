@@ -161,7 +161,7 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
 
         final boolean replaced = null != deleted;
         if (replaced) {
-           this.addValueToValueToRanges(range, newValue);
+            this.addValueToValueToRanges(range, newValue);
         }
         return replaced;
     }
@@ -306,8 +306,9 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
         final List<List<V>> values = Lists.array();
         boolean copy = false;
 
-        Exit://
-        for(TreeMapSpreadsheetRangeStoreTopLeftEntry<V> entry : this.topLeft.values()) {
+        Exit:
+//
+        for (TreeMapSpreadsheetRangeStoreTopLeftEntry<V> entry : this.topLeft.values()) {
             for (SpreadsheetRange range : entry.ranges()) {
                 copy = copy | range.equals(from); // doesnt find > from must be ==
 
@@ -325,7 +326,7 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
 
         return Lists.readOnly(values);
     }
-    
+
     @Override
     public Set<SpreadsheetRange> rangesWithValue(final V value) {
         checkValue(value);

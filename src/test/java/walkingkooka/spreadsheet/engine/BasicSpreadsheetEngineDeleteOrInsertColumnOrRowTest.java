@@ -1,9 +1,5 @@
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.tree.expression.ExpressionNodeVisitor;
-import walkingkooka.type.MemberVisibility;
-
 public final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineDeleteOrInsertColumnOrRow> {
 
     // TypeNameTesting..........................................................................

@@ -197,11 +197,11 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
             }
         }
 
-        if(removed) {
+        if (removed) {
             final Set<T> ids = this.referenceToTargets.get(reference);
-            if(null!=ids) {
-                if(ids.remove(id)){
-                    if(ids.isEmpty()) {
+            if (null != ids) {
+                if (ids.remove(id)) {
+                    if (ids.isEmpty()) {
                         this.referenceToTargets.remove(reference);
                     }
                 }

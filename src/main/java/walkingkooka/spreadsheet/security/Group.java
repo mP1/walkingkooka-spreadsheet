@@ -10,7 +10,7 @@ import java.util.Objects;
 /**
  * A group defined in the system.
  */
-public final class Group extends Identity<GroupId> 
+public final class Group extends Identity<GroupId>
         implements HasJsonNode {
 
     /**

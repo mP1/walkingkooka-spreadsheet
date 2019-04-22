@@ -247,7 +247,7 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
             throw new IllegalArgumentException(cause.getMessage(), cause);
         }
 
-        if(null==text) {
+        if (null == text) {
             HasJsonNode.requiredPropertyMissing(TEXT_PROPERTY, node);
         }
         if (null != value && null != error) {

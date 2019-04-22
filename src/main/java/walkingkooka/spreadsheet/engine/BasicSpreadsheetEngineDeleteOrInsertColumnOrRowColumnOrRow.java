@@ -1,6 +1,5 @@
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.NeverError;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetExpressionReferenceVisitor;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;

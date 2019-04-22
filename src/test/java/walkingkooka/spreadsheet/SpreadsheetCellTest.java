@@ -443,7 +443,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.toStringAndCheck(SpreadsheetCell.with(REFERENCE,
                 this.formula(),
                 this.style())
-                .setFormat(this.format()),
+                        .setFormat(this.format()),
                 REFERENCE + "=" + this.formula() + " bold \"pattern\"");
     }
 
