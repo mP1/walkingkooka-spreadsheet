@@ -9,13 +9,12 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
  * A {@link HateosHandler} that handles inserting a single or range of rows.
  */
-final class SpreadsheetEngineInsertRowsHateosHandler extends SpreadsheetEngineHateosHandler3<SpreadsheetRowReference> {
+final class SpreadsheetEngineInsertRowsHateosHandler extends SpreadsheetEngineHateosHandler2<SpreadsheetRowReference> {
 
     static SpreadsheetEngineInsertRowsHateosHandler with(final SpreadsheetEngine engine,
                                                          final Supplier<SpreadsheetEngineContext> context) {
@@ -38,7 +37,7 @@ final class SpreadsheetEngineInsertRowsHateosHandler extends SpreadsheetEngineHa
 
     @Override
     SpreadsheetDelta handle0(final SpreadsheetRowReference row,
-                             final Optional<SpreadsheetDelta> resource,
+                             final SpreadsheetDelta resource,
                              final Map<HttpRequestAttribute<?>, Object> parameters) {
         return this.engine.insertRows(row,
                 this.count(parameters),
@@ -52,7 +51,7 @@ final class SpreadsheetEngineInsertRowsHateosHandler extends SpreadsheetEngineHa
 
     @Override
     SpreadsheetDelta handleCollection0(final Range<SpreadsheetRowReference> rows,
-                                       final Optional<SpreadsheetDelta> resource,
+                                       final SpreadsheetDelta resource,
                                        final Map<HttpRequestAttribute<?>, Object> parameters) {
         throw new UnsupportedOperationException();
     }

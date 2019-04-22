@@ -124,7 +124,7 @@ public final class SpreadsheetEngineDeleteRowsHateosHandlerTest extends Spreadsh
 
     @Override
     public Optional<SpreadsheetDelta> resource() {
-        return Optional.empty();
+        return this.spreadsheetDeltaWithoutCells();
     }
 
     private SpreadsheetEngineDeleteRowsHateosHandler createHandler(final SpreadsheetEngine engine) {

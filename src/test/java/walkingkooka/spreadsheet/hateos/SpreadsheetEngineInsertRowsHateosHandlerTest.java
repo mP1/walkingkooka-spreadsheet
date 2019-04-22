@@ -120,7 +120,7 @@ public final class SpreadsheetEngineInsertRowsHateosHandlerTest extends Spreadsh
 
     @Override
     public Optional<SpreadsheetDelta> resource() {
-        return Optional.empty();
+        return this.spreadsheetDeltaWithoutCells();
     }
 
     private SpreadsheetEngineInsertRowsHateosHandler createHandler(final SpreadsheetEngine engine) {
