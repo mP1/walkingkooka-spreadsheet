@@ -19,8 +19,7 @@ import java.util.function.Supplier;
 /**
  * A {@link HateosHandler} that calls {@link SpreadsheetEngine#copyCells(Collection, SpreadsheetRange, SpreadsheetEngineContext)}.
  */
-final class SpreadsheetEngineCopyCellsHateosHandler extends SpreadsheetEngineHateosHandler
-        implements HateosHandler<SpreadsheetCellReference, SpreadsheetDelta, SpreadsheetDelta> {
+final class SpreadsheetEngineCopyCellsHateosHandler extends SpreadsheetEngineHateosHandler2<SpreadsheetCellReference> {
 
     static SpreadsheetEngineCopyCellsHateosHandler with(final SpreadsheetEngine engine,
                                                         final Supplier<SpreadsheetEngineContext> context) {
@@ -34,31 +33,38 @@ final class SpreadsheetEngineCopyCellsHateosHandler extends SpreadsheetEngineHat
     }
 
     @Override
-    public Optional<SpreadsheetDelta> handle(final SpreadsheetCellReference id,
-                                             final Optional<SpreadsheetDelta> resource,
-                                             final Map<HttpRequestAttribute<?>, Object> parameters) {
-        Objects.requireNonNull(id, "id");
-        checkResource(resource);
-        checkParameters(parameters);
+    String id() {
+        return "cellreference";
+    }
 
+    @Override
+    SpreadsheetDelta handle0(final SpreadsheetCellReference id,
+                             final Optional<SpreadsheetDelta> resource,
+                             final Map<HttpRequestAttribute<?>, Object> parameters) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Optional<SpreadsheetDelta> handleCollection(final Range<SpreadsheetCellReference> ids,
-                                                       final Optional<SpreadsheetDelta> resource,
-                                                       final Map<HttpRequestAttribute<?>, Object> parameters) {
-        Objects.requireNonNull(ids, "ids");
-        checkResource(resource);
-        checkParameters(parameters);
+    void checkRange(final Range<SpreadsheetCellReference> cells) {
+        Objects.requireNonNull(cells, "cells");
+    }
 
-        return Optional.of(this.engine.copyCells(resource.get().cells(),
+    @Override
+    SpreadsheetDelta handleCollection0(final Range<SpreadsheetCellReference> cells,
+                                       final Optional<SpreadsheetDelta> resource,
+                                       final Map<HttpRequestAttribute<?>, Object> parameters) {
+        return this.engine.copyCells(resource.get().cells(),
                 this.parameterValueOrFail(parameters, TO, SpreadsheetRange::parse),
-                this.context.get()));
+                this.context.get());
     }
 
     // @VisibleForTesting
     final static UrlParameterName TO = UrlParameterName.with("to");
+
+    @Override
+    void checkSpreadsheetDelta(final Optional<SpreadsheetDelta> delta) {
+        checkResource(delta);
+    }
 
     @Override
     String operation() {
