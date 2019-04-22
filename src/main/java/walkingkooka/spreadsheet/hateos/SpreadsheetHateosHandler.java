@@ -25,13 +25,6 @@ abstract class SpreadsheetHateosHandler {
     }
 
     /**
-     * Complains if the id is null.
-     */
-    final void checkId(final Comparable<?> id) {
-        Objects.requireNonNull(id, "id");
-    }
-
-    /**
      * Complains if the ids is null.
      */
     final void checkIds(final Range<?> ids, final String label) {
@@ -63,33 +56,6 @@ abstract class SpreadsheetHateosHandler {
         checkResource(resource);
         if (resource.isPresent()) {
             throw new IllegalArgumentException("Resource not allowed=" + resource);
-        }
-    }
-
-    /**
-     * Complains if the resource is null.
-     */
-    final void checkResources(final List<? extends HateosResource<?>> resources) {
-        Objects.requireNonNull(resources, "resources");
-    }
-
-    /**
-     * Complains if the resource is null or present.
-     */
-    final void checkResourcesEmpty(final List<? extends HateosResource<?>> resources) {
-        Objects.requireNonNull(resources, "resources");
-        if (resources.size() > 0) {
-            throw new IllegalArgumentException("Resources not allowed=" + resources);
-        }
-    }
-
-    /**
-     * Complains if the resource is NOT present.
-     */
-    final void checkResourcePresent(final Optional<? extends HateosResource<?>> resource) {
-        this.checkResource(resource);
-        if (!resource.isPresent()) {
-            throw new IllegalArgumentException("Required resource not present=" + resource);
         }
     }
 
