@@ -9,15 +9,13 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
  * A {@link HateosHandler} that handles inserting a single or range of columns.
  */
-final class SpreadsheetEngineInsertColumnsHateosHandler extends SpreadsheetEngineHateosHandler
-        implements HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta, SpreadsheetDelta> {
+final class SpreadsheetEngineInsertColumnsHateosHandler extends SpreadsheetEngineHateosHandler3<SpreadsheetColumnReference> {
 
     static SpreadsheetEngineInsertColumnsHateosHandler with(final SpreadsheetEngine engine,
                                                             final Supplier<SpreadsheetEngineContext> context) {
@@ -34,22 +32,28 @@ final class SpreadsheetEngineInsertColumnsHateosHandler extends SpreadsheetEngin
     }
 
     @Override
-    public Optional<SpreadsheetDelta> handle(final SpreadsheetColumnReference column,
-                                             final Optional<SpreadsheetDelta> resource,
-                                             final Map<HttpRequestAttribute<?>, Object> parameters) {
-        Objects.requireNonNull(column, "column");
-        checkResourceEmpty(resource);
-        checkParameters(parameters);
-
-        return Optional.of(this.engine.insertColumns(column,
-                this.count(parameters),
-                this.context.get()));
+    String id() {
+        return "column";
     }
 
     @Override
-    public Optional<SpreadsheetDelta> handleCollection(final Range<SpreadsheetColumnReference> columns,
-                                                       final Optional<SpreadsheetDelta> resource,
-                                                       final Map<HttpRequestAttribute<?>, Object> parameters) {
+    SpreadsheetDelta handle0(final SpreadsheetColumnReference column,
+                             final Optional<SpreadsheetDelta> resource,
+                             final Map<HttpRequestAttribute<?>, Object> parameters) {
+        return this.engine.insertColumns(column,
+                this.count(parameters),
+                this.context.get());
+    }
+
+    @Override
+    void checkRange(final Range<SpreadsheetColumnReference> rows) {
+        checkIdsInclusive(rows, "columns");
+    }
+
+    @Override
+    SpreadsheetDelta handleCollection0(final Range<SpreadsheetColumnReference> columns,
+                                       final Optional<SpreadsheetDelta> resource,
+                                       final Map<HttpRequestAttribute<?>, Object> parameters) {
         checkIdsInclusive(columns, "columns");
         checkResourceEmpty(resource);
         checkParameters(parameters);
