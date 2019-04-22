@@ -9,15 +9,13 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
  * A {@link HateosHandler} for {@link SpreadsheetEngine#deleteRows(SpreadsheetRowReference, int, SpreadsheetEngineContext)}.
  */
-final class SpreadsheetEngineDeleteRowsHateosHandler extends SpreadsheetEngineHateosHandler
-        implements HateosHandler<SpreadsheetRowReference, SpreadsheetDelta, SpreadsheetDelta> {
+final class SpreadsheetEngineDeleteRowsHateosHandler extends SpreadsheetEngineHateosHandler3<SpreadsheetRowReference> {
 
     static SpreadsheetEngineDeleteRowsHateosHandler with(final SpreadsheetEngine engine,
                                                          final Supplier<SpreadsheetEngineContext> context) {
@@ -31,28 +29,30 @@ final class SpreadsheetEngineDeleteRowsHateosHandler extends SpreadsheetEngineHa
     }
 
     @Override
-    public Optional<SpreadsheetDelta> handle(final SpreadsheetRowReference row,
-                                             final Optional<SpreadsheetDelta> resource,
-                                             final Map<HttpRequestAttribute<?>, Object> parameters) {
-        Objects.requireNonNull(row, "row");
-        this.checkResourceEmpty(resource);
-        checkParameters(parameters);
-
-        return Optional.of(this.engine.deleteRows(row, 1, this.context.get()));
+    String id() {
+        return "row";
     }
 
     @Override
-    public Optional<SpreadsheetDelta> handleCollection(final Range<SpreadsheetRowReference> rows,
-                                                       final Optional<SpreadsheetDelta> resource,
-                                                       final Map<HttpRequestAttribute<?>, Object> parameters) {
-        checkIdsInclusive(rows, "rows");
-        checkResourceEmpty(resource);
-        checkParameters(parameters);
+    SpreadsheetDelta handle0(final SpreadsheetRowReference row,
+                             final Optional<SpreadsheetDelta> resource,
+                             final Map<HttpRequestAttribute<?>, Object> parameters) {
+        return this.engine.deleteRows(row, 1, this.context.get());
+    }
 
+    @Override
+    void checkRange(final Range<SpreadsheetRowReference> rows) {
+        checkIdsInclusive(rows, "rows");
+    }
+
+    @Override
+    SpreadsheetDelta handleCollection0(final Range<SpreadsheetRowReference> rows,
+                                       final Optional<SpreadsheetDelta> resource,
+                                       final Map<HttpRequestAttribute<?>, Object> parameters) {
         final SpreadsheetRowReference lower = rows.lowerBound().value().get();
         final SpreadsheetRowReference upper = rows.upperBound().value().get();
 
-        return Optional.of(this.engine.deleteRows(lower, upper.value() - lower.value() + 1, this.context.get()));
+        return this.engine.deleteRows(lower, upper.value() - lower.value() + 1, this.context.get());
     }
 
     @Override
