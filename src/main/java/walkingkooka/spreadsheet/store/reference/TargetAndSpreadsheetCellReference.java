@@ -13,7 +13,7 @@ import java.util.Objects;
 public final class TargetAndSpreadsheetCellReference<T extends ExpressionReference & Comparable<T>> implements HashCodeEqualsDefined {
 
     public static <T extends ExpressionReference & Comparable<T>> TargetAndSpreadsheetCellReference<T> with(final T target,
-                                                                                                              final SpreadsheetCellReference reference) {
+                                                                                                            final SpreadsheetCellReference reference) {
         Objects.requireNonNull(target, "target");
         Objects.requireNonNull(reference, "reference");
         if (target.equals(reference)) {

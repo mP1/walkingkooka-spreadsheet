@@ -6,7 +6,6 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.tree.expression.ExpressionReference;
 
-import java.util.Collection;
 import java.util.Set;
 
 /**

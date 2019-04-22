@@ -5,7 +5,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.store.StoreTesting;
-import walkingkooka.spreadsheet.store.security.SpreadsheetGroupStore;
 import walkingkooka.test.TypeNameTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
@@ -196,7 +195,7 @@ public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>
         assertNotNull(ranges, "ranges");
         return ranges;
     }
-    
+
     // loadCellReferenceValues.........................................................................................
 
     default void loadCellReferenceValuesFails(final SpreadsheetCellReference cell) {

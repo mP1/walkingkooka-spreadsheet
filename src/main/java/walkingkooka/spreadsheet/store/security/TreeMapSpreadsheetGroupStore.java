@@ -58,7 +58,7 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
     public void delete(final GroupId id) {
         Objects.requireNonNull(id, "id");
 
-        if(null!=this.groupIdToGroup.remove(id)) {
+        if (null != this.groupIdToGroup.remove(id)) {
             this.groupIdToUserIds.remove(id);
             this.deleteWatchers.accept(id);
         }
@@ -108,7 +108,7 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
 
         final Map<GroupId, Set<UserId>> groupIdToUserIds = this.groupIdToUserIds;
         Set<UserId> users = groupIdToUserIds.get(groupId);
-        if(null==users) {
+        if (null == users) {
             users = Sets.ordered();
             groupIdToUserIds.put(groupId, users);
         }
@@ -122,10 +122,10 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
 
         final Map<GroupId, Set<UserId>> groupIdToUserIds = this.groupIdToUserIds;
         Set<UserId> users = groupIdToUserIds.get(groupId);
-        if(null!=users) {
+        if (null != users) {
             users.remove(userId);
 
-            if(users.isEmpty()) {
+            if (users.isEmpty()) {
                 groupIdToUserIds.remove(groupId);
             }
         }
@@ -135,9 +135,9 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
     public Set<Group> loadUserGroups(final UserId userId) {
         final Set<Group> groups = Sets.ordered();
 
-        for(Map.Entry<GroupId, Set<UserId>> groupIdAndUsers : this.groupIdToUserIds.entrySet()) {
+        for (Map.Entry<GroupId, Set<UserId>> groupIdAndUsers : this.groupIdToUserIds.entrySet()) {
             final Set<UserId> users = groupIdAndUsers.getValue();
-            if(users.contains(userId)) {
+            if (users.contains(userId)) {
                 groups.add(this.groupIdToGroup.get(groupIdAndUsers.getKey()));
             }
         }

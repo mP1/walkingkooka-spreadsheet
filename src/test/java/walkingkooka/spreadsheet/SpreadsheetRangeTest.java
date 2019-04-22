@@ -207,7 +207,7 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
     @Test
     public void testContainsNullFails() {
         assertThrows(NullPointerException.class, () -> {
-           this.range().contains(null);
+            this.range().contains(null);
         });
     }
 

@@ -1,6 +1,6 @@
 package walkingkooka.spreadsheet.engine;
 
-public final class BasicSpreadsheetEngineUpdatedCellsTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineUpdatedCells>{
+public final class BasicSpreadsheetEngineUpdatedCellsTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineUpdatedCells> {
 
     @Override
     public Class<BasicSpreadsheetEngineUpdatedCells> type() {
