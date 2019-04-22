@@ -10,6 +10,7 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -29,16 +30,17 @@ abstract class SpreadsheetEngineHateosHandler2<I extends Comparable<I>> extends 
                                                    final Optional<SpreadsheetDelta> delta,
                                                    final Map<HttpRequestAttribute<?>, Object> parameters) {
         Objects.requireNonNull(id, this.id());
-        checkSpreadsheetDelta(delta);
+        final SpreadsheetDelta delta2 = checkSpreadsheetDelta(delta);
         checkParameters(parameters);
 
-        return Optional.of(this.handle0(id, delta, parameters));
+        return Optional.of(this.handle0(id, delta2, parameters)
+                .setWindow(delta2.window()));
     }
 
     abstract String id();
 
     abstract SpreadsheetDelta handle0(final I id,
-                                      final Optional<SpreadsheetDelta> delta,
+                                      final SpreadsheetDelta delta,
                                       final Map<HttpRequestAttribute<?>, Object> parameters);
 
     @Override
@@ -46,17 +48,21 @@ abstract class SpreadsheetEngineHateosHandler2<I extends Comparable<I>> extends 
                                                              final Optional<SpreadsheetDelta> delta,
                                                              final Map<HttpRequestAttribute<?>, Object> parameters) {
         checkRange(range);
-        checkSpreadsheetDelta(delta);
+        final SpreadsheetDelta delta2 = checkSpreadsheetDelta(delta);
         checkParameters(parameters);
 
-        return Optional.of(this.handleCollection0(range, delta, parameters));
+        return Optional.of(this.handleCollection0(range, delta2, parameters)
+                .setWindow(delta2.window()));
     }
 
     abstract void checkRange(final Range<I> range);
 
     abstract SpreadsheetDelta handleCollection0(final Range<I> range,
-                                                final Optional<SpreadsheetDelta> delta,
+                                                final SpreadsheetDelta delta,
                                                 final Map<HttpRequestAttribute<?>, Object> parameters);
 
-    abstract void checkSpreadsheetDelta(final Optional<SpreadsheetDelta> delta);
+    final SpreadsheetDelta checkSpreadsheetDelta(final Optional<SpreadsheetDelta> delta) {
+        Objects.requireNonNull(delta, "delta");
+        return delta.orElseThrow(() -> new IllegalArgumentException("Required " + SpreadsheetDelta.class.getSimpleName() + " missing."));
+    }
 }
