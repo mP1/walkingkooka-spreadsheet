@@ -3941,6 +3941,150 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.countAndCheck(cellStore, 2 + 1);
     }
 
+    //  loadLabel.......................................................................................................
+
+    @Test
+    public void testLoadLabelUnknownFails() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetLabelName label = SpreadsheetLabelName.with("LABEL123");
+        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetCellReference.parse("B2"));
+
+        this.saveLabelAndCheck(engine,
+                mapping,
+                context);
+
+        this.loadLabelAndFailCheck(engine,
+                SpreadsheetLabelName.with("UnknownLabel"));
+    }
+
+    //  saveLabel.......................................................................................................
+
+    @Test
+    public void testSaveLabelAndLoadFromLabelStore() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetLabelName label = SpreadsheetLabelName.with("LABEL123");
+        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetCellReference.parse("B2"));
+
+        this.saveLabelAndCheck(engine,
+                mapping,
+                context);
+
+        this.loadLabelAndCheck(labelStore,
+                label,
+                mapping);
+    }
+
+    @Test
+    public void testSaveLabelAndLoadLabel() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetLabelName label = SpreadsheetLabelName.with("LABEL123");
+        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetCellReference.parse("B2"));
+
+        this.saveLabelAndCheck(engine,
+                mapping,
+                context);
+
+        this.loadLabelAndCheck(engine,
+                label,
+                mapping);
+    }
+
+    @Test
+    public void testSaveLabelWithoutReferences() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetLabelName label = SpreadsheetLabelName.with("LABEL123");
+        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetCellReference.parse("B2"));
+
+        engine.saveCell(this.cell("B2", "99"), context);
+
+        this.saveLabelAndCheck(engine,
+                mapping,
+                context);
+
+        engine.saveCell(this.cell("A1", label + "+1"), context);
+    }
+
+    @Test
+    public void testSaveLabelRefreshesReferences() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetLabelName label = SpreadsheetLabelName.with("LABEL123");
+        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetCellReference.parse("B2"));
+
+        engine.saveCell(this.cell("A1", label + "+1"), context);
+        engine.saveCell(this.cell("B2", "99"), context);
+
+        this.saveLabelAndCheck(engine,
+                mapping,
+                context,
+                this.formattedCellWithValue("A1", label + "+1", BigDecimal.valueOf(99 + 1)));
+    }
+
+    //  removeLabel.......................................................................................................
+
+    @Test
+    public void testRemoveLabelAndLoadFromLabelStore() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetLabelName label = SpreadsheetLabelName.with("LABEL123");
+        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetCellReference.parse("B2"));
+
+        this.saveLabelAndCheck(engine,
+                mapping,
+                context);
+
+        this.removeLabelAndCheck(engine,
+                label,
+                context);
+
+        this.loadLabelFailCheck(labelStore, label);
+    }
+
+    @Test
+    public void testRemoveLabelRefreshesCell() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetLabelName label = SpreadsheetLabelName.with("LABEL123");
+        final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetCellReference.parse("B2"));
+
+        engine.saveCell(this.cell("A1", label + "+1"), context);
+        engine.saveCell(this.cell("B2", "99"), context);
+
+        engine.saveLabel(mapping, context);
+
+        this.removeLabelAndCheck(engine,
+                label,
+                context,
+                this.formattedCellWithError("A1", label + "+1", "Unknown label: " + label));
+
+        this.loadLabelFailCheck(labelStore, label);
+    }
+
     //  helpers.......................................................................................................
 
     @Override
@@ -3950,7 +4094,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private BasicSpreadsheetEngine createSpreadsheetEngine(final SpreadsheetCellStore cellStore) {
         return this.createSpreadsheetEngine(cellStore,
-                SpreadsheetLabelStores.readOnly(this.labelStore()));
+                this.labelStore());
     }
 
     private BasicSpreadsheetEngine createSpreadsheetEngine(final SpreadsheetLabelStore labelStore) {
