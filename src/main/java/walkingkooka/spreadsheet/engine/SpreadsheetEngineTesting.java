@@ -25,6 +25,7 @@ import walkingkooka.type.MemberVisibility;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -182,6 +183,109 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         });
     }
 
+    @Test
+    default void testSaveLabelNullMappingFails() {
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().saveLabel(null, this.createContext());
+        });
+    }
+
+    @Test
+    default void testSaveLabelNullContextFails() {
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().saveLabel(SpreadsheetLabelMapping.with(SpreadsheetLabelName.with("LABEL123"),
+                    SpreadsheetCellReference.parse("A1")), null);
+        });
+    }
+
+    default void saveLabelAndCheck(final SpreadsheetEngine engine,
+                                   final SpreadsheetLabelMapping label,
+                                   final SpreadsheetEngineContext context,
+                                   final SpreadsheetCell...cells) {
+        this.saveLabelAndCheck(engine, label, context, Sets.of(cells));
+    }
+
+    default void saveLabelAndCheck(final SpreadsheetEngine engine,
+                                   final SpreadsheetLabelMapping label,
+                                   final SpreadsheetEngineContext context,
+                                   final Set<SpreadsheetCell> cells) {
+        this.saveLabelAndCheck(engine,
+                label,
+                context,
+                SpreadsheetDelta.with(engine.id(), cells));
+    }
+
+    default void saveLabelAndCheck(final SpreadsheetEngine engine,
+                                   final SpreadsheetLabelMapping label,
+                                   final SpreadsheetEngineContext context,
+                                   final SpreadsheetDelta delta) {
+        assertEquals(delta,
+                engine.saveLabel(label, context),
+                () -> "saveLabel " + label);
+    }
+
+    @Test
+    default void testRemoveLabelNullMappingFails() {
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().removeLabel(null, this.createContext());
+        });
+    }
+
+    @Test
+    default void testRemoveLabelNullContextFails() {
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().removeLabel(SpreadsheetLabelName.with("label"), null);
+        });
+    }
+
+    default void removeLabelAndCheck(final SpreadsheetEngine engine,
+                                     final SpreadsheetLabelName label,
+                                     final SpreadsheetEngineContext context,
+                                     final SpreadsheetCell... cells) {
+        this.removeLabelAndCheck(engine, label, context, Sets.of(cells));
+    }
+
+    default void removeLabelAndCheck(final SpreadsheetEngine engine,
+                                     final SpreadsheetLabelName label,
+                                     final SpreadsheetEngineContext context,
+                                     final Set<SpreadsheetCell> cells) {
+        this.removeLabelAndCheck(engine,
+                label,
+                context,
+                SpreadsheetDelta.with(engine.id(), cells));
+    }
+
+    default void removeLabelAndCheck(final SpreadsheetEngine engine,
+                                     final SpreadsheetLabelName label,
+                                     final SpreadsheetEngineContext context,
+                                     final SpreadsheetDelta delta) {
+        assertEquals(delta,
+                engine.removeLabel(label, context),
+                () -> "removeLabel " + label);
+    }
+
+    @Test
+    default void testLoadLabelNullMappingFails() {
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().loadLabel(null);
+        });
+    }
+
+    default void loadLabelAndCheck(final SpreadsheetEngine engine,
+                                   final SpreadsheetLabelName label,
+                                   final SpreadsheetLabelMapping mapping) {
+        assertEquals(Optional.of(mapping),
+                engine.loadLabel(label),
+                () -> "loadLabel " + label);
+    }
+
+    default void loadLabelAndFailCheck(final SpreadsheetEngine engine,
+                                       final SpreadsheetLabelName label) {
+        assertEquals(Optional.empty(),
+                engine.loadLabel(label),
+                () -> "loadLabel " + label);
+    }
+
     E createSpreadsheetEngine();
 
     SpreadsheetEngineContext createContext();
@@ -305,16 +409,24 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     default void loadLabelAndCheck(final SpreadsheetLabelStore labelStore,
                                    final SpreadsheetLabelName label,
                                    final ExpressionReference reference) {
-        assertEquals(Optional.of(SpreadsheetLabelMapping.with(label, reference)),
+        this.loadLabelAndCheck(labelStore,
+                label,
+                SpreadsheetLabelMapping.with(label, reference));
+    }
+
+    default void loadLabelAndCheck(final SpreadsheetLabelStore labelStore,
+                                   final SpreadsheetLabelName label,
+                                   final SpreadsheetLabelMapping mapping) {
+        assertEquals(Optional.of(mapping),
                 labelStore.load(label),
-                "label loaded");
+                () -> "label " + label + " loaded");
     }
 
     default void loadLabelFailCheck(final SpreadsheetLabelStore labelStore,
                                     final SpreadsheetLabelName label) {
         assertEquals(Optional.empty(),
                 labelStore.load(label),
-                "label loaded failed");
+                () -> "label loaded failed");
     }
 
     default void saveCellAndCheck(final SpreadsheetEngine engine,

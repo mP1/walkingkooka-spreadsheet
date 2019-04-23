@@ -3,9 +3,11 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetDelta;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 
 import java.util.Collection;
@@ -79,4 +81,22 @@ public interface SpreadsheetEngine {
     SpreadsheetDelta copyCells(final Collection<SpreadsheetCell> from,
                                final SpreadsheetRange to,
                                final SpreadsheetEngineContext context);
+
+    /**
+     * Sets a new label mapping or replaces an existing one returning a {@link SpreadsheetDelta} which may or may not
+     * have affected and updated cells.
+     */
+    SpreadsheetDelta saveLabel(final SpreadsheetLabelMapping mapping,
+                               final SpreadsheetEngineContext context);
+
+    /**
+     * Removes the given {@link SpreadsheetLabelName} if it exists which may also cause cells to be updated, due a now missing label.
+     */
+    SpreadsheetDelta removeLabel(final SpreadsheetLabelName label,
+                                 final SpreadsheetEngineContext context);
+
+    /**
+     * Loads the given label if it exists.
+     */
+    Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName name);
 }
