@@ -9,6 +9,7 @@ import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormattedCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
@@ -437,8 +438,45 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         }
     }
 
+    @Override
+    public SpreadsheetDelta saveLabel(final SpreadsheetLabelMapping mapping,
+                                      final SpreadsheetEngineContext context) {
+        checkMapping(mapping);
+        checkContext(context);
+
+        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
+            this.labelStore.save(mapping);
+            return this.delta(updated.refreshUpdated());
+        }
+    }
+
+    @Override
+    public SpreadsheetDelta removeLabel(final SpreadsheetLabelName label,
+                                        final SpreadsheetEngineContext context) {
+        checkLabel(label);
+        checkContext(context);
+
+        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
+            this.labelStore.delete(label);
+            return this.delta(updated.refreshUpdated());
+        }
+    }
+
+    @Override
+    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName name) {
+        return this.labelStore.load(name);
+    }
+
     private SpreadsheetDelta delta(final Set<SpreadsheetCell> cells) {
         return SpreadsheetDelta.with(this.id(), cells);
+    }
+
+    private static void checkLabel(final SpreadsheetLabelName name) {
+        Objects.requireNonNull(name, "name");
+    }
+
+    private static void checkMapping(final SpreadsheetLabelMapping mapping) {
+        Objects.requireNonNull(mapping, "mapping");
     }
 
     private static void checkReference(final SpreadsheetCellReference reference) {

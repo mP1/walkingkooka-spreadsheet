@@ -1,8 +1,10 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.store.reference.TargetAndSpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 
 /**
  * Controls what happens whenever a save to cell store happens.
@@ -30,6 +32,18 @@ enum BasicSpreadsheetEngineUpdatedCellsMode {
                                     final BasicSpreadsheetEngineUpdatedCells cells) {
             cells.onCellReferenceDeletedImmediate(targetAndReference);
         }
+
+        @Override
+        void onLabelSaved(final SpreadsheetLabelMapping mapping,
+                          final BasicSpreadsheetEngineUpdatedCells cells) {
+            cells.onLabelSavedImmediate(mapping);
+        }
+
+        @Override
+        void onLabelDeleted(final SpreadsheetLabelName label,
+                            final BasicSpreadsheetEngineUpdatedCells cells) {
+            cells.onLabelDeletedImmediate(label);
+        }
     },
 
     /**
@@ -53,6 +67,18 @@ enum BasicSpreadsheetEngineUpdatedCellsMode {
                                     final BasicSpreadsheetEngineUpdatedCells cells) {
             cells.onCellReferenceDeletedBatch(targetAndReference);
         }
+
+        @Override
+        void onLabelSaved(final SpreadsheetLabelMapping mapping,
+                          final BasicSpreadsheetEngineUpdatedCells cells) {
+            cells.onLabelSavedBatch(mapping);
+        }
+
+        @Override
+        void onLabelDeleted(final SpreadsheetLabelName label,
+                            final BasicSpreadsheetEngineUpdatedCells cells) {
+            cells.onLabelDeletedBatch(label);
+        }
     };
 
     /**
@@ -71,4 +97,10 @@ enum BasicSpreadsheetEngineUpdatedCellsMode {
 
     abstract void onCellReferenceDeleted(final TargetAndSpreadsheetCellReference<SpreadsheetCellReference> targetAndReference,
                                          final BasicSpreadsheetEngineUpdatedCells cells);
+
+    abstract void onLabelSaved(final SpreadsheetLabelMapping mapping,
+                               final BasicSpreadsheetEngineUpdatedCells cells);
+
+    abstract void onLabelDeleted(final SpreadsheetLabelName label,
+                                 final BasicSpreadsheetEngineUpdatedCells cells);
 }
