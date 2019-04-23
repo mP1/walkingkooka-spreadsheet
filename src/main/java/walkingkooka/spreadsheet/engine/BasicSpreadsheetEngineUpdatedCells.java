@@ -4,6 +4,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.store.Watchers;
 import walkingkooka.spreadsheet.store.reference.TargetAndSpreadsheetCellReference;
@@ -36,6 +37,9 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
         this.onSaveCell = engine.cellStore.addSaveWatcher(this::onCellSaved);
         this.onDeleteCell = engine.cellStore.addDeleteWatcher(this::onCellDeleted);
         this.onDeleteCellReferences = engine.cellReferencesStore.addRemoveReferenceWatcher(this::onCellReferenceDeleted);
+        
+        this.onSaveLabel = engine.labelStore.addSaveWatcher(this::onLabelSaved);
+        this.onDeleteLabel = engine.labelStore.addDeleteWatcher(this::onLabelDeleted);
 
         this.engine = engine;
         this.context = context;
@@ -53,6 +57,14 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
 
     private void onCellReferenceDeleted(final TargetAndSpreadsheetCellReference<SpreadsheetCellReference> targetAndReference) {
         this.mode.onCellReferenceDeleted(targetAndReference, this);
+    }
+
+    private void onLabelSaved(final SpreadsheetLabelMapping mapping) {
+        this.mode.onLabelSaved(mapping, this);
+    }
+
+    private void onLabelDeleted(final SpreadsheetLabelName label) {
+        this.mode.onLabelDeleted(label, this);
     }
 
     // IMMEDIATE.......................................................................................................
@@ -102,6 +114,14 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
         this.batchReferrers(targetAndReference.target());
     }
 
+    void onLabelSavedImmediate(final SpreadsheetLabelMapping mapping) {
+        this.batchLabel(mapping.label());
+    }
+
+    void onLabelDeletedImmediate(final SpreadsheetLabelName label) {
+        this.batchLabel(label);
+    }
+
     // BATCH MODE....................................................................................................
 
     void onCellSavedBatch(final SpreadsheetCell cell) {
@@ -114,6 +134,14 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
 
     void onCellReferenceDeletedBatch(final TargetAndSpreadsheetCellReference<SpreadsheetCellReference> targetAndReference) {
         throw new UnsupportedOperationException();
+    }
+
+    void onLabelSavedBatch(final SpreadsheetLabelMapping mapping) {
+        this.batchLabel(mapping.label());
+    }
+
+    void onLabelDeletedBatch(final SpreadsheetLabelName label) {
+        this.batchLabel(label);
     }
 
     // REFRESH UPDATED ................................................................................................
@@ -201,12 +229,18 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
      */
     @Override
     public void close() {
-        Watchers.removeAllThenFail(this.onSaveCell, this.onDeleteCell, this.onDeleteCellReferences);
+        Watchers.removeAllThenFail(this.onSaveCell,
+                this.onDeleteCell,
+                this.onDeleteCellReferences,
+                this.onSaveLabel,
+                this.onDeleteLabel);
     }
 
     private final Runnable onSaveCell;
     private final Runnable onDeleteCell;
     private final Runnable onDeleteCellReferences;
+    private final Runnable onSaveLabel;
+    private final Runnable onDeleteLabel;
 
     @Override
     public String toString() {
