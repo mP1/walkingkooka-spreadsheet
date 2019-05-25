@@ -98,7 +98,7 @@ final public class GroupName implements Name,
     // Object..................................................................................................
 
     public final int hashCode() {
-        return CASE_SENSITITY.hash(this.name);
+        return CASE_SENSITIVITY.hash(this.name);
     }
 
     @Override
@@ -121,8 +121,15 @@ final public class GroupName implements Name,
 
     @Override
     public int compareTo(final GroupName other) {
-        return CASE_SENSITITY.comparator().compare(this.name, other.name);
+        return CASE_SENSITIVITY.comparator().compare(this.name, other.name);
     }
 
-    private final CaseSensitivity CASE_SENSITITY = CaseSensitivity.SENSITIVE;
+    // HasCaseSensitivity................................................................................................
+
+    @Override
+    public CaseSensitivity caseSensitivity() {
+        return CASE_SENSITIVITY;
+    }
+
+    private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.SENSITIVE;
 }
