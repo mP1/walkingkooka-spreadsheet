@@ -5,6 +5,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.stack.Stack;
 import walkingkooka.collect.stack.Stacks;
 import walkingkooka.text.cursor.parser.ParentParserToken;
+import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetAdditionParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetBetweenSymbolParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetBigDecimalParserToken;
@@ -60,6 +61,8 @@ import walkingkooka.tree.visit.Visiting;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * A {@link SpreadsheetParserTokenVisitor} that handles visiting and updating {@link SpreadsheetCellReferenceParserToken}
@@ -76,13 +79,13 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
         final BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor visitor = new BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor(xOffset, yOffset);
         visitor.accept(token);
 
-        final List<SpreadsheetParserToken> tokens = visitor.children;
+        final List<ParserToken> tokens = visitor.children;
         final int count = tokens.size();
         if (1 != count) {
             throw new IllegalStateException("Expected only 1 child but got " + count + "=" + tokens);
         }
 
-        return tokens.get(0);
+        return tokens.get(0).cast();
     }
 
     /**
@@ -103,7 +106,7 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetAdditionParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::addition);
         super.endVisit(token);
     }
 
@@ -115,7 +118,7 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetCellReferenceParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::cellReference);
         super.endVisit(token);
     }
 
@@ -127,7 +130,7 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetDivisionParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::division);
         super.endVisit(token);
     }
 
@@ -139,7 +142,7 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetEqualsParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::equalsParserToken);
         super.endVisit(token);
     }
 
@@ -151,7 +154,7 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetFunctionParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::function);
         super.endVisit(token);
     }
 
@@ -163,7 +166,7 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetGreaterThanParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::greaterThan);
         super.endVisit(token);
     }
 
@@ -175,7 +178,7 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetGreaterThanEqualsParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::greaterThanEquals);
         super.endVisit(token);
     }
 
@@ -187,7 +190,7 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetGroupParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::group);
         super.endVisit(token);
     }
 
@@ -199,7 +202,7 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetLessThanParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::lessThan);
         super.endVisit(token);
     }
 
@@ -211,7 +214,7 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetLessThanEqualsParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::lessThanEquals);
         super.endVisit(token);
     }
 
@@ -223,7 +226,7 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetMultiplicationParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::multiplication);
         super.endVisit(token);
     }
 
@@ -235,7 +238,7 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetNegativeParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::negative);
         super.endVisit(token);
     }
 
@@ -247,7 +250,7 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetNotEqualsParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::notEquals);
         super.endVisit(token);
     }
 
@@ -259,7 +262,7 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetPercentageParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::percentage);
         super.endVisit(token);
     }
 
@@ -271,7 +274,7 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetPowerParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::power);
         super.endVisit(token);
     }
 
@@ -283,7 +286,7 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetRangeParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::range);
         super.endVisit(token);
     }
 
@@ -295,7 +298,7 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetSubtractionParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::subtraction);
         super.endVisit(token);
     }
 
@@ -500,11 +503,12 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
         this.children = Lists.array();
     }
 
-    private <P extends SpreadsheetParserToken & ParentParserToken> void exit(final P parent) {
-        final List<SpreadsheetParserToken> children = this.children;
+    private <P extends SpreadsheetParserToken & ParentParserToken> void exit(final P parent,
+                                                                             final BiFunction<List<ParserToken>, String, SpreadsheetParserToken> factory) {
+        final List<ParserToken> children = this.children;
         this.children = this.previousChildren.peek();
         this.previousChildren = this.previousChildren.pop();
-        this.add(SpreadsheetParserToken.class.cast(parent.setValue(children).setTextFromValues()));
+        this.add(factory.apply(children, ParserToken.text(children)));
     }
 
     private void leaf(final SpreadsheetParserToken token) {
@@ -516,9 +520,9 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
         this.children.add(child);
     }
 
-    private Stack<List<SpreadsheetParserToken>> previousChildren = Stacks.arrayList();
+    private Stack<List<ParserToken>> previousChildren = Stacks.arrayList();
 
-    private List<SpreadsheetParserToken> children = Lists.array();
+    private List<ParserToken> children = Lists.array();
 
     @Override
     public final String toString() {

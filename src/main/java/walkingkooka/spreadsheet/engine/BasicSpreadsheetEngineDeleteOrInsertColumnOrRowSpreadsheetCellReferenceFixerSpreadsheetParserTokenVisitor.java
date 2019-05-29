@@ -60,6 +60,7 @@ import walkingkooka.tree.visit.Visiting;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.BiFunction;
 
 /**
  * A {@link SpreadsheetParserTokenVisitor} that handles visiting and updating {@link SpreadsheetCellReferenceParserToken}
@@ -75,13 +76,13 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
         final BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor visitor = new BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor(columnOrRow);
         visitor.accept(token);
 
-        final List<SpreadsheetParserToken> tokens = visitor.children;
+        final List<ParserToken> tokens = visitor.children;
         final int count = tokens.size();
         if (1 != count) {
             throw new IllegalStateException("Expected only 1 child but got " + count + "=" + tokens);
         }
 
-        return tokens.get(0);
+        return tokens.get(0).cast();
     }
 
     /**
@@ -103,7 +104,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
 
     @Override
     protected final void endVisit(final SpreadsheetAdditionParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::addition);
         super.endVisit(token);
     }
 
@@ -115,7 +116,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
 
     @Override
     protected final void endVisit(final SpreadsheetCellReferenceParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::cellReference);
         super.endVisit(token);
     }
 
@@ -127,7 +128,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
 
     @Override
     protected final void endVisit(final SpreadsheetDivisionParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::division);
         super.endVisit(token);
     }
 
@@ -139,7 +140,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
 
     @Override
     protected final void endVisit(final SpreadsheetEqualsParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::equalsParserToken);
         super.endVisit(token);
     }
 
@@ -151,7 +152,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
 
     @Override
     protected final void endVisit(final SpreadsheetFunctionParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::function);
         super.endVisit(token);
     }
 
@@ -163,7 +164,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
 
     @Override
     protected final void endVisit(final SpreadsheetGreaterThanParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::greaterThan);
         super.endVisit(token);
     }
 
@@ -175,7 +176,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
 
     @Override
     protected final void endVisit(final SpreadsheetGreaterThanEqualsParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::greaterThanEquals);
         super.endVisit(token);
     }
 
@@ -187,7 +188,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
 
     @Override
     protected final void endVisit(final SpreadsheetGroupParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::group);
         super.endVisit(token);
     }
 
@@ -199,7 +200,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
 
     @Override
     protected final void endVisit(final SpreadsheetLessThanParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::lessThan);
         super.endVisit(token);
     }
 
@@ -211,7 +212,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
 
     @Override
     protected final void endVisit(final SpreadsheetLessThanEqualsParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::lessThanEquals);
         super.endVisit(token);
     }
 
@@ -223,7 +224,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
 
     @Override
     protected final void endVisit(final SpreadsheetMultiplicationParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::multiplication);
         super.endVisit(token);
     }
 
@@ -235,7 +236,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
 
     @Override
     protected final void endVisit(final SpreadsheetNegativeParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::negative);
         super.endVisit(token);
     }
 
@@ -247,7 +248,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
 
     @Override
     protected final void endVisit(final SpreadsheetNotEqualsParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::notEquals);
         super.endVisit(token);
     }
 
@@ -259,7 +260,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
 
     @Override
     protected final void endVisit(final SpreadsheetPercentageParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::percentage);
         super.endVisit(token);
     }
 
@@ -271,7 +272,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
 
     @Override
     protected final void endVisit(final SpreadsheetPowerParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::power);
         super.endVisit(token);
     }
 
@@ -283,7 +284,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
 
     @Override
     protected final void endVisit(final SpreadsheetRangeParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::range);
         super.endVisit(token);
     }
 
@@ -295,7 +296,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
 
     @Override
     protected final void endVisit(final SpreadsheetSubtractionParserToken token) {
-        this.exit(token);
+        this.exit(token, SpreadsheetParserToken::subtraction);
         super.endVisit(token);
     }
 
@@ -453,14 +454,15 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
         this.invalidCellReference = false;
     }
 
-    private <P extends SpreadsheetParserToken & ParentParserToken> void exit(final P parent) {
-        final List<SpreadsheetParserToken> children = this.children;
+    private <P extends SpreadsheetParserToken & ParentParserToken> void exit(final P parent,
+                                                                             final BiFunction<List<ParserToken>, String, ParserToken> factory) {
+        final List<ParserToken> children = this.children;
         this.children = this.previousChildren.peek();
         this.previousChildren = this.previousChildren.pop();
         this.add(
                 this.invalidCellReference ?
                         this.cellReferenceDeleted(parent) :
-                        SpreadsheetParserToken.class.cast(parent.setValue(children).setTextFromValues()));
+                        factory.apply(children, ParserToken.text(children)));
         this.invalidCellReference = false;
     }
 
@@ -492,18 +494,18 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
         }
     }
 
-    private void leaf(final SpreadsheetParserToken token) {
+    private void leaf(final ParserToken token) {
         this.add(token);
     }
 
-    private void add(final SpreadsheetParserToken child) {
+    private void add(final ParserToken child) {
         Objects.requireNonNull(child, "child");
         this.children.add(child);
     }
 
-    private Stack<List<SpreadsheetParserToken>> previousChildren = Stacks.arrayList();
+    private Stack<List<ParserToken>> previousChildren = Stacks.arrayList();
 
-    private List<SpreadsheetParserToken> children = Lists.array();
+    private List<ParserToken> children = Lists.array();
 
     @Override
     public final String toString() {
