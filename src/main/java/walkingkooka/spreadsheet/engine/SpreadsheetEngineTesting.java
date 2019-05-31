@@ -12,7 +12,6 @@ import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
-import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
@@ -21,6 +20,7 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.text.TextProperties;
 import walkingkooka.type.MemberVisibility;
 
 import java.util.Collection;
@@ -76,9 +76,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     @Test
     default void testSaveCellNullContextFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().saveCell(SpreadsheetCell.with(REFERENCE,
-                    SpreadsheetFormula.with("1"),
-                    SpreadsheetCellStyle.EMPTY),
+            this.createSpreadsheetEngine().saveCell(SpreadsheetCell.with(REFERENCE, SpreadsheetFormula.with("1")),
                     null);
         });
     }

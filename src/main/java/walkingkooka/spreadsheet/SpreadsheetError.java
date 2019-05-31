@@ -13,7 +13,9 @@ import java.util.Objects;
 /**
  * An error for an individual cell or formula which may be a parsing or execution error.
  */
-public final class SpreadsheetError implements HashCodeEqualsDefined, Value<String>, HasJsonNode {
+public final class SpreadsheetError implements HashCodeEqualsDefined,
+        Value<String>,
+        HasJsonNode {
 
     public static SpreadsheetError with(final String message) {
         Whitespace.failIfNullOrEmptyOrWhitespace(message, "Message");

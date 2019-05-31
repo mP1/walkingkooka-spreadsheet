@@ -6,7 +6,6 @@ import walkingkooka.spreadsheet.SpreadsheetDelta;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
-import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
 public abstract class SpreadsheetEngineHateosHandlerTestCase<T> extends SpreadsheetHateosHandlerTestCase<T> {
@@ -24,9 +23,7 @@ public abstract class SpreadsheetEngineHateosHandlerTestCase<T> extends Spreadsh
     }
 
     final SpreadsheetCell cell() {
-        return SpreadsheetCell.with(SpreadsheetCellReference.parse("A99"),
-                SpreadsheetFormula.with("1+2"),
-                SpreadsheetCellStyle.EMPTY);
+        return SpreadsheetCell.with(SpreadsheetCellReference.parse("A99"), SpreadsheetFormula.with("1+2"));
     }
 
     @Override

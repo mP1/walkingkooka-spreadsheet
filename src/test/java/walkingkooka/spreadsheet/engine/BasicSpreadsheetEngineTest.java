@@ -3,6 +3,7 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
@@ -10,7 +11,6 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetError;
-import walkingkooka.spreadsheet.SpreadsheetFormattedCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
@@ -24,8 +24,6 @@ import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStores;
 import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStores;
-import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
-import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -47,6 +45,12 @@ import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.expression.ExpressionNodeName;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.text.FontStyle;
+import walkingkooka.tree.text.FontWeight;
+import walkingkooka.tree.text.TextDecoration;
+import walkingkooka.tree.text.TextNode;
+import walkingkooka.tree.text.TextProperties;
+import walkingkooka.tree.text.TextPropertyName;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -480,19 +484,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
 
         // rule 3 is ignored because it returns false, rule 2 short circuits the conditional testing ...
+        final TextProperties italics = TextProperties.with(Maps.of(TextPropertyName.FONT_STYLE, FontStyle.ITALIC));
         this.saveRule(true,
                 1,
-                style(SpreadsheetTextStyle.NO_BOLD, SpreadsheetTextStyle.ITALICS, SpreadsheetTextStyle.NO_UNDERLINE),
+                italics,
                 a,
                 rules);
+
         this.saveRule(true,
                 2,
-                style(SpreadsheetTextStyle.NO_BOLD, SpreadsheetTextStyle.NO_ITALICS, SpreadsheetTextStyle.UNDERLINE),
+                TextProperties.with(Maps.of(TextPropertyName.TEXT_DECORATION, TextDecoration.UNDERLINE)),
                 a,
                 rules);
         this.saveRule(false,
                 3,
-                style(SpreadsheetTextStyle.BOLD, SpreadsheetTextStyle.ITALICS, SpreadsheetTextStyle.UNDERLINE),
+                TextProperties.with(Maps.of(TextPropertyName.FONT_STYLE, FontStyle.ITALIC, TextPropertyName.FONT_WEIGHT, FontWeight.BOLD, TextPropertyName.TEXT_DECORATION, TextDecoration.UNDERLINE)),
                 a,
                 rules);
 
@@ -504,27 +510,30 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 BigDecimal.valueOf(3 + 4),
                 FORMATTED_DEFAULT_SUFFIX);
-        final SpreadsheetCellStyle style = cell.formatted().get().style();
+
         // UNDERLINED from conditional formatting rule #2.
-        assertEquals(style(SpreadsheetTextStyle.NO_BOLD, SpreadsheetTextStyle.NO_ITALICS, SpreadsheetTextStyle.UNDERLINE),
-                style,
-                () -> "Style should include underline if correct rule was applied=" + cell);
+        assertEquals(Optional.of(italics.replace(TextNode.text("7 " + FORMATTED_DEFAULT_SUFFIX)).root()),
+                cell.formatted(),
+                () -> "TextProperties should include underline if correct rule was applied=" + cell);
     }
 
-    private void saveRule(final boolean result, final int priority, final SpreadsheetCellStyle style,
-                          final SpreadsheetCellReference cell, final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rules) {
-        rules.addValue(SpreadsheetRange.cell(cell), rule(result, priority, style));
+    private void saveRule(final boolean result,
+                          final int priority,
+                          final TextProperties textProperties,
+                          final SpreadsheetCellReference cell,
+                          final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rules) {
+        rules.addValue(SpreadsheetRange.cell(cell), rule(result, priority, textProperties));
     }
 
     private SpreadsheetConditionalFormattingRule rule(final boolean result,
                                                       final int priority,
-                                                      final SpreadsheetCellStyle style) {
+                                                      final TextProperties textProperties) {
 
 
         return SpreadsheetConditionalFormattingRule.with(SpreadsheetDescription.with(priority + "=" + result),
                 priority,
                 SpreadsheetFormula.with(String.valueOf(result)).setExpression(Optional.of(ExpressionNode.booleanNode(result))),
-                (c) -> style);
+                (c) -> textProperties);
     }
 
     // saveCell....................................................................................................
@@ -589,10 +598,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
 
-        final SpreadsheetCell cell = SpreadsheetCell.with(cellReference,
+        final SpreadsheetCell cell = this.cell(cellReference,
                 SpreadsheetFormula.with("1+2")
-                        .setError(Optional.of(SpreadsheetError.with("error!"))),
-                this.style());
+                        .setError(Optional.of(SpreadsheetError.with("error!"))));
 
         this.saveCellAndCheck(engine,
                 cell,
@@ -4282,7 +4290,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetFormattedText formattedText = this.defaultSpreadsheetTextFormatter().format(value, SPREADSHEET_TEXT_FORMAT_CONTEXT)
                 .orElseThrow(() -> new AssertionError("Failed to format " + CharSequences.quoteIfChars(value)));
-        final Optional<SpreadsheetFormattedCell> formattedCell = Optional.of(SpreadsheetFormattedCell.with(formattedText.text(), this.style()));
+        final Optional<TextNode> formattedCell = Optional.of(this.textProperties()
+                .replace(formattedText.toTextNode())
+                .root());
 
         return cell.setFormula(cell.formula()
                 .setExpression(this.parseFormula(cell.formula()))
@@ -4306,11 +4316,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     /**
-     * Makes a {@link SpreadsheetCell} updating the formula expression and setting the error and formatted cell and style.
+     * Makes a {@link SpreadsheetCell} updating the formula expression and setting the error and formatted cell and textProperties.
      */
     private SpreadsheetCell formattedCellWithError(final SpreadsheetCell cell,
                                                    final String errorMessage) {
-        final Optional<SpreadsheetFormattedCell> formattedCell = Optional.of(SpreadsheetFormattedCell.with(errorMessage, this.style()));
+        final Optional<TextNode> formattedCell = Optional.of(this.textProperties()
+                .replace(TextNode.text(errorMessage))
+                .root());
 
         return cell.setFormula(cell.formula()
                 .setExpression(this.parseFormula(cell.formula()))
@@ -4405,14 +4417,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return SpreadsheetReferenceKind.ABSOLUTE.column(column).setRow(SpreadsheetReferenceKind.ABSOLUTE.row(row));
     }
 
-    private SpreadsheetRange range(final int beginColumn, final int beginRow, final int endColumn, final int endRow) {
-        return range(cellReference(beginColumn, beginRow), cellReference(endColumn, endRow));
-    }
-
-    private SpreadsheetRange range(final SpreadsheetCellReference begin, final int endColumn, final int endRow) {
-        return range(begin, cellReference(endColumn, endRow));
-    }
-
     private SpreadsheetRange range(final SpreadsheetCellReference begin, final SpreadsheetCellReference end) {
         return SpreadsheetRange.with(begin, end);
     }
@@ -4422,22 +4426,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     private SpreadsheetCell cell(final SpreadsheetCellReference reference, final String formula) {
-        return SpreadsheetCell.with(reference, SpreadsheetFormula.with(formula), this.style());
+        return this.cell(reference, SpreadsheetFormula.with(formula));
     }
 
-    private SpreadsheetCellStyle style() {
-        return style(SpreadsheetTextStyle.BOLD,
-                SpreadsheetTextStyle.NO_ITALICS,
-                SpreadsheetTextStyle.NO_UNDERLINE);
+    private SpreadsheetCell cell(final SpreadsheetCellReference reference, final SpreadsheetFormula formula) {
+        return SpreadsheetCell.with(reference, formula)
+                .setTextProperties(this.textProperties());
     }
 
-    private SpreadsheetCellStyle style(final Optional<Boolean> bold,
-                                       final Optional<Boolean> italics,
-                                       final Optional<Boolean> underline) {
-        return SpreadsheetCellStyle.EMPTY.setText(SpreadsheetTextStyle.EMPTY
-                .setBold(bold)
-                .setItalics(italics)
-                .setUnderline(underline));
+    private TextProperties textProperties() {
+        return TextProperties.with(Maps.of(TextPropertyName.FONT_WEIGHT, FontWeight.BOLD));
     }
 
     @Override
