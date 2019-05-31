@@ -610,7 +610,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default DecimalNumberContext decimalNumberContext() {
-        return DecimalNumberContexts.basic("$", '.', 'E', ',', '-', '%', '+');
+        return DecimalNumberContexts.american();
     }
 
     @Override
