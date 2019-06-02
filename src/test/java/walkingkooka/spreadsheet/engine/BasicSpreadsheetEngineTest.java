@@ -49,8 +49,8 @@ import walkingkooka.tree.text.FontStyle;
 import walkingkooka.tree.text.FontWeight;
 import walkingkooka.tree.text.TextDecoration;
 import walkingkooka.tree.text.TextNode;
-import walkingkooka.tree.text.TextProperties;
-import walkingkooka.tree.text.TextPropertyName;
+import walkingkooka.tree.text.TextStyle;
+import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -484,7 +484,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
 
         // rule 3 is ignored because it returns false, rule 2 short circuits the conditional testing ...
-        final TextProperties italics = TextProperties.with(Maps.of(TextPropertyName.FONT_STYLE, FontStyle.ITALIC));
+        final TextStyle italics = TextStyle.with(Maps.of(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC));
         this.saveRule(true,
                 1,
                 italics,
@@ -493,12 +493,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.saveRule(true,
                 2,
-                TextProperties.with(Maps.of(TextPropertyName.TEXT_DECORATION, TextDecoration.UNDERLINE)),
+                TextStyle.with(Maps.of(TextStylePropertyName.TEXT_DECORATION, TextDecoration.UNDERLINE)),
                 a,
                 rules);
         this.saveRule(false,
                 3,
-                TextProperties.with(Maps.of(TextPropertyName.FONT_STYLE, FontStyle.ITALIC, TextPropertyName.FONT_WEIGHT, FontWeight.BOLD, TextPropertyName.TEXT_DECORATION, TextDecoration.UNDERLINE)),
+                TextStyle.with(Maps.of(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC, TextStylePropertyName.FONT_WEIGHT, FontWeight.BOLD, TextStylePropertyName.TEXT_DECORATION, TextDecoration.UNDERLINE)),
                 a,
                 rules);
 
@@ -514,26 +514,26 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         // UNDERLINED from conditional formatting rule #2.
         assertEquals(Optional.of(italics.replace(TextNode.text("7 " + FORMATTED_DEFAULT_SUFFIX)).root()),
                 cell.formatted(),
-                () -> "TextProperties should include underline if correct rule was applied=" + cell);
+                () -> "TextStyle should include underline if correct rule was applied=" + cell);
     }
 
     private void saveRule(final boolean result,
                           final int priority,
-                          final TextProperties textProperties,
+                          final TextStyle style,
                           final SpreadsheetCellReference cell,
                           final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rules) {
-        rules.addValue(SpreadsheetRange.cell(cell), rule(result, priority, textProperties));
+        rules.addValue(SpreadsheetRange.cell(cell), rule(result, priority, style));
     }
 
     private SpreadsheetConditionalFormattingRule rule(final boolean result,
                                                       final int priority,
-                                                      final TextProperties textProperties) {
+                                                      final TextStyle style) {
 
 
         return SpreadsheetConditionalFormattingRule.with(SpreadsheetDescription.with(priority + "=" + result),
                 priority,
                 SpreadsheetFormula.with(String.valueOf(result)).setExpression(Optional.of(ExpressionNode.booleanNode(result))),
-                (c) -> textProperties);
+                (c) -> style);
     }
 
     // saveCell....................................................................................................
@@ -4290,7 +4290,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetFormattedText formattedText = this.defaultSpreadsheetTextFormatter().format(value, SPREADSHEET_TEXT_FORMAT_CONTEXT)
                 .orElseThrow(() -> new AssertionError("Failed to format " + CharSequences.quoteIfChars(value)));
-        final Optional<TextNode> formattedCell = Optional.of(this.textProperties()
+        final Optional<TextNode> formattedCell = Optional.of(this.style()
                 .replace(formattedText.toTextNode())
                 .root());
 
@@ -4316,11 +4316,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     /**
-     * Makes a {@link SpreadsheetCell} updating the formula expression and setting the error and formatted cell and textProperties.
+     * Makes a {@link SpreadsheetCell} updating the formula expression and setting the error and formatted cell and style.
      */
     private SpreadsheetCell formattedCellWithError(final SpreadsheetCell cell,
                                                    final String errorMessage) {
-        final Optional<TextNode> formattedCell = Optional.of(this.textProperties()
+        final Optional<TextNode> formattedCell = Optional.of(this.style()
                 .replace(TextNode.text(errorMessage))
                 .root());
 
@@ -4431,11 +4431,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private SpreadsheetCell cell(final SpreadsheetCellReference reference, final SpreadsheetFormula formula) {
         return SpreadsheetCell.with(reference, formula)
-                .setTextProperties(this.textProperties());
+                .setStyle(this.style());
     }
 
-    private TextProperties textProperties() {
-        return TextProperties.with(Maps.of(TextPropertyName.FONT_WEIGHT, FontWeight.BOLD));
+    private TextStyle style() {
+        return TextStyle.with(Maps.of(TextStylePropertyName.FONT_WEIGHT, FontWeight.BOLD));
     }
 
     @Override
