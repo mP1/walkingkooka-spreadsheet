@@ -7,8 +7,8 @@ import walkingkooka.build.tostring.UsesToStringBuilder;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.test.HashCodeEqualsDefined;
+import walkingkooka.tree.text.TextProperties;
 
 import java.util.Comparator;
 import java.util.Objects;
@@ -30,12 +30,12 @@ public final class SpreadsheetConditionalFormattingRule implements HashCodeEqual
     public static SpreadsheetConditionalFormattingRule with(final SpreadsheetDescription description,
                                                             final int priority,
                                                             final SpreadsheetFormula formula,
-                                                            final Function<SpreadsheetCell, SpreadsheetCellStyle> style) {
+                                                            final Function<SpreadsheetCell, TextProperties> textProperties) {
         checkDescription(description);
         checkFormula(formula);
-        checkStyle(style);
+        checkTextProperties(textProperties);
 
-        return new SpreadsheetConditionalFormattingRule(description, priority, formula, style);
+        return new SpreadsheetConditionalFormattingRule(description, priority, formula, textProperties);
     }
 
     /**
@@ -44,12 +44,12 @@ public final class SpreadsheetConditionalFormattingRule implements HashCodeEqual
     private SpreadsheetConditionalFormattingRule(final SpreadsheetDescription description,
                                                  final int priority,
                                                  final SpreadsheetFormula formula,
-                                                 final Function<SpreadsheetCell, SpreadsheetCellStyle> style) {
+                                                 final Function<SpreadsheetCell, TextProperties> textProperties) {
         super();
         this.description = description;
         this.priority = priority;
         this.formula = formula;
-        this.style = style;
+        this.textProperties = textProperties;
     }
 
     // description...................................................................................................
@@ -63,7 +63,7 @@ public final class SpreadsheetConditionalFormattingRule implements HashCodeEqual
 
         return this.description.equals(description) ?
                 this :
-                this.replace(description, this.priority, this.formula, this.style);
+                this.replace(description, this.priority, this.formula, this.textProperties);
     }
 
     private final SpreadsheetDescription description;
@@ -81,7 +81,7 @@ public final class SpreadsheetConditionalFormattingRule implements HashCodeEqual
     public SpreadsheetConditionalFormattingRule setPriority(final int priority) {
         return this.priority == priority ?
                 this :
-                this.replace(this.description, priority, this.formula, this.style);
+                this.replace(this.description, priority, this.formula, this.textProperties);
     }
 
     private final int priority;
@@ -97,7 +97,7 @@ public final class SpreadsheetConditionalFormattingRule implements HashCodeEqual
 
         return this.formula.equals(formula) ?
                 this :
-                this.replace(this.description, this.priority, formula, this.style);
+                this.replace(this.description, this.priority, formula, this.textProperties);
     }
 
     private final SpreadsheetFormula formula;
@@ -112,24 +112,24 @@ public final class SpreadsheetConditionalFormattingRule implements HashCodeEqual
         }
     }
 
-    // style...................................................................................................
+    // textProperties...................................................................................................
 
-    public Function<SpreadsheetCell, SpreadsheetCellStyle> style() {
-        return this.style;
+    public Function<SpreadsheetCell, TextProperties> textProperties() {
+        return this.textProperties;
     }
 
-    public SpreadsheetConditionalFormattingRule setStyle(final Function<SpreadsheetCell, SpreadsheetCellStyle> style) {
-        checkStyle(style);
+    public SpreadsheetConditionalFormattingRule setTextProperties(final Function<SpreadsheetCell, TextProperties> textProperties) {
+        checkTextProperties(textProperties);
 
-        return this.style.equals(style) ?
+        return this.textProperties.equals(textProperties) ?
                 this :
-                this.replace(this.description, this.priority, this.formula, style);
+                this.replace(this.description, this.priority, this.formula, textProperties);
     }
 
-    private final Function<SpreadsheetCell, SpreadsheetCellStyle> style;
+    private final Function<SpreadsheetCell, TextProperties> textProperties;
 
-    private static void checkStyle(final Function<SpreadsheetCell, SpreadsheetCellStyle> style) {
-        Objects.requireNonNull(style, "style");
+    private static void checkTextProperties(final Function<SpreadsheetCell, TextProperties> textProperties) {
+        Objects.requireNonNull(textProperties, "textProperties");
     }
 
     // factory..................................................................................
@@ -140,15 +140,15 @@ public final class SpreadsheetConditionalFormattingRule implements HashCodeEqual
     private SpreadsheetConditionalFormattingRule replace(final SpreadsheetDescription description,
                                                          final int priority,
                                                          final SpreadsheetFormula formula,
-                                                         final Function<SpreadsheetCell, SpreadsheetCellStyle> style) {
-        return new SpreadsheetConditionalFormattingRule(description, priority, formula, style);
+                                                         final Function<SpreadsheetCell, TextProperties> textProperties) {
+        return new SpreadsheetConditionalFormattingRule(description, priority, formula, textProperties);
     }
 
     // HashCodeEqualsDefined.........................................................................................
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.description, this.priority, this.formula, this.style);
+        return Objects.hash(this.description, this.priority, this.formula, this.textProperties);
     }
 
     @Override
@@ -162,7 +162,7 @@ public final class SpreadsheetConditionalFormattingRule implements HashCodeEqual
         return this.description.equals(other.description) &&
                 this.priority == other.priority &&
                 this.formula.equals(other.formula) &&
-                this.style.equals(other.style);
+                this.textProperties.equals(other.textProperties);
     }
 
     @Override
@@ -178,6 +178,6 @@ public final class SpreadsheetConditionalFormattingRule implements HashCodeEqual
         builder.value(this.description);
         builder.value(this.priority);
         builder.value(this.formula);
-        builder.value(this.style);
+        builder.value(this.textProperties);
     }
 }
