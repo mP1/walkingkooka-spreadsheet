@@ -8,7 +8,7 @@ import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.expression.ExpressionNode;
-import walkingkooka.tree.text.TextProperties;
+import walkingkooka.tree.text.TextStyle;
 import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
@@ -44,7 +44,7 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
     }
 
     @Test
-    public void testWithNullTextPropertiesFails() {
+    public void testWithNullTextStyleFails() {
         assertThrows(NullPointerException.class, () -> {
             SpreadsheetConditionalFormattingRule.with(description(), priority(), formula(), null);
         });
@@ -79,7 +79,7 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
         checkDescription(different, description);
         checkPriority(different);
         checkFormula(different);
-        checkTextProperties(different);
+        checkTextStyle(different);
     }
 
     // setPriority................................................................................
@@ -97,7 +97,7 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
         checkDescription(different);
         checkPriority(different, priority);
         checkFormula(different);
-        checkTextProperties(different);
+        checkTextStyle(different);
     }
 
     // setFormula................................................................................
@@ -130,33 +130,33 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
         checkDescription(different);
         checkPriority(different);
         checkFormula(different, formula);
-        checkTextProperties(different);
+        checkTextStyle(different);
     }
 
-    // setTextProperties................................................................................................
+    // setStyle................................................................................................
 
     @Test
-    public void testSetTextPropertiesNullFails() {
+    public void testSetStyleNullFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.createObject().setTextProperties(null);
+            this.createObject().setStyle(null);
         });
     }
 
     @Test
-    public void testSetTextPropertiesSame() {
+    public void testSetStyleSame() {
         final SpreadsheetConditionalFormattingRule rule = this.createObject();
-        assertSame(rule, rule.setTextProperties(rule.textProperties()));
+        assertSame(rule, rule.setStyle(rule.style()));
     }
 
     @Test
-    public void testSetTextPropertiesDifferent() {
+    public void testSetStyleDifferent() {
         final SpreadsheetConditionalFormattingRule rule = this.createObject();
-        final Function<SpreadsheetCell, TextProperties> textProperties = (c) -> null;
-        final SpreadsheetConditionalFormattingRule different = rule.setTextProperties(textProperties);
+        final Function<SpreadsheetCell, TextStyle> style = (c) -> null;
+        final SpreadsheetConditionalFormattingRule different = rule.setStyle(style);
         checkDescription(different);
         checkPriority(different);
         checkFormula(different);
-        checkTextProperties(different, textProperties);
+        checkTextStyle(different, style);
     }
 
     // equals ...........................................................................................
@@ -186,7 +186,7 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
     }
 
     @Test
-    public void testEqualsDifferentTextProperties() {
+    public void testEqualsDifferentTextStyle() {
         this.checkNotEquals(SpreadsheetConditionalFormattingRule.with(description(),
                 priority(),
                 formula(),
@@ -221,14 +221,14 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
         return SpreadsheetFormula.with("123");
     }
 
-    private Function<SpreadsheetCell, TextProperties> style() {
+    private Function<SpreadsheetCell, TextStyle> style() {
         return FUNCTION;
     }
 
-    private final Function<SpreadsheetCell, TextProperties> FUNCTION = new Function<SpreadsheetCell, TextProperties>() {
+    private final Function<SpreadsheetCell, TextStyle> FUNCTION = new Function<SpreadsheetCell, TextStyle>() {
 
         @Override
-        public TextProperties apply(final SpreadsheetCell spreadsheetCell) {
+        public TextStyle apply(final SpreadsheetCell spreadsheetCell) {
             throw new UnsupportedOperationException();
         }
 
@@ -241,11 +241,11 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
                        final SpreadsheetDescription description,
                        final int priority,
                        final SpreadsheetFormula formula,
-                       final Function<SpreadsheetCell, TextProperties> textProperties) {
+                       final Function<SpreadsheetCell, TextStyle> style) {
         checkDescription(rule, description);
         checkPriority(rule, priority);
         checkFormula(rule, formula);
-        checkTextProperties(rule, textProperties);
+        checkTextStyle(rule, style);
     }
 
     private void checkDescription(final SpreadsheetConditionalFormattingRule rule) {
@@ -275,13 +275,13 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
         assertEquals(formula, rule.formula(), "formula");
     }
 
-    private void checkTextProperties(final SpreadsheetConditionalFormattingRule rule) {
-        checkTextProperties(rule, style());
+    private void checkTextStyle(final SpreadsheetConditionalFormattingRule rule) {
+        checkTextStyle(rule, style());
     }
 
-    private void checkTextProperties(final SpreadsheetConditionalFormattingRule rule,
-                                     final Function<SpreadsheetCell, TextProperties> textProperties) {
-        assertEquals(textProperties, rule.textProperties(), "textProperties");
+    private void checkTextStyle(final SpreadsheetConditionalFormattingRule rule,
+                                     final Function<SpreadsheetCell, TextStyle> style) {
+        assertEquals(style, rule.style(), "style");
     }
 
     @Override

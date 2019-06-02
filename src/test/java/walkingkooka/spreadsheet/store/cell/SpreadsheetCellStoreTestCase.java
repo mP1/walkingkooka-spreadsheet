@@ -15,8 +15,8 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.tree.text.FontWeight;
 import walkingkooka.tree.text.TextNode;
-import walkingkooka.tree.text.TextProperties;
-import walkingkooka.tree.text.TextPropertyName;
+import walkingkooka.tree.text.TextStyle;
+import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -253,7 +253,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
     private SpreadsheetCell cell(final SpreadsheetCellReference cellReference) {
         return SpreadsheetCell.with(cellReference, this.formula())
-                .setTextProperties(this.textProperties())
+                .setStyle(this.style())
                 .setFormat(this.format())
                 .setFormatted(this.formatted());
     }
@@ -275,8 +275,8 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         return SpreadsheetFormula.with("1+2");
     }
 
-    private TextProperties textProperties() {
-        return TextProperties.with(Maps.of(TextPropertyName.FONT_WEIGHT, FontWeight.BOLD));
+    private TextStyle style() {
+        return TextStyle.with(Maps.of(TextStylePropertyName.FONT_WEIGHT, FontWeight.BOLD));
     }
 
     private Optional<SpreadsheetCellFormat> format() {
