@@ -15,7 +15,6 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.text.TextNode;
-import walkingkooka.tree.text.TextProperties;
 import walkingkooka.type.MemberVisibility;
 
 import java.util.List;
