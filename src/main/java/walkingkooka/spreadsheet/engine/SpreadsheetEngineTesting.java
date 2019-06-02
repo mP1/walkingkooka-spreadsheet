@@ -20,7 +20,6 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.text.TextProperties;
 import walkingkooka.type.MemberVisibility;
 
 import java.util.Collection;
