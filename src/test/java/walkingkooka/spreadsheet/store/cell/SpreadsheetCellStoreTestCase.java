@@ -2,19 +2,21 @@ package walkingkooka.spreadsheet.store.cell;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
-import walkingkooka.spreadsheet.SpreadsheetFormattedCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.store.StoreTesting;
-import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
-import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
 import walkingkooka.test.TypeNameTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
+import walkingkooka.tree.text.FontWeight;
+import walkingkooka.tree.text.TextNode;
+import walkingkooka.tree.text.TextProperties;
+import walkingkooka.tree.text.TextPropertyName;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -250,7 +252,8 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
 
     private SpreadsheetCell cell(final SpreadsheetCellReference cellReference) {
-        return SpreadsheetCell.with(cellReference, this.formula(), this.style())
+        return SpreadsheetCell.with(cellReference, this.formula())
+                .setTextProperties(this.textProperties())
                 .setFormat(this.format())
                 .setFormatted(this.formatted());
     }
@@ -272,15 +275,15 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         return SpreadsheetFormula.with("1+2");
     }
 
-    private SpreadsheetCellStyle style() {
-        return SpreadsheetCellStyle.EMPTY.setText(SpreadsheetTextStyle.EMPTY.setBold(SpreadsheetTextStyle.BOLD));
+    private TextProperties textProperties() {
+        return TextProperties.with(Maps.of(TextPropertyName.FONT_WEIGHT, FontWeight.BOLD));
     }
 
     private Optional<SpreadsheetCellFormat> format() {
         return SpreadsheetCell.NO_FORMAT;
     }
 
-    private Optional<SpreadsheetFormattedCell> formatted() {
+    private Optional<TextNode> formatted() {
         return SpreadsheetCell.NO_FORMATTED_CELL;
     }
 

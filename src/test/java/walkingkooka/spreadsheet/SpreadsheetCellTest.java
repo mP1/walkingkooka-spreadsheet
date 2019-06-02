@@ -1,15 +1,19 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.compare.ComparableTesting;
-import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
-import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.text.FontStyle;
+import walkingkooka.tree.text.FontWeight;
+import walkingkooka.tree.text.TextNode;
+import walkingkooka.tree.text.TextProperties;
+import walkingkooka.tree.text.TextPropertyName;
 import walkingkooka.type.MemberVisibility;
 
 import java.util.Optional;
@@ -34,21 +38,14 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testWithNullReferenceFails() {
         assertThrows(NullPointerException.class, () -> {
-            SpreadsheetCell.with(null, this.formula(), this.style());
+            SpreadsheetCell.with(null, this.formula());
         });
     }
 
     @Test
     public void testWithNullFormulaFails() {
         assertThrows(NullPointerException.class, () -> {
-            SpreadsheetCell.with(REFERENCE, null, this.style());
-        });
-    }
-
-    @Test
-    public void testWithNullStyleFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetCell.with(REFERENCE, this.formula(), null);
+            SpreadsheetCell.with(REFERENCE, null);
         });
     }
 
@@ -58,19 +55,17 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
         this.checkReference(cell);
         this.checkFormula(cell);
-        this.checkStyle(cell);
+        this.checkTextProperties(cell);
         this.checkFormat(cell);
         this.checkFormatted(cell);
     }
 
     @Test
     public void testWithFormula() {
-        final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE,
-                this.formula(),
-                this.style());
+        final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE, this.formula());
         this.checkReference(cell);
         this.checkFormula(cell);
-        this.checkStyle(cell);
+        this.checkTextProperties(cell);
         this.checkNoFormat(cell);
         this.checkNoFormatted(cell);
     }
@@ -128,50 +123,38 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
         this.checkReference(different, REFERENCE);
         this.checkFormula(different, differentFormula);
-        this.checkStyle(different, this.style());
+        this.checkTextProperties(different);
         this.checkFormat(different);
         this.checkNoFormatted(different); // clear formatted because of formula / value change.
     }
 
-    private void setFormulaAndCheck(final SpreadsheetFormula differentFormula) {
-        final SpreadsheetCell cell = this.createCell();
-        final SpreadsheetCell different = cell.setFormula(differentFormula);
-        assertNotSame(cell, different);
-
-        this.checkReference(different, REFERENCE);
-        this.checkFormula(different, differentFormula);
-        this.checkStyle(different, this.style());
-        this.checkFormat(different);
-        this.checkNoFormatted(different); // clear formatted because of formula / value change.
-    }
-
-    // SetStyle.....................................................................................................
+    // SetTextProperties.....................................................................................................
 
     @Test
-    public void testSetStyleNullFails() {
+    public void testSetTextPropertiesNullFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.createCell().setStyle(null);
+            this.createCell().setTextProperties(null);
         });
     }
 
     @Test
-    public void testSetStyleSame() {
+    public void testSetTextPropertiesSame() {
         final SpreadsheetCell cell = this.createCell();
-        assertSame(cell, cell.setStyle(cell.style()));
+        assertSame(cell, cell.setTextProperties(cell.textProperties()));
     }
 
     @Test
-    public void testSetStyleDifferent() {
+    public void testSetTextPropertiesDifferent() {
         final SpreadsheetCell cell = this.createCell();
-        final SpreadsheetCellStyle differentStyle = SpreadsheetCellStyle.EMPTY.setText(SpreadsheetTextStyle.EMPTY.setItalics(SpreadsheetTextStyle.ITALICS));
-        final SpreadsheetCell different = cell.setStyle(differentStyle);
+        final TextProperties differentTextProperties = TextProperties.with(Maps.of(TextPropertyName.FONT_STYLE, FontStyle.ITALIC));
+        final SpreadsheetCell different = cell.setTextProperties(differentTextProperties);
         assertNotSame(cell, different);
 
         this.checkReference(different, REFERENCE);
         this.checkFormula(different, this.formula());
-        this.checkStyle(different, differentStyle);
+        this.checkTextProperties(different, differentTextProperties);
         this.checkFormat(different);
-        this.checkNoFormatted(different); // clear formatted because of style change
+        this.checkNoFormatted(different); // clear formatted because of text properties change
     }
 
     // SetFormat.....................................................................................................
@@ -198,22 +181,20 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
         this.checkReference(different, REFERENCE);
         this.checkFormula(different, this.formula());
-        this.checkStyle(different, this.style());
+        this.checkTextProperties(different);
         this.checkFormat(different, differentFormat);
         this.checkNoFormatted(different); // clear formatted because of format change
     }
 
     @Test
     public void testSetFormatWhenWithout() {
-        final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE,
-                this.formula(),
-                this.style());
+        final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE, this.formula());
         final SpreadsheetCell different = cell.setFormat(this.format());
         assertNotSame(cell, different);
 
         this.checkReference(different);
         this.checkFormula(different);
-        this.checkStyle(different);
+        this.checkTextProperties(different);
         this.checkFormat(different);
         this.checkNoFormatted(different);
     }
@@ -236,28 +217,26 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testSetFormattedDifferent() {
         final SpreadsheetCell cell = this.createCell();
-        final Optional<SpreadsheetFormattedCell> differentFormatted = Optional.of(SpreadsheetFormattedCell.with("different", SpreadsheetCellStyle.EMPTY));
+        final Optional<TextNode> differentFormatted = Optional.of(TextNode.text("different"));
         final SpreadsheetCell different = cell.setFormatted(differentFormatted);
         assertNotSame(cell, different);
 
         this.checkReference(different, REFERENCE);
         this.checkFormula(different, this.formula());
-        this.checkStyle(different, this.style());
+        this.checkTextProperties(different);
         this.checkFormat(different, this.format());
         this.checkFormatted(different, differentFormatted);
     }
 
     @Test
     public void testSetFormattedWhenWithout() {
-        final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE,
-                this.formula(),
-                this.style());
+        final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE, this.formula());
         final SpreadsheetCell different = cell.setFormatted(this.formatted());
         assertNotSame(cell, different);
 
         this.checkReference(different);
         this.checkFormula(different);
-        this.checkStyle(different);
+        this.checkTextProperties(different);
         this.checkNoFormat(different);
         this.checkFormatted(different);
     }
@@ -280,11 +259,9 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     @Test
-    public void testCompareDifferentStyle() {
+    public void testCompareDifferentTextProperties() {
         this.compareToAndCheckEqual(this.createComparable()
-                .setStyle(SpreadsheetCellStyle.EMPTY
-                        .setText(SpreadsheetTextStyle.EMPTY
-                                .setItalics(SpreadsheetTextStyle.ITALICS))));
+                .setTextProperties(TextProperties.with(Maps.of(TextPropertyName.FONT_STYLE, FontStyle.ITALIC))));
     }
 
     @Test
@@ -295,7 +272,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @Test
     public void testCompareDifferentFormatted() {
-        this.compareToAndCheckEqual(this.createComparable().setFormatted(Optional.of(SpreadsheetFormattedCell.with("different-formatted", this.style()))));
+        this.compareToAndCheckEqual(this.createComparable().setFormatted(Optional.of(TextNode.text("different-formatted"))));
     }
 
     // HasJsonNode...............................................................................................
@@ -335,91 +312,125 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testFromJsonNodeObjectReferenceMissingFails() {
         this.fromJsonNodeFails(JsonNode.object()
+                .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode()));
+    }
+
+    @Test
+    public void testFromJsonNodeObjectReferenceMissingFails2() {
+        this.fromJsonNodeFails(JsonNode.object()
                 .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode())
-                .set(SpreadsheetCell.STYLE_PROPERTY, style().toJsonNode()));
+                .set(SpreadsheetCell.TEXT_PROPERTIES_PROPERTY, this.boldAndItalics().toJsonNode()));
     }
 
     @Test
     public void testFromJsonNodeObjectFormulaMissingFails() {
         this.fromJsonNodeFails(JsonNode.object()
-                .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode())
-                .set(SpreadsheetCell.STYLE_PROPERTY, style().toJsonNode()));
+                .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode()));
     }
 
     @Test
-    public void testFromJsonNodeObjectStyleMissingFails() {
-        this.fromJsonNodeFails(JsonNode.object()
-                .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode())
-                .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode()));
-    }
+    public void testFromJsonNodeObjectReferenceAndFormulaAndTextProperties() {
+        final TextProperties boldAndItalics = this.boldAndItalics();
 
-    @Test
-    public void testFromJsonNodeObjectReferenceAndFormulaAndStyle() {
         this.fromJsonNodeAndCheck(JsonNode.object()
                         .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode())
                         .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode())
-                        .set(SpreadsheetCell.STYLE_PROPERTY, style().toJsonNode()),
-                SpreadsheetCell.with(reference(),
-                        formula(),
-                        style()));
+                        .set(SpreadsheetCell.TEXT_PROPERTIES_PROPERTY, boldAndItalics.toJsonNode()),
+                SpreadsheetCell.with(reference(), formula()).setTextProperties(boldAndItalics));
     }
 
     @Test
-    public void testFromJsonNodeObjectReferenceAndFormulaAndStyleAndFormat() {
+    public void testFromJsonNodeObjectReferenceAndFormulaAndTextPropertiesAndFormat() {
+        final TextProperties boldAndItalics = this.boldAndItalics();
+
         this.fromJsonNodeAndCheck(JsonNode.object()
                         .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode())
                         .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode())
-                        .set(SpreadsheetCell.STYLE_PROPERTY, style().toJsonNode())
+                        .set(SpreadsheetCell.TEXT_PROPERTIES_PROPERTY, boldAndItalics.toJsonNode())
                         .set(SpreadsheetCell.FORMAT_PROPERTY, format().get().toJsonNode()),
-                SpreadsheetCell.with(reference(),
-                        formula(),
-                        style())
+                SpreadsheetCell.with(reference(), formula())
+                        .setTextProperties(boldAndItalics)
                         .setFormat(format()));
     }
 
     @Test
-    public void testFromJsonNodeObjectReferenceAndFormulaAndStyleAndFormattedCell() {
+    public void testFromJsonNodeObjectReferenceAndFormulaAndTextPropertiesAndFormattedCell() {
+        final TextProperties boldAndItalics = this.boldAndItalics();
+
         this.fromJsonNodeAndCheck(JsonNode.object()
                         .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode())
                         .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode())
-                        .set(SpreadsheetCell.STYLE_PROPERTY, style().toJsonNode())
-                        .set(SpreadsheetCell.FORMATTED_PROPERTY, formatted().get().toJsonNode()),
-                SpreadsheetCell.with(reference(),
-                        formula(),
-                        style())
+                        .set(SpreadsheetCell.TEXT_PROPERTIES_PROPERTY, boldAndItalics.toJsonNode())
+                        .set(SpreadsheetCell.FORMATTED_PROPERTY, formatted().get().toJsonNodeWithType()),
+                SpreadsheetCell.with(reference(), formula())
+                        .setTextProperties(boldAndItalics)
                         .setFormatted(formatted()));
     }
 
     @Test
-    public void testFromJsonNodeObjectReferenceAndFormulaAndStyleAndFormatAndFormattedCell() {
+    public void testFromJsonNodeObjectReferenceAndFormulaAndFormatAndFormattedCell() {
         this.fromJsonNodeAndCheck(JsonNode.object()
                         .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode())
                         .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode())
-                        .set(SpreadsheetCell.STYLE_PROPERTY, style().toJsonNode())
                         .set(SpreadsheetCell.FORMAT_PROPERTY, format().get().toJsonNode())
-                        .set(SpreadsheetCell.FORMATTED_PROPERTY, formatted().get().toJsonNode()),
-                SpreadsheetCell.with(reference(),
-                        formula(),
-                        style())
+                        .set(SpreadsheetCell.FORMATTED_PROPERTY, formatted().get().toJsonNodeWithType()),
+                SpreadsheetCell.with(reference(), formula())
+                        .setFormat(format())
+                        .setFormatted(formatted()));
+    }
+
+    @Test
+    public void testFromJsonNodeObjectReferenceAndFormulaAndTextPropertiesAndFormatAndFormattedCell() {
+        final TextProperties boldAndItalics = this.boldAndItalics();
+
+        this.fromJsonNodeAndCheck(JsonNode.object()
+                        .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode())
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode())
+                        .set(SpreadsheetCell.TEXT_PROPERTIES_PROPERTY, boldAndItalics.toJsonNode())
+                        .set(SpreadsheetCell.FORMAT_PROPERTY, format().get().toJsonNode())
+                        .set(SpreadsheetCell.FORMATTED_PROPERTY, formatted().get().toJsonNodeWithType()),
+                SpreadsheetCell.with(reference(), formula())
+                        .setTextProperties(boldAndItalics)
                         .setFormat(format())
                         .setFormatted(formatted()));
     }
 
     // HasJsonNode .toJsonNode.........................................................................
+
     @Test
     public void testJsonNode() {
-        this.toJsonNodeAndCheck(SpreadsheetCell.with(reference(COLUMN, ROW),
-                SpreadsheetFormula.with(FORMULA),
-                this.style()),
-                "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}, \"style\": " + this.style().toJsonNode() + "}");
+        this.toJsonNodeAndCheck(SpreadsheetCell.with(reference(COLUMN, ROW), SpreadsheetFormula.with(FORMULA)),
+                "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}}");
+    }
+
+    @Test
+    public void testJsonNodeWithTextProperties() {
+        final TextProperties boldAndItalics = this.boldAndItalics();
+
+        this.toJsonNodeAndCheck(SpreadsheetCell.with(reference(COLUMN, ROW), SpreadsheetFormula.with(FORMULA))
+                        .setTextProperties(boldAndItalics),
+                "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}, \"text-properties\": " + boldAndItalics.toJsonNodeWithType() + "}");
     }
 
     @Test
     public void testJsonNodeWithFormatted() {
         this.toJsonNodeAndCheck(this.createCell(),
-                "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}, \"style\": " + this.style().toJsonNode() +
+                "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}" +
                         ", \"format\": " + this.format().get().toJsonNode() +
-                        ", \"formatted\": " + this.formatted().get().toJsonNode() +
+                        ", \"formatted\": " + this.formatted().get().toJsonNodeWithType() +
+                        "}");
+    }
+
+    @Test
+    public void testJsonNodeWithTextPropertiesAndFormatted() {
+        final TextProperties boldAndItalics = this.boldAndItalics();
+
+        this.toJsonNodeAndCheck(this.createCell()
+                        .setTextProperties(boldAndItalics)
+                .setFormatted(this.formatted()),
+                "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}, \"text-properties\": " + boldAndItalics.toJsonNodeWithType() +
+                        ", \"format\": " + this.format().get().toJsonNode() +
+                        ", \"formatted\": " + this.formatted().get().toJsonNodeWithType() +
                         "}");
     }
 
@@ -431,26 +442,33 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     // toString...............................................................................................
 
     @Test
+    public void testToStringWithTextProperties() {
+        final TextProperties boldAndItalics = this.boldAndItalics();
+
+        this.toStringAndCheck(SpreadsheetCell.with(REFERENCE,
+                this.formula()).setTextProperties(boldAndItalics),
+                REFERENCE + "=" + this.formula() + " " + boldAndItalics);
+    }
+
+    @Test
     public void testToStringWithoutErrorWithoutFormatWithoutFormatted() {
         this.toStringAndCheck(SpreadsheetCell.with(REFERENCE,
-                this.formula(),
-                this.style()),
-                REFERENCE + "=" + this.formula() + " bold");
+                this.formula()),
+                REFERENCE + "=" + this.formula());
     }
 
     @Test
     public void testToStringWithoutErrorWithFormatWithoutFormatted() {
         this.toStringAndCheck(SpreadsheetCell.with(REFERENCE,
-                this.formula(),
-                this.style())
+                this.formula())
                         .setFormat(this.format()),
-                REFERENCE + "=" + this.formula() + " bold \"pattern\"");
+                REFERENCE + "=" + this.formula() + " \"pattern\"");
     }
 
     @Test
     public void testToStringWithoutError() {
         this.toStringAndCheck(this.createCell(),
-                REFERENCE + "=" + this.formula() + " bold \"pattern\" \"formatted-text\"");
+                REFERENCE + "=" + this.formula() + " \"pattern\" \"formatted-text\"");
     }
 
     private SpreadsheetCell createCell() {
@@ -464,8 +482,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     private SpreadsheetCell createComparable(final int column, final int row, final String formula) {
         return SpreadsheetCell.with(reference(column, row),
-                SpreadsheetFormula.with(formula),
-                this.style())
+                SpreadsheetFormula.with(formula))
                 .setFormat(this.format())
                 .setFormatted(this.formatted());
     }
@@ -506,16 +523,16 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         assertEquals(formula, cell.formula(), "formula");
     }
 
-    private SpreadsheetCellStyle style() {
-        return SpreadsheetCellStyle.EMPTY.setText(SpreadsheetTextStyle.EMPTY.setBold(SpreadsheetTextStyle.BOLD));
+    private TextProperties boldAndItalics() {
+        return TextProperties.with(Maps.of(TextPropertyName.FONT_WEIGHT, FontWeight.BOLD, TextPropertyName.FONT_STYLE, FontStyle.ITALIC));
     }
 
-    private void checkStyle(final SpreadsheetCell cell) {
-        this.checkStyle(cell, this.style());
+    private void checkTextProperties(final SpreadsheetCell cell) {
+        this.checkTextProperties(cell, SpreadsheetCell.NO_TEXT_PROPERTIES);
     }
 
-    private void checkStyle(final SpreadsheetCell cell, final SpreadsheetCellStyle style) {
-        assertEquals(style, cell.style(), "style");
+    private void checkTextProperties(final SpreadsheetCell cell, final TextProperties textProperties) {
+        assertEquals(textProperties, cell.textProperties(), "textProperties");
     }
 
     private Optional<SpreadsheetCellFormat> format() {
@@ -534,8 +551,8 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         assertEquals(format, cell.format(), "format");
     }
 
-    private Optional<SpreadsheetFormattedCell> formatted() {
-        return Optional.of(SpreadsheetFormattedCell.with("formatted-text", SpreadsheetCellStyle.EMPTY));
+    private Optional<TextNode> formatted() {
+        return Optional.of(TextNode.text("formatted-text"));
     }
 
     private void checkNoFormatted(final SpreadsheetCell cell) {
@@ -546,7 +563,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.checkFormatted(cell, this.formatted());
     }
 
-    private void checkFormatted(final SpreadsheetCell cell, final Optional<SpreadsheetFormattedCell> formatted) {
+    private void checkFormatted(final SpreadsheetCell cell, final Optional<TextNode> formatted) {
         assertEquals(formatted, cell.formatted(), "formatted");
     }
 
