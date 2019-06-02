@@ -1,12 +1,10 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.set.Sets;
-import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetDelta;
 import walkingkooka.spreadsheet.SpreadsheetError;
-import walkingkooka.spreadsheet.SpreadsheetFormattedCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
@@ -16,16 +14,16 @@ import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStore;
-import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
-import walkingkooka.text.spreadsheetformat.SpreadsheetFormattedText;
 import walkingkooka.text.spreadsheetformat.SpreadsheetTextFormatter;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
+import walkingkooka.tree.text.TextNode;
+import walkingkooka.tree.text.TextProperties;
 
 import java.util.Collection;
 import java.util.NoSuchElementException;
@@ -123,7 +121,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     final SpreadsheetCell formulaEvaluateAndStyle(final SpreadsheetCell cell,
                                                   final SpreadsheetEngineContext context) {
-        return this.formatAndApplyStyle(
+        return this.formatAndApplyTextProperties(
                 cell.setFormula(this.parseFormulaAndEvaluate(cell.formula(), context)),
                 context);
     }
@@ -205,8 +203,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * If a value is present use the pattern to format and apply the styling.
      */
-    private SpreadsheetCell formatAndApplyStyle(final SpreadsheetCell cell,
-                                                final SpreadsheetEngineContext context) {
+    private SpreadsheetCell formatAndApplyTextProperties(final SpreadsheetCell cell,
+                                                         final SpreadsheetEngineContext context) {
         SpreadsheetCell result = cell;
 
         SpreadsheetTextFormatter<?> formatter = context.defaultSpreadsheetTextFormatter();
@@ -224,8 +222,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         final SpreadsheetFormula formula = cell.formula();
         final Optional<Object> value = formula.value();
         final SpreadsheetCell beforeConditionalRules = value.isPresent() ?
-                result.setFormatted(Optional.of(this.formatAndApplyStyle0(value.get(), formatter, result.style(), context))) :
-                this.formatAndApplyStyleValueAbsent(result);
+                result.setFormatted(Optional.of(this.formatAndApplyTextProperties0(value.get(), formatter, result.textProperties(), context))) :
+                this.formatAndApplyTextPropertiesValueAbsent(result);
 
         return this.locateAndApplyConditionalFormattingRule(beforeConditionalRules, context);
     }
@@ -250,29 +248,18 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     /**
-     * Uses the formatter to format the value, merging the style and returns an updated {@link SpreadsheetFormattedCell}.
+     * Uses the formatter to format the value, merging the style and returns an updated {@link TextNode}.
      */
-    private SpreadsheetFormattedCell formatAndApplyStyle0(final Object value,
-                                                          final SpreadsheetTextFormatter<?> formatter,
-                                                          final SpreadsheetCellStyle style,
-                                                          final SpreadsheetEngineContext context) {
-        String text = "";
-        Optional<Color> color = SpreadsheetFormattedText.WITHOUT_COLOR;
-
-        final Optional<SpreadsheetFormattedText> maybeFormattedText = context.format(value, formatter);
-        if (maybeFormattedText.isPresent()) {
-            final SpreadsheetFormattedText formattedText = maybeFormattedText.get();
-            text = formattedText.text();
-            color = formattedText.color();
-        }
-        SpreadsheetFormattedCell formattedCell = style.setCellFormattedText(text);
-
-        if (color.isPresent()) {
-            formattedCell.setTextColor(color.get());
-        }
-
-        return formattedCell;
+    private TextNode formatAndApplyTextProperties0(final Object value, 
+                                                   final SpreadsheetTextFormatter<?> formatter, 
+                                                   final TextProperties textProperties, 
+                                                   final SpreadsheetEngineContext context) {
+        return context.format(value, formatter)
+                .map(f -> textProperties.replace(f.toTextNode()))
+                .orElse(EMPTY_TEXT_NODE);
     }
+
+    private final static TextNode EMPTY_TEXT_NODE = TextNode.text("");
 
     /**
      * Locates and returns the first matching conditional rule style.
@@ -287,13 +274,15 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             final Object test = context.evaluate(rule.formula().expression().get());
             final Boolean booleanResult = context.convert(test, Boolean.class);
             if (Boolean.TRUE.equals(booleanResult)) {
-                final Optional<SpreadsheetFormattedCell> formatted = cell.formatted();
+                final Optional<TextNode> formatted = cell.formatted();
                 if (!formatted.isPresent()) {
                     throw new BasicSpreadsheetEngineException("Missing formatted cell=" + cell);
                 }
-
-                result = cell.setFormatted(Optional.of(formatted.get().setStyle(rule.style().apply(cell))));
-                break;
+                result = cell.setFormatted(
+                        Optional.of(
+                                rule.textProperties()
+                                        .apply(cell)
+                                        .replace(formatted.get())));
             }
         }
         return result;
@@ -310,12 +299,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * Handles apply style to the error if present or defaulting to empty {@link String}.
      * The error becomes the text and no formatting or color is applied.
      */
-    private SpreadsheetCell formatAndApplyStyleValueAbsent(final SpreadsheetCell cell) {
+    private SpreadsheetCell formatAndApplyTextPropertiesValueAbsent(final SpreadsheetCell cell) {
         final Optional<SpreadsheetError> error = cell.formula().error();
 
-        return cell.setFormatted(Optional.of(cell.style().setCellFormattedText(error.isPresent() ?
-                error.get().value() :
-                "")));
+        return cell.setFormatted(Optional.of(cell.textProperties().replace(TextNode.text(error.get().value()))));
     }
 
     // SAVE CELL....................................................................................................

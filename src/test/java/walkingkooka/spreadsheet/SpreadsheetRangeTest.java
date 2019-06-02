@@ -4,8 +4,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
-import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
-import walkingkooka.spreadsheet.style.SpreadsheetTextStyle;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ParseStringTesting;
@@ -16,6 +14,8 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.text.TextNode;
+import walkingkooka.tree.text.TextProperties;
 import walkingkooka.type.MemberVisibility;
 
 import java.util.List;
@@ -502,22 +502,16 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
     }
 
     private SpreadsheetCell spreadsheetCell(final int column, final int row) {
-        return SpreadsheetCell.with(this.cell(column, row),
-                SpreadsheetFormula.with(column + "+" + row),
-                this.style())
+        return SpreadsheetCell.with(this.cell(column, row), SpreadsheetFormula.with(column + "+" + row))
                 .setFormat(this.format())
                 .setFormatted(this.formatted());
-    }
-
-    private SpreadsheetCellStyle style() {
-        return SpreadsheetCellStyle.EMPTY.setText(SpreadsheetTextStyle.EMPTY.setBold(SpreadsheetTextStyle.BOLD));
     }
 
     private Optional<SpreadsheetCellFormat> format() {
         return SpreadsheetCell.NO_FORMAT;
     }
 
-    private Optional<SpreadsheetFormattedCell> formatted() {
+    private Optional<TextNode> formatted() {
         return SpreadsheetCell.NO_FORMATTED_CELL;
     }
 

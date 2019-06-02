@@ -1,7 +1,6 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
@@ -46,9 +45,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     final SpreadsheetCell cell(final String cellReference, final String formulaText) {
-        return SpreadsheetCell.with(SpreadsheetCellReference.parse(cellReference),
-                SpreadsheetFormula.with(formulaText),
-                SpreadsheetCellStyle.EMPTY);
+        return SpreadsheetCell.with(SpreadsheetCellReference.parse(cellReference), SpreadsheetFormula.with(formulaText));
     }
 
     final void checkId(final SpreadsheetDelta delta) {

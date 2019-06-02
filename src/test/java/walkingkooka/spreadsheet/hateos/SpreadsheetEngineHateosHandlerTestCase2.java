@@ -9,7 +9,6 @@ import walkingkooka.spreadsheet.SpreadsheetDelta;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
-import walkingkooka.spreadsheet.style.SpreadsheetCellStyle;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
 import java.util.Optional;
@@ -63,8 +62,6 @@ public abstract class SpreadsheetEngineHateosHandlerTestCase2<H extends HateosHa
     }
 
     final SpreadsheetCell cell(final String reference, final String formula) {
-        return SpreadsheetCell.with(SpreadsheetCellReference.parse(reference),
-                SpreadsheetFormula.with(formula),
-                SpreadsheetCellStyle.EMPTY);
+        return SpreadsheetCell.with(SpreadsheetCellReference.parse(reference), SpreadsheetFormula.with(formula));
     }
 }
