@@ -351,7 +351,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Test
     public void testFromJsonNodeText() {
         this.fromJsonNodeAndCheck(JsonNode.object()
-                        .set(SpreadsheetFormula.TEXT_PROPERTY, JsonNode.string(TEXT)),
+                        .set(SpreadsheetFormula.TEXT, JsonNode.string(TEXT)),
                 SpreadsheetFormula.with(TEXT));
     }
 
@@ -360,7 +360,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         final SpreadsheetError error = SpreadsheetError.with(ERROR);
 
         this.fromJsonNodeAndCheck(JsonNode.object()
-                        .set(SpreadsheetFormula.TEXT_PROPERTY, JsonNode.string(TEXT))
+                        .set(SpreadsheetFormula.TEXT, JsonNode.string(TEXT))
                         .set(SpreadsheetFormula.ERROR_PROPERTY, error.toJsonNode()),
                 SpreadsheetFormula.with(TEXT).setError(Optional.of(error)));
     }
@@ -368,7 +368,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Test
     public void testFromJsonNodeTextAndValue() {
         this.fromJsonNodeAndCheck(JsonNode.object()
-                        .set(SpreadsheetFormula.TEXT_PROPERTY, JsonNode.string(TEXT))
+                        .set(SpreadsheetFormula.TEXT, JsonNode.string(TEXT))
                         .set(SpreadsheetFormula.VALUE_PROPERTY, JsonNode.number(VALUE)),
                 SpreadsheetFormula.with(TEXT).setValue(Optional.of(VALUE)));
     }
@@ -376,7 +376,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Test
     public void testFromJsonNodeTextAndErrorAndValueFails() {
         this.fromJsonNodeFails(JsonNode.object()
-                .set(SpreadsheetFormula.TEXT_PROPERTY, JsonNode.string(TEXT))
+                .set(SpreadsheetFormula.TEXT, JsonNode.string(TEXT))
                 .set(SpreadsheetFormula.VALUE_PROPERTY, JsonNode.string("1"))
                 .set(SpreadsheetFormula.ERROR_PROPERTY, SpreadsheetError.with(ERROR).toJsonNode()));
     }

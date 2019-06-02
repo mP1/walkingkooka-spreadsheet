@@ -23,7 +23,7 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.text.spreadsheetformat.SpreadsheetTextFormatter;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.text.TextNode;
-import walkingkooka.tree.text.TextProperties;
+import walkingkooka.tree.text.TextStyle;
 
 import java.util.Collection;
 import java.util.NoSuchElementException;
@@ -121,7 +121,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     final SpreadsheetCell formulaEvaluateAndStyle(final SpreadsheetCell cell,
                                                   final SpreadsheetEngineContext context) {
-        return this.formatAndApplyTextProperties(
+        return this.formatAndApplyStyle(
                 cell.setFormula(this.parseFormulaAndEvaluate(cell.formula(), context)),
                 context);
     }
@@ -203,7 +203,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * If a value is present use the pattern to format and apply the styling.
      */
-    private SpreadsheetCell formatAndApplyTextProperties(final SpreadsheetCell cell,
+    private SpreadsheetCell formatAndApplyStyle(final SpreadsheetCell cell,
                                                          final SpreadsheetEngineContext context) {
         SpreadsheetCell result = cell;
 
@@ -222,8 +222,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         final SpreadsheetFormula formula = cell.formula();
         final Optional<Object> value = formula.value();
         final SpreadsheetCell beforeConditionalRules = value.isPresent() ?
-                result.setFormatted(Optional.of(this.formatAndApplyTextProperties0(value.get(), formatter, result.textProperties(), context))) :
-                this.formatAndApplyTextPropertiesValueAbsent(result);
+                result.setFormatted(Optional.of(this.formatAndApplyStyle0(value.get(), formatter, result.style(), context))) :
+                this.formatAndApplyStyleValueAbsent(result);
 
         return this.locateAndApplyConditionalFormattingRule(beforeConditionalRules, context);
     }
@@ -250,12 +250,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * Uses the formatter to format the value, merging the style and returns an updated {@link TextNode}.
      */
-    private TextNode formatAndApplyTextProperties0(final Object value, 
+    private TextNode formatAndApplyStyle0(final Object value,
                                                    final SpreadsheetTextFormatter<?> formatter, 
-                                                   final TextProperties textProperties, 
+                                                   final TextStyle style,
                                                    final SpreadsheetEngineContext context) {
         return context.format(value, formatter)
-                .map(f -> textProperties.replace(f.toTextNode()))
+                .map(f -> style.replace(f.toTextNode()))
                 .orElse(EMPTY_TEXT_NODE);
     }
 
@@ -280,7 +280,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 }
                 result = cell.setFormatted(
                         Optional.of(
-                                rule.textProperties()
+                                rule.style()
                                         .apply(cell)
                                         .replace(formatted.get())));
             }
@@ -299,10 +299,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * Handles apply style to the error if present or defaulting to empty {@link String}.
      * The error becomes the text and no formatting or color is applied.
      */
-    private SpreadsheetCell formatAndApplyTextPropertiesValueAbsent(final SpreadsheetCell cell) {
+    private SpreadsheetCell formatAndApplyStyleValueAbsent(final SpreadsheetCell cell) {
         final Optional<SpreadsheetError> error = cell.formula().error();
 
-        return cell.setFormatted(Optional.of(cell.textProperties().replace(TextNode.text(error.get().value()))));
+        return cell.setFormatted(Optional.of(cell.style().replace(TextNode.text(error.get().value()))));
     }
 
     // SAVE CELL....................................................................................................
