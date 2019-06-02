@@ -30,8 +30,7 @@ import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonNodeName;
 import walkingkooka.tree.json.JsonObjectNode;
 import walkingkooka.tree.text.TextNode;
-import walkingkooka.tree.text.TextProperties;
-import walkingkooka.tree.text.TextPropertyName;
+import walkingkooka.tree.text.TextStyle;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -55,9 +54,9 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
     public final static Optional<TextNode> NO_FORMATTED_CELL = Optional.empty();
 
     /**
-     * An empty {@link TextProperties}.
+     * An empty {@link TextStyle}.
      */
-    public final static TextProperties NO_TEXT_PROPERTIES = TextProperties.EMPTY;
+    public final static TextStyle NO_STYLE = TextStyle.EMPTY;
 
     /**
      * Factory that creates a new {@link SpreadsheetCell}
@@ -67,7 +66,7 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
         checkReference(reference);
         checkFormula(formula);
 
-        return new SpreadsheetCell(reference, formula, NO_TEXT_PROPERTIES, NO_FORMAT, NO_FORMATTED_CELL);
+        return new SpreadsheetCell(reference, formula, NO_STYLE, NO_FORMAT, NO_FORMATTED_CELL);
     }
 
     private static void checkReference(final SpreadsheetCellReference reference) {
@@ -78,8 +77,8 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
         Objects.requireNonNull(formula, "formula");
     }
 
-    private static void checkTextProperties(final TextProperties textProperties) {
-        Objects.requireNonNull(textProperties, "textProperties");
+    private static void checkTextStyle(final TextStyle style) {
+        Objects.requireNonNull(style, "style");
     }
 
     /**
@@ -87,14 +86,14 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
      */
     private SpreadsheetCell(final SpreadsheetCellReference reference,
                             final SpreadsheetFormula formula,
-                            final TextProperties textProperties,
+                            final TextStyle style,
                             final Optional<SpreadsheetCellFormat> format,
                             final Optional<TextNode> formatted) {
         super();
 
         this.reference = reference;
         this.formula = formula;
-        this.textProperties = textProperties;
+        this.style = style;
         this.format = format;
         this.formatted = formatted;
     }
@@ -116,7 +115,7 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
 
         return this.reference.equals(reference) ?
                 this :
-                this.replace(reference, this.formula, this.textProperties, this.format, NO_FORMATTED_CELL);
+                this.replace(reference, this.formula, this.style, this.format, NO_FORMATTED_CELL);
     }
 
     /**
@@ -135,7 +134,7 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
 
         return this.formula.equals(formula) ?
                 this :
-                this.replace(this.reference, formula, this.textProperties, this.format, NO_FORMATTED_CELL);
+                this.replace(this.reference, formula, this.style, this.format, NO_FORMATTED_CELL);
     }
 
     /**
@@ -145,22 +144,22 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
 
     // style .............................................................................................
 
-    public TextProperties textProperties() {
-        return this.textProperties;
+    public TextStyle style() {
+        return this.style;
     }
 
-    public SpreadsheetCell setTextProperties(final TextProperties textProperties) {
-        checkTextProperties(textProperties);
+    public SpreadsheetCell setStyle(final TextStyle style) {
+        checkTextStyle(style);
 
-        return this.textProperties.equals(textProperties) ?
+        return this.style.equals(style) ?
                 this :
-                this.replace(this.reference, this.formula, textProperties, this.format, NO_FORMATTED_CELL);
+                this.replace(this.reference, this.formula, style, this.format, NO_FORMATTED_CELL);
     }
 
     /**
      * The cell style that is used to format the output of the formula.
      */
-    private final TextProperties textProperties;
+    private final TextStyle style;
 
     // format .............................................................................................
 
@@ -173,7 +172,7 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
 
         return this.format.equals(format) ?
                 this :
-                this.replace(this.reference, this.formula, this.textProperties, format, NO_FORMATTED_CELL);
+                this.replace(this.reference, this.formula, this.style, format, NO_FORMATTED_CELL);
     }
 
     /**
@@ -193,7 +192,7 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
         final Optional<TextNode> formatted2 = formatted.map(TextNode::root);
         return this.formatted.equals(formatted2) ?
                 this :
-                this.replace(this.reference, this.formula, this.textProperties, this.format, formatted2);
+                this.replace(this.reference, this.formula, this.style, this.format, formatted2);
     }
 
     /**
@@ -208,10 +207,10 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
      */
     private SpreadsheetCell replace(final SpreadsheetCellReference reference,
                                     final SpreadsheetFormula formula,
-                                    final TextProperties textProperties,
+                                    final TextStyle style,
                                     final Optional<SpreadsheetCellFormat> format,
                                     final Optional<TextNode> formatted) {
-        return new SpreadsheetCell(reference, formula, textProperties, format, formatted);
+        return new SpreadsheetCell(reference, formula, style, format, formatted);
     }
 
     // Comparable.................................................................................................
@@ -231,7 +230,7 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
 
         SpreadsheetCellReference reference = null;
         SpreadsheetFormula formula = null;
-        TextProperties textProperties = TextProperties.EMPTY;
+        TextStyle style = TextStyle.EMPTY;
         SpreadsheetCellFormat format = null;
         TextNode formatted = null;
 
@@ -245,8 +244,8 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
                     case FORMULA_PROPERTY_STRING:
                         formula = SpreadsheetFormula.fromJsonNode(child);
                         break;
-                    case TEXT_PROPERTIES_PROPERTY_STRING:
-                        textProperties = TextProperties.fromJsonNode(child);
+                    case STYLE_PROPERTY_STRING:
+                        style = TextStyle.fromJsonNode(child);
                         break;
                     case FORMAT_PROPERTY_STRING:
                         format = SpreadsheetCellFormat.fromJsonNode(child);
@@ -269,7 +268,7 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
             HasJsonNode.requiredPropertyMissing(FORMULA_PROPERTY, node);
         }
 
-        return new SpreadsheetCell(reference, formula, textProperties, Optional.ofNullable(format), Optional.ofNullable(formatted));
+        return new SpreadsheetCell(reference, formula, style, Optional.ofNullable(format), Optional.ofNullable(formatted));
     }
 
     @Override
@@ -278,8 +277,8 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
                 .set(REFERENCE_PROPERTY, this.reference.toJsonNode())
                 .set(FORMULA_PROPERTY, this.formula.toJsonNode());
 
-        if (false == this.textProperties.isEmpty()) {
-            object = object.set(TEXT_PROPERTIES_PROPERTY, this.textProperties.toJsonNodeWithType());
+        if (false == this.style.isEmpty()) {
+            object = object.set(STYLE_PROPERTY, this.style.toJsonNodeWithType());
         }
         if (this.format.isPresent()) {
             object = object.set(FORMAT_PROPERTY, this.format.get().toJsonNode());
@@ -293,13 +292,13 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
 
     private final static String REFERENCE_PROPERTY_STRING = "reference";
     private final static String FORMULA_PROPERTY_STRING = "formula";
-    private final static String TEXT_PROPERTIES_PROPERTY_STRING = "text-properties";
+    private final static String STYLE_PROPERTY_STRING = "style";
     private final static String FORMAT_PROPERTY_STRING = "format";
     private final static String FORMATTED_PROPERTY_STRING = "formatted";
 
     final static JsonNodeName REFERENCE_PROPERTY = JsonNodeName.with(REFERENCE_PROPERTY_STRING);
     final static JsonNodeName FORMULA_PROPERTY = JsonNodeName.with(FORMULA_PROPERTY_STRING);
-    final static JsonNodeName TEXT_PROPERTIES_PROPERTY = JsonNodeName.with(TEXT_PROPERTIES_PROPERTY_STRING);
+    final static JsonNodeName STYLE_PROPERTY = JsonNodeName.with(STYLE_PROPERTY_STRING);
     final static JsonNodeName FORMAT_PROPERTY = JsonNodeName.with(FORMAT_PROPERTY_STRING);
     final static JsonNodeName FORMATTED_PROPERTY = JsonNodeName.with(FORMATTED_PROPERTY_STRING);
 
@@ -313,7 +312,7 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.reference, this.formula, this.textProperties, this.format, this.formatted);
+        return Objects.hash(this.reference, this.formula, this.style, this.format, this.formatted);
     }
 
     @Override
@@ -326,7 +325,7 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
     private boolean equals0(final SpreadsheetCell other) {
         return this.reference.equals(other.reference()) &&
                 this.formula.equals(other.formula()) &&
-                this.textProperties.equals(other.textProperties) &&
+                this.style.equals(other.style) &&
                 this.format.equals(other.format) &&
                 this.formatted.equals(other.formatted);
     }
@@ -341,7 +340,7 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
         builder.labelSeparator("=")
                 .label(this.reference.toString())
                 .value(this.formula)
-                .value(this.textProperties)
+                .value(this.style)
                 .value(this.format)
                 .value(this.formatted);
     }
