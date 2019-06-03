@@ -22,6 +22,7 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.type.MemberVisibility;
 
+import java.math.MathContext;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
@@ -607,7 +608,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default DecimalNumberContext decimalNumberContext() {
-        return DecimalNumberContexts.american();
+        return DecimalNumberContexts.american(MathContext.DECIMAL32);
     }
 
     @Override
