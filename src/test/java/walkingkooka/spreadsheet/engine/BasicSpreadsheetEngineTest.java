@@ -4184,7 +4184,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
                 return node.toValue(ExpressionEvaluationContexts.basic(functions,
                         SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(engine, labelStore, this),
-                        MathContext.UNLIMITED,
                         Converters.simple(),
                         decimalNumberContext()));
             }
