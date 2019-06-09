@@ -12,7 +12,6 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetBetweenSymbolParse
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetBigDecimalParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetBigIntegerParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReferenceParserToken;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCloseParenthesisSymbolParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetDivideSymbolParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetDivisionParserToken;
@@ -42,7 +41,8 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetMultiplySymbolPars
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetNegativeParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetNotEqualsParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetNotEqualsSymbolParserToken;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetOpenParenthesisSymbolParserToken;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParenthesisCloseSymbolParserToken;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParenthesisOpenSymbolParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserTokenVisitor;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetPercentSymbolParserToken;
@@ -284,11 +284,6 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
     }
 
     @Override
-    protected final void visit(final SpreadsheetCloseParenthesisSymbolParserToken token) {
-        this.leaf(token);
-    }
-
-    @Override
     protected final void visit(final SpreadsheetColumnReferenceParserToken token) {
         this.leaf(this.columnOrRow.fixCellReferencesWithinExpression(token));
     }
@@ -379,7 +374,12 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
     }
 
     @Override
-    protected final void visit(final SpreadsheetOpenParenthesisSymbolParserToken token) {
+    protected final void visit(final SpreadsheetParenthesisCloseSymbolParserToken token) {
+        this.leaf(token);
+    }
+
+    @Override
+    protected final void visit(final SpreadsheetParenthesisOpenSymbolParserToken token) {
         this.leaf(token);
     }
 
@@ -447,9 +447,9 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
         final String text = token.text();
 
         final List<ParserToken> tokens = Lists.of(SpreadsheetFormula.INVALID_CELL_REFERENCE_PARSER_TOKEN,
-                SpreadsheetParserToken.openParenthesisSymbol("(", "("),
+                SpreadsheetParserToken.parenthesisOpenSymbol("(", "("),
                 SpreadsheetParserToken.text(text, CharSequences.quote(text).toString()),
-                SpreadsheetParserToken.openParenthesisSymbol(")", ")"));
+                SpreadsheetParserToken.parenthesisCloseSymbol(")", ")"));
         return SpreadsheetParserToken.function(tokens, ParserToken.text(tokens));
     }
 
