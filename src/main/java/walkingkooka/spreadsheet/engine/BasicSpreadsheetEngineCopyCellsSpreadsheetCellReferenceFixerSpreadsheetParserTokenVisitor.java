@@ -11,7 +11,6 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetBetweenSymbolParse
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetBigDecimalParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetBigIntegerParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReferenceParserToken;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCloseParenthesisSymbolParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetDivideSymbolParserToken;
@@ -42,7 +41,8 @@ import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetMultiplySymbolPars
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetNegativeParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetNotEqualsParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetNotEqualsSymbolParserToken;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetOpenParenthesisSymbolParserToken;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParenthesisCloseSymbolParserToken;
+import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParenthesisOpenSymbolParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserTokenVisitor;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetPercentSymbolParserToken;
@@ -286,11 +286,6 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
     }
 
     @Override
-    protected final void visit(final SpreadsheetCloseParenthesisSymbolParserToken token) {
-        this.leaf(token);
-    }
-
-    @Override
     protected final void visit(final SpreadsheetColumnReferenceParserToken token) {
         final SpreadsheetColumnReference reference = token.value();
 
@@ -405,7 +400,12 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
     }
 
     @Override
-    protected final void visit(final SpreadsheetOpenParenthesisSymbolParserToken token) {
+    protected final void visit(final SpreadsheetParenthesisCloseSymbolParserToken token) {
+        this.leaf(token);
+    }
+
+    @Override
+    protected final void visit(final SpreadsheetParenthesisOpenSymbolParserToken token) {
         this.leaf(token);
     }
 
