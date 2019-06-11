@@ -53,7 +53,7 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosR
      */
     static SpreadsheetDeltaNonWindowed nonWindowed(final SpreadsheetId id,
                                                    final Set<SpreadsheetCell> cells) {
-        return SpreadsheetDeltaNonWindowed.with0(id, copyCells(cells));
+        return SpreadsheetDeltaNonWindowed.with0(id, Sets.immutable(cells));
     }
 
     /**
@@ -95,15 +95,6 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosR
 
     static void checkCells(final Set<SpreadsheetCell> cells) {
         Objects.requireNonNull(cells, "cells");
-    }
-
-    /**
-     * Makes a copy of the cells without any filtering.
-     */
-    static Set<SpreadsheetCell> copyCells(final Set<SpreadsheetCell> cells) {
-        final Set<SpreadsheetCell> copy = Sets.ordered();
-        copy.addAll(cells);
-        return Sets.readOnly(cells);
     }
 
     /**
