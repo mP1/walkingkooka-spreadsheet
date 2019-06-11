@@ -130,11 +130,7 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosR
      */
     private static List<Range<SpreadsheetCellReference>> copyWindow(final List<Range<SpreadsheetCellReference>> window) {
         Objects.requireNonNull(window, "window");
-
-        final List<Range<SpreadsheetCellReference>> copy = Lists.array();
-        copy.addAll(window);
-
-        return copy;
+        return Lists.immutable(window);
     }
 
     // HasJsonNode...................................................................................................
