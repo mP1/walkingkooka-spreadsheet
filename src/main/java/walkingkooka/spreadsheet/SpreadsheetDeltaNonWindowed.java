@@ -1,6 +1,7 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Range;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.tree.json.JsonNode;
@@ -30,7 +31,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     public SpreadsheetDelta setCells(final Set<SpreadsheetCell> cells) {
         checkCells(cells);
 
-        final Set<SpreadsheetCell> copy = copyCells(cells);
+        final Set<SpreadsheetCell> copy = Sets.immutable(cells);
         return this.cells.equals(copy) ?
                 this :
                 new SpreadsheetDeltaNonWindowed(this.id, copy);
