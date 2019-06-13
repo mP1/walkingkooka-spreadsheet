@@ -8,7 +8,7 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.visit.Visiting;
 import walkingkooka.tree.visit.Visitor;
 import walkingkooka.tree.visit.VisitorTesting;
-import walkingkooka.type.MemberVisibility;
+import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -147,8 +147,8 @@ public final class SpreadsheetExpressionReferenceVisitorTest implements VisitorT
     }
 
     @Override
-    public MemberVisibility typeVisibility() {
-        return MemberVisibility.PUBLIC;
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
     }
 
     // TypeNameTesting.........................................................................

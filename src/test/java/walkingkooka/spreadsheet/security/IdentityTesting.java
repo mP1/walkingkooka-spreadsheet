@@ -6,7 +6,7 @@ import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.HasJsonNodeTesting;
-import walkingkooka.type.MemberVisibility;
+import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -42,7 +42,7 @@ public interface IdentityTesting<I extends Identity<ID> & HasJsonNode, ID extend
     ID createId();
 
     @Override
-    default MemberVisibility typeVisibility() {
-        return MemberVisibility.PUBLIC;
+    default JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
     }
 }
