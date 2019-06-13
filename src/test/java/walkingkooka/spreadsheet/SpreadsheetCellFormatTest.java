@@ -27,7 +27,7 @@ import walkingkooka.text.spreadsheetformat.SpreadsheetTextFormatter;
 import walkingkooka.text.spreadsheetformat.SpreadsheetTextFormatters;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.type.MemberVisibility;
+import walkingkooka.type.JavaVisibility;
 
 import java.util.Optional;
 
@@ -221,8 +221,8 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
     }
 
     @Override
-    public MemberVisibility typeVisibility() {
-        return MemberVisibility.PUBLIC;
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
     }
 
     // HasJsonNodeTesting............................................................
