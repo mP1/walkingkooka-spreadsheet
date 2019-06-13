@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.CharSequences;
-import walkingkooka.type.MemberVisibility;
+import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -93,7 +93,7 @@ public interface SpreadsheetDataValidatorTesting<V extends SpreadsheetDataValida
     }
 
     @Override
-    default MemberVisibility typeVisibility() {
-        return MemberVisibility.PACKAGE_PRIVATE;
+    default JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

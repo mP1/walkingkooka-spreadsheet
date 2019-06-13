@@ -3,7 +3,7 @@ package walkingkooka.spreadsheet.store.label;
 import walkingkooka.spreadsheet.SpreadsheetExpressionReferenceVisitor;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.visit.VisitorTesting;
-import walkingkooka.type.MemberVisibility;
+import walkingkooka.type.JavaVisibility;
 
 public final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitorTest implements VisitorTesting<TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitor,
         ExpressionReference> {
@@ -14,8 +14,8 @@ public final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionRe
     }
 
     @Override
-    public MemberVisibility typeVisibility() {
-        return MemberVisibility.PACKAGE_PRIVATE;
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     @Override
