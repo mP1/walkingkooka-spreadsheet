@@ -2,7 +2,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.test.ClassTesting;
 import walkingkooka.test.TypeNameTesting;
-import walkingkooka.type.MemberVisibility;
+import walkingkooka.type.JavaVisibility;
 
 public abstract class BasicSpreadsheetEngineTestCase<T> implements TypeNameTesting<T>, ClassTesting<T> {
 
@@ -20,7 +20,7 @@ public abstract class BasicSpreadsheetEngineTestCase<T> implements TypeNameTesti
     // ClassTesting.....................................................................................................
 
     @Override
-    public final MemberVisibility typeVisibility() {
-        return MemberVisibility.PACKAGE_PRIVATE;
+    public final JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

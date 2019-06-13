@@ -5,7 +5,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ToStringTesting;
-import walkingkooka.type.MemberVisibility;
+import walkingkooka.type.JavaVisibility;
 
 import java.util.List;
 import java.util.Optional;
@@ -224,7 +224,7 @@ public interface StoreTesting<S extends Store<K, V>, K, V> extends ClassTesting2
     }
 
     @Override
-    default MemberVisibility typeVisibility() {
-        return MemberVisibility.PACKAGE_PRIVATE;
+    default JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
