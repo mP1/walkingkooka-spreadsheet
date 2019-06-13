@@ -1,7 +1,7 @@
 package walkingkooka.spreadsheet.store.range;
 
 import walkingkooka.test.ClassTesting2;
-import walkingkooka.type.MemberVisibility;
+import walkingkooka.type.JavaVisibility;
 
 import java.util.Map;
 
@@ -9,8 +9,8 @@ public final class TreeMapSpreadsheetRangeStoreBottomRightEntryTest extends Tree
         implements ClassTesting2<TreeMapSpreadsheetRangeStoreBottomRightEntry> {
 
     @Override
-    public MemberVisibility typeVisibility() {
-        return MemberVisibility.PACKAGE_PRIVATE;
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     @Override

@@ -6,7 +6,7 @@ import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStores;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.visit.VisitorTesting;
-import walkingkooka.type.MemberVisibility;
+import walkingkooka.type.JavaVisibility;
 
 public final class ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpressionReferenceVisitorTest implements
         VisitorTesting<ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpressionReferenceVisitor, ExpressionReference>,
@@ -25,8 +25,8 @@ public final class ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadshee
     }
 
     @Override
-    public MemberVisibility typeVisibility() {
-        return MemberVisibility.PACKAGE_PRIVATE;
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     @Override
