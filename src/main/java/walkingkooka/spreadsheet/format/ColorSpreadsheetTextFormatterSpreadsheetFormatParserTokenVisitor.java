@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.ToStringBuilder;
 import walkingkooka.Value;
-import walkingkooka.build.tostring.ToStringBuilder;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNameParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
