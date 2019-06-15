@@ -15,10 +15,12 @@
  *
  */
 
-package walkingkooka.spreadsheet.parser;
+package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
 import walkingkooka.compare.Range;
+import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
+import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -71,8 +73,8 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     private static final Parser<ParserContext> PARSER = SpreadsheetParsers.row().orReport(ParserReporters.basic());
 
     // https://support.office.com/en-us/article/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3
-    final static int MAX = 1_048_576;
-    final static int RADIX = 10;
+    public final static int MAX = 1_048_576;
+    public final static int RADIX = 10;
 
     /**
      * Factory that creates a new row.

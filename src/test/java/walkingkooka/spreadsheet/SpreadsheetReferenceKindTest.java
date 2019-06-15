@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.parser;
+package walkingkooka.spreadsheet;
 
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ToStringTesting;

@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.parser;
+package walkingkooka.spreadsheet;
 
 import java.util.Comparator;
 

@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.parser;
+package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
 import walkingkooka.naming.Name;
@@ -32,7 +32,10 @@ final public class SpreadsheetFunctionName implements Name, Comparable<Spreadshe
 
     final static CharPredicate PART = INITIAL.or(CharPredicates.range('0', '9').or(CharPredicates.is('.')));
 
-    final static int MAX_LENGTH = 255;
+    /**
+     * The maximum valid length of a function name.
+     */
+    public final static int MAX_LENGTH = 255;
 
     /**
      * Factory that creates a {@link SpreadsheetFunctionName}
