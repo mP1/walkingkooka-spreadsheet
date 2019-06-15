@@ -21,10 +21,10 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetRange;
+import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.parser.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.store.StoreTesting;
 import walkingkooka.test.TypeNameTesting;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 
 import java.util.List;
 import java.util.Optional;

@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.store.cell;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
 
 import java.util.TreeMap;
 
