@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.SpreadsheetReferenceKind;
 
 public final class SpreadsheetColumnReferenceParserTest extends SpreadsheetParserTestCase<SpreadsheetColumnReferenceParser, SpreadsheetColumnReferenceParserToken> {
 
@@ -98,12 +99,12 @@ public final class SpreadsheetColumnReferenceParserTest extends SpreadsheetParse
 
     @Test
     public void testRelativeReferenceInvalid() {
-        this.parseThrows("" + INVALID, SpreadsheetColumnReference.invalidColumnValue(SpreadsheetColumnReference.MAX + 1));
+        this.parseThrows("" + INVALID, "Invalid column value 16385 expected between 0 and 16384");
     }
 
     @Test
     public void testAbsoluteReferenceInvalid() {
-        this.parseThrows("$" + INVALID, SpreadsheetColumnReference.invalidColumnValue(SpreadsheetColumnReference.MAX + 1));
+        this.parseThrows("$" + INVALID, "Invalid column value 16385 expected between 0 and 16384");
     }
 
     private void parseAndCheck2(final String text, final SpreadsheetReferenceKind referenceKind, final int column) {

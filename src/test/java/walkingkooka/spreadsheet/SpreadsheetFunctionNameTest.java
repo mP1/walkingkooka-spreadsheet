@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.parser;
+package walkingkooka.spreadsheet;
 
 import walkingkooka.naming.NameTesting2;
 import walkingkooka.test.ClassTesting2;

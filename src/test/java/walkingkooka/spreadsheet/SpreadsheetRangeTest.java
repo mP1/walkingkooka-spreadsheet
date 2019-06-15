@@ -19,10 +19,6 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.parser.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.parser.SpreadsheetReferenceKind;
-import walkingkooka.spreadsheet.parser.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
 import walkingkooka.test.ClassTesting2;

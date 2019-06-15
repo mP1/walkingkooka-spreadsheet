@@ -17,6 +17,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.Cast;
+import walkingkooka.spreadsheet.SpreadsheetFunctionName;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.visit.Visiting;
 

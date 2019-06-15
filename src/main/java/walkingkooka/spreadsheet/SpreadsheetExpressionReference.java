@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.parser;
+package walkingkooka.spreadsheet;
 
 import walkingkooka.compare.Comparators;
 import walkingkooka.test.HashCodeEqualsDefined;
