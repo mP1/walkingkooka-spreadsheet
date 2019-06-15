@@ -22,11 +22,11 @@ import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.net.http.server.hateos.HateosHandlerTesting;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetDelta;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
 
 import java.util.Optional;
 import java.util.function.Supplier;

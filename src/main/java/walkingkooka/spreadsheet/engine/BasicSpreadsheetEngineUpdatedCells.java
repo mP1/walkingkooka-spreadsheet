@@ -20,11 +20,11 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.SpreadsheetRange;
-import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.parser.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.store.Watchers;
 import walkingkooka.spreadsheet.store.reference.TargetAndSpreadsheetCellReference;
 

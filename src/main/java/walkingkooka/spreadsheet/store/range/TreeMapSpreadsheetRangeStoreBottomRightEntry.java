@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.store.range;
 
 import walkingkooka.compare.Comparators;
+import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetRange;
-import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
 
 import java.util.Comparator;
 

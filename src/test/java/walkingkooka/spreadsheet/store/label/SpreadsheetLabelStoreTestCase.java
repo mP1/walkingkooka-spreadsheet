@@ -18,10 +18,10 @@
 package walkingkooka.spreadsheet.store.label;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
-import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.parser.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.parser.SpreadsheetReferenceKind;
+import walkingkooka.spreadsheet.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.SpreadsheetReferenceKind;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 

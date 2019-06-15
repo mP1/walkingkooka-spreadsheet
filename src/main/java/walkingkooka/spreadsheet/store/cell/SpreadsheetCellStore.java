@@ -18,9 +18,9 @@
 package walkingkooka.spreadsheet.store.cell;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.parser.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.parser.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.store.Store;
 
 import java.util.Set;

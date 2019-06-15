@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.store.range;
 
+import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetRange;
-import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.store.FakeStore;
 import walkingkooka.test.Fake;
 

@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.store.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
-import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.parser.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
 

@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.parser;
+package walkingkooka.spreadsheet;
 
 /**
  * Used to note whether a column or row reference is absolute or relative.

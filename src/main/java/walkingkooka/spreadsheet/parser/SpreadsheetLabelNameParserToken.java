@@ -16,6 +16,8 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.spreadsheet.SpreadsheetLabelName;
+
 /**
  * Represents a label or name for a cell or range etc.
  */

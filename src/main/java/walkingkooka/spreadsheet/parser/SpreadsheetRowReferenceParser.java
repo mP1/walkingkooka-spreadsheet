@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.spreadsheet.SpreadsheetReferenceKind;
+import walkingkooka.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
