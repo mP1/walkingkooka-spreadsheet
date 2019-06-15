@@ -17,9 +17,9 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.type.PublicStaticHelper;
 

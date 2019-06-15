@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.store.reference;
 
+import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.store.Store;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Objects;

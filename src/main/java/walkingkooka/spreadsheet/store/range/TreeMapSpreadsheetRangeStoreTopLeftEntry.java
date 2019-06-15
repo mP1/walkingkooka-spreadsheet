@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.store.range;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Comparators;
 import walkingkooka.spreadsheet.SpreadsheetRange;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
 
 import java.util.Comparator;
 import java.util.Set;

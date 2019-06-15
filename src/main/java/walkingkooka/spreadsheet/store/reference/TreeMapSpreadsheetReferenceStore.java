@@ -20,9 +20,9 @@ package walkingkooka.spreadsheet.store.reference;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.spreadsheet.store.Watchers;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Iterator;

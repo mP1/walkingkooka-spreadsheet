@@ -19,10 +19,10 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting;
+import walkingkooka.spreadsheet.parser.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.parser.SpreadsheetReferenceKind;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ToStringTesting;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.JavaVisibility;
