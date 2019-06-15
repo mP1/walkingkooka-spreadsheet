@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.build.tostring.ToStringBuilder;
+import walkingkooka.ToStringBuilder;
 import walkingkooka.compare.ComparisonRelation;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;

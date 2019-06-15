@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.build.tostring.ToStringBuilder;
-import walkingkooka.build.tostring.UsesToStringBuilder;
+import walkingkooka.ToStringBuilder;
+import walkingkooka.UsesToStringBuilder;
 
 /**
  * Base for the three categories of digits: Integers, Fractions and Exponent digits.
