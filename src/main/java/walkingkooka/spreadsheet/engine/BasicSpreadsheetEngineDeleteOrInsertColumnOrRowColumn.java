@@ -18,12 +18,12 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReferenceParserToken;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReferenceParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.parser.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetReferenceKind;
+import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 
 import java.util.Collection;
 import java.util.Optional;

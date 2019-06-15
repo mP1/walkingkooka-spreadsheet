@@ -18,9 +18,9 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetExpressionReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.parser.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.parser.SpreadsheetLabelName;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.visit.Visiting;
 import walkingkooka.tree.visit.Visitor;

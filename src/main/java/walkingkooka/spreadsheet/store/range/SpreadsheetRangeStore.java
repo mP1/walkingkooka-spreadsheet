@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.store.range;
 
 import walkingkooka.spreadsheet.SpreadsheetRange;
+import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.store.Store;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
 import java.util.List;
 import java.util.Objects;
