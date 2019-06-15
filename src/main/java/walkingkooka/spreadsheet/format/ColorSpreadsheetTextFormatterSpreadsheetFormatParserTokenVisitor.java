@@ -18,11 +18,9 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.ToStringBuilder;
-import walkingkooka.Value;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNameParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 
 /**
@@ -46,17 +44,17 @@ final class ColorSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor ext
 
     @Override
     protected void visit(final SpreadsheetFormatColorNameParserToken token) {
-        this.set(ColorSpreadsheetTextFormatterColorSource.NAME, token);
+        this.set(ColorSpreadsheetTextFormatterColorSource.NAME, token.value());
     }
 
     @Override
     protected void visit(final SpreadsheetFormatColorNumberParserToken token) {
-        this.set(ColorSpreadsheetTextFormatterColorSource.NUMBER, token);
+        this.set(ColorSpreadsheetTextFormatterColorSource.NUMBER, token.value());
     }
 
-    private <T extends SpreadsheetFormatParserToken & Value<?>> void set(final ColorSpreadsheetTextFormatterColorSource source, final T token) {
+    private void set(final ColorSpreadsheetTextFormatterColorSource source, final Object numberOfName) {
         this.source = source;
-        this.numberOfName = token.value();
+        this.numberOfName = numberOfName;
     }
 
     ColorSpreadsheetTextFormatterColorSource source;
