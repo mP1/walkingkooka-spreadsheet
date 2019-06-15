@@ -18,13 +18,13 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
+import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.parser.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.parser.SpreadsheetReferenceKind;
+import walkingkooka.spreadsheet.parser.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.CharSequences;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;

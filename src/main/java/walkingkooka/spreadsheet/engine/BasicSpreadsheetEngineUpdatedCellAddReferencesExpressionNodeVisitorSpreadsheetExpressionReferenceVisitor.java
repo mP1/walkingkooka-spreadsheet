@@ -19,9 +19,9 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetExpressionReferenceVisitor;
 import walkingkooka.spreadsheet.SpreadsheetRange;
+import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.parser.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.store.reference.TargetAndSpreadsheetCellReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 
 /**
  * A {@link SpreadsheetExpressionReferenceVisitor} that adds references to each reference present within cell formula.

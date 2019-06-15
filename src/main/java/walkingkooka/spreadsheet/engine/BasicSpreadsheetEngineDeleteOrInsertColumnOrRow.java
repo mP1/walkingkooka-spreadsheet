@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetColumnReferenceParserToken;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetRowReferenceParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 
 /**
  * Template that includes most of the methods that may be used to delete or insert columns or rows,

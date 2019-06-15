@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.store.label;
 
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.parser.SpreadsheetLabelName;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.List;
