@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Range;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
 import walkingkooka.tree.json.JsonNode;
 
 import java.util.List;

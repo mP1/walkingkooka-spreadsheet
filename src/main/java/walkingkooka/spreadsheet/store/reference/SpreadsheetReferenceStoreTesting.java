@@ -20,9 +20,9 @@ package walkingkooka.spreadsheet.store.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.store.StoreTesting;
 import walkingkooka.test.TypeNameTesting;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.List;

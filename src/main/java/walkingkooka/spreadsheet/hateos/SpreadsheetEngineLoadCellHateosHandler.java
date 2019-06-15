@@ -25,7 +25,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
 
 import java.util.Map;
 import java.util.Objects;

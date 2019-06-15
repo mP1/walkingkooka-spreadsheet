@@ -26,7 +26,7 @@ import walkingkooka.spreadsheet.SpreadsheetDelta;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
 
 import java.util.Optional;
 import java.util.function.Supplier;

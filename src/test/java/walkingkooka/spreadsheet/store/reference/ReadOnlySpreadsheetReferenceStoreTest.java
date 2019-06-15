@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.store.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.store.ReadOnlyStoreTesting;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
 import java.util.Set;
 

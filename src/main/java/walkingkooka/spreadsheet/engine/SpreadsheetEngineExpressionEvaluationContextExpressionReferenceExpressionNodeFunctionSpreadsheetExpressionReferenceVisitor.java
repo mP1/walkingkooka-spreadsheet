@@ -19,10 +19,10 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetExpressionReferenceVisitor;
 import walkingkooka.spreadsheet.SpreadsheetRange;
+import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.parser.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.store.LoadStoreException;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionReference;
 

@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.datavalidation;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetReferenceKind;
+import walkingkooka.spreadsheet.parser.SpreadsheetReferenceKind;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionReference;

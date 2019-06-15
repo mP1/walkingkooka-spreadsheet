@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetDelta;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
 
 public abstract class SpreadsheetEngineHateosHandlerTestCase<T> extends SpreadsheetHateosHandlerTestCase<T> {
 
