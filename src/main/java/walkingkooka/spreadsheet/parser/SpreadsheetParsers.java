@@ -19,7 +19,9 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
+import walkingkooka.spreadsheet.SpreadsheetFunctionName;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.cursor.parser.BigDecimalParserToken;
@@ -122,13 +124,19 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         return FUNCTION_NAME;
     }
 
-    private final static Parser<ParserContext> FUNCTION_NAME = Parsers.stringInitialAndPartCharPredicate(
-            SpreadsheetFunctionName.INITIAL,
-            SpreadsheetFunctionName.PART,
-            1,
-            SpreadsheetFunctionName.MAX_LENGTH)
-            .transform(SpreadsheetParsers::transformFunctionName)
-            .setToString(SpreadsheetFunctionName.class.getSimpleName());
+    static {
+        final CharPredicate initial = CharPredicates.range('A', 'Z').or(CharPredicates.range('a', 'z')); // SpreadsheetFunctionName.INITIAL
+
+        FUNCTION_NAME = Parsers.stringInitialAndPartCharPredicate(
+                initial,
+                initial.or(CharPredicates.range('0', '9').or(CharPredicates.is('.'))), // SpreadsheetFunctionName.PART,
+                1,
+                SpreadsheetFunctionName.MAX_LENGTH)
+                .transform(SpreadsheetParsers::transformFunctionName)
+                .setToString(SpreadsheetFunctionName.class.getSimpleName());
+    }
+
+    private final static Parser<ParserContext> FUNCTION_NAME;
 
     private static ParserToken transformFunctionName(final ParserToken token, final ParserContext context) {
         return SpreadsheetParserToken.functionName(SpreadsheetFunctionName.with(StringParserToken.class.cast(token).value()), token.text());
@@ -353,6 +361,11 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         return CaseSensitivity.INSENSITIVE.parser(text)
                 .transform((stringParserToken, context) -> factory.apply(StringParserToken.class.cast(stringParserToken).value(), stringParserToken.text()))
                 .setToString(tokenClass.getSimpleName());
+    }
+
+    public static int valueFromDigit(final char c) {
+        final int digit = Character.toUpperCase(c) - 'A';
+        return digit >= 0 && digit < SpreadsheetColumnReferenceParser.RADIX ? digit + 1 : -1;
     }
 
     /**
