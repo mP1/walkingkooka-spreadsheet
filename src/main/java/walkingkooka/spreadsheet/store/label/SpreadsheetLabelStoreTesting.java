@@ -19,9 +19,9 @@ package walkingkooka.spreadsheet.store.label;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
-import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.parser.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.store.StoreTesting;
 import walkingkooka.test.TypeNameTesting;
 import walkingkooka.tree.expression.ExpressionReference;

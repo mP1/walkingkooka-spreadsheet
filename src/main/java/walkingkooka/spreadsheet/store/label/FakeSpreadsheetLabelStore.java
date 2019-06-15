@@ -17,9 +17,9 @@
 
 package walkingkooka.spreadsheet.store.label;
 
+import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
-import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.parser.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.store.FakeStore;
 import walkingkooka.test.Fake;
 import walkingkooka.tree.expression.ExpressionReference;

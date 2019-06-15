@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Range;
-import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.HasJsonNodeTesting;

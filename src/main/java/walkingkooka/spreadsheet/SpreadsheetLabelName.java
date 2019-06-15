@@ -15,12 +15,13 @@
  *
  */
 
-package walkingkooka.spreadsheet.parser;
+package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
 import walkingkooka.naming.Name;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
+import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.HasJsonNode;
@@ -48,7 +49,10 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference i
 
     final static CharPredicate PART = INITIAL.or(DIGIT.or(CharPredicates.is('_')));
 
-    final static int MAX_LENGTH = 255;
+    /**
+     * The maximum valid length for a label name.
+     */
+    public final static int MAX_LENGTH = 255;
 
     /**
      * Accepts a json string and returns a {@link SpreadsheetLabelName} or fails.
@@ -73,7 +77,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference i
     public static SpreadsheetLabelName with(final String name) {
         CharPredicates.failIfNullOrEmptyOrInitialAndPartFalse(name, "name", INITIAL, PART);
 
-        if (!isAcceptableLength(name)) {
+        if (name.length() >= MAX_LENGTH) {
             throw new IllegalArgumentException("Label length " + name.length() + " is greater than allowed " + MAX_LENGTH);
         }
 
@@ -84,10 +88,6 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference i
         return new SpreadsheetLabelName(name);
     }
 
-    static boolean isAcceptableLength(final String name) {
-        return name.length() < MAX_LENGTH;
-    }
-
     // modes used by isCellReference
     private final static int MODE_COLUMN = 0;
     private final static int MODE_ROW = MODE_COLUMN + 1;
@@ -96,7 +96,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference i
     /**
      * Tests if the {@link String name} is a valid cell reference.
      */
-    static boolean isCellReference(final String name) {
+    public static boolean isCellReference(final String name) {
         int mode = MODE_COLUMN; // -1 too long or contains invalid char
         int column = 0;
         int row = 0;
@@ -108,7 +108,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference i
 
             // try and parse into column + row
             if (MODE_COLUMN == mode) {
-                final int digit = SpreadsheetColumnReferenceParser.valueFromDigit0(c);
+                final int digit = SpreadsheetParsers.valueFromDigit(c);
                 if (-1 != digit) {
                     column = column * SpreadsheetColumnReference.RADIX + digit;
                     if (column >= SpreadsheetColumnReference.MAX) {

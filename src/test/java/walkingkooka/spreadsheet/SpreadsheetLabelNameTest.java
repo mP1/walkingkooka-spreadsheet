@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.parser;
+package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.naming.NameTesting;

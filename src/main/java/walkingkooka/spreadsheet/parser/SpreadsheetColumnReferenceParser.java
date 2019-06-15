@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.spreadsheet.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
@@ -39,13 +41,7 @@ final class SpreadsheetColumnReferenceParser extends SpreadsheetColumnOrRowRefer
 
     @Override
     int valueFromDigit(final char c) {
-        return valueFromDigit0(c);
-    }
-
-    // @Visible SpreadsheetLabelNameParser
-    static int valueFromDigit0(final char c) {
-        final int digit = Character.toUpperCase(c) - 'A';
-        return digit >= 0 && digit < RADIX ? digit + 1 : -1;
+        return SpreadsheetParsers.valueFromDigit(c);
     }
 
     @Override
@@ -53,7 +49,7 @@ final class SpreadsheetColumnReferenceParser extends SpreadsheetColumnOrRowRefer
         return RADIX;
     }
 
-    private final static int RADIX = 26;
+    final static int RADIX = 26;
 
     @Override
     ParserToken token1(final SpreadsheetReferenceKind absoluteOrRelative, final int value, final String text) {

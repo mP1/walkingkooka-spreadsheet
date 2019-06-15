@@ -22,7 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
-import walkingkooka.spreadsheet.parser.SpreadsheetReferenceKind;
+import walkingkooka.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.PublicStaticHelperTesting;
 import walkingkooka.text.CharSequences;
