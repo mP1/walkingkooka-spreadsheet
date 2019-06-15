@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.collect.set.Sets;
+import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
 import walkingkooka.test.ClassTesting2;
-import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetCellReference;
 
 import java.util.Arrays;
 import java.util.Set;
