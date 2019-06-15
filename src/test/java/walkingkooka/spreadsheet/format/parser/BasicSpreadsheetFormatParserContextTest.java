@@ -18,9 +18,12 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.type.JavaVisibility;
+
+import java.math.MathContext;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -36,7 +39,51 @@ public final class BasicSpreadsheetFormatParserContextTest implements ClassTesti
 
     @Override
     public BasicSpreadsheetFormatParserContext createContext() {
-        return BasicSpreadsheetFormatParserContext.with(DecimalNumberContexts.fake());
+        return BasicSpreadsheetFormatParserContext.with(this.decimalNumberContext());
+    }
+
+    @Override
+    public String currencySymbol() {
+        return this.decimalNumberContext().currencySymbol();
+    }
+
+    @Override
+    public char decimalPoint() {
+        return this.decimalNumberContext().decimalPoint();
+    }
+
+    @Override
+    public char exponentSymbol() {
+        return this.decimalNumberContext().exponentSymbol();
+    }
+
+    @Override
+    public char groupingSeparator() {
+        return this.decimalNumberContext().groupingSeparator();
+    }
+
+    @Override
+    public MathContext mathContext() {
+        return MathContext.DECIMAL32;
+    }
+
+    @Override
+    public char minusSign() {
+        return this.decimalNumberContext().minusSign();
+    }
+
+    @Override
+    public char percentageSymbol() {
+        return this.decimalNumberContext().percentageSymbol();
+    }
+
+    @Override
+    public char plusSign() {
+        return this.decimalNumberContext().plusSign();
+    }
+
+    private DecimalNumberContext decimalNumberContext() {
+        return DecimalNumberContexts.american(this.mathContext());
     }
 
     @Override
