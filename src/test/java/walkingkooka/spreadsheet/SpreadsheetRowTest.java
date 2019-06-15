@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting;
-import walkingkooka.spreadsheet.parser.SpreadsheetReferenceKind;
-import walkingkooka.spreadsheet.parser.SpreadsheetRowReference;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.HasJsonNodeTesting;

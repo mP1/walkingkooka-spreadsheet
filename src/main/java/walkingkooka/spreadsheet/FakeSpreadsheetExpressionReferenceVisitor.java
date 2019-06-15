@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.parser.SpreadsheetLabelName;
 import walkingkooka.test.Fake;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.visit.Visiting;

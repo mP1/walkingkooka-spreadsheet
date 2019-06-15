@@ -17,6 +17,9 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.predicate.character.CharPredicate;
+import walkingkooka.predicate.character.CharPredicates;
+import walkingkooka.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.parser.Parser;
@@ -49,12 +52,11 @@ final class SpreadsheetLabelNameParser implements Parser<SpreadsheetParserContex
         return stringParserToken.isPresent() ?
                 this.token(stringParserToken.get(), save) :
                 Optional.empty();
-
     }
 
     private Optional<ParserToken> token(final ParserToken stringParserToken, final TextCursorSavePoint save) {
         final String text = stringParserToken.text();
-        return SpreadsheetLabelName.isAcceptableLength(text) && !SpreadsheetLabelName.isCellReference(text) ?
+        return text.length() < SpreadsheetLabelName.MAX_LENGTH && !SpreadsheetLabelName.isCellReference(text) ?
                 Optional.of(SpreadsheetParserToken.labelName(SpreadsheetLabelName.with(text), text)) :
                 restoreAndNothing(save);
     }
@@ -64,12 +66,24 @@ final class SpreadsheetLabelNameParser implements Parser<SpreadsheetParserContex
         return Optional.empty();
     }
 
-    private final static Parser<SpreadsheetParserContext> LABEL = Parsers.stringInitialAndPartCharPredicate(
-            SpreadsheetLabelName.INITIAL,
-            SpreadsheetLabelName.PART,
-            1,
-            SpreadsheetLabelName.MAX_LENGTH
-    );
+    // @see SpreadsheetLabelName
+    static {
+        final CharPredicate LETTER = CharPredicates.range('A', 'Z').or(CharPredicates.range('a', 'z'));
+        final CharPredicate INITIAL = LETTER;
+
+        final CharPredicate DIGIT = CharPredicates.range('0', '9');
+
+        final CharPredicate PART = INITIAL.or(DIGIT.or(CharPredicates.is('_')));
+
+        LABEL = Parsers.stringInitialAndPartCharPredicate(
+                INITIAL,
+                PART,
+                1,
+                SpreadsheetLabelName.MAX_LENGTH
+        );
+    }
+
+    private final static Parser<SpreadsheetParserContext> LABEL;
 
     @Override
     public String toString() {

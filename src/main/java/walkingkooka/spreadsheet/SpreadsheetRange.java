@@ -18,10 +18,6 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
-import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.parser.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.parser.SpreadsheetReferenceKind;
-import walkingkooka.spreadsheet.parser.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.CharSequences;

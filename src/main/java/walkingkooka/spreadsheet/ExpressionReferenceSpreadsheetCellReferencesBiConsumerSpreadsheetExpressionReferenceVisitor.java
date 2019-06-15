@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.spreadsheet.parser.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.parser.SpreadsheetLabelName;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.function.Consumer;
