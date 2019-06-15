@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Context;
-import walkingkooka.build.tostring.ToStringBuilder;
-import walkingkooka.build.tostring.ToStringBuilderOption;
+import walkingkooka.ToStringBuilder;
+import walkingkooka.ToStringBuilderOption;
 
 /**
  * The context that accompanies each {@link BigDecimalSpreadsheetTextFormatterComponent}.

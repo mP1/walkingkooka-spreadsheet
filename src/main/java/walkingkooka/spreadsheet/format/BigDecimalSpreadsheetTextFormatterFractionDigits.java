@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.build.tostring.ToStringBuilder;
+import walkingkooka.ToStringBuilder;
 
 /**
  * Handles copy fraction digits including adding zero or spaces for trailing "zero" digits.

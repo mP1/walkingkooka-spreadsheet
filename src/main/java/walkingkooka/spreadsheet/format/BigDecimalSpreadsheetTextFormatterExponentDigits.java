@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.build.tostring.ToStringBuilder;
+import walkingkooka.ToStringBuilder;
 
 /**
  * Handles inserting the exponent digits into the formatted text output.
