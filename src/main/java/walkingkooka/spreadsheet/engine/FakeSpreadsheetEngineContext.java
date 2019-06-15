@@ -1,9 +1,9 @@
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.spreadsheet.format.SpreadsheetFormattedText;
+import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
 import walkingkooka.test.Fake;
 import walkingkooka.text.cursor.parser.spreadsheet.SpreadsheetParserToken;
-import walkingkooka.text.spreadsheetformat.SpreadsheetFormattedText;
-import walkingkooka.text.spreadsheetformat.SpreadsheetTextFormatter;
 import walkingkooka.tree.expression.ExpressionNode;
 
 import java.util.Objects;

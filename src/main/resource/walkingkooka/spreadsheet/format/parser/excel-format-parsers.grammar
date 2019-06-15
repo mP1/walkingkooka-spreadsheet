@@ -1,0 +1,173 @@
+(* expression .........................................................................*)
+EXPRESSION                        = [ EXPRESSION_COMPONENT ],
+                                    [ EXPRESSION_SEPARATOR, [ EXPRESSION_COMPONENT ],
+                                    [ EXPRESSION_SEPARATOR, [ EXPRESSION_COMPONENT ],
+                                    [ EXPRESSION_SEPARATOR, [ (GENERAL | TEXT) ]]
+                                    ]];
+
+EXPRESSION_COMPONENT              = GENERAL | DATETIME2 | FRACTION | BIGDECIMAL;
+
+
+
+(* color .................................................................................*)
+COLOR                             = BRACKET_OPEN,
+                                    ( COLOR_AND_NUMBER | COLOR_NAME ),
+                                    [ WHITESPACE ],
+                                    BRACKET_CLOSE;
+
+
+
+(* condition .................................................................................*)
+CONDITION                         = CONDITION_EQUAL | CONDITION_GREATER_THAN_EQUAL | CONDITION_GREATER_THAN |
+                                    CONDITION_LESS_THAN_EQUAL | CONDITION_LESS_THAN | CONDITION_NOT_EQUAL;
+
+CONDITION_EQUAL                   = BRACKET_OPEN,
+                                    [ WHITESPACE ],
+                                    EQUALS,
+                                    [ WHITESPACE ],
+                                    CONDITION_NUMBER,
+                                    [ WHITESPACE ],
+                                    BRACKET_CLOSE;
+                                    
+CONDITION_GREATER_THAN            = BRACKET_OPEN,
+                                    [ WHITESPACE ],
+                                    GREATER_THAN,
+                                    [ WHITESPACE ],
+                                    CONDITION_NUMBER,
+                                    [ WHITESPACE ],
+                                    BRACKET_CLOSE;
+
+CONDITION_GREATER_THAN_EQUAL      = BRACKET_OPEN,
+                                    [ WHITESPACE ],
+                                    GREATER_THAN_EQUALS,
+                                    [ WHITESPACE ],
+                                    CONDITION_NUMBER,
+                                    [ WHITESPACE ],
+                                    BRACKET_CLOSE;
+                                    
+CONDITION_LESS_THAN               = BRACKET_OPEN,
+                                    [ WHITESPACE ],
+                                    LESS_THAN,
+                                    [ WHITESPACE ],
+                                    CONDITION_NUMBER,
+                                    [ WHITESPACE ],
+                                    BRACKET_CLOSE;
+
+CONDITION_LESS_THAN_EQUAL         = BRACKET_OPEN,
+                                    [ WHITESPACE ],
+                                    LESS_THAN_EQUALS,
+                                    [ WHITESPACE ],
+                                    CONDITION_NUMBER,
+                                    [ WHITESPACE ],
+                                    BRACKET_CLOSE;
+                                    
+CONDITION_NOT_EQUAL               = BRACKET_OPEN,
+                                    [ WHITESPACE ],
+                                    NOT_EQUALS,
+                                    [ WHITESPACE ],
+                                    CONDITION_NUMBER,
+                                    [ WHITESPACE ],
+                                    BRACKET_CLOSE;
+
+
+
+(* date .................................................................................*)
+DATE_GENERAL                      = GENERAL | DATE;
+
+DATE                              = [{ DATE_COMPONENT_LITERAL }];
+
+DATE2                             = [{ DATE_LITERAL }],
+                                    DATE_COMPONENT,
+                                    [{ DATE_COMPONENT_LITERAL }];
+
+DATE_COMPONENT_LITERAL            = DATE_COMPONENT | DATE_LITERAL;
+DATE_COMPONENT                    = { DAY | MONTH_MINUTE | YEAR };
+DATE_LITERAL                      = DATE_DATETIME_TIME_TEXT;
+
+
+
+(* date/time ...............................................................................*)
+DATETIME_GENERAL                  = GENERAL | DATETIME;
+
+DATETIME                          = [{ DATETIME_COMPONENT_LITERAL }];
+
+DATETIME2                         = [{ DATETIME_LITERAL }],
+                                    DATETIME_COMPONENT,
+                                    [{ DATETIME_COMPONENT_LITERAL }];
+
+DATETIME_COMPONENT_LITERAL        = DATETIME_COMPONENT | DATETIME_LITERAL;
+DATETIME_COMPONENT                = DAY | MONTH_MINUTE | YEAR | HOUR | SECOND | AM_SLASH_PM | A_SLASH_P;
+DATETIME_LITERAL                  = DATE_DATETIME_TIME_TEXT;
+
+
+
+(* time .................................................................................*)
+TIME_GENERAL                      = GENERAL | TIME;
+
+TIME                              = [{ TIME_COMPONENT_TIME_LITERAL }];
+
+TIME2                             = [{ TIME_LITERAL }],
+                                    TIME_COMPONENT,
+                                    [{ TIME_COMPONENT_TIME_LITERAL }];
+
+TIME_COMPONENT_TIME_LITERAL       = TIME_COMPONENT | TIME_LITERAL;
+TIME_COMPONENT                    = HOUR | MONTH_MINUTE | SECOND | AM_SLASH_PM | A_SLASH_P;
+TIME_LITERAL                      = DATE_DATETIME_TIME_TEXT;
+
+
+
+(* date, datetime, time .................................................................................*)
+DATE_DATETIME_TIME_TEXT           = COLOR | CONDITION | ESCAPE | LITERAL | QUOTED;
+
+
+
+(* fractions .......................................................................*)
+FRACTION_GENERAL                  = GENERAL | FRACTION;
+
+FRACTION                          = FRACTION_COMPONENT,
+                                    FRACTION_SYMBOL,
+                                    FRACTION_COMPONENT;
+
+FRACTION_COMPONENT                = [{ FRACTION_LITERAL }],
+                                    FRACTION_DIGIT,
+                                    [{ FRACTION_DIGIT | FRACTION_LITERAL }];
+FRACTION_LITERAL                  = COLOR | CONDITION | CURRENCY | ESCAPE | LITERAL2 | PERCENTAGE | QUOTED;
+FRACTION_DIGIT                    = LEADING_ZERO | LEADING_SPACE | NON_ZERO | THOUSANDS;
+
+
+
+(* BIGDECIMAL .......................................................................*)
+BIGDECIMAL_GENERAL                = GENERAL | BIGDECIMAL;
+
+BIGDECIMAL                        = [{ BIGDECIMAL_DECIMAL_POINT | BIGDECIMAL_DIGIT | BIGDECIMAL_LITERAL | BIGDECIMAL_EXPONENT | PERCENTAGE }];
+
+BIGDECIMAL_EXPONENT               = BIGDECIMAL_EXPONENT_SYMBOL,
+                                    [{ BIGDECIMAL_DECIMAL_POINT | BIGDECIMAL_DIGIT | BIGDECIMAL_LITERAL }];
+
+BIGDECIMAL_EXPONENT_SYMBOL        = ( 'E+' | 'e+' | 'E-' | 'e-' );
+
+BIGDECIMAL_LITERAL                = COLOR | CONDITION | CURRENCY | ESCAPE | LITERAL2 | PERCENTAGE | QUOTED;
+BIGDECIMAL_DIGIT                  = LEADING_ZERO | LEADING_SPACE | NON_ZERO | THOUSANDS;
+
+
+
+(* general ..........................................................................*)
+GENERAL                           = [{ GENERAL_COLOR_WHITESPACE }],
+                                    GENERAL_SYMBOL,
+                                    [{ GENERAL_COLOR_WHITESPACE }];
+
+GENERAL_COLOR_WHITESPACE          = WHITESPACE | COLOR;
+
+
+
+(* text .................................................................................*)
+TEXT                              = TEXT_WITH_STAR | TEXT_WITHOUT_STAR;
+
+TEXT_WITH_STAR                    = [{ TEXT_COMPONENT }],
+                                    STAR,
+                                    [{ TEXT_COMPONENT }];
+
+TEXT_WITHOUT_STAR                 = [{ TEXT_COMPONENT }];
+
+TEXT_COMPONENT                    = COLOR | ESCAPE | LITERAL | QUOTED | TEXT_PLACEHOLDER | UNDERSCORE;
+
