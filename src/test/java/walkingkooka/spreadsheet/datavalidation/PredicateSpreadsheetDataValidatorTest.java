@@ -20,12 +20,43 @@ package walkingkooka.spreadsheet.datavalidation;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.predicate.Predicates;
+import walkingkooka.tree.pointer.NodePointerException;
 
 import java.util.function.Predicate;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class PredicateSpreadsheetDataValidatorTest extends SpreadsheetDataValidatorTemplateTestCase<PredicateSpreadsheetDataValidator, String> {
 
     private final static String VALUE = "abc123";
+    private final static String TO_STRING = "toString123";
+
+    @Test
+    public void testWithNullClassFails() {
+        assertThrows(NullPointerException.class, () -> {
+            PredicateSpreadsheetDataValidator.with(null,
+                    this.predicate(),
+                    TO_STRING);
+        });
+    }
+
+    @Test
+    public void testWithNullPredicateFails() {
+        assertThrows(NullPointerException.class, () -> {
+            PredicateSpreadsheetDataValidator.with(String.class,
+                    null,
+                    TO_STRING);
+        });
+    }
+
+    @Test
+    public void testWithNullToStringFails() {
+        assertThrows(NullPointerException.class, () -> {
+            PredicateSpreadsheetDataValidator.with(String.class,
+                    this.predicate(),
+                    null);
+        });
+    }
 
     @Test
     public void testPredicatePass() {
@@ -39,12 +70,14 @@ public final class PredicateSpreadsheetDataValidatorTest extends SpreadsheetData
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createSpreadsheetDataValidator(), this.predicate().toString());
+        this.toStringAndCheck(this.createSpreadsheetDataValidator(), TO_STRING);
     }
 
     @Override
     public PredicateSpreadsheetDataValidator createSpreadsheetDataValidator() {
-        return PredicateSpreadsheetDataValidator.with(String.class, this.predicate());
+        return PredicateSpreadsheetDataValidator.with(String.class,
+                this.predicate(),
+                TO_STRING);
     }
 
     private Predicate<String> predicate() {

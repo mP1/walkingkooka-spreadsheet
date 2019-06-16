@@ -20,8 +20,11 @@ package walkingkooka.spreadsheet.datavalidation;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.ComparisonRelation;
 import walkingkooka.compare.Range;
+import walkingkooka.net.Url;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.type.PublicStaticHelper;
 
@@ -107,7 +110,7 @@ public final class SpreadsheetDataValidators implements PublicStaticHelper {
      * Creates a {@link SpreadsheetDataValidator} using the {@link Predicate condition}.
      */
     private static SpreadsheetDataValidator<BigDecimal> bigDecimal(final Predicate<BigDecimal> condition) {
-        return PredicateSpreadsheetDataValidator.with(BigDecimal.class, condition);
+        return PredicateSpreadsheetDataValidator.with(BigDecimal.class, condition, condition.toString());
     }
 
     // CUSTOM..........................................................................................................
@@ -185,7 +188,7 @@ public final class SpreadsheetDataValidators implements PublicStaticHelper {
      * Creates a {@link SpreadsheetDataValidator} using the {@link Predicate condition}.
      */
     private static SpreadsheetDataValidator<LocalDate> localDate(final Predicate<ChronoLocalDate> condition) {
-        return PredicateSpreadsheetDataValidator.with(LocalDate.class, condition);
+        return PredicateSpreadsheetDataValidator.with(LocalDate.class, condition, condition.toString());
     }
 
     // TEXT .......................................................................................................
@@ -194,7 +197,18 @@ public final class SpreadsheetDataValidators implements PublicStaticHelper {
      * A {@link SpreadsheetDataValidator} that only accepts text that is an email.
      */
     public static SpreadsheetDataValidator<String> textAbsoluteUrl() {
-        return TextPredicate(Predicates.absoluteUrl());
+        return validator(SpreadsheetDataValidators::isAbsoluteUrl, "absoluteUrl");
+    }
+
+    private static boolean isAbsoluteUrl(final String possible) {
+        boolean is;
+        try {
+            Url.parseAbsolute(possible);
+            is = true;
+        } catch (final Exception ignore) {
+            is = false;
+        }
+        return is;
     }
 
     /**
@@ -203,7 +217,7 @@ public final class SpreadsheetDataValidators implements PublicStaticHelper {
     public static SpreadsheetDataValidator<String> textCommaSeparated(final String csv) {
         Objects.requireNonNull(csv, "csv");
 
-        return TextPredicate(Predicates.setContains(commaSeparatedValuesWithEmpty(csv)));
+        return validator(Predicates.setContains(commaSeparatedValuesWithEmpty(csv)), CharSequences.quoteAndEscape(csv).toString());
     }
 
     private static Set<String> commaSeparatedValuesWithEmpty(final String csv) {
@@ -216,14 +230,14 @@ public final class SpreadsheetDataValidators implements PublicStaticHelper {
      * A {@link SpreadsheetDataValidator} that only accepts text that contains the given {@link String}.
      */
     public static SpreadsheetDataValidator<String> textContains(final String contains) {
-        return TextPredicate(contains(contains));
+        return validator(contains(contains), "contains " + CharSequences.quoteAndEscape(contains));
     }
 
     /**
      * A {@link SpreadsheetDataValidator} that only accepts text that doesnt contain the given {@link String}.
      */
     public static SpreadsheetDataValidator<String> textDoesntContain(final String contains) {
-        return TextPredicate(contains(contains).negate());
+        return validator(contains(contains).negate(), "doesnt contain " + CharSequences.quoteAndEscape(contains));
     }
 
     private static Predicate<String> contains(final String contains) {
@@ -234,21 +248,28 @@ public final class SpreadsheetDataValidators implements PublicStaticHelper {
      * A {@link SpreadsheetDataValidator} that only accepts text that equals the given {@link String}.
      */
     public static SpreadsheetDataValidator<String> textEquals(final String text) {
-        return TextPredicate(Predicates.is(text));
+        return validator(Predicates.is(text), CharSequences.quoteAndEscape(text).toString());
     }
 
     /**
      * A {@link SpreadsheetDataValidator} that only accepts text that is an email.
      */
     public static SpreadsheetDataValidator<String> textEmail() {
-        return TextPredicate(Predicates.email());
+        return validator(SpreadsheetDataValidators::isEmail, "email");
+    }
+
+    private static boolean isEmail(final String possible) {
+        return EmailAddress.tryParse(possible).isPresent();
     }
 
     /**
      * Creates a {@link SpreadsheetDataValidator} with a {@link String} {@link Predicate}.
      */
-    private static SpreadsheetDataValidator<String> TextPredicate(final Predicate<String> predicate) {
-        return PredicateSpreadsheetDataValidator.with(String.class, predicate);
+    private static SpreadsheetDataValidator<String> validator(final Predicate<String> predicate,
+                                                              final String toString) {
+        return PredicateSpreadsheetDataValidator.with(String.class,
+                predicate,
+                toString);
     }
 
     // MISC ..........................................................................................................
