@@ -25,20 +25,28 @@ import java.util.function.Predicate;
  */
 final class PredicateSpreadsheetDataValidator<T> extends SpreadsheetDataValidatorTemplate<T> {
 
-    static <T> PredicateSpreadsheetDataValidator<T> with(final Class<T> valueType, final Predicate<? super T> condition) {
+    static <T> PredicateSpreadsheetDataValidator<T> with(final Class<T> valueType,
+                                                         final Predicate<? super T> condition,
+                                                         final String toString) {
         Objects.requireNonNull(valueType, "valueType");
         Objects.requireNonNull(condition, "condition");
+        Objects.requireNonNull(toString, "toString");
 
-        return new PredicateSpreadsheetDataValidator<>(valueType, condition);
+        return new PredicateSpreadsheetDataValidator<>(valueType,
+                condition,
+                toString);
     }
 
     /**
      * Private ctor
      */
-    private PredicateSpreadsheetDataValidator(final Class<T> valueType, final Predicate<? super T> condition) {
+    private PredicateSpreadsheetDataValidator(final Class<T> valueType,
+                                              final Predicate<? super T> condition,
+                                              final String toString) {
         super();
         this.valueType = valueType;
         this.condition = condition;
+        this.toString = toString;
     }
 
     @Override
@@ -53,10 +61,12 @@ final class PredicateSpreadsheetDataValidator<T> extends SpreadsheetDataValidato
         return this.condition.test(value);
     }
 
+    private final Predicate<? super T> condition;
+
     @Override
     public String toString() {
-        return this.condition.toString();
+        return this.toString;
     }
 
-    private final Predicate<? super T> condition;
+    private final String toString;
 }
