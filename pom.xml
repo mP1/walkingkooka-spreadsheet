@@ -29,6 +29,13 @@
   <name>walkingkooka-squares Maven Webapp</name>
   <url>http://www.github.com/mP1/walkingkooka-squares</url>
 
+  <repositories>
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+    </repository>
+  </repositories>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.9</maven.compiler.source>
@@ -43,9 +50,9 @@
     </dependency>
 
     <dependency>
-      <groupId>walkingkooka</groupId>
+      <groupId>com.github.mP1</groupId>
       <artifactId>walkingkooka</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>master-SNAPSHOT</version>
     </dependency>
   </dependencies>
 
