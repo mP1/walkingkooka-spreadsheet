@@ -18,13 +18,19 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.test.ClassTesting2;
+import walkingkooka.test.IsMethodTesting;
 import walkingkooka.test.ToStringTesting;
+import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
 
+import java.util.function.Predicate;
+
 public abstract class SpreadsheetExpressionReferenceTestCase<R extends SpreadsheetExpressionReference> implements ClassTesting2<R>,
         HasJsonNodeTesting<R>,
+        IsMethodTesting<R>,
         ToStringTesting<R> {
 
     SpreadsheetExpressionReferenceTestCase() {
@@ -39,10 +45,32 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
 
     abstract R createReference();
 
-    // HasJsonNode.......................................................................................
+    // HasJsonNode......................................................................................................
 
     @Override
     public final R createHasJsonNode() {
         return this.createReference();
+    }
+
+    // IsMethodTesting...................................................................................................
+
+    @Override
+    public final R createIsMethodObject() {
+        return this.createReference();
+    }
+
+    @Override
+    public final String isMethodTypeNamePrefix() {
+        return "Spreadsheet";
+    }
+
+    @Override
+    public final String isMethodTypeNameSuffix() {
+        return "";//ExpressionReference.class.getSimpleName();
+    }
+
+    @Override
+    public final Predicate<String> isMethodIgnoreMethodFilter() {
+        return Predicates.never();
     }
 }
