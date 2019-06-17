@@ -119,7 +119,7 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosR
     static Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
                                             final List<SpreadsheetRange> window) {
         return cells.stream()
-                .filter(c -> window.stream().anyMatch(r -> r.contains(c.reference())))
+                .filter(c -> window.stream().anyMatch(r -> r.test(c.reference())))
                 .collect(Collectors.toCollection(Sets::ordered));
     }
 
