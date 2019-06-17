@@ -169,7 +169,19 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
         Objects.requireNonNull(other, "other");
     }
 
-    // HashCodeEqualsDefined................................................................
+    // is...............................................................................................................
+
+    @Override
+    public boolean isCellReference() {
+        return true;
+    }
+
+    @Override
+    public boolean isLabelName() {
+        return false;
+    }
+
+    // HashCodeEqualsDefined............................................................................................
 
     @Override
     public int hashCode() {
