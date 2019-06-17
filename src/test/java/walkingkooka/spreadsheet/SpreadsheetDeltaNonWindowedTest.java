@@ -95,7 +95,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     }
 
     @Override
-    List<Range<SpreadsheetCellReference>> window() {
+    List<SpreadsheetRange> window() {
         return Lists.empty();
     }
 }
