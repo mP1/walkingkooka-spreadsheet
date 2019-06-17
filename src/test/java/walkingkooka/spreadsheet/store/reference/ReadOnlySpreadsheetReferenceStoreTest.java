@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.store.ReadOnlyStoreTesting;
 
 import java.util.Set;
@@ -211,43 +212,43 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
     }
 
     private SpreadsheetCellReference a1() {
-        return SpreadsheetCellReference.parse("A1");
+        return SpreadsheetExpressionReference.parseCellReference("A1");
     }
 
     private SpreadsheetCellReference b1() {
-        return SpreadsheetCellReference.parse("b1");
+        return SpreadsheetExpressionReference.parseCellReference("b1");
     }
 
     private SpreadsheetCellReference c1() {
-        return SpreadsheetCellReference.parse("c1");
+        return SpreadsheetExpressionReference.parseCellReference("c1");
     }
 
     private SpreadsheetCellReference d1() {
-        return SpreadsheetCellReference.parse("d1");
+        return SpreadsheetExpressionReference.parseCellReference("d1");
     }
 
     private SpreadsheetCellReference e1() {
-        return SpreadsheetCellReference.parse("e1");
+        return SpreadsheetExpressionReference.parseCellReference("e1");
     }
 
     private SpreadsheetCellReference f99() {
-        return SpreadsheetCellReference.parse("f99");
+        return SpreadsheetExpressionReference.parseCellReference("f99");
     }
 
     private SpreadsheetCellReference g99() {
-        return SpreadsheetCellReference.parse("g99");
+        return SpreadsheetExpressionReference.parseCellReference("g99");
     }
 
     private SpreadsheetCellReference h99() {
-        return SpreadsheetCellReference.parse("h99");
+        return SpreadsheetExpressionReference.parseCellReference("h99");
     }
 
     private SpreadsheetCellReference i99() {
-        return SpreadsheetCellReference.parse("i99");
+        return SpreadsheetExpressionReference.parseCellReference("i99");
     }
 
     private SpreadsheetCellReference j99() {
-        return SpreadsheetCellReference.parse("j99");
+        return SpreadsheetExpressionReference.parseCellReference("j99");
     }
 
     @Override

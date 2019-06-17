@@ -18,13 +18,18 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.compare.Comparators;
+import walkingkooka.compare.Range;
+import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonObjectNode;
 
 import java.util.Comparator;
+import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * Base class for all Spreadsheet {@link ExpressionReference}
@@ -35,6 +40,58 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
      * A comparator that orders {@link SpreadsheetLabelName} before {@link SpreadsheetCellReference}.
      */
     public final static Comparator<SpreadsheetExpressionReference> COMPARATOR = SpreadsheetExpressionReferenceComparator.INSTANCE;
+
+    // modes used by isCellReference
+    private final static int MODE_COLUMN = 0;
+    private final static int MODE_ROW = MODE_COLUMN + 1;
+    private final static int MODE_FAIL = MODE_ROW + 1;
+
+    /**
+     * Tests if the {@link String name} is a valid cell reference.
+     */
+    public static boolean isCellReference(final String name) {
+        int mode = MODE_COLUMN; // -1 too long or contains invalid char
+        int column = 0;
+        int row = 0;
+
+        // AB11 max row, max column
+        final int length = name.length();
+        for (int i = 0; i < length; i++) {
+            final char c = name.charAt(i);
+
+            // try and parseCellReference into column + row
+            if (MODE_COLUMN == mode) {
+                final int digit = SpreadsheetParsers.valueFromDigit(c);
+                if (-1 != digit) {
+                    column = column * SpreadsheetColumnReference.RADIX + digit;
+                    if (column >= SpreadsheetColumnReference.MAX) {
+                        mode = MODE_FAIL;
+                        break; // column is too big cant be a cell reference.
+                    }
+                    continue;
+                }
+                mode = MODE_ROW;
+            }
+            if (MODE_ROW == mode) {
+                final int digit = Character.digit(c, SpreadsheetRowReference.RADIX);
+                if (-1 != digit) {
+                    row = SpreadsheetRowReference.RADIX * row + digit;
+                    if (row >= SpreadsheetRowReference.MAX) {
+                        mode = MODE_FAIL;
+                        break; // row is too big cant be a cell reference.
+                    }
+                    continue;
+                }
+                mode = MODE_FAIL;
+                break;
+            }
+        }
+
+        // ran out of characters still checking row must be a valid cell reference.
+        return MODE_ROW == mode;
+    }
+
+    // sub class factories..............................................................................................
 
     /**
      * {@see SpreadsheetCellReference}
@@ -49,6 +106,33 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
      */
     public static SpreadsheetLabelName labelName(final String name) {
         return SpreadsheetLabelName.with(name);
+    }
+
+    // parse............................................................................................................
+
+    /**
+     * Parsers the given text into a {@link SpreadsheetExpressionReference}
+     */
+    public static SpreadsheetExpressionReference parse(final String text) {
+        Objects.requireNonNull(text, "text");
+
+        return SpreadsheetLabelName.isCellReference(text) ?
+                parseCellReference(text) :
+                labelName(text);
+    }
+
+    /**
+     * Parsers a range of cell referencs.
+     */
+    public static Range<SpreadsheetCellReference> parseCellReferenceRange(final String text) {
+        return SpreadsheetCellReference.parseCellReferenceRange0(text);
+    }
+
+    /**
+     * Parsers the text expecting a valid {@link SpreadsheetCellReference} or fails.
+     */
+    public static SpreadsheetCellReference parseCellReference(final String text) {
+        return SpreadsheetCellReference.parseCellReference0(text);
     }
 
     /**
@@ -85,11 +169,58 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
      */
     final static int LABEL_COMPARED_WITH_CELL_RESULT = Comparators.LESS;
 
+    // HasJsonNode......................................................................................................
+
+    /**
+     * Attempts to convert a {@link JsonNode} into a {@link SpreadsheetExpressionReference}.
+     */
+    public static SpreadsheetExpressionReference fromJsonNode(final JsonNode node) {
+        return fromJsonNode0(node, SpreadsheetExpressionReference::parse);
+    }
+
+    /**
+     * Accepts a json string and returns a {@link SpreadsheetCellReference} or fails.
+     */
+    public static SpreadsheetCellReference fromJsonNodeCellReference(final JsonNode node) {
+        return fromJsonNode0(node,
+                SpreadsheetExpressionReference::parseCellReference);
+    }
+
+    /**
+     * Accepts a json string and returns a {@link SpreadsheetLabelName} or fails.
+     */
+    public static SpreadsheetLabelName fromJsonNodeLabelName(final JsonNode node) {
+        return fromJsonNode0(node, SpreadsheetExpressionReference::labelName);
+    }
+
+    /**
+     * Generic helper that tries to convert the node into a string and call a parse method.
+     */
+    private static <R extends SpreadsheetExpressionReference> R fromJsonNode0(final JsonNode node,
+                                                                              final Function<String, R> parse) {
+        Objects.requireNonNull(node, "node");
+
+        try {
+            return parse.apply(node.stringValueOrFail());
+        } catch (final JsonNodeException cause) {
+            throw new IllegalArgumentException(cause.getMessage(), cause);
+        }
+    }
+
     /**
      * The json form of this object is also {@link #toString()}
      */
     @Override
     public final JsonNode toJsonNode() {
         return JsonObjectNode.string(this.toString());
+    }
+
+    static {
+        HasJsonNode.register("spreadsheet-cell-reference",
+                SpreadsheetCellReference::fromJsonNodeCellReference,
+                SpreadsheetCellReference.class);
+        HasJsonNode.register("spreadsheet-label-name",
+                SpreadsheetLabelName::fromJsonNodeLabelName,
+                SpreadsheetLabelName.class);
     }
 }

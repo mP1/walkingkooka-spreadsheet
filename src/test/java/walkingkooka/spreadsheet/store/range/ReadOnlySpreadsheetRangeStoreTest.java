@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.store.range;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.store.ReadOnlyStoreTesting;
 
@@ -30,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class ReadOnlySpreadsheetRangeStoreTest implements SpreadsheetRangeStoreTesting<ReadOnlySpreadsheetRangeStore<String>, String>,
         ReadOnlyStoreTesting<ReadOnlySpreadsheetRangeStore<String>, SpreadsheetRange, List<String>> {
 
-    private final static SpreadsheetRange RANGE = SpreadsheetRange.with(SpreadsheetCellReference.parse("a1"), SpreadsheetCellReference.parse("b2"));
+    private final static SpreadsheetRange RANGE = SpreadsheetRange.with(SpreadsheetExpressionReference.parseCellReference("a1"), SpreadsheetExpressionReference.parseCellReference("b2"));
     private final static String VALUE = "value";
 
     @Test

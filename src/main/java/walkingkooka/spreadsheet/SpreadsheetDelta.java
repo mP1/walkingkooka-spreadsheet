@@ -194,7 +194,7 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosR
 
     private static List<Range<SpreadsheetCellReference>> windowFromJsonNode(final String range) {
         return Arrays.stream(range.split(WINDOW_SEPARATOR))
-                .map(SpreadsheetCellReference::parseRange)
+                .map(SpreadsheetCellReference::parseCellReferenceRange)
                 .collect(Collectors.toList());
     }
 

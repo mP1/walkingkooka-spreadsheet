@@ -134,7 +134,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
      * Creates a {@link SpreadsheetCellReference} fromt this column and the new row.
      */
     public SpreadsheetCellReference setRow(final SpreadsheetRowReference row) {
-        return SpreadsheetCellReference.with(this, row);
+        return SpreadsheetExpressionReference.cellReference(this, row);
     }
 
     // HashCodeEqualsDefined.................................................................................

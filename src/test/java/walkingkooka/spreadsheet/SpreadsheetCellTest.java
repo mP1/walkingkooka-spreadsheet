@@ -292,7 +292,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     // HasJsonNode...............................................................................................
 
-    // HasJsonNode.fromJsonNode.......................................................................................
+    // HasJsonNode.fromJsonNodeLabelName.......................................................................................
 
     @Test
     public void testFromJsonNodeBooleanFails() {
@@ -511,7 +511,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     private static SpreadsheetCellReference reference(final int column, final int row) {
-        return SpreadsheetCellReference.with(SpreadsheetReferenceKind.ABSOLUTE.column(column), SpreadsheetReferenceKind.ABSOLUTE.row(row));
+        return SpreadsheetExpressionReference.cellReference(SpreadsheetReferenceKind.ABSOLUTE.column(column), SpreadsheetReferenceKind.ABSOLUTE.row(row));
     }
 
     private void checkReference(final SpreadsheetCell cell) {
