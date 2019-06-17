@@ -71,7 +71,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createSpreadsheetDelta(), "cells: A1=1, B2=2, C3=3 window: (A1..E5),(F6..Z99)");
+        this.toStringAndCheck(this.createSpreadsheetDelta(), "cells: A1=1, B2=2, C3=3 window: A1..E5,F6..Z99");
     }
 
     @Test
@@ -94,7 +94,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     }
 
     @Override
-    List<Range<SpreadsheetCellReference>> window() {
+    List<SpreadsheetRange> window() {
         return this.window0("A1:E5", "F6:Z99");
     }
 }
