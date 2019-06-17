@@ -41,7 +41,7 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
      */
     public final static Comparator<SpreadsheetExpressionReference> COMPARATOR = SpreadsheetExpressionReferenceComparator.INSTANCE;
 
-    // modes used by isCellReference
+    // modes used by isTextCellReference
     private final static int MODE_COLUMN = 0;
     private final static int MODE_ROW = MODE_COLUMN + 1;
     private final static int MODE_FAIL = MODE_ROW + 1;
@@ -49,7 +49,9 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     /**
      * Tests if the {@link String name} is a valid cell reference.
      */
-    public static boolean isCellReference(final String name) {
+    public static boolean isTextCellReference(final String name) {
+        Objects.requireNonNull(name, "name");
+
         int mode = MODE_COLUMN; // -1 too long or contains invalid char
         int column = 0;
         int row = 0;
@@ -116,7 +118,7 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     public static SpreadsheetExpressionReference parse(final String text) {
         Objects.requireNonNull(text, "text");
 
-        return SpreadsheetLabelName.isCellReference(text) ?
+        return SpreadsheetLabelName.isTextCellReference(text) ?
                 parseCellReference(text) :
                 labelName(text);
     }

@@ -22,14 +22,8 @@ import walkingkooka.InvalidTextLengthException;
 import walkingkooka.naming.Name;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
-import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.json.HasJsonNode;
-import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeException;
-
-import java.util.Objects;
 
 /**
  * A label or {@link Name} is a name to a cell reference, range and so on.
@@ -65,7 +59,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference i
             throw new InvalidTextLengthException("Label", name, 0, MAX_LENGTH);
         }
 
-        if (isCellReference(name)) {
+        if (isTextCellReference(name)) {
             throw new IllegalArgumentException("Label is a valid cell reference=" + CharSequences.quote(name));
         }
 
