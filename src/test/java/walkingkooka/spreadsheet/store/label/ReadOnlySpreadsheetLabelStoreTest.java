@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.store.label;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.store.ReadOnlyStoreTesting;
@@ -119,8 +120,8 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
 
     @Override
     public void testLabelsWithCellReference() {
-        final SpreadsheetLabelName label = SpreadsheetLabelName.with("LabelZ99");
-        final SpreadsheetCellReference reference = SpreadsheetCellReference.parse("Z99");
+        final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LabelZ99");
+        final SpreadsheetCellReference reference = SpreadsheetExpressionReference.parseCellReference("Z99");
 
         this.labelsAndCheck(ReadOnlySpreadsheetLabelStore.with(new FakeSpreadsheetLabelStore() {
                     @Override
@@ -163,11 +164,11 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
     }
 
     private SpreadsheetLabelName labelName() {
-        return SpreadsheetLabelName.with("elephant");
+        return SpreadsheetExpressionReference.labelName("elephant");
     }
 
     private SpreadsheetCellReference reference() {
-        return SpreadsheetCellReference.parse("A1");
+        return SpreadsheetExpressionReference.parseCellReference("A1");
     }
 
     @Override

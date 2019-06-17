@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.store.cell;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 
 import java.util.TreeMap;
@@ -29,7 +30,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     @Test
     public void testToString() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
-        store.save(SpreadsheetCell.with(SpreadsheetCellReference.parse("A1"), SpreadsheetFormula.with("1+2")));
+        store.save(SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference("A1"), SpreadsheetFormula.with("1+2")));
 
         this.toStringAndCheck(store, "[A1=1+2]");
     }

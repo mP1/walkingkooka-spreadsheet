@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetExpressionReferenceVisitor;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.visit.VisitorTesting;
@@ -26,7 +27,7 @@ import walkingkooka.tree.visit.VisitorTesting;
 public final class BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitorSpreadsheetExpressionReferenceVisitorTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitorSpreadsheetExpressionReferenceVisitor>
         implements VisitorTesting<BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitorSpreadsheetExpressionReferenceVisitor, ExpressionReference> {
 
-    private final static SpreadsheetCellReference CELL = SpreadsheetCellReference.parse("A99");
+    private final static SpreadsheetCellReference CELL = SpreadsheetExpressionReference.parseCellReference("A99");
 
     @Test
     public void testToString() {

@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.SpreadsheetDelta;
 import walkingkooka.spreadsheet.SpreadsheetError;
+import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.SpreadsheetLabelName;
@@ -55,7 +56,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     SpreadsheetColumnReference COLUMN = SpreadsheetReferenceKind.ABSOLUTE.column(1);
     SpreadsheetRowReference ROW = SpreadsheetReferenceKind.ABSOLUTE.row(2);
     SpreadsheetCellReference REFERENCE = COLUMN.setRow(ROW);
-    SpreadsheetLabelName LABEL = SpreadsheetLabelName.with("LABEL123");
+    SpreadsheetLabelName LABEL = SpreadsheetExpressionReference.labelName("LABEL123");
 
     @Test
     default void testLoadCellNullCellFails() {
@@ -208,8 +209,8 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     @Test
     default void testSaveLabelNullContextFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().saveLabel(SpreadsheetLabelMapping.with(SpreadsheetLabelName.with("LABEL123"),
-                    SpreadsheetCellReference.parse("A1")), null);
+            this.createSpreadsheetEngine().saveLabel(SpreadsheetLabelMapping.with(SpreadsheetExpressionReference.labelName("LABEL123"),
+                    SpreadsheetExpressionReference.parseCellReference("A1")), null);
         });
     }
 
@@ -249,7 +250,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     @Test
     default void testRemoveLabelNullContextFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().removeLabel(SpreadsheetLabelName.with("label"), null);
+            this.createSpreadsheetEngine().removeLabel(SpreadsheetExpressionReference.labelName("label"), null);
         });
     }
 

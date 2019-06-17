@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.store.label;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.store.StoreTesting;
@@ -51,18 +52,18 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
     @Test
     default void testLabelsWithUnknownCellReference() {
         final S store = this.createStore();
-        this.labelsAndCheck(store, SpreadsheetCellReference.parse("Z99"));
+        this.labelsAndCheck(store, SpreadsheetExpressionReference.parseCellReference("Z99"));
     }
 
     @Test
     default void testLabelsWithCellReference() {
         final S store = this.createStore();
 
-        final SpreadsheetLabelName label = SpreadsheetLabelName.with("LabelZ99");
-        final SpreadsheetCellReference reference = SpreadsheetCellReference.parse("Z99");
+        final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LabelZ99");
+        final SpreadsheetCellReference reference = SpreadsheetExpressionReference.parseCellReference("Z99");
 
         store.save(SpreadsheetLabelMapping.with(label, reference));
-        store.save(SpreadsheetLabelMapping.with(SpreadsheetLabelName.with("DifferentLabel"), SpreadsheetCellReference.parse("A1")));
+        store.save(SpreadsheetLabelMapping.with(SpreadsheetExpressionReference.labelName("DifferentLabel"), SpreadsheetExpressionReference.parseCellReference("A1")));
 
         this.labelsAndCheck(store, reference, label);
     }
@@ -71,11 +72,11 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
     default void testLabelsWithCellReference2() {
         final S store = this.createStore();
 
-        final SpreadsheetLabelName label1 = SpreadsheetLabelName.with("LabelZ991");
-        final SpreadsheetLabelName label2 = SpreadsheetLabelName.with("LabelZ992");
-        final SpreadsheetLabelName label3 = SpreadsheetLabelName.with("LabelZ993");
+        final SpreadsheetLabelName label1 = SpreadsheetExpressionReference.labelName("LabelZ991");
+        final SpreadsheetLabelName label2 = SpreadsheetExpressionReference.labelName("LabelZ992");
+        final SpreadsheetLabelName label3 = SpreadsheetExpressionReference.labelName("LabelZ993");
 
-        final SpreadsheetCellReference reference = SpreadsheetCellReference.parse("Z99");
+        final SpreadsheetCellReference reference = SpreadsheetExpressionReference.parseCellReference("Z99");
 
         store.save(SpreadsheetLabelMapping.with(label1, reference));
         store.save(SpreadsheetLabelMapping.with(label2, reference));
@@ -88,9 +89,9 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
     default void testLabelsWithCellIndirectReference() {
         final S store = this.createStore();
 
-        final SpreadsheetLabelName indirect = SpreadsheetLabelName.with("IndirectLabelZ99");
-        final SpreadsheetLabelName label = SpreadsheetLabelName.with("LabelZ99");
-        final SpreadsheetCellReference reference = SpreadsheetCellReference.parse("Z99");
+        final SpreadsheetLabelName indirect = SpreadsheetExpressionReference.labelName("IndirectLabelZ99");
+        final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LabelZ99");
+        final SpreadsheetCellReference reference = SpreadsheetExpressionReference.parseCellReference("Z99");
 
         store.save(SpreadsheetLabelMapping.with(indirect, reference));
         store.save(SpreadsheetLabelMapping.with(label, indirect));
@@ -122,12 +123,12 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
 
     @Override
     default SpreadsheetLabelName id() {
-        return SpreadsheetLabelName.with("abc123456789");
+        return SpreadsheetExpressionReference.labelName("abc123456789");
     }
 
     @Override
     default SpreadsheetLabelMapping value() {
-        return SpreadsheetLabelMapping.with(this.id(), SpreadsheetCellReference.parse("A1"));
+        return SpreadsheetLabelMapping.with(this.id(), SpreadsheetExpressionReference.parseCellReference("A1"));
     }
 
     // TypeNameTesting..................................................................

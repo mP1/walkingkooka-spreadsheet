@@ -184,7 +184,7 @@ public final class SpreadsheetExpressionReferenceComparatorTest implements Class
     }
 
     private SpreadsheetLabelName label(final String label) {
-        return SpreadsheetLabelName.with(label);
+        return SpreadsheetExpressionReference.labelName(label);
     }
 
     @Override
