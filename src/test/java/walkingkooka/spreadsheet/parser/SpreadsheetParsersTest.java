@@ -26,6 +26,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.SpreadsheetReferenceKind;
@@ -98,12 +99,12 @@ public final class SpreadsheetParsersTest implements ParserTesting<Parser<Spread
         final String text = "Hello";
 
         this.cellReferenceParseAndCheck(text,
-                SpreadsheetParserToken.labelName(SpreadsheetLabelName.with(text), text),
+                SpreadsheetParserToken.labelName(SpreadsheetExpressionReference.labelName(text), text),
                 text);
     }
 
     /**
-     * First parse the range using {@link SpreadsheetParsers#cellReferences()}} and then repeat again with
+     * First parseCellReference the range using {@link SpreadsheetParsers#cellReferences()}} and then repeat again with
      * {@link SpreadsheetParsers#expression()}.
      */
     private void cellReferenceParseAndCheck(final String from,
@@ -176,7 +177,7 @@ public final class SpreadsheetParsersTest implements ParserTesting<Parser<Spread
     }
 
     /**
-     * First parse the range using {@link SpreadsheetParsers#range()} and then repeat again with {@link SpreadsheetParsers#expression()}.
+     * First parseCellReference the range using {@link SpreadsheetParsers#range()} and then repeat again with {@link SpreadsheetParsers#expression()}.
      */
     private void rangeParseAndCheck(final String from, final SpreadsheetRangeParserToken expected, final String text) {
         this.parseAndCheck(SpreadsheetParsers.range(), from, expected, text);
@@ -740,7 +741,7 @@ public final class SpreadsheetParsersTest implements ParserTesting<Parser<Spread
     }
 
     /**
-     * First parse the range using {@link SpreadsheetParsers#function()} and then repeat again with
+     * First parseCellReference the range using {@link SpreadsheetParsers#function()} and then repeat again with
      * {@link SpreadsheetParsers#expression()}. Both should give the same results.
      */
     private void functionParseAndCheck(final String from,
@@ -922,7 +923,7 @@ public final class SpreadsheetParsersTest implements ParserTesting<Parser<Spread
         final Optional<ParserToken> spreadsheetFormula = this.createParser().parse(cursor,
                 SpreadsheetParserContexts.basic(DecimalNumberContexts.american(MathContext.DECIMAL32)));
         if (!spreadsheetFormula.isPresent()) {
-            fail("Parser failed to parse " + CharSequences.quoteAndEscape(parse));
+            fail("Parser failed to parseCellReference " + CharSequences.quoteAndEscape(parse));
         }
 
         final TextCursorSavePoint after = cursor.save();
@@ -1049,7 +1050,7 @@ public final class SpreadsheetParsersTest implements ParserTesting<Parser<Spread
     }
 
     private SpreadsheetLabelNameParserToken label(final String label) {
-        return SpreadsheetParserToken.labelName(SpreadsheetLabelName.with(label), label);
+        return SpreadsheetParserToken.labelName(SpreadsheetExpressionReference.labelName(label), label);
     }
 
     private SpreadsheetParserToken negative(final SpreadsheetParserToken number) {

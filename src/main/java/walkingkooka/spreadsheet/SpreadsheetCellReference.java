@@ -44,33 +44,18 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
         LowerOrUpper<SpreadsheetCellReference> {
 
     /**
-     * Accepts a json string and returns a {@link SpreadsheetCellReference} or fails.
-     */
-    public static SpreadsheetCellReference fromJsonNode(final JsonNode node) {
-        Objects.requireNonNull(node, "node");
-
-        try {
-            return parse(node.stringValueOrFail());
-        } catch (final JsonNodeException cause) {
-            throw new IllegalArgumentException(cause.getMessage(), cause);
-        }
-    }
-
-    static {
-        HasJsonNode.register("spreadsheet-cell-reference", SpreadsheetCellReference::fromJsonNode, SpreadsheetCellReference.class);
-    }
-
-    /**
      * Parsers a range of cell referencs.
      */
-    public static Range<SpreadsheetCellReference> parseRange(final String text) {
-        return Range.parse(text, SpreadsheetParsers.RANGE_SEPARATOR.character(), SpreadsheetCellReference::parse);
+    static Range<SpreadsheetCellReference> parseCellReferenceRange0(final String text) {
+        return Range.parse(text,
+                SpreadsheetParsers.RANGE_SEPARATOR.character(),
+                SpreadsheetCellReference::parseCellReference);
     }
 
     /**
      * Parsers the text expecting a valid {@link SpreadsheetCellReference} or fails.
      */
-    public static SpreadsheetCellReference parse(final String text) {
+    static SpreadsheetCellReference parseCellReference0(final String text) {
         try {
             final SpreadsheetCellReferenceParserToken token = PARSER.parse(TextCursors.charSequence(text),
                     SpreadsheetParserContexts.basic(DecimalNumberContexts.american(MathContext.DECIMAL32)))
@@ -86,7 +71,7 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
     /**
      * Factory that creates a {@link SpreadsheetCellReference} with the given column and row.
      */
-    public static SpreadsheetCellReference with(final SpreadsheetColumnReference column, final SpreadsheetRowReference row) {
+    static SpreadsheetCellReference with(final SpreadsheetColumnReference column, final SpreadsheetRowReference row) {
         checkColumn(column);
         checkRow(row);
 

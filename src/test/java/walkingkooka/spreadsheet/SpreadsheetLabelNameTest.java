@@ -188,6 +188,6 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
 
     @Override
     public SpreadsheetLabelName fromJsonNode(final JsonNode from) {
-        return SpreadsheetLabelName.fromJsonNode(from);
+        return SpreadsheetLabelName.fromJsonNodeLabelName(from);
     }
 }

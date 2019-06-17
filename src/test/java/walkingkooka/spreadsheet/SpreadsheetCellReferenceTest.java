@@ -373,27 +373,27 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
                         .setRow(SpreadsheetRowReference.with(97, SpreadsheetReferenceKind.ABSOLUTE)));
     }
 
-    // parseRange....................................................................................................
+    // parseCellReferenceRange..........................................................................................
 
     @Test
     public void testParseRange() {
-        assertEquals(Range.greaterThanEquals(SpreadsheetCellReference.parse("B2"))
-                        .and(Range.lessThanEquals(SpreadsheetCellReference.parse("D4"))),
-                SpreadsheetCellReference.parseRange("B2:D4"));
+        assertEquals(Range.greaterThanEquals(SpreadsheetExpressionReference.parseCellReference("B2"))
+                        .and(Range.lessThanEquals(SpreadsheetExpressionReference.parseCellReference("D4"))),
+                SpreadsheetCellReference.parseCellReferenceRange("B2:D4"));
     }
 
     @Test
     public void testParseRange2() {
-        assertEquals(Range.greaterThanEquals(SpreadsheetCellReference.parse("$B$2"))
-                        .and(Range.lessThanEquals(SpreadsheetCellReference.parse("$D$4"))),
-                SpreadsheetCellReference.parseRange("$B$2:$D$4"));
+        assertEquals(Range.greaterThanEquals(SpreadsheetExpressionReference.parseCellReference("$B$2"))
+                        .and(Range.lessThanEquals(SpreadsheetExpressionReference.parseCellReference("$D$4"))),
+                SpreadsheetCellReference.parseCellReferenceRange("$B$2:$D$4"));
     }
 
     @Test
     public void testParseRange3() {
-        assertEquals(Range.greaterThanEquals(SpreadsheetCellReference.parse("$B2"))
-                        .and(Range.lessThanEquals(SpreadsheetCellReference.parse("D$4"))),
-                SpreadsheetCellReference.parseRange("$B2:D$4"));
+        assertEquals(Range.greaterThanEquals(SpreadsheetExpressionReference.parseCellReference("$B2"))
+                        .and(Range.lessThanEquals(SpreadsheetExpressionReference.parseCellReference("D$4"))),
+                SpreadsheetCellReference.parseCellReferenceRange("$B2:D$4"));
     }
 
     // HasJsonNode..................................................................................................
@@ -426,7 +426,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
     @Test
     public void testFromJsonNodeString() {
         this.fromJsonNodeAndCheck(JsonNode.string("$A$1"),
-                SpreadsheetCellReference.parse("$A$1"));
+                SpreadsheetExpressionReference.parseCellReference("$A$1"));
     }
 
     // toString..................................................................................................
@@ -499,7 +499,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
 
     @Override
     public SpreadsheetCellReference parse(final String text) {
-        return SpreadsheetCellReference.parse(text);
+        return SpreadsheetExpressionReference.parseCellReference(text);
     }
 
     @Override
@@ -516,6 +516,6 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
 
     @Override
     public SpreadsheetCellReference fromJsonNode(final JsonNode from) {
-        return SpreadsheetCellReference.fromJsonNode(from);
+        return SpreadsheetCellReference.fromJsonNodeCellReference(from);
     }
 }

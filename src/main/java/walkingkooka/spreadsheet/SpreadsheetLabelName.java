@@ -56,26 +56,9 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference i
     public final static int MAX_LENGTH = 255;
 
     /**
-     * Accepts a json string and returns a {@link SpreadsheetLabelName} or fails.
-     */
-    public static SpreadsheetLabelName fromJsonNode(final JsonNode node) {
-        Objects.requireNonNull(node, "node");
-
-        try {
-            return with(node.stringValueOrFail());
-        } catch (final JsonNodeException cause) {
-            throw new IllegalArgumentException(cause.getMessage(), cause);
-        }
-    }
-
-    static {
-        HasJsonNode.register("spreadsheet-label-name", SpreadsheetLabelName::fromJsonNode, SpreadsheetLabelName.class);
-    }
-
-    /**
      * Factory that creates a {@link SpreadsheetLabelName}
      */
-    public static SpreadsheetLabelName with(final String name) {
+    static SpreadsheetLabelName with(final String name) {
         CharPredicates.failIfNullOrEmptyOrInitialAndPartFalse(name, "name", INITIAL, PART);
 
         if (name.length() >= MAX_LENGTH) {
@@ -87,56 +70,6 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference i
         }
 
         return new SpreadsheetLabelName(name);
-    }
-
-    // modes used by isCellReference
-    private final static int MODE_COLUMN = 0;
-    private final static int MODE_ROW = MODE_COLUMN + 1;
-    private final static int MODE_FAIL = MODE_ROW + 1;
-
-    /**
-     * Tests if the {@link String name} is a valid cell reference.
-     */
-    public static boolean isCellReference(final String name) {
-        int mode = MODE_COLUMN; // -1 too long or contains invalid char
-        int column = 0;
-        int row = 0;
-
-        // AB11 max row, max column
-        final int length = name.length();
-        for (int i = 0; i < length; i++) {
-            final char c = name.charAt(i);
-
-            // try and parse into column + row
-            if (MODE_COLUMN == mode) {
-                final int digit = SpreadsheetParsers.valueFromDigit(c);
-                if (-1 != digit) {
-                    column = column * SpreadsheetColumnReference.RADIX + digit;
-                    if (column >= SpreadsheetColumnReference.MAX) {
-                        mode = MODE_FAIL;
-                        break; // column is too big cant be a cell reference.
-                    }
-                    continue;
-                }
-                mode = MODE_ROW;
-            }
-            if (MODE_ROW == mode) {
-                final int digit = Character.digit(c, SpreadsheetRowReference.RADIX);
-                if (-1 != digit) {
-                    row = SpreadsheetRowReference.RADIX * row + digit;
-                    if (row >= SpreadsheetRowReference.MAX) {
-                        mode = MODE_FAIL;
-                        break; // row is too big cant be a cell reference.
-                    }
-                    continue;
-                }
-                mode = MODE_FAIL;
-                break;
-            }
-        }
-
-        // ran out of characters still checking row must be a valid cell reference.
-        return MODE_ROW == mode;
     }
 
     /**

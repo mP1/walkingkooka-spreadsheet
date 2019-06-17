@@ -61,7 +61,7 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     }
 
     final SpreadsheetCell cell(final String cellReference, final String formulaText) {
-        return SpreadsheetCell.with(SpreadsheetCellReference.parse(cellReference), SpreadsheetFormula.with(formulaText));
+        return SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference(cellReference), SpreadsheetFormula.with(formulaText));
     }
 
     final void checkId(final SpreadsheetDelta delta) {

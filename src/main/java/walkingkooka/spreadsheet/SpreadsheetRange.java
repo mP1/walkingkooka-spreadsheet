@@ -70,7 +70,7 @@ public final class SpreadsheetRange implements ExpressionReference,
                                                    final String label,
                                                    final String text) {
         try {
-            return SpreadsheetCellReference.parse(component);
+            return SpreadsheetExpressionReference.parseCellReference(component);
         } catch (final IllegalArgumentException cause) {
             throw new IllegalArgumentException("Invalid " + label + " in " + CharSequences.quote(text), cause);
         }
