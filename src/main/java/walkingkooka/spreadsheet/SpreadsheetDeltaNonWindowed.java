@@ -57,7 +57,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
      * There is no window.
      */
     @Override
-    public List<Range<SpreadsheetCellReference>> window() {
+    public List<SpreadsheetRange> window() {
         return Lists.empty();
     }
 

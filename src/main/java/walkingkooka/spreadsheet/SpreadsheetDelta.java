@@ -56,7 +56,7 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosR
 
     static SpreadsheetDelta filterCellsIfNecessaryAndCreate(final SpreadsheetId id,
                                                             final Set<SpreadsheetCell> cells,
-                                                            final List<Range<SpreadsheetCellReference>> window) {
+                                                            final List<SpreadsheetRange> window) {
         return null == window || window.isEmpty() ?
                 nonWindowed(id, cells) :
                 windowed(id,
@@ -77,7 +77,7 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosR
      */
     static SpreadsheetDeltaWindowed windowed(final SpreadsheetId id,
                                              final Set<SpreadsheetCell> cells,
-                                             final List<Range<SpreadsheetCellReference>> window) {
+                                             final List<SpreadsheetRange> window) {
         return SpreadsheetDeltaWindowed.with0(id, cells, window);
     }
 
@@ -117,9 +117,9 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosR
      * Filters the cells using the assumed window of {@link Range cell reference ranges}.
      */
     static Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
-                                            final List<Range<SpreadsheetCellReference>> window) {
+                                            final List<SpreadsheetRange> window) {
         return cells.stream()
-                .filter(c -> window.stream().anyMatch(r -> r.test(c.reference())))
+                .filter(c -> window.stream().anyMatch(r -> r.contains(c.reference())))
                 .collect(Collectors.toCollection(Sets::ordered));
     }
 
@@ -128,13 +128,13 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosR
     /**
      * Getter that returns any windows for this delta. An empty list signifies, no filtering.
      */
-    public abstract List<Range<SpreadsheetCellReference>> window();
+    public abstract List<SpreadsheetRange> window();
 
     /**
      * Would be setter that if necessary returns a new {@link SpreadsheetDelta} which will also filter cells if necessary.
      */
-    public final SpreadsheetDelta setWindow(final List<Range<SpreadsheetCellReference>> window) {
-        final List<Range<SpreadsheetCellReference>> copy = copyWindow(window);
+    public final SpreadsheetDelta setWindow(final List<SpreadsheetRange> window) {
+        final List<SpreadsheetRange> copy = copyWindow(window);
 
         return this.window().equals(copy) ?
                 this :
@@ -144,7 +144,7 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosR
     /**
      * Checks and makes a copy of the window ranges.
      */
-    private static List<Range<SpreadsheetCellReference>> copyWindow(final List<Range<SpreadsheetCellReference>> window) {
+    private static List<SpreadsheetRange> copyWindow(final List<SpreadsheetRange> window) {
         Objects.requireNonNull(window, "window");
         return Lists.immutable(window);
     }
@@ -159,7 +159,7 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosR
 
         SpreadsheetId id = null;
         Set<SpreadsheetCell> cells = null;
-        List<Range<SpreadsheetCellReference>> window = null;
+        List<SpreadsheetRange> window = null;
 
         try {
             for (JsonNode child : node.objectOrFail().children()) {
@@ -192,9 +192,9 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosR
         return SpreadsheetDelta.filterCellsIfNecessaryAndCreate(id, cells, window);
     }
 
-    private static List<Range<SpreadsheetCellReference>> windowFromJsonNode(final String range) {
+    private static List<SpreadsheetRange> windowFromJsonNode(final String range) {
         return Arrays.stream(range.split(WINDOW_SEPARATOR))
-                .map(SpreadsheetCellReference::parseCellReferenceRange)
+                .map(SpreadsheetRange::parse)
                 .collect(Collectors.toList());
     }
 

@@ -37,13 +37,13 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
      */
     static SpreadsheetDeltaWindowed with0(final SpreadsheetId id,
                                           final Set<SpreadsheetCell> cells,
-                                          final List<Range<SpreadsheetCellReference>> window) {
+                                          final List<SpreadsheetRange> window) {
         return new SpreadsheetDeltaWindowed(id, cells, window);
     }
 
     private SpreadsheetDeltaWindowed(final SpreadsheetId id,
                                      final Set<SpreadsheetCell> cells,
-                                     final List<Range<SpreadsheetCellReference>> window) {
+                                     final List<SpreadsheetRange> window) {
         super(id, cells);
         this.window = window;
     }
@@ -52,7 +52,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     public SpreadsheetDelta setCells(final Set<SpreadsheetCell> cells) {
         checkCells(cells);
 
-        final List<Range<SpreadsheetCellReference>> window = this.window;
+        final List<SpreadsheetRange> window = this.window;
         final Set<SpreadsheetCell> filtered = filterCells(cells, window);
         return this.cells.equals(filtered) ?
                 this :
@@ -60,11 +60,11 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    public List<Range<SpreadsheetCellReference>> window() {
+    public List<SpreadsheetRange> window() {
         return this.window;
     }
 
-    private final List<Range<SpreadsheetCellReference>> window;
+    private final List<SpreadsheetRange> window;
 
     @Override
     boolean canBeEquals(final Object other) {
@@ -84,17 +84,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
 
     private JsonStringNode windowToJsonNode() {
         return JsonNode.string(this.window.stream()
-                .map(SpreadsheetDeltaWindowed::toStringRange)
+                .map(SpreadsheetRange::toString)
                 .collect(Collectors.joining(WINDOW_SEPARATOR)));
-    }
-
-    private static String toStringRange(final Range<SpreadsheetCellReference> range) {
-        return toStringRangeBound(range.lowerBound())
-                .concat(SpreadsheetParsers.RANGE_SEPARATOR.string())
-                .concat(toStringRangeBound(range.upperBound()));
-    }
-
-    private static String toStringRangeBound(final RangeBound<SpreadsheetCellReference> bound) {
-        return bound.value().map(Object::toString).orElse("");
     }
 }

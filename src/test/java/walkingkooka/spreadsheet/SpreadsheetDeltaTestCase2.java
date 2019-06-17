@@ -50,10 +50,10 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
     public final void testWindowReadOnly() {
         final SpreadsheetDelta delta = SpreadsheetDelta.with(this.id(), this.cells())
                 .setWindow(this.window());
-        final List<Range<SpreadsheetCellReference>> window = delta.window();
+        final List<SpreadsheetRange> window = delta.window();
 
         assertThrows(UnsupportedOperationException.class, () -> {
-            window.add(Range.singleton(SpreadsheetExpressionReference.parseCellReference("Z99")));
+            window.add(SpreadsheetRange.parse("A1:A2"));
         });
 
         this.checkWindow(delta, this.window());
@@ -75,7 +75,7 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
     public final void testSetDifferentWindow() {
         final D delta = this.createSpreadsheetDelta();
 
-        final List<Range<SpreadsheetCellReference>> window = this.window0("A1:Z9999");
+        final List<SpreadsheetRange> window = this.window0("A1:Z9999");
         assertNotEquals(window, this.window());
 
         final SpreadsheetDelta different = delta.setWindow(window);
@@ -102,7 +102,7 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
     private void setDifferentWindowFilters(final String range1, final String range2) {
         final SpreadsheetDelta delta = this.createSpreadsheetDelta();
 
-        final List<Range<SpreadsheetCellReference>> window = this.window0(range1, range2);
+        final List<SpreadsheetRange> window = this.window0(range1, range2);
         final SpreadsheetDelta different = delta.setWindow(window);
 
         this.checkId(different);
@@ -132,11 +132,11 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
 
     abstract D createSpreadsheetDelta(final SpreadsheetId id, final Set<SpreadsheetCell> cells);
 
-    abstract List<Range<SpreadsheetCellReference>> window();
+    abstract List<SpreadsheetRange> window();
 
-    final List<Range<SpreadsheetCellReference>> window0(final String... range) {
+    final List<SpreadsheetRange> window0(final String... range) {
         return Arrays.stream(range)
-                .map(SpreadsheetCellReference::parseCellReferenceRange)
+                .map(SpreadsheetRange::parse)
                 .collect(Collectors.toList());
     }
 
@@ -144,7 +144,7 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
         this.checkWindow(delta, this.window());
     }
 
-    final void checkWindow(final SpreadsheetDelta delta, final List<Range<SpreadsheetCellReference>> window) {
+    final void checkWindow(final SpreadsheetDelta delta, final List<SpreadsheetRange> window) {
         assertEquals(window, delta.window(), "window");
     }
 
