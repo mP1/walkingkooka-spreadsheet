@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.ParserToken;
 
@@ -118,7 +119,7 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
     }
 
     final SpreadsheetLabelNameParserToken label(final String text) {
-        return SpreadsheetParserToken.labelName(SpreadsheetLabelName.with(text), text);
+        return SpreadsheetParserToken.labelName(SpreadsheetExpressionReference.labelName(text), text);
     }
 
     final SpreadsheetMinusSymbolParserToken minusSymbol() {

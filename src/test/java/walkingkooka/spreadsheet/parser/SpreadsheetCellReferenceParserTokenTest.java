@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -100,7 +101,9 @@ public final class SpreadsheetCellReferenceParserTokenTest extends SpreadsheetPa
     private void checkCell(final SpreadsheetCellReferenceParserToken cell,
                            final SpreadsheetRowReferenceParserToken row,
                            final SpreadsheetColumnReferenceParserToken column) {
-        assertEquals(SpreadsheetCellReference.with(column.value(), row.value()), cell.cell(), "cell");
+        assertEquals(SpreadsheetExpressionReference.cellReference(column.value(), row.value()),
+                cell.cell(),
+                "cell");
     }
 
     @Override

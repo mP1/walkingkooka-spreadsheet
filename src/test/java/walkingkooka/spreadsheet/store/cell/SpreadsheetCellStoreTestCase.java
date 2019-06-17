@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.SpreadsheetRowReference;
@@ -242,7 +243,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
     @Override
     public final SpreadsheetCellReference id() {
-        return SpreadsheetCellReference.parse("A1");
+        return SpreadsheetExpressionReference.parseCellReference("A1");
     }
 
     @Override
@@ -265,7 +266,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
 
     private SpreadsheetCell cell(final String reference) {
-        return this.cell(SpreadsheetCellReference.parse(reference));
+        return this.cell(SpreadsheetExpressionReference.parseCellReference(reference));
     }
 
     private SpreadsheetCell cell(final SpreadsheetCellReference cellReference) {
@@ -276,7 +277,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
 
     final SpreadsheetCellReference cellReference(final int column, final int row) {
-        return SpreadsheetCellReference.with(SpreadsheetReferenceKind.ABSOLUTE.column(column),
+        return SpreadsheetExpressionReference.cellReference(SpreadsheetReferenceKind.ABSOLUTE.column(column),
                 SpreadsheetReferenceKind.ABSOLUTE.row(row));
     }
 

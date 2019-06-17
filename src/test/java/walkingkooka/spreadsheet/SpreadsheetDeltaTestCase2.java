@@ -53,7 +53,7 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
         final List<Range<SpreadsheetCellReference>> window = delta.window();
 
         assertThrows(UnsupportedOperationException.class, () -> {
-            window.add(Range.singleton(SpreadsheetCellReference.parse("Z99")));
+            window.add(Range.singleton(SpreadsheetExpressionReference.parseCellReference("Z99")));
         });
 
         this.checkWindow(delta, this.window());
@@ -136,7 +136,7 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
 
     final List<Range<SpreadsheetCellReference>> window0(final String... range) {
         return Arrays.stream(range)
-                .map(SpreadsheetCellReference::parseRange)
+                .map(SpreadsheetCellReference::parseCellReferenceRange)
                 .collect(Collectors.toList());
     }
 

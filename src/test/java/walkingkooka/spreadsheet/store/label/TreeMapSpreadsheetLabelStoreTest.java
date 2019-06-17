@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.store.label;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.SpreadsheetRange;
@@ -34,7 +35,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
         store.save(SpreadsheetLabelMapping.with(this.label1(), this.a1()));
 
         this.loadCellReferencesOrRangesAndCheck(store,
-                SpreadsheetLabelName.with("unknown"),
+                SpreadsheetExpressionReference.labelName("unknown"),
                 Sets.empty());
     }
 
@@ -104,23 +105,23 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     }
 
     private SpreadsheetLabelName label1() {
-        return SpreadsheetLabelName.with("label1");
+        return SpreadsheetExpressionReference.labelName("label1");
     }
 
     private SpreadsheetLabelName label2() {
-        return SpreadsheetLabelName.with("label2");
+        return SpreadsheetExpressionReference.labelName("label2");
     }
 
     private SpreadsheetLabelName label3() {
-        return SpreadsheetLabelName.with("label3");
+        return SpreadsheetExpressionReference.labelName("label3");
     }
 
     private SpreadsheetCellReference a1() {
-        return SpreadsheetCellReference.parse("A1");
+        return SpreadsheetExpressionReference.parseCellReference("A1");
     }
 
     private SpreadsheetCellReference a2() {
-        return SpreadsheetCellReference.parse("A2");
+        return SpreadsheetExpressionReference.parseCellReference("A2");
     }
 
     private SpreadsheetRange range1() {

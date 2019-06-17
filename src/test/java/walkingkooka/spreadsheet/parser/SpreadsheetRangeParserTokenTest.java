@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.visit.Visiting;
@@ -111,12 +112,12 @@ public final class SpreadsheetRangeParserTokenTest extends SpreadsheetBinaryPars
 
     @Override
     SpreadsheetParserToken leftToken() {
-        return SpreadsheetParserToken.labelName(SpreadsheetLabelName.with("left"), "left");
+        return SpreadsheetParserToken.labelName(SpreadsheetExpressionReference.labelName("left"), "left");
     }
 
     @Override
     SpreadsheetParserToken rightToken() {
-        return SpreadsheetParserToken.labelName(SpreadsheetLabelName.with("right"), "right");
+        return SpreadsheetParserToken.labelName(SpreadsheetExpressionReference.labelName("right"), "right");
     }
 
     @Override

@@ -237,7 +237,7 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
                 final JsonNodeName name = child.name();
                 switch (name.value()) {
                     case REFERENCE_PROPERTY_STRING:
-                        reference = SpreadsheetCellReference.fromJsonNode(child);
+                        reference = SpreadsheetCellReference.fromJsonNodeCellReference(child);
                         break;
                     case FORMULA_PROPERTY_STRING:
                         formula = SpreadsheetFormula.fromJsonNode(child);
