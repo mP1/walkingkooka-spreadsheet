@@ -111,10 +111,10 @@ public final class SpreadsheetLabelMapping implements HashCodeEqualsDefined, Hat
                 final JsonNodeName name = child.name();
                 switch (name.value()) {
                     case LABEL_NAME_PROPERTY_STRING:
-                        labelName = SpreadsheetLabelName.fromJsonNode(child);
+                        labelName = SpreadsheetLabelName.fromJsonNodeLabelName(child);
                         break;
                     case REFERENCE_PROPERTY_STRING:
-                        reference = SpreadsheetCellReference.fromJsonNode(child);
+                        reference = SpreadsheetCellReference.fromJsonNodeCellReference(child);
                         break;
                     default:
                         throw new IllegalArgumentException("Unknown property " + name + "=" + node);

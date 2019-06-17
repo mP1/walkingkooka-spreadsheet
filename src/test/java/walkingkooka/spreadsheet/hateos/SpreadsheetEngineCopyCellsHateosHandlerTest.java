@@ -26,6 +26,7 @@ import walkingkooka.net.http.server.hateos.HateosHandlerTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetDelta;
+import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
@@ -104,12 +105,12 @@ public final class SpreadsheetEngineCopyCellsHateosHandlerTest extends
 
     @Override
     public SpreadsheetCellReference id() {
-        return SpreadsheetCellReference.parse("A1");
+        return SpreadsheetExpressionReference.parseCellReference("A1");
     }
 
     @Override
     public Range<SpreadsheetCellReference> collection() {
-        return SpreadsheetCellReference.parseRange("C1:D2");
+        return SpreadsheetCellReference.parseCellReferenceRange("C1:D2");
     }
 
     @Override

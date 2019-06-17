@@ -33,7 +33,7 @@ public final class SpreadsheetExpressionReferenceVisitorTest implements VisitorT
     public void testStartVisitSkip() {
         final StringBuilder b = new StringBuilder();
 
-        final SpreadsheetCellReference label = SpreadsheetCellReference.parse("A1");
+        final SpreadsheetCellReference label = SpreadsheetExpressionReference.parseCellReference("A1");
         new FakeSpreadsheetExpressionReferenceVisitor() {
             @Override
             protected Visiting startVisit(final ExpressionReference reference) {
@@ -56,7 +56,7 @@ public final class SpreadsheetExpressionReferenceVisitorTest implements VisitorT
     public void testAcceptSpreadsheetCellReference() {
         final StringBuilder b = new StringBuilder();
 
-        final SpreadsheetCellReference label = SpreadsheetCellReference.parse("A1");
+        final SpreadsheetCellReference label = SpreadsheetExpressionReference.parseCellReference("A1");
         new FakeSpreadsheetExpressionReferenceVisitor() {
             @Override
             protected Visiting startVisit(final ExpressionReference reference) {
@@ -86,7 +86,7 @@ public final class SpreadsheetExpressionReferenceVisitorTest implements VisitorT
     public void testAcceptSpreadsheetLabelName() {
         final StringBuilder b = new StringBuilder();
 
-        final SpreadsheetLabelName label = SpreadsheetLabelName.with("label");
+        final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("label");
         new FakeSpreadsheetExpressionReferenceVisitor() {
             @Override
             protected Visiting startVisit(final ExpressionReference reference) {
@@ -116,7 +116,7 @@ public final class SpreadsheetExpressionReferenceVisitorTest implements VisitorT
     public void testAcceptSpreadsheetRange() {
         final StringBuilder b = new StringBuilder();
 
-        final SpreadsheetRange range = SpreadsheetRange.with(SpreadsheetCellReference.parse("A1"), SpreadsheetCellReference.parse("B2"));
+        final SpreadsheetRange range = SpreadsheetRange.with(SpreadsheetExpressionReference.parseCellReference("A1"), SpreadsheetExpressionReference.parseCellReference("B2"));
 
         new FakeSpreadsheetExpressionReferenceVisitor() {
             @Override

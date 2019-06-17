@@ -24,6 +24,7 @@ import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetDelta;
+import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
@@ -79,6 +80,6 @@ public abstract class SpreadsheetEngineHateosHandlerTestCase2<H extends HateosHa
     }
 
     final SpreadsheetCell cell(final String reference, final String formula) {
-        return SpreadsheetCell.with(SpreadsheetCellReference.parse(reference), SpreadsheetFormula.with(formula));
+        return SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference(reference), SpreadsheetFormula.with(formula));
     }
 }
