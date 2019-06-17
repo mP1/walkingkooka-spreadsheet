@@ -81,12 +81,26 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference i
 
     private final String name;
 
+    // is...............................................................................................................
+
+    @Override
+    public boolean isCellReference() {
+        return false;
+    }
+
+    @Override
+    public boolean isLabelName() {
+        return true;
+    }
+
+    // Comparable........................................................................................................
+
     @Override
     public int compareTo(final SpreadsheetLabelName other) {
         return CASE_SENSITIVITY.comparator().compare(this.name, other.name);
     }
 
-    // Object
+    // Object...........................................................................................................
 
     @Override
     public int hashCode() {

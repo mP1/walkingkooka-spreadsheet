@@ -144,6 +144,20 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
         super();
     }
 
+    // is...............................................................................................................
+
+    /**
+     * Only {@link SpreadsheetCellReference} returns true.
+     */
+    public abstract boolean isCellReference();
+
+    /**
+     * Only {@link SpreadsheetLabelName} returns true.
+     */
+    public abstract boolean isLabelName();
+
+    // Object...........................................................................................................
+
     @Override
     public final boolean equals(final Object other) {
         return this == other ||
@@ -154,6 +168,8 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     abstract boolean canBeEqual(final Object other);
 
     abstract boolean equals0(final Object other);
+
+    // Comparable.......................................................................................................
 
     /**
      * Invoked by {@link SpreadsheetExpressionReferenceComparator} using double dispatch
