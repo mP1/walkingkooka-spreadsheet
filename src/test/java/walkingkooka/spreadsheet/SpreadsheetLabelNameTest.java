@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.naming.NameTesting;
 import walkingkooka.naming.PropertiesPath;
 import walkingkooka.text.CaseSensitivity;
@@ -31,21 +32,21 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
 
     @Test
     public void testCreateContainsSeparatorFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(InvalidCharacterException.class, () -> {
             SpreadsheetLabelName.with("xyz" + PropertiesPath.SEPARATOR.string());
         });
     }
 
     @Test
     public void testWithInvalidInitialFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(InvalidCharacterException.class, () -> {
             SpreadsheetLabelName.with("1abc");
         });
     }
 
     @Test
     public void testWithInvalidPartFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(InvalidCharacterException.class, () -> {
             SpreadsheetLabelName.with("abc$def");
         });
     }

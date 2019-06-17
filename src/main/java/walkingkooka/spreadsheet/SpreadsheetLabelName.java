@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
+import walkingkooka.InvalidTextLengthException;
 import walkingkooka.naming.Name;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
@@ -78,7 +79,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference i
         CharPredicates.failIfNullOrEmptyOrInitialAndPartFalse(name, "name", INITIAL, PART);
 
         if (name.length() >= MAX_LENGTH) {
-            throw new IllegalArgumentException("Label length " + name.length() + " is greater than allowed " + MAX_LENGTH);
+            throw new InvalidTextLengthException("Label", name, 0, MAX_LENGTH);
         }
 
         if (isCellReference(name)) {
