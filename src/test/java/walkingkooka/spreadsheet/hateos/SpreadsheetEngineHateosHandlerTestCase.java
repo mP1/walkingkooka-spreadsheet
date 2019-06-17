@@ -21,6 +21,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetDelta;
+import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
@@ -40,7 +41,7 @@ public abstract class SpreadsheetEngineHateosHandlerTestCase<T> extends Spreadsh
     }
 
     final SpreadsheetCell cell() {
-        return SpreadsheetCell.with(SpreadsheetCellReference.parse("A99"), SpreadsheetFormula.with("1+2"));
+        return SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference("A99"), SpreadsheetFormula.with("1+2"));
     }
 
     @Override

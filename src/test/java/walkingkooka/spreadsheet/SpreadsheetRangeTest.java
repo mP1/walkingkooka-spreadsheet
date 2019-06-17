@@ -356,7 +356,7 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
     private void containsAndCheckTrue(final String range,
                                       final String cell) {
         this.containsAndCheckTrue(SpreadsheetRange.parse(range),
-                SpreadsheetCellReference.parse(cell));
+                SpreadsheetExpressionReference.parseCellReference(cell));
     }
 
     private void containsAndCheckTrue(final SpreadsheetRange range,
@@ -367,7 +367,7 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
     private void containsAndCheckFalse(final String range,
                                        final String cell) {
         this.containsAndCheckFalse(SpreadsheetRange.parse(range),
-                SpreadsheetCellReference.parse(cell));
+                SpreadsheetExpressionReference.parseCellReference(cell));
     }
 
     private void containsAndCheckFalse(final SpreadsheetRange range,
@@ -572,7 +572,7 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
 
     @Test
     public void testParseMissingSeparatorSingleton() {
-        this.parseAndCheck("A1", SpreadsheetRange.cell(SpreadsheetCellReference.parse("A1")));
+        this.parseAndCheck("A1", SpreadsheetRange.cell(SpreadsheetExpressionReference.parseCellReference("A1")));
     }
 
     @Test
@@ -597,7 +597,7 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
 
     @Test
     public void testParse() {
-        this.parseAndCheck("A1:A2", SpreadsheetRange.with(SpreadsheetCellReference.parse("A1"), SpreadsheetCellReference.parse("A2")));
+        this.parseAndCheck("A1:A2", SpreadsheetRange.with(SpreadsheetExpressionReference.parseCellReference("A1"), SpreadsheetExpressionReference.parseCellReference("A2")));
     }
 
     // HasJsonNodeTesting...........................................................................................

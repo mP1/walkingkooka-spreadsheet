@@ -67,7 +67,7 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerTest im
 
     @Test
     public void testCell() {
-        final SpreadsheetCellReference z99 = SpreadsheetCellReference.parse("Z99");
+        final SpreadsheetCellReference z99 = SpreadsheetExpressionReference.parseCellReference("Z99");
         this.acceptAndCheck(z99, z99);
     }
 
@@ -83,7 +83,7 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerTest im
 
     @Test
     public void testLabelToUnknown() {
-        this.acceptAndCheck(SpreadsheetLabelName.with("unknown"));
+        this.acceptAndCheck(SpreadsheetExpressionReference.labelName("unknown"));
     }
 
     @Test
@@ -121,15 +121,15 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerTest im
     }
 
     private SpreadsheetLabelName labelB1() {
-        return SpreadsheetLabelName.with("labelB1");
+        return SpreadsheetExpressionReference.labelName("labelB1");
     }
 
     private SpreadsheetCellReference cellB1() {
-        return SpreadsheetCellReference.parse("B1");
+        return SpreadsheetExpressionReference.parseCellReference("B1");
     }
 
     private SpreadsheetLabelName labelRangeC1D2() {
-        return SpreadsheetLabelName.with("labelRangeC1D2");
+        return SpreadsheetExpressionReference.labelName("labelRangeC1D2");
     }
 
     private SpreadsheetRange rangeC1C2() {
@@ -137,11 +137,11 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerTest im
     }
 
     private SpreadsheetCellReference cellC1() {
-        return SpreadsheetCellReference.parse("C1");
+        return SpreadsheetExpressionReference.parseCellReference("C1");
     }
 
     private SpreadsheetCellReference cellC2() {
-        return SpreadsheetCellReference.parse("C2");
+        return SpreadsheetExpressionReference.parseCellReference("C2");
     }
 
     @Override
