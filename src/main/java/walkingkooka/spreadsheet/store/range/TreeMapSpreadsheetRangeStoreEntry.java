@@ -80,7 +80,7 @@ abstract class TreeMapSpreadsheetRangeStoreEntry<V> implements Comparable<TreeMa
     final void loadCellReferenceRanges(final SpreadsheetCellReference cell,
                                        final Collection<SpreadsheetRange> ranges) {
 
-        if (this.range.contains(cell)) {
+        if (this.range.test(cell)) {
             ranges.add(this.range);
         }
     }
