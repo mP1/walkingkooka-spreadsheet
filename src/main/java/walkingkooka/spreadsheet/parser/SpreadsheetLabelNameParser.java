@@ -57,7 +57,7 @@ final class SpreadsheetLabelNameParser implements Parser<SpreadsheetParserContex
 
     private Optional<ParserToken> token(final ParserToken stringParserToken, final TextCursorSavePoint save) {
         final String text = stringParserToken.text();
-        return text.length() < SpreadsheetLabelName.MAX_LENGTH && !SpreadsheetLabelName.isCellReference(text) ?
+        return text.length() < SpreadsheetLabelName.MAX_LENGTH && !SpreadsheetLabelName.isTextCellReference(text) ?
                 Optional.of(SpreadsheetParserToken.labelName(SpreadsheetExpressionReference.labelName(text), text)) :
                 restoreAndNothing(save);
     }

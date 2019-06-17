@@ -20,13 +20,48 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ParseStringTesting;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<SpreadsheetExpressionReference>,
         ParseStringTesting<SpreadsheetExpressionReference> {
+
+    @Test
+    public void testIsTextCellReferenceNullFails() {
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetExpressionReference.isTextCellReference(null);
+        });
+    }
+
+    @Test
+    public void testIsTextCellEmptyFalse() {
+        this.isTextCellReferenceAndCheck("", false);
+    }
+
+    @Test
+    public void testIsTextCellWithCellReference() {
+        this.isTextCellReferenceAndCheck("A1", true);
+    }
+
+    @Test
+    public void testIsTextCellWithLabel() {
+        this.isTextCellReferenceAndCheck("LABEL123", false);
+    }
+
+    private void isTextCellReferenceAndCheck(final String text, final boolean expected) {
+        assertEquals(expected,
+                SpreadsheetExpressionReference.isTextCellReference(text),
+                () -> "isTextCellReference " + CharSequences.quoteAndEscape(text));
+        if (expected) {
+            SpreadsheetExpressionReference.parse(text);
+        }
+    }
+
+    // cellReference....................................................................................................
 
     @Test
     public void testCellReference() {
