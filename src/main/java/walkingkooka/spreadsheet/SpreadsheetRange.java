@@ -28,6 +28,7 @@ import walkingkooka.tree.json.JsonNodeException;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -37,7 +38,8 @@ import java.util.stream.Stream;
 public final class SpreadsheetRange implements ExpressionReference,
         HashCodeEqualsDefined,
         HasJsonNode,
-        Comparable<SpreadsheetRange> {
+        Comparable<SpreadsheetRange>,
+        Predicate<SpreadsheetCellReference> {
 
     /**
      * Factory that parses some text holding a range.
@@ -196,24 +198,6 @@ public final class SpreadsheetRange implements ExpressionReference,
     }
 
     /**
-     * Tests if this range contains the given {@link SpreadsheetCellReference}.
-     */
-    public boolean contains(final SpreadsheetCellReference reference) {
-        Objects.requireNonNull(reference, "reference");
-
-        final SpreadsheetRowReference row = reference.row();
-        final SpreadsheetColumnReference column = reference.column();
-
-        final SpreadsheetCellReference begin = this.begin;
-        final SpreadsheetCellReference end = this.end;
-
-        return row.compareTo(begin.row()) >= 0 &&
-                column.compareTo(begin.column()) >= 0 &&
-                row.compareTo(end.row()) <= 0 &&
-                column.compareTo(end.column()) <= 0;
-    }
-
-    /**
      * A stream that provides all {@link SpreadsheetColumnReference}.
      */
     public Stream<SpreadsheetColumnReference> columnStream() {
@@ -253,7 +237,28 @@ public final class SpreadsheetRange implements ExpressionReference,
         this.cellStream().forEach(c -> store.delete(c));
     }
 
-    // HasJsonNode...........................................................................................
+    // Predicate........................................................................................................
+
+    /**
+     * Tests if this range test the given {@link SpreadsheetCellReference}.
+     */
+    @Override
+    public boolean test(final SpreadsheetCellReference reference) {
+        Objects.requireNonNull(reference, "reference");
+
+        final SpreadsheetRowReference row = reference.row();
+        final SpreadsheetColumnReference column = reference.column();
+
+        final SpreadsheetCellReference begin = this.begin;
+        final SpreadsheetCellReference end = this.end;
+
+        return row.compareTo(begin.row()) >= 0 &&
+                column.compareTo(begin.column()) >= 0 &&
+                row.compareTo(end.row()) <= 0 &&
+                column.compareTo(end.column()) <= 0;
+    }
+
+    // HasJsonNode......................................................................................................
 
     /**
      * Factory that creates a {@link SpreadsheetRange} from a {@link JsonNode} holding the range in string form.
