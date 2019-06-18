@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.compare.Range;
 import walkingkooka.predicate.PredicateTesting;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
@@ -53,16 +54,42 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
     private final static int ROW2 = 21;
 
     @Test
-    public void testWithNullBeginFails() {
+    public void testWithNullRangeFails() {
         assertThrows(NullPointerException.class, () -> {
-            SpreadsheetRange.with(null, this.cell());
+            SpreadsheetRange.with(null);
         });
     }
 
     @Test
-    public void testWithNullEndFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetRange.with(this.cell(), null);
+    public void testWithRangeAllFails() {
+        this.withFails(Range.all());
+    }
+
+    @Test
+    public void testWithRangeLessThanEqualsFails() {
+        this.withFails(Range.lessThanEquals(this.cell(5, 5)));
+    }
+
+    @Test
+    public void testWithRangeGreaterThanEqualsFails() {
+        this.withFails(Range.greaterThanEquals(this.cell(1, 1)));
+    }
+
+    @Test
+    public void testWithRangeLowerExclusiveFails() {
+        this.withFails(Range.greaterThan(this.cell(1, 1))
+                .and(Range.lessThanEquals(this.cell(5, 5))));
+    }
+
+    @Test
+    public void testWithRangeUpperExclusiveFails() {
+        this.withFails(Range.greaterThanEquals(this.cell(1, 1))
+                .and(Range.lessThan(this.cell(5, 5))));
+    }
+
+    private void withFails(final Range<SpreadsheetCellReference> range) {
+        assertThrows(IllegalArgumentException.class, () -> {
+            SpreadsheetRange.with(range);
         });
     }
 
@@ -70,11 +97,13 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
     public void testWith() {
         final SpreadsheetCellReference begin = this.cell(1, 2);
         final SpreadsheetCellReference end = this.cell(3, 4);
+        final Range<SpreadsheetCellReference> range = begin.range(end);
 
-        final SpreadsheetRange range = SpreadsheetRange.with(begin, end);
-        assertSame(begin, range.begin(), "begin");
-        assertSame(end, range.end(), "end");
-        this.checkIsSingleCell(range, false);
+        final SpreadsheetRange spreadsheetRange = SpreadsheetRange.with(range);
+        assertSame(range, spreadsheetRange.range(), "range");
+        assertEquals(begin, spreadsheetRange.begin(), "begin");
+        assertEquals(end, spreadsheetRange.end(), "end");
+        this.checkIsSingleCell(spreadsheetRange, false);
     }
 
     @Test
@@ -134,7 +163,7 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
     // isSingleCell...........................................................
 
     @Test
-    public void testIsSingleCell() {
+    public void testIsSingleCellTrue() {
         final int column1 = 88;
         final int row1 = 99;
         final int column2 = column1;
@@ -145,74 +174,72 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
         this.checkIsSingleCell(range, true);
     }
 
-    // setBeginAndEnd.....................................................................................
+    @Test
+    public void testIsSingleCellFalse() {
+        final int column1 = 66;
+        final int row1 = 77;
+        final int column2 = 88;
+        final int row2 = 99;
+
+        final SpreadsheetRange range = this.range(column1, row1, column2, row2);
+        this.checkIsSingleCell(range, false);
+    }
+
+    // setRange.....................................................................................
 
     @Test
-    public void testSetBeginAndEndWithNullBeginFails() {
+    public void testSetRangeWithNullRangeFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.range().setBeginAndEnd(null, this.end());
+            this.range().setRange(null);
         });
     }
 
     @Test
-    public void testSetBeginAndEndWithNullEndFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.range().setBeginAndEnd(this.begin(), null);
-        });
-    }
-
-    @Test
-    public void testSetBeginAndEndWithSame() {
+    public void testSetRangeWithSame() {
         final SpreadsheetRange range = this.range();
-        assertSame(range, range.setBeginAndEnd(this.begin(), this.end()));
+        assertSame(range, range.setRange(this.begin().spreadsheetRange(this.end()).range()));
     }
 
     @Test
-    public void testSetBeginAndEndWithSame2() {
-        final SpreadsheetRange range = this.range();
-        assertSame(range, range.setBeginAndEnd(this.end(), this.begin()));
-    }
-
-    @Test
-    public void testSetBeginAndEndWithDifferent() {
+    public void testSetRangeWithDifferent() {
         final SpreadsheetRange range = this.range();
         final SpreadsheetCellReference differentBegin = this.cell(1, 2);
-        final SpreadsheetRange different = range.setBeginAndEnd(differentBegin, this.end());
+        final SpreadsheetRange different = range.setRange(differentBegin.range(this.end()));
         this.check(different, 1, 2, COLUMN2, ROW2);
     }
 
     @Test
-    public void testSetBeginAndEndWithDifferent2() {
+    public void testSetRangeWithDifferent2() {
         final SpreadsheetRange range = this.range();
-        final SpreadsheetRange different = range.setBeginAndEnd(this.end(), this.cell(1, 2));
+        final SpreadsheetRange different = range.setRange(this.end().range(this.cell(1, 2)));
         this.check(different, 1, 2, COLUMN2, ROW2);
     }
 
     @Test
-    public void testSetBeginAndEndWithDifferent3() {
+    public void testSetRangeWithDifferent3() {
         final SpreadsheetRange range = this.range();
-        final SpreadsheetRange different = range.setBeginAndEnd(this.begin(), this.cell(88, 99));
+        final SpreadsheetRange different = range.setRange(this.begin().range(this.cell(88, 99)));
         this.check(different, COLUMN1, ROW1, 88, 99);
     }
 
     @Test
-    public void testSetBeginAndEndWithDifferent4() {
+    public void testSetRangeWithDifferent4() {
         final SpreadsheetRange range = this.range();
-        final SpreadsheetRange different = range.setBeginAndEnd(this.cell(88, 99), this.begin());
+        final SpreadsheetRange different = range.setRange(this.cell(88, 99).range(this.begin()));
         this.check(different, COLUMN1, ROW1, 88, 99);
     }
 
     @Test
-    public void testSetBeginAndEndWithDifferent5() {
+    public void testSetRangeWithDifferent5() {
         final SpreadsheetRange range = this.range();
-        final SpreadsheetRange different = range.setBeginAndEnd(this.cell(1, 2), this.cell(88, 99));
+        final SpreadsheetRange different = range.setRange(this.cell(1, 2).range(this.cell(88, 99)));
         this.check(different, 1, 2, 88, 99);
     }
 
     @Test
-    public void testSetBeginAndEndWithDifferent6() {
+    public void testSetRangeWithDifferent6() {
         final SpreadsheetRange range = this.range();
-        final SpreadsheetRange different = range.setBeginAndEnd(this.cell(88, 99), this.cell(1, 2));
+        final SpreadsheetRange different = range.setRange(this.cell(88, 99).range(this.cell(1, 2)));
         this.check(different, 1, 2, 88, 99);
     }
 
@@ -471,7 +498,7 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
         this.checkNotEquals(this.range(COLUMN1, ROW1, COLUMN2, 99));
     }
 
-    // toString...............................................................................
+    // toString.........................................................................................................
 
     @Test
     public void testToStringSingleton() {
@@ -483,11 +510,13 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
         this.toStringAndCheck(SpreadsheetRange.parse("C3:D4"), "C3:D4");
     }
 
+    // disabled..........................................................................................................
+
     @Override
     public void testTypeNaming() {
     }
 
-    // helpers .................................................................................
+    // helpers .........................................................................................................
 
     @Override
     public SpreadsheetRange createObject() {
@@ -578,7 +607,7 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
 
     @Test
     public void testParse() {
-        this.parseAndCheck("A1:A2", SpreadsheetRange.with(SpreadsheetExpressionReference.parseCellReference("A1"), SpreadsheetExpressionReference.parseCellReference("A2")));
+        this.parseAndCheck("A1:A2", SpreadsheetRange.with(SpreadsheetExpressionReference.parseCellReference("A1").range(SpreadsheetExpressionReference.parseCellReference("A2"))));
     }
 
     // HasJsonNodeTesting...........................................................................................
@@ -618,11 +647,11 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
     }
 
     private SpreadsheetRange range(final int column1, final int row1, final int column2, final int row2) {
-        return SpreadsheetRange.with(this.cell(column1, row1), this.cell(column2, row2));
+        return this.range(this.cell(column1, row1), this.cell(column2, row2));
     }
 
     private SpreadsheetRange range(final SpreadsheetCellReference begin, final SpreadsheetCellReference end) {
-        return SpreadsheetRange.with(begin, end);
+        return SpreadsheetRange.with(begin.range(end));
     }
 
     private SpreadsheetCellReference cell() {

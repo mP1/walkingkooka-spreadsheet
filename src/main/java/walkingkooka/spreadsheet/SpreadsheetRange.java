@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
+import walkingkooka.compare.Range;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.CharSequences;
@@ -64,8 +65,8 @@ public final class SpreadsheetRange implements ExpressionReference,
             throw new IllegalArgumentException("Missing end =" + CharSequences.quote(text));
         }
 
-        return with(parse1(text.substring(0, colon), "begin", text),
-                parse1(text.substring(colon + SEPARATOR.length()), "end", text));
+        return parse1(text.substring(0, colon), "begin", text)
+                .spreadsheetRange(parse1(text.substring(colon + SEPARATOR.length()), "end", text));
     }
 
     private static SpreadsheetCellReference parse1(final String component,
@@ -99,7 +100,7 @@ public final class SpreadsheetRange implements ExpressionReference,
             }
         }
 
-        return SpreadsheetRange.with(topLeft, bottomRight);
+        return topLeft.spreadsheetRange(bottomRight);
     }
 
     /**
@@ -111,76 +112,64 @@ public final class SpreadsheetRange implements ExpressionReference,
     }
 
     private static SpreadsheetRange cell0(final SpreadsheetCellReference cell) {
-        return new SpreadsheetRange(cell, cell);
+        return with(cell.range(cell));
     }
 
     /**
      * Factory that creates a {@link SpreadsheetRange}
      */
-    public static SpreadsheetRange with(final SpreadsheetCellReference begin, final SpreadsheetCellReference end) {
-        checkBegin(begin);
-        checkEnd(end);
+    public static SpreadsheetRange with(final Range<SpreadsheetCellReference> range) {
+        SpreadsheetRangeRangeVisitor.check(range);
 
-        return new SpreadsheetRange(begin.lower(end), end.upper(begin));
+        return new SpreadsheetRange(range);
     }
 
     /**
      * Private ctor
      */
-    private SpreadsheetRange(final SpreadsheetCellReference begin, final SpreadsheetCellReference end) {
-        this.begin = begin;
-        this.end = end;
+    private SpreadsheetRange(final Range<SpreadsheetCellReference> range) {
+        super();
+        this.range = range;
+    }
+
+    /**
+     * Returns the top left cell reference.
+     */
+    public SpreadsheetCellReference begin() {
+        return this.range.lowerBound().value().get(); // must exist
+    }
+
+    /**
+     * Returns the bottom right cell reference.
+     */
+    public SpreadsheetCellReference end() {
+        return this.range.upperBound().value().get(); // must exist
     }
 
     /**
      * Returns a {@link SpreadsheetCellReference} that holds the top left cell reference.
      */
-    public SpreadsheetCellReference begin() {
-        return this.begin;
+    public Range<SpreadsheetCellReference> range() {
+        return this.range;
     }
 
-    private final SpreadsheetCellReference begin;
-
-    /**
-     * Returns a {@link SpreadsheetCellReference} that holds the bottom right cell reference.
-     */
-    public SpreadsheetCellReference end() {
-        return this.end;
-    }
-
-    private final SpreadsheetCellReference end;
-
+    private final Range<SpreadsheetCellReference> range;
 
     /**
      * Would be setter that accepts a pair of coordinates, and returns a range with those values,
      * creating a new instance if necessary.
      */
-    public SpreadsheetRange setBeginAndEnd(final SpreadsheetCellReference begin,
-                                           final SpreadsheetCellReference end) {
-        checkBegin(begin);
-        checkEnd(end);
-
-        final SpreadsheetCellReference begin0 = begin.lower(end);
-        final SpreadsheetCellReference end0 = end.upper(begin);
-
-        return this.begin.equals(begin0) && this.end.equals(end0) ?
+    public SpreadsheetRange setRange(final Range<SpreadsheetCellReference> range) {
+        return this.range.equals(range) ?
                 this :
-                new SpreadsheetRange(begin0, end0);
-    }
-
-    private static void checkBegin(final SpreadsheetCellReference begin) {
-        Objects.requireNonNull(begin, "begin");
-    }
-
-    private static void checkEnd(final SpreadsheetCellReference end) {
-        Objects.requireNonNull(end, "end");
+                with(range);
     }
 
     /**
      * Returns true only if this range covers a single cell.
      */
     public boolean isSingleCell() {
-        return this.width() == 1 && this.height() == 1;
+        return this.begin().equals(this.end());
     }
 
     /**
@@ -201,7 +190,7 @@ public final class SpreadsheetRange implements ExpressionReference,
      * A stream that provides all {@link SpreadsheetColumnReference}.
      */
     public Stream<SpreadsheetColumnReference> columnStream() {
-        return IntStream.range(this.begin().column().value(), this.end.column().value())
+        return IntStream.range(this.begin().column().value(), this.end().column().value())
                 .mapToObj(i -> SpreadsheetReferenceKind.ABSOLUTE.column(i));
     }
 
@@ -209,7 +198,7 @@ public final class SpreadsheetRange implements ExpressionReference,
      * A stream that provides all {@link SpreadsheetRowReference}.
      */
     public Stream<SpreadsheetRowReference> rowStream() {
-        return IntStream.range(this.begin().row().value(), this.end.row().value())
+        return IntStream.range(this.begin().row().value(), this.end().row().value())
                 .mapToObj(i -> SpreadsheetReferenceKind.ABSOLUTE.row(i));
     }
 
@@ -249,13 +238,14 @@ public final class SpreadsheetRange implements ExpressionReference,
         final SpreadsheetRowReference row = reference.row();
         final SpreadsheetColumnReference column = reference.column();
 
-        final SpreadsheetCellReference begin = this.begin;
-        final SpreadsheetCellReference end = this.end;
+        final SpreadsheetCellReference begin = this.begin();
+        final SpreadsheetCellReference end = this.end();
 
         return row.compareTo(begin.row()) >= 0 &&
                 column.compareTo(begin.column()) >= 0 &&
                 row.compareTo(end.row()) <= 0 &&
                 column.compareTo(end.column()) <= 0;
+
     }
 
     // HasJsonNode......................................................................................................
@@ -288,9 +278,10 @@ public final class SpreadsheetRange implements ExpressionReference,
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.begin, this.end);
+        return this.range.hashCode();
     }
 
+    @Override
     public boolean equals(final Object other) {
         return this == other ||
                 other instanceof SpreadsheetRange &&
@@ -298,15 +289,14 @@ public final class SpreadsheetRange implements ExpressionReference,
     }
 
     private boolean equals0(final SpreadsheetRange other) {
-        return this.begin.equals(other.begin) &&
-                this.end.equals(other.end);
+        return this.range.equals(other.range);
     }
 
     @Override
     public String toString() {
         return this.isSingleCell() ?
-                this.begin.toString() :
-                this.begin + SEPARATOR + this.end;
+                this.begin().toString() :
+                this.begin() + SEPARATOR + this.end();
     }
 
     // Comparable.......................................................................................

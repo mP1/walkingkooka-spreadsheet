@@ -1801,7 +1801,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference c = this.cellReference(0, 10);
         final SpreadsheetCellReference d = this.cellReference(0, 15);
 
-        final SpreadsheetRange ab = range(a, b);
+        final SpreadsheetRange ab = a.spreadsheetRange(b);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, ab));
 
         engine.saveCell(this.cell(a, "1+0"), context);
@@ -1847,7 +1847,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         engine.saveCell(this.cell(a, "1+0"), context);
 
-        final SpreadsheetRange bc = range(b, c);
+        final SpreadsheetRange bc = b.spreadsheetRange(c);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, bc));
 
         final int count = c.row().value() - b.row().value() + 1;
@@ -1879,7 +1879,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference c = this.cellReference(0, 10);
         final SpreadsheetCellReference d = this.cellReference(0, 20);
 
-        final SpreadsheetRange bc = range(b, c);
+        final SpreadsheetRange bc = b.spreadsheetRange(c);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, bc));
 
         engine.saveCell(this.cell(a, "1+0"), context);
@@ -1921,7 +1921,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b = this.cellReference(0, 5);
         final SpreadsheetCellReference c = this.cellReference(0, 10);
 
-        final SpreadsheetRange bc = range(b, c);
+        final SpreadsheetRange bc = b.spreadsheetRange(c);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, bc));
 
         engine.saveCell(this.cell(a, "1+0+" + LABEL), context);
@@ -1958,7 +1958,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference d = this.cellReference(0, 15);
         final SpreadsheetCellReference e = this.cellReference(0, 20);
 
-        final SpreadsheetRange de = range(d, e);
+        final SpreadsheetRange de = d.spreadsheetRange(e);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, de));
 
         engine.saveCell(this.cell(a, "1+0+" + LABEL), context);
@@ -1988,7 +1988,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(20));
 
         this.countAndCheck(labelStore, 1);
-        this.loadLabelAndCheck(labelStore, LABEL, range(d.addRow(-count), e.addRow(-count)));
+        final SpreadsheetCellReference begin = d.addRow(-count);
+        final SpreadsheetCellReference end = e.addRow(-count);
+        this.loadLabelAndCheck(labelStore, LABEL, begin.spreadsheetRange(end));
     }
 
     @Test
@@ -2003,7 +2005,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference d = this.cellReference(0, 15);
         final SpreadsheetCellReference e = this.cellReference(0, 20);
 
-        final SpreadsheetRange ce = range(c, e);
+        final SpreadsheetRange ce = c.spreadsheetRange(e);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, ce));
 
         final int count = e.row().value() - d.row().value() + 1;
@@ -2013,7 +2015,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context); // b..c deleted, d moved
 
         this.countAndCheck(labelStore, 1);
-        this.loadLabelAndCheck(labelStore, LABEL, range(c, d));
+        this.loadLabelAndCheck(labelStore, LABEL, c.spreadsheetRange(d));
     }
 
     @Test
@@ -2026,7 +2028,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference c = this.cellReference(0, 10);
         final SpreadsheetCellReference d = this.cellReference(0, 15);
 
-        final SpreadsheetRange bd = range(b, d);
+        final SpreadsheetRange bd = b.spreadsheetRange(d);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, bd));
 
         final int count = 1;
@@ -2037,7 +2039,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(labelStore, 1);
 
-        this.loadLabelAndCheck(labelStore, LABEL, range(b, d.addRow(-count)));
+        final SpreadsheetCellReference end = d.addRow(-count);
+        this.loadLabelAndCheck(labelStore, LABEL, b.spreadsheetRange(end));
     }
 
     @Test
@@ -2052,7 +2055,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference d = this.cellReference(0, 20); // range
         final SpreadsheetCellReference e = this.cellReference(0, 25); // range
 
-        final SpreadsheetRange be = range(b, e);
+        final SpreadsheetRange be = b.spreadsheetRange(e);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, be));
 
         final int count = c.row().value() - a.row().value();
@@ -2063,7 +2066,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(labelStore, 1);
 
-        this.loadLabelAndCheck(labelStore, LABEL, range(a, b));
+        this.loadLabelAndCheck(labelStore, LABEL, a.spreadsheetRange(b));
     }
 
     // deleteColumn....................................................................................................
@@ -2473,7 +2476,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference c = this.cellReference(10, 0);
         final SpreadsheetCellReference d = this.cellReference(15, 0);
 
-        final SpreadsheetRange ab = range(a, b);
+        final SpreadsheetRange ab = a.spreadsheetRange(b);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, ab));
 
         engine.saveCell(this.cell(a, "1+0"), context);
@@ -2517,7 +2520,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b = this.cellReference(5, 0);
         final SpreadsheetCellReference c = this.cellReference(10, 0);
 
-        final SpreadsheetRange bc = range(b, c);
+        final SpreadsheetRange bc = b.spreadsheetRange(c);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, bc));
 
         engine.saveCell(this.cell(a, "1+0"), context);
@@ -2551,7 +2554,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference c = this.cellReference(10, 0);
         final SpreadsheetCellReference d = this.cellReference(20, 0);
 
-        final SpreadsheetRange bc = range(b, c);
+        final SpreadsheetRange bc = b.spreadsheetRange(c);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, bc));
 
         engine.saveCell(this.cell(a, "1+0"), context);
@@ -2586,7 +2589,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b = this.cellReference(5, 0);
         final SpreadsheetCellReference c = this.cellReference(10, 0);
 
-        final SpreadsheetRange bc = range(b, c);
+        final SpreadsheetRange bc = b.spreadsheetRange(c);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, bc));
 
         engine.saveCell(this.cell(a, "1+0+" + LABEL), context);
@@ -2623,7 +2626,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference d = this.cellReference(15, 0);
         final SpreadsheetCellReference e = this.cellReference(20, 0);
 
-        final SpreadsheetRange de = range(d, e);
+        final SpreadsheetRange de = d.spreadsheetRange(e);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, de));
 
         engine.saveCell(this.cell(a, "1+0+" + LABEL), context);
@@ -2653,7 +2656,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(20));
 
         this.countAndCheck(labelStore, 1);
-        this.loadLabelAndCheck(labelStore, LABEL, range(d.addColumn(-count), e.addColumn(-count)));
+        final SpreadsheetCellReference begin = d.addColumn(-count);
+        final SpreadsheetCellReference end = e.addColumn(-count);
+        this.loadLabelAndCheck(labelStore, LABEL, begin.spreadsheetRange(end));
     }
 
     @Test
@@ -2668,7 +2673,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference d = this.cellReference(15, 0);
         final SpreadsheetCellReference e = this.cellReference(20, 0);
 
-        final SpreadsheetRange ce = range(c, e);
+        final SpreadsheetRange ce = c.spreadsheetRange(e);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, ce));
 
         final int count = e.column().value() - d.column().value() + 1;
@@ -2678,7 +2683,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context); // b..c deleted, d moved
 
         this.countAndCheck(labelStore, 1);
-        this.loadLabelAndCheck(labelStore, LABEL, range(c, d));
+        this.loadLabelAndCheck(labelStore, LABEL, c.spreadsheetRange(d));
     }
 
     @Test
@@ -2691,7 +2696,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference c = this.cellReference(10, 0);
         final SpreadsheetCellReference d = this.cellReference(15, 0);
 
-        final SpreadsheetRange bd = range(b, d);
+        final SpreadsheetRange bd = b.spreadsheetRange(d);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, bd));
 
         final int count = 1;
@@ -2702,7 +2707,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(labelStore, 1);
 
-        this.loadLabelAndCheck(labelStore, LABEL, range(b, d.addColumn(-count)));
+        final SpreadsheetCellReference end = d.addColumn(-count);
+        this.loadLabelAndCheck(labelStore, LABEL, b.spreadsheetRange(end));
     }
 
     @Test
@@ -2717,7 +2723,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference d = this.cellReference(20, 0); // range
         final SpreadsheetCellReference e = this.cellReference(25, 0); // range
 
-        final SpreadsheetRange be = range(b, e);
+        final SpreadsheetRange be = b.spreadsheetRange(e);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, be));
 
         final int count = c.column().value() - a.column().value();
@@ -2728,7 +2734,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.countAndCheck(labelStore, 1);
 
-        this.loadLabelAndCheck(labelStore, LABEL, range(a, b));
+        this.loadLabelAndCheck(labelStore, LABEL, a.spreadsheetRange(b));
     }
 
     // insertColumn....................................................................................................
@@ -2952,7 +2958,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a = this.cellReference("$A$1"); // A1
         final SpreadsheetCellReference b = this.cellReference("$F$6"); // moved
 
-        final SpreadsheetRange a1 = SpreadsheetRange.with(a, a.add(1, 1));
+        final SpreadsheetRange a1 = a.spreadsheetRange(a.add(1, 1));
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, a1));
 
         engine.saveCell(this.cell(a, "99+0"), context);
@@ -2999,7 +3005,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference d = this.cellReference(15, 0);
         final SpreadsheetCellReference e = this.cellReference(20, 0);
 
-        labelStore.save(SpreadsheetLabelMapping.with(LABEL, SpreadsheetRange.with(c, d)));
+        labelStore.save(SpreadsheetLabelMapping.with(LABEL, c.spreadsheetRange(d)));
 
         engine.saveCell(this.cell(a, "1+" + LABEL), context);
         engine.saveCell(this.cell(c, "99+0"), context);
@@ -3011,7 +3017,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue("$P$1", "99+0", BigDecimal.valueOf(99 + 0))); // $b insert
 
         this.countAndCheck(labelStore, 1);
-        this.loadLabelAndCheck(labelStore, LABEL, SpreadsheetRange.with(d, e));
+        this.loadLabelAndCheck(labelStore, LABEL, d.spreadsheetRange(e));
 
         this.countAndCheck(cellStore, 2);
 
@@ -3445,7 +3451,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a = this.cellReference("$A$1"); //
         final SpreadsheetCellReference b = this.cellReference("$F$6"); // moved
 
-        final SpreadsheetRange a1 = SpreadsheetRange.with(a, a.add(1, 1));
+        final SpreadsheetRange a1 = a.spreadsheetRange(a.add(1, 1));
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, a1));
 
         engine.saveCell(this.cell(a, "99+0"), context);
@@ -3492,7 +3498,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference d = this.cellReference(0, 15);
         final SpreadsheetCellReference e = this.cellReference(0, 20);
 
-        labelStore.save(SpreadsheetLabelMapping.with(LABEL, SpreadsheetRange.with(c, d)));
+        labelStore.save(SpreadsheetLabelMapping.with(LABEL, c.spreadsheetRange(d)));
 
         engine.saveCell(this.cell(a, "1+" + LABEL), context);
         engine.saveCell(this.cell(c, "99+0"), context);
@@ -3504,7 +3510,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue("$A$16", "99+0", BigDecimal.valueOf(99 + 0))); // $b insert
 
         this.countAndCheck(labelStore, 1);
-        this.loadLabelAndCheck(labelStore, LABEL, SpreadsheetRange.with(d, e));
+        this.loadLabelAndCheck(labelStore, LABEL, d.spreadsheetRange(e));
 
         this.countAndCheck(cellStore, 2);
 
@@ -3757,7 +3763,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.copyCellsAndCheck(engine,
                 Lists.of(cellA, cellB),
-                SpreadsheetRange.with(d, d.add(2, 2)),
+                d.spreadsheetRange(d.add(2, 2)),
                 context,
                 this.formattedCellWithValue(d, "1+0", BigDecimal.valueOf(1 + 0)),
                 this.formattedCellWithValue(d.add(1, 1), "2+0", BigDecimal.valueOf(2 + 0)));
@@ -3787,7 +3793,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.copyCellsAndCheck(engine,
                 Lists.of(cellA, cellB),
-                SpreadsheetRange.with(d, d.add(1, 1)),
+                d.spreadsheetRange(d.add(1, 1)),
                 context,
                 this.formattedCellWithValue(d, "1+0", BigDecimal.valueOf(1 + 0)),
                 this.formattedCellWithValue(d.add(1, 1), "2+0", BigDecimal.valueOf(2 + 0)));
@@ -3818,7 +3824,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.copyCellsAndCheck(
                 engine,
                 Lists.of(cellA, cellB),
-                SpreadsheetRange.with(d, d.add(2, 2)),
+                d.spreadsheetRange(d.add(2, 2)),
                 context,
                 this.formattedCellWithValue(d, "1+0", BigDecimal.valueOf(1 + 0)),
                 this.formattedCellWithValue(d.add(1, 1), "2+0", BigDecimal.valueOf(2 + 0)));
@@ -3848,7 +3854,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.copyCellsAndCheck(engine,
                 Lists.of(cellA, cellB),
-                SpreadsheetRange.with(d, d.add(6, 1)),
+                d.spreadsheetRange(d.add(6, 1)),
                 context,
                 this.formattedCellWithValue(d, "1+0", BigDecimal.valueOf(1 + 0)),
                 this.formattedCellWithValue(d.add(1, 1), "2+0", BigDecimal.valueOf(2 + 0)),
@@ -3882,7 +3888,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.copyCellsAndCheck(engine,
                 Lists.of(cellA, cellB),
-                SpreadsheetRange.with(d, d.add(1, 6)),
+                d.spreadsheetRange(d.add(1, 6)),
                 context,
                 this.formattedCellWithValue(d, "1+0", BigDecimal.valueOf(1 + 0)),
                 this.formattedCellWithValue(d.add(1, 1), "2+0", BigDecimal.valueOf(2 + 0)),
@@ -3958,7 +3964,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.copyCellsAndCheck(engine,
                 Lists.of(cellB),
-                SpreadsheetRange.with(c, c),
+                c.spreadsheetRange(c),
                 context,
                 this.formattedCellWithValue(cellA.reference(), "10+" + c, BigDecimal.valueOf(10 + 2 + 0)), // external reference to copied
                 this.formattedCellWithValue(c, "2+0", BigDecimal.valueOf(2 + 0))); // copied
@@ -4431,10 +4437,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private SpreadsheetCellReference cellReference(final int column, final int row) {
         return SpreadsheetReferenceKind.ABSOLUTE.column(column).setRow(SpreadsheetReferenceKind.ABSOLUTE.row(row));
-    }
-
-    private SpreadsheetRange range(final SpreadsheetCellReference begin, final SpreadsheetCellReference end) {
-        return SpreadsheetRange.with(begin, end);
     }
 
     private SpreadsheetCell cell(final String reference, final String formula) {
