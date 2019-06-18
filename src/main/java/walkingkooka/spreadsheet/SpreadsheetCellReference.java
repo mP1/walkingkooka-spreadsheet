@@ -29,9 +29,6 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.text.cursor.parser.ParserReporters;
-import walkingkooka.tree.json.HasJsonNode;
-import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeException;
 
 import java.math.MathContext;
 import java.util.Objects;
@@ -167,6 +164,28 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
 
     private static void checkOther(final SpreadsheetCellReference other) {
         Objects.requireNonNull(other, "other");
+    }
+
+    // range/spreadsheetRange...........................................................................................
+
+    /**
+     * Creates a {@link Range} from the this and the other {@link SpreadsheetCellReference}.
+     */
+    public Range<SpreadsheetCellReference> range(final SpreadsheetCellReference other) {
+        Objects.requireNonNull(other, "other");
+
+        final SpreadsheetCellReference begin = this.lower(other);
+        final SpreadsheetCellReference end = this.upper(other);
+
+        return Range.greaterThanEquals(begin)
+                .and(Range.lessThanEquals(end));
+    }
+
+    /**
+     * Creates a {@link SpreadsheetRange} from the this and the other {@link SpreadsheetCellReference}.
+     */
+    public SpreadsheetRange spreadsheetRange(final SpreadsheetCellReference other) {
+        return SpreadsheetRange.with(this.range(other));
     }
 
     // is...............................................................................................................

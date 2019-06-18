@@ -116,7 +116,7 @@ public final class SpreadsheetExpressionReferenceVisitorTest implements VisitorT
     public void testAcceptSpreadsheetRange() {
         final StringBuilder b = new StringBuilder();
 
-        final SpreadsheetRange range = SpreadsheetRange.with(SpreadsheetExpressionReference.parseCellReference("A1"), SpreadsheetExpressionReference.parseCellReference("B2"));
+        final SpreadsheetRange range = SpreadsheetRange.parse("A1:B2");
 
         new FakeSpreadsheetExpressionReferenceVisitor() {
             @Override
