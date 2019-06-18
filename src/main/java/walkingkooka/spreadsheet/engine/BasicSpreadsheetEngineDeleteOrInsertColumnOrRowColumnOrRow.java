@@ -275,7 +275,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
             } while (false);
 
             this.saveLabelIfUpdated(
-                    range.setBeginAndEnd(rangeBegin, rangeEnd),
+                    rangeBegin.spreadsheetRange(rangeEnd),
                     mapping);
         }
     }
@@ -324,7 +324,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
             end = this.fixCellReference(end);
         }
 
-        this.saveLabelIfUpdated(range.setBeginAndEnd(begin, end), mapping);
+        this.saveLabelIfUpdated(begin.spreadsheetRange(end), mapping);
     }
 
     // cells....................................................................................................
