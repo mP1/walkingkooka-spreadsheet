@@ -35,24 +35,24 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
     private final static SpreadsheetCellReference TOPLEFT1 = SpreadsheetRangeStoreTesting.cell(10, 20);
     private final static SpreadsheetCellReference CENTER1 = TOPLEFT1.add(1, 1);
     private final static SpreadsheetCellReference BOTTOMRIGHT1 = CENTER1.add(1, 1);
-    private final static SpreadsheetRange RANGE1A = SpreadsheetRange.with(TOPLEFT1, BOTTOMRIGHT1);
-    private final static SpreadsheetRange RANGE1B = SpreadsheetRange.with(TOPLEFT1, BOTTOMRIGHT1.add(1, 1));
-    private final static SpreadsheetRange RANGE1C = SpreadsheetRange.with(CENTER1, BOTTOMRIGHT1);
+    private final static SpreadsheetRange RANGE1A = TOPLEFT1.spreadsheetRange(BOTTOMRIGHT1);
+    private final static SpreadsheetRange RANGE1B = TOPLEFT1.spreadsheetRange(BOTTOMRIGHT1.add(1, 1));
+    private final static SpreadsheetRange RANGE1C = CENTER1.spreadsheetRange(BOTTOMRIGHT1);
 
     private final static SpreadsheetCellReference TOPLEFT2 = SpreadsheetRangeStoreTesting.cell(30, 40);
     private final static SpreadsheetCellReference CENTER2 = TOPLEFT2.add(1, 1);
     private final static SpreadsheetCellReference BOTTOMRIGHT2 = CENTER2.add(2, 2);
-    private final static SpreadsheetRange RANGE2A = SpreadsheetRange.with(TOPLEFT2, BOTTOMRIGHT2);
+    private final static SpreadsheetRange RANGE2A = TOPLEFT2.spreadsheetRange(BOTTOMRIGHT2);
 
-    private final static SpreadsheetRange RANGE2B = SpreadsheetRange.with(CENTER1, BOTTOMRIGHT2);
+    private final static SpreadsheetRange RANGE2B = CENTER1.spreadsheetRange(BOTTOMRIGHT2);
 
     private final static SpreadsheetCellReference TOPLEFT3 = SpreadsheetRangeStoreTesting.cell(50, 60);
     private final static SpreadsheetCellReference CENTER3 = TOPLEFT3.add(1, 1);
     private final static SpreadsheetCellReference BOTTOMRIGHT3 = CENTER3.add(2, 2);
-    private final static SpreadsheetRange RANGE3 = SpreadsheetRange.with(TOPLEFT3, BOTTOMRIGHT3);
+    private final static SpreadsheetRange RANGE3 = TOPLEFT3.spreadsheetRange(BOTTOMRIGHT3);
 
-    private final static SpreadsheetRange RANGE4 = SpreadsheetRange.with(SpreadsheetRangeStoreTesting.cell(70, 70),
-            SpreadsheetRangeStoreTesting.cell(80, 80));
+    private final static SpreadsheetRange RANGE4 = SpreadsheetRangeStoreTesting.cell(70, 70)
+            .spreadsheetRange(SpreadsheetRangeStoreTesting.cell(80, 80));
 
     private final static String VALUE1 = "value1";
     private final static String VALUE2 = "value2";
