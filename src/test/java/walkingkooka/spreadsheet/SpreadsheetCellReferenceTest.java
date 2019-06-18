@@ -351,7 +351,55 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
         return columnKind.column(column).setRow(rowKind.row(row));
     }
 
-    // ParseStringTesting.........................................................................................
+    // range.............................................................................................................
+
+    @Test
+    public void testRangeNullFails() {
+        assertThrows(NullPointerException.class, () -> {
+            this.cell(1, 1).spreadsheetRange(null);
+        });
+    }
+
+    @Test
+    public void testRange() {
+        final SpreadsheetCellReference lower = this.cell(1, 1);
+        final SpreadsheetCellReference upper = this.cell(2, 2);
+        this.rangeAndCheck(lower,
+                upper,
+                Range.greaterThanEquals(lower).and(Range.lessThanEquals(upper)));
+    }
+
+    @Test
+    public void testRangeSwapped() {
+        final SpreadsheetCellReference lower = this.cell(1, 1);
+        final SpreadsheetCellReference upper = this.cell(2, 2);
+        final SpreadsheetRange range = upper.spreadsheetRange(lower);
+        this.checkEquals(Range.greaterThanEquals(lower).and(Range.lessThanEquals(upper)), range.range());
+    }
+
+    @Test
+    public void testRangeOne() {
+        final SpreadsheetCellReference lower = this.cell(1, 1);
+        final SpreadsheetRange range = lower.spreadsheetRange(lower);
+        this.checkEquals(Range.singleton(lower), range.range());
+    }
+
+    private void rangeAndCheck(final SpreadsheetCellReference cell,
+                               final SpreadsheetCellReference other,
+                               final Range<SpreadsheetCellReference> expected) {
+        final Range<SpreadsheetCellReference> range = cell.range(other);
+        assertEquals(expected,
+                range,
+                () -> cell + " range " + other);
+
+
+
+        assertEquals(SpreadsheetRange.with(expected),
+                cell.spreadsheetRange(other),
+                () -> cell + " spreadsheetRange " + other);
+    }
+
+    // ParseStringTesting...............................................................................................
 
     @Test
     public void testParseInvalidCellReferenceFails() {

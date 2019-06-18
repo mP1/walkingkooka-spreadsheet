@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class ReadOnlySpreadsheetRangeStoreTest implements SpreadsheetRangeStoreTesting<ReadOnlySpreadsheetRangeStore<String>, String>,
         ReadOnlyStoreTesting<ReadOnlySpreadsheetRangeStore<String>, SpreadsheetRange, List<String>> {
 
-    private final static SpreadsheetRange RANGE = SpreadsheetRange.with(SpreadsheetExpressionReference.parseCellReference("a1"), SpreadsheetExpressionReference.parseCellReference("b2"));
+    private final static SpreadsheetRange RANGE = SpreadsheetRange.parse("a1:b2");
     private final static String VALUE = "value";
 
     @Test
