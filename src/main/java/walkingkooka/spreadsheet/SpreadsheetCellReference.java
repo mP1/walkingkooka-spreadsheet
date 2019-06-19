@@ -200,6 +200,18 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
         return false;
     }
 
+    @Override
+    public boolean isRange() {
+        return false;
+    }
+
+    // SpreadsheetExpressionReferenceVisitor............................................................................
+
+    @Override
+    void accept(final SpreadsheetExpressionReferenceVisitor visitor) {
+        visitor.visit(this);
+    }
+
     // HashCodeEqualsDefined............................................................................................
 
     @Override

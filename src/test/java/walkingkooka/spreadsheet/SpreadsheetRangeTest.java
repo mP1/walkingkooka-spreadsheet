@@ -23,13 +23,11 @@ import walkingkooka.compare.Range;
 import walkingkooka.predicate.PredicateTesting;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ParseStringTesting;
-import walkingkooka.test.ToStringTesting;
-import walkingkooka.tree.json.HasJsonNodeTesting;
+import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.text.TextNode;
+import walkingkooka.tree.visit.Visiting;
 import walkingkooka.type.JavaVisibility;
 
 import java.util.List;
@@ -41,12 +39,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRange>,
-        HashCodeEqualsDefinedTesting<SpreadsheetRange>,
-        HasJsonNodeTesting<SpreadsheetRange>,
-        ParseStringTesting<SpreadsheetRange>,
-        PredicateTesting<SpreadsheetRange, SpreadsheetCellReference>,
-        ToStringTesting<SpreadsheetRange> {
+public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTestCase<SpreadsheetRange>
+        implements ParseStringTesting<SpreadsheetRange>,
+        PredicateTesting<SpreadsheetRange, SpreadsheetCellReference> {
 
     private final static int COLUMN1 = 10;
     private final static int ROW1 = 11;
@@ -140,24 +135,6 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
         final SpreadsheetRange range = this.range(column1, row1, column2, row2);
         this.check(range, column2, row2, column1, row1, 88 - 3 + 1, 99 - 4 + 1);
         this.checkIsSingleCell(range, false);
-    }
-
-    // cell...........................................................
-
-    @Test
-    public void testCellNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetRange.cell(null);
-        });
-    }
-
-    @Test
-    public void testCell() {
-        final int column = 88;
-        final int row = 99;
-        final SpreadsheetRange range = SpreadsheetRange.cell(this.cell(column, row));
-        this.check(range, column, row, column, row, 1, 1);
-        this.checkIsSingleCell(range, true);
     }
 
     // isSingleCell...........................................................
@@ -377,13 +354,13 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
 
     private void testTrue(final String range,
                           final String cell) {
-        this.testTrue(SpreadsheetRange.parse(range),
+        this.testTrue(SpreadsheetRange.parseRange0(range),
                 SpreadsheetExpressionReference.parseCellReference(cell));
     }
 
     private void testFalse(final String range,
                            final String cell) {
-        this.testFalse(SpreadsheetRange.parse(range),
+        this.testFalse(SpreadsheetRange.parseRange0(range),
                 SpreadsheetExpressionReference.parseCellReference(cell));
     }
 
@@ -486,6 +463,49 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
         assertEquals(Optional.empty(), store.load(c.reference()));
     }
 
+    // SpreadsheetExpressionReferenceVisitor.............................................................................
+
+    @Test
+    public void testAccept() {
+        final StringBuilder b = new StringBuilder();
+        final SpreadsheetRange reference = this.createReference();
+
+        new FakeSpreadsheetExpressionReferenceVisitor() {
+            @Override
+            protected Visiting startVisit(final ExpressionReference r) {
+                assertSame(reference, r);
+                b.append("1");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final ExpressionReference r) {
+                assertSame(reference, r);
+                b.append("2");
+            }
+
+            @Override
+            protected Visiting startVisit(final SpreadsheetExpressionReference r) {
+                assertSame(reference, r);
+                b.append("3");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final SpreadsheetExpressionReference r) {
+                assertSame(reference, r);
+                b.append("4");
+            }
+
+            @Override
+            protected void visit(final SpreadsheetRange r) {
+                assertSame(reference, r);
+                b.append("5");
+            }
+        }.accept(reference);
+        assertEquals("13542", b.toString());
+    }
+
     // equals...............................................................................
 
     @Test
@@ -502,12 +522,12 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
 
     @Test
     public void testToStringSingleton() {
-        this.toStringAndCheck(SpreadsheetRange.parse("Z9"), "Z9");
+        this.toStringAndCheck(SpreadsheetRange.parseRange0("Z9"), "Z9");
     }
 
     @Test
     public void testString() {
-        this.toStringAndCheck(SpreadsheetRange.parse("C3:D4"), "C3:D4");
+        this.toStringAndCheck(SpreadsheetRange.parseRange0("C3:D4"), "C3:D4");
     }
 
     // disabled..........................................................................................................
@@ -519,7 +539,7 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
     // helpers .........................................................................................................
 
     @Override
-    public SpreadsheetRange createObject() {
+    SpreadsheetRange createReference() {
         return this.range(COLUMN1, ROW1, COLUMN2, ROW2);
     }
 
@@ -537,44 +557,44 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
         return SpreadsheetCell.NO_FORMATTED_CELL;
     }
 
-    // from...............................................................................................
+    // fromCells.......................................................................................................
 
     @Test
-    public void testFromWithNullCellsFails() {
+    public void testFromCellsWithNullCellsFails() {
         assertThrows(NullPointerException.class, () -> {
-            SpreadsheetRange.from(null);
+            SpreadsheetRange.fromCells(null);
         });
     }
 
     @Test
-    public void testFrom() {
+    public void testFromCells() {
         final SpreadsheetCellReference a = this.cell(111, 11);
         final SpreadsheetCellReference b = this.cell(112, 12);
         final SpreadsheetCellReference c = this.cell(113, 20);
         final SpreadsheetCellReference d = this.cell(114, 24);
         final SpreadsheetCellReference e = this.cell(115, 24);
 
-        final SpreadsheetRange range = SpreadsheetRange.from(Lists.of(a, b, c, d, e));
+        final SpreadsheetRange range = SpreadsheetRange.fromCells(Lists.of(a, b, c, d, e));
         this.check(range, 111, 11, 115, 24);
     }
 
     @Test
-    public void testFrom2() {
+    public void testFromCells2() {
         final SpreadsheetCellReference a = this.cell(111, 11);
         final SpreadsheetCellReference b = this.cell(112, 12);
         final SpreadsheetCellReference c = this.cell(113, 20);
         final SpreadsheetCellReference d = this.cell(114, 24);
         final SpreadsheetCellReference e = this.cell(115, 24);
 
-        final SpreadsheetRange range = SpreadsheetRange.from(Lists.of(e, d, c, b, a));
+        final SpreadsheetRange range = SpreadsheetRange.fromCells(Lists.of(e, d, c, b, a));
         this.check(range, 111, 11, 115, 24);
     }
 
     @Test
-    public void testFrom3() {
+    public void testFromCells3() {
         final SpreadsheetCellReference a = this.cell(111, 11);
 
-        final SpreadsheetRange range = SpreadsheetRange.from(Lists.of(a));
+        final SpreadsheetRange range = SpreadsheetRange.fromCells(Lists.of(a));
         this.check(range, 111, 11, 111, 11);
     }
 
@@ -582,7 +602,7 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
 
     @Test
     public void testParseMissingSeparatorSingleton() {
-        this.parseAndCheck("A1", SpreadsheetRange.cell(SpreadsheetExpressionReference.parseCellReference("A1")));
+        this.parseAndCheck("A1", SpreadsheetRange.cell0(SpreadsheetExpressionReference.parseCellReference("A1")));
     }
 
     @Test
@@ -619,17 +639,17 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
 
     @Test
     public void testFromJsonNode() {
-        this.fromJsonNodeAndCheck(JsonNode.string("A1:A2"), SpreadsheetRange.parse("A1:A2"));
+        this.fromJsonNodeAndCheck(JsonNode.string("A1:A2"), SpreadsheetRange.parseRange0("A1:A2"));
     }
 
     @Test
-    public void testToJsonNode() {
-        this.toJsonNodeAndCheck(SpreadsheetRange.parse("A1:A2"), JsonNode.string("A1:A2"));
+    public void testToJsonNode2() {
+        this.toJsonNodeAndCheck(SpreadsheetRange.parseRange0("A1:A2"), JsonNode.string("A1:A2"));
     }
 
     @Test
     public void testToJsonNodeRoundtrip() {
-        this.toJsonNodeRoundTripTwiceAndCheck(SpreadsheetRange.parse("A1:A2"));
+        this.toJsonNodeRoundTripTwiceAndCheck(SpreadsheetRange.parseRange0("A1:A2"));
     }
 
     //helper.................................................................................................
@@ -720,7 +740,7 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
         assertEquals(expected, range.isSingleCell(), () -> "range=" + range + " isSingleCell");
     }
 
-    // ClassTesting..................................................................................................
+    // ClassTesting.....................................................................................................
 
     @Override
     public Class<SpreadsheetRange> type() {
@@ -732,23 +752,18 @@ public final class SpreadsheetRangeTest implements ClassTesting2<SpreadsheetRang
         return JavaVisibility.PUBLIC;
     }
 
-    // HasJsonNodeTesting...........................................................................................
-
-    @Override
-    public SpreadsheetRange createHasJsonNode() {
-        return this.createObject();
-    }
+    // HasJsonNodeTesting...............................................................................................
 
     @Override
     public SpreadsheetRange fromJsonNode(final JsonNode node) {
-        return SpreadsheetRange.fromJsonNode(node);
+        return SpreadsheetRange.fromJsonNodeRange(node);
     }
 
     // ParseStringTesting..................................................................................................
 
     @Override
     public SpreadsheetRange parse(final String text) {
-        return SpreadsheetRange.parse(text);
+        return SpreadsheetRange.parseRange0(text);
     }
 
     @Override

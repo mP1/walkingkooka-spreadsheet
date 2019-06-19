@@ -44,7 +44,7 @@ final class BasicSpreadsheetEngineCopyCells {
 
     private void execute(final Collection<SpreadsheetCell> from,
                          final SpreadsheetRange to) {
-        final SpreadsheetRange fromRange = SpreadsheetRange.from(from.stream()
+        final SpreadsheetRange fromRange = SpreadsheetRange.fromCells(from.stream()
                 .map(c -> c.reference())
                 .collect(Collectors.toList()));
 

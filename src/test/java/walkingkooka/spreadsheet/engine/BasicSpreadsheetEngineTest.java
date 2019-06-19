@@ -539,7 +539,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                           final TextStyle style,
                           final SpreadsheetCellReference cell,
                           final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rules) {
-        rules.addValue(SpreadsheetRange.cell(cell), rule(result, priority, style));
+        rules.addValue(cell.spreadsheetRange(cell), rule(result, priority, style));
     }
 
     private SpreadsheetConditionalFormattingRule rule(final boolean result,
@@ -3734,7 +3734,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.copyCellsAndCheck(engine,
                 Lists.of(cellA),
-                SpreadsheetRange.cell(d),
+                d.spreadsheetRange(d),
                 context,
                 this.formattedCellWithValue(d, "1+0", BigDecimal.valueOf(1 + 0)));
 
@@ -3919,7 +3919,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.copyCellsAndCheck(engine,
                 Lists.of(cellB),
-                SpreadsheetRange.cell(d),
+                d.spreadsheetRange(d),
                 context,
                 this.formattedCellWithValue(a, "1+0", BigDecimal.valueOf(1 + 0)),
                 this.formattedCellWithValue(d, "" + a, BigDecimal.valueOf(1 + 0)));
@@ -3941,7 +3941,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.copyCellsAndCheck(engine,
                 Lists.of(cellB, cellC),
-                SpreadsheetRange.parse("E5:F6"),
+                SpreadsheetExpressionReference.parseRange("E5:F6"),
                 context,
                 this.formattedCellWithValue("E5", "2", BigDecimal.valueOf(2 + 0)),
                 this.formattedCellWithValue("F6", "3+E5", BigDecimal.valueOf(3 + 2)));
