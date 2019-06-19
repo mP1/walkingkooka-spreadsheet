@@ -125,7 +125,7 @@ public final class TreeMapSpreadsheetLabelStoreTest extends SpreadsheetLabelStor
     }
 
     private SpreadsheetRange range1() {
-        return SpreadsheetRange.parse("A1:A3");
+        return SpreadsheetExpressionReference.parseRange("A1:A3");
     }
 
     @Override

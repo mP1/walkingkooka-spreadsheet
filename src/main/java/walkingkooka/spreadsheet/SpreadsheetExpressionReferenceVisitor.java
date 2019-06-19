@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.Cast;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.visit.Visiting;
 import walkingkooka.tree.visit.Visitor;
@@ -24,7 +25,7 @@ import walkingkooka.tree.visit.Visitor;
 import java.util.Objects;
 
 /**
- * A {@link Visitor} for all known implementations of {@link ExpressionReference}.
+ * A {@link Visitor} for all known implementations of {@link SpreadsheetExpressionReference}.
  */
 public abstract class SpreadsheetExpressionReferenceVisitor extends Visitor<ExpressionReference> {
 
@@ -36,21 +37,11 @@ public abstract class SpreadsheetExpressionReferenceVisitor extends Visitor<Expr
         Objects.requireNonNull(reference, "reference");
 
         if (Visiting.CONTINUE == this.startVisit(reference)) {
-            do {
-                if (reference instanceof SpreadsheetCellReference) {
-                    this.visit(SpreadsheetCellReference.class.cast(reference));
-                    break;
-                }
-                if (reference instanceof SpreadsheetLabelName) {
-                    this.visit(SpreadsheetLabelName.class.cast(reference));
-                    break;
-                }
-                if (reference instanceof SpreadsheetRange) {
-                    this.visit(SpreadsheetRange.class.cast(reference));
-                    break;
-                }
+
+            if (false == reference instanceof SpreadsheetExpressionReference) {
                 throw new IllegalArgumentException("Unknown reference type: " + reference.getClass().getName() + "=" + reference);
-            } while (false);
+            }
+            this.traverse(Cast.to(reference));
         }
         this.endVisit(reference);
     }
@@ -60,6 +51,21 @@ public abstract class SpreadsheetExpressionReferenceVisitor extends Visitor<Expr
     }
 
     protected void endVisit(final ExpressionReference reference) {
+        // nop
+    }
+
+    private void traverse(final SpreadsheetExpressionReference reference) {
+        if (Visiting.CONTINUE == this.startVisit(reference)) {
+            reference.accept(this);
+        }
+        this.endVisit(reference);
+    }
+
+    protected Visiting startVisit(final SpreadsheetExpressionReference reference) {
+        return Visiting.CONTINUE;
+    }
+
+    protected void endVisit(final SpreadsheetExpressionReference reference) {
         // nop
     }
 
