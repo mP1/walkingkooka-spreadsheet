@@ -75,11 +75,11 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetEngineSaveCellHateosHandler}
+     * {@see SpreadsheetEngineLoadCellHateosHandler}
      */
     public static HateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetDelta> loadCell(final SpreadsheetEngine engine,
                                                                                                       final Supplier<SpreadsheetEngineContext> context) {
-        return SpreadsheetEngineSaveCellHateosHandler.with(engine, context);
+        return SpreadsheetEngineLoadCellHateosHandler.with(engine, context);
     }
 
     /**
