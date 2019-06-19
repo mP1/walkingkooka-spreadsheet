@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Range;
 import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.http.server.HttpRequestAttribute;
@@ -28,7 +29,9 @@ import walkingkooka.net.http.server.HttpRequestParameterName;
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.SpreadsheetDelta;
 import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
@@ -47,7 +50,7 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
         extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineLoadCellHateosHandler,
         SpreadsheetCellReference,
         SpreadsheetCell,
-        SpreadsheetCell> {
+        SpreadsheetDelta> {
 
     private final static SpreadsheetEngineEvaluation EVALUATION = SpreadsheetEngineEvaluation.FORCE_RECOMPUTE;
 
@@ -72,7 +75,7 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
         this.handleAndCheck(this.id(),
                 this.resource(),
                 this.parameters(),
-                Optional.of(this.cell()));
+                Optional.of(SpreadsheetDelta.with(this.spreadsheetId(), Sets.of(this.cell()))));
     }
 
     @Test
@@ -127,6 +130,11 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
                 assertNotEquals(null, context, "context");
 
                 return Optional.of(cell());
+            }
+
+            @Override
+            public SpreadsheetId id() {
+                return SpreadsheetEngineLoadCellHateosHandlerTest.this.spreadsheetId();
             }
         };
     }
