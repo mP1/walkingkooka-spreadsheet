@@ -93,6 +93,18 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference i
         return true;
     }
 
+    @Override
+    public boolean isRange() {
+        return false;
+    }
+
+    // SpreadsheetExpressionReferenceVisitor............................................................................
+
+    @Override
+    void accept(final SpreadsheetExpressionReferenceVisitor visitor) {
+        visitor.visit(this);
+    }
+
     // Comparable........................................................................................................
 
     @Override

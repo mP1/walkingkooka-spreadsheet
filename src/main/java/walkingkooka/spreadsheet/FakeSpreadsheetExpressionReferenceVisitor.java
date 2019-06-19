@@ -38,6 +38,16 @@ public class FakeSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpres
     }
 
     @Override
+    protected Visiting startVisit(final SpreadsheetExpressionReference reference) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetExpressionReference reference) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visit(final SpreadsheetCellReference reference) {
         throw new UnsupportedOperationException();
     }

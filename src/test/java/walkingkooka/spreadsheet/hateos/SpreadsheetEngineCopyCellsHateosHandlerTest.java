@@ -85,7 +85,7 @@ public final class SpreadsheetEngineCopyCellsHateosHandlerTest extends
                                               final SpreadsheetRange to,
                                               final SpreadsheetEngineContext context) {
                 assertEquals(resource().get().cells(), from, "from");
-                assertEquals(SpreadsheetRange.parse(TO), to, "to");
+                assertEquals(SpreadsheetExpressionReference.parseRange(TO), to, "to");
                 return delta();
             }
         };
