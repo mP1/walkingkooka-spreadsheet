@@ -22,9 +22,13 @@ import walkingkooka.InvalidCharacterException;
 import walkingkooka.naming.NameTesting;
 import walkingkooka.naming.PropertiesPath;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.visit.Visiting;
 import walkingkooka.type.JavaVisibility;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferenceTestCase<SpreadsheetLabelName>
@@ -108,6 +112,49 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     @Test
     public void testWithEnormousRow() {
         this.createNameAndCheck("A" + (SpreadsheetRowReference.MAX + 1));
+    }
+
+    // SpreadsheetExpressionReferenceVisitor.............................................................................
+
+    @Test
+    public void testAccept() {
+        final StringBuilder b = new StringBuilder();
+        final SpreadsheetLabelName reference = this.createReference();
+
+        new FakeSpreadsheetExpressionReferenceVisitor() {
+            @Override
+            protected Visiting startVisit(final ExpressionReference r) {
+                assertSame(reference, r);
+                b.append("1");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final ExpressionReference r) {
+                assertSame(reference, r);
+                b.append("2");
+            }
+
+            @Override
+            protected Visiting startVisit(final SpreadsheetExpressionReference r) {
+                assertSame(reference, r);
+                b.append("3");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final SpreadsheetExpressionReference r) {
+                assertSame(reference, r);
+                b.append("4");
+            }
+
+            @Override
+            protected void visit(final SpreadsheetLabelName r) {
+                assertSame(reference, r);
+                b.append("5");
+            }
+        }.accept(reference);
+        assertEquals("13542", b.toString());
     }
 
     // HasJsonNode..................................................................................................
