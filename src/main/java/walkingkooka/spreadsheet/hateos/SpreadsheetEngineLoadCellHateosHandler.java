@@ -17,12 +17,14 @@
 
 package walkingkooka.spreadsheet.hateos;
 
+import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Range;
 import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
@@ -36,7 +38,7 @@ import java.util.function.Supplier;
  * A {@link HateosHandler} that calls {@link SpreadsheetEngine#loadCell(SpreadsheetCellReference, SpreadsheetEngineEvaluation, SpreadsheetEngineContext)}.
  */
 final class SpreadsheetEngineLoadCellHateosHandler extends SpreadsheetEngineHateosHandler
-        implements HateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetCell> {
+        implements HateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetDelta> {
 
     static SpreadsheetEngineLoadCellHateosHandler with(final SpreadsheetEngine engine,
                                                        final Supplier<SpreadsheetEngineContext> context) {
@@ -50,7 +52,7 @@ final class SpreadsheetEngineLoadCellHateosHandler extends SpreadsheetEngineHate
     }
 
     @Override
-    public Optional<SpreadsheetCell> handle(final SpreadsheetCellReference cellReference,
+    public Optional<SpreadsheetDelta> handle(final SpreadsheetCellReference cellReference,
                                             final Optional<SpreadsheetCell> resource,
                                             final Map<HttpRequestAttribute<?>, Object> parameters) {
         Objects.requireNonNull(cellReference, "cellReference");
@@ -59,11 +61,16 @@ final class SpreadsheetEngineLoadCellHateosHandler extends SpreadsheetEngineHate
 
         return this.engine.loadCell(cellReference,
                 this.parameterValueOrFail(parameters, EVALUATION, SpreadsheetEngineEvaluation::valueOf),
-                this.context.get());
+                this.context.get())
+                .map(this::handleLoadCell);
+    }
+
+    private SpreadsheetDelta handleLoadCell(final SpreadsheetCell cell) {
+        return SpreadsheetDelta.with(this.engine.id(), Sets.of(cell));
     }
 
     @Override
-    public Optional<SpreadsheetCell> handleCollection(final Range<SpreadsheetCellReference> ids,
+    public Optional<SpreadsheetDelta> handleCollection(final Range<SpreadsheetCellReference> ids,
                                                       final Optional<SpreadsheetCell> resource,
                                                       final Map<HttpRequestAttribute<?>, Object> parameters) {
         Objects.requireNonNull(ids, "ids");
