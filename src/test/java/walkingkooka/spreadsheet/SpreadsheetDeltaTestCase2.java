@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.compare.Range;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.HasJsonNodeTesting;
@@ -53,7 +52,7 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
         final List<SpreadsheetRange> window = delta.window();
 
         assertThrows(UnsupportedOperationException.class, () -> {
-            window.add(SpreadsheetRange.parse("A1:A2"));
+            window.add(SpreadsheetRange.parseRange("A1:A2"));
         });
 
         this.checkWindow(delta, this.window());
@@ -136,7 +135,7 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
 
     final List<SpreadsheetRange> window0(final String... range) {
         return Arrays.stream(range)
-                .map(SpreadsheetRange::parse)
+                .map(SpreadsheetRange::parseRange)
                 .collect(Collectors.toList());
     }
 

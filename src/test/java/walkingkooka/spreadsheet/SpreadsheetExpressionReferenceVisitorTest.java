@@ -30,117 +30,62 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 public final class SpreadsheetExpressionReferenceVisitorTest implements VisitorTesting<SpreadsheetExpressionReferenceVisitor, ExpressionReference> {
 
     @Test
-    public void testStartVisitSkip() {
+    public void testStartVisitExpressionReferenceSkip() {
         final StringBuilder b = new StringBuilder();
 
-        final SpreadsheetCellReference label = SpreadsheetExpressionReference.parseCellReference("A1");
+        final SpreadsheetCellReference cell = SpreadsheetExpressionReference.parseCellReference("A1");
         new FakeSpreadsheetExpressionReferenceVisitor() {
             @Override
             protected Visiting startVisit(final ExpressionReference reference) {
-                assertSame(label, reference);
+                assertSame(cell, reference);
                 b.append("1");
                 return Visiting.SKIP;
             }
 
             @Override
             protected void endVisit(final ExpressionReference reference) {
-                assertSame(label, reference);
+                assertSame(cell, reference);
                 b.append("2");
             }
-        }.accept(label);
+        }.accept(cell);
 
         assertEquals("12", b.toString());
     }
 
     @Test
-    public void testAcceptSpreadsheetCellReference() {
+    public void testStartVisitSpreadsheetExpressionReferenceSkip() {
         final StringBuilder b = new StringBuilder();
 
-        final SpreadsheetCellReference label = SpreadsheetExpressionReference.parseCellReference("A1");
+        final SpreadsheetCellReference cell = SpreadsheetExpressionReference.parseCellReference("A1");
         new FakeSpreadsheetExpressionReferenceVisitor() {
             @Override
             protected Visiting startVisit(final ExpressionReference reference) {
-                assertSame(label, reference);
+                assertSame(cell, reference);
                 b.append("1");
                 return Visiting.CONTINUE;
             }
 
             @Override
             protected void endVisit(final ExpressionReference reference) {
-                assertSame(label, reference);
+                assertSame(cell, reference);
                 b.append("2");
             }
 
             @Override
-            protected void visit(final SpreadsheetCellReference l) {
-                assertSame(label, l);
+            protected Visiting startVisit(final SpreadsheetExpressionReference reference) {
+                assertSame(cell, reference);
                 b.append("3");
-            }
-
-        }.accept(label);
-
-        assertEquals("132", b.toString());
-    }
-
-    @Test
-    public void testAcceptSpreadsheetLabelName() {
-        final StringBuilder b = new StringBuilder();
-
-        final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("label");
-        new FakeSpreadsheetExpressionReferenceVisitor() {
-            @Override
-            protected Visiting startVisit(final ExpressionReference reference) {
-                assertSame(label, reference);
-                b.append("1");
-                return Visiting.CONTINUE;
+                return Visiting.SKIP;
             }
 
             @Override
-            protected void endVisit(final ExpressionReference reference) {
-                assertSame(label, reference);
-                b.append("2");
+            protected void endVisit(final SpreadsheetExpressionReference reference) {
+                assertSame(cell, reference);
+                b.append("4");
             }
+        }.accept(cell);
 
-            @Override
-            protected void visit(final SpreadsheetLabelName l) {
-                assertSame(label, l);
-                b.append("3");
-            }
-
-        }.accept(label);
-
-        assertEquals("132", b.toString());
-    }
-
-    @Test
-    public void testAcceptSpreadsheetRange() {
-        final StringBuilder b = new StringBuilder();
-
-        final SpreadsheetRange range = SpreadsheetRange.parse("A1:B2");
-
-        new FakeSpreadsheetExpressionReferenceVisitor() {
-            @Override
-            protected Visiting startVisit(final ExpressionReference reference) {
-                assertSame(range, reference);
-                b.append("1");
-                return Visiting.CONTINUE;
-            }
-
-            @Override
-            protected void endVisit(final ExpressionReference reference) {
-                assertSame(range, reference);
-                b.append("2");
-            }
-
-            @Override
-            protected void visit(final SpreadsheetRange r) {
-                assertSame(range, r);
-                b.append("3");
-            }
-
-        }.accept(range);
-
-        assertEquals("132", b.toString());
+        assertEquals("1342", b.toString());
     }
 
     @Override

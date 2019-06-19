@@ -22,7 +22,9 @@ import walkingkooka.compare.ComparableTesting;
 import walkingkooka.compare.LowerOrUpperTesting;
 import walkingkooka.compare.Range;
 import walkingkooka.test.ParseStringTesting;
+import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.visit.Visiting;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -477,6 +479,49 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
                 SpreadsheetExpressionReference.parseCellReference("$A$1"));
     }
 
+    // SpreadsheetExpressionReferenceVisitor.............................................................................
+
+    @Test
+    public void testAccept() {
+        final StringBuilder b = new StringBuilder();
+        final SpreadsheetCellReference reference = this.createReference();
+
+        new FakeSpreadsheetExpressionReferenceVisitor() {
+            @Override
+            protected Visiting startVisit(final ExpressionReference r) {
+                assertSame(reference, r);
+                b.append("1");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final ExpressionReference r) {
+                assertSame(reference, r);
+                b.append("2");
+            }
+
+            @Override
+            protected Visiting startVisit(final SpreadsheetExpressionReference r) {
+                assertSame(reference, r);
+                b.append("3");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final SpreadsheetExpressionReference r) {
+                assertSame(reference, r);
+                b.append("4");
+            }
+
+            @Override
+            protected void visit(final SpreadsheetCellReference r) {
+                assertSame(reference, r);
+                b.append("5");
+            }
+        }.accept(reference);
+        assertEquals("13542", b.toString());
+    }
+
     // toString..................................................................................................
 
     @Test
@@ -543,7 +588,6 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
     }
 
     // ParseStringTesting.........................................................................................
-
 
     @Override
     public SpreadsheetCellReference parse(final String text) {

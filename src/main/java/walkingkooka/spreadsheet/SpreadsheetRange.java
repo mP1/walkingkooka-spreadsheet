@@ -20,12 +20,7 @@ package walkingkooka.spreadsheet;
 import walkingkooka.Cast;
 import walkingkooka.compare.Range;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
-import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.json.HasJsonNode;
-import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeException;
 
 import java.util.List;
 import java.util.Objects;
@@ -36,27 +31,39 @@ import java.util.stream.Stream;
 /**
  * Holds a range. Note the begin component is always before the end, with rows being the significant axis before column.
  */
-public final class SpreadsheetRange implements ExpressionReference,
-        HashCodeEqualsDefined,
-        HasJsonNode,
+public final class SpreadsheetRange extends SpreadsheetExpressionReference implements
         Comparable<SpreadsheetRange>,
         Predicate<SpreadsheetCellReference> {
 
     /**
      * Factory that parses some text holding a range.
      */
-    public static SpreadsheetRange parse(final String text) {
+    static SpreadsheetRange parseRange0(final String text) {
         CharSequences.failIfNullOrEmpty(text, "text");
 
         final int colon = text.indexOf(SEPARATOR);
 
         return -1 == colon ?
-                cell0(parse1(text, "range", text)) :
-                parse0(text, colon);
+                cell0(parseRange1(text, "range", text)) :
+                parseRange2(text, colon);
     }
 
-    private static SpreadsheetRange parse0(final String text,
-                                           final int colon) {
+    private static SpreadsheetCellReference parseRange1(final String component,
+                                                        final String label,
+                                                        final String text) {
+        try {
+            return SpreadsheetExpressionReference.parseCellReference(component);
+        } catch (final IllegalArgumentException cause) {
+            throw new IllegalArgumentException("Invalid " + label + " in " + CharSequences.quote(text), cause);
+        }
+    }
+
+    static SpreadsheetRange cell0(final SpreadsheetCellReference cell) {
+        return with(cell.range(cell));
+    }
+
+    private static SpreadsheetRange parseRange2(final String text,
+                                                final int colon) {
         if (0 == colon) {
             throw new IllegalArgumentException("Missing begin =" + CharSequences.quote(text));
         }
@@ -65,18 +72,8 @@ public final class SpreadsheetRange implements ExpressionReference,
             throw new IllegalArgumentException("Missing end =" + CharSequences.quote(text));
         }
 
-        return parse1(text.substring(0, colon), "begin", text)
-                .spreadsheetRange(parse1(text.substring(colon + SEPARATOR.length()), "end", text));
-    }
-
-    private static SpreadsheetCellReference parse1(final String component,
-                                                   final String label,
-                                                   final String text) {
-        try {
-            return SpreadsheetExpressionReference.parseCellReference(component);
-        } catch (final IllegalArgumentException cause) {
-            throw new IllegalArgumentException("Invalid " + label + " in " + CharSequences.quote(text), cause);
-        }
+        return parseRange1(text.substring(0, colon), "begin", text)
+                .spreadsheetRange(parseRange1(text.substring(colon + SEPARATOR.length()), "end", text));
     }
 
     private final static String SEPARATOR = ":";
@@ -84,7 +81,7 @@ public final class SpreadsheetRange implements ExpressionReference,
     /**
      * Computes the range of the given cells.
      */
-    public static SpreadsheetRange from(final List<SpreadsheetCellReference> cells) {
+    public static SpreadsheetRange fromCells(final List<SpreadsheetCellReference> cells) {
         Objects.requireNonNull(cells, "cells");
 
         SpreadsheetCellReference topLeft = null;
@@ -101,18 +98,6 @@ public final class SpreadsheetRange implements ExpressionReference,
         }
 
         return topLeft.spreadsheetRange(bottomRight);
-    }
-
-    /**
-     * Factory that creates a {@link SpreadsheetRange}
-     */
-    public static SpreadsheetRange cell(final SpreadsheetCellReference cell) {
-        Objects.requireNonNull(cell, "cell");
-        return cell0(cell);
-    }
-
-    private static SpreadsheetRange cell0(final SpreadsheetCellReference cell) {
-        return with(cell.range(cell));
     }
 
     /**
@@ -226,6 +211,30 @@ public final class SpreadsheetRange implements ExpressionReference,
         this.cellStream().forEach(c -> store.delete(c));
     }
 
+    // is...............................................................................................................
+
+    @Override
+    public boolean isCellReference() {
+        return false;
+    }
+
+    @Override
+    public boolean isLabelName() {
+        return false;
+    }
+
+    @Override
+    public boolean isRange() {
+        return true;
+    }
+
+    // SpreadsheetExpressionReferenceVisitor............................................................................
+
+    @Override
+    void accept(final SpreadsheetExpressionReferenceVisitor visitor) {
+        visitor.visit(this);
+    }
+
     // Predicate........................................................................................................
 
     /**
@@ -248,32 +257,6 @@ public final class SpreadsheetRange implements ExpressionReference,
 
     }
 
-    // HasJsonNode......................................................................................................
-
-    /**
-     * Factory that creates a {@link SpreadsheetRange} from a {@link JsonNode} holding the range in string form.
-     */
-    public static SpreadsheetRange fromJsonNode(final JsonNode node) {
-        Objects.requireNonNull(node, "node");
-
-        try {
-            return parse(node.stringValueOrFail());
-        } catch (final JsonNodeException cause) {
-            throw new IllegalArgumentException(cause.getMessage(), cause);
-        }
-    }
-
-    @Override
-    public JsonNode toJsonNode() {
-        return JsonNode.string(this.toString());
-    }
-
-    static {
-        HasJsonNode.register("spreadsheet-range",
-                SpreadsheetRange::fromJsonNode,
-                SpreadsheetRange.class);
-    }
-
     // HashCodeEqualsDefined.......................................................................................
 
     @Override
@@ -282,13 +265,16 @@ public final class SpreadsheetRange implements ExpressionReference,
     }
 
     @Override
-    public boolean equals(final Object other) {
-        return this == other ||
-                other instanceof SpreadsheetRange &&
-                        this.equals0(Cast.to(other));
+    boolean canBeEqual(final Object other) {
+        return other instanceof SpreadsheetRange;
     }
 
-    private boolean equals0(final SpreadsheetRange other) {
+    @Override
+    boolean equals0(final Object other) {
+        return this.equals1(Cast.to(other));
+    }
+
+    private boolean equals1(final SpreadsheetRange other) {
         return this.range.equals(other.range);
     }
 
@@ -299,10 +285,25 @@ public final class SpreadsheetRange implements ExpressionReference,
                 this.begin() + SEPARATOR + this.end();
     }
 
-    // Comparable.......................................................................................
+    // SpreadsheetExpressionReferenceComparator........................................................................
 
     @Override
     public int compareTo(final SpreadsheetRange other) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    final int compare(final SpreadsheetExpressionReference other) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    final int compare0(final SpreadsheetCellReference other) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    final int compare0(final SpreadsheetLabelName other) {
         throw new UnsupportedOperationException();
     }
 }

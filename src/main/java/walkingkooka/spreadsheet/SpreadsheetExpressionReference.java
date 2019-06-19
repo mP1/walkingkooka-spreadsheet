@@ -138,6 +138,13 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     }
 
     /**
+     * Parsers the text expecting a valid {@link SpreadsheetRange} or fails.
+     */
+    public static SpreadsheetRange parseRange(final String text) {
+        return SpreadsheetRange.parseRange0(text);
+    }
+
+    /**
      * Package private to limit sub classing.
      */
     SpreadsheetExpressionReference() {
@@ -155,6 +162,15 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
      * Only {@link SpreadsheetLabelName} returns true.
      */
     public abstract boolean isLabelName();
+
+    /**
+     * Only {@link SpreadsheetRange} returns true.
+     */
+    public abstract boolean isRange();
+
+    // SpreadsheetExpressionReferenceVisitor............................................................................
+
+    abstract void accept(final SpreadsheetExpressionReferenceVisitor visitor);
 
     // Object...........................................................................................................
 
@@ -212,6 +228,13 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     }
 
     /**
+     * Accepts a json string and returns a {@link SpreadsheetRange} or fails.
+     */
+    public static SpreadsheetRange fromJsonNodeRange(final JsonNode node) {
+        return fromJsonNode0(node, SpreadsheetExpressionReference::parseRange);
+    }
+
+    /**
      * Generic helper that tries to convert the node into a string and call a parse method.
      */
     private static <R extends SpreadsheetExpressionReference> R fromJsonNode0(final JsonNode node,
@@ -240,5 +263,8 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
         HasJsonNode.register("spreadsheet-label-name",
                 SpreadsheetLabelName::fromJsonNodeLabelName,
                 SpreadsheetLabelName.class);
+        HasJsonNode.register("spreadsheet-range",
+                SpreadsheetRange::fromJsonNodeRange,
+                SpreadsheetRange.class);
     }
 }
