@@ -128,11 +128,21 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
      */
     public static <N extends Node<N, ?, ?, ?>> Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> router(final AbsoluteUrl base,
                                                                                                                              final HateosContentType<N> contentType,
-                                                                                                                             final SpreadsheetEngine engine,
-                                                                                                                             final SpreadsheetEngineContext context) {
+                                                                                                                             final HateosHandler<SpreadsheetCellReference, SpreadsheetDelta, SpreadsheetDelta> copyCells,
+                                                                                                                             final HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta, SpreadsheetDelta> deleteColumns,
+                                                                                                                             final HateosHandler<SpreadsheetRowReference, SpreadsheetDelta, SpreadsheetDelta> deleteRows,
+                                                                                                                             final HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta, SpreadsheetDelta> insertColumns,
+                                                                                                                             final HateosHandler<SpreadsheetRowReference, SpreadsheetDelta, SpreadsheetDelta> insertRows,
+                                                                                                                             final HateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetDelta> loadCell,
+                                                                                                                             final HateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetDelta> saveCell) {
         final HateosHandlerRouterBuilder<N> builder = HateosHandlerRouterBuilder.with(base, contentType);
-        Objects.requireNonNull(engine, "engine");
-        Objects.requireNonNull(context, "context");
+        Objects.requireNonNull(copyCells, "copyCells");
+        Objects.requireNonNull(deleteColumns, "deleteColumns");
+        Objects.requireNonNull(deleteRows, "deleteRows");
+        Objects.requireNonNull(insertColumns, "insertColumns");
+        Objects.requireNonNull(insertRows, "insertRows");
+        Objects.requireNonNull(loadCell, "loadCell");
+        Objects.requireNonNull(saveCell, "saveCell");
 
         // cell GET, POST...............................................................................................
 
@@ -140,8 +150,8 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
             final HateosHandlerRouterMapper<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetDelta> cell = HateosHandlerRouterMapper.with(SpreadsheetExpressionReference::parseCellReference,
                     SpreadsheetCell.class,
                     SpreadsheetDelta.class);
-            cell.get(loadCell(engine, context));
-            cell.post(saveCell(engine, context));
+            cell.get(loadCell);
+            cell.post(saveCell);
 
             builder.add(CELL, LinkRelation.SELF, cell);
         }
@@ -151,7 +161,7 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
             final HateosHandlerRouterMapper<SpreadsheetCellReference, SpreadsheetDelta, SpreadsheetDelta> copy = HateosHandlerRouterMapper.with(SpreadsheetExpressionReference::parseCellReference,
                     SpreadsheetDelta.class,
                     SpreadsheetDelta.class);
-            copy.post(copyCells(engine, context));
+            copy.post(copyCells);
             builder.add(CELL, COPY, copy);
         }
 
@@ -161,8 +171,8 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
             final HateosHandlerRouterMapper<SpreadsheetColumnReference, SpreadsheetDelta, SpreadsheetDelta> columns = HateosHandlerRouterMapper.with(SpreadsheetColumnReference::parse,
                     SpreadsheetDelta.class,
                     SpreadsheetDelta.class);
-            columns.post(insertColumns(engine, context));
-            columns.delete(deleteColumns(engine, context));
+            columns.post(insertColumns);
+            columns.delete(deleteColumns);
 
             builder.add(COLUMN, LinkRelation.SELF, columns);
         }
@@ -173,8 +183,8 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
             final HateosHandlerRouterMapper<SpreadsheetRowReference, SpreadsheetDelta, SpreadsheetDelta> rows = HateosHandlerRouterMapper.with(SpreadsheetRowReference::parse,
                     SpreadsheetDelta.class,
                     SpreadsheetDelta.class);
-            rows.post(insertRows(engine, context));
-            rows.delete(deleteRows(engine, context));
+            rows.post(insertRows);
+            rows.delete(deleteRows);
             builder.add(ROW, LinkRelation.SELF, rows);
         }
 
