@@ -135,40 +135,49 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(context, "context");
 
-        // cell.........................................................................................................
+        // cell GET, POST...............................................................................................
 
-        final HateosHandlerRouterMapper<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetDelta> cell = HateosHandlerRouterMapper.with(SpreadsheetExpressionReference::parseCellReference,
-                SpreadsheetCell.class,
-                SpreadsheetDelta.class);
-        cell.get(loadCell(engine, context));
-        cell.post(saveCell(engine, context));
+        {
+            final HateosHandlerRouterMapper<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetDelta> cell = HateosHandlerRouterMapper.with(SpreadsheetExpressionReference::parseCellReference,
+                    SpreadsheetCell.class,
+                    SpreadsheetDelta.class);
+            cell.get(loadCell(engine, context));
+            cell.post(saveCell(engine, context));
 
-        builder.add(CELL, LinkRelation.SELF, cell);
+            builder.add(CELL, LinkRelation.SELF, cell);
+        }
+        // cell/copy POST................................................................................................
 
-        final HateosHandlerRouterMapper<SpreadsheetCellReference, SpreadsheetDelta, SpreadsheetDelta> copy = HateosHandlerRouterMapper.with(SpreadsheetExpressionReference::parseCellReference,
-                SpreadsheetDelta.class,
-                SpreadsheetDelta.class);
-        copy.get(copyCells(engine, context));
-        builder.add(CELL, COPY, cell);
+        {
+            final HateosHandlerRouterMapper<SpreadsheetCellReference, SpreadsheetDelta, SpreadsheetDelta> copy = HateosHandlerRouterMapper.with(SpreadsheetExpressionReference::parseCellReference,
+                    SpreadsheetDelta.class,
+                    SpreadsheetDelta.class);
+            copy.post(copyCells(engine, context));
+            builder.add(CELL, COPY, copy);
+        }
 
-        // columns.......................................................................................................
+        // columns POST DELETE..........................................................................................
 
-        final HateosHandlerRouterMapper<SpreadsheetColumnReference, SpreadsheetDelta, SpreadsheetDelta> columns = HateosHandlerRouterMapper.with(SpreadsheetColumnReference::parse,
-                SpreadsheetDelta.class,
-                SpreadsheetDelta.class);
-        columns.post(insertColumns(engine, context));
-        columns.delete(deleteColumns(engine, context));
+        {
+            final HateosHandlerRouterMapper<SpreadsheetColumnReference, SpreadsheetDelta, SpreadsheetDelta> columns = HateosHandlerRouterMapper.with(SpreadsheetColumnReference::parse,
+                    SpreadsheetDelta.class,
+                    SpreadsheetDelta.class);
+            columns.post(insertColumns(engine, context));
+            columns.delete(deleteColumns(engine, context));
 
-        builder.add(COLUMN, LinkRelation.SELF, columns);
+            builder.add(COLUMN, LinkRelation.SELF, columns);
+        }
 
-        // rows.........................................................................................................
+        // rows POST DELETE.............................................................................................
 
-        final HateosHandlerRouterMapper<SpreadsheetRowReference, SpreadsheetDelta, SpreadsheetDelta> rows = HateosHandlerRouterMapper.with(SpreadsheetRowReference::parse,
-                SpreadsheetDelta.class,
-                SpreadsheetDelta.class);
-        rows.post(insertRows(engine, context));
-        rows.delete(deleteRows(engine, context));
-        builder.add(ROW, LinkRelation.SELF, rows);
+        {
+            final HateosHandlerRouterMapper<SpreadsheetRowReference, SpreadsheetDelta, SpreadsheetDelta> rows = HateosHandlerRouterMapper.with(SpreadsheetRowReference::parse,
+                    SpreadsheetDelta.class,
+                    SpreadsheetDelta.class);
+            rows.post(insertRows(engine, context));
+            rows.delete(deleteRows(engine, context));
+            builder.add(ROW, LinkRelation.SELF, rows);
+        }
 
         return builder.build();
     }
