@@ -16,7 +16,6 @@
  */
 package walkingkooka.spreadsheet.hateos;
 
-import org.eclipse.jetty.http.HttpStatus;
 import org.junit.jupiter.api.Test;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.RelativeUrl;
@@ -30,7 +29,13 @@ import walkingkooka.net.http.server.HttpResponse;
 import walkingkooka.net.http.server.HttpResponses;
 import walkingkooka.net.http.server.RecordingHttpResponse;
 import walkingkooka.net.http.server.hateos.HateosContentType;
+import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.routing.Router;
+import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.SpreadsheetDelta;
+import walkingkooka.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
@@ -43,7 +48,6 @@ import walkingkooka.type.JavaVisibility;
 import java.lang.reflect.Method;
 import java.util.Optional;
 import java.util.function.BiConsumer;
-import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -56,30 +60,140 @@ public final class SpreadsheetHateosHandlersTest implements ClassTesting2<Spread
 
     @Test
     public void testRouterBaseNullFails() {
-        this.routerFails(null, this.contentType(), this.engine(), this.engineContext());
+        this.routerFails(null,
+                this.contentType(),
+                this.copyCells(),
+                this.deleteColumns(),
+                this.deleteRows(),
+                this.insertColumns(),
+                this.insertRows(),
+                this.loadCell(),
+                this.saveCell());
     }
 
     @Test
     public void testRouterContentTypeNullFails() {
-        this.routerFails(this.base(), null, this.engine(), this.engineContext());
+        this.routerFails(this.base(),
+                null,
+                this.copyCells(),
+                this.deleteColumns(),
+                this.deleteRows(),
+                this.insertColumns(),
+                this.insertRows(),
+                this.loadCell(),
+                this.saveCell());
     }
 
     @Test
-    public void testRouterEngineNullFails() {
-        this.routerFails(this.base(), this.contentType(), null, this.engineContext());
+    public void testRouterCopyCellsHandlerNullFails() {
+        this.routerFails(this.base(),
+                this.contentType(),
+                null,
+                this.deleteColumns(),
+                this.deleteRows(),
+                this.insertColumns(),
+                this.insertRows(),
+                this.loadCell(),
+                this.saveCell());
     }
 
     @Test
-    public void testRouterEngineContextNullFails() {
-        this.routerFails(this.base(), this.contentType(), this.engine(), null);
+    public void testRouterDeleteColumnsHandlerNullFails() {
+        this.routerFails(this.base(),
+                this.contentType(),
+                this.copyCells(),
+                null,
+                this.deleteRows(),
+                this.insertColumns(),
+                this.insertRows(),
+                this.loadCell(),
+                this.saveCell());
+    }
+
+    @Test
+    public void testRouterDeleteRowsHandlerNullFails() {
+        this.routerFails(this.base(),
+                this.contentType(),
+                this.copyCells(),
+                this.deleteColumns(),
+                null,
+                this.insertColumns(),
+                this.insertRows(),
+                this.loadCell(),
+                this.saveCell());
+    }
+
+    @Test
+    public void testRouterInsertColumnsHandlerNullFails() {
+        this.routerFails(this.base(),
+                this.contentType(),
+                this.copyCells(),
+                this.deleteColumns(),
+                this.deleteRows(),
+                null,
+                this.insertRows(),
+                this.loadCell(),
+                this.saveCell());
+    }
+
+    @Test
+    public void testRouterInsertRowsHandlerNullFails() {
+        this.routerFails(this.base(),
+                this.contentType(),
+                this.copyCells(),
+                this.deleteColumns(),
+                this.deleteRows(),
+                this.insertColumns(),
+                null,
+                this.loadCell(),
+                this.saveCell());
+    }
+
+    @Test
+    public void testRouterLoadCellsHandlerNullFails() {
+        this.routerFails(this.base(),
+                this.contentType(),
+                this.copyCells(),
+                this.deleteColumns(),
+                this.deleteRows(),
+                this.insertColumns(),
+                this.insertRows(),
+                null,
+                this.saveCell());
+    }
+
+    @Test
+    public void testRouterSaveCellsHandlerNullFails() {
+        this.routerFails(this.base(),
+                this.contentType(),
+                this.copyCells(),
+                this.deleteColumns(),
+                this.deleteRows(),
+                this.insertColumns(),
+                this.insertRows(),
+                this.loadCell(),
+                null);
     }
 
     private void routerFails(final AbsoluteUrl base,
                              final HateosContentType<JsonNode> contentType,
-                             final SpreadsheetEngine engine,
-                             final SpreadsheetEngineContext context) {
+                             final HateosHandler<SpreadsheetCellReference, SpreadsheetDelta, SpreadsheetDelta> copyCells,
+                             final HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta, SpreadsheetDelta> deleteColumns,
+                             final HateosHandler<SpreadsheetRowReference, SpreadsheetDelta, SpreadsheetDelta> deleteRows,
+                             final HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta, SpreadsheetDelta> insertColumns,
+                             final HateosHandler<SpreadsheetRowReference, SpreadsheetDelta, SpreadsheetDelta> insertRows,
+                             final HateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetDelta> loadCell,
+                             final HateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetDelta> saveCell) {
         assertThrows(NullPointerException.class, () -> {
-            SpreadsheetHateosHandlers.router(base, contentType, engine, context);
+            SpreadsheetHateosHandlers.router(base,
+                    contentType,
+                    copyCells,
+                    deleteColumns,
+                    deleteRows,
+                    insertColumns,
+                    insertRows,
+                    loadCell,
+                    saveCell);
         });
     }
 
@@ -176,7 +290,7 @@ public final class SpreadsheetHateosHandlersTest implements ClassTesting2<Spread
         final HttpRequest request = this.request(method, url);
         final Optional<BiConsumer<HttpRequest, HttpResponse>> possible = this.route(request);
         assertNotEquals(Optional.empty(), possible);
-        if(possible.isPresent()) {
+        if (possible.isPresent()) {
             final RecordingHttpResponse response = HttpResponses.recording();
             possible.get().accept(request, response);
             assertEquals(HttpStatusCode.NOT_IMPLEMENTED,
@@ -188,8 +302,13 @@ public final class SpreadsheetHateosHandlersTest implements ClassTesting2<Spread
     private Optional<BiConsumer<HttpRequest, HttpResponse>> route(final HttpRequest request) {
         final Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> router = SpreadsheetHateosHandlers.router(this.base(),
                 this.contentType(),
-                this.engine(),
-                this.engineContext());
+                this.copyCells(),
+                this.deleteColumns(),
+                this.deleteRows(),
+                this.insertColumns(),
+                this.insertRows(),
+                this.loadCell(),
+                this.saveCell());
         return router.route(request.routingParameters());
     }
 
@@ -213,7 +332,7 @@ public final class SpreadsheetHateosHandlersTest implements ClassTesting2<Spread
                               final String url) {
         final HttpRequest request = this.request(method, url);
         final Optional<BiConsumer<HttpRequest, HttpResponse>> possible = this.route(request);
-        if(possible.isPresent()) {
+        if (possible.isPresent()) {
             final RecordingHttpResponse response = HttpResponses.recording();
             possible.get().accept(request, response);
             assertEquals(HttpStatusCode.METHOD_NOT_ALLOWED,
@@ -230,6 +349,34 @@ public final class SpreadsheetHateosHandlersTest implements ClassTesting2<Spread
 
     private HateosContentType<JsonNode> contentType() {
         return HateosContentType.json();
+    }
+
+    private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta, SpreadsheetDelta> copyCells() {
+        return SpreadsheetHateosHandlers.copyCells(this.engine(), this.engineContext());
+    }
+
+    private HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta, SpreadsheetDelta> deleteColumns() {
+        return SpreadsheetHateosHandlers.deleteColumns(this.engine(), this.engineContext());
+    }
+
+    private HateosHandler<SpreadsheetRowReference, SpreadsheetDelta, SpreadsheetDelta> deleteRows() {
+        return SpreadsheetHateosHandlers.deleteRows(this.engine(), this.engineContext());
+    }
+
+    private HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta, SpreadsheetDelta> insertColumns() {
+        return SpreadsheetHateosHandlers.insertColumns(this.engine(), this.engineContext());
+    }
+
+    private HateosHandler<SpreadsheetRowReference, SpreadsheetDelta, SpreadsheetDelta> insertRows() {
+        return SpreadsheetHateosHandlers.insertRows(this.engine(), this.engineContext());
+    }
+
+    private HateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetDelta> loadCell() {
+        return SpreadsheetHateosHandlers.loadCell(this.engine(), this.engineContext());
+    }
+
+    final HateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetDelta> saveCell() {
+        return SpreadsheetHateosHandlers.saveCell(this.engine(), this.engineContext());
     }
 
     private SpreadsheetEngine engine() {
