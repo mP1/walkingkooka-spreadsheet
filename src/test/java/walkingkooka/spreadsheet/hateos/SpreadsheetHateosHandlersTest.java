@@ -16,15 +16,19 @@
  */
 package walkingkooka.spreadsheet.hateos;
 
+import org.eclipse.jetty.http.HttpStatus;
 import org.junit.jupiter.api.Test;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.RelativeUrl;
 import walkingkooka.net.Url;
 import walkingkooka.net.http.HttpMethod;
+import walkingkooka.net.http.HttpStatusCode;
 import walkingkooka.net.http.server.FakeHttpRequest;
 import walkingkooka.net.http.server.HttpRequest;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.HttpResponse;
+import walkingkooka.net.http.server.HttpResponses;
+import walkingkooka.net.http.server.RecordingHttpResponse;
 import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.routing.Router;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
@@ -79,122 +83,143 @@ public final class SpreadsheetHateosHandlersTest implements ClassTesting2<Spread
         });
     }
 
+    // cell.............................................................................................................
+
     @Test
     public void testRouteCellGetLoadCell() {
-        this.routeAndCheck(HttpMethod.GET, URL + "/cell/1");
+        this.routeAndCheck(HttpMethod.GET, URL + "/cell/A1");
     }
 
     @Test
     public void testRouteCellPostSaveCell() {
-        this.routeAndCheck(HttpMethod.POST, URL + "/cell/1");
+        this.routeAndCheck(HttpMethod.POST, URL + "/cell/A1");
     }
 
     @Test
     public void testRouteCellPutFails() {
-        this.routeAndCheck(HttpMethod.POST, URL + "/cell/1");
+        this.routeAndFail(HttpMethod.PUT, URL + "/cell/A1");
     }
 
     @Test
-    public void testRouteCellDeleteFails() {
-        this.routeAndCheck(HttpMethod.DELETE, URL + "/cell/1");
+    public void testRouteCellDelete() {
+        this.routeAndFail(HttpMethod.DELETE, URL + "/cell/A1");
     }
+
+    // column...........................................................................................................
 
     @Test
     public void testRouteColumnsGetFails() {
-        this.routeAndFail(HttpMethod.GET, URL + "/columns/1");
+        this.routeAndFail(HttpMethod.GET, URL + "/column/A");
     }
 
     @Test
     public void testRouteColumnsPost() {
-        this.routeAndCheck(HttpMethod.POST, URL + "/columns/1");
+        this.routeAndCheck(HttpMethod.POST, URL + "/column/A");
     }
 
     @Test
     public void testRouteColumnsPutFails() {
-        this.routeAndFail(HttpMethod.PUT, URL + "/columns/1");
+        this.routeAndFail(HttpMethod.PUT, URL + "/column/A");
     }
 
     @Test
     public void testRouteColumnsDelete() {
-        this.routeAndCheck(HttpMethod.DELETE, URL + "/columns/1");
+        this.routeAndCheck(HttpMethod.DELETE, URL + "/column/A");
     }
+
+    // row..............................................................................................................
 
     @Test
     public void testRouteRowsGetFails() {
-        this.routeAndFail(HttpMethod.GET, URL + "/rows/1");
+        this.routeAndFail(HttpMethod.GET, URL + "/row/1");
     }
 
     @Test
     public void testRouteRowsPost() {
-        this.routeAndCheck(HttpMethod.POST, URL + "/rows/1");
+        this.routeAndCheck(HttpMethod.POST, URL + "/row/1");
     }
 
     @Test
     public void testRouteRowsPutFails() {
-        this.routeAndFail(HttpMethod.PUT, URL + "/rows/1");
+        this.routeAndFail(HttpMethod.PUT, URL + "/row/1");
     }
 
     @Test
     public void testRouteRowsDelete() {
-        this.routeAndCheck(HttpMethod.DELETE, URL + "/rows/1");
+        this.routeAndCheck(HttpMethod.DELETE, URL + "/row/1");
     }
+
+    // copycells........................................................................................................
 
     @Test
     public void testRouteCopyCellsGetFails() {
-        this.routeAndFail(HttpMethod.GET, URL + "/cell/1/copy");
+        this.routeAndFail(HttpMethod.GET, URL + "/cell/A1:B2/copy");
     }
 
     @Test
     public void testRouteCopyCellsPost() {
-        this.routeAndCheck(HttpMethod.POST, URL + "/cell/1/copy");
+        this.routeAndCheck(HttpMethod.POST, URL + "/cell/A1:B2/copy");
     }
 
     @Test
     public void testRouteCopyCellsPutFails() {
-        this.routeAndFail(HttpMethod.PUT, URL + "/cell/1/copy");
+        this.routeAndFail(HttpMethod.PUT, URL + "/cell/A1:B2/copy");
     }
 
     @Test
     public void testRouteCopyCellsDeleteFails() {
-        this.routeAndCheck(HttpMethod.DELETE, URL + "/cell/1/copy");
+        this.routeAndFail(HttpMethod.DELETE, URL + "/cell/A1:B2/copy");
     }
 
-    private Optional<BiConsumer<HttpRequest, HttpResponse>> route(final HttpMethod method,
-                                                                  final String url) {
-        final AbsoluteUrl absoluteUrl = Url.parseAbsolute(url);
+    private void routeAndCheck(final HttpMethod method,
+                               final String url) {
+        final HttpRequest request = this.request(method, url);
+        final Optional<BiConsumer<HttpRequest, HttpResponse>> possible = this.route(request);
+        assertNotEquals(Optional.empty(), possible);
+        if(possible.isPresent()) {
+            final RecordingHttpResponse response = HttpResponses.recording();
+            possible.get().accept(request, response);
+            assertEquals(HttpStatusCode.NOT_IMPLEMENTED,
+                    response.status().map(s -> s.value()).orElse(null),
+                    () -> "status " + request + " " + response + "\n" + possible);
+        }
+    }
+
+    private Optional<BiConsumer<HttpRequest, HttpResponse>> route(final HttpRequest request) {
         final Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> router = SpreadsheetHateosHandlers.router(this.base(),
                 this.contentType(),
                 this.engine(),
                 this.engineContext());
-        return router.route(new FakeHttpRequest() {
+        return router.route(request.routingParameters());
+    }
+
+    private HttpRequest request(final HttpMethod method,
+                                final String url) {
+        return new FakeHttpRequest() {
 
             @Override
             public RelativeUrl url() {
-                return absoluteUrl.relativeUrl();
+                return Url.parseAbsolute(url).relativeUrl();
             }
 
             @Override
             public HttpMethod method() {
                 return method;
             }
-
-        }.routingParameters());
-    }
-
-    private void routeAndCheck(final HttpMethod method,
-                               final String url) {
-        final Optional<BiConsumer<HttpRequest, HttpResponse>> possible = this.route(method, url);
-        assertNotEquals(Optional.empty(), possible);
-        possible.map(SpreadsheetHateosHandlersTest::handleRequest);
-    }
-
-    private static Object handleRequest(final HttpRequest request, final HttpResponse response) {
-        return null;
+        };
     }
 
     private void routeAndFail(final HttpMethod method,
                               final String url) {
-        assertEquals(Optional.empty(), this.route(method, url));
+        final HttpRequest request = this.request(method, url);
+        final Optional<BiConsumer<HttpRequest, HttpResponse>> possible = this.route(request);
+        if(possible.isPresent()) {
+            final RecordingHttpResponse response = HttpResponses.recording();
+            possible.get().accept(request, response);
+            assertEquals(HttpStatusCode.METHOD_NOT_ALLOWED,
+                    response.status().map(s -> s.value()).orElse(null),
+                    () -> "status " + request + " " + response + "\n" + possible);
+        }
     }
 
     private final static String URL = "http://example.com/api/";
