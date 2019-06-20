@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.math.Fraction;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExpressionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
-import walkingkooka.util.Optionals;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -71,7 +70,7 @@ final class ExpressionSpreadsheetTextFormatter extends SpreadsheetTextFormatter3
         return this.formatters.stream()
                 .skip(this.skip(value))
                 .filter(f -> f.type().isInstance(value))
-                .flatMap(f -> Optionals.stream(f.format(value, context)))
+                .flatMap(f -> f.format(value, context).stream())
                 .findFirst();
     }
 
