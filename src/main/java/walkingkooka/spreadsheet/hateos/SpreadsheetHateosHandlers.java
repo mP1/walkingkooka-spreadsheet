@@ -40,7 +40,6 @@ import walkingkooka.type.PublicStaticHelper;
 
 import java.util.Objects;
 import java.util.function.BiConsumer;
-import java.util.function.Supplier;
 
 /**
  * A collection of factory methods to create various {@link SpreadsheetHateosHandler}.
@@ -71,7 +70,7 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
      * {@see SpreadsheetEngineCopyColumnsHateosHandler}
      */
     public static HateosHandler<SpreadsheetCellReference, SpreadsheetDelta, SpreadsheetDelta> copyCells(final SpreadsheetEngine engine,
-                                                                                                        final Supplier<SpreadsheetEngineContext> context) {
+                                                                                                        final SpreadsheetEngineContext context) {
         return SpreadsheetEngineCopyCellsHateosHandler.with(engine, context);
     }
 
@@ -79,7 +78,7 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
      * {@see SpreadsheetEngineDeleteColumnsHateosHandler}
      */
     public static HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta, SpreadsheetDelta> deleteColumns(final SpreadsheetEngine engine,
-                                                                                                              final Supplier<SpreadsheetEngineContext> context) {
+                                                                                                              final SpreadsheetEngineContext context) {
         return SpreadsheetEngineDeleteColumnsHateosHandler.with(engine, context);
     }
 
@@ -87,7 +86,7 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
      * {@see SpreadsheetEngineDeleteRowsHateosHandler}
      */
     public static HateosHandler<SpreadsheetRowReference, SpreadsheetDelta, SpreadsheetDelta> deleteRows(final SpreadsheetEngine engine,
-                                                                                                        final Supplier<SpreadsheetEngineContext> context) {
+                                                                                                        final SpreadsheetEngineContext context) {
         return SpreadsheetEngineDeleteRowsHateosHandler.with(engine, context);
     }
 
@@ -96,7 +95,7 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
      * {@see SpreadsheetEngineInsertColumnsHateosHandler}
      */
     public static HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta, SpreadsheetDelta> insertColumns(final SpreadsheetEngine engine,
-                                                                                                              final Supplier<SpreadsheetEngineContext> context) {
+                                                                                                              final SpreadsheetEngineContext context) {
         return SpreadsheetEngineInsertColumnsHateosHandler.with(engine, context);
     }
 
@@ -104,7 +103,7 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
      * {@see SpreadsheetEngineInsertRowsHateosHandler}
      */
     public static HateosHandler<SpreadsheetRowReference, SpreadsheetDelta, SpreadsheetDelta> insertRows(final SpreadsheetEngine engine,
-                                                                                                        final Supplier<SpreadsheetEngineContext> context) {
+                                                                                                        final SpreadsheetEngineContext context) {
         return SpreadsheetEngineInsertRowsHateosHandler.with(engine, context);
     }
 
@@ -112,7 +111,7 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
      * {@see SpreadsheetEngineLoadCellHateosHandler}
      */
     public static HateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetDelta> loadCell(final SpreadsheetEngine engine,
-                                                                                                      final Supplier<SpreadsheetEngineContext> context) {
+                                                                                                      final SpreadsheetEngineContext context) {
         return SpreadsheetEngineLoadCellHateosHandler.with(engine, context);
     }
 
@@ -120,7 +119,7 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
      * {@see SpreadsheetEngineSaveCellHateosHandler}
      */
     public static HateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetDelta> saveCell(final SpreadsheetEngine engine,
-                                                                                                      final Supplier<SpreadsheetEngineContext> context) {
+                                                                                                      final SpreadsheetEngineContext context) {
         return SpreadsheetEngineSaveCellHateosHandler.with(engine, context);
     }
 
@@ -130,7 +129,7 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
     public static <N extends Node<N, ?, ?, ?>> Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> router(final AbsoluteUrl base,
                                                                                                                              final HateosContentType<N> contentType,
                                                                                                                              final SpreadsheetEngine engine,
-                                                                                                                             final Supplier<SpreadsheetEngineContext> context) {
+                                                                                                                             final SpreadsheetEngineContext context) {
         final HateosHandlerRouterBuilder<N> builder = HateosHandlerRouterBuilder.with(base, contentType);
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(context, "context");

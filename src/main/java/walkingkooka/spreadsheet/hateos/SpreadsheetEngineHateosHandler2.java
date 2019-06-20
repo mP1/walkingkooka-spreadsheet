@@ -27,7 +27,6 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 /**
  * Base class that decorates requests performing parameter checks and a few other extras.
@@ -37,7 +36,7 @@ abstract class SpreadsheetEngineHateosHandler2<I extends Comparable<I>> extends 
         SpreadsheetDelta> {
 
     SpreadsheetEngineHateosHandler2(final SpreadsheetEngine engine,
-                                    final Supplier<SpreadsheetEngineContext> context) {
+                                    final SpreadsheetEngineContext context) {
         super(engine, context);
     }
 
