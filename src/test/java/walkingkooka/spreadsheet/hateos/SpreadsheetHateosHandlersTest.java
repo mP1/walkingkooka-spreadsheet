@@ -77,7 +77,7 @@ public final class SpreadsheetHateosHandlersTest implements ClassTesting2<Spread
     private void routerFails(final AbsoluteUrl base,
                              final HateosContentType<JsonNode> contentType,
                              final SpreadsheetEngine engine,
-                             final Supplier<SpreadsheetEngineContext> context) {
+                             final SpreadsheetEngineContext context) {
         assertThrows(NullPointerException.class, () -> {
             SpreadsheetHateosHandlers.router(base, contentType, engine, context);
         });
@@ -236,8 +236,8 @@ public final class SpreadsheetHateosHandlersTest implements ClassTesting2<Spread
         return SpreadsheetEngines.fake();
     }
 
-    private Supplier<SpreadsheetEngineContext> engineContext() {
-        return () -> SpreadsheetEngineContexts.fake();
+    private SpreadsheetEngineContext engineContext() {
+        return SpreadsheetEngineContexts.fake();
     }
 
     // ClassTesting.....................................................................................................

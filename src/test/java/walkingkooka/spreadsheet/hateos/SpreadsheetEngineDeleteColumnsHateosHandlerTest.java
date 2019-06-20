@@ -148,23 +148,17 @@ public final class SpreadsheetEngineDeleteColumnsHateosHandlerTest extends Sprea
     }
 
     private SpreadsheetEngineDeleteColumnsHateosHandler createHandler(final SpreadsheetEngine engine) {
-        return this.createHandler(engine,
-                this.engineContextSupplier());
+        return this.createHandler(engine, this.engineContext());
     }
 
     @Override
     SpreadsheetEngineDeleteColumnsHateosHandler createHandler(final SpreadsheetEngine engine,
-                                                              final Supplier<SpreadsheetEngineContext> context) {
+                                                              final SpreadsheetEngineContext context) {
         return SpreadsheetEngineDeleteColumnsHateosHandler.with(engine, context);
     }
 
     @Override
     SpreadsheetEngine engine() {
         return new FakeSpreadsheetEngine();
-    }
-
-    @Override
-    SpreadsheetEngineContext engineContext() {
-        return SpreadsheetEngineContexts.fake();
     }
 }

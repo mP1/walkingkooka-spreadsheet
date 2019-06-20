@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 
 import java.util.Collection;
 import java.util.Map;
@@ -67,7 +68,7 @@ public final class SpreadsheetEngineCopyCellsHateosHandlerTest extends
 
     @Override
     SpreadsheetEngineCopyCellsHateosHandler createHandler(final SpreadsheetEngine engine,
-                                                          final Supplier<SpreadsheetEngineContext> context) {
+                                                          final SpreadsheetEngineContext context) {
         return SpreadsheetEngineCopyCellsHateosHandler.with(engine, context);
     }
 
@@ -89,11 +90,6 @@ public final class SpreadsheetEngineCopyCellsHateosHandlerTest extends
                 return delta();
             }
         };
-    }
-
-    @Override
-    SpreadsheetEngineContext engineContext() {
-        return null;
     }
 
     @Override

@@ -76,7 +76,7 @@ public final class SpreadsheetEngineSaveCellHateosHandlerTest
 
     @Override
     SpreadsheetEngineSaveCellHateosHandler createHandler(final SpreadsheetEngine engine,
-                                                         final Supplier<SpreadsheetEngineContext> context) {
+                                                         final SpreadsheetEngineContext context) {
         return SpreadsheetEngineSaveCellHateosHandler.with(engine, context);
     }
 
@@ -115,11 +115,6 @@ public final class SpreadsheetEngineSaveCellHateosHandlerTest
                 return delta();
             }
         };
-    }
-
-    @Override
-    SpreadsheetEngineContext engineContext() {
-        return SpreadsheetEngineContexts.fake();
     }
 
     @Override
