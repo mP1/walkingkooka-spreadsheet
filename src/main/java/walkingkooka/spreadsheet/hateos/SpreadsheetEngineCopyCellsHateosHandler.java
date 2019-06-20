@@ -31,7 +31,6 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Supplier;
 
 /**
  * A {@link HateosHandler} that calls {@link SpreadsheetEngine#copyCells(Collection, SpreadsheetRange, SpreadsheetEngineContext)}.
@@ -39,13 +38,13 @@ import java.util.function.Supplier;
 final class SpreadsheetEngineCopyCellsHateosHandler extends SpreadsheetEngineHateosHandler2<SpreadsheetCellReference> {
 
     static SpreadsheetEngineCopyCellsHateosHandler with(final SpreadsheetEngine engine,
-                                                        final Supplier<SpreadsheetEngineContext> context) {
+                                                        final SpreadsheetEngineContext context) {
         check(engine, context);
         return new SpreadsheetEngineCopyCellsHateosHandler(engine, context);
     }
 
     private SpreadsheetEngineCopyCellsHateosHandler(final SpreadsheetEngine engine,
-                                                    final Supplier<SpreadsheetEngineContext> context) {
+                                                    final SpreadsheetEngineContext context) {
         super(engine, context);
     }
 
@@ -72,7 +71,7 @@ final class SpreadsheetEngineCopyCellsHateosHandler extends SpreadsheetEngineHat
                                        final Map<HttpRequestAttribute<?>, Object> parameters) {
         return this.engine.copyCells(resource.cells(),
                 this.parameterValueOrFail(parameters, TO, SpreadsheetExpressionReference::parseRange),
-                this.context.get());
+                this.context);
     }
 
     // @VisibleForTesting

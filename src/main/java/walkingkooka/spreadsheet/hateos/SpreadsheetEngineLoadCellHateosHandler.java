@@ -32,7 +32,6 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 /**
  * A {@link HateosHandler} that calls {@link SpreadsheetEngine#loadCell(SpreadsheetCellReference, SpreadsheetEngineEvaluation, SpreadsheetEngineContext)}.
@@ -41,27 +40,27 @@ final class SpreadsheetEngineLoadCellHateosHandler extends SpreadsheetEngineHate
         implements HateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetDelta> {
 
     static SpreadsheetEngineLoadCellHateosHandler with(final SpreadsheetEngine engine,
-                                                       final Supplier<SpreadsheetEngineContext> context) {
+                                                       final SpreadsheetEngineContext context) {
         check(engine, context);
         return new SpreadsheetEngineLoadCellHateosHandler(engine, context);
     }
 
     private SpreadsheetEngineLoadCellHateosHandler(final SpreadsheetEngine engine,
-                                                   final Supplier<SpreadsheetEngineContext> context) {
+                                                   final SpreadsheetEngineContext context) {
         super(engine, context);
     }
 
     @Override
     public Optional<SpreadsheetDelta> handle(final SpreadsheetCellReference cellReference,
-                                            final Optional<SpreadsheetCell> resource,
-                                            final Map<HttpRequestAttribute<?>, Object> parameters) {
+                                             final Optional<SpreadsheetCell> resource,
+                                             final Map<HttpRequestAttribute<?>, Object> parameters) {
         Objects.requireNonNull(cellReference, "cellReference");
         checkResourceEmpty(resource);
         checkParameters(parameters);
 
         return this.engine.loadCell(cellReference,
                 this.parameterValueOrFail(parameters, EVALUATION, SpreadsheetEngineEvaluation::valueOf),
-                this.context.get())
+                this.context)
                 .map(this::handleLoadCell);
     }
 
@@ -71,8 +70,8 @@ final class SpreadsheetEngineLoadCellHateosHandler extends SpreadsheetEngineHate
 
     @Override
     public Optional<SpreadsheetDelta> handleCollection(final Range<SpreadsheetCellReference> ids,
-                                                      final Optional<SpreadsheetCell> resource,
-                                                      final Map<HttpRequestAttribute<?>, Object> parameters) {
+                                                       final Optional<SpreadsheetCell> resource,
+                                                       final Map<HttpRequestAttribute<?>, Object> parameters) {
         Objects.requireNonNull(ids, "ids");
         checkResource(resource);
         checkParameters(parameters);
