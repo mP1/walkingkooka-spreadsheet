@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 /**
  * An abstract {@link HateosHandler} that includes uses a {@link SpreadsheetEngine} and {@link SpreadsheetEngineContext} to do things.
@@ -38,7 +37,7 @@ abstract class SpreadsheetEngineHateosHandler extends SpreadsheetHateosHandler {
      * Checks required factory method parameters are not null.
      */
     static void check(final SpreadsheetEngine engine,
-                      final Supplier<SpreadsheetEngineContext> context) {
+                      final SpreadsheetEngineContext context) {
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(context, "context");
     }
@@ -47,7 +46,7 @@ abstract class SpreadsheetEngineHateosHandler extends SpreadsheetHateosHandler {
      * Package private to limit sub classing.
      */
     SpreadsheetEngineHateosHandler(final SpreadsheetEngine engine,
-                                   final Supplier<SpreadsheetEngineContext> context) {
+                                   final SpreadsheetEngineContext context) {
         super();
         this.engine = engine;
         this.context = context;
@@ -69,7 +68,7 @@ abstract class SpreadsheetEngineHateosHandler extends SpreadsheetHateosHandler {
     private final UrlParameterName COUNT = UrlParameterName.with("count");
 
     final SpreadsheetEngine engine;
-    final Supplier<SpreadsheetEngineContext> context;
+    final SpreadsheetEngineContext context;
 
     @Override
     public final String toString() {

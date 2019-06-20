@@ -26,7 +26,6 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 
 import java.util.Map;
-import java.util.function.Supplier;
 
 /**
  * A {@link HateosHandler} for {@link SpreadsheetEngine#deleteColumns(SpreadsheetColumnReference, int, SpreadsheetEngineContext)}.
@@ -34,13 +33,13 @@ import java.util.function.Supplier;
 final class SpreadsheetEngineDeleteColumnsHateosHandler extends SpreadsheetEngineHateosHandler2<SpreadsheetColumnReference> {
 
     static SpreadsheetEngineDeleteColumnsHateosHandler with(final SpreadsheetEngine engine,
-                                                            final Supplier<SpreadsheetEngineContext> context) {
+                                                            final SpreadsheetEngineContext context) {
         check(engine, context);
         return new SpreadsheetEngineDeleteColumnsHateosHandler(engine, context);
     }
 
     private SpreadsheetEngineDeleteColumnsHateosHandler(final SpreadsheetEngine engine,
-                                                        final Supplier<SpreadsheetEngineContext> context) {
+                                                        final SpreadsheetEngineContext context) {
         super(engine, context);
     }
 
@@ -53,7 +52,7 @@ final class SpreadsheetEngineDeleteColumnsHateosHandler extends SpreadsheetEngin
     SpreadsheetDelta handle0(final SpreadsheetColumnReference column,
                              final SpreadsheetDelta resource,
                              final Map<HttpRequestAttribute<?>, Object> parameters) {
-        return this.engine.deleteColumns(column, 1, this.context.get());
+        return this.engine.deleteColumns(column, 1, this.context);
     }
 
     @Override
@@ -68,7 +67,7 @@ final class SpreadsheetEngineDeleteColumnsHateosHandler extends SpreadsheetEngin
         final SpreadsheetColumnReference lower = columns.lowerBound().value().get();
         final SpreadsheetColumnReference upper = columns.upperBound().value().get();
 
-        return this.engine.deleteColumns(lower, upper.value() - lower.value() + 1, this.context.get());
+        return this.engine.deleteColumns(lower, upper.value() - lower.value() + 1, this.context);
     }
 
     @Override

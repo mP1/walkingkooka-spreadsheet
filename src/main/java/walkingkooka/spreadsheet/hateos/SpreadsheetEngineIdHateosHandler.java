@@ -28,7 +28,6 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 /**
  * A {@link HateosHandler} that calls {@link SpreadsheetEngine#id()}.
@@ -37,13 +36,13 @@ final class SpreadsheetEngineIdHateosHandler extends SpreadsheetEngineHateosHand
         implements HateosHandler<SpreadsheetId, SpreadsheetDelta, SpreadsheetDelta> {
 
     static SpreadsheetEngineIdHateosHandler with(final SpreadsheetEngine engine,
-                                                 final Supplier<SpreadsheetEngineContext> context) {
+                                                 final SpreadsheetEngineContext context) {
         check(engine, context);
         return new SpreadsheetEngineIdHateosHandler(engine, context);
     }
 
     private SpreadsheetEngineIdHateosHandler(final SpreadsheetEngine engine,
-                                             final Supplier<SpreadsheetEngineContext> context) {
+                                             final SpreadsheetEngineContext context) {
         super(engine, context);
     }
 
