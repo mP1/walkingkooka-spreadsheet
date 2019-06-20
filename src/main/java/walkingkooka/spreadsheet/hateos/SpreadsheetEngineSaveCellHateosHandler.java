@@ -30,7 +30,6 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 /**
  * A {@link HateosHandler} that calls {@link SpreadsheetEngine#saveCell(SpreadsheetCell, SpreadsheetEngineContext)}.
@@ -39,13 +38,13 @@ final class SpreadsheetEngineSaveCellHateosHandler extends SpreadsheetEngineHate
         implements HateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetDelta> {
 
     static SpreadsheetEngineSaveCellHateosHandler with(final SpreadsheetEngine engine,
-                                                       final Supplier<SpreadsheetEngineContext> context) {
+                                                       final SpreadsheetEngineContext context) {
         check(engine, context);
         return new SpreadsheetEngineSaveCellHateosHandler(engine, context);
     }
 
     private SpreadsheetEngineSaveCellHateosHandler(final SpreadsheetEngine engine,
-                                                   final Supplier<SpreadsheetEngineContext> context) {
+                                                   final SpreadsheetEngineContext context) {
         super(engine, context);
     }
 
@@ -58,7 +57,7 @@ final class SpreadsheetEngineSaveCellHateosHandler extends SpreadsheetEngineHate
         checkParameters(parameters);
 
         return Optional.of(this.engine.saveCell(cell.get(),
-                this.context.get()));
+                this.context));
     }
 
     @Override
