@@ -144,8 +144,7 @@ public final class SpreadsheetEngineInsertColumnsHateosHandlerTest extends Sprea
     }
 
     private SpreadsheetEngineInsertColumnsHateosHandler createHandler(final SpreadsheetEngine engine) {
-        return this.createHandler(engine,
-                this.engineContextSupplier());
+        return this.createHandler(engine, this.engineContext());
     }
 
     @Override
@@ -159,17 +158,12 @@ public final class SpreadsheetEngineInsertColumnsHateosHandlerTest extends Sprea
 
     @Override
     SpreadsheetEngineInsertColumnsHateosHandler createHandler(final SpreadsheetEngine engine,
-                                                              final Supplier<SpreadsheetEngineContext> context) {
+                                                              final SpreadsheetEngineContext context) {
         return SpreadsheetEngineInsertColumnsHateosHandler.with(engine, context);
     }
 
     @Override
     SpreadsheetEngine engine() {
         return new FakeSpreadsheetEngine();
-    }
-
-    @Override
-    SpreadsheetEngineContext engineContext() {
-        return SpreadsheetEngineContexts.fake();
     }
 }

@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -48,7 +49,7 @@ public abstract class SpreadsheetEngineHateosHandlerTestCase2<H extends HateosHa
     @Test
     public final void testWithNullEngineFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.createHandler(null, this.engineContextSupplier());
+            this.createHandler(null, this.engineContext());
         });
     }
 
@@ -61,19 +62,17 @@ public abstract class SpreadsheetEngineHateosHandlerTestCase2<H extends HateosHa
 
     @Override
     public final H createHandler() {
-        return this.createHandler(this.engine(), this.engineContextSupplier());
+        return this.createHandler(this.engine(), this.engineContext());
     }
 
     abstract H createHandler(final SpreadsheetEngine engine,
-                             final Supplier<SpreadsheetEngineContext> context);
+                             final SpreadsheetEngineContext context);
 
     abstract SpreadsheetEngine engine();
 
-    final Supplier<SpreadsheetEngineContext> engineContextSupplier() {
-        return this::engineContext;
+    final SpreadsheetEngineContext engineContext() {
+        return SpreadsheetEngineContexts.fake();
     }
-
-    abstract SpreadsheetEngineContext engineContext();
 
     final Optional<SpreadsheetDelta> spreadsheetDeltaWithoutCells() {
         return Optional.of(SpreadsheetDelta.with(this.spreadsheetId(), SpreadsheetDelta.NO_CELLS));

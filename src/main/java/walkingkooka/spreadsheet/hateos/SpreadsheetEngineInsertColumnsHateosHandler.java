@@ -26,7 +26,6 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 
 import java.util.Map;
-import java.util.function.Supplier;
 
 /**
  * A {@link HateosHandler} that handles inserting a single or range of columns.
@@ -34,7 +33,7 @@ import java.util.function.Supplier;
 final class SpreadsheetEngineInsertColumnsHateosHandler extends SpreadsheetEngineHateosHandler2<SpreadsheetColumnReference> {
 
     static SpreadsheetEngineInsertColumnsHateosHandler with(final SpreadsheetEngine engine,
-                                                            final Supplier<SpreadsheetEngineContext> context) {
+                                                            final SpreadsheetEngineContext context) {
         check(engine, context);
         return new SpreadsheetEngineInsertColumnsHateosHandler(engine, context);
     }
@@ -43,7 +42,7 @@ final class SpreadsheetEngineInsertColumnsHateosHandler extends SpreadsheetEngin
      * Private ctor
      */
     private SpreadsheetEngineInsertColumnsHateosHandler(final SpreadsheetEngine engine,
-                                                        final Supplier<SpreadsheetEngineContext> context) {
+                                                        final SpreadsheetEngineContext context) {
         super(engine, context);
     }
 
@@ -58,7 +57,7 @@ final class SpreadsheetEngineInsertColumnsHateosHandler extends SpreadsheetEngin
                              final Map<HttpRequestAttribute<?>, Object> parameters) {
         return this.engine.insertColumns(column,
                 this.count(parameters),
-                this.context.get());
+                this.context);
     }
 
     @Override

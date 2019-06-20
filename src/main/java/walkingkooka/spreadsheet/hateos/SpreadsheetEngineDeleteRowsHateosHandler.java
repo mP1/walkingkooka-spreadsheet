@@ -26,7 +26,6 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 
 import java.util.Map;
-import java.util.function.Supplier;
 
 /**
  * A {@link HateosHandler} for {@link SpreadsheetEngine#deleteRows(SpreadsheetRowReference, int, SpreadsheetEngineContext)}.
@@ -34,13 +33,13 @@ import java.util.function.Supplier;
 final class SpreadsheetEngineDeleteRowsHateosHandler extends SpreadsheetEngineHateosHandler2<SpreadsheetRowReference> {
 
     static SpreadsheetEngineDeleteRowsHateosHandler with(final SpreadsheetEngine engine,
-                                                         final Supplier<SpreadsheetEngineContext> context) {
+                                                         final SpreadsheetEngineContext context) {
         check(engine, context);
         return new SpreadsheetEngineDeleteRowsHateosHandler(engine, context);
     }
 
     private SpreadsheetEngineDeleteRowsHateosHandler(final SpreadsheetEngine engine,
-                                                     final Supplier<SpreadsheetEngineContext> context) {
+                                                     final SpreadsheetEngineContext context) {
         super(engine, context);
     }
 
@@ -53,7 +52,7 @@ final class SpreadsheetEngineDeleteRowsHateosHandler extends SpreadsheetEngineHa
     SpreadsheetDelta handle0(final SpreadsheetRowReference row,
                              final SpreadsheetDelta resource,
                              final Map<HttpRequestAttribute<?>, Object> parameters) {
-        return this.engine.deleteRows(row, 1, this.context.get());
+        return this.engine.deleteRows(row, 1, this.context);
     }
 
     @Override
@@ -68,7 +67,7 @@ final class SpreadsheetEngineDeleteRowsHateosHandler extends SpreadsheetEngineHa
         final SpreadsheetRowReference lower = rows.lowerBound().value().get();
         final SpreadsheetRowReference upper = rows.upperBound().value().get();
 
-        return this.engine.deleteRows(lower, upper.value() - lower.value() + 1, this.context.get());
+        return this.engine.deleteRows(lower, upper.value() - lower.value() + 1, this.context);
     }
 
     @Override

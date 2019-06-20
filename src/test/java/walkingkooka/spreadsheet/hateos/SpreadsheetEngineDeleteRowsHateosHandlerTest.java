@@ -145,8 +145,7 @@ public final class SpreadsheetEngineDeleteRowsHateosHandlerTest extends Spreadsh
     }
 
     private SpreadsheetEngineDeleteRowsHateosHandler createHandler(final SpreadsheetEngine engine) {
-        return this.createHandler(engine,
-                this.engineContextSupplier());
+        return this.createHandler(engine, this.engineContext());
     }
 
     @Override
@@ -156,17 +155,12 @@ public final class SpreadsheetEngineDeleteRowsHateosHandlerTest extends Spreadsh
 
     @Override
     SpreadsheetEngineDeleteRowsHateosHandler createHandler(final SpreadsheetEngine engine,
-                                                           final Supplier<SpreadsheetEngineContext> context) {
+                                                           final SpreadsheetEngineContext context) {
         return SpreadsheetEngineDeleteRowsHateosHandler.with(engine, context);
     }
 
     @Override
     SpreadsheetEngine engine() {
         return new FakeSpreadsheetEngine();
-    }
-
-    @Override
-    SpreadsheetEngineContext engineContext() {
-        return SpreadsheetEngineContexts.fake();
     }
 }
