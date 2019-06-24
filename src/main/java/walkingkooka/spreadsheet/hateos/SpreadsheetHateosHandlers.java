@@ -25,6 +25,7 @@ import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.net.http.server.hateos.HateosHandlerRouterBuilder;
 import walkingkooka.net.http.server.hateos.HateosHandlerRouterMapper;
+import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.routing.Router;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -40,6 +41,8 @@ import walkingkooka.type.PublicStaticHelper;
 
 import java.util.Objects;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Supplier;
 
 /**
  * A collection of factory methods to create various {@link SpreadsheetHateosHandler}.
@@ -189,6 +192,17 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
         }
 
         return builder.build();
+    }
+
+    /**
+     * {@see SpreadsheetEngineSuppliersAndFactoryHateosHandler}
+     */
+    public static <I extends Comparable<I>,
+            R extends HateosResource<?>,
+            S extends HateosResource<?>> HateosHandler<I, R, S> supplierAndHandlerFactory(final Supplier<SpreadsheetEngine> engine,
+                                                                                          final Supplier<SpreadsheetEngineContext> engineContext,
+                                                                                          final BiFunction<SpreadsheetEngine, SpreadsheetEngineContext, HateosHandler<I, R, S>> handlerFactory) {
+        return SpreadsheetEngineSuppliersAndFactoryHateosHandler.with(engine, engineContext, handlerFactory);
     }
 
     /**
