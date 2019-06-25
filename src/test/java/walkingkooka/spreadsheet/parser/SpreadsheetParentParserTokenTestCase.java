@@ -68,19 +68,6 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
         assertEquals(tokens, token.value(), "tokens not copied");
     }
 
-    @Test
-    public void testWithoutSymbolsCached() {
-        final T token = this.createToken();
-        assertSame(token.withoutSymbols(), token.withoutSymbols());
-        assertSame(token.withoutSymbols().get().withoutSymbols(), token.withoutSymbols().get().withoutSymbols());
-    }
-
-    @Test
-    public void testWithoutSymbolsDoubleSame() {
-        final T token = this.createToken();
-        assertSame(token.withoutSymbols().get(), token.withoutSymbols().get());
-    }
-
     abstract T createToken(final String text, final List<ParserToken> tokens);
 
     final public T createToken(final String text) {
