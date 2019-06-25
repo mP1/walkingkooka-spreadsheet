@@ -63,14 +63,6 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
         });
     }
 
-    @Test
-    public void testWithoutCommentsSymbolsOrWhitespacePropertiesNullCheck() throws Exception {
-        final Optional<SpreadsheetParserToken> without = this.createToken().withoutSymbols();
-        if (without.isPresent()) {
-            BeanPropertiesTesting.allPropertiesNeverReturnNullCheck(without.get(), Predicates.never());
-        }
-    }
-
     final void toExpressionNodeAndFail() {
         this.toExpressionNodeAndFail(this.createToken());
     }

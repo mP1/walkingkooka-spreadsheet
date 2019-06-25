@@ -27,19 +27,11 @@ import java.util.List;
 public final class SpreadsheetGroupParserToken extends SpreadsheetParentParserToken<SpreadsheetGroupParserToken> {
 
     static SpreadsheetGroupParserToken with(final List<ParserToken> value, final String text) {
-        return new SpreadsheetGroupParserToken(copyAndCheckTokens(value),
-                checkText(text),
-                WITHOUT_COMPUTE_REQUIRED);
+        return new SpreadsheetGroupParserToken(copyAndCheckTokens(value), checkText(text));
     }
 
-    private SpreadsheetGroupParserToken(final List<ParserToken> value, final String text, final List<ParserToken> valueWithout) {
-        super(value, text, valueWithout);
-    }
-
-    @Override
-    SpreadsheetParentParserToken replace(final List<ParserToken> tokens,
-                                         final List<ParserToken> without) {
-        return new SpreadsheetGroupParserToken(tokens, text, without);
+    private SpreadsheetGroupParserToken(final List<ParserToken> value, final String text) {
+        super(value, text);
     }
 
     // isXXX............................................................................................................

@@ -17,6 +17,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.Cast;
+import walkingkooka.text.cursor.parser.ParentParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
@@ -26,10 +27,10 @@ import java.util.List;
  */
 abstract class SpreadsheetUnaryParserToken<T extends SpreadsheetUnaryParserToken> extends SpreadsheetParentParserToken<T> {
 
-    SpreadsheetUnaryParserToken(final List<ParserToken> value, final String text, final List<ParserToken> valueWithout) {
-        super(value, text, valueWithout);
+    SpreadsheetUnaryParserToken(final List<ParserToken> value, final String text) {
+        super(value, text);
 
-        final List<ParserToken> without = Cast.to(SpreadsheetParentParserToken.class.cast(this.withoutSymbols().get()).value());
+        final List<ParserToken> without = ParentParserToken.filterWithoutNoise(value);
         final int count = without.size();
         if (1 != count) {
             throw new IllegalArgumentException("Expected 1 tokens but got " + count + "=" + without);
