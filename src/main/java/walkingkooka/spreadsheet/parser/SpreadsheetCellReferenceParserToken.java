@@ -30,13 +30,11 @@ public final class SpreadsheetCellReferenceParserToken extends SpreadsheetParent
         implements SpreadsheetReferenceParserToken {
 
     static SpreadsheetCellReferenceParserToken with(final List<ParserToken> value, final String text) {
-        return new SpreadsheetCellReferenceParserToken(Lists.immutable(value),
-                checkText(text),
-                WITHOUT_COMPUTE_REQUIRED);
+        return new SpreadsheetCellReferenceParserToken(Lists.immutable(value), checkText(text));
     }
 
-    private SpreadsheetCellReferenceParserToken(final List<ParserToken> value, final String text, final List<ParserToken> valueWithout) {
-        super(value, text, valueWithout);
+    private SpreadsheetCellReferenceParserToken(final List<ParserToken> value, final String text) {
+        super(value, text);
 
         final SpreadsheetCellReferenceParserTokenConsumer checker = new SpreadsheetCellReferenceParserTokenConsumer();
         value.stream()
@@ -59,11 +57,6 @@ public final class SpreadsheetCellReferenceParserToken extends SpreadsheetParent
     }
 
     private final SpreadsheetCellReference cell;
-
-    @Override
-    SpreadsheetParentParserToken replace(final List<ParserToken> tokens, final List<ParserToken> without) {
-        return new SpreadsheetCellReferenceParserToken(tokens, text, without);
-    }
 
     // isXXX............................................................................................................
 

@@ -28,19 +28,11 @@ public final class SpreadsheetGreaterThanEqualsParserToken extends SpreadsheetBi
 
     static SpreadsheetGreaterThanEqualsParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetGreaterThanEqualsParserToken(copyAndCheckTokens(value),
-                checkText(text),
-                WITHOUT_COMPUTE_REQUIRED);
+                checkText(text));
     }
 
-    private SpreadsheetGreaterThanEqualsParserToken(final List<ParserToken> value, final String text, final List<ParserToken> valueWithout) {
-        super(value, text, valueWithout);
-    }
-
-    @Override
-    SpreadsheetGreaterThanEqualsParserToken replace(final List<ParserToken> tokens, final List<ParserToken> without) {
-        return new SpreadsheetGreaterThanEqualsParserToken(tokens,
-                this.text,
-                without);
+    private SpreadsheetGreaterThanEqualsParserToken(final List<ParserToken> value, final String text) {
+        super(value, text);
     }
 
     // isXXX............................................................................................................
