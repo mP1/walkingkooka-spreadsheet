@@ -29,19 +29,11 @@ public final class SpreadsheetFormatLessThanEqualsParserToken extends Spreadshee
 
     static SpreadsheetFormatLessThanEqualsParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetFormatLessThanEqualsParserToken(copyAndCheckTokensFailIfEmpty(value),
-                checkTextNotEmptyOrWhitespace(text),
-                WITHOUT_COMPUTE_REQUIRED);
+                checkTextNotEmptyOrWhitespace(text));
     }
 
-    private SpreadsheetFormatLessThanEqualsParserToken(final List<ParserToken> value, final String text, final List<ParserToken> valueWithout) {
-        super(value, text, valueWithout);
-    }
-
-    @Override
-    SpreadsheetFormatLessThanEqualsParserToken replace(final List<ParserToken> tokens, final String text, final List<ParserToken> without) {
-        return new SpreadsheetFormatLessThanEqualsParserToken(tokens,
-                text,
-                without);
+    private SpreadsheetFormatLessThanEqualsParserToken(final List<ParserToken> value, final String text) {
+        super(value, text);
     }
 
     @Override

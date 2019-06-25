@@ -29,7 +29,6 @@ abstract class SpreadsheetFormatSymbolParserToken extends SpreadsheetFormatLeafP
         super(value, text);
     }
 
-    @Override
     public final Optional<SpreadsheetFormatParserToken> withoutSymbols() {
         return Optional.empty();
     }
