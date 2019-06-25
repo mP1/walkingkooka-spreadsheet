@@ -28,23 +28,12 @@ public final class SpreadsheetPercentageParserToken extends SpreadsheetUnaryPars
 
     static SpreadsheetPercentageParserToken with(final List<ParserToken> value,
                                                  final String text) {
-        return new SpreadsheetPercentageParserToken(copyAndCheckTokens(value),
-                checkText(text),
-                WITHOUT_COMPUTE_REQUIRED);
+        return new SpreadsheetPercentageParserToken(copyAndCheckTokens(value), checkText(text));
     }
 
     private SpreadsheetPercentageParserToken(final List<ParserToken> value,
-                                             final String text,
-                                             final List<ParserToken> valueWithout) {
-        super(value, text, valueWithout);
-    }
-
-    @Override
-    SpreadsheetParentParserToken replace(final List<ParserToken> tokens,
-                                         final List<ParserToken> without) {
-        return new SpreadsheetPercentageParserToken(tokens,
-                text,
-                without);
+                                             final String text) {
+        super(value, text);
     }
 
     // isXXX............................................................................................................
