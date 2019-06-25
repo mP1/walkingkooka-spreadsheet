@@ -27,20 +27,11 @@ import java.util.List;
 public final class SpreadsheetLessThanEqualsParserToken extends SpreadsheetBinaryParserToken<SpreadsheetLessThanEqualsParserToken> {
 
     static SpreadsheetLessThanEqualsParserToken with(final List<ParserToken> value, final String text) {
-        return new SpreadsheetLessThanEqualsParserToken(copyAndCheckTokens(value),
-                checkText(text),
-                WITHOUT_COMPUTE_REQUIRED);
+        return new SpreadsheetLessThanEqualsParserToken(copyAndCheckTokens(value), checkText(text));
     }
 
-    private SpreadsheetLessThanEqualsParserToken(final List<ParserToken> value, final String text, final List<ParserToken> valueWithout) {
-        super(value, text, valueWithout);
-    }
-
-    @Override
-    SpreadsheetLessThanEqualsParserToken replace(final List<ParserToken> tokens, final List<ParserToken> without) {
-        return new SpreadsheetLessThanEqualsParserToken(tokens,
-                this.text,
-                without);
+    private SpreadsheetLessThanEqualsParserToken(final List<ParserToken> value, final String text) {
+        super(value, text);
     }
 
     // isXXX............................................................................................................

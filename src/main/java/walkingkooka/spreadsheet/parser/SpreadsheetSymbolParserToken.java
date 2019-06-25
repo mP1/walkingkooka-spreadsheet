@@ -18,8 +18,6 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.tree.search.SearchNode;
 
-import java.util.Optional;
-
 /**
  * Base class for all spreadsheet symbol parser tokens.
  */
@@ -27,11 +25,6 @@ abstract class SpreadsheetSymbolParserToken extends SpreadsheetLeafParserToken<S
 
     SpreadsheetSymbolParserToken(final String value, final String text) {
         super(value, text);
-    }
-
-    @Override
-    public final Optional<SpreadsheetParserToken> withoutSymbols() {
-        return Optional.empty();
     }
 
     @Override

@@ -27,20 +27,11 @@ import java.util.List;
 public final class SpreadsheetPowerParserToken extends SpreadsheetBinaryParserToken<SpreadsheetPowerParserToken> {
 
     static SpreadsheetPowerParserToken with(final List<ParserToken> value, final String text) {
-        return new SpreadsheetPowerParserToken(copyAndCheckTokens(value),
-                checkText(text),
-                WITHOUT_COMPUTE_REQUIRED);
+        return new SpreadsheetPowerParserToken(copyAndCheckTokens(value), checkText(text));
     }
 
-    private SpreadsheetPowerParserToken(final List<ParserToken> value, final String text, final List<ParserToken> valueWithout) {
-        super(value, text, valueWithout);
-    }
-
-    @Override
-    SpreadsheetPowerParserToken replace(final List<ParserToken> tokens, final List<ParserToken> without) {
-        return new SpreadsheetPowerParserToken(tokens,
-                this.text,
-                without);
+    private SpreadsheetPowerParserToken(final List<ParserToken> value, final String text) {
+        super(value, text);
     }
 
     // isXXX............................................................................................................

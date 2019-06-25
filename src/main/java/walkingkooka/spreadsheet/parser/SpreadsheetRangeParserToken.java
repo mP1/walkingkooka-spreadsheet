@@ -27,20 +27,11 @@ import java.util.List;
 public final class SpreadsheetRangeParserToken extends SpreadsheetBinaryParserToken<SpreadsheetRangeParserToken> {
 
     static SpreadsheetRangeParserToken with(final List<ParserToken> value, final String text) {
-        return new SpreadsheetRangeParserToken(copyAndCheckTokens(value),
-                checkText(text),
-                WITHOUT_COMPUTE_REQUIRED);
+        return new SpreadsheetRangeParserToken(copyAndCheckTokens(value), checkText(text));
     }
 
-    private SpreadsheetRangeParserToken(final List<ParserToken> value, final String text, final List<ParserToken> valueWithout) {
-        super(value, text, valueWithout);
-    }
-
-    @Override
-    SpreadsheetRangeParserToken replace(final List<ParserToken> tokens, final List<ParserToken> without) {
-        return new SpreadsheetRangeParserToken(tokens,
-                this.text,
-                without);
+    private SpreadsheetRangeParserToken(final List<ParserToken> value, final String text) {
+        super(value, text);
     }
 
     // isXXX............................................................................................................
