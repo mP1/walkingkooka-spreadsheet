@@ -17,9 +17,52 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.color.Color;
+import walkingkooka.convert.Converter;
+import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.Fraction;
+import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
+import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
+import walkingkooka.tree.expression.ExpressionNodeName;
 import walkingkooka.type.PublicStaticHelper;
 
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+
 public final class SpreadsheetEngineContexts implements PublicStaticHelper {
+
+    /**
+     * {@see BasicSpreadsheetEngineContext}
+     */
+    static SpreadsheetEngineContext basic(final BiFunction<ExpressionNodeName, List<Object>, Object> functions,
+                                          final SpreadsheetEngine engine,
+                                          final SpreadsheetLabelStore labelStore,
+                                          final Converter converter,
+                                          final DecimalNumberContext decimalNumberContext,
+                                          final DateTimeContext dateTimeContext,
+                                          final Function<Integer, Color> numberToColor,
+                                          final Function<String, Color> nameToColor,
+                                          final String generalDecimalFormatPattern,
+                                          final int width,
+                                          final Function<BigDecimal, Fraction> fractioner,
+                                          final SpreadsheetTextFormatter<?> textFormatter) {
+        return BasicSpreadsheetEngineContext.with(functions,
+                engine,
+                labelStore,
+                converter,
+                decimalNumberContext,
+                dateTimeContext,
+                numberToColor,
+                nameToColor,
+                generalDecimalFormatPattern,
+                width,
+                fractioner,
+                textFormatter);
+    }
 
     /**
      * {@see FakeSpreadsheetEngineContext}
