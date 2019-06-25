@@ -29,19 +29,11 @@ public final class SpreadsheetFormatEqualsParserToken extends SpreadsheetFormatC
 
     static SpreadsheetFormatEqualsParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetFormatEqualsParserToken(copyAndCheckTokensFailIfEmpty(value),
-                checkTextNotEmptyOrWhitespace(text),
-                WITHOUT_COMPUTE_REQUIRED);
+                checkTextNotEmptyOrWhitespace(text));
     }
 
-    private SpreadsheetFormatEqualsParserToken(final List<ParserToken> value, final String text, final List<ParserToken> valueWithout) {
-        super(value, text, valueWithout);
-    }
-
-    @Override
-    SpreadsheetFormatEqualsParserToken replace(final List<ParserToken> tokens, final String text, final List<ParserToken> without) {
-        return new SpreadsheetFormatEqualsParserToken(tokens,
-                text,
-                without);
+    private SpreadsheetFormatEqualsParserToken(final List<ParserToken> value, final String text) {
+        super(value, text);
     }
 
     @Override
