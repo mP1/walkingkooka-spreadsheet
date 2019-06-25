@@ -29,56 +29,17 @@ import java.util.stream.Collectors;
 abstract class SpreadsheetFormatParentParserToken<T extends SpreadsheetFormatParentParserToken> extends SpreadsheetFormatParserToken
         implements ParentParserToken<T> {
 
-    final static List<ParserToken> WITHOUT_COMPUTE_REQUIRED = null;
-
-    SpreadsheetFormatParentParserToken(final List<ParserToken> value, final String text, final List<ParserToken> valueWithout) {
+    SpreadsheetFormatParentParserToken(final List<ParserToken> value, final String text) {
         super(text);
         this.value = value;
-        this.without = value.equals(valueWithout) ?
-                Optional.of(this) :
-                computeWithout(value);
     }
-
-    private Optional<SpreadsheetFormatParserToken> computeWithout(final List<ParserToken> value) {
-        final List<ParserToken> without = filterWithout(value);
-
-        return Optional.of(value.size() == without.size() ?
-                this :
-                this.replace(without, this.text(), without));
-    }
-
-    private static List<ParserToken> filterWithout(final List<ParserToken> value) {
-        return value.stream()
-                .filter(t -> t instanceof SpreadsheetFormatParserToken && !t.isNoise())
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public final Optional<SpreadsheetFormatParserToken> withoutSymbols() {
-        return this.without;
-    }
-
-    private final Optional<SpreadsheetFormatParserToken> without;
 
     @Override
     public final List<ParserToken> value() {
         return this.value;
     }
 
-    final SpreadsheetFormatParentParserToken setValue0(final List<ParserToken> tokens) {
-        final List<ParserToken> copy = copyAndCheckTokens(tokens);
-
-        return this.value().equals(copy) ?
-                this :
-                this.replace(copy, this.text(), filterWithout(copy));
-    }
-
     final List<ParserToken> value;
-
-    /**
-     * Factory that creates a new {@link SpreadsheetFormatParentParserToken} with the same text but new tokens.
-     */
-    abstract SpreadsheetFormatParentParserToken replace(final List<ParserToken> tokens, final String text, final List<ParserToken> without);
 
     // isXXX............................................................................................................
 

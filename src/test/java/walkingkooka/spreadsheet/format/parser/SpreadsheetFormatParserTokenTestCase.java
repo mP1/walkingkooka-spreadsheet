@@ -61,14 +61,6 @@ public abstract class SpreadsheetFormatParserTokenTestCase<T extends Spreadsheet
         });
     }
 
-    @Test
-    public void testWithoutSymbolsPropertiesNullCheck() throws Exception {
-        final Optional<SpreadsheetFormatParserToken> without = this.createToken().withoutSymbols();
-        if (without.isPresent()) {
-            BeanPropertiesTesting.allPropertiesNeverReturnNullCheck(without.get(), Predicates.never());
-        }
-    }
-
     // IsMethodTesting.................................................................................................
 
     @Override

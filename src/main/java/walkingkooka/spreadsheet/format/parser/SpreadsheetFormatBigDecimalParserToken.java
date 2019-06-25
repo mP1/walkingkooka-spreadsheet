@@ -32,22 +32,14 @@ public final class SpreadsheetFormatBigDecimalParserToken extends SpreadsheetFor
      */
     static SpreadsheetFormatBigDecimalParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetFormatBigDecimalParserToken(copyAndCheckTokensFailIfEmpty(value),
-                checkTextNotEmpty(text),
-                WITHOUT_COMPUTE_REQUIRED);
+                checkTextNotEmpty(text));
     }
 
     /**
      * Private ctor use helper.
      */
-    private SpreadsheetFormatBigDecimalParserToken(final List<ParserToken> value, final String text, final List<ParserToken> valueWithout) {
-        super(value, text, valueWithout);
-
-        SpreadsheetFormatParentParserToken.class.cast(this.withoutSymbols().get()).value();
-    }
-
-    @Override
-    SpreadsheetFormatParentParserToken replace(final List<ParserToken> tokens, final String text, final List<ParserToken> without) {
-        return new SpreadsheetFormatBigDecimalParserToken(tokens, text, without);
+    private SpreadsheetFormatBigDecimalParserToken(final List<ParserToken> value, final String text) {
+        super(value, text);
     }
 
     // isXXX...........................................................................................................
