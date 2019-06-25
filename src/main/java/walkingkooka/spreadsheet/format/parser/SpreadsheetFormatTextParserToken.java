@@ -35,23 +35,14 @@ public final class SpreadsheetFormatTextParserToken extends SpreadsheetFormatPar
         final List<ParserToken> copy = copyAndCheckTokens(value);
         Objects.requireNonNull(text, "text");
 
-        return new SpreadsheetFormatTextParserToken(copy,
-                text,
-                WITHOUT_COMPUTE_REQUIRED);
+        return new SpreadsheetFormatTextParserToken(copy, text);
     }
 
     /**
      * Private ctor use helper.
      */
-    private SpreadsheetFormatTextParserToken(final List<ParserToken> value, final String text, final List<ParserToken> valueWithout) {
-        super(value, text, valueWithout);
-
-        SpreadsheetFormatParentParserToken.class.cast(this.withoutSymbols().get()).value();
-    }
-
-    @Override
-    SpreadsheetFormatParentParserToken replace(final List<ParserToken> tokens, final String text, final List<ParserToken> without) {
-        return new SpreadsheetFormatTextParserToken(tokens, text, without);
+    private SpreadsheetFormatTextParserToken(final List<ParserToken> value, final String text) {
+        super(value, text);
     }
 
     // isXXX...........................................................................................................

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.Cast;
+import walkingkooka.text.cursor.parser.ParentParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.visit.Visiting;
 
@@ -34,22 +35,22 @@ public final class SpreadsheetFormatColorParserToken extends SpreadsheetFormatPa
      */
     static SpreadsheetFormatColorParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetFormatColorParserToken(copyAndCheckTokensFailIfEmpty(value),
-                checkTextNotEmptyOrWhitespace(text),
-                WITHOUT_COMPUTE_REQUIRED);
+                checkTextNotEmptyOrWhitespace(text));
     }
 
     /**
      * Private ctor use helper.
      */
-    private SpreadsheetFormatColorParserToken(final List<ParserToken> value, final String text, final List<ParserToken> valueWithout) {
-        super(value, text, valueWithout);
+    private SpreadsheetFormatColorParserToken(final List<ParserToken> value, final String text) {
+        super(value, text);
 
-        final List<SpreadsheetFormatParserToken> without = Cast.to(SpreadsheetFormatParentParserToken.class.cast(this.withoutSymbols().get()).value());
+        final List<ParserToken> without = ParentParserToken.filterWithoutNoise(value);
         final int count = without.size();
         if (1 != count) {
             throw new IllegalArgumentException("Expected 1 token but got " + count + "=" + without);
         }
         final Optional<SpreadsheetFormatParserToken> nameOrNumber = without.stream()
+                .map(SpreadsheetFormatParserToken.class::cast)
                 .filter(t -> t.isColorName() || t.isColorNumber())
                 .findFirst();
         if (!nameOrNumber.isPresent()) {
@@ -63,11 +64,6 @@ public final class SpreadsheetFormatColorParserToken extends SpreadsheetFormatPa
     }
 
     private final SpreadsheetFormatParserToken nameOrNumber;
-
-    @Override
-    SpreadsheetFormatParentParserToken replace(final List<ParserToken> tokens, final String text, final List<ParserToken> without) {
-        return new SpreadsheetFormatColorParserToken(tokens, text, without);
-    }
 
     // isXXX...........................................................................................................
 
