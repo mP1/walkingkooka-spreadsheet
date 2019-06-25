@@ -18,15 +18,54 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.color.Color;
+import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.math.DecimalNumberContextTesting;
+import walkingkooka.text.CharSequences;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public interface SpreadsheetTextFormatContextTesting<C extends SpreadsheetTextFormatContext> extends DecimalNumberContextTesting<C> {
+public interface SpreadsheetTextFormatContextTesting<C extends SpreadsheetTextFormatContext> extends DateTimeContextTesting<C>,
+        DecimalNumberContextTesting<C> {
+
+    default void colorNumberAndCheck(final SpreadsheetTextFormatContext context,
+                                     final int number,
+                                     final Color color) {
+        assertEquals(color,
+                context.colorNumber(number),
+                () -> "colorNumber " + number + " " + context);
+    }
+
+    default void colorNameAndCheck(final SpreadsheetTextFormatContext context,
+                                   final String name,
+                                   final Color color) {
+        assertEquals(color,
+                context.colorName(name),
+                () -> "colorName " + name + " " + context);
+    }
 
     @Test
     default void testGeneralDecimalFormatPattern() {
         assertNotNull("decimalDecimalFormatPattern", this.createContext().generalDecimalFormatPattern());
+    }
+
+    default <T> void convertAndCheck(final Object value,
+                                     final Class<T> target,
+                                     final T expected) {
+        this.convertAndCheck(this.createContext(),
+                value,
+                target,
+                expected);
+    }
+
+    default <T> void convertAndCheck(final C context,
+                                     final Object value,
+                                     final Class<T> target,
+                                     final T expected) {
+        assertEquals(expected,
+                context.convert(value, target),
+                () -> "convert " + CharSequences.quoteIfChars(value) + " target: " + target.getName());
     }
 
     @Override
