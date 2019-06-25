@@ -17,9 +17,34 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.color.Color;
+import walkingkooka.convert.Converter;
+import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.type.PublicStaticHelper;
 
+import java.util.Map;
+
 public final class SpreadsheetTextFormatContexts implements PublicStaticHelper {
+
+    /**
+     * {@see BasicSpreadsheetTextFormatContext}
+     */
+    public static SpreadsheetTextFormatContext basic(final Map<Integer, Color> numberToColor,
+                                                     final Map<String, Color> nameToColor,
+                                                     final String generalDecimalFormatPattern,
+                                                     final int width,
+                                                     final Converter converter,
+                                                     final DateTimeContext dateTimeContext,
+                                                     final DecimalNumberContext decimalNumberContext) {
+        return BasicSpreadsheetTextFormatContext.with(numberToColor,
+                nameToColor,
+                generalDecimalFormatPattern,
+                width,
+                converter,
+                dateTimeContext,
+                decimalNumberContext);
+    }
 
     /**
      * {@see FakeSpreadsheetTextFormatContext}
