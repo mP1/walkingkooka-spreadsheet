@@ -30,7 +30,6 @@ abstract class SpreadsheetFormatNonSymbolParserToken<T> extends SpreadsheetForma
     /**
      * All sub classes are leafs and not symbols.
      */
-    @Override
     public final Optional<SpreadsheetFormatParserToken> withoutSymbols() {
         return Optional.of(this);
     }

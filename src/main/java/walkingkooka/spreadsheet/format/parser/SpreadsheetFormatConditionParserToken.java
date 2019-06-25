@@ -18,6 +18,7 @@ package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.Cast;
 import walkingkooka.compare.ComparisonRelation;
+import walkingkooka.text.cursor.parser.ParentParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
@@ -31,16 +32,17 @@ abstract public class SpreadsheetFormatConditionParserToken<T extends Spreadshee
     /**
      * Package private to limit sub classing.
      */
-    SpreadsheetFormatConditionParserToken(final List<ParserToken> value, final String text, final List<ParserToken> valueWithout) {
-        super(value, text, valueWithout);
+    SpreadsheetFormatConditionParserToken(final List<ParserToken> value, final String text) {
+        super(value, text);
 
-        final List<SpreadsheetFormatParserToken> without = Cast.to(SpreadsheetFormatParentParserToken.class.cast(this.withoutSymbols().get()).value());
+        final List<ParserToken> without = ParentParserToken.filterWithoutNoise(value);
         final int count = without.size();
         if (1 != count) {
             throw new IllegalArgumentException("Expected 1 token but got " + count + "=" + without);
         }
 
         final Optional<SpreadsheetFormatParserToken> bigDecimal = without.stream()
+                .map(SpreadsheetFormatParserToken.class::cast)
                 .filter(t -> t.isConditionNumber())
                 .findFirst();
         if (!bigDecimal.isPresent()) {

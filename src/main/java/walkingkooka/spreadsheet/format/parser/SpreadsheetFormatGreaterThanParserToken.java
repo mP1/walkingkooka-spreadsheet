@@ -29,19 +29,11 @@ public final class SpreadsheetFormatGreaterThanParserToken extends SpreadsheetFo
 
     static SpreadsheetFormatGreaterThanParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetFormatGreaterThanParserToken(copyAndCheckTokensFailIfEmpty(value),
-                checkTextNotEmptyOrWhitespace(text),
-                WITHOUT_COMPUTE_REQUIRED);
+                checkTextNotEmptyOrWhitespace(text));
     }
 
-    private SpreadsheetFormatGreaterThanParserToken(final List<ParserToken> value, final String text, final List<ParserToken> valueWithout) {
-        super(value, text, valueWithout);
-    }
-
-    @Override
-    SpreadsheetFormatGreaterThanParserToken replace(final List<ParserToken> tokens, final String text, final List<ParserToken> without) {
-        return new SpreadsheetFormatGreaterThanParserToken(tokens,
-                text,
-                without);
+    private SpreadsheetFormatGreaterThanParserToken(final List<ParserToken> value, final String text) {
+        super(value, text);
     }
 
     @Override
