@@ -32,22 +32,14 @@ public final class SpreadsheetFormatDateTimeParserToken extends SpreadsheetForma
      */
     static SpreadsheetFormatDateTimeParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetFormatDateTimeParserToken(copyAndCheckTokensFailIfEmpty(value),
-                checkTextNotEmpty(text),
-                WITHOUT_COMPUTE_REQUIRED);
+                checkTextNotEmpty(text));
     }
 
     /**
      * Private ctor use helper.
      */
-    private SpreadsheetFormatDateTimeParserToken(final List<ParserToken> value, final String text, final List<ParserToken> valueWithout) {
-        super(value, text, valueWithout);
-
-        SpreadsheetFormatParentParserToken.class.cast(this.withoutSymbols().get()).value();
-    }
-
-    @Override
-    SpreadsheetFormatParentParserToken replace(final List<ParserToken> tokens, final String text, final List<ParserToken> without) {
-        return new SpreadsheetFormatDateTimeParserToken(tokens, text, without);
+    private SpreadsheetFormatDateTimeParserToken(final List<ParserToken> value, final String text) {
+        super(value, text);
     }
 
     // isXXX...........................................................................................................

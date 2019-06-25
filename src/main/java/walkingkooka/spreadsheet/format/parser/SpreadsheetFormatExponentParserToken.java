@@ -32,22 +32,14 @@ public final class SpreadsheetFormatExponentParserToken extends SpreadsheetForma
      */
     static SpreadsheetFormatExponentParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetFormatExponentParserToken(copyAndCheckTokensFailIfEmpty(value),
-                checkTextNotEmptyOrWhitespace(text),
-                WITHOUT_COMPUTE_REQUIRED);
+                checkTextNotEmptyOrWhitespace(text));
     }
 
     /**
      * Private ctor use helper.
      */
-    private SpreadsheetFormatExponentParserToken(final List<ParserToken> value, final String text, final List<ParserToken> valueWithout) {
-        super(value, text, valueWithout);
-
-        this.withoutSymbols().get();
-    }
-
-    @Override
-    SpreadsheetFormatParentParserToken replace(final List<ParserToken> tokens, final String text, final List<ParserToken> without) {
-        return new SpreadsheetFormatExponentParserToken(tokens, text, without);
+    private SpreadsheetFormatExponentParserToken(final List<ParserToken> value, final String text) {
+        super(value, text);
     }
 
     // isXXX...........................................................................................................
