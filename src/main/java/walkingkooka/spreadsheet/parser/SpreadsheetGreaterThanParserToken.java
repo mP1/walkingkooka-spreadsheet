@@ -27,20 +27,11 @@ import java.util.List;
 public final class SpreadsheetGreaterThanParserToken extends SpreadsheetBinaryParserToken<SpreadsheetGreaterThanParserToken> {
 
     static SpreadsheetGreaterThanParserToken with(final List<ParserToken> value, final String text) {
-        return new SpreadsheetGreaterThanParserToken(copyAndCheckTokens(value),
-                checkText(text),
-                WITHOUT_COMPUTE_REQUIRED);
+        return new SpreadsheetGreaterThanParserToken(copyAndCheckTokens(value), checkText(text));
     }
 
-    private SpreadsheetGreaterThanParserToken(final List<ParserToken> value, final String text, final List<ParserToken> valueWithout) {
-        super(value, text, valueWithout);
-    }
-
-    @Override
-    SpreadsheetGreaterThanParserToken replace(final List<ParserToken> tokens, final List<ParserToken> without) {
-        return new SpreadsheetGreaterThanParserToken(tokens,
-                this.text,
-                without);
+    private SpreadsheetGreaterThanParserToken(final List<ParserToken> value, final String text) {
+        super(value, text);
     }
 
     // isXXX............................................................................................................

@@ -68,8 +68,6 @@ public final class SpreadsheetCellReferenceParserTokenTest extends SpreadsheetPa
         this.checkText(cell, text);
         this.checkValue(cell, row, column);
         this.checkCell(cell, row, column);
-
-        assertSame(cell, cell.withoutSymbols().get());
     }
 
     @Test

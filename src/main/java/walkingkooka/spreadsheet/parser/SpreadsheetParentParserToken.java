@@ -30,53 +30,19 @@ import java.util.Optional;
 abstract class SpreadsheetParentParserToken<T extends SpreadsheetParentParserToken> extends SpreadsheetParserToken
         implements ParentParserToken<T> {
 
-    final static List<ParserToken> WITHOUT_COMPUTE_REQUIRED = null;
-
-    SpreadsheetParentParserToken(final List<ParserToken> value, final String text, final List<ParserToken> valueWithout) {
+    SpreadsheetParentParserToken(final List<ParserToken> value, final String text) {
         super(text);
         this.value = value;
-        this.without = value.equals(valueWithout) ?
-                Optional.of(this) :
-                computeWithout(value);
     }
-
-    private Optional<SpreadsheetParserToken> computeWithout(final List<ParserToken> value) {
-        final List<ParserToken> without = ParentParserToken.filterWithoutNoise(value);
-
-        return Optional.of(value.size() == without.size() ?
-                this :
-                this.replace(without, without));
-    }
-
-    @Override
-    public final Optional<SpreadsheetParserToken> withoutSymbols() {
-        return this.without;
-    }
-
-    private final Optional<SpreadsheetParserToken> without;
 
     @Override
     public final List<ParserToken> value() {
         return this.value;
     }
 
-    final SpreadsheetParentParserToken setValue0(final List<ParserToken> value) {
-        Objects.requireNonNull(value, "values");
-
-        final List<ParserToken> copy = Lists.array();
-        copy.addAll(value);
-
-        return this.value().equals(copy) ?
-                this :
-                this.replace(copy, ParentParserToken.filterWithoutNoise(copy));
-    }
-
     final List<ParserToken> value;
 
-    /**
-     * Factory that creates a new {@link SpreadsheetParentParserToken} with the same text but new tokens.
-     */
-    abstract SpreadsheetParentParserToken replace(final List<ParserToken> tokens, final List<ParserToken> without);
+    // isXXX............................................................................................................
 
     @Override
     public final boolean isBetweenSymbol() {

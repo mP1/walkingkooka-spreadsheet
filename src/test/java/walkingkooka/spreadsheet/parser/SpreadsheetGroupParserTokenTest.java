@@ -46,7 +46,6 @@ public final class SpreadsheetGroupParserTokenTest extends SpreadsheetParentPars
         final String text = "(" + NUMBER1 + ")";
         final SpreadsheetGroupParserToken token = this.createToken(text, this.number1());
         this.checkText(token, text);
-        assertSame(token, token.withoutSymbols().get());
     }
 
     @Test
@@ -60,11 +59,6 @@ public final class SpreadsheetGroupParserTokenTest extends SpreadsheetParentPars
         final SpreadsheetGroupParserToken token = this.createToken(text, left, number, right);
         this.checkText(token, text);
         this.checkValue(token, left, number, right);
-
-        final SpreadsheetGroupParserToken token2 = Cast.to(token.withoutSymbols().get());
-        assertNotSame(token, token2);
-        this.checkText(token2, text);
-        this.checkValue(token2, number);
     }
 
     @Test
@@ -80,11 +74,6 @@ public final class SpreadsheetGroupParserTokenTest extends SpreadsheetParentPars
         final SpreadsheetGroupParserToken token = this.createToken(text, left, whitespace1, number, whitespace2, right);
         this.checkText(token, text);
         this.checkValue(token, left, whitespace1, number, whitespace2, right);
-
-        final SpreadsheetGroupParserToken token2 = Cast.to(token.withoutSymbols().get());
-        assertNotSame(token, token2);
-        this.checkText(token2, text);
-        this.checkValue(token2, number);
     }
 
     @Test
