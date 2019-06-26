@@ -24,14 +24,15 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.type.PublicStaticHelper;
 
 import java.util.Map;
+import java.util.function.Function;
 
 public final class SpreadsheetTextFormatContexts implements PublicStaticHelper {
 
     /**
      * {@see BasicSpreadsheetTextFormatContext}
      */
-    public static SpreadsheetTextFormatContext basic(final Map<Integer, Color> numberToColor,
-                                                     final Map<String, Color> nameToColor,
+    public static SpreadsheetTextFormatContext basic(final Function<Integer, Color> numberToColor,
+                                                     final Function<String, Color> nameToColor,
                                                      final String generalDecimalFormatPattern,
                                                      final int width,
                                                      final Converter converter,
