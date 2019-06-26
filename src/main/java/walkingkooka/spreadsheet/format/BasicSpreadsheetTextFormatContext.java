@@ -30,14 +30,15 @@ import walkingkooka.text.CharSequences;
 import java.math.MathContext;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * A {@link SpreadsheetTextFormatContext} that basically delegates each of its methods to a dependency given at create time.
  */
 final class BasicSpreadsheetTextFormatContext implements SpreadsheetTextFormatContext {
 
-    static BasicSpreadsheetTextFormatContext with(final Map<Integer, Color> numberToColor,
-                                                  final Map<String, Color> nameToColor,
+    static BasicSpreadsheetTextFormatContext with(final Function<Integer, Color> numberToColor,
+                                                  final Function<String, Color> nameToColor,
                                                   final String generalDecimalFormatPattern,
                                                   final int width,
                                                   final Converter converter,
@@ -53,8 +54,8 @@ final class BasicSpreadsheetTextFormatContext implements SpreadsheetTextFormatCo
         Objects.requireNonNull(dateTimeContext, "dateTimeContext");
         Objects.requireNonNull(decimalNumberContext, "decimalNumberContext");
 
-        return new BasicSpreadsheetTextFormatContext(Maps.immutable(numberToColor),
-                Maps.immutable(nameToColor),
+        return new BasicSpreadsheetTextFormatContext(numberToColor,
+                nameToColor,
                 generalDecimalFormatPattern,
                 width,
                 converter,
@@ -62,8 +63,8 @@ final class BasicSpreadsheetTextFormatContext implements SpreadsheetTextFormatCo
                 decimalNumberContext);
     }
 
-    private BasicSpreadsheetTextFormatContext(final Map<Integer, Color> numberToColor,
-                                              final Map<String, Color> nameToColor,
+    private BasicSpreadsheetTextFormatContext(final Function<Integer, Color> numberToColor,
+                                              final Function<String, Color> nameToColor,
                                               final String generalDecimalFormatPattern,
                                               final int width,
                                               final Converter converter,
@@ -88,25 +89,17 @@ final class BasicSpreadsheetTextFormatContext implements SpreadsheetTextFormatCo
 
     @Override
     public Color colorNumber(final int number) {
-        final Color color = this.numberToColor.get(number);
-        if (null == color) {
-            throw new IllegalArgumentException("Invalid color number " + number);
-        }
-        return color;
+        return this.numberToColor.apply(number);
     }
 
-    private final Map<Integer, Color> numberToColor;
+    private final Function<Integer, Color> numberToColor;
 
     @Override
     public Color colorName(final String name) {
-        final Color color = this.nameToColor.get(name);
-        if (null == color) {
-            throw new IllegalArgumentException("Invalid color number " + CharSequences.quoteAndEscape(name));
-        }
-        return color;
+        return this.nameToColor.apply(name);
     }
 
-    private final Map<String, Color> nameToColor;
+    private final Function<String, Color> nameToColor;
 
 
     @Override

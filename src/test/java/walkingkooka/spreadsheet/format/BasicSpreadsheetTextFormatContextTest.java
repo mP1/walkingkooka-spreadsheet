@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
@@ -28,8 +27,9 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 
 import java.math.MathContext;
-import java.util.Map;
+import java.util.function.Function;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetTextFormatContextTesting<BasicSpreadsheetTextFormatContext> {
@@ -126,8 +126,8 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
                 null);
     }
 
-    private void withFails(final Map<Integer, Color> numberToColor,
-                           final Map<String, Color> nameToColor,
+    private void withFails(final Function<Integer, Color> numberToColor,
+                           final Function<String, Color> nameToColor,
                            final String generalDecimalFormatPattern,
                            final int width,
                            final Converter converter,
@@ -181,12 +181,36 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
                 decimalNumberContext());
     }
 
-    private Map<Integer, Color> numberToColor() {
-        return Maps.of(1, this.color());
+    private Function<Integer, Color> numberToColor() {
+        return new Function<>() {
+
+            @Override
+            public Color apply(final Integer number) {
+                assertEquals(number, 1, "color number");
+                return BasicSpreadsheetTextFormatContextTest.this.color();
+            }
+
+            @Override
+            public String toString() {
+                return 1 + "=" + BasicSpreadsheetTextFormatContextTest.this.color();
+            }
+        };
     }
 
-    private Map<String, Color> nameToColor() {
-        return Maps.of("bingo", color());
+    private Function<String, Color> nameToColor() {
+        return new Function<>() {
+
+            @Override
+            public Color apply(final String name) {
+                assertEquals(name, "bingo", "color name");
+                return BasicSpreadsheetTextFormatContextTest.this.color();
+            }
+
+            @Override
+            public String toString() {
+                return "bingo=" + BasicSpreadsheetTextFormatContextTest.this.color();
+            }
+        };
     }
 
     private Color color() {
