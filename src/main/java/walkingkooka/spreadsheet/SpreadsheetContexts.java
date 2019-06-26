@@ -29,6 +29,13 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     }
 
     /**
+     * {@see MemorySpreadsheetContext}
+     */
+    public static SpreadsheetContext memory() {
+        return MemorySpreadsheetContext.create();
+    }
+
+    /**
      * Stop creation
      */
     private SpreadsheetContexts() {
