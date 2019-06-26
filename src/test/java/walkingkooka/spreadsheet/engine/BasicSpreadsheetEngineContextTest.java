@@ -294,6 +294,13 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     @Test
+    public void testEvaluateWithFunction() {
+        this.evaluateAndCheck(ExpressionNode.function(ExpressionNodeName.with("xyz"),
+                Lists.of(ExpressionNode.longNode(1), ExpressionNode.longNode(2), ExpressionNode.longNode(3))),
+                Long.valueOf(1 + 2 + 3));
+    }
+
+    @Test
     public void testParseFormatPattern() {
         // DecimalNumberContext returns 'D' for the decimal point character and 'M' for minus sign
 
