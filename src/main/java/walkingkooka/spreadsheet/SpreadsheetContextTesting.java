@@ -48,6 +48,13 @@ public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends
     }
 
     @Test
+    default void testNumberToColorNullSpreadsheetIdFails() {
+        assertThrows(NullPointerException.class, () -> {
+            this.createContext().numberToColor(null);
+        });
+    }
+
+    @Test
     default void testStoreRepositoryNullSpreadsheetIdFails() {
         assertThrows(NullPointerException.class, () -> {
             this.createContext().storeRepository(null);
