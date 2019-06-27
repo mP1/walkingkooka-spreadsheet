@@ -49,27 +49,32 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
     static MemorySpreadsheetContext with(final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                                          final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
                                          final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
+                                         final Function<SpreadsheetId, Function<String, Color> > spreadsheetIdNameToColor,
                                          final Function<SpreadsheetId, Function<Integer, Color> > spreadsheetIdNumberToColor) {
         Objects.requireNonNull(spreadsheetIdDateTimeContext, "spreadsheetIdDateTimeContext");
         Objects.requireNonNull(spreadsheetIdDecimalFormatContext, "spreadsheetIdDecimalFormatContext");
         Objects.requireNonNull(spreadsheetIdFunctions, "spreadsheetIdFunctions");
+        Objects.requireNonNull(spreadsheetIdNameToColor, "spreadsheetIdNameToColor");
         Objects.requireNonNull(spreadsheetIdNumberToColor, "spreadsheetIdNumberToColor");
 
         return new MemorySpreadsheetContext(spreadsheetIdDateTimeContext,
                 spreadsheetIdDecimalFormatContext,
                 spreadsheetIdFunctions,
+                spreadsheetIdNameToColor,
                 spreadsheetIdNumberToColor);
     }
 
     private MemorySpreadsheetContext(final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                                      final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
                                      final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
+                                     final Function<SpreadsheetId, Function<String, Color> > spreadsheetIdNameToColor,
                                      final Function<SpreadsheetId, Function<Integer, Color> > spreadsheetIdNumberToColor) {
         super();
 
         this.spreadsheetIdDateTimeContext = spreadsheetIdDateTimeContext;
         this.spreadsheetIdDecimalFormatContext = spreadsheetIdDecimalFormatContext;
         this.spreadsheetIdFunctions = spreadsheetIdFunctions;
+        this.spreadsheetIdNameToColor = spreadsheetIdNameToColor;
         this.spreadsheetIdNumberToColor = spreadsheetIdNumberToColor;
     }
 
@@ -94,6 +99,13 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
 
     private final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions;
 
+    @Override
+    public Function<String, Color> nameToColor(final SpreadsheetId id) {
+        return this.spreadsheetIdNameToColor.apply(id);
+    }
+
+    private final Function<SpreadsheetId, Function<String, Color> > spreadsheetIdNameToColor;
+    
     @Override
     public Function<Integer, Color> numberToColor(final SpreadsheetId id) {
         return this.spreadsheetIdNumberToColor.apply(id);
