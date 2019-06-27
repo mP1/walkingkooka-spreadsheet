@@ -49,6 +49,11 @@ public interface SpreadsheetContext extends Context {
     BiFunction<ExpressionNodeName, List<Object>, Object> functions(final SpreadsheetId id);
 
     /**
+     * Returns a {@link Function} which maps {@link String color name} to {@link Color} for the given {@link SpreadsheetId}.
+     */
+    Function<String, Color> nameToColor(final SpreadsheetId id);
+
+    /**
      * Returns a {@link Function} which maps color number to {@link Color} for the given {@link SpreadsheetId}.
      */
     Function<Integer, Color> numberToColor(final SpreadsheetId id);
