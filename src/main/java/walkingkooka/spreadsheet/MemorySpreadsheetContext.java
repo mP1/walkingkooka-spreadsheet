@@ -91,6 +91,7 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
                 SpreadsheetLabelStores.treeMap(),
                 SpreadsheetReferenceStores.treeMap(),
                 SpreadsheetRangeStores.treeMap(),
+                SpreadsheetRangeStores.treeMap(),
                 SpreadsheetUserStores.treeMap());
     }
 

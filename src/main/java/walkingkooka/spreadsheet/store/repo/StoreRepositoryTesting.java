@@ -52,8 +52,13 @@ public interface StoreRepositoryTesting<S extends StoreRepository> extends ToStr
     }
 
     @Test
-    default void testRanges() {
-        assertNotNull(this.createStoreRepository().ranges());
+    default void testRangeToCells() {
+        assertNotNull(this.createStoreRepository().rangeToCells());
+    }
+
+    @Test
+    default void testRangeToConditionalFormattingRules() {
+        assertNotNull(this.createStoreRepository().rangeToConditionalFormattingRules());
     }
 
     @Test
