@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.store.repo;
 
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
@@ -47,9 +48,17 @@ public final class StoreRepositories implements PublicStaticHelper {
                                         final SpreadsheetGroupStore groups,
                                         final SpreadsheetLabelStore labels,
                                         final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences,
-                                        final SpreadsheetRangeStore ranges,
+                                        final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells,
+                                        final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
                                         final SpreadsheetUserStore users) {
-        return BasicStoreRepository.with(cells, cellReferences, groups, labels, labelReferences, ranges, users);
+        return BasicStoreRepository.with(cells,
+                cellReferences,
+                groups,
+                labels,
+                labelReferences,
+                rangeToCells,
+                rangeToConditionalFormattingRules,
+                users);
     }
 
     /**
