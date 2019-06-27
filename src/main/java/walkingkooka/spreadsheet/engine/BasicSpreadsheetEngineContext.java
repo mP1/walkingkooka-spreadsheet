@@ -78,7 +78,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                               final String generalDecimalFormatPattern,
                                               final int width,
                                               final Function<BigDecimal, Fraction> fractioner,
-                                              final SpreadsheetTextFormatter<?> textFormatter) {
+                                              final SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter) {
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(labelStore, "labelStore");
@@ -92,7 +92,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
             throw new IllegalArgumentException("Invalid width " + width + " <= 0");
         }
         Objects.requireNonNull(fractioner, "fractioner");
-        Objects.requireNonNull(textFormatter, "textFormatter");
+        Objects.requireNonNull(defaultSpreadsheetTextFormatter, "defaultSpreadsheetTextFormatter");
 
         return new BasicSpreadsheetEngineContext(functions,
                 engine,
@@ -105,7 +105,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 generalDecimalFormatPattern,
                 width,
                 fractioner,
-                textFormatter);
+                defaultSpreadsheetTextFormatter);
     }
 
     /**
@@ -122,7 +122,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final String generalDecimalFormatPattern,
                                           final int width,
                                           final Function<BigDecimal, Fraction> fractioner,
-                                          final SpreadsheetTextFormatter<?> textFormatter) {
+                                          final SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter) {
         super();
         this.parserContext = SpreadsheetParserContexts.basic(decimalNumberContext);
 
@@ -141,7 +141,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 dateTimeContext,
                 decimalNumberContext);
         this.fractioner = fractioner;
-        this.textFormatter = textFormatter;
+        this.defaultSpreadsheetTextFormatter = defaultSpreadsheetTextFormatter;
     }
 
     // parsing formula and executing.....................................................................................
@@ -220,10 +220,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     @Override
     public SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter() {
-        return this.textFormatter;
+        return this.defaultSpreadsheetTextFormatter;
     }
 
-    private final SpreadsheetTextFormatter<?> textFormatter;
+    private final SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter;
 
     // Object...........................................................................................................
 
@@ -233,7 +233,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 .label("decimalNumberContext").value(this.decimalNumberContext)
                 .label("converter").value(this.converter)
                 .label("fractioner").value(this.fractioner)
-                .label("textFormatter").value(this.textFormatter)
+                .label("defaultSpreadsheetTextFormatter").value(this.defaultSpreadsheetTextFormatter)
                 .build();
     }
 }
