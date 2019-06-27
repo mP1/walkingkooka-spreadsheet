@@ -54,6 +54,11 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     }
 
     @Test
+    public void testNameToColor() {
+        assertNotEquals(null, this.createContext().nameToColor(this.spreadsheetId()));
+    }
+
+    @Test
     public void testNumberToColor() {
         assertNotEquals(null, this.createContext().numberToColor(this.spreadsheetId()));
     }
@@ -118,6 +123,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         return MemorySpreadsheetContext.with(this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
                 this::spreadsheetIdFunctions,
+                this::spreadsheetIdNameToColor,
                 this::spreadsheetIdNumberToColor);
     }
 
@@ -143,6 +149,16 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         throw new UnsupportedOperationException(functionName + "(" + parameters + ")");
     }
 
+    private Function<String, Color> spreadsheetIdNameToColor(final SpreadsheetId spreadsheetId) {
+        this.checkSpreadsheetId(spreadsheetId);
+
+        return this::spreadsheetIdNameToColor0;
+    }
+
+    private Color spreadsheetIdNameToColor0(final String colorName) {
+        throw new UnsupportedOperationException("name to color " + colorName);
+    }
+    
     private Function<Integer, Color> spreadsheetIdNumberToColor(final SpreadsheetId spreadsheetId) {
         this.checkSpreadsheetId(spreadsheetId);
 
