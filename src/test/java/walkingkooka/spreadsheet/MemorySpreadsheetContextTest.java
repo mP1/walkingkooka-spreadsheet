@@ -46,7 +46,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdGeneralDecimalFormatPattern,
                 this::spreadsheetIdNameToColor,
-                this::spreadsheetIdNumberToColor);
+                this::spreadsheetIdNumberToColor,
+                this::spreadsheetIdWidth);
     }
 
     @Test
@@ -56,7 +57,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdGeneralDecimalFormatPattern,
                 this::spreadsheetIdNameToColor,
-                this::spreadsheetIdNumberToColor);
+                this::spreadsheetIdNumberToColor,
+                this::spreadsheetIdWidth);
     }
 
     @Test
@@ -66,7 +68,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 null,
                 this::spreadsheetIdGeneralDecimalFormatPattern,
                 this::spreadsheetIdNameToColor,
-                this::spreadsheetIdNumberToColor);
+                this::spreadsheetIdNumberToColor,
+                this::spreadsheetIdWidth);
     }
 
     @Test
@@ -76,7 +79,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdFunctions,
                 null,
                 this::spreadsheetIdNameToColor,
-                this::spreadsheetIdNumberToColor);
+                this::spreadsheetIdNumberToColor,
+                this::spreadsheetIdWidth);
     }
 
     @Test
@@ -86,7 +90,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdGeneralDecimalFormatPattern,
                 null,
-                this::spreadsheetIdNumberToColor);
+                this::spreadsheetIdNumberToColor,
+                this::spreadsheetIdWidth);
     }
 
     @Test
@@ -96,6 +101,18 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdGeneralDecimalFormatPattern,
                 this::spreadsheetIdNameToColor,
+                null,
+                this::spreadsheetIdWidth);
+    }
+
+    @Test
+    public void testWithNullSpreadsheetIdWidthFails() {
+        this.withFails(this::spreadsheetIdDateTimeContext,
+                this::spreadsheetIdDecimalNumberContext,
+                this::spreadsheetIdFunctions,
+                this::spreadsheetIdGeneralDecimalFormatPattern,
+                this::spreadsheetIdNameToColor,
+                this::spreadsheetIdNumberToColor,
                 null);
     }
 
@@ -104,14 +121,16 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                            final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                            final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
                            final Function<SpreadsheetId, Function<String, Color>> spreadsheetIdNameToColor,
-                           final Function<SpreadsheetId, Function<Integer, Color>> spreadsheetIdNumberToColor) {
+                           final Function<SpreadsheetId, Function<Integer, Color>> spreadsheetIdNumberToColor,
+                           final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
         assertThrows(NullPointerException.class, () -> {
             MemorySpreadsheetContext.with(spreadsheetIdDateTimeContext,
                     spreadsheetIdDecimalFormatContext,
                     spreadsheetIdFunctions,
                     spreadsheetIdGeneralDecimalFormatPattern,
                     spreadsheetIdNameToColor,
-                    spreadsheetIdNumberToColor);
+                    spreadsheetIdNumberToColor,
+                    spreadsheetIdWidth);
         });
     }
 
@@ -207,7 +226,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdGeneralDecimalFormatPattern,
                 this::spreadsheetIdNameToColor,
-                this::spreadsheetIdNumberToColor);
+                this::spreadsheetIdNumberToColor,
+                this::spreadsheetIdWidth);
     }
 
     private DateTimeContext spreadsheetIdDateTimeContext(final SpreadsheetId spreadsheetId) {
@@ -256,6 +276,12 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
     private Color spreadsheetIdNumberToColor0(final Integer colorNumber) {
         throw new UnsupportedOperationException("number to color " + colorNumber);
+    }
+
+    private Integer spreadsheetIdWidth(final SpreadsheetId spreadsheetId) {
+        this.checkSpreadsheetId(spreadsheetId);
+
+        return 15;
     }
 
     private void checkSpreadsheetId(final SpreadsheetId spreadsheetId) {

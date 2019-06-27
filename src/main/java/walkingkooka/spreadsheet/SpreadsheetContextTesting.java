@@ -75,6 +75,13 @@ public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends
         });
     }
 
+    @Test
+    default void testWidthNullSpreadsheetIdFails() {
+        assertThrows(NullPointerException.class, () -> {
+            this.createContext().width(null);
+        });
+    }
+
     // TypeNameTesting..................................................................................................
 
     @Override
