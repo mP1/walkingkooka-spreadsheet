@@ -48,7 +48,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final String generalDecimalFormatPattern,
                                                  final int width,
                                                  final Function<BigDecimal, Fraction> fractioner,
-                                                 final SpreadsheetTextFormatter<?> textFormatter) {
+                                                 final SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter) {
         return BasicSpreadsheetEngineContext.with(functions,
                 engine,
                 labelStore,
@@ -60,7 +60,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                 generalDecimalFormatPattern,
                 width,
                 fractioner,
-                textFormatter);
+                defaultSpreadsheetTextFormatter);
     }
 
     /**
