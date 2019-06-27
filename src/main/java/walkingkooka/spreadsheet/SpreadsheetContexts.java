@@ -17,7 +17,11 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.type.PublicStaticHelper;
+
+import java.util.function.Function;
 
 public final class SpreadsheetContexts implements PublicStaticHelper {
 
@@ -31,8 +35,10 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     /**
      * {@see MemorySpreadsheetContext}
      */
-    public static SpreadsheetContext memory() {
-        return MemorySpreadsheetContext.create();
+    public static SpreadsheetContext memory(final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
+                                            final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext) {
+        return MemorySpreadsheetContext.with(spreadsheetIdDateTimeContext,
+                spreadsheetIdDecimalFormatContext);
     }
 
     /**
