@@ -67,4 +67,9 @@ public interface SpreadsheetContext extends Context {
      * Factory that returns a {@link StoreRepository} for a given {@link SpreadsheetId}
      */
     StoreRepository storeRepository(final SpreadsheetId id);
+
+    /**
+     * Returns the width for a given {@link SpreadsheetId}
+     */
+    int width(final SpreadsheetId id);
 }
