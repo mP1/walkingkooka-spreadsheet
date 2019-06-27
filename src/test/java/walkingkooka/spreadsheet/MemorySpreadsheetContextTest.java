@@ -18,15 +18,30 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.store.Store;
-import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.repo.StoreRepository;
+
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class MemorySpreadsheetContextTest implements SpreadsheetContextTesting<MemorySpreadsheetContext> {
+
+    @Test
+    public void testDateTimeContext() {
+        assertNotEquals(null, this.createContext().dateTimeContext(this.spreadsheetId()));
+    }
+
+    @Test
+    public void testDecimalNumberContext() {
+        assertNotEquals(null, this.createContext().decimalNumberContext(this.spreadsheetId()));
+    }
 
     @Test
     public void testStoreRepositoryUnknownSpreadsheetId() {
@@ -84,7 +99,29 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
     @Override
     public MemorySpreadsheetContext createContext() {
-        return MemorySpreadsheetContext.create();
+        return MemorySpreadsheetContext.with(this::spreadsheetIdDateTimeContext, this::spreadsheetIdDecimalNumberContext);
+    }
+
+    private DateTimeContext spreadsheetIdDateTimeContext(final SpreadsheetId spreadsheetId) {
+        this.checkSpreadsheetId(spreadsheetId);
+
+        return DateTimeContexts.fake();
+    }
+
+    private DecimalNumberContext spreadsheetIdDecimalNumberContext(final SpreadsheetId spreadsheetId) {
+        this.checkSpreadsheetId(spreadsheetId);
+
+        return DecimalNumberContexts.fake();
+    }
+
+    private void checkSpreadsheetId(final SpreadsheetId spreadsheetId) {
+        Objects.requireNonNull(spreadsheetId, "spreadsheetId");
+
+        assertEquals(this.spreadsheetId(), spreadsheetId, "spreadsheetId");
+    }
+
+    private SpreadsheetId spreadsheetId() {
+        return SpreadsheetId.with(0x123456);
     }
 
     @Override
