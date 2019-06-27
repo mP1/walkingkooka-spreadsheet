@@ -24,8 +24,12 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.spreadsheet.store.repo.StoreRepository;
+import walkingkooka.tree.expression.ExpressionNodeName;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -41,6 +45,11 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     @Test
     public void testDecimalNumberContext() {
         assertNotEquals(null, this.createContext().decimalNumberContext(this.spreadsheetId()));
+    }
+
+    @Test
+    public void testFunctions() {
+        assertNotEquals(null, this.createContext().functions(this.spreadsheetId()));
     }
 
     @Test
@@ -100,7 +109,9 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
     @Override
     public MemorySpreadsheetContext createContext() {
-        return MemorySpreadsheetContext.with(this::spreadsheetIdDateTimeContext, this::spreadsheetIdDecimalNumberContext);
+        return MemorySpreadsheetContext.with(this::spreadsheetIdDateTimeContext,
+                this::spreadsheetIdDecimalNumberContext,
+                this::spreadsheetIdFunctions);
     }
 
     private DateTimeContext spreadsheetIdDateTimeContext(final SpreadsheetId spreadsheetId) {
@@ -113,6 +124,16 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         this.checkSpreadsheetId(spreadsheetId);
 
         return DecimalNumberContexts.fake();
+    }
+
+    private BiFunction<ExpressionNodeName, List<Object>, Object> spreadsheetIdFunctions(final SpreadsheetId spreadsheetId) {
+        this.checkSpreadsheetId(spreadsheetId);
+
+        return this::spreadsheetIdFunctions;
+    }
+
+    private Object spreadsheetIdFunctions(final ExpressionNodeName functionName, final List<Object> parameters) {
+        throw new UnsupportedOperationException(functionName + "(" + parameters + ")");
     }
 
     private void checkSpreadsheetId(final SpreadsheetId spreadsheetId) {

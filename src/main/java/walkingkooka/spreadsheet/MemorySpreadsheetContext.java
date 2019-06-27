@@ -28,9 +28,12 @@ import walkingkooka.spreadsheet.store.repo.StoreRepositories;
 import walkingkooka.spreadsheet.store.repo.StoreRepository;
 import walkingkooka.spreadsheet.store.security.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.store.security.SpreadsheetUserStores;
+import walkingkooka.tree.expression.ExpressionNodeName;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -43,19 +46,25 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
      * Creates a new empty {@link MemorySpreadsheetContext}
      */
     static MemorySpreadsheetContext with(final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
-                                         final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext) {
+                                         final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
+                                         final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions) {
         Objects.requireNonNull(spreadsheetIdDateTimeContext, "spreadsheetIdDateTimeContext");
         Objects.requireNonNull(spreadsheetIdDecimalFormatContext, "spreadsheetIdDecimalFormatContext");
+        Objects.requireNonNull(spreadsheetIdFunctions, "spreadsheetIdFunctions");
 
-        return new MemorySpreadsheetContext(spreadsheetIdDateTimeContext, spreadsheetIdDecimalFormatContext);
+        return new MemorySpreadsheetContext(spreadsheetIdDateTimeContext,
+                spreadsheetIdDecimalFormatContext,
+                spreadsheetIdFunctions);
     }
 
     private MemorySpreadsheetContext(final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
-                                     final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext) {
+                                     final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
+                                     final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions) {
         super();
 
         this.spreadsheetIdDateTimeContext = spreadsheetIdDateTimeContext;
         this.spreadsheetIdDecimalFormatContext = spreadsheetIdDecimalFormatContext;
+        this.spreadsheetIdFunctions = spreadsheetIdFunctions;
     }
 
     @Override
@@ -71,6 +80,13 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
     }
 
     private final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext;
+
+    @Override
+    public BiFunction<ExpressionNodeName, List<Object>, Object> functions(final SpreadsheetId id) {
+        return this.spreadsheetIdFunctions.apply(id);
+    }
+
+    private final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions;
 
     @Override
     public StoreRepository storeRepository(final SpreadsheetId id) {
