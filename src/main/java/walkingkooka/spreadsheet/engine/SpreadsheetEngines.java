@@ -39,18 +39,18 @@ public final class SpreadsheetEngines implements PublicStaticHelper {
      */
     public static SpreadsheetEngine basic(final SpreadsheetId id,
                                           final SpreadsheetCellStore cellStore,
-                                          final SpreadsheetLabelStore labelStore,
-                                          final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> conditionalFormattingRules,
                                           final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferencesStore,
+                                          final SpreadsheetLabelStore labelStore,
                                           final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore,
-                                          final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore) {
+                                          final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore,
+                                          final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRuleStore) {
         return BasicSpreadsheetEngine.with(id,
                 cellStore,
-                labelStore,
-                conditionalFormattingRules,
                 cellReferencesStore,
+                labelStore,
                 labelReferencesStore,
-                rangeToCellStore);
+                rangeToCellStore,
+                rangeToConditionalFormattingRuleStore);
     }
 
     /**
