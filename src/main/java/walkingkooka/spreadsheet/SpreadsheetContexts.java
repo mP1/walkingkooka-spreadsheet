@@ -19,8 +19,11 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.tree.expression.ExpressionNodeName;
 import walkingkooka.type.PublicStaticHelper;
 
+import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public final class SpreadsheetContexts implements PublicStaticHelper {
@@ -36,9 +39,11 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
      * {@see MemorySpreadsheetContext}
      */
     public static SpreadsheetContext memory(final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
-                                            final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext) {
+                                            final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
+                                            final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions) {
         return MemorySpreadsheetContext.with(spreadsheetIdDateTimeContext,
-                spreadsheetIdDecimalFormatContext);
+                spreadsheetIdDecimalFormatContext,
+                spreadsheetIdFunctions);
     }
 
     /**
