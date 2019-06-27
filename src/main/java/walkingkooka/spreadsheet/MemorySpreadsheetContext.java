@@ -21,6 +21,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStores;
@@ -48,6 +49,7 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
      */
     static MemorySpreadsheetContext with(final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                                          final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
+                                         final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter,
                                          final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                                          final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
                                          final Function<SpreadsheetId, Function<String, Color> > spreadsheetIdNameToColor,
@@ -55,6 +57,7 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
                                          final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
         Objects.requireNonNull(spreadsheetIdDateTimeContext, "spreadsheetIdDateTimeContext");
         Objects.requireNonNull(spreadsheetIdDecimalFormatContext, "spreadsheetIdDecimalFormatContext");
+        Objects.requireNonNull(spreadsheetIdDefaultSpreadsheetTextFormatter, "spreadsheetIdDefaultSpreadsheetTextFormatter");
         Objects.requireNonNull(spreadsheetIdFunctions, "spreadsheetIdFunctions");
         Objects.requireNonNull(spreadsheetIdGeneralDecimalFormatPattern, "spreadsheetIdGeneralDecimalFormatPattern");
         Objects.requireNonNull(spreadsheetIdNameToColor, "spreadsheetIdNameToColor");
@@ -63,6 +66,7 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
 
         return new MemorySpreadsheetContext(spreadsheetIdDateTimeContext,
                 spreadsheetIdDecimalFormatContext,
+                spreadsheetIdDefaultSpreadsheetTextFormatter,
                 spreadsheetIdFunctions,
                 spreadsheetIdGeneralDecimalFormatPattern,
                 spreadsheetIdNameToColor,
@@ -72,6 +76,7 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
 
     private MemorySpreadsheetContext(final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                                      final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
+                                     final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter,
                                      final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                                      final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
                                      final Function<SpreadsheetId, Function<String, Color> > spreadsheetIdNameToColor,
@@ -81,6 +86,7 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
 
         this.spreadsheetIdDateTimeContext = spreadsheetIdDateTimeContext;
         this.spreadsheetIdDecimalFormatContext = spreadsheetIdDecimalFormatContext;
+        this.spreadsheetIdDefaultSpreadsheetTextFormatter = spreadsheetIdDefaultSpreadsheetTextFormatter;
         this.spreadsheetIdFunctions = spreadsheetIdFunctions;
         this.spreadsheetIdGeneralDecimalFormatPattern = spreadsheetIdGeneralDecimalFormatPattern;
         this.spreadsheetIdNameToColor = spreadsheetIdNameToColor;
@@ -101,6 +107,13 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
     }
 
     private final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext;
+
+    @Override
+    public SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter(final SpreadsheetId id) {
+        return this.spreadsheetIdDefaultSpreadsheetTextFormatter.apply(id);
+    }
+
+    private final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter;
 
     @Override
     public BiFunction<ExpressionNodeName, List<Object>, Object> functions(final SpreadsheetId id) {
