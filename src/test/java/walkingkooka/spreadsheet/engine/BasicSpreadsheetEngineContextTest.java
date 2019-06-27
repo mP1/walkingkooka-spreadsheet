@@ -66,7 +66,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     GENERAL_DECIMAL_FORMAT_PATTERN,
                     WIDTH,
                     FRACTIONER,
-                    this.textFormatter());
+                    this.defaultSpreadsheetTextFormatter());
         });
     }
 
@@ -84,7 +84,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     GENERAL_DECIMAL_FORMAT_PATTERN,
                     WIDTH,
                     FRACTIONER,
-                    this.textFormatter());
+                    this.defaultSpreadsheetTextFormatter());
         });
     }
 
@@ -102,7 +102,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     GENERAL_DECIMAL_FORMAT_PATTERN,
                     WIDTH,
                     FRACTIONER,
-                    this.textFormatter());
+                    this.defaultSpreadsheetTextFormatter());
         });
     }
 
@@ -120,7 +120,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     GENERAL_DECIMAL_FORMAT_PATTERN,
                     WIDTH,
                     FRACTIONER,
-                    this.textFormatter());
+                    this.defaultSpreadsheetTextFormatter());
         });
     }
 
@@ -138,7 +138,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     GENERAL_DECIMAL_FORMAT_PATTERN,
                     WIDTH,
                     FRACTIONER,
-                    this.textFormatter());
+                    this.defaultSpreadsheetTextFormatter());
         });
     }
 
@@ -156,7 +156,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     GENERAL_DECIMAL_FORMAT_PATTERN,
                     WIDTH,
                     FRACTIONER,
-                    this.textFormatter());
+                    this.defaultSpreadsheetTextFormatter());
         });
     }
 
@@ -174,7 +174,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     GENERAL_DECIMAL_FORMAT_PATTERN,
                     WIDTH,
                     FRACTIONER,
-                    this.textFormatter());
+                    this.defaultSpreadsheetTextFormatter());
         });
     }
 
@@ -192,7 +192,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     GENERAL_DECIMAL_FORMAT_PATTERN,
                     WIDTH,
                     FRACTIONER,
-                    this.textFormatter());
+                    this.defaultSpreadsheetTextFormatter());
         });
     }
 
@@ -210,7 +210,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     null,
                     WIDTH,
                     FRACTIONER,
-                    this.textFormatter());
+                    this.defaultSpreadsheetTextFormatter());
         });
     }
 
@@ -228,7 +228,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     GENERAL_DECIMAL_FORMAT_PATTERN,
                     0,
                     FRACTIONER,
-                    this.textFormatter());
+                    this.defaultSpreadsheetTextFormatter());
         });
     }
 
@@ -246,12 +246,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     GENERAL_DECIMAL_FORMAT_PATTERN,
                     WIDTH,
                     null,
-                    this.textFormatter());
+                    this.defaultSpreadsheetTextFormatter());
         });
     }
 
     @Test
-    public void testWithNullTextFormatterFails() {
+    public void testWithNullDefaultSpreadsheetTextFormatterFails() {
         assertThrows(NullPointerException.class, () -> {
             BasicSpreadsheetEngineContext.with(this.functions(),
                     this.engine(),
@@ -361,7 +361,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createContext(), "decimalNumberContext=\"C\" 'D' 'E' 'G' 'M' 'P' 'L' precision=7 roundingMode=HALF_EVEN converter=value instanceof target type. | Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean fractioner=Fractioner123 textFormatter=SpreadsheetTextFormatter123");
+        this.toStringAndCheck(this.createContext(), "decimalNumberContext=\"C\" 'D' 'E' 'G' 'M' 'P' 'L' precision=7 roundingMode=HALF_EVEN converter=value instanceof target type. | Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean fractioner=Fractioner123 defaultSpreadsheetTextFormatter=SpreadsheetTextFormatter123");
     }
 
     @Override
@@ -377,7 +377,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 GENERAL_DECIMAL_FORMAT_PATTERN,
                 WIDTH,
                 FRACTIONER,
-                this.textFormatter());
+                this.defaultSpreadsheetTextFormatter());
     }
 
     private BiFunction<ExpressionNodeName, List<Object>, Object> functions() {
@@ -459,7 +459,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         }
     };
 
-    private SpreadsheetTextFormatter<?> textFormatter() {
+    private SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter() {
         return new FakeSpreadsheetTextFormatter() {
             @Override
             public String toString() {
