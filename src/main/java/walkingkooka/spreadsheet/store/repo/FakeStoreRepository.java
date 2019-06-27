@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.store.repo;
 
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
@@ -59,7 +60,12 @@ public class FakeStoreRepository implements StoreRepository, Fake {
     }
 
     @Override
-    public SpreadsheetRangeStore ranges() {
+    public SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules() {
         throw new UnsupportedOperationException();
     }
 

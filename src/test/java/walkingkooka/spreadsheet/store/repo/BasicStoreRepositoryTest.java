@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.store.repo;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
@@ -44,7 +45,8 @@ public final class BasicStoreRepositoryTest implements StoreRepositoryTesting<Ba
                 this.groups(),
                 this.labels(),
                 this.labelReferences(),
-                this.ranges(),
+                this.rangeToCells(),
+                this.rangeToConditionalFormattingRules(),
                 this.users());
     }
 
@@ -55,7 +57,8 @@ public final class BasicStoreRepositoryTest implements StoreRepositoryTesting<Ba
                 this.groups(),
                 this.labels(),
                 this.labelReferences(),
-                this.ranges(),
+                this.rangeToCells(),
+                this.rangeToConditionalFormattingRules(),
                 this.users());
     }
 
@@ -66,7 +69,8 @@ public final class BasicStoreRepositoryTest implements StoreRepositoryTesting<Ba
                 null,
                 this.labels(),
                 this.labelReferences(),
-                this.ranges(),
+                this.rangeToCells(),
+                this.rangeToConditionalFormattingRules(),
                 this.users());
     }
 
@@ -77,7 +81,8 @@ public final class BasicStoreRepositoryTest implements StoreRepositoryTesting<Ba
                 this.groups(),
                 null,
                 this.labelReferences(),
-                this.ranges(),
+                this.rangeToCells(),
+                this.rangeToConditionalFormattingRules(),
                 this.users());
     }
 
@@ -88,17 +93,31 @@ public final class BasicStoreRepositoryTest implements StoreRepositoryTesting<Ba
                 this.groups(),
                 this.labels(),
                 null,
-                this.ranges(),
+                this.rangeToCells(),
+                this.rangeToConditionalFormattingRules(),
                 this.users());
     }
 
     @Test
-    public void testWithNullRangesFails() {
+    public void testWithNullRangeToCellsFails() {
         this.withFails(this.cells(),
                 this.cellReferences(),
                 this.groups(),
                 this.labels(),
                 this.labelReferences(),
+                null,
+                this.rangeToConditionalFormattingRules(),
+                this.users());
+    }
+
+    @Test
+    public void testWithNullRangeToConditionalFormattingRulesFails() {
+        this.withFails(this.cells(),
+                this.cellReferences(),
+                this.groups(),
+                this.labels(),
+                this.labelReferences(),
+                this.rangeToCells(),
                 null,
                 this.users());
     }
@@ -110,7 +129,8 @@ public final class BasicStoreRepositoryTest implements StoreRepositoryTesting<Ba
                 this.groups(),
                 this.labels(),
                 this.labelReferences(),
-                this.ranges(),
+                this.rangeToCells(),
+                this.rangeToConditionalFormattingRules(),
                 null);
     }
 
@@ -119,10 +139,11 @@ public final class BasicStoreRepositoryTest implements StoreRepositoryTesting<Ba
                            final SpreadsheetGroupStore groups,
                            final SpreadsheetLabelStore labels,
                            final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences,
-                           final SpreadsheetRangeStore ranges,
+                           final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells,
+                           final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
                            final SpreadsheetUserStore users) {
         assertThrows(NullPointerException.class, () -> {
-            BasicStoreRepository.with(cells, cellReferences, groups, labels, labelReferences, ranges, users);
+            BasicStoreRepository.with(cells, cellReferences, groups, labels, labelReferences, rangeToCells, rangeToConditionalFormattingRules, users);
         });
     }
 
@@ -133,7 +154,8 @@ public final class BasicStoreRepositoryTest implements StoreRepositoryTesting<Ba
         final SpreadsheetGroupStore groups = this.groups();
         final SpreadsheetLabelStore labels = this.labels();
         final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences = this.labelReferences();
-        final SpreadsheetRangeStore ranges = this.ranges();
+        final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells = this.rangeToCells();
+        final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules = this.rangeToConditionalFormattingRules();
         final SpreadsheetUserStore users = this.users();
 
         this.toStringAndCheck(BasicStoreRepository.with(cells,
@@ -141,9 +163,10 @@ public final class BasicStoreRepositoryTest implements StoreRepositoryTesting<Ba
                 groups,
                 labels,
                 labelReferences,
-                ranges,
+                rangeToCells,
+                rangeToConditionalFormattingRules,
                 users),
-                cells + " " + cellReferences + " " + groups + " " + labels + " " + labelReferences + " " + ranges + " " + users);
+                cells + " " + cellReferences + " " + groups + " " + labels + " " + labelReferences + " " + rangeToCells + " " + rangeToConditionalFormattingRules + " " + users);
     }
 
     @Override
@@ -153,7 +176,8 @@ public final class BasicStoreRepositoryTest implements StoreRepositoryTesting<Ba
                 this.groups(),
                 this.labels(),
                 this.labelReferences(),
-                this.ranges(),
+                this.rangeToCells(),
+                this.rangeToConditionalFormattingRules(),
                 this.users());
     }
 
@@ -177,7 +201,11 @@ public final class BasicStoreRepositoryTest implements StoreRepositoryTesting<Ba
         return SpreadsheetReferenceStores.fake();
     }
 
-    private SpreadsheetRangeStore ranges() {
+    private SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells() {
+        return SpreadsheetRangeStores.fake();
+    }
+
+    private SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules() {
         return SpreadsheetRangeStores.fake();
     }
 
