@@ -22,11 +22,15 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.FakeDateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 
 import java.math.MathContext;
+import java.text.DateFormatSymbols;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -166,18 +170,24 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createContext(),
-                "numberToColor=1=#123456 nameToColor=bingo=#123456 generalDecimalFormatPattern=\"##.#\" width=1 converter=Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean dateTimeContext=DateTimeContext123 decimalNumberContext=\"$$\" '!' 'E' 'G' 'M' 'P' 'L' precision=7 roundingMode=HALF_EVEN");
+        final DateFormatSymbols symbols = DateFormatSymbols.getInstance(Locale.ENGLISH);
+
+        this.toStringAndCheck(this.createContext(symbols),
+                "numberToColor=1=#123456 nameToColor=bingo=#123456 generalDecimalFormatPattern=\"##.#\" width=1 converter=Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean dateTimeContext=" + symbols + " decimalNumberContext=\"$$\" '!' 'E' 'G' 'M' 'P' 'L' precision=7 roundingMode=HALF_EVEN");
     }
 
     @Override
     public BasicSpreadsheetTextFormatContext createContext() {
+        return this.createContext(this.dateFormatSymbols());
+    }
+
+    private BasicSpreadsheetTextFormatContext createContext(final DateFormatSymbols dateFormatSymbols) {
         return BasicSpreadsheetTextFormatContext.with(this.numberToColor(),
                 this.nameToColor(),
                 GENERAL_DECIMAL_FORMAT_PATTERN,
                 WIDTH,
                 CONVERTER,
-                dateTimeContext(),
+                DateTimeContexts.dateFormatSymbols(dateFormatSymbols),
                 decimalNumberContext());
     }
 
@@ -222,12 +232,11 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
     private final Converter CONVERTER = Converters.truthyNumberBoolean();
 
     private DateTimeContext dateTimeContext() {
-        return new FakeDateTimeContext() {
-            @Override
-            public String toString() {
-                return "DateTimeContext123";
-            }
-        };
+        return DateTimeContexts.dateFormatSymbols(this.dateFormatSymbols());
+    }
+
+    private DateFormatSymbols dateFormatSymbols() {
+        return DateFormatSymbols.getInstance(Locale.ENGLISH);
     }
 
     private DecimalNumberContext decimalNumberContext() {
