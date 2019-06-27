@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.color.Color;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContext;
@@ -50,6 +51,11 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     @Test
     public void testFunctions() {
         assertNotEquals(null, this.createContext().functions(this.spreadsheetId()));
+    }
+
+    @Test
+    public void testNumberToColor() {
+        assertNotEquals(null, this.createContext().numberToColor(this.spreadsheetId()));
     }
 
     @Test
@@ -111,7 +117,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     public MemorySpreadsheetContext createContext() {
         return MemorySpreadsheetContext.with(this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
-                this::spreadsheetIdFunctions);
+                this::spreadsheetIdFunctions,
+                this::spreadsheetIdNumberToColor);
     }
 
     private DateTimeContext spreadsheetIdDateTimeContext(final SpreadsheetId spreadsheetId) {
@@ -134,6 +141,16 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
     private Object spreadsheetIdFunctions(final ExpressionNodeName functionName, final List<Object> parameters) {
         throw new UnsupportedOperationException(functionName + "(" + parameters + ")");
+    }
+
+    private Function<Integer, Color> spreadsheetIdNumberToColor(final SpreadsheetId spreadsheetId) {
+        this.checkSpreadsheetId(spreadsheetId);
+
+        return this::spreadsheetIdNumberToColor0;
+    }
+
+    private Color spreadsheetIdNumberToColor0(final Integer colorNumber) {
+        throw new UnsupportedOperationException("number to color " + colorNumber);
     }
 
     private void checkSpreadsheetId(final SpreadsheetId spreadsheetId) {
