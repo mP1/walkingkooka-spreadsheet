@@ -20,6 +20,10 @@ package walkingkooka.spreadsheet;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.store.repo.StoreRepository;
+import walkingkooka.tree.expression.ExpressionNodeName;
+
+import java.util.List;
+import java.util.function.BiFunction;
 
 public class FakeSpreadsheetContext implements SpreadsheetContext {
     @Override
@@ -29,6 +33,11 @@ public class FakeSpreadsheetContext implements SpreadsheetContext {
 
     @Override
     public DecimalNumberContext decimalNumberContext(final SpreadsheetId id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public BiFunction<ExpressionNodeName, List<Object>, Object> functions(final SpreadsheetId id) {
         throw new UnsupportedOperationException();
     }
 
