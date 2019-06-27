@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.store.repo;
 
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
@@ -58,9 +59,14 @@ public interface StoreRepository {
     SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences();
 
     /**
-     * The {@lin SpreadsheetRangeStore}
+     * A {@lin SpreadsheetRangeStore} that maps ranges to cells
      */
-    SpreadsheetRangeStore ranges();
+    SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells();
+
+    /**
+     * A {@lin SpreadsheetRangeStore} that maps ranges to {@link SpreadsheetConditionalFormattingRule}
+     */
+    SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules();
 
     /**
      * A {@link SpreadsheetUserStore} holding users.

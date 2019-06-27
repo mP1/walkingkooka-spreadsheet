@@ -56,7 +56,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         this.countAndCheck(repository.groups(), 0);
         this.countAndCheck(repository.labels(), 0);
         this.countAndCheck(repository.labelReferences(), 0);
-        this.countAndCheck(repository.ranges(), 0);
+        this.countAndCheck(repository.rangeToCells(), 0);
+        this.countAndCheck(repository.rangeToConditionalFormattingRules(), 0);
         this.countAndCheck(repository.users(), 0);
 
         repository.cells().save(SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference("A1"), SpreadsheetFormula.with("1+2")));
@@ -94,7 +95,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         final MemorySpreadsheetContext context = this.createContext();
         context.storeRepository(SpreadsheetId.with(111));
 
-        this.toStringAndCheck(context, "{111=[] {} [] [] {} {} {}}");
+        this.toStringAndCheck(context, "{111=[] {} [] [] {} {} {} {}}");
     }
 
     @Override
