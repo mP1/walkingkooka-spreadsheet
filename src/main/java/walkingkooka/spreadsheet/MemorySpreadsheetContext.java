@@ -17,25 +17,47 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.Fraction;
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.UrlPathName;
+import walkingkooka.net.http.server.HttpRequest;
+import walkingkooka.net.http.server.HttpRequestAttribute;
+import walkingkooka.net.http.server.HttpResponse;
+import walkingkooka.net.http.server.hateos.HateosContentType;
+import walkingkooka.routing.Router;
+import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
+import walkingkooka.spreadsheet.hateos.SpreadsheetHateosHandlers;
+import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
+import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStores;
+import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStores;
+import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStores;
 import walkingkooka.spreadsheet.store.repo.StoreRepositories;
 import walkingkooka.spreadsheet.store.repo.StoreRepository;
 import walkingkooka.spreadsheet.store.security.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.store.security.SpreadsheetUserStores;
+import walkingkooka.tree.Node;
 import walkingkooka.tree.expression.ExpressionNodeName;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -43,20 +65,26 @@ import java.util.function.Function;
  * A {@link SpreadsheetContext} that creates a new {@link StoreRepository} for unknown {@link SpreadsheetId}.
  * There is no way to delete existing spreadsheets.
  */
-final class MemorySpreadsheetContext implements SpreadsheetContext {
+final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements SpreadsheetContext {
 
     /**
      * Creates a new empty {@link MemorySpreadsheetContext}
      */
-    static MemorySpreadsheetContext with(final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
-                                         final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
-                                         final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
-                                         final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter,
-                                         final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
-                                         final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
-                                         final Function<SpreadsheetId, Function<String, Color>> spreadsheetIdNameToColor,
-                                         final Function<SpreadsheetId, Function<Integer, Color>> spreadsheetIdNumberToColor,
-                                         final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
+    static <N extends Node<N, ?, ?, ?>> MemorySpreadsheetContext with(final AbsoluteUrl base,
+                                                                      final HateosContentType<N> contentType,
+                                                                      final Function<BigDecimal, Fraction> fractioner,
+                                                                      final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
+                                                                      final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
+                                                                      final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
+                                                                      final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter,
+                                                                      final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
+                                                                      final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
+                                                                      final Function<SpreadsheetId, Function<String, Color>> spreadsheetIdNameToColor,
+                                                                      final Function<SpreadsheetId, Function<Integer, Color>> spreadsheetIdNumberToColor,
+                                                                      final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
+        Objects.requireNonNull(base, "base");
+        Objects.requireNonNull(contentType, "contentType");
+        Objects.requireNonNull(fractioner, "fractioner");
         Objects.requireNonNull(spreadsheetIdConverter, "spreadsheetIdConverter");
         Objects.requireNonNull(spreadsheetIdDateTimeContext, "spreadsheetIdDateTimeContext");
         Objects.requireNonNull(spreadsheetIdDecimalFormatContext, "spreadsheetIdDecimalFormatContext");
@@ -67,7 +95,10 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
         Objects.requireNonNull(spreadsheetIdNumberToColor, "spreadsheetIdNumberToColor");
         Objects.requireNonNull(spreadsheetIdWidth, "spreadsheetIdWidth");
 
-        return new MemorySpreadsheetContext(spreadsheetIdConverter,
+        return new MemorySpreadsheetContext<>(base,
+                contentType,
+                fractioner,
+                spreadsheetIdConverter,
                 spreadsheetIdDateTimeContext,
                 spreadsheetIdDecimalFormatContext,
                 spreadsheetIdDefaultSpreadsheetTextFormatter,
@@ -78,7 +109,10 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
                 spreadsheetIdWidth);
     }
 
-    private MemorySpreadsheetContext(final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
+    private MemorySpreadsheetContext(final AbsoluteUrl base,
+                                     final HateosContentType<N> contentType,
+                                     final Function<BigDecimal, Fraction> fractioner,
+                                     final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
                                      final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                                      final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
                                      final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter,
@@ -88,6 +122,10 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
                                      final Function<SpreadsheetId, Function<Integer, Color>> spreadsheetIdNumberToColor,
                                      final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
         super();
+
+        this.base = base;
+        this.contentType = contentType;
+        this.fractioner = fractioner;
 
         this.spreadsheetIdConverter = spreadsheetIdConverter;
         this.spreadsheetIdDateTimeContext = spreadsheetIdDateTimeContext;
@@ -142,6 +180,90 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
 
     private final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern;
 
+    // hateosRouter.....................................................................................................
+
+    @Override
+    public Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> hateosRouter(final SpreadsheetId id) {
+        SpreadsheetContext.checkId(id);
+
+        Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> hateosRouter = this.idToHateosRouter.get(id);
+        if (null == hateosRouter) {
+            hateosRouter = this.createHateosHandler(id);
+
+            this.idToHateosRouter.put(id, hateosRouter);
+        }
+        return hateosRouter;
+    }
+
+    private final Map<SpreadsheetId, Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>>> idToHateosRouter = Maps.sorted();
+
+    /**
+     * Factory that creates a {@link Router} for the given {@link SpreadsheetId spreadsheet}.
+     */
+    private Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> createHateosHandler(final SpreadsheetId id) {
+        final StoreRepository storeRepository = this.storeRepository(id);
+
+        final SpreadsheetCellStore cellStore = storeRepository.cells();
+        final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferencesStore = storeRepository.cellReferences();
+        final SpreadsheetLabelStore labelStore = storeRepository.labels();
+        final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore = storeRepository.labelReferences();
+        final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore = storeRepository.rangeToCells();
+        final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules = storeRepository.rangeToConditionalFormattingRules();
+
+        final SpreadsheetEngine engine = SpreadsheetEngines.basic(id,
+                cellStore,
+                cellReferencesStore,
+                labelStore,
+                labelReferencesStore,
+                rangeToCellStore,
+                rangeToConditionalFormattingRules);
+
+        final Converter converter = this.spreadsheetIdConverter.apply(id);
+        final BiFunction<ExpressionNodeName, List<Object>, Object> functions = this.spreadsheetIdFunctions.apply(id);
+        final Function<Integer, Color> numberToColor = this.spreadsheetIdNumberToColor.apply(id);
+        final Function<String, Color> nameToColor = this.spreadsheetIdNameToColor.apply(id);
+        final String generalDecimalFormatPattern = this.spreadsheetIdGeneralDecimalFormatPattern.apply(id);
+        final int width = this.spreadsheetIdWidth.apply(id);
+        final Function<BigDecimal, Fraction> fractioner = this.fractioner;
+        final SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter = this.defaultSpreadsheetTextFormatter(id);
+
+        final SpreadsheetEngineContext engineContext = SpreadsheetEngineContexts.basic(functions,
+                engine,
+                labelStore,
+                converter,
+                this.decimalNumberContext(id),
+                this.dateTimeContext(id),
+                numberToColor,
+                nameToColor,
+                generalDecimalFormatPattern,
+                width,
+                fractioner,
+                defaultSpreadsheetTextFormatter);
+
+        return SpreadsheetHateosHandlers.router(this.baseWithSpreadsheetId(id),
+                this.contentType,
+                SpreadsheetHateosHandlers.copyCells(engine, engineContext),
+                SpreadsheetHateosHandlers.deleteColumns(engine, engineContext),
+                SpreadsheetHateosHandlers.deleteRows(engine, engineContext),
+                SpreadsheetHateosHandlers.insertColumns(engine, engineContext),
+                SpreadsheetHateosHandlers.insertRows(engine, engineContext),
+                SpreadsheetHateosHandlers.loadCell(engine, engineContext),
+                SpreadsheetHateosHandlers.saveCell(engine, engineContext));
+    }
+
+    /**
+     * Appends the spreadsheet id to the {@link #base}.
+     */
+    private AbsoluteUrl baseWithSpreadsheetId(final SpreadsheetId id) {
+        final AbsoluteUrl base = this.base;
+        return base.setPath(base.path()
+                .append(UrlPathName.with(String.valueOf(id.value()))));
+    }
+
+    private final AbsoluteUrl base;
+    private final HateosContentType<N> contentType;
+    private final Function<BigDecimal, Fraction> fractioner;
+
     @Override
     public Function<String, Color> nameToColor(final SpreadsheetId id) {
         return this.spreadsheetIdNameToColor.apply(id);
@@ -190,6 +312,9 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
 
     @Override
     public String toString() {
-        return this.idToStoreRepository.toString();
+        return ToStringBuilder.empty()
+                .label("base").value(this.base)
+                .label("contentType").value(this.contentType)
+                .build();
     }
 }
