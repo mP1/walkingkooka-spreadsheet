@@ -17,9 +17,21 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.store.repo.StoreRepository;
 
 public class FakeSpreadsheetContext implements SpreadsheetContext {
+    @Override
+    public DateTimeContext dateTimeContext(final SpreadsheetId id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public DecimalNumberContext decimalNumberContext(final SpreadsheetId id) {
+        throw new UnsupportedOperationException();
+    }
+
     @Override
     public StoreRepository storeRepository(final SpreadsheetId id) {
         throw new UnsupportedOperationException();

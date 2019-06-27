@@ -27,6 +27,20 @@ public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends
         TypeNameTesting<C> {
 
     @Test
+    default void testDateTimeContextNullSpreadsheetIdFails() {
+        assertThrows(NullPointerException.class, () -> {
+            this.createContext().dateTimeContext(null);
+        });
+    }
+
+    @Test
+    default void testDecimalNumberContextNullSpreadsheetIdFails() {
+        assertThrows(NullPointerException.class, () -> {
+            this.createContext().decimalNumberContext(null);
+        });
+    }
+
+    @Test
     default void testStoreRepositoryNullSpreadsheetIdFails() {
         assertThrows(NullPointerException.class, () -> {
             this.createContext().storeRepository(null);
