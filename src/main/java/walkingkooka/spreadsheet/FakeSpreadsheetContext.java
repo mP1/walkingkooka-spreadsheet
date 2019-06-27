@@ -44,6 +44,11 @@ public class FakeSpreadsheetContext implements SpreadsheetContext {
     }
 
     @Override
+    public Function<String, Color> nameToColor(final SpreadsheetId id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Function<Integer, Color> numberToColor(final SpreadsheetId id) {
         throw new UnsupportedOperationException();
     }
