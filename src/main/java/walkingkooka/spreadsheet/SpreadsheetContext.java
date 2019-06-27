@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.Context;
+import walkingkooka.color.Color;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.store.repo.StoreRepository;
@@ -25,6 +26,7 @@ import walkingkooka.tree.expression.ExpressionNodeName;
 
 import java.util.List;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * A {@link Context} for spreadsheets.
@@ -45,6 +47,11 @@ public interface SpreadsheetContext extends Context {
      * Returns a {@link BiFunction} which knows available functions for the given {@link SpreadsheetId}.
      */
     BiFunction<ExpressionNodeName, List<Object>, Object> functions(final SpreadsheetId id);
+
+    /**
+     * Returns a {@link Function} which maps color number to {@link Color} for the given {@link SpreadsheetId}.
+     */
+    Function<Integer, Color> numberToColor(final SpreadsheetId id);
 
     /**
      * Factory that returns a {@link StoreRepository} for a given {@link SpreadsheetId}

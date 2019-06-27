@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.collect.map.Maps;
+import walkingkooka.color.Color;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
@@ -47,24 +48,29 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
      */
     static MemorySpreadsheetContext with(final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                                          final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
-                                         final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions) {
+                                         final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
+                                         final Function<SpreadsheetId, Function<Integer, Color> > spreadsheetIdNumberToColor) {
         Objects.requireNonNull(spreadsheetIdDateTimeContext, "spreadsheetIdDateTimeContext");
         Objects.requireNonNull(spreadsheetIdDecimalFormatContext, "spreadsheetIdDecimalFormatContext");
         Objects.requireNonNull(spreadsheetIdFunctions, "spreadsheetIdFunctions");
+        Objects.requireNonNull(spreadsheetIdNumberToColor, "spreadsheetIdNumberToColor");
 
         return new MemorySpreadsheetContext(spreadsheetIdDateTimeContext,
                 spreadsheetIdDecimalFormatContext,
-                spreadsheetIdFunctions);
+                spreadsheetIdFunctions,
+                spreadsheetIdNumberToColor);
     }
 
     private MemorySpreadsheetContext(final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                                      final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
-                                     final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions) {
+                                     final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
+                                     final Function<SpreadsheetId, Function<Integer, Color> > spreadsheetIdNumberToColor) {
         super();
 
         this.spreadsheetIdDateTimeContext = spreadsheetIdDateTimeContext;
         this.spreadsheetIdDecimalFormatContext = spreadsheetIdDecimalFormatContext;
         this.spreadsheetIdFunctions = spreadsheetIdFunctions;
+        this.spreadsheetIdNumberToColor = spreadsheetIdNumberToColor;
     }
 
     @Override
@@ -87,6 +93,13 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
     }
 
     private final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions;
+
+    @Override
+    public Function<Integer, Color> numberToColor(final SpreadsheetId id) {
+        return this.spreadsheetIdNumberToColor.apply(id);
+    }
+
+    private final Function<SpreadsheetId, Function<Integer, Color> > spreadsheetIdNumberToColor;
 
     @Override
     public StoreRepository storeRepository(final SpreadsheetId id) {
