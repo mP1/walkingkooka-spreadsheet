@@ -21,11 +21,16 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.net.http.server.HttpRequest;
+import walkingkooka.net.http.server.HttpRequestAttribute;
+import walkingkooka.net.http.server.HttpResponse;
+import walkingkooka.routing.Router;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
 import walkingkooka.spreadsheet.store.repo.StoreRepository;
 import walkingkooka.tree.expression.ExpressionNodeName;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -58,6 +63,11 @@ public class FakeSpreadsheetContext implements SpreadsheetContext {
 
     @Override
     public String generalDecimalFormatPattern(final SpreadsheetId id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> hateosRouter(final SpreadsheetId id) {
         throw new UnsupportedOperationException();
     }
 
