@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.color.Color;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.store.repo.StoreRepository;
@@ -24,6 +25,7 @@ import walkingkooka.tree.expression.ExpressionNodeName;
 
 import java.util.List;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public class FakeSpreadsheetContext implements SpreadsheetContext {
     @Override
@@ -38,6 +40,11 @@ public class FakeSpreadsheetContext implements SpreadsheetContext {
 
     @Override
     public BiFunction<ExpressionNodeName, List<Object>, Object> functions(final SpreadsheetId id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Function<Integer, Color> numberToColor(final SpreadsheetId id) {
         throw new UnsupportedOperationException();
     }
 

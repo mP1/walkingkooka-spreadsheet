@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.color.Color;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.tree.expression.ExpressionNodeName;
@@ -40,10 +41,12 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
      */
     public static SpreadsheetContext memory(final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                                             final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
-                                            final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions) {
+                                            final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
+                                            final Function<SpreadsheetId, Function<Integer, Color> > spreadsheetIdNumberToColor) {
         return MemorySpreadsheetContext.with(spreadsheetIdDateTimeContext,
                 spreadsheetIdDecimalFormatContext,
-                spreadsheetIdFunctions);
+                spreadsheetIdFunctions,
+                spreadsheetIdNumberToColor);
     }
 
     /**
