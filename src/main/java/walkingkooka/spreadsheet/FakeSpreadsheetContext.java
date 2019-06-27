@@ -62,4 +62,9 @@ public class FakeSpreadsheetContext implements SpreadsheetContext {
     public StoreRepository storeRepository(final SpreadsheetId id) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public int width(final SpreadsheetId id) {
+        throw new UnsupportedOperationException();
+    }
 }

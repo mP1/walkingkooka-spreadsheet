@@ -51,20 +51,23 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
                                          final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                                          final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
                                          final Function<SpreadsheetId, Function<String, Color> > spreadsheetIdNameToColor,
-                                         final Function<SpreadsheetId, Function<Integer, Color> > spreadsheetIdNumberToColor) {
+                                         final Function<SpreadsheetId, Function<Integer, Color> > spreadsheetIdNumberToColor,
+                                         final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
         Objects.requireNonNull(spreadsheetIdDateTimeContext, "spreadsheetIdDateTimeContext");
         Objects.requireNonNull(spreadsheetIdDecimalFormatContext, "spreadsheetIdDecimalFormatContext");
         Objects.requireNonNull(spreadsheetIdFunctions, "spreadsheetIdFunctions");
         Objects.requireNonNull(spreadsheetIdGeneralDecimalFormatPattern, "spreadsheetIdGeneralDecimalFormatPattern");
         Objects.requireNonNull(spreadsheetIdNameToColor, "spreadsheetIdNameToColor");
         Objects.requireNonNull(spreadsheetIdNumberToColor, "spreadsheetIdNumberToColor");
+        Objects.requireNonNull(spreadsheetIdWidth, "spreadsheetIdWidth");
 
         return new MemorySpreadsheetContext(spreadsheetIdDateTimeContext,
                 spreadsheetIdDecimalFormatContext,
                 spreadsheetIdFunctions,
                 spreadsheetIdGeneralDecimalFormatPattern,
                 spreadsheetIdNameToColor,
-                spreadsheetIdNumberToColor);
+                spreadsheetIdNumberToColor,
+                spreadsheetIdWidth);
     }
 
     private MemorySpreadsheetContext(final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
@@ -72,7 +75,8 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
                                      final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                                      final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
                                      final Function<SpreadsheetId, Function<String, Color> > spreadsheetIdNameToColor,
-                                     final Function<SpreadsheetId, Function<Integer, Color> > spreadsheetIdNumberToColor) {
+                                     final Function<SpreadsheetId, Function<Integer, Color> > spreadsheetIdNumberToColor,
+                                     final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
         super();
 
         this.spreadsheetIdDateTimeContext = spreadsheetIdDateTimeContext;
@@ -81,6 +85,7 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
         this.spreadsheetIdGeneralDecimalFormatPattern = spreadsheetIdGeneralDecimalFormatPattern;
         this.spreadsheetIdNameToColor = spreadsheetIdNameToColor;
         this.spreadsheetIdNumberToColor = spreadsheetIdNumberToColor;
+        this.spreadsheetIdWidth = spreadsheetIdWidth;
     }
 
     @Override
@@ -149,6 +154,13 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
     }
 
     private final Map<SpreadsheetId, StoreRepository> idToStoreRepository = Maps.sorted();
+
+    @Override
+    public int width(final SpreadsheetId id) {
+        return this.spreadsheetIdWidth.apply(id);
+    }
+
+    private final Function<SpreadsheetId, Integer> spreadsheetIdWidth;
 
     @Override
     public String toString() {
