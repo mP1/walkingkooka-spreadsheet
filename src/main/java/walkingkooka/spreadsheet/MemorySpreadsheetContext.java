@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.collect.map.Maps;
+import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStores;
@@ -29,6 +31,7 @@ import walkingkooka.spreadsheet.store.security.SpreadsheetUserStores;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * A {@link SpreadsheetContext} that creates a new {@link StoreRepository} for unknown {@link SpreadsheetId}.
@@ -39,13 +42,35 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
     /**
      * Creates a new empty {@link MemorySpreadsheetContext}
      */
-    static MemorySpreadsheetContext create() {
-        return new MemorySpreadsheetContext();
+    static MemorySpreadsheetContext with(final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
+                                         final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext) {
+        Objects.requireNonNull(spreadsheetIdDateTimeContext, "spreadsheetIdDateTimeContext");
+        Objects.requireNonNull(spreadsheetIdDecimalFormatContext, "spreadsheetIdDecimalFormatContext");
+
+        return new MemorySpreadsheetContext(spreadsheetIdDateTimeContext, spreadsheetIdDecimalFormatContext);
     }
 
-    private MemorySpreadsheetContext() {
+    private MemorySpreadsheetContext(final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
+                                     final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext) {
         super();
+
+        this.spreadsheetIdDateTimeContext = spreadsheetIdDateTimeContext;
+        this.spreadsheetIdDecimalFormatContext = spreadsheetIdDecimalFormatContext;
     }
+
+    @Override
+    public DateTimeContext dateTimeContext(final SpreadsheetId id) {
+        return this.spreadsheetIdDateTimeContext.apply(id);
+    }
+
+    private final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext;
+
+    @Override
+    public DecimalNumberContext decimalNumberContext(final SpreadsheetId id) {
+        return this.spreadsheetIdDecimalFormatContext.apply(id);
+    }
+
+    private final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext;
 
     @Override
     public StoreRepository storeRepository(final SpreadsheetId id) {

@@ -18,12 +18,26 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.Context;
+import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.store.repo.StoreRepository;
+
+import java.util.Objects;
 
 /**
  * A {@link Context} for spreadsheets.
  */
 public interface SpreadsheetContext extends Context {
+
+    /**
+     * The {@link DateTimeContext} for the given {@link SpreadsheetId}
+     */
+    DateTimeContext dateTimeContext(final SpreadsheetId id);
+
+    /**
+     * The {@link DecimalNumberContext} for the given {@link SpreadsheetId}
+     */
+    DecimalNumberContext decimalNumberContext(final SpreadsheetId id);
 
     /**
      * Factory that returns a {@link StoreRepository} for a given {@link SpreadsheetId}
