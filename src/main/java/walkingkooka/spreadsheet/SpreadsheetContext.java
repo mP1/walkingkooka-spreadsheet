@@ -49,6 +49,11 @@ public interface SpreadsheetContext extends Context {
     BiFunction<ExpressionNodeName, List<Object>, Object> functions(final SpreadsheetId id);
 
     /**
+     * Returns a {@link String general decimal format pattern} for the given {@link SpreadsheetId}.
+     */
+    String generalDecimalFormatPattern(final SpreadsheetId id);
+
+    /**
      * Returns a {@link Function} which maps {@link String color name} to {@link Color} for the given {@link SpreadsheetId}.
      */
     Function<String, Color> nameToColor(final SpreadsheetId id);
