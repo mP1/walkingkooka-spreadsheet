@@ -35,8 +35,68 @@ import java.util.function.Function;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MemorySpreadsheetContextTest implements SpreadsheetContextTesting<MemorySpreadsheetContext> {
+
+    @Test
+    public void testWithNullSpreadsheetIdDateTimeContextFails() {
+        this.withFails(null,
+                this::spreadsheetIdDecimalNumberContext,
+                this::spreadsheetIdFunctions,
+                this::spreadsheetIdNameToColor,
+                this::spreadsheetIdNumberToColor);
+    }
+
+    @Test
+    public void testWithNullSpreadsheetIdDecimalNumberContextFails() {
+        this.withFails(this::spreadsheetIdDateTimeContext,
+                null,
+                this::spreadsheetIdFunctions,
+                this::spreadsheetIdNameToColor,
+                this::spreadsheetIdNumberToColor);
+    }
+
+    @Test
+    public void testWithNullSpreadsheetIdFunctionsFails() {
+        this.withFails(this::spreadsheetIdDateTimeContext,
+                this::spreadsheetIdDecimalNumberContext,
+                null,
+                this::spreadsheetIdNameToColor,
+                this::spreadsheetIdNumberToColor);
+    }
+
+    @Test
+    public void testWithNullSpreadsheetIdNameToColorFails() {
+        this.withFails(this::spreadsheetIdDateTimeContext,
+                this::spreadsheetIdDecimalNumberContext,
+                this::spreadsheetIdFunctions,
+                null,
+                this::spreadsheetIdNumberToColor);
+    }
+
+    @Test
+    public void testWithNullSpreadsheetIdNumberToColorFails() {
+        this.withFails(this::spreadsheetIdDateTimeContext,
+                this::spreadsheetIdDecimalNumberContext,
+                this::spreadsheetIdFunctions,
+                this::spreadsheetIdNameToColor,
+                null);
+    }
+
+    private void withFails(final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
+                           final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
+                           final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
+                           final Function<SpreadsheetId, Function<String, Color>> spreadsheetIdNameToColor,
+                           final Function<SpreadsheetId, Function<Integer, Color>> spreadsheetIdNumberToColor) {
+        assertThrows(NullPointerException.class, () -> {
+            MemorySpreadsheetContext.with(spreadsheetIdDateTimeContext,
+                    spreadsheetIdDecimalFormatContext,
+                    spreadsheetIdFunctions,
+                    spreadsheetIdNameToColor,
+                    spreadsheetIdNumberToColor);
+        });
+    }
 
     @Test
     public void testDateTimeContext() {
