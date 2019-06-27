@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet;
 import walkingkooka.color.Color;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
 import walkingkooka.spreadsheet.store.repo.StoreRepository;
 import walkingkooka.tree.expression.ExpressionNodeName;
 
@@ -35,6 +36,11 @@ public class FakeSpreadsheetContext implements SpreadsheetContext {
 
     @Override
     public DecimalNumberContext decimalNumberContext(final SpreadsheetId id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter(final SpreadsheetId id) {
         throw new UnsupportedOperationException();
     }
 

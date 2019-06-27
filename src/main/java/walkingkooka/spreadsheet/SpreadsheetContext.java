@@ -21,6 +21,7 @@ import walkingkooka.Context;
 import walkingkooka.color.Color;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
 import walkingkooka.spreadsheet.store.repo.StoreRepository;
 import walkingkooka.tree.expression.ExpressionNodeName;
 
@@ -42,6 +43,11 @@ public interface SpreadsheetContext extends Context {
      * The {@link DecimalNumberContext} for the given {@link SpreadsheetId}
      */
     DecimalNumberContext decimalNumberContext(final SpreadsheetId id);
+
+    /**
+     * Returns the default {@link SpreadsheetTextFormatter }for a given {@link SpreadsheetId}
+     */
+    SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter(final SpreadsheetId id);
 
     /**
      * Returns a {@link BiFunction} which knows available functions for the given {@link SpreadsheetId}.
