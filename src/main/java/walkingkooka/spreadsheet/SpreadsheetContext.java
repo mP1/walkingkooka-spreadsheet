@@ -21,8 +21,10 @@ import walkingkooka.Context;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.store.repo.StoreRepository;
+import walkingkooka.tree.expression.ExpressionNodeName;
 
-import java.util.Objects;
+import java.util.List;
+import java.util.function.BiFunction;
 
 /**
  * A {@link Context} for spreadsheets.
@@ -38,6 +40,11 @@ public interface SpreadsheetContext extends Context {
      * The {@link DecimalNumberContext} for the given {@link SpreadsheetId}
      */
     DecimalNumberContext decimalNumberContext(final SpreadsheetId id);
+
+    /**
+     * Returns a {@link BiFunction} which knows available functions for the given {@link SpreadsheetId}.
+     */
+    BiFunction<ExpressionNodeName, List<Object>, Object> functions(final SpreadsheetId id);
 
     /**
      * Factory that returns a {@link StoreRepository} for a given {@link SpreadsheetId}
