@@ -42,11 +42,13 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     public static SpreadsheetContext memory(final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                                             final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
                                             final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
+                                            final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
                                             final Function<SpreadsheetId, Function<String, Color> > spreadsheetIdNameToColor,
                                             final Function<SpreadsheetId, Function<Integer, Color> > spreadsheetIdNumberToColor) {
         return MemorySpreadsheetContext.with(spreadsheetIdDateTimeContext,
                 spreadsheetIdDecimalFormatContext,
                 spreadsheetIdFunctions,
+                spreadsheetIdGeneralDecimalFormatPattern,
                 spreadsheetIdNameToColor,
                 spreadsheetIdNumberToColor);
     }
