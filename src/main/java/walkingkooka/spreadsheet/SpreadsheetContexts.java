@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet;
 import walkingkooka.color.Color;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
 import walkingkooka.tree.expression.ExpressionNodeName;
 import walkingkooka.type.PublicStaticHelper;
 
@@ -41,6 +42,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
      */
     public static SpreadsheetContext memory(final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                                             final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
+                                            final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter,
                                             final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                                             final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
                                             final Function<SpreadsheetId, Function<String, Color> > spreadsheetIdNameToColor,
@@ -48,6 +50,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
                                             final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
         return MemorySpreadsheetContext.with(spreadsheetIdDateTimeContext,
                 spreadsheetIdDecimalFormatContext,
+                spreadsheetIdDefaultSpreadsheetTextFormatter,
                 spreadsheetIdFunctions,
                 spreadsheetIdGeneralDecimalFormatPattern,
                 spreadsheetIdNameToColor,
