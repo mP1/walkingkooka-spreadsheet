@@ -60,26 +60,26 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      */
     static BasicSpreadsheetEngine with(final SpreadsheetId id,
                                        final SpreadsheetCellStore cellStore,
-                                       final SpreadsheetLabelStore labelStore,
-                                       final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> conditionalFormattingRules,
                                        final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferencesStore,
+                                       final SpreadsheetLabelStore labelStore,
                                        final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore,
-                                       final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore) {
+                                       final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore,
+                                       final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRuleStore) {
         Objects.requireNonNull(id, "id");
         Objects.requireNonNull(cellStore, "cellStore");
-        Objects.requireNonNull(labelStore, "labelStore");
-        Objects.requireNonNull(conditionalFormattingRules, "conditionalFormattingRules");
         Objects.requireNonNull(cellReferencesStore, "cellReferencesStore");
+        Objects.requireNonNull(labelStore, "labelStore");
         Objects.requireNonNull(labelReferencesStore, "labelReferencesStore");
         Objects.requireNonNull(rangeToCellStore, "rangeToCellStore");
+        Objects.requireNonNull(rangeToConditionalFormattingRuleStore, "rangeToConditionalFormattingRuleStore");
 
         return new BasicSpreadsheetEngine(id,
                 cellStore,
-                labelStore,
-                conditionalFormattingRules,
                 cellReferencesStore,
+                labelStore,
                 labelReferencesStore,
-                rangeToCellStore);
+                rangeToCellStore,
+                rangeToConditionalFormattingRuleStore);
     }
 
     /**
@@ -87,18 +87,18 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      */
     private BasicSpreadsheetEngine(final SpreadsheetId id,
                                    final SpreadsheetCellStore cellStore,
-                                   final SpreadsheetLabelStore labelStore,
-                                   final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> conditionalFormattingRules,
                                    final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferencesStore,
+                                   final SpreadsheetLabelStore labelStore,
                                    final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore,
-                                   final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore) {
+                                   final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore,
+                                   final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRuleStore) {
         this.id = id;
         this.cellStore = cellStore;
-        this.labelStore = labelStore;
-        this.conditionalFormattingRules = conditionalFormattingRules;
         this.cellReferencesStore = cellReferencesStore;
+        this.labelStore = labelStore;
         this.labelReferencesStore = labelReferencesStore;
         this.rangeToCellStore = rangeToCellStore;
+        this.rangeToConditionalFormattingRuleStore = rangeToConditionalFormattingRuleStore;
     }
 
     @Override
@@ -286,7 +286,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         SpreadsheetCell result = cell;
 
         final Set<SpreadsheetConditionalFormattingRule> rules = Sets.sorted(SpreadsheetConditionalFormattingRule.PRIORITY_COMPARATOR);
-        rules.addAll(this.conditionalFormattingRules.loadCellReferenceValues(cell.reference()));
+        rules.addAll(this.rangeToConditionalFormattingRuleStore.loadCellReferenceValues(cell.reference()));
         for (SpreadsheetConditionalFormattingRule rule : rules) {
             final Object test = context.evaluate(rule.formula().expression().get());
             final Boolean booleanResult = context.convert(test, Boolean.class);
@@ -308,7 +308,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * Provides the conditional format rules for each cell.
      */
-    private final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> conditionalFormattingRules;
+    private final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRuleStore;
 
     // FORMAT ERROR ....................................................................................................
 
