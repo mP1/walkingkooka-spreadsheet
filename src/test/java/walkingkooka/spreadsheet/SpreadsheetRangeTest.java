@@ -652,6 +652,22 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
         this.toJsonNodeRoundTripTwiceAndCheck(SpreadsheetRange.parseRange0("A1:A2"));
     }
 
+    //compare...........................................................................................................
+
+    @Test
+    public void testCompareCellFails() {
+        assertThrows(UnsupportedOperationException.class, () -> {
+            this.range().compare(this.begin());
+        });
+    }
+
+    @Test
+    public void testCompareRangeFails() {
+        assertThrows(UnsupportedOperationException.class, () -> {
+            this.range().compare(this.range());
+        });
+    }
+
     //helper.................................................................................................
 
     private SpreadsheetRange range() {
@@ -672,10 +688,6 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
 
     private SpreadsheetRange range(final SpreadsheetCellReference begin, final SpreadsheetCellReference end) {
         return SpreadsheetRange.with(begin.range(end));
-    }
-
-    private SpreadsheetCellReference cell() {
-        return this.cell(99, 88);
     }
 
     private SpreadsheetCellReference cell(final int column, final int row) {
