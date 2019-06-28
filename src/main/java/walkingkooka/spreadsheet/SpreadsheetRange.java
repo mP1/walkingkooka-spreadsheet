@@ -68,7 +68,7 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference imple
             throw new IllegalArgumentException("Missing begin =" + CharSequences.quote(text));
         }
 
-        if (colon + SEPARATOR.length() == text.length() - 1) {
+        if (colon + SEPARATOR.length() == text.length()) {
             throw new IllegalArgumentException("Missing end =" + CharSequences.quote(text));
         }
 
