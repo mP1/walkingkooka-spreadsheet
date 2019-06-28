@@ -163,6 +163,7 @@ public final class SpreadsheetRowTest implements ClassTesting2<SpreadsheetRow>,
 
     private void checkReference(final SpreadsheetRow row, final SpreadsheetRowReference reference) {
         assertEquals(reference, row.reference(), "reference");
+        assertEquals(reference, row.id(), "id");
     }
 
     @Override
