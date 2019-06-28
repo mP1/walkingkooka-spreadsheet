@@ -26,8 +26,32 @@ import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetExpressionReferenceVisitorTest implements VisitorTesting<SpreadsheetExpressionReferenceVisitor, ExpressionReference> {
+
+    @Test
+    public void testExpressionReferenceNotSpreadsheetExpressionReferenceFails() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            this.createVisitor().accept(new ExpressionReference() {
+            });
+        });
+    }
+
+    @Test
+    public void testAcceptSpreadsheetCellReference() {
+        this.createVisitor().accept(SpreadsheetExpressionReference.parseCellReference("A1"));
+    }
+
+    @Test
+    public void testAcceptSpreadsheetLabelName() {
+        this.createVisitor().accept(SpreadsheetExpressionReference.labelName("Label123"));
+    }
+
+    @Test
+    public void testAcceptSpreadsheetRange() {
+        this.createVisitor().accept(SpreadsheetExpressionReference.parseRange("A1:B2"));
+    }
 
     @Test
     public void testStartVisitExpressionReferenceSkip() {
