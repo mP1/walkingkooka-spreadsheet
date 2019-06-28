@@ -163,6 +163,7 @@ public final class SpreadsheetColumnTest implements ClassTesting2<SpreadsheetCol
 
     private void checkReference(final SpreadsheetColumn column, final SpreadsheetColumnReference reference) {
         assertEquals(reference, column.reference(), "reference");
+        assertEquals(reference, column.id(), "id");
     }
 
     @Override
