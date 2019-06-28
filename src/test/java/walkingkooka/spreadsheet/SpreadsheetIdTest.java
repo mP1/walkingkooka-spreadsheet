@@ -40,7 +40,8 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     @Test
     public void testWith() {
         final SpreadsheetId id = SpreadsheetId.with(VALUE);
-        assertEquals(VALUE, id.value(), "id");
+        assertEquals(VALUE, id.value(), "value");
+        assertEquals(VALUE, id.id(), "id");
     }
 
     @Test
