@@ -17,18 +17,21 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.spreadsheet.SpreadsheetValueVisitorTesting;
+import walkingkooka.Cast;
 import walkingkooka.test.ClassTesting2;
+import walkingkooka.test.ToStringTesting;
 import walkingkooka.test.TypeNameTesting;
 
-public final class SpreadsheetConverterMappingTest extends SpreadsheetConverterTestCase<SpreadsheetConverterMapping>
-        implements ClassTesting2<SpreadsheetConverterMapping>, TypeNameTesting<SpreadsheetConverterMapping> {
+public final class SpreadsheetConverterMappingTest extends SpreadsheetConverterTestCase<SpreadsheetConverterMapping<?>>
+        implements ClassTesting2<SpreadsheetConverterMapping<?>>,
+        ToStringTesting<SpreadsheetConverterMapping<?>>,
+        TypeNameTesting<SpreadsheetConverterMapping<?>> {
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetConverterMapping> type() {
-        return SpreadsheetConverterMapping.class;
+    public Class<SpreadsheetConverterMapping<?>> type() {
+        return Cast.to(SpreadsheetConverterMapping.class);
     }
 
     // TypeNameTesting..................................................................................................
