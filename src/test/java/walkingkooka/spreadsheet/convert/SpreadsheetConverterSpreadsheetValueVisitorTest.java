@@ -17,15 +17,19 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.spreadsheet.SpreadsheetValueVisitorTest;
+import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitorTesting;
-import walkingkooka.type.JavaVisibility;
 
 public final class SpreadsheetConverterSpreadsheetValueVisitorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterSpreadsheetValueVisitor>
         implements SpreadsheetValueVisitorTesting<SpreadsheetConverterSpreadsheetValueVisitor> {
 
     @Override
     public void testSinglePublicAcceptMethod() {
+    }
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(new SpreadsheetConverterSpreadsheetValueVisitor(String.class, null), "java.lang.String");
     }
 
     @Override
