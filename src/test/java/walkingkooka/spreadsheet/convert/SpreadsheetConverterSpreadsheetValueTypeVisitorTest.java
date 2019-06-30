@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.spreadsheet.SpreadsheetValueTypeVisitorTesting;
-import walkingkooka.spreadsheet.SpreadsheetValueVisitorTesting;
 
 public final class SpreadsheetConverterSpreadsheetValueTypeVisitorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterSpreadsheetValueTypeVisitor>
         implements SpreadsheetValueTypeVisitorTesting<SpreadsheetConverterSpreadsheetValueTypeVisitor> {
