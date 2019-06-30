@@ -943,10 +943,10 @@ public final class SpreadsheetParsersTest implements ParserTesting<Parser<Spread
         final Function<ConverterContext, ParserContext> parserContext = (c) -> ParserContexts.basic(c);
 
         final Converter stringBigDecimal = Converters.parser(BigDecimal.class,
-                Parsers.bigDecimal(MathContext.DECIMAL32),
+                Parsers.bigDecimal(),
                 parserContext);
         final Converter stringNumber = Converters.parser(Number.class,
-                Cast.to(Parsers.bigDecimal(MathContext.DECIMAL32)),
+                Parsers.bigDecimal(),
                 parserContext);
         final Converter stringBigInteger = Converters.parser(BigInteger.class,
                 Parsers.bigInteger(10),

@@ -224,12 +224,17 @@ public final class ConditionSpreadsheetTextFormatterTest extends SpreadsheetText
             }
 
             @Override
+            public MathContext mathContext() {
+                return MathContext.DECIMAL32;
+            }
+
+            @Override
             public <T> T convert(final Object value, final Class<T> target) {
                 return this.converter.convert(value, target, ConverterContexts.basic(this));
             }
 
             private final Converter converter = Converters.parser(BigDecimal.class,
-                    Parsers.bigDecimal(MathContext.UNLIMITED),
+                    Parsers.bigDecimal(),
                     (c) -> ParserContexts.basic(c));
         };
     }

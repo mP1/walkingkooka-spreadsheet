@@ -266,7 +266,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     private static final EbnfIdentifierName NUMBER_IDENTIFIER = EbnfIdentifierName.with("NUMBER");
-    private static final Parser<ParserContext> NUMBER = Parsers.bigDecimal(MathContext.UNLIMITED)
+    private static final Parser<ParserContext> NUMBER = Parsers.bigDecimal()
             .transform(SpreadsheetParsers::transformNumber);
 
     private static ParserToken transformNumber(final ParserToken token, final ParserContext context) {

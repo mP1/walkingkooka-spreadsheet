@@ -121,7 +121,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     private final static Parser<SpreadsheetFormatParserContext> CONDITION_PARSER;
 
     private static void condition(final Map<EbnfIdentifierName, Parser<ParserContext>> predefined) {
-        predefined.put(CONDITION_BIGDECIMAL_LITERAL_IDENTIFIER, Parsers.bigDecimal(MathContext.UNLIMITED)
+        predefined.put(CONDITION_BIGDECIMAL_LITERAL_IDENTIFIER, Parsers.bigDecimal()
                 .transform(SpreadsheetFormatParsers::transformConditionNumber)
                 .setToString(CONDITION_BIGDECIMAL_LITERAL_IDENTIFIER.toString()));
 
