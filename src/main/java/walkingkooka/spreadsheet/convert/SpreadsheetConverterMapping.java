@@ -74,7 +74,7 @@ final class SpreadsheetConverterMapping<T> {
                 localDateTime(dateOffset, dateTime),
                 localTime(time),
                 longMapping(dateOffset, longFormat),
-                string(bigDecimalFormat, bigIntegerFormat, doubleFormat, date, dateTime, time, longFormat));
+                string(date, dateTime, time));
     }
 
     /**
@@ -208,13 +208,9 @@ final class SpreadsheetConverterMapping<T> {
     /**
      * Holds all the {@link Converter converters} from a {@link Long}.
      */
-    private static SpreadsheetConverterMapping<Converter> string(final String bigDecimalFormat,
-                                                                 final String bigIntegerFormat,
-                                                                 final String doubleFormat,
-                                                                 final DateTimeFormatter date,
+    private static SpreadsheetConverterMapping<Converter> string(final DateTimeFormatter date,
                                                                  final DateTimeFormatter dateTime,
-                                                                 final DateTimeFormatter time,
-                                                                 final String longFormat) {
+                                                                 final DateTimeFormatter time) {
         return new SpreadsheetConverterMapping<>(parser(BigDecimal.class, Parsers.bigDecimal()),
                 parser(BigInteger.class, Parsers.bigInteger(RADIX)),
                 toBoolean(String.class, STRING_FALSE),
@@ -227,7 +223,7 @@ final class SpreadsheetConverterMapping<T> {
     }
 
     private static <T> Converter parser(final Class<T> type,
-                                       final Parser parser) {
+                                        final Parser parser) {
         return Converters.parser(type, parser, SpreadsheetConverterMapping::parserContext);
     }
 

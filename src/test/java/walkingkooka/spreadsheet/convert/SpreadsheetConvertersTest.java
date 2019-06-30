@@ -17,25 +17,27 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.test.TypeNameTesting;
+import walkingkooka.test.ClassTesting2;
+import walkingkooka.test.PublicStaticHelperTesting;
 import walkingkooka.type.JavaVisibility;
 
-public abstract class SpreadsheetConverterTestCase<T> implements TypeNameTesting<T> {
+import java.lang.reflect.Method;
 
-    SpreadsheetConverterTestCase() {
-        super();
-    }
-
-    // ClassTesting.....................................................................................................
-
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
-
-    // TypeNameTesting..................................................................................................
+public final class SpreadsheetConvertersTest implements ClassTesting2<SpreadsheetConverters>,
+        PublicStaticHelperTesting<SpreadsheetConverters> {
 
     @Override
-    public final String typeNamePrefix() {
-        return SpreadsheetConverter.class.getSimpleName();
+    public Class<SpreadsheetConverters> type() {
+        return SpreadsheetConverters.class;
+    }
+
+    @Override
+    public boolean canHavePublicTypes(final Method method) {
+        return false;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
     }
 }

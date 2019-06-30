@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting2;
@@ -32,6 +33,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase<SpreadsheetConverter>
         implements ConverterTesting2<SpreadsheetConverter> {
@@ -41,7 +45,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     private final static Double DECIMAL_DOUBLE = 12.5;
     private final static BigDecimal DECIMAL_BIG_DECIMAL = BigDecimal.valueOf(DECIMAL_DOUBLE);
     private final static String DECIMAL_STRING = "12D50!!!";
-    private final static String DECIMAL_STRING_LOCAL_DATE_TIME = "130170120000!!!";
+    private final static String DECIMAL_STRING_LOCAL_DATE_TIME = "13 01 1970 12 00 00!!!";
 
     private final static Long WHOLE_LONG = 12L;
     private final static BigDecimal WHOLE_BIG_DECIMAL = BigDecimal.valueOf(WHOLE_LONG);
@@ -51,14 +55,13 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     private final static LocalDateTime WHOLE_LOCAL_DATE_TIME = LocalDateTime.of(WHOLE_LOCAL_DATE, LocalTime.MIDNIGHT);
     private final static LocalTime WHOLE_LOCAL_TIME = LocalTime.ofSecondOfDay(WHOLE_LONG);
     private final static String WHOLE_STRING = "12!!!";
-    private final static String WHOLE_STRING_LOCAL_DATE = "130170!!!";
-    private final static String WHOLE_STRING_LOCAL_TIME = "120000!!!";
+    private final static String WHOLE_STRING_LOCAL_DATE = "13 01 1970!!!";
+    private final static String WHOLE_STRING_LOCAL_TIME = "12 00 00!!!";
 
     private final static LocalDate LOCAL_DATE_FALSE = LocalDate.ofEpochDay(DATE_OFFSET);
     private final static LocalDate LOCAL_DATE_TRUE = LOCAL_DATE_FALSE.plusDays(1);
 
-    private final static LocalDateTime LOCAL_DATE_TIME_FALSE = LocalDateTime.ofEpochSecond(DATE_OFFSET, 0, ZoneOffset.UTC );
-    private final static LocalDateTime LOCAL_DATE_TIME_TRUE = LOCAL_DATE_TIME_FALSE.plusDays(1);
+    private final static LocalDateTime LOCAL_DATE_TIME_FALSE = LocalDateTime.ofEpochSecond(DATE_OFFSET, 0, ZoneOffset.UTC);
 
     private final static LocalTime LOCAL_TIME_FALSE = LocalTime.ofSecondOfDay(0);
     private final static LocalTime LOCAL_TIME_TRUE = LocalTime.ofSecondOfDay(1);
@@ -758,6 +761,42 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     public void testStringString() {
         this.convertAndCheck("abc123");
     }
+
+    @Test
+    public void testBigDecimalBigIntegerDoubleLocalDateLocalDateTimeLongStringBigDecimal() {
+        final SpreadsheetConverter converter = this.createConverter();
+
+        final List<Class<?>> allTargets = Lists.of(BigInteger.class,
+                Double.class,
+                LocalDate.class,
+                LocalDateTime.class,
+                Long.class,
+                String.class,
+                BigDecimal.class);
+
+        final ConverterContext context = this.createContext();
+
+        for (int i = 0; i < 10; i++) {
+            final StringBuilder b = new StringBuilder();
+
+            final BigDecimal bigDecimal = BigDecimal.valueOf(i);
+
+            Object value = bigDecimal;
+            for (Class<?> target : allTargets) {
+                b.append(value)
+                        .append(' ')
+                        .append(target.getName())
+                        .append(' ');
+
+                value = converter.convert(value, target, context);
+
+                b.append(value).append('\n');
+            }
+
+            assertEquals(bigDecimal, value, () -> b.toString());
+        }
+    }
+
     // ConverterTesting.................................................................................................
 
     @Override
@@ -766,9 +805,9 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 "##00.00'!!!'",
                 "##00'!!!'",
                 "##00.00'!!!'",
-                DateTimeFormatter.ofPattern("ddMMyy'!!!'"),
-                DateTimeFormatter.ofPattern("ddMMyyhhmmss'!!!'"),
-                DateTimeFormatter.ofPattern("hhmmss'!!!'"),
+                DateTimeFormatter.ofPattern("dd MM yyyy'!!!'"),
+                DateTimeFormatter.ofPattern("dd MM yyyy HH mm ss'!!!'"),
+                DateTimeFormatter.ofPattern("HH mm ss'!!!'"),
                 "##00'!!!'");
     }
 
