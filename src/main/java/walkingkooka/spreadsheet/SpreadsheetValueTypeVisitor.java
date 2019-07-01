@@ -63,6 +63,9 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
                 case "java.lang.Long":
                     this.visitLong();
                     break;
+                case "java.lang.Number":
+                    this.visitNumber();
+                    break;
                 case "java.lang.String":
                     this.visitString();
                     break;
@@ -111,6 +114,10 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
     }
 
     protected void visitLong() {
+
+    }
+
+    protected void visitNumber() {
 
     }
 
