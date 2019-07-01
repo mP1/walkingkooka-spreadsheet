@@ -21,10 +21,15 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.Fraction;
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
+import walkingkooka.tree.Node;
 import walkingkooka.tree.expression.ExpressionNodeName;
 import walkingkooka.type.PublicStaticHelper;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -41,16 +46,22 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     /**
      * {@see MemorySpreadsheetContext}
      */
-    public static SpreadsheetContext memory(final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
-                                            final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
-                                            final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
-                                            final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter,
-                                            final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
-                                            final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
-                                            final Function<SpreadsheetId, Function<String, Color>> spreadsheetIdNameToColor,
-                                            final Function<SpreadsheetId, Function<Integer, Color>> spreadsheetIdNumberToColor,
-                                            final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
-        return MemorySpreadsheetContext.with(spreadsheetIdConverter,
+    public static <N extends Node<N, ?, ?, ?>> SpreadsheetContext memory(final AbsoluteUrl base,
+                                                                         final HateosContentType<N> contentType,
+                                                                         final Function<BigDecimal, Fraction> fractioner,
+                                                                         final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
+                                                                         final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
+                                                                         final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
+                                                                         final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter,
+                                                                         final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
+                                                                         final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
+                                                                         final Function<SpreadsheetId, Function<String, Color>> spreadsheetIdNameToColor,
+                                                                         final Function<SpreadsheetId, Function<Integer, Color>> spreadsheetIdNumberToColor,
+                                                                         final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
+        return MemorySpreadsheetContext.with(base,
+                contentType,
+                fractioner,
+                spreadsheetIdConverter,
                 spreadsheetIdDateTimeContext,
                 spreadsheetIdDecimalFormatContext,
                 spreadsheetIdDefaultSpreadsheetTextFormatter,
