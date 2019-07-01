@@ -18,7 +18,13 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.convert.ConversionException;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitorTesting;
+
+import java.time.format.DateTimeFormatter;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetConverterSpreadsheetValueVisitorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterSpreadsheetValueVisitor>
         implements SpreadsheetValueVisitorTesting<SpreadsheetConverterSpreadsheetValueVisitor> {
@@ -28,13 +34,29 @@ public final class SpreadsheetConverterSpreadsheetValueVisitorTest extends Sprea
     }
 
     @Test
+    public void testAcceptUnknownValue() {
+        final ConversionException thrown = assertThrows(ConversionException.class, () -> {
+            this.createVisitor().accept('X');
+        });
+        assertEquals("Unable to convert 'X' to java.lang.String", thrown.getMessage(), "message");
+    }
+
+    @Test
     public void testToString() {
-        this.toStringAndCheck(new SpreadsheetConverterSpreadsheetValueVisitor(String.class, null), "java.lang.String");
+        this.toStringAndCheck(this.createVisitor(),
+                "\"String\" \"BigDecimal\" dateOffset=1 bigDecimalFormat=\"#.#\" bigIntegerFormat=\"#.##\" doubleFormat=\"#.###\" date=Value(Year,4,10,EXCEEDS_PAD)'-'Value(MonthOfYear,2)'-'Value(DayOfMonth,2) dateTime=ParseCaseSensitive(false)(Value(Year,4,10,EXCEEDS_PAD)'-'Value(MonthOfYear,2)'-'Value(DayOfMonth,2))'T'(Value(HourOfDay,2)':'Value(MinuteOfHour,2)[':'Value(SecondOfMinute,2)[Fraction(NanoOfSecond,0,9,DecimalPoint)]]) time=ParseCaseSensitive(false)(Value(HourOfDay,2)':'Value(MinuteOfHour,2)[':'Value(SecondOfMinute,2)[Fraction(NanoOfSecond,0,9,DecimalPoint)]])[Offset(+HH:MM:ss,'Z')] longFormat=\"###\"");
     }
 
     @Override
     public SpreadsheetConverterSpreadsheetValueVisitor createVisitor() {
-        return new SpreadsheetConverterSpreadsheetValueVisitor(null, null);
+        return new SpreadsheetConverterSpreadsheetValueVisitor(String.class, SpreadsheetConverterMapping.with(1,
+                "#.#",
+                "#.##",
+                "#.###",
+                DateTimeFormatter.ISO_LOCAL_DATE,
+                DateTimeFormatter.ISO_LOCAL_DATE_TIME,
+                DateTimeFormatter.ISO_TIME,
+                "###"));
     }
 
     // ClassTesting.....................................................................................................
