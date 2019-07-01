@@ -17,14 +17,29 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetValueTypeVisitorTesting;
+
+import java.time.format.DateTimeFormatter;
 
 public final class SpreadsheetConverterSpreadsheetValueTypeVisitorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterSpreadsheetValueTypeVisitor>
         implements SpreadsheetValueTypeVisitorTesting<SpreadsheetConverterSpreadsheetValueTypeVisitor> {
 
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(this.createVisitor(), "all=\"BigDecimal\" dateOffset=1 format=\"#.#\"");
+    }
+
     @Override
     public SpreadsheetConverterSpreadsheetValueTypeVisitor createVisitor() {
-        return new SpreadsheetConverterSpreadsheetValueTypeVisitor(null);
+        return new SpreadsheetConverterSpreadsheetValueTypeVisitor(SpreadsheetConverterMapping.with(1,
+                "#.#",
+                "#.##",
+                "#.###",
+                DateTimeFormatter.ISO_LOCAL_DATE,
+                DateTimeFormatter.ISO_LOCAL_DATE_TIME,
+                DateTimeFormatter.ISO_TIME,
+                "###").bigDecimal);
     }
 
     // ClassTesting.....................................................................................................
