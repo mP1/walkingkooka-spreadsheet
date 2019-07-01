@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.color.Color;
+import walkingkooka.convert.Converter;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
@@ -29,6 +30,12 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class FakeSpreadsheetContext implements SpreadsheetContext {
+
+    @Override
+    public Converter converter(final SpreadsheetId id) {
+        throw new UnsupportedOperationException();
+    }
+
     @Override
     public DateTimeContext dateTimeContext(final SpreadsheetId id) {
         throw new UnsupportedOperationException();
