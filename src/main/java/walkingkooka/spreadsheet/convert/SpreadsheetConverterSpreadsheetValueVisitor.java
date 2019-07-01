@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.ToStringBuilder;
 import walkingkooka.convert.ConversionException;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitor;
@@ -119,6 +120,9 @@ final class SpreadsheetConverterSpreadsheetValueVisitor extends SpreadsheetValue
 
     @Override
     public String toString() {
-        return this.targetType.getName();
+        return ToStringBuilder.empty()
+                .value(this.targetType.getSimpleName())
+                .value(this.all)
+                .build();
     }
 }
