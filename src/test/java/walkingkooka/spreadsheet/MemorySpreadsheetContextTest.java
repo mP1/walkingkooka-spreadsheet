@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
+import walkingkooka.convert.Converter;
+import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContext;
@@ -43,19 +45,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
     @Test
     public void testWithNullSpreadsheetIdDateTimeContextFails() {
-        this.withFails(null,
-                this::spreadsheetIdDecimalNumberContext,
-                this::spreadsheetIdDefaultSpreadsheetTextFormatter,
-                this::spreadsheetIdFunctions,
-                this::spreadsheetIdGeneralDecimalFormatPattern,
-                this::spreadsheetIdNameToColor,
-                this::spreadsheetIdNumberToColor,
-                this::spreadsheetIdWidth);
-    }
-
-    @Test
-    public void testWithNullSpreadsheetIdDecimalNumberContextFails() {
-        this.withFails(this::spreadsheetIdDateTimeContext,
+        this.withFails(this::spreadsheetIdConverter,
+                this::spreadsheetIdDateTimeContext,
                 null,
                 this::spreadsheetIdDefaultSpreadsheetTextFormatter,
                 this::spreadsheetIdFunctions,
@@ -67,7 +58,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
     @Test
     public void testWithNullSpreadsheetIdDefaultSpreadsheetTextFormatterFails() {
-        this.withFails(this::spreadsheetIdDateTimeContext,
+        this.withFails(this::spreadsheetIdConverter,
+                this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
                 null,
                 this::spreadsheetIdFunctions,
@@ -79,7 +71,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
     @Test
     public void testWithNullSpreadsheetIdFunctionsFails() {
-        this.withFails(this::spreadsheetIdDateTimeContext,
+        this.withFails(this::spreadsheetIdConverter,
+                this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
                 null,
                 this::spreadsheetIdFunctions,
@@ -91,7 +84,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
     @Test
     public void testWithNullSpreadsheetIdGeneralDecimalFormatPatternFails() {
-        this.withFails(this::spreadsheetIdDateTimeContext,
+        this.withFails(this::spreadsheetIdConverter,
+                this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
                 this::spreadsheetIdDefaultSpreadsheetTextFormatter,
                 this::spreadsheetIdFunctions,
@@ -103,7 +97,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
     @Test
     public void testWithNullSpreadsheetIdNameToColorFails() {
-        this.withFails(this::spreadsheetIdDateTimeContext,
+        this.withFails(this::spreadsheetIdConverter,
+                this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
                 this::spreadsheetIdDefaultSpreadsheetTextFormatter,
                 this::spreadsheetIdFunctions,
@@ -115,7 +110,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
     @Test
     public void testWithNullSpreadsheetIdNumberToColorFails() {
-        this.withFails(this::spreadsheetIdDateTimeContext,
+        this.withFails(this::spreadsheetIdConverter,
+                this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
                 this::spreadsheetIdDefaultSpreadsheetTextFormatter,
                 this::spreadsheetIdFunctions,
@@ -127,7 +123,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
     @Test
     public void testWithNullSpreadsheetIdWidthFails() {
-        this.withFails(this::spreadsheetIdDateTimeContext,
+        this.withFails(this::spreadsheetIdConverter,
+                this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
                 this::spreadsheetIdDefaultSpreadsheetTextFormatter,
                 this::spreadsheetIdFunctions,
@@ -137,7 +134,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 null);
     }
 
-    private void withFails(final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
+    private void withFails(final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
+                           final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                            final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
                            final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter,
                            final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
@@ -146,7 +144,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                            final Function<SpreadsheetId, Function<Integer, Color>> spreadsheetIdNumberToColor,
                            final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
         assertThrows(NullPointerException.class, () -> {
-            MemorySpreadsheetContext.with(spreadsheetIdDateTimeContext,
+            MemorySpreadsheetContext.with(spreadsheetIdConverter,
+                    spreadsheetIdDateTimeContext,
                     spreadsheetIdDecimalFormatContext,
                     spreadsheetIdDefaultSpreadsheetTextFormatter,
                     spreadsheetIdFunctions,
@@ -155,6 +154,11 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                     spreadsheetIdNumberToColor,
                     spreadsheetIdWidth);
         });
+    }
+
+    @Test
+    public void testConverter() {
+        assertNotEquals(null, this.createContext().converter(this.spreadsheetId()));
     }
 
     @Test
@@ -249,7 +253,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
     @Override
     public MemorySpreadsheetContext createContext() {
-        return MemorySpreadsheetContext.with(this::spreadsheetIdDateTimeContext,
+        return MemorySpreadsheetContext.with(this::spreadsheetIdConverter,
+                this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
                 this::spreadsheetIdDefaultSpreadsheetTextFormatter,
                 this::spreadsheetIdFunctions,
@@ -257,6 +262,12 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdNameToColor,
                 this::spreadsheetIdNumberToColor,
                 this::spreadsheetIdWidth);
+    }
+
+    private Converter spreadsheetIdConverter(final SpreadsheetId spreadsheetId) {
+        this.checkSpreadsheetId(spreadsheetId);
+
+        return Converters.fake();
     }
 
     private DateTimeContext spreadsheetIdDateTimeContext(final SpreadsheetId spreadsheetId) {
@@ -302,7 +313,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     private Color spreadsheetIdNameToColor0(final String colorName) {
         throw new UnsupportedOperationException("name to color " + colorName);
     }
-    
+
     private Function<Integer, Color> spreadsheetIdNumberToColor(final SpreadsheetId spreadsheetId) {
         this.checkSpreadsheetId(spreadsheetId);
 

@@ -19,13 +19,20 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.Context;
 import walkingkooka.color.Color;
+import walkingkooka.convert.Converter;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.net.http.server.HttpRequest;
+import walkingkooka.net.http.server.HttpRequestAttribute;
+import walkingkooka.net.http.server.HttpResponse;
+import walkingkooka.routing.Router;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
 import walkingkooka.spreadsheet.store.repo.StoreRepository;
 import walkingkooka.tree.expression.ExpressionNodeName;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -33,6 +40,15 @@ import java.util.function.Function;
  * A {@link Context} for spreadsheets.
  */
 public interface SpreadsheetContext extends Context {
+
+    static void checkId(final SpreadsheetId id) {
+        Objects.requireNonNull(id, "id");
+    }
+
+    /**
+     * The {@link Converter} for the given {@link SpreadsheetId}
+     */
+    Converter converter(final SpreadsheetId id);
 
     /**
      * The {@link DateTimeContext} for the given {@link SpreadsheetId}
