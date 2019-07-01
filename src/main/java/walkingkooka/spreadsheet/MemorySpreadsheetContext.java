@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
+import walkingkooka.convert.Converter;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
@@ -47,14 +48,16 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
     /**
      * Creates a new empty {@link MemorySpreadsheetContext}
      */
-    static MemorySpreadsheetContext with(final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
+    static MemorySpreadsheetContext with(final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
+                                         final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                                          final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
                                          final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter,
                                          final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                                          final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
-                                         final Function<SpreadsheetId, Function<String, Color> > spreadsheetIdNameToColor,
-                                         final Function<SpreadsheetId, Function<Integer, Color> > spreadsheetIdNumberToColor,
+                                         final Function<SpreadsheetId, Function<String, Color>> spreadsheetIdNameToColor,
+                                         final Function<SpreadsheetId, Function<Integer, Color>> spreadsheetIdNumberToColor,
                                          final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
+        Objects.requireNonNull(spreadsheetIdConverter, "spreadsheetIdConverter");
         Objects.requireNonNull(spreadsheetIdDateTimeContext, "spreadsheetIdDateTimeContext");
         Objects.requireNonNull(spreadsheetIdDecimalFormatContext, "spreadsheetIdDecimalFormatContext");
         Objects.requireNonNull(spreadsheetIdDefaultSpreadsheetTextFormatter, "spreadsheetIdDefaultSpreadsheetTextFormatter");
@@ -64,7 +67,8 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
         Objects.requireNonNull(spreadsheetIdNumberToColor, "spreadsheetIdNumberToColor");
         Objects.requireNonNull(spreadsheetIdWidth, "spreadsheetIdWidth");
 
-        return new MemorySpreadsheetContext(spreadsheetIdDateTimeContext,
+        return new MemorySpreadsheetContext(spreadsheetIdConverter,
+                spreadsheetIdDateTimeContext,
                 spreadsheetIdDecimalFormatContext,
                 spreadsheetIdDefaultSpreadsheetTextFormatter,
                 spreadsheetIdFunctions,
@@ -74,16 +78,18 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
                 spreadsheetIdWidth);
     }
 
-    private MemorySpreadsheetContext(final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
+    private MemorySpreadsheetContext(final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
+                                     final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                                      final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
                                      final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter,
                                      final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                                      final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
-                                     final Function<SpreadsheetId, Function<String, Color> > spreadsheetIdNameToColor,
-                                     final Function<SpreadsheetId, Function<Integer, Color> > spreadsheetIdNumberToColor,
+                                     final Function<SpreadsheetId, Function<String, Color>> spreadsheetIdNameToColor,
+                                     final Function<SpreadsheetId, Function<Integer, Color>> spreadsheetIdNumberToColor,
                                      final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
         super();
 
+        this.spreadsheetIdConverter = spreadsheetIdConverter;
         this.spreadsheetIdDateTimeContext = spreadsheetIdDateTimeContext;
         this.spreadsheetIdDecimalFormatContext = spreadsheetIdDecimalFormatContext;
         this.spreadsheetIdDefaultSpreadsheetTextFormatter = spreadsheetIdDefaultSpreadsheetTextFormatter;
@@ -93,6 +99,13 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
         this.spreadsheetIdNumberToColor = spreadsheetIdNumberToColor;
         this.spreadsheetIdWidth = spreadsheetIdWidth;
     }
+
+    @Override
+    public Converter converter(final SpreadsheetId id) {
+        return this.spreadsheetIdConverter.apply(id);
+    }
+
+    private final Function<SpreadsheetId, Converter> spreadsheetIdConverter;
 
     @Override
     public DateTimeContext dateTimeContext(final SpreadsheetId id) {
@@ -134,14 +147,14 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
         return this.spreadsheetIdNameToColor.apply(id);
     }
 
-    private final Function<SpreadsheetId, Function<String, Color> > spreadsheetIdNameToColor;
-    
+    private final Function<SpreadsheetId, Function<String, Color>> spreadsheetIdNameToColor;
+
     @Override
     public Function<Integer, Color> numberToColor(final SpreadsheetId id) {
         return this.spreadsheetIdNumberToColor.apply(id);
     }
 
-    private final Function<SpreadsheetId, Function<Integer, Color> > spreadsheetIdNumberToColor;
+    private final Function<SpreadsheetId, Function<Integer, Color>> spreadsheetIdNumberToColor;
 
     @Override
     public StoreRepository storeRepository(final SpreadsheetId id) {
