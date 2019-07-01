@@ -329,6 +329,40 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     }
 
     @Test
+    public void testAcceptNumber() {
+        final StringBuilder b = new StringBuilder();
+        final Class<Number> type = Number.class;
+
+        new FakeSpreadsheetValueTypeVisitor() {
+            @Override
+            protected Visiting startVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("1");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("2");
+            }
+
+            @Override
+            protected void visitNumber() {
+                b.append("3");
+            }
+        }.accept(type);
+
+        assertEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptNumber2() {
+        new SpreadsheetValueTypeVisitor() {
+        }.accept(Number.class);
+    }
+
+    @Test
     public void testAcceptString() {
         final StringBuilder b = new StringBuilder();
         final Class<String> type = String.class;
