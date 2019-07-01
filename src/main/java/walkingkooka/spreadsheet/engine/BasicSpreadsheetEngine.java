@@ -291,15 +291,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             final Object test = context.evaluate(rule.formula().expression().get());
             final Boolean booleanResult = context.convert(test, Boolean.class);
             if (Boolean.TRUE.equals(booleanResult)) {
-                final Optional<TextNode> formatted = cell.formatted();
-                if (!formatted.isPresent()) {
-                    throw new BasicSpreadsheetEngineException("Missing formatted cell=" + cell);
-                }
+                final TextNode formatted = cell.formatted()
+                        .orElseThrow(() -> new BasicSpreadsheetEngineException("Missing formatted cell=" + cell));
                 result = cell.setFormatted(
                         Optional.of(
                                 rule.style()
                                         .apply(cell)
-                                        .replace(formatted.get())));
+                                        .replace(formatted)));
             }
         }
         return result;
