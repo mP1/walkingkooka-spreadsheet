@@ -138,6 +138,13 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     }
 
     @Test
+    public void testBigDecimalNumber() {
+        this.convertAndCheck(DECIMAL_BIG_DECIMAL,
+                Number.class,
+                DECIMAL_BIG_DECIMAL);
+    }
+
+    @Test
     public void testBigDecimalString() {
         this.convertAndCheck(DECIMAL_BIG_DECIMAL,
                 String.class,
@@ -205,6 +212,13 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
         this.convertAndCheck(WHOLE_BIG_INTEGER,
                 Long.class,
                 WHOLE_LONG);
+    }
+
+    @Test
+    public void testBigIntegerNumber() {
+        this.convertAndCheck(WHOLE_BIG_INTEGER,
+                Number.class,
+                WHOLE_BIG_INTEGER);
     }
 
     @Test
@@ -325,6 +339,20 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     }
 
     @Test
+    public void testBooleanTrueNumber() {
+        this.convertAndCheck(true,
+                Number.class,
+                LONG_TRUE);
+    }
+
+    @Test
+    public void testBooleanFalseNumber() {
+        this.convertAndCheck(false,
+                Number.class,
+                LONG_FALSE);
+    }
+
+    @Test
     public void testBooleanTrueString() {
         this.convertAndCheck(true,
                 String.class,
@@ -402,6 +430,13 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     }
 
     @Test
+    public void testDoubleNumber() {
+        this.convertAndCheck(WHOLE_DOUBLE,
+                Number.class,
+                WHOLE_DOUBLE);
+    }
+
+    @Test
     public void testDoubleString() {
         this.convertAndCheck(DECIMAL_DOUBLE,
                 String.class,
@@ -469,6 +504,13 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     public void testLocalDateLong() {
         this.convertAndCheck(WHOLE_LOCAL_DATE,
                 Long.class,
+                WHOLE_LONG);
+    }
+
+    @Test
+    public void testLocalDateNumber() {
+        this.convertAndCheck(WHOLE_LOCAL_DATE,
+                Number.class,
                 WHOLE_LONG);
     }
 
@@ -543,6 +585,20 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     }
 
     @Test
+    public void testLocalDateTimeNumber() {
+        this.convertAndCheck(DECIMAL_LOCAL_DATE_TIME,
+                Number.class,
+                DECIMAL_BIG_DECIMAL);
+    }
+
+    @Test
+    public void testLocalDateTimeNumber2() {
+        this.convertAndCheck(WHOLE_LOCAL_DATE_TIME,
+                Number.class,
+                WHOLE_BIG_DECIMAL);
+    }
+
+    @Test
     public void testLocalDateTimeString() {
         this.convertAndCheck(DECIMAL_LOCAL_DATE_TIME,
                 String.class,
@@ -614,13 +670,20 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     }
 
     @Test
+    public void testLocalTimeNumber() {
+        this.convertAndCheck(WHOLE_LOCAL_DATE,
+                Number.class,
+                WHOLE_LONG);
+    }
+
+    @Test
     public void testLocalTimeString() {
         this.convertAndCheck(WHOLE_LOCAL_DATE,
                 String.class,
                 WHOLE_STRING_LOCAL_DATE);
     }
 
-    // LocalTime........................................................................................................
+    // Long........................................................................................................
 
     @Test
     public void testLongBigDecimal() {
@@ -682,6 +745,13 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     public void testLongLong() {
         this.convertAndCheck(WHOLE_LONG,
                 Long.class,
+                WHOLE_LONG);
+    }
+
+    @Test
+    public void testLongNumber() {
+        this.convertAndCheck(WHOLE_LONG,
+                Number.class,
                 WHOLE_LONG);
     }
 
@@ -755,6 +825,13 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
         this.convertAndCheck(WHOLE_STRING,
                 Long.class,
                 WHOLE_LONG);
+    }
+
+    @Test
+    public void testStringNumber() {
+        this.convertAndCheck(DECIMAL_STRING,
+                Number.class,
+                DECIMAL_BIG_DECIMAL);
     }
 
     @Test
