@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.ToStringBuilder;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
@@ -66,15 +67,27 @@ final class SpreadsheetConverterMapping<T> {
                                                                                     final DateTimeFormatter dateTime,
                                                                                     final DateTimeFormatter time,
                                                                                     final String longFormat) {
+        final ToStringBuilder toString = ToStringBuilder.empty()
+                .value(BigDecimal.class.getSimpleName())
+                .label("dateOffset").value(dateOffset)
+                .label("bigDecimalFormat").value(bigDecimalFormat)
+                .label("bigIntegerFormat").value(bigIntegerFormat)
+                .label("doubleFormat").value(doubleFormat)
+                .label("date").value(date)
+                .label("dateTime").value(dateTime)
+                .label("time").value(time)
+                .label("longFormat").value(longFormat);
+
         return new SpreadsheetConverterMapping<>(bigDecimal(dateOffset, bigDecimalFormat),
                 bigInteger(dateOffset, bigIntegerFormat),
-                fromBoolean(dateOffset),
+                booleanMapping(dateOffset),
                 doubleMapping(dateOffset, doubleFormat),
                 localDate(dateOffset, date),
                 localDateTime(dateOffset, dateTime),
                 localTime(time),
                 longMapping(dateOffset, longFormat),
-                string(date, dateTime, time));
+                string(date, dateTime, time),
+                toString.build());
     }
 
     /**
@@ -82,6 +95,11 @@ final class SpreadsheetConverterMapping<T> {
      */
     private static SpreadsheetConverterMapping<Converter> bigDecimal(final long dateOffset,
                                                                      final String format) {
+        final ToStringBuilder toString = ToStringBuilder.empty()
+                .value(BigDecimal.class.getSimpleName())
+                .label("dateOffset").value(dateOffset)
+                .label("format").value(format);
+
         return new SpreadsheetConverterMapping<>(Converters.simple(), // bigDecimal -> bigDecimal
                 Converters.numberBigInteger(),
                 Converters.bigDecimalBoolean(),
@@ -90,7 +108,8 @@ final class SpreadsheetConverterMapping<T> {
                 Converters.numberLocalDateTime(dateOffset),
                 Converters.numberLocalTime(),
                 Converters.numberLong(),
-                Converters.decimalFormatString(format));
+                Converters.decimalFormatString(format),
+                toString.build());
     }
 
     /**
@@ -98,6 +117,11 @@ final class SpreadsheetConverterMapping<T> {
      */
     private static SpreadsheetConverterMapping<Converter> bigInteger(final long dateOffset,
                                                                      final String format) {
+        final ToStringBuilder toString = ToStringBuilder.empty()
+                .value(BigInteger.class.getSimpleName())
+                .label("dateOffset").value(dateOffset)
+                .label("format").value(format);
+
         return new SpreadsheetConverterMapping<>(Converters.numberBigDecimal(),
                 Converters.simple(), // bigDecimal -> bigInteger
                 toBoolean(BigInteger.class, BIG_INTEGER_FALSE),
@@ -106,13 +130,18 @@ final class SpreadsheetConverterMapping<T> {
                 Converters.numberLocalDateTime(dateOffset),
                 Converters.numberLocalTime(),
                 Converters.numberLong(),
-                Converters.decimalFormatString(format));
+                Converters.decimalFormatString(format),
+                toString.build());
     }
 
     /**
      * Holds all the {@link Converter converters} from a {@link Boolean}.
      */
-    private static SpreadsheetConverterMapping<Converter> fromBoolean(final long dateOffset) {
+    private static SpreadsheetConverterMapping<Converter> booleanMapping(final long dateOffset) {
+        final ToStringBuilder toString = ToStringBuilder.empty()
+                .value(Boolean.class.getSimpleName())
+                .label("dateOffset").value(dateOffset);
+
         return new SpreadsheetConverterMapping<>(fromBoolean(BigDecimal.class, BIG_DECIMAL_TRUE, BIG_DECIMAL_FALSE),
                 fromBoolean(BigInteger.class, BIG_INTEGER_TRUE, BIG_INTEGER_FALSE),
                 Converters.simple(), // boolean -> boolean
@@ -121,7 +150,8 @@ final class SpreadsheetConverterMapping<T> {
                 fromBoolean(LocalDateTime.class, localDateTimeTrue(dateOffset), localDateTimeFalse(dateOffset)),
                 fromBoolean(LocalTime.class, LOCAL_TIME_TRUE, LOCAL_TIME_FALSE),
                 fromBoolean(Long.class, LONG_TRUE, LONG_FALSE),
-                fromBoolean(String.class, STRING_TRUE, STRING_FALSE));
+                fromBoolean(String.class, STRING_TRUE, STRING_FALSE),
+                toString.build());
     }
 
     /**
@@ -129,6 +159,11 @@ final class SpreadsheetConverterMapping<T> {
      */
     private static SpreadsheetConverterMapping<Converter> doubleMapping(final long dateOffset,
                                                                         final String format) {
+        final ToStringBuilder toString = ToStringBuilder.empty()
+                .value(Double.class.getSimpleName())
+                .label("dateOffset").value(dateOffset)
+                .label("format").value(format);
+
         return new SpreadsheetConverterMapping<>(Converters.numberBigDecimal(),
                 Converters.numberBigInteger(),
                 toBoolean(Double.class, DOUBLE_FALSE),
@@ -137,7 +172,8 @@ final class SpreadsheetConverterMapping<T> {
                 Converters.numberLocalDateTime(dateOffset),
                 Converters.numberLocalTime(),
                 Converters.numberLong(),
-                Converters.decimalFormatString(format));
+                Converters.decimalFormatString(format),
+                toString.build());
     }
 
     /**
@@ -145,6 +181,11 @@ final class SpreadsheetConverterMapping<T> {
      */
     private static SpreadsheetConverterMapping<Converter> localDate(final long dateOffset,
                                                                     final DateTimeFormatter formatter) {
+        final ToStringBuilder toString = ToStringBuilder.empty()
+                .value(LocalDate.class.getSimpleName())
+                .label("dateOffset").value(dateOffset)
+                .value("formatter").value(formatter);
+
         return new SpreadsheetConverterMapping<>(Converters.localDateBigDecimal(dateOffset),
                 Converters.localDateBigInteger(dateOffset),
                 toBoolean(LocalDate.class, localDateFalse(dateOffset)),
@@ -153,7 +194,8 @@ final class SpreadsheetConverterMapping<T> {
                 Converters.localDateLocalDateTime(),
                 Converters.fail(LocalDate.class, LocalTime.class),
                 Converters.localDateLong(dateOffset),
-                Converters.localDateString(formatter));
+                Converters.localDateString(formatter),
+                toString.build());
     }
 
     /**
@@ -161,6 +203,11 @@ final class SpreadsheetConverterMapping<T> {
      */
     private static SpreadsheetConverterMapping<Converter> localDateTime(final long dateOffset,
                                                                         final DateTimeFormatter formatter) {
+        final ToStringBuilder toString = ToStringBuilder.empty()
+                .value(LocalDateTime.class.getSimpleName())
+                .label("dateOffset").value(dateOffset)
+                .value("formatter").value(formatter);
+
         return new SpreadsheetConverterMapping<>(Converters.localDateTimeBigDecimal(dateOffset),
                 Converters.localDateTimeBigInteger(dateOffset),
                 toBoolean(LocalDateTime.class, LocalDateTime.of(localDateFalse(dateOffset), LOCAL_TIME_FALSE)),
@@ -169,13 +216,18 @@ final class SpreadsheetConverterMapping<T> {
                 Converters.simple(), // datetime -> datetime
                 Converters.localDateTimeLocalTime(),
                 Converters.localDateTimeLong(dateOffset),
-                Converters.localDateTimeString(formatter));
+                Converters.localDateTimeString(formatter),
+                toString.build());
     }
 
     /**
      * Holds all the {@link Converter converters} from a {@link LocalTime}.
      */
     private static SpreadsheetConverterMapping<Converter> localTime(final DateTimeFormatter formatter) {
+        final ToStringBuilder toString = ToStringBuilder.empty()
+                .value(LocalTime.class.getSimpleName())
+                .value("formatter").value(formatter);
+
         return new SpreadsheetConverterMapping<>(Converters.localTimeBigDecimal(),
                 Converters.localTimeBigInteger(),
                 toBoolean(LocalTime.class, LOCAL_TIME_FALSE),
@@ -184,7 +236,8 @@ final class SpreadsheetConverterMapping<T> {
                 Converters.localTimeLocalDateTime(),
                 Converters.simple(), // time -> time
                 Converters.localTimeLong(),
-                Converters.localTimeString(formatter));
+                Converters.localTimeString(formatter),
+                toString.build());
     }
 
     /**
@@ -192,6 +245,11 @@ final class SpreadsheetConverterMapping<T> {
      */
     private static SpreadsheetConverterMapping<Converter> longMapping(final long dateOffset,
                                                                       final String format) {
+        final ToStringBuilder toString = ToStringBuilder.empty()
+                .value(Long.class.getSimpleName())
+                .label("dateOffset").value(dateOffset)
+                .value("format").value(format);
+
         return new SpreadsheetConverterMapping<>(Converters.numberBigDecimal(),
                 Converters.numberBigInteger(),
                 toBoolean(Long.class, LONG_FALSE),
@@ -200,7 +258,8 @@ final class SpreadsheetConverterMapping<T> {
                 Converters.numberLocalDateTime(dateOffset),
                 Converters.numberLocalTime(),
                 Converters.simple(), // long -> long
-                Converters.decimalFormatString(format));
+                Converters.decimalFormatString(format),
+                toString.build());
     }
 
     private final static int RADIX = 10;
@@ -211,6 +270,12 @@ final class SpreadsheetConverterMapping<T> {
     private static SpreadsheetConverterMapping<Converter> string(final DateTimeFormatter date,
                                                                  final DateTimeFormatter dateTime,
                                                                  final DateTimeFormatter time) {
+        final ToStringBuilder toString = ToStringBuilder.empty()
+                .value(Boolean.class.getSimpleName())
+                .value("date").value(date)
+                .value("dateTime").value(dateTime)
+                .value("time").value(time);
+
         return new SpreadsheetConverterMapping<>(parser(BigDecimal.class, Parsers.bigDecimal()),
                 parser(BigInteger.class, Parsers.bigInteger(RADIX)),
                 toBoolean(String.class, STRING_FALSE),
@@ -219,7 +284,8 @@ final class SpreadsheetConverterMapping<T> {
                 Converters.stringLocalDateTime(dateTime),
                 Converters.stringLocalTime(time),
                 parser(Long.class, Parsers.longParser(RADIX)),
-                Converters.simple()); // string -> string
+                Converters.simple(),
+                toString.build()); // string -> string
     }
 
     private static <T> Converter parser(final Class<T> type,
@@ -274,7 +340,8 @@ final class SpreadsheetConverterMapping<T> {
                                         final T localDateTime,
                                         final T localTime,
                                         final T longValue,
-                                        final T string) {
+                                        final T string,
+                                        final String toString) {
         super();
 
         this.bigDecimal = bigDecimal;
@@ -286,6 +353,8 @@ final class SpreadsheetConverterMapping<T> {
         this.localTime = localTime;
         this.longValue = longValue;
         this.string = string;
+
+        this.toString = toString;
     }
 
     final T bigDecimal;
@@ -300,14 +369,8 @@ final class SpreadsheetConverterMapping<T> {
 
     @Override
     public String toString() {
-        return this.bigDecimal + " " +
-                this.bigInteger + " " +
-                this.booleanValue + " " +
-                this.doubleValue + " " +
-                this.localDate + " " +
-                this.localDateTime + " " +
-                this.localTime + " " +
-                this.longValue + " " +
-                this.string;
+        return this.toString;
     }
+
+    private final String toString;
 }
