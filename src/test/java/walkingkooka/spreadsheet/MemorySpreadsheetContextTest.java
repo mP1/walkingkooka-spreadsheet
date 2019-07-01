@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Binary;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
@@ -25,14 +27,40 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.Fraction;
+import walkingkooka.net.AbsoluteUrl;
+import walkingkooka.net.RelativeUrl;
+import walkingkooka.net.Url;
+import walkingkooka.net.header.AcceptCharset;
+import walkingkooka.net.header.CharsetName;
+import walkingkooka.net.header.HttpHeaderName;
+import walkingkooka.net.http.HttpEntity;
+import walkingkooka.net.http.HttpMethod;
+import walkingkooka.net.http.HttpStatusCode;
+import walkingkooka.net.http.server.FakeHttpRequest;
+import walkingkooka.net.http.server.HttpRequest;
+import walkingkooka.net.http.server.HttpRequestAttribute;
+import walkingkooka.net.http.server.HttpRequestParameterName;
+import walkingkooka.net.http.server.HttpResponse;
+import walkingkooka.net.http.server.HttpResponses;
+import walkingkooka.net.http.server.RecordingHttpResponse;
+import walkingkooka.net.http.server.hateos.HateosContentType;
+import walkingkooka.routing.Router;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatters;
 import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.spreadsheet.store.repo.StoreRepository;
 import walkingkooka.tree.expression.ExpressionNodeName;
+import walkingkooka.tree.json.JsonNode;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.nio.charset.Charset;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -44,8 +72,91 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class MemorySpreadsheetContextTest implements SpreadsheetContextTesting<MemorySpreadsheetContext> {
 
     @Test
+    public void testWithNullBaseFails() {
+        this.withFails(null,
+                this.contentType(),
+                this::fractioner,
+                this::spreadsheetIdConverter,
+                this::spreadsheetIdDateTimeContext,
+                this::spreadsheetIdDecimalNumberContext,
+                this::spreadsheetIdDefaultSpreadsheetTextFormatter,
+                this::spreadsheetIdFunctions,
+                this::spreadsheetIdGeneralDecimalFormatPattern,
+                this::spreadsheetIdNameToColor,
+                this::spreadsheetIdNumberToColor,
+                this::spreadsheetIdWidth);
+    }
+
+    @Test
+    public void testWithNullContentTypeFails() {
+        this.withFails(this.base(),
+                null,
+                this::fractioner,
+                this::spreadsheetIdConverter,
+                this::spreadsheetIdDateTimeContext,
+                this::spreadsheetIdDecimalNumberContext,
+                this::spreadsheetIdDefaultSpreadsheetTextFormatter,
+                this::spreadsheetIdFunctions,
+                this::spreadsheetIdGeneralDecimalFormatPattern,
+                this::spreadsheetIdNameToColor,
+                this::spreadsheetIdNumberToColor,
+                this::spreadsheetIdWidth);
+    }
+
+    @Test
+    public void testWithNullFractionerFails() {
+        this.withFails(this.base(),
+                this.contentType(),
+                null,
+                this::spreadsheetIdConverter,
+                this::spreadsheetIdDateTimeContext,
+                this::spreadsheetIdDecimalNumberContext,
+                this::spreadsheetIdDefaultSpreadsheetTextFormatter,
+                this::spreadsheetIdFunctions,
+                this::spreadsheetIdGeneralDecimalFormatPattern,
+                this::spreadsheetIdNameToColor,
+                this::spreadsheetIdNumberToColor,
+                this::spreadsheetIdWidth);
+    }
+
+    @Test
+    public void testWithNullSpreadsheetIdConverterFails() {
+        this.withFails(this.base(),
+                this.contentType(),
+                this::fractioner,
+                null,
+                this::spreadsheetIdDateTimeContext,
+                this::spreadsheetIdDecimalNumberContext,
+                this::spreadsheetIdDefaultSpreadsheetTextFormatter,
+                this::spreadsheetIdFunctions,
+                this::spreadsheetIdGeneralDecimalFormatPattern,
+                this::spreadsheetIdNameToColor,
+                this::spreadsheetIdNumberToColor,
+                this::spreadsheetIdWidth);
+    }
+
+    @Test
     public void testWithNullSpreadsheetIdDateTimeContextFails() {
-        this.withFails(this::spreadsheetIdConverter,
+        this.withFails(this.base(),
+                this.contentType(),
+                this::fractioner,
+                this::spreadsheetIdConverter,
+                null,
+                this::spreadsheetIdDecimalNumberContext,
+                this::spreadsheetIdDefaultSpreadsheetTextFormatter,
+                this::spreadsheetIdFunctions,
+                this::spreadsheetIdGeneralDecimalFormatPattern,
+                this::spreadsheetIdNameToColor,
+                this::spreadsheetIdNumberToColor,
+                this::spreadsheetIdWidth);
+    }
+
+    @Test
+    public void testWithNullSpreadsheetIdDecimalNumberContextFails() {
+        this.withFails(this.base(),
+                this.contentType(),
+                this::fractioner,
+                this::spreadsheetIdConverter,
                 this::spreadsheetIdDateTimeContext,
                 null,
                 this::spreadsheetIdDefaultSpreadsheetTextFormatter,
@@ -58,7 +169,10 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
     @Test
     public void testWithNullSpreadsheetIdDefaultSpreadsheetTextFormatterFails() {
-        this.withFails(this::spreadsheetIdConverter,
+        this.withFails(this.base(),
+                this.contentType(),
+                this::fractioner,
+                this::spreadsheetIdConverter,
                 this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
                 null,
@@ -71,7 +185,10 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
     @Test
     public void testWithNullSpreadsheetIdFunctionsFails() {
-        this.withFails(this::spreadsheetIdConverter,
+        this.withFails(this.base(),
+                this.contentType(),
+                this::fractioner,
+                this::spreadsheetIdConverter,
                 this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
                 null,
@@ -84,7 +201,10 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
     @Test
     public void testWithNullSpreadsheetIdGeneralDecimalFormatPatternFails() {
-        this.withFails(this::spreadsheetIdConverter,
+        this.withFails(this.base(),
+                this.contentType(),
+                this::fractioner,
+                this::spreadsheetIdConverter,
                 this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
                 this::spreadsheetIdDefaultSpreadsheetTextFormatter,
@@ -97,7 +217,10 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
     @Test
     public void testWithNullSpreadsheetIdNameToColorFails() {
-        this.withFails(this::spreadsheetIdConverter,
+        this.withFails(this.base(),
+                this.contentType(),
+                this::fractioner,
+                this::spreadsheetIdConverter,
                 this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
                 this::spreadsheetIdDefaultSpreadsheetTextFormatter,
@@ -110,7 +233,10 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
     @Test
     public void testWithNullSpreadsheetIdNumberToColorFails() {
-        this.withFails(this::spreadsheetIdConverter,
+        this.withFails(this.base(),
+                this.contentType(),
+                this::fractioner,
+                this::spreadsheetIdConverter,
                 this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
                 this::spreadsheetIdDefaultSpreadsheetTextFormatter,
@@ -123,7 +249,10 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
     @Test
     public void testWithNullSpreadsheetIdWidthFails() {
-        this.withFails(this::spreadsheetIdConverter,
+        this.withFails(this.base(),
+                this.contentType(),
+                this::fractioner,
+                this::spreadsheetIdConverter,
                 this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
                 this::spreadsheetIdDefaultSpreadsheetTextFormatter,
@@ -134,7 +263,10 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 null);
     }
 
-    private void withFails(final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
+    private void withFails(final AbsoluteUrl base,
+                           final HateosContentType<JsonNode> contentType,
+                           final Function<BigDecimal, Fraction> fractioner,
+                           final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
                            final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                            final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
                            final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter,
@@ -144,7 +276,10 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                            final Function<SpreadsheetId, Function<Integer, Color>> spreadsheetIdNumberToColor,
                            final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
         assertThrows(NullPointerException.class, () -> {
-            MemorySpreadsheetContext.with(spreadsheetIdConverter,
+            MemorySpreadsheetContext.with(base,
+                    contentType,
+                    fractioner,
+                    spreadsheetIdConverter,
                     spreadsheetIdDateTimeContext,
                     spreadsheetIdDecimalFormatContext,
                     spreadsheetIdDefaultSpreadsheetTextFormatter,
@@ -184,6 +319,141 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     @Test
     public void testGeneralDecimalFormatPattern() {
         assertNotEquals(null, this.createContext().generalDecimalFormatPattern(this.spreadsheetId()));
+    }
+
+    @Test
+    public void testHateosRouter() {
+        assertNotEquals(null, this.createContext().hateosRouter(this.spreadsheetId()));
+    }
+
+    @Test
+    public void testHateosRouterAndRouteMappedRequest() {
+        final MemorySpreadsheetContext context = this.createContext();
+        final SpreadsheetId id = this.spreadsheetId();
+        final Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> router = context.hateosRouter(id);
+
+        final HttpRequest request = new FakeHttpRequest() {
+            @Override
+            public HttpMethod method() {
+                return HttpMethod.POST;
+            }
+
+            @Override
+            public RelativeUrl url() {
+                return Url.parseRelative("/api987/123/cell/A1");
+            }
+
+            @Override
+            public Map<HttpHeaderName<?>, Object> headers() {
+                return Maps.of(HttpHeaderName.CONTENT_TYPE, HateosContentType.json().contentType(),
+                        HttpHeaderName.ACCEPT_CHARSET, AcceptCharset.parse("UTF-8"));
+            }
+
+            public Map<HttpRequestParameterName, List<String>> parameters() {
+                return HttpRequest.NO_PARAMETERS;
+            }
+
+            @Override
+            public byte[] body() {
+                return SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference("A1"),
+                        SpreadsheetFormula.with("1+2"))
+                        .toJsonNode()
+                        .toString()
+                        .getBytes(Charset.defaultCharset());
+            }
+        };
+
+        final Optional<BiConsumer<HttpRequest, HttpResponse>> mapped = router.route(request.routingParameters());
+        assertNotEquals(Optional.empty(), mapped, "request " + request.parameters());
+
+        final RecordingHttpResponse response = HttpResponses.recording();
+        final BiConsumer<HttpRequest, HttpResponse> consumer = mapped.get();
+        consumer.accept(request, response);
+
+        final RecordingHttpResponse expected = HttpResponses.recording();
+        expected.setStatus(HttpStatusCode.OK.setMessage("POST resource successful"));
+
+        final String expectedBody = "{\n" +
+                "  \"id\": \"123\",\n" +
+                "  \"cells\": [{\n" +
+                "    \"reference\": \"A1\",\n" +
+                "    \"formula\": {\n" +
+                "      \"text\": \"1+2\",\n" +
+                "      \"expression\": {\n" +
+                "        \"type\": \"expression+\",\n" +
+                "        \"value\": [{\n" +
+                "          \"type\": \"expression-big-decimal\",\n" +
+                "          \"value\": \"1\"\n" +
+                "        }, {\n" +
+                "          \"type\": \"expression-big-decimal\",\n" +
+                "          \"value\": \"2\"\n" +
+                "        }]\n" +
+                "      },\n" +
+                "      \"value\": {\n" +
+                "        \"type\": \"big-decimal\",\n" +
+                "        \"value\": \"3\"\n" +
+                "      }\n" +
+                "    },\n" +
+                "    \"formatted\": {\n" +
+                "      \"type\": \"text\",\n" +
+                "      \"value\": \"Hello1233\"\n" +
+                "    }\n" +
+                "  }],\n" +
+                "  \"_links\": [{\n" +
+                "    \"href\": \"http://example.com/api987/123/cell/123/copy\",\n" +
+                "    \"method\": \"POST\",\n" +
+                "    \"rel\": \"copy\",\n" +
+                "    \"type\": \"application/hal+json\"\n" +
+                "  }, {\n" +
+                "    \"href\": \"http://example.com/api987/123/cell/123\",\n" +
+                "    \"method\": \"POST\",\n" +
+                "    \"rel\": \"self\",\n" +
+                "    \"type\": \"application/hal+json\"\n" +
+                "  }]\n" +
+                "}";
+
+        expected.addEntity(HttpEntity.with(Maps.of(
+                HttpHeaderName.CONTENT_LENGTH, 789L,
+                HttpHeaderName.CONTENT_TYPE, HateosContentType.json().contentType().setCharset(CharsetName.UTF_8)),
+                Binary.with(expectedBody.getBytes(Charset.defaultCharset()))));
+
+        assertEquals(expected, response, () -> "consumer: " + consumer + ", request: " + request);
+    }
+
+    @Test
+    public void testHateosRouterAndRouteInvalidRequest() {
+        final MemorySpreadsheetContext context = this.createContext();
+        final SpreadsheetId id = this.spreadsheetId();
+        final Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> router = context.hateosRouter(id);
+
+        final HttpRequest request = new FakeHttpRequest() {
+            @Override
+            public HttpMethod method() {
+                return HttpMethod.GET;
+            }
+
+            @Override
+            public RelativeUrl url() {
+                return Url.parseRelative("/INVALID");
+            }
+
+            @Override
+            public Map<HttpHeaderName<?>, Object> headers() {
+                return HttpRequest.NO_HEADERS;
+            }
+
+            public Map<HttpRequestParameterName, List<String>> parameters() {
+                return HttpRequest.NO_PARAMETERS;
+            }
+
+            @Override
+            public byte[] body() {
+                return new byte[0];
+            }
+        };
+
+        final Optional<BiConsumer<HttpRequest, HttpResponse>> mapped = router.route(request.routingParameters());
+        assertEquals(Optional.empty(), mapped, "request " + request.parameters());
     }
 
     @Test
@@ -248,12 +518,15 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         final MemorySpreadsheetContext context = this.createContext();
         context.storeRepository(SpreadsheetId.with(111));
 
-        this.toStringAndCheck(context, "{111=[] {} [] [] {} {} {} {}}");
+        this.toStringAndCheck(context, "base=http://example.com/api987 contentType=JSON");
     }
 
     @Override
     public MemorySpreadsheetContext createContext() {
-        return MemorySpreadsheetContext.with(this::spreadsheetIdConverter,
+        return MemorySpreadsheetContext.with(this.base(),
+                this.contentType(),
+                this::fractioner,
+                this::spreadsheetIdConverter,
                 this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
                 this::spreadsheetIdDefaultSpreadsheetTextFormatter,
@@ -264,10 +537,22 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdWidth);
     }
 
+    private AbsoluteUrl base() {
+        return Url.parseAbsolute("http://example.com/api987");
+    }
+
+    private HateosContentType<JsonNode> contentType() {
+        return HateosContentType.json();
+    }
+
+    final Fraction fractioner(final BigDecimal value) {
+        throw new UnsupportedOperationException();
+    }
+
     private Converter spreadsheetIdConverter(final SpreadsheetId spreadsheetId) {
         this.checkSpreadsheetId(spreadsheetId);
 
-        return Converters.fake();
+        return Converters.simple();
     }
 
     private DateTimeContext spreadsheetIdDateTimeContext(final SpreadsheetId spreadsheetId) {
@@ -279,7 +564,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     private DecimalNumberContext spreadsheetIdDecimalNumberContext(final SpreadsheetId spreadsheetId) {
         this.checkSpreadsheetId(spreadsheetId);
 
-        return DecimalNumberContexts.fake();
+        return DecimalNumberContexts.american(MathContext.DECIMAL32);
     }
 
     private SpreadsheetTextFormatter<?> spreadsheetIdDefaultSpreadsheetTextFormatter(final SpreadsheetId spreadsheetId) {
@@ -337,7 +622,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     }
 
     private SpreadsheetId spreadsheetId() {
-        return SpreadsheetId.with(0x123456);
+        return SpreadsheetId.with(123);
     }
 
     @Override

@@ -76,6 +76,11 @@ public interface SpreadsheetContext extends Context {
     String generalDecimalFormatPattern(final SpreadsheetId id);
 
     /**
+     * A {@link Router} that can handle hateos requests for the given identified spreadsheet.
+     */
+    Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> hateosRouter(final SpreadsheetId id);
+
+    /**
      * Returns a {@link Function} which maps {@link String color name} to {@link Color} for the given {@link SpreadsheetId}.
      */
     Function<String, Color> nameToColor(final SpreadsheetId id);
