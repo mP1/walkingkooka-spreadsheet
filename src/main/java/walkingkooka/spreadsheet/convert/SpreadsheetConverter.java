@@ -102,6 +102,7 @@ final class SpreadsheetConverter implements Converter {
             BigInteger.class,
             Double.class,
             Long.class,
+            Number.class,
             String.class);
 
     @Override
