@@ -80,6 +80,11 @@ final class SpreadsheetConverterSpreadsheetValueTypeVisitor extends SpreadsheetV
     }
 
     @Override
+    protected void visitNumber() {
+        this.converter = this.all.number;
+    }
+
+    @Override
     protected void visitString() {
         this.converter = this.all.string;
     }
