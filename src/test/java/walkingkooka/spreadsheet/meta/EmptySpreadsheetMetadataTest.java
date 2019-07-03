@@ -23,6 +23,8 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.tree.json.JsonNode;
 
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class EmptySpreadsheetMetadataTest extends SpreadsheetMetadataTestCase<EmptySpreadsheetMetadata> {
@@ -48,6 +50,14 @@ public final class EmptySpreadsheetMetadataTest extends SpreadsheetMetadataTestC
                 propertyName,
                 familyName,
                 SpreadsheetMetadata.with(Maps.of(propertyName, familyName)));
+    }
+
+    // SpreadsheetMetadataVisitor.......................................................................................
+
+    @Test
+    public void testAccept() {
+        SpreadsheetMetadata.EMPTY.accept(new SpreadsheetMetadataVisitor() {
+        });
     }
 
     // toString.........................................................................................................
