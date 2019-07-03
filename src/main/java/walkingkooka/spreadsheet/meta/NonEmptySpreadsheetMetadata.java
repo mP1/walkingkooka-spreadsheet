@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.text.TextStyleVisitor;
 
 import java.util.List;
 import java.util.Map;
@@ -132,6 +133,13 @@ final class NonEmptySpreadsheetMetadata extends SpreadsheetMetadata {
         return list.isEmpty() ?
                 SpreadsheetMetadata.EMPTY :
                 new NonEmptySpreadsheetMetadata(SpreadsheetMetadataMap.withSpreadsheetMetadataMapEntrySet(SpreadsheetMetadataMapEntrySet.withList(list))); // no need to sort after a delete
+    }
+
+    // SpreadsheetMetadataVisitor.......................................................................................
+
+    @Override
+    void accept(final SpreadsheetMetadataVisitor visitor) {
+        this.value.accept(visitor);
     }
 
     // Object...........................................................................................................

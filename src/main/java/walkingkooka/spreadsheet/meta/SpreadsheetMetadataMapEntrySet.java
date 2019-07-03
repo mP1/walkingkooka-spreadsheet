@@ -23,6 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.text.TextStyleVisitor;
 
 import java.util.AbstractSet;
 import java.util.Comparator;
@@ -101,6 +102,13 @@ final class SpreadsheetMetadataMapEntrySet extends AbstractSet<Entry<Spreadsheet
     }
 
     private final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> entries;
+
+    // SpreadsheetMetadataVisitor.......................................................................................
+
+    void accept(final SpreadsheetMetadataVisitor visitor) {
+        this.entries.stream()
+                .forEach(visitor::acceptPropertyAndValue);
+    }
 
     // HasJsonNode......................................................................................................
 
