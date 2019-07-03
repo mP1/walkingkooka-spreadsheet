@@ -80,7 +80,14 @@ final class EmptySpreadsheetMetadata extends SpreadsheetMetadata {
         return this;
     }
 
-    // Object..........................................................................................................
+    // SpreadsheetMetadataVisitor........................................................................................
+
+    @Override
+    void accept(final SpreadsheetMetadataVisitor visitor) {
+        // no properties
+    }
+
+    // Object...........................................................................................................
 
     @Override
     public int hashCode() {
