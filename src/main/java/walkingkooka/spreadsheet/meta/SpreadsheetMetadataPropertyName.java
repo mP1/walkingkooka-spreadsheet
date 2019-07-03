@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.naming.Name;
 import walkingkooka.net.email.EmailAddress;
@@ -27,6 +28,7 @@ import walkingkooka.tree.json.JsonNodeName;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 /**
  * The {@link Name} of metadata property, used to fetch a value given a name.
@@ -45,23 +47,30 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     /**
      * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link EmailAddress} metadata values.
      */
-    private static SpreadsheetMetadataPropertyName<EmailAddress> registerEmailAddressConstant(final String name) {
-        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.emailAddress());
+    private static SpreadsheetMetadataPropertyName<EmailAddress> registerEmailAddressConstant(final String name,
+                                                                                              final BiConsumer<EmailAddress, SpreadsheetMetadataVisitor> visitor) {
+        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.emailAddress(),
+                visitor);
     }
 
     /**
      * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link LocalDateTime} metadata values.
      */
-    private static SpreadsheetMetadataPropertyName<LocalDateTime> registerDateTimeConstant(final String name) {
-        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.localDateTime());
+    private static SpreadsheetMetadataPropertyName<LocalDateTime> registerDateTimeConstant(final String name,
+                                                                                           final BiConsumer<LocalDateTime, SpreadsheetMetadataVisitor> visitor) {
+        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.localDateTime(),
+                visitor);
     }
 
     /**
      * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built.
      */
     private static <T> SpreadsheetMetadataPropertyName<T> registerConstant(final String name,
-                                                                           final SpreadsheetMetadataPropertyValueHandler<T> handler) {
-        final SpreadsheetMetadataPropertyName<T> spreadsheetMetadataName = new SpreadsheetMetadataPropertyName<T>(name, handler);
+                                                                           final SpreadsheetMetadataPropertyValueHandler<T> handler,
+                                                                           final BiConsumer<T, SpreadsheetMetadataVisitor> visitor) {
+        final SpreadsheetMetadataPropertyName<T> spreadsheetMetadataName = new SpreadsheetMetadataPropertyName<T>(name,
+                handler,
+                visitor);
         SpreadsheetMetadataPropertyName.CONSTANTS.put(name, spreadsheetMetadataName);
         return spreadsheetMetadataName;
     }
@@ -69,22 +78,26 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>creator {@link EmailAddress}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<EmailAddress> CREATOR = registerEmailAddressConstant("creator");
+    public final static SpreadsheetMetadataPropertyName<EmailAddress> CREATOR = registerEmailAddressConstant("creator",
+            (e, v) -> v.visitCreator(e));
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>creation {@link LocalDateTime}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<LocalDateTime> CREATE_DATE_TIME = registerDateTimeConstant("create-date-time");
+    public final static SpreadsheetMetadataPropertyName<LocalDateTime> CREATE_DATE_TIME = registerDateTimeConstant("create-date-time",
+            (d, v) -> v.visitCreateDateTime(d));
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>last modified by {@link EmailAddress}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<EmailAddress> MODIFIED_BY = registerEmailAddressConstant("modified-by");
+    public final static SpreadsheetMetadataPropertyName<EmailAddress> MODIFIED_BY = registerEmailAddressConstant("modified-by",
+            (e, v) -> v.visitModifiedBy(e));
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>modified {@link LocalDateTime}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<LocalDateTime> MODIFIED_DATE_TIME = registerDateTimeConstant("modified-date-time");
+    public final static SpreadsheetMetadataPropertyName<LocalDateTime> MODIFIED_DATE_TIME = registerDateTimeConstant("modified-date-time",
+            (d, v) -> v.visitModifiedDateTime(d));
 
     /**
      * Factory that assumnes a valid {@link SpreadsheetMetadataPropertyName} or fails.
@@ -103,13 +116,16 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
      * Private constructor use factory.
      */
     private SpreadsheetMetadataPropertyName(final String name,
-                                            final SpreadsheetMetadataPropertyValueHandler<T> handler) {
+                                            final SpreadsheetMetadataPropertyValueHandler<T> handler,
+                                            final BiConsumer<T, SpreadsheetMetadataVisitor> visitor) {
         super();
         this.name = name;
         this.inQuotes = CharSequences.quoteAndEscape(name).toString();
         this.jsonNodeName = JsonNodeName.with(name);
 
         this.handler = handler;
+
+        this.visitor = visitor;
     }
 
     @Override
@@ -132,6 +148,20 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
 
     final SpreadsheetMetadataPropertyValueHandler<T> handler;
 
+    // SpreadsheetMetadataVisitor.......................................................................................
+
+    /**
+     * Dispatches to the appropriate {@link SpreadsheetMetadataVisitor} visit method.
+     */
+    void accept(final Object value, final SpreadsheetMetadataVisitor visitor) {
+        this.visitor.accept(Cast.to(value), visitor);
+    }
+
+    /**
+     * Calls the appropriate {@link SpreadsheetMetadataVisitor} visit method
+     */
+    private final BiConsumer<T, SpreadsheetMetadataVisitor> visitor;
+    
     // Object...........................................................................................................
 
     @Override

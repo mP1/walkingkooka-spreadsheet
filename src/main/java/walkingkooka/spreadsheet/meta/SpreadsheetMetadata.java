@@ -25,6 +25,7 @@ import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonObjectNode;
+import walkingkooka.tree.text.TextStyleVisitor;
 
 import java.util.Map;
 import java.util.Objects;
@@ -112,6 +113,10 @@ public abstract class SpreadsheetMetadata implements HashCodeEqualsDefined,
     private static void checkPropertyName(final SpreadsheetMetadataPropertyName<?> propertyName) {
         Objects.requireNonNull(propertyName, "propertyName");
     }
+
+    // SpreadsheetMetadataStyleVisitor..................................................................................
+
+    abstract void accept(final SpreadsheetMetadataVisitor visitor);
 
     // Object...........................................................................................................
 
