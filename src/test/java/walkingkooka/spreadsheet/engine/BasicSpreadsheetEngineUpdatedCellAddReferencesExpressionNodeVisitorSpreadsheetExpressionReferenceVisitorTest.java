@@ -21,11 +21,12 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetExpressionReferenceVisitor;
+import walkingkooka.spreadsheet.SpreadsheetExpressionReferenceVisitorTesting;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.visit.VisitorTesting;
 
 public final class BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitorSpreadsheetExpressionReferenceVisitorTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitorSpreadsheetExpressionReferenceVisitor>
-        implements VisitorTesting<BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitorSpreadsheetExpressionReferenceVisitor, ExpressionReference> {
+        implements SpreadsheetExpressionReferenceVisitorTesting<BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitorSpreadsheetExpressionReferenceVisitor> {
 
     private final static SpreadsheetCellReference CELL = SpreadsheetExpressionReference.parseCellReference("A99");
 

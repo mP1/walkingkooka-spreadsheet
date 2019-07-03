@@ -28,7 +28,7 @@ import walkingkooka.type.JavaVisibility;
 import java.util.function.Consumer;
 
 public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetExpressionReferenceVisitorTest implements
-        VisitorTesting<ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetExpressionReferenceVisitor, ExpressionReference>,
+        SpreadsheetExpressionReferenceVisitorTesting<ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetExpressionReferenceVisitor>,
         ToStringTesting<ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetExpressionReferenceVisitor> {
 
     @Test
