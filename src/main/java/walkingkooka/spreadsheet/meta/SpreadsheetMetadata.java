@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.HasJsonNode;
@@ -36,6 +37,7 @@ import java.util.Optional;
  */
 public abstract class SpreadsheetMetadata implements HashCodeEqualsDefined,
         HasJsonNode,
+        HateosResource<SpreadsheetId>,
         Value<Map<SpreadsheetMetadataPropertyName<?>, Object>> {
 
     /**
