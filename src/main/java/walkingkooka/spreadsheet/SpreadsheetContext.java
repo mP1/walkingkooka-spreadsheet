@@ -27,6 +27,7 @@ import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.HttpResponse;
 import walkingkooka.routing.Router;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.store.repo.StoreRepository;
 import walkingkooka.tree.expression.ExpressionNodeName;
 
@@ -79,6 +80,11 @@ public interface SpreadsheetContext extends Context {
      * A {@link Router} that can handle hateos requests for the given identified spreadsheet.
      */
     Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> hateosRouter(final SpreadsheetId id);
+
+    /**
+     * Returns a {@link SpreadsheetMetadata} accompanying the identified spreadsheet {@link SpreadsheetId}.
+     */
+    SpreadsheetMetadata metadata(final SpreadsheetId id);
 
     /**
      * Returns a {@link Function} which maps {@link String color name} to {@link Color} for the given {@link SpreadsheetId}.
