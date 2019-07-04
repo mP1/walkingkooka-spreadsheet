@@ -48,6 +48,7 @@ import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.routing.Router;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatters;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.spreadsheet.store.repo.StoreRepository;
 import walkingkooka.tree.expression.ExpressionNodeName;
@@ -82,6 +83,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdDefaultSpreadsheetTextFormatter,
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdGeneralDecimalFormatPattern,
+                this::spreadsheetIdMetadata,
                 this::spreadsheetIdNameToColor,
                 this::spreadsheetIdNumberToColor,
                 this::spreadsheetIdWidth);
@@ -98,6 +100,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdDefaultSpreadsheetTextFormatter,
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdGeneralDecimalFormatPattern,
+                this::spreadsheetIdMetadata,
                 this::spreadsheetIdNameToColor,
                 this::spreadsheetIdNumberToColor,
                 this::spreadsheetIdWidth);
@@ -114,6 +117,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdDefaultSpreadsheetTextFormatter,
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdGeneralDecimalFormatPattern,
+                this::spreadsheetIdMetadata,
                 this::spreadsheetIdNameToColor,
                 this::spreadsheetIdNumberToColor,
                 this::spreadsheetIdWidth);
@@ -130,6 +134,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdDefaultSpreadsheetTextFormatter,
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdGeneralDecimalFormatPattern,
+                this::spreadsheetIdMetadata,
                 this::spreadsheetIdNameToColor,
                 this::spreadsheetIdNumberToColor,
                 this::spreadsheetIdWidth);
@@ -146,6 +151,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdDefaultSpreadsheetTextFormatter,
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdGeneralDecimalFormatPattern,
+                this::spreadsheetIdMetadata,
                 this::spreadsheetIdNameToColor,
                 this::spreadsheetIdNumberToColor,
                 this::spreadsheetIdWidth);
@@ -162,6 +168,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdDefaultSpreadsheetTextFormatter,
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdGeneralDecimalFormatPattern,
+                this::spreadsheetIdMetadata,
                 this::spreadsheetIdNameToColor,
                 this::spreadsheetIdNumberToColor,
                 this::spreadsheetIdWidth);
@@ -178,6 +185,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 null,
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdGeneralDecimalFormatPattern,
+                this::spreadsheetIdMetadata,
                 this::spreadsheetIdNameToColor,
                 this::spreadsheetIdNumberToColor,
                 this::spreadsheetIdWidth);
@@ -194,6 +202,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 null,
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdGeneralDecimalFormatPattern,
+                this::spreadsheetIdMetadata,
                 this::spreadsheetIdNameToColor,
                 this::spreadsheetIdNumberToColor,
                 this::spreadsheetIdWidth);
@@ -209,6 +218,24 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdDecimalNumberContext,
                 this::spreadsheetIdDefaultSpreadsheetTextFormatter,
                 this::spreadsheetIdFunctions,
+                null,
+                this::spreadsheetIdMetadata,
+                this::spreadsheetIdNameToColor,
+                this::spreadsheetIdNumberToColor,
+                this::spreadsheetIdWidth);
+    }
+
+    @Test
+    public void testWithNullSpreadsheetIdMetadataFails() {
+        this.withFails(this.base(),
+                this.contentType(),
+                this::fractioner,
+                this::spreadsheetIdConverter,
+                this::spreadsheetIdDateTimeContext,
+                this::spreadsheetIdDecimalNumberContext,
+                this::spreadsheetIdDefaultSpreadsheetTextFormatter,
+                this::spreadsheetIdFunctions,
+                this::spreadsheetIdGeneralDecimalFormatPattern,
                 null,
                 this::spreadsheetIdNameToColor,
                 this::spreadsheetIdNumberToColor,
@@ -226,6 +253,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdDefaultSpreadsheetTextFormatter,
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdGeneralDecimalFormatPattern,
+                this::spreadsheetIdMetadata,
                 null,
                 this::spreadsheetIdNumberToColor,
                 this::spreadsheetIdWidth);
@@ -242,6 +270,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdDefaultSpreadsheetTextFormatter,
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdGeneralDecimalFormatPattern,
+                this::spreadsheetIdMetadata,
                 this::spreadsheetIdNameToColor,
                 null,
                 this::spreadsheetIdWidth);
@@ -258,6 +287,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdDefaultSpreadsheetTextFormatter,
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdGeneralDecimalFormatPattern,
+                this::spreadsheetIdMetadata,
                 this::spreadsheetIdNameToColor,
                 this::spreadsheetIdNumberToColor,
                 null);
@@ -272,6 +302,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                            final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter,
                            final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                            final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
+                           final Function<SpreadsheetId, SpreadsheetMetadata> spreadsheetIdMetadata,
                            final Function<SpreadsheetId, Function<String, Color>> spreadsheetIdNameToColor,
                            final Function<SpreadsheetId, Function<Integer, Color>> spreadsheetIdNumberToColor,
                            final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
@@ -285,6 +316,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                     spreadsheetIdDefaultSpreadsheetTextFormatter,
                     spreadsheetIdFunctions,
                     spreadsheetIdGeneralDecimalFormatPattern,
+                    spreadsheetIdMetadata,
                     spreadsheetIdNameToColor,
                     spreadsheetIdNumberToColor,
                     spreadsheetIdWidth);
@@ -532,6 +564,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdDefaultSpreadsheetTextFormatter,
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdGeneralDecimalFormatPattern,
+                this::spreadsheetIdMetadata,
                 this::spreadsheetIdNameToColor,
                 this::spreadsheetIdNumberToColor,
                 this::spreadsheetIdWidth);
@@ -587,6 +620,11 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         this.checkSpreadsheetId(spreadsheetId);
 
         return "Hello123";
+    }
+
+    private SpreadsheetMetadata spreadsheetIdMetadata(final SpreadsheetId spreadsheetId) {
+        this.checkSpreadsheetId(spreadsheetId);
+        return SpreadsheetMetadata.EMPTY;
     }
 
     private Function<String, Color> spreadsheetIdNameToColor(final SpreadsheetId spreadsheetId) {
