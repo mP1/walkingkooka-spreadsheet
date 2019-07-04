@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.tree.visit.Visiting;
 
 import java.time.LocalDateTime;
@@ -65,6 +66,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitModifiedDateTime(final LocalDateTime dateTime) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitSpreadsheetId(final SpreadsheetId id) {
         throw new UnsupportedOperationException();
     }
 }
