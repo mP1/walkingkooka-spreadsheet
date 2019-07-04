@@ -64,7 +64,7 @@ public final class SpreadsheetWhitespaceParserToken extends SpreadsheetNonBinary
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override
-    public void accept(final SpreadsheetParserTokenVisitor visitor) {
+    void accept(final SpreadsheetParserTokenVisitor visitor) {
         visitor.visit(this);
     }
 

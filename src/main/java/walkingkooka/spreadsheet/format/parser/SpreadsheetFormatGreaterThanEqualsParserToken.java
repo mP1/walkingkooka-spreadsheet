@@ -76,7 +76,7 @@ public final class SpreadsheetFormatGreaterThanEqualsParserToken extends Spreads
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override
-    public void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
+    void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         if (Visiting.CONTINUE == visitor.startVisit(this)) {
             this.acceptValues(visitor);
         }

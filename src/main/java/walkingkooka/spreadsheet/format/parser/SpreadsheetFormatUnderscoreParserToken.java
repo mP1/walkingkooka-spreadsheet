@@ -137,7 +137,7 @@ public final class SpreadsheetFormatUnderscoreParserToken extends SpreadsheetFor
     }
 
     @Override
-    public void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
+    void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         visitor.visit(this);
     }
 

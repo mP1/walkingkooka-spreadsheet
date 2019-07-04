@@ -138,7 +138,7 @@ public final class SpreadsheetFormatSecondParserToken extends SpreadsheetFormatN
     }
 
     @Override
-    public void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
+    void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         visitor.visit(this);
     }
 

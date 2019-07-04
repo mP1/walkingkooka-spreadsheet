@@ -137,7 +137,7 @@ public final class SpreadsheetFormatStarParserToken extends SpreadsheetFormatNon
     }
 
     @Override
-    public void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
+    void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         visitor.visit(this);
     }
 
