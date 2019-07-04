@@ -21,7 +21,7 @@ import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetExpressionReferenceVisitor;
 import walkingkooka.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.SpreadsheetRange;
-import walkingkooka.spreadsheet.store.LoadStoreException;
+import walkingkooka.spreadsheet.store.LoadSpreadsheetStoreException;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -54,7 +54,7 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
     protected void visit(final SpreadsheetLabelName label) {
         try {
             this.accept(this.store.loadOrFail(label).reference());
-        } catch (final LoadStoreException cause) {
+        } catch (final LoadSpreadsheetStoreException cause) {
             throw new ExpressionEvaluationException("Unknown label: " + label);
         }
     }

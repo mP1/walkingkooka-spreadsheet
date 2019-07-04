@@ -20,19 +20,19 @@ package walkingkooka.spreadsheet.store;
 /**
  * This exception is thrown with a load fails..
  */
-public class LoadStoreException extends StoreException {
+public class LoadSpreadsheetStoreException extends SpreadsheetStoreException {
 
     private static final long serialVersionUID = 1L;
 
-    protected LoadStoreException() {
+    protected LoadSpreadsheetStoreException() {
         super();
     }
 
-    public LoadStoreException(final String message) {
+    public LoadSpreadsheetStoreException(final String message) {
         super(message);
     }
 
-    public LoadStoreException(final String message, final Throwable cause) {
+    public LoadSpreadsheetStoreException(final String message, final Throwable cause) {
         super(message, cause);
     }
 }

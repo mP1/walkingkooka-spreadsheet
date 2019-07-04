@@ -23,7 +23,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.store.Store;
+import walkingkooka.spreadsheet.store.SpreadsheetStore;
 import walkingkooka.spreadsheet.store.Watchers;
 import walkingkooka.tree.expression.ExpressionReference;
 
@@ -103,7 +103,7 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
     @Override
     public Set<SpreadsheetLabelName> ids(final int from,
                                          final int count) {
-        Store.checkFromAndTo(from, count);
+        SpreadsheetStore.checkFromAndTo(from, count);
 
         return this.mappings.keySet()
                 .stream()
@@ -118,7 +118,7 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
     @Override
     public List<SpreadsheetLabelMapping> values(final SpreadsheetLabelName from,
                                                 final int count) {
-        Store.checkFromAndToIds(from, count);
+        SpreadsheetStore.checkFromAndToIds(from, count);
 
         return this.mappings.entrySet()
                 .stream()

@@ -20,14 +20,14 @@ package walkingkooka.spreadsheet.store.security;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
-import walkingkooka.spreadsheet.store.Store;
+import walkingkooka.spreadsheet.store.SpreadsheetStore;
 
 import java.util.Optional;
 
 /**
- * A {@link Store} that holds all users.
+ * A {@link SpreadsheetStore} that holds all users.
  */
-public interface SpreadsheetUserStore extends Store<UserId, User> {
+public interface SpreadsheetUserStore extends SpreadsheetStore<UserId, User> {
 
     /**
      * Loads the user with the provided {@link EmailAddress}

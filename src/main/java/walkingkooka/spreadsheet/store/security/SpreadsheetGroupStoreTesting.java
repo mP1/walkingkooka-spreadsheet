@@ -21,14 +21,14 @@ import walkingkooka.spreadsheet.security.Group;
 import walkingkooka.spreadsheet.security.GroupId;
 import walkingkooka.spreadsheet.security.GroupName;
 import walkingkooka.spreadsheet.security.UserId;
-import walkingkooka.spreadsheet.store.StoreTesting;
+import walkingkooka.spreadsheet.store.SpreadsheetStoreTesting;
 import walkingkooka.test.TypeNameTesting;
 
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public interface SpreadsheetGroupStoreTesting<S extends SpreadsheetGroupStore> extends StoreTesting<S, GroupId, Group>,
+public interface SpreadsheetGroupStoreTesting<S extends SpreadsheetGroupStore> extends SpreadsheetStoreTesting<S, GroupId, Group>,
         TypeNameTesting<S> {
 
     default void loadUserGroupsAndCheck(final SpreadsheetGroupStore store,
@@ -39,7 +39,7 @@ public interface SpreadsheetGroupStoreTesting<S extends SpreadsheetGroupStore> e
                 "store loadUserGroups " + userId + " incorrect result");
     }
 
-    // StoreTesting...........................................................
+    // SpreadsheetStoreTesting...........................................................
 
     @Override
     default GroupId id() {

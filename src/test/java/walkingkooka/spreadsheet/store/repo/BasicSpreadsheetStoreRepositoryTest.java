@@ -38,7 +38,7 @@ import walkingkooka.spreadsheet.store.security.SpreadsheetUserStores;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicStoreRepositoryTest implements StoreRepositoryTesting<BasicStoreRepository> {
+public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetStoreRepositoryTesting<BasicSpreadsheetStoreRepository> {
 
     @Test
     public void testWithNullCellsFails() {
@@ -167,7 +167,7 @@ public final class BasicStoreRepositoryTest implements StoreRepositoryTesting<Ba
                            final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
                            final SpreadsheetUserStore users) {
         assertThrows(NullPointerException.class, () -> {
-            BasicStoreRepository.with(cells,
+            BasicSpreadsheetStoreRepository.with(cells,
                     cellReferences,
                     groups,
                     labels,
@@ -191,7 +191,7 @@ public final class BasicStoreRepositoryTest implements StoreRepositoryTesting<Ba
         final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules = this.rangeToConditionalFormattingRules();
         final SpreadsheetUserStore users = this.users();
 
-        this.toStringAndCheck(BasicStoreRepository.with(cells,
+        this.toStringAndCheck(BasicSpreadsheetStoreRepository.with(cells,
                 cellReferences,
                 groups,
                 labels,
@@ -204,8 +204,8 @@ public final class BasicStoreRepositoryTest implements StoreRepositoryTesting<Ba
     }
 
     @Override
-    public BasicStoreRepository createStoreRepository() {
-        return BasicStoreRepository.with(this.cells(),
+    public BasicSpreadsheetStoreRepository createStoreRepository() {
+        return BasicSpreadsheetStoreRepository.with(this.cells(),
                 this.cellReferences(),
                 this.groups(),
                 this.labels(),
@@ -255,8 +255,8 @@ public final class BasicStoreRepositoryTest implements StoreRepositoryTesting<Ba
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<BasicStoreRepository> type() {
-        return BasicStoreRepository.class;
+    public Class<BasicSpreadsheetStoreRepository> type() {
+        return BasicSpreadsheetStoreRepository.class;
     }
 
     // TypeNameTesting..................................................................................................

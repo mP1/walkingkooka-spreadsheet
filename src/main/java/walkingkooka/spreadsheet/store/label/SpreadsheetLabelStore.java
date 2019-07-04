@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.store.label;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.store.Store;
+import walkingkooka.spreadsheet.store.SpreadsheetStore;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Set;
@@ -28,7 +28,7 @@ import java.util.Set;
 /**
  * A store that holds all label to cell references for a spreadsheet. No additional actions are supported.
  */
-public interface SpreadsheetLabelStore extends Store<SpreadsheetLabelName, SpreadsheetLabelMapping> {
+public interface SpreadsheetLabelStore extends SpreadsheetStore<SpreadsheetLabelName, SpreadsheetLabelMapping> {
 
     /**
      * Returns all {@link SpreadsheetCellReference} for the given {@link SpreadsheetLabelName}, including resolving

@@ -20,11 +20,11 @@ package walkingkooka.spreadsheet.store.security;
 import walkingkooka.spreadsheet.security.Group;
 import walkingkooka.spreadsheet.security.GroupId;
 import walkingkooka.spreadsheet.security.UserId;
-import walkingkooka.spreadsheet.store.FakeStore;
+import walkingkooka.spreadsheet.store.FakeSpreadsheetStore;
 
 import java.util.Set;
 
-public class FakeSpreadsheetGroupStore extends FakeStore<GroupId, Group> implements SpreadsheetGroupStore {
+public class FakeSpreadsheetGroupStore extends FakeSpreadsheetStore<GroupId, Group> implements SpreadsheetGroupStore {
 
     @Override
     public void addUser(final UserId userId, final GroupId groupId) {
