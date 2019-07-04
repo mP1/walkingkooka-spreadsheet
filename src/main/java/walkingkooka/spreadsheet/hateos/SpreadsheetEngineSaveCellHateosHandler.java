@@ -71,8 +71,6 @@ final class SpreadsheetEngineSaveCellHateosHandler extends SpreadsheetEngineHate
         throw new UnsupportedOperationException();
     }
 
-    private final static UrlParameterName EVALUATION = UrlParameterName.with("evaluation");
-
     @Override
     String operation() {
         return "saveCell";
