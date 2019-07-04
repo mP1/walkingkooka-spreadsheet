@@ -20,21 +20,21 @@ package walkingkooka.spreadsheet.store;
 import walkingkooka.spreadsheet.SpreadsheetException;
 
 /**
- * Base class for all {@link Store } exceptions.
+ * Base class for all {@link SpreadsheetStore } exceptions.
  */
-public class StoreException extends SpreadsheetException {
+public class SpreadsheetStoreException extends SpreadsheetException {
 
     private static final long serialVersionUID = 1L;
 
-    protected StoreException() {
+    protected SpreadsheetStoreException() {
         super();
     }
 
-    public StoreException(final String message) {
+    public SpreadsheetStoreException(final String message) {
         super(message);
     }
 
-    public StoreException(final String message, final Throwable cause) {
+    public SpreadsheetStoreException(final String message, final Throwable cause) {
         super(message, cause);
     }
 }

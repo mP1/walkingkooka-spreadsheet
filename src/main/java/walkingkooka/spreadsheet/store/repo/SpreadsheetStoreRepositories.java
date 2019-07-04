@@ -32,28 +32,28 @@ import walkingkooka.type.PublicStaticHelper;
 /**
  * Contains many factory methods for a variety of {@link SpreadsheetCellStore} implementations.
  */
-public final class StoreRepositories implements PublicStaticHelper {
+public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
 
     /**
-     * {@see FakeStoreRepository}
+     * {@see FakeSpreadsheetStoreRepository}
      */
-    public static StoreRepository fake() {
-        return new FakeStoreRepository();
+    public static SpreadsheetStoreRepository fake() {
+        return new FakeSpreadsheetStoreRepository();
     }
 
     /**
-     * {@see BasicStoreRepository}
+     * {@see BasicSpreadsheetStoreRepository}
      */
-    public static StoreRepository basic(final SpreadsheetCellStore cells,
-                                        final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferences,
-                                        final SpreadsheetGroupStore groups,
-                                        final SpreadsheetLabelStore labels,
-                                        final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences,
-                                        final SpreadsheetMetadataStore metadatas,
-                                        final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells,
-                                        final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
-                                        final SpreadsheetUserStore users) {
-        return BasicStoreRepository.with(cells,
+    public static SpreadsheetStoreRepository basic(final SpreadsheetCellStore cells,
+                                                   final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferences,
+                                                   final SpreadsheetGroupStore groups,
+                                                   final SpreadsheetLabelStore labels,
+                                                   final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences,
+                                                   final SpreadsheetMetadataStore metadatas,
+                                                   final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells,
+                                                   final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
+                                                   final SpreadsheetUserStore users) {
+        return BasicSpreadsheetStoreRepository.with(cells,
                 cellReferences,
                 groups,
                 labels,
@@ -67,7 +67,7 @@ public final class StoreRepositories implements PublicStaticHelper {
     /**
      * Stop creation
      */
-    private StoreRepositories() {
+    private SpreadsheetStoreRepositories() {
         throw new UnsupportedOperationException();
     }
 }

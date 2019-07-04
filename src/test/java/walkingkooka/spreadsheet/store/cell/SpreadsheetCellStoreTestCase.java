@@ -29,7 +29,7 @@ import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.store.StoreTesting;
+import walkingkooka.spreadsheet.store.SpreadsheetStoreTesting;
 import walkingkooka.test.TypeNameTesting;
 import walkingkooka.tree.text.FontWeight;
 import walkingkooka.tree.text.TextNode;
@@ -44,7 +44,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStore> implements StoreTesting<S, SpreadsheetCellReference, SpreadsheetCell>,
+public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStore> implements SpreadsheetStoreTesting<S, SpreadsheetCellReference, SpreadsheetCell>,
         TypeNameTesting<S> {
 
     final static SpreadsheetCellReference REFERENCE = SpreadsheetReferenceKind.ABSOLUTE.column(1).setRow(SpreadsheetReferenceKind.ABSOLUTE.row(2));

@@ -48,8 +48,8 @@ import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStores;
 import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStores;
-import walkingkooka.spreadsheet.store.repo.StoreRepositories;
-import walkingkooka.spreadsheet.store.repo.StoreRepository;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.security.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.store.security.SpreadsheetUserStores;
 import walkingkooka.tree.Node;
@@ -65,7 +65,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
- * A {@link SpreadsheetContext} that creates a new {@link StoreRepository} for unknown {@link SpreadsheetId}.
+ * A {@link SpreadsheetContext} that creates a new {@link SpreadsheetStoreRepository} for unknown {@link SpreadsheetId}.
  * There is no way to delete existing spreadsheets.
  */
 final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements SpreadsheetContext {
@@ -209,7 +209,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
      * Factory that creates a {@link Router} for the given {@link SpreadsheetId spreadsheet}.
      */
     private Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> createHateosHandler(final SpreadsheetId id) {
-        final StoreRepository storeRepository = this.storeRepository(id);
+        final SpreadsheetStoreRepository storeRepository = this.storeRepository(id);
 
         final SpreadsheetCellStore cellStore = storeRepository.cells();
         final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferencesStore = storeRepository.cellReferences();
@@ -296,10 +296,10 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
     private final Function<SpreadsheetId, Function<Integer, Color>> spreadsheetIdNumberToColor;
 
     @Override
-    public StoreRepository storeRepository(final SpreadsheetId id) {
+    public SpreadsheetStoreRepository storeRepository(final SpreadsheetId id) {
         Objects.requireNonNull(id, "id");
 
-        StoreRepository storeRepository = this.idToStoreRepository.get(id);
+        SpreadsheetStoreRepository storeRepository = this.idToStoreRepository.get(id);
         if (null == storeRepository) {
             storeRepository = this.createStoreRepository();
             this.idToStoreRepository.put(id, storeRepository);
@@ -307,8 +307,8 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
         return storeRepository;
     }
 
-    private StoreRepository createStoreRepository() {
-        return StoreRepositories.basic(SpreadsheetCellStores.treeMap(),
+    private SpreadsheetStoreRepository createStoreRepository() {
+        return SpreadsheetStoreRepositories.basic(SpreadsheetCellStores.treeMap(),
                 SpreadsheetReferenceStores.treeMap(),
                 SpreadsheetGroupStores.treeMap(),
                 SpreadsheetLabelStores.treeMap(),
@@ -319,7 +319,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                 SpreadsheetUserStores.treeMap());
     }
 
-    private final Map<SpreadsheetId, StoreRepository> idToStoreRepository = Maps.sorted();
+    private final Map<SpreadsheetId, SpreadsheetStoreRepository> idToStoreRepository = Maps.sorted();
 
     @Override
     public int width(final SpreadsheetId id) {

@@ -19,10 +19,10 @@ package walkingkooka.spreadsheet.store.meta;
 
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.store.Store;
+import walkingkooka.spreadsheet.store.SpreadsheetStore;
 
 /**
- * A {@link Store} that holds all spreadsheet to metadata.
+ * A {@link SpreadsheetStore} that holds all spreadsheet to metadata.
  */
-public interface SpreadsheetMetadataStore extends Store<SpreadsheetId, SpreadsheetMetadata> {
+public interface SpreadsheetMetadataStore extends SpreadsheetStore<SpreadsheetId, SpreadsheetMetadata> {
 }

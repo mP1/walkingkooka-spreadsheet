@@ -21,14 +21,14 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.store.Store;
+import walkingkooka.spreadsheet.store.SpreadsheetStore;
 
 import java.util.Set;
 
 /**
  * A store that holds all cells for a spreadsheet. No additional actions are supported.
  */
-public interface SpreadsheetCellStore extends Store<SpreadsheetCellReference, SpreadsheetCell> {
+public interface SpreadsheetCellStore extends SpreadsheetStore<SpreadsheetCellReference, SpreadsheetCell> {
 
     /**
      * The highest row number
