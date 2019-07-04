@@ -52,6 +52,16 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 () -> "" + metadata);
     }
 
+    // id...............................................................................................................
+
+    @Test
+    public final void testIdAbsentFails() {
+        final SpreadsheetMetadata metadata = this.createObject();
+        assertThrows(IllegalStateException.class, () -> {
+            metadata.id();
+        });
+    }
+
     // get..............................................................................................................
 
     @Test

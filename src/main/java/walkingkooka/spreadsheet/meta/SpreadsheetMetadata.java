@@ -20,12 +20,12 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonObjectNode;
-import walkingkooka.tree.text.TextStyleVisitor;
 
 import java.util.Map;
 import java.util.Objects;
@@ -64,9 +64,16 @@ public abstract class SpreadsheetMetadata implements HashCodeEqualsDefined,
     }
 
     /**
-     * Returns true if the textStyle is empty.
+     * Returns true if the {@link SpreadsheetMetadata} is empty.
      */
     public abstract boolean isEmpty();
+
+    /**
+     * Returns the {@link SpreadsheetId} or throws a {@link IllegalStateException} if missing.
+     */
+    public SpreadsheetId id() {
+        return this.get(SpreadsheetMetadataPropertyName.SPREADSHEET_ID).orElseThrow(() -> new IllegalStateException("Missing " + SpreadsheetMetadataPropertyName.SPREADSHEET_ID + "=" + this));
+    }
 
     // get..............................................................................................................
 
