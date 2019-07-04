@@ -111,7 +111,7 @@ public final class SpreadsheetFormatEqualsSymbolParserToken extends SpreadsheetF
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override
-    public void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
+    void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         visitor.visit(this);
     }
 

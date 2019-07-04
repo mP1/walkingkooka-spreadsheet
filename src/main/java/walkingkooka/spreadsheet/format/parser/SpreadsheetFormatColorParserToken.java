@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.Cast;
 import walkingkooka.text.cursor.parser.ParentParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.visit.Visiting;
@@ -155,7 +154,7 @@ public final class SpreadsheetFormatColorParserToken extends SpreadsheetFormatPa
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override
-    public void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
+    void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         if (Visiting.CONTINUE == visitor.startVisit(this)) {
             this.acceptValues(visitor);
         }

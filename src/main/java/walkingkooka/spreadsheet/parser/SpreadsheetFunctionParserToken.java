@@ -16,7 +16,6 @@
  */
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.Cast;
 import walkingkooka.spreadsheet.SpreadsheetFunctionName;
 import walkingkooka.text.cursor.parser.ParentParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -159,7 +158,7 @@ public final class SpreadsheetFunctionParserToken extends SpreadsheetParentParse
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override
-    public void accept(final SpreadsheetParserTokenVisitor visitor) {
+    void accept(final SpreadsheetParserTokenVisitor visitor) {
         if (Visiting.CONTINUE == visitor.startVisit(this)) {
             this.acceptValues(visitor);
         }

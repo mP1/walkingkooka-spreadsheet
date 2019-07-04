@@ -137,7 +137,7 @@ public final class SpreadsheetFormatMonthOrMinuteParserToken extends Spreadsheet
     }
 
     @Override
-    public void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
+    void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         visitor.visit(this);
     }
 
