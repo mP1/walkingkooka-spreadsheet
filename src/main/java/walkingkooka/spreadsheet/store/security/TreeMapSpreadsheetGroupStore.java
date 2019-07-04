@@ -23,7 +23,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.security.Group;
 import walkingkooka.spreadsheet.security.GroupId;
 import walkingkooka.spreadsheet.security.UserId;
-import walkingkooka.spreadsheet.store.Store;
+import walkingkooka.spreadsheet.store.SpreadsheetStore;
 import walkingkooka.spreadsheet.store.Watchers;
 
 import java.util.List;
@@ -96,7 +96,7 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
     @Override
     public Set<GroupId> ids(final int from,
                             final int count) {
-        Store.checkFromAndTo(from, count);
+        SpreadsheetStore.checkFromAndTo(from, count);
 
         return this.groupIdToGroup.keySet()
                 .stream()
@@ -108,7 +108,7 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
     @Override
     public List<Group> values(final GroupId from,
                               final int count) {
-        Store.checkFromAndToIds(from, count);
+        SpreadsheetStore.checkFromAndToIds(from, count);
 
         return this.groupIdToGroup.entrySet()
                 .stream()

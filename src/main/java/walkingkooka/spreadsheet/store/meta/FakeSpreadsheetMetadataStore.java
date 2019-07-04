@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.store.meta;
 
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.store.FakeStore;
+import walkingkooka.spreadsheet.store.FakeSpreadsheetStore;
 import walkingkooka.test.Fake;
 
-public class FakeSpreadsheetMetadataStore extends FakeStore<SpreadsheetId, SpreadsheetMetadata> implements SpreadsheetMetadataStore, Fake {
+public class FakeSpreadsheetMetadataStore extends FakeSpreadsheetStore<SpreadsheetId, SpreadsheetMetadata> implements SpreadsheetMetadataStore, Fake {
 }

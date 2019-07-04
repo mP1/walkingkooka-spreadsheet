@@ -19,10 +19,10 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.test.StandardThrowableTesting;
 
-public final class StoreExceptionTest implements StandardThrowableTesting<StoreException> {
+public final class SpreadsheetStoreExceptionTest implements StandardThrowableTesting<SpreadsheetStoreException> {
 
     @Override
-    public Class<StoreException> type() {
-        return StoreException.class;
+    public Class<SpreadsheetStoreException> type() {
+        return SpreadsheetStoreException.class;
     }
 }

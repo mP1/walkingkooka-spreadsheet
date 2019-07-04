@@ -23,12 +23,12 @@ import walkingkooka.type.JavaVisibility;
 
 import java.lang.reflect.Method;
 
-public final class StoreRepositoriesTest implements ClassTesting2<StoreRepositories>,
-        PublicStaticHelperTesting<StoreRepositories> {
+public final class SpreadsheetStoreRepositoriesTest implements ClassTesting2<SpreadsheetStoreRepositories>,
+        PublicStaticHelperTesting<SpreadsheetStoreRepositories> {
 
     @Override
-    public Class<StoreRepositories> type() {
-        return StoreRepositories.class;
+    public Class<SpreadsheetStoreRepositories> type() {
+        return SpreadsheetStoreRepositories.class;
     }
 
     @Override
