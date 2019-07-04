@@ -69,13 +69,6 @@ public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends
     }
 
     @Test
-    default void testMetadataNullSpreadsheetIdFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createContext().metadata(null);
-        });
-    }
-
-    @Test
     default void testNameToColorNullSpreadsheetIdFails() {
         assertThrows(NullPointerException.class, () -> {
             this.createContext().nameToColor(null);

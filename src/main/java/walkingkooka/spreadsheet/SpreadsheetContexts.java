@@ -34,6 +34,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public final class SpreadsheetContexts implements PublicStaticHelper {
 
@@ -50,26 +51,26 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     public static <N extends Node<N, ?, ?, ?>> SpreadsheetContext memory(final AbsoluteUrl base,
                                                                          final HateosContentType<N> contentType,
                                                                          final Function<BigDecimal, Fraction> fractioner,
+                                                                         final Supplier<SpreadsheetMetadata> metadataWithDefaults,
                                                                          final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
                                                                          final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                                                                          final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
                                                                          final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter,
                                                                          final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                                                                          final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
-                                                                         final Function<SpreadsheetId, SpreadsheetMetadata> spreadsheetIdMetadata,
                                                                          final Function<SpreadsheetId, Function<String, Color>> spreadsheetIdNameToColor,
                                                                          final Function<SpreadsheetId, Function<Integer, Color>> spreadsheetIdNumberToColor,
                                                                          final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
         return MemorySpreadsheetContext.with(base,
                 contentType,
                 fractioner,
+                metadataWithDefaults,
                 spreadsheetIdConverter,
                 spreadsheetIdDateTimeContext,
                 spreadsheetIdDecimalFormatContext,
                 spreadsheetIdDefaultSpreadsheetTextFormatter,
                 spreadsheetIdFunctions,
                 spreadsheetIdGeneralDecimalFormatPattern,
-                spreadsheetIdMetadata,
                 spreadsheetIdNameToColor,
                 spreadsheetIdNumberToColor,
                 spreadsheetIdWidth);
