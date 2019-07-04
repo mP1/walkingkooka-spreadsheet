@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.store.reference;
 
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.store.Store;
+import walkingkooka.spreadsheet.store.SpreadsheetStore;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Objects;
@@ -26,9 +26,9 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 /**
- * A {@link Store} that holds one or more references for every {@link SpreadsheetCellReference}.
+ * A {@link SpreadsheetStore} that holds one or more references for every {@link SpreadsheetCellReference}.
  */
-public interface SpreadsheetReferenceStore<T extends ExpressionReference & Comparable<T>> extends Store<T, Set<SpreadsheetCellReference>> {
+public interface SpreadsheetReferenceStore<T extends ExpressionReference & Comparable<T>> extends SpreadsheetStore<T, Set<SpreadsheetCellReference>> {
 
     @Override
     default Set<SpreadsheetCellReference> save(final Set<SpreadsheetCellReference> value) {

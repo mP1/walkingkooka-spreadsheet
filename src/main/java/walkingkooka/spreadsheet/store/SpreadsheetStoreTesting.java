@@ -31,7 +31,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface StoreTesting<S extends Store<K, V>, K, V> extends ClassTesting2<S>,
+public interface SpreadsheetStoreTesting<S extends SpreadsheetStore<K, V>, K, V> extends ClassTesting2<S>,
         ToStringTesting<S> {
 
     @Test
@@ -204,7 +204,7 @@ public interface StoreTesting<S extends Store<K, V>, K, V> extends ClassTesting2
         assertEquals(Optional.empty(), value, () -> "Expected id " + id + " to fail");
     }
 
-    default void countAndCheck(final Store<?, ?> store, final int count) {
+    default void countAndCheck(final SpreadsheetStore<?, ?> store, final int count) {
         assertEquals(count, store.count(), () -> "Wrong count " + store);
     }
 

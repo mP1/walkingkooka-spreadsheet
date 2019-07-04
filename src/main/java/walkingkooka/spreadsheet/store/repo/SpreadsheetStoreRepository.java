@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.store.repo;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
-import walkingkooka.spreadsheet.store.Store;
+import walkingkooka.spreadsheet.store.SpreadsheetStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.meta.SpreadsheetMetadataStore;
@@ -30,9 +30,9 @@ import walkingkooka.spreadsheet.store.security.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.store.security.SpreadsheetUserStore;
 
 /**
- * Holds all {@link Store stores} in the system
+ * Holds all {@link SpreadsheetStore stores} in the system
  */
-public interface StoreRepository {
+public interface SpreadsheetStoreRepository {
 
     /**
      * A {@link SpreadsheetCellStore} holding cells.

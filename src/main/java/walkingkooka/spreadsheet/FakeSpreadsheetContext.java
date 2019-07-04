@@ -27,7 +27,7 @@ import walkingkooka.net.http.server.HttpResponse;
 import walkingkooka.routing.Router;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.store.repo.StoreRepository;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.ExpressionNodeName;
 
 import java.util.List;
@@ -88,7 +88,7 @@ public class FakeSpreadsheetContext implements SpreadsheetContext {
     }
 
     @Override
-    public StoreRepository storeRepository(final SpreadsheetId id) {
+    public SpreadsheetStoreRepository storeRepository(final SpreadsheetId id) {
         throw new UnsupportedOperationException();
     }
 

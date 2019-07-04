@@ -20,13 +20,13 @@ package walkingkooka.spreadsheet.store.security;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
-import walkingkooka.spreadsheet.store.StoreTesting;
+import walkingkooka.spreadsheet.store.SpreadsheetStoreTesting;
 import walkingkooka.test.TypeNameTesting;
 
-public interface SpreadsheetUserStoreTesting<S extends SpreadsheetUserStore> extends StoreTesting<S, UserId, User>,
+public interface SpreadsheetUserStoreTesting<S extends SpreadsheetUserStore> extends SpreadsheetStoreTesting<S, UserId, User>,
         TypeNameTesting<S> {
 
-    // StoreTesting...........................................................
+    // SpreadsheetStoreTesting...........................................................
 
     @Override
     default UserId id() {
