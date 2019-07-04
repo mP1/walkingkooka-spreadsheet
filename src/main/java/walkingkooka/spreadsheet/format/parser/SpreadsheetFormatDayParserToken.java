@@ -138,7 +138,7 @@ public final class SpreadsheetFormatDayParserToken extends SpreadsheetFormatNonS
     }
 
     @Override
-    public void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
+    void accept(final SpreadsheetFormatParserTokenVisitor visitor) {
         visitor.visit(this);
     }
 

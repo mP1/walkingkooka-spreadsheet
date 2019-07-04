@@ -108,7 +108,7 @@ public final class SpreadsheetBetweenSymbolParserToken extends SpreadsheetBinary
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override
-    public void accept(final SpreadsheetParserTokenVisitor visitor) {
+    void accept(final SpreadsheetParserTokenVisitor visitor) {
         visitor.visit(this);
     }
 
