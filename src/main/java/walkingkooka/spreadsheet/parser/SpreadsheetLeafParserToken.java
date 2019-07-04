@@ -134,5 +134,5 @@ abstract class SpreadsheetLeafParserToken<T> extends SpreadsheetParserToken
 
     // SpreadsheetParserTokenVisitor....................................................................................
 
-    abstract public void accept(final SpreadsheetParserTokenVisitor visitor);
+    abstract void accept(final SpreadsheetParserTokenVisitor visitor);
 }
