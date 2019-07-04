@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.tree.visit.Visiting;
 import walkingkooka.type.JavaVisibility;
 
@@ -133,6 +134,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = d;
             }
         }.accept(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, this.dateTime());
+    }
+
+    @Test
+    public void testVisitSpreadsheetId() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitSpreadsheetId(final SpreadsheetId i) {
+                this.visited = i;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123));
     }
 
     private static <T> SpreadsheetMetadata metadata(final SpreadsheetMetadataPropertyName<T> propertyName, final T value) {

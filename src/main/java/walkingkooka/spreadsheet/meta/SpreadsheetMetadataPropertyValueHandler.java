@@ -42,6 +42,13 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     }
 
     /**
+     * {@see SpreadsheetIdSpreadsheetMetadataPropertyValueHandler}
+     */
+    static SpreadsheetIdSpreadsheetMetadataPropertyValueHandler spreadsheetId() {
+        return SpreadsheetIdSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    }
+    
+    /**
      * Package private to limit sub classing.
      */
     SpreadsheetMetadataPropertyValueHandler() {
