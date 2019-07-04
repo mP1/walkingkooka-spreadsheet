@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 
@@ -62,6 +63,13 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
     @Test
     public void testEmpty() {
         assertSame(SpreadsheetMetadataMap.EMPTY, SpreadsheetMetadataMap.with(Maps.empty()));
+    }
+
+    @Test
+    public void testId() {
+        final SpreadsheetId id = SpreadsheetId.with(123);
+        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadata(Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, id));
+        assertSame(id, metadata.id());
     }
 
     @Test
