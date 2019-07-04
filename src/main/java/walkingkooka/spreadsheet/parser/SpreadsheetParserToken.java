@@ -652,17 +652,18 @@ public abstract class SpreadsheetParserToken implements ParserToken, HasExpressi
 
     // SpreadsheetParserTokenVisitor....................................................................................
 
+    @Override
     public final void accept(final ParserTokenVisitor visitor) {
-        final SpreadsheetParserTokenVisitor ebnfParserTokenVisitor = Cast.to(visitor);
-        final SpreadsheetParserToken token = this;
-
-        if (Visiting.CONTINUE == ebnfParserTokenVisitor.startVisit(token)) {
-            this.accept(SpreadsheetParserTokenVisitor.class.cast(visitor));
+        if (visitor instanceof SpreadsheetParserTokenVisitor) {
+            final SpreadsheetParserTokenVisitor visitor2 = SpreadsheetParserTokenVisitor.class.cast(visitor);
+            if (Visiting.CONTINUE == visitor2.startVisit(this)) {
+                this.accept(SpreadsheetParserTokenVisitor.class.cast(visitor));
+            }
+            visitor2.endVisit(this);
         }
-        ebnfParserTokenVisitor.endVisit(token);
     }
 
-    abstract public void accept(final SpreadsheetParserTokenVisitor visitor);
+    abstract void accept(final SpreadsheetParserTokenVisitor visitor);
 
     // HasExpressionNode................................................................................................
 
