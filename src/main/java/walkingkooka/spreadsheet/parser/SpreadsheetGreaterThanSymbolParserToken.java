@@ -73,7 +73,7 @@ public final class SpreadsheetGreaterThanSymbolParserToken extends SpreadsheetCo
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override
-    public void accept(final SpreadsheetParserTokenVisitor visitor) {
+    void accept(final SpreadsheetParserTokenVisitor visitor) {
         visitor.visit(this);
     }
 

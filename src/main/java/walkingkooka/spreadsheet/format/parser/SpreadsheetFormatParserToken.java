@@ -27,7 +27,6 @@ import walkingkooka.tree.visit.Visiting;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Represents a token within the spreadsheet format grammar.
@@ -724,17 +723,18 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
 
     // Visitor ...........................................................................................................
 
+    @Override
     public final void accept(final ParserTokenVisitor visitor) {
-        final SpreadsheetFormatParserTokenVisitor formatVisitor = Cast.to(visitor);
-        final SpreadsheetFormatParserToken token = this;
-
-        if (Visiting.CONTINUE == formatVisitor.startVisit(token)) {
-            this.accept(SpreadsheetFormatParserTokenVisitor.class.cast(visitor));
+        if (visitor instanceof SpreadsheetFormatParserTokenVisitor) {
+            final SpreadsheetFormatParserTokenVisitor visitor2 = SpreadsheetFormatParserTokenVisitor.class.cast(visitor);
+            if (Visiting.CONTINUE == visitor2.startVisit(this)) {
+                this.accept(visitor2);
+            }
+            visitor2.endVisit(this);
         }
-        formatVisitor.endVisit(token);
     }
 
-    abstract public void accept(final SpreadsheetFormatParserTokenVisitor visitor);
+    abstract void accept(final SpreadsheetFormatParserTokenVisitor visitor);
 
     // Object ...........................................................................................................
 
