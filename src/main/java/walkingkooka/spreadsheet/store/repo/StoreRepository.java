@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormatti
 import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.store.meta.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.store.security.SpreadsheetGroupStore;
@@ -57,6 +58,11 @@ public interface StoreRepository {
      * A {@link SpreadsheetReferenceStore} holding label references.
      */
     SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences();
+
+    /**
+     * A {@link SpreadsheetMetadataStore} holding all {@link SpreadsheetMetadataStore}.
+     */
+    SpreadsheetMetadataStore metadatas();
 
     /**
      * A {@lin SpreadsheetRangeStore} that maps ranges to cells

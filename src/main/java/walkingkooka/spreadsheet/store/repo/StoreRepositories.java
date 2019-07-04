@@ -22,6 +22,7 @@ import walkingkooka.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.store.meta.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.store.security.SpreadsheetGroupStore;
@@ -48,6 +49,7 @@ public final class StoreRepositories implements PublicStaticHelper {
                                         final SpreadsheetGroupStore groups,
                                         final SpreadsheetLabelStore labels,
                                         final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences,
+                                        final SpreadsheetMetadataStore metadatas,
                                         final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells,
                                         final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
                                         final SpreadsheetUserStore users) {
@@ -56,6 +58,7 @@ public final class StoreRepositories implements PublicStaticHelper {
                 groups,
                 labels,
                 labelReferences,
+                metadatas,
                 rangeToCells,
                 rangeToConditionalFormattingRules,
                 users);

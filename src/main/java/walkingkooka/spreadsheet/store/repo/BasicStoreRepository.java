@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormatti
 import walkingkooka.spreadsheet.store.Store;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.store.meta.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.store.security.SpreadsheetGroupStore;
@@ -40,6 +41,7 @@ final class BasicStoreRepository implements StoreRepository {
                                      final SpreadsheetGroupStore groups,
                                      final SpreadsheetLabelStore labels,
                                      final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences,
+                                     final SpreadsheetMetadataStore metadatas,
                                      final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells,
                                      final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
                                      final SpreadsheetUserStore users) {
@@ -48,6 +50,7 @@ final class BasicStoreRepository implements StoreRepository {
         Objects.requireNonNull(groups, "groups");
         Objects.requireNonNull(labels, "labels");
         Objects.requireNonNull(labelReferences, "labelReferences");
+        Objects.requireNonNull(metadatas, "metadatas");
         Objects.requireNonNull(rangeToCells, "rangeToCells");
         Objects.requireNonNull(rangeToConditionalFormattingRules, "rangeToConditionalFormattingRules");
         Objects.requireNonNull(users, "users");
@@ -57,6 +60,7 @@ final class BasicStoreRepository implements StoreRepository {
                 groups,
                 labels,
                 labelReferences,
+                metadatas,
                 rangeToCells,
                 rangeToConditionalFormattingRules,
                 users);
@@ -67,6 +71,7 @@ final class BasicStoreRepository implements StoreRepository {
                                  final SpreadsheetGroupStore groups,
                                  final SpreadsheetLabelStore labels,
                                  final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences,
+                                 final SpreadsheetMetadataStore metadatas,
                                  final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells,
                                  final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
                                  final SpreadsheetUserStore users) {
@@ -75,6 +80,7 @@ final class BasicStoreRepository implements StoreRepository {
         this.groups = groups;
         this.labels = labels;
         this.labelReferences = labelReferences;
+        this.metadatas = metadatas;
         this.rangeToCells = rangeToCells;
         this.rangeToConditionalFormattingRules = rangeToConditionalFormattingRules;
         this.users = users;
@@ -116,6 +122,13 @@ final class BasicStoreRepository implements StoreRepository {
     private final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences;
 
     @Override
+    public SpreadsheetMetadataStore metadatas() {
+        return this.metadatas;
+    }
+
+    private final SpreadsheetMetadataStore metadatas;
+
+    @Override
     public SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells() {
         return this.rangeToCells;
     }
@@ -143,6 +156,7 @@ final class BasicStoreRepository implements StoreRepository {
                 this.groups + " " +
                 this.labels + " " +
                 this.labelReferences + " " +
+                this.metadatas + " " +
                 this.rangeToCells + " " +
                 this.rangeToConditionalFormattingRules + " " +
                 this.users;

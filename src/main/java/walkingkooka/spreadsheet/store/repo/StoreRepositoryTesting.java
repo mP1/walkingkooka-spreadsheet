@@ -52,6 +52,11 @@ public interface StoreRepositoryTesting<S extends StoreRepository> extends ToStr
     }
 
     @Test
+    default void testMetadatas() {
+        assertNotNull(this.createStoreRepository().metadatas());
+    }
+
+    @Test
     default void testRangeToCells() {
         assertNotNull(this.createStoreRepository().rangeToCells());
     }
