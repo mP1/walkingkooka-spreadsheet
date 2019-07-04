@@ -22,6 +22,7 @@ import walkingkooka.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.store.meta.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.store.security.SpreadsheetGroupStore;
@@ -56,6 +57,11 @@ public class FakeStoreRepository implements StoreRepository, Fake {
 
     @Override
     public SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public SpreadsheetMetadataStore metadatas() {
         throw new UnsupportedOperationException();
     }
 

@@ -43,6 +43,7 @@ import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStores;
+import walkingkooka.spreadsheet.store.meta.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStores;
 import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStore;
@@ -312,6 +313,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                 SpreadsheetGroupStores.treeMap(),
                 SpreadsheetLabelStores.treeMap(),
                 SpreadsheetReferenceStores.treeMap(),
+                SpreadsheetMetadataStores.treeMap(),
                 SpreadsheetRangeStores.treeMap(),
                 SpreadsheetRangeStores.treeMap(),
                 SpreadsheetUserStores.treeMap());
