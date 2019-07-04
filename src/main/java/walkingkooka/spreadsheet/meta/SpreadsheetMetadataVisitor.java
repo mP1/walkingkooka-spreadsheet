@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.tree.visit.Visiting;
 import walkingkooka.tree.visit.Visitor;
 
@@ -90,6 +91,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitModifiedDateTime(final LocalDateTime dateTime) {
+        // nop
+    }
+
+    protected void visitSpreadsheetId(final SpreadsheetId id) {
         // nop
     }
 }

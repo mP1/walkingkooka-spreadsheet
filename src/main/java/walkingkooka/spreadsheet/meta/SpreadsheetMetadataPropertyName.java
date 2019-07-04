@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.naming.Name;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
@@ -63,6 +64,15 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     }
 
     /**
+     * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link SpreadsheetId} metadata values.
+     */
+    private static SpreadsheetMetadataPropertyName<SpreadsheetId> registerSpreadsheetIdConstant(final String name,
+                                                                                                final BiConsumer<SpreadsheetId, SpreadsheetMetadataVisitor> visitor) {
+        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.spreadsheetId(),
+                visitor);
+    }
+    
+    /**
      * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built.
      */
     private static <T> SpreadsheetMetadataPropertyName<T> registerConstant(final String name,
@@ -98,6 +108,12 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
      */
     public final static SpreadsheetMetadataPropertyName<LocalDateTime> MODIFIED_DATE_TIME = registerDateTimeConstant("modified-date-time",
             (d, v) -> v.visitModifiedDateTime(d));
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheet-id {@link SpreadsheetId}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetId> SPREADSHEET_ID = registerSpreadsheetIdConstant("spreadsheet-id",
+            (e, v) -> v.visitSpreadsheetId(e));
 
     /**
      * Factory that assumnes a valid {@link SpreadsheetMetadataPropertyName} or fails.
