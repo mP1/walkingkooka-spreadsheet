@@ -82,9 +82,9 @@ public interface SpreadsheetContext extends Context {
     Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> hateosRouter(final SpreadsheetId id);
 
     /**
-     * Returns a {@link SpreadsheetMetadata} accompanying the identified spreadsheet {@link SpreadsheetId}.
+     * Returns a {@link SpreadsheetMetadata} allocating a new {@link SpreadsheetId}.
      */
-    SpreadsheetMetadata metadata(final SpreadsheetId id);
+    SpreadsheetMetadata metadataWithDefaults();
 
     /**
      * Returns a {@link Function} which maps {@link String color name} to {@link Color} for the given {@link SpreadsheetId}.
