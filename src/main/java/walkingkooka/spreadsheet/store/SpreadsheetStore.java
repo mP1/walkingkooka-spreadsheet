@@ -28,7 +28,7 @@ import java.util.function.Consumer;
 /**
  * A store that holds a value with an id (K).
  */
-public interface Store<K, V> {
+public interface SpreadsheetStore<K, V> {
 
     /**
      * Fetches the value using the reference.
@@ -36,12 +36,12 @@ public interface Store<K, V> {
     Optional<V> load(final K id);
 
     /**
-     * Fetches the value with the id or throws a {@link StoreException}.
+     * Fetches the value with the id or throws a {@link SpreadsheetStoreException}.
      */
     default V loadOrFail(final K id) {
         final Optional<V> value = this.load(id);
         if (false == value.isPresent()) {
-            throw new LoadStoreException("Value with id " + id + " is absent");
+            throw new LoadSpreadsheetStoreException("Value with id " + id + " is absent");
         }
         return value.get();
     }

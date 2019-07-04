@@ -29,9 +29,9 @@ import walkingkooka.spreadsheet.store.security.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.store.security.SpreadsheetUserStore;
 import walkingkooka.test.Fake;
 
-public class FakeStoreRepository implements StoreRepository, Fake {
+public class FakeSpreadsheetStoreRepository implements SpreadsheetStoreRepository, Fake {
 
-    protected FakeStoreRepository() {
+    protected FakeSpreadsheetStoreRepository() {
         super();
     }
 

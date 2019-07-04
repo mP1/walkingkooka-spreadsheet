@@ -23,7 +23,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.store.Store;
+import walkingkooka.spreadsheet.store.SpreadsheetStore;
 import walkingkooka.spreadsheet.store.Watchers;
 
 import java.util.List;
@@ -103,7 +103,7 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
     @Override
     public Set<SpreadsheetId> ids(final int from,
                                   final int count) {
-        Store.checkFromAndTo(from, count);
+        SpreadsheetStore.checkFromAndTo(from, count);
 
         return this.metadatas.keySet()
                 .stream()
@@ -118,7 +118,7 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
     @Override
     public List<SpreadsheetMetadata> values(final SpreadsheetId from,
                                             final int count) {
-        Store.checkFromAndToIds(from, count);
+        SpreadsheetStore.checkFromAndToIds(from, count);
 
         return this.metadatas.entrySet()
                 .stream()
