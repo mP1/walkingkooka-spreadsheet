@@ -31,11 +31,14 @@ import walkingkooka.routing.Router;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetDelta;
 import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.store.SpreadsheetStore;
 import walkingkooka.tree.Node;
 import walkingkooka.type.PublicStaticHelper;
@@ -76,6 +79,13 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
     public static HateosHandler<SpreadsheetCellReference, SpreadsheetDelta, SpreadsheetDelta> copyCells(final SpreadsheetEngine engine,
                                                                                                         final SpreadsheetEngineContext context) {
         return SpreadsheetEngineCopyCellsHateosHandler.with(engine, context);
+    }
+
+    /**
+     * {@see SpreadsheetContextCreateMetadataHateosHandler}
+     */
+    public static HateosHandler<SpreadsheetId, SpreadsheetMetadata, SpreadsheetMetadata> createMetadata(final SpreadsheetContext context) {
+        return SpreadsheetContextCreateMetadataHateosHandler.with(context);
     }
 
     /**
