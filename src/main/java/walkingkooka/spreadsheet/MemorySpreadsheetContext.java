@@ -38,6 +38,7 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
 import walkingkooka.spreadsheet.hateos.SpreadsheetHateosHandlers;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
@@ -79,6 +80,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                                                                       final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter,
                                                                       final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                                                                       final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
+                                                                      final Function<SpreadsheetId, SpreadsheetMetadata> spreadsheetIdMetadata,
                                                                       final Function<SpreadsheetId, Function<String, Color>> spreadsheetIdNameToColor,
                                                                       final Function<SpreadsheetId, Function<Integer, Color>> spreadsheetIdNumberToColor,
                                                                       final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
@@ -91,6 +93,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
         Objects.requireNonNull(spreadsheetIdDefaultSpreadsheetTextFormatter, "spreadsheetIdDefaultSpreadsheetTextFormatter");
         Objects.requireNonNull(spreadsheetIdFunctions, "spreadsheetIdFunctions");
         Objects.requireNonNull(spreadsheetIdGeneralDecimalFormatPattern, "spreadsheetIdGeneralDecimalFormatPattern");
+        Objects.requireNonNull(spreadsheetIdMetadata, "spreadsheetIdMetadata");
         Objects.requireNonNull(spreadsheetIdNameToColor, "spreadsheetIdNameToColor");
         Objects.requireNonNull(spreadsheetIdNumberToColor, "spreadsheetIdNumberToColor");
         Objects.requireNonNull(spreadsheetIdWidth, "spreadsheetIdWidth");
@@ -104,6 +107,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                 spreadsheetIdDefaultSpreadsheetTextFormatter,
                 spreadsheetIdFunctions,
                 spreadsheetIdGeneralDecimalFormatPattern,
+                spreadsheetIdMetadata,
                 spreadsheetIdNameToColor,
                 spreadsheetIdNumberToColor,
                 spreadsheetIdWidth);
@@ -118,6 +122,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                                      final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter,
                                      final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                                      final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
+                                     final Function<SpreadsheetId, SpreadsheetMetadata> spreadsheetIdMetadata,
                                      final Function<SpreadsheetId, Function<String, Color>> spreadsheetIdNameToColor,
                                      final Function<SpreadsheetId, Function<Integer, Color>> spreadsheetIdNumberToColor,
                                      final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
@@ -133,6 +138,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
         this.spreadsheetIdDefaultSpreadsheetTextFormatter = spreadsheetIdDefaultSpreadsheetTextFormatter;
         this.spreadsheetIdFunctions = spreadsheetIdFunctions;
         this.spreadsheetIdGeneralDecimalFormatPattern = spreadsheetIdGeneralDecimalFormatPattern;
+        this.spreadsheetIdMetadata = spreadsheetIdMetadata;
         this.spreadsheetIdNameToColor = spreadsheetIdNameToColor;
         this.spreadsheetIdNumberToColor = spreadsheetIdNumberToColor;
         this.spreadsheetIdWidth = spreadsheetIdWidth;
@@ -263,6 +269,15 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
     private final AbsoluteUrl base;
     private final HateosContentType<N> contentType;
     private final Function<BigDecimal, Fraction> fractioner;
+
+    // metadata.........................................................................................................
+
+    @Override
+    public SpreadsheetMetadata metadata(final SpreadsheetId id) {
+        return this.spreadsheetIdMetadata.apply(id);
+    }
+
+    private final Function<SpreadsheetId, SpreadsheetMetadata> spreadsheetIdMetadata;
 
     @Override
     public Function<String, Color> nameToColor(final SpreadsheetId id) {
