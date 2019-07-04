@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.store.SpreadsheetStore;
 import walkingkooka.tree.Node;
 import walkingkooka.type.PublicStaticHelper;
 
@@ -78,6 +79,13 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetStoreDeleteHateosHandler}
+     */
+    public static <K extends Comparable<K>, V extends HateosResource<K>> HateosHandler<K, V, V> delete(final SpreadsheetStore<K, V> store) {
+        return SpreadsheetStoreDeleteHateosHandler.with(store);
+    }
+
+    /**
      * {@see SpreadsheetEngineDeleteColumnsHateosHandler}
      */
     public static HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta, SpreadsheetDelta> deleteColumns(final SpreadsheetEngine engine,
@@ -111,11 +119,25 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetStoreLoadHateosHandler}
+     */
+    public static <K extends Comparable<K>, V extends HateosResource<K>> HateosHandler<K, V, V> load(final SpreadsheetStore<K, V> store) {
+        return SpreadsheetStoreLoadHateosHandler.with(store);
+    }
+
+    /**
      * {@see SpreadsheetEngineLoadCellHateosHandler}
      */
     public static HateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetDelta> loadCell(final SpreadsheetEngine engine,
                                                                                                       final SpreadsheetEngineContext context) {
         return SpreadsheetEngineLoadCellHateosHandler.with(engine, context);
+    }
+
+    /**
+     * {@see SpreadsheetStoreSaveHateosHandler}
+     */
+    public static <K extends Comparable<K>, V extends HateosResource<K>> HateosHandler<K, V, V> save(final SpreadsheetStore<K, V> store) {
+        return SpreadsheetStoreSaveHateosHandler.with(store);
     }
 
     /**
