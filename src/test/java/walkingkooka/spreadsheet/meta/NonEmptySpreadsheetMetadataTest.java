@@ -39,10 +39,10 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.sorted();
         map.put(this.property1(), this.value1());
         map.put(this.property2(), this.value2());
-        final SpreadsheetMetadataMap textStyleMap = SpreadsheetMetadataMap.with(map);
+        final SpreadsheetMetadataMap metadataMap = SpreadsheetMetadataMap.with(map);
 
-        final NonEmptySpreadsheetMetadata textStyle = this.createSpreadsheetMetadata(textStyleMap);
-        assertSame(textStyleMap, textStyle.value(), "value");
+        final NonEmptySpreadsheetMetadata metadata = this.createSpreadsheetMetadata(metadataMap);
+        assertSame(metadataMap, metadata.value(), "value");
     }
 
     @Test
@@ -54,10 +54,10 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         final Map<SpreadsheetMetadataPropertyName<?>, Object> copy = Maps.sorted();
         copy.putAll(map);
 
-        final NonEmptySpreadsheetMetadata textStyle = this.createSpreadsheetMetadata(map);
+        final NonEmptySpreadsheetMetadata metadata = this.createSpreadsheetMetadata(map);
 
         map.clear();
-        assertEquals(copy, textStyle.value(), "value");
+        assertEquals(copy, metadata.value(), "value");
     }
 
     @Test
@@ -78,8 +78,8 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         map.put(this.property1(), this.value1());
         map.put(this.property2(), this.value2());
 
-        final NonEmptySpreadsheetMetadata textStyle = this.createSpreadsheetMetadata(map);
-        assertEquals(SpreadsheetMetadataMap.class, textStyle.value().getClass(), () -> "" + textStyle.value);
+        final NonEmptySpreadsheetMetadata metadata = this.createSpreadsheetMetadata(map);
+        assertEquals(SpreadsheetMetadataMap.class, metadata.value().getClass(), () -> "" + metadata.value);
     }
 
     // get..............................................................................................................
@@ -182,12 +182,12 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
                 this.createSpreadsheetMetadata(property1, value1, property2, value2, property3, value3));
     }
 
-    private <T> void setAndCheck(final SpreadsheetMetadata textStyle,
+    private <T> void setAndCheck(final SpreadsheetMetadata metadata,
                                  final SpreadsheetMetadataPropertyName<T> propertyName,
                                  final T value) {
-        assertSame(textStyle,
-                textStyle.set(propertyName, value),
-                () -> textStyle + " set " + propertyName + " and " + CharSequences.quoteIfChars(value));
+        assertSame(metadata,
+                metadata.set(propertyName, value),
+                () -> metadata + " set " + propertyName + " and " + CharSequences.quoteIfChars(value));
     }
 
     // remove...........................................................................................................
@@ -233,7 +233,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         //set
         final SpreadsheetMetadataPropertyName<LocalDateTime> property1 = this.property1();
         final LocalDateTime value1 = this.value1();
-        final SpreadsheetMetadata textStyle1 = this.setAndCheck(SpreadsheetMetadata.EMPTY,
+        final SpreadsheetMetadata metadata1 = this.setAndCheck(SpreadsheetMetadata.EMPTY,
                 property1,
                 value1,
                 this.createSpreadsheetMetadata(property1, value1));
@@ -241,17 +241,17 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         //set
         final SpreadsheetMetadataPropertyName<EmailAddress> property2 = this.property2();
         final EmailAddress value2 = this.value2();
-        final SpreadsheetMetadata textStyle2 = this.setAndCheck(textStyle1,
+        final SpreadsheetMetadata metadata2 = this.setAndCheck(metadata1,
                 property2,
                 value2,
                 this.createSpreadsheetMetadata(property1, value1, property2, value2));
 
         // remove1
-        final SpreadsheetMetadata textStyle3 = this.removeAndCheck(textStyle2,
+        final SpreadsheetMetadata metadata3 = this.removeAndCheck(metadata2,
                 property1,
                 this.createSpreadsheetMetadata(property2, value2));
 
-        this.removeAndCheck(textStyle3,
+        this.removeAndCheck(metadata3,
                 property2,
                 SpreadsheetMetadata.EMPTY);
     }
@@ -261,7 +261,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         //set
         final SpreadsheetMetadataPropertyName<LocalDateTime> property1 = this.property1();
         final LocalDateTime value1 = this.value1();
-        final SpreadsheetMetadata textStyle1 = this.setAndCheck(SpreadsheetMetadata.EMPTY,
+        final SpreadsheetMetadata metadata1 = this.setAndCheck(SpreadsheetMetadata.EMPTY,
                 property1,
                 value1,
                 this.createSpreadsheetMetadata(property1, value1));
@@ -269,19 +269,19 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         //set
         final SpreadsheetMetadataPropertyName<EmailAddress> property2 = this.property2();
         final EmailAddress value2 = this.value2();
-        final SpreadsheetMetadata textStyle2 = this.setAndCheck(textStyle1,
+        final SpreadsheetMetadata metadata2 = this.setAndCheck(metadata1,
                 property2,
                 value2,
                 this.createSpreadsheetMetadata(property1, value1, property2, value2));
 
         // remove1
-        final SpreadsheetMetadata textStyle3 = this.removeAndCheck(textStyle2,
+        final SpreadsheetMetadata metadata3 = this.removeAndCheck(metadata2,
                 property1,
                 this.createSpreadsheetMetadata(property2, value2));
 
 
         //set property1 again
-        this.setAndCheck(textStyle3,
+        this.setAndCheck(metadata3,
                 property1,
                 value1,
                 this.createSpreadsheetMetadata(property1, value1, property2, value2));
