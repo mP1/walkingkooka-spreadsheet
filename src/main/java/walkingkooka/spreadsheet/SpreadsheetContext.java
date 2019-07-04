@@ -28,7 +28,7 @@ import walkingkooka.net.http.server.HttpResponse;
 import walkingkooka.routing.Router;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.store.repo.StoreRepository;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.ExpressionNodeName;
 
 import java.util.List;
@@ -97,9 +97,9 @@ public interface SpreadsheetContext extends Context {
     Function<Integer, Color> numberToColor(final SpreadsheetId id);
 
     /**
-     * Factory that returns a {@link StoreRepository} for a given {@link SpreadsheetId}
+     * Factory that returns a {@link SpreadsheetStoreRepository} for a given {@link SpreadsheetId}
      */
-    StoreRepository storeRepository(final SpreadsheetId id);
+    SpreadsheetStoreRepository storeRepository(final SpreadsheetId id);
 
     /**
      * Returns the width for a given {@link SpreadsheetId}

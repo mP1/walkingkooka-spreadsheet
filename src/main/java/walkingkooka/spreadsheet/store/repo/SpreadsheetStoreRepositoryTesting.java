@@ -23,7 +23,7 @@ import walkingkooka.test.TypeNameTesting;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public interface StoreRepositoryTesting<S extends StoreRepository> extends ToStringTesting<S>,
+public interface SpreadsheetStoreRepositoryTesting<S extends SpreadsheetStoreRepository> extends ToStringTesting<S>,
         TypeNameTesting<S> {
 
     @Test
@@ -77,6 +77,6 @@ public interface StoreRepositoryTesting<S extends StoreRepository> extends ToStr
 
     @Override
     default String typeNameSuffix() {
-        return StoreRepository.class.getSimpleName();
+        return SpreadsheetStoreRepository.class.getSimpleName();
     }
 }

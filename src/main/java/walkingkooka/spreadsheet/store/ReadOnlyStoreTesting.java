@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * Stores tests that are readonly must also implement this interface(mixin).
  */
-public interface ReadOnlyStoreTesting<S extends Store<K, V>, K, V> extends StoreTesting<S, K, V>,
+public interface ReadOnlyStoreTesting<S extends SpreadsheetStore<K, V>, K, V> extends SpreadsheetStoreTesting<S, K, V>,
         TypeNameTesting<S> {
 
     @Test

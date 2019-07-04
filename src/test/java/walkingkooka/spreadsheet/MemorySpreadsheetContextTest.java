@@ -50,8 +50,8 @@ import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatters;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.store.Store;
-import walkingkooka.spreadsheet.store.repo.StoreRepository;
+import walkingkooka.spreadsheet.store.SpreadsheetStore;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.ExpressionNodeName;
 import walkingkooka.tree.json.JsonNode;
 
@@ -505,7 +505,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         final MemorySpreadsheetContext context = this.createContext();
         final SpreadsheetId id = SpreadsheetId.with(123);
 
-        final StoreRepository repository = context.storeRepository(id);
+        final SpreadsheetStoreRepository repository = context.storeRepository(id);
         assertNotEquals(null, repository);
 
         this.countAndCheck(repository.cells(), 0);
@@ -526,11 +526,11 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         final MemorySpreadsheetContext context = this.createContext();
 
         final SpreadsheetId id1 = SpreadsheetId.with(111);
-        final StoreRepository repository1 = context.storeRepository(id1);
+        final SpreadsheetStoreRepository repository1 = context.storeRepository(id1);
         assertNotEquals(null, repository1);
 
         final SpreadsheetId id2 = SpreadsheetId.with(222);
-        final StoreRepository repository2 = context.storeRepository(id2);
+        final SpreadsheetStoreRepository repository2 = context.storeRepository(id2);
         assertNotEquals(null, repository2);
     }
 
@@ -539,11 +539,11 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         final MemorySpreadsheetContext context = this.createContext();
 
         final SpreadsheetId id1 = SpreadsheetId.with(111);
-        final StoreRepository repository1 = context.storeRepository(id1);
+        final SpreadsheetStoreRepository repository1 = context.storeRepository(id1);
         assertSame(repository1, context.storeRepository(id1));
     }
 
-    private void countAndCheck(final Store<?, ?> store, final int count) {
+    private void countAndCheck(final SpreadsheetStore<?, ?> store, final int count) {
         assertEquals(count, store.count(), () -> "" + store.all());
     }
 

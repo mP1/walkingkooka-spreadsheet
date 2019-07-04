@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.store.repo;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
-import walkingkooka.spreadsheet.store.Store;
+import walkingkooka.spreadsheet.store.SpreadsheetStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.meta.SpreadsheetMetadataStore;
@@ -32,19 +32,19 @@ import walkingkooka.spreadsheet.store.security.SpreadsheetUserStore;
 import java.util.Objects;
 
 /**
- * A {@link StoreRepository} that exposes the {@link Store stores} given to it.
+ * A {@link SpreadsheetStoreRepository} that exposes the {@link SpreadsheetStore stores} given to it.
  */
-final class BasicStoreRepository implements StoreRepository {
+final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepository {
 
-    static BasicStoreRepository with(final SpreadsheetCellStore cells,
-                                     final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferences,
-                                     final SpreadsheetGroupStore groups,
-                                     final SpreadsheetLabelStore labels,
-                                     final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences,
-                                     final SpreadsheetMetadataStore metadatas,
-                                     final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells,
-                                     final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
-                                     final SpreadsheetUserStore users) {
+    static BasicSpreadsheetStoreRepository with(final SpreadsheetCellStore cells,
+                                                final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferences,
+                                                final SpreadsheetGroupStore groups,
+                                                final SpreadsheetLabelStore labels,
+                                                final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences,
+                                                final SpreadsheetMetadataStore metadatas,
+                                                final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells,
+                                                final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
+                                                final SpreadsheetUserStore users) {
         Objects.requireNonNull(cells, "cells");
         Objects.requireNonNull(cellReferences, "cellReferences");
         Objects.requireNonNull(groups, "groups");
@@ -55,7 +55,7 @@ final class BasicStoreRepository implements StoreRepository {
         Objects.requireNonNull(rangeToConditionalFormattingRules, "rangeToConditionalFormattingRules");
         Objects.requireNonNull(users, "users");
 
-        return new BasicStoreRepository(cells,
+        return new BasicSpreadsheetStoreRepository(cells,
                 cellReferences,
                 groups,
                 labels,
@@ -66,15 +66,15 @@ final class BasicStoreRepository implements StoreRepository {
                 users);
     }
 
-    private BasicStoreRepository(final SpreadsheetCellStore cells,
-                                 final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferences,
-                                 final SpreadsheetGroupStore groups,
-                                 final SpreadsheetLabelStore labels,
-                                 final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences,
-                                 final SpreadsheetMetadataStore metadatas,
-                                 final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells,
-                                 final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
-                                 final SpreadsheetUserStore users) {
+    private BasicSpreadsheetStoreRepository(final SpreadsheetCellStore cells,
+                                            final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferences,
+                                            final SpreadsheetGroupStore groups,
+                                            final SpreadsheetLabelStore labels,
+                                            final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences,
+                                            final SpreadsheetMetadataStore metadatas,
+                                            final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells,
+                                            final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
+                                            final SpreadsheetUserStore users) {
         this.cells = cells;
         this.cellReferences = cellReferences;
         this.groups = groups;

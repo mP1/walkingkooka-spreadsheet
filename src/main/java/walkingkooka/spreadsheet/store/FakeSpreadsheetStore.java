@@ -24,7 +24,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
 
-public class FakeStore<K, V> implements Store<K, V>, Fake {
+public class FakeSpreadsheetStore<K, V> implements SpreadsheetStore<K, V>, Fake {
 
     @Override
     public Optional<V> load(final K id) {
@@ -58,13 +58,13 @@ public class FakeStore<K, V> implements Store<K, V>, Fake {
 
     @Override
     public Set<K> ids(final int from, final int count) {
-        Store.checkFromAndTo(from, count);
+        SpreadsheetStore.checkFromAndTo(from, count);
         throw new UnsupportedOperationException();
     }
 
     @Override
     public List<V> values(final K from, final int count) {
-        Store.checkFromAndToIds(from, count);
+        SpreadsheetStore.checkFromAndToIds(from, count);
         throw new UnsupportedOperationException();
     }
 }

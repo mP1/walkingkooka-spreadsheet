@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.store.StoreTesting;
+import walkingkooka.spreadsheet.store.SpreadsheetStoreTesting;
 import walkingkooka.test.TypeNameTesting;
 import walkingkooka.tree.expression.ExpressionReference;
 
@@ -32,7 +32,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> extends StoreTesting<S, SpreadsheetLabelName, SpreadsheetLabelMapping>,
+public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> extends SpreadsheetStoreTesting<S, SpreadsheetLabelName, SpreadsheetLabelMapping>,
         TypeNameTesting<S> {
 
     @Test

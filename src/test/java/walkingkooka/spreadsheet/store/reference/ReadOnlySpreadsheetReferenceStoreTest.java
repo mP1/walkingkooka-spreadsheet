@@ -256,7 +256,7 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
         return Sets.of(this.a1(), this.b1(), this.c1());
     }
 
-    // StoreTesting.................................................................................
+    // SpreadsheetStoreTesting.................................................................................
 
     @Override
     public ReadOnlySpreadsheetReferenceStore<SpreadsheetCellReference> createStore() {
