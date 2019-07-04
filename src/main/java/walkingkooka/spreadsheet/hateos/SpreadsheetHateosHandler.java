@@ -81,7 +81,7 @@ abstract class SpreadsheetHateosHandler {
      */
     final void checkResourceNotEmpty(final Optional<? extends HateosResource<?>> resource) {
         checkResource(resource);
-        resource.orElseThrow(() -> new IllegalArgumentException("Resource not allowed=" + resource));
+        resource.orElseThrow(() -> new IllegalArgumentException("Resource missing=" + resource));
     }
 
     /**
