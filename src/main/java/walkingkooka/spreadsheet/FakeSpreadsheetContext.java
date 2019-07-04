@@ -73,7 +73,7 @@ public class FakeSpreadsheetContext implements SpreadsheetContext {
     }
 
     @Override
-    public SpreadsheetMetadata metadata(final SpreadsheetId id) {
+    public SpreadsheetMetadata metadataWithDefaults() {
         throw new UnsupportedOperationException();
     }
 
