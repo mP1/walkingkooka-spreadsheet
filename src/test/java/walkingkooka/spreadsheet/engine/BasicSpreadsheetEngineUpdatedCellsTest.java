@@ -17,7 +17,40 @@
 
 package walkingkooka.spreadsheet.engine;
 
-public final class BasicSpreadsheetEngineUpdatedCellsTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineUpdatedCells> {
+import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
+import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStores;
+import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStores;
+import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStores;
+import walkingkooka.test.ToStringTesting;
+
+public final class BasicSpreadsheetEngineUpdatedCellsTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineUpdatedCells>
+        implements ToStringTesting<BasicSpreadsheetEngineUpdatedCells> {
+
+    @Test
+    public void testToString() {
+        final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(SpreadsheetId.with(123),
+                SpreadsheetCellStores.treeMap(),
+                SpreadsheetReferenceStores.treeMap(),
+                SpreadsheetLabelStores.treeMap(),
+                SpreadsheetReferenceStores.treeMap(),
+                SpreadsheetRangeStores.treeMap(),
+                SpreadsheetRangeStores.treeMap()
+        );
+
+        final BasicSpreadsheetEngineUpdatedCells cells = BasicSpreadsheetEngineUpdatedCells.with(engine,
+                SpreadsheetEngineContexts.fake(),
+                BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE);
+
+        cells.onCellSavedImmediate(SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference("A1"), SpreadsheetFormula.with("1+2")));
+        cells.onCellSavedImmediate(SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference("B2"), SpreadsheetFormula.with("3+4")));
+
+        this.toStringAndCheck(cells, "{A1=A1=1+2, B2=B2=3+4}");
+    }
 
     @Override
     public Class<BasicSpreadsheetEngineUpdatedCells> type() {
