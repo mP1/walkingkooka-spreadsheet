@@ -114,6 +114,16 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         this.createNameAndCheck("A" + (SpreadsheetRowReference.MAX + 1));
     }
 
+    @Test
+    public void testMapping() {
+        final SpreadsheetLabelName label = SpreadsheetLabelName.with("LABEL123");
+        final SpreadsheetExpressionReference reference = SpreadsheetExpressionReference.parse("A1");
+
+        final SpreadsheetLabelMapping mapping = label.mapping(reference);
+        assertSame(label, mapping.label(), "label");
+        assertSame(reference, mapping.reference(), "reference");
+    }
+
     // SpreadsheetExpressionReferenceVisitor.............................................................................
 
     @Test
