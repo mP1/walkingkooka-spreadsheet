@@ -59,8 +59,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected Visiting startVisit(final SpreadsheetAdditionParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -70,8 +69,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected Visiting startVisit(final SpreadsheetCellReferenceParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -81,8 +79,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected Visiting startVisit(final SpreadsheetDivisionParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -92,8 +89,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected Visiting startVisit(final SpreadsheetEqualsParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -103,8 +99,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected Visiting startVisit(final SpreadsheetFunctionParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -118,8 +113,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected Visiting startVisit(final SpreadsheetGreaterThanParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -129,8 +123,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected Visiting startVisit(final SpreadsheetGreaterThanEqualsParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -140,8 +133,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected Visiting startVisit(final SpreadsheetGroupParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -153,8 +145,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected Visiting startVisit(final SpreadsheetLessThanParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -164,8 +155,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected Visiting startVisit(final SpreadsheetLessThanEqualsParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -175,8 +165,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected Visiting startVisit(final SpreadsheetMultiplicationParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -186,8 +175,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected Visiting startVisit(final SpreadsheetNegativeParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -197,8 +185,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected Visiting startVisit(final SpreadsheetNotEqualsParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -208,8 +195,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected Visiting startVisit(final SpreadsheetPercentageParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     /**
@@ -224,8 +210,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected Visiting startVisit(final SpreadsheetPowerParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -235,8 +220,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected Visiting startVisit(final SpreadsheetRangeParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -246,8 +230,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected Visiting startVisit(final SpreadsheetSubtractionParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -305,9 +288,11 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     // GENERAL PURPOSE .................................................................................................
 
-    private void enter() {
+    private Visiting enter() {
         this.previousChildren = this.previousChildren.push(this.children);
         this.children = Lists.array();
+        
+        return Visiting.CONTINUE;
     }
 
     private void exitBinary(final BiFunction<ExpressionNode, ExpressionNode, ExpressionNode> factory, final SpreadsheetParserToken token) {
@@ -335,8 +320,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
     }
 
     private void addReference(final ExpressionReference reference, final SpreadsheetParserToken token) {
-        final ExpressionNode node = ExpressionNode.reference(reference);
-        this.add(node, token);
+        this.add(ExpressionNode.reference(reference), token);
     }
 
     private void add(final ExpressionNode node, final SpreadsheetParserToken token) {
@@ -350,6 +334,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     private List<ExpressionNode> children = Lists.array();
 
+    @Override
     public String toString() {
         return this.children + "," + this.previousChildren;
     }
