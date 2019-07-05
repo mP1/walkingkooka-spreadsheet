@@ -637,12 +637,15 @@ public abstract class SpreadsheetParserToken implements ParserToken, HasExpressi
      */
     abstract int operatorPriority();
 
-    final static int LOWEST_PRIORITY = 0;
+    final static int IGNORED = 0;
+
+    final static int LOWEST_PRIORITY = IGNORED + 1;
     final static int GREATER_THAN_LESS_THAN_PRIORITY = LOWEST_PRIORITY + 1;
     final static int ADDITION_SUBTRACTION_PRIORITY = GREATER_THAN_LESS_THAN_PRIORITY + 1;
     final static int MULTIPLY_DIVISION_PRIORITY = ADDITION_SUBTRACTION_PRIORITY + 1;
     final static int POWER_PRIORITY = MULTIPLY_DIVISION_PRIORITY + 1;
     final static int RANGE_BETWEEN_PRIORITY = POWER_PRIORITY + 1;
+
     final static int HIGHEST_PRIORITY = RANGE_BETWEEN_PRIORITY;
 
     /**
