@@ -17,8 +17,6 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.predicate.Predicates;
-import walkingkooka.test.BeanPropertiesTesting;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.IsMethodTesting;
 import walkingkooka.test.PublicStaticFactoryTesting;
@@ -50,7 +48,7 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
     }
 
     @Test
-    public void testWithEmptyTextFails() {
+    public final void testWithEmptyTextFails() {
         assertThrows(IllegalArgumentException.class, () -> {
             this.createToken("");
         });
@@ -61,6 +59,12 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
         assertThrows(IllegalArgumentException.class, () -> {
             this.createToken("   ");
         });
+    }
+
+    @Test
+    public final void testAccept2() {
+        new SpreadsheetParserTokenVisitor() {
+        }.accept(this.createToken());
     }
 
     final void toExpressionNodeAndFail() {
