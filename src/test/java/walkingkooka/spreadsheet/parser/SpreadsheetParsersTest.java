@@ -17,9 +17,7 @@
 
 package walkingkooka.spreadsheet.parser;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.opentest4j.AssertionFailedError;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
@@ -56,7 +54,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -860,6 +857,31 @@ public final class SpreadsheetParsersTest implements ParserTesting<Parser<Spread
     @Test
     public void testSimpleAddition() {
         this.parseEvaluateAndCheck("1+2", 1 + 2);
+    }
+
+    @Test
+    public void testSimpleAdditionLeadingWhitespace() {
+        this.parseEvaluateAndCheck(" 1+2", 1 + 2);
+    }
+
+    @Test
+    public void testSimpleAdditionLeadingWhitespace2() {
+        this.parseEvaluateAndCheck("  1+2", 1 + 2);
+    }
+
+    @Test
+    public void testSimpleAdditionTrailingWhitespace() {
+        this.parseEvaluateAndCheck("1+2 ", 1 + 2);
+    }
+
+    @Test
+    public void testSimpleAdditionTrailingWhitespace2() {
+        this.parseEvaluateAndCheck("1+2  ", 1 + 2);
+    }
+
+    @Test
+    public void testSimpleAdditionSurroundedByWhitespace() {
+        this.parseEvaluateAndCheck(" 1+2 ", 1 + 2);
     }
 
     @Test
