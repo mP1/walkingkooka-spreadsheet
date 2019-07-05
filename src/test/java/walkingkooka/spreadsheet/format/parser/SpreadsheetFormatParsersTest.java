@@ -4180,7 +4180,7 @@ public final class SpreadsheetFormatParsersTest implements ParserTesting<Parser<
     }
 
     @Override
-    public String parserTokenToString(final ParserToken token) {
-        return SpreadsheetFormatParserPrettySpreadsheetFormatParserTokenVisitor.toString(token);
+    public String parserTokenTypeNamePrefix() {
+        return "SpreadsheetFormat";
     }
 }
