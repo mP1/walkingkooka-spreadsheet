@@ -52,11 +52,6 @@ public final class ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadshee
     }
 
     @Override
-    public String typeNameSuffix() {
-        return SpreadsheetExpressionReferenceVisitor.class.getSimpleName();
-    }
-
-    @Override
     public Class<ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpressionReferenceVisitor> type() {
         return ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpressionReferenceVisitor.class;
     }
