@@ -37,6 +37,12 @@ public final class BasicSpreadsheetFormatParserContextTest implements ClassTesti
         });
     }
 
+    @Test
+    public void testToString() {
+        final DecimalNumberContext context = this.decimalNumberContext();
+        this.toStringAndCheck(BasicSpreadsheetFormatParserContext.with(context), context.toString());
+    }
+
     @Override
     public BasicSpreadsheetFormatParserContext createContext() {
         return BasicSpreadsheetFormatParserContext.with(this.decimalNumberContext());
