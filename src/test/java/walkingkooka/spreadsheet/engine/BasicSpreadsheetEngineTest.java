@@ -23,6 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
@@ -71,6 +72,7 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -3715,16 +3717,137 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // copyCells....................................................................................................
 
     @Test
-    public void testCopyCellsOneCellInto1x1() {
+    public void testCopyCellsAddition() {
+        this.copyCellsAndCheck("1+0", BigDecimal.valueOf(1 + 0));
+    }
+
+    @Test
+    public void testCopyCellsBigDecimal() {
+        this.copyCellsAndCheck("99.5", BigDecimal.valueOf(99.5));
+    }
+
+    @Test
+    public void testCopyCellsBigInteger() {
+        this.copyCellsAndCheck("99", BigDecimal.valueOf(99));
+    }
+
+    @Test
+    public void testCopyCellsDivision() {
+        this.copyCellsAndCheck("10/5", BigDecimal.valueOf(10 / 5));
+    }
+
+    @Test
+    public void testCopyCellsEqualsTrue() {
+        this.copyCellsAndCheck("10==10", true);
+    }
+
+    @Test
+    public void testCopyCellsEqualsFalse() {
+        this.copyCellsAndCheck("10==9", false);
+    }
+
+    @Test
+    public void testCopyCellsGreaterThanTrue() {
+        this.copyCellsAndCheck("10>9", true);
+    }
+
+    @Test
+    public void testCopyCellsGreaterThanFalse() {
+        this.copyCellsAndCheck("10>11", false);
+    }
+
+    @Test
+    public void testCopyCellsGreaterThanEqualsTrue() {
+        this.copyCellsAndCheck("10>=10", true);
+    }
+
+    @Test
+    public void testCopyCellsGreaterThanEqualsFalse() {
+        this.copyCellsAndCheck("10>=11", false);
+    }
+
+    @Test
+    public void testCopyCellsFunction() {
+        this.copyCellsAndCheck("abc123(1,99)", BigDecimal.valueOf(1+99));
+    }
+
+    @Test
+    public void testCopyCellsGroup() {
+        this.copyCellsAndCheck("(99)", BigDecimal.valueOf(99));
+    }
+
+    @Test
+    public void testCopyCellsLessThanTrue() {
+        this.copyCellsAndCheck("10<11", true);
+    }
+
+    @Test
+    public void testCopyCellsLessThanFalse() {
+        this.copyCellsAndCheck("10<9", false);
+    }
+
+    @Test
+    public void testCopyCellsLessThanEqualsTrue() {
+        this.copyCellsAndCheck("10<=10", true);
+    }
+
+    @Test
+    public void testCopyCellsLessThanEqualsFalse() {
+        this.copyCellsAndCheck("10<=9", false);
+    }
+
+    @Test
+    public void testCopyCellsMultiplication() {
+        this.copyCellsAndCheck("6*7", BigDecimal.valueOf(6*7));
+    }
+
+    @Test
+    public void testCopyCellsNegative() {
+        this.copyCellsAndCheck("-123", BigDecimal.valueOf(-123));
+    }
+
+    @Test
+    public void testCopyCellsNotEqualsTrue() {
+        this.copyCellsAndCheck("10!=9", true);
+    }
+
+    @Test
+    public void testCopyCellsNotEqualsFalse() {
+        this.copyCellsAndCheck("10!=10", false);
+    }
+
+    @Test
+    public void testCopyCellsPercentage() {
+        this.copyCellsAndCheck("123.5%", BigDecimal.valueOf(123.5 / 100));
+    }
+
+    @Test
+    public void testCopyCellsSubtraction() {
+        this.copyCellsAndCheck("13-4", BigDecimal.valueOf(13-4));
+    }
+
+    @Test
+    public void testCopyCellsText() {
+        this.copyCellsAndCheck("\"abc123\"", "abc123");
+    }
+
+    @Test
+    public void testCopyCellsAdditionWithWhitespace() {
+        this.copyCellsAndCheck("1 + 2", BigDecimal.valueOf(1+2));
+    }
+
+    private void copyCellsAndCheck(final String formulaText, final Object expected) {
         final SpreadsheetCellStore cellStore = this.cellStore();
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
-        final SpreadsheetEngineContext context = this.createContext(engine);
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
         final SpreadsheetCellReference a = this.cellReference(10, 20);
         final SpreadsheetCellReference b = this.cellReference(11, 21);
         final SpreadsheetCellReference c = this.cellReference(12, 22);
 
-        final SpreadsheetCell cellA = this.cell(a, "1+0");
+        final SpreadsheetCell cellA = this.cell(a, formulaText);
         final SpreadsheetCell cellB = this.cell(b, "2+0");
         final SpreadsheetCell cellC = this.cell(c, "3+0");
 
@@ -3738,7 +3861,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 Lists.of(cellA),
                 d.spreadsheetRange(d),
                 context,
-                this.formattedCellWithValue(d, "1+0", BigDecimal.valueOf(1 + 0)));
+                this.formattedCellWithValue(d, formulaText, expected));
 
         this.countAndCheck(cellStore, 3 + 1);
     }
@@ -4204,13 +4327,23 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     if (name.value().equals(SpreadsheetFormula.INVALID_CELL_REFERENCE.value())) {
                         throw new ExpressionEvaluationException("Invalid cell reference: " + params.get(0).toString());
                     }
+                    if(name.value().equals("abc123")) {
+                        // assumes parameters are BigDecimal
+                        return params.stream()
+                                .map(BigDecimal.class::cast)
+                                .reduce(BigDecimal.ZERO, BigDecimal::add);
+                    }
                     throw new UnsupportedOperationException(name + "(" + params.stream().map(p -> p.toString()).collect(Collectors.joining(",")) + ")");
                 };
 
                 return node.toValue(ExpressionEvaluationContexts.basic(functions,
                         SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(engine, labelStore, this),
-                        Converters.simple(),
+                        this.converter(),
                         decimalNumberContext()));
+            }
+
+            private Converter converter() {
+                return Converters.collection(Lists.of(Converters.simple(), Converters.numberBigDecimal()));
             }
 
             @Override
