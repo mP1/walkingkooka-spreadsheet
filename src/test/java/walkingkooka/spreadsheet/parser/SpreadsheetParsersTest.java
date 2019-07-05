@@ -1131,7 +1131,7 @@ public final class SpreadsheetParsersTest implements ParserTesting<Parser<Spread
     }
 
     @Override
-    public String parserTokenToString(final ParserToken token) {
-        return SpreadsheetParserPrettySpreadsheetParserTokenVisitor.toString(token);
+    public String parserTokenTypeNamePrefix() {
+        return "Spreadsheet";
     }
 }
