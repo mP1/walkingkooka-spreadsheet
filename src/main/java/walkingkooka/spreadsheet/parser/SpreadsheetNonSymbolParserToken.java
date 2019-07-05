@@ -116,7 +116,7 @@ abstract class SpreadsheetNonSymbolParserToken<T> extends SpreadsheetLeafParserT
 
     @Override
     final int operatorPriority() {
-        return LOWEST_PRIORITY;
+        return IGNORED;
     }
 
     @Override
