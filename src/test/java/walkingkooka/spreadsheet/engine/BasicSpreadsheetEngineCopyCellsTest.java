@@ -17,7 +17,29 @@
 
 package walkingkooka.spreadsheet.engine;
 
-public final class BasicSpreadsheetEngineCopyCellsTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineCopyCells> {
+import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
+import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStores;
+import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStores;
+import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStores;
+import walkingkooka.test.ToStringTesting;
+
+public final class BasicSpreadsheetEngineCopyCellsTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineCopyCells>
+        implements ToStringTesting<BasicSpreadsheetEngineCopyCells> {
+
+    @Test
+    public void testToString() {
+        final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(SpreadsheetId.with(123),
+                SpreadsheetCellStores.fake(),
+                SpreadsheetReferenceStores.fake(),
+                SpreadsheetLabelStores.fake(),
+                SpreadsheetReferenceStores.fake(),
+                SpreadsheetRangeStores.fake(),
+                SpreadsheetRangeStores.fake()
+        );
+        this.toStringAndCheck(new BasicSpreadsheetEngineCopyCells(engine, null), engine.toString());
+    }
 
     @Override
     public Class<BasicSpreadsheetEngineCopyCells> type() {
