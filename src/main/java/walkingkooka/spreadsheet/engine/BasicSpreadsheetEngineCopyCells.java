@@ -35,8 +35,8 @@ final class BasicSpreadsheetEngineCopyCells {
                 .execute(from, to);
     }
 
-    private BasicSpreadsheetEngineCopyCells(final BasicSpreadsheetEngine engine,
-                                            final SpreadsheetEngineContext context) {
+    BasicSpreadsheetEngineCopyCells(final BasicSpreadsheetEngine engine,
+                                    final SpreadsheetEngineContext context) {
         super();
         this.engine = engine;
         this.context = context;
