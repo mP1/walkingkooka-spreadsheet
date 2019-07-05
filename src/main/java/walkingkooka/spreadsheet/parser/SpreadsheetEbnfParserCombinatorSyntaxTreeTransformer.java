@@ -17,12 +17,10 @@
 
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.text.cursor.parser.ParserTokens;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfAlternativeParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfConcatenationParserToken;
@@ -102,7 +100,9 @@ final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer implements Ebnf
     public Parser<ParserContext> identifier(final EbnfIdentifierParserToken token,
                                             final Parser<ParserContext> parser) {
         final EbnfIdentifierName name = token.value();
-        return name.equals(SpreadsheetParsers.FUNCTION_IDENTIFIER) ?
+        return name.equals(SpreadsheetParsers.EXPRESSION_IDENTIFIER) ?
+                parser.transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::expression) :
+        name.equals(SpreadsheetParsers.FUNCTION_IDENTIFIER) ?
                 parser.transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::function) :
                 name.equals(GROUP_IDENTIFIER) ?
                         parser.transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::group) :
@@ -111,6 +111,18 @@ final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer implements Ebnf
                                 name.equals(PERCENTAGE_IDENTIFIER) ?
                                         parser.transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::percentage) :
                                         this.requiredCheck(name, parser);
+    }
+
+    /**
+     * If the expression had a leading or trailing whitespace it will appear as a {@link SequenceParserToken},
+     * otherwise the token will be a {@link SpreadsheetParserToken}. If the former, wrap all tokens in the
+     * {@link SequenceParserToken} in a {@link SpreadsheetGroupParserToken}.
+     */
+    private static ParserToken expression(final ParserToken token,
+                                          final ParserContext context) {
+        return token instanceof SpreadsheetParserToken ?
+                token :
+                SpreadsheetParserToken.group(SequenceParserToken.class.cast(token).value(), token.text());
     }
 
     private static ParserToken function(final ParserToken token,
