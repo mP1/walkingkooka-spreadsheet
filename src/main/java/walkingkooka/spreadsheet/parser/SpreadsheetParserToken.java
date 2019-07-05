@@ -326,7 +326,7 @@ public abstract class SpreadsheetParserToken implements ParserToken, HasExpressi
     /**
      * {@see SpreadsheetPowerSymbolParserToken}
      */
-    public static SpreadsheetSymbolParserToken powerSymbol(final String value, final String text) {
+    public static SpreadsheetPowerSymbolParserToken powerSymbol(final String value, final String text) {
         return SpreadsheetPowerSymbolParserToken.with(value, text);
     }
 
