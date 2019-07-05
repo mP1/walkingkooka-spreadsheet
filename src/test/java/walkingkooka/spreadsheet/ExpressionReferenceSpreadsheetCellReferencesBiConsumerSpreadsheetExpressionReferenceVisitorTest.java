@@ -66,11 +66,6 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreads
     }
 
     @Override
-    public String typeNameSuffix() {
-        return SpreadsheetExpressionReferenceVisitor.class.getSimpleName();
-    }
-
-    @Override
     public Class<ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetExpressionReferenceVisitor> type() {
         return ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreadsheetExpressionReferenceVisitor.class;
     }

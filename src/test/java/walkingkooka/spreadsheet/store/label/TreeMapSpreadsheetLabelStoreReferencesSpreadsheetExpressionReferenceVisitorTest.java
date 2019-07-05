@@ -41,11 +41,6 @@ public final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionRe
     }
 
     @Override
-    public String typeNameSuffix() {
-        return SpreadsheetExpressionReferenceVisitor.class.getSimpleName();
-    }
-
-    @Override
     public Class<TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitor> type() {
         return TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitor.class;
     }
