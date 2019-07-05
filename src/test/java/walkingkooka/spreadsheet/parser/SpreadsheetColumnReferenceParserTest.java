@@ -125,6 +125,11 @@ public final class SpreadsheetColumnReferenceParserTest extends SpreadsheetParse
     }
 
     @Override
+    public String parserTokenTypeNamePrefix() {
+        return "Spreadsheet";
+    }
+
+    @Override
     public Class<SpreadsheetColumnReferenceParser> type() {
         return SpreadsheetColumnReferenceParser.class;
     }

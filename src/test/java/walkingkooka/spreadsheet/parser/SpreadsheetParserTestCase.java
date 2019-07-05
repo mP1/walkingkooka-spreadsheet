@@ -40,8 +40,8 @@ public abstract class SpreadsheetParserTestCase<P extends Parser<SpreadsheetPars
     }
 
     @Override
-    public final String parserTokenToString(final ParserToken token) {
-        return SpreadsheetParserPrettySpreadsheetParserTokenVisitor.toString(token);
+    public String parserTokenTypeNamePrefix() {
+        return "Spreadsheet";
     }
 
     // TypeNameTesting .........................................................................................
