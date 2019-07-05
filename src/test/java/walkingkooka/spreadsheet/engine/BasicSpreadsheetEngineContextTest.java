@@ -48,6 +48,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngineContextTesting<BasicSpreadsheetEngineContext> {
@@ -279,6 +280,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     @Test
+    public void testDefaultSpreadsheetTextFormatter() {
+        final SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter = this.defaultSpreadsheetTextFormatter();
+        assertSame(defaultSpreadsheetTextFormatter, this.createContext(defaultSpreadsheetTextFormatter).defaultSpreadsheetTextFormatter());
+    }
+
+    @Test
     public void testParseFormula() {
         this.parseFormulaAndCheck("1+2",
                 SpreadsheetParserToken.addition(Lists.of(SpreadsheetParserToken.bigDecimal(BigDecimal.valueOf(1), "1"),
@@ -366,6 +373,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Override
     public BasicSpreadsheetEngineContext createContext() {
+        return this.createContext(this.defaultSpreadsheetTextFormatter());
+    }
+
+    private BasicSpreadsheetEngineContext createContext(final SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter) {
         return BasicSpreadsheetEngineContext.with(this.functions(),
                 this.engine(),
                 this.labelStore(),
@@ -377,7 +388,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 GENERAL_DECIMAL_FORMAT_PATTERN,
                 WIDTH,
                 FRACTIONER,
-                this.defaultSpreadsheetTextFormatter());
+                defaultSpreadsheetTextFormatter);
     }
 
     private BiFunction<ExpressionNodeName, List<Object>, Object> functions() {
@@ -422,6 +433,15 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         };
     }
 
+    private SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter() {
+        return new FakeSpreadsheetTextFormatter() {
+            @Override
+            public String toString() {
+                return "SpreadsheetTextFormatter123";
+            }
+        };
+    }
+
     private Function<Integer, Color> numberToColor() {
         return this::numberToColor0;
     }
@@ -458,15 +478,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             return "Fractioner123";
         }
     };
-
-    private SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter() {
-        return new FakeSpreadsheetTextFormatter() {
-            @Override
-            public String toString() {
-                return "SpreadsheetTextFormatter123";
-            }
-        };
-    }
 
     @Override
     public Class<BasicSpreadsheetEngineContext> type() {
