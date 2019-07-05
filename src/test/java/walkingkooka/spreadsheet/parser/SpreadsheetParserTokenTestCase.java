@@ -77,7 +77,7 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
     }
 
     final void toExpressionNodeAndCheck(final T token, final ExpressionNode expected) {
-        final Optional<ExpressionNode> node = this.createToken().expressionNode();
+        final Optional<ExpressionNode> node = token.expressionNode();
         assertEquals(Optional.of(expected), node, "toExpressionNode");
     }
 
