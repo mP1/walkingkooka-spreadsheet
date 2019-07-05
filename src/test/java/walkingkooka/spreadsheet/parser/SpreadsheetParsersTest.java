@@ -17,8 +17,9 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import walkingkooka.Cast;
+import org.opentest4j.AssertionFailedError;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
@@ -28,7 +29,6 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetFunctionName;
-import walkingkooka.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.text.CharSequences;
@@ -50,11 +50,13 @@ import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -69,6 +71,33 @@ public final class SpreadsheetParsersTest implements ParserTesting<Parser<Spread
         final String text = "\"abc-123\"";
 
         this.parseAndCheck(text, SpreadsheetTextParserToken.text("abc-123", text), text);
+    }
+
+    @Test
+    public void testBigDecimal() {
+        final String text = "1.5";
+
+        this.parseAndCheck(text,
+                bigDecimal(1.5),
+                text);
+    }
+
+    @Test
+    public void testBigInteger() {
+        final String text = "1";
+
+        this.parseAndCheck(text,
+                bigInteger(1),
+                text);
+    }
+
+    @Test
+    public void testBigInteger2() {
+        final String text = "234";
+
+        this.parseAndCheck(text,
+                bigInteger(234),
+                text);
     }
 
     // CELL & LABEL ......................................................................................................
@@ -187,20 +216,38 @@ public final class SpreadsheetParsersTest implements ParserTesting<Parser<Spread
     // Negative.........................................................................................
 
     @Test
-    public void testNegativeNumber() {
-        final String text = "-1";
+    public void testNegativeBigDecimal() {
+        final String text = "-1.5";
 
         this.parseAndCheck(text,
-                SpreadsheetParserToken.negative(Lists.of(minus(), bigDecimal(1)), text),
+                SpreadsheetParserToken.negative(Lists.of(minus(), bigDecimal(1.5)), text),
                 text);
     }
 
     @Test
-    public void testNegativeWhitespaceNumber() {
-        final String text = "-  1";
+    public void testNegativeWhitespaceBigDecimal() {
+        final String text = "-  1.5";
 
         this.parseAndCheck(text,
-                SpreadsheetParserToken.negative(Lists.of(minus(), whitespace(), bigDecimal(1)), text),
+                SpreadsheetParserToken.negative(Lists.of(minus(), whitespace(), bigDecimal(1.5)), text),
+                text);
+    }
+
+    @Test
+    public void testNegativeBigInteger() {
+        final String text = "-1";
+
+        this.parseAndCheck(text,
+                SpreadsheetParserToken.negative(Lists.of(minus(), bigInteger(1)), text),
+                text);
+    }
+
+    @Test
+    public void testNegativeWhitespaceBigInteger() {
+        final String text = "-  1.5";
+
+        this.parseAndCheck(text,
+                SpreadsheetParserToken.negative(Lists.of(minus(), whitespace(), bigInteger(1)), text),
                 text);
     }
 
@@ -1035,8 +1082,12 @@ public final class SpreadsheetParsersTest implements ParserTesting<Parser<Spread
         return SpreadsheetParserContexts.basic(this.decimalNumberContext());
     }
 
-    private SpreadsheetParserToken bigDecimal(final int value) {
-        return SpreadsheetParserToken.bigDecimal(BigDecimal.valueOf(value), String.valueOf(value));
+    private SpreadsheetParserToken bigDecimal(final double value) {
+        return SpreadsheetParserToken.bigDecimal(BigDecimal.valueOf(value).setScale(1, RoundingMode.HALF_UP), String.valueOf(value));
+    }
+
+    private SpreadsheetParserToken bigInteger(final long value) {
+        return SpreadsheetParserToken.bigInteger(BigInteger.valueOf(value), String.valueOf(value));
     }
 
     private SpreadsheetCellReferenceParserToken cell(final int column, final String columnText, final int row) {
