@@ -72,7 +72,6 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -1185,6 +1184,150 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 1,
                 context,
                 this.formattedCellWithValue("b3", "5+6", BigDecimal.valueOf(5 + 6)));
+
+        this.countAndCheck(cellStore, 2);
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedAddition() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("5+6", BigDecimal.valueOf(5 + 6));
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedBigDecimal() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("55.5", BigDecimal.valueOf(55.5));
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedBigInteger() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("55", BigDecimal.valueOf(55));
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedDivision() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("9/3", BigDecimal.valueOf(9 / 3));
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedEqualsTrue() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("8==8", true);
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedEqualsFalse() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("8==7", false);
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedFunction() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("abc123(1,99)", BigDecimal.valueOf(1 + 99));
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedGreaterThanTrue() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("8>7", true);
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedGreaterThanFalse() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("7>8", false);
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedGreaterThanEqualsTrue() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("8>=7", true);
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedGreaterThanEqualsFalse() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("7>=8", false);
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedGroup() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("(99)", BigDecimal.valueOf(99));
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedLessThanTrue() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("8<9", true);
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedLessThanFalse() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("7<6", false);
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedLessThanEqualsTrue() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("8<=8", true);
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedLessThanEqualsFalse() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("8<=7", false);
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedMultiplication() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("9*3", BigDecimal.valueOf(9 * 3));
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedNegative() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("-99", BigDecimal.valueOf(-99));
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedNotEqualsTrue() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("8!=7", true);
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedNotEqualsFalse() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("8!=8", false);
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedPercentage() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("120%", BigDecimal.valueOf(1.2));
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedSubtraction() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("9-7", BigDecimal.valueOf(9 - 7));
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedText() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("\"ABC123\"", "ABC123");
+    }
+
+    @Test
+    public void testDeleteColumnColumnsAfterCellsRefreshedAdditionWithWhitespace() {
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("1 + 2", BigDecimal.valueOf(1 + 2));
+    }
+
+    private void deleteColumnColumnsAfterCellsRefreshedAndCheck(final String formula,
+                                                                final Object value) {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetCellReference a = this.cellReference("A1"); // A1
+        final SpreadsheetCellReference b = this.cellReference("B2"); // B2
+        final SpreadsheetCellReference c = this.cellReference("C3"); // C3
+
+        engine.saveCell(this.cell(a, "1+2"), context);
+        engine.saveCell(this.cell(b, "3+4"), context); // deleted/replaced by $c
+        engine.saveCell(this.cell(c, formula), context); // becomes b3
+
+        this.deleteColumnsAndCheck(engine,
+                b.column(),
+                1,
+                context,
+                this.formattedCellWithValue("b3", formula, value));
 
         this.countAndCheck(cellStore, 2);
     }
