@@ -44,8 +44,14 @@ import java.util.List;
  */
 final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer implements EbnfParserCombinatorSyntaxTreeTransformer {
 
+    /**
+     * Singleton
+     */
     final static SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer INSTANCE = new SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer();
 
+    /**
+     * Private ctor use singleton.
+     */
     private SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer() {
         super();
     }
@@ -71,114 +77,9 @@ final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer implements Ebnf
      * BINARY_EXPRESSION       = EXPRESSION2, [ WHITESPACE ], BINARY_OPERATOR, [ WHITESPACE ], EXPRESSION2;
      * </pre>
      */
-    private ParserToken concatenation(final ParserToken sequence,
+    private ParserToken concatenation(final ParserToken token,
                                       final ParserContext context) {
-        return transformConcatenation(sequence.cast(), context);
-    }
-
-    private static ParserToken transformConcatenation(final SequenceParserToken sequence,
-                                                      final ParserContext context) {
-        ParserToken result;
-
-        for (; ; ) {
-            final SequenceParserToken cleaned = sequence.flat();
-
-            final SpreadsheetParserToken first = cleaned.removeWhitespace()
-                    .value()
-                    .get(0)
-                    .cast();
-
-            if (first.isSymbol()) {
-                result = sequence;
-                break;
-            }
-
-            result = binaryOperandPrioritize(cleaned.value(), sequence);
-            break;
-        }
-
-        return result;
-    }
-
-    private static ParserToken binaryOperandPrioritize(final List<ParserToken> tokens,
-                                                       final SequenceParserToken parent) {
-        List<ParserToken> prioritized = maybeExpandNegatives(tokens);
-
-        for (int priority = SpreadsheetParserToken.HIGHEST_PRIORITY; priority > SpreadsheetParserToken.LOWEST_PRIORITY; priority--) {
-            boolean changed;
-
-            do {
-                changed = false;
-                int i = 0;
-                for (ParserToken t : prioritized) {
-                    final SpreadsheetParserToken s = t.cast();
-                    if (s.operatorPriority() == priority) {
-                        changed = true;
-
-                        final int firstIndex = findNonWhitespaceSiblingToken(prioritized, i - 1, -1);
-                        final int lastIndex = findNonWhitespaceSiblingToken(prioritized, i + 1, +1);
-
-                        final List<ParserToken> binaryOperandTokens = Lists.array();
-                        binaryOperandTokens.addAll(prioritized.subList(firstIndex, lastIndex + 1));
-
-                        final List<ParserToken> replaced = Lists.array();
-                        replaced.addAll(prioritized.subList(0, firstIndex));
-                        replaced.add(s.binaryOperand(binaryOperandTokens, ParserToken.text(binaryOperandTokens)));
-                        replaced.addAll(prioritized.subList(lastIndex + 1, prioritized.size()));
-
-                        prioritized = replaced;
-                        break;
-                    }
-                    i++;
-                }
-            } while (changed && prioritized.size() > 1);
-        }
-
-        return prioritized.size() == 1 ?
-                prioritized.get(0) :
-                ParserTokens.sequence(prioritized, parent.text());
-    }
-
-    /**
-     * Expands any {@link SpreadsheetNegativeParserToken} into its core components, only if it doesnt follow another symbol.
-     * This fixes the parsing "mistake" that converts any minus followed by a token into a {@link SpreadsheetNegativeParserToken}.
-     */
-    private static List<ParserToken> maybeExpandNegatives(final List<ParserToken> tokens) {
-        final List<ParserToken> expanded = Lists.array();
-        boolean expand = false;
-
-        for (ParserToken t : tokens) {
-            final SpreadsheetParserToken s = t.cast();
-            if (s.isWhitespace()) {
-                expanded.add(t);
-                continue;
-            }
-
-            if (s.isNegative() && expand) {
-                final SpreadsheetNegativeParserToken negativeParserToken = s.cast();
-                expanded.addAll(negativeParserToken.value());
-                expand = true;
-                continue;
-            }
-            expand = !s.isSymbol();
-            expanded.add(s);
-        }
-
-        return expanded;
-    }
-
-    private static int findNonWhitespaceSiblingToken(final List<ParserToken> tokens,
-                                                     final int startIndex,
-                                                     final int step) {
-        int i = startIndex;
-        for (; ; ) {
-            final SpreadsheetParserToken token = tokens.get(i).cast();
-            if (!token.isWhitespace()) {
-                break;
-            }
-            i = i + step;
-        }
-        return i;
+        return SequenceParserToken.class.cast(token).transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformerBinaryOperatorTransformer.INSTANCE);
     }
 
     @Override

@@ -16,13 +16,10 @@
  */
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.ParentParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Base class for a token that contain another child token, with the class knowing the cardinality.
@@ -196,7 +193,7 @@ abstract class SpreadsheetParentParserToken<T extends SpreadsheetParentParserTok
 
     @Override
     final int operatorPriority() {
-        return LOWEST_PRIORITY;
+        return IGNORED;
     }
 
     @Override
