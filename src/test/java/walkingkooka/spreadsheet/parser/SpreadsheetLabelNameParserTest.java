@@ -103,6 +103,11 @@ public final class SpreadsheetLabelNameParserTest extends SpreadsheetParserTestC
     }
 
     @Override
+    public String parserTokenTypeNamePrefix() {
+        return "Spreadsheet";
+    }
+
+    @Override
     public Class<SpreadsheetLabelNameParser> type() {
         return SpreadsheetLabelNameParser.class;
     }
