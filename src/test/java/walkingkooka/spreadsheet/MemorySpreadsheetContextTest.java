@@ -491,6 +491,11 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     }
 
     @Test
+    public void testMetadataWithDefaults() {
+        assertEquals(this.metadataWithDefaults(), this.createContext().metadataWithDefaults());
+    }
+
+    @Test
     public void testNameToColor() {
         assertNotEquals(null, this.createContext().nameToColor(this.spreadsheetId()));
     }
