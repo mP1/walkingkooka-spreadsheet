@@ -36,11 +36,6 @@ public final class BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeV
     }
 
     @Override
-    public String typeNameSuffix() {
-        return SpreadsheetExpressionReferenceVisitor.class.getSimpleName();
-    }
-
-    @Override
     public Class<BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitorSpreadsheetExpressionReferenceVisitor> type() {
         return BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitorSpreadsheetExpressionReferenceVisitor.class;
     }
