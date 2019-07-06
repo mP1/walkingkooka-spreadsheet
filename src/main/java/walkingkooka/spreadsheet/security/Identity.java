@@ -64,6 +64,11 @@ public abstract class Identity<I extends IdentityId> implements Value<I>,
         return this.id;
     }
 
+    @Override
+    public String idForHateosLink() {
+        return this.id().toString();
+    }
+
     // Identity...................................................
 
     @Override
