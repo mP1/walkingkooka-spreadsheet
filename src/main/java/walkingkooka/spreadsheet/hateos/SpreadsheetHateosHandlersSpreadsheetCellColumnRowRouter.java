@@ -44,7 +44,7 @@ import java.util.function.BiConsumer;
 /**
  * A collection of factory methods to create various {@link SpreadsheetHateosHandler}.
  */
-final class SpreadsheetHateosHandlersSpreadsheetRouter implements StaticHelper {
+final class SpreadsheetHateosHandlersSpreadsheetCellColumnRowRouter implements StaticHelper {
 
     /**
      * A {@link HateosResourceName} with <code>cell</code>.
@@ -137,7 +137,7 @@ final class SpreadsheetHateosHandlersSpreadsheetRouter implements StaticHelper {
     /**
      * Stop creation.
      */
-    private SpreadsheetHateosHandlersSpreadsheetRouter() {
+    private SpreadsheetHateosHandlersSpreadsheetCellColumnRowRouter() {
         throw new UnsupportedOperationException();
     }
 }

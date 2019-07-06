@@ -136,16 +136,16 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
     /**
      * Builds a {@link Router} that handles all operations, using the given {@link SpreadsheetEngine} and {@link SpreadsheetEngineContext}.
      */
-    public static <N extends Node<N, ?, ?, ?>> Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> spreadsheetRouter(final AbsoluteUrl base,
-                                                                                                                                        final HateosContentType<N> contentType,
-                                                                                                                                        final HateosHandler<SpreadsheetCellReference, SpreadsheetDelta, SpreadsheetDelta> copyCells,
-                                                                                                                                        final HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta, SpreadsheetDelta> deleteColumns,
-                                                                                                                                        final HateosHandler<SpreadsheetRowReference, SpreadsheetDelta, SpreadsheetDelta> deleteRows,
-                                                                                                                                        final HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta, SpreadsheetDelta> insertColumns,
-                                                                                                                                        final HateosHandler<SpreadsheetRowReference, SpreadsheetDelta, SpreadsheetDelta> insertRows,
-                                                                                                                                        final HateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetDelta> loadCell,
-                                                                                                                                        final HateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetDelta> saveCell) {
-        return SpreadsheetHateosHandlersSpreadsheetRouter.router(base,
+    public static <N extends Node<N, ?, ?, ?>> Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> spreadsheetCellColumnRowRouter(final AbsoluteUrl base,
+                                                                                                                                                     final HateosContentType<N> contentType,
+                                                                                                                                                     final HateosHandler<SpreadsheetCellReference, SpreadsheetDelta, SpreadsheetDelta> copyCells,
+                                                                                                                                                     final HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta, SpreadsheetDelta> deleteColumns,
+                                                                                                                                                     final HateosHandler<SpreadsheetRowReference, SpreadsheetDelta, SpreadsheetDelta> deleteRows,
+                                                                                                                                                     final HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta, SpreadsheetDelta> insertColumns,
+                                                                                                                                                     final HateosHandler<SpreadsheetRowReference, SpreadsheetDelta, SpreadsheetDelta> insertRows,
+                                                                                                                                                     final HateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetDelta> loadCell,
+                                                                                                                                                     final HateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetDelta> saveCell) {
+        return SpreadsheetHateosHandlersSpreadsheetCellColumnRowRouter.router(base,
                 contentType,
                 copyCells,
                 deleteColumns,
