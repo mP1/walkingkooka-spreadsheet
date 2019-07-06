@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.test.HashCodeEqualsDefined;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 
@@ -33,6 +34,22 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
         HateosResource<Long>,
         Value<Long> {
 
+    /**
+     * Parses some text into a {@link SpreadsheetId}. This is the inverse of {@link SpreadsheetId#toString()}.
+     */
+    public static SpreadsheetId parse(final String text) {
+        CharSequences.failIfNullOrEmpty(text, "text");
+
+        try {
+            return new SpreadsheetId(Long.parseLong(text, 16));
+        } catch (final NumberFormatException cause) {
+            throw new IllegalArgumentException(cause.getMessage(), cause);
+        }
+    }
+
+    /**
+     * Creates a new {@link SpreadsheetId}
+     */
     public static SpreadsheetId with(final long value) {
         return new SpreadsheetId(value);
     }
@@ -108,6 +125,6 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
 
     @Override
     public String toString() {
-        return this.value.toString();
+        return Long.toHexString(this.value);
     }
 }
