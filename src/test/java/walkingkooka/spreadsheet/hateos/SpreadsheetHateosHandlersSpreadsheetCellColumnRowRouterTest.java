@@ -51,9 +51,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetHateosHandlersSpreadsheetRouterTest implements ClassTesting2<SpreadsheetHateosHandlersSpreadsheetRouter> {
+public final class SpreadsheetHateosHandlersSpreadsheetCellColumnRowRouterTest implements ClassTesting2<SpreadsheetHateosHandlersSpreadsheetCellColumnRowRouter> {
 
-    // spreadsheetRouter...........................................................................................................
+    // spreadsheetCellColumnRowRouter...........................................................................................................
 
     @Test
     public void testRouterBaseNullFails() {
@@ -182,7 +182,7 @@ public final class SpreadsheetHateosHandlersSpreadsheetRouterTest implements Cla
                              final HateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetDelta> loadCell,
                              final HateosHandler<SpreadsheetCellReference, SpreadsheetCell, SpreadsheetDelta> saveCell) {
         assertThrows(NullPointerException.class, () -> {
-            SpreadsheetHateosHandlersSpreadsheetRouter.router(base,
+            SpreadsheetHateosHandlersSpreadsheetCellColumnRowRouter.router(base,
                     contentType,
                     copyCells,
                     deleteColumns,
@@ -297,7 +297,7 @@ public final class SpreadsheetHateosHandlersSpreadsheetRouterTest implements Cla
     }
 
     private Optional<BiConsumer<HttpRequest, HttpResponse>> route(final HttpRequest request) {
-        final Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> router = SpreadsheetHateosHandlersSpreadsheetRouter.router(this.base(),
+        final Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> router = SpreadsheetHateosHandlersSpreadsheetCellColumnRowRouter.router(this.base(),
                 this.contentType(),
                 this.copyCells(),
                 this.deleteColumns(),
@@ -387,8 +387,8 @@ public final class SpreadsheetHateosHandlersSpreadsheetRouterTest implements Cla
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetHateosHandlersSpreadsheetRouter> type() {
-        return SpreadsheetHateosHandlersSpreadsheetRouter.class;
+    public Class<SpreadsheetHateosHandlersSpreadsheetCellColumnRowRouter> type() {
+        return SpreadsheetHateosHandlersSpreadsheetCellColumnRowRouter.class;
     }
 
     @Override
