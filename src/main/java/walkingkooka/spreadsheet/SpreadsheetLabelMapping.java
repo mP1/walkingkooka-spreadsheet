@@ -95,6 +95,11 @@ public final class SpreadsheetLabelMapping implements HashCodeEqualsDefined, Hat
         return this.label();
     }
 
+    @Override
+    public String idForHateosLink() {
+        return this.id().value();
+    }
+
     // HasJsonNode..........................................................................................
 
     /**

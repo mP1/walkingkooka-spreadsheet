@@ -67,6 +67,11 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
         return this.value();
     }
 
+    @Override
+    public String idForHateosLink() {
+        return this.toString();
+    }
+
     // Value ....................................................................................................
 
     @Override

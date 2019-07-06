@@ -102,6 +102,11 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
         return this.reference();
     }
 
+    @Override
+    public String idForHateosLink() {
+        return this.id().toString();
+    }
+
     // reference .............................................................................................
 
     public SpreadsheetCellReference reference() {
