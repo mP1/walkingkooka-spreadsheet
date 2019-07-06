@@ -23,6 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.color.ColorHslOrHsv;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -92,7 +93,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static String FORMATTED_PATTERN_SUFFIX = "FORMATTED_PATTERN_SUFFIX";
     private final static String FORMATTED_DEFAULT_SUFFIX = "FORMATTED_DEFAULT_SUFFIX";
 
-    private final static Optional<Color> COLOR = Optional.of(Color.BLACK);
+    private final static Optional<ColorHslOrHsv> COLOR = Optional.of(Color.BLACK);
 
     private final static String PATTERN_DEFAULT = "$text+" + FORMATTED_DEFAULT_SUFFIX;
     private final static String PATTERN = "$text+" + FORMATTED_PATTERN_SUFFIX;
@@ -4531,7 +4532,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     private SpreadsheetTextFormatter<Object> formatter(final String pattern,
-                                                       final Optional<Color> color,
+                                                       final Optional<ColorHslOrHsv> color,
                                                        final String suffix) {
         return new SpreadsheetTextFormatter<Object>() {
             @Override
