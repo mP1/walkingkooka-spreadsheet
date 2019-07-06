@@ -248,7 +248,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                 fractioner,
                 defaultSpreadsheetTextFormatter);
 
-        return SpreadsheetHateosHandlers.router(this.baseWithSpreadsheetId(id),
+        return SpreadsheetHateosHandlers.spreadsheetRouter(this.baseWithSpreadsheetId(id),
                 this.contentType,
                 SpreadsheetHateosHandlers.copyCells(engine, engineContext),
                 SpreadsheetHateosHandlers.deleteColumns(engine, engineContext),
