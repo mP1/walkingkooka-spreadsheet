@@ -434,12 +434,12 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 "    }\n" +
                 "  }],\n" +
                 "  \"_links\": [{\n" +
-                "    \"href\": \"http://example.com/api987/123/cell/123/copy\",\n" +
+                "    \"href\": \"http://example.com/api987/123/cell/7b/copy\",\n" +
                 "    \"method\": \"POST\",\n" +
                 "    \"rel\": \"copy\",\n" +
                 "    \"type\": \"application/hal+json\"\n" +
                 "  }, {\n" +
-                "    \"href\": \"http://example.com/api987/123/cell/123\",\n" +
+                "    \"href\": \"http://example.com/api987/123/cell/7b\",\n" +
                 "    \"method\": \"POST\",\n" +
                 "    \"rel\": \"self\",\n" +
                 "    \"type\": \"application/hal+json\"\n" +
@@ -447,7 +447,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 "}";
 
         expected.addEntity(HttpEntity.with(Maps.of(
-                HttpHeaderName.CONTENT_LENGTH, 789L,
+                HttpHeaderName.CONTENT_LENGTH, 787L,
                 HttpHeaderName.CONTENT_TYPE, HateosContentType.json().contentType().setCharset(CharsetName.UTF_8)),
                 Binary.with(expectedBody.getBytes(Charset.defaultCharset()))));
 
