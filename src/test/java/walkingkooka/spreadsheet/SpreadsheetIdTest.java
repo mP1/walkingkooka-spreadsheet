@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.ParseStringTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
@@ -33,6 +34,7 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
         ComparableTesting<SpreadsheetId>,
         HashCodeEqualsDefinedTesting<SpreadsheetId>,
         HasJsonNodeTesting<SpreadsheetId>,
+        ParseStringTesting<SpreadsheetId>,
         ToStringTesting<SpreadsheetId> {
 
     private final static Long VALUE = 123L;
@@ -42,6 +44,16 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
         final SpreadsheetId id = SpreadsheetId.with(VALUE);
         assertEquals(VALUE, id.value(), "value");
         assertEquals(VALUE, id.id(), "id");
+    }
+
+    @Test
+    public void testParseInvalidFails() {
+        this.parseFails("XYZ", IllegalArgumentException.class);
+    }
+
+    @Test
+    public void testParse() {
+        this.parseAndCheck("1A", SpreadsheetId.with(0x1a));
     }
 
     @Test
@@ -67,7 +79,7 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     @Test
     public void testToString() {
         this.toStringAndCheck(SpreadsheetId.with(VALUE),
-                "" + VALUE);
+                Long.toHexString(VALUE));
     }
 
     @Override
@@ -100,5 +112,22 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     @Override
     public SpreadsheetId fromJsonNode(final JsonNode node) {
         return SpreadsheetId.fromJsonNode(node);
+    }
+
+    // ParseStringTesting...............................................................................................
+
+    @Override
+    public SpreadsheetId parse(final String text) {
+        return SpreadsheetId.parse(text);
+    }
+
+    @Override
+    public Class<? extends RuntimeException> parseFailedExpected(final Class<? extends RuntimeException> type) {
+        return type;
+    }
+
+    @Override
+    public RuntimeException parseFailedExpected(final RuntimeException cause) {
+        return cause;
     }
 }
