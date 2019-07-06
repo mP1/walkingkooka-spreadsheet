@@ -56,6 +56,11 @@ public final class SpreadsheetColumn implements HateosResource<SpreadsheetColumn
         return this.reference();
     }
 
+    @Override
+    public String idForHateosLink() {
+        return this.id().toString();
+    }
+
     // reference .............................................................................................
 
     public SpreadsheetColumnReference reference() {
