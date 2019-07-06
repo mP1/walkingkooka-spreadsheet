@@ -77,6 +77,11 @@ public abstract class SpreadsheetMetadata implements HashCodeEqualsDefined,
         return this.get(SpreadsheetMetadataPropertyName.SPREADSHEET_ID).orElseThrow(() -> new IllegalStateException("Missing " + SpreadsheetMetadataPropertyName.SPREADSHEET_ID + "=" + this));
     }
 
+    @Override
+    public String idForHateosLink() {
+        return this.id().idForHateosLink();
+    }
+
     // get..............................................................................................................
 
     /**

@@ -90,11 +90,16 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosR
     }
 
     @Override
-    public SpreadsheetId id() {
+    public final SpreadsheetId id() {
         return this.id;
     }
 
     final SpreadsheetId id;
+
+    @Override
+    public final String idForHateosLink() {
+        return this.id().idForHateosLink();
+    }
 
     // cells............................................................................................................
 
