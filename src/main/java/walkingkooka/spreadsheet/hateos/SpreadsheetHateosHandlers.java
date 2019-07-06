@@ -82,10 +82,11 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetContextCreateMetadataHateosHandler}
+     * {@see SpreadsheetContextCreateAndSaveMetadataHateosHandler}
      */
-    public static HateosHandler<SpreadsheetId, SpreadsheetMetadata, SpreadsheetMetadata> createMetadata(final SpreadsheetContext context) {
-        return SpreadsheetContextCreateMetadataHateosHandler.with(context);
+    public static HateosHandler<SpreadsheetId, SpreadsheetMetadata, SpreadsheetMetadata> createAndSaveMetadata(final SpreadsheetContext context,
+                                                                                                               final SpreadsheetStore<SpreadsheetId, SpreadsheetMetadata> store) {
+        return SpreadsheetContextCreateAndSaveMetadataHateosHandler.with(context, store);
     }
 
     /**
