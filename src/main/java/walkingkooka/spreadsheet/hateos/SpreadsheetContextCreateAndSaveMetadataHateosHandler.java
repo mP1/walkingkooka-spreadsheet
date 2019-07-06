@@ -23,23 +23,29 @@ import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.store.SpreadsheetStore;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
  * A {@link HateosHandler} that invokes {@link SpreadsheetContext#metadataWithDefaults()}
  */
-final class SpreadsheetContextCreateMetadataHateosHandler extends SpreadsheetContextHateosHandler<SpreadsheetId, SpreadsheetMetadata> {
+final class SpreadsheetContextCreateAndSaveMetadataHateosHandler extends SpreadsheetContextHateosHandler<SpreadsheetId, SpreadsheetMetadata> {
 
-    static SpreadsheetContextCreateMetadataHateosHandler with(final SpreadsheetContext context) {
+    static SpreadsheetContextCreateAndSaveMetadataHateosHandler with(final SpreadsheetContext context,
+                                                                     final SpreadsheetStore<SpreadsheetId, SpreadsheetMetadata> store) {
         checkContext(context);
+        Objects.requireNonNull(store, "store");
 
-        return new SpreadsheetContextCreateMetadataHateosHandler(context);
+        return new SpreadsheetContextCreateAndSaveMetadataHateosHandler(context, store);
     }
 
-    private SpreadsheetContextCreateMetadataHateosHandler(final SpreadsheetContext context) {
+    private SpreadsheetContextCreateAndSaveMetadataHateosHandler(final SpreadsheetContext context,
+                                                                 final SpreadsheetStore<SpreadsheetId, SpreadsheetMetadata> store) {
         super(context);
+        this.store = store;
     }
 
     @Override
@@ -47,11 +53,13 @@ final class SpreadsheetContextCreateMetadataHateosHandler extends SpreadsheetCon
                                                 final Optional<SpreadsheetMetadata> metadata,
                                                 final Map<HttpRequestAttribute<?>, Object> parameters) {
         checkId(id);
-        checkResource(metadata);
+        checkResourceNotEmpty(metadata);
         checkParameters(parameters);
 
-        throw new UnsupportedOperationException();
+        return Optional.of(this.store.save(metadata.get()));
     }
+
+    private final SpreadsheetStore<SpreadsheetId, SpreadsheetMetadata> store;
 
     @Override
     public final Optional<SpreadsheetMetadata> handleCollection(final Range<SpreadsheetId> ids,
