@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.compare.ComparableTesting;
+import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.HasJsonNodeTesting;
@@ -42,6 +43,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>,
         ComparableTesting<SpreadsheetCell>,
         HasJsonNodeTesting<SpreadsheetCell>,
+        HateosResourceTesting<SpreadsheetCell>,
         ToStringTesting<SpreadsheetCell> {
 
 
@@ -454,7 +456,23 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.toJsonNodeRoundTripTwiceAndCheck(this.createObject());
     }
 
-    // toString...............................................................................................
+    // HateosResourceTesting............................................................................................
+
+    @Test
+    public void testHateosLinkIdAbsoluteReference() {
+        this.hateosLinkIdAndCheck(this.createCell("$B$21"), "B21");
+    }
+
+    @Test
+    public void testHateosLinkIdRelativeReference() {
+        this.hateosLinkIdAndCheck(this.createCell("C9"), "C9");
+    }
+
+    private SpreadsheetCell createCell(final String reference) {
+        return SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference(reference), formula("1+2"));
+    }
+
+    // toString.........................................................................................................
 
     @Test
     public void testToStringWithTextStyle() {
@@ -607,5 +625,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Override
     public SpreadsheetCell fromJsonNode(final JsonNode jsonNode) {
         return SpreadsheetCell.fromJsonNode(jsonNode);
+    }
+
+    // HateosResourceTesting............................................................................................
+
+    @Override
+    public SpreadsheetCell createHateosResource() {
+        return this.createCell();
     }
 }

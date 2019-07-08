@@ -21,6 +21,7 @@ import walkingkooka.compare.Comparators;
 import walkingkooka.compare.LowerOrUpper;
 import walkingkooka.compare.Range;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
@@ -203,6 +204,13 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
     @Override
     public boolean isRange() {
         return false;
+    }
+
+    // HasHateosLink....................................................................................................
+
+    @Override
+    public String hateosLinkId() {
+        return this.column.hateosLinkId() + this.row.hateosLinkId();
     }
 
     // SpreadsheetExpressionReferenceVisitor............................................................................
