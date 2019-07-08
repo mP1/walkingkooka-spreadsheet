@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.compare.LowerOrUpper;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.test.HashCodeEqualsDefined;
@@ -42,6 +43,7 @@ abstract class SpreadsheetColumnOrRowReference<R extends SpreadsheetColumnOrRowR
         Comparable<R>,
         LowerOrUpper<R>,
         HashCodeEqualsDefined,
+        HasHateosLinkId,
         HasJsonNode {
 
     /**
