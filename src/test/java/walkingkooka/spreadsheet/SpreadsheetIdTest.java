@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting;
+import walkingkooka.net.http.server.hateos.HasHateosLinkIdTesting;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ParseStringTesting;
@@ -33,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
         ComparableTesting<SpreadsheetId>,
         HashCodeEqualsDefinedTesting<SpreadsheetId>,
+        HasHateosLinkIdTesting<SpreadsheetId>,
         HasJsonNodeTesting<SpreadsheetId>,
         ParseStringTesting<SpreadsheetId>,
         ToStringTesting<SpreadsheetId> {
@@ -45,6 +47,15 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
         assertEquals(VALUE, id.value(), "value");
         assertEquals(VALUE, id.id(), "id");
     }
+
+    // HasHateosLink....................................................................................................
+
+    @Test
+    public void testHateosLinkId() {
+        this.hateosLinkIdAndCheck(SpreadsheetId.with(0x1f), "1f");
+    }
+
+    // Parse............................................................................................................
 
     @Test
     public void testParseInvalidFails() {
@@ -102,7 +113,14 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
         return SpreadsheetId.class;
     }
 
-    // HasJsonNodeTesting..............................................................................
+    // HasHateosLinkTesting.............................................................................................
+
+    @Override
+    public SpreadsheetId createHasHateosLinkId() {
+        return this.createObject();
+    }
+
+    // HasJsonNodeTesting...............................................................................................
 
     @Override
     public SpreadsheetId createHasJsonNode() {
