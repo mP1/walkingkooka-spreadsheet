@@ -78,8 +78,8 @@ public abstract class SpreadsheetMetadata implements HashCodeEqualsDefined,
     }
 
     @Override
-    public String idForHateosLink() {
-        return this.id().idForHateosLink();
+    public String hateosLinkId() {
+        return this.id().hateosLinkId();
     }
 
     // get..............................................................................................................
