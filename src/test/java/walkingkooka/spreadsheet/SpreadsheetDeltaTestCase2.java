@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.HasJsonNodeTesting;
@@ -39,6 +40,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> extends SpreadsheetDeltaTestCase<D>
         implements HashCodeEqualsDefinedTesting<D>,
         HasJsonNodeTesting<D>,
+        HateosResourceTesting<D>,
         ToStringTesting<D> {
 
     SpreadsheetDeltaTestCase2() {
@@ -113,7 +115,14 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
         this.checkWindow(delta);
     }
 
-    // equals....................................................................................................
+    // HasHateosLink....................................................................................................
+
+    @Test
+    public final void testHateosLinkId() {
+        this.hateosLinkIdAndCheck("4d2");
+    }
+
+    // equals...........................................................................................................
 
     @Test
     public final void testDifferentId() {
@@ -154,17 +163,24 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
         return JavaVisibility.PACKAGE_PRIVATE;
     }
 
-    // HashCodeDefinedTesting...............................................................................................
+    // HashCodeDefinedTesting............................................................................................
 
     @Override
     public final D createObject() {
         return this.createSpreadsheetDelta();
     }
 
-    // HasJsonTesting...............................................................................................
+    // HasJsonTesting...................................................................................................
 
     @Override
     public final D createHasJsonNode() {
+        return this.createSpreadsheetDelta();
+    }
+
+    // HateosResource...................................................................................................
+
+    @Override
+    public final D createHateosResource() {
         return this.createSpreadsheetDelta();
     }
 
