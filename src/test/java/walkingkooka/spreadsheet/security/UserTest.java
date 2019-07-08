@@ -19,27 +19,27 @@ package walkingkooka.spreadsheet.security;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class UserTest implements IdentityTesting<User, UserId>,
-        HasJsonNodeTesting<User> {
+public final class UserTest extends IdentityTestCase<User, UserId> {
 
     private final static EmailAddress EMAIL = EmailAddress.parse("user@example.com");
 
     @Test
     public void testWithNullEmailFails() {
         assertThrows(NullPointerException.class, () -> {
-            User.with(UserId.with(1), null);
+            User.with(this.createId(), null);
         });
     }
 
     @Test
     public void testWith() {
-        final UserId id = UserId.with(1);
+        final Optional<UserId> id = this.createId();
         final User user = User.with(id, EMAIL);
         assertEquals(id, user.value(), "id");
         assertEquals(EMAIL, user.email(), "email");
@@ -48,44 +48,35 @@ public final class UserTest implements IdentityTesting<User, UserId>,
     // HasJsonNodeTesting.................................................................................................
 
     @Test
-    public void testFromJsonNodeBooleanFails() {
-        this.fromJsonNodeFails(JsonNode.booleanNode(true));
+    public void testFromJsonNodeWithoutId() {
+        this.fromJsonNodeAndCheck(this.jsonNodeWithoutId(),
+                User.with(Optional.empty(), EMAIL));
     }
 
     @Test
-    public void testFromJsonNodeNullFails() {
-        this.fromJsonNodeFails(JsonNode.nullNode());
-    }
-
-    @Test
-    public void testFromJsonNodeNumberFails() {
-        this.fromJsonNodeFails(JsonNode.number(12));
-    }
-
-    @Test
-    public void testFromJsonNodeArrayFails() {
-        this.fromJsonNodeFails(JsonNode.array());
-    }
-
-    @Test
-    public void testFromJsonNodeObjectFails() {
-        this.fromJsonNodeFails(JsonNode.object());
-    }
-
-    @Test
-    public void testFromJsonNode() {
-        this.fromJsonNodeAndCheck(this.jsonNode(),
+    public void testFromJsonNodeWithId() {
+        this.fromJsonNodeAndCheck(this.jsonNodeWithId(),
                 User.with(this.createId(), EMAIL));
     }
 
     @Test
-    public void testToJsonNode() {
-        this.toJsonNodeAndCheck(this.createObject(), this.jsonNode());
+    public void testToJsonNodeWithoutId() {
+        this.toJsonNodeAndCheck(User.with(Optional.empty(), EMAIL), this.jsonNodeWithoutId());
     }
 
-    private JsonNode jsonNode() {
+    @Test
+    public void testToJsonNodeWithId() {
+        this.toJsonNodeAndCheck(this.createObject(), this.jsonNodeWithId());
+    }
+
+    private JsonNode jsonNodeWithoutId() {
         return JsonNode.object()
-                .set(User.ID_PROPERTY, createId().toJsonNode())
+                .set(User.EMAIL_PROPERTY, EMAIL.toJsonNode());
+    }
+
+    private JsonNode jsonNodeWithId() {
+        return JsonNode.object()
+                .set(User.ID_PROPERTY, createId().get().toJsonNode())
                 .set(User.EMAIL_PROPERTY, EMAIL.toJsonNode());
     }
 
@@ -98,17 +89,17 @@ public final class UserTest implements IdentityTesting<User, UserId>,
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(User.with(UserId.with(1), EMAIL), EMAIL.toString());
+        this.toStringAndCheck(User.with(this.createId(), EMAIL), "1 " + EMAIL);
     }
 
     @Override
-    public User createIdentity(final UserId id) {
+    public User createIdentity(final Optional<UserId> id) {
         return User.with(id, EMAIL);
     }
 
     @Override
-    public UserId createId() {
-        return UserId.with(1);
+    public Optional<UserId> createId() {
+        return Optional.of(UserId.with(1));
     }
 
     @Override
@@ -116,7 +107,7 @@ public final class UserTest implements IdentityTesting<User, UserId>,
         return User.class;
     }
 
-    // HasJsonNodeTesting..................................................................
+    // HasJsonNodeTesting...............................................................................................
 
     @Override
     public final User fromJsonNode(final JsonNode from) {

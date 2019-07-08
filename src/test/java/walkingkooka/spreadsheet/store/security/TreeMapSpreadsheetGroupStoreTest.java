@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.security.GroupName;
 import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.test.ToStringTesting;
 
+import java.util.Optional;
 import java.util.TreeMap;
 
 public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupStoreTesting<TreeMapSpreadsheetGroupStore>,
@@ -32,42 +33,43 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
 
     @Test
     public void testLoad1() {
-        this.loadAndCheck(this.createNotEmptyStore(), this.group2().id(), this.group2());
+        this.loadAndCheck(this.createNotEmptyStore(), this.groupId2().get(), this.group2());
     }
 
     @Test
     public void testLoad2() {
-        this.loadAndCheck(this.createNotEmptyStore(), this.group3().id(), this.group3());
+        this.loadAndCheck(this.createNotEmptyStore(), this.groupId3().get(), this.group3());
     }
 
     @Test
     public void testSave() {
         final TreeMapSpreadsheetGroupStore store = this.createNotEmptyStore();
 
-        final Group saved = Group.with(GroupId.with(2), GroupName.with("saved"));
+        final Group saved = Group.with(this.groupId2(), GroupName.with("saved"));
         store.save(saved);
 
-        this.loadAndCheck(store, saved.id(), saved);
+        this.loadAndCheck(store, saved.id().get(), saved);
     }
 
     @Test
     public void testSaveReplaces() {
         final TreeMapSpreadsheetGroupStore store = this.createNotEmptyStore();
 
-        final Group replace = Group.with(this.group3().id(), GroupName.with("replaced"));
+        final Optional<GroupId> id = this.group3().id();
+        final Group replace = Group.with(id, GroupName.with("replaced"));
         store.save(replace);
 
-        this.loadAndCheck(store, replace.id(), replace);
+        this.loadAndCheck(store, id.get(), replace);
     }
 
     @Test
     public void testDelete() {
         final TreeMapSpreadsheetGroupStore store = this.createNotEmptyStore();
 
-        final Group group1 = this.group1();
-        store.delete(group1.id());
+        final GroupId id = this.groupId1().get();
+        store.delete(id);
 
-        this.loadFailCheck(store, group1.id());
+        this.loadFailCheck(store, id);
     }
 
     @Test
@@ -79,7 +81,7 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
     public void testCountAfterSave() {
         final TreeMapSpreadsheetGroupStore store = this.createNotEmptyStore();
 
-        store.save(Group.with(GroupId.with(999), GroupName.with("saved")));
+        store.save(Group.with(Optional.of(GroupId.with(999)), GroupName.with("saved")));
 
         this.countAndCheck(store, 3 + 1);
     }
@@ -96,7 +98,10 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
         store.save(b);
         store.save(c);
 
-        this.idsAndCheck(store, 0, 3, a.id(), b.id(), c.id());
+        this.idsAndCheck(store,
+                0,
+                3,
+                a.id().get(), b.id().get(), c.id().get());
     }
 
     @Test
@@ -113,7 +118,10 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
         store.save(c);
         store.save(d);
 
-        this.idsAndCheck(store, 1, 2, b.id(), c.id());
+        this.idsAndCheck(store,
+                1,
+                2,
+                b.id().get(), c.id().get());
     }
 
     @Test
@@ -128,7 +136,10 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
         store.save(b);
         store.save(c);
 
-        this.valuesAndCheck(store, a.id(), 3, a, b, c);
+        this.valuesAndCheck(store,
+                a.id().get(),
+                3,
+                a, b, c);
     }
 
     @Test
@@ -145,7 +156,10 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
         store.save(c);
         store.save(d);
 
-        this.valuesAndCheck(store, b.id(), 2, b, c);
+        this.valuesAndCheck(store,
+                b.id().get(),
+                2,
+                b, c);
     }
 
     @Test
@@ -158,9 +172,12 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
         final UserId user1 = this.user1();
         final UserId user2 = this.user2();
 
-        store.addUser(user1, group1.id());
-        store.addUser(user2, group1.id());
-        store.addUser(user2, group2.id());
+        final GroupId groupId1 = group1.id().get();
+        final GroupId groupId2 = group2.id().get();
+
+        store.addUser(user1, groupId1);
+        store.addUser(user2, groupId1);
+        store.addUser(user2, groupId2);
 
         this.loadUserGroupsAndCheck(store, user1, Sets.of(group1));
         this.loadUserGroupsAndCheck(store, user2, Sets.of(group1, group2));
@@ -176,12 +193,15 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
         final UserId user1 = this.user1();
         final UserId user2 = this.user2();
 
-        store.addUser(user1, group1.id());
-        store.addUser(user2, group1.id());
-        store.addUser(user2, group2.id());
+        final GroupId groupId1 = group1.id().get();
+        final GroupId groupId2 = group2.id().get();
 
-        store.removeUser(user1, group1.id());
-        store.removeUser(user2, group1.id());
+        store.addUser(user1, groupId1);
+        store.addUser(user2, groupId1);
+        store.addUser(user2, groupId2);
+
+        store.removeUser(user1, groupId1);
+        store.removeUser(user2, groupId1);
 
         this.loadUserGroupsAndCheck(store, user1, Sets.empty());
         this.loadUserGroupsAndCheck(store, user2, Sets.of(group2));
@@ -190,25 +210,41 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
     @Test
     public void testToString() {
         final TreeMapSpreadsheetGroupStore store = this.createNotEmptyStore();
-        this.toStringAndCheck(store, "[group1, group2, group33]");
+        this.toStringAndCheck(store, "[1 group1, 2 group2, 33 group33]");
     }
 
     // helpers........................................................................................
 
     private Group group1() {
-        return Group.with(GroupId.with(1), GroupName.with("group1"));
+        return Group.with(this.groupId1(), GroupName.with("group1"));
     }
 
     private Group group2() {
-        return Group.with(GroupId.with(2), GroupName.with("group2"));
+        return Group.with(this.groupId2(), GroupName.with("group2"));
     }
 
     private Group group3() {
-        return Group.with(GroupId.with(33), GroupName.with("group33"));
+        return Group.with(this.groupId3(), GroupName.with("group33"));
     }
 
     private Group group4() {
-        return Group.with(GroupId.with(444), GroupName.with("group444"));
+        return Group.with(this.groupId4(), GroupName.with("group444"));
+    }
+
+    private Optional<GroupId> groupId1() {
+        return Optional.of(GroupId.with(1));
+    }
+
+    private Optional<GroupId> groupId2() {
+        return Optional.of(GroupId.with(2));
+    }
+
+    private Optional<GroupId> groupId3() {
+        return Optional.of(GroupId.with(33));
+    }
+
+    private Optional<GroupId> groupId4() {
+        return Optional.of(GroupId.with(444));
     }
 
     private UserId user1() {
@@ -229,9 +265,9 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
     private TreeMapSpreadsheetGroupStore createNotEmptyStore() {
         final TreeMapSpreadsheetGroupStore store = this.createStore();
 
-        store.groupIdToGroup.put(this.group1().id(), this.group1());
-        store.groupIdToGroup.put(this.group2().id(), this.group2());
-        store.groupIdToGroup.put(this.group3().id(), this.group3());
+        store.store.save(this.group1());
+        store.store.save(this.group2());
+        store.store.save(this.group3());
 
         return store;
     }

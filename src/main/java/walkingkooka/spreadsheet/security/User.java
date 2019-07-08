@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.security;
 
+import walkingkooka.ToStringBuilder;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.tree.json.HasJsonNode;
@@ -24,18 +26,19 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonNodeName;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * A user in the system.
  */
-public final class User extends Identity<UserId>
-        implements HasJsonNode, HateosResource<UserId> {
+public final class User extends Identity<UserId> {
 
     /**
      * Factory that creates a new {@link User}.
      */
-    public static User with(final UserId id, final EmailAddress email) {
+    public static User with(final Optional<UserId> id, final EmailAddress email) {
         checkId(id);
         Objects.requireNonNull(email, "email");
 
@@ -45,7 +48,7 @@ public final class User extends Identity<UserId>
     /**
      * Private ctor use factory.
      */
-    private User(final UserId id, final EmailAddress email) {
+    private User(final Optional<UserId> id, final EmailAddress email) {
         super(id);
         this.email = email;
     }
@@ -56,7 +59,14 @@ public final class User extends Identity<UserId>
 
     private final EmailAddress email;
 
-    // HasJsonNode..........................................................................................
+    // HateosResource...................................................................................................
+
+    @Override
+    public String idForHateosLink() {
+        return this.email.value().replace("-", "\\-");
+    }
+
+    // HasJsonNode......................................................................................................
 
     /**
      * Factory that creates a {@link User} from a {@link JsonNode}.
@@ -85,27 +95,25 @@ public final class User extends Identity<UserId>
             throw new IllegalArgumentException(cause.getMessage(), cause);
         }
 
-        if (null == id) {
-            HasJsonNode.requiredPropertyMissing(ID_PROPERTY, node);
-        }
         if (null == email) {
             HasJsonNode.requiredPropertyMissing(EMAIL_PROPERTY, node);
         }
 
-        return new User(id, email);
+        return new User(Optional.ofNullable(id), email);
     }
 
     @Override
     public JsonNode toJsonNode() {
+        final List<JsonNode> properties = Lists.array();
+
+        this.id.ifPresent(id -> properties.add(id.toJsonNode().setName(ID_PROPERTY)));
+        properties.add(this.email.toJsonNode().setName(EMAIL_PROPERTY));
+
         return JsonNode.object()
-                .set(ID_PROPERTY, this.id.toJsonNode())
-                .set(EMAIL_PROPERTY, this.email.toJsonNode());
+                .setChildren(properties);
     }
 
-    private final static String ID_PROPERTY_STRING = "id";
     private final static String EMAIL_PROPERTY_STRING = "email";
-
-    final static JsonNodeName ID_PROPERTY = JsonNodeName.with(ID_PROPERTY_STRING);
     final static JsonNodeName EMAIL_PROPERTY = JsonNodeName.with(EMAIL_PROPERTY_STRING);
 
     static {
@@ -114,7 +122,7 @@ public final class User extends Identity<UserId>
                 User.class);
     }
 
-    // Identity.................................................................................................
+    // Identity.........................................................................................................
 
     @Override
     boolean canBeEqual(final Object other) {
@@ -128,6 +136,9 @@ public final class User extends Identity<UserId>
 
     @Override
     public String toString() {
-        return this.email.toString();
+        return ToStringBuilder.empty()
+                .value(this.id)
+                .value(this.email)
+                .build();
     }
 }
