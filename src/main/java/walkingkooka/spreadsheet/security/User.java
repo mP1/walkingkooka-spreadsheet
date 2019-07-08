@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.security;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
@@ -51,6 +50,17 @@ public final class User extends Identity<UserId> {
     private User(final Optional<UserId> id, final EmailAddress email) {
         super(id);
         this.email = email;
+    }
+
+    /**
+     * Would be setter returns a {@link User} with the given id, creating a new instance if necessary.
+     */
+    public User setId(final Optional<UserId> id) {
+        checkId(id);
+
+        return this.id.equals(id) ?
+                this :
+                new User(id, this.email);
     }
 
     public EmailAddress email() {

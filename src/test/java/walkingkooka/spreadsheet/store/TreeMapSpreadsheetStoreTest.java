@@ -71,10 +71,10 @@ public final class TreeMapSpreadsheetStoreTest implements SpreadsheetStoreTestin
         final EmailAddress email = EmailAddress.parse("saved@example.com");
 
         final User saved = store.save(User.with(Optional.empty(), email));
-        assertEquals(User.with(Optional.of(UserId.with(445)), email), saved, "id");
+        assertEquals(User.with(Optional.of(UserId.with(334)), email), saved, "id");
 
         this.loadAndCheck(store, saved.id().get(), saved);
-        this.countAndCheck(store, 5);
+        this.countAndCheck(store, 4);
     }
 
     @Test
@@ -84,16 +84,16 @@ public final class TreeMapSpreadsheetStoreTest implements SpreadsheetStoreTestin
         final EmailAddress email = EmailAddress.parse("saved1@example.com");
 
         final User saved1 = store.save(User.with(Optional.empty(), email));
-        assertEquals(User.with(Optional.of(UserId.with(445)), email), saved1, "id");
+        assertEquals(User.with(Optional.of(UserId.with(334)), email), saved1, "id");
 
         final EmailAddress email2 = EmailAddress.parse("saved2@example.com");
 
         final User saved2 = store.save(User.with(Optional.empty(), email2));
-        assertEquals(User.with(Optional.of(UserId.with(446)), email2), saved2, "id");
+        assertEquals(User.with(Optional.of(UserId.with(335)), email2), saved2, "id");
 
         this.loadAndCheck(store, saved2.id().get(), saved2);
 
-        this.countAndCheck(store, 6);
+        this.countAndCheck(store, 5);
     }
 
     @Test
