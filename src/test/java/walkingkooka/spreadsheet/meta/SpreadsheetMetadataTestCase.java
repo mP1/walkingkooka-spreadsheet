@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
@@ -36,6 +37,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata> implements ClassTesting2<SpreadsheetMetadata>,
         HashCodeEqualsDefinedTesting<SpreadsheetMetadata>,
         HasJsonNodeTesting<SpreadsheetMetadata>,
+        HateosResourceTesting<SpreadsheetMetadata>,
         ToStringTesting<SpreadsheetMetadata> {
 
     SpreadsheetMetadataTestCase() {
@@ -169,6 +171,13 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Override
     public final SpreadsheetMetadata createHasJsonNode() {
+        return this.createObject();
+    }
+
+    // HateosResourceTesting.............................................................................................
+
+    @Override
+    public final SpreadsheetMetadata createHateosResource() {
         return this.createObject();
     }
 }
