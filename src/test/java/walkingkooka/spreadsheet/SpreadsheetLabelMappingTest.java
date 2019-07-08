@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
@@ -35,6 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetLabelMappingTest implements ClassTesting2<SpreadsheetLabelMapping>,
         HashCodeEqualsDefinedTesting<SpreadsheetLabelMapping>,
         HasJsonNodeTesting<SpreadsheetLabelMapping>,
+        HateosResourceTesting<SpreadsheetLabelMapping>,
         ToStringTesting<SpreadsheetLabelMapping> {
 
     private final static SpreadsheetLabelName LABEL = SpreadsheetExpressionReference.labelName("label");
@@ -113,14 +115,23 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         this.checkReference(different, differentReference);
     }
 
-    // HasJsonNode................................................................................
+    // HasJsonNode......................................................................................................
 
     @Test
     public void testFromJsonNodeEmptyObjectFails() {
         this.fromJsonNodeFails(JsonNode.object());
     }
 
-    // equals................................................................................
+    // HateosResource....................................................................................................
+
+    @Test
+    public void testHateosLinkId() {
+        final String text = "ABC12345678";
+        this.hateosLinkIdAndCheck(SpreadsheetLabelMapping.with(SpreadsheetLabelName.with(text), SpreadsheetExpressionReference.parseCellReference("A1")),
+                text);
+    }
+
+    // equals...........................................................................................................
 
     @Test
     public void testEqualsDifferentLabel() {
@@ -180,6 +191,13 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
 
     @Override
     public SpreadsheetLabelMapping createHasJsonNode() {
+        return this.createObject();
+    }
+
+    // HateosResourceTesting............................................................................................
+
+    @Override
+    public SpreadsheetLabelMapping createHateosResource() {
         return this.createObject();
     }
 }
