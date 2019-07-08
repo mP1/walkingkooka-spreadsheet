@@ -103,7 +103,7 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
     }
 
     @Override
-    public String idForHateosLink() {
+    public String hateosLinkId() {
         return this.id().toString();
     }
 

@@ -71,7 +71,7 @@ public final class Group extends Identity<GroupId> {
     // HateosResource...................................................................................................
 
     @Override
-    public String idForHateosLink() {
+    public String hateosLinkId() {
         return this.name.value().replace("-", "\\-");
     }
 
