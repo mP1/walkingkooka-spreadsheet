@@ -18,7 +18,9 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
+import walkingkooka.HasId;
 import walkingkooka.Value;
+import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.CharSequences;
@@ -31,7 +33,8 @@ import walkingkooka.tree.json.JsonNode;
 public final class SpreadsheetId implements Comparable<SpreadsheetId>,
         HashCodeEqualsDefined,
         HasJsonNode,
-        HateosResource<Long>,
+        HasId<Long>,
+        HasHateosLinkId,
         Value<Long> {
 
     /**
