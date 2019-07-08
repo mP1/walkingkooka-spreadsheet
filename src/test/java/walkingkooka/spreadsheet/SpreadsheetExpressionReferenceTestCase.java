@@ -18,12 +18,12 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.net.http.server.hateos.HasHateosLinkIdTesting;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.IsMethodTesting;
 import walkingkooka.test.ToStringTesting;
-import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
 
@@ -32,6 +32,7 @@ import java.util.function.Predicate;
 public abstract class SpreadsheetExpressionReferenceTestCase<R extends SpreadsheetExpressionReference> implements ClassTesting2<R>,
         HashCodeEqualsDefinedTesting<R>,
         HasJsonNodeTesting<R>,
+        HasHateosLinkIdTesting<R>,
         IsMethodTesting<R>,
         ToStringTesting<R> {
 
@@ -51,6 +52,13 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
 
     @Override
     public final R createObject() {
+        return this.createReference();
+    }
+
+    // HasHateosLinkTesting..............................................................................................
+
+    @Override
+    public final R createHasHateosLinkId() {
         return this.createReference();
     }
 

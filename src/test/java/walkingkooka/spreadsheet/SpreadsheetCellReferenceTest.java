@@ -446,7 +446,19 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
                 SpreadsheetCellReference.parseCellReferenceRange("$B2:D$4"));
     }
 
-    // HasJsonNode..................................................................................................
+    // HasJsonNode......................................................................................................
+
+    @Test
+    public void testHateosLinkIdAbsoluteReference() {
+        this.hateosLinkIdAndCheck(SpreadsheetExpressionReference.parseCellReference("$F$9"), "F9");
+    }
+
+    @Test
+    public void testHateosLinkIdRelativeReference() {
+        this.hateosLinkIdAndCheck(SpreadsheetExpressionReference.parseCellReference("B5"), "B5");
+    }
+
+    // HasJsonNode......................................................................................................
 
     @Test
     public void testFromJsonNodeBooleanFails() {
