@@ -25,6 +25,8 @@ import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.type.JavaVisibility;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface IdentityTesting<I extends Identity<ID> & HasJsonNode, ID extends IdentityId>
@@ -54,9 +56,9 @@ public interface IdentityTesting<I extends Identity<ID> & HasJsonNode, ID extend
         return this.createObject();
     }
 
-    I createIdentity(final ID id);
+    I createIdentity(final Optional<ID> id);
 
-    ID createId();
+    Optional<ID> createId();
 
     @Override
     default JavaVisibility typeVisibility() {
