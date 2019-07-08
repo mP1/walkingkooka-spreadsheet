@@ -24,6 +24,7 @@ import walkingkooka.tree.json.JsonNode;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class UserTest extends IdentityTestCase<User, UserId> {
@@ -45,6 +46,22 @@ public final class UserTest extends IdentityTestCase<User, UserId> {
         assertEquals(EMAIL, user.email(), "email");
     }
 
+    @Test
+    public void testSetIdSame() {
+        final User user = this.createIdentity();
+        assertSame(user, user.setId(this.createId()));
+    }
+
+    @Test
+    public void testSetIdDifferent() {
+        final User user = this.createIdentity();
+        final Optional<UserId> id = Optional.of(UserId.with(999));
+
+        final User different = user.setId(id);
+        assertEquals(id, different.id(), "id");
+        assertEquals(EMAIL, different.email(), "email");
+    }
+    
     // HasJsonNodeTesting.................................................................................................
 
     @Test
@@ -61,7 +78,7 @@ public final class UserTest extends IdentityTestCase<User, UserId> {
 
     @Test
     public void testToJsonNodeWithoutId() {
-        this.toJsonNodeAndCheck(User.with(Optional.empty(), EMAIL), this.jsonNodeWithoutId());
+        this.toJsonNodeAndCheck(this.createIdentity().setId(Optional.empty()), this.jsonNodeWithoutId());
     }
 
     @Test
