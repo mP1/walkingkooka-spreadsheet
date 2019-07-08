@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.spreadsheet.store.SpreadsheetStoreTesting;
 import walkingkooka.test.TypeNameTesting;
 
+import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -48,7 +49,7 @@ public interface SpreadsheetGroupStoreTesting<S extends SpreadsheetGroupStore> e
 
     @Override
     default Group value() {
-        return Group.with(this.id(), GroupName.with("Group1"));
+        return Group.with(Optional.of(this.id()), GroupName.with("Group1"));
     }
 
     // TypeNameTesting..................................................................

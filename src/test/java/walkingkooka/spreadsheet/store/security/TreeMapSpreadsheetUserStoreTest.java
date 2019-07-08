@@ -31,42 +31,44 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
 
     @Test
     public void testLoad1() {
-        this.loadAndCheck(this.createNotEmptyStore(), this.user2().id(), this.user2());
+        this.loadAndCheck(this.createNotEmptyStore(), this.user2().id().get(), this.user2());
     }
 
     @Test
     public void testLoad2() {
-        this.loadAndCheck(this.createNotEmptyStore(), this.user3().id(), this.user3());
+        this.loadAndCheck(this.createNotEmptyStore(), this.user3().id().get(), this.user3());
     }
 
     @Test
     public void testSave() {
         final TreeMapSpreadsheetUserStore store = this.createNotEmptyStore();
 
-        final User saved = User.with(UserId.with(2), EmailAddress.parse("saved@example.com"));
+        final Optional<UserId> id = Optional.of(UserId.with(2));
+        final User saved = User.with(id, EmailAddress.parse("saved@example.com"));
         store.save(saved);
 
-        this.loadAndCheck(store, saved.id(), saved);
+        this.loadAndCheck(store, id.get(), saved);
     }
 
     @Test
     public void testSaveReplaces() {
         final TreeMapSpreadsheetUserStore store = this.createNotEmptyStore();
 
-        final User replace = User.with(this.user3().id(), EmailAddress.parse("replaced@example.com"));
+        final Optional<UserId> id = this.userId3();
+        final User replace = User.with(id, EmailAddress.parse("replaced@example.com"));
         store.save(replace);
 
-        this.loadAndCheck(store, replace.id(), replace);
+        this.loadAndCheck(store, id.get(), replace);
     }
 
     @Test
     public void testDelete() {
         final TreeMapSpreadsheetUserStore store = this.createNotEmptyStore();
 
-        final User user1 = this.user1();
-        store.delete(user1.id());
+        final UserId id = this.userId1().get();
+        store.delete(id);
 
-        this.loadFailCheck(store, user1.id());
+        this.loadFailCheck(store, id);
     }
 
     @Test
@@ -78,7 +80,7 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
     public void testCountAfterSave() {
         final TreeMapSpreadsheetUserStore store = this.createNotEmptyStore();
 
-        store.save(User.with(UserId.with(999), EmailAddress.parse("saved@example.com")));
+        store.save(User.with(Optional.of(UserId.with(999)), EmailAddress.parse("saved@example.com")));
 
         this.countAndCheck(store, 3 + 1);
     }
@@ -95,7 +97,10 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
         store.save(b);
         store.save(c);
 
-        this.idsAndCheck(store, 0, 3, a.id(), b.id(), c.id());
+        this.idsAndCheck(store,
+                0,
+                3,
+                a.id().get(), b.id().get(), c.id().get());
     }
 
     @Test
@@ -112,7 +117,10 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
         store.save(c);
         store.save(d);
 
-        this.idsAndCheck(store, 1, 2, b.id(), c.id());
+        this.idsAndCheck(store,
+                1,
+                2,
+                b.id().get(), c.id().get());
     }
 
     @Test
@@ -127,7 +135,10 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
         store.save(b);
         store.save(c);
 
-        this.valuesAndCheck(store, a.id(), 3, a, b, c);
+        this.valuesAndCheck(store,
+                a.id().get(),
+                3,
+                a, b, c);
     }
 
     @Test
@@ -144,7 +155,10 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
         store.save(c);
         store.save(d);
 
-        this.valuesAndCheck(store, b.id(), 2, b, c);
+        this.valuesAndCheck(store,
+                b.id().get(),
+                2,
+                b, c);
     }
 
     @Test
@@ -157,25 +171,41 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
     @Test
     public void testToString() {
         final TreeMapSpreadsheetUserStore store = createNotEmptyStore();
-        this.toStringAndCheck(store, store.userIdToUser.toString());
+        this.toStringAndCheck(store, store.store.toString());
     }
 
     // helpers........................................................................................
 
     private User user1() {
-        return User.with(UserId.with(1), EmailAddress.parse("user1@example.com"));
+        return User.with(this.userId1(), EmailAddress.parse("user1@example.com"));
     }
 
     private User user2() {
-        return User.with(UserId.with(2), EmailAddress.parse("user2@example.com"));
+        return User.with(this.userId2(), EmailAddress.parse("user2@example.com"));
     }
 
     private User user3() {
-        return User.with(UserId.with(333), EmailAddress.parse("user333@example.com"));
+        return User.with(this.userId3(), EmailAddress.parse("user3@example.com"));
     }
 
     private User user4() {
-        return User.with(UserId.with(444), EmailAddress.parse("user444@example.com"));
+        return User.with(this.userId4(), EmailAddress.parse("user4@example.com"));
+    }
+
+    private Optional<UserId> userId1() {
+        return Optional.of(UserId.with(1));
+    }
+
+    private Optional<UserId> userId2() {
+        return Optional.of(UserId.with(2));
+    }
+
+    private Optional<UserId> userId3() {
+        return Optional.of(UserId.with(33));
+    }
+
+    private Optional<UserId> userId4() {
+        return Optional.of(UserId.with(444));
     }
 
     // SpreadsheetUserStoreTesting............................................................................
@@ -188,9 +218,9 @@ public final class TreeMapSpreadsheetUserStoreTest implements SpreadsheetUserSto
     private TreeMapSpreadsheetUserStore createNotEmptyStore() {
         final TreeMapSpreadsheetUserStore store = this.createStore();
 
-        store.userIdToUser.put(this.user1().id(), this.user1());
-        store.userIdToUser.put(this.user2().id(), this.user2());
-        store.userIdToUser.put(this.user3().id(), this.user3());
+        store.store.save(this.user1());
+        store.store.save(this.user2());
+        store.store.save(this.user3());
 
         return store;
     }

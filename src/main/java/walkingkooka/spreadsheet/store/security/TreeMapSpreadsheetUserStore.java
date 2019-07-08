@@ -24,6 +24,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.spreadsheet.store.SpreadsheetStore;
+import walkingkooka.spreadsheet.store.SpreadsheetStores;
 import walkingkooka.spreadsheet.store.Watchers;
 
 import java.util.List;
@@ -31,11 +32,14 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
- * A {@link SpreadsheetUserStore} backed by a {@link java.util.TreeMap}.
+ * A {@link SpreadsheetUserStore} backed by a {@link SpreadsheetStores#treeMap(BiFunction)}.
  */
 final class TreeMapSpreadsheetUserStore implements SpreadsheetUserStore {
 
@@ -45,92 +49,68 @@ final class TreeMapSpreadsheetUserStore implements SpreadsheetUserStore {
 
     private TreeMapSpreadsheetUserStore() {
         super();
+
+        this.store = SpreadsheetStores.treeMap(TreeMapSpreadsheetUserStore::createUser);
+    }
+
+    private static User createUser(final Long value, final User user) {
+        return User.with(Optional.of(UserId.with(value)), user.email());
     }
 
     @Override
     public Optional<User> load(final UserId id) {
-        Objects.requireNonNull(id, "id");
-
-        return Optional.ofNullable(this.userIdToUser.get(id));
+        return this.store.load(id);
     }
 
     @Override
     public User save(final User user) {
-        Objects.requireNonNull(user, "user");
-
-        if (false == user.equals(this.userIdToUser.put(user.id(), user))) {
-            this.saveWatchers.accept(user);
-        }
-
-        return user;
+        return this.store.save(user);
     }
 
     @Override
     public Runnable addSaveWatcher(final Consumer<User> saved) {
-        return this.saveWatchers.addWatcher(saved);
+        return this.store.addSaveWatcher(saved);
     }
-
-    private final Watchers<User> saveWatchers = Watchers.create();
 
     @Override
     public void delete(final UserId id) {
-        Objects.requireNonNull(id, "id");
-
-        if (null != this.userIdToUser.remove(id)) {
-            this.deleteWatchers.accept(id);
-        }
+        this.store.delete(id);
     }
 
     @Override
     public Runnable addDeleteWatcher(final Consumer<UserId> deleted) {
-        return this.deleteWatchers.addWatcher(deleted);
+        return this.store.addDeleteWatcher(deleted);
     }
-
-    private final Watchers<UserId> deleteWatchers = Watchers.create();
 
     @Override
     public int count() {
-        return this.userIdToUser.size();
+        return this.store.count();
     }
 
     @Override
     public Set<UserId> ids(final int from,
                            final int count) {
-        SpreadsheetStore.checkFromAndTo(from, count);
-
-        return this.userIdToUser.keySet()
-                .stream()
-                .skip(from)
-                .limit(count)
-                .collect(Collectors.toCollection(Sets::ordered));
+        return this.store.ids(from, count);
     }
 
     @Override
     public List<User> values(final UserId from,
                              final int count) {
-        SpreadsheetStore.checkFromAndToIds(from, count);
-
-        return this.userIdToUser.entrySet()
-                .stream()
-                .filter(e -> e.getKey().compareTo(from) >= 0)
-                .map(e -> e.getValue())
-                .limit(count)
-                .collect(Collectors.toCollection(Lists::array));
+        return this.store.values(from, count);
     }
 
     @Override
-    public Optional<User> loadWithEmail(EmailAddress email) {
-        return this.userIdToUser.values()
+    public Optional<User> loadWithEmail(final EmailAddress email) {
+        return this.store.values(UserId.with(0), Integer.MAX_VALUE)
                 .stream()
                 .filter(u -> email.equals(u.email()))
                 .findFirst();
     }
 
-    // VisibleForTesting
-    final Map<UserId, User> userIdToUser = Maps.sorted();
+    final SpreadsheetStore<UserId, User> store;
 
     @Override
     public String toString() {
-        return this.userIdToUser.toString();
+        return this.store.toString();
     }
 }

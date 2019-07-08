@@ -19,66 +19,73 @@ package walkingkooka.spreadsheet.security;
 
 import walkingkooka.Cast;
 import walkingkooka.Value;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.test.HashCodeEqualsDefined;
+import walkingkooka.tree.json.HasJsonNode;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeName;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Base class for all security related identifies
  */
-public abstract class Identity<I extends IdentityId> implements Value<I>,
+public abstract class Identity<I extends IdentityId> implements Value<Optional<I>>,
         HashCodeEqualsDefined,
-        HateosResource<I> {
+        HasJsonNode,
+        HateosResource<Optional<I>> {
 
     /**
      * Factory that creates a new {@link Group}.
      */
-    public static Group group(final GroupId id, final GroupName name) {
+    public static Group group(final Optional<GroupId> id, final GroupName name) {
         return Group.with(id, name);
     }
 
     /**
      * Factory that creates a new {@link User}.
      */
-    public static User user(final UserId id, final EmailAddress email) {
+    public static User user(final Optional<UserId> id, final EmailAddress email) {
         return User.with(id, email);
     }
 
-    static void checkId(final IdentityId id) {
+    static void checkId(final Optional<?> id) {
         Objects.requireNonNull(id, "id");
     }
 
     /**
      * Package private to limit sub classing.
      */
-    Identity(final I id) {
+    Identity(final Optional<I> id) {
         super();
         this.id = id;
     }
 
-    // HateosResource ....................................................................................
+    // HateosResource ..................................................................................................
 
-    public final I id() {
+    public final Optional<I> id() {
         return this.id;
     }
 
-    @Override
-    public String idForHateosLink() {
-        return this.id().toString();
-    }
-
-    // Identity...................................................
+    // Identity........................................................................................................
 
     @Override
-    public final I value() {
+    public final Optional<I> value() {
         return this.id;
     }
 
-    final I id;
+    final Optional<I> id;
 
-    // Object.................................................
+    // HasJsonNode......................................................................................................
+
+    final static String ID_PROPERTY_STRING = "id";
+    final static JsonNodeName ID_PROPERTY = JsonNodeName.with(ID_PROPERTY_STRING);
+
+    // Object...........................................................................................................
 
     @Override
     public final int hashCode() {
