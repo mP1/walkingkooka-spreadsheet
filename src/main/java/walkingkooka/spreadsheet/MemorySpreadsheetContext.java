@@ -37,7 +37,6 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
-import walkingkooka.spreadsheet.hateos.SpreadsheetHateosHandlers;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
@@ -248,15 +247,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                 fractioner,
                 defaultSpreadsheetTextFormatter);
 
-        return SpreadsheetHateosHandlers.spreadsheetCellColumnRowRouter(this.baseWithSpreadsheetId(id),
-                this.contentType,
-                SpreadsheetHateosHandlers.copyCells(engine, engineContext),
-                SpreadsheetHateosHandlers.deleteColumns(engine, engineContext),
-                SpreadsheetHateosHandlers.deleteRows(engine, engineContext),
-                SpreadsheetHateosHandlers.insertColumns(engine, engineContext),
-                SpreadsheetHateosHandlers.insertRows(engine, engineContext),
-                SpreadsheetHateosHandlers.loadCell(engine, engineContext),
-                SpreadsheetHateosHandlers.saveCell(engine, engineContext));
+        throw new UnsupportedOperationException();
     }
 
     /**
