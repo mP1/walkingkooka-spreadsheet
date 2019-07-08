@@ -19,27 +19,27 @@ package walkingkooka.spreadsheet.security;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class GroupTest implements IdentityTesting<Group, GroupId>,
-        HasJsonNodeTesting<Group> {
+public final class GroupTest extends IdentityTestCase<Group, GroupId> {
 
     private final long ID_VALUE = 123;
 
     @Test
     public void testWithNullNameFails() {
         assertThrows(NullPointerException.class, () -> {
-            Group.with(GroupId.with(1), null);
+            Group.with(this.createId(), null);
         });
     }
 
     @Test
     public void testWith() {
-        final GroupId id = GroupId.with(1);
+        final Optional<GroupId> id = this.createId();
         final Group group = Group.with(id, name());
         assertEquals(id, group.value(), "id");
         assertEquals(name(), group.name(), "name");
@@ -47,55 +47,46 @@ public final class GroupTest implements IdentityTesting<Group, GroupId>,
 
     @Test
     public void testDifferentName() {
-        this.checkNotEquals(Group.with(GroupId.with(ID_VALUE), GroupName.with("different")));
+        this.checkNotEquals(Group.with(this.createId(), GroupName.with("different")));
     }
 
     @Test
     public void testUser() {
-        this.checkNotEquals(User.with(UserId.with(ID_VALUE), EmailAddress.parse("user@example.com")));
+        this.checkNotEquals(User.with(Optional.of(UserId.with(ID_VALUE)), EmailAddress.parse("user@example.com")));
     }
 
     // HasJsonNodeTesting.................................................................................................
 
     @Test
-    public void testFromJsonNodeBooleanFails() {
-        this.fromJsonNodeFails(JsonNode.booleanNode(true));
+    public void testFromJsonNodeWithoutId() {
+        this.fromJsonNodeAndCheck(this.jsonNodeWithoutId(),
+                Group.with(Optional.empty(), this.name()));
     }
 
     @Test
-    public void testFromJsonNodeNullFails() {
-        this.fromJsonNodeFails(JsonNode.nullNode());
-    }
-
-    @Test
-    public void testFromJsonNodeNumberFails() {
-        this.fromJsonNodeFails(JsonNode.number(12));
-    }
-
-    @Test
-    public void testFromJsonNodeArrayFails() {
-        this.fromJsonNodeFails(JsonNode.array());
-    }
-
-    @Test
-    public void testFromJsonNodeObjectFails() {
-        this.fromJsonNodeFails(JsonNode.object());
-    }
-
-    @Test
-    public void testFromJsonNode() {
-        this.fromJsonNodeAndCheck(this.jsonNode(),
+    public void testFromJsonNodeWithId() {
+        this.fromJsonNodeAndCheck(this.jsonNodeWithId(),
                 Group.with(this.createId(), this.name()));
     }
 
     @Test
-    public void testToJsonNode() {
-        this.toJsonNodeAndCheck(this.createObject(), this.jsonNode());
+    public void testToJsonNodeWithoutId() {
+        this.toJsonNodeAndCheck(Group.with(Optional.empty(), name()), this.jsonNodeWithoutId());
     }
 
-    private JsonNode jsonNode() {
+    @Test
+    public void testToJsonNodeWithId() {
+        this.toJsonNodeAndCheck(this.createObject(), this.jsonNodeWithId());
+    }
+
+    private JsonNode jsonNodeWithoutId() {
         return JsonNode.object()
-                .set(Group.ID_PROPERTY, createId().toJsonNode())
+                .set(Group.NAME_PROPERTY, this.name().toJsonNode());
+    }
+
+    private JsonNode jsonNodeWithId() {
+        return JsonNode.object()
+                .set(Group.ID_PROPERTY, createId().get().toJsonNode())
                 .set(Group.NAME_PROPERTY, this.name().toJsonNode());
     }
 
@@ -106,17 +97,17 @@ public final class GroupTest implements IdentityTesting<Group, GroupId>,
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(Group.with(GroupId.with(ID_VALUE), name()), name().toString());
+        this.toStringAndCheck(Group.with(this.createId(), name()), "1 Group-123");
     }
 
     @Override
-    public Group createIdentity(final GroupId id) {
+    public Group createIdentity(final Optional<GroupId> id) {
         return Group.with(id, name());
     }
 
     @Override
-    public GroupId createId() {
-        return GroupId.with(1);
+    public Optional<GroupId> createId() {
+        return Optional.of(GroupId.with(1));
     }
 
     private GroupName name() {
@@ -128,7 +119,7 @@ public final class GroupTest implements IdentityTesting<Group, GroupId>,
         return Group.class;
     }
 
-    // HasJsonNodeTesting..................................................................
+    // HasJsonNodeTesting...............................................................................................
 
     @Override
     public final Group fromJsonNode(final JsonNode from) {

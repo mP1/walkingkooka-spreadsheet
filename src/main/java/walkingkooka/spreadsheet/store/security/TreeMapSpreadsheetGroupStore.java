@@ -22,8 +22,10 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.security.Group;
 import walkingkooka.spreadsheet.security.GroupId;
+import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.spreadsheet.store.SpreadsheetStore;
+import walkingkooka.spreadsheet.store.SpreadsheetStores;
 import walkingkooka.spreadsheet.store.Watchers;
 
 import java.util.List;
@@ -45,77 +47,54 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
 
     private TreeMapSpreadsheetGroupStore() {
         super();
+        this.store = SpreadsheetStores.treeMap(TreeMapSpreadsheetGroupStore::createGroup);
+    }
+
+    private static Group createGroup(final Long value, final Group group) {
+        return Group.with(Optional.of(GroupId.with(value)), group.name());
     }
 
     @Override
     public Optional<Group> load(final GroupId id) {
-        Objects.requireNonNull(id, "id");
-
-        return Optional.ofNullable(this.groupIdToGroup.get(id));
+        return this.store.load(id);
     }
 
     @Override
     public Group save(final Group group) {
-        Objects.requireNonNull(group, "group");
-
-        if (false == group.equals(this.groupIdToGroup.put(group.id(), group))) {
-            this.saveWatchers.accept(group);
-        }
-
-        return group;
+        return this.store.save(group);
     }
 
+    @Override
     public Runnable addSaveWatcher(final Consumer<Group> saved) {
-        return this.saveWatchers.addWatcher(saved);
+        return this.store.addSaveWatcher(saved);
     }
-
-    private final Watchers<Group> saveWatchers = Watchers.create();
 
     @Override
     public void delete(final GroupId id) {
-        Objects.requireNonNull(id, "id");
-
-        if (null != this.groupIdToGroup.remove(id)) {
-            this.groupIdToUserIds.remove(id);
-            this.deleteWatchers.accept(id);
-        }
+        this.groupIdToUserIds.remove(id);
+        this.store.delete(id);
     }
 
     @Override
     public Runnable addDeleteWatcher(final Consumer<GroupId> deleted) {
-        return this.deleteWatchers.addWatcher(deleted);
+        return this.store.addDeleteWatcher(deleted);
     }
-
-    private final Watchers<GroupId> deleteWatchers = Watchers.create();
 
     @Override
     public int count() {
-        return this.groupIdToGroup.size();
+        return this.store.count();
     }
 
     @Override
     public Set<GroupId> ids(final int from,
-                            final int count) {
-        SpreadsheetStore.checkFromAndTo(from, count);
-
-        return this.groupIdToGroup.keySet()
-                .stream()
-                .skip(from)
-                .limit(count)
-                .collect(Collectors.toCollection(Sets::ordered));
+                           final int count) {
+        return this.store.ids(from, count);
     }
 
     @Override
     public List<Group> values(final GroupId from,
-                              final int count) {
-        SpreadsheetStore.checkFromAndToIds(from, count);
-
-        return this.groupIdToGroup.entrySet()
-                .stream()
-                .filter(e -> e.getKey().compareTo(from) >= 0)
-                .map(e -> e.getValue())
-                .limit(count)
-                .collect(Collectors.toCollection(Lists::array));
+                             final int count) {
+        return this.store.values(from, count);
     }
 
     @Override
@@ -155,7 +134,7 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
         for (Map.Entry<GroupId, Set<UserId>> groupIdAndUsers : this.groupIdToUserIds.entrySet()) {
             final Set<UserId> users = groupIdAndUsers.getValue();
             if (users.contains(userId)) {
-                groups.add(this.groupIdToGroup.get(groupIdAndUsers.getKey()));
+                groups.add(this.store.loadOrFail(groupIdAndUsers.getKey()));
             }
         }
 
@@ -163,12 +142,12 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
     }
 
     // VisibleForTesting
-    final Map<GroupId, Group> groupIdToGroup = Maps.sorted();
+    final SpreadsheetStore<GroupId, Group> store;
 
     final Map<GroupId, Set<UserId>> groupIdToUserIds = Maps.sorted();
 
     @Override
     public String toString() {
-        return this.groupIdToGroup.values().toString();
+        return this.store.toString();
     }
 }
