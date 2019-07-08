@@ -57,7 +57,7 @@ public final class SpreadsheetColumn implements HateosResource<SpreadsheetColumn
     }
 
     @Override
-    public String idForHateosLink() {
+    public String hateosLinkId() {
         return this.id().toString();
     }
 

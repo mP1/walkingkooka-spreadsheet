@@ -72,7 +72,7 @@ public final class User extends Identity<UserId> {
     // HateosResource...................................................................................................
 
     @Override
-    public String idForHateosLink() {
+    public String hateosLinkId() {
         return this.email.value().replace("-", "\\-");
     }
 
