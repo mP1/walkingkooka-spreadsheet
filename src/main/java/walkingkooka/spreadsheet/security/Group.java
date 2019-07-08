@@ -51,6 +51,17 @@ public final class Group extends Identity<GroupId> {
         this.name = name;
     }
 
+    /**
+     * Would be setter returns a {@link Group} with the given id, creating a new instance if necessary.
+     */
+    public Group setId(final Optional<GroupId> id) {
+        checkId(id);
+
+        return this.id.equals(id) ?
+                this :
+                new Group(id, this.name);
+    }
+
     public GroupName name() {
         return this.name;
     }
