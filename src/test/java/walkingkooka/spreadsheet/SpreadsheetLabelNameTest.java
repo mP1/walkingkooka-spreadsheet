@@ -124,6 +124,13 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         assertSame(reference, mapping.reference(), "reference");
     }
 
+    // HasJsonNode......................................................................................................
+
+    @Test
+    public void testHateosLinkIdAbsoluteReference() {
+        this.hateosLinkIdAndCheck(SpreadsheetLabelName.labelName("LABEL1234"), "LABEL1234");
+    }
+
     // SpreadsheetExpressionReferenceVisitor.............................................................................
 
     @Test

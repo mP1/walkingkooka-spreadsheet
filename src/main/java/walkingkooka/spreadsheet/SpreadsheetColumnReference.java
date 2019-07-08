@@ -137,7 +137,16 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
         return SpreadsheetExpressionReference.cellReference(this, row);
     }
 
-    // HashCodeEqualsDefined.................................................................................
+    // HasHateosLink....................................................................................................
+
+    @Override
+    public String hateosLinkId() {
+        final StringBuilder b = new StringBuilder();
+        toString1(this.value, b);
+        return b.toString();
+    }
+
+    // HashCodeEqualsDefined............................................................................................
 
     @Override
     boolean canBeEqual(final Object other) {
