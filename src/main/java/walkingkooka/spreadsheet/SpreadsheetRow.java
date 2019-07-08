@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
-import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.HasId;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
@@ -28,9 +28,10 @@ import java.util.Objects;
 /**
  * Represents a single row within a spreadsheet.
  */
-public final class SpreadsheetRow implements HateosResource<SpreadsheetRowReference>,
+public final class SpreadsheetRow implements HasId<SpreadsheetRowReference>,
         Comparable<SpreadsheetRow>,
-        HashCodeEqualsDefined {
+        HashCodeEqualsDefined,
+        HasJsonNode {
 
     /**
      * Factory that creates a new {@link SpreadsheetRow}
@@ -50,18 +51,13 @@ public final class SpreadsheetRow implements HateosResource<SpreadsheetRowRefere
         this.reference = reference;
     }
 
-    // HasId .......................................................................................
+    // HasId ...........................................................................................................
 
     public SpreadsheetRowReference id() {
         return this.reference();
     }
 
-    @Override
-    public String hateosLinkId() {
-        return this.id().toString();
-    }
-
-    // reference .............................................................................................
+    // reference .......................................................................................................
 
     public SpreadsheetRowReference reference() {
         return this.reference;
