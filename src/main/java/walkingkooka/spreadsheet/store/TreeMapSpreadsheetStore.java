@@ -81,10 +81,12 @@ final class TreeMapSpreadsheetStore<K extends Comparable<K> & Value<Long>, V ext
         return value;
     }
 
+    // no attempt to avoid clashes etc.
     private V saveNew(final V value) {
         final long max = this.idToValue.lastKey().value();
         final V valueWithId = this.valueWithIdFactory.apply(max + 1, value);
-        this.saveWatchers.accept(value);
+        this.idToValue.put(valueWithId.id().get(), valueWithId);
+        this.saveWatchers.accept(valueWithId);
         return valueWithId;
     }
 
