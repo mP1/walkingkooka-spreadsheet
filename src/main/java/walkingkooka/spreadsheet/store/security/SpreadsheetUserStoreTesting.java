@@ -23,6 +23,8 @@ import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.spreadsheet.store.SpreadsheetStoreTesting;
 import walkingkooka.test.TypeNameTesting;
 
+import java.util.Optional;
+
 public interface SpreadsheetUserStoreTesting<S extends SpreadsheetUserStore> extends SpreadsheetStoreTesting<S, UserId, User>,
         TypeNameTesting<S> {
 
@@ -35,7 +37,7 @@ public interface SpreadsheetUserStoreTesting<S extends SpreadsheetUserStore> ext
 
     @Override
     default User value() {
-        return User.with(this.id(), EmailAddress.parse("user@example.com"));
+        return User.with(Optional.of(this.id()), EmailAddress.parse("user@example.com"));
     }
 
     // TypeNameTesting..................................................................
