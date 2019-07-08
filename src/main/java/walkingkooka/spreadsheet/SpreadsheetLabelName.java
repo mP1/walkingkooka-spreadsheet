@@ -105,6 +105,13 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference i
         return false;
     }
 
+    // HasHateosLink....................................................................................................
+
+    @Override
+    public String hateosLinkId() {
+        return this.name;
+    }
+
     // SpreadsheetExpressionReferenceVisitor............................................................................
 
     @Override

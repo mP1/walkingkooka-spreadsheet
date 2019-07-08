@@ -130,7 +130,14 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
         return column.setRow(this);
     }
 
-    // HashCodeEqualsDefined.................................................................................
+    // HasHateosLink....................................................................................................
+
+    @Override
+    public String hateosLinkId() {
+        return String.valueOf(this.value + 1);
+    }
+
+    // HashCodeEqualsDefined............................................................................................
 
     @Override
     boolean canBeEqual(final Object other) {
