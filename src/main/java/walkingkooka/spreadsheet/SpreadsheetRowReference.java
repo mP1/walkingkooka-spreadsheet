@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
 import walkingkooka.compare.Range;
+import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.text.cursor.parser.Parser;
