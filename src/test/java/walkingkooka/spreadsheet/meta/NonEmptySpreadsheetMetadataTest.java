@@ -31,6 +31,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTestCase<NonEmptySpreadsheetMetadata> {
 
@@ -285,6 +286,21 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
                 property1,
                 value1,
                 this.createSpreadsheetMetadata(property1, value1, property2, value2));
+    }
+
+    // HateosResource...................................................................................................
+
+    @Test
+    public void testHateosLinkId() {
+        this.hateosLinkIdAndCheck(NonEmptySpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(0x12347f))),
+                "12347f");
+    }
+
+    @Test
+    public void testHateosLinkIdMissingIdFails() {
+        assertThrows(IllegalStateException.class, () -> {
+            this.createSpreadsheetMetadata().hateosLinkId();
+        });
     }
 
     // ToString.........................................................................................................
