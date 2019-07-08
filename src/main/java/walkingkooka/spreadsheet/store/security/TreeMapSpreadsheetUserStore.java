@@ -54,7 +54,7 @@ final class TreeMapSpreadsheetUserStore implements SpreadsheetUserStore {
     }
 
     private static User createUser(final Long value, final User user) {
-        return User.with(Optional.of(UserId.with(value)), user.email());
+        return user.setId(Optional.of(UserId.with(value)));
     }
 
     @Override
