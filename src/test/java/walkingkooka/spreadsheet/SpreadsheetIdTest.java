@@ -72,9 +72,53 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
         this.checkNotEquals(SpreadsheetId.with(999));
     }
 
+    // Compare..........................................................................................................
+
     @Test
     public void testCompareLess() {
         this.compareToAndCheckLess(SpreadsheetId.with(VALUE * 2));
+    }
+
+    // HasJsonNode.......................................................................................................
+
+    @Test
+    public void testFromJsonNodeBooleanFails() {
+        this.fromJsonNodeFails(JsonNode.booleanNode(true));
+    }
+
+    @Test
+    public void testFromJsonNodeNullFails() {
+        this.fromJsonNodeFails(JsonNode.nullNode());
+    }
+
+    @Test
+    public void testFromJsonNodeNumberFails() {
+        this.fromJsonNodeFails(JsonNode.number(1));
+    }
+
+    @Test
+    public void testFromJsonNodeArrayFails() {
+        this.fromJsonNodeFails(JsonNode.array());
+    }
+
+    @Test
+    public void testFromJsonNodeObjectFails() {
+        this.fromJsonNodeFails(JsonNode.object());
+    }
+
+    @Test
+    public void testFromJsonNodeInvalidStringFails() {
+        this.fromJsonNodeFails(JsonNode.string("123xyz"));
+    }
+
+    @Test
+    public void testFromJsonNode() {
+        this.fromJsonNodeAndCheck(JsonNode.string("1f"), SpreadsheetId.with(0x1f));
+    }
+
+    @Test
+    public void testToJsonNode() {
+        this.toJsonNodeAndCheck(SpreadsheetId.with(0x1f), JsonNode.string("1f"));
     }
 
     @Test
@@ -86,6 +130,8 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     public void testToJsonNodeFromJsonNodeRoundtrip2() {
         this.toJsonNodeRoundTripTwiceAndCheck(SpreadsheetId.with(0xabcd));
     }
+
+    // ToString..........................................................................................................
 
     @Test
     public void testToString() {
