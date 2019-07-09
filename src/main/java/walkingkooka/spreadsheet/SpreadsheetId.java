@@ -21,11 +21,11 @@ import walkingkooka.Cast;
 import walkingkooka.HasId;
 import walkingkooka.Value;
 import walkingkooka.net.http.server.hateos.HasHateosLinkId;
-import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeException;
 
 /**
  * Identifies a single spreadsheet.
@@ -84,18 +84,22 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
 
     private Long value;
 
-    // HasJsonNode..........................................................................................
+    // HasJsonNode......................................................................................................
 
     /**
      * Factory that creates a {@link SpreadsheetId} from a {@link JsonNode}
      */
     public static SpreadsheetId fromJsonNode(final JsonNode node) {
-        return with(node.fromJsonNode(Long.class));
+        try {
+            return parse(node.stringValueOrFail());
+        } catch (final JsonNodeException cause) {
+            throw new IllegalArgumentException(cause.getMessage(), cause);
+        }
     }
 
     @Override
     public JsonNode toJsonNode() {
-        return HasJsonNode.toJsonNodeObject(this.value);
+        return JsonNode.string(this.toString());
     }
 
     static {
@@ -104,7 +108,7 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
                 SpreadsheetId.class);
     }
 
-    // HashCodeEqualsDefined..........................................................................................
+    // HashCodeEqualsDefined.............................................................................................
 
     @Override
     public int hashCode() {
@@ -122,14 +126,14 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
         return this.value.equals(id.value());
     }
 
-    // Comparable....................................................................................................
+    // Comparable.......................................................................................................
 
     @Override
     public int compareTo(final SpreadsheetId other) {
         return this.value.compareTo(other.value);
     }
 
-    // Object........................................................................................................
+    // Object...........................................................................................................
 
     @Override
     public String toString() {
