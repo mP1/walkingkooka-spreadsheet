@@ -19,69 +19,68 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
+import walkingkooka.ToStringBuilderOption;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Range;
+import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonNodeName;
-import walkingkooka.tree.json.JsonObjectNode;
+import walkingkooka.tree.json.parser.JsonNodeParserException;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Captures changes following an operation.
+ * Captures changes following an operation. A window when non empty is applied to any given cells as a filter.
+ * The ID must be either an {@link Optional} or {@link Range} matching the ID limitations of {@link walkingkooka.net.http.server.hateos.HateosHandler}.
  */
-public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosResource<SpreadsheetId> {
+public abstract class SpreadsheetDelta<I> implements HashCodeEqualsDefined, HateosResource<I> {
 
     public final static Set<SpreadsheetCell> NO_CELLS = Sets.empty();
 
     /**
-     * Factory that creates a new {@link SpreadsheetDelta}
+     * Factory that creates a new {@link SpreadsheetDelta} with an id.
      */
-    public static SpreadsheetDelta with(final SpreadsheetId id,
-                                        final Set<SpreadsheetCell> cells) {
-        Objects.requireNonNull(id, "id");
+    public static <I extends Comparable<I> & HasHateosLinkId> SpreadsheetDelta<Optional<I>> withId(final Optional<I> id,
+                                                                                                   final Set<SpreadsheetCell> cells) {
+        checkId(id);
         checkCells(cells);
 
-        return nonWindowed(id, cells);
-    }
-
-    static SpreadsheetDelta filterCellsIfNecessaryAndCreate(final SpreadsheetId id,
-                                                            final Set<SpreadsheetCell> cells,
-                                                            final List<SpreadsheetRange> window) {
-        return null == window || window.isEmpty() ?
-                nonWindowed(id, cells) :
-                windowed(id,
-                        filterCells(cells, window),
-                        Lists.readOnly(window));
+        return SpreadsheetDeltaIdNonWindowed.with(id, cells);
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetDeltaNonWindowed}
+     * Factory that creates a new {@link SpreadsheetDelta} with an id.
      */
-    static SpreadsheetDeltaNonWindowed nonWindowed(final SpreadsheetId id,
-                                                   final Set<SpreadsheetCell> cells) {
-        return SpreadsheetDeltaNonWindowed.with0(id, Sets.immutable(cells));
+    public static <I extends Comparable<I> & HasHateosLinkId> SpreadsheetDelta<Range<I>> withRange(final Range<I> range,
+                                                                                                   final Set<SpreadsheetCell> cells) {
+        checkRange(range);
+        checkCells(cells);
+
+        return SpreadsheetDeltaRangeNonWindowed.with(range, cells);
+    }
+
+    static void checkId(final Optional<?> id) {
+        Objects.requireNonNull(id, "id");
+    }
+
+    static void checkRange(final Range<?> range) {
+        Objects.requireNonNull(range, "range");
     }
 
     /**
-     * Factory that creates a {@link SpreadsheetDeltaWindowed}
+     * Package private to limit sub classing.
      */
-    static SpreadsheetDeltaWindowed windowed(final SpreadsheetId id,
-                                             final Set<SpreadsheetCell> cells,
-                                             final List<SpreadsheetRange> window) {
-        return SpreadsheetDeltaWindowed.with0(id, cells, window);
-    }
-
-    SpreadsheetDelta(final SpreadsheetId id,
+    SpreadsheetDelta(final I id,
                      final Set<SpreadsheetCell> cells) {
         super();
 
@@ -89,17 +88,45 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosR
         this.cells = cells;
     }
 
+    // HateosResource...................................................................................................
+
     @Override
-    public final SpreadsheetId id() {
+    public final I id() {
         return this.id;
     }
 
-    final SpreadsheetId id;
+    final I id;
 
-    @Override
-    public final String hateosLinkId() {
-        return this.id().hateosLinkId();
+    /**
+     * Would be setter that returns a {@link SpreadsheetDelta} with the given {@link Optional id} creating a new instance and sharing other properties.
+     */
+    public final <II extends Comparable<II> & HasHateosLinkId> SpreadsheetDelta<Optional<II>> setId(final Optional<II> id) {
+        checkId(id);
+        return this.setId0(id);
     }
+
+    abstract <II extends Comparable<II> & HasHateosLinkId> SpreadsheetDelta<Optional<II>> setId0(final Optional<II> id);
+
+    /**
+     * Would be setter that returns a {@link SpreadsheetDelta} with the given {@link Range range} creating a new instance and sharing other properties.
+     */
+    public final <II extends Comparable<II> & HasHateosLinkId> SpreadsheetDelta<Range<II>> setRange(final Range<II> range) {
+        checkRange(range);
+
+        return this.setRange0(range);
+    }
+
+    abstract <II extends Comparable<II> & HasHateosLinkId> SpreadsheetDelta<Range<II>> setRange0(final Range<II> ids);
+
+    /**
+     * Unconditionally creates a new instance with the given {@link Optional id}.
+     */
+    abstract <II extends Comparable<II> & HasHateosLinkId> SpreadsheetDelta<Optional<II>> replaceId(final Optional<II> id);
+
+    /**
+     * Unconditionally creates a new instance with the given {@link Range range}.
+     */
+    abstract <II extends Comparable<II> & HasHateosLinkId> SpreadsheetDelta<Range<II>> replaceRange(final Range<II> range);
 
     // cells............................................................................................................
 
@@ -108,24 +135,27 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosR
     }
 
     /**
-     * Would be setter that returns {@link SpreadsheetDelta}
+     * Would be setter that returns a {@link SpreadsheetDelta} holding the given cells after they are possibly filtered
+     * using the {@link #window()}
      */
-    public abstract SpreadsheetDelta setCells(final Set<SpreadsheetCell> cells);
+    public final SpreadsheetDelta<I> setCells(final Set<SpreadsheetCell> cells) {
+        checkCells(cells);
+
+        final Set<SpreadsheetCell> copy = this.copyCells(cells);
+        return this.cells.equals(copy) ?
+                this :
+                this.replace(copy, this.window());
+    }
+
+    /**
+     * Takes a copy of the cells, possibly filtering out cells if a window is present.
+     */
+    abstract Set<SpreadsheetCell> copyCells(final Set<SpreadsheetCell> cells);
 
     final Set<SpreadsheetCell> cells;
 
     static void checkCells(final Set<SpreadsheetCell> cells) {
         Objects.requireNonNull(cells, "cells");
-    }
-
-    /**
-     * Filters the cells using the assumed window of {@link Range cell reference ranges}.
-     */
-    static Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
-                                            final List<SpreadsheetRange> window) {
-        return cells.stream()
-                .filter(c -> window.stream().anyMatch(r -> r.test(c.reference())))
-                .collect(Collectors.toCollection(Sets::ordered));
     }
 
     // window............................................................................................................
@@ -139,45 +169,82 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosR
      * Would be setter that if necessary returns a new {@link SpreadsheetDelta} which will also filter cells if necessary.
      */
     public final SpreadsheetDelta setWindow(final List<SpreadsheetRange> window) {
-        final List<SpreadsheetRange> copy = copyWindow(window);
+        Objects.requireNonNull(window, "window");
+
+        final List<SpreadsheetRange> copy = Lists.immutable(window);
 
         return this.window().equals(copy) ?
                 this :
-                filterCellsIfNecessaryAndCreate(this.id, this.cells, copy);
+                setWindow0(copy);
     }
+
+    private SpreadsheetDelta setWindow0(final List<SpreadsheetRange> window) {
+        final Set<SpreadsheetCell> cells = this.cells;
+
+        final Set<SpreadsheetCell> filtered = maybeFilterCells(cells, window);
+        return this.window().equals(cells) ?
+                this :
+                this.replace(filtered, window);
+    }
+
+    // filter............................................................................................................
 
     /**
-     * Checks and makes a copy of the window ranges.
+     * Factory that creates a new {@link SpreadsheetDelta}.
      */
-    private static List<SpreadsheetRange> copyWindow(final List<SpreadsheetRange> window) {
-        Objects.requireNonNull(window, "window");
-        return Lists.immutable(window);
+    private SpreadsheetDelta<I> replace(final Set<SpreadsheetCell> cells,
+                                        final List<SpreadsheetRange> window) {
+        return window.isEmpty() ?
+                this.replaceNonWindowed(cells) :
+                this.replaceWindowed(cells, window);
     }
 
-    // HasJsonNode...................................................................................................
+    abstract SpreadsheetDelta<I> replaceNonWindowed(final Set<SpreadsheetCell> cells);
+
+    abstract SpreadsheetDelta<I> replaceWindowed(final Set<SpreadsheetCell> cells,
+                                                 final List<SpreadsheetRange> window);
+
+    /**
+     * Filters the cells using the assumed window of {@link Range cell reference ranges}.
+     */
+    static Set<SpreadsheetCell> maybeFilterCells(final Set<SpreadsheetCell> cells,
+                                                 final List<SpreadsheetRange> window) {
+        return null == window || window.isEmpty() ?
+                cells :
+                cells.stream()
+                        .filter(c -> window.stream().anyMatch(r -> r.test(c.reference())))
+                        .collect(Collectors.toCollection(Sets::ordered));
+    }
+
+    // HasJsonNode.......................................................................................................
 
     /**
      * Factory that creates a {@link SpreadsheetDelta} from a {@link JsonNode}.
      */
-    public static SpreadsheetDelta fromJsonNode(final JsonNode node) {
+    public static SpreadsheetDelta<?> fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
-        SpreadsheetId id = null;
+        HasHateosLinkId id = null;
+        Range<?> range = null;
         Set<SpreadsheetCell> cells = null;
         List<SpreadsheetRange> window = null;
 
         try {
             for (JsonNode child : node.objectOrFail().children()) {
                 final JsonNodeName name = child.name();
+
                 switch (name.value()) {
                     case ID_PROPERTY_STRING:
-                        id = SpreadsheetId.fromJsonNode(child);
+                        id = child.fromJsonNodeWithType();
+                        break;
+                    case RANGE_PROPERTY_STRING:
+                        range = Range.fromJsonNode(child);
                         break;
                     case CELLS_PROPERTY_STRING:
                         cells = child.fromJsonNodeSet(SpreadsheetCell.class);
                         break;
                     case WINDOW_PROPERTY_STRING:
-                        window = windowFromJsonNode(child.stringValueOrFail());
+                        window = rangeFromJsonNode(child.stringValueOrFail());
                         break;
                     default:
                         throw new IllegalArgumentException("Unknown property " + name + "=" + node);
@@ -187,38 +254,74 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosR
             throw new IllegalArgumentException(cause.getMessage(), cause);
         }
 
-        if (null == id) {
-            HasJsonNode.requiredPropertyMissing(ID_PROPERTY, node);
+        if (null != id && null != range) {
+            throw new JsonNodeParserException("Invalid json " + ID_PROPERTY_STRING + " and " + RANGE_PROPERTY_STRING + " both set=" + node);
         }
+
         if (null == cells) {
             HasJsonNode.requiredPropertyMissing(CELLS_PROPERTY, node);
         }
 
-        return SpreadsheetDelta.filterCellsIfNecessaryAndCreate(id, cells, window);
+        final SpreadsheetDelta<?> delta = range != null ?
+                SpreadsheetDeltaRangeNonWindowed.with(Cast.to(range), cells) :
+                fromJsonNodeWithId(Cast.to(id), cells);
+        return null != window ?
+                delta.setWindow0(window) :
+                delta;
     }
 
-    private static List<SpreadsheetRange> windowFromJsonNode(final String range) {
+    private static List<SpreadsheetRange> rangeFromJsonNode(final String range) {
         return Arrays.stream(range.split(WINDOW_SEPARATOR))
                 .map(SpreadsheetRange::parseRange)
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Creates a {@link JsonObjectNode} with the id and cells.
-     */
-    final JsonObjectNode toJsonNodeIdAndCells() {
-        return JsonNode.object()
-                .set(ID_PROPERTY, this.id.toJsonNode())
-                .set(CELLS_PROPERTY, HasJsonNode.toJsonNodeSet(this.cells));
+    private static <I extends Comparable<I> & HasHateosLinkId> SpreadsheetDeltaIdNonWindowed fromJsonNodeWithId(final I id,
+                                                                                                                final Set<SpreadsheetCell> cells) {
+        return SpreadsheetDeltaIdNonWindowed.with(Optional.ofNullable(id), cells);
     }
 
+    @Override
+    public final JsonNode toJsonNode() {
+        final List<JsonNode> children = Lists.array();
+
+        final JsonNode idOrRange = this.idOrRangeToJson();
+        if (null != idOrRange) {
+            children.add(idOrRange.setName(this.idOrRangeJsonPropertyName()));
+        }
+
+        final Set<SpreadsheetCell> cells = this.cells;
+        if (!cells.isEmpty()) {
+            children.add(HasJsonNode.toJsonNodeSet(cells).setName(CELLS_PROPERTY));
+        }
+
+        final List<SpreadsheetRange> window = this.window();
+        if (!window.isEmpty()) {
+            children.add(JsonNode.string(window.stream()
+                    .map(SpreadsheetRange::toString)
+                    .collect(Collectors.joining(WINDOW_SEPARATOR)))
+                    .setName(WINDOW_PROPERTY));
+        }
+
+        return JsonNode.object().setChildren(children);
+    }
+
+    abstract JsonNode idOrRangeToJson();
+
+    abstract JsonNodeName idOrRangeJsonPropertyName();
+
+    /**
+     * Constant used to separate individual ranges in the window list.
+     */
     final static String WINDOW_SEPARATOR = ",";
 
     private final static String ID_PROPERTY_STRING = "id";
+    private final static String RANGE_PROPERTY_STRING = "range";
     private final static String CELLS_PROPERTY_STRING = "cells";
     private final static String WINDOW_PROPERTY_STRING = "window";
 
     final static JsonNodeName ID_PROPERTY = JsonNodeName.with(ID_PROPERTY_STRING);
+    final static JsonNodeName RANGE_PROPERTY = JsonNodeName.with(RANGE_PROPERTY_STRING);
     final static JsonNodeName CELLS_PROPERTY = JsonNodeName.with(CELLS_PROPERTY_STRING);
     final static JsonNodeName WINDOW_PROPERTY = JsonNodeName.with(WINDOW_PROPERTY_STRING);
 
@@ -226,11 +329,13 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosR
         HasJsonNode.register("spreadsheet-delta",
                 SpreadsheetDelta::fromJsonNode,
                 SpreadsheetDelta.class,
-                SpreadsheetDeltaNonWindowed.class,
-                SpreadsheetDeltaWindowed.class);
+                SpreadsheetDeltaIdNonWindowed.class,
+                SpreadsheetDeltaIdWindowed.class,
+                SpreadsheetDeltaRangeNonWindowed.class,
+                SpreadsheetDeltaRangeWindowed.class);
     }
 
-    // equals...................................................................................................
+    // equals...........................................................................................................
 
     @Override
     public int hashCode() {
@@ -254,14 +359,30 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosR
 
     abstract boolean equals1(final SpreadsheetDelta other);
 
+    /**
+     * Produces a {@link String} that contains ID then cells: comma separated cells then window: comma separated window ranges.
+     */
     @Override
     public final String toString() {
         return ToStringBuilder.empty()
                 .labelSeparator(": ")
                 .separator(" ")
                 .valueSeparator(", ")
-                .label("cells").value(this.cells)
+                .disable(ToStringBuilderOption.QUOTE)
+                .value(this.toStringId())
+                .enable(ToStringBuilderOption.QUOTE)
+                .label("cells")
+                .value(this.cells)
                 .label("window").value(this.window())
                 .build();
     }
+
+    /**
+     * Allows Range to format itself with a COLON rather than the default double dot...
+     * <pre>
+     * (1e:2f) cells: A1=1, B2=2, C3=3 window: A1:E5, F6:Z99
+     * (1e..2f) cells: A1=1, B2=2, C3=3 window: A1:E5, F6:Z99
+     * </pre>
+     */
+    abstract Object toStringId();
 }

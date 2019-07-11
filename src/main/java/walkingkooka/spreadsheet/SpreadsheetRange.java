@@ -77,7 +77,10 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference imple
                 .spreadsheetRange(parseRange1(text.substring(colon + SEPARATOR.length()), "end", text));
     }
 
-    private final static String SEPARATOR = ":";
+    /**
+     * Separator between two cell references.
+     */
+    public final static String SEPARATOR = ":";
 
     /**
      * Computes the range of the given cells.

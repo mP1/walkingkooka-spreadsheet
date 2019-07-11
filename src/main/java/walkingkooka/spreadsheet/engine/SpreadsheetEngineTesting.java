@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.compare.Range;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -217,7 +218,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     default void saveLabelAndCheck(final SpreadsheetEngine engine,
                                    final SpreadsheetLabelMapping label,
                                    final SpreadsheetEngineContext context,
-                                   final SpreadsheetCell...cells) {
+                                   final SpreadsheetCell... cells) {
         this.saveLabelAndCheck(engine, label, context, Sets.of(cells));
     }
 
@@ -228,13 +229,13 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         this.saveLabelAndCheck(engine,
                 label,
                 context,
-                SpreadsheetDelta.with(engine.id(), cells));
+                SpreadsheetDelta.withId(Optional.of(label.id()), cells));
     }
 
     default void saveLabelAndCheck(final SpreadsheetEngine engine,
                                    final SpreadsheetLabelMapping label,
                                    final SpreadsheetEngineContext context,
-                                   final SpreadsheetDelta delta) {
+                                   final SpreadsheetDelta<Optional<SpreadsheetLabelName>> delta) {
         assertEquals(delta,
                 engine.saveLabel(label, context),
                 () -> "saveLabel " + label);
@@ -268,13 +269,13 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         this.removeLabelAndCheck(engine,
                 label,
                 context,
-                SpreadsheetDelta.with(engine.id(), cells));
+                SpreadsheetDelta.withId(Optional.of(label), cells));
     }
 
     default void removeLabelAndCheck(final SpreadsheetEngine engine,
                                      final SpreadsheetLabelName label,
                                      final SpreadsheetEngineContext context,
-                                     final SpreadsheetDelta delta) {
+                                     final SpreadsheetDelta<Optional<SpreadsheetLabelName>> delta) {
         assertEquals(delta,
                 engine.removeLabel(label, context),
                 () -> "removeLabel " + label);
@@ -449,13 +450,16 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                   final SpreadsheetCell save,
                                   final SpreadsheetEngineContext context,
                                   final SpreadsheetCell... updated) {
-        this.saveCellAndCheck(engine, save, context, SpreadsheetDelta.with(engine.id(), Sets.of(updated)));
+        this.saveCellAndCheck(engine,
+                save,
+                context,
+                SpreadsheetDelta.withId(Optional.of(save.id()), Sets.of(updated)));
     }
 
     default void saveCellAndCheck(final SpreadsheetEngine engine,
                                   final SpreadsheetCell save,
                                   final SpreadsheetEngineContext context,
-                                  final SpreadsheetDelta delta) {
+                                  final SpreadsheetDelta<Optional<SpreadsheetCellReference>> delta) {
         assertEquals(delta,
                 engine.saveCell(save, context),
                 () -> "saveCell " + save);
@@ -465,13 +469,16 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                     final SpreadsheetCellReference delete,
                                     final SpreadsheetEngineContext context,
                                     final SpreadsheetCell... updated) {
-        this.deleteCellAndCheck(engine, delete, context, SpreadsheetDelta.with(engine.id(), Sets.of(updated)));
+        this.deleteCellAndCheck(engine,
+                delete,
+                context,
+                SpreadsheetDelta.withId(Optional.of(delete), Sets.of(updated)));
     }
 
     default void deleteCellAndCheck(final SpreadsheetEngine engine,
                                     final SpreadsheetCellReference delete,
                                     final SpreadsheetEngineContext context,
-                                    final SpreadsheetDelta delta) {
+                                    final SpreadsheetDelta<Optional<SpreadsheetCellReference>> delta) {
         assertEquals(delta,
                 engine.deleteCell(delete, context),
                 () -> "deleteCell " + delete);
@@ -492,36 +499,36 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 column,
                 count,
                 context,
-                SpreadsheetDelta.with(engine.id(), Sets.of(updated)));
+                SpreadsheetDelta.withRange(Range.greaterThanEquals(column).and(Range.lessThanEquals(column.add(count))), Sets.of(updated)));
     }
 
     default void deleteColumnsAndCheck(final SpreadsheetEngine engine,
                                        final SpreadsheetColumnReference column,
                                        final int count,
                                        final SpreadsheetEngineContext context,
-                                       final SpreadsheetDelta delta) {
+                                       final SpreadsheetDelta<Range<SpreadsheetColumnReference>> delta) {
         assertEquals(delta,
                 engine.deleteColumns(column, count, context),
                 () -> "deleteColumns column: " + column + " count: " + count);
     }
 
     default void deleteRowsAndCheck(final SpreadsheetEngine engine,
-                                    final SpreadsheetRowReference column,
+                                    final SpreadsheetRowReference row,
                                     final int count,
                                     final SpreadsheetEngineContext context,
                                     final SpreadsheetCell... updated) {
         this.deleteRowsAndCheck(engine,
-                column,
+                row,
                 count,
                 context,
-                SpreadsheetDelta.with(engine.id(), Sets.of(updated)));
+                SpreadsheetDelta.withRange(Range.greaterThanEquals(row).and(Range.lessThanEquals(row.add(count))), Sets.of(updated)));
     }
 
     default void deleteRowsAndCheck(final SpreadsheetEngine engine,
                                     final SpreadsheetRowReference column,
                                     final int count,
                                     final SpreadsheetEngineContext context,
-                                    final SpreadsheetDelta delta) {
+                                    final SpreadsheetDelta<Range<SpreadsheetRowReference>> delta) {
         assertEquals(delta,
                 engine.deleteRows(column, count, context),
                 () -> "deleteRows column: " + column + " count: " + count);
@@ -536,36 +543,36 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 column,
                 count,
                 context,
-                SpreadsheetDelta.with(engine.id(), Sets.of(updated)));
+                SpreadsheetDelta.withRange(Range.greaterThanEquals(column).and(Range.lessThanEquals(column.add(count))), Sets.of(updated)));
     }
 
     default void insertColumnsAndCheck(final SpreadsheetEngine engine,
                                        final SpreadsheetColumnReference column,
                                        final int count,
                                        final SpreadsheetEngineContext context,
-                                       final SpreadsheetDelta delta) {
+                                       final SpreadsheetDelta<Range<SpreadsheetColumnReference>> delta) {
         assertEquals(delta,
                 engine.insertColumns(column, count, context),
                 () -> "insertColumns column: " + column + " count: " + count);
     }
 
     default void insertRowsAndCheck(final SpreadsheetEngine engine,
-                                    final SpreadsheetRowReference column,
+                                    final SpreadsheetRowReference row,
                                     final int count,
                                     final SpreadsheetEngineContext context,
                                     final SpreadsheetCell... updated) {
         this.insertRowsAndCheck(engine,
-                column,
+                row,
                 count,
                 context,
-                SpreadsheetDelta.with(engine.id(), Sets.of(updated)));
+                SpreadsheetDelta.withRange(Range.greaterThanEquals(row).and(Range.lessThanEquals(row.add(count))), Sets.of(updated)));
     }
 
     default void insertRowsAndCheck(final SpreadsheetEngine engine,
                                     final SpreadsheetRowReference column,
                                     final int count,
                                     final SpreadsheetEngineContext context,
-                                    final SpreadsheetDelta delta) {
+                                    final SpreadsheetDelta<Range<SpreadsheetRowReference>> delta) {
         assertEquals(delta,
                 engine.insertRows(column, count, context),
                 () -> "insertRows column: " + column + " count: " + count);
@@ -580,24 +587,25 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 from,
                 to,
                 context,
-                SpreadsheetDelta.with(engine.id(), Sets.of(updated)));
+                SpreadsheetDelta.withRange(to.range(), Sets.of(updated)));
     }
 
     default void copyCellsAndCheck(final SpreadsheetEngine engine,
                                    final Collection<SpreadsheetCell> from,
                                    final SpreadsheetRange to,
                                    final SpreadsheetEngineContext context,
-                                   final SpreadsheetDelta delta) {
+                                   final SpreadsheetDelta<Range<SpreadsheetCellReference>> delta) {
         assertEquals(delta,
                 engine.copyCells(from, to, context),
                 () -> "copyCells " + from + " to " + to);
 
         // load and check updated cells again...
-        delta.cells().forEach(c -> this.loadCellAndCheck(engine,
-                c.reference(),
-                SpreadsheetEngineEvaluation.SKIP_EVALUATE,
-                context,
-                c));
+        delta.cells()
+                .forEach(c -> this.loadCellAndCheck(engine,
+                        c.reference(),
+                        SpreadsheetEngineEvaluation.SKIP_EVALUATE,
+                        context,
+                        c));
     }
 
     default void checkFormula(final SpreadsheetCell cell, final String formula) {
