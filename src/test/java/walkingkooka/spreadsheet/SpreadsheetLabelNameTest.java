@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
-import walkingkooka.naming.NameTesting;
+import walkingkooka.naming.NameTesting2;
 import walkingkooka.naming.PropertiesPath;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferenceTestCase<SpreadsheetLabelName>
-        implements NameTesting<SpreadsheetLabelName, SpreadsheetLabelName> {
+        implements NameTesting2<SpreadsheetLabelName, SpreadsheetLabelName> {
 
     @Test
     public void testCreateContainsSeparatorFails() {
@@ -122,6 +122,11 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         final SpreadsheetLabelMapping mapping = label.mapping(reference);
         assertSame(label, mapping.label(), "label");
         assertSame(reference, mapping.reference(), "reference");
+    }
+
+    @Override
+    public void testNameValidChars() {
+        // test ignored because short generated names will clash with valid cell references and fail the test.
     }
 
     // HasJsonNode......................................................................................................
@@ -239,6 +244,32 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     }
 
     @Override
+    public int minLength() {
+        return 1;
+    }
+
+    @Override
+    public int maxLength() {
+        return SpreadsheetLabelName.MAX_LENGTH;
+    }
+
+    @Override
+    public String possibleValidChars(final int position) {
+        return 0 == position ?
+                ASCII_LETTERS :
+                ASCII_LETTERS_DIGITS + "_";
+    }
+
+    @Override
+    public String possibleInvalidChars(final int position) {
+        return 0 == position ?
+                ASCII_DIGITS + CONTROL + "_!@#$%^&*()" :
+                CONTROL + "!@#$%^&*()";
+    }
+
+    // ClassTesting.....................................................................................................
+
+    @Override
     public Class<SpreadsheetLabelName> type() {
         return SpreadsheetLabelName.class;
     }
@@ -248,7 +279,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         return JavaVisibility.PUBLIC;
     }
 
-    // HasJsonNodeTesting..........................................................................
+    // HasJsonNodeTesting...............................................................................................
 
     @Override
     public SpreadsheetLabelName fromJsonNode(final JsonNode from) {
