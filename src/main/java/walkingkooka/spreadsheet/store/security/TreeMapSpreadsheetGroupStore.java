@@ -17,16 +17,13 @@
 
 package walkingkooka.spreadsheet.store.security;
 
-import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.security.Group;
 import walkingkooka.spreadsheet.security.GroupId;
-import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.spreadsheet.store.SpreadsheetStore;
 import walkingkooka.spreadsheet.store.SpreadsheetStores;
-import walkingkooka.spreadsheet.store.Watchers;
 
 import java.util.List;
 import java.util.Map;
@@ -34,7 +31,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 /**
  * A {@link SpreadsheetGroupStore} backed by a {@link java.util.TreeMap}.
@@ -47,11 +43,11 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
 
     private TreeMapSpreadsheetGroupStore() {
         super();
-        this.store = SpreadsheetStores.treeMap(TreeMapSpreadsheetGroupStore::createGroup);
+        this.store = SpreadsheetStores.treeMap(TreeMapSpreadsheetGroupStore::groupSetId);
     }
 
-    private static Group createGroup(final Long value, final Group group) {
-        return Group.with(Optional.of(GroupId.with(value)), group.name());
+    private static Group groupSetId(final Long value, final Group group) {
+        return group.setId(Optional.of(GroupId.with(value)));
     }
 
     @Override
