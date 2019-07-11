@@ -43,7 +43,9 @@ import java.util.stream.Collectors;
  * Captures changes following an operation. A window when non empty is applied to any given cells as a filter.
  * The ID must be either an {@link Optional} or {@link Range} matching the ID limitations of {@link walkingkooka.net.http.server.hateos.HateosHandler}.
  */
-public abstract class SpreadsheetDelta<I> implements HashCodeEqualsDefined, HateosResource<I> {
+public abstract class SpreadsheetDelta<I> implements Comparable<SpreadsheetDelta<I>>,
+        HashCodeEqualsDefined,
+        HateosResource<I> {
 
     public final static Set<SpreadsheetCell> NO_CELLS = Sets.empty();
 
@@ -385,4 +387,11 @@ public abstract class SpreadsheetDelta<I> implements HashCodeEqualsDefined, Hate
      * </pre>
      */
     abstract Object toStringId();
+
+    // Comparable.......................................................................................................
+
+    @Override
+    public final int compareTo(final SpreadsheetDelta<I> other) {
+        throw new UnsupportedOperationException();
+    }
 }
