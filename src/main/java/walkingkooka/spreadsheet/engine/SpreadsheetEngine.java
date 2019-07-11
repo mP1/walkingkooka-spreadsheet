@@ -53,41 +53,41 @@ public interface SpreadsheetEngine {
      * Saves the cell, and updates all affected (referenced cells) returning all updated cells.
      */
     SpreadsheetDelta<Optional<SpreadsheetCellReference>> saveCell(final SpreadsheetCell cell,
-                              final SpreadsheetEngineContext context);
+                                                                  final SpreadsheetEngineContext context);
 
     /**
      * Deletes the cell, removing references and updates and returns all affected (referenced cells).
      */
     SpreadsheetDelta<Optional<SpreadsheetCellReference>> deleteCell(final SpreadsheetCellReference cell,
-                                final SpreadsheetEngineContext context);
+                                                                    final SpreadsheetEngineContext context);
 
     /**
      * Deletes the identified columns, updates all absolute references as necessary in both formulas and label mappings.
      */
     SpreadsheetDelta<Range<SpreadsheetColumnReference>> deleteColumns(final SpreadsheetColumnReference column,
-                                                                    final int count,
-                                                                    final SpreadsheetEngineContext context);
+                                                                      final int count,
+                                                                      final SpreadsheetEngineContext context);
 
     /**
      * Deletes the identified rows, updates all absolute references as necessary in both formulas and label mappings.
      */
     SpreadsheetDelta<Range<SpreadsheetRowReference>> deleteRows(final SpreadsheetRowReference row,
-                                final int count,
-                                final SpreadsheetEngineContext context);
+                                                                final int count,
+                                                                final SpreadsheetEngineContext context);
 
     /**
      * Inserts the identified columns, updates all absolute references as necessary in both formulas and label mappings.
      */
     SpreadsheetDelta<Range<SpreadsheetColumnReference>> insertColumns(final SpreadsheetColumnReference column,
-                                   final int count,
-                                   final SpreadsheetEngineContext context);
+                                                                      final int count,
+                                                                      final SpreadsheetEngineContext context);
 
     /**
      * Inserts the identified rows, updates all absolute references as necessary in both formulas and label mappings.
      */
     SpreadsheetDelta<Range<SpreadsheetRowReference>> insertRows(final SpreadsheetRowReference row,
-                                final int count,
-                                final SpreadsheetEngineContext context);
+                                                                final int count,
+                                                                final SpreadsheetEngineContext context);
 
     /**
      * Copies the provided cells into this spreadsheet at the given range. The source range is smaller, where possible
@@ -97,21 +97,21 @@ public interface SpreadsheetEngine {
      * before the actual copying.
      */
     SpreadsheetDelta<Range<SpreadsheetCellReference>> copyCells(final Collection<SpreadsheetCell> from,
-                               final SpreadsheetRange to,
-                               final SpreadsheetEngineContext context);
+                                                                final SpreadsheetRange to,
+                                                                final SpreadsheetEngineContext context);
 
     /**
      * Sets a new label mapping or replaces an existing one returning a {@link SpreadsheetDelta} which may or may not
      * have affected and updated cells.
      */
     SpreadsheetDelta<Optional<SpreadsheetLabelName>> saveLabel(final SpreadsheetLabelMapping mapping,
-                               final SpreadsheetEngineContext context);
+                                                               final SpreadsheetEngineContext context);
 
     /**
      * Removes the given {@link SpreadsheetLabelName} if it exists which may also cause cells to be updated, due a now missing label.
      */
     SpreadsheetDelta<Optional<SpreadsheetLabelName>> removeLabel(final SpreadsheetLabelName label,
-                                 final SpreadsheetEngineContext context);
+                                                                 final SpreadsheetEngineContext context);
 
     /**
      * Loads the given label if it exists.
