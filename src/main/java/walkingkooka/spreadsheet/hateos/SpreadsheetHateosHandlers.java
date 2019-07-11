@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.store.SpreadsheetStore;
 import walkingkooka.type.PublicStaticHelper;
@@ -94,6 +95,19 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
             SpreadsheetDelta<Range<SpreadsheetRowReference>>> insertRows(final SpreadsheetEngine engine,
                                                                          final SpreadsheetEngineContext context) {
         return SpreadsheetEngineInsertRowsHateosHandler.with(engine, context);
+    }
+
+    /**
+     * {@see SpreadsheetEngineLoadCellHateosHandler}
+     */
+    public static HateosHandler<SpreadsheetCellReference,
+            SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
+            SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCell(final SpreadsheetEngineEvaluation evaluation,
+                                                                        final SpreadsheetEngine engine,
+                                                                        final SpreadsheetEngineContext context) {
+        return SpreadsheetEngineLoadCellHateosHandler.with(evaluation,
+                engine,
+                context);
     }
 
     /**
