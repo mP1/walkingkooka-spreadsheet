@@ -259,7 +259,7 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined, HateosR
         return ToStringBuilder.empty()
                 .labelSeparator(": ")
                 .separator(" ")
-                .valueSeparator(",")
+                .valueSeparator(", ")
                 .label("cells").value(this.cells)
                 .label("window").value(this.window())
                 .build();
