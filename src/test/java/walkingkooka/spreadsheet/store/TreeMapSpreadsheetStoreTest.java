@@ -85,6 +85,20 @@ public final class TreeMapSpreadsheetStoreTest implements SpreadsheetStoreTestin
     }
 
     @Test
+    public void testSaveWithoutIdStoreEmpty() {
+        final TreeMapSpreadsheetStore<UserId, User> store = this.createStore();
+        this.countAndCheck(store, 0);
+
+        final EmailAddress email = EmailAddress.parse("saved@example.com");
+
+        final User saved = store.save(User.with(Optional.empty(), email));
+        assertEquals(User.with(Optional.of(UserId.with(1)), email), saved, "id");
+
+        this.loadAndCheck(store, saved.id().get(), saved);
+        this.countAndCheck(store, 1);
+    }
+
+    @Test
     public void testSaveWithoutId() {
         final TreeMapSpreadsheetStore<UserId, User> store = this.createNotEmptyStore();
         this.countAndCheck(store, 3);
