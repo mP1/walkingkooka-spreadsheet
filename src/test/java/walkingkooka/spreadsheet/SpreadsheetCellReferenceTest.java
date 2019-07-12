@@ -569,7 +569,64 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
         assertEquals("13542", b.toString());
     }
 
-    // toString..................................................................................................
+    // equalsIgnoreReferenceKind........................................................................................
+
+    @Test
+    public void testEqualsIgnoreReferenceKindNullFalse() {
+        this.equalsIgnoreReferenceKindAndCheck(this.createReference(), null, false);
+    }
+
+    @Test
+    public void testEqualsIgnoreReferenceKindSameTrue() {
+        this.equalsIgnoreReferenceKindAndCheck(this.createReference(),
+                this.createReference(),
+                true);
+    }
+
+    @Test
+    public void testEqualsIgnoreReferenceKindDifferentValuesFalse() {
+        this.equalsIgnoreReferenceKindAndCheck("$A1",
+                "$B2",
+                false);
+    }
+
+    @Test
+    public void testEqualsIgnoreReferenceKindDifferentReferenceKindSameValues() {
+        this.equalsIgnoreReferenceKindAndCheck("$C3",
+                "C3",
+                true);
+    }
+
+    @Test
+    public void testEqualsIgnoreReferenceKindSameReferenceKindDifferentValues() {
+        this.equalsIgnoreReferenceKindAndCheck("$C3",
+                "$C4",
+                false);
+    }
+
+    private void equalsIgnoreReferenceKindAndCheck(final String reference1,
+                                                   final String reference2,
+                                                   final boolean expected) {
+        this.equalsIgnoreReferenceKindAndCheck(SpreadsheetCellReference.parseCellReference(reference1),
+                SpreadsheetCellReference.parseCellReference(reference2),
+                expected);
+    }
+
+    private void equalsIgnoreReferenceKindAndCheck(final SpreadsheetCellReference reference1,
+                                                   final SpreadsheetCellReference reference2,
+                                                   final boolean expected) {
+        assertEquals(expected,
+                reference1.equalsIgnoreReferenceKind(reference2),
+                () -> reference1 + " equalsIgnoreReferenceKind " + reference2
+        );
+        if (null != reference2) {
+            assertEquals(expected,
+                    reference2.equalsIgnoreReferenceKind(reference1),
+                    () -> reference2 + " equalsIgnoreReferenceKind " + reference1);
+        }
+    }
+
+    // toString.........................................................................................................
 
     @Test
     public void testToString() {

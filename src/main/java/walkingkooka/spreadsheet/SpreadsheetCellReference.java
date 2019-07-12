@@ -281,4 +281,19 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
     final int compare0(final SpreadsheetLabelName other) {
         return LABEL_COMPARED_WITH_CELL_RESULT;
     }
+
+    // equalsIgnoreReferenceKind........................................................................................
+
+    /**
+     * Returns true if the other {@link SpreadsheetCellReference} is equal ignoring {@link SpreadsheetReferenceKind}.
+     */
+    public boolean equalsIgnoreReferenceKind(final Object other) {
+        return this == other ||
+                (null != other && this.equalsIgnoreReferenceKind0(Cast.to(other)));
+    }
+
+    private boolean equalsIgnoreReferenceKind0(final SpreadsheetCellReference other) {
+        return this.column.equalsIgnoreReferenceKind(other.column) &&
+                this.row.equalsIgnoreReferenceKind(other.row);
+    }
 }
