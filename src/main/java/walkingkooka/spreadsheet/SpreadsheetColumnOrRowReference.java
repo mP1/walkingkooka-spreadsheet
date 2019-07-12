@@ -74,6 +74,10 @@ abstract class SpreadsheetColumnOrRowReference<R extends SpreadsheetColumnOrRowR
         return array;
     }
 
+    final static void checkReferenceKind(final SpreadsheetReferenceKind referenceKind) {
+        Objects.requireNonNull(referenceKind, "referenceKind");
+    }
+
     /**
      * Package private to limit sub classing.
      */
@@ -106,9 +110,24 @@ abstract class SpreadsheetColumnOrRowReference<R extends SpreadsheetColumnOrRowR
         return this.referenceKind;
     }
 
+    abstract R setReferenceKind(final SpreadsheetReferenceKind referenceKind);
+
+    final R setReferenceKind0(final SpreadsheetReferenceKind referenceKind) {
+        checkReferenceKind(referenceKind);
+
+        return this.referenceKind == referenceKind ?
+                Cast.to(this) :
+                this.replaceReferenceKind(referenceKind);
+    }
+
     private final SpreadsheetReferenceKind referenceKind;
 
-    // HashCodeEqualsDefined............................................................................
+    /**
+     * Unconditionally creates a new {@link SpreadsheetColumnOrRowReference} with the given {@link SpreadsheetReferenceKind}.
+     */
+    abstract R replaceReferenceKind(final SpreadsheetReferenceKind referenceKind);
+
+    // HashCodeEqualsDefined............................................................................................
 
     @Override
     public final int hashCode() {
