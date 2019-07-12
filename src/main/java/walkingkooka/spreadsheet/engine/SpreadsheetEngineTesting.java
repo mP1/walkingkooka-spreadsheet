@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Range;
@@ -50,7 +51,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends ClassTesting2<E> {
 
@@ -311,11 +311,17 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                            final SpreadsheetCellReference reference,
                                            final SpreadsheetEngineEvaluation evaluation,
                                            final SpreadsheetEngineContext context) {
-        final Optional<SpreadsheetCell> cell = engine.loadCell(reference, evaluation, context);
-        if (!cell.isPresent()) {
-            fail("Loading " + reference + " should have succeeded");
-        }
-        return cell.get();
+        final SpreadsheetDelta<Optional<SpreadsheetCellReference>> delta = engine.loadCell(reference, evaluation, context);
+        assertEquals(Optional.of(reference), delta.id(), "id");
+
+        return delta.cells()
+                .stream()
+                .filter(c -> c.reference().equalsIgnoreReferenceKind(reference))
+                .findFirst()
+                .orElseGet(() -> {
+                    Assertions.fail("Loading " + reference + " failed to return requested cell, cells: " + delta);
+                    return null;
+                });
     }
 
     default void loadCellFailCheck(final SpreadsheetCellReference reference,
@@ -339,10 +345,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                    final SpreadsheetCellReference reference,
                                    final SpreadsheetEngineEvaluation evaluation,
                                    final SpreadsheetEngineContext context) {
-        final Optional<SpreadsheetCell> cell = engine.loadCell(reference, evaluation, context);
-        assertEquals(Optional.empty(),
-                cell,
-                () -> "Expected reference " + reference + " to fail");
+        final SpreadsheetDelta<Optional<SpreadsheetCellReference>> loaded = engine.loadCell(reference, evaluation, context);
+        assertEquals(Optional.of(reference), loaded.id(), "id");
+
+        assertEquals(Optional.empty(), loaded.cells()
+                        .stream()
+                        .filter(c -> c.reference().equals(reference))
+                        .findFirst(),
+                "Expected reference " + reference + " to fail");
     }
 
     default SpreadsheetCell loadCellAndCheckWithoutValueOrError(final SpreadsheetEngine engine,
@@ -417,8 +427,8 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                   final SpreadsheetCellReference reference,
                                   final SpreadsheetEngineEvaluation evaluation,
                                   final SpreadsheetEngineContext context,
-                                  final SpreadsheetCell cell) {
-        assertEquals(Optional.of(cell),
+                                  final SpreadsheetCell...cells) {
+        assertEquals(SpreadsheetDelta.withId(Optional.of(reference), Sets.of(cells)),
                 engine.loadCell(reference, evaluation, context),
                 () -> "loadCell " + reference);
     }
