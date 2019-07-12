@@ -90,7 +90,10 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
         store.save(b);
         store.save(c);
 
-        this.idsAndCheck(ReadOnlySpreadsheetMetadataStore.with(store), 0, 3, a.id(), b.id(), c.id());
+        this.idsAndCheck(ReadOnlySpreadsheetMetadataStore.with(store),
+                0,
+                3,
+                a.id().get(), b.id().get(), c.id().get());
     }
 
     @Override
@@ -109,7 +112,10 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
         store.save(b);
         store.save(c);
 
-        this.valuesAndCheck(ReadOnlySpreadsheetMetadataStore.with(store), a.id(), 3, a, b, c);
+        this.valuesAndCheck(ReadOnlySpreadsheetMetadataStore.with(store),
+                a.id().get(),
+                3,
+                a, b, c);
     }
 
     @Override
