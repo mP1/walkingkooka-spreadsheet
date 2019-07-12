@@ -86,9 +86,12 @@ final class TreeMapSpreadsheetStore<K extends Comparable<K> & Value<Long>, V ext
 
     // no attempt to avoid clashes etc.
     private V saveNew(final V value) {
-        final long max = this.idToValue.lastKey().value();
+        final SortedMap<K, V> idToValue = this.idToValue;
+        final long max = idToValue.isEmpty() ?
+                0 :
+                idToValue.lastKey().value();
         final V valueWithId = this.valueWithIdFactory.apply(max + 1, value);
-        this.idToValue.put(valueWithId.id().get(), valueWithId);
+        idToValue.put(valueWithId.id().get(), valueWithId);
         this.saveWatchers.accept(valueWithId);
         return valueWithId;
     }
