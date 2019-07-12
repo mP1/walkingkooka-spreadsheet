@@ -21,7 +21,6 @@ import walkingkooka.compare.Comparators;
 import walkingkooka.compare.LowerOrUpper;
 import walkingkooka.compare.Range;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
@@ -130,6 +129,14 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
 
     private static void checkColumn(final SpreadsheetColumnReference column) {
         Objects.requireNonNull(column, "column");
+    }
+
+    /**
+     * Returns this in absolute form, creating a new instance if necessary.
+     */
+    public SpreadsheetCellReference toAbsolute() {
+        return this.setColumn(this.column().setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE))
+                .setRow(this.row().setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE));
     }
 
     /**

@@ -110,7 +110,42 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
         this.checkRow(different, differentRow);
     }
 
-    // addColumn .............................................................................................
+    // toAbsolute.......................................................................................................
+
+    @Test
+    public void testToAbsoluteAlreadyAbsolute() {
+        this.toAbsoluteAndCheck(SpreadsheetCellReference.parseCellReference("$B$2"));
+    }
+
+    @Test
+    public void testToAbsoluteRelative() {
+        this.toAbsoluteAndCheck(SpreadsheetCellReference.parseCellReference("B2"));
+    }
+
+    @Test
+    public void testToAbsoluteMixed() {
+        this.toAbsoluteAndCheck(SpreadsheetCellReference.parseCellReference("$B2"));
+    }
+
+    @Test
+    public void testToAbsoluteMixed2() {
+        this.toAbsoluteAndCheck(SpreadsheetCellReference.parseCellReference("B$2"));
+    }
+
+    private void toAbsoluteAndCheck(final SpreadsheetCellReference reference) {
+        final SpreadsheetColumnReference column = reference.column();
+        final SpreadsheetRowReference row = reference.row();
+
+        final SpreadsheetCellReference absolute = reference.toAbsolute();
+
+        this.checkColumn(absolute, column.setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE));
+        this.checkRow(absolute, row.setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE));
+
+        this.checkColumn(reference, column);
+        this.checkRow(reference, row);
+    }
+
+    // addColumn .......................................................................................................
 
     @Test
     public void testAddColumnZero() {
