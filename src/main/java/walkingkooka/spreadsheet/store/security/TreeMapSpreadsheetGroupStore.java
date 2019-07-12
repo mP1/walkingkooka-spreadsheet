@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.spreadsheet.store.SpreadsheetStore;
 import walkingkooka.spreadsheet.store.SpreadsheetStores;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -43,7 +44,7 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
 
     private TreeMapSpreadsheetGroupStore() {
         super();
-        this.store = SpreadsheetStores.treeMap(TreeMapSpreadsheetGroupStore::groupSetId);
+        this.store = SpreadsheetStores.treeMap(Comparator.naturalOrder(), TreeMapSpreadsheetGroupStore::groupSetId);
     }
 
     private static Group groupSetId(final Long value, final Group group) {
