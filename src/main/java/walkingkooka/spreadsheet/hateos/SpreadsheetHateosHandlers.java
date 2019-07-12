@@ -64,6 +64,16 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetEngineInsertColumnsHateosHandler}
+     */
+    public static HateosHandler<SpreadsheetColumnReference,
+            SpreadsheetDelta<Optional<SpreadsheetColumnReference>>,
+            SpreadsheetDelta<Range<SpreadsheetColumnReference>>> insertColumns(final SpreadsheetEngine engine,
+                                                                               final SpreadsheetEngineContext context) {
+        return SpreadsheetEngineInsertColumnsHateosHandler.with(engine, context);
+    }
+
+    /**
      * {@see SpreadsheetEngineSaveCellHateosHandler}
      */
     public static HateosHandler<SpreadsheetCellReference,
