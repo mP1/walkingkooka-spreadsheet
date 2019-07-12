@@ -42,6 +42,14 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
     }
 
     /**
+     * {@see SpreadsheetEngineDeleteColumnsHateosHandler}
+     */
+    public static SpreadsheetEngineDeleteColumnsHateosHandler deleteColumns(final SpreadsheetEngine engine,
+                                                                            final SpreadsheetEngineContext context) {
+        return SpreadsheetEngineDeleteColumnsHateosHandler.with(engine, context);
+    }
+
+    /**
      * {@see SpreadsheetEngineSaveCellHateosHandler}
      */
     public static HateosHandler<SpreadsheetCellReference,
