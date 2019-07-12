@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.test.HashCodeEqualsDefined;
@@ -37,7 +38,8 @@ import java.util.Optional;
  */
 public abstract class SpreadsheetMetadata implements HashCodeEqualsDefined,
         HasJsonNode,
-        HateosResource<SpreadsheetId>,
+        HasHateosLinkId,
+        HateosResource<Optional<SpreadsheetId>>,
         Value<Map<SpreadsheetMetadataPropertyName<?>, Object>> {
 
     /**
@@ -73,13 +75,15 @@ public abstract class SpreadsheetMetadata implements HashCodeEqualsDefined,
     /**
      * Returns the {@link SpreadsheetId} or throws a {@link IllegalStateException} if missing.
      */
-    public SpreadsheetId id() {
-        return this.get(SpreadsheetMetadataPropertyName.SPREADSHEET_ID).orElseThrow(() -> new IllegalStateException("Missing " + SpreadsheetMetadataPropertyName.SPREADSHEET_ID + "=" + this));
+    public Optional<SpreadsheetId> id() {
+        return this.get(SpreadsheetMetadataPropertyName.SPREADSHEET_ID);
     }
 
     @Override
     public String hateosLinkId() {
-        return this.id().hateosLinkId();
+        return this.id()
+                .orElseThrow(() -> new IllegalStateException("Missing " + SpreadsheetMetadataPropertyName.SPREADSHEET_ID + "=" + this))
+                .hateosLinkId();
     }
 
     // get..............................................................................................................
