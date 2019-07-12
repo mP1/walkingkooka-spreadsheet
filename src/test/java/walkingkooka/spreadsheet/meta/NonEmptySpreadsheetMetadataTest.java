@@ -27,6 +27,7 @@ import walkingkooka.tree.json.JsonNode;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -70,7 +71,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
     public void testId() {
         final SpreadsheetId id = SpreadsheetId.with(123);
         final SpreadsheetMetadata metadata = this.createSpreadsheetMetadata(Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, id));
-        assertSame(id, metadata.id());
+        assertEquals(Optional.of(id), metadata.id(), "id");
     }
 
     @Test
