@@ -17,29 +17,21 @@
 
 package walkingkooka.spreadsheet.store.security;
 
-import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.map.Maps;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.spreadsheet.store.SpreadsheetStore;
 import walkingkooka.spreadsheet.store.SpreadsheetStores;
-import walkingkooka.spreadsheet.store.Watchers;
 
+import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 /**
- * A {@link SpreadsheetUserStore} backed by a {@link SpreadsheetStores#treeMap(BiFunction)}.
+ * A {@link SpreadsheetUserStore} backed by a {@link SpreadsheetStores#treeMap(Comparator, BiFunction)}.
  */
 final class TreeMapSpreadsheetUserStore implements SpreadsheetUserStore {
 
@@ -50,7 +42,7 @@ final class TreeMapSpreadsheetUserStore implements SpreadsheetUserStore {
     private TreeMapSpreadsheetUserStore() {
         super();
 
-        this.store = SpreadsheetStores.treeMap(TreeMapSpreadsheetUserStore::createUser);
+        this.store = SpreadsheetStores.treeMap(Comparator.naturalOrder(), TreeMapSpreadsheetUserStore::createUser);
     }
 
     private static User createUser(final Long value, final User user) {

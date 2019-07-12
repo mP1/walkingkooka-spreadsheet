@@ -25,14 +25,34 @@ import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.test.TypeNameTesting;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.TreeMap;
+import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class TreeMapSpreadsheetStoreTest implements SpreadsheetStoreTesting<TreeMapSpreadsheetStore<UserId, User>, UserId, User>,
         TypeNameTesting<TreeMapSpreadsheetStore<UserId, User>> {
+
+    @Test
+    public void testWithNullIdComparatorFails() {
+        this.withFails(null, this::userFactory);
+    }
+
+    @Test
+    public void testWithNullValueWithIdFactoryFails() {
+        this.withFails(Comparator.naturalOrder(), null);
+    }
+
+    private void withFails(final Comparator<UserId> idComparator,
+                           final BiFunction<Long, User, User> valueWithIdFactory) {
+        assertThrows(NullPointerException.class, () -> {
+            TreeMapSpreadsheetStore.with(idComparator, valueWithIdFactory);
+        });
+    }
 
     @Test
     public void testLoad1() {
@@ -218,7 +238,7 @@ public final class TreeMapSpreadsheetStoreTest implements SpreadsheetStoreTestin
 
     @Override
     public TreeMapSpreadsheetStore<UserId, User> createStore() {
-        return TreeMapSpreadsheetStore.with(this::userFactory);
+        return TreeMapSpreadsheetStore.with(Comparator.naturalOrder(), this::userFactory);
     }
 
     final User userFactory(final Long value, final User user) {
