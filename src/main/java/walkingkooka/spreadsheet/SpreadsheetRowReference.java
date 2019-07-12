@@ -82,7 +82,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
      */
     public static SpreadsheetRowReference with(final int value, final SpreadsheetReferenceKind referenceKind) {
         checkValue(value);
-        Objects.requireNonNull(referenceKind, "referenceKind");
+        checkReferenceKind(referenceKind);
 
         return value < CACHE_SIZE ?
                 referenceKind.rowFromCache(value) :
@@ -102,6 +102,22 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
         super(value, referenceKind);
     }
 
+    /**
+     * Would be setter that returns a {@link SpreadsheetRowReference} with the given {@link SpreadsheetReferenceKind}
+     * creating a new instance if necessary.
+     */
+    @Override
+    public SpreadsheetRowReference setReferenceKind(final SpreadsheetReferenceKind referenceKind) {
+        checkReferenceKind(referenceKind);
+
+        return this.setReferenceKind0(referenceKind);
+    }
+
+    @Override
+    SpreadsheetRowReference replaceReferenceKind(final SpreadsheetReferenceKind referenceKind) {
+        return new SpreadsheetRowReference(this.value, referenceKind);
+    }
+    
     @Override
     public SpreadsheetRowReference add(final int value) {
         return Cast.to(this.add0(value));
