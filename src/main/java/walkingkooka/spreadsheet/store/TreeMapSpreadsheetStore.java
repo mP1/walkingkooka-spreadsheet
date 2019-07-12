@@ -23,6 +23,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -42,18 +43,20 @@ final class TreeMapSpreadsheetStore<K extends Comparable<K> & Value<Long>, V ext
     /**
      * Factory that creates a new {@link TreeMapSpreadsheetStore}.
      */
-    static <K extends Comparable<K> & Value<Long>, V extends HasId<Optional<K>>> TreeMapSpreadsheetStore<K, V> with(final BiFunction<Long, V, V> valueWithIdFactory) {
+    static <K extends Comparable<K> & Value<Long>, V extends HasId<Optional<K>>> TreeMapSpreadsheetStore<K, V> with(final Comparator<K> idComparator,
+                                                                                                                    final BiFunction<Long, V, V> valueWithIdFactory) {
+        Objects.requireNonNull(idComparator, "idComparator");
         Objects.requireNonNull(valueWithIdFactory, "valueWithIdFactory");
 
-        return new TreeMapSpreadsheetStore<>(valueWithIdFactory);
+        return new TreeMapSpreadsheetStore<>(idComparator, valueWithIdFactory);
     }
 
     /**
      * Private ctor
      */
-    private TreeMapSpreadsheetStore(final BiFunction<Long, V, V> valueWithIdFactory) {
+    private TreeMapSpreadsheetStore(final Comparator<K> idComparator, final BiFunction<Long, V, V> valueWithIdFactory) {
         super();
-        this.idToValue = Maps.sorted();
+        this.idToValue = Maps.sorted(idComparator);
         this.valueWithIdFactory = valueWithIdFactory;
     }
 
