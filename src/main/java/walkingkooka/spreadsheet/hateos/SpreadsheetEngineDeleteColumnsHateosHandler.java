@@ -49,7 +49,7 @@ final class SpreadsheetEngineDeleteColumnsHateosHandler extends SpreadsheetEngin
                                                                                    final Optional<SpreadsheetDelta<Optional<SpreadsheetColumnReference>>> resource,
                                                                                    final Map<HttpRequestAttribute<?>, Object> parameters) {
         final SpreadsheetColumnReference column = this.checkIdRequired(id);
-        this.checkResource(resource);
+        this.checkResourceEmpty(resource);
         this.checkParameters(parameters);
 
         return Optional.of(this.engine.deleteColumns(column, 1, this.context).setId(id));
