@@ -21,6 +21,7 @@ import walkingkooka.HasId;
 import walkingkooka.Value;
 import walkingkooka.type.PublicStaticHelper;
 
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.TreeMap;
 import java.util.function.BiFunction;
@@ -40,8 +41,9 @@ public final class SpreadsheetStores implements PublicStaticHelper {
     /**
      * {@see TreeMapSpreadsheetStore}
      */
-    public static <K extends Comparable<K> & Value<Long>, V extends HasId<Optional<K>>> SpreadsheetStore<K, V> treeMap(final BiFunction<Long, V, V> valueWithIdFactory) {
-        return TreeMapSpreadsheetStore.with(valueWithIdFactory);
+    public static <K extends Comparable<K> & Value<Long>, V extends HasId<Optional<K>>> SpreadsheetStore<K, V> treeMap(final Comparator<K> idComparator,
+                                                                                                                       final BiFunction<Long, V, V> valueWithIdFactory) {
+        return TreeMapSpreadsheetStore.with(idComparator, valueWithIdFactory);
     }
 
     /**
