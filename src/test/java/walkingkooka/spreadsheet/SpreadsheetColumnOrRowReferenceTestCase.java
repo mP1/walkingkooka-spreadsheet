@@ -250,7 +250,91 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         this.toJsonNodeAndCheck(reference, JsonNode.string(reference.toString()));
     }
 
-    // helper......................................................................................
+    // equalsIgnoreReferenceKind........................................................................................
+
+    @Test
+    public void testEqualsIgnoreReferenceKindNullFalse() {
+        this.equalsIgnoreReferenceKindAndCheck(this.createReference(),
+                null,
+                false);
+    }
+
+    @Test
+    public void testEqualsIgnoreReferenceKindSame() {
+        this.equalsIgnoreReferenceKindAndCheck(this.createReference(),
+                this.createReference(),
+                true);
+    }
+
+    @Test
+    public void testEqualsIgnoreReferenceDifferentValues() {
+        this.equalsIgnoreReferenceKindAndCheck(1,
+                SpreadsheetReferenceKind.ABSOLUTE,
+                2,
+                SpreadsheetReferenceKind.ABSOLUTE,
+                false);
+    }
+
+    @Test
+    public void testEqualsIgnoreReferenceSameValuesDifferentKind() {
+        final int value = 5;
+
+        this.equalsIgnoreReferenceKindAndCheck(value,
+                SpreadsheetReferenceKind.ABSOLUTE,
+                value,
+                SpreadsheetReferenceKind.RELATIVE,
+                true);
+    }
+
+    @Test
+    public void testEqualsIgnoreReferenceSameValuesBothAbsolute() {
+        final int value = 5;
+        final SpreadsheetReferenceKind kind = SpreadsheetReferenceKind.ABSOLUTE;
+
+        this.equalsIgnoreReferenceKindAndCheck(value,
+                kind,
+                value,
+                kind,
+                true);
+    }
+
+    @Test
+    public void testEqualsIgnoreReferenceSameValuesBothRelative() {
+        final int value = 5;
+        final SpreadsheetReferenceKind kind = SpreadsheetReferenceKind.RELATIVE;
+
+        this.equalsIgnoreReferenceKindAndCheck(value,
+                kind,
+                value,
+                kind,
+                true);
+    }
+
+    private void equalsIgnoreReferenceKindAndCheck(final int value1,
+                                                   final SpreadsheetReferenceKind kind1,
+                                                   final int value2,
+                                                   final SpreadsheetReferenceKind kind2,
+                                                   final boolean expected) {
+        equalsIgnoreReferenceKindAndCheck(this.createReference(value1, kind1),
+                this.createReference(value2, kind2),
+                expected);
+    }
+
+    private void equalsIgnoreReferenceKindAndCheck(final R reference1,
+                                                   final R reference2,
+                                                   final boolean expected) {
+        assertEquals(expected,
+                reference1.equalsIgnoreReferenceKind(reference2),
+                () -> reference1 + " equalsIgnoreReferenceKind " + reference2
+        );
+        if (null != reference2) {
+            assertEquals(expected,
+                    reference2.equalsIgnoreReferenceKind(reference1),
+                    () -> reference2 + " equalsIgnoreReferenceKind " + reference1);
+        }
+    }
+
+    // helper............................................................................................................
 
     final R createReference() {
         return this.createReference(VALUE, REFERENCE_KIND);

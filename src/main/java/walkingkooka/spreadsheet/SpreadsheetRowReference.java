@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
 import walkingkooka.compare.Range;
-import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.text.cursor.parser.Parser;
@@ -159,6 +158,14 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     @Override
     boolean canBeEqual(final Object other) {
         return other instanceof SpreadsheetRowReference;
+    }
+
+    /**
+     * Returns true if the values ignoring the {@link SpreadsheetReferenceKind}.
+     */
+    @Override
+    public boolean equalsIgnoreReferenceKind(final SpreadsheetRowReference other) {
+        return this.equalsIgnoreReferenceKind0(other);
     }
 
     @Override
