@@ -33,15 +33,6 @@ public interface SpreadsheetMetadataStoreTesting<S extends SpreadsheetMetadataSt
 
     int ID = 1;
 
-    @Test
-    default void testSaveWithoutIdFails() {
-        final S store = this.createStore();
-
-        assertThrows(SpreadsheetMetadataStoreException.class, () -> {
-            store.save(SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com"))));
-        });
-    }
-
     @Override
     default SpreadsheetId id() {
         return SpreadsheetId.with(ID);
