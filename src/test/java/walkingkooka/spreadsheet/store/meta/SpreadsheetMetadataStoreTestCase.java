@@ -25,7 +25,6 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMetadataStore> implements SpreadsheetMetadataStoreTesting<S> {
 
@@ -86,7 +85,10 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
         store.save(b);
         store.save(c);
 
-        this.idsAndCheck(store, 0, 3, a.id(), b.id(), c.id());
+        this.idsAndCheck(store,
+                0,
+                3,
+                a.id().get(), b.id().get(), c.id().get());
     }
 
     @Test
@@ -103,7 +105,10 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
         store.save(c);
         store.save(d);
 
-        this.idsAndCheck(store, ID, 2, b.id(), c.id());
+        this.idsAndCheck(store,
+                ID,
+                2,
+                b.id().get(), c.id().get());
     }
 
     @Test
@@ -118,7 +123,10 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
         store.save(b);
         store.save(c);
 
-        this.valuesAndCheck(store, a.id(), 3, a, b, c);
+        this.valuesAndCheck(store,
+                a.id().get(),
+                3,
+                a, b, c);
     }
 
     @Test
@@ -135,7 +143,9 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
         store.save(c);
         store.save(d);
 
-        this.valuesAndCheck(store, b.id(), 2, b, c);
+        this.valuesAndCheck(store,
+                b.id().get(),
+                2, b, c);
     }
 
     final SpreadsheetMetadata metadata(final long id, final String creator) {
