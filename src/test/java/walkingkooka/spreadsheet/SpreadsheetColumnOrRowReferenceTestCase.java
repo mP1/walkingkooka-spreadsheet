@@ -41,6 +41,11 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     final static int VALUE = 123;
     final static SpreadsheetReferenceKind REFERENCE_KIND = SpreadsheetReferenceKind.ABSOLUTE;
+    final static SpreadsheetReferenceKind DIFFERENT_REFERENCE_KIND = SpreadsheetReferenceKind.RELATIVE;
+
+    SpreadsheetColumnOrRowReferenceTestCase() {
+        super();
+    }
 
     @Test
     public final void testWithNegativeValueFails() {
@@ -108,7 +113,38 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         throw new UnsupportedOperationException();
     }
 
-    // setValue............................................................................................
+    // setReferenceKind.................................................................................................
+
+    @Test
+    public final void testSetReferenceKindNullFails() {
+        assertThrows(NullPointerException.class, () -> {
+            this.createReference().setReferenceKind(null);
+        });
+    }
+
+    @Test
+    public final void testSetReferenceKindSame() {
+        final R reference = this.createReference();
+        assertSame(reference, reference.setReferenceKind(reference.referenceKind()));
+    }
+
+    @Test
+    public final void testSetReferenceKindDifferent() {
+        final R reference = this.createReference();
+
+        final R different = reference.setReferenceKind(DIFFERENT_REFERENCE_KIND);
+        assertNotSame(reference, different);
+
+        this.checkValue(different, VALUE);
+        this.checkKind(different, DIFFERENT_REFERENCE_KIND);
+
+        this.checkValue(reference, VALUE);
+        this.checkKind(reference, REFERENCE_KIND);
+
+        assertEquals(reference, different.setReferenceKind(REFERENCE_KIND));
+    }
+
+    // setValue.........................................................................................................
 
     @Test
     public final void testSetValueInvalidFails() {
