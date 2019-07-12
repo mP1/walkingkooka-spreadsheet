@@ -45,9 +45,9 @@ public interface SpreadsheetEngine {
      * Loads which includes parsing the formula as necessary and evaluating the value of the requested cells.
      * Invalid cell requests will be ignored and absent fromthe result. If parsing or evaluation fails the cell will have an error.
      */
-    Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
-                                       final SpreadsheetEngineEvaluation evaluation,
-                                       final SpreadsheetEngineContext context);
+    SpreadsheetDelta<Optional<SpreadsheetCellReference>> loadCell(final SpreadsheetCellReference cell,
+                                                                  final SpreadsheetEngineEvaluation evaluation,
+                                                                  final SpreadsheetEngineContext context);
 
     /**
      * Saves the cell, and updates all affected (referenced cells) returning all updated cells.

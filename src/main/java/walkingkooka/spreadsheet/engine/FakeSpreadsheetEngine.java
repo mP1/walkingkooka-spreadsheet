@@ -39,9 +39,9 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference cell,
-                                              final SpreadsheetEngineEvaluation evaluation,
-                                              final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta<Optional<SpreadsheetCellReference>> loadCell(final SpreadsheetCellReference cell,
+                                                                         final SpreadsheetEngineEvaluation evaluation,
+                                                                         final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
