@@ -134,6 +134,7 @@ abstract class SpreadsheetColumnOrRowReference<R extends SpreadsheetColumnOrRowR
         return Objects.hash(this.value, this.referenceKind);
     }
 
+    @Override
     public final boolean equals(final Object other) {
         return this == other ||
                 this.canBeEqual(other) &&
@@ -143,8 +144,19 @@ abstract class SpreadsheetColumnOrRowReference<R extends SpreadsheetColumnOrRowR
     abstract boolean canBeEqual(Object other);
 
     private boolean equals0(final SpreadsheetColumnOrRowReference other) {
-        return this.value == other.value &&
+        return this.equalsValue(other) &&
                 this.referenceKind == other.referenceKind;
+    }
+
+    abstract boolean equalsIgnoreReferenceKind(final R other);
+
+    final boolean equalsIgnoreReferenceKind0(final SpreadsheetColumnOrRowReference other) {
+        return this == other ||
+                (null != other && this.equalsValue(Cast.to(other)));
+    }
+
+    final boolean equalsValue(final SpreadsheetColumnOrRowReference other) {
+        return this.value == other.value;
     }
 
     @Override
