@@ -64,11 +64,11 @@ abstract class SpreadsheetHateosHandler<I extends Comparable<I> & HasHateosLinkI
     /**
      * Checks that the range bounds are not null and both are inclusive.
      */
-    final void checkRangeBounded(final Range<?> range) {
-        Objects.requireNonNull(range, "range");
+    final void checkRangeBounded(final Range<?> range, final String label) {
+        Objects.requireNonNull(range, label);
 
         if (!range.lowerBound().isInclusive() || !range.upperBound().isInclusive()) {
-            throw new IllegalArgumentException("Range with both bounds required=" + range);
+            throw new IllegalArgumentException("Range with both " + label + " required=" + range);
         }
     }
 
