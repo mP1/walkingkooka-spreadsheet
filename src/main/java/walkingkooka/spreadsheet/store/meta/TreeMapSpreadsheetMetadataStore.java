@@ -17,22 +17,18 @@
 
 package walkingkooka.spreadsheet.store.meta;
 
-import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.map.Maps;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.store.SpreadsheetStore;
-import walkingkooka.spreadsheet.store.Watchers;
+import walkingkooka.spreadsheet.store.SpreadsheetStores;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 /**
  * A {@link SpreadsheetMetadataStore} that uses a {@link Map}.
@@ -51,90 +47,60 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
      */
     private TreeMapSpreadsheetMetadataStore() {
         super();
+
+        this.store = SpreadsheetStores.treeMap(Comparator.naturalOrder(), TreeMapSpreadsheetMetadataStore::createSpreadsheetMetadata);
+    }
+
+    private static SpreadsheetMetadata createSpreadsheetMetadata(final Long value, final SpreadsheetMetadata spreadsheetMetadata) {
+        return spreadsheetMetadata.set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(value));
     }
 
     @Override
     public Optional<SpreadsheetMetadata> load(final SpreadsheetId id) {
-        Objects.requireNonNull(id, "ids");
-        return Optional.ofNullable(this.metadatas.get(id));
+        return this.store.load(id);
     }
 
     @Override
-    public SpreadsheetMetadata save(final SpreadsheetMetadata metadata) {
-        Objects.requireNonNull(metadata, "metadata");
-
-        final SpreadsheetId key = metadata.get(SpreadsheetMetadataPropertyName.SPREADSHEET_ID)
-                .orElseThrow(() -> new SpreadsheetMetadataStoreException("Metadata missing required " + SpreadsheetMetadataPropertyName.SPREADSHEET_ID + "=" + metadata));
-        if (false == metadata.equals(this.metadatas.put(key, metadata))) {
-            this.saveWatchers.accept(metadata);
-        }
-
-        return metadata;
+    public SpreadsheetMetadata save(final SpreadsheetMetadata spreadsheetMetadata) {
+        return this.store.save(spreadsheetMetadata);
     }
 
     @Override
     public Runnable addSaveWatcher(final Consumer<SpreadsheetMetadata> saved) {
-        return this.saveWatchers.addWatcher(saved);
+        return this.store.addSaveWatcher(saved);
     }
-
-    private final Watchers<SpreadsheetMetadata> saveWatchers = Watchers.create();
 
     @Override
     public void delete(final SpreadsheetId id) {
-        Objects.requireNonNull(id, "id");
-
-        if (null != this.metadatas.remove(id)) {
-            this.deleteWatchers.accept(id);
-        }
+        this.store.delete(id);
     }
 
     @Override
     public Runnable addDeleteWatcher(final Consumer<SpreadsheetId> deleted) {
-        return this.deleteWatchers.addWatcher(deleted);
+        return this.store.addDeleteWatcher(deleted);
     }
-
-    private final Watchers<SpreadsheetId> deleteWatchers = Watchers.create();
 
     @Override
     public int count() {
-        return this.metadatas.size();
+        return this.store.count();
     }
 
     @Override
     public Set<SpreadsheetId> ids(final int from,
                                   final int count) {
-        SpreadsheetStore.checkFromAndTo(from, count);
-
-        return this.metadatas.keySet()
-                .stream()
-                .skip(from)
-                .limit(count)
-                .collect(Collectors.toCollection(Sets::ordered));
+        return this.store.ids(from, count);
     }
 
-    /**
-     * Find the first metadata at or after the from {@link SpreadsheetId} and then gather the required count.
-     */
     @Override
     public List<SpreadsheetMetadata> values(final SpreadsheetId from,
                                             final int count) {
-        SpreadsheetStore.checkFromAndToIds(from, count);
-
-        return this.metadatas.entrySet()
-                .stream()
-                .filter(e -> e.getKey().compareTo(from) >= 0)
-                .map(e -> e.getValue())
-                .limit(count)
-                .collect(Collectors.toCollection(Lists::array));
+        return this.store.values(from, count);
     }
 
-    /**
-     * All metadatas present in this spreadsheet
-     */
-    private final Map<SpreadsheetId, SpreadsheetMetadata> metadatas = Maps.sorted();
+    final SpreadsheetStore<SpreadsheetId, SpreadsheetMetadata> store;
 
     @Override
     public String toString() {
-        return this.metadatas.values().toString();
+        return this.store.toString();
     }
 }

@@ -35,10 +35,6 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
         });
     }
 
-    @Override
-    public void testSaveWithoutIdFails() {
-    }
-
     @Test
     public void testSaveAndLoad() {
         final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
