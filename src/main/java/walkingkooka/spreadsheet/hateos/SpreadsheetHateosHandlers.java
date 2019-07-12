@@ -32,6 +32,16 @@ import java.util.Optional;
 public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
 
     /**
+     * {@see SpreadsheetEngineCopyCellsHateosHandler}
+     */
+    public static HateosHandler<SpreadsheetCellReference,
+            SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
+            SpreadsheetDelta<Range<SpreadsheetCellReference>>> copyCells(final SpreadsheetEngine engine,
+                                                                         final SpreadsheetEngineContext context) {
+        return SpreadsheetEngineCopyCellsHateosHandler.with(engine, context);
+    }
+
+    /**
      * {@see SpreadsheetEngineSaveCellHateosHandler}
      */
     public static HateosHandler<SpreadsheetCellReference,
