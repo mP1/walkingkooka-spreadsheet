@@ -47,24 +47,7 @@ public abstract class SpreadsheetValueVisitor extends Visitor<Object> {
                     break;
                 }
                 if (value instanceof Number) {
-                    final Number number = Number.class.cast(value);
-                    if (number instanceof BigDecimal) {
-                        this.visit(BigDecimal.class.cast(value));
-                        break;
-                    }
-                    if (number instanceof BigInteger) {
-                        this.visit(BigInteger.class.cast(value));
-                        break;
-                    }
-                    if (number instanceof Double) {
-                        this.visit(Double.class.cast(value));
-                        break;
-                    }
-                    if (number instanceof Long) {
-                        this.visit(Long.class.cast(value));
-                        break;
-                    }
-                    this.visit(value);
+                    SpreadsheetValueVisitorNumberVisitor.with(this).accept(Number.class.cast(value));
                     break;
                 }
                 if (value instanceof Boolean) {
