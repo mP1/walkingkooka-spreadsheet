@@ -268,7 +268,7 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
      * The inverse of {@link #targetToReferences}
      */
     // VisibleForTesting
-    final Map<SpreadsheetCellReference, Set<T>> referenceToTargets = Maps.sorted();
+    final Map<SpreadsheetCellReference, Set<T>> referenceToTargets = Maps.sorted(SpreadsheetCellReference.COMPARATOR);
 
     @Override
     public String toString() {
