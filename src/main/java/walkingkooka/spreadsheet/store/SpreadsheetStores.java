@@ -42,8 +42,8 @@ public final class SpreadsheetStores implements PublicStaticHelper {
      * {@see TreeMapSpreadsheetStore}
      */
     public static <K extends Comparable<K> & Value<Long>, V extends HasId<Optional<K>>> SpreadsheetStore<K, V> treeMap(final Comparator<K> idComparator,
-                                                                                                                       final BiFunction<Long, V, V> valueWithIdFactory) {
-        return TreeMapSpreadsheetStore.with(idComparator, valueWithIdFactory);
+                                                                                                                       final BiFunction<K, V, V> idSetter) {
+        return TreeMapSpreadsheetStore.with(idComparator, idSetter);
     }
 
     /**
