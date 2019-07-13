@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.SpreadsheetDelta;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
@@ -34,7 +36,7 @@ import java.util.function.Function;
 
 /**
  * A {@link Function} which may be passed to {@link walkingkooka.tree.expression.ExpressionEvaluationContexts#basic(BiFunction, Function, MathContext, Converter, walkingkooka.math.DecimalNumberContext)}
- * and acts as a bridge resolving references to a {@link SpreadsheetEngine}.
+ * and acts as a bridge resolving {@link ExpressionReference} to a {@link ExpressionNode}.
  */
 final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction implements Function<ExpressionReference, Optional<ExpressionNode>> {
 
@@ -66,12 +68,18 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
     public Optional<ExpressionNode> apply(final ExpressionReference reference) {
         Objects.requireNonNull(reference, "reference");
 
-        final Optional<SpreadsheetCell> maybeCell = this.engine.loadCell(SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunctionSpreadsheetExpressionReferenceVisitor.reference(reference, this.labelStore),
-                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, this.context);
-        if (!maybeCell.isPresent()) {
-            throw new ExpressionEvaluationException("Unknown cell reference " + reference);
-        }
-        final SpreadsheetFormula formula = maybeCell.get().formula();
+        final SpreadsheetCellReference cellReference = SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunctionSpreadsheetExpressionReferenceVisitor.reference(reference, this.labelStore);
+
+        final SpreadsheetDelta<Optional<SpreadsheetCellReference>> delta = this.engine.loadCell(cellReference,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                this.context);
+
+        final SpreadsheetCell cell = delta.cells()
+                .stream()
+                .filter(c -> c.reference().equalsIgnoreReferenceKind(cellReference))
+                .findFirst()
+                .orElseThrow(() -> new ExpressionEvaluationException("Unknown cell reference " + reference));
+        final SpreadsheetFormula formula = cell.formula();
         final Optional<SpreadsheetError> error = formula.error();
         if (error.isPresent()) {
             throw new ExpressionEvaluationException(error.get().value());

@@ -166,7 +166,7 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
     /**
      * Completes any outstanding refreshes.
      */
-    Set<SpreadsheetCell> refreshUpdated() {
+    void refreshUpdated() {
         this.mode = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE;
 
         for (; ; ) {
@@ -182,7 +182,20 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
                     SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                     this.context);
         }
+    }
 
+    /**
+     * Unconditionally adds the {@link SpreadsheetCell} to the updated cells. This is used to add a cell that was loaded
+     * but not changed.
+     */
+    void onLoad(final SpreadsheetCell cell) {
+        this.updated.put(cell.reference(), cell);
+    }
+
+    /**
+     * Returns all the updated {@link SpreadsheetCell}.
+     */
+    Set<SpreadsheetCell> cells() {
         final Set<SpreadsheetCell> updated = Sets.sorted();
         updated.addAll(this.updated.values());
         return Sets.readOnly(updated);
