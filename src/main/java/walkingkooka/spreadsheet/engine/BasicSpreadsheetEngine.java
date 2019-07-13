@@ -110,22 +110,196 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     private final SpreadsheetId id;
 
-    // LOAD CELL, SAVE CELL..........................................................................................
+    // LOAD CELL........................................................................................................
 
     /**
-     * Loads the requested cell, which may also involve re-evaluating the formula.
+     * Loads the cell honouring the {@link SpreadsheetEngineEvaluation} which may result in loading and evaluating other cells.
      */
     @Override
-    public Optional<SpreadsheetCell> loadCell(final SpreadsheetCellReference reference,
-                                              final SpreadsheetEngineEvaluation evaluation,
-                                              final SpreadsheetEngineContext context) {
-        checkReference(reference);
+    public SpreadsheetDelta<Optional<SpreadsheetCellReference>> loadCell(final SpreadsheetCellReference reference,
+                                                                         final SpreadsheetEngineEvaluation evaluation,
+                                                                         final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(reference, "reference");
         Objects.requireNonNull(evaluation, "evaluation");
         checkContext(context);
 
-        final Optional<SpreadsheetCell> cell = this.cellStore.load(reference);
-        return cell.map(c -> this.maybeParseAndEvaluateAndFormat(c, evaluation, context));
+        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
+            final Optional<SpreadsheetCell> loaded = this.cellStore.load(reference);
+            loaded.map(c -> {
+                final SpreadsheetCell evaluated = this.maybeParseAndEvaluateAndFormat(c, evaluation, context);
+                updated.onLoad(evaluated); // might have just loaded a cell without any updates but want to record cell.
+                return evaluated;
+            });
+            updated.refreshUpdated();
+            return SpreadsheetDelta.withId(Optional.of(reference), updated.cells());
+        }
     }
+
+    // SAVE CELL........................................................................................................
+
+    /**
+     * Saves the cell, and updates all affected (referenced cells) returning all updated cells.
+     */
+    @Override
+    public SpreadsheetDelta<Optional<SpreadsheetCellReference>> saveCell(final SpreadsheetCell cell,
+                                                                         final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(cell, "cell");
+        checkContext(context);
+
+        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
+            this.maybeParseAndEvaluateAndFormat(cell,
+                    SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                    context);
+            updated.refreshUpdated();
+            return SpreadsheetDelta.withId(cell.id(), updated.cells());
+        }
+    }
+
+    // DELETE CELL....................................................................................................
+
+    /**
+     * DELETE the cell, and updates all affected (referenced cells) returning all updated cells.
+     */
+    @Override
+    public SpreadsheetDelta<Optional<SpreadsheetCellReference>> deleteCell(final SpreadsheetCellReference reference,
+                                                                           final SpreadsheetEngineContext context) {
+        checkReference(reference);
+        checkContext(context);
+
+        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
+            this.cellStore.delete(reference);
+            updated.refreshUpdated();
+            return SpreadsheetDelta.withId(Optional.of(reference), updated.cells());
+        }
+    }
+
+    // DELETE / INSERT / COLUMN / ROW ..................................................................................
+
+    @Override
+    public SpreadsheetDelta<Range<SpreadsheetColumnReference>> deleteColumns(final SpreadsheetColumnReference column,
+                                                                             final int count,
+                                                                             final SpreadsheetEngineContext context) {
+        checkColumn(column);
+        checkCount(count);
+        checkContext(context);
+
+        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
+            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn.with(column.value(), count, this, context)
+                    .delete();
+            updated.refreshUpdated();
+            return SpreadsheetDelta.withRange(range(column, column.add(count)),
+                    updated.cells());
+        }
+    }
+
+    @Override
+    public SpreadsheetDelta<Range<SpreadsheetRowReference>> deleteRows(final SpreadsheetRowReference row,
+                                                                       final int count,
+                                                                       final SpreadsheetEngineContext context) {
+        checkRow(row);
+        checkCount(count);
+        checkContext(context);
+
+        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
+            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowRow.with(row.value(), count, this, context)
+                    .delete();
+            updated.refreshUpdated();
+            return SpreadsheetDelta.withRange(range(row, row.add(count)), updated.cells());
+        }
+    }
+
+    @Override
+    public SpreadsheetDelta<Range<SpreadsheetColumnReference>> insertColumns(final SpreadsheetColumnReference column,
+                                                                             final int count,
+                                                                             final SpreadsheetEngineContext context) {
+        checkColumn(column);
+        checkCount(count);
+        checkContext(context);
+
+        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
+            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn.with(column.value(), count,
+                    this,
+                    context)
+                    .insert();
+            updated.refreshUpdated();
+            return SpreadsheetDelta.withRange(range(column, column.add(count)),
+                    updated.cells());
+        }
+    }
+
+    @Override
+    public SpreadsheetDelta<Range<SpreadsheetRowReference>> insertRows(final SpreadsheetRowReference row,
+                                                                       final int count,
+                                                                       final SpreadsheetEngineContext context) {
+        checkRow(row);
+        checkCount(count);
+        checkContext(context);
+
+        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
+            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowRow.with(row.value(), count, this, context)
+                    .insert();
+            updated.refreshUpdated();
+            return SpreadsheetDelta.withRange(range(row, row.add(count)), updated.cells());
+        }
+    }
+
+    private static void checkCount(final int count) {
+        if (count < 0) {
+            throw new IllegalArgumentException("Count " + count + " < 0");
+        }
+    }
+
+    private static <I extends Comparable<I> & HasHateosLinkId> Range<I> range(final I lower, final I upper) {
+        return Range.greaterThanEquals(lower).and(Range.lessThanEquals(upper));
+    }
+
+    @Override
+    public SpreadsheetDelta<Range<SpreadsheetCellReference>> copyCells(final Collection<SpreadsheetCell> from,
+                                                                       final SpreadsheetRange to,
+                                                                       final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(from, "from");
+        Objects.requireNonNull(to, "to");
+        checkContext(context);
+
+        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
+            BasicSpreadsheetEngineCopyCells.execute(from, to, this, context);
+            updated.refreshUpdated();
+            return SpreadsheetDelta.withRange(to.range(), updated.cells());
+        }
+    }
+
+    @Override
+    public SpreadsheetDelta<Optional<SpreadsheetLabelName>> saveLabel(final SpreadsheetLabelMapping mapping,
+                                                                      final SpreadsheetEngineContext context) {
+        checkMapping(mapping);
+        checkContext(context);
+
+        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
+            this.labelStore.save(mapping);
+            updated.refreshUpdated();
+            return SpreadsheetDelta.withId(Optional.of(mapping.label()), updated.cells());
+        }
+    }
+
+    @Override
+    public SpreadsheetDelta<Optional<SpreadsheetLabelName>> removeLabel(final SpreadsheetLabelName label,
+                                                                        final SpreadsheetEngineContext context) {
+        checkLabel(label);
+        checkContext(context);
+
+        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
+            this.labelStore.delete(label);
+            updated.refreshUpdated();
+            return SpreadsheetDelta.withId(Optional.of(label), updated.cells());
+        }
+    }
+
+    @Override
+    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName name) {
+        return this.labelStore.load(name);
+    }
+
+    // cell eval........................................................................................................
 
     /**
      * Attempts to evaluate the cell, parsing and evaluating as necessary depending on the {@link SpreadsheetEngineEvaluation}
@@ -322,161 +496,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return cell.setFormatted(Optional.of(cell.style().replace(TextNode.text(error.get().value()))));
     }
 
-    // SAVE CELL....................................................................................................
-
-    /**
-     * Saves the cell, and updates all affected (referenced cells) returning all updated cells.
-     */
-    @Override
-    public SpreadsheetDelta<Optional<SpreadsheetCellReference>> saveCell(final SpreadsheetCell cell,
-                                                                         final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(cell, "cell");
-        checkContext(context);
-
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
-            this.maybeParseAndEvaluateAndFormat(cell,
-                    SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
-                    context);
-            return SpreadsheetDelta.withId(cell.id(), updated.refreshUpdated());
-        }
-    }
-
-    // DELETE CELL....................................................................................................
-
-    /**
-     * DELETE the cell, and updates all affected (referenced cells) returning all updated cells.
-     */
-    @Override
-    public SpreadsheetDelta<Optional<SpreadsheetCellReference>> deleteCell(final SpreadsheetCellReference reference,
-                                                                           final SpreadsheetEngineContext context) {
-        checkReference(reference);
-        checkContext(context);
-
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
-            this.cellStore.delete(reference);
-            return SpreadsheetDelta.withId(Optional.of(reference), updated.refreshUpdated());
-        }
-    }
-
-    // DELETE / INSERT / COLUMN / ROW ..................................................................................
-
-    @Override
-    public SpreadsheetDelta<Range<SpreadsheetColumnReference>> deleteColumns(final SpreadsheetColumnReference column,
-                                                                             final int count,
-                                                                             final SpreadsheetEngineContext context) {
-        checkColumn(column);
-        checkCount(count);
-        checkContext(context);
-
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
-            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn.with(column.value(), count, this, context)
-                    .delete();
-            return SpreadsheetDelta.withRange(range(column, column.add(count)),
-                    updated.refreshUpdated());
-        }
-    }
-
-    @Override
-    public SpreadsheetDelta<Range<SpreadsheetRowReference>> deleteRows(final SpreadsheetRowReference row,
-                                                                       final int count,
-                                                                       final SpreadsheetEngineContext context) {
-        checkRow(row);
-        checkCount(count);
-        checkContext(context);
-
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
-            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowRow.with(row.value(), count, this, context)
-                    .delete();
-            return SpreadsheetDelta.withRange(range(row, row.add(count)), updated.refreshUpdated());
-        }
-    }
-
-    @Override
-    public SpreadsheetDelta<Range<SpreadsheetColumnReference>> insertColumns(final SpreadsheetColumnReference column,
-                                                                             final int count,
-                                                                             final SpreadsheetEngineContext context) {
-        checkColumn(column);
-        checkCount(count);
-        checkContext(context);
-
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
-            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumn.with(column.value(), count,
-                    this,
-                    context)
-                    .insert();
-            return SpreadsheetDelta.withRange(range(column, column.add(count)),
-                    updated.refreshUpdated());
-        }
-    }
-
-    @Override
-    public SpreadsheetDelta<Range<SpreadsheetRowReference>> insertRows(final SpreadsheetRowReference row,
-                                                                       final int count,
-                                                                       final SpreadsheetEngineContext context) {
-        checkRow(row);
-        checkCount(count);
-        checkContext(context);
-
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
-            BasicSpreadsheetEngineDeleteOrInsertColumnOrRowRow.with(row.value(), count, this, context)
-                    .insert();
-            return SpreadsheetDelta.withRange(range(row, row.add(count)), updated.refreshUpdated());
-        }
-    }
-
-    private static void checkCount(final int count) {
-        if (count < 0) {
-            throw new IllegalArgumentException("Count " + count + " < 0");
-        }
-    }
-
-    private static <I extends Comparable<I> & HasHateosLinkId> Range<I> range(final I lower, final I upper) {
-        return Range.greaterThanEquals(lower).and(Range.lessThanEquals(upper));
-    }
-
-    @Override
-    public SpreadsheetDelta<Range<SpreadsheetCellReference>> copyCells(final Collection<SpreadsheetCell> from,
-                                                                       final SpreadsheetRange to,
-                                                                       final SpreadsheetEngineContext context) {
-        Objects.requireNonNull(from, "from");
-        Objects.requireNonNull(to, "to");
-        checkContext(context);
-
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
-            BasicSpreadsheetEngineCopyCells.execute(from, to, this, context);
-
-            return SpreadsheetDelta.withRange(to.range(), updated.refreshUpdated());
-        }
-    }
-
-    @Override
-    public SpreadsheetDelta<Optional<SpreadsheetLabelName>> saveLabel(final SpreadsheetLabelMapping mapping,
-                                                                      final SpreadsheetEngineContext context) {
-        checkMapping(mapping);
-        checkContext(context);
-
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
-            this.labelStore.save(mapping);
-            return SpreadsheetDelta.withId(Optional.of(mapping.label()), updated.refreshUpdated());
-        }
-    }
-
-    @Override
-    public SpreadsheetDelta<Optional<SpreadsheetLabelName>> removeLabel(final SpreadsheetLabelName label,
-                                                                        final SpreadsheetEngineContext context) {
-        checkLabel(label);
-        checkContext(context);
-
-        try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.IMMEDIATE.createUpdatedCells(this, context)) {
-            this.labelStore.delete(label);
-            return SpreadsheetDelta.withId(Optional.of(label), updated.refreshUpdated());
-        }
-    }
-
-    @Override
-    public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName name) {
-        return this.labelStore.load(name);
-    }
+    // checkers.........................................................................................................
 
     private static void checkLabel(final SpreadsheetLabelName name) {
         Objects.requireNonNull(name, "name");

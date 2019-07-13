@@ -397,6 +397,34 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testLoadCellWithCrossReferences() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a = this.cellReference(1, 1);
+        final SpreadsheetCellReference b = this.cellReference(2, 1);
+        final SpreadsheetCellReference c = this.cellReference(3, 1);
+
+        this.counter = BigDecimal.ZERO;
+
+        engine.saveCell(this.cell(a, "1+2+BasicSpreadsheetEngineTestCounter()"), context);
+        engine.saveCell(this.cell(b, "3+4+"+a), context);
+        engine.saveCell(this.cell(c, "5+6+"+a), context);
+
+        // updating this counter results in $A having its value recomputed forcing a cascade update of $b and $c
+        this.counter = BigDecimal.valueOf(100);
+
+        this.loadCellAndCheck(engine,
+                a,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context,
+                formattedCellWithValue(a, "1+2+BasicSpreadsheetEngineTestCounter()", BigDecimal.valueOf(100+3)),
+                formattedCellWithValue(b, "3+4+" + a, BigDecimal.valueOf(3 + 4 + 103)),
+                formattedCellWithValue(c, "5+6+" + a, BigDecimal.valueOf(5 + 6 + 103)));
+    }
+
+    @Test
     public void testLoadCellValueCellReferenceInvalidFails() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
@@ -459,7 +487,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCallValueIsLabel() {
+    public void testLoadCellValueIsLabel() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final SpreadsheetLabelStore labelStore = this.labelStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore, labelStore);
@@ -491,7 +519,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testLoadCallWithConditionalFormattingRule() {
+    public void testLoadCellWithConditionalFormattingRule() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final SpreadsheetLabelStore labelStore = this.labelStore();
 
@@ -1221,7 +1249,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedFunction() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("abc123(1,99)", BigDecimal.valueOf(1 + 99));
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("BasicSpreadsheetEngineTestSum(1,99)", BigDecimal.valueOf(1 + 99));
     }
 
     @Test
@@ -3912,7 +3940,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testCopyCellsFunction() {
-        this.copyCellsAndCheck("abc123(1,99)", BigDecimal.valueOf(1+99));
+        this.copyCellsAndCheck("BasicSpreadsheetEngineTestSum(1,99)", BigDecimal.valueOf(1+99));
     }
 
     @Test
@@ -4471,11 +4499,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     if (name.value().equals(SpreadsheetFormula.INVALID_CELL_REFERENCE.value())) {
                         throw new ExpressionEvaluationException("Invalid cell reference: " + params.get(0).toString());
                     }
-                    if(name.value().equals("abc123")) {
+                    if(name.value().equals("BasicSpreadsheetEngineTestSum")) {
                         // assumes parameters are BigDecimal
                         return params.stream()
                                 .map(BigDecimal.class::cast)
                                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+                    }
+                    if(name.value().equals("BasicSpreadsheetEngineTestCounter")) {
+                        return BasicSpreadsheetEngineTest.this.counter;
                     }
                     throw new UnsupportedOperationException(name + "(" + params.stream().map(p -> p.toString()).collect(Collectors.joining(",")) + ")");
                 };
@@ -4524,6 +4555,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
         };
     }
+
+    private Object counter;
 
     private SpreadsheetTextFormatter<Object> defaultSpreadsheetTextFormatter() {
         return this.formatter(PATTERN_DEFAULT,
