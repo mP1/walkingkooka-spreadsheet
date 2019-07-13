@@ -453,7 +453,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         this.saveCellAndCheck(engine,
                 save,
                 context,
-                SpreadsheetDelta.withId(Optional.of(save.id()), Sets.of(updated)));
+                SpreadsheetDelta.withId(save.id(), Sets.of(updated)));
     }
 
     default void saveCellAndCheck(final SpreadsheetEngine engine,

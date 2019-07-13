@@ -337,7 +337,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
             this.maybeParseAndEvaluateAndFormat(cell,
                     SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                     context);
-            return SpreadsheetDelta.withId(Optional.of(cell.id()), updated.refreshUpdated());
+            return SpreadsheetDelta.withId(cell.id(), updated.refreshUpdated());
         }
     }
 
