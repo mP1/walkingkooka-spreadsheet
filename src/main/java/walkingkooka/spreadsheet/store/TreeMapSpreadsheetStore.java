@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.HasId;
-import walkingkooka.Value;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
@@ -38,13 +37,13 @@ import java.util.stream.Collectors;
  * A {@link SpreadsheetStore} that shares a {@link TreeMap} and automatically allocates an ID if saving a value without an ID.
  * This store is intended to be decorated sharing the map.
  */
-final class TreeMapSpreadsheetStore<K extends Comparable<K> & Value<Long>, V extends HasId<Optional<K>>> implements SpreadsheetStore<K, V> {
+final class TreeMapSpreadsheetStore<K extends Comparable<K>, V extends HasId<Optional<K>>> implements SpreadsheetStore<K, V> {
 
     /**
      * Factory that creates a new {@link TreeMapSpreadsheetStore}.
      */
-    static <K extends Comparable<K> & Value<Long>, V extends HasId<Optional<K>>> TreeMapSpreadsheetStore<K, V> with(final Comparator<K> idComparator,
-                                                                                                                    final BiFunction<K, V, V> idSetter) {
+    static <K extends Comparable<K>, V extends HasId<Optional<K>>> TreeMapSpreadsheetStore<K, V> with(final Comparator<K> idComparator,
+                                                                                                      final BiFunction<K, V, V> idSetter) {
         Objects.requireNonNull(idComparator, "idComparator");
         Objects.requireNonNull(idSetter, "idSetter");
 
