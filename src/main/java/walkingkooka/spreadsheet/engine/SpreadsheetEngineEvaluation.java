@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.net.header.LinkRelation;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
@@ -76,11 +77,24 @@ public enum SpreadsheetEngineEvaluation implements HasJsonNode {
         }
     };
 
+    SpreadsheetEngineEvaluation() {
+        this.linkRelation = LinkRelation.with(this.name().toLowerCase().replace('_', '-'));
+    }
+
     abstract SpreadsheetCell formulaEvaluateAndStyle(final SpreadsheetCell cell,
                                                      final BasicSpreadsheetEngine engine,
                                                      final SpreadsheetEngineContext context);
 
-    // HasJsonNode...........................................................................................
+    // LinkRelation.....................................................................................................
+
+    public LinkRelation toLinkRelation() {
+        return this.linkRelation;
+    }
+
+    private final LinkRelation linkRelation;
+
+
+    // HasJsonNode......................................................................................................
 
     /**
      * Factory that creates a {@link SpreadsheetEngineEvaluation} from a {@link JsonNode}
