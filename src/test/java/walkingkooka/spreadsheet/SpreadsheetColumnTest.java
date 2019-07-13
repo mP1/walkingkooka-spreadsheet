@@ -87,7 +87,18 @@ public final class SpreadsheetColumnTest implements ClassTesting2<SpreadsheetCol
         this.compareToAndCheckLess(this.createComparable(COLUMN + 999));
     }
 
-    // HasJsonNode...............................................................................................
+    @Test
+    public void testArraySort() {
+        final SpreadsheetColumn column1 = SpreadsheetColumn.with(SpreadsheetColumnReference.parse("A"));
+        final SpreadsheetColumn column2 = SpreadsheetColumn.with(SpreadsheetColumnReference.parse("$B"));
+        final SpreadsheetColumn column3 = SpreadsheetColumn.with(SpreadsheetColumnReference.parse("C"));
+        final SpreadsheetColumn column4 = SpreadsheetColumn.with(SpreadsheetColumnReference.parse("$D"));
+
+        this.compareToArraySortAndCheck(column3, column1, column4, column2,
+                column1, column2, column3, column4);
+    }
+
+    // HasJsonNode......................................................................................................
 
     // HasJsonNode.fromJsonNode.......................................................................................
 
