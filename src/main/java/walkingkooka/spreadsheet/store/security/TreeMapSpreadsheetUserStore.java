@@ -42,11 +42,12 @@ final class TreeMapSpreadsheetUserStore implements SpreadsheetUserStore {
     private TreeMapSpreadsheetUserStore() {
         super();
 
-        this.store = SpreadsheetStores.treeMap(Comparator.naturalOrder(), TreeMapSpreadsheetUserStore::createUser);
+        this.store = SpreadsheetStores.treeMap(Comparator.naturalOrder(), TreeMapSpreadsheetUserStore::userIdSetter);
     }
 
-    private static User createUser(final Long value, final User user) {
-        return user.setId(Optional.of(UserId.with(value)));
+    private static User userIdSetter(final UserId id,
+                                     final User user) {
+        return user.setId(Optional.of(UserId.with(null == id ? 1 : id.value() + 1)));
     }
 
     @Override
