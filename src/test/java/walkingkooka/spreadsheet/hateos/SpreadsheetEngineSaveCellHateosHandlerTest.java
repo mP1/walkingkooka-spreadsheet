@@ -92,7 +92,7 @@ public final class SpreadsheetEngineSaveCellHateosHandlerTest
     @Override
     public Optional<SpreadsheetDelta<Optional<SpreadsheetCellReference>>> resource() {
         final SpreadsheetCell cell = this.cell();
-        return Optional.of(SpreadsheetDelta.withId(Optional.of(cell.id()), Sets.of(cell)));
+        return Optional.of(SpreadsheetDelta.withId(cell.id(), Sets.of(cell)));
     }
 
     @Override
