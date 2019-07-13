@@ -38,7 +38,7 @@ import java.util.Optional;
  */
 public final class SpreadsheetCell implements HashCodeEqualsDefined,
         Comparable<SpreadsheetCell>,
-        HateosResource<SpreadsheetCellReference>,
+        HateosResource<Optional<SpreadsheetCellReference>>,
         UsesToStringBuilder {
 
     /**
@@ -98,8 +98,8 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
 
     // HasId .......................................................................................
 
-    public SpreadsheetCellReference id() {
-        return this.reference();
+    public Optional<SpreadsheetCellReference> id() {
+        return Optional.of(this.reference());
     }
 
     @Override
