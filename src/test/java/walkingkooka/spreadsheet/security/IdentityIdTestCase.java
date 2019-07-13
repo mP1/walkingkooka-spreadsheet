@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.security;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.compare.ComparableTesting;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.HasJsonNode;
@@ -26,7 +27,8 @@ import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public abstract class IdentityIdTestCase<I extends IdentityId> implements ClassTesting2<I>,
+public abstract class IdentityIdTestCase<I extends IdentityId & Comparable<I>> implements ClassTesting2<I>,
+        ComparableTesting<I>,
         HasJsonNodeTesting<I>,
         ToStringTesting<I> {
 
@@ -39,6 +41,16 @@ public abstract class IdentityIdTestCase<I extends IdentityId> implements ClassT
         final Long value = 123L;
         final I id = this.createId(value);
         assertEquals(value, id.value(), "value");
+    }
+
+    @Test
+    public final void testArraySort() {
+        final I id1 = this.createId(1);
+        final I id2 = this.createId(2);
+        final I id3 = this.createId(3);
+
+        this.compareToArraySortAndCheck(id2, id3, id1,
+                id1, id2, id3);
     }
 
     @Test
