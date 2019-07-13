@@ -18,10 +18,13 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.net.header.LinkRelation;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.JavaVisibility;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class SpreadsheetEngineEvaluationTest implements ClassTesting2<SpreadsheetEngineEvaluation>,
         HasJsonNodeTesting<SpreadsheetEngineEvaluation> {
@@ -67,6 +70,32 @@ public final class SpreadsheetEngineEvaluationTest implements ClassTesting2<Spre
     public void testToJsonRoundtrip2() {
         this.toJsonNodeRoundTripTwiceAndCheck(SpreadsheetEngineEvaluation.SKIP_EVALUATE);
     }
+
+    // HasLinkRelation..................................................................................................
+
+    @Test
+    public void testToLinkRelationClearValueErrorSkipEvaluate() {
+        toLinkRelationAndCheck(SpreadsheetEngineEvaluation.CLEAR_VALUE_ERROR_SKIP_EVALUATE, "clear-value-error-skip-evaluate");
+    }
+
+    @Test
+    public void testToLinkRelationComputeIfNecessary() {
+        toLinkRelationAndCheck(SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, "compute-if-necessary");
+    }
+
+    @Test
+    public void testToLinkRelationSkipEvaluate() {
+        toLinkRelationAndCheck(SpreadsheetEngineEvaluation.SKIP_EVALUATE, "skip-evaluate");
+    }
+
+    private void toLinkRelationAndCheck(final SpreadsheetEngineEvaluation evaluation,
+                                        final String linkRelation) {
+        assertEquals(LinkRelation.with(linkRelation),
+                evaluation.toLinkRelation(),
+                () -> evaluation + ".toLinkRelation");
+    }
+
+    // ClassTesting.....................................................................................................
 
     @Override
     public Class<SpreadsheetEngineEvaluation> type() {
