@@ -189,7 +189,10 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         store.save(b);
         store.save(c);
 
-        this.idsAndCheck(store, 0, 3, a.id(), b.id(), c.id());
+        this.idsAndCheck(store,
+                0,
+                3,
+                a.reference(), b.reference(), c.reference());
     }
 
     @Test
@@ -206,7 +209,10 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         store.save(c);
         store.save(d);
 
-        this.idsAndCheck(store, 1, 2, b.id(), c.id());
+        this.idsAndCheck(store,
+                1,
+                2,
+                b.reference(), c.reference());
     }
 
     @Test
@@ -221,7 +227,10 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         store.save(b);
         store.save(c);
 
-        this.valuesAndCheck(store, a.id(), 3, a, b, c);
+        this.valuesAndCheck(store,
+                a.reference(),
+                3,
+                a, b, c);
     }
 
     @Test
@@ -238,7 +247,10 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         store.save(c);
         store.save(d);
 
-        this.valuesAndCheck(store, b.id(), 2, b, c);
+        this.valuesAndCheck(store,
+                b.reference(),
+                2,
+                b, c);
     }
 
     @Override
