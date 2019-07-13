@@ -48,11 +48,13 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
     private TreeMapSpreadsheetMetadataStore() {
         super();
 
-        this.store = SpreadsheetStores.treeMap(Comparator.naturalOrder(), TreeMapSpreadsheetMetadataStore::createSpreadsheetMetadata);
+        this.store = SpreadsheetStores.treeMap(Comparator.naturalOrder(), TreeMapSpreadsheetMetadataStore::idSetter);
     }
 
-    private static SpreadsheetMetadata createSpreadsheetMetadata(final Long value, final SpreadsheetMetadata spreadsheetMetadata) {
-        return spreadsheetMetadata.set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(value));
+    private static SpreadsheetMetadata idSetter(final SpreadsheetId id,
+                                                final SpreadsheetMetadata spreadsheetMetadata) {
+        return spreadsheetMetadata.set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID,
+                SpreadsheetId.with(null == id ? 1 : id.value() + 1));
     }
 
     @Override

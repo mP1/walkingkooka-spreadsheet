@@ -47,8 +47,9 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
         this.store = SpreadsheetStores.treeMap(Comparator.naturalOrder(), TreeMapSpreadsheetGroupStore::groupSetId);
     }
 
-    private static Group groupSetId(final Long value, final Group group) {
-        return group.setId(Optional.of(GroupId.with(value)));
+    private static Group groupSetId(final GroupId id,
+                                    final Group group) {
+        return group.setId(Optional.of(GroupId.with(null != id ? id.value() + 1 : 1)));
     }
 
     @Override

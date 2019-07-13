@@ -44,20 +44,20 @@ final class TreeMapSpreadsheetStore<K extends Comparable<K> & Value<Long>, V ext
      * Factory that creates a new {@link TreeMapSpreadsheetStore}.
      */
     static <K extends Comparable<K> & Value<Long>, V extends HasId<Optional<K>>> TreeMapSpreadsheetStore<K, V> with(final Comparator<K> idComparator,
-                                                                                                                    final BiFunction<Long, V, V> valueWithIdFactory) {
+                                                                                                                    final BiFunction<K, V, V> idSetter) {
         Objects.requireNonNull(idComparator, "idComparator");
-        Objects.requireNonNull(valueWithIdFactory, "valueWithIdFactory");
+        Objects.requireNonNull(idSetter, "idSetter");
 
-        return new TreeMapSpreadsheetStore<>(idComparator, valueWithIdFactory);
+        return new TreeMapSpreadsheetStore<>(idComparator, idSetter);
     }
 
     /**
      * Private ctor
      */
-    private TreeMapSpreadsheetStore(final Comparator<K> idComparator, final BiFunction<Long, V, V> valueWithIdFactory) {
+    private TreeMapSpreadsheetStore(final Comparator<K> idComparator, final BiFunction<K, V, V> idSetter) {
         super();
         this.idToValue = Maps.sorted(idComparator);
-        this.valueWithIdFactory = valueWithIdFactory;
+        this.idSetter = idSetter;
     }
 
     @Override
@@ -87,19 +87,19 @@ final class TreeMapSpreadsheetStore<K extends Comparable<K> & Value<Long>, V ext
     // no attempt to avoid clashes etc.
     private V saveNew(final V value) {
         final SortedMap<K, V> idToValue = this.idToValue;
-        final long max = idToValue.isEmpty() ?
-                0 :
-                idToValue.lastKey().value();
-        final V valueWithId = this.valueWithIdFactory.apply(max + 1, value);
+        final K max = idToValue.isEmpty() ?
+                null :
+                idToValue.lastKey();
+        final V valueWithId = this.idSetter.apply(max, value);
         idToValue.put(valueWithId.id().get(), valueWithId);
         this.saveWatchers.accept(valueWithId);
         return valueWithId;
     }
 
     /**
-     * Accepts an ID and value combining the two into a new value.
+     * Accepts the current highest ID or null (when the store is empty) and value combining the two into a new value.
      */
-    private final BiFunction<Long, V, V> valueWithIdFactory;
+    private final BiFunction<K, V, V> idSetter;
 
     @Override
     public Runnable addSaveWatcher(final Consumer<V> saved) {
