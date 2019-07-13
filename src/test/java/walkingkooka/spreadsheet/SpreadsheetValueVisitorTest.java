@@ -408,6 +408,65 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
         }.accept(this);
     }
 
+    @Test
+    public void testAcceptUnknownNumberType() {
+        final StringBuilder b = new StringBuilder();
+        final Object value = new TestNumber();
+
+        new FakeSpreadsheetValueVisitor() {
+            @Override
+            protected Visiting startVisit(final Object v) {
+                assertSame(value, v);
+                b.append("1");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Object v) {
+                assertSame(value, v);
+                b.append("2");
+            }
+
+            @Override
+            protected void visit(final Object v) {
+                assertSame(value, v);
+                b.append("3");
+            }
+        }.accept(value);
+
+        assertEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptUnknownNumberType2() {
+        new SpreadsheetValueVisitor() {
+        }.accept(new TestNumber());
+    }
+
+    static class TestNumber extends Number {
+        @Override
+        public int intValue() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public long longValue() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public float floatValue() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public double doubleValue() {
+            throw new UnsupportedOperationException();
+        }
+
+        private final static long serialVersionUID = 1L;
+    }
+
     @Override
     public void testSinglePublicAcceptMethod() {
         // only contains 1 public accept not two because type = Object.
