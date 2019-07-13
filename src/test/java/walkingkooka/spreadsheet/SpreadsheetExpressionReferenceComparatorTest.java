@@ -70,6 +70,21 @@ public final class SpreadsheetExpressionReferenceComparatorTest implements Class
         this.compareAndCheckLess(this.cell(column, row), this.cell(column, row + 11));
     }
 
+    @Test
+    public void testCellDifferentReferenceKind() {
+        this.compareAndCheckEqual(SpreadsheetExpressionReference.parseCellReference("A1"), SpreadsheetExpressionReference.parseCellReference("$A1"));
+    }
+
+    @Test
+    public void testCellDifferentReferenceKind2() {
+        this.compareAndCheckEqual(SpreadsheetExpressionReference.parseCellReference("A1"), SpreadsheetExpressionReference.parseCellReference("$A$1"));
+    }
+
+    @Test
+    public void testCellDifferentReferenceKind3() {
+        this.compareAndCheckEqual(SpreadsheetExpressionReference.parseCellReference("A1"), SpreadsheetExpressionReference.parseCellReference("A$1"));
+    }
+
     // label v label ....................................................................................................
 
     @Test
