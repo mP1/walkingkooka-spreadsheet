@@ -129,6 +129,19 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         // test ignored because short generated names will clash with valid cell references and fail the test.
     }
 
+    // Comparator ......................................................................................................
+
+    @Test
+    public void testSort() {
+        final SpreadsheetLabelName a1 = SpreadsheetLabelName.with("LABELa1");
+        final SpreadsheetLabelName b2 = SpreadsheetLabelName.with("LABELB2");
+        final SpreadsheetLabelName c3 = SpreadsheetLabelName.with("LABELC3");
+        final SpreadsheetLabelName d4 = SpreadsheetLabelName.with("LABELd4");
+
+        this.compareToArraySortAndCheck(d4, c3, a1, b2,
+                a1, b2, c3, d4);
+    }
+
     // HasJsonNode......................................................................................................
 
     @Test

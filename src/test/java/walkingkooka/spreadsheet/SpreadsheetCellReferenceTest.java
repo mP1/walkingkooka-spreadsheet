@@ -626,6 +626,19 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
         }
     }
 
+    // compare..........................................................................................................
+
+    @Test
+    public void testArraySort() {
+        final SpreadsheetCellReference a1 = SpreadsheetExpressionReference.parseCellReference("A1");
+        final SpreadsheetCellReference b2 = SpreadsheetExpressionReference.parseCellReference("$B2");
+        final SpreadsheetCellReference c3 = SpreadsheetExpressionReference.parseCellReference("c$3");
+        final SpreadsheetCellReference d4 = SpreadsheetExpressionReference.parseCellReference("$D$4");
+
+        this.compareToArraySortAndCheck(c3, a1, d4, b2,
+                a1, b2, c3, d4);
+    }
+
     // toString.........................................................................................................
 
     @Test

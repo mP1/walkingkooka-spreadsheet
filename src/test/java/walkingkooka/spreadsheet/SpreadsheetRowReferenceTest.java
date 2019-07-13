@@ -64,6 +64,17 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
                 SpreadsheetReferenceKind.RELATIVE.row(VALUE + 999));
     }
 
+    @Test
+    public void testArraySort() {
+        final SpreadsheetRowReference row1 = SpreadsheetRowReference.parse("1");
+        final SpreadsheetRowReference row2 = SpreadsheetRowReference.parse("2");
+        final SpreadsheetRowReference row3 = SpreadsheetRowReference.parse("3");
+        final SpreadsheetRowReference row4 = SpreadsheetRowReference.parse("$4");
+
+        this.compareToArraySortAndCheck(row3, row1, row4, row2,
+                row1, row2, row3, row4);
+    }
+
     // parseString.....................................................................................................
 
     @Test
