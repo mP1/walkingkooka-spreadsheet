@@ -42,6 +42,7 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
 
     /**
      * A comparator that orders {@link SpreadsheetLabelName} before {@link SpreadsheetCellReference}.
+     * Note when comparing {@link SpreadsheetCellReference} the {@link SpreadsheetReferenceKind} component is ignored.
      */
     public final static Comparator<SpreadsheetExpressionReference> COMPARATOR = SpreadsheetExpressionReferenceComparator.INSTANCE;
 
