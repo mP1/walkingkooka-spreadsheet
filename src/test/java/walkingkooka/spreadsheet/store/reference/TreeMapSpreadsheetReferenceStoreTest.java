@@ -31,6 +31,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceStoreTestCase<TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference>, SpreadsheetCellReference> {
 
@@ -134,6 +135,30 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
         this.loadFailCheck(store, c1);
 
         this.loadReferredAndCheck(store, b1, a1);
+        this.loadReferredAndCheck(store, c1, a1, b1);
+    }
+
+    @Test
+    public void testSaveAndLoadDifferentReferenceKind() {
+        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+
+        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference b1 = this.b1();
+        final SpreadsheetCellReference c1 = this.c1();
+
+        store.saveReferences(a1, Sets.of(b1, c1));
+        store.saveReferences(b1, Sets.of(c1));
+
+        final SpreadsheetCellReference absoluteB1 = SpreadsheetExpressionReference.parseCellReference("$B$1");
+        assertNotEquals(b1, absoluteB1, "expected same cell but relative/absolute");
+        assertEquals(true, absoluteB1.equalsIgnoreReferenceKind(b1), () -> absoluteB1 + " " + b1);
+
+        this.loadAndCheck(store, a1, b1, c1);
+        this.loadAndCheck(store, b1, c1);
+        this.loadFailCheck(store, c1);
+
+        this.loadReferredAndCheck(store, b1, a1);
+        this.loadReferredAndCheck(store, absoluteB1, a1);
         this.loadReferredAndCheck(store, c1, a1, b1);
     }
 
