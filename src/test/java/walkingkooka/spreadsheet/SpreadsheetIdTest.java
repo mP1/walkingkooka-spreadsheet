@@ -79,6 +79,16 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
         this.compareToAndCheckLess(SpreadsheetId.with(VALUE * 2));
     }
 
+    @Test
+    public void testArraySort() {
+        final SpreadsheetId id1 = SpreadsheetId.with(1);
+        final SpreadsheetId id2 = SpreadsheetId.with(2);
+        final SpreadsheetId id3 = SpreadsheetId.with(3);
+
+        this.compareToArraySortAndCheck(id3, id1, id2,
+                id1, id2, id3);
+    }
+
     // HasJsonNode.......................................................................................................
 
     @Test

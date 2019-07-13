@@ -61,6 +61,17 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
                 SpreadsheetReferenceKind.RELATIVE.column(VALUE + 999));
     }
 
+    @Test
+    public void testArraySort() {
+        final SpreadsheetColumnReference column1 = SpreadsheetColumnReference.parse("A");
+        final SpreadsheetColumnReference column2 = SpreadsheetColumnReference.parse("B");
+        final SpreadsheetColumnReference column3 = SpreadsheetColumnReference.parse("C");
+        final SpreadsheetColumnReference column4 = SpreadsheetColumnReference.parse("$D");
+
+        this.compareToArraySortAndCheck(column3, column1, column4, column2,
+                column1, column2, column3, column4);
+    }
+
     // parseRange....................................................................................................
 
     @Test

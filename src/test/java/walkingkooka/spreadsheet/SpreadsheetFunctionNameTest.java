@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.naming.NameTesting2;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.text.CaseSensitivity;
@@ -25,6 +26,19 @@ import walkingkooka.type.JavaVisibility;
 final public class SpreadsheetFunctionNameTest implements ClassTesting2<SpreadsheetFunctionName>,
         NameTesting2<SpreadsheetFunctionName, SpreadsheetFunctionName> {
 
+    // Comparator ......................................................................................................
+
+    @Test
+    public void testSort() {
+        final SpreadsheetFunctionName a1 = SpreadsheetFunctionName.with("a1");
+        final SpreadsheetFunctionName b2 = SpreadsheetFunctionName.with("B2");
+        final SpreadsheetFunctionName c3 = SpreadsheetFunctionName.with("C3");
+        final SpreadsheetFunctionName d4 = SpreadsheetFunctionName.with("d4");
+
+        this.compareToArraySortAndCheck(d4, c3, a1, b2,
+                b2, c3, a1, d4);
+    }
+    
     @Override
     public SpreadsheetFunctionName createName(final String name) {
         return SpreadsheetFunctionName.with(name);
