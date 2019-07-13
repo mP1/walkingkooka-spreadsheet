@@ -87,7 +87,20 @@ public final class SpreadsheetRowTest implements ClassTesting2<SpreadsheetRow>,
         this.compareToAndCheckLess(this.createComparable(ROW + 999));
     }
 
-    // HasJsonNode...............................................................................................
+    // compare..........................................................................................................
+
+    @Test
+    public void testArraySort() {
+        final SpreadsheetRow row1 = SpreadsheetRow.with(SpreadsheetRowReference.parse("1"));
+        final SpreadsheetRow row2 = SpreadsheetRow.with(SpreadsheetRowReference.parse("2"));
+        final SpreadsheetRow row3 = SpreadsheetRow.with(SpreadsheetRowReference.parse("3"));
+        final SpreadsheetRow row4 = SpreadsheetRow.with(SpreadsheetRowReference.parse("$4"));
+
+        this.compareToArraySortAndCheck(row3, row1, row4, row2,
+                row1, row2, row3, row4);
+    }
+
+    // HasJsonNode......................................................................................................
 
     // HasJsonNode.fromJsonNode.......................................................................................
 
