@@ -22,7 +22,6 @@ import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.naming.NameTesting;
 import walkingkooka.text.CaseSensitivity;
-import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.type.FieldAttributes;
 import walkingkooka.type.JavaVisibility;
 
@@ -56,9 +55,24 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
         }
     }
 
+    // Comparator ......................................................................................................
+
     @Override
     public void testCompareDifferentCase() {
     }
+
+    @Test
+    public void testSort() {
+        final SpreadsheetMetadataPropertyName creator = SpreadsheetMetadataPropertyName.CREATOR;
+        final SpreadsheetMetadataPropertyName modifiedBy = SpreadsheetMetadataPropertyName.MODIFIED_BY;
+        final SpreadsheetMetadataPropertyName modifiedDateTime = SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME;
+        final SpreadsheetMetadataPropertyName spreadsheetId = SpreadsheetMetadataPropertyName.SPREADSHEET_ID;
+
+        this.compareToArraySortAndCheck(spreadsheetId, modifiedDateTime, creator, modifiedBy,
+                creator, modifiedBy, modifiedDateTime, spreadsheetId);
+    }
+
+    // HasJsonNode......................................................................................................
 
     @Test
     public void testJsonNodeNameCached() {

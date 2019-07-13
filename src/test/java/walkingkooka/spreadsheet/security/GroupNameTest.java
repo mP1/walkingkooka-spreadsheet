@@ -98,7 +98,20 @@ final public class GroupNameTest implements NameTesting<GroupName, GroupName>,
         this.createNameAndCheck("ABCDEF");
     }
 
-    // toJsonNode .......................................................................................
+    // Comparator ......................................................................................................
+
+    @Test
+    public void testSort() {
+        final GroupName a1 = GroupName.with("a1");
+        final GroupName b2 = GroupName.with("B2");
+        final GroupName c3 = GroupName.with("C3");
+        final GroupName d4 = GroupName.with("d4");
+
+        this.compareToArraySortAndCheck(d4, c3, a1, b2,
+                b2, c3, a1, d4);
+    }
+
+    // toJsonNode ......................................................................................................
 
     @Test
     public void testFromJsonNodeBooleanFails() {
