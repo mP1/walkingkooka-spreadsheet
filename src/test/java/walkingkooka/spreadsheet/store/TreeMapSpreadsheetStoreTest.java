@@ -39,18 +39,18 @@ public final class TreeMapSpreadsheetStoreTest implements SpreadsheetStoreTestin
 
     @Test
     public void testWithNullIdComparatorFails() {
-        this.withFails(null, this::userFactory);
+        this.withFails(null, this::idSetter);
     }
 
     @Test
-    public void testWithNullValueWithIdFactoryFails() {
+    public void testWithNullIdSetterFails() {
         this.withFails(Comparator.naturalOrder(), null);
     }
 
     private void withFails(final Comparator<UserId> idComparator,
-                           final BiFunction<Long, User, User> valueWithIdFactory) {
+                           final BiFunction<UserId, User, User> idSetter) {
         assertThrows(NullPointerException.class, () -> {
-            TreeMapSpreadsheetStore.with(idComparator, valueWithIdFactory);
+            TreeMapSpreadsheetStore.with(idComparator, idSetter);
         });
     }
 
@@ -252,11 +252,11 @@ public final class TreeMapSpreadsheetStoreTest implements SpreadsheetStoreTestin
 
     @Override
     public TreeMapSpreadsheetStore<UserId, User> createStore() {
-        return TreeMapSpreadsheetStore.with(Comparator.naturalOrder(), this::userFactory);
+        return TreeMapSpreadsheetStore.with(Comparator.naturalOrder(), this::idSetter);
     }
 
-    final User userFactory(final Long value, final User user) {
-        return User.with(Optional.of(UserId.with(value)), user.email());
+    final User idSetter(final UserId id, final User user) {
+        return User.with(Optional.of(UserId.with(null == id ? 1 : id.value() + 1)), user.email());
     }
 
     private TreeMapSpreadsheetStore<UserId, User> createNotEmptyStore() {
