@@ -92,7 +92,7 @@ abstract class SpreadsheetHateosHandler<I extends Comparable<I> & HasHateosLinkI
     final void checkResourceEmpty(final Optional<? extends HateosResource<?>> resource) {
         checkResource(resource);
         resource.ifPresent((r) -> {
-            throw new IllegalArgumentException("Resource not allowed=" + resource);
+            throw new IllegalArgumentException("Resource not allowed=" + r);
         });
     }
 
@@ -101,7 +101,7 @@ abstract class SpreadsheetHateosHandler<I extends Comparable<I> & HasHateosLinkI
      */
     final <T extends HateosResource<?>> T checkResourceNotEmpty(final Optional<T> resource) {
         checkResource(resource);
-        return resource.orElseThrow(() -> new IllegalArgumentException("Required resource missing=" + resource));
+        return resource.orElseThrow(() -> new IllegalArgumentException("Required resource missing"));
     }
 
     // parameters.......................................................................................................
