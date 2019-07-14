@@ -18,11 +18,27 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.test.StandardThrowableTesting;
+import walkingkooka.type.JavaVisibility;
 
 public final class SpreadsheetMetadataPropertyValueExceptionTest implements StandardThrowableTesting<SpreadsheetMetadataPropertyValueException> {
 
     @Override
+    public SpreadsheetMetadataPropertyValueException createThrowable(final String message) {
+        return new SpreadsheetMetadataPropertyValueException(message);
+    }
+
+    @Override
+    public SpreadsheetMetadataPropertyValueException createThrowable(final String message, final Throwable cause) {
+        return new SpreadsheetMetadataPropertyValueException(message, cause);
+    }
+
+    @Override
     public Class<SpreadsheetMetadataPropertyValueException> type() {
         return SpreadsheetMetadataPropertyValueException.class;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
     }
 }
