@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.security;
 
+import walkingkooka.tree.json.FromJsonNodeException;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 
@@ -27,7 +28,13 @@ public final class UserId extends IdentityId
         implements Comparable<UserId> {
 
     public static UserId fromJsonNode(final JsonNode node) {
-        return with(node.fromJsonNode(Long.class));
+        try {
+            return with(node.fromJsonNode(Long.class));
+        } catch (final FromJsonNodeException cause) {
+            throw cause;
+        } catch (final RuntimeException cause) {
+            throw new FromJsonNodeException(cause.getMessage(), node, cause);
+        }
     }
 
     public static UserId with(final long value) {
