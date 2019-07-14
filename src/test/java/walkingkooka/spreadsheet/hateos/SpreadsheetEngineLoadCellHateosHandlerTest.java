@@ -63,7 +63,7 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createHandler().toString(), "SpreadsheetEngine.loadCell");
+        this.toStringAndCheck(this.createHandler().toString(), "SpreadsheetEngine.loadCell " + EVALUATION);
     }
 
     @Override

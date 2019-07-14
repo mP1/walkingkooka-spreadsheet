@@ -82,6 +82,6 @@ final class SpreadsheetEngineLoadCellHateosHandler extends SpreadsheetEngineHate
 
     @Override
     String operation() {
-        return "loadCell";
+        return "loadCell " + this.evaluation;
     }
 }
