@@ -35,8 +35,10 @@ import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormatti
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
+import walkingkooka.spreadsheet.hateos.SpreadsheetHateosHandlers;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
@@ -189,6 +191,9 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
 
     // hateosRouter.....................................................................................................
 
+    /**
+     * Lazily creates a {@link Router} using the {@link SpreadsheetId} to a cache.
+     */
     @Override
     public Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> hateosRouter(final SpreadsheetId id) {
         SpreadsheetContext.checkId(id);
@@ -247,7 +252,18 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                 fractioner,
                 defaultSpreadsheetTextFormatter);
 
-        throw new UnsupportedOperationException();
+        return SpreadsheetHateosHandlers.engineRouter(this.baseWithSpreadsheetId(id),
+                this.contentType,
+                SpreadsheetHateosHandlers.copyCells(engine, engineContext),
+                SpreadsheetHateosHandlers.deleteColumns(engine, engineContext),
+                SpreadsheetHateosHandlers.deleteRows(engine, engineContext),
+                SpreadsheetHateosHandlers.insertColumns(engine, engineContext),
+                SpreadsheetHateosHandlers.insertRows(engine, engineContext),
+                SpreadsheetHateosHandlers.loadCell(SpreadsheetEngineEvaluation.CLEAR_VALUE_ERROR_SKIP_EVALUATE, engine, engineContext),
+                SpreadsheetHateosHandlers.loadCell(SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, engine, engineContext),
+                SpreadsheetHateosHandlers.loadCell(SpreadsheetEngineEvaluation.FORCE_RECOMPUTE, engine, engineContext),
+                SpreadsheetHateosHandlers.loadCell(SpreadsheetEngineEvaluation.SKIP_EVALUATE, engine, engineContext),
+                SpreadsheetHateosHandlers.saveCell(engine, engineContext));
     }
 
     /**
@@ -256,7 +272,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
     private AbsoluteUrl baseWithSpreadsheetId(final SpreadsheetId id) {
         final AbsoluteUrl base = this.base;
         return base.setPath(base.path()
-                .append(UrlPathName.with(String.valueOf(id.value()))));
+                .append(UrlPathName.with(id.hateosLinkId())));
     }
 
     private final AbsoluteUrl base;
