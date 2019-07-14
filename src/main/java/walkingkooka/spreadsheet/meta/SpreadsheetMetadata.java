@@ -24,9 +24,9 @@ import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.test.HashCodeEqualsDefined;
+import walkingkooka.tree.json.FromJsonNodeException;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonObjectNode;
 
 import java.util.Map;
@@ -165,8 +165,10 @@ public abstract class SpreadsheetMetadata implements HashCodeEqualsDefined,
 
         try {
             return fromJson0(node.objectOrFail());
-        } catch (final JsonNodeException cause) {
-            throw new IllegalArgumentException(cause.getMessage(), cause);
+        } catch (final FromJsonNodeException cause) {
+            throw cause;
+        } catch (final RuntimeException cause) {
+            throw new FromJsonNodeException(cause.getMessage(), node, cause);
         }
     }
 

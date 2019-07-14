@@ -23,9 +23,9 @@ import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.json.FromJsonNodeException;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonObjectNode;
 
 import java.util.Comparator;
@@ -248,8 +248,10 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
 
         try {
             return parse.apply(node.stringValueOrFail());
-        } catch (final JsonNodeException cause) {
-            throw new IllegalArgumentException(cause.getMessage(), cause);
+        } catch (final FromJsonNodeException cause) {
+            throw cause;
+        } catch (final RuntimeException cause) {
+            throw new FromJsonNodeException(cause.getMessage(), node, cause);
         }
     }
 
