@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.HasText;
 import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.json.FromJsonNodeException;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
@@ -224,7 +225,7 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
                         try {
                             text = child.stringValueOrFail();
                         } catch (final JsonNodeException cause) {
-                            throw new IllegalArgumentException("Node " + TEXT + " is not a string=" + child);
+                            throw new FromJsonNodeException("Node " + TEXT + " is not a string=" + child, node);
                         }
                         checkText(text);
                         break;
@@ -242,20 +243,24 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
                 }
             }
         } catch (final JsonNodeException cause) {
-            throw new IllegalArgumentException(cause.getMessage(), cause);
+            throw new FromJsonNodeException(cause.getMessage(), node, cause);
         }
 
         if (null == text) {
             HasJsonNode.requiredPropertyMissing(TEXT, node);
         }
         if (null != value && null != error) {
-            throw new IllegalArgumentException("Node contains both " + VALUE_PROPERTY + " and " + ERROR_PROPERTY + " set=" + node);
+            throw new FromJsonNodeException("Node contains both " + VALUE_PROPERTY + " and " + ERROR_PROPERTY + " set=" + node, node);
         }
 
-        return new SpreadsheetFormula(text,
-                Optional.ofNullable(expression),
-                Optional.ofNullable(value),
-                Optional.ofNullable(error));
+        try {
+            return new SpreadsheetFormula(text,
+                    Optional.ofNullable(expression),
+                    Optional.ofNullable(value),
+                    Optional.ofNullable(error));
+        } catch (final RuntimeException cause) {
+            throw new FromJsonNodeException(cause.getMessage(), node, cause);
+        }
     }
 
     /**

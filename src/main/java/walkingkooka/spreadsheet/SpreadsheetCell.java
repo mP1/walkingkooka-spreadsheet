@@ -22,6 +22,7 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.test.HashCodeEqualsDefined;
+import walkingkooka.tree.json.FromJsonNodeException;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
@@ -257,11 +258,11 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
                         formatted = TextNode.fromJsonNode(child);
                         break;
                     default:
-                        throw new IllegalArgumentException("Unknown property " + name + "=" + node);
+                        HasJsonNode.unknownPropertyPresent(name, node);
                 }
             }
         } catch (final JsonNodeException cause) {
-            throw new IllegalArgumentException(cause.getMessage(), cause);
+            throw new FromJsonNodeException(cause.getMessage(), node, cause);
         }
 
         if (null == reference) {
@@ -271,7 +272,11 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
             HasJsonNode.requiredPropertyMissing(FORMULA_PROPERTY, node);
         }
 
-        return new SpreadsheetCell(reference, formula, style, Optional.ofNullable(format), Optional.ofNullable(formatted));
+        try {
+            return new SpreadsheetCell(reference, formula, style, Optional.ofNullable(format), Optional.ofNullable(formatted));
+        } catch (final RuntimeException cause) {
+            throw new FromJsonNodeException(cause.getMessage(), node, cause);
+        }
     }
 
     @Override
