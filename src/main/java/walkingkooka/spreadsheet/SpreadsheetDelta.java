@@ -228,7 +228,7 @@ public abstract class SpreadsheetDelta<I> implements Comparable<SpreadsheetDelta
 
         HasHateosLinkId id = null;
         Range<?> range = null;
-        Set<SpreadsheetCell> cells = null;
+        Set<SpreadsheetCell> cells = Sets.empty();
         List<SpreadsheetRange> window = null;
 
         try {
@@ -249,19 +249,11 @@ public abstract class SpreadsheetDelta<I> implements Comparable<SpreadsheetDelta
                         window = rangeFromJsonNode(child.stringValueOrFail());
                         break;
                     default:
-                        throw new IllegalArgumentException("Unknown property " + name + "=" + node);
+                        HasJsonNode.unknownPropertyPresent(name, node);
                 }
             }
         } catch (final JsonNodeException cause) {
             throw new IllegalArgumentException(cause.getMessage(), cause);
-        }
-
-        if (null != id && null != range) {
-            throw new JsonNodeParserException("Invalid json " + ID_PROPERTY_STRING + " and " + RANGE_PROPERTY_STRING + " both set=" + node);
-        }
-
-        if (null == cells) {
-            HasJsonNode.requiredPropertyMissing(CELLS_PROPERTY, node);
         }
 
         final SpreadsheetDelta<?> delta = range != null ?
