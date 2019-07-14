@@ -151,7 +151,16 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
                                                                                                                                            SpreadsheetDelta<Range<SpreadsheetRowReference>>> insertRows,
                                                                                                                                    final HateosHandler<SpreadsheetCellReference,
                                                                                                                                            SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-                                                                                                                                           SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCell,
+                                                                                                                                           SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellClearValueErrorSkipEvaluate,
+                                                                                                                                   final HateosHandler<SpreadsheetCellReference,
+                                                                                                                                           SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
+                                                                                                                                           SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellSkipEvaluate,
+                                                                                                                                   final HateosHandler<SpreadsheetCellReference,
+                                                                                                                                           SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
+                                                                                                                                           SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellForceRecompute,
+                                                                                                                                   final HateosHandler<SpreadsheetCellReference,
+                                                                                                                                           SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
+                                                                                                                                           SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellComputeIfNecessary,
                                                                                                                                    final HateosHandler<SpreadsheetCellReference,
                                                                                                                                            SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
                                                                                                                                            SpreadsheetDelta<Range<SpreadsheetCellReference>>> saveCell) {
@@ -162,7 +171,10 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
                 deleteRows,
                 insertColumns,
                 insertRows,
-                loadCell,
+                loadCellClearValueErrorSkipEvaluate,
+                loadCellSkipEvaluate,
+                loadCellForceRecompute,
+                loadCellComputeIfNecessary,
                 saveCell);
     }
 
