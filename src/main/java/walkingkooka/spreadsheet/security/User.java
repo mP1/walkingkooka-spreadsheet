@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.security;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.tree.json.FromJsonNodeException;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
@@ -98,18 +99,22 @@ public final class User extends Identity<UserId> {
                         email = EmailAddress.fromJsonNode(child);
                         break;
                     default:
-                        throw new IllegalArgumentException("Unknown property " + name + "=" + node);
+                        HasJsonNode.unknownPropertyPresent(name, node);
                 }
             }
         } catch (final JsonNodeException cause) {
-            throw new IllegalArgumentException(cause.getMessage(), cause);
+            throw new FromJsonNodeException(cause.getMessage(), node, cause);
         }
 
         if (null == email) {
             HasJsonNode.requiredPropertyMissing(EMAIL_PROPERTY, node);
         }
 
-        return new User(Optional.ofNullable(id), email);
+        try {
+            return new User(Optional.ofNullable(id), email);
+        } catch (final RuntimeException cause) {
+            throw new FromJsonNodeException(cause.getMessage(), node, cause);
+        }
     }
 
     @Override
