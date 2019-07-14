@@ -43,16 +43,30 @@ public final class SpreadsheetDeltaRangeNonWindowedTest extends SpreadsheetDelta
     // HasJson..........................................................................................................
 
     @Test
-    public void testFromJson() {
+    public void testFromJsonRange() {
         this.fromJsonNodeAndCheck(JsonNode.object()
-                        .set(SpreadsheetDelta.RANGE_PROPERTY, this.id().toJsonNode())
-                        .set(SpreadsheetDelta.CELLS_PROPERTY, HasJsonNode.toJsonNodeSet(this.cells())),
-                this.createHasJsonNode());
+                        .set(SpreadsheetDelta.RANGE_PROPERTY, this.id().toJsonNode()),
+                this.createSpreadsheetDelta(this.id(), SpreadsheetDelta.NO_CELLS));
     }
 
     @Test
-    public void testToJsonNode() {
-        this.toJsonNodeAndCheck(this.createHasJsonNode(),
+    public void testFromJsonRangeCells() {
+        this.fromJsonNodeAndCheck(JsonNode.object()
+                        .set(SpreadsheetDelta.RANGE_PROPERTY, this.id().toJsonNode())
+                        .set(SpreadsheetDelta.CELLS_PROPERTY, HasJsonNode.toJsonNodeSet(this.cells())),
+                this.createSpreadsheetDelta(this.id(), this.cells()));
+    }
+
+    @Test
+    public void testToJsonNodeRange() {
+        this.toJsonNodeAndCheck(this.createSpreadsheetDelta(this.id(), SpreadsheetDelta.NO_CELLS),
+                JsonNode.object()
+                        .set(SpreadsheetDelta.RANGE_PROPERTY, this.id().toJsonNode()));
+    }
+
+    @Test
+    public void testToJsonNodeRangeCells() {
+        this.toJsonNodeAndCheck(this.createSpreadsheetDelta(this.id(), this.cells()),
                 JsonNode.object()
                         .set(SpreadsheetDelta.RANGE_PROPERTY, this.id().toJsonNode())
                         .set(SpreadsheetDelta.CELLS_PROPERTY, HasJsonNode.toJsonNodeSet(this.cells())));
