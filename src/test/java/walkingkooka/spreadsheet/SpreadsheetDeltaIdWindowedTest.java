@@ -56,16 +56,24 @@ public final class SpreadsheetDeltaIdWindowedTest extends SpreadsheetDeltaWindow
     // HasJsonNode......................................................................................................
 
     @Test
-    public void testFromJsonWithId() {
+    public void testFromJsonIdCellsWindow() {
         this.fromJsonNodeAndCheck(JsonNode.object()
                         .set(SpreadsheetDelta.ID_PROPERTY, this.id().get().toJsonNodeWithType())
                         .set(SpreadsheetDelta.CELLS_PROPERTY, HasJsonNode.toJsonNodeSet(this.cells()))
                         .set(SpreadsheetDelta.WINDOW_PROPERTY, JsonNode.string("A1:E5,F6:Z99")),
-                this.createHasJsonNode());
+                SpreadsheetDeltaIdWindowed.with(this.id(), this.cells(), this.window()));
     }
 
     @Test
-    public void testFromJsonWithoutId() {
+    public void testFromJsonIdWindow() {
+        this.fromJsonNodeAndCheck(JsonNode.object()
+                        .set(SpreadsheetDelta.ID_PROPERTY, this.id().get().toJsonNodeWithType())
+                        .set(SpreadsheetDelta.WINDOW_PROPERTY, JsonNode.string("A1:E5,F6:Z99")),
+                SpreadsheetDeltaIdWindowed.with(this.id(), SpreadsheetDelta.NO_CELLS, this.window()));
+    }
+
+    @Test
+    public void testFromJsonCellsWindow() {
         this.fromJsonNodeAndCheck(JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, HasJsonNode.toJsonNodeSet(this.cells()))
                         .set(SpreadsheetDelta.WINDOW_PROPERTY, JsonNode.string("A1:E5,F6:Z99")),
@@ -73,7 +81,14 @@ public final class SpreadsheetDeltaIdWindowedTest extends SpreadsheetDeltaWindow
     }
 
     @Test
-    public void testToJsonNodeWithId() {
+    public void testFromJsonWindow() {
+        this.fromJsonNodeAndCheck(JsonNode.object()
+                        .set(SpreadsheetDelta.WINDOW_PROPERTY, JsonNode.string("A1:E5,F6:Z99")),
+                SpreadsheetDeltaIdWindowed.with(EMPTY_ID, SpreadsheetDelta.NO_CELLS, this.window()));
+    }
+
+    @Test
+    public void testToJsonNodeIdCellsWindows() {
         this.toJsonNodeAndCheck(this.createHasJsonNode(),
                 JsonNode.object()
                         .set(SpreadsheetDelta.ID_PROPERTY, this.id().get().toJsonNodeWithType())
@@ -82,10 +97,25 @@ public final class SpreadsheetDeltaIdWindowedTest extends SpreadsheetDeltaWindow
     }
 
     @Test
-    public void testToJsonNodeWithoutId() {
+    public void testToJsonNodeIdWindow() {
+        this.toJsonNodeAndCheck(SpreadsheetDeltaIdWindowed.with(this.id(), SpreadsheetDelta.NO_CELLS, this.window()),
+                JsonNode.object()
+                        .set(SpreadsheetDelta.ID_PROPERTY, this.id().get().toJsonNodeWithType())
+                        .set(SpreadsheetDelta.WINDOW_PROPERTY, JsonNode.string("A1:E5,F6:Z99")));
+    }
+
+    @Test
+    public void testToJsonNodeCellsWindows() {
         this.toJsonNodeAndCheck(SpreadsheetDeltaIdWindowed.with(EMPTY_ID, this.cells(), this.window()),
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, HasJsonNode.toJsonNodeSet(this.cells()))
+                        .set(SpreadsheetDelta.WINDOW_PROPERTY, JsonNode.string("A1:E5,F6:Z99")));
+    }
+
+    @Test
+    public void testToJsonNodeWindow() {
+        this.toJsonNodeAndCheck(SpreadsheetDeltaIdWindowed.with(EMPTY_ID, SpreadsheetDelta.NO_CELLS, this.window()),
+                JsonNode.object()
                         .set(SpreadsheetDelta.WINDOW_PROPERTY, JsonNode.string("A1:E5,F6:Z99")));
     }
 
