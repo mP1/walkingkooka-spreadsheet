@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.security;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.tree.json.FromJsonNodeException;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
@@ -97,18 +98,22 @@ public final class Group extends Identity<GroupId> {
                         groupName = GroupName.fromJsonNode(child);
                         break;
                     default:
-                        throw new IllegalArgumentException("Unknown property " + name + "=" + node);
+                        HasJsonNode.unknownPropertyPresent(name, node);
                 }
             }
         } catch (final JsonNodeException cause) {
-            throw new IllegalArgumentException(cause.getMessage(), cause);
+            throw new FromJsonNodeException(cause.getMessage(), node, cause);
         }
 
         if (null == groupName) {
             HasJsonNode.requiredPropertyMissing(NAME_PROPERTY, node);
         }
 
-        return new Group(Optional.ofNullable(id), groupName);
+        try {
+            return new Group(Optional.ofNullable(id), groupName);
+        } catch (final RuntimeException cause) {
+            throw new FromJsonNodeException(cause.getMessage(), node, cause);
+        }
     }
 
     @Override
