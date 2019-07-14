@@ -18,11 +18,27 @@
 package walkingkooka.spreadsheet.store;
 
 import walkingkooka.test.StandardThrowableTesting;
+import walkingkooka.type.JavaVisibility;
 
 public final class LoadSpreadsheetStoreExceptionTest implements StandardThrowableTesting<LoadSpreadsheetStoreException> {
 
     @Override
+    public LoadSpreadsheetStoreException createThrowable(final String message) {
+        return new LoadSpreadsheetStoreException(message);
+    }
+
+    @Override
+    public LoadSpreadsheetStoreException createThrowable(final String message, final Throwable cause) {
+        return new LoadSpreadsheetStoreException(message, cause);
+    }
+
+    @Override
     public Class<LoadSpreadsheetStoreException> type() {
         return LoadSpreadsheetStoreException.class;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
     }
 }
