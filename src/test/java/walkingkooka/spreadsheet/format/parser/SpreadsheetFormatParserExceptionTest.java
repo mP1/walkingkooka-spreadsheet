@@ -18,11 +18,27 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.test.StandardThrowableTesting;
+import walkingkooka.type.JavaVisibility;
 
 public final class SpreadsheetFormatParserExceptionTest implements StandardThrowableTesting<SpreadsheetFormatParserException> {
 
     @Override
+    public SpreadsheetFormatParserException createThrowable(final String message) {
+        return new SpreadsheetFormatParserException(message);
+    }
+
+    @Override
+    public SpreadsheetFormatParserException createThrowable(final String message, final Throwable cause) {
+        return new SpreadsheetFormatParserException(message, cause);
+    }
+
+    @Override
     public Class<SpreadsheetFormatParserException> type() {
         return SpreadsheetFormatParserException.class;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
     }
 }
