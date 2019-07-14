@@ -18,11 +18,27 @@
 package walkingkooka.spreadsheet.conditionalformat;
 
 import walkingkooka.test.StandardThrowableTesting;
+import walkingkooka.type.JavaVisibility;
 
 public final class SpreadsheetConditionalFormattingExceptionTest implements StandardThrowableTesting<SpreadsheetConditionalFormattingException> {
 
     @Override
+    public SpreadsheetConditionalFormattingException createThrowable(final String message) {
+        return new SpreadsheetConditionalFormattingException(message);
+    }
+
+    @Override
+    public SpreadsheetConditionalFormattingException createThrowable(final String message, final Throwable cause) {
+        return new SpreadsheetConditionalFormattingException(message, cause);
+    }
+
+    @Override
     public Class<SpreadsheetConditionalFormattingException> type() {
         return SpreadsheetConditionalFormattingException.class;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
     }
 }
