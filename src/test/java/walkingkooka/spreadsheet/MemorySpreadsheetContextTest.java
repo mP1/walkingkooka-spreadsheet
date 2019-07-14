@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Binary;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
@@ -46,6 +47,7 @@ import walkingkooka.net.http.server.HttpResponses;
 import walkingkooka.net.http.server.RecordingHttpResponse;
 import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.routing.Router;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatters;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -356,6 +358,407 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     }
 
     @Test
+    public void testHateosRouter() {
+        assertNotEquals(null, this.createContext().hateosRouter(this.spreadsheetId()));
+    }
+
+    @Test
+    public void testHateosRouterThenSaveThenLoadClearValueErrorSkipEvaluate() {
+        this.hateosRouterThenSaveThenLoadAndCheck(SpreadsheetEngineEvaluation.CLEAR_VALUE_ERROR_SKIP_EVALUATE,
+                "{\n" +
+                        "  \"id\": {\n" +
+                        "    \"type\": \"spreadsheet-cell-reference\",\n" +
+                        "    \"value\": \"B2\"\n" +
+                        "  },\n" +
+                        "  \"cells\": [{\n" +
+                        "    \"reference\": \"B2\",\n" +
+                        "    \"formula\": {\n" +
+                        "      \"text\": \"1+2\",\n" +
+                        "      \"expression\": {\n" +
+                        "        \"type\": \"expression+\",\n" +
+                        "        \"value\": [{\n" +
+                        "          \"type\": \"expression-big-decimal\",\n" +
+                        "          \"value\": \"1\"\n" +
+                        "        }, {\n" +
+                        "          \"type\": \"expression-big-decimal\",\n" +
+                        "          \"value\": \"2\"\n" +
+                        "        }]\n" +
+                        "      }\n" +
+                        "    }\n" +
+                        "  }],\n" +
+                        "  \"_links\": [{\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/clear-value-error-skip-evaluate\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"clear-value-error-skip-evaluate\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }, {\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/compute-if-necessary\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"compute-if-necessary\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }, {\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/copy\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"copy\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }, {\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/force-recompute\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"force-recompute\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }, {\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"self\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }, {\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/skip-evaluate\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"skip-evaluate\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }]\n" +
+                        "}");
+    }
+
+    @Test
+    public void testHateosRouterThenSaveThenLoadComputeIfNecessary() {
+        this.hateosRouterThenSaveThenLoadAndCheck(SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                "{\n" +
+                        "  \"id\": {\n" +
+                        "    \"type\": \"spreadsheet-cell-reference\",\n" +
+                        "    \"value\": \"B2\"\n" +
+                        "  },\n" +
+                        "  \"cells\": [{\n" +
+                        "    \"reference\": \"B2\",\n" +
+                        "    \"formula\": {\n" +
+                        "      \"text\": \"1+2\",\n" +
+                        "      \"expression\": {\n" +
+                        "        \"type\": \"expression+\",\n" +
+                        "        \"value\": [{\n" +
+                        "          \"type\": \"expression-big-decimal\",\n" +
+                        "          \"value\": \"1\"\n" +
+                        "        }, {\n" +
+                        "          \"type\": \"expression-big-decimal\",\n" +
+                        "          \"value\": \"2\"\n" +
+                        "        }]\n" +
+                        "      },\n" +
+                        "      \"value\": {\n" +
+                        "        \"type\": \"big-decimal\",\n" +
+                        "        \"value\": \"3\"\n" +
+                        "      }\n" +
+                        "    },\n" +
+                        "    \"formatted\": {\n" +
+                        "      \"type\": \"text\",\n" +
+                        "      \"value\": \"Hello1233\"\n" +
+                        "    }\n" +
+                        "  }],\n" +
+                        "  \"_links\": [{\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/clear-value-error-skip-evaluate\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"clear-value-error-skip-evaluate\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }, {\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/compute-if-necessary\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"compute-if-necessary\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }, {\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/copy\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"copy\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }, {\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/force-recompute\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"force-recompute\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }, {\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"self\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }, {\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/skip-evaluate\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"skip-evaluate\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }]\n" +
+                        "}");
+    }
+
+    @Test
+    public void testHateosRouterThenSaveThenLoadForceRecompute() {
+        this.hateosRouterThenSaveThenLoadAndCheck(SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                "{\n" +
+                        "  \"id\": {\n" +
+                        "    \"type\": \"spreadsheet-cell-reference\",\n" +
+                        "    \"value\": \"B2\"\n" +
+                        "  },\n" +
+                        "  \"cells\": [{\n" +
+                        "    \"reference\": \"B2\",\n" +
+                        "    \"formula\": {\n" +
+                        "      \"text\": \"1+2\",\n" +
+                        "      \"expression\": {\n" +
+                        "        \"type\": \"expression+\",\n" +
+                        "        \"value\": [{\n" +
+                        "          \"type\": \"expression-big-decimal\",\n" +
+                        "          \"value\": \"1\"\n" +
+                        "        }, {\n" +
+                        "          \"type\": \"expression-big-decimal\",\n" +
+                        "          \"value\": \"2\"\n" +
+                        "        }]\n" +
+                        "      },\n" +
+                        "      \"value\": {\n" +
+                        "        \"type\": \"big-decimal\",\n" +
+                        "        \"value\": \"3\"\n" +
+                        "      }\n" +
+                        "    },\n" +
+                        "    \"formatted\": {\n" +
+                        "      \"type\": \"text\",\n" +
+                        "      \"value\": \"Hello1233\"\n" +
+                        "    }\n" +
+                        "  }],\n" +
+                        "  \"_links\": [{\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/clear-value-error-skip-evaluate\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"clear-value-error-skip-evaluate\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }, {\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/compute-if-necessary\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"compute-if-necessary\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }, {\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/copy\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"copy\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }, {\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/force-recompute\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"force-recompute\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }, {\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"self\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }, {\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/skip-evaluate\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"skip-evaluate\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }]\n" +
+                        "}");
+    }
+
+    @Test
+    public void testHateosRouterThenSaveThenLoadSkipEvaluate() {
+        this.hateosRouterThenSaveThenLoadAndCheck(SpreadsheetEngineEvaluation.SKIP_EVALUATE,
+                "{\n" +
+                        "  \"id\": {\n" +
+                        "    \"type\": \"spreadsheet-cell-reference\",\n" +
+                        "    \"value\": \"B2\"\n" +
+                        "  },\n" +
+                        "  \"cells\": [{\n" +
+                        "    \"reference\": \"B2\",\n" +
+                        "    \"formula\": {\n" +
+                        "      \"text\": \"1+2\",\n" +
+                        "      \"expression\": {\n" +
+                        "        \"type\": \"expression+\",\n" +
+                        "        \"value\": [{\n" +
+                        "          \"type\": \"expression-big-decimal\",\n" +
+                        "          \"value\": \"1\"\n" +
+                        "        }, {\n" +
+                        "          \"type\": \"expression-big-decimal\",\n" +
+                        "          \"value\": \"2\"\n" +
+                        "        }]\n" +
+                        "      },\n" +
+                        "      \"value\": {\n" +
+                        "        \"type\": \"big-decimal\",\n" +
+                        "        \"value\": \"3\"\n" +
+                        "      }\n" +
+                        "    },\n" +
+                        "    \"formatted\": {\n" +
+                        "      \"type\": \"text\",\n" +
+                        "      \"value\": \"Hello1233\"\n" +
+                        "    }\n" +
+                        "  }],\n" +
+                        "  \"_links\": [{\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/clear-value-error-skip-evaluate\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"clear-value-error-skip-evaluate\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }, {\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/compute-if-necessary\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"compute-if-necessary\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }, {\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/copy\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"copy\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }, {\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/force-recompute\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"force-recompute\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }, {\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"self\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }, {\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/skip-evaluate\",\n" +
+                        "    \"method\": \"GET\",\n" +
+                        "    \"rel\": \"skip-evaluate\",\n" +
+                        "    \"type\": \"application/hal+json\"\n" +
+                        "  }]\n" +
+                        "}");
+    }
+
+    private void hateosRouterThenSaveThenLoadAndCheck(final SpreadsheetEngineEvaluation evaluation,
+                                                      final String expectedBody) {
+        final MemorySpreadsheetContext context = this.createContext();
+        final SpreadsheetId id = this.spreadsheetId();
+        final Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> router = context.hateosRouter(id);
+
+        final SpreadsheetCellReference cellReference = SpreadsheetExpressionReference.parseCellReference("B2");
+        final SpreadsheetCell cell = SpreadsheetCell.with(cellReference, SpreadsheetFormula.with("1+2"));
+        final Charset utf8 = Charset.forName("UTF-8");
+
+        // save a cell
+        {
+            final HttpRequest request = new FakeHttpRequest() {
+                @Override
+                public HttpMethod method() {
+                    return HttpMethod.POST;
+                }
+
+                @Override
+                public RelativeUrl url() {
+                    return Url.parseRelative("/api987/123def/cell/B2/");
+                }
+
+                @Override
+                public Map<HttpHeaderName<?>, Object> headers() {
+                    return Maps.of(HttpHeaderName.CONTENT_TYPE, HateosContentType.json().contentType(),
+                            HttpHeaderName.ACCEPT_CHARSET, AcceptCharset.parse("UTF-8"));
+                }
+
+                public Map<HttpRequestParameterName, List<String>> parameters() {
+                    return HttpRequest.NO_PARAMETERS;
+                }
+
+                @Override
+                public byte[] body() {
+                    return SpreadsheetDelta.withId(Optional.of(cellReference), Sets.of(cell))
+                            .toJsonNode()
+                            .toString()
+                            .getBytes(utf8);
+                }
+
+                @Override
+                public String toString() {
+                    return this.method() + " " + this.url();
+                }
+            };
+
+            final Optional<BiConsumer<HttpRequest, HttpResponse>> mapped = router.route(request.routingParameters());
+            assertNotEquals(Optional.empty(), mapped, "request " + request.parameters());
+
+            final RecordingHttpResponse response = HttpResponses.recording();
+            final BiConsumer<HttpRequest, HttpResponse> consumer = mapped.get();
+            consumer.accept(request, response);
+        }
+
+        // load cell back
+        {
+            final HttpRequest request = new FakeHttpRequest() {
+                @Override
+                public HttpMethod method() {
+                    return HttpMethod.GET;
+                }
+
+                @Override
+                public RelativeUrl url() {
+                    return Url.parseRelative("/api987/123def/cell/B2/" + evaluation.toLinkRelation().toString());
+                }
+
+                @Override
+                public Map<HttpHeaderName<?>, Object> headers() {
+                    return Maps.of(HttpHeaderName.CONTENT_TYPE, HateosContentType.json().contentType(),
+                            HttpHeaderName.ACCEPT_CHARSET, AcceptCharset.parse("UTF-8"));
+                }
+
+                public Map<HttpRequestParameterName, List<String>> parameters() {
+                    return HttpRequest.NO_PARAMETERS;
+                }
+
+                @Override
+                public byte[] body() {
+                    return new byte[0];
+                }
+            };
+
+            final Optional<BiConsumer<HttpRequest, HttpResponse>> mapped = router.route(request.routingParameters());
+            assertNotEquals(Optional.empty(), mapped, "request " + request.parameters());
+
+            final RecordingHttpResponse response = HttpResponses.recording();
+            final BiConsumer<HttpRequest, HttpResponse> consumer = mapped.get();
+            consumer.accept(request, response);
+
+            final RecordingHttpResponse expected = HttpResponses.recording();
+            expected.setStatus(HttpStatusCode.OK.setMessage("GET resource successful"));
+
+            expected.addEntity(HttpEntity.with(Maps.of(
+                    HttpHeaderName.CONTENT_LENGTH, 0L + expectedBody.getBytes(utf8).length,
+                    HttpHeaderName.CONTENT_TYPE, HateosContentType.json().contentType().setCharset(CharsetName.UTF_8)),
+                    Binary.with(expectedBody.getBytes(utf8))));
+
+            assertEquals(expected, response, () -> "consumer: " + consumer + ", request: " + request);
+        }
+    }
+
+    @Test
+    public void testHateosRouterAndRouteInvalidRequest() {
+        final MemorySpreadsheetContext context = this.createContext();
+        final SpreadsheetId id = this.spreadsheetId();
+        final Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> router = context.hateosRouter(id);
+
+        final HttpRequest request = new FakeHttpRequest() {
+            @Override
+            public HttpMethod method() {
+                return HttpMethod.GET;
+            }
+
+            @Override
+            public RelativeUrl url() {
+                return Url.parseRelative("/INVALID");
+            }
+
+            @Override
+            public Map<HttpHeaderName<?>, Object> headers() {
+                return HttpRequest.NO_HEADERS;
+            }
+
+            public Map<HttpRequestParameterName, List<String>> parameters() {
+                return HttpRequest.NO_PARAMETERS;
+            }
+
+            @Override
+            public byte[] body() {
+                return new byte[0];
+            }
+        };
+
+        final Optional<BiConsumer<HttpRequest, HttpResponse>> mapped = router.route(request.routingParameters());
+        assertEquals(Optional.empty(), mapped, "request " + request.parameters());
+    }
+
+
+    @Test
     public void testMetadataWithDefaults() {
         assertEquals(this.metadataWithDefaults(), this.createContext().metadataWithDefaults());
     }
@@ -531,7 +934,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     }
 
     private SpreadsheetId spreadsheetId() {
-        return SpreadsheetId.with(123);
+        return SpreadsheetId.with(0x123def);
     }
 
     @Override
