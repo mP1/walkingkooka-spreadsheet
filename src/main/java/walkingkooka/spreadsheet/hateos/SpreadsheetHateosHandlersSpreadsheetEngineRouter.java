@@ -17,6 +17,7 @@
 package walkingkooka.spreadsheet.hateos;
 
 import walkingkooka.Cast;
+import walkingkooka.NeverError;
 import walkingkooka.compare.Range;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.header.LinkRelation;
@@ -99,7 +100,16 @@ final class SpreadsheetHateosHandlersSpreadsheetEngineRouter implements StaticHe
                                                                                                                               SpreadsheetDelta<Range<SpreadsheetRowReference>>> insertRows,
                                                                                                                       final HateosHandler<SpreadsheetCellReference,
                                                                                                                               SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-                                                                                                                              SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCell,
+                                                                                                                              SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellClearValueErrorSkipEvaluate,
+                                                                                                                      final HateosHandler<SpreadsheetCellReference,
+                                                                                                                              SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
+                                                                                                                              SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellSkipEvaluate,
+                                                                                                                      final HateosHandler<SpreadsheetCellReference,
+                                                                                                                              SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
+                                                                                                                              SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellForceRecompute,
+                                                                                                                      final HateosHandler<SpreadsheetCellReference,
+                                                                                                                              SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
+                                                                                                                              SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellComputeIfNecessary,
                                                                                                                       final HateosHandler<SpreadsheetCellReference,
                                                                                                                               SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
                                                                                                                               SpreadsheetDelta<Range<SpreadsheetCellReference>>> saveCell) {
@@ -109,7 +119,10 @@ final class SpreadsheetHateosHandlersSpreadsheetEngineRouter implements StaticHe
         Objects.requireNonNull(deleteRows, "deleteRows");
         Objects.requireNonNull(insertColumns, "insertColumns");
         Objects.requireNonNull(insertRows, "insertRows");
-        Objects.requireNonNull(loadCell, "loadCell");
+        Objects.requireNonNull(loadCellClearValueErrorSkipEvaluate, "loadCellClearValueErrorSkipEvaluate");
+        Objects.requireNonNull(loadCellSkipEvaluate, "loadCellSkipEvaluate");
+        Objects.requireNonNull(loadCellForceRecompute, "loadCellForceRecompute");
+        Objects.requireNonNull(loadCellComputeIfNecessary, "loadCellComputeIfNecessary");
         Objects.requireNonNull(saveCell, "saveCell");
 
         // cell GET, POST...............................................................................................
@@ -122,7 +135,7 @@ final class SpreadsheetHateosHandlersSpreadsheetEngineRouter implements StaticHe
                     SpreadsheetDelta<Range<SpreadsheetCellReference>>> cell = HateosHandlerRouterMapper.with(stringToCellReference,
                     OPTIONAL_CELL_REFERENCE,
                     RANGE_CELL_REFERENCE);
-            cell.get(loadCell);
+            cell.get(loadCellComputeIfNecessary);
             cell.post(saveCell);
 
             builder.add(CELL, LinkRelation.SELF, cell);
@@ -135,6 +148,27 @@ final class SpreadsheetHateosHandlersSpreadsheetEngineRouter implements StaticHe
                     SpreadsheetDelta<Range<SpreadsheetCellReference>>> cell = HateosHandlerRouterMapper.with(stringToCellReference,
                     OPTIONAL_CELL_REFERENCE,
                     RANGE_CELL_REFERENCE);
+
+            HateosHandler<SpreadsheetCellReference,
+                    SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
+                    SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCell = null;
+            switch(evaluation) {
+                case CLEAR_VALUE_ERROR_SKIP_EVALUATE:
+                    loadCell = loadCellClearValueErrorSkipEvaluate;
+                    break;
+                case SKIP_EVALUATE:
+                    loadCell = loadCellSkipEvaluate;
+                    break;
+                case FORCE_RECOMPUTE:
+                    loadCell = loadCellForceRecompute;
+                    break;
+                case COMPUTE_IF_NECESSARY:
+                    loadCell = loadCellComputeIfNecessary;
+                    break;
+                default:
+                    NeverError.unhandledEnum(evaluation, SpreadsheetEngineEvaluation.values());
+            }
+
             cell.get(loadCell);
 
             builder.add(CELL, evaluation.toLinkRelation(), cell);

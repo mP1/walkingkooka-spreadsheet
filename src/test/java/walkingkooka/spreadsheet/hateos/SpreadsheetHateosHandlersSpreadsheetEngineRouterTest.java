@@ -52,9 +52,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implements ClassTesting2<SpreadsheetHateosHandlersSpreadsheetEngineRouter>{
-
-    private final static SpreadsheetEngineEvaluation EVALUATION = SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY;
+public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implements ClassTesting2<SpreadsheetHateosHandlersSpreadsheetEngineRouter> {
 
     // spreadsheetCellColumnRowRouter...........................................................................................................
 
@@ -67,7 +65,10 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
                 this.deleteRows(),
                 this.insertColumns(),
                 this.insertRows(),
-                this.loadCell(),
+                this.loadCellClearValueErrorSkipEvaluate(),
+                this.loadCellComputeIfNecessary(),
+                this.loadCellForceRecompute(),
+                this.loadCellSkipEvaluate(),
                 this.saveCell());
     }
 
@@ -80,7 +81,10 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
                 this.deleteRows(),
                 this.insertColumns(),
                 this.insertRows(),
-                this.loadCell(),
+                this.loadCellClearValueErrorSkipEvaluate(),
+                this.loadCellComputeIfNecessary(),
+                this.loadCellForceRecompute(),
+                this.loadCellSkipEvaluate(),
                 this.saveCell());
     }
 
@@ -93,7 +97,10 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
                 this.deleteRows(),
                 this.insertColumns(),
                 this.insertRows(),
-                this.loadCell(),
+                this.loadCellClearValueErrorSkipEvaluate(),
+                this.loadCellComputeIfNecessary(),
+                this.loadCellForceRecompute(),
+                this.loadCellSkipEvaluate(),
                 this.saveCell());
     }
 
@@ -106,7 +113,10 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
                 this.deleteRows(),
                 this.insertColumns(),
                 this.insertRows(),
-                this.loadCell(),
+                this.loadCellClearValueErrorSkipEvaluate(),
+                this.loadCellComputeIfNecessary(),
+                this.loadCellForceRecompute(),
+                this.loadCellSkipEvaluate(),
                 this.saveCell());
     }
 
@@ -119,7 +129,10 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
                 null,
                 this.insertColumns(),
                 this.insertRows(),
-                this.loadCell(),
+                this.loadCellClearValueErrorSkipEvaluate(),
+                this.loadCellComputeIfNecessary(),
+                this.loadCellForceRecompute(),
+                this.loadCellSkipEvaluate(),
                 this.saveCell());
     }
 
@@ -132,7 +145,10 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
                 this.deleteRows(),
                 null,
                 this.insertRows(),
-                this.loadCell(),
+                this.loadCellClearValueErrorSkipEvaluate(),
+                this.loadCellComputeIfNecessary(),
+                this.loadCellForceRecompute(),
+                this.loadCellSkipEvaluate(),
                 this.saveCell());
     }
 
@@ -145,12 +161,15 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
                 this.deleteRows(),
                 this.insertColumns(),
                 null,
-                this.loadCell(),
+                this.loadCellClearValueErrorSkipEvaluate(),
+                this.loadCellComputeIfNecessary(),
+                this.loadCellForceRecompute(),
+                this.loadCellSkipEvaluate(),
                 this.saveCell());
     }
 
     @Test
-    public void testRouterLoadCellsHandlerNullFails() {
+    public void testRouterLoadCellsClearValueErrorSkipEvaluateHandlerNullFails() {
         this.routerFails(this.base(),
                 this.contentType(),
                 this.copyCells(),
@@ -158,6 +177,57 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
                 this.deleteRows(),
                 this.insertColumns(),
                 this.insertRows(),
+                null,
+                this.loadCellComputeIfNecessary(),
+                this.loadCellForceRecompute(),
+                this.loadCellSkipEvaluate(),
+                this.saveCell());
+    }
+
+    @Test
+    public void testRouterLoadCellsComputeIfNecessaryHandlerNullFails() {
+        this.routerFails(this.base(),
+                this.contentType(),
+                this.copyCells(),
+                this.deleteColumns(),
+                this.deleteRows(),
+                this.insertColumns(),
+                this.insertRows(),
+                this.loadCellClearValueErrorSkipEvaluate(),
+                null,
+                this.loadCellForceRecompute(),
+                this.loadCellSkipEvaluate(),
+                this.saveCell());
+    }
+
+    @Test
+    public void testRouterLoadCellsForceRecomputeHandlerNullFails() {
+        this.routerFails(this.base(),
+                this.contentType(),
+                this.copyCells(),
+                this.deleteColumns(),
+                this.deleteRows(),
+                this.insertColumns(),
+                this.insertRows(),
+                this.loadCellClearValueErrorSkipEvaluate(),
+                this.loadCellComputeIfNecessary(),
+                null,
+                this.loadCellSkipEvaluate(),
+                this.saveCell());
+    }
+
+    @Test
+    public void testRouterLoadCellsSkipEvaluateHandlerNullFails() {
+        this.routerFails(this.base(),
+                this.contentType(),
+                this.copyCells(),
+                this.deleteColumns(),
+                this.deleteRows(),
+                this.insertColumns(),
+                this.insertRows(),
+                this.loadCellClearValueErrorSkipEvaluate(),
+                this.loadCellComputeIfNecessary(),
+                this.loadCellForceRecompute(),
                 null,
                 this.saveCell());
     }
@@ -171,7 +241,10 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
                 this.deleteRows(),
                 this.insertColumns(),
                 this.insertRows(),
-                this.loadCell(),
+                this.loadCellClearValueErrorSkipEvaluate(),
+                this.loadCellComputeIfNecessary(),
+                this.loadCellForceRecompute(),
+                this.loadCellSkipEvaluate(),
                 null);
     }
 
@@ -194,7 +267,16 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
                                      SpreadsheetDelta<Range<SpreadsheetRowReference>>> insertRows,
                              final HateosHandler<SpreadsheetCellReference,
                                      SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-                                     SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCell,
+                                     SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellClearValueErrorSkipEvaluate,
+                             final HateosHandler<SpreadsheetCellReference,
+                                     SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
+                                     SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellSkipEvaluate,
+                             final HateosHandler<SpreadsheetCellReference,
+                                     SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
+                                     SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellForceRecompute,
+                             final HateosHandler<SpreadsheetCellReference,
+                                     SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
+                                     SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellComputeIfNecessary,
                              final HateosHandler<SpreadsheetCellReference,
                                      SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
                                      SpreadsheetDelta<Range<SpreadsheetCellReference>>> saveCell) {
@@ -206,7 +288,10 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
                     deleteRows,
                     insertColumns,
                     insertRows,
-                    loadCell,
+                    loadCellClearValueErrorSkipEvaluate,
+                    loadCellSkipEvaluate,
+                    loadCellForceRecompute,
+                    loadCellComputeIfNecessary,
                     saveCell);
         });
     }
@@ -330,7 +415,10 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
                 this.deleteRows(),
                 this.insertColumns(),
                 this.insertRows(),
-                this.loadCell(),
+                this.loadCellClearValueErrorSkipEvaluate(),
+                this.loadCellComputeIfNecessary(),
+                this.loadCellForceRecompute(),
+                this.loadCellSkipEvaluate(),
                 this.saveCell());
         return router.route(request.routingParameters());
     }
@@ -394,8 +482,24 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
         return SpreadsheetHateosHandlers.insertRows(this.engine(), this.engineContext());
     }
 
-    private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>, SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCell() {
-        return SpreadsheetHateosHandlers.loadCell(EVALUATION, this.engine(), this.engineContext());
+    private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>, SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellClearValueErrorSkipEvaluate() {
+        return this.loadCell(SpreadsheetEngineEvaluation.CLEAR_VALUE_ERROR_SKIP_EVALUATE);
+    }
+
+    private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>, SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellComputeIfNecessary() {
+        return this.loadCell(SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY);
+    }
+
+    private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>, SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellForceRecompute() {
+        return this.loadCell(SpreadsheetEngineEvaluation.FORCE_RECOMPUTE);
+    }
+
+    private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>, SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellSkipEvaluate() {
+        return this.loadCell(SpreadsheetEngineEvaluation.SKIP_EVALUATE);
+    }
+
+    private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>, SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCell(final SpreadsheetEngineEvaluation evaluation) {
+        return SpreadsheetHateosHandlers.loadCell(evaluation, this.engine(), this.engineContext());
     }
 
     final HateosHandler<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>, SpreadsheetDelta<Range<SpreadsheetCellReference>>> saveCell() {
