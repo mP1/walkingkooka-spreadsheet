@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.store.meta;
+package walkingkooka.spreadsheet.meta.store;
 
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;

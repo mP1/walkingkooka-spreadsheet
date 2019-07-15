@@ -15,14 +15,12 @@
  *
  */
 
-package walkingkooka.spreadsheet.store.meta;
+package walkingkooka.spreadsheet.meta.store;
 
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.store.SpreadsheetStore;
+import walkingkooka.spreadsheet.store.FakeSpreadsheetStore;
+import walkingkooka.test.Fake;
 
-/**
- * A {@link SpreadsheetStore} that holds all spreadsheet to metadata.
- */
-public interface SpreadsheetMetadataStore extends SpreadsheetStore<SpreadsheetId, SpreadsheetMetadata> {
+public class FakeSpreadsheetMetadataStore extends FakeSpreadsheetStore<SpreadsheetId, SpreadsheetMetadata> implements SpreadsheetMetadataStore, Fake {
 }

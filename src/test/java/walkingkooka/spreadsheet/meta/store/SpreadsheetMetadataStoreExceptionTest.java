@@ -15,25 +15,26 @@
  *
  */
 
-package walkingkooka.spreadsheet.store.meta;
+package walkingkooka.spreadsheet.meta.store;
 
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.PublicStaticHelperTesting;
+import walkingkooka.test.StandardThrowableTesting;
 import walkingkooka.type.JavaVisibility;
 
-import java.lang.reflect.Method;
-
-public final class SpreadsheetMetadataStoresTest implements ClassTesting2<SpreadsheetMetadataStores>,
-        PublicStaticHelperTesting<SpreadsheetMetadataStores> {
+public final class SpreadsheetMetadataStoreExceptionTest implements StandardThrowableTesting<SpreadsheetMetadataStoreException> {
 
     @Override
-    public Class<SpreadsheetMetadataStores> type() {
-        return SpreadsheetMetadataStores.class;
+    public SpreadsheetMetadataStoreException createThrowable(final String message) {
+        return new SpreadsheetMetadataStoreException(message);
     }
 
     @Override
-    public boolean canHavePublicTypes(final Method method) {
-        return false;
+    public SpreadsheetMetadataStoreException createThrowable(final String message, final Throwable cause) {
+        return new SpreadsheetMetadataStoreException(message, cause);
+    }
+
+    @Override
+    public Class<SpreadsheetMetadataStoreException> type() {
+        return SpreadsheetMetadataStoreException.class;
     }
 
     @Override
