@@ -91,7 +91,7 @@ final public class GroupName implements Name,
     /**
      * Accepts a json string holding the name string
      */
-    public static GroupName fromJsonNode(final JsonNode node) {
+    static GroupName fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
         try {

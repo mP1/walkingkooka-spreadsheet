@@ -209,7 +209,7 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
     /**
      * Factory that creates a {@link SpreadsheetFormula} from a {@link JsonNode}.
      */
-    public static SpreadsheetFormula fromJsonNode(final JsonNode node) {
+    static SpreadsheetFormula fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
         String text = null;

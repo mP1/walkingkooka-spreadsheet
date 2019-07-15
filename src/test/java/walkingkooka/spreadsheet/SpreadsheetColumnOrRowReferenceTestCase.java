@@ -106,13 +106,6 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         assertNotSame(value, this.createReference(value));
     }
 
-    // HasJsonNodeTesting..................................................................
-
-    @Override
-    public final void testFromJsonNullFails() {
-        throw new UnsupportedOperationException();
-    }
-
     // setReferenceKind.................................................................................................
 
     @Test
