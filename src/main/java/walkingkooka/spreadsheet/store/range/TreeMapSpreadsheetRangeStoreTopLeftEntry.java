@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.store.range;
 
 import walkingkooka.collect.set.Sets;
-import walkingkooka.compare.Comparators;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 

@@ -25,7 +25,6 @@ import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.routing.Router;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.SpreadsheetContext;

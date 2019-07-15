@@ -22,7 +22,6 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.collect.map.Maps;
-import walkingkooka.color.Color;
 import walkingkooka.color.ColorHslOrHsv;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.HasText;

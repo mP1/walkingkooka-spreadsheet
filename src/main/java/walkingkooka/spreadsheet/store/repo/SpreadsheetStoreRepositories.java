@@ -20,13 +20,13 @@ package walkingkooka.spreadsheet.store.repo;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
-import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
-import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
-import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
-import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
+import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
+import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStore;
 import walkingkooka.type.PublicStaticHelper;
 
 /**

@@ -17,8 +17,6 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.predicate.Predicates;
-import walkingkooka.test.BeanPropertiesTesting;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.IsMethodTesting;
 import walkingkooka.test.PublicStaticFactoryTesting;
@@ -26,7 +24,6 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokenTesting;
 import walkingkooka.type.JavaVisibility;
 
-import java.util.Optional;
 import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;

@@ -26,7 +26,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetFormatParentParserTokenTestCase<T extends SpreadsheetFormatParentParserToken<T>> extends SpreadsheetFormatParserTokenTestCase<T> {

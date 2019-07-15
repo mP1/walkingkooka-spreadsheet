@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStores;
 import walkingkooka.tree.expression.ExpressionNode;

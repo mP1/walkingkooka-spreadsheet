@@ -20,8 +20,6 @@ import walkingkooka.text.cursor.parser.ParentParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Base class for a token that contain another child token.
