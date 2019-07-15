@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.store.reference;
 
 import walkingkooka.Cast;
-import walkingkooka.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.expression.ExpressionReference;
 

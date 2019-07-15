@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
@@ -240,16 +241,16 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
             final JsonNodeName name = child.name();
             switch (name.value()) {
                 case REFERENCE_PROPERTY_STRING:
-                    reference = SpreadsheetCellReference.fromJsonNodeCellReference(child);
+                    reference = child.fromJsonNode(SpreadsheetCellReference.class);
                     break;
                 case FORMULA_PROPERTY_STRING:
-                    formula = SpreadsheetFormula.fromJsonNode(child);
+                    formula = child.fromJsonNode(SpreadsheetFormula.class);
                     break;
                 case STYLE_PROPERTY_STRING:
                     style = child.fromJsonNode(TextStyle.class);
                     break;
                 case FORMAT_PROPERTY_STRING:
-                    format = SpreadsheetCellFormat.fromJsonNode(child);
+                    format = child.fromJsonNode(SpreadsheetCellFormat.class);
                     break;
                 case FORMATTED_PROPERTY_STRING:
                     formatted = child.fromJsonNode(TextNode.class);

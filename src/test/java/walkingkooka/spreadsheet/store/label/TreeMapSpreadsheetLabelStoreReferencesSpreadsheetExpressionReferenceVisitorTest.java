@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.store.label;
 
-import walkingkooka.spreadsheet.SpreadsheetExpressionReferenceVisitorTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitorTesting;
 import walkingkooka.type.JavaVisibility;
 
 public final class TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitorTest implements SpreadsheetExpressionReferenceVisitorTesting<TreeMapSpreadsheetLabelStoreReferencesSpreadsheetExpressionReferenceVisitor> {
