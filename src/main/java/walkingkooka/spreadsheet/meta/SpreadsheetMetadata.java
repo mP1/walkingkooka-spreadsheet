@@ -160,7 +160,7 @@ public abstract class SpreadsheetMetadata implements HashCodeEqualsDefined,
     /**
      * Accepts a json object holding the metadata as a map.
      */
-    public static SpreadsheetMetadata fromJsonNode(final JsonNode node) {
+    static SpreadsheetMetadata fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
         try {

@@ -100,7 +100,7 @@ public enum SpreadsheetEngineEvaluation implements HasJsonNode {
     /**
      * Factory that creates a {@link SpreadsheetEngineEvaluation} from a {@link JsonNode}
      */
-    public static SpreadsheetEngineEvaluation fromJsonNode(final JsonNode node) {
+    static SpreadsheetEngineEvaluation fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
         try {

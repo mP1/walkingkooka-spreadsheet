@@ -81,7 +81,7 @@ public final class Group extends Identity<GroupId> {
     /**
      * Factory that creates a {@link Group} from a {@link JsonNode}.
      */
-    public static Group fromJsonNode(final JsonNode node) {
+    static Group fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
         GroupId id = null;
