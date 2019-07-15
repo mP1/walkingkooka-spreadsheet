@@ -15,22 +15,30 @@
  *
  */
 
-package walkingkooka.spreadsheet.hateos;
+package walkingkooka.spreadsheet.engine.hateos;
 
-import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
+import walkingkooka.test.ClassTesting;
+import walkingkooka.test.ToStringTesting;
+import walkingkooka.test.TypeNameTesting;
+import walkingkooka.type.JavaVisibility;
 
-public abstract class SpreadsheetEngineHateosHandlerTestCase<H> extends SpreadsheetHateosHandlerTestCase<H> {
+public abstract class SpreadsheetEngineHateosHandlerTestCase<T> implements ClassTesting<T>,
+        ToStringTesting<T>,
+        TypeNameTesting<T> {
 
     SpreadsheetEngineHateosHandlerTestCase() {
         super();
     }
 
-    final SpreadsheetCell cell() {
-        return SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference("A99"), SpreadsheetFormula.with("1+2"));
+    // ClassTesting.....................................................................................................
+
+    @Override
+    public final JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
+
+    // TypeNameTesting..................................................................................................
 
     @Override
     public final String typeNamePrefix() {
