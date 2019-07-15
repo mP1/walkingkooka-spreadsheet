@@ -23,6 +23,7 @@ import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -106,32 +107,27 @@ public final class SpreadsheetRowTest implements ClassTesting2<SpreadsheetRow>,
 
     @Test
     public void testFromJsonNodeBooleanFails() {
-        this.fromJsonNodeFails(JsonNode.booleanNode(true));
-    }
-
-    @Test
-    public void testFromJsonNodeNullFails() {
-        this.fromJsonNodeFails(JsonNode.nullNode());
+        this.fromJsonNodeFails(JsonNode.booleanNode(true), JsonNodeException.class);
     }
 
     @Test
     public void testFromJsonNodeNumberFails() {
-        this.fromJsonNodeFails(JsonNode.number(12));
+        this.fromJsonNodeFails(JsonNode.number(12), JsonNodeException.class);
     }
 
     @Test
     public void testFromJsonNodeArrayFails() {
-        this.fromJsonNodeFails(JsonNode.array());
+        this.fromJsonNodeFails(JsonNode.array(), JsonNodeException.class);
     }
 
     @Test
     public void testFromJsonNodeStringFails() {
-        this.fromJsonNodeFails(JsonNode.string("fails"));
+        this.fromJsonNodeFails(JsonNode.string("fails"), JsonNodeException.class);
     }
 
     @Test
     public void testFromJsonNodeObjectEmptyFails() {
-        this.fromJsonNodeFails(JsonNode.object());
+        this.fromJsonNodeFails(JsonNode.object(), JsonNodeException.class);
     }
 
 
