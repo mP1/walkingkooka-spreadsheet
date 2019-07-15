@@ -14,8 +14,7 @@
  * limitations under the License.
  *
  */
-
-package walkingkooka.spreadsheet;
+package walkingkooka.spreadsheet.context.hateos;
 
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.PublicStaticHelperTesting;
@@ -23,12 +22,14 @@ import walkingkooka.type.JavaVisibility;
 
 import java.lang.reflect.Method;
 
-public class SpreadsheetContextsTest implements ClassTesting2<SpreadsheetContexts>,
-        PublicStaticHelperTesting<SpreadsheetContexts> {
+public final class SpreadsheetContextHateosHandlersTest implements ClassTesting2<SpreadsheetContextHateosHandlers>,
+        PublicStaticHelperTesting<SpreadsheetContextHateosHandlers> {
+
+    // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetContexts> type() {
-        return SpreadsheetContexts.class;
+    public Class<SpreadsheetContextHateosHandlers> type() {
+        return SpreadsheetContextHateosHandlers.class;
     }
 
     @Override
@@ -41,4 +42,3 @@ public class SpreadsheetContextsTest implements ClassTesting2<SpreadsheetContext
         return JavaVisibility.PUBLIC;
     }
 }
-
