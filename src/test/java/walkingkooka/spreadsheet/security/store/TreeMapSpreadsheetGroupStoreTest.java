@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.store.security;
+package walkingkooka.spreadsheet.security.store;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;

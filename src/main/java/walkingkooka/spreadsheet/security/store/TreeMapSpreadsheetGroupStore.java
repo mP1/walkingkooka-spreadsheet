@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.store.security;
+package walkingkooka.spreadsheet.security.store;
 
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;

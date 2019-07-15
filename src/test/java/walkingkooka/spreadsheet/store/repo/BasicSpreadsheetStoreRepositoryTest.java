@@ -31,10 +31,10 @@ import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStores;
 import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStores;
-import walkingkooka.spreadsheet.store.security.SpreadsheetGroupStore;
-import walkingkooka.spreadsheet.store.security.SpreadsheetGroupStores;
-import walkingkooka.spreadsheet.store.security.SpreadsheetUserStore;
-import walkingkooka.spreadsheet.store.security.SpreadsheetUserStores;
+import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
+import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
+import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
+import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
