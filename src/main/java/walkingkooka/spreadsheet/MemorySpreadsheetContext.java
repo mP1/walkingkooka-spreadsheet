@@ -51,8 +51,8 @@ import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStores;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.spreadsheet.store.security.SpreadsheetGroupStores;
-import walkingkooka.spreadsheet.store.security.SpreadsheetUserStores;
+import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
+import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
 import walkingkooka.tree.Node;
 import walkingkooka.tree.expression.ExpressionNodeName;
 

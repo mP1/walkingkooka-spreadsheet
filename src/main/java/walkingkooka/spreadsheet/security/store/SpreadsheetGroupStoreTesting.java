@@ -15,35 +15,47 @@
  *
  */
 
-package walkingkooka.spreadsheet.store.security;
+package walkingkooka.spreadsheet.security.store;
 
-import walkingkooka.net.email.EmailAddress;
-import walkingkooka.spreadsheet.security.User;
+import walkingkooka.spreadsheet.security.Group;
+import walkingkooka.spreadsheet.security.GroupId;
+import walkingkooka.spreadsheet.security.GroupName;
 import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.spreadsheet.store.SpreadsheetStoreTesting;
 import walkingkooka.test.TypeNameTesting;
 
 import java.util.Optional;
+import java.util.Set;
 
-public interface SpreadsheetUserStoreTesting<S extends SpreadsheetUserStore> extends SpreadsheetStoreTesting<S, UserId, User>,
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public interface SpreadsheetGroupStoreTesting<S extends SpreadsheetGroupStore> extends SpreadsheetStoreTesting<S, GroupId, Group>,
         TypeNameTesting<S> {
+
+    default void loadUserGroupsAndCheck(final SpreadsheetGroupStore store,
+                                        final UserId userId,
+                                        final Set<Group> groups) {
+        assertEquals(groups,
+                store.loadUserGroups(userId),
+                "store loadUserGroups " + userId + " incorrect result");
+    }
 
     // SpreadsheetStoreTesting...........................................................
 
     @Override
-    default UserId id() {
-        return UserId.with(1);
+    default GroupId id() {
+        return GroupId.with(1);
     }
 
     @Override
-    default User value() {
-        return User.with(Optional.of(this.id()), EmailAddress.parse("user@example.com"));
+    default Group value() {
+        return Group.with(Optional.of(this.id()), GroupName.with("Group1"));
     }
 
     // TypeNameTesting..................................................................
 
     @Override
     default String typeNameSuffix() {
-        return SpreadsheetUserStore.class.getSimpleName();
+        return SpreadsheetGroupStore.class.getSimpleName();
     }
 }

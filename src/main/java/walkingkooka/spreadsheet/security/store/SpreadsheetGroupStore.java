@@ -15,22 +15,33 @@
  *
  */
 
-package walkingkooka.spreadsheet.store.security;
+package walkingkooka.spreadsheet.security.store;
 
-import walkingkooka.net.email.EmailAddress;
+import walkingkooka.spreadsheet.security.Group;
+import walkingkooka.spreadsheet.security.GroupId;
 import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.spreadsheet.store.SpreadsheetStore;
 
-import java.util.Optional;
+import java.util.Set;
 
 /**
- * A {@link SpreadsheetStore} that holds all users.
+ * A {@link SpreadsheetStore} that holds all {@link Group groups} for a spreadsheet.
  */
-public interface SpreadsheetUserStore extends SpreadsheetStore<UserId, User> {
+public interface SpreadsheetGroupStore extends SpreadsheetStore<GroupId, Group> {
 
     /**
-     * Loads the user with the provided {@link EmailAddress}
+     * Adds a user to an existing group.
      */
-    Optional<User> loadWithEmail(final EmailAddress email);
+    void addUser(final UserId userId, final GroupId groupId);
+
+    /**
+     * Adds a user from an existing group.
+     */
+    void removeUser(final UserId userId, final GroupId groupId);
+
+    /**
+     * Loads all the groups for the provided {@link User}
+     */
+    Set<Group> loadUserGroups(final UserId userId);
 }
