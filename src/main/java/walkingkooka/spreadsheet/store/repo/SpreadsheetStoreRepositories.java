@@ -21,12 +21,12 @@ import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormatti
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
-import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
-import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
-import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStore;
 import walkingkooka.type.PublicStaticHelper;
 
 /**
