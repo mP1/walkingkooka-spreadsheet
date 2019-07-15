@@ -15,33 +15,29 @@
  *
  */
 
-package walkingkooka.spreadsheet.store.security;
+package walkingkooka.spreadsheet.security.store;
 
 import walkingkooka.spreadsheet.security.Group;
 import walkingkooka.spreadsheet.security.GroupId;
-import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
-import walkingkooka.spreadsheet.store.SpreadsheetStore;
+import walkingkooka.spreadsheet.store.FakeSpreadsheetStore;
 
 import java.util.Set;
 
-/**
- * A {@link SpreadsheetStore} that holds all {@link Group groups} for a spreadsheet.
- */
-public interface SpreadsheetGroupStore extends SpreadsheetStore<GroupId, Group> {
+public class FakeSpreadsheetGroupStore extends FakeSpreadsheetStore<GroupId, Group> implements SpreadsheetGroupStore {
 
-    /**
-     * Adds a user to an existing group.
-     */
-    void addUser(final UserId userId, final GroupId groupId);
+    @Override
+    public void addUser(final UserId userId, final GroupId groupId) {
+        throw new UnsupportedOperationException();
+    }
 
-    /**
-     * Adds a user from an existing group.
-     */
-    void removeUser(final UserId userId, final GroupId groupId);
+    @Override
+    public void removeUser(final UserId userId, final GroupId groupId) {
+        throw new UnsupportedOperationException();
+    }
 
-    /**
-     * Loads all the groups for the provided {@link User}
-     */
-    Set<Group> loadUserGroups(final UserId userId);
+    @Override
+    public Set<Group> loadUserGroups(final UserId userId) {
+        throw new UnsupportedOperationException();
+    }
 }

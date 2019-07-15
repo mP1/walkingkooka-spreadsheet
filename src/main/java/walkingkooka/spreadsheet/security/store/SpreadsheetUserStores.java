@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.store.security;
+package walkingkooka.spreadsheet.security.store;
 
 import walkingkooka.type.PublicStaticHelper;
 

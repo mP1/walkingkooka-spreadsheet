@@ -15,19 +15,22 @@
  *
  */
 
-package walkingkooka.spreadsheet.store.security;
+package walkingkooka.spreadsheet.security.store;
 
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
-import walkingkooka.spreadsheet.store.FakeSpreadsheetStore;
+import walkingkooka.spreadsheet.store.SpreadsheetStore;
 
 import java.util.Optional;
 
-public class FakeSpreadsheetUserStore extends FakeSpreadsheetStore<UserId, User> implements SpreadsheetUserStore {
+/**
+ * A {@link SpreadsheetStore} that holds all users.
+ */
+public interface SpreadsheetUserStore extends SpreadsheetStore<UserId, User> {
 
-    @Override
-    public Optional<User> loadWithEmail(final EmailAddress email) {
-        throw new UnsupportedOperationException();
-    }
+    /**
+     * Loads the user with the provided {@link EmailAddress}
+     */
+    Optional<User> loadWithEmail(final EmailAddress email);
 }
