@@ -21,7 +21,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.store.reference.TargetAndSpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.store.TargetAndSpreadsheetCellReference;
 
 /**
  * Controls what happens whenever a save to cell store happens.
