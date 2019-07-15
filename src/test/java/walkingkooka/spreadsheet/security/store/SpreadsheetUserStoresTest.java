@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.store.security;
+package walkingkooka.spreadsheet.security.store;
 
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.PublicStaticHelperTesting;
@@ -23,12 +23,12 @@ import walkingkooka.type.JavaVisibility;
 
 import java.lang.reflect.Method;
 
-public final class SpreadsheetGroupStoresTest implements ClassTesting2<SpreadsheetGroupStores>,
-        PublicStaticHelperTesting<SpreadsheetGroupStores> {
+public final class SpreadsheetUserStoresTest implements ClassTesting2<SpreadsheetUserStores>,
+        PublicStaticHelperTesting<SpreadsheetUserStores> {
 
     @Override
-    public Class<SpreadsheetGroupStores> type() {
-        return SpreadsheetGroupStores.class;
+    public Class<SpreadsheetUserStores> type() {
+        return SpreadsheetUserStores.class;
     }
 
     @Override

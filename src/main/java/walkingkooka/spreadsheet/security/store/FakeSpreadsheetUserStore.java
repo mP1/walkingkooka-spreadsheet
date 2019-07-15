@@ -15,29 +15,19 @@
  *
  */
 
-package walkingkooka.spreadsheet.store.security;
+package walkingkooka.spreadsheet.security.store;
 
-import walkingkooka.spreadsheet.security.Group;
-import walkingkooka.spreadsheet.security.GroupId;
+import walkingkooka.net.email.EmailAddress;
+import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.spreadsheet.store.FakeSpreadsheetStore;
 
-import java.util.Set;
+import java.util.Optional;
 
-public class FakeSpreadsheetGroupStore extends FakeSpreadsheetStore<GroupId, Group> implements SpreadsheetGroupStore {
-
-    @Override
-    public void addUser(final UserId userId, final GroupId groupId) {
-        throw new UnsupportedOperationException();
-    }
+public class FakeSpreadsheetUserStore extends FakeSpreadsheetStore<UserId, User> implements SpreadsheetUserStore {
 
     @Override
-    public void removeUser(final UserId userId, final GroupId groupId) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Set<Group> loadUserGroups(final UserId userId) {
+    public Optional<User> loadWithEmail(final EmailAddress email) {
         throw new UnsupportedOperationException();
     }
 }

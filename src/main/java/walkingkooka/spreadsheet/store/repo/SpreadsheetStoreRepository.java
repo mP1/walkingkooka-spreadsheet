@@ -26,8 +26,8 @@ import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStore;
-import walkingkooka.spreadsheet.store.security.SpreadsheetGroupStore;
-import walkingkooka.spreadsheet.store.security.SpreadsheetUserStore;
+import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
+import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 
 /**
  * Holds all {@link SpreadsheetStore stores} in the system

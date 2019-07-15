@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.store.security;
+package walkingkooka.spreadsheet.security.store;
 
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.security.User;
