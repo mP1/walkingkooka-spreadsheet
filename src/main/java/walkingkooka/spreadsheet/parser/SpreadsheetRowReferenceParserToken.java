@@ -16,7 +16,7 @@
  */
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.spreadsheet.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 
 /**
  * A token that holds a row reference.

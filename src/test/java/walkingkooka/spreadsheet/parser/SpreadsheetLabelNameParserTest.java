@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 
 public final class SpreadsheetLabelNameParserTest extends SpreadsheetParserTestCase<SpreadsheetLabelNameParser, SpreadsheetLabelNameParserToken> {
 
