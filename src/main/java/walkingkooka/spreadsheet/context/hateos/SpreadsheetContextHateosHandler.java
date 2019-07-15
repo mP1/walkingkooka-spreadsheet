@@ -15,14 +15,14 @@
  *
  */
 
-package walkingkooka.spreadsheet.hateos;
+package walkingkooka.spreadsheet.context.hateos;
 
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.net.http.server.hateos.HateosResource;
-import walkingkooka.spreadsheet.SpreadsheetContext;
+import walkingkooka.spreadsheet.context.SpreadsheetContext;
 
 import java.util.Map;
 import java.util.Objects;
