@@ -23,7 +23,6 @@ import walkingkooka.Value;
 import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.json.FromJsonNodeException;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 
@@ -90,11 +89,7 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
      * Factory that creates a {@link SpreadsheetId} from a {@link JsonNode}
      */
     static SpreadsheetId fromJsonNode(final JsonNode node) {
-        try {
-            return parse(node.stringValueOrFail());
-        } catch (final RuntimeException cause) {
-            throw new FromJsonNodeException(cause.getMessage(), node, cause);
-        }
+        return parse(node.stringValueOrFail());
     }
 
     @Override
