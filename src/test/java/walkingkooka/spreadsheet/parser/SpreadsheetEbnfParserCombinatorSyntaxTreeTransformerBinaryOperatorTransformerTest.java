@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.text.cursor.parser.BinaryOperatorTransformer;
 import walkingkooka.text.cursor.parser.BinaryOperatorTransformerTesting;
 
 public final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformerBinaryOperatorTransformerTest implements BinaryOperatorTransformerTesting<SpreadsheetEbnfParserCombinatorSyntaxTreeTransformerBinaryOperatorTransformer> {

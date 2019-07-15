@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.TypeNameTesting;
-import walkingkooka.type.JavaVisibility;
 
 public abstract class SpreadsheetMetadataTestCase2<T> implements ClassTesting2<T>,
         TypeNameTesting<T> {

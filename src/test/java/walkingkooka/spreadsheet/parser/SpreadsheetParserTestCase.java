@@ -21,7 +21,6 @@ import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.TypeNameTesting;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserTesting;
-import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.type.JavaVisibility;
 
 public abstract class SpreadsheetParserTestCase<P extends Parser<SpreadsheetParserContext>,

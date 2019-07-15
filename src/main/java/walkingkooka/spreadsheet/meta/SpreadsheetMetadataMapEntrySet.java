@@ -23,7 +23,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.text.TextStyleVisitor;
 
 import java.util.AbstractSet;
 import java.util.Comparator;
