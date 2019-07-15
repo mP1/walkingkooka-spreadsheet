@@ -19,9 +19,9 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStores;

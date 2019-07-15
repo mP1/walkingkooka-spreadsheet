@@ -16,7 +16,7 @@
  */
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.spreadsheet.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 
 /**
  * A token that holds a column reference.

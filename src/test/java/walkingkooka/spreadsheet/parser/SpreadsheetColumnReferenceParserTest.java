@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.SpreadsheetReferenceKind;
+import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 
 public final class SpreadsheetColumnReferenceParserTest extends SpreadsheetParserTestCase<SpreadsheetColumnReferenceParser, SpreadsheetColumnReferenceParserToken> {
 

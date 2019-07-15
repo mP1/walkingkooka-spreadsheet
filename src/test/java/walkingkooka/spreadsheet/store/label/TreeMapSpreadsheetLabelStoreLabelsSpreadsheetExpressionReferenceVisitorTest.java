@@ -19,10 +19,10 @@ package walkingkooka.spreadsheet.store.label;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.Maps;
-import walkingkooka.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.SpreadsheetExpressionReferenceVisitorTesting;
-import walkingkooka.spreadsheet.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitorTesting;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.type.JavaVisibility;
 
 public final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitorTest implements SpreadsheetExpressionReferenceVisitorTesting<TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisitor> {

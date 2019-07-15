@@ -19,13 +19,13 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.compare.Range;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
-import walkingkooka.spreadsheet.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.SpreadsheetRange;
-import walkingkooka.spreadsheet.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.test.Fake;
 
 import java.util.Collection;

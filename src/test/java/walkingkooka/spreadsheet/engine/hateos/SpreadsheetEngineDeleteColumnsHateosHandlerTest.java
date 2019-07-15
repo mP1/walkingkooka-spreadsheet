@@ -21,11 +21,11 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosHandler;
-import walkingkooka.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 
 import java.util.Map;
 import java.util.Optional;
