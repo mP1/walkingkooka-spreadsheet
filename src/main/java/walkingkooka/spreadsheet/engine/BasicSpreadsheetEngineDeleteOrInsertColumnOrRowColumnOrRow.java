@@ -28,8 +28,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
-import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Collection;
