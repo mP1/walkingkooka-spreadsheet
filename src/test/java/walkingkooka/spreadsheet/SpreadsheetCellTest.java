@@ -25,6 +25,7 @@ import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.text.FontStyle;
 import walkingkooka.tree.text.FontWeight;
 import walkingkooka.tree.text.TextNode;
@@ -298,51 +299,49 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @Test
     public void testFromJsonNodeBooleanFails() {
-        this.fromJsonNodeFails(JsonNode.booleanNode(true));
-    }
-
-    @Test
-    public void testFromJsonNodeNullFails() {
-        this.fromJsonNodeFails(JsonNode.nullNode());
+        this.fromJsonNodeFails(JsonNode.booleanNode(true), JsonNodeException.class);
     }
 
     @Test
     public void testFromJsonNodeNumberFails() {
-        this.fromJsonNodeFails(JsonNode.number(12));
+        this.fromJsonNodeFails(JsonNode.number(12), JsonNodeException.class);
     }
 
     @Test
     public void testFromJsonNodeArrayFails() {
-        this.fromJsonNodeFails(JsonNode.array());
+        this.fromJsonNodeFails(JsonNode.array(), JsonNodeException.class);
     }
 
     @Test
     public void testFromJsonNodeStringFails() {
-        this.fromJsonNodeFails(JsonNode.string("fails"));
+        this.fromJsonNodeFails(JsonNode.string("fails"), JsonNodeException.class);
     }
 
     @Test
     public void testFromJsonNodeObjectEmptyFails() {
-        this.fromJsonNodeFails(JsonNode.object());
+        this.fromJsonNodeFails(JsonNode.object(), JsonNodeException.class);
     }
 
     @Test
     public void testFromJsonNodeObjectReferenceMissingFails() {
         this.fromJsonNodeFails(JsonNode.object()
-                .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode()));
+                .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode()),
+                JsonNodeException.class);
     }
 
     @Test
     public void testFromJsonNodeObjectReferenceMissingFails2() {
         this.fromJsonNodeFails(JsonNode.object()
                 .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode())
-                .set(SpreadsheetCell.STYLE_PROPERTY, this.boldAndItalics().toJsonNode()));
+                .set(SpreadsheetCell.STYLE_PROPERTY, this.boldAndItalics().toJsonNode()),
+                JsonNodeException.class);
     }
 
     @Test
     public void testFromJsonNodeObjectFormulaMissingFails() {
         this.fromJsonNodeFails(JsonNode.object()
-                .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode()));
+                .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode()),
+                JsonNodeException.class);
     }
 
     @Test
