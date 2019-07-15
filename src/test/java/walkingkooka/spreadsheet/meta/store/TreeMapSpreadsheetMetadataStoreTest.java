@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.store.meta;
+package walkingkooka.spreadsheet.meta.store;
 
 import org.junit.jupiter.api.Test;
 

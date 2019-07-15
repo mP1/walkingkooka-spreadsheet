@@ -30,8 +30,8 @@ import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.store.meta.SpreadsheetMetadataStore;
-import walkingkooka.spreadsheet.store.meta.SpreadsheetMetadataStores;
+import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
+import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 
 import java.time.LocalDateTime;
 import java.util.Map;
