@@ -15,12 +15,11 @@
  *
  */
 
-package walkingkooka.spreadsheet.engine;
+package walkingkooka.spreadsheet;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.compare.Range;
 import walkingkooka.compare.RangeVisitor;
-import walkingkooka.spreadsheet.SpreadsheetRange;
 
 /**
  * A {@link RangeVisitor} used to format a {@link Range} so a COLON appears between bounds rather than double dot.

@@ -15,15 +15,10 @@
  *
  */
 
-package walkingkooka.spreadsheet.engine;
+package walkingkooka.spreadsheet;
 
 import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Range;
-import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.test.ClassTesting2;
 
 import java.util.Arrays;

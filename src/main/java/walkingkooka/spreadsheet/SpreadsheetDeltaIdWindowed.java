@@ -15,12 +15,10 @@
  *
  */
 
-package walkingkooka.spreadsheet.engine;
+package walkingkooka.spreadsheet;
 
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.hateos.HasHateosLinkId;
-import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetRange;
 
 import java.util.List;
 import java.util.Optional;

@@ -15,11 +15,9 @@
  *
  */
 
-package walkingkooka.spreadsheet.engine;
+package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetRange;
 
 import java.util.List;
 import java.util.Set;

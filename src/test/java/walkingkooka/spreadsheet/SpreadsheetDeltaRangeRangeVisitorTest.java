@@ -15,14 +15,12 @@
  *
  */
 
-package walkingkooka.spreadsheet.engine;
+package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.compare.Range;
 import walkingkooka.compare.RangeVisitorTesting;
-import walkingkooka.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.text.CharSequences;
 import walkingkooka.type.JavaVisibility;
 

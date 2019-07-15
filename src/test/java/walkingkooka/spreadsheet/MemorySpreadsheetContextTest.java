@@ -47,7 +47,6 @@ import walkingkooka.net.http.server.HttpResponses;
 import walkingkooka.net.http.server.RecordingHttpResponse;
 import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.routing.Router;
-import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatters;

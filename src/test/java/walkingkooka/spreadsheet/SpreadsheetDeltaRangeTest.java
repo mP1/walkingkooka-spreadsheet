@@ -15,21 +15,19 @@
  *
  */
 
-package walkingkooka.spreadsheet.engine;
+package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
-import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.compare.Range;
 import walkingkooka.type.JavaVisibility;
 
-import java.util.Optional;
-
-public final class SpreadsheetDeltaIdTest extends SpreadsheetDeltaTestCase<SpreadsheetDeltaId<SpreadsheetId>, Optional<SpreadsheetId>> {
+public final class SpreadsheetDeltaRangeTest extends SpreadsheetDeltaTestCase<SpreadsheetDeltaRange<SpreadsheetId>, Range<SpreadsheetId>> {
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetDeltaId<SpreadsheetId>> type() {
-        return Cast.to(SpreadsheetDeltaId.class);
+    public Class<SpreadsheetDeltaRange<SpreadsheetId>> type() {
+        return Cast.to(SpreadsheetDeltaRange.class);
     }
 
     @Override
