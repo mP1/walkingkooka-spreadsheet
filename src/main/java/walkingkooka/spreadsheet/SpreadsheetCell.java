@@ -229,7 +229,7 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
     /**
      * Factory that creates a {@link SpreadsheetCell} from a {@link JsonNode}.
      */
-    public static SpreadsheetCell fromJsonNode(final JsonNode node) {
+    static SpreadsheetCell fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
         SpreadsheetCellReference reference = null;
@@ -249,13 +249,13 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
                         formula = SpreadsheetFormula.fromJsonNode(child);
                         break;
                     case STYLE_PROPERTY_STRING:
-                        style = TextStyle.fromJsonNode(child);
+                        style = child.fromJsonNode(TextStyle.class);
                         break;
                     case FORMAT_PROPERTY_STRING:
                         format = SpreadsheetCellFormat.fromJsonNode(child);
                         break;
                     case FORMATTED_PROPERTY_STRING:
-                        formatted = TextNode.fromJsonNode(child);
+                        formatted = child.fromJsonNode(TextNode.class);
                         break;
                     default:
                         HasJsonNode.unknownPropertyPresent(name, node);
