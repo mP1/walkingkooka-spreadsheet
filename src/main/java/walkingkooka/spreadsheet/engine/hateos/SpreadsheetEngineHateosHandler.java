@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.hateos;
+package walkingkooka.spreadsheet.engine.hateos;
 
 import walkingkooka.compare.Range;
 import walkingkooka.net.UrlParameterName;
@@ -23,6 +23,9 @@ import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.spreadsheet.SpreadsheetDelta;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.text.CharSequences;
 
 import java.util.List;
@@ -32,19 +35,39 @@ import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * Base class for all handlers, holding numerous utility methods and the like.
+ * An abstract {@link HateosHandler} that includes uses a {@link SpreadsheetEngine} and {@link SpreadsheetEngineContext} to do things.
  */
-abstract class SpreadsheetHateosHandler<I extends Comparable<I> & HasHateosLinkId,
-        R extends HateosResource<Optional<I>>,
-        S extends HateosResource<Range<I>>>
-        implements HateosHandler<I, R, S> {
+abstract class SpreadsheetEngineHateosHandler<I extends Comparable<I> & HasHateosLinkId>
+        implements HateosHandler<I, SpreadsheetDelta<Optional<I>>, SpreadsheetDelta<Range<I>>> {
+
+    /**
+     * Checks required factory method parameters are not null.
+     */
+    static void check(final SpreadsheetEngine engine,
+                      final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(engine, "engine");
+        Objects.requireNonNull(context, "context");
+    }
 
     /**
      * Package private to limit sub classing.
      */
-    SpreadsheetHateosHandler() {
+    SpreadsheetEngineHateosHandler(final SpreadsheetEngine engine,
+                                   final SpreadsheetEngineContext context) {
         super();
+        this.engine = engine;
+        this.context = context;
     }
+
+    final SpreadsheetEngine engine;
+    final SpreadsheetEngineContext context;
+
+    @Override
+    public final String toString() {
+        return SpreadsheetEngine.class.getSimpleName() + "." + this.operation();
+    }
+
+    abstract String operation();
 
     // Optional<I>......................................................................................................
 

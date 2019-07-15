@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.hateos;
+package walkingkooka.spreadsheet.engine.hateos;
 
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
@@ -29,17 +29,17 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * A {@link HateosHandler} for {@link SpreadsheetEngine#deleteColumns(SpreadsheetColumnReference, int, SpreadsheetEngineContext)}.
+ * A {@link HateosHandler} for {@link SpreadsheetEngine#insertColumns(SpreadsheetColumnReference, int, SpreadsheetEngineContext)}.
  */
-final class SpreadsheetEngineDeleteColumnsHateosHandler extends SpreadsheetEngineHateosHandler<SpreadsheetColumnReference> {
+final class SpreadsheetEngineInsertColumnsHateosHandler extends SpreadsheetEngineHateosHandler<SpreadsheetColumnReference> {
 
-    static SpreadsheetEngineDeleteColumnsHateosHandler with(final SpreadsheetEngine engine,
+    static SpreadsheetEngineInsertColumnsHateosHandler with(final SpreadsheetEngine engine,
                                                             final SpreadsheetEngineContext context) {
         check(engine, context);
-        return new SpreadsheetEngineDeleteColumnsHateosHandler(engine, context);
+        return new SpreadsheetEngineInsertColumnsHateosHandler(engine, context);
     }
 
-    private SpreadsheetEngineDeleteColumnsHateosHandler(final SpreadsheetEngine engine,
+    private SpreadsheetEngineInsertColumnsHateosHandler(final SpreadsheetEngine engine,
                                                         final SpreadsheetEngineContext context) {
         super(engine, context);
     }
@@ -52,7 +52,7 @@ final class SpreadsheetEngineDeleteColumnsHateosHandler extends SpreadsheetEngin
         this.checkResourceEmpty(resource);
         this.checkParameters(parameters);
 
-        return Optional.of(this.engine.deleteColumns(column, 1, this.context).setId(id));
+        return Optional.of(this.engine.insertColumns(column, 1, this.context).setId(id));
     }
 
 
@@ -67,11 +67,11 @@ final class SpreadsheetEngineDeleteColumnsHateosHandler extends SpreadsheetEngin
         final SpreadsheetColumnReference lower = columns.lowerBound().value().get();
         final SpreadsheetColumnReference upper = columns.upperBound().value().get();
 
-        return Optional.of(this.engine.deleteColumns(lower, upper.value() - lower.value() + 1, this.context));
+        return Optional.of(this.engine.insertColumns(lower, upper.value() - lower.value() + 1, this.context));
     }
 
     @Override
     String operation() {
-        return "deleteColumns";
+        return "insertColumns";
     }
 }
