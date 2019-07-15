@@ -23,7 +23,6 @@ import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
 import walkingkooka.test.HashCodeEqualsDefined;
-import walkingkooka.tree.json.FromJsonNodeException;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 
@@ -117,11 +116,7 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
     static SpreadsheetCellFormat fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
-        try {
-            return with(node.stringValueOrFail());
-        } catch (final RuntimeException cause) {
-            throw new FromJsonNodeException(cause.getMessage(), node, cause);
-        }
+        return with(node.stringValueOrFail());
     }
 
     @Override

@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.visit.Visiting;
 import walkingkooka.type.JavaVisibility;
@@ -660,8 +661,23 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
     // HasJsonNodeTesting...........................................................................................
 
     @Test
-    public void testFromJsonNodeInvalidFails() {
-        this.fromJsonNodeFails(JsonNode.string("A1:"));
+    public void testFromJsonNodeBooleanFails() {
+        this.fromJsonNodeFails(JsonNode.booleanNode(true), JsonNodeException.class);
+    }
+
+    @Test
+    public void testFromJsonNodeNumberFails() {
+        this.fromJsonNodeFails(JsonNode.number(12), JsonNodeException.class);
+    }
+
+    @Test
+    public void testFromJsonNodeArrayFails() {
+        this.fromJsonNodeFails(JsonNode.array(), JsonNodeException.class);
+    }
+
+    @Test
+    public void testFromJsonNodeObjectFails() {
+        this.fromJsonNodeFails(JsonNode.object(), JsonNodeException.class);
     }
 
     @Test
