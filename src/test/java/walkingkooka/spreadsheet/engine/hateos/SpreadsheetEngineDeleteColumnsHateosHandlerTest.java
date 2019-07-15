@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.hateos;
+package walkingkooka.spreadsheet.engine.hateos;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.Range;

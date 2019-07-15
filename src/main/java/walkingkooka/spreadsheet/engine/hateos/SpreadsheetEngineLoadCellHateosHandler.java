@@ -15,67 +15,73 @@
  *
  */
 
-package walkingkooka.spreadsheet.hateos;
+package walkingkooka.spreadsheet.engine.hateos;
 
 import walkingkooka.compare.Range;
-import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetDelta;
-import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
  * A {@link HateosHandler} that calls {@link SpreadsheetEngine#saveCell(SpreadsheetCell, SpreadsheetEngineContext)}.
  */
-final class SpreadsheetEngineCopyCellsHateosHandler extends SpreadsheetEngineHateosHandler<SpreadsheetCellReference> {
+final class SpreadsheetEngineLoadCellHateosHandler extends SpreadsheetEngineHateosHandler<SpreadsheetCellReference> {
 
-    static SpreadsheetEngineCopyCellsHateosHandler with(final SpreadsheetEngine engine,
-                                                        final SpreadsheetEngineContext context) {
+    static SpreadsheetEngineLoadCellHateosHandler with(final SpreadsheetEngineEvaluation evaluation,
+                                                       final SpreadsheetEngine engine,
+                                                       final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(evaluation, "evaluation");
+
         check(engine, context);
-        return new SpreadsheetEngineCopyCellsHateosHandler(engine, context);
+        return new SpreadsheetEngineLoadCellHateosHandler(evaluation,
+                engine,
+                context);
     }
 
-    private SpreadsheetEngineCopyCellsHateosHandler(final SpreadsheetEngine engine,
-                                                    final SpreadsheetEngineContext context) {
+    private SpreadsheetEngineLoadCellHateosHandler(final SpreadsheetEngineEvaluation evaluation,
+                                                   final SpreadsheetEngine engine,
+                                                   final SpreadsheetEngineContext context) {
         super(engine, context);
+        this.evaluation = evaluation;
     }
 
     @Override
     public Optional<SpreadsheetDelta<Optional<SpreadsheetCellReference>>> handle(final Optional<SpreadsheetCellReference> id,
                                                                                  final Optional<SpreadsheetDelta<Optional<SpreadsheetCellReference>>> resource,
                                                                                  final Map<HttpRequestAttribute<?>, Object> parameters) {
-        this.checkIdNotNull(id);
-        this.checkResource(resource);
+        final SpreadsheetCellReference reference = this.checkIdRequired(id);
+        this.checkResourceEmpty(resource);
         this.checkParameters(parameters);
 
-        throw new UnsupportedOperationException();
+        return Optional.of(this.engine.loadCell(reference,
+                this.evaluation,
+                this.context));
     }
 
+    private final SpreadsheetEngineEvaluation evaluation;
 
     @Override
     public Optional<SpreadsheetDelta<Range<SpreadsheetCellReference>>> handleCollection(final Range<SpreadsheetCellReference> ids,
                                                                                         final Optional<SpreadsheetDelta<Range<SpreadsheetCellReference>>> resource,
                                                                                         final Map<HttpRequestAttribute<?>, Object> parameters) {
         this.checkRangeNotNull(ids);
-        final SpreadsheetDelta<Range<SpreadsheetCellReference>> delta = this.checkResourceNotEmpty(resource);
+        this.checkResource(resource);
         this.checkParameters(parameters);
 
-        return Optional.of(this.engine.copyCells(delta.cells(),
-                this.parameterValueOrFail(parameters, TO, SpreadsheetExpressionReference::parseRange),
-                this.context));
+        throw new UnsupportedOperationException();
     }
-
-    final static UrlParameterName TO = UrlParameterName.with("to");
 
     @Override
     String operation() {
-        return "copyCells"; // SpreadsheetEngine#copyCells
+        return "loadCell " + this.evaluation;
     }
 }

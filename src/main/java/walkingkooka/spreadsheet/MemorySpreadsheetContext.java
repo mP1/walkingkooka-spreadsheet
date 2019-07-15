@@ -37,8 +37,8 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
+import walkingkooka.spreadsheet.engine.hateos.SpreadsheetEngineHateosHandlers;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
-import walkingkooka.spreadsheet.hateos.SpreadsheetHateosHandlers;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
@@ -252,18 +252,18 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                 fractioner,
                 defaultSpreadsheetTextFormatter);
 
-        return SpreadsheetHateosHandlers.engineRouter(this.baseWithSpreadsheetId(id),
+        return SpreadsheetEngineHateosHandlers.engineRouter(this.baseWithSpreadsheetId(id),
                 this.contentType,
-                SpreadsheetHateosHandlers.copyCells(engine, engineContext),
-                SpreadsheetHateosHandlers.deleteColumns(engine, engineContext),
-                SpreadsheetHateosHandlers.deleteRows(engine, engineContext),
-                SpreadsheetHateosHandlers.insertColumns(engine, engineContext),
-                SpreadsheetHateosHandlers.insertRows(engine, engineContext),
-                SpreadsheetHateosHandlers.loadCell(SpreadsheetEngineEvaluation.CLEAR_VALUE_ERROR_SKIP_EVALUATE, engine, engineContext),
-                SpreadsheetHateosHandlers.loadCell(SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, engine, engineContext),
-                SpreadsheetHateosHandlers.loadCell(SpreadsheetEngineEvaluation.FORCE_RECOMPUTE, engine, engineContext),
-                SpreadsheetHateosHandlers.loadCell(SpreadsheetEngineEvaluation.SKIP_EVALUATE, engine, engineContext),
-                SpreadsheetHateosHandlers.saveCell(engine, engineContext));
+                SpreadsheetEngineHateosHandlers.copyCells(engine, engineContext),
+                SpreadsheetEngineHateosHandlers.deleteColumns(engine, engineContext),
+                SpreadsheetEngineHateosHandlers.deleteRows(engine, engineContext),
+                SpreadsheetEngineHateosHandlers.insertColumns(engine, engineContext),
+                SpreadsheetEngineHateosHandlers.insertRows(engine, engineContext),
+                SpreadsheetEngineHateosHandlers.loadCell(SpreadsheetEngineEvaluation.CLEAR_VALUE_ERROR_SKIP_EVALUATE, engine, engineContext),
+                SpreadsheetEngineHateosHandlers.loadCell(SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, engine, engineContext),
+                SpreadsheetEngineHateosHandlers.loadCell(SpreadsheetEngineEvaluation.FORCE_RECOMPUTE, engine, engineContext),
+                SpreadsheetEngineHateosHandlers.loadCell(SpreadsheetEngineEvaluation.SKIP_EVALUATE, engine, engineContext),
+                SpreadsheetEngineHateosHandlers.saveCell(engine, engineContext));
     }
 
     /**

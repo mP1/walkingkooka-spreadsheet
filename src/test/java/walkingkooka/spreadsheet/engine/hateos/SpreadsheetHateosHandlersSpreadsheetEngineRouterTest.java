@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package walkingkooka.spreadsheet.hateos;
+package walkingkooka.spreadsheet.engine.hateos;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.Range;
@@ -463,23 +463,23 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
     }
 
     private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>, SpreadsheetDelta<Range<SpreadsheetCellReference>>> copyCells() {
-        return SpreadsheetHateosHandlers.copyCells(this.engine(), this.engineContext());
+        return SpreadsheetEngineHateosHandlers.copyCells(this.engine(), this.engineContext());
     }
 
     private HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta<Optional<SpreadsheetColumnReference>>, SpreadsheetDelta<Range<SpreadsheetColumnReference>>> deleteColumns() {
-        return SpreadsheetHateosHandlers.deleteColumns(this.engine(), this.engineContext());
+        return SpreadsheetEngineHateosHandlers.deleteColumns(this.engine(), this.engineContext());
     }
 
     private HateosHandler<SpreadsheetRowReference, SpreadsheetDelta<Optional<SpreadsheetRowReference>>, SpreadsheetDelta<Range<SpreadsheetRowReference>>> deleteRows() {
-        return SpreadsheetHateosHandlers.deleteRows(this.engine(), this.engineContext());
+        return SpreadsheetEngineHateosHandlers.deleteRows(this.engine(), this.engineContext());
     }
 
     private HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta<Optional<SpreadsheetColumnReference>>, SpreadsheetDelta<Range<SpreadsheetColumnReference>>> insertColumns() {
-        return SpreadsheetHateosHandlers.insertColumns(this.engine(), this.engineContext());
+        return SpreadsheetEngineHateosHandlers.insertColumns(this.engine(), this.engineContext());
     }
 
     private HateosHandler<SpreadsheetRowReference, SpreadsheetDelta<Optional<SpreadsheetRowReference>>, SpreadsheetDelta<Range<SpreadsheetRowReference>>> insertRows() {
-        return SpreadsheetHateosHandlers.insertRows(this.engine(), this.engineContext());
+        return SpreadsheetEngineHateosHandlers.insertRows(this.engine(), this.engineContext());
     }
 
     private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>, SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellClearValueErrorSkipEvaluate() {
@@ -499,11 +499,11 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
     }
 
     private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>, SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCell(final SpreadsheetEngineEvaluation evaluation) {
-        return SpreadsheetHateosHandlers.loadCell(evaluation, this.engine(), this.engineContext());
+        return SpreadsheetEngineHateosHandlers.loadCell(evaluation, this.engine(), this.engineContext());
     }
 
     final HateosHandler<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>, SpreadsheetDelta<Range<SpreadsheetCellReference>>> saveCell() {
-        return SpreadsheetHateosHandlers.saveCell(this.engine(), this.engineContext());
+        return SpreadsheetEngineHateosHandlers.saveCell(this.engine(), this.engineContext());
     }
 
     private SpreadsheetEngine engine() {

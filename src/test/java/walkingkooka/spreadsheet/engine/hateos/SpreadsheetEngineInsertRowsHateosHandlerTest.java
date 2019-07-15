@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.hateos;
+package walkingkooka.spreadsheet.engine.hateos;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.Range;
@@ -32,18 +32,18 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public final class SpreadsheetEngineDeleteRowsHateosHandlerTest extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineDeleteRowsHateosHandler,
+public final class SpreadsheetEngineInsertRowsHateosHandlerTest extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineInsertRowsHateosHandler,
         SpreadsheetRowReference> {
 
     @Test
-    public void testDeleteRow() {
+    public void testInsertRow() {
         final Optional<SpreadsheetRowReference> row = this.id();
         final Optional<SpreadsheetDelta<Optional<SpreadsheetRowReference>>> resource = this.resource();
 
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
-                    public SpreadsheetDelta<Range<SpreadsheetRowReference>> deleteRows(final SpreadsheetRowReference r,
+                    public SpreadsheetDelta<Range<SpreadsheetRowReference>> insertRows(final SpreadsheetRowReference r,
                                                                                        final int count,
                                                                                        final SpreadsheetEngineContext context) {
                         assertEquals(row.get(), r, "row");
@@ -58,7 +58,7 @@ public final class SpreadsheetEngineDeleteRowsHateosHandlerTest extends Spreadsh
     }
 
     @Test
-    public void testDeleteSeveralRows() {
+    public void testInsertSeveralRows() {
         final Optional<SpreadsheetDelta<Range<SpreadsheetRowReference>>> resource = this.collectionResource();
 
         final Range<SpreadsheetRowReference> range = SpreadsheetRowReference.parseRange("2:4");
@@ -67,7 +67,7 @@ public final class SpreadsheetEngineDeleteRowsHateosHandlerTest extends Spreadsh
         this.handleCollectionAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
-                    public SpreadsheetDelta<Range<SpreadsheetRowReference>> deleteRows(final SpreadsheetRowReference r,
+                    public SpreadsheetDelta<Range<SpreadsheetRowReference>> insertRows(final SpreadsheetRowReference r,
                                                                                        final int count,
                                                                                        final SpreadsheetEngineContext context) {
                         assertEquals(SpreadsheetRowReference.parse("2"), r, "row");
@@ -82,17 +82,17 @@ public final class SpreadsheetEngineDeleteRowsHateosHandlerTest extends Spreadsh
     }
 
     @Test
-    public void testDeleteAllRowsFails() {
+    public void testInsertAllRowsFails() {
         this.handleCollectionFails2(Range.all());
     }
 
     @Test
-    public void testDeleteOpenRangeBeginFails() {
+    public void testInsertOpenRangeBeginFails() {
         this.handleCollectionFails2(Range.lessThanEquals(SpreadsheetRowReference.parse("2")));
     }
 
     @Test
-    public void testDeleteOpenRangeEndFails() {
+    public void testInsertOpenRangeEndFails() {
         this.handleCollectionFails2(Range.greaterThanEquals(SpreadsheetRowReference.parse("3")));
     }
 
@@ -107,17 +107,17 @@ public final class SpreadsheetEngineDeleteRowsHateosHandlerTest extends Spreadsh
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createHandler().toString(), "SpreadsheetEngine.deleteRows");
+        this.toStringAndCheck(this.createHandler().toString(), "SpreadsheetEngine.insertRows");
     }
 
-    private SpreadsheetEngineDeleteRowsHateosHandler createHandler(final SpreadsheetEngine engine) {
+    private SpreadsheetEngineInsertRowsHateosHandler createHandler(final SpreadsheetEngine engine) {
         return this.createHandler(engine, this.engineContext());
     }
 
     @Override
-    SpreadsheetEngineDeleteRowsHateosHandler createHandler(final SpreadsheetEngine engine,
+    SpreadsheetEngineInsertRowsHateosHandler createHandler(final SpreadsheetEngine engine,
                                                            final SpreadsheetEngineContext context) {
-        return SpreadsheetEngineDeleteRowsHateosHandler.with(engine, context);
+        return SpreadsheetEngineInsertRowsHateosHandler.with(engine, context);
     }
 
     @Override
@@ -155,7 +155,7 @@ public final class SpreadsheetEngineDeleteRowsHateosHandlerTest extends Spreadsh
     }
 
     @Override
-    public Class<SpreadsheetEngineDeleteRowsHateosHandler> type() {
-        return SpreadsheetEngineDeleteRowsHateosHandler.class;
+    public Class<SpreadsheetEngineInsertRowsHateosHandler> type() {
+        return SpreadsheetEngineInsertRowsHateosHandler.class;
     }
 }
