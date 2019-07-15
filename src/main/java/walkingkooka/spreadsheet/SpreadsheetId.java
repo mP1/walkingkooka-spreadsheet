@@ -89,7 +89,7 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
     /**
      * Factory that creates a {@link SpreadsheetId} from a {@link JsonNode}
      */
-    public static SpreadsheetId fromJsonNode(final JsonNode node) {
+    static SpreadsheetId fromJsonNode(final JsonNode node) {
         try {
             return parse(node.stringValueOrFail());
         } catch (final RuntimeException cause) {

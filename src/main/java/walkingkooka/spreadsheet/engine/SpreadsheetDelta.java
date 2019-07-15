@@ -28,6 +28,7 @@ import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.test.HashCodeEqualsDefined;
+import walkingkooka.tree.json.FromJsonNodeException;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
@@ -224,7 +225,7 @@ public abstract class SpreadsheetDelta<I> implements Comparable<SpreadsheetDelta
     /**
      * Factory that creates a {@link SpreadsheetDelta} from a {@link JsonNode}.
      */
-    public static SpreadsheetDelta<?> fromJsonNode(final JsonNode node) {
+    static SpreadsheetDelta<?> fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
         HasHateosLinkId id = null;
@@ -241,7 +242,7 @@ public abstract class SpreadsheetDelta<I> implements Comparable<SpreadsheetDelta
                         id = child.fromJsonNodeWithType();
                         break;
                     case RANGE_PROPERTY_STRING:
-                        range = Range.fromJsonNode(child);
+                        range = child.fromJsonNode(Range.class);
                         break;
                     case CELLS_PROPERTY_STRING:
                         cells = child.fromJsonNodeSet(SpreadsheetCell.class);
@@ -254,7 +255,7 @@ public abstract class SpreadsheetDelta<I> implements Comparable<SpreadsheetDelta
                 }
             }
         } catch (final JsonNodeException cause) {
-            throw new IllegalArgumentException(cause.getMessage(), cause);
+            throw new FromJsonNodeException(cause.getMessage(), node, cause);
         }
 
         final SpreadsheetDelta<?> delta = range != null ?
