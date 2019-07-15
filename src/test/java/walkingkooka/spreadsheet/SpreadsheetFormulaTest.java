@@ -25,6 +25,7 @@ import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonNodeName;
 import walkingkooka.type.JavaVisibility;
 
@@ -331,38 +332,33 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 .setError(error);
     }
 
-    // HasJsonNode..............................................................................................
+    // HasJsonNode......................................................................................................
 
-    // HasJsonNode.fromJsonNode.......................................................................................
+    // HasJsonNode.fromJsonNode..........................................................................................
 
     @Test
     public void testFromJsonNodeBooleanFails() {
-        this.fromJsonNodeFails(JsonNode.booleanNode(true));
-    }
-
-    @Test
-    public void testFromJsonNodeNullFails() {
-        this.fromJsonNodeFails(JsonNode.nullNode());
+        this.fromJsonNodeFails(JsonNode.booleanNode(true), JsonNodeException.class);
     }
 
     @Test
     public void testFromJsonNodeNumberFails() {
-        this.fromJsonNodeFails(JsonNode.number(12));
+        this.fromJsonNodeFails(JsonNode.number(12), JsonNodeException.class);
     }
 
     @Test
     public void testFromJsonNodeArrayFails() {
-        this.fromJsonNodeFails(JsonNode.array());
+        this.fromJsonNodeFails(JsonNode.array(), JsonNodeException.class);
     }
 
     @Test
     public void testFromJsonNodeStringFails() {
-        this.fromJsonNodeFails(JsonNode.string("fails"));
+        this.fromJsonNodeFails(JsonNode.string("fails"), JsonNodeException.class);
     }
 
     @Test
     public void testFromJsonNodeObjectEmptyFails() {
-        this.fromJsonNodeFails(JsonNode.object());
+        this.fromJsonNodeFails(JsonNode.object(), JsonNodeException.class);
     }
 
     @Test
@@ -395,7 +391,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.fromJsonNodeFails(JsonNode.object()
                 .set(SpreadsheetFormula.TEXT, JsonNode.string(TEXT))
                 .set(SpreadsheetFormula.VALUE_PROPERTY, JsonNode.string("1"))
-                .set(SpreadsheetFormula.ERROR_PROPERTY, SpreadsheetError.with(ERROR).toJsonNode()));
+                .set(SpreadsheetFormula.ERROR_PROPERTY, SpreadsheetError.with(ERROR).toJsonNode()),
+                JsonNodeException.class);
     }
 
     // HasJsonNode.toJsonNode..............................................................................................

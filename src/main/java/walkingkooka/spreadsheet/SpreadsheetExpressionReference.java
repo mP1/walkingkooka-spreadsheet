@@ -23,7 +23,6 @@ import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.json.FromJsonNodeException;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObjectNode;
@@ -213,14 +212,14 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     /**
      * Attempts to convert a {@link JsonNode} into a {@link SpreadsheetExpressionReference}.
      */
-    public static SpreadsheetExpressionReference fromJsonNode(final JsonNode node) {
+    static SpreadsheetExpressionReference fromJsonNode(final JsonNode node) {
         return fromJsonNode0(node, SpreadsheetExpressionReference::parse);
     }
 
     /**
      * Accepts a json string and returns a {@link SpreadsheetCellReference} or fails.
      */
-    public static SpreadsheetCellReference fromJsonNodeCellReference(final JsonNode node) {
+    static SpreadsheetCellReference fromJsonNodeCellReference(final JsonNode node) {
         return fromJsonNode0(node,
                 SpreadsheetExpressionReference::parseCellReference);
     }
@@ -228,14 +227,14 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     /**
      * Accepts a json string and returns a {@link SpreadsheetLabelName} or fails.
      */
-    public static SpreadsheetLabelName fromJsonNodeLabelName(final JsonNode node) {
+    static SpreadsheetLabelName fromJsonNodeLabelName(final JsonNode node) {
         return fromJsonNode0(node, SpreadsheetExpressionReference::labelName);
     }
 
     /**
      * Accepts a json string and returns a {@link SpreadsheetRange} or fails.
      */
-    public static SpreadsheetRange fromJsonNodeRange(final JsonNode node) {
+    static SpreadsheetRange fromJsonNodeRange(final JsonNode node) {
         return fromJsonNode0(node, SpreadsheetExpressionReference::parseRange);
     }
 
@@ -246,13 +245,7 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
                                                                               final Function<String, R> parse) {
         Objects.requireNonNull(node, "node");
 
-        try {
-            return parse.apply(node.stringValueOrFail());
-        } catch (final FromJsonNodeException cause) {
-            throw cause;
-        } catch (final RuntimeException cause) {
-            throw new FromJsonNodeException(cause.getMessage(), node, cause);
-        }
+        return parse.apply(node.stringValueOrFail());
     }
 
     /**
