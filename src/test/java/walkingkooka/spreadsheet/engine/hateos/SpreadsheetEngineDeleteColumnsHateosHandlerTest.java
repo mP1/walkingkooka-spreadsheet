@@ -22,8 +22,8 @@ import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.spreadsheet.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
+import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 
