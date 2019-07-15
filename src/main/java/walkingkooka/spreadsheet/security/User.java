@@ -82,7 +82,7 @@ public final class User extends Identity<UserId> {
     /**
      * Factory that creates a {@link User} from a {@link JsonNode}.
      */
-    public static User fromJsonNode(final JsonNode node) {
+    static User fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
         UserId id = null;
@@ -96,7 +96,7 @@ public final class User extends Identity<UserId> {
                         id = UserId.fromJsonNode(child);
                         break;
                     case EMAIL_PROPERTY_STRING:
-                        email = EmailAddress.fromJsonNode(child);
+                        email = child.fromJsonNode(EmailAddress.class);
                         break;
                     default:
                         HasJsonNode.unknownPropertyPresent(name, node);

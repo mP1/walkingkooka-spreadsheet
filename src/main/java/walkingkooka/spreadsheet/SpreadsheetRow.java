@@ -84,7 +84,7 @@ public final class SpreadsheetRow implements HasId<SpreadsheetRowReference>,
 
     // HasJsonNode.......................................................................................
 
-    public static SpreadsheetRow fromJsonNode(final JsonNode node) {
+    static SpreadsheetRow fromJsonNode(final JsonNode node) {
         return with(SpreadsheetRowReference.fromJsonNode(node));
     }
 

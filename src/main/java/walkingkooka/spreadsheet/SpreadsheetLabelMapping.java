@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.json.FromJsonNodeException;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
@@ -105,7 +106,7 @@ public final class SpreadsheetLabelMapping implements HashCodeEqualsDefined, Hat
     /**
      * Factory that creates a {@link SpreadsheetLabelMapping} from a {@link JsonNode}.
      */
-    public static SpreadsheetLabelMapping fromJsonNode(final JsonNode node) {
+    static SpreadsheetLabelMapping fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
         SpreadsheetLabelName labelName = null;
@@ -126,7 +127,7 @@ public final class SpreadsheetLabelMapping implements HashCodeEqualsDefined, Hat
                 }
             }
         } catch (final JsonNodeException cause) {
-            throw new IllegalArgumentException(cause.getMessage(), cause);
+            throw new FromJsonNodeException(cause.getMessage(), node, cause);
         }
 
         if (null == labelName) {

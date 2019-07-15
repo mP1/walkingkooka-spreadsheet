@@ -80,7 +80,7 @@ public final class SpreadsheetError implements HashCodeEqualsDefined,
     /**
      * Factory that creates a {@link SpreadsheetError} from a {@link JsonNode}.
      */
-    public static SpreadsheetError fromJsonNode(final JsonNode node) {
+    static SpreadsheetError fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
         try {

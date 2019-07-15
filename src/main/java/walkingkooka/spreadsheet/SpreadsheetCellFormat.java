@@ -114,7 +114,7 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
     /**
      * Factory that creates a {@link SpreadsheetCellFormat} from a {@link JsonNode}.
      */
-    public static SpreadsheetCellFormat fromJsonNode(final JsonNode node) {
+    static SpreadsheetCellFormat fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
         try {
