@@ -21,8 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStores;
 import walkingkooka.test.ToStringTesting;
-import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.visit.VisitorTesting;
 import walkingkooka.type.JavaVisibility;
 
 public final class ExpressionReferenceSpreadsheetCellReferenceFunctionSpreadsheetExpressionReferenceVisitorTest implements

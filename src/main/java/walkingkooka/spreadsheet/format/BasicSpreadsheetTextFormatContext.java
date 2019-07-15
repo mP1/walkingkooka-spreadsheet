@@ -18,17 +18,14 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.ToStringBuilder;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.text.CharSequences;
 
 import java.math.MathContext;
-import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 

@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.datavalidation;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.predicate.Predicates;
-import walkingkooka.tree.pointer.NodePointerException;
 
 import java.util.function.Predicate;
 
