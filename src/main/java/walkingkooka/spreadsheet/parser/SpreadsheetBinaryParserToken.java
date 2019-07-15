@@ -16,7 +16,6 @@
  */
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.Cast;
 import walkingkooka.text.cursor.parser.ParentParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 
