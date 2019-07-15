@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package walkingkooka.spreadsheet.hateos;
+package walkingkooka.spreadsheet.engine.hateos;
 
 import walkingkooka.Cast;
 import walkingkooka.NeverError;
@@ -47,7 +47,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 /**
- * A collection of factory methods to create various {@link SpreadsheetHateosHandler}.
+ * A collection of factory methods to create various {@link HateosHandler}.
  */
 final class SpreadsheetHateosHandlersSpreadsheetEngineRouter implements StaticHelper {
 
@@ -152,7 +152,7 @@ final class SpreadsheetHateosHandlersSpreadsheetEngineRouter implements StaticHe
             HateosHandler<SpreadsheetCellReference,
                     SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
                     SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCell = null;
-            switch(evaluation) {
+            switch (evaluation) {
                 case CLEAR_VALUE_ERROR_SKIP_EVALUATE:
                     loadCell = loadCellClearValueErrorSkipEvaluate;
                     break;
