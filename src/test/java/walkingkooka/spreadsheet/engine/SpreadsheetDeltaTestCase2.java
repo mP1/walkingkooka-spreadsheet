@@ -15,13 +15,18 @@
  *
  */
 
-package walkingkooka.spreadsheet;
+package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
+import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.HasJsonNodeTesting;

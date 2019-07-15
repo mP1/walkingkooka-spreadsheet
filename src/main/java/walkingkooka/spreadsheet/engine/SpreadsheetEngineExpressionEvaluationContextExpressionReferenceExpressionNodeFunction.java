@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.SpreadsheetDelta;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
