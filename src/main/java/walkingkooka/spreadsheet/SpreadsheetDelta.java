@@ -30,7 +30,6 @@ import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonNodeName;
-import walkingkooka.tree.json.parser.JsonNodeParserException;
 
 import java.util.Arrays;
 import java.util.List;

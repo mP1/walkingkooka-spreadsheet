@@ -19,15 +19,12 @@ package walkingkooka.spreadsheet.security;
 
 import walkingkooka.Cast;
 import walkingkooka.Value;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.HasJsonNode;
-import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeName;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 

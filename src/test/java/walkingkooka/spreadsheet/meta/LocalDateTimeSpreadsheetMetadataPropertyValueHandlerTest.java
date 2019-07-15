@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.net.email.EmailAddress;
 import walkingkooka.tree.json.HasJsonNode;
 
 import java.time.LocalDateTime;

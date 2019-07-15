@@ -27,7 +27,6 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.json.FromJsonNodeException;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonStringNode;
 
 import java.util.Objects;

@@ -34,7 +34,6 @@ import walkingkooka.text.cursor.parser.ebnf.EbnfGrammarParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfIdentifierName;
 import walkingkooka.type.PublicStaticHelper;
 
-import java.math.MathContext;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiFunction;

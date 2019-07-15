@@ -16,7 +16,6 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.Cast;
 import walkingkooka.compare.ComparisonRelation;
 import walkingkooka.text.cursor.parser.ParentParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
