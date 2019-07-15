@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet;
+package walkingkooka.spreadsheet.context;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ContextTesting;

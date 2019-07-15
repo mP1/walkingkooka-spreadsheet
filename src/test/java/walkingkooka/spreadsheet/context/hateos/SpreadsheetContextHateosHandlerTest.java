@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.hateos;
+package walkingkooka.spreadsheet.context.hateos;
 
 import walkingkooka.Cast;
 
