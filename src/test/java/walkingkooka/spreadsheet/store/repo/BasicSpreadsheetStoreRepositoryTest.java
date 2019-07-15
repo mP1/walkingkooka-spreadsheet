@@ -23,18 +23,18 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStores;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStore;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
-import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
-import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStores;
-import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStore;
-import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStores;
-import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStore;
-import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStores;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

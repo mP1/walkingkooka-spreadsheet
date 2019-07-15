@@ -23,7 +23,7 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.Fraction;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
-import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.tree.expression.ExpressionNodeName;
 import walkingkooka.type.PublicStaticHelper;
 
