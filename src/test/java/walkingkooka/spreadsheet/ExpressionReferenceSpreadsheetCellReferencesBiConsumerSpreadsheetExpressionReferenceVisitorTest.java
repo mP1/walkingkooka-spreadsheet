@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitorTesting;
-import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStores;
-import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStores;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStores;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.type.JavaVisibility;
 
