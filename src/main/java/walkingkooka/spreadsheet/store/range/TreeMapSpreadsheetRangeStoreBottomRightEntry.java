@@ -35,7 +35,7 @@ final class TreeMapSpreadsheetRangeStoreBottomRightEntry<V> extends TreeMapSprea
 
     @Override
     Comparator<SpreadsheetCellReference> comparator() {
-        return Comparators.<SpreadsheetCellReference>naturalOrdering().reversed();
+        return Comparator.<SpreadsheetCellReference>naturalOrder().reversed();
     }
 
     @Override
