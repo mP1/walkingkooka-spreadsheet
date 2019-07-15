@@ -19,10 +19,10 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStores;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStores;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
-import walkingkooka.spreadsheet.store.label.SpreadsheetLabelStores;
-import walkingkooka.spreadsheet.store.range.SpreadsheetRangeStores;
-import walkingkooka.spreadsheet.store.reference.SpreadsheetReferenceStores;
 import walkingkooka.test.ToStringTesting;
 
 public final class BasicSpreadsheetEngineCopyCellsTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineCopyCells>
