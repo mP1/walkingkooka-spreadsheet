@@ -14,13 +14,13 @@
  * limitations under the License.
  *
  */
-package walkingkooka.spreadsheet.hateos;
+package walkingkooka.spreadsheet.context.hateos;
 
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.net.http.server.hateos.HateosResource;
-import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.context.SpreadsheetContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.store.SpreadsheetStore;
 import walkingkooka.type.PublicStaticHelper;
