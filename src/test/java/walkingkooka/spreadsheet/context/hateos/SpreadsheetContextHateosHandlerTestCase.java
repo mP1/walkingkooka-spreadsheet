@@ -15,10 +15,10 @@
  *
  */
 
-package walkingkooka.spreadsheet.hateos;
+package walkingkooka.spreadsheet.context.hateos;
 
 import walkingkooka.net.http.server.hateos.HateosHandler;
-import walkingkooka.spreadsheet.SpreadsheetContext;
+import walkingkooka.spreadsheet.context.SpreadsheetContext;
 import walkingkooka.test.ClassTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.test.TypeNameTesting;
