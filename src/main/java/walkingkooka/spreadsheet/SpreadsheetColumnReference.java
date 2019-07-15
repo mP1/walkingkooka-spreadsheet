@@ -46,7 +46,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     /**
      * Expects a {@link JsonStringNode} and returns a {@link SpreadsheetColumnReference}.
      */
-    public static SpreadsheetColumnReference fromJsonNode(final JsonNode from) {
+    static SpreadsheetColumnReference fromJsonNode(final JsonNode from) {
         Objects.requireNonNull(from, "from");
 
         try {

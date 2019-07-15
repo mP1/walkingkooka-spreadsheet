@@ -84,7 +84,7 @@ public final class SpreadsheetColumn implements HasId<SpreadsheetColumnReference
 
     // HasJsonNode.......................................................................................
 
-    public static SpreadsheetColumn fromJsonNode(final JsonNode node) {
+    static SpreadsheetColumn fromJsonNode(final JsonNode node) {
         return with(SpreadsheetColumnReference.fromJsonNode(node));
     }
 

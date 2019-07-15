@@ -53,7 +53,7 @@ final class SpreadsheetIdSpreadsheetMetadataPropertyValueHandler extends Spreads
 
     @Override
     SpreadsheetId fromJsonNode(final JsonNode node, final SpreadsheetMetadataPropertyName<?> name) {
-        return SpreadsheetId.fromJsonNode(node);
+        return node.fromJsonNode(SpreadsheetId.class);
     }
 
     @Override

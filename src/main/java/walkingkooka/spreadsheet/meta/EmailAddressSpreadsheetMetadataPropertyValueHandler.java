@@ -53,7 +53,7 @@ final class EmailAddressSpreadsheetMetadataPropertyValueHandler extends Spreadsh
 
     @Override
     EmailAddress fromJsonNode(final JsonNode node, final SpreadsheetMetadataPropertyName<?> name) {
-        return EmailAddress.fromJsonNode(node);
+        return node.fromJsonNode(EmailAddress.class);
     }
 
     @Override

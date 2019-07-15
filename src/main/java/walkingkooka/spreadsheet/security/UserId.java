@@ -27,7 +27,7 @@ import walkingkooka.tree.json.JsonNode;
 public final class UserId extends IdentityId
         implements Comparable<UserId> {
 
-    public static UserId fromJsonNode(final JsonNode node) {
+    static UserId fromJsonNode(final JsonNode node) {
         try {
             return with(node.fromJsonNode(Long.class));
         } catch (final FromJsonNodeException cause) {
