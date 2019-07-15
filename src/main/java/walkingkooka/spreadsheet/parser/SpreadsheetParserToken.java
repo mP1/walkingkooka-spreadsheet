@@ -18,10 +18,10 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.SpreadsheetFunctionName;
-import walkingkooka.spreadsheet.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.text.Whitespace;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokenVisitor;

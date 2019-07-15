@@ -17,8 +17,8 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.SpreadsheetReferenceKind;
-import walkingkooka.spreadsheet.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.visit.Visiting;
 

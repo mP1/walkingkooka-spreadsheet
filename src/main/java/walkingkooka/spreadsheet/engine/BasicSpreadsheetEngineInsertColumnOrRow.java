@@ -17,9 +17,9 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 
 /**
  * Inserts the requested columns or rows.

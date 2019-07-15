@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.store.cell;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 
 import java.util.TreeMap;
 
