@@ -22,10 +22,8 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.test.HashCodeEqualsDefined;
-import walkingkooka.tree.json.FromJsonNodeException;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonNodeName;
 import walkingkooka.tree.json.JsonObjectNode;
 import walkingkooka.tree.text.TextNode;
@@ -238,31 +236,27 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
         SpreadsheetCellFormat format = null;
         TextNode formatted = null;
 
-        try {
-            for (JsonNode child : node.objectOrFail().children()) {
-                final JsonNodeName name = child.name();
-                switch (name.value()) {
-                    case REFERENCE_PROPERTY_STRING:
-                        reference = SpreadsheetCellReference.fromJsonNodeCellReference(child);
-                        break;
-                    case FORMULA_PROPERTY_STRING:
-                        formula = SpreadsheetFormula.fromJsonNode(child);
-                        break;
-                    case STYLE_PROPERTY_STRING:
-                        style = child.fromJsonNode(TextStyle.class);
-                        break;
-                    case FORMAT_PROPERTY_STRING:
-                        format = SpreadsheetCellFormat.fromJsonNode(child);
-                        break;
-                    case FORMATTED_PROPERTY_STRING:
-                        formatted = child.fromJsonNode(TextNode.class);
-                        break;
-                    default:
-                        HasJsonNode.unknownPropertyPresent(name, node);
-                }
+        for (JsonNode child : node.objectOrFail().children()) {
+            final JsonNodeName name = child.name();
+            switch (name.value()) {
+                case REFERENCE_PROPERTY_STRING:
+                    reference = SpreadsheetCellReference.fromJsonNodeCellReference(child);
+                    break;
+                case FORMULA_PROPERTY_STRING:
+                    formula = SpreadsheetFormula.fromJsonNode(child);
+                    break;
+                case STYLE_PROPERTY_STRING:
+                    style = child.fromJsonNode(TextStyle.class);
+                    break;
+                case FORMAT_PROPERTY_STRING:
+                    format = SpreadsheetCellFormat.fromJsonNode(child);
+                    break;
+                case FORMATTED_PROPERTY_STRING:
+                    formatted = child.fromJsonNode(TextNode.class);
+                    break;
+                default:
+                    HasJsonNode.unknownPropertyPresent(name, node);
             }
-        } catch (final JsonNodeException cause) {
-            throw new FromJsonNodeException(cause.getMessage(), node, cause);
         }
 
         if (null == reference) {
@@ -272,11 +266,7 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
             HasJsonNode.requiredPropertyMissing(FORMULA_PROPERTY, node);
         }
 
-        try {
-            return new SpreadsheetCell(reference, formula, style, Optional.ofNullable(format), Optional.ofNullable(formatted));
-        } catch (final RuntimeException cause) {
-            throw new FromJsonNodeException(cause.getMessage(), node, cause);
-        }
+        return new SpreadsheetCell(reference, formula, style, Optional.ofNullable(format), Optional.ofNullable(formatted));
     }
 
     @Override
