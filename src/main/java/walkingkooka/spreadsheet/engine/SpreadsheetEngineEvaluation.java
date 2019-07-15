@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.collect.list.Lists;
+import walkingkooka.Cast;
 import walkingkooka.net.header.LinkRelation;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.tree.json.FromJsonNodeException;
@@ -25,7 +25,6 @@ import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 public enum SpreadsheetEngineEvaluation implements HasJsonNode {
@@ -117,15 +116,14 @@ public enum SpreadsheetEngineEvaluation implements HasJsonNode {
     }
 
     static {
-        final List<Class<?>> types = Lists.array();
-        types.add(SpreadsheetEngineEvaluation.class);
-
-        Arrays.stream(values())
+        final Class<SpreadsheetEngineEvaluation>[] types = Cast.to(Arrays.stream(values())
                 .map(SpreadsheetEngineEvaluation::getClass)
-                .forEach(types::add);
+                .toArray(Class[]::new));
+
 
         HasJsonNode.register("spreadsheet-engine-evaluation",
                 SpreadsheetEngineEvaluation::fromJsonNode,
-                types.toArray(new Class[0]));
+                SpreadsheetEngineEvaluation.class,
+                types);
     }
 }
