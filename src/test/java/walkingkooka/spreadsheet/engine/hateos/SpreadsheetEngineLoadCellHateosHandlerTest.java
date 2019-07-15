@@ -15,23 +15,22 @@
  *
  */
 
-package walkingkooka.spreadsheet.hateos;
+package walkingkooka.spreadsheet.engine.hateos;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
-import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetDelta;
-import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 
 import java.util.Map;
 import java.util.Objects;
@@ -39,60 +38,59 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetEngineSaveCellHateosHandlerTest
-        extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineSaveCellHateosHandler,
+public final class SpreadsheetEngineLoadCellHateosHandlerTest
+        extends SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineLoadCellHateosHandler,
         SpreadsheetCellReference> {
 
+    private final static SpreadsheetEngineEvaluation EVALUATION = SpreadsheetEngineEvaluation.FORCE_RECOMPUTE;
+
     @Test
-    public void testSaveCellMissingFails() {
-        this.handleFails(this.id(),
-                Optional.empty(),
-                this.parameters(),
-                IllegalArgumentException.class);
+    public void testWithNullEvaluationFails() {
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetEngineLoadCellHateosHandler.with(null, this.engine(), this.engineContext());
+        });
     }
 
     @Test
-    public void testSaveCell() {
+    public void testLoadCell() {
         this.handleAndCheck(this.id(),
                 this.resource(),
                 this.parameters(),
-                Optional.of(this.saved()));
-    }
-
-    @Test
-    public void testSaveCellCollectionFails() {
-        this.handleCollectionUnsupported(this.createHandler(),
-                Range.all(),
-                this.collectionResource(),
-                this.parameters());
+                Optional.of(this.spreadsheetDelta()));
     }
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createHandler().toString(), "SpreadsheetEngine.saveCell");
+        this.toStringAndCheck(this.createHandler().toString(), "SpreadsheetEngine.loadCell " + EVALUATION);
     }
 
     @Override
-    SpreadsheetEngineSaveCellHateosHandler createHandler(final SpreadsheetEngine engine,
+    SpreadsheetEngineLoadCellHateosHandler createHandler(final SpreadsheetEngine engine,
                                                          final SpreadsheetEngineContext context) {
-        return SpreadsheetEngineSaveCellHateosHandler.with(engine, context);
+        return SpreadsheetEngineLoadCellHateosHandler.with(EVALUATION,
+                engine,
+                context);
     }
 
     @Override
     public Optional<SpreadsheetCellReference> id() {
-        return Optional.of(SpreadsheetExpressionReference.parseCellReference("A1"));
+        return Optional.of(this.spreadsheetCellReference());
+    }
+
+    private SpreadsheetCellReference spreadsheetCellReference() {
+        return SpreadsheetExpressionReference.parseCellReference("B2");
     }
 
     @Override
     public Range<SpreadsheetCellReference> collection() {
-        return SpreadsheetCellReference.parseCellReferenceRange("B2:D4");
+        return SpreadsheetRange.parseRange("B2:C3").range();
     }
 
     @Override
     public Optional<SpreadsheetDelta<Optional<SpreadsheetCellReference>>> resource() {
-        final SpreadsheetCell cell = this.cell();
-        return Optional.of(SpreadsheetDelta.withId(cell.id(), Sets.of(cell)));
+        return Optional.empty();
     }
 
     @Override
@@ -102,36 +100,35 @@ public final class SpreadsheetEngineSaveCellHateosHandlerTest
 
     @Override
     public Map<HttpRequestAttribute<?>, Object> parameters() {
-        return Maps.empty();
+        return HateosHandler.NO_PARAMETERS;
     }
 
     @Override
     SpreadsheetEngine engine() {
         return new FakeSpreadsheetEngine() {
             @Override
-            public SpreadsheetDelta<Optional<SpreadsheetCellReference>> saveCell(final SpreadsheetCell cell,
+            public SpreadsheetDelta<Optional<SpreadsheetCellReference>> loadCell(final SpreadsheetCellReference id,
+                                                                                 final SpreadsheetEngineEvaluation evaluation,
                                                                                  final SpreadsheetEngineContext context) {
+                Objects.requireNonNull(id, "id");
+                Objects.requireNonNull(evaluation, "evaluation");
                 Objects.requireNonNull(context, "context");
 
-                assertEquals(SpreadsheetEngineSaveCellHateosHandlerTest.this.cell(), cell, "cell");
+                assertEquals(SpreadsheetEngineLoadCellHateosHandlerTest.this.spreadsheetCellReference(), id, "spreadsheetCellReference");
+                assertEquals(EVALUATION, evaluation, "evaluation");
                 assertNotEquals(null, context, "context");
 
-                return saved();
+                return spreadsheetDelta();
             }
         };
     }
 
-    private SpreadsheetDelta<Optional<SpreadsheetCellReference>> saved() {
-        final SpreadsheetCell saved = savedCell();
-        return SpreadsheetDelta.withId(Optional.of(saved.reference()), Sets.of(savedCell()));
-    }
-
-    private SpreadsheetCell savedCell() {
-        return this.cell().setFormula(SpreadsheetFormula.with("1+2").setError(Optional.of(SpreadsheetError.with("Error something"))));
+    private SpreadsheetDelta<Optional<SpreadsheetCellReference>> spreadsheetDelta() {
+        return SpreadsheetDelta.withId(this.id(), Sets.of(this.cell()));
     }
 
     @Override
-    public Class<SpreadsheetEngineSaveCellHateosHandler> type() {
-        return Cast.to(SpreadsheetEngineSaveCellHateosHandler.class);
+    public Class<SpreadsheetEngineLoadCellHateosHandler> type() {
+        return Cast.to(SpreadsheetEngineLoadCellHateosHandler.class);
     }
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  *
  */
-package walkingkooka.spreadsheet.hateos;
+package walkingkooka.spreadsheet.engine.hateos;
 
 import walkingkooka.compare.Range;
 import walkingkooka.net.AbsoluteUrl;
@@ -23,19 +23,14 @@ import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.HttpResponse;
 import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.net.http.server.hateos.HateosHandler;
-import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.routing.Router;
 import walkingkooka.spreadsheet.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.SpreadsheetContext;
 import walkingkooka.spreadsheet.SpreadsheetDelta;
-import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
-import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.store.SpreadsheetStore;
 import walkingkooka.tree.Node;
 import walkingkooka.type.PublicStaticHelper;
 
@@ -43,9 +38,9 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 
 /**
- * A collection of factory methods to create various {@link SpreadsheetHateosHandler}.
+ * A collection of factory methods to create various {@link HateosHandler}.
  */
-public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
+public final class SpreadsheetEngineHateosHandlers implements PublicStaticHelper {
 
     /**
      * {@see SpreadsheetEngineCopyCellsHateosHandler}
@@ -55,14 +50,6 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
             SpreadsheetDelta<Range<SpreadsheetCellReference>>> copyCells(final SpreadsheetEngine engine,
                                                                          final SpreadsheetEngineContext context) {
         return SpreadsheetEngineCopyCellsHateosHandler.with(engine, context);
-    }
-
-    /**
-     * {@see SpreadsheetContextCreateAndSaveMetadataHateosHandler}
-     */
-    public static HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> createAndSaveMetadata(final SpreadsheetContext context,
-                                                                                                                                final SpreadsheetStore<SpreadsheetId, SpreadsheetMetadata> store) {
-        return SpreadsheetContextCreateAndSaveMetadataHateosHandler.with(context, store);
     }
 
     /**
@@ -180,7 +167,7 @@ public final class SpreadsheetHateosHandlers implements PublicStaticHelper {
     /**
      * Stop creation.
      */
-    private SpreadsheetHateosHandlers() {
+    private SpreadsheetEngineHateosHandlers() {
         throw new UnsupportedOperationException();
     }
 }

@@ -19,11 +19,25 @@ package walkingkooka.spreadsheet.hateos;
 
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.spreadsheet.SpreadsheetContext;
+import walkingkooka.test.ClassTesting;
+import walkingkooka.test.ToStringTesting;
+import walkingkooka.test.TypeNameTesting;
+import walkingkooka.type.JavaVisibility;
 
-public abstract class SpreadsheetContextHateosHandlerTestCase<H extends SpreadsheetContextHateosHandler<?, ?, ?>> extends SpreadsheetHateosHandlerTestCase<H> {
+public abstract class SpreadsheetContextHateosHandlerTestCase<T>
+        implements ClassTesting<T>,
+        ToStringTesting<T>,
+        TypeNameTesting<T> {
 
     SpreadsheetContextHateosHandlerTestCase() {
         super();
+    }
+
+    // ClassTesting.....................................................................................................
+
+    @Override
+    public final JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     // TypeNameTesting..................................................................................................

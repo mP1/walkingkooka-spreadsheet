@@ -15,13 +15,16 @@
  *
  */
 
-package walkingkooka.spreadsheet.hateos;
+package walkingkooka.spreadsheet.engine.hateos;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.net.http.server.hateos.HateosHandlerTesting;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetDelta;
+import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
@@ -65,5 +68,9 @@ public abstract class SpreadsheetEngineHateosHandlerTestCase2<H extends Spreadsh
 
     final SpreadsheetEngineContext engineContext() {
         return SpreadsheetEngineContexts.fake();
+    }
+
+    final SpreadsheetCell cell() {
+        return SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference("A99"), SpreadsheetFormula.with("1+2"));
     }
 }

@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.hateos;
+package walkingkooka.spreadsheet.engine.hateos;
 
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
@@ -29,17 +29,17 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * A {@link HateosHandler} for {@link SpreadsheetEngine#deleteRows(SpreadsheetRowReference, int, SpreadsheetEngineContext)}.
+ * A {@link HateosHandler} for {@link SpreadsheetEngine#insertRows(SpreadsheetRowReference, int, SpreadsheetEngineContext)}.
  */
-final class SpreadsheetEngineDeleteRowsHateosHandler extends SpreadsheetEngineHateosHandler<SpreadsheetRowReference> {
+final class SpreadsheetEngineInsertRowsHateosHandler extends SpreadsheetEngineHateosHandler<SpreadsheetRowReference> {
 
-    static SpreadsheetEngineDeleteRowsHateosHandler with(final SpreadsheetEngine engine,
+    static SpreadsheetEngineInsertRowsHateosHandler with(final SpreadsheetEngine engine,
                                                          final SpreadsheetEngineContext context) {
         check(engine, context);
-        return new SpreadsheetEngineDeleteRowsHateosHandler(engine, context);
+        return new SpreadsheetEngineInsertRowsHateosHandler(engine, context);
     }
 
-    private SpreadsheetEngineDeleteRowsHateosHandler(final SpreadsheetEngine engine,
+    private SpreadsheetEngineInsertRowsHateosHandler(final SpreadsheetEngine engine,
                                                      final SpreadsheetEngineContext context) {
         super(engine, context);
     }
@@ -52,7 +52,7 @@ final class SpreadsheetEngineDeleteRowsHateosHandler extends SpreadsheetEngineHa
         this.checkResourceEmpty(resource);
         this.checkParameters(parameters);
 
-        return Optional.of(this.engine.deleteRows(row, 1, this.context).setId(id));
+        return Optional.of(this.engine.insertRows(row, 1, this.context).setId(id));
     }
 
 
@@ -67,11 +67,11 @@ final class SpreadsheetEngineDeleteRowsHateosHandler extends SpreadsheetEngineHa
         final SpreadsheetRowReference lower = rows.lowerBound().value().get();
         final SpreadsheetRowReference upper = rows.upperBound().value().get();
 
-        return Optional.of(this.engine.deleteRows(lower, upper.value() - lower.value() + 1, this.context));
+        return Optional.of(this.engine.insertRows(lower, upper.value() - lower.value() + 1, this.context));
     }
 
     @Override
     String operation() {
-        return "deleteRows";
+        return "insertRows";
     }
 }
