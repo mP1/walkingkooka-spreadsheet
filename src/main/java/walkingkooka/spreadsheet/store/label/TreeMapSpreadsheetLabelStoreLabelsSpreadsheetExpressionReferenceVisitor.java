@@ -18,11 +18,11 @@
 package walkingkooka.spreadsheet.store.label;
 
 import walkingkooka.collect.set.Sets;
-import walkingkooka.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.SpreadsheetExpressionReferenceVisitor;
-import walkingkooka.spreadsheet.SpreadsheetLabelMapping;
-import walkingkooka.spreadsheet.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.SpreadsheetRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitor;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 
 import java.util.Map;
 import java.util.Set;

@@ -24,13 +24,13 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.SpreadsheetRange;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 
 import java.util.Collection;
 import java.util.Map;

@@ -22,12 +22,12 @@ import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.net.http.server.hateos.HateosHandlerTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 
 import java.util.Optional;
 

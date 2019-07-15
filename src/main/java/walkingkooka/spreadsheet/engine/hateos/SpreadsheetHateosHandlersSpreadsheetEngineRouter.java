@@ -30,14 +30,14 @@ import walkingkooka.net.http.server.hateos.HateosHandlerRouterBuilder;
 import walkingkooka.net.http.server.hateos.HateosHandlerRouterMapper;
 import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.routing.Router;
-import walkingkooka.spreadsheet.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.tree.Node;
 import walkingkooka.type.StaticHelper;
 

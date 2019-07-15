@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.store.range;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
-import walkingkooka.spreadsheet.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.SpreadsheetRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.store.ReadOnlyStoreTesting;
 
 import java.util.List;
