@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
+import walkingkooka.spreadsheet.function.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.HasText;
