@@ -17,10 +17,19 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTokenVisitorTesting;
 import walkingkooka.type.JavaVisibility;
 
 public final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitorTest implements SpreadsheetParserTokenVisitorTesting<BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor> {
+
+    @Test
+    public void testToString() {
+        final BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor visitor = new BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor(12, 34);
+        visitor.visit(SpreadsheetParserToken.doubleParserToken(1.24, "1.24"));
+        this.toStringAndCheck(visitor, "12,34 [1.24], []");
+    }
 
     @Override
     public BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor createVisitor() {
