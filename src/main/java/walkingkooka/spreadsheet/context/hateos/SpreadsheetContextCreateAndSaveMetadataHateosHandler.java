@@ -24,7 +24,7 @@ import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.context.SpreadsheetContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.store.SpreadsheetStore;
+import walkingkooka.store.Store;
 
 import java.util.Map;
 import java.util.Objects;
@@ -38,7 +38,7 @@ final class SpreadsheetContextCreateAndSaveMetadataHateosHandler extends Spreads
         HateosResource<Range<SpreadsheetId>>> {
 
     static SpreadsheetContextCreateAndSaveMetadataHateosHandler with(final SpreadsheetContext context,
-                                                                     final SpreadsheetStore<SpreadsheetId, SpreadsheetMetadata> store) {
+                                                                     final Store<SpreadsheetId, SpreadsheetMetadata> store) {
         checkContext(context);
         Objects.requireNonNull(store, "store");
 
@@ -46,7 +46,7 @@ final class SpreadsheetContextCreateAndSaveMetadataHateosHandler extends Spreads
     }
 
     private SpreadsheetContextCreateAndSaveMetadataHateosHandler(final SpreadsheetContext context,
-                                                                 final SpreadsheetStore<SpreadsheetId, SpreadsheetMetadata> store) {
+                                                                 final Store<SpreadsheetId, SpreadsheetMetadata> store) {
         super(context);
         this.store = store;
     }
@@ -74,7 +74,7 @@ final class SpreadsheetContextCreateAndSaveMetadataHateosHandler extends Spreads
         return Optional.of(this.context.metadataWithDefaults());
     }
 
-    private final SpreadsheetStore<SpreadsheetId, SpreadsheetMetadata> store;
+    private final Store<SpreadsheetId, SpreadsheetMetadata> store;
 
     @Override
     public final Optional<HateosResource<Range<SpreadsheetId>>> handleCollection(final Range<SpreadsheetId> ids,

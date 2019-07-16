@@ -797,7 +797,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
         assertEquals(referenceToTargets, map.referenceToTargets, "referenceToTargets");
     }
 
-    // SpreadsheetStoreTesting.................................................................................
+    // StoreTesting.................................................................................
 
     @Override
     public TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> createStore() {

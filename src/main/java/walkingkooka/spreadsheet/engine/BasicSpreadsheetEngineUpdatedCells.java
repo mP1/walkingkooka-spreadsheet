@@ -26,7 +26,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.store.TargetAndSpreadsheetCellReference;
-import walkingkooka.spreadsheet.store.Watchers;
+import walkingkooka.store.Watchers;
 
 import java.util.Map;
 import java.util.Queue;

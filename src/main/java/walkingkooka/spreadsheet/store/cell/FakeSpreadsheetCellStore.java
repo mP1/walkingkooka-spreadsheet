@@ -21,12 +21,12 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.store.FakeSpreadsheetStore;
+import walkingkooka.store.FakeStore;
 import walkingkooka.test.Fake;
 
 import java.util.Set;
 
-public class FakeSpreadsheetCellStore extends FakeSpreadsheetStore<SpreadsheetCellReference, SpreadsheetCell> implements SpreadsheetCellStore, Fake {
+public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference, SpreadsheetCell> implements SpreadsheetCellStore, Fake {
 
     @Override
     public int rows() {
