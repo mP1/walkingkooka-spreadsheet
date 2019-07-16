@@ -16,7 +16,7 @@
  */
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.spreadsheet.SpreadsheetFunctionName;
+import walkingkooka.spreadsheet.function.SpreadsheetFunctionName;
 
 /**
  * Holds the actual function name within a function token.

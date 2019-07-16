@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet;
+package walkingkooka.spreadsheet.function;
 
 import walkingkooka.Cast;
 import walkingkooka.naming.Name;
