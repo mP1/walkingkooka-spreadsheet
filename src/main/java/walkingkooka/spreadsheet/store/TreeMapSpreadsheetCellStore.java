@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.store.cell;
+package walkingkooka.spreadsheet.store;
 
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;

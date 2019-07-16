@@ -33,8 +33,8 @@ import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
-import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
-import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
+import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
