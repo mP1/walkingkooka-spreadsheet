@@ -18,11 +18,28 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTokenVisitorTesting;
+import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
+import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.type.JavaVisibility;
 
+import java.math.MathContext;
+
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 public final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitorTest implements SpreadsheetParserTokenVisitorTesting<BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor> {
+
+    @Test
+    public void testZeroZeroOffset() {
+        final SpreadsheetParserToken token = SpreadsheetParsers.cellReferences().parse(TextCursors.charSequence("$A$1"), SpreadsheetParserContexts.basic(DecimalNumberContexts.american(MathContext.DECIMAL32)))
+                .map(SpreadsheetParserToken.class::cast)
+                .orElseThrow(() -> new Error("Unable to parse"));
+        assertSame(token,
+                BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.expressionFixReferences(token, 0, 0));
+    }
 
     @Test
     public void testToString() {
