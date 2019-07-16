@@ -571,6 +571,25 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
     }
 
     @Test
+    public void testFromCellsEmptyCellsFails() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            SpreadsheetRange.fromCells(Lists.empty());
+        });
+    }
+
+    @Test
+    public void testFromCellOne() {
+        final int column = 2;
+        final int row = 3;
+
+        final SpreadsheetCellReference a = this.cell(column, row);
+
+        final SpreadsheetRange range = SpreadsheetRange.fromCells(Lists.of(a));
+        this.check(range, column, row, column, row);
+        assertEquals(Range.singleton(a), range.range(), "range");
+    }
+
+    @Test
     public void testFromCells() {
         final SpreadsheetCellReference a = this.cell(111, 11);
         final SpreadsheetCellReference b = this.cell(112, 12);
