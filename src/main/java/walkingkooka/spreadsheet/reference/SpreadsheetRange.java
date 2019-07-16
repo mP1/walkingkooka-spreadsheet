@@ -21,10 +21,13 @@ import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.hateos.HasHateosLinkId;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.text.CharSequences;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -45,7 +48,7 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference imple
         final int colon = text.indexOf(SEPARATOR);
 
         return -1 == colon ?
-                cell0(parseRange1(text, "range", text)) :
+                cellToRange(parseRange1(text, "range", text)) :
                 parseRange2(text, colon);
     }
 
@@ -59,7 +62,7 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference imple
         }
     }
 
-    static SpreadsheetRange cell0(final SpreadsheetCellReference cell) {
+    static SpreadsheetRange cellToRange(final SpreadsheetCellReference cell) {
         return with(cell.range(cell));
     }
 
@@ -223,6 +226,18 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference imple
                                     .setRow(SpreadsheetReferenceKind.ABSOLUTE.row(rowOffset + (index / width)));
                         }
                 );
+    }
+
+    /**
+     * Visits all the {@link SpreadsheetCellReference} within this range, and dispatches either the present or absent
+     * {@link Consumer} with present cells. The absent {@link Consumer} will receive absolute {@link SpreadsheetCellReference}.
+     * Cells will be visited column across then rows down.
+     */
+    public void cells(final Collection<SpreadsheetCell> cells,
+                      final Consumer<? super SpreadsheetCell> present,
+                      final Consumer<? super SpreadsheetCellReference> absent) {
+        this.cellStream()
+                .forEach(SpreadsheetRangeCellsConsumer.with(cells, present, absent));
     }
 
     // is...............................................................................................................
