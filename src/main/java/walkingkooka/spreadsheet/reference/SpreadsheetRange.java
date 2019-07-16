@@ -21,7 +21,6 @@ import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.hateos.HasHateosLinkId;
-import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.text.CharSequences;
 
 import java.util.List;
@@ -224,12 +223,6 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference imple
                                     .setRow(SpreadsheetReferenceKind.ABSOLUTE.row(rowOffset + (index / width)));
                         }
                 );
-    }
-
-    public void clear(final SpreadsheetCellStore store) {
-        Objects.requireNonNull(store, "store");
-
-        this.cellStream().forEach(c -> store.delete(c));
     }
 
     // is...............................................................................................................
