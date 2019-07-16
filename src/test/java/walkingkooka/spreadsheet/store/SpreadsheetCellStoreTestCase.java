@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.store.cell;
+package walkingkooka.spreadsheet.store;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;

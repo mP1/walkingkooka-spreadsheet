@@ -24,7 +24,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStore;
-import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.type.PublicStaticHelper;
