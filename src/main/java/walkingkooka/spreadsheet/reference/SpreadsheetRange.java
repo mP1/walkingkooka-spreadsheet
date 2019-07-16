@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.Cast;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.hateos.HasHateosLinkId;
-import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.text.CharSequences;
 
 import java.util.List;
