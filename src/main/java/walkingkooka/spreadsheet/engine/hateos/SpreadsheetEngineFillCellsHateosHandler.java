@@ -21,28 +21,29 @@ import walkingkooka.compare.Range;
 import walkingkooka.net.UrlParameterName;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosHandler;
-import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 
 /**
- * A {@link HateosHandler} that calls {@link SpreadsheetEngine#saveCell(SpreadsheetCell, SpreadsheetEngineContext)}.
+ * A {@link HateosHandler} that calls {@link SpreadsheetEngine#fillCells(Collection, SpreadsheetRange, SpreadsheetEngineContext)}.
  */
-final class SpreadsheetEngineCopyCellsHateosHandler extends SpreadsheetEngineHateosHandler<SpreadsheetCellReference> {
+final class SpreadsheetEngineFillCellsHateosHandler extends SpreadsheetEngineHateosHandler<SpreadsheetCellReference> {
 
-    static SpreadsheetEngineCopyCellsHateosHandler with(final SpreadsheetEngine engine,
+    static SpreadsheetEngineFillCellsHateosHandler with(final SpreadsheetEngine engine,
                                                         final SpreadsheetEngineContext context) {
         check(engine, context);
-        return new SpreadsheetEngineCopyCellsHateosHandler(engine, context);
+        return new SpreadsheetEngineFillCellsHateosHandler(engine, context);
     }
 
-    private SpreadsheetEngineCopyCellsHateosHandler(final SpreadsheetEngine engine,
+    private SpreadsheetEngineFillCellsHateosHandler(final SpreadsheetEngine engine,
                                                     final SpreadsheetEngineContext context) {
         super(engine, context);
     }
@@ -67,7 +68,7 @@ final class SpreadsheetEngineCopyCellsHateosHandler extends SpreadsheetEngineHat
         final SpreadsheetDelta<Range<SpreadsheetCellReference>> delta = this.checkResourceNotEmpty(resource);
         this.checkParameters(parameters);
 
-        return Optional.of(this.engine.copyCells(delta.cells(),
+        return Optional.of(this.engine.fillCells(delta.cells(),
                 this.parameterValueOrFail(parameters, TO, SpreadsheetExpressionReference::parseRange),
                 this.context));
     }
@@ -76,6 +77,6 @@ final class SpreadsheetEngineCopyCellsHateosHandler extends SpreadsheetEngineHat
 
     @Override
     String operation() {
-        return "copyCells"; // SpreadsheetEngine#copyCells
+        return "fillCells"; // SpreadsheetEngine#fillCells
     }
 }
