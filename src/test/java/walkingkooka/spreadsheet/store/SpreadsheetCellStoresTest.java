@@ -15,7 +15,7 @@
  *
  */
 
-package walkingkooka.spreadsheet.store.cell;
+package walkingkooka.spreadsheet.store;
 
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.PublicStaticHelperTesting;
