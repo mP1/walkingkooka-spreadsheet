@@ -509,6 +509,6 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     public final String toString() {
-        return this.children + "," + this.previousChildren;
+        return this.xOffset +"," + this.yOffset + " " + this.children + ", " + this.previousChildren;
     }
 }
