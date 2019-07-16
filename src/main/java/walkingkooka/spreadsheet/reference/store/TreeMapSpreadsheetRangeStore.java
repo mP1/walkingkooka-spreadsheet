@@ -22,8 +22,8 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
-import walkingkooka.spreadsheet.store.SpreadsheetStore;
-import walkingkooka.spreadsheet.store.Watchers;
+import walkingkooka.store.Store;
+import walkingkooka.store.Watchers;
 
 import java.util.Iterator;
 import java.util.List;
@@ -293,7 +293,7 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
     @Override
     public Set<SpreadsheetRange> ids(final int from,
                                      final int count) {
-        SpreadsheetStore.checkFromAndTo(from, count);
+        Store.checkFromAndTo(from, count);
 
         final Set<SpreadsheetRange> ids = Sets.ordered();
         int i = 0;
@@ -318,7 +318,7 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
     @Override
     public List<List<V>> values(final SpreadsheetRange from,
                                 final int count) {
-        SpreadsheetStore.checkFromAndToIds(from, count);
+        Store.checkFromAndToIds(from, count);
 
         final List<List<V>> values = Lists.array();
         boolean copy = false;

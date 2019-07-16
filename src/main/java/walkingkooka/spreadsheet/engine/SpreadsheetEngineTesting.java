@@ -35,7 +35,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
-import walkingkooka.spreadsheet.store.SpreadsheetStore;
+import walkingkooka.store.Store;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -493,7 +493,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> "deleteCell " + delete);
     }
 
-    default void countAndCheck(final SpreadsheetStore<?, ?> store, final int count) {
+    default void countAndCheck(final Store<?, ?> store, final int count) {
         assertEquals(count,
                 store.count(),
                 "record count in " + store);
