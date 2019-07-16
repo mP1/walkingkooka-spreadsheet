@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine.hateos;
 
+import walkingkooka.collect.map.Maps;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosHandler;
@@ -76,6 +77,9 @@ final class SpreadsheetEngineLoadCellHateosHandler extends SpreadsheetEngineHate
         this.checkRangeNotNull(ids);
         this.checkResource(resource);
         this.checkParameters(parameters);
+
+        final Map<SpreadsheetCellReference, SpreadsheetCell> referenceToCell = Maps.sorted(SpreadsheetCellReference.COMPARATOR);
+
 
         throw new UnsupportedOperationException();
     }
