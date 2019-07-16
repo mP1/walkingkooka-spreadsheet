@@ -89,13 +89,15 @@ public interface SpreadsheetEngine {
                                                                 final SpreadsheetEngineContext context);
 
     /**
-     * Fills the provided cells into this spreadsheet at the given range. The source range is smaller, where possible
-     * it will be duplicated along both axis or repeated into the target range.<br>
-     * This is ideal for a copy/paste function, where the pasted range must have all cells relative references fixed.
-     * Note prior to copying the area should be cleared, as this only copies the given it doesnt clear the entire range,
-     * before the actual copying.
+     * Fill may be used to perform several operations.
+     * <ul>
+     * <li>If $cells are empty the $from is ignored and the {@link SpreadsheetRange $to} has all cells deleted, aka DELETE</li>
+     * <li>If $cells is NOT empty and $from and $to are equal the cells are saved without modification, aka SAVE</li>
+     * <li>If $cells is NOT empty and $from is smaller than $to cells are repeated and ABSOLUTE references updated aka FILL or COPY then PASTE</li>
+     * </ul>
      */
-    SpreadsheetDelta<Range<SpreadsheetCellReference>> fillCells(final Collection<SpreadsheetCell> from,
+    SpreadsheetDelta<Range<SpreadsheetCellReference>> fillCells(final Collection<SpreadsheetCell> cells,
+                                                                final SpreadsheetRange from,
                                                                 final SpreadsheetRange to,
                                                                 final SpreadsheetEngineContext context);
 
