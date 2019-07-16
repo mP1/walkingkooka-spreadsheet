@@ -22,14 +22,56 @@ import walkingkooka.Cast;
 import walkingkooka.compare.Range;
 import walkingkooka.compare.RangeVisitorTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.text.CharSequences;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetDeltaRangeRangeVisitorTest implements RangeVisitorTesting<SpreadsheetDeltaRangeRangeVisitor<SpreadsheetCellReference>, SpreadsheetCellReference> {
 
+    @Test
+    public void testAllFails() {
+        assertThrows(IllegalArgumentException.class, () -> {
+           new SpreadsheetDeltaRangeRangeVisitor().all(); 
+        });
+    }
+
+    @Test
+    public void testLowerBoundsAllFails() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new SpreadsheetDeltaRangeRangeVisitor().lowerBoundAll();
+        });
+    }
+
+    @Test
+    public void testLowerBoundsExclusiveFails() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new SpreadsheetDeltaRangeRangeVisitor().lowerBoundExclusive(cellReference());
+        });
+    }
+
+    @Test
+    public void testUpperBoundsAllFails() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new SpreadsheetDeltaRangeRangeVisitor().upperBoundAll();
+        });
+    }
+
+    @Test
+    public void testUpperBoundsExclusiveFails() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new SpreadsheetDeltaRangeRangeVisitor().upperBoundExclusive(cellReference());
+        });
+    }
+
+    @Test
+    public void testSingle() {
+        this.rangeToStringAndCheck("B99");
+    }
+    
     @Test
     public void testToBounded() {
         this.rangeToStringAndCheck("A1:B2");
@@ -63,6 +105,10 @@ public final class SpreadsheetDeltaRangeRangeVisitorTest implements RangeVisitor
 
     private static Range<SpreadsheetCellReference> range(final String text) {
         return SpreadsheetRange.parseRange(text).range();
+    }
+
+    private static SpreadsheetCellReference cellReference() {
+        return SpreadsheetExpressionReference.parseCellReference("Z99");
     }
 
     @Override
