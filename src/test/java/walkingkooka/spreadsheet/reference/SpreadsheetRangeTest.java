@@ -24,8 +24,6 @@ import walkingkooka.predicate.PredicateTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
-import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
@@ -433,38 +431,6 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
     private <T> void checkStream(final SpreadsheetRange range, final Stream<?> stream, final Object... expected) {
         final List<Object> actual = stream.collect(Collectors.toList());
         assertEquals(Lists.of(expected), actual, () -> range.toString());
-    }
-
-    // clear....................................................................................................
-
-    @Test
-    public void testClearWithNullStoreFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.range().clear(null);
-        });
-    }
-
-    @Test
-    public void testClear() {
-        final SpreadsheetCellStore store = SpreadsheetCellStores.treeMap();
-
-        final SpreadsheetCell a = spreadsheetCell(1, 1);
-        final SpreadsheetCell b = spreadsheetCell(2, 2);
-        final SpreadsheetCell c = spreadsheetCell(3, 10);
-        final SpreadsheetCell d = spreadsheetCell(4, 14);
-        final SpreadsheetCell e = spreadsheetCell(5, 15);
-
-        store.save(a);
-        store.save(b);
-        store.save(c);
-        store.save(d);
-        store.save(e);
-
-        this.range(2, 2, 4, 11).clear(store);
-
-        assertEquals(3, store.count(), "store record count"); // a,d,e
-        assertEquals(Optional.empty(), store.load(b.reference()));
-        assertEquals(Optional.empty(), store.load(c.reference()));
     }
 
     // SpreadsheetExpressionReferenceVisitor.............................................................................
