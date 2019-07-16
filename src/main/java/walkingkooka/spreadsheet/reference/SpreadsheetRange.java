@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -88,6 +89,22 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference imple
     public static SpreadsheetRange fromCells(final List<SpreadsheetCellReference> cells) {
         Objects.requireNonNull(cells, "cells");
 
+        final List<SpreadsheetCellReference> copy = Lists.immutable(cells);
+
+        SpreadsheetRange range = null;
+        switch (copy.size()) {
+            case 0:
+                throw new IllegalArgumentException("Cells empty");
+            case 1:
+                range = with(Range.singleton(copy.get(0)));
+            default:
+                range = computeRangeFromManyCells(copy);
+        }
+
+        return range;
+    }
+
+    private static SpreadsheetRange computeRangeFromManyCells(final List<SpreadsheetCellReference> cells) {
         SpreadsheetCellReference topLeft = null;
         SpreadsheetCellReference bottomRight = null;
 
