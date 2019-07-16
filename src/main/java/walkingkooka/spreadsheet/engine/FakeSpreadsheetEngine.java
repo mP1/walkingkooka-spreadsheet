@@ -85,7 +85,7 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public SpreadsheetDelta<Range<SpreadsheetCellReference>> copyCells(final Collection<SpreadsheetCell> from,
+    public SpreadsheetDelta<Range<SpreadsheetCellReference>> fillCells(final Collection<SpreadsheetCell> from,
                                                                        final SpreadsheetRange to,
                                                                        final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();

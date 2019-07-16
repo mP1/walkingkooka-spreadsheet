@@ -38,7 +38,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public final class SpreadsheetEngineCopyCellsHateosHandlerTest extends walkingkooka.spreadsheet.engine.hateos.SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineCopyCellsHateosHandler,
+public final class SpreadsheetEngineFillCellsHateosHandlerTest extends walkingkooka.spreadsheet.engine.hateos.SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineFillCellsHateosHandler,
         SpreadsheetCellReference> {
 
     @Test
@@ -47,22 +47,22 @@ public final class SpreadsheetEngineCopyCellsHateosHandlerTest extends walkingko
     }
 
     @Test
-    public void testCopy() {
+    public void testFill() {
         this.handleCollectionAndCheck(this.collection(),
                 this.collectionResource(),
                 this.parameters(),
-                Optional.of(this.copied()));
+                Optional.of(this.filled()));
     }
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createHandler(), SpreadsheetEngine.class.getSimpleName() + ".copyCells");
+        this.toStringAndCheck(this.createHandler(), SpreadsheetEngine.class.getSimpleName() + ".fillCells");
     }
 
     @Override
-    SpreadsheetEngineCopyCellsHateosHandler createHandler(final SpreadsheetEngine engine,
+    SpreadsheetEngineFillCellsHateosHandler createHandler(final SpreadsheetEngine engine,
                                                           final SpreadsheetEngineContext context) {
-        return SpreadsheetEngineCopyCellsHateosHandler.with(engine, context);
+        return SpreadsheetEngineFillCellsHateosHandler.with(engine, context);
     }
 
     @Override
@@ -70,19 +70,19 @@ public final class SpreadsheetEngineCopyCellsHateosHandlerTest extends walkingko
         return new FakeSpreadsheetEngine() {
 
             @Override
-            public SpreadsheetDelta<Range<SpreadsheetCellReference>> copyCells(final Collection<SpreadsheetCell> from,
+            public SpreadsheetDelta<Range<SpreadsheetCellReference>> fillCells(final Collection<SpreadsheetCell> from,
                                                                                final SpreadsheetRange to,
                                                                                final SpreadsheetEngineContext context) {
                 assertEquals(collectionResource().get().cells(), from, "from");
                 assertEquals(SpreadsheetExpressionReference.parseRange(TO), to, "to");
-                return copied();
+                return filled();
             }
         };
     }
 
     @Override
     public Map<HttpRequestAttribute<?>, Object> parameters() {
-        return Maps.of(SpreadsheetEngineCopyCellsHateosHandler.TO, Lists.of(TO));
+        return Maps.of(SpreadsheetEngineFillCellsHateosHandler.TO, Lists.of(TO));
     }
 
     private final static String TO = "E1:F2";
@@ -108,12 +108,12 @@ public final class SpreadsheetEngineCopyCellsHateosHandlerTest extends walkingko
         return Optional.of(SpreadsheetDelta.withRange(collection(), Sets.of(cell)));
     }
 
-    private SpreadsheetDelta<Range<SpreadsheetCellReference>> copied() {
+    private SpreadsheetDelta<Range<SpreadsheetCellReference>> filled() {
         return SpreadsheetDelta.withRange(this.collection(), Sets.of(this.cell()));
     }
 
     @Override
-    public Class<SpreadsheetEngineCopyCellsHateosHandler> type() {
-        return SpreadsheetEngineCopyCellsHateosHandler.class;
+    public Class<SpreadsheetEngineFillCellsHateosHandler> type() {
+        return SpreadsheetEngineFillCellsHateosHandler.class;
     }
 }
