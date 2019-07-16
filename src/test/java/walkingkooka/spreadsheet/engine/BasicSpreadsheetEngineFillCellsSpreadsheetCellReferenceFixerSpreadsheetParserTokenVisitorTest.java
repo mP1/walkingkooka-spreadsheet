@@ -30,7 +30,7 @@ import java.math.MathContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitorTest implements SpreadsheetParserTokenVisitorTesting<BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor> {
+public final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitorTest implements SpreadsheetParserTokenVisitorTesting<BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor> {
 
     @Test
     public void testZeroZeroOffset() {
@@ -38,19 +38,19 @@ public final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerS
                 .map(SpreadsheetParserToken.class::cast)
                 .orElseThrow(() -> new Error("Unable to parse"));
         assertSame(token,
-                BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.expressionFixReferences(token, 0, 0));
+                BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.expressionFixReferences(token, 0, 0));
     }
 
     @Test
     public void testToString() {
-        final BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor visitor = new BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor(12, 34);
+        final BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor visitor = new BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor(12, 34);
         visitor.visit(SpreadsheetParserToken.doubleParserToken(1.24, "1.24"));
         this.toStringAndCheck(visitor, "12,34 [1.24], []");
     }
 
     @Override
-    public BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor createVisitor() {
-        return new BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor(0, 0);
+    public BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor createVisitor() {
+        return new BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor(0, 0);
     }
 
     @Override
@@ -59,8 +59,8 @@ public final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerS
     }
 
     @Override
-    public Class<BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor> type() {
-        return BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.class;
+    public Class<BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor> type() {
+        return BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.class;
     }
 
     @Override
