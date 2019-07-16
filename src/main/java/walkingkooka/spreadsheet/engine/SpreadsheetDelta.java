@@ -172,7 +172,7 @@ public abstract class SpreadsheetDelta<I> implements Comparable<SpreadsheetDelta
     /**
      * Would be setter that if necessary returns a new {@link SpreadsheetDelta} which will also filter cells if necessary.
      */
-    public final SpreadsheetDelta setWindow(final List<SpreadsheetRange> window) {
+    public final SpreadsheetDelta<I> setWindow(final List<SpreadsheetRange> window) {
         Objects.requireNonNull(window, "window");
 
         final List<SpreadsheetRange> copy = Lists.immutable(window);
@@ -182,7 +182,7 @@ public abstract class SpreadsheetDelta<I> implements Comparable<SpreadsheetDelta
                 setWindow0(copy);
     }
 
-    private SpreadsheetDelta setWindow0(final List<SpreadsheetRange> window) {
+    private SpreadsheetDelta<I> setWindow0(final List<SpreadsheetRange> window) {
         final Set<SpreadsheetCell> cells = this.cells;
 
         final Set<SpreadsheetCell> filtered = maybeFilterCells(cells, window);
