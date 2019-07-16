@@ -193,7 +193,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         });
     }
 
-    // loadCell................................................................................................
+    // spreadsheetId....................................................................................................
+
+    @Test
+    public void testSpreadsheetId() {
+        this.spreadsheetIdAndCheck(this.createSpreadsheetEngine(), this.id());
+    }
+
+    // loadCell.........................................................................................................
 
     @Test
     public void testLoadCellCellWhenEmpty() {
