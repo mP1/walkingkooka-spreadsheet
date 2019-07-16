@@ -25,8 +25,8 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.test.ToStringTesting;
 
-public final class BasicSpreadsheetEngineCopyCellsTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineCopyCells>
-        implements ToStringTesting<BasicSpreadsheetEngineCopyCells> {
+public final class BasicSpreadsheetEngineFillCellsTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineFillCells>
+        implements ToStringTesting<BasicSpreadsheetEngineFillCells> {
 
     @Test
     public void testToString() {
@@ -38,16 +38,16 @@ public final class BasicSpreadsheetEngineCopyCellsTest extends BasicSpreadsheetE
                 SpreadsheetRangeStores.fake(),
                 SpreadsheetRangeStores.fake()
         );
-        this.toStringAndCheck(new BasicSpreadsheetEngineCopyCells(engine, null), engine.toString());
+        this.toStringAndCheck(new BasicSpreadsheetEngineFillCells(engine, null), engine.toString());
     }
 
     @Override
-    public Class<BasicSpreadsheetEngineCopyCells> type() {
-        return BasicSpreadsheetEngineCopyCells.class;
+    public Class<BasicSpreadsheetEngineFillCells> type() {
+        return BasicSpreadsheetEngineFillCells.class;
     }
 
     @Override
     public String typeNameSuffix() {
-        return "CopyCells";
+        return "FillCells";
     }
 }

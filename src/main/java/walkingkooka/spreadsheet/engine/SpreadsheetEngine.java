@@ -89,13 +89,13 @@ public interface SpreadsheetEngine {
                                                                 final SpreadsheetEngineContext context);
 
     /**
-     * Copies the provided cells into this spreadsheet at the given range. The source range is smaller, where possible
+     * Fills the provided cells into this spreadsheet at the given range. The source range is smaller, where possible
      * it will be duplicated along both axis or repeated into the target range.<br>
      * This is ideal for a copy/paste function, where the pasted range must have all cells relative references fixed.
      * Note prior to copying the area should be cleared, as this only copies the given it doesnt clear the entire range,
      * before the actual copying.
      */
-    SpreadsheetDelta<Range<SpreadsheetCellReference>> copyCells(final Collection<SpreadsheetCell> from,
+    SpreadsheetDelta<Range<SpreadsheetCellReference>> fillCells(final Collection<SpreadsheetCell> from,
                                                                 final SpreadsheetRange to,
                                                                 final SpreadsheetEngineContext context);
 

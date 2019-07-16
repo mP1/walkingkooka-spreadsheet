@@ -60,7 +60,7 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
     public void testRouterBaseNullFails() {
         this.routerFails(null,
                 this.contentType(),
-                this.copyCells(),
+                this.fillCells(),
                 this.deleteColumns(),
                 this.deleteRows(),
                 this.insertColumns(),
@@ -76,7 +76,7 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
     public void testRouterContentTypeNullFails() {
         this.routerFails(this.base(),
                 null,
-                this.copyCells(),
+                this.fillCells(),
                 this.deleteColumns(),
                 this.deleteRows(),
                 this.insertColumns(),
@@ -89,7 +89,7 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
     }
 
     @Test
-    public void testRouterCopyCellsHandlerNullFails() {
+    public void testRouterFillCellsHandlerNullFails() {
         this.routerFails(this.base(),
                 this.contentType(),
                 null,
@@ -108,7 +108,7 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
     public void testRouterDeleteColumnsHandlerNullFails() {
         this.routerFails(this.base(),
                 this.contentType(),
-                this.copyCells(),
+                this.fillCells(),
                 null,
                 this.deleteRows(),
                 this.insertColumns(),
@@ -124,7 +124,7 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
     public void testRouterDeleteRowsHandlerNullFails() {
         this.routerFails(this.base(),
                 this.contentType(),
-                this.copyCells(),
+                this.fillCells(),
                 this.deleteColumns(),
                 null,
                 this.insertColumns(),
@@ -140,7 +140,7 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
     public void testRouterInsertColumnsHandlerNullFails() {
         this.routerFails(this.base(),
                 this.contentType(),
-                this.copyCells(),
+                this.fillCells(),
                 this.deleteColumns(),
                 this.deleteRows(),
                 null,
@@ -156,7 +156,7 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
     public void testRouterInsertRowsHandlerNullFails() {
         this.routerFails(this.base(),
                 this.contentType(),
-                this.copyCells(),
+                this.fillCells(),
                 this.deleteColumns(),
                 this.deleteRows(),
                 this.insertColumns(),
@@ -172,7 +172,7 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
     public void testRouterLoadCellsClearValueErrorSkipEvaluateHandlerNullFails() {
         this.routerFails(this.base(),
                 this.contentType(),
-                this.copyCells(),
+                this.fillCells(),
                 this.deleteColumns(),
                 this.deleteRows(),
                 this.insertColumns(),
@@ -188,7 +188,7 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
     public void testRouterLoadCellsComputeIfNecessaryHandlerNullFails() {
         this.routerFails(this.base(),
                 this.contentType(),
-                this.copyCells(),
+                this.fillCells(),
                 this.deleteColumns(),
                 this.deleteRows(),
                 this.insertColumns(),
@@ -204,7 +204,7 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
     public void testRouterLoadCellsForceRecomputeHandlerNullFails() {
         this.routerFails(this.base(),
                 this.contentType(),
-                this.copyCells(),
+                this.fillCells(),
                 this.deleteColumns(),
                 this.deleteRows(),
                 this.insertColumns(),
@@ -220,7 +220,7 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
     public void testRouterLoadCellsSkipEvaluateHandlerNullFails() {
         this.routerFails(this.base(),
                 this.contentType(),
-                this.copyCells(),
+                this.fillCells(),
                 this.deleteColumns(),
                 this.deleteRows(),
                 this.insertColumns(),
@@ -236,7 +236,7 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
     public void testRouterSaveCellsHandlerNullFails() {
         this.routerFails(this.base(),
                 this.contentType(),
-                this.copyCells(),
+                this.fillCells(),
                 this.deleteColumns(),
                 this.deleteRows(),
                 this.insertColumns(),
@@ -252,7 +252,7 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
                              final HateosContentType<JsonNode> contentType,
                              final HateosHandler<SpreadsheetCellReference,
                                      SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-                                     SpreadsheetDelta<Range<SpreadsheetCellReference>>> copyCells,
+                                     SpreadsheetDelta<Range<SpreadsheetCellReference>>> fillCells,
                              final HateosHandler<SpreadsheetColumnReference,
                                      SpreadsheetDelta<Optional<SpreadsheetColumnReference>>,
                                      SpreadsheetDelta<Range<SpreadsheetColumnReference>>> deleteColumns,
@@ -283,7 +283,7 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
         assertThrows(NullPointerException.class, () -> {
             SpreadsheetHateosHandlersSpreadsheetEngineRouter.router(base,
                     contentType,
-                    copyCells,
+                    fillCells,
                     deleteColumns,
                     deleteRows,
                     insertColumns,
@@ -371,26 +371,26 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
         this.routeAndCheck(HttpMethod.DELETE, URL + "/row/1");
     }
 
-    // copycells........................................................................................................
+    // fillCells........................................................................................................
 
     @Test
-    public void testRouteCopyCellsGetFails() {
-        this.routeAndFail(HttpMethod.GET, URL + "/cell/A1:B2/copy");
+    public void testRouteFillCellsGetFails() {
+        this.routeAndFail(HttpMethod.GET, URL + "/cell/A1:B2/fill");
     }
 
     @Test
-    public void testRouteCopyCellsPost() {
-        this.routeAndCheck(HttpMethod.POST, URL + "/cell/A1:B2/copy");
+    public void testRouteFillCellsPost() {
+        this.routeAndCheck(HttpMethod.POST, URL + "/cell/A1:B2/fill");
     }
 
     @Test
-    public void testRouteCopyCellsPutFails() {
-        this.routeAndFail(HttpMethod.PUT, URL + "/cell/A1:B2/copy");
+    public void testRouteFillCellsPutFails() {
+        this.routeAndFail(HttpMethod.PUT, URL + "/cell/A1:B2/fill");
     }
 
     @Test
-    public void testRouteCopyCellsDeleteFails() {
-        this.routeAndFail(HttpMethod.DELETE, URL + "/cell/A1:B2/copy");
+    public void testRouteFillCellsDeleteFails() {
+        this.routeAndFail(HttpMethod.DELETE, URL + "/cell/A1:B2/fill");
     }
 
     private void routeAndCheck(final HttpMethod method,
@@ -410,7 +410,7 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
     private Optional<BiConsumer<HttpRequest, HttpResponse>> route(final HttpRequest request) {
         final Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> router = SpreadsheetHateosHandlersSpreadsheetEngineRouter.router(this.base(),
                 this.contentType(),
-                this.copyCells(),
+                this.fillCells(),
                 this.deleteColumns(),
                 this.deleteRows(),
                 this.insertColumns(),
@@ -462,8 +462,8 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
         return HateosContentType.json();
     }
 
-    private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>, SpreadsheetDelta<Range<SpreadsheetCellReference>>> copyCells() {
-        return SpreadsheetEngineHateosHandlers.copyCells(this.engine(), this.engineContext());
+    private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>, SpreadsheetDelta<Range<SpreadsheetCellReference>>> fillCells() {
+        return SpreadsheetEngineHateosHandlers.fillCells(this.engine(), this.engineContext());
     }
 
     private HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta<Optional<SpreadsheetColumnReference>>, SpreadsheetDelta<Range<SpreadsheetColumnReference>>> deleteColumns() {
