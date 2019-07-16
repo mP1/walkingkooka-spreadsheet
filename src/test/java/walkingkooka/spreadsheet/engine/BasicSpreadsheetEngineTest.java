@@ -3886,129 +3886,129 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(5 + 0));
     }
 
-    // copyCells....................................................................................................
+    // fillCells....................................................................................................
 
     @Test
-    public void testCopyCellsAddition() {
-        this.copyCellsAndCheck("1+0", BigDecimal.valueOf(1 + 0));
+    public void testFillCellsAddition() {
+        this.fillCellsAndCheck("1+0", BigDecimal.valueOf(1 + 0));
     }
 
     @Test
-    public void testCopyCellsBigDecimal() {
-        this.copyCellsAndCheck("99.5", BigDecimal.valueOf(99.5));
+    public void testFillCellsBigDecimal() {
+        this.fillCellsAndCheck("99.5", BigDecimal.valueOf(99.5));
     }
 
     @Test
-    public void testCopyCellsBigInteger() {
-        this.copyCellsAndCheck("99", BigDecimal.valueOf(99));
+    public void testFillCellsBigInteger() {
+        this.fillCellsAndCheck("99", BigDecimal.valueOf(99));
     }
 
     @Test
-    public void testCopyCellsDivision() {
-        this.copyCellsAndCheck("10/5", BigDecimal.valueOf(10 / 5));
+    public void testFillCellsDivision() {
+        this.fillCellsAndCheck("10/5", BigDecimal.valueOf(10 / 5));
     }
 
     @Test
-    public void testCopyCellsEqualsTrue() {
-        this.copyCellsAndCheck("10==10", true);
+    public void testFillCellsEqualsTrue() {
+        this.fillCellsAndCheck("10==10", true);
     }
 
     @Test
-    public void testCopyCellsEqualsFalse() {
-        this.copyCellsAndCheck("10==9", false);
+    public void testFillCellsEqualsFalse() {
+        this.fillCellsAndCheck("10==9", false);
     }
 
     @Test
-    public void testCopyCellsGreaterThanTrue() {
-        this.copyCellsAndCheck("10>9", true);
+    public void testFillCellsGreaterThanTrue() {
+        this.fillCellsAndCheck("10>9", true);
     }
 
     @Test
-    public void testCopyCellsGreaterThanFalse() {
-        this.copyCellsAndCheck("10>11", false);
+    public void testFillCellsGreaterThanFalse() {
+        this.fillCellsAndCheck("10>11", false);
     }
 
     @Test
-    public void testCopyCellsGreaterThanEqualsTrue() {
-        this.copyCellsAndCheck("10>=10", true);
+    public void testFillCellsGreaterThanEqualsTrue() {
+        this.fillCellsAndCheck("10>=10", true);
     }
 
     @Test
-    public void testCopyCellsGreaterThanEqualsFalse() {
-        this.copyCellsAndCheck("10>=11", false);
+    public void testFillCellsGreaterThanEqualsFalse() {
+        this.fillCellsAndCheck("10>=11", false);
     }
 
     @Test
-    public void testCopyCellsFunction() {
-        this.copyCellsAndCheck("BasicSpreadsheetEngineTestSum(1,99)", BigDecimal.valueOf(1+99));
+    public void testFillCellsFunction() {
+        this.fillCellsAndCheck("BasicSpreadsheetEngineTestSum(1,99)", BigDecimal.valueOf(1+99));
     }
 
     @Test
-    public void testCopyCellsGroup() {
-        this.copyCellsAndCheck("(99)", BigDecimal.valueOf(99));
+    public void testFillCellsGroup() {
+        this.fillCellsAndCheck("(99)", BigDecimal.valueOf(99));
     }
 
     @Test
-    public void testCopyCellsLessThanTrue() {
-        this.copyCellsAndCheck("10<11", true);
+    public void testFillCellsLessThanTrue() {
+        this.fillCellsAndCheck("10<11", true);
     }
 
     @Test
-    public void testCopyCellsLessThanFalse() {
-        this.copyCellsAndCheck("10<9", false);
+    public void testFillCellsLessThanFalse() {
+        this.fillCellsAndCheck("10<9", false);
     }
 
     @Test
-    public void testCopyCellsLessThanEqualsTrue() {
-        this.copyCellsAndCheck("10<=10", true);
+    public void testFillCellsLessThanEqualsTrue() {
+        this.fillCellsAndCheck("10<=10", true);
     }
 
     @Test
-    public void testCopyCellsLessThanEqualsFalse() {
-        this.copyCellsAndCheck("10<=9", false);
+    public void testFillCellsLessThanEqualsFalse() {
+        this.fillCellsAndCheck("10<=9", false);
     }
 
     @Test
-    public void testCopyCellsMultiplication() {
-        this.copyCellsAndCheck("6*7", BigDecimal.valueOf(6*7));
+    public void testFillCellsMultiplication() {
+        this.fillCellsAndCheck("6*7", BigDecimal.valueOf(6*7));
     }
 
     @Test
-    public void testCopyCellsNegative() {
-        this.copyCellsAndCheck("-123", BigDecimal.valueOf(-123));
+    public void testFillCellsNegative() {
+        this.fillCellsAndCheck("-123", BigDecimal.valueOf(-123));
     }
 
     @Test
-    public void testCopyCellsNotEqualsTrue() {
-        this.copyCellsAndCheck("10!=9", true);
+    public void testFillCellsNotEqualsTrue() {
+        this.fillCellsAndCheck("10!=9", true);
     }
 
     @Test
-    public void testCopyCellsNotEqualsFalse() {
-        this.copyCellsAndCheck("10!=10", false);
+    public void testFillCellsNotEqualsFalse() {
+        this.fillCellsAndCheck("10!=10", false);
     }
 
     @Test
-    public void testCopyCellsPercentage() {
-        this.copyCellsAndCheck("123.5%", BigDecimal.valueOf(123.5 / 100));
+    public void testFillCellsPercentage() {
+        this.fillCellsAndCheck("123.5%", BigDecimal.valueOf(123.5 / 100));
     }
 
     @Test
-    public void testCopyCellsSubtraction() {
-        this.copyCellsAndCheck("13-4", BigDecimal.valueOf(13-4));
+    public void testFillCellsSubtraction() {
+        this.fillCellsAndCheck("13-4", BigDecimal.valueOf(13-4));
     }
 
     @Test
-    public void testCopyCellsText() {
-        this.copyCellsAndCheck("\"abc123\"", "abc123");
+    public void testFillCellsText() {
+        this.fillCellsAndCheck("\"abc123\"", "abc123");
     }
 
     @Test
-    public void testCopyCellsAdditionWithWhitespace() {
-        this.copyCellsAndCheck("1 + 2", BigDecimal.valueOf(1+2));
+    public void testFillCellsAdditionWithWhitespace() {
+        this.fillCellsAndCheck("1 + 2", BigDecimal.valueOf(1+2));
     }
 
-    private void copyCellsAndCheck(final String formulaText, final Object expected) {
+    private void fillCellsAndCheck(final String formulaText, final Object expected) {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final SpreadsheetLabelStore labelStore = this.labelStore();
 
@@ -4029,7 +4029,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        this.copyCellsAndCheck(engine,
+        this.fillCellsAndCheck(engine,
                 Lists.of(cellA),
                 d.spreadsheetRange(d),
                 context,
@@ -4039,7 +4039,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testCopyCellsOneCellInto2x2() {
+    public void testFillCellsOneCellInto2x2() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -4058,7 +4058,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        this.copyCellsAndCheck(engine,
+        this.fillCellsAndCheck(engine,
                 Lists.of(cellA, cellB),
                 d.spreadsheetRange(d.add(2, 2)),
                 context,
@@ -4069,7 +4069,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testCopyCells2x2CellInto1x1() {
+    public void testFillCells2x2CellInto1x1() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -4088,7 +4088,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        this.copyCellsAndCheck(engine,
+        this.fillCellsAndCheck(engine,
                 Lists.of(cellA, cellB),
                 d.spreadsheetRange(d.add(1, 1)),
                 context,
@@ -4099,7 +4099,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testCopyCells2x2CellInto2x2() {
+    public void testFillCells2x2CellInto2x2() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -4118,7 +4118,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        this.copyCellsAndCheck(
+        this.fillCellsAndCheck(
                 engine,
                 Lists.of(cellA, cellB),
                 d.spreadsheetRange(d.add(2, 2)),
@@ -4130,7 +4130,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testCopyCells2x2CellInto7x2Gives6x2() {
+    public void testFillCells2x2CellInto7x2Gives6x2() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -4149,7 +4149,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        this.copyCellsAndCheck(engine,
+        this.fillCellsAndCheck(engine,
                 Lists.of(cellA, cellB),
                 d.spreadsheetRange(d.add(6, 1)),
                 context,
@@ -4164,7 +4164,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testCopyCells2x2CellInto2x7Gives2x6() {
+    public void testFillCells2x2CellInto2x7Gives2x6() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -4183,7 +4183,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        this.copyCellsAndCheck(engine,
+        this.fillCellsAndCheck(engine,
                 Lists.of(cellA, cellB),
                 d.spreadsheetRange(d.add(1, 6)),
                 context,
@@ -4198,7 +4198,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testCopyCellsAbsoluteReference() {
+    public void testFillCellsAbsoluteReference() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -4214,7 +4214,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference d = this.cellReference(30, 40);
 
-        this.copyCellsAndCheck(engine,
+        this.fillCellsAndCheck(engine,
                 Lists.of(cellB),
                 d.spreadsheetRange(d),
                 context,
@@ -4225,7 +4225,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testCopyCellsExpressionRelativeReferenceFixed() {
+    public void testFillCellsExpressionRelativeReferenceFixed() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -4236,7 +4236,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         cellStore.save(cellB);
         cellStore.save(cellC);
 
-        this.copyCellsAndCheck(engine,
+        this.fillCellsAndCheck(engine,
                 Lists.of(cellB, cellC),
                 SpreadsheetExpressionReference.parseRange("E5:F6"),
                 context,
@@ -4247,7 +4247,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testCopyCellsExternalReferencesRefreshed() {
+    public void testFillCellsExternalReferencesRefreshed() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -4259,7 +4259,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         engine.saveCell(cellA, context);
         engine.saveCell(cellB, context);
 
-        this.copyCellsAndCheck(engine,
+        this.fillCellsAndCheck(engine,
                 Lists.of(cellB),
                 c.spreadsheetRange(c),
                 context,

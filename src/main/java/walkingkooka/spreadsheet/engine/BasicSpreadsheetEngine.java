@@ -253,7 +253,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
-    public SpreadsheetDelta<Range<SpreadsheetCellReference>> copyCells(final Collection<SpreadsheetCell> from,
+    public SpreadsheetDelta<Range<SpreadsheetCellReference>> fillCells(final Collection<SpreadsheetCell> from,
                                                                        final SpreadsheetRange to,
                                                                        final SpreadsheetEngineContext context) {
         Objects.requireNonNull(from, "from");
@@ -261,7 +261,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         checkContext(context);
 
         try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
-            BasicSpreadsheetEngineCopyCells.execute(from, to, this, context);
+            BasicSpreadsheetEngineFillCells.execute(from, to, this, context);
             updated.refreshUpdated();
             return SpreadsheetDelta.withRange(to.range(), updated.cells());
         }
