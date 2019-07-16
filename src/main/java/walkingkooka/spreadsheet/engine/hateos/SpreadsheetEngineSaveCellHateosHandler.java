@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 
 import java.util.Map;
 import java.util.Optional;
@@ -66,11 +67,14 @@ final class SpreadsheetEngineSaveCellHateosHandler extends SpreadsheetEngineHate
     public Optional<SpreadsheetDelta<Range<SpreadsheetCellReference>>> handleCollection(final Range<SpreadsheetCellReference> ids,
                                                                                         final Optional<SpreadsheetDelta<Range<SpreadsheetCellReference>>> resource,
                                                                                         final Map<HttpRequestAttribute<?>, Object> parameters) {
-        this.checkRangeNotNull(ids);
-        this.checkResource(resource);
+        final SpreadsheetRange range = SpreadsheetRange.with(ids);
+        final SpreadsheetDelta<Range<SpreadsheetCellReference>> delta = this.checkResourceNotEmpty(resource);
         this.checkParameters(parameters);
 
-        throw new UnsupportedOperationException();
+        return Optional.of(this.engine.fillCells(delta.cells(),
+                range,
+                range,
+                this.context));
     }
 
     @Override
