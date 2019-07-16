@@ -62,22 +62,26 @@ final class SpreadsheetEngineLoadCellHateosHandler extends SpreadsheetEngineHate
         this.checkResourceEmpty(resource);
         this.checkParameters(parameters);
 
-        return Optional.of(this.engine.loadCell(reference,
+        return Optional.of(this.loadCell(reference));
+    }
+
+    SpreadsheetDelta<Optional<SpreadsheetCellReference>> loadCell(final SpreadsheetCellReference reference) {
+        return this.engine.loadCell(reference,
                 this.evaluation,
-                this.context));
+                this.context);
     }
 
     private final SpreadsheetEngineEvaluation evaluation;
 
     @Override
-    public Optional<SpreadsheetDelta<Range<SpreadsheetCellReference>>> handleCollection(final Range<SpreadsheetCellReference> ids,
+    public Optional<SpreadsheetDelta<Range<SpreadsheetCellReference>>> handleCollection(final Range<SpreadsheetCellReference> cells,
                                                                                         final Optional<SpreadsheetDelta<Range<SpreadsheetCellReference>>> resource,
                                                                                         final Map<HttpRequestAttribute<?>, Object> parameters) {
-        this.checkRangeNotNull(ids);
+        this.checkRangeNotNull(cells);
         this.checkResource(resource);
         this.checkParameters(parameters);
 
-        throw new UnsupportedOperationException();
+        return SpreadsheetEngineLoadCellHateosHandlerBatchLoader.with(this).batchLoad(cells);
     }
 
     @Override
