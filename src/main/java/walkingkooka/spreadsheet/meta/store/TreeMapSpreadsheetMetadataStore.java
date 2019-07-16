@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.meta.store;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.store.SpreadsheetStore;
-import walkingkooka.spreadsheet.store.SpreadsheetStores;
+import walkingkooka.store.Store;
+import walkingkooka.store.Stores;
 
 import java.util.Comparator;
 import java.util.List;
@@ -48,7 +48,7 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
     private TreeMapSpreadsheetMetadataStore() {
         super();
 
-        this.store = SpreadsheetStores.treeMap(Comparator.naturalOrder(), TreeMapSpreadsheetMetadataStore::idSetter);
+        this.store = Stores.treeMap(Comparator.naturalOrder(), TreeMapSpreadsheetMetadataStore::idSetter);
     }
 
     private static SpreadsheetMetadata idSetter(final SpreadsheetId id,
@@ -99,7 +99,7 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
         return this.store.values(from, count);
     }
 
-    final SpreadsheetStore<SpreadsheetId, SpreadsheetMetadata> store;
+    final Store<SpreadsheetId, SpreadsheetMetadata> store;
 
     @Override
     public String toString() {

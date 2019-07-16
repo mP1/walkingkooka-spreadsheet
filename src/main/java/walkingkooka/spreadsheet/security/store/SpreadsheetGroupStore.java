@@ -21,14 +21,14 @@ import walkingkooka.spreadsheet.security.Group;
 import walkingkooka.spreadsheet.security.GroupId;
 import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
-import walkingkooka.spreadsheet.store.SpreadsheetStore;
+import walkingkooka.store.Store;
 
 import java.util.Set;
 
 /**
- * A {@link SpreadsheetStore} that holds all {@link Group groups} for a spreadsheet.
+ * A {@link Store} that holds all {@link Group groups} for a spreadsheet.
  */
-public interface SpreadsheetGroupStore extends SpreadsheetStore<GroupId, Group> {
+public interface SpreadsheetGroupStore extends Store<GroupId, Group> {
 
     /**
      * Adds a user to an existing group.

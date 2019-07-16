@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.reference.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.store.FakeSpreadsheetStore;
+import walkingkooka.store.FakeStore;
 import walkingkooka.test.Fake;
 import walkingkooka.tree.expression.ExpressionReference;
 
@@ -26,7 +26,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 
-public class FakeSpreadsheetReferenceStore<T extends ExpressionReference & Comparable<T>> extends FakeSpreadsheetStore<T, Set<SpreadsheetCellReference>> implements SpreadsheetReferenceStore<T>, Fake {
+public class FakeSpreadsheetReferenceStore<T extends ExpressionReference & Comparable<T>> extends FakeStore<T, Set<SpreadsheetCellReference>> implements SpreadsheetReferenceStore<T>, Fake {
 
     @Override
     public void saveReferences(final T id, final Set<SpreadsheetCellReference> targets) {
