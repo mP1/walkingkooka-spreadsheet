@@ -15,42 +15,38 @@
  *
  */
 
-package walkingkooka.spreadsheet.store.cell;
+package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.store.FakeStore;
-import walkingkooka.test.Fake;
+import walkingkooka.store.Store;
 
 import java.util.Set;
 
-public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference, SpreadsheetCell> implements SpreadsheetCellStore, Fake {
+/**
+ * A store that holds all cells for a spreadsheet. No additional actions are supported.
+ */
+public interface SpreadsheetCellStore extends Store<SpreadsheetCellReference, SpreadsheetCell> {
 
-    @Override
-    public int rows() {
-        throw new UnsupportedOperationException();
-    }
+    /**
+     * The highest row number
+     */
+    int rows();
 
-    @Override
-    public int columns() {
-        throw new UnsupportedOperationException();
-    }
+    /**
+     * The highest column number
+     */
+    int columns();
 
     /**
      * Returns a view of all cells in the given row.
      */
-    @Override
-    public Set<SpreadsheetCell> row(final SpreadsheetRowReference row) {
-        throw new UnsupportedOperationException();
-    }
+    Set<SpreadsheetCell> row(SpreadsheetRowReference row);
 
     /**
      * Returns a view of all cells in the given column.
      */
-    @Override
-    public Set<SpreadsheetCell> column(final SpreadsheetColumnReference column) {
-        throw new UnsupportedOperationException();
-    }
+    Set<SpreadsheetCell> column(SpreadsheetColumnReference column);
 }

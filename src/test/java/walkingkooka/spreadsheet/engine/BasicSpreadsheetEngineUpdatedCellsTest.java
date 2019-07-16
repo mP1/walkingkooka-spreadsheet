@@ -25,7 +25,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStores;
-import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStores;
+import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.test.ToStringTesting;
 
 public final class BasicSpreadsheetEngineUpdatedCellsTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineUpdatedCells>
