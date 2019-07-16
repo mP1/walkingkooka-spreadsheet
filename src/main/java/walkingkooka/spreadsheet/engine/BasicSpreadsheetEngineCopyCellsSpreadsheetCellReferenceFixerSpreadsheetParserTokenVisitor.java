@@ -92,6 +92,14 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
     static SpreadsheetParserToken expressionFixReferences(final SpreadsheetParserToken token,
                                                           final int xOffset,
                                                           final int yOffset) {
+        return xOffset == 0 && yOffset == 0 ?
+                token :
+                expressionFixReferences0(token, xOffset, yOffset);
+    }
+
+    private static SpreadsheetParserToken expressionFixReferences0(final SpreadsheetParserToken token,
+                                                                   final int xOffset,
+                                                                   final int yOffset) {
         final BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor visitor = new BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor(xOffset, yOffset);
         visitor.accept(token);
 
