@@ -26,11 +26,11 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
-import walkingkooka.spreadsheet.store.SpreadsheetStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
+import walkingkooka.store.Store;
 
 /**
- * Holds all {@link SpreadsheetStore stores} in the system
+ * Holds all {@link Store stores} in the system
  */
 public interface SpreadsheetStoreRepository {
 

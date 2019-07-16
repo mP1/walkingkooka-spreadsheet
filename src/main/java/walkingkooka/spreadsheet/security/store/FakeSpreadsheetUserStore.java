@@ -20,11 +20,11 @@ package walkingkooka.spreadsheet.security.store;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
-import walkingkooka.spreadsheet.store.FakeSpreadsheetStore;
+import walkingkooka.store.FakeStore;
 
 import java.util.Optional;
 
-public class FakeSpreadsheetUserStore extends FakeSpreadsheetStore<UserId, User> implements SpreadsheetUserStore {
+public class FakeSpreadsheetUserStore extends FakeStore<UserId, User> implements SpreadsheetUserStore {
 
     @Override
     public Optional<User> loadWithEmail(final EmailAddress email) {

@@ -20,10 +20,10 @@ package walkingkooka.spreadsheet.meta.store;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.store.SpreadsheetStoreTesting;
+import walkingkooka.store.StoreTesting;
 import walkingkooka.test.TypeNameTesting;
 
-public interface SpreadsheetMetadataStoreTesting<S extends SpreadsheetMetadataStore> extends SpreadsheetStoreTesting<S, SpreadsheetId, SpreadsheetMetadata>,
+public interface SpreadsheetMetadataStoreTesting<S extends SpreadsheetMetadataStore> extends StoreTesting<S, SpreadsheetId, SpreadsheetMetadata>,
         TypeNameTesting<S> {
 
     int ID = 1;

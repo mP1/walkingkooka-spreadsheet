@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.reference.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
-import walkingkooka.spreadsheet.store.SpreadsheetStore;
+import walkingkooka.store.Store;
 
 import java.util.List;
 import java.util.Objects;
@@ -29,10 +29,10 @@ import java.util.function.Consumer;
 /**
  * A store that holds one or more values for {@link SpreadsheetRange}.
  */
-public interface SpreadsheetRangeStore<V> extends SpreadsheetStore<SpreadsheetRange, List<V>> {
+public interface SpreadsheetRangeStore<V> extends Store<SpreadsheetRange, List<V>> {
 
     /**
-     * Values dont include the actual range, thereore this {@link SpreadsheetStore} method is invalid.
+     * Values dont include the actual range, thereore this {@link Store} method is invalid.
      */
     @Override
     default List<V> save(final List<V> value) {

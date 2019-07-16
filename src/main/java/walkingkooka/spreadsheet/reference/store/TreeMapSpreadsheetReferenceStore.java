@@ -21,8 +21,8 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.store.SpreadsheetStore;
-import walkingkooka.spreadsheet.store.Watchers;
+import walkingkooka.store.Store;
+import walkingkooka.store.Watchers;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Iterator;
@@ -114,7 +114,7 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
     @Override
     public Set<T> ids(final int from,
                       final int count) {
-        SpreadsheetStore.checkFromAndTo(from, count);
+        Store.checkFromAndTo(from, count);
 
         return this.targetToReferences.keySet()
                 .stream()
@@ -126,7 +126,7 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
     @Override
     public List<Set<SpreadsheetCellReference>> values(final T from,
                                                       final int count) {
-        SpreadsheetStore.checkFromAndToIds(from, count);
+        Store.checkFromAndToIds(from, count);
 
         return this.targetToReferences.entrySet()
                 .stream()

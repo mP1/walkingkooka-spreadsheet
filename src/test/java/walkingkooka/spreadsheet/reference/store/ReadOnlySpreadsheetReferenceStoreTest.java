@@ -22,7 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.store.ReadOnlyStoreTesting;
+import walkingkooka.store.ReadOnlyStoreTesting;
 
 import java.util.Set;
 
@@ -256,7 +256,7 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
         return Sets.of(this.a1(), this.b1(), this.c1());
     }
 
-    // SpreadsheetStoreTesting.................................................................................
+    // StoreTesting.................................................................................
 
     @Override
     public ReadOnlySpreadsheetReferenceStore<SpreadsheetCellReference> createStore() {

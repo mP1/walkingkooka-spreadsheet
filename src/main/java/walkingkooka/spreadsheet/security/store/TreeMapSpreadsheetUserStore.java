@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.security.store;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
-import walkingkooka.spreadsheet.store.SpreadsheetStore;
-import walkingkooka.spreadsheet.store.SpreadsheetStores;
+import walkingkooka.store.Store;
+import walkingkooka.store.Stores;
 
 import java.util.Comparator;
 import java.util.List;
@@ -31,7 +31,7 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 /**
- * A {@link SpreadsheetUserStore} backed by a {@link SpreadsheetStores#treeMap(Comparator, BiFunction)}.
+ * A {@link SpreadsheetUserStore} backed by a {@link Stores#treeMap(Comparator, BiFunction)}.
  */
 final class TreeMapSpreadsheetUserStore implements SpreadsheetUserStore {
 
@@ -42,7 +42,7 @@ final class TreeMapSpreadsheetUserStore implements SpreadsheetUserStore {
     private TreeMapSpreadsheetUserStore() {
         super();
 
-        this.store = SpreadsheetStores.treeMap(Comparator.naturalOrder(), TreeMapSpreadsheetUserStore::userIdSetter);
+        this.store = Stores.treeMap(Comparator.naturalOrder(), TreeMapSpreadsheetUserStore::userIdSetter);
     }
 
     private static User userIdSetter(final UserId id,
@@ -100,7 +100,7 @@ final class TreeMapSpreadsheetUserStore implements SpreadsheetUserStore {
                 .findFirst();
     }
 
-    final SpreadsheetStore<UserId, User> store;
+    final Store<UserId, User> store;
 
     @Override
     public String toString() {

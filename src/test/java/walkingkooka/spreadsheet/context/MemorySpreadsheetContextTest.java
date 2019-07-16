@@ -58,7 +58,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.store.SpreadsheetStore;
+import walkingkooka.store.Store;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.ExpressionNodeName;
 import walkingkooka.tree.json.JsonNode;
@@ -822,7 +822,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         assertSame(repository1, context.storeRepository(id1));
     }
 
-    private void countAndCheck(final SpreadsheetStore<?, ?> store, final int count) {
+    private void countAndCheck(final Store<?, ?> store, final int count) {
         assertEquals(count, store.count(), () -> "" + store.all());
     }
 

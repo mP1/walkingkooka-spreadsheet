@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.meta.store;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.store.ReadOnlyStoreTesting;
+import walkingkooka.store.ReadOnlyStoreTesting;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;

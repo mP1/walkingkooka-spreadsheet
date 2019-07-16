@@ -22,8 +22,8 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
-import walkingkooka.spreadsheet.store.SpreadsheetStore;
-import walkingkooka.spreadsheet.store.SpreadsheetStores;
+import walkingkooka.store.Store;
+import walkingkooka.store.Stores;
 
 import java.util.Comparator;
 import java.util.List;
@@ -53,7 +53,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
      */
     private TreeMapSpreadsheetCellStore() {
         super();
-        this.store = SpreadsheetStores.treeMap(Comparator.naturalOrder(), TreeMapSpreadsheetCellStore::idSetter);
+        this.store = Stores.treeMap(Comparator.naturalOrder(), TreeMapSpreadsheetCellStore::idSetter);
     }
 
     private static SpreadsheetCell idSetter(final SpreadsheetCellReference id, final SpreadsheetCell spreadsheetCell) {
@@ -142,7 +142,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     }
 
     // VisibleForTesting
-    final SpreadsheetStore<SpreadsheetCellReference, SpreadsheetCell> store;
+    final Store<SpreadsheetCellReference, SpreadsheetCell> store;
 
     @Override
     public String toString() {
