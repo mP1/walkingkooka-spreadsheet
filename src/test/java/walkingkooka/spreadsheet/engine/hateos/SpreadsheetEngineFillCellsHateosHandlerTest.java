@@ -70,10 +70,12 @@ public final class SpreadsheetEngineFillCellsHateosHandlerTest extends walkingko
         return new FakeSpreadsheetEngine() {
 
             @Override
-            public SpreadsheetDelta<Range<SpreadsheetCellReference>> fillCells(final Collection<SpreadsheetCell> from,
+            public SpreadsheetDelta<Range<SpreadsheetCellReference>> fillCells(final Collection<SpreadsheetCell> cells,
+                                                                               final SpreadsheetRange from,
                                                                                final SpreadsheetRange to,
                                                                                final SpreadsheetEngineContext context) {
-                assertEquals(collectionResource().get().cells(), from, "from");
+                assertEquals(collectionResource().get().cells(), cells, "cells");
+                assertEquals(SpreadsheetExpressionReference.parseRange(FROM), from, "from");
                 assertEquals(SpreadsheetExpressionReference.parseRange(TO), to, "to");
                 return filled();
             }
@@ -85,6 +87,7 @@ public final class SpreadsheetEngineFillCellsHateosHandlerTest extends walkingko
         return Maps.of(SpreadsheetEngineFillCellsHateosHandler.TO, Lists.of(TO));
     }
 
+    private final static String FROM = "B1:C2";
     private final static String TO = "E1:F2";
 
     @Override
@@ -94,7 +97,7 @@ public final class SpreadsheetEngineFillCellsHateosHandlerTest extends walkingko
 
     @Override
     public Range<SpreadsheetCellReference> collection() {
-        return SpreadsheetCellReference.parseCellReferenceRange("C1:D2");
+        return SpreadsheetCellReference.parseCellReferenceRange(FROM);
     }
 
     @Override

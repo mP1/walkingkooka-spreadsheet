@@ -253,15 +253,17 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
-    public SpreadsheetDelta<Range<SpreadsheetCellReference>> fillCells(final Collection<SpreadsheetCell> from,
+    public SpreadsheetDelta<Range<SpreadsheetCellReference>> fillCells(final Collection<SpreadsheetCell> cells,
+                                                                       final SpreadsheetRange from,
                                                                        final SpreadsheetRange to,
                                                                        final SpreadsheetEngineContext context) {
+        Objects.requireNonNull(cells, "cells");
         Objects.requireNonNull(from, "from");
         Objects.requireNonNull(to, "to");
         checkContext(context);
 
         try (final BasicSpreadsheetEngineUpdatedCells updated = BasicSpreadsheetEngineUpdatedCellsMode.BATCH.createUpdatedCells(this, context)) {
-            BasicSpreadsheetEngineFillCells.execute(from, to, this, context);
+            BasicSpreadsheetEngineFillCells.execute(cells, from, to, this, context);
             updated.refreshUpdated();
             return SpreadsheetDelta.withRange(to.range(), updated.cells());
         }

@@ -17,22 +17,25 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 final class BasicSpreadsheetEngineFillCells {
 
-    static void execute(final Collection<SpreadsheetCell> from,
+    static void execute(final Collection<SpreadsheetCell> cells,
+                        final SpreadsheetRange from,
                         final SpreadsheetRange to,
                         final BasicSpreadsheetEngine engine,
                         final SpreadsheetEngineContext context) {
         new BasicSpreadsheetEngineFillCells(engine, context)
-                .execute(from, to);
+                .execute(cells, from, to);
     }
 
     BasicSpreadsheetEngineFillCells(final BasicSpreadsheetEngine engine,
@@ -42,14 +45,44 @@ final class BasicSpreadsheetEngineFillCells {
         this.context = context;
     }
 
-    private void execute(final Collection<SpreadsheetCell> from,
+    private void execute(final Collection<SpreadsheetCell> cells,
+                         final SpreadsheetRange from,
                          final SpreadsheetRange to) {
-        final SpreadsheetRange fromRange = SpreadsheetRange.fromCells(from.stream()
-                .map(c -> c.reference())
-                .collect(Collectors.toList()));
+        if(cells.isEmpty()) {
+            this.clear(to);
+        } else {
+            final List<SpreadsheetCell> out = cells.stream()
+                    .filter(c -> false == from.test(c.reference()))
+                    .collect(Collectors.toList());
+            if(!out.isEmpty()) {
+                throw new IllegalArgumentException("Several cells " + out + " are outside the range " + from);
+            }
 
-        final int fromWidth = fromRange.width();
-        final int fromHeight = fromRange.height();
+            this.fill(cells, from, to);
+        }
+    }
+
+    /**
+     * Clears aka deletes all the cells in the given {@link SpreadsheetRange}
+     */
+    private void clear(final SpreadsheetRange to) {
+        to.cellStream().forEach(this::deleteCell);
+    }
+
+    /**
+     * Fills the given $to range repeating the from range as necessary. Cells missing from the $from will result in
+     * deletion in the $to.
+     */
+    private void fill(final Collection<SpreadsheetCell> cells,
+                      final SpreadsheetRange from,
+                      final SpreadsheetRange to) {
+        final List<Object> referencesAndCells = Lists.array();
+        from.cells(cells,
+                referencesAndCells::add,
+                referencesAndCells::add);
+
+        final int fromWidth = from.width();
+        final int fromHeight = from.height();
 
         final int toWidth = to.width();
         final int toHeight = to.height();
@@ -61,7 +94,7 @@ final class BasicSpreadsheetEngineFillCells {
                 1 :
                 toHeight / fromHeight;
 
-        final SpreadsheetCellReference fromBegin = fromRange.begin();
+        final SpreadsheetCellReference fromBegin = from.begin();
         final SpreadsheetCellReference toBegin = to.begin();
 
         final int xOffset = toBegin.column().value() - fromBegin.column().value();
@@ -71,13 +104,20 @@ final class BasicSpreadsheetEngineFillCells {
             final int y = yOffset + h * fromHeight;
 
             for (int w = 0; w < widthMultiple; w++) {
-                final int x = xOffset + w * fromWidth;
-
-                for (SpreadsheetCell c : from) {
-                    this.saveCell(c, x, y);
+                for (Object referenceOrCell : referencesAndCells) {
+                    if(referenceOrCell instanceof SpreadsheetCellReference) {
+                        this.deleteCell(SpreadsheetCellReference.class.cast(referenceOrCell));
+                    } else {
+                        final int x = xOffset + w * fromWidth;
+                        this.saveCell(SpreadsheetCell.class.cast(referenceOrCell), x, y);
+                    }
                 }
             }
         }
+    }
+
+    private void deleteCell(final SpreadsheetCellReference reference) {
+        this.engine.deleteCell(reference, this.context);
     }
 
     /**
@@ -93,6 +133,7 @@ final class BasicSpreadsheetEngineFillCells {
         final BasicSpreadsheetEngine engine = this.engine;
         final SpreadsheetEngineContext context = this.context;
 
+        // possibly fix references, and then parse the formula and evaluate etc.
         final SpreadsheetCell save = updatedReference.setFormula(engine.parse(formula,
                 token -> BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.expressionFixReferences(token,
                         xOffset,
