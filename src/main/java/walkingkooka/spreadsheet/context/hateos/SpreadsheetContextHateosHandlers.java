@@ -22,7 +22,7 @@ import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.context.SpreadsheetContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.store.SpreadsheetStore;
+import walkingkooka.store.Store;
 import walkingkooka.type.PublicStaticHelper;
 
 /**
@@ -35,7 +35,7 @@ public final class SpreadsheetContextHateosHandlers implements PublicStaticHelpe
      * {@see SpreadsheetContextCreateAndSaveMetadataHateosHandler}
      */
     public static HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> createAndSaveMetadata(final SpreadsheetContext context,
-                                                                                                                                final SpreadsheetStore<SpreadsheetId, SpreadsheetMetadata> store) {
+                                                                                                                                final Store<SpreadsheetId, SpreadsheetMetadata> store) {
         return SpreadsheetContextCreateAndSaveMetadataHateosHandler.with(context, store);
     }
 

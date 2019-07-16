@@ -19,14 +19,14 @@ package walkingkooka.spreadsheet.reference.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
-import walkingkooka.spreadsheet.store.FakeSpreadsheetStore;
+import walkingkooka.store.FakeStore;
 import walkingkooka.test.Fake;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-public class FakeSpreadsheetRangeStore<V> extends FakeSpreadsheetStore<SpreadsheetRange, List<V>> implements SpreadsheetRangeStore<V>, Fake {
+public class FakeSpreadsheetRangeStore<V> extends FakeStore<SpreadsheetRange, List<V>> implements SpreadsheetRangeStore<V>, Fake {
 
     @Override
     public Set<SpreadsheetRange> loadCellReferenceRanges(final SpreadsheetCellReference cell) {

@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
-import walkingkooka.spreadsheet.store.ReadOnlyStoreTesting;
+import walkingkooka.store.ReadOnlyStoreTesting;
 
 import java.util.List;
 

@@ -26,13 +26,13 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
-import walkingkooka.spreadsheet.store.SpreadsheetStore;
 import walkingkooka.spreadsheet.store.cell.SpreadsheetCellStore;
+import walkingkooka.store.Store;
 
 import java.util.Objects;
 
 /**
- * A {@link SpreadsheetStoreRepository} that exposes the {@link SpreadsheetStore stores} given to it.
+ * A {@link SpreadsheetStoreRepository} that exposes the {@link Store stores} given to it.
  */
 final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepository {
 
