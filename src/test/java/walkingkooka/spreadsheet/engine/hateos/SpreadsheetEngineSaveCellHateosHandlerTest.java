@@ -53,7 +53,7 @@ public final class SpreadsheetEngineSaveCellHateosHandlerTest
     }
 
     @Test
-    public void testSaveCell() {
+    public void testHandleSaveCell() {
         this.handleAndCheck(this.id(),
                 this.resource(),
                 this.parameters(),
@@ -61,7 +61,18 @@ public final class SpreadsheetEngineSaveCellHateosHandlerTest
     }
 
     @Test
-    public void testSaveCellCollectionFails() {
+    public void testHandleSaveMultipleCellsFails() {
+        final SpreadsheetCell cell = this.cell();
+        final SpreadsheetCell z99 = SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference("Z99"), SpreadsheetFormula.with("99"));
+
+        this.handleFails(this.id(),
+                Optional.of(SpreadsheetDelta.withId(cell.id(), Sets.of(cell, z99))),
+                this.parameters(),
+                IllegalArgumentException.class);
+    }
+
+    @Test
+    public void testHandleSaveCellCollectionFails() {
         this.handleCollectionUnsupported(this.createHandler(),
                 Range.all(),
                 this.collectionResource(),
