@@ -57,9 +57,9 @@ final class SpreadsheetHateosHandlersSpreadsheetEngineRouter implements StaticHe
     static HateosResourceName CELL = HateosResourceName.with("cell");
 
     /**
-     * A {@link LinkRelation} with <code>copy</code>.
+     * A {@link LinkRelation} with <code>fill</code>.
      */
-    static LinkRelation COPY = LinkRelation.with("copy");
+    static LinkRelation FILL = LinkRelation.with("fill");
 
     /**
      * A {@link HateosResourceName} with <code>column</code>.
@@ -85,7 +85,7 @@ final class SpreadsheetHateosHandlersSpreadsheetEngineRouter implements StaticHe
                                                                                                                       final HateosContentType<N> contentType,
                                                                                                                       final HateosHandler<SpreadsheetCellReference,
                                                                                                                               SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-                                                                                                                              SpreadsheetDelta<Range<SpreadsheetCellReference>>> copyCells,
+                                                                                                                              SpreadsheetDelta<Range<SpreadsheetCellReference>>> fillCells,
                                                                                                                       final HateosHandler<SpreadsheetColumnReference,
                                                                                                                               SpreadsheetDelta<Optional<SpreadsheetColumnReference>>,
                                                                                                                               SpreadsheetDelta<Range<SpreadsheetColumnReference>>> deleteColumns,
@@ -114,7 +114,7 @@ final class SpreadsheetHateosHandlersSpreadsheetEngineRouter implements StaticHe
                                                                                                                               SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
                                                                                                                               SpreadsheetDelta<Range<SpreadsheetCellReference>>> saveCell) {
         final HateosHandlerRouterBuilder<N> builder = HateosHandlerRouterBuilder.with(base, contentType);
-        Objects.requireNonNull(copyCells, "copyCells");
+        Objects.requireNonNull(fillCells, "fillCells");
         Objects.requireNonNull(deleteColumns, "deleteColumns");
         Objects.requireNonNull(deleteRows, "deleteRows");
         Objects.requireNonNull(insertColumns, "insertColumns");
@@ -182,8 +182,8 @@ final class SpreadsheetHateosHandlersSpreadsheetEngineRouter implements StaticHe
                     SpreadsheetDelta<Range<SpreadsheetCellReference>>> copy = HateosHandlerRouterMapper.with(stringToCellReference,
                     OPTIONAL_CELL_REFERENCE,
                     RANGE_CELL_REFERENCE);
-            copy.post(copyCells);
-            builder.add(CELL, COPY, copy);
+            copy.post(fillCells);
+            builder.add(CELL, FILL, copy);
         }
 
         // columns POST DELETE..........................................................................................

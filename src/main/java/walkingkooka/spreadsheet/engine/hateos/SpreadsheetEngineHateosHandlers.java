@@ -43,13 +43,13 @@ import java.util.function.BiConsumer;
 public final class SpreadsheetEngineHateosHandlers implements PublicStaticHelper {
 
     /**
-     * {@see SpreadsheetEngineCopyCellsHateosHandler}
+     * {@see SpreadsheetEngineFillCellsHateosHandler}
      */
     public static HateosHandler<SpreadsheetCellReference,
             SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-            SpreadsheetDelta<Range<SpreadsheetCellReference>>> copyCells(final SpreadsheetEngine engine,
+            SpreadsheetDelta<Range<SpreadsheetCellReference>>> fillCells(final SpreadsheetEngine engine,
                                                                          final SpreadsheetEngineContext context) {
-        return SpreadsheetEngineCopyCellsHateosHandler.with(engine, context);
+        return SpreadsheetEngineFillCellsHateosHandler.with(engine, context);
     }
 
     /**

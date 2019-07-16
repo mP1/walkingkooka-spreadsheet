@@ -25,17 +25,17 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-final class BasicSpreadsheetEngineCopyCells {
+final class BasicSpreadsheetEngineFillCells {
 
     static void execute(final Collection<SpreadsheetCell> from,
                         final SpreadsheetRange to,
                         final BasicSpreadsheetEngine engine,
                         final SpreadsheetEngineContext context) {
-        new BasicSpreadsheetEngineCopyCells(engine, context)
+        new BasicSpreadsheetEngineFillCells(engine, context)
                 .execute(from, to);
     }
 
-    BasicSpreadsheetEngineCopyCells(final BasicSpreadsheetEngine engine,
+    BasicSpreadsheetEngineFillCells(final BasicSpreadsheetEngine engine,
                                     final SpreadsheetEngineContext context) {
         super();
         this.engine = engine;
@@ -74,7 +74,7 @@ final class BasicSpreadsheetEngineCopyCells {
                 final int x = xOffset + w * fromWidth;
 
                 for (SpreadsheetCell c : from) {
-                    this.copyCell(c, x, y);
+                    this.saveCell(c, x, y);
                 }
             }
         }
@@ -84,7 +84,7 @@ final class BasicSpreadsheetEngineCopyCells {
      * Fixes any relative references within the formula belonging to the cell's expression. Absolute references are
      * ignored and left unmodified.
      */
-    private void copyCell(final SpreadsheetCell cell,
+    private void saveCell(final SpreadsheetCell cell,
                           final int xOffset,
                           final int yOffset) {
         final SpreadsheetCell updatedReference = cell.setReference(cell.reference().add(xOffset, yOffset));
@@ -94,7 +94,7 @@ final class BasicSpreadsheetEngineCopyCells {
         final SpreadsheetEngineContext context = this.context;
 
         final SpreadsheetCell save = updatedReference.setFormula(engine.parse(formula,
-                token -> BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.expressionFixReferences(token,
+                token -> BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.expressionFixReferences(token,
                         xOffset,
                         yOffset),
                 context));

@@ -587,26 +587,26 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> "insertRows column: " + column + " count: " + count);
     }
 
-    default void copyCellsAndCheck(final SpreadsheetEngine engine,
+    default void fillCellsAndCheck(final SpreadsheetEngine engine,
                                    final Collection<SpreadsheetCell> from,
                                    final SpreadsheetRange to,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetCell... updated) {
-        this.copyCellsAndCheck(engine,
+        this.fillCellsAndCheck(engine,
                 from,
                 to,
                 context,
                 SpreadsheetDelta.withRange(to.range(), Sets.of(updated)));
     }
 
-    default void copyCellsAndCheck(final SpreadsheetEngine engine,
+    default void fillCellsAndCheck(final SpreadsheetEngine engine,
                                    final Collection<SpreadsheetCell> from,
                                    final SpreadsheetRange to,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetDelta<Range<SpreadsheetCellReference>> delta) {
         assertEquals(delta,
-                engine.copyCells(from, to, context),
-                () -> "copyCells " + from + " to " + to);
+                engine.fillCells(from, to, context),
+                () -> "fillCells " + from + " to " + to);
 
         // load and check updated cells again...
         delta.cells()

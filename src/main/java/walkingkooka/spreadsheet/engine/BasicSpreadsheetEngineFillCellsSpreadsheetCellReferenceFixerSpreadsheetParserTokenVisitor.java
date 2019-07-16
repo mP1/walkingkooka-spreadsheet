@@ -82,9 +82,9 @@ import java.util.function.BiFunction;
 
 /**
  * A {@link SpreadsheetParserTokenVisitor} that handles visiting and updating {@link SpreadsheetCellReferenceParserToken}
- * so cell references after an insert or delete row/column are corrected.
+ * so cell references during a fill operation.
  */
-final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVisitor {
+final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVisitor {
 
     /**
      * Accepts a token tree and updates rows and columns.
@@ -100,7 +100,7 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
     private static SpreadsheetParserToken expressionFixReferences0(final SpreadsheetParserToken token,
                                                                    final int xOffset,
                                                                    final int yOffset) {
-        final BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor visitor = new BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor(xOffset, yOffset);
+        final BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor visitor = new BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor(xOffset, yOffset);
         visitor.accept(token);
 
         final List<ParserToken> tokens = visitor.children;
@@ -116,7 +116,7 @@ final class BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsh
      * Package private ctor use static method.
      */
     // @VisibleForTesting
-    BasicSpreadsheetEngineCopyCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor(final int xOffset, final int yOffset) {
+    BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor(final int xOffset, final int yOffset) {
         super();
         this.xOffset = xOffset;
         this.yOffset = yOffset;

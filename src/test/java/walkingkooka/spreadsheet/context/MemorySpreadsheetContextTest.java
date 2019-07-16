@@ -403,9 +403,9 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                         "    \"rel\": \"compute-if-necessary\",\n" +
                         "    \"type\": \"application/hal+json\"\n" +
                         "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/copy\",\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/fill\",\n" +
                         "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"copy\",\n" +
+                        "    \"rel\": \"fill\",\n" +
                         "    \"type\": \"application/hal+json\"\n" +
                         "  }, {\n" +
                         "    \"href\": \"http://example.com/api987/123def/cell/B2/force-recompute\",\n" +
@@ -469,9 +469,9 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                         "    \"rel\": \"compute-if-necessary\",\n" +
                         "    \"type\": \"application/hal+json\"\n" +
                         "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/copy\",\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/fill\",\n" +
                         "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"copy\",\n" +
+                        "    \"rel\": \"fill\",\n" +
                         "    \"type\": \"application/hal+json\"\n" +
                         "  }, {\n" +
                         "    \"href\": \"http://example.com/api987/123def/cell/B2/force-recompute\",\n" +
@@ -535,9 +535,9 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                         "    \"rel\": \"compute-if-necessary\",\n" +
                         "    \"type\": \"application/hal+json\"\n" +
                         "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/copy\",\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/fill\",\n" +
                         "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"copy\",\n" +
+                        "    \"rel\": \"fill\",\n" +
                         "    \"type\": \"application/hal+json\"\n" +
                         "  }, {\n" +
                         "    \"href\": \"http://example.com/api987/123def/cell/B2/force-recompute\",\n" +
@@ -601,9 +601,9 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                         "    \"rel\": \"compute-if-necessary\",\n" +
                         "    \"type\": \"application/hal+json\"\n" +
                         "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/copy\",\n" +
+                        "    \"href\": \"http://example.com/api987/123def/cell/B2/fill\",\n" +
                         "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"copy\",\n" +
+                        "    \"rel\": \"fill\",\n" +
                         "    \"type\": \"application/hal+json\"\n" +
                         "  }, {\n" +
                         "    \"href\": \"http://example.com/api987/123def/cell/B2/force-recompute\",\n" +
