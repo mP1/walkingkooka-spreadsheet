@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * A {@link HateosHandler} that calls {@link SpreadsheetEngine#fillCells(Collection, SpreadsheetRange, SpreadsheetEngineContext)}.
+ * A {@link HateosHandler} that calls {@link SpreadsheetEngine#fillCells(Collection, SpreadsheetRange, SpreadsheetRange, SpreadsheetEngineContext)}.
  */
 final class SpreadsheetEngineFillCellsHateosHandler extends SpreadsheetEngineHateosHandler<SpreadsheetCellReference> {
 
@@ -59,16 +59,16 @@ final class SpreadsheetEngineFillCellsHateosHandler extends SpreadsheetEngineHat
         throw new UnsupportedOperationException();
     }
 
-
     @Override
-    public Optional<SpreadsheetDelta<Range<SpreadsheetCellReference>>> handleCollection(final Range<SpreadsheetCellReference> ids,
+    public Optional<SpreadsheetDelta<Range<SpreadsheetCellReference>>> handleCollection(final Range<SpreadsheetCellReference> from,
                                                                                         final Optional<SpreadsheetDelta<Range<SpreadsheetCellReference>>> resource,
                                                                                         final Map<HttpRequestAttribute<?>, Object> parameters) {
-        this.checkRangeNotNull(ids);
+        final SpreadsheetRange fromSpreadsheetRange = SpreadsheetRange.with(from);
         final SpreadsheetDelta<Range<SpreadsheetCellReference>> delta = this.checkResourceNotEmpty(resource);
         this.checkParameters(parameters);
 
         return Optional.of(this.engine.fillCells(delta.cells(),
+                fromSpreadsheetRange,
                 this.parameterValueOrFail(parameters, TO, SpreadsheetExpressionReference::parseRange),
                 this.context));
     }
