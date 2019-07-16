@@ -3886,7 +3886,284 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 BigDecimal.valueOf(5 + 0));
     }
 
-    // fillCells....................................................................................................
+    // fillCells........................................................................................................
+
+    // fill deletes.....................................................................................................
+
+    @Test
+    public void testFillCellsDeleteOneCell() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a = this.cellReference(5, 5);
+        final SpreadsheetCell cellA = this.cell(a, "1+0");
+
+        cellStore.save(cellA);
+
+        final SpreadsheetRange rangeA = a.spreadsheetRange(a);
+
+        this.fillCellsAndCheck(engine,
+                SpreadsheetDelta.NO_CELLS,
+                rangeA,
+                rangeA,
+                context);
+
+        this.countAndCheck(cellStore, 0); // a deleted
+    }
+
+    @Test
+    public void testFillCellsDeleteOneCell2() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a = this.cellReference(5, 5);
+        final SpreadsheetCell cellA = this.cell(a, "1+0");
+        cellStore.save(cellA);
+
+        final SpreadsheetCellReference b = this.cellReference(10, 10);
+        final SpreadsheetCell cellB = this.cell(b, "2+0");
+        cellStore.save(cellB);
+
+        final SpreadsheetRange rangeA = a.spreadsheetRange(a);
+
+        this.fillCellsAndCheck(engine,
+                SpreadsheetDelta.NO_CELLS,
+                rangeA,
+                rangeA,
+                context);
+
+        this.countAndCheck(cellStore, 1); // a deleted
+
+        this.loadCellAndCheck(engine,
+                b,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context,
+                this.formattedCellWithValue(b, "2+0", BigDecimal.valueOf(2)));
+    }
+
+    @Test
+    public void testFillCellsDeletesManyCells() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a = this.cellReference(5, 5);
+        final SpreadsheetCell cellA = this.cell(a, "1+0");
+        cellStore.save(cellA);
+
+        final SpreadsheetCellReference b = this.cellReference(6, 6);
+        final SpreadsheetCell cellB = this.cell(b, "2+0");
+        cellStore.save(cellB);
+
+        final SpreadsheetRange rangeA = a.spreadsheetRange(b);
+
+        this.fillCellsAndCheck(engine,
+                SpreadsheetDelta.NO_CELLS,
+                rangeA,
+                rangeA,
+                context);
+
+        this.countAndCheck(cellStore, 0); // a deleted
+    }
+
+    @Test
+    public void testFillCellsDeletesManyCells2() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a = this.cellReference(5, 5);
+        final SpreadsheetCell cellA = this.cell(a, "1+0");
+        cellStore.save(cellA);
+
+        final SpreadsheetCellReference b = this.cellReference(6, 6);
+        final SpreadsheetCell cellB = this.cell(b, "2+0");
+        cellStore.save(cellB);
+
+        final SpreadsheetRange rangeA = a.spreadsheetRange(b);
+
+        final SpreadsheetCellReference c = this.cellReference(10, 10);
+        final SpreadsheetCell cellC = this.cell(c, "3+0");
+        cellStore.save(cellC);
+
+        this.fillCellsAndCheck(engine,
+                SpreadsheetDelta.NO_CELLS,
+                rangeA,
+                rangeA,
+                context);
+
+        this.countAndCheck(cellStore, 1); // a&b deleted, leaving c
+
+        this.loadCellAndCheck(engine,
+                c,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context,
+                this.formattedCellWithValue(c, "3+0", BigDecimal.valueOf(3)));
+    }
+
+    // fill save with missing cells......................................................................................
+
+    @Test
+    public void testFillCellsSaveWithMissingCells() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a = this.cellReference(1, 1);
+        final SpreadsheetCellReference b = this.cellReference(2, 2);
+
+        final SpreadsheetCell cellA = this.cell(a, "1+0");
+        final SpreadsheetCell cellB = this.cell(b, "2+0");
+
+        final SpreadsheetRange range = a.spreadsheetRange(b);
+
+        this.fillCellsAndCheck(engine,
+                Sets.of(cellA, cellB),
+                range,
+                range,
+                context,
+                this.formattedCellWithValue(a, "1+0", BigDecimal.valueOf(1)),
+                this.formattedCellWithValue(b, "2+0", BigDecimal.valueOf(2)));
+
+        this.countAndCheck(cellStore, 2); // a + b saved
+
+        this.loadCellAndCheck(engine,
+                a,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context,
+                this.formattedCellWithValue(a, "1+0", BigDecimal.valueOf(1)));
+
+        this.loadCellAndCheck(engine,
+                b,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context,
+                this.formattedCellWithValue(b, "2+0", BigDecimal.valueOf(2)));
+    }
+
+    @Test
+    public void testFillCellsSaveWithMissingCells2() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a = this.cellReference(1, 1);
+        final SpreadsheetCellReference b = this.cellReference(2, 2);
+
+        final SpreadsheetCell cellA = this.cell(a, "1+0");
+        final SpreadsheetCell cellB = this.cell(b, "2+0");
+
+        final SpreadsheetRange range = a.spreadsheetRange(b);
+
+        final SpreadsheetCellReference c = this.cellReference(10, 10);
+        final SpreadsheetCell cellC = this.cell(c, "3+0");
+        cellStore.save(cellC);
+
+        this.fillCellsAndCheck(engine,
+                Sets.of(cellA, cellB),
+                range,
+                range,
+                context,
+                this.formattedCellWithValue(a, "1+0", BigDecimal.valueOf(1)),
+                this.formattedCellWithValue(b, "2+0", BigDecimal.valueOf(2)));
+
+        this.countAndCheck(cellStore, 3); // a + b saved + c
+
+        this.loadCellAndCheck(engine,
+                a,
+                SpreadsheetEngineEvaluation.SKIP_EVALUATE,
+                context,
+                this.formattedCellWithValue(a, "1+0", BigDecimal.valueOf(1))); // fill should have evaluated.
+
+        this.loadCellAndCheck(engine,
+                b,
+                SpreadsheetEngineEvaluation.SKIP_EVALUATE,
+                context,
+                this.formattedCellWithValue(b, "2+0", BigDecimal.valueOf(2)));
+
+        this.loadCellAndCheck(engine,
+                c,
+                SpreadsheetEngineEvaluation.SKIP_EVALUATE,
+                context,
+                cellC);
+    }
+
+    // fill moves cell..................................................................................................
+
+    @Test
+    public void testFillCellsRangeOneEmptyCells2() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a = this.cellReference(1, 1);
+        final SpreadsheetCellReference b = this.cellReference(2, 1);
+        final SpreadsheetCellReference c = this.cellReference(1, 2);
+
+        final SpreadsheetCell cellA = this.cell(a, "1+0");
+        final SpreadsheetCell cellB = this.cell(b, "2+0");
+        final SpreadsheetCell cellC = this.cell(c, "3+0");
+
+        cellStore.save(cellA);
+        cellStore.save(cellB);
+        cellStore.save(cellC);
+
+        this.fillCellsAndCheck(engine,
+                SpreadsheetDelta.NO_CELLS,
+                a.spreadsheetRange(a),
+                SpreadsheetRange.fromCells(Lists.of(b)),
+                context);
+
+        this.countAndCheck(cellStore, 2); // a + c, b deleted
+
+        this.loadCellAndCheck(engine,
+                a,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context,
+                this.formattedCellWithValue(a, "1+0", BigDecimal.valueOf(1)));
+
+        this.loadCellAndCheck(engine,
+                c,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context,
+                this.formattedCellWithValue(c, "3+0", BigDecimal.valueOf(3)));
+    }
+
+    @Test
+    public void testFillCellsRangeTwoEmptyCells() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a = this.cellReference(1, 1);
+        final SpreadsheetCellReference b = this.cellReference(2, 1);
+        final SpreadsheetCellReference c = this.cellReference(1, 2);
+
+        final SpreadsheetCell cellA = this.cell(a, "1+0");
+        final SpreadsheetCell cellB = this.cell(b, "2+0");
+        final SpreadsheetCell cellC = this.cell(c, "3+0");
+
+        cellStore.save(cellA);
+        cellStore.save(cellB);
+        cellStore.save(cellC);
+
+        this.fillCellsAndCheck(engine,
+                SpreadsheetDelta.NO_CELLS,
+                a.spreadsheetRange(a),
+                SpreadsheetRange.fromCells(Lists.of(a, b)),
+                context);
+
+        this.countAndCheck(cellStore, 1);
+
+        this.loadCellAndCheck(engine,
+                c,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                context,
+                this.formattedCellWithValue(c, "3+0", BigDecimal.valueOf(3)));
+    }
+
+    // fill moves 1 cell................................................................................................
 
     @Test
     public void testFillCellsAddition() {
@@ -4031,6 +4308,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.fillCellsAndCheck(engine,
                 Lists.of(cellA),
+                a.spreadsheetRange(a),
                 d.spreadsheetRange(d),
                 context,
                 this.formattedCellWithValue(d, formulaText, expected));
@@ -4039,7 +4317,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillCellsOneCellInto2x2() {
+    public void testFillCellsRepeatCellInto2x2() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -4060,6 +4338,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.fillCellsAndCheck(engine,
                 Lists.of(cellA, cellB),
+                SpreadsheetRange.fromCells(Lists.of(a, b)),
                 d.spreadsheetRange(d.add(2, 2)),
                 context,
                 this.formattedCellWithValue(d, "1+0", BigDecimal.valueOf(1 + 0)),
@@ -4090,6 +4369,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.fillCellsAndCheck(engine,
                 Lists.of(cellA, cellB),
+                SpreadsheetRange.fromCells(Lists.of(a, b)),
                 d.spreadsheetRange(d.add(1, 1)),
                 context,
                 this.formattedCellWithValue(d, "1+0", BigDecimal.valueOf(1 + 0)),
@@ -4099,7 +4379,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillCells2x2CellInto2x2() {
+    public void testFillCells2x2Into2x2() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -4121,6 +4401,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.fillCellsAndCheck(
                 engine,
                 Lists.of(cellA, cellB),
+                SpreadsheetRange.fromCells(Lists.of(a, b)),
                 d.spreadsheetRange(d.add(2, 2)),
                 context,
                 this.formattedCellWithValue(d, "1+0", BigDecimal.valueOf(1 + 0)),
@@ -4130,7 +4411,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillCells2x2CellInto7x2Gives6x2() {
+    public void testFillCells2x2Into7x2Gives6x2() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -4151,6 +4432,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.fillCellsAndCheck(engine,
                 Lists.of(cellA, cellB),
+                SpreadsheetRange.fromCells(Lists.of(a, b)),
                 d.spreadsheetRange(d.add(6, 1)),
                 context,
                 this.formattedCellWithValue(d, "1+0", BigDecimal.valueOf(1 + 0)),
@@ -4164,7 +4446,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testFillCells2x2CellInto2x7Gives2x6() {
+    public void testFillCells2x2Into2x7Gives2x6() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
@@ -4185,6 +4467,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.fillCellsAndCheck(engine,
                 Lists.of(cellA, cellB),
+                SpreadsheetRange.fromCells(Lists.of(a, b)),
                 d.spreadsheetRange(d.add(1, 6)),
                 context,
                 this.formattedCellWithValue(d, "1+0", BigDecimal.valueOf(1 + 0)),
@@ -4216,6 +4499,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.fillCellsAndCheck(engine,
                 Lists.of(cellB),
+                b.spreadsheetRange(b),
                 d.spreadsheetRange(d),
                 context,
                 this.formattedCellWithValue(a, "1+0", BigDecimal.valueOf(1 + 0)),
@@ -4238,6 +4522,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.fillCellsAndCheck(engine,
                 Lists.of(cellB, cellC),
+                cellB.reference().spreadsheetRange(cellC.reference()),
                 SpreadsheetExpressionReference.parseRange("E5:F6"),
                 context,
                 this.formattedCellWithValue("E5", "2", BigDecimal.valueOf(2 + 0)),
@@ -4252,7 +4537,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCell cellB = this.cell("b1", "2+0"); // copied to C1
+        final SpreadsheetCellReference b = this.cellReference("b1");
+        final SpreadsheetCell cellB = this.cell(b, "2+0"); // copied to C1
         final SpreadsheetCellReference c = this.cellReference("C1"); // copyCell dest...
         final SpreadsheetCell cellA = this.cell("a1", "10+" + c);
 
@@ -4261,6 +4547,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.fillCellsAndCheck(engine,
                 Lists.of(cellB),
+                b.spreadsheetRange(b),
                 c.spreadsheetRange(c),
                 context,
                 this.formattedCellWithValue(cellA.reference(), "10+" + c, BigDecimal.valueOf(10 + 2 + 0)), // external reference to copied

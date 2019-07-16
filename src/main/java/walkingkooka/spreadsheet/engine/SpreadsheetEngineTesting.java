@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Range;
 import walkingkooka.math.DecimalNumberContext;
@@ -197,6 +198,131 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         assertThrows(NullPointerException.class, () -> {
             this.createSpreadsheetEngine().insertRows(ROW, 1, null);
         });
+    }
+
+    @Test
+    default void testFillCellsNullCellsFails() {
+        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("A1");
+        final SpreadsheetRange range = reference.spreadsheetRange(reference);
+
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().fillCells(null,
+                    range,
+                    range,
+                    this.createContext());
+        });
+    }
+
+    @Test
+    default void testFillCellsNullFromFails() {
+        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("A1");
+        final SpreadsheetCell cell = SpreadsheetCell.with(reference, SpreadsheetFormula.with("1"));
+        final SpreadsheetRange range = reference.spreadsheetRange(reference);
+
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().fillCells(Lists.of(cell),
+                    null,
+                    range,
+                    this.createContext());
+        });
+    }
+
+    @Test
+    default void testFillCellsNullToFails() {
+        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("A1");
+        final SpreadsheetCell cell = SpreadsheetCell.with(reference, SpreadsheetFormula.with("1"));
+        final SpreadsheetRange range = reference.spreadsheetRange(reference);
+
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().fillCells(Lists.of(cell),
+                    range,
+                    null,
+                    this.createContext());
+        });
+    }
+
+    @Test
+    default void testFillCellsNullContextFails() {
+        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("A1");
+        final SpreadsheetCell cell = SpreadsheetCell.with(reference, SpreadsheetFormula.with("1"));
+        final SpreadsheetRange range = reference.spreadsheetRange(reference);
+
+        assertThrows(NullPointerException.class, () -> {
+            this.createSpreadsheetEngine().fillCells(Lists.of(cell),
+                    range,
+                    range,
+                    null);
+        });
+    }
+
+    @Test
+    default void testFillCellsCellOutOfFromRangeFails() {
+        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("B2");
+        final SpreadsheetCell cell = SpreadsheetCell.with(reference, SpreadsheetFormula.with("1"));
+
+        final SpreadsheetRange range = SpreadsheetRange.fromCells(Lists.of(SpreadsheetCellReference.parseCellReference("C3")));
+
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            this.createSpreadsheetEngine().fillCells(Lists.of(cell),
+                    range,
+                    range,
+                    this.createContext());
+        });
+        assertEquals("Several cells [B2=1] are outside the range C3", thrown.getMessage(), "message");
+    }
+
+    @Test
+    default void testFillCellsCellOutOfFromRangeFails2() {
+        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("B2");
+        final SpreadsheetCell cell = SpreadsheetCell.with(reference, SpreadsheetFormula.with("1"));
+
+        final SpreadsheetRange range = SpreadsheetRange.parseRange("C3:D4");
+
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            this.createSpreadsheetEngine().fillCells(Lists.of(cell),
+                    range,
+                    range,
+                    this.createContext());
+        });
+
+        assertEquals("Several cells [B2=1] are outside the range C3:D4", thrown.getMessage(), "message");
+    }
+
+    @Test
+    default void testFillCellsOneCellsOutOfManyOutOfRange() {
+        final SpreadsheetCell b2 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("B2"), SpreadsheetFormula.with("1"));
+        final SpreadsheetCell c3 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("C3"), SpreadsheetFormula.with("2"));
+        final SpreadsheetCell d4 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("D4"), SpreadsheetFormula.with("3"));
+
+        final SpreadsheetRange range = SpreadsheetRange.parseRange("C3:D4");
+
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            this.createSpreadsheetEngine().fillCells(Lists.of(b2, c3, d4),
+                    range,
+                    range,
+                    this.createContext());
+        });
+
+        assertEquals("Several cells [B2=1] are outside the range C3:D4", thrown.getMessage(), "message");
+    }
+
+    @Test
+    default void testFillCellsSeveralCellsOutOfFromRangeFails() {
+        final SpreadsheetCell b2 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("B2"), SpreadsheetFormula.with("1"));
+        final SpreadsheetCell c3 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("C3"), SpreadsheetFormula.with("2"));
+        final SpreadsheetCell d4 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("D4"), SpreadsheetFormula.with("3"));
+        final SpreadsheetCell e5 = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("E5"), SpreadsheetFormula.with("4"));
+
+        final SpreadsheetRange range = SpreadsheetRange.parseRange("C3:D4");
+
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            this.createSpreadsheetEngine().fillCells(Lists.of(b2, c3, d4, e5),
+                    range,
+                    range,
+                    this.createContext());
+        });
+
+        assertEquals("Several cells [B2=1, E5=4] are outside the range C3:D4", thrown.getMessage(), "message");
     }
 
     @Test
@@ -588,11 +714,13 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void fillCellsAndCheck(final SpreadsheetEngine engine,
-                                   final Collection<SpreadsheetCell> from,
+                                   final Collection<SpreadsheetCell> cells,
+                                   final SpreadsheetRange from,
                                    final SpreadsheetRange to,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetCell... updated) {
         this.fillCellsAndCheck(engine,
+                cells,
                 from,
                 to,
                 context,
@@ -600,13 +728,14 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default void fillCellsAndCheck(final SpreadsheetEngine engine,
-                                   final Collection<SpreadsheetCell> from,
+                                   final Collection<SpreadsheetCell> cells,
+                                   final SpreadsheetRange from,
                                    final SpreadsheetRange to,
                                    final SpreadsheetEngineContext context,
                                    final SpreadsheetDelta<Range<SpreadsheetCellReference>> delta) {
         assertEquals(delta,
-                engine.fillCells(from, to, context),
-                () -> "fillCells " + from + " to " + to);
+                engine.fillCells(cells, from, to, context),
+                () -> "fillCells " + cells + " " + from + " to " + to);
 
         // load and check updated cells again...
         delta.cells()
