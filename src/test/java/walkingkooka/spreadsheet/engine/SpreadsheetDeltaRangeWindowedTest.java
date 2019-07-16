@@ -77,7 +77,7 @@ public final class SpreadsheetDeltaRangeWindowedTest extends SpreadsheetDeltaWin
 
     @Test
     public void testToJsonNodeRangeWindow() {
-        final SpreadsheetDelta delta = this.createSpreadsheetDelta(this.id(), Sets.empty(), this.window());
+        final SpreadsheetDeltaRangeWindowed<SpreadsheetId> delta = this.createSpreadsheetDelta(this.id(), Sets.empty(), this.window());
 
         this.toJsonNodeAndCheck(delta,
                 JsonNode.object()
@@ -87,7 +87,7 @@ public final class SpreadsheetDeltaRangeWindowedTest extends SpreadsheetDeltaWin
 
     @Test
     public void testToJsonNodeRangeCellsWindow() {
-        final SpreadsheetDelta delta = this.createSpreadsheetDelta(this.id(), this.cells(), this.window());
+        final SpreadsheetDeltaRangeWindowed<SpreadsheetId> delta = this.createSpreadsheetDelta(this.id(), this.cells(), this.window());
 
         this.toJsonNodeAndCheck(delta,
                 JsonNode.object()
