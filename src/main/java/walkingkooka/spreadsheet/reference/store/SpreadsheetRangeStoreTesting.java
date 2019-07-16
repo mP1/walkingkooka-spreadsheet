@@ -24,7 +24,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
-import walkingkooka.spreadsheet.store.SpreadsheetStoreTesting;
+import walkingkooka.store.StoreTesting;
 import walkingkooka.test.TypeNameTesting;
 
 import java.util.List;
@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>, V> extends SpreadsheetStoreTesting<S, SpreadsheetRange, List<V>>,
+public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>, V> extends StoreTesting<S, SpreadsheetRange, List<V>>,
         TypeNameTesting<S> {
 
     /**
@@ -259,7 +259,7 @@ public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>
 
     V valueValue();
 
-    // SpreadsheetStoreTesting...........................................................
+    // StoreTesting...........................................................
 
     @Override
     default SpreadsheetRange id() {

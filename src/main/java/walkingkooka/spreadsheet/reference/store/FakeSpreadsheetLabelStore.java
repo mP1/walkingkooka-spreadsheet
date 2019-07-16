@@ -20,13 +20,13 @@ package walkingkooka.spreadsheet.reference.store;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.store.FakeSpreadsheetStore;
+import walkingkooka.store.FakeStore;
 import walkingkooka.test.Fake;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Set;
 
-public class FakeSpreadsheetLabelStore extends FakeSpreadsheetStore<SpreadsheetLabelName, SpreadsheetLabelMapping> implements SpreadsheetLabelStore, Fake {
+public class FakeSpreadsheetLabelStore extends FakeStore<SpreadsheetLabelName, SpreadsheetLabelMapping> implements SpreadsheetLabelStore, Fake {
 
     @Override
     public Set<? super ExpressionReference> loadCellReferencesOrRanges(final SpreadsheetLabelName label) {
