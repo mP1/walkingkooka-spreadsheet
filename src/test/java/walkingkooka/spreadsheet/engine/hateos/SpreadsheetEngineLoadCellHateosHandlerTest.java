@@ -26,7 +26,6 @@ import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
@@ -254,11 +253,6 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
 
     private SpreadsheetCell z99() {
         return this.cell("z99", "99");
-    }
-
-    private SpreadsheetCell cell(final String cellReference, final String formula) {
-        return SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference(cellReference),
-                SpreadsheetFormula.with(formula));
     }
 
     private SpreadsheetDelta<Optional<SpreadsheetCellReference>> delta(final SpreadsheetCellReference cellReference) {

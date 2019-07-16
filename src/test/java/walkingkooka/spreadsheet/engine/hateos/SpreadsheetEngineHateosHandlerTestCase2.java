@@ -71,6 +71,11 @@ public abstract class SpreadsheetEngineHateosHandlerTestCase2<H extends Spreadsh
     }
 
     final SpreadsheetCell cell() {
-        return SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference("A99"), SpreadsheetFormula.with("1+2"));
+        return this.cell("A99", "1+2");
+    }
+
+    final SpreadsheetCell cell(final String cellReference, final String formula) {
+        return SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference(cellReference),
+                SpreadsheetFormula.with(formula));
     }
 }
