@@ -34,6 +34,7 @@ import walkingkooka.type.JavaVisibility;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -64,24 +65,24 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
 
     @Test
     public void testWithRangeLessThanEqualsFails() {
-        this.withFails(Range.lessThanEquals(this.cell(5, 5)));
+        this.withFails(Range.lessThanEquals(this.cellReference(5, 5)));
     }
 
     @Test
     public void testWithRangeGreaterThanEqualsFails() {
-        this.withFails(Range.greaterThanEquals(this.cell(1, 1)));
+        this.withFails(Range.greaterThanEquals(this.cellReference(1, 1)));
     }
 
     @Test
     public void testWithRangeLowerExclusiveFails() {
-        this.withFails(Range.greaterThan(this.cell(1, 1))
-                .and(Range.lessThanEquals(this.cell(5, 5))));
+        this.withFails(Range.greaterThan(this.cellReference(1, 1))
+                .and(Range.lessThanEquals(this.cellReference(5, 5))));
     }
 
     @Test
     public void testWithRangeUpperExclusiveFails() {
-        this.withFails(Range.greaterThanEquals(this.cell(1, 1))
-                .and(Range.lessThan(this.cell(5, 5))));
+        this.withFails(Range.greaterThanEquals(this.cellReference(1, 1))
+                .and(Range.lessThan(this.cellReference(5, 5))));
     }
 
     private void withFails(final Range<SpreadsheetCellReference> range) {
@@ -92,8 +93,8 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
 
     @Test
     public void testWith() {
-        final SpreadsheetCellReference begin = this.cell(1, 2);
-        final SpreadsheetCellReference end = this.cell(3, 4);
+        final SpreadsheetCellReference begin = this.cellReference(1, 2);
+        final SpreadsheetCellReference end = this.cellReference(3, 4);
         final Range<SpreadsheetCellReference> range = begin.range(end);
 
         final SpreadsheetRange spreadsheetRange = SpreadsheetRange.with(range);
@@ -182,7 +183,7 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
     @Test
     public void testSetRangeWithDifferent() {
         final SpreadsheetRange range = this.range();
-        final SpreadsheetCellReference differentBegin = this.cell(1, 2);
+        final SpreadsheetCellReference differentBegin = this.cellReference(1, 2);
         final SpreadsheetRange different = range.setRange(differentBegin.range(this.end()));
         this.check(different, 1, 2, COLUMN2, ROW2);
     }
@@ -190,35 +191,35 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
     @Test
     public void testSetRangeWithDifferent2() {
         final SpreadsheetRange range = this.range();
-        final SpreadsheetRange different = range.setRange(this.end().range(this.cell(1, 2)));
+        final SpreadsheetRange different = range.setRange(this.end().range(this.cellReference(1, 2)));
         this.check(different, 1, 2, COLUMN2, ROW2);
     }
 
     @Test
     public void testSetRangeWithDifferent3() {
         final SpreadsheetRange range = this.range();
-        final SpreadsheetRange different = range.setRange(this.begin().range(this.cell(88, 99)));
+        final SpreadsheetRange different = range.setRange(this.begin().range(this.cellReference(88, 99)));
         this.check(different, COLUMN1, ROW1, 88, 99);
     }
 
     @Test
     public void testSetRangeWithDifferent4() {
         final SpreadsheetRange range = this.range();
-        final SpreadsheetRange different = range.setRange(this.cell(88, 99).range(this.begin()));
+        final SpreadsheetRange different = range.setRange(this.cellReference(88, 99).range(this.begin()));
         this.check(different, COLUMN1, ROW1, 88, 99);
     }
 
     @Test
     public void testSetRangeWithDifferent5() {
         final SpreadsheetRange range = this.range();
-        final SpreadsheetRange different = range.setRange(this.cell(1, 2).range(this.cell(88, 99)));
+        final SpreadsheetRange different = range.setRange(this.cellReference(1, 2).range(this.cellReference(88, 99)));
         this.check(different, 1, 2, 88, 99);
     }
 
     @Test
     public void testSetRangeWithDifferent6() {
         final SpreadsheetRange range = this.range();
-        final SpreadsheetRange different = range.setRange(this.cell(88, 99).range(this.cell(1, 2)));
+        final SpreadsheetRange different = range.setRange(this.cellReference(88, 99).range(this.cellReference(1, 2)));
         this.check(different, 1, 2, 88, 99);
     }
 
@@ -413,10 +414,10 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
         this.checkStream(
                 range,
                 range.cellStream(),
-                this.cell(3, 7), this.cell(4, 7), this.cell(5, 7),
-                this.cell(3, 8), this.cell(4, 8), this.cell(5, 8),
-                this.cell(3, 9), this.cell(4, 9), this.cell(5, 9),
-                this.cell(3, 10), this.cell(4, 10), this.cell(5, 10));
+                this.cellReference(3, 7), this.cellReference(4, 7), this.cellReference(5, 7),
+                this.cellReference(3, 8), this.cellReference(4, 8), this.cellReference(5, 8),
+                this.cellReference(3, 9), this.cellReference(4, 9), this.cellReference(5, 9),
+                this.cellReference(3, 10), this.cellReference(4, 10), this.cellReference(5, 10));
     }
 
     @Test
@@ -425,12 +426,207 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
         this.checkStream(range,
                 range.cellStream()
                         .filter(cell -> cell.column().value() == 5 && cell.row().value() < 13),
-                this.cell(5, 10), this.cell(5, 11), this.cell(5, 12));
+                this.cellReference(5, 10), this.cellReference(5, 11), this.cellReference(5, 12));
     }
 
     private <T> void checkStream(final SpreadsheetRange range, final Stream<?> stream, final Object... expected) {
         final List<Object> actual = stream.collect(Collectors.toList());
         assertEquals(Lists.of(expected), actual, () -> range.toString());
+    }
+
+    // cells............................................................................................................
+
+    @Test
+    public void testCellsNullCellsFails() {
+        this.cellsFails(null,
+                this::cellsPresent,
+                this::cellsAbsent);
+    }
+
+    @Test
+    public void testCellsNullPresentFails() {
+        this.cellsFails(Lists.of((this.cell("A1", "1+2"))),
+                null,
+                this::cellsAbsent);
+    }
+
+    @Test
+    public void testCellsNullAbsentFails() {
+        this.cellsFails(Lists.of((this.cell("A1", "1+2"))),
+                this::cellsPresent,
+                null);
+    }
+
+    private void cellsFails(final List<SpreadsheetCell> cells,
+                            final Consumer<SpreadsheetCell> present,
+                            final Consumer<SpreadsheetCellReference> absent) {
+        assertThrows(NullPointerException.class, () -> {
+            this.createReference().cells(cells, present, absent);
+        });
+    }
+
+    @Test
+    public void testCellsEmpty() {
+        final SpreadsheetRange range = SpreadsheetRange.parseRange("B1:C3"); // B1, B2, B3, C1, C2, C3
+
+        final List<SpreadsheetCellReference> absent = Lists.array();
+        range.cells(Lists.empty(), this::cellsPresent, absent::add);
+
+        assertEquals(range.cellStream().collect(Collectors.toList()), absent, "absent");
+    }
+
+    @Test
+    public void testCellsFull() {
+        final SpreadsheetRange range = SpreadsheetRange.parseRange("B1:C3"); // B1, B2, B3, C1, C2, C3
+
+        final List<SpreadsheetCell> present = Lists.array();
+
+        final SpreadsheetCell b1 = this.b1();
+        final SpreadsheetCell b2 = this.b2();
+        final SpreadsheetCell b3 = this.b3();
+        final SpreadsheetCell c1 = this.c1();
+        final SpreadsheetCell c2 = this.c2();
+        final SpreadsheetCell c3 = this.c3();
+
+        range.cells(Lists.of(b1, b2, b3, c1, c2, c3),
+                present::add,
+                this::cellsAbsent);
+
+        assertEquals(Lists.of(b1, c1, b2, c2, b3, c3), present, "present");
+    }
+
+    @Test
+    public void testCellsMixed() {
+        final SpreadsheetRange range = SpreadsheetRange.parseRange("B1:C3"); // B1, B2, B3, C1, C2, C3
+
+        final SpreadsheetCell b1 = this.b1();
+        final SpreadsheetCell b2 = this.b2();
+        final SpreadsheetCellReference b3 = this.cellReference("$B$3");
+        final SpreadsheetCellReference c1 = this.cellReference("$C$1");
+        final SpreadsheetCellReference c2 = this.cellReference("$C$2");
+        final SpreadsheetCell c3 = this.c3();
+
+        final List<Object> consumed = Lists.array();
+
+        range.cells(Lists.of(b1, b2, c3), consumed::add, consumed::add);
+
+        assertEquals(Lists.of(b1,
+                c1,
+                b2,
+                c2,
+                b3,
+                c3),
+                consumed,
+                "consumed");
+    }
+
+    @Test
+    public void testCellsMixed2() {
+        final SpreadsheetRange range = SpreadsheetRange.parseRange("B1:C3"); // B1, B2, B3, C1, C2, C3
+
+        final SpreadsheetCellReference b1 = this.cellReference("$B$1");
+        final SpreadsheetCellReference b2 = this.cellReference("$B$2");
+        final SpreadsheetCell b3 = this.b3();
+        final SpreadsheetCellReference c1 = this.cellReference("$C$1");
+        final SpreadsheetCellReference c2 = this.cellReference("$C$2");
+        final SpreadsheetCell c3 = this.c3();
+
+        final List<Object> consumed = Lists.array();
+
+        range.cells(Lists.of(b3, c3), consumed::add, consumed::add);
+
+        assertEquals(Lists.of(b1,
+                c1,
+                b2,
+                c2,
+                b3,
+                c3),
+                consumed,
+                "consumed");
+    }
+
+    @Test
+    public void testCellsMixed3() {
+        final SpreadsheetRange range = SpreadsheetRange.parseRange("B1:C3"); // B1, B2, B3, C1, C2, C3
+
+        final SpreadsheetCell b1 = this.b1();
+        final SpreadsheetCellReference b2 = this.cellReference("$B$2");
+        final SpreadsheetCellReference b3 = this.cellReference("$B$3");
+        final SpreadsheetCellReference c1 = this.cellReference("$C$1");
+        final SpreadsheetCellReference c2 = this.cellReference("$C$2");
+        final SpreadsheetCellReference c3 = this.cellReference("$C$3");
+
+        final List<Object> consumed = Lists.array();
+
+        range.cells(Lists.of(b1), consumed::add, consumed::add);
+
+        assertEquals(Lists.of(b1,
+                c1,
+                b2,
+                c2,
+                b3,
+                c3),
+                consumed,
+                "consumed");
+    }
+
+    @Test
+    public void testCellsIgnoresOutOfRange() {
+        final SpreadsheetRange range = SpreadsheetRange.parseRange("B1:C2"); // B1, B2, B3, C1, C2, C3
+
+        final SpreadsheetCell b1 = this.b1();
+        final SpreadsheetCellReference b2 = this.cellReference("$B$2");
+        final SpreadsheetCellReference c1 = this.cellReference("$C$1");
+        final SpreadsheetCellReference c2 = this.cellReference("$C$2");
+
+        final SpreadsheetCell z99 = this.cell("Z99", "99+0");
+
+        final List<Object> consumed = Lists.array();
+
+        range.cells(Lists.of(b1), consumed::add, consumed::add);
+
+        assertEquals(Lists.of(b1,
+                c1,
+                b2,
+                c2),
+                consumed,
+                "consumed");
+    }
+
+    private SpreadsheetCell cell(final String reference, final String formula) {
+        return SpreadsheetCell.with(this.cellReference(reference), SpreadsheetFormula.with(formula));
+    }
+
+    private void cellsPresent(final SpreadsheetCell cell) {
+        throw new UnsupportedOperationException();
+    }
+
+    private void cellsAbsent(final SpreadsheetCellReference reference) {
+        throw new UnsupportedOperationException();
+    }
+
+    private SpreadsheetCell b1() {
+        return this.cell("B1", "1");
+    }
+
+    private SpreadsheetCell b2() {
+        return this.cell("B2", "2");
+    }
+
+    private SpreadsheetCell b3() {
+        return this.cell("B3", "3");
+    }
+
+    private SpreadsheetCell c1() {
+        return this.cell("C1", "4");
+    }
+
+    private SpreadsheetCell c2() {
+        return this.cell("C2", "5");
+    }
+
+    private SpreadsheetCell c3() {
+        return this.cell("C3", "6");
     }
 
     // SpreadsheetExpressionReferenceVisitor.............................................................................
@@ -514,7 +710,7 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
     }
 
     private SpreadsheetCell spreadsheetCell(final int column, final int row) {
-        return SpreadsheetCell.with(this.cell(column, row), SpreadsheetFormula.with(column + "+" + row))
+        return SpreadsheetCell.with(this.cellReference(column, row), SpreadsheetFormula.with(column + "+" + row))
                 .setFormat(this.format())
                 .setFormatted(this.formatted());
     }
@@ -548,7 +744,7 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
         final int column = 2;
         final int row = 3;
 
-        final SpreadsheetCellReference a = this.cell(column, row);
+        final SpreadsheetCellReference a = this.cellReference(column, row);
 
         final SpreadsheetRange range = SpreadsheetRange.fromCells(Lists.of(a));
         this.check(range, column, row, column, row);
@@ -557,11 +753,11 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
 
     @Test
     public void testFromCells() {
-        final SpreadsheetCellReference a = this.cell(111, 11);
-        final SpreadsheetCellReference b = this.cell(112, 12);
-        final SpreadsheetCellReference c = this.cell(113, 20);
-        final SpreadsheetCellReference d = this.cell(114, 24);
-        final SpreadsheetCellReference e = this.cell(115, 24);
+        final SpreadsheetCellReference a = this.cellReference(111, 11);
+        final SpreadsheetCellReference b = this.cellReference(112, 12);
+        final SpreadsheetCellReference c = this.cellReference(113, 20);
+        final SpreadsheetCellReference d = this.cellReference(114, 24);
+        final SpreadsheetCellReference e = this.cellReference(115, 24);
 
         final SpreadsheetRange range = SpreadsheetRange.fromCells(Lists.of(a, b, c, d, e));
         this.check(range, 111, 11, 115, 24);
@@ -569,11 +765,11 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
 
     @Test
     public void testFromCells2() {
-        final SpreadsheetCellReference a = this.cell(111, 11);
-        final SpreadsheetCellReference b = this.cell(112, 12);
-        final SpreadsheetCellReference c = this.cell(113, 20);
-        final SpreadsheetCellReference d = this.cell(114, 24);
-        final SpreadsheetCellReference e = this.cell(115, 24);
+        final SpreadsheetCellReference a = this.cellReference(111, 11);
+        final SpreadsheetCellReference b = this.cellReference(112, 12);
+        final SpreadsheetCellReference c = this.cellReference(113, 20);
+        final SpreadsheetCellReference d = this.cellReference(114, 24);
+        final SpreadsheetCellReference e = this.cellReference(115, 24);
 
         final SpreadsheetRange range = SpreadsheetRange.fromCells(Lists.of(e, d, c, b, a));
         this.check(range, 111, 11, 115, 24);
@@ -581,7 +777,7 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
 
     @Test
     public void testFromCells3() {
-        final SpreadsheetCellReference a = this.cell(111, 11);
+        final SpreadsheetCellReference a = this.cellReference(111, 11);
 
         final SpreadsheetRange range = SpreadsheetRange.fromCells(Lists.of(a));
         this.check(range, 111, 11, 111, 11);
@@ -591,7 +787,7 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
 
     @Test
     public void testParseMissingSeparatorSingleton() {
-        this.parseAndCheck("A1", SpreadsheetRange.cell0(SpreadsheetExpressionReference.parseCellReference("A1")));
+        this.parseAndCheck("A1", SpreadsheetRange.cellToRange(SpreadsheetExpressionReference.parseCellReference("A1")));
     }
 
     @Test
@@ -706,22 +902,26 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
     }
 
     private SpreadsheetCellReference begin() {
-        return this.cell(COLUMN1, ROW1);
+        return this.cellReference(COLUMN1, ROW1);
     }
 
     private SpreadsheetCellReference end() {
-        return this.cell(COLUMN2, ROW2);
+        return this.cellReference(COLUMN2, ROW2);
     }
 
     private SpreadsheetRange range(final int column1, final int row1, final int column2, final int row2) {
-        return this.range(this.cell(column1, row1), this.cell(column2, row2));
+        return this.range(this.cellReference(column1, row1), this.cellReference(column2, row2));
     }
 
     private SpreadsheetRange range(final SpreadsheetCellReference begin, final SpreadsheetCellReference end) {
         return SpreadsheetRange.with(begin.range(end));
     }
 
-    private SpreadsheetCellReference cell(final int column, final int row) {
+    private SpreadsheetCellReference cellReference(final String text) {
+        return SpreadsheetExpressionReference.parseCellReference(text);
+    }
+
+    private SpreadsheetCellReference cellReference(final int column, final int row) {
         return this.column(column)
                 .setRow(this.row(row));
     }
@@ -756,7 +956,7 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
     }
 
     private void checkBegin(final SpreadsheetRange range, final int column, final int row) {
-        this.checkBegin(range, this.cell(column, row));
+        this.checkBegin(range, this.cellReference(column, row));
     }
 
     private void checkBegin(final SpreadsheetRange range, final SpreadsheetCellReference begin) {
@@ -764,7 +964,7 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
     }
 
     private void checkEnd(final SpreadsheetRange range, final int column, final int row) {
-        this.checkEnd(range, this.cell(column, row));
+        this.checkEnd(range, this.cellReference(column, row));
     }
 
     private void checkEnd(final SpreadsheetRange range, final SpreadsheetCellReference end) {
