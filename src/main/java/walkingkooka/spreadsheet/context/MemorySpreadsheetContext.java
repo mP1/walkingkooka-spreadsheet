@@ -257,9 +257,9 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
 
         return SpreadsheetEngineHateosHandlers.engineRouter(this.baseWithSpreadsheetId(id),
                 this.contentType,
-                SpreadsheetEngineHateosHandlers.fillCells(engine, engineContext),
                 SpreadsheetEngineHateosHandlers.deleteColumns(engine, engineContext),
                 SpreadsheetEngineHateosHandlers.deleteRows(engine, engineContext),
+                SpreadsheetEngineHateosHandlers.fillCells(engine, engineContext),
                 SpreadsheetEngineHateosHandlers.insertColumns(engine, engineContext),
                 SpreadsheetEngineHateosHandlers.insertRows(engine, engineContext),
                 SpreadsheetEngineHateosHandlers.loadCell(SpreadsheetEngineEvaluation.CLEAR_VALUE_ERROR_SKIP_EVALUATE, engine, engineContext),
