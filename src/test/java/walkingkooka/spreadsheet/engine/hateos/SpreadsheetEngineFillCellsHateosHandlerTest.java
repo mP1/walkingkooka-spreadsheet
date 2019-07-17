@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.engine.FakeSpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
+import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
@@ -47,10 +48,56 @@ public final class SpreadsheetEngineFillCellsHateosHandlerTest extends walkingko
     }
 
     @Test
-    public void testFill() {
-        this.handleCollectionAndCheck(this.collection(),
+    public void testFillFromParameterMissing() {
+        this.handleCollectionAndCheck2(this.parameters(), this.toSpreadsheetRange());
+    }
+
+    @Test
+    public void testFillFromParameterEmptyFails() {
+        this.handleCollectionFails(this.toSpreadsheetRange().range(),
                 this.collectionResource(),
-                this.parameters(),
+                Maps.of(SpreadsheetEngineFillCellsHateosHandler.FROM, Lists.empty()),
+                IllegalArgumentException.class);
+    }
+
+    @Test
+    public void testFillFromParameterInvalidFails() {
+        this.handleCollectionFails(this.toSpreadsheetRange().range(),
+                this.collectionResource(),
+                Maps.of(SpreadsheetEngineFillCellsHateosHandler.FROM, Lists.of("!INVALID")),
+                IllegalArgumentException.class);
+    }
+
+    @Test
+    public void testFillFromParameterPresent() {
+        this.handleCollectionAndCheck2(Maps.of(SpreadsheetEngineFillCellsHateosHandler.FROM, Lists.of(TO)), this.toSpreadsheetRange());
+    }
+
+    @Test
+    public void testFillFromParameterPresent2() {
+        this.handleCollectionAndCheck2(Maps.of(SpreadsheetEngineFillCellsHateosHandler.FROM, Lists.of(TO, FROM)), this.toSpreadsheetRange());
+    }
+
+    private void handleCollectionAndCheck2(Map<HttpRequestAttribute<?>, Object> parameters,
+                                           final SpreadsheetRange from) {
+        this.handleCollectionAndCheck(
+                SpreadsheetEngineFillCellsHateosHandler.with(new FakeSpreadsheetEngine() {
+
+                                                                 @Override
+                                                                 public SpreadsheetDelta<Range<SpreadsheetCellReference>> fillCells(final Collection<SpreadsheetCell> cells,
+                                                                                                                                    final SpreadsheetRange f,
+                                                                                                                                    final SpreadsheetRange t,
+                                                                                                                                    final SpreadsheetEngineContext context) {
+                                                                     assertEquals(collectionResource().get().cells(), cells, "cells");
+                                                                     assertEquals(from, f, "from");
+                                                                     assertEquals(toSpreadsheetRange(), t, "to");
+                                                                     return filled();
+                                                                 }
+                                                             },
+                        this.engineContext()),
+                this.collection(),
+                this.collectionResource(),
+                parameters,
                 Optional.of(this.filled()));
     }
 
@@ -67,28 +114,13 @@ public final class SpreadsheetEngineFillCellsHateosHandlerTest extends walkingko
 
     @Override
     SpreadsheetEngine engine() {
-        return new FakeSpreadsheetEngine() {
-
-            @Override
-            public SpreadsheetDelta<Range<SpreadsheetCellReference>> fillCells(final Collection<SpreadsheetCell> cells,
-                                                                               final SpreadsheetRange from,
-                                                                               final SpreadsheetRange to,
-                                                                               final SpreadsheetEngineContext context) {
-                assertEquals(collectionResource().get().cells(), cells, "cells");
-                assertEquals(SpreadsheetExpressionReference.parseRange(FROM), from, "from");
-                assertEquals(SpreadsheetExpressionReference.parseRange(TO), to, "to");
-                return filled();
-            }
-        };
+        return SpreadsheetEngines.fake();
     }
 
     @Override
     public Map<HttpRequestAttribute<?>, Object> parameters() {
-        return Maps.of(SpreadsheetEngineFillCellsHateosHandler.TO, Lists.of(TO));
+        return Maps.empty();
     }
-
-    private final static String FROM = "B1:C2";
-    private final static String TO = "E1:F2";
 
     @Override
     public Optional<SpreadsheetCellReference> id() {
@@ -97,8 +129,21 @@ public final class SpreadsheetEngineFillCellsHateosHandlerTest extends walkingko
 
     @Override
     public Range<SpreadsheetCellReference> collection() {
-        return SpreadsheetCellReference.parseCellReferenceRange(FROM);
+        return SpreadsheetCellReference.parseCellReferenceRange(TO); // url has TO
     }
+
+    private SpreadsheetRange toSpreadsheetRange() {
+        return SpreadsheetExpressionReference.parseRange(TO);
+    }
+
+    private final static String TO = "B1:C2";
+
+    private SpreadsheetRange fromSpreadsheetRange() {
+        return SpreadsheetExpressionReference.parseRange(FROM);
+    }
+
+    private final static String FROM = "E1:F2";
+
 
     @Override
     public Optional<SpreadsheetDelta<Optional<SpreadsheetCellReference>>> resource() {
