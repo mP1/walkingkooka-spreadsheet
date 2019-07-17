@@ -51,12 +51,6 @@
 
     <dependency>
       <groupId>com.github.mP1</groupId>
-      <artifactId>walkingkooka</artifactId>
-      <version>master-SNAPSHOT</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.github.mP1</groupId>
       <artifactId>walkingkooka-store</artifactId>
       <version>master-SNAPSHOT</version>
     </dependency>
