@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public final class SpreadsheetFormatParsersTest implements ParserTesting<Parser<SpreadsheetFormatParserContext>,
         SpreadsheetFormatParserContext> {
 
-    // color........................................................................................................
+    // color............................................................................................................
 
     @Test
     public void testColorDigitNonZeroFails() {

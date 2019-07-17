@@ -23,7 +23,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
-import walkingkooka.color.ColorHslOrHsv;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -93,7 +92,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static String FORMATTED_PATTERN_SUFFIX = "FORMATTED_PATTERN_SUFFIX";
     private final static String FORMATTED_DEFAULT_SUFFIX = "FORMATTED_DEFAULT_SUFFIX";
 
-    private final static Optional<ColorHslOrHsv> COLOR = Optional.of(Color.BLACK);
+    private final static Optional<Color> COLOR = Optional.of(Color.BLACK);
 
     private final static String PATTERN_DEFAULT = "$text+" + FORMATTED_DEFAULT_SUFFIX;
     private final static String PATTERN = "$text+" + FORMATTED_PATTERN_SUFFIX;
@@ -150,7 +149,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     null,
                     this.labelReferencesStore(),
                     this.rangeToCellStore(),
-                    this.rangeToConditionalFormattingRuleStore());;
+                    this.rangeToConditionalFormattingRuleStore());
         });
     }
 
@@ -163,7 +162,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     this.labelStore(),
                     null,
                     this.rangeToCellStore(),
-                    this.rangeToConditionalFormattingRuleStore());;
+                    this.rangeToConditionalFormattingRuleStore());
         });
     }
 
@@ -176,7 +175,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     this.labelStore(),
                     this.labelReferencesStore(),
                     null,
-                    this.rangeToConditionalFormattingRuleStore());;
+                    this.rangeToConditionalFormattingRuleStore());
         });
     }
 
@@ -416,8 +415,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.counter = BigDecimal.ZERO;
 
         engine.saveCell(this.cell(a, "1+2+BasicSpreadsheetEngineTestCounter()"), context);
-        engine.saveCell(this.cell(b, "3+4+"+a), context);
-        engine.saveCell(this.cell(c, "5+6+"+a), context);
+        engine.saveCell(this.cell(b, "3+4+" + a), context);
+        engine.saveCell(this.cell(c, "5+6+" + a), context);
 
         // updating this counter results in $A having its value recomputed forcing a cascade update of $b and $c
         this.counter = BigDecimal.valueOf(100);
@@ -426,7 +425,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                formattedCellWithValue(a, "1+2+BasicSpreadsheetEngineTestCounter()", BigDecimal.valueOf(100+3)),
+                formattedCellWithValue(a, "1+2+BasicSpreadsheetEngineTestCounter()", BigDecimal.valueOf(100 + 3)),
                 formattedCellWithValue(b, "3+4+" + a, BigDecimal.valueOf(3 + 4 + 103)),
                 formattedCellWithValue(c, "5+6+" + a, BigDecimal.valueOf(5 + 6 + 103)));
     }
@@ -4224,7 +4223,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCellsFunction() {
-        this.fillCellsAndCheck("BasicSpreadsheetEngineTestSum(1,99)", BigDecimal.valueOf(1+99));
+        this.fillCellsAndCheck("BasicSpreadsheetEngineTestSum(1,99)", BigDecimal.valueOf(1 + 99));
     }
 
     @Test
@@ -4254,7 +4253,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCellsMultiplication() {
-        this.fillCellsAndCheck("6*7", BigDecimal.valueOf(6*7));
+        this.fillCellsAndCheck("6*7", BigDecimal.valueOf(6 * 7));
     }
 
     @Test
@@ -4279,7 +4278,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCellsSubtraction() {
-        this.fillCellsAndCheck("13-4", BigDecimal.valueOf(13-4));
+        this.fillCellsAndCheck("13-4", BigDecimal.valueOf(13 - 4));
     }
 
     @Test
@@ -4289,7 +4288,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCellsAdditionWithWhitespace() {
-        this.fillCellsAndCheck("1 + 2", BigDecimal.valueOf(1+2));
+        this.fillCellsAndCheck("1 + 2", BigDecimal.valueOf(1 + 2));
     }
 
     private void fillCellsAndCheck(final String formulaText, final Object expected) {
@@ -4793,13 +4792,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     if (name.value().equals(SpreadsheetFormula.INVALID_CELL_REFERENCE.value())) {
                         throw new ExpressionEvaluationException("Invalid cell reference: " + params.get(0).toString());
                     }
-                    if(name.value().equals("BasicSpreadsheetEngineTestSum")) {
+                    if (name.value().equals("BasicSpreadsheetEngineTestSum")) {
                         // assumes parameters are BigDecimal
                         return params.stream()
                                 .map(BigDecimal.class::cast)
                                 .reduce(BigDecimal.ZERO, BigDecimal::add);
                     }
-                    if(name.value().equals("BasicSpreadsheetEngineTestCounter")) {
+                    if (name.value().equals("BasicSpreadsheetEngineTestCounter")) {
                         return BasicSpreadsheetEngineTest.this.counter;
                     }
                     throw new UnsupportedOperationException(name + "(" + params.stream().map(p -> p.toString()).collect(Collectors.joining(",")) + ")");
@@ -4859,7 +4858,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     private SpreadsheetTextFormatter<Object> formatter(final String pattern,
-                                                       final Optional<ColorHslOrHsv> color,
+                                                       final Optional<Color> color,
                                                        final String suffix) {
         return new SpreadsheetTextFormatter<Object>() {
             @Override

@@ -297,7 +297,7 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
     }
 
     private void checkTextStyle(final SpreadsheetConditionalFormattingRule rule,
-                                     final Function<SpreadsheetCell, TextStyle> style) {
+                                final Function<SpreadsheetCell, TextStyle> style) {
         assertEquals(style, rule.style(), "style");
     }
 
