@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -60,20 +61,40 @@ final class SpreadsheetEngineFillCellsHateosHandler extends SpreadsheetEngineHat
     }
 
     @Override
-    public Optional<SpreadsheetDelta<Range<SpreadsheetCellReference>>> handleCollection(final Range<SpreadsheetCellReference> from,
+    public Optional<SpreadsheetDelta<Range<SpreadsheetCellReference>>> handleCollection(final Range<SpreadsheetCellReference> to,
                                                                                         final Optional<SpreadsheetDelta<Range<SpreadsheetCellReference>>> resource,
                                                                                         final Map<HttpRequestAttribute<?>, Object> parameters) {
-        final SpreadsheetRange fromSpreadsheetRange = SpreadsheetRange.with(from);
+        final SpreadsheetRange toSpreadsheetRange = SpreadsheetRange.with(to);
         final SpreadsheetDelta<Range<SpreadsheetCellReference>> delta = this.checkResourceNotEmpty(resource);
         this.checkParameters(parameters);
 
+        final SpreadsheetRange from = FROM.parameterValue(parameters)
+                .map(SpreadsheetEngineFillCellsHateosHandler::mapFirstStringValue)
+                .orElse(toSpreadsheetRange);
+
         return Optional.of(this.engine.fillCells(delta.cells(),
-                fromSpreadsheetRange,
-                this.parameterValueOrFail(parameters, TO, SpreadsheetExpressionReference::parseRange),
+                from,
+                toSpreadsheetRange,
                 this.context));
     }
 
-    final static UrlParameterName TO = UrlParameterName.with("to");
+    private static SpreadsheetRange mapFirstStringValue(final List<String> values) {
+        return values.stream()
+                .limit(1)
+                .map(SpreadsheetEngineFillCellsHateosHandler::parseRange)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Required parameter " + FROM + " missing"));
+    }
+
+    private static SpreadsheetRange parseRange(final String value) {
+        try {
+            return SpreadsheetExpressionReference.parseRange(value);
+        } catch (final NullPointerException | IllegalArgumentException cause) {
+            throw cause;
+        }
+    }
+
+    final static UrlParameterName FROM = UrlParameterName.with("from");
 
     @Override
     String operation() {
