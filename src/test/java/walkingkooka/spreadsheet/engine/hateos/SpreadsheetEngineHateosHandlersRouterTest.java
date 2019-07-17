@@ -52,7 +52,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implements ClassTesting2<SpreadsheetHateosHandlersSpreadsheetEngineRouter> {
+public final class SpreadsheetEngineHateosHandlersRouterTest implements ClassTesting2<SpreadsheetEngineHateosHandlersRouter> {
 
     // spreadsheetCellColumnRowRouter...................................................................................
 
@@ -281,7 +281,7 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
                                      SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
                                      SpreadsheetDelta<Range<SpreadsheetCellReference>>> saveCell) {
         assertThrows(NullPointerException.class, () -> {
-            SpreadsheetHateosHandlersSpreadsheetEngineRouter.router(base,
+            SpreadsheetEngineHateosHandlersRouter.router(base,
                     contentType,
                     deleteColumns,
                     deleteRows,
@@ -408,7 +408,7 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
     }
 
     private Optional<BiConsumer<HttpRequest, HttpResponse>> route(final HttpRequest request) {
-        final Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> router = SpreadsheetHateosHandlersSpreadsheetEngineRouter.router(this.base(),
+        final Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> router = SpreadsheetEngineHateosHandlersRouter.router(this.base(),
                 this.contentType(),
                 this.deleteColumns(),
                 this.deleteRows(),
@@ -517,8 +517,8 @@ public final class SpreadsheetHateosHandlersSpreadsheetEngineRouterTest implemen
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetHateosHandlersSpreadsheetEngineRouter> type() {
-        return SpreadsheetHateosHandlersSpreadsheetEngineRouter.class;
+    public Class<SpreadsheetEngineHateosHandlersRouter> type() {
+        return SpreadsheetEngineHateosHandlersRouter.class;
     }
 
     @Override

@@ -150,7 +150,7 @@ public final class SpreadsheetEngineHateosHandlers implements PublicStaticHelper
                                                                                                                                    final HateosHandler<SpreadsheetCellReference,
                                                                                                                                            SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
                                                                                                                                            SpreadsheetDelta<Range<SpreadsheetCellReference>>> saveCell) {
-        return SpreadsheetHateosHandlersSpreadsheetEngineRouter.router(base,
+        return SpreadsheetEngineHateosHandlersRouter.router(base,
                 contentType,
                 deleteColumns,
                 deleteRows,
