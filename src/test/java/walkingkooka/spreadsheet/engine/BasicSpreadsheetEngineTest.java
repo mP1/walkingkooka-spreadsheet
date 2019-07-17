@@ -4546,7 +4546,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference b = this.cellReference("b1");
         final SpreadsheetCell cellB = this.cell(b, "2+0"); // copied to C1
-        final SpreadsheetCellReference c = this.cellReference("C1"); // copyCell dest...
+        final SpreadsheetCellReference c = this.cellReference("C1"); // fillCells dest...
         final SpreadsheetCell cellA = this.cell("a1", "10+" + c);
 
         engine.saveCell(cellA, context);
