@@ -83,7 +83,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                                                                       final Supplier<SpreadsheetMetadata> metadata,
                                                                       final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
                                                                       final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
-                                                                      final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
+                                                                      final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext,
                                                                       final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter,
                                                                       final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                                                                       final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
@@ -96,7 +96,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
         Objects.requireNonNull(metadata, "metadata");
         Objects.requireNonNull(spreadsheetIdConverter, "spreadsheetIdConverter");
         Objects.requireNonNull(spreadsheetIdDateTimeContext, "spreadsheetIdDateTimeContext");
-        Objects.requireNonNull(spreadsheetIdDecimalFormatContext, "spreadsheetIdDecimalFormatContext");
+        Objects.requireNonNull(spreadsheetIdDecimalNumberContext, "spreadsheetIdDecimalNumberContext");
         Objects.requireNonNull(spreadsheetIdDefaultSpreadsheetTextFormatter, "spreadsheetIdDefaultSpreadsheetTextFormatter");
         Objects.requireNonNull(spreadsheetIdFunctions, "spreadsheetIdFunctions");
         Objects.requireNonNull(spreadsheetIdGeneralDecimalFormatPattern, "spreadsheetIdGeneralDecimalFormatPattern");
@@ -110,7 +110,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                 metadata,
                 spreadsheetIdConverter,
                 spreadsheetIdDateTimeContext,
-                spreadsheetIdDecimalFormatContext,
+                spreadsheetIdDecimalNumberContext,
                 spreadsheetIdDefaultSpreadsheetTextFormatter,
                 spreadsheetIdFunctions,
                 spreadsheetIdGeneralDecimalFormatPattern,
@@ -125,7 +125,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                                      final Supplier<SpreadsheetMetadata> metadata,
                                      final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
                                      final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
-                                     final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext,
+                                     final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext,
                                      final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter,
                                      final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                                      final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
@@ -141,7 +141,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
 
         this.spreadsheetIdConverter = spreadsheetIdConverter;
         this.spreadsheetIdDateTimeContext = spreadsheetIdDateTimeContext;
-        this.spreadsheetIdDecimalFormatContext = spreadsheetIdDecimalFormatContext;
+        this.spreadsheetIdDecimalNumberContext = spreadsheetIdDecimalNumberContext;
         this.spreadsheetIdDefaultSpreadsheetTextFormatter = spreadsheetIdDefaultSpreadsheetTextFormatter;
         this.spreadsheetIdFunctions = spreadsheetIdFunctions;
         this.spreadsheetIdGeneralDecimalFormatPattern = spreadsheetIdGeneralDecimalFormatPattern;
@@ -166,10 +166,10 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
 
     @Override
     public DecimalNumberContext decimalNumberContext(final SpreadsheetId id) {
-        return this.spreadsheetIdDecimalFormatContext.apply(id);
+        return this.spreadsheetIdDecimalNumberContext.apply(id);
     }
 
-    private final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalFormatContext;
+    private final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext;
 
     @Override
     public SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter(final SpreadsheetId id) {
