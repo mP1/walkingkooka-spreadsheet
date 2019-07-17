@@ -389,9 +389,9 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Test
     public void testFromJsonNodeTextAndErrorAndValueFails() {
         this.fromJsonNodeFails(JsonNode.object()
-                .set(SpreadsheetFormula.TEXT, JsonNode.string(TEXT))
-                .set(SpreadsheetFormula.VALUE_PROPERTY, JsonNode.string("1"))
-                .set(SpreadsheetFormula.ERROR_PROPERTY, SpreadsheetError.with(ERROR).toJsonNode()),
+                        .set(SpreadsheetFormula.TEXT, JsonNode.string(TEXT))
+                        .set(SpreadsheetFormula.VALUE_PROPERTY, JsonNode.string("1"))
+                        .set(SpreadsheetFormula.ERROR_PROPERTY, SpreadsheetError.with(ERROR).toJsonNode()),
                 JsonNodeException.class);
     }
 

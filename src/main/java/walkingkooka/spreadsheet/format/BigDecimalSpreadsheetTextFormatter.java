@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatBigDecimalParserToken;
 
 import java.math.BigDecimal;
@@ -26,7 +27,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetTextFormatter} that unconditionally formats a {@link BigDecimal}, without a {@link walkingkooka.color.Color}.
+ * A {@link SpreadsheetTextFormatter} that unconditionally formats a {@link BigDecimal}, without a {@link Color}.
  */
 final class BigDecimalSpreadsheetTextFormatter extends SpreadsheetTextFormatter3<BigDecimal, SpreadsheetFormatBigDecimalParserToken> {
 

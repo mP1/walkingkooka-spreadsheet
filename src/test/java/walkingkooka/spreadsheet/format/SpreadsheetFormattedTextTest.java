@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
-import walkingkooka.color.ColorHslOrHsv;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
@@ -42,7 +41,7 @@ public final class SpreadsheetFormattedTextTest implements ClassTesting2<Spreads
         HasTextNodeTesting,
         ToStringTesting<SpreadsheetFormattedText> {
 
-    private final static Optional<ColorHslOrHsv> COLOR = Optional.of(Color.BLACK);
+    private final static Optional<Color> COLOR = Optional.of(Color.BLACK);
     private final static String TEXT = "1/1/2000";
 
     @Test
@@ -75,7 +74,7 @@ public final class SpreadsheetFormattedTextTest implements ClassTesting2<Spreads
         this.createAndCheck(COLOR, "");
     }
 
-    private void createAndCheck(final Optional<ColorHslOrHsv> color, final String text) {
+    private void createAndCheck(final Optional<Color> color, final String text) {
         final SpreadsheetFormattedText formatted = SpreadsheetFormattedText.with(color, text);
         this.check(formatted, color, text);
     }
@@ -97,14 +96,14 @@ public final class SpreadsheetFormattedTextTest implements ClassTesting2<Spreads
 
     @Test
     public void testSetColorDifferent() {
-        final Optional<ColorHslOrHsv> differentColor = Optional.of(Color.fromRgb(123));
+        final Optional<Color> differentColor = Optional.of(Color.fromRgb(123));
         final SpreadsheetFormattedText formatted = this.createFormattedText();
         final SpreadsheetFormattedText different = formatted.setColor(differentColor);
         assertNotSame(formatted, different);
         this.check(different, differentColor, TEXT);
     }
 
-    private void check(final SpreadsheetFormattedText formatted, final Optional<ColorHslOrHsv> color, final String text) {
+    private void check(final SpreadsheetFormattedText formatted, final Optional<Color> color, final String text) {
         assertEquals(color, formatted.color(), "color");
         assertEquals(text, formatted.text(), "text");
     }
