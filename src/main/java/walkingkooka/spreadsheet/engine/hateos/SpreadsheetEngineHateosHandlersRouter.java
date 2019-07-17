@@ -49,7 +49,7 @@ import java.util.function.Function;
 /**
  * A collection of factory methods to create various {@link HateosHandler}.
  */
-final class SpreadsheetHateosHandlersSpreadsheetEngineRouter implements StaticHelper {
+final class SpreadsheetEngineHateosHandlersRouter implements StaticHelper {
 
     /**
      * A {@link HateosResourceName} with <code>cell</code>.
@@ -219,7 +219,7 @@ final class SpreadsheetHateosHandlersSpreadsheetEngineRouter implements StaticHe
     /**
      * Stop creation.
      */
-    private SpreadsheetHateosHandlersSpreadsheetEngineRouter() {
+    private SpreadsheetEngineHateosHandlersRouter() {
         throw new UnsupportedOperationException();
     }
 }
