@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.collect.set.Sets;
+import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 
@@ -42,7 +43,7 @@ import java.util.Set;
  * <li>{@link Long}</li>
  * <li>{@link String}</li>
  * </ul>
- * More types like {@link walkingkooka.net.Url} and {@link walkingkooka.color.ColorHslOrHsv} may be added.
+ * More types like {@link walkingkooka.net.Url} and {@link Color} may be added.
  * </pre>
  */
 final class SpreadsheetConverter implements Converter {

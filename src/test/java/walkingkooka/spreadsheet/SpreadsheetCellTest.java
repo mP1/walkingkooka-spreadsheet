@@ -328,22 +328,22 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testFromJsonNodeObjectReferenceMissingFails() {
         this.fromJsonNodeFails(JsonNode.object()
-                .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode()),
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode()),
                 JsonNodeException.class);
     }
 
     @Test
     public void testFromJsonNodeObjectReferenceMissingFails2() {
         this.fromJsonNodeFails(JsonNode.object()
-                .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode())
-                .set(SpreadsheetCell.STYLE_PROPERTY, this.boldAndItalics().toJsonNode()),
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode())
+                        .set(SpreadsheetCell.STYLE_PROPERTY, this.boldAndItalics().toJsonNode()),
                 JsonNodeException.class);
     }
 
     @Test
     public void testFromJsonNodeObjectFormulaMissingFails() {
         this.fromJsonNodeFails(JsonNode.object()
-                .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode()),
+                        .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode()),
                 JsonNodeException.class);
     }
 
@@ -446,7 +446,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
         this.toJsonNodeAndCheck(this.createCell()
                         .setStyle(boldAndItalics)
-                .setFormatted(this.formatted()),
+                        .setFormatted(this.formatted()),
                 "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}, \"style\": " + boldAndItalics.toJsonNodeWithType() +
                         ", \"format\": " + this.format().get().toJsonNode() +
                         ", \"formatted\": " + this.formatted().get().toJsonNodeWithType() +
