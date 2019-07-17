@@ -22,7 +22,7 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.collect.map.Maps;
-import walkingkooka.color.ColorHslOrHsv;
+import walkingkooka.color.Color;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.HasText;
 import walkingkooka.tree.text.HasTextNode;
@@ -34,7 +34,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Holds the {@link ColorHslOrHsv} and text that results from formatting a value.
+ * Holds the {@link Color} and text that results from formatting a value.
  */
 public final class SpreadsheetFormattedText implements HasText,
         HasTextNode,
@@ -44,19 +44,19 @@ public final class SpreadsheetFormattedText implements HasText,
     /**
      * Constant that holds an empty color.
      */
-    public final static Optional<ColorHslOrHsv> WITHOUT_COLOR = Optional.empty();
+    public final static Optional<Color> WITHOUT_COLOR = Optional.empty();
 
     /**
      * Creates a {@link SpreadsheetFormattedText}
      */
-    public static SpreadsheetFormattedText with(final Optional<ColorHslOrHsv> color, final String text) {
+    public static SpreadsheetFormattedText with(final Optional<Color> color, final String text) {
         checkColor(color);
         checkText(text);
 
         return new SpreadsheetFormattedText(color, text);
     }
 
-    private static void checkColor(final Optional<ColorHslOrHsv> color) {
+    private static void checkColor(final Optional<Color> color) {
         Objects.requireNonNull(color, "color");
     }
 
@@ -67,16 +67,16 @@ public final class SpreadsheetFormattedText implements HasText,
     /**
      * Private ctor use factory.
      */
-    private SpreadsheetFormattedText(final Optional<ColorHslOrHsv> color, final String text) {
+    private SpreadsheetFormattedText(final Optional<Color> color, final String text) {
         this.color = color;
         this.text = text;
     }
 
-    public Optional<ColorHslOrHsv> color() {
+    public Optional<Color> color() {
         return this.color;
     }
 
-    public SpreadsheetFormattedText setColor(final Optional<ColorHslOrHsv> color) {
+    public SpreadsheetFormattedText setColor(final Optional<Color> color) {
         checkColor(color);
 
         return this.color.equals(color) ?
@@ -84,7 +84,7 @@ public final class SpreadsheetFormattedText implements HasText,
                 this.replace(color, this.text);
     }
 
-    private final Optional<ColorHslOrHsv> color;
+    private final Optional<Color> color;
 
     @Override
     public String text() {
@@ -101,7 +101,7 @@ public final class SpreadsheetFormattedText implements HasText,
 
     private final String text;
 
-    private SpreadsheetFormattedText replace(final Optional<ColorHslOrHsv> color, final String text) {
+    private SpreadsheetFormattedText replace(final Optional<Color> color, final String text) {
         return new SpreadsheetFormattedText(color, text);
     }
 
