@@ -32,8 +32,10 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
+import walkingkooka.tree.text.TextNode;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -78,7 +80,7 @@ public final class SpreadsheetEngineFillCellsHateosHandlerTest extends walkingko
         this.handleCollectionAndCheck2(Maps.of(SpreadsheetEngineFillCellsHateosHandler.FROM, Lists.of(TO, FROM)), this.toSpreadsheetRange());
     }
 
-    private void handleCollectionAndCheck2(Map<HttpRequestAttribute<?>, Object> parameters,
+    private void handleCollectionAndCheck2(final Map<HttpRequestAttribute<?>, Object> parameters,
                                            final SpreadsheetRange from) {
         this.handleCollectionAndCheck(
                 SpreadsheetEngineFillCellsHateosHandler.with(new FakeSpreadsheetEngine() {
@@ -100,6 +102,43 @@ public final class SpreadsheetEngineFillCellsHateosHandlerTest extends walkingko
                 parameters,
                 Optional.of(this.filled()));
     }
+
+    @Test
+    public void testFillFiltered() {
+        final SpreadsheetCell unsaved1 = this.cell();
+        final SpreadsheetCell saved1 = unsaved1.setFormatted(Optional.of(TextNode.text("FORMATTED 1")));
+
+        final Range<SpreadsheetCellReference> range = this.collection();
+        final SpreadsheetRange spreadsheetRange = SpreadsheetRange.with(range);
+
+        final SpreadsheetDelta<Range<SpreadsheetCellReference>> resource = SpreadsheetDelta.withRange(range, Sets.of(unsaved1));
+
+        final List<SpreadsheetRange> window = this.window();
+
+        this.handleCollectionAndCheck(
+                SpreadsheetEngineFillCellsHateosHandler.with(new FakeSpreadsheetEngine() {
+
+                                                                 @Override
+                                                                 public SpreadsheetDelta<Range<SpreadsheetCellReference>> fillCells(final Collection<SpreadsheetCell> cells,
+                                                                                                                                    final SpreadsheetRange from,
+                                                                                                                                    final SpreadsheetRange to,
+                                                                                                                                    final SpreadsheetEngineContext context) {
+                                                                     assertEquals(resource.cells(), cells, "cells");
+                                                                     assertEquals(spreadsheetRange, from, "from");
+                                                                     assertEquals(spreadsheetRange, to, "to");
+                                                                     return SpreadsheetDelta.withRange(to.range(),
+                                                                             Sets.of(saved1,
+                                                                                     cellOutsideWindow().setFormatted(Optional.of(TextNode.text("FORMATTED 2")))));
+                                                                 }
+                                                             },
+                        this.engineContext()),
+                range,
+                Optional.of(resource.setWindow(window)),
+                this.parameters(),
+                Optional.of(SpreadsheetDelta.withRange(range, Sets.of(saved1)).setWindow(window)));
+    }
+
+    // toString.........................................................................................................
 
     @Test
     public void testToString() {
@@ -138,12 +177,7 @@ public final class SpreadsheetEngineFillCellsHateosHandlerTest extends walkingko
 
     private final static String TO = "B1:C2";
 
-    private SpreadsheetRange fromSpreadsheetRange() {
-        return SpreadsheetExpressionReference.parseRange(FROM);
-    }
-
     private final static String FROM = "E1:F2";
-
 
     @Override
     public Optional<SpreadsheetDelta<Optional<SpreadsheetCellReference>>> resource() {
