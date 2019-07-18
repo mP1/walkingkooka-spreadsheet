@@ -72,10 +72,10 @@ final class SpreadsheetEngineFillCellsHateosHandler extends SpreadsheetEngineHat
                 .map(SpreadsheetEngineFillCellsHateosHandler::mapFirstStringValue)
                 .orElse(toSpreadsheetRange);
 
-        return Optional.of(this.engine.fillCells(delta.cells(),
+        return Optional.of(delta.setCells(this.engine.fillCells(delta.cells(),
                 from,
                 toSpreadsheetRange,
-                this.context));
+                this.context).cells()));
     }
 
     private static SpreadsheetRange mapFirstStringValue(final List<String> values) {
