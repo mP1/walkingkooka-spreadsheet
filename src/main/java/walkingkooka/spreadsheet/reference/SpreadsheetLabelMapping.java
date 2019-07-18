@@ -21,10 +21,8 @@ import walkingkooka.Cast;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.json.FromJsonNodeException;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonNodeName;
 
 import java.util.Objects;
@@ -112,22 +110,18 @@ public final class SpreadsheetLabelMapping implements HashCodeEqualsDefined, Hat
         SpreadsheetLabelName labelName = null;
         ExpressionReference reference = null;
 
-        try {
-            for (JsonNode child : node.objectOrFail().children()) {
-                final JsonNodeName name = child.name();
-                switch (name.value()) {
-                    case LABEL_NAME_PROPERTY_STRING:
-                        labelName = SpreadsheetLabelName.fromJsonNodeLabelName(child);
-                        break;
-                    case REFERENCE_PROPERTY_STRING:
-                        reference = SpreadsheetCellReference.fromJsonNodeCellReference(child);
-                        break;
-                    default:
-                        throw new IllegalArgumentException("Unknown property " + name + "=" + node);
-                }
+        for (JsonNode child : node.objectOrFail().children()) {
+            final JsonNodeName name = child.name();
+            switch (name.value()) {
+                case LABEL_NAME_PROPERTY_STRING:
+                    labelName = SpreadsheetLabelName.fromJsonNodeLabelName(child);
+                    break;
+                case REFERENCE_PROPERTY_STRING:
+                    reference = SpreadsheetCellReference.fromJsonNodeCellReference(child);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown property " + name + "=" + node);
             }
-        } catch (final JsonNodeException cause) {
-            throw new FromJsonNodeException(cause.getMessage(), node, cause);
         }
 
         if (null == labelName) {
