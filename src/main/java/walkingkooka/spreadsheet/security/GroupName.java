@@ -24,7 +24,6 @@ import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.json.FromJsonNodeException;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 
@@ -94,11 +93,7 @@ final public class GroupName implements Name,
     static GroupName fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
-        try {
-            return with(node.stringValueOrFail());
-        } catch (final RuntimeException cause) {
-            throw new FromJsonNodeException(cause.getMessage(), node, cause);
-        }
+        return with(node.stringValueOrFail());
     }
 
     @Override

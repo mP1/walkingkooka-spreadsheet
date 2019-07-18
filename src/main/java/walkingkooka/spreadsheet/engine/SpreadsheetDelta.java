@@ -28,10 +28,8 @@ import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.test.HashCodeEqualsDefined;
-import walkingkooka.tree.json.FromJsonNodeException;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonNodeName;
 
 import java.util.Arrays;
@@ -233,29 +231,25 @@ public abstract class SpreadsheetDelta<I> implements Comparable<SpreadsheetDelta
         Set<SpreadsheetCell> cells = Sets.empty();
         List<SpreadsheetRange> window = null;
 
-        try {
-            for (JsonNode child : node.objectOrFail().children()) {
-                final JsonNodeName name = child.name();
+        for (JsonNode child : node.objectOrFail().children()) {
+            final JsonNodeName name = child.name();
 
-                switch (name.value()) {
-                    case ID_PROPERTY_STRING:
-                        id = child.fromJsonNodeWithType();
-                        break;
-                    case RANGE_PROPERTY_STRING:
-                        range = child.fromJsonNode(Range.class);
-                        break;
-                    case CELLS_PROPERTY_STRING:
-                        cells = child.fromJsonNodeSet(SpreadsheetCell.class);
-                        break;
-                    case WINDOW_PROPERTY_STRING:
-                        window = rangeFromJsonNode(child.stringValueOrFail());
-                        break;
-                    default:
-                        HasJsonNode.unknownPropertyPresent(name, node);
-                }
+            switch (name.value()) {
+                case ID_PROPERTY_STRING:
+                    id = child.fromJsonNodeWithType();
+                    break;
+                case RANGE_PROPERTY_STRING:
+                    range = child.fromJsonNode(Range.class);
+                    break;
+                case CELLS_PROPERTY_STRING:
+                    cells = child.fromJsonNodeSet(SpreadsheetCell.class);
+                    break;
+                case WINDOW_PROPERTY_STRING:
+                    window = rangeFromJsonNode(child.stringValueOrFail());
+                    break;
+                default:
+                    HasJsonNode.unknownPropertyPresent(name, node);
             }
-        } catch (final JsonNodeException cause) {
-            throw new FromJsonNodeException(cause.getMessage(), node, cause);
         }
 
         final SpreadsheetDelta<?> delta = range != null ?

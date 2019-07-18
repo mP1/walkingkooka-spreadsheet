@@ -218,33 +218,29 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
         Object value = null;
         SpreadsheetError error = null;
 
-        try {
-            for (JsonNode child : node.objectOrFail().children()) {
-                final JsonNodeName name = child.name();
-                switch (name.value()) {
-                    case TEXT_STRING:
-                        try {
-                            text = child.stringValueOrFail();
-                        } catch (final JsonNodeException cause) {
-                            throw new FromJsonNodeException("Node " + TEXT + " is not a string=" + child, node);
-                        }
-                        checkText(text);
-                        break;
-                    case EXPRESSION_PROPERTY_STRING:
-                        value = child.fromJsonNodeWithType();
-                        break;
-                    case VALUE_PROPERTY_STRING:
-                        value = child.value();
-                        break;
-                    case ERROR_PROPERTY_STRING:
-                        error = SpreadsheetError.fromJsonNode(child);
-                        break;
-                    default:
-                        HasJsonNode.unknownPropertyPresent(name, node);
-                }
+        for (JsonNode child : node.objectOrFail().children()) {
+            final JsonNodeName name = child.name();
+            switch (name.value()) {
+                case TEXT_STRING:
+                    try {
+                        text = child.stringValueOrFail();
+                    } catch (final JsonNodeException cause) {
+                        throw new FromJsonNodeException("Node " + TEXT + " is not a string=" + child, node);
+                    }
+                    checkText(text);
+                    break;
+                case EXPRESSION_PROPERTY_STRING:
+                    value = child.fromJsonNodeWithType();
+                    break;
+                case VALUE_PROPERTY_STRING:
+                    value = child.value();
+                    break;
+                case ERROR_PROPERTY_STRING:
+                    error = SpreadsheetError.fromJsonNode(child);
+                    break;
+                default:
+                    HasJsonNode.unknownPropertyPresent(name, node);
             }
-        } catch (final JsonNodeException cause) {
-            throw new FromJsonNodeException(cause.getMessage(), node, cause);
         }
 
         if (null == text) {
@@ -254,14 +250,10 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
             throw new FromJsonNodeException("Node contains both " + VALUE_PROPERTY + " and " + ERROR_PROPERTY + " set=" + node, node);
         }
 
-        try {
-            return new SpreadsheetFormula(text,
-                    Optional.ofNullable(expression),
-                    Optional.ofNullable(value),
-                    Optional.ofNullable(error));
-        } catch (final RuntimeException cause) {
-            throw new FromJsonNodeException(cause.getMessage(), node, cause);
-        }
+        return new SpreadsheetFormula(text,
+                Optional.ofNullable(expression),
+                Optional.ofNullable(value),
+                Optional.ofNullable(error));
     }
 
     /**

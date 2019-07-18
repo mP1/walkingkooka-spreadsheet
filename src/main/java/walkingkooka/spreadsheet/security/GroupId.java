@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.security;
 
-import walkingkooka.tree.json.FromJsonNodeException;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 
@@ -28,13 +27,7 @@ public final class GroupId extends IdentityId
         implements Comparable<GroupId> {
 
     static GroupId fromJsonNode(final JsonNode node) {
-        try {
-            return with(node.fromJsonNode(Long.class));
-        } catch (final FromJsonNodeException cause) {
-            throw cause;
-        } catch (final RuntimeException cause) {
-            throw new FromJsonNodeException(cause.getMessage(), node, cause);
-        }
+        return with(node.fromJsonNode(Long.class));
     }
 
     public static GroupId with(final long value) {
