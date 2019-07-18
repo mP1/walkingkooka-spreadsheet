@@ -47,7 +47,14 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     static SpreadsheetIdSpreadsheetMetadataPropertyValueHandler spreadsheetId() {
         return SpreadsheetIdSpreadsheetMetadataPropertyValueHandler.INSTANCE;
     }
-    
+
+    /**
+     * {@see StringSpreadsheetMetadataPropertyValueHandler}
+     */
+    static StringSpreadsheetMetadataPropertyValueHandler string() {
+        return StringSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    }
+
     /**
      * Package private to limit sub classing.
      */
