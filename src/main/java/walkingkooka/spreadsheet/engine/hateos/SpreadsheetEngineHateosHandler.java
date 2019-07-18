@@ -123,6 +123,22 @@ abstract class SpreadsheetEngineHateosHandler<I extends Comparable<I> & HasHateo
         return resource.orElseThrow(() -> new IllegalArgumentException("Required resource missing"));
     }
 
+    static <I> void checkWithoutCells(final Optional<SpreadsheetDelta<I>> delta) {
+        delta.ifPresent(SpreadsheetEngineHateosHandler::checkWithoutCells0);
+    }
+
+    private static <I> void checkWithoutCells0(final SpreadsheetDelta<I> delta) {
+        if (!delta.cells().isEmpty()) {
+            throw new IllegalArgumentException("Expected delta without cells: " + delta);
+        }
+    }
+
+    static <I> SpreadsheetDelta<I> applyWindow(final SpreadsheetDelta<I> out,
+                                               final Optional<SpreadsheetDelta<I>> in) {
+        return in.map(d -> d.setCells(out.cells()))
+                .orElse(out);
+    }
+
     // parameters.......................................................................................................
 
     /**

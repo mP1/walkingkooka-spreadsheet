@@ -41,12 +41,12 @@ final class SpreadsheetEngineLoadCellHateosHandlerBatchLoader {
         this.handler = handler;
     }
 
-    Optional<SpreadsheetDelta<Range<SpreadsheetCellReference>>> batchLoad(final Range<SpreadsheetCellReference> cells) {
+    SpreadsheetDelta<Range<SpreadsheetCellReference>> batchLoad(final Range<SpreadsheetCellReference> cells) {
         SpreadsheetRange.with(cells).cellStream()
                 .forEach(this::maybeLoadCell);
         return this.referenceToCell.isEmpty() ?
-                Optional.empty() :
-                Optional.of(this.createDelta(cells));
+                null :
+                this.createDelta(cells);
     }
 
     private void maybeLoadCell(final SpreadsheetCellReference reference) {
