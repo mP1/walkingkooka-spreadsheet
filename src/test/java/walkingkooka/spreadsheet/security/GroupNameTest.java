@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.naming.NameTesting;
 import walkingkooka.naming.PropertiesPath;
 import walkingkooka.text.CaseSensitivity;
-import walkingkooka.tree.json.HasJsonNodeTesting;
+import walkingkooka.tree.json.HasJsonNodeStringTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.type.JavaVisibility;
@@ -29,7 +29,7 @@ import walkingkooka.type.JavaVisibility;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final public class GroupNameTest implements NameTesting<GroupName, GroupName>,
-        HasJsonNodeTesting<GroupName> {
+        HasJsonNodeStringTesting<GroupName> {
 
     @Test
     public void testCreateEmptyStringFails() {
@@ -113,26 +113,6 @@ final public class GroupNameTest implements NameTesting<GroupName, GroupName>,
     }
 
     // toJsonNode ......................................................................................................
-
-    @Test
-    public void testFromJsonNodeBooleanFails() {
-        this.fromJsonNodeFails(JsonNode.booleanNode(true), JsonNodeException.class);
-    }
-
-    @Test
-    public void testFromJsonNodeNumberFails() {
-        this.fromJsonNodeFails(JsonNode.number(123), JsonNodeException.class);
-    }
-
-    @Test
-    public void testFromJsonNodeArrayFails() {
-        this.fromJsonNodeFails(JsonNode.array(), JsonNodeException.class);
-    }
-
-    @Test
-    public void testFromJsonNodeObjectFails() {
-        this.fromJsonNodeFails(JsonNode.object(), JsonNodeException.class);
-    }
 
     @Test
     public void testFromJsonNodeInvalidEmailFails() {
