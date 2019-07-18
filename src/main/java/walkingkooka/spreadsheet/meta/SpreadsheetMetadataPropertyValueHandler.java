@@ -42,6 +42,13 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     }
 
     /**
+     * {@see LocaleSpreadsheetMetadataPropertyValueHandler}
+     */
+    static LocaleSpreadsheetMetadataPropertyValueHandler locale() {
+        return LocaleSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    }
+    
+    /**
      * {@see SpreadsheetIdSpreadsheetMetadataPropertyValueHandler}
      */
     static SpreadsheetIdSpreadsheetMetadataPropertyValueHandler spreadsheetId() {
