@@ -24,7 +24,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserReporters;
-import walkingkooka.tree.json.FromJsonNodeException;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonStringNode;
@@ -49,11 +48,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     static SpreadsheetColumnReference fromJsonNode(final JsonNode from) {
         Objects.requireNonNull(from, "from");
 
-        try {
-            return parse(from.stringValueOrFail());
-        } catch (final RuntimeException cause) {
-            throw new FromJsonNodeException(cause.getMessage(), from, cause);
-        }
+        return parse(from.stringValueOrFail());
     }
 
     static {

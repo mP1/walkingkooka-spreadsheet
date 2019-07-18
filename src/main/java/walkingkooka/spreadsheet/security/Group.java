@@ -19,10 +19,8 @@ package walkingkooka.spreadsheet.security;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.tree.json.FromJsonNodeException;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonNodeName;
 
 import java.util.List;
@@ -87,33 +85,25 @@ public final class Group extends Identity<GroupId> {
         GroupId id = null;
         GroupName groupName = null;
 
-        try {
-            for (JsonNode child : node.objectOrFail().children()) {
-                final JsonNodeName name = child.name();
-                switch (name.value()) {
-                    case ID_PROPERTY_STRING:
-                        id = GroupId.fromJsonNode(child);
-                        break;
-                    case NAME_PROPERTY_STRING:
-                        groupName = GroupName.fromJsonNode(child);
-                        break;
-                    default:
-                        HasJsonNode.unknownPropertyPresent(name, node);
-                }
+        for (JsonNode child : node.objectOrFail().children()) {
+            final JsonNodeName name = child.name();
+            switch (name.value()) {
+                case ID_PROPERTY_STRING:
+                    id = GroupId.fromJsonNode(child);
+                    break;
+                case NAME_PROPERTY_STRING:
+                    groupName = GroupName.fromJsonNode(child);
+                    break;
+                default:
+                    HasJsonNode.unknownPropertyPresent(name, node);
             }
-        } catch (final JsonNodeException cause) {
-            throw new FromJsonNodeException(cause.getMessage(), node, cause);
         }
 
         if (null == groupName) {
             HasJsonNode.requiredPropertyMissing(NAME_PROPERTY, node);
         }
 
-        try {
-            return new Group(Optional.ofNullable(id), groupName);
-        } catch (final RuntimeException cause) {
-            throw new FromJsonNodeException(cause.getMessage(), node, cause);
-        }
+        return new Group(Optional.ofNullable(id), groupName);
     }
 
     @Override

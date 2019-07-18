@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.Range;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -128,7 +127,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testFromJsonNodeStringInvalidFails() {
-        this.fromJsonNodeFails(JsonNode.string("!9"), JsonNodeException.class);
+        this.fromJsonNodeFails(JsonNode.string("!9"), IllegalArgumentException.class);
     }
 
     @Test

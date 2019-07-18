@@ -23,7 +23,6 @@ import walkingkooka.naming.PropertiesPath;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.json.HasJsonNodeStringTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -116,7 +115,7 @@ final public class GroupNameTest implements NameTesting<GroupName, GroupName>,
 
     @Test
     public void testFromJsonNodeInvalidEmailFails() {
-        this.fromJsonNodeFails(JsonNode.string("!"), JsonNodeException.class);
+        this.fromJsonNodeFails(JsonNode.string("!"), IllegalArgumentException.class);
     }
 
     @Test
