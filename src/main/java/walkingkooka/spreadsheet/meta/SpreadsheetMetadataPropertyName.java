@@ -71,7 +71,17 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
         return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.spreadsheetId(),
                 visitor);
     }
-    
+
+    /**
+     * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link SpreadsheetId} metadata values.
+     */
+    private static SpreadsheetMetadataPropertyName<String> registerStringConstant(final String name,
+                                                                                  final BiConsumer<String, SpreadsheetMetadataVisitor> visitor) {
+        return registerConstant(name,
+                SpreadsheetMetadataPropertyValueHandler.string(),
+                visitor);
+    }
+
     /**
      * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built.
      */
@@ -96,6 +106,14 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
      */
     public final static SpreadsheetMetadataPropertyName<LocalDateTime> CREATE_DATE_TIME = registerDateTimeConstant("create-date-time",
             (d, v) -> v.visitCreateDateTime(d));
+
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>general decimal format pattern {@link String}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<String> GENERAL_DECIMAL_FORMAT_PATTERN = registerStringConstant("general-decimal-format-pattern",
+            (d, v) -> v.visitGeneralDecimalFormatPattern(d));
+
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>last modified by {@link EmailAddress}</code>
