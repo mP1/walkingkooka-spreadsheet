@@ -18,9 +18,12 @@
 package walkingkooka.spreadsheet.engine.hateos;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.net.http.server.hateos.HateosHandlerTesting;
+import walkingkooka.predicate.PredicateTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
@@ -28,15 +31,19 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetEngineHateosHandlerTestCase2<H extends SpreadsheetEngineHateosHandler<I>,
         I extends Comparable<I> & HasHateosLinkId>
         extends SpreadsheetEngineHateosHandlerTestCase<H>
-        implements HateosHandlerTesting<H, I, SpreadsheetDelta<Optional<I>>, SpreadsheetDelta<Range<I>>> {
+        implements HateosHandlerTesting<H, I, SpreadsheetDelta<Optional<I>>, SpreadsheetDelta<Range<I>>>,
+        PredicateTesting {
 
     SpreadsheetEngineHateosHandlerTestCase2() {
         super();
@@ -77,5 +84,27 @@ public abstract class SpreadsheetEngineHateosHandlerTestCase2<H extends Spreadsh
     final SpreadsheetCell cell(final String cellReference, final String formula) {
         return SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference(cellReference),
                 SpreadsheetFormula.with(formula));
+    }
+
+    final Set<SpreadsheetCell> cells() {
+        return Sets.of(this.cell(), this.cellOutsideWindow());
+    }
+
+    final Set<SpreadsheetCell> cellsWithinWindow() {
+        return Sets.of(this.cell());
+    }
+
+    final List<SpreadsheetRange> window() {
+        final SpreadsheetRange window = SpreadsheetExpressionReference.parseRange("A1:B99");
+
+        this.testTrue(window, this.cell().reference());
+
+        this.testFalse(window, cellOutsideWindow().reference());
+
+        return Lists.of(window);
+    }
+
+    final SpreadsheetCell cellOutsideWindow() {
+        return this.cell("Z99", "99");
     }
 }

@@ -73,16 +73,9 @@ abstract class SpreadsheetEngineDeleteOrInsertColumnsOrRowsHateosHandler<R exten
     private <I> SpreadsheetDelta<I> executeAndWindowFilter(final R lower,
                                                            final int count,
                                                            final Optional<SpreadsheetDelta<I>> in) {
-        in.ifPresent(this::checkWithoutCells);
-        final SpreadsheetDelta<I> out = this.execute(lower, count);
-        return in.map(d -> d.setCells(out.cells()))
-                .orElse(out);
-    }
+        checkWithoutCells(in);
 
-    private void checkWithoutCells(final SpreadsheetDelta<?> delta) {
-        if (!delta.cells().isEmpty()) {
-            throw new IllegalArgumentException("Expected delta without cells: " + delta);
-        }
+        return applyWindow(this.execute(lower, count), in);
     }
 
     /**
