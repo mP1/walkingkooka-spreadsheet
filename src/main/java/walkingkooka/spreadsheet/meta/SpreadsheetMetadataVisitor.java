@@ -23,6 +23,7 @@ import walkingkooka.tree.visit.Visiting;
 import walkingkooka.tree.visit.Visitor;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.Objects;
 
@@ -87,6 +88,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitGeneralDecimalFormatPattern(final String pattern) {
+        // nop
+    }
+
+    protected void visitLocale(final Locale locale) {
         // nop
     }
 
