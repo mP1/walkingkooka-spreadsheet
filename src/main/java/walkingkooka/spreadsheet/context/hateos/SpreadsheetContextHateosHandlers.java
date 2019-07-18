@@ -30,13 +30,20 @@ import walkingkooka.type.PublicStaticHelper;
  */
 public final class SpreadsheetContextHateosHandlers implements PublicStaticHelper {
 
-
     /**
      * {@see SpreadsheetContextCreateAndSaveMetadataHateosHandler}
      */
     public static HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> createAndSaveMetadata(final SpreadsheetContext context,
                                                                                                                                 final Store<SpreadsheetId, SpreadsheetMetadata> store) {
         return SpreadsheetContextCreateAndSaveMetadataHateosHandler.with(context, store);
+    }
+
+    /**
+     * {@see SpreadsheetContextLoadMetadataHateosHandler}
+     */
+    public static HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> loadMetadata(final SpreadsheetContext context,
+                                                                                                                       final Store<SpreadsheetId, SpreadsheetMetadata> store) {
+        return SpreadsheetContextLoadMetadataHateosHandler.with(context, store);
     }
 
     /**
