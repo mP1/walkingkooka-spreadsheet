@@ -23,7 +23,7 @@ import walkingkooka.compare.LowerOrUpperTesting;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.test.ToStringTesting;
-import walkingkooka.tree.json.HasJsonNodeTesting;
+import walkingkooka.tree.json.HasJsonNodeStringTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.JavaVisibility;
 
@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends SpreadsheetColumnOrRowReference<R>> implements ClassTesting2<R>,
         ComparableTesting<R>,
         LowerOrUpperTesting<R>,
-        HasJsonNodeTesting<R>,
+        HasJsonNodeStringTesting<R>,
         ParseStringTesting<R>,
         ToStringTesting<R> {
 

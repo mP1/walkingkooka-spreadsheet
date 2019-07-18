@@ -127,26 +127,6 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     // JsonNodeTesting..................................................................................................
 
     @Test
-    public void testFromJsonNodeBooleanFails() {
-        this.fromJsonNodeFails(JsonNode.booleanNode(true), JsonNodeException.class);
-    }
-
-    @Test
-    public void testFromJsonNodeNumberFails() {
-        this.fromJsonNodeFails(JsonNode.number(123), JsonNodeException.class);
-    }
-
-    @Test
-    public void testFromJsonNodeArrayFails() {
-        this.fromJsonNodeFails(JsonNode.array(), JsonNodeException.class);
-    }
-
-    @Test
-    public void testFromJsonNodeObjectFails() {
-        this.fromJsonNodeFails(JsonNode.object(), JsonNodeException.class);
-    }
-
-    @Test
     public void testFromJsonNodeStringInvalidFails() {
         this.fromJsonNodeFails(JsonNode.string("!9"), JsonNodeException.class);
     }
