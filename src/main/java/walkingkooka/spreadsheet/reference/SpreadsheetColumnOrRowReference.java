@@ -39,7 +39,7 @@ import java.util.function.IntFunction;
 /**
  * Captures the common features shared by a row or column.
  */
-abstract class SpreadsheetColumnOrRowReference<R extends SpreadsheetColumnOrRowReference<R>> implements Value<Integer>,
+abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColumnOrRowReference<R>> implements Value<Integer>,
         Comparable<R>,
         LowerOrUpper<R>,
         HashCodeEqualsDefined,
