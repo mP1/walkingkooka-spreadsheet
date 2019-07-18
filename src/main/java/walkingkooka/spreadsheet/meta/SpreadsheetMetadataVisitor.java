@@ -86,6 +86,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitGeneralDecimalFormatPattern(final String pattern) {
+        // nop
+    }
+
     protected void visitModifiedBy(final EmailAddress emailAddress) {
         // nop
     }

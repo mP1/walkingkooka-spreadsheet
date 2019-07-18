@@ -117,6 +117,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitGeneralDecimalFormatPattern() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitGeneralDecimalFormatPattern(final String p) {
+                this.visited = p;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.GENERAL_DECIMAL_FORMAT_PATTERN, "#.##");
+    }
+
+    @Test
     public void testVisitModifiedBy() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
