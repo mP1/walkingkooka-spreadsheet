@@ -31,18 +31,18 @@ import java.util.Optional;
 /**
  * A {@link HateosHandler} that invokes {@link SpreadsheetContext#metadataWithDefaults()}
  */
-final class SpreadsheetContextCreateAndSaveMetadataHateosHandler extends SpreadsheetContextSpreadsheetMetadataStoreHateosHandler {
+final class SpreadsheetContextLoadMetadataHateosHandler extends SpreadsheetContextSpreadsheetMetadataStoreHateosHandler {
 
-    static SpreadsheetContextCreateAndSaveMetadataHateosHandler with(final SpreadsheetContext context,
-                                                                     final Store<SpreadsheetId, SpreadsheetMetadata> store) {
+    static SpreadsheetContextLoadMetadataHateosHandler with(final SpreadsheetContext context,
+                                                            final Store<SpreadsheetId, SpreadsheetMetadata> store) {
         checkContext(context);
         Objects.requireNonNull(store, "store");
 
-        return new SpreadsheetContextCreateAndSaveMetadataHateosHandler(context, store);
+        return new SpreadsheetContextLoadMetadataHateosHandler(context, store);
     }
 
-    private SpreadsheetContextCreateAndSaveMetadataHateosHandler(final SpreadsheetContext context,
-                                                                 final Store<SpreadsheetId, SpreadsheetMetadata> store) {
+    private SpreadsheetContextLoadMetadataHateosHandler(final SpreadsheetContext context,
+                                                        final Store<SpreadsheetId, SpreadsheetMetadata> store) {
         super(context, store);
     }
 
@@ -50,27 +50,15 @@ final class SpreadsheetContextCreateAndSaveMetadataHateosHandler extends Spreads
     public Optional<SpreadsheetMetadata> handle(final Optional<SpreadsheetId> id,
                                                 final Optional<SpreadsheetMetadata> resource,
                                                 final Map<HttpRequestAttribute<?>, Object> parameters) {
-        checkIdNotNull(id);
-        checkResource(resource);
+        final SpreadsheetId spreadsheetId = this.checkIdRequired(id);
+        checkResourceEmpty(resource);
         checkParameters(parameters);
 
-        return id.map(i -> this.saveMetadata(i, this.checkResourceNotEmpty(resource)))
-                .or(() -> this.createMetadata(resource));
-    }
-
-    private SpreadsheetMetadata saveMetadata(final SpreadsheetId id,
-                                             final SpreadsheetMetadata metadata) {
-        return this.store.save(metadata);
-    }
-
-    private Optional<SpreadsheetMetadata> createMetadata(final Optional<SpreadsheetMetadata> metadata) {
-        checkResourceEmpty(metadata);
-
-        return Optional.of(this.context.metadataWithDefaults());
+        return this.store.load(spreadsheetId);
     }
 
     @Override
     String operation() {
-        return "saveMetadata";
+        return "loadMetadata";
     }
 }
