@@ -35,6 +35,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -67,6 +68,30 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
                 this.resource(),
                 this.parameters(),
                 Optional.of(this.spreadsheetDelta()));
+    }
+
+    @Test
+    public void testLoadCellAndFilter() {
+        final Optional<SpreadsheetCellReference> id = this.id();
+        final List<SpreadsheetRange> window = this.window();
+
+        this.handleAndCheck(SpreadsheetEngineLoadCellHateosHandler.with(EVALUATION,
+                new FakeSpreadsheetEngine() {
+                    @Override
+                    public SpreadsheetDelta<Optional<SpreadsheetCellReference>> loadCell(final SpreadsheetCellReference cell,
+                                                                                         final SpreadsheetEngineEvaluation evaluation,
+                                                                                         final SpreadsheetEngineContext context) {
+                        assertSame(EVALUATION, evaluation, "evaluation");
+                        assertNotNull(context, "context");
+
+                        return SpreadsheetDelta.withId(Optional.of(cell), cells());
+                    }
+                },
+                this.engineContext()),
+                id,
+                Optional.of(SpreadsheetDelta.withId(id, SpreadsheetDelta.NO_CELLS).setWindow(window)),
+                this.parameters(),
+                Optional.of(SpreadsheetDelta.withId(this.id(), this.cellsWithinWindow()).setWindow(window)));
     }
 
     // handleCollection.................................................................................................
@@ -225,6 +250,48 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
                 this.collectionResource(),
                 this.parameters(),
                 result);
+    }
+
+    @Test
+    public void testBatchLoadIndividuallyAndFilterWindow() {
+        // B1, B2, B3
+        // C1, C2, C3
+
+        final SpreadsheetCell b1 = this.b1();
+        final SpreadsheetCell b2 = this.b2();
+        final SpreadsheetCell b3 = this.b3();
+
+        final SpreadsheetCell c1 = this.c1();
+        final SpreadsheetCell c2 = this.c2();
+        final SpreadsheetCell c3 = this.c3();
+
+        final List<SpreadsheetCell> cells = Lists.of(b1, b2, b3, c1, c2, c3);
+
+        final Range<SpreadsheetCellReference> range = this.collection();
+        final List<SpreadsheetRange> window = this.window();
+
+        this.handleCollectionAndCheck(SpreadsheetEngineLoadCellHateosHandler.with(EVALUATION,
+                new FakeSpreadsheetEngine() {
+                    @Override
+                    public SpreadsheetDelta<Optional<SpreadsheetCellReference>> loadCell(final SpreadsheetCellReference cell,
+                                                                                         final SpreadsheetEngineEvaluation evaluation,
+                                                                                         final SpreadsheetEngineContext context) {
+                        assertSame(EVALUATION, evaluation, "evaluation");
+                        assertNotNull(context, "context");
+
+                        final SpreadsheetCell loaded = cells.stream()
+                                .filter(c -> c.reference().equalsIgnoreReferenceKind(cell))
+                                .findFirst()
+                                .orElseThrow(() -> new AssertionError("Unable to find cell " + cell));
+
+                        return SpreadsheetDelta.withId(Optional.of(cell), Sets.of(loaded, cellOutsideWindow()));
+                    }
+                },
+                this.engineContext()),
+                range,
+                Optional.of(SpreadsheetDelta.withRange(range, SpreadsheetDelta.NO_CELLS).setWindow(window)),
+                this.parameters(),
+                Optional.of(SpreadsheetDelta.withRange(range, Sets.of(b1, b2, b3, c1, c2, c3)).setWindow(window)));
     }
 
     private SpreadsheetCell b1() {

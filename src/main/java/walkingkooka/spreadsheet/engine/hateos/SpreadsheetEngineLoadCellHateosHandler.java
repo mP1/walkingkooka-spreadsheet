@@ -59,10 +59,12 @@ final class SpreadsheetEngineLoadCellHateosHandler extends SpreadsheetEngineHate
                                                                                  final Optional<SpreadsheetDelta<Optional<SpreadsheetCellReference>>> resource,
                                                                                  final Map<HttpRequestAttribute<?>, Object> parameters) {
         final SpreadsheetCellReference reference = this.checkIdRequired(id);
-        this.checkResourceEmpty(resource);
+        this.checkResource(resource);
         this.checkParameters(parameters);
 
-        return Optional.of(this.loadCell(reference));
+        checkWithoutCells(resource);
+
+        return Optional.of(applyWindow(this.loadCell(reference), resource));
     }
 
     SpreadsheetDelta<Optional<SpreadsheetCellReference>> loadCell(final SpreadsheetCellReference reference) {
@@ -81,7 +83,9 @@ final class SpreadsheetEngineLoadCellHateosHandler extends SpreadsheetEngineHate
         this.checkResource(resource);
         this.checkParameters(parameters);
 
-        return SpreadsheetEngineLoadCellHateosHandlerBatchLoader.with(this).batchLoad(cells);
+        checkWithoutCells(resource);
+
+        return Optional.ofNullable(applyWindow(SpreadsheetEngineLoadCellHateosHandlerBatchLoader.with(this).batchLoad(cells), resource));
     }
 
     @Override
