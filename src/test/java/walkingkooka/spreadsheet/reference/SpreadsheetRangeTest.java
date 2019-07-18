@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.Range;
-import walkingkooka.predicate.PredicateTesting;
+import walkingkooka.predicate.PredicateTesting2;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
@@ -44,7 +44,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTestCase<SpreadsheetRange>
         implements ParseStringTesting<SpreadsheetRange>,
-        PredicateTesting<SpreadsheetRange, SpreadsheetCellReference> {
+        PredicateTesting2<SpreadsheetRange, SpreadsheetCellReference> {
 
     private final static int COLUMN1 = 10;
     private final static int ROW1 = 11;
