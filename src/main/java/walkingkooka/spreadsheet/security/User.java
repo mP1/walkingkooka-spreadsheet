@@ -20,10 +20,8 @@ package walkingkooka.spreadsheet.security;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.tree.json.FromJsonNodeException;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonNodeName;
 
 import java.util.List;
@@ -88,33 +86,25 @@ public final class User extends Identity<UserId> {
         UserId id = null;
         EmailAddress email = null;
 
-        try {
-            for (JsonNode child : node.objectOrFail().children()) {
-                final JsonNodeName name = child.name();
-                switch (name.value()) {
-                    case ID_PROPERTY_STRING:
-                        id = UserId.fromJsonNode(child);
-                        break;
-                    case EMAIL_PROPERTY_STRING:
-                        email = child.fromJsonNode(EmailAddress.class);
-                        break;
-                    default:
-                        HasJsonNode.unknownPropertyPresent(name, node);
-                }
+        for (JsonNode child : node.objectOrFail().children()) {
+            final JsonNodeName name = child.name();
+            switch (name.value()) {
+                case ID_PROPERTY_STRING:
+                    id = UserId.fromJsonNode(child);
+                    break;
+                case EMAIL_PROPERTY_STRING:
+                    email = child.fromJsonNode(EmailAddress.class);
+                    break;
+                default:
+                    HasJsonNode.unknownPropertyPresent(name, node);
             }
-        } catch (final JsonNodeException cause) {
-            throw new FromJsonNodeException(cause.getMessage(), node, cause);
         }
 
         if (null == email) {
             HasJsonNode.requiredPropertyMissing(EMAIL_PROPERTY, node);
         }
 
-        try {
-            return new User(Optional.ofNullable(id), email);
-        } catch (final RuntimeException cause) {
-            throw new FromJsonNodeException(cause.getMessage(), node, cause);
-        }
+        return new User(Optional.ofNullable(id), email);
     }
 
     @Override

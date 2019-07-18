@@ -21,9 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ToStringTesting;
-import walkingkooka.tree.json.HasJsonNodeTesting;
+import walkingkooka.tree.json.HasJsonNodeStringTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetColumnTest implements ClassTesting2<SpreadsheetColumn>,
         ComparableTesting<SpreadsheetColumn>,
-        HasJsonNodeTesting<SpreadsheetColumn>,
+        HasJsonNodeStringTesting<SpreadsheetColumn>,
         ToStringTesting<SpreadsheetColumn> {
 
 
@@ -104,30 +103,9 @@ public final class SpreadsheetColumnTest implements ClassTesting2<SpreadsheetCol
     // HasJsonNode.fromJsonNode.........................................................................................
 
     @Test
-    public void testFromJsonNodeBooleanFails() {
-        this.fromJsonNodeFails(JsonNode.booleanNode(true), JsonNodeException.class);
-    }
-
-    @Test
-    public void testFromJsonNodeNumberFails() {
-        this.fromJsonNodeFails(JsonNode.number(12), JsonNodeException.class);
-    }
-
-    @Test
-    public void testFromJsonNodeArrayFails() {
-        this.fromJsonNodeFails(JsonNode.array(), JsonNodeException.class);
-    }
-
-    @Test
     public void testFromJsonNodeStringFails() {
-        this.fromJsonNodeFails(JsonNode.string("fails"), JsonNodeException.class);
+        this.fromJsonNodeFails(JsonNode.string("fails"), IllegalArgumentException.class);
     }
-
-    @Test
-    public void testFromJsonNodeObjectEmptyFails() {
-        this.fromJsonNodeFails(JsonNode.object(), JsonNodeException.class);
-    }
-
 
     // HasJsonNode .toJsonNode.........................................................................
     @Test

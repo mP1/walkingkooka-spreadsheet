@@ -22,7 +22,6 @@ import walkingkooka.net.header.LinkRelation;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.tree.json.HasJsonNodeStringTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,7 +33,7 @@ public final class SpreadsheetEngineEvaluationTest implements ClassTesting2<Spre
 
     @Test
     public void testFromJsonNodeStringUnknownFails() {
-        this.fromJsonNodeFails(JsonNode.string("123"), JsonNodeException.class);
+        this.fromJsonNodeFails(JsonNode.string("123"), IllegalArgumentException.class);
     }
 
     @Test

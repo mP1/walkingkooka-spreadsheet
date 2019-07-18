@@ -24,10 +24,8 @@ import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.test.HashCodeEqualsDefined;
-import walkingkooka.tree.json.FromJsonNodeException;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonObjectNode;
 
 import java.util.Map;
 import java.util.Objects;
@@ -163,19 +161,9 @@ public abstract class SpreadsheetMetadata implements HashCodeEqualsDefined,
     static SpreadsheetMetadata fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
-        try {
-            return fromJson0(node.objectOrFail());
-        } catch (final FromJsonNodeException cause) {
-            throw cause;
-        } catch (final RuntimeException cause) {
-            throw new FromJsonNodeException(cause.getMessage(), node, cause);
-        }
-    }
-
-    private static SpreadsheetMetadata fromJson0(final JsonObjectNode json) {
         final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = Maps.ordered();
 
-        for (JsonNode child : json.children()) {
+        for (JsonNode child : node.objectOrFail().children()) {
             final SpreadsheetMetadataPropertyName<?> name = SpreadsheetMetadataPropertyName.fromJsonNodeName(child);
             properties.put(name,
                     name.handler.fromJsonNode(child, name));
