@@ -22,71 +22,48 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.spreadsheet.context.FakeSpreadsheetContext;
 import walkingkooka.spreadsheet.context.SpreadsheetContext;
+import walkingkooka.spreadsheet.context.SpreadsheetContexts;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.store.Store;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+public final class SpreadsheetContextLoadMetadataHateosHandlerTest extends SpreadsheetContextSpreadsheetMetadataStoreHateosHandlerTestCase<SpreadsheetContextLoadMetadataHateosHandler> {
 
-public final class SpreadsheetContextCreateAndSaveMetadataHateosHandlerTest extends SpreadsheetContextSpreadsheetMetadataStoreHateosHandlerTestCase<SpreadsheetContextCreateAndSaveMetadataHateosHandler> {
-
-    SpreadsheetContextCreateAndSaveMetadataHateosHandlerTest() {
+    SpreadsheetContextLoadMetadataHateosHandlerTest() {
         super();
     }
 
     // handle...........................................................................................................
 
     @Test
-    public void testHandleIdWithoutMetadataResourceFails() {
+    public void testHandleIdWithMetadataResourceFails() {
         final Optional<SpreadsheetId> id = this.id();
 
         this.handleFails(id,
-                Optional.empty(),
+                Optional.of(this.metadataWithDefaults()),
                 this.parameters(),
                 IllegalArgumentException.class);
     }
 
     @Test
-    public void testHandleWithoutIdCreatesMetadata() {
+    public void testHandleLoad() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, this.spreadsheetId(),
                 SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com")));
 
-        this.handleAndCheck(this.createHandler(new FakeSpreadsheetContext() {
+        final Store<SpreadsheetId, SpreadsheetMetadata> store = SpreadsheetMetadataStores.treeMap();
+        store.save(metadata);
 
-                    @Override
-                    public SpreadsheetMetadata metadataWithDefaults() {
-                        return metadata;
-                    }
-                }),
-                Optional.empty(),
+        this.handleAndCheck(this.createHandler(SpreadsheetContexts.fake(),
+                store),
+                this.id(),
                 Optional.empty(),
                 HateosHandler.NO_PARAMETERS,
                 Optional.of(metadata));
-    }
-
-    @Test
-    public void testHandleIdWithMetadataSaves() {
-        final Optional<SpreadsheetId> id = this.id();
-
-        final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
-        final SpreadsheetContextCreateAndSaveMetadataHateosHandler handler = SpreadsheetContextCreateAndSaveMetadataHateosHandler.with(this.context(), store);
-
-        final SpreadsheetMetadata metadata = this.metadata();
-
-        this.handleAndCheck(handler,
-                id,
-                Optional.of(metadata),
-                this.parameters(),
-                Optional.of(metadata));
-
-        assertEquals(Optional.of(metadata), store.load(id.get()), () -> "store missing id=" + id);
     }
 
     // toString.........................................................................................................
@@ -94,25 +71,20 @@ public final class SpreadsheetContextCreateAndSaveMetadataHateosHandlerTest exte
     @Test
     public final void testToString() {
         final SpreadsheetContext context = this.context();
-        this.toStringAndCheck(this.createHandler(context), context + " saveMetadata");
+        this.toStringAndCheck(this.createHandler(context), context + " loadMetadata");
     }
 
     // helpers..........................................................................................................
 
     @Override
-    SpreadsheetContextCreateAndSaveMetadataHateosHandler createHandler(final SpreadsheetContext context,
-                                                                       final Store<SpreadsheetId, SpreadsheetMetadata> store) {
-        return SpreadsheetContextCreateAndSaveMetadataHateosHandler.with(context, store);
+    SpreadsheetContextLoadMetadataHateosHandler createHandler(final SpreadsheetContext context,
+                                                              final Store<SpreadsheetId, SpreadsheetMetadata> store) {
+        return SpreadsheetContextLoadMetadataHateosHandler.with(context, store);
     }
 
     @Override
     SpreadsheetContext context() {
-        return new FakeSpreadsheetContext() {
-            @Override
-            public SpreadsheetMetadata metadataWithDefaults() {
-                return SpreadsheetContextCreateAndSaveMetadataHateosHandlerTest.this.metadataWithDefaults();
-            }
-        };
+        return SpreadsheetContexts.fake();
     }
 
     private SpreadsheetMetadata metadataWithDefaults() {
@@ -123,7 +95,7 @@ public final class SpreadsheetContextCreateAndSaveMetadataHateosHandlerTest exte
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetContextCreateAndSaveMetadataHateosHandler> type() {
-        return SpreadsheetContextCreateAndSaveMetadataHateosHandler.class;
+    public Class<SpreadsheetContextLoadMetadataHateosHandler> type() {
+        return SpreadsheetContextLoadMetadataHateosHandler.class;
     }
 }
