@@ -842,27 +842,7 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
         this.hateosLinkIdAndCheck(SpreadsheetRange.parseRange("B2:C9"), "B2-C9");
     }
 
-    // HasJsonNodeTesting...........................................................................................
-
-    @Test
-    public void testFromJsonNodeBooleanFails() {
-        this.fromJsonNodeFails(JsonNode.booleanNode(true), JsonNodeException.class);
-    }
-
-    @Test
-    public void testFromJsonNodeNumberFails() {
-        this.fromJsonNodeFails(JsonNode.number(12), JsonNodeException.class);
-    }
-
-    @Test
-    public void testFromJsonNodeArrayFails() {
-        this.fromJsonNodeFails(JsonNode.array(), JsonNodeException.class);
-    }
-
-    @Test
-    public void testFromJsonNodeObjectFails() {
-        this.fromJsonNodeFails(JsonNode.object(), JsonNodeException.class);
-    }
+    // HasJsonNodeTesting...............................................................................................
 
     @Test
     public void testFromJsonNode() {
