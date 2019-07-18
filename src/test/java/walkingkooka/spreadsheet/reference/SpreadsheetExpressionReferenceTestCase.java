@@ -24,14 +24,14 @@ import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.IsMethodTesting;
 import walkingkooka.test.ToStringTesting;
-import walkingkooka.tree.json.HasJsonNodeTesting;
+import walkingkooka.tree.json.HasJsonNodeStringTesting;
 import walkingkooka.tree.json.JsonNode;
 
 import java.util.function.Predicate;
 
 public abstract class SpreadsheetExpressionReferenceTestCase<R extends SpreadsheetExpressionReference> implements ClassTesting2<R>,
         HashCodeEqualsDefinedTesting<R>,
-        HasJsonNodeTesting<R>,
+        HasJsonNodeStringTesting<R>,
         HasHateosLinkIdTesting<R>,
         IsMethodTesting<R>,
         ToStringTesting<R> {
