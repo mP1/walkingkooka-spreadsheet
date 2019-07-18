@@ -18,20 +18,16 @@
 package walkingkooka.spreadsheet.engine.hateos;
 
 import walkingkooka.compare.Range;
-import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 
-import java.util.Map;
-import java.util.Optional;
-
 /**
  * A {@link HateosHandler} for {@link SpreadsheetEngine#deleteColumns(SpreadsheetColumnReference, int, SpreadsheetEngineContext)}.
  */
-final class SpreadsheetEngineDeleteColumnsHateosHandler extends SpreadsheetEngineHateosHandler<SpreadsheetColumnReference> {
+final class SpreadsheetEngineDeleteColumnsHateosHandler extends SpreadsheetEngineDeleteOrInsertColumnsOrRowsHateosHandler<SpreadsheetColumnReference> {
 
     static SpreadsheetEngineDeleteColumnsHateosHandler with(final SpreadsheetEngine engine,
                                                             final SpreadsheetEngineContext context) {
@@ -45,29 +41,13 @@ final class SpreadsheetEngineDeleteColumnsHateosHandler extends SpreadsheetEngin
     }
 
     @Override
-    public Optional<SpreadsheetDelta<Optional<SpreadsheetColumnReference>>> handle(final Optional<SpreadsheetColumnReference> id,
-                                                                                   final Optional<SpreadsheetDelta<Optional<SpreadsheetColumnReference>>> resource,
-                                                                                   final Map<HttpRequestAttribute<?>, Object> parameters) {
-        final SpreadsheetColumnReference column = this.checkIdRequired(id);
-        this.checkResourceEmpty(resource);
-        this.checkParameters(parameters);
-
-        return Optional.of(this.engine.deleteColumns(column, 1, this.context).setId(id));
+    String rangeLabel() {
+        return "columns";
     }
 
-
     @Override
-    public Optional<SpreadsheetDelta<Range<SpreadsheetColumnReference>>> handleCollection(final Range<SpreadsheetColumnReference> columns,
-                                                                                          final Optional<SpreadsheetDelta<Range<SpreadsheetColumnReference>>> resource,
-                                                                                          final Map<HttpRequestAttribute<?>, Object> parameters) {
-        this.checkRangeBounded(columns, "columns");
-        this.checkResourceEmpty(resource);
-        this.checkParameters(parameters);
-
-        final SpreadsheetColumnReference lower = columns.lowerBound().value().get();
-        final SpreadsheetColumnReference upper = columns.upperBound().value().get();
-
-        return Optional.of(this.engine.deleteColumns(lower, upper.value() - lower.value() + 1, this.context));
+    SpreadsheetDelta<Range<SpreadsheetColumnReference>> execute(final SpreadsheetColumnReference column, final int count) {
+        return this.engine.deleteColumns(column, count, this.context);
     }
 
     @Override
