@@ -42,10 +42,13 @@ abstract class SpreadsheetEngineDeleteOrInsertColumnsOrRowsHateosHandler<R exten
                                                                 final Optional<SpreadsheetDelta<Optional<R>>> resource,
                                                                 final Map<HttpRequestAttribute<?>, Object> parameters) {
         final R columnOrRow = this.checkIdRequired(id);
-        this.checkResourceEmpty(resource);
+        this.checkResource(resource);
         this.checkParameters(parameters);
 
-        return Optional.of(this.execute(columnOrRow, 1).setId(id));
+        return Optional.of(this.executeAndWindowFilter(columnOrRow,
+                1,
+                resource)
+                .setId(id)); //setId necessary as $resource may be empty and we dont want the id=range of the result.
     }
 
 
@@ -54,20 +57,33 @@ abstract class SpreadsheetEngineDeleteOrInsertColumnsOrRowsHateosHandler<R exten
                                                                        final Optional<SpreadsheetDelta<Range<R>>> resource,
                                                                        final Map<HttpRequestAttribute<?>, Object> parameters) {
         this.checkRangeBounded(columnOrRow, this.rangeLabel());
-        this.checkResourceEmpty(resource);
+        this.checkResource(resource);
         this.checkParameters(parameters);
 
         final R lower = columnOrRow.lowerBound().value().get();
         final R upper = columnOrRow.upperBound().value().get();
 
-        return Optional.of(this.execute(lower, upper.value() - lower.value() + 1));
-    }
-
-    final void checkRangeBounded(final Range<?> range) {
-        this.checkRangeBounded(range, this.rangeLabel());
+        return Optional.of(this.executeAndWindowFilter(lower,
+                upper.value() - lower.value() + 1,
+                resource));
     }
 
     abstract String rangeLabel();
+
+    private <I> SpreadsheetDelta<I> executeAndWindowFilter(final R lower,
+                                                           final int count,
+                                                           final Optional<SpreadsheetDelta<I>> in) {
+        in.ifPresent(this::checkWithoutCells);
+        final SpreadsheetDelta<I> out = this.execute(lower, count);
+        return in.map(d -> d.setCells(out.cells()))
+                .orElse(out);
+    }
+
+    private void checkWithoutCells(final SpreadsheetDelta<?> delta) {
+        if (!delta.cells().isEmpty()) {
+            throw new IllegalArgumentException("Expected delta without cells: " + delta);
+        }
+    }
 
     /**
      * Sub classes must perform the delete or insert option.
