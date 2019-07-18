@@ -59,6 +59,10 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
         throw new UnsupportedOperationException();
     }
 
+    protected void visitGeneralDecimalFormatPattern(final String pattern) {
+        throw new UnsupportedOperationException();
+    }
+
     @Override
     protected void visitModifiedBy(final EmailAddress emailAddress) {
         throw new UnsupportedOperationException();
