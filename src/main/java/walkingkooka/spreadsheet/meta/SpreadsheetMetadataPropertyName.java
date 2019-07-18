@@ -28,6 +28,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeName;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
@@ -63,6 +64,15 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
                 visitor);
     }
 
+    /**
+     * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link Locale} metadata values.
+     */
+    private static SpreadsheetMetadataPropertyName<Locale> registerLocaleConstant(final String name,
+                                                                                  final BiConsumer<Locale, SpreadsheetMetadataVisitor> visitor) {
+        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.locale(),
+                visitor);
+    }
+    
     /**
      * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link SpreadsheetId} metadata values.
      */
@@ -114,6 +124,11 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     public final static SpreadsheetMetadataPropertyName<String> GENERAL_DECIMAL_FORMAT_PATTERN = registerStringConstant("general-decimal-format-pattern",
             (d, v) -> v.visitGeneralDecimalFormatPattern(d));
 
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link Locale}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<Locale> LOCALE = registerLocaleConstant("locale",
+            (l, v) -> v.visitLocale(l));
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>last modified by {@link EmailAddress}</code>
