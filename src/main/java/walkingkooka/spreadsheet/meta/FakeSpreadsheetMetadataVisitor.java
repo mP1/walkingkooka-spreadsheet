@@ -22,6 +22,7 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.tree.visit.Visiting;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 
 public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
@@ -60,6 +61,10 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     protected void visitGeneralDecimalFormatPattern(final String pattern) {
+        throw new UnsupportedOperationException();
+    }
+
+    protected void visitLocale(final Locale locale) {
         throw new UnsupportedOperationException();
     }
 

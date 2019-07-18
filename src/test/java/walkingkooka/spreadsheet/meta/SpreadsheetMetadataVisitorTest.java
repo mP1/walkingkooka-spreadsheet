@@ -25,6 +25,7 @@ import walkingkooka.tree.visit.Visiting;
 import walkingkooka.type.JavaVisibility;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -124,6 +125,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = p;
             }
         }.accept(SpreadsheetMetadataPropertyName.GENERAL_DECIMAL_FORMAT_PATTERN, "#.##");
+    }
+
+    @Test
+    public void testVisitLocale() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitLocale(final Locale l) {
+                this.visited = l;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
     }
 
     @Test
