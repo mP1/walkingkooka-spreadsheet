@@ -128,6 +128,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitDecimalPoint() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitDecimalPoint(final Character c) {
+                this.visited = c;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.DECIMAL_POINT, '.');
+    }
+    
+    @Test
     public void testVisitGeneralDecimalFormatPattern() {
         new TestSpreadsheetMetadataVisitor() {
             @Override

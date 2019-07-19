@@ -65,6 +65,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    protected void visitDecimalPoint(final Character decimalPoint) {
+        throw new UnsupportedOperationException();
+    }
+
     protected void visitGeneralDecimalFormatPattern(final String pattern) {
         throw new UnsupportedOperationException();
     }

@@ -47,6 +47,15 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     final static Map<String, SpreadsheetMetadataPropertyName<?>> CONSTANTS = Maps.sorted(SpreadsheetMetadataPropertyName.CASE_SENSITIVITY.comparator());
 
     /**
+     * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link Character} metadata values.
+     */
+    private static SpreadsheetMetadataPropertyName<Character> registerCharacterConstant(final String name,
+                                                                                        final BiConsumer<Character, SpreadsheetMetadataVisitor> visitor) {
+        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.character(),
+                visitor);
+    }
+    
+    /**
      * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link EmailAddress} metadata values.
      */
     private static SpreadsheetMetadataPropertyName<EmailAddress> registerEmailAddressConstant(final String name,
@@ -131,6 +140,12 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
      */
     public final static SpreadsheetMetadataPropertyName<String> CURRENCY_SYMBOL = registerNonEmptyStringConstant("currency-symbol",
             (c, v) -> v.visitCurrencySymbol(c));
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>decimal point {@link Character}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<Character> DECIMAL_POINT = registerCharacterConstant("decimal-point",
+            (c, v) -> v.visitDecimalPoint(c));
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>general decimal format pattern {@link String}</code>
