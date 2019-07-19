@@ -127,6 +127,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitPlusSign(final Character plusSign) {
+        // nop
+    }
+
     protected void visitSpreadsheetId(final SpreadsheetId id) {
         // nop
     }
