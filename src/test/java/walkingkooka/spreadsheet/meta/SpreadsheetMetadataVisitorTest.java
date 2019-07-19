@@ -218,6 +218,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitPlusSign() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitPlusSign(final Character c) {
+                this.visited = c;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.PLUS_SIGN, '+');
+    }
+    
+    @Test
     public void testVisitSpreadsheetId() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
