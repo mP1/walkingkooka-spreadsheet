@@ -95,6 +95,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitExponentSymbol(final Character exponentSymbol) {
+        // nop
+    }
+
     protected void visitGeneralDecimalFormatPattern(final String pattern) {
         // nop
     }
