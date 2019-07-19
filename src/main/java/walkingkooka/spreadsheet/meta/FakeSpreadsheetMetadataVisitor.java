@@ -111,6 +111,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitPlusSign(final Character plusSign) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitSpreadsheetId(final SpreadsheetId id) {
         throw new UnsupportedOperationException();
     }
