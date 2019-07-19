@@ -70,6 +70,12 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    protected void visitExponentSymbol(final Character exponentSymbol) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitGeneralDecimalFormatPattern(final String pattern) {
         throw new UnsupportedOperationException();
     }
