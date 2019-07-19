@@ -85,7 +85,13 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     protected void visitLocale(final Locale locale) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitMinusSign(final Character minusSign) {
         throw new UnsupportedOperationException();
     }
 
