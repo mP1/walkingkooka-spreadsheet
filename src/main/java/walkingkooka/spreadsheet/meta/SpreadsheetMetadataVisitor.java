@@ -111,6 +111,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitMinusSign(final Character minusSign) {
+        // nop
+    }
+
     protected void visitModifiedBy(final EmailAddress emailAddress) {
         // nop
     }
