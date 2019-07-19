@@ -123,6 +123,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitPercentageSymbol(final Character percentageSymbol) {
+        // nop
+    }
+
     protected void visitSpreadsheetId(final SpreadsheetId id) {
         // nop
     }
