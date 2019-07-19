@@ -21,6 +21,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.text.CharSequences;
 
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 final class SpreadsheetMetadataComponents {
@@ -35,8 +36,23 @@ final class SpreadsheetMetadataComponents {
     }
 
     <T> T getOrNull(final SpreadsheetMetadataPropertyName<T> propertyName) {
+        return this.getOrElse(propertyName, this::defaultNull);
+    }
+
+    private <T> T defaultNull() {
+        return null;
+    }
+
+    <T> T getOrElse(final SpreadsheetMetadataPropertyName<T> propertyName,
+                    final Supplier<T> defaultValue) {
         return this.metadata.get0(propertyName)
-                .orElseGet(() -> this.addMissing(propertyName));
+                .orElseGet(() -> {
+                    final T value = defaultValue.get();
+                    if(null==value) {
+                        this.addMissing(propertyName);
+                    }
+                    return value;
+                });
     }
 
     final SpreadsheetMetadata metadata;
@@ -56,7 +72,7 @@ final class SpreadsheetMetadataComponents {
         }
     }
 
-    private final List<SpreadsheetMetadataPropertyName<?>> missing = Lists.array();
+    final List<SpreadsheetMetadataPropertyName<?>> missing = Lists.array();
 
     @Override
     public String toString() {
