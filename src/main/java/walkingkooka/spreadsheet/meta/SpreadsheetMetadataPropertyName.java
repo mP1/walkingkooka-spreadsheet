@@ -194,6 +194,12 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
      */
     public final static SpreadsheetMetadataPropertyName<Character> PERCENTAGE_SYMBOL = registerCharacterConstant("percentage-symbol",
             (c, v) -> v.visitPercentageSymbol(c));
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>plus-sign {@link Character}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<Character> PLUS_SIGN = registerCharacterConstant("plus-sign",
+            (c, v) -> v.visitPlusSign(c));
     
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheet-id {@link SpreadsheetId}</code>
