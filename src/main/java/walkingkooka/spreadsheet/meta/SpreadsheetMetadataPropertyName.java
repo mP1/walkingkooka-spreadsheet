@@ -160,6 +160,12 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
             (d, v) -> v.visitGeneralDecimalFormatPattern(d));
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>grouping-Separator {@link Character}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<Character> GROUPING_SEPARATOR = registerCharacterConstant("grouping-Separator",
+            (c, v) -> v.visitGroupingSeparator(c));
+    
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link Locale}</code>
      */
     public final static SpreadsheetMetadataPropertyName<Locale> LOCALE = registerLocaleConstant("locale",
