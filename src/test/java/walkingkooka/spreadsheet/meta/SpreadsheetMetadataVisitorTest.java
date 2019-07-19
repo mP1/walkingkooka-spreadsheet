@@ -208,6 +208,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitPercentageSymbol() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitPercentageSymbol(final Character c) {
+                this.visited = c;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, '.');
+    }
+
+    @Test
     public void testVisitSpreadsheetId() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
