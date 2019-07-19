@@ -128,16 +128,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitExponentSymbol() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitExponentSymbol(final Character c) {
-                this.visited = c;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, '.');
-    }
-
-    @Test
     public void testVisitDecimalPoint() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
@@ -145,6 +135,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = c;
             }
         }.accept(SpreadsheetMetadataPropertyName.DECIMAL_POINT, '.');
+    }
+
+    @Test
+    public void testVisitExponentSymbol() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitExponentSymbol(final Character c) {
+                this.visited = c;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, '.');
     }
     
     @Test
@@ -155,6 +155,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = p;
             }
         }.accept(SpreadsheetMetadataPropertyName.GENERAL_DECIMAL_FORMAT_PATTERN, "#.##");
+    }
+
+    @Test
+    public void testVisitGroupingSeparator() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitGroupingSeparator(final Character c) {
+                this.visited = c;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, ',');
     }
 
     @Test

@@ -80,6 +80,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    protected void visitGroupingSeparator(final Character groupingSeparator) {
+        throw new UnsupportedOperationException();
+    }
+
     protected void visitLocale(final Locale locale) {
         throw new UnsupportedOperationException();
     }
