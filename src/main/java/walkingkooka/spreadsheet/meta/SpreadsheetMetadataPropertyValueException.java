@@ -19,19 +19,45 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.spreadsheet.SpreadsheetException;
 
+import java.util.Objects;
+
 public class SpreadsheetMetadataPropertyValueException extends SpreadsheetException {
 
     private static final long serialVersionUID = 1L;
 
-    protected SpreadsheetMetadataPropertyValueException() {
-        super();
-    }
-
-    public SpreadsheetMetadataPropertyValueException(final String message) {
+    public SpreadsheetMetadataPropertyValueException(final String message,
+                                                     final SpreadsheetMetadataPropertyName<?> name,
+                                                     final Object value) {
         super(message);
+
+        this.name = checkName(name);
+        this.value = value;
     }
 
-    public SpreadsheetMetadataPropertyValueException(final String message, final Throwable cause) {
+    public SpreadsheetMetadataPropertyValueException(final String message,
+                                                     final SpreadsheetMetadataPropertyName<?> name,
+                                                     final Object value,
+                                                     final Throwable cause) {
         super(message, cause);
+
+        this.name = checkName(name);
+        this.value = value;
     }
+
+    static SpreadsheetMetadataPropertyName<?> checkName(final SpreadsheetMetadataPropertyName<?> name) {
+        Objects.requireNonNull(name, "name");
+        return name;
+    }
+
+    public SpreadsheetMetadataPropertyName<?> name() {
+        return this.name;
+    }
+
+    private final SpreadsheetMetadataPropertyName<?> name;
+
+    public Object value() {
+        return this.value;
+    }
+
+    private final Object value;
 }
