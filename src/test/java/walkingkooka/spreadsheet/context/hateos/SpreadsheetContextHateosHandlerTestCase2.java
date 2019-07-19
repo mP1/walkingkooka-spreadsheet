@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.context.hateos;
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.hateos.HasHateosLinkId;
+import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.net.http.server.hateos.HateosHandlerTesting;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.context.SpreadsheetContext;
@@ -54,4 +55,11 @@ public abstract class SpreadsheetContextHateosHandlerTestCase2<H extends Spreads
     abstract H createHandler(final SpreadsheetContext context);
 
     abstract SpreadsheetContext context();
+
+    // TypeNameTesting..................................................................................................
+
+    @Override
+    public final String typeNameSuffix() {
+        return HateosHandler.class.getSimpleName();
+    }
 }
