@@ -103,7 +103,7 @@ public final class SpreadsheetContextHateosHandlersRouterTest extends Spreadshee
     @Test
     public void testHandleMetadataLoadGet() {
         this.routeAndCheck(HttpMethod.GET,
-                URL + "/spreadsheet/12ef/metadata",
+                URL + "/spreadsheet/12ef",
                 HttpStatusCode.OK,
                 "{\n" +
                         "  \"creator\": \"load@example.com\",\n" +
@@ -114,7 +114,7 @@ public final class SpreadsheetContextHateosHandlersRouterTest extends Spreadshee
     @Test
     public void testHandleMetadataSavePost() {
         this.routeAndCheck(HttpMethod.POST,
-                URL + "/spreadsheet/12ef/metadata",
+                URL + "/spreadsheet/12ef",
                 HttpStatusCode.OK,
                 "{\n" +
                         "  \"creator\": \"save@example.com\",\n" +
@@ -125,14 +125,14 @@ public final class SpreadsheetContextHateosHandlersRouterTest extends Spreadshee
     @Test
     public void testHandleMetadataMetadataPut() {
         this.routeAndFail(HttpMethod.PUT,
-                URL + "/spreadsheet/12ef/metadata",
+                URL + "/spreadsheet/12ef",
                 HttpStatusCode.METHOD_NOT_ALLOWED);
     }
 
     @Test
     public void testHandleMetadataDelete() {
         this.routeAndFail(HttpMethod.DELETE,
-                URL + "/spreadsheet/12ef/metadata",
+                URL + "/spreadsheet/12ef",
                 HttpStatusCode.METHOD_NOT_ALLOWED);
     }
 
