@@ -172,6 +172,12 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
             (l, v) -> v.visitLocale(l));
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>minus-sign {@link Character}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<Character> MINUS_SIGN = registerCharacterConstant("minus-sign",
+            (c, v) -> v.visitMinusSign(c));
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>last modified by {@link EmailAddress}</code>
      */
     public final static SpreadsheetMetadataPropertyName<EmailAddress> MODIFIED_BY = registerEmailAddressConstant("modified-by",

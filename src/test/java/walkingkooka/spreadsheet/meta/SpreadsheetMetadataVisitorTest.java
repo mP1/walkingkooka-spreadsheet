@@ -178,6 +178,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitMinusSign() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitMinusSign(final Character c) {
+                this.visited = c;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.MINUS_SIGN, '-');
+    }
+
+    @Test
     public void testVisitModifiedBy() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
