@@ -33,10 +33,13 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
         ToStringTesting<SpreadsheetMetadataComponents>,
         TypeNameTesting<SpreadsheetMetadataComponents> {
 
+    // getOrNull........................................................................................................
+
     @Test
     public void testGetOrNullAbsent() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
         assertEquals(null, components.getOrNull(SpreadsheetMetadataPropertyName.CREATOR));
+        this.checkMissing(components, SpreadsheetMetadataPropertyName.CREATOR);
     }
 
     @Test
@@ -46,7 +49,41 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
 
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.with(Maps.of(property, value)));
         assertEquals(value, components.getOrNull(property));
+        this.checkMissing(components);
     }
+
+    // getOrElse........................................................................................................
+
+    @Test
+    public void testGetOrElseAbsentSupplierNull() {
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
+        assertEquals(null, components.getOrElse(SpreadsheetMetadataPropertyName.CREATOR, () -> null));
+        this.checkMissing(components, SpreadsheetMetadataPropertyName.CREATOR);
+    }
+
+    @Test
+    public void testGetOrElseSupplierPresent() {
+        final SpreadsheetMetadataPropertyName<EmailAddress> property = SpreadsheetMetadataPropertyName.CREATOR;
+        final EmailAddress value = EmailAddress.parse("user@example.com");
+
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
+        assertEquals(value, components.getOrElse(property, () -> value));
+        this.checkMissing(components);
+    }
+
+    @Test
+    public void testGetOrElsePresent() {
+        final SpreadsheetMetadataPropertyName<EmailAddress> property = SpreadsheetMetadataPropertyName.CREATOR;
+        final EmailAddress value = EmailAddress.parse("user@example.com");
+
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.with(Maps.of(property, value)));
+        assertEquals(value, components.getOrElse(property, () -> {
+            throw new UnsupportedOperationException();
+        }));
+        this.checkMissing(components);
+    }
+    
+    // reportIfMissing..................................................................................................
 
     @Test
     public void testReportIfMissingMissingOne() {
@@ -80,6 +117,13 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
         components.getOrNull(property);
         components.reportIfMissing();
     }
+
+    private void checkMissing(final SpreadsheetMetadataComponents components,
+                              final SpreadsheetMetadataPropertyName<?>...missings) {
+        assertEquals(Lists.of(missings), components.missing, "missing");
+    }
+
+    // ToString.........................................................................................................
 
     @Test
     public void testToString() {

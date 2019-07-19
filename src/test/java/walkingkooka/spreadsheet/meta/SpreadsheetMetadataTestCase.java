@@ -22,6 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.ThrowableTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.HasJsonNodeTesting;
@@ -38,6 +39,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         HashCodeEqualsDefinedTesting<SpreadsheetMetadata>,
         HasJsonNodeTesting<SpreadsheetMetadata>,
         HateosResourceTesting<SpreadsheetMetadata>,
+        ThrowableTesting,
         ToStringTesting<SpreadsheetMetadata> {
 
     SpreadsheetMetadataTestCase() {
@@ -138,6 +140,17 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         return removed;
     }
 
+    // HasDecimalNumberContext..........................................................................................
+
+    @Test
+    public final void testHasDecimalNumberContextRequiredPropertiesAbsentFails() {
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
+            this.createObject().decimalNumberContext();
+        });
+        checkMessage(thrown,
+                "Required properties \"currency-symbol\", \"decimal-point\", \"exponent-symbol\", \"grouping-separator\", \"minus-sign\", \"percentage-symbol\", \"plus-sign\", \"precision\", \"rounding-mode\" missing.");
+    }
+
     // HasMathContext...................................................................................................
 
     @Test
@@ -145,7 +158,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
             this.createObject().mathContext();
         });
-        assertEquals("Required properties \"precision\", \"rounding-mode\" missing.", thrown.getMessage(), "message");
+        checkMessage(thrown,
+                "Required properties \"precision\", \"rounding-mode\" missing.");
     }
 
     // ClassTesting.....................................................................................................
