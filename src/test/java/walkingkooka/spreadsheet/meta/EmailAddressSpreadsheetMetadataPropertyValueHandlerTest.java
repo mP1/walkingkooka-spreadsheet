@@ -23,6 +23,11 @@ import walkingkooka.net.email.EmailAddress;
 public final class EmailAddressSpreadsheetMetadataPropertyValueHandlerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase<EmailAddressSpreadsheetMetadataPropertyValueHandler, EmailAddress> {
 
     @Test
+    public void testInvalidEmailFails() {
+        this.checkFails("invalid email", "Property \"creator\" value \"invalid email\"(String) is not a EmailAddress");
+    }
+
+    @Test
     public void testFromJsonNode() {
         final EmailAddress emailAddress = this.propertyValue();
         this.fromJsonNodeAndCheck(emailAddress.toJsonNode(), emailAddress);
