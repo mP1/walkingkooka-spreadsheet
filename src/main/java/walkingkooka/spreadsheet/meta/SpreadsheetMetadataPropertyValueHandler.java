@@ -73,7 +73,9 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
 
     final T check(final Object value, final SpreadsheetMetadataPropertyName<?> name) {
         if (null == value) {
-            throw new SpreadsheetMetadataPropertyValueException("Property " + name.inQuotes + " missing value");
+            throw new SpreadsheetMetadataPropertyValueException("Property " + name.inQuotes + " missing value",
+                    name,
+                    value);
         }
 
         this.check0(value, name);
@@ -104,7 +106,9 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
             typeName = typeName.substring(1 + typeName.lastIndexOf('.'));
         }
 
-        return new SpreadsheetMetadataPropertyValueException("Property " + name.inQuotes + " value " + CharSequences.quoteIfChars(value) + "(" + typeName + ") is not a " + this.expectedTypeName(type));
+        return new SpreadsheetMetadataPropertyValueException("Property " + name.inQuotes + " value " + CharSequences.quoteIfChars(value) + "(" + typeName + ") is not a " + this.expectedTypeName(type),
+                name,
+                value);
     }
 
     abstract String expectedTypeName(final Class<?> type);

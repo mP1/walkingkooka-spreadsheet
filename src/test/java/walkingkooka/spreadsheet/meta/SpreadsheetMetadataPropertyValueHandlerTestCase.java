@@ -83,15 +83,26 @@ public abstract class SpreadsheetMetadataPropertyValueHandlerTestCase<P extends 
     }
 
     final void checkFails(final Object value, final String message) {
+        final SpreadsheetMetadataPropertyName<?> propertyName = this.propertyName();
+
         final SpreadsheetMetadataPropertyValueException thrown = assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> {
             this.check(value);
         });
-        assertEquals(message, thrown.getMessage(), "message");
+        this.checkSpreadsheetMetadataPropertyValueException(thrown, message, propertyName, value);
 
         final SpreadsheetMetadataPropertyValueException thrown2 = assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> {
-            this.propertyName().checkValue(value);
+            propertyName.checkValue(value);
         });
-        assertEquals(message, thrown2.getMessage(), "message");
+        this.checkSpreadsheetMetadataPropertyValueException(thrown, message, propertyName, value);
+    }
+
+    private void checkSpreadsheetMetadataPropertyValueException(final SpreadsheetMetadataPropertyValueException thrown,
+                                                                final String message,
+                                                                final SpreadsheetMetadataPropertyName<?> propertyName,
+                                                                final Object value) {
+        assertEquals(message, thrown.getMessage(), "message");
+        assertEquals(propertyName, thrown.name(), "propertyName");
+        assertEquals(value, thrown.value(), "value");
     }
 
     final void fromJsonNodeAndCheck(final JsonNode node, final T value) {
