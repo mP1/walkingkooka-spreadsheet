@@ -128,6 +128,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitExponentSymbol() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitExponentSymbol(final Character c) {
+                this.visited = c;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, '.');
+    }
+
+    @Test
     public void testVisitDecimalPoint() {
         new TestSpreadsheetMetadataVisitor() {
             @Override

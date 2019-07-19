@@ -148,6 +148,12 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
             (c, v) -> v.visitDecimalPoint(c));
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>exponent-symbol {@link Character}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<Character> EXPONENT_SYMBOL = registerCharacterConstant("exponent-symbol",
+            (c, v) -> v.visitExponentSymbol(c));
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>general decimal format pattern {@link String}</code>
      */
     public final static SpreadsheetMetadataPropertyName<String> GENERAL_DECIMAL_FORMAT_PATTERN = registerStringConstant("general-decimal-format-pattern",
