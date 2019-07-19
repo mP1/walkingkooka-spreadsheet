@@ -24,7 +24,7 @@ public final class EmailAddressSpreadsheetMetadataPropertyValueHandlerTest exten
 
     @Test
     public void testInvalidEmailFails() {
-        this.checkFails("invalid email", "Property \"creator\" value \"invalid email\"(String) is not a EmailAddress");
+        this.checkFails("invalid email", "Expected EmailAddress but got \"invalid email\" (String)");
     }
 
     @Test
