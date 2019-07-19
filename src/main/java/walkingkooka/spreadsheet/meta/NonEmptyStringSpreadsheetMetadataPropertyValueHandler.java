@@ -20,23 +20,25 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.tree.json.JsonNode;
 
 /**
- * A {@link SpreadsheetMetadataPropertyValueHandler} for {@link String} entries, with no restrictions on the string content itself,
- * including empty.
+ * A {@link SpreadsheetMetadataPropertyValueHandler} for {@link String} entries which cannot be empty.
  */
-final class StringSpreadsheetMetadataPropertyValueHandler extends SpreadsheetMetadataPropertyValueHandler<String> {
+final class NonEmptyStringSpreadsheetMetadataPropertyValueHandler extends SpreadsheetMetadataPropertyValueHandler<String> {
 
     /**
      * A singleton
      */
-    static final StringSpreadsheetMetadataPropertyValueHandler INSTANCE = new StringSpreadsheetMetadataPropertyValueHandler();
+    static final NonEmptyStringSpreadsheetMetadataPropertyValueHandler INSTANCE = new NonEmptyStringSpreadsheetMetadataPropertyValueHandler();
 
-    private StringSpreadsheetMetadataPropertyValueHandler() {
+    private NonEmptyStringSpreadsheetMetadataPropertyValueHandler() {
         super();
     }
 
     @Override
     void check0(final Object value, final SpreadsheetMetadataPropertyName<?> name) {
-        this.checkType(value, String.class, name);
+        final String string = this.checkType(value, String.class, name);
+        if (string.isEmpty()) {
+            throw new SpreadsheetMetadataPropertyValueException("Empty value", name, string);
+        }
     }
 
     @Override

@@ -118,6 +118,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitCurrencySymbol() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitCurrencySymbol(final String c) {
+                this.visited = c;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$$");
+    }
+
+    @Test
     public void testVisitGeneralDecimalFormatPattern() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
