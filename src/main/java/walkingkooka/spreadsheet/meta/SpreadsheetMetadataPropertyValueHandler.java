@@ -28,6 +28,13 @@ import walkingkooka.tree.json.JsonNode;
 abstract class SpreadsheetMetadataPropertyValueHandler<T> {
 
     /**
+     * {@see CharacterSpreadsheetMetadataPropertyValueHandler}
+     */
+    static CharacterSpreadsheetMetadataPropertyValueHandler character() {
+        return CharacterSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    }
+
+    /**
      * {@see EmailAddressSpreadsheetMetadataPropertyValueHandler}
      */
     static EmailAddressSpreadsheetMetadataPropertyValueHandler emailAddress() {
