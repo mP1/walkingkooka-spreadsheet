@@ -17,19 +17,55 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.test.StandardThrowableTesting;
 import walkingkooka.type.JavaVisibility;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public final class SpreadsheetMetadataPropertyValueExceptionTest implements StandardThrowableTesting<SpreadsheetMetadataPropertyValueException> {
+
+    @Test
+    public void testCreate() {
+        final SpreadsheetMetadataPropertyValueException throwable = new SpreadsheetMetadataPropertyValueException(MESSAGE,
+                this.name(),
+                this.value());
+        this.checkMessage(throwable, MESSAGE);
+        this.checkPropertyNameAndValue(throwable);
+    }
+
+    @Test
+    public void testCreateWithThrowable() {
+        final SpreadsheetMetadataPropertyValueException throwable = new SpreadsheetMetadataPropertyValueException(MESSAGE,
+                this.name(),
+                this.value(),
+                CAUSE);
+        this.checkMessage(throwable, MESSAGE);
+        this.checkPropertyNameAndValue(throwable);
+        this.checkCause(throwable, CAUSE);
+    }
+
+    private void checkPropertyNameAndValue(final SpreadsheetMetadataPropertyValueException throwable) {
+        assertEquals(this.name(), throwable.name(), "name");
+        assertEquals(this.value(), throwable.value(), "value");
+    }
 
     @Override
     public SpreadsheetMetadataPropertyValueException createThrowable(final String message) {
-        return new SpreadsheetMetadataPropertyValueException(message);
+        return new SpreadsheetMetadataPropertyValueException(message, this.name(), this.value());
     }
 
     @Override
     public SpreadsheetMetadataPropertyValueException createThrowable(final String message, final Throwable cause) {
-        return new SpreadsheetMetadataPropertyValueException(message, cause);
+        return new SpreadsheetMetadataPropertyValueException(message, this.name(), this.value(), cause);
+    }
+
+    private SpreadsheetMetadataPropertyName<?> name() {
+        return SpreadsheetMetadataPropertyName.CREATOR;
+    }
+
+    private Object value() {
+        return "abc123";
     }
 
     @Override
