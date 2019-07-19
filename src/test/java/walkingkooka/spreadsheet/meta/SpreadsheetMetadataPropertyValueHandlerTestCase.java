@@ -38,20 +38,20 @@ public abstract class SpreadsheetMetadataPropertyValueHandlerTestCase<P extends 
     @Test
     public final void testCheckNullValueFails() {
         this.checkFails(null,
-                "Property " + this.propertyName().inQuotes + " missing value");
+                "Missing value");
     }
 
     @Test
     public final void testCheckInvalidValueFails() {
         this.checkFails(this,
-                "Property " + this.propertyName().inQuotes + " value " + this + "(" + this.getClass().getSimpleName() + ") is not a " + this.propertyValueType());
+                "Expected " + this.propertyValueType() + " but got " + this + " (" + this.getClass().getSimpleName() + ")" );
     }
 
     @Test
     public final void testCheckInvalidValueFails2() {
         final StringBuilder value = new StringBuilder("123abc");
         this.checkFails(value,
-                "Property " + this.propertyName().inQuotes + " value \"" + value + "\"(" + value.getClass().getName() + ") is not a " + this.propertyValueType());
+                "Expected " + this.propertyValueType() + " but got \"123abc\" (java.lang.StringBuilder)" );
     }
 
     @Test
