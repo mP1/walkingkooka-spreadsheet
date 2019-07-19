@@ -18,11 +18,21 @@
 package walkingkooka.spreadsheet.context.hateos;
 
 import walkingkooka.Cast;
+import walkingkooka.net.http.server.hateos.HateosHandler;
 
 public final class SpreadsheetContextHateosHandlerTest extends SpreadsheetContextHateosHandlerTestCase<SpreadsheetContextHateosHandler<?, ?, ?>> {
+
+    // ClassTesting......................................................................................................
 
     @Override
     public Class<SpreadsheetContextHateosHandler<?, ?, ?>> type() {
         return Cast.to(SpreadsheetContextHateosHandler.class);
+    }
+
+    // TypeNameTesting..................................................................................................
+
+    @Override
+    public String typeNameSuffix() {
+        return HateosHandler.class.getSimpleName();
     }
 }

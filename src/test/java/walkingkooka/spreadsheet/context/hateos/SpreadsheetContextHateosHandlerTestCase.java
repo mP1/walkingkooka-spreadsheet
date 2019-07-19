@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.context.hateos;
 
-import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.spreadsheet.context.SpreadsheetContext;
 import walkingkooka.test.ClassTesting;
 import walkingkooka.test.ToStringTesting;
@@ -45,10 +44,5 @@ public abstract class SpreadsheetContextHateosHandlerTestCase<T>
     @Override
     public final String typeNamePrefix() {
         return SpreadsheetContext.class.getSimpleName();
-    }
-
-    @Override
-    public final String typeNameSuffix() {
-        return HateosHandler.class.getSimpleName();
     }
 }
