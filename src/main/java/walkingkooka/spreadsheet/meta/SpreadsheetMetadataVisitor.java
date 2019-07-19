@@ -103,6 +103,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitGroupingSeparator(final Character groupingSeparator) {
+        // nop
+    }
+
     protected void visitLocale(final Locale locale) {
         // nop
     }
