@@ -190,6 +190,12 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
             (d, v) -> v.visitModifiedDateTime(d));
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>percentage-symbol {@link Character}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<Character> PERCENTAGE_SYMBOL = registerCharacterConstant("percentage-symbol",
+            (c, v) -> v.visitPercentageSymbol(c));
+    
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheet-id {@link SpreadsheetId}</code>
      */
     public final static SpreadsheetMetadataPropertyName<SpreadsheetId> SPREADSHEET_ID = registerSpreadsheetIdConstant("spreadsheet-id",
