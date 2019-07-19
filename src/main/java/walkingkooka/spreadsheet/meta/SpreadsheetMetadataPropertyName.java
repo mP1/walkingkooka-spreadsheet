@@ -228,7 +228,6 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
                                             final BiConsumer<T, SpreadsheetMetadataVisitor> visitor) {
         super();
         this.name = name;
-        this.inQuotes = CharSequences.quoteAndEscape(name).toString();
         this.jsonNodeName = JsonNodeName.with(name);
 
         this.handler = handler;
@@ -242,8 +241,6 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     }
 
     final String name;
-
-    final String inQuotes;
 
     final JsonNodeName jsonNodeName;
 
