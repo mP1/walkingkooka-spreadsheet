@@ -72,6 +72,15 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
         return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.locale(),
                 visitor);
     }
+
+    /**
+     * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles non empty string values.
+     */
+    private static SpreadsheetMetadataPropertyName<String> registerNonEmptyStringConstant(final String name,
+                                                                                          final BiConsumer<String, SpreadsheetMetadataVisitor> visitor) {
+        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.nonEmpty(),
+                visitor);
+    }
     
     /**
      * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link SpreadsheetId} metadata values.
@@ -117,6 +126,11 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     public final static SpreadsheetMetadataPropertyName<LocalDateTime> CREATE_DATE_TIME = registerDateTimeConstant("create-date-time",
             (d, v) -> v.visitCreateDateTime(d));
 
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>currency {@link String}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<String> CURRENCY_SYMBOL = registerNonEmptyStringConstant("currency-symbol",
+            (c, v) -> v.visitCurrencySymbol(c));
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>general decimal format pattern {@link String}</code>

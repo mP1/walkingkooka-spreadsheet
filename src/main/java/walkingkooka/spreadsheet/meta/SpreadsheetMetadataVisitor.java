@@ -83,6 +83,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitCurrencySymbol(final String currencySymbol) {
+        // nop
+    }
+
     protected void visitCreateDateTime(final LocalDateTime dateTime) {
         // nop
     }
