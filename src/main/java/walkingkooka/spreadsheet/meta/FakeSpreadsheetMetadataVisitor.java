@@ -106,6 +106,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitPercentageSymbol(final Character percentageSymbol) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitSpreadsheetId(final SpreadsheetId id) {
         throw new UnsupportedOperationException();
     }
