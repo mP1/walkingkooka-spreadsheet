@@ -229,6 +229,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitPrecision() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitPrecision(final Integer i) {
+                this.visited = i;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.PRECISION, 123);
+    }
+
+    @Test
     public void testVisitRoundingMode() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
