@@ -19,13 +19,17 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.text.CharSequences;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Locale;
@@ -37,7 +41,8 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTestCase<NonEmptySpreadsheetMetadata> {
+public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTestCase<NonEmptySpreadsheetMetadata>
+        implements DecimalNumberContextTesting {
 
     @Test
     public void testWithSpreadsheetMetadataMap() {
@@ -307,14 +312,140 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         });
     }
 
+    // HasDecimalNumberContext..........................................................................................
+
+    @Test
+    public void testDecimalNumberContextSomeRequiredPropertiesAbsentFails() {
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
+            SpreadsheetMetadata.EMPTY
+                    .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "CS")
+                    .set(SpreadsheetMetadataPropertyName.DECIMAL_POINT, 'D')
+                    .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, 'E')
+                    .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, 'G')
+                    .set(SpreadsheetMetadataPropertyName.MINUS_SIGN, 'M')
+                    .decimalNumberContext();
+        });
+        assertEquals("Required properties \"percentage-symbol\", \"plus-sign\", \"precision\", \"rounding-mode\" missing.",
+                thrown.getMessage(),
+                "message");
+    }
+
+    @Test
+    public void testDecimalNumberContextSomeRequiredPropertiesAbsentFails2() {
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
+            SpreadsheetMetadata.EMPTY
+                    .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "CS")
+                    .set(SpreadsheetMetadataPropertyName.DECIMAL_POINT, 'D')
+                    .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, 'E')
+                    .decimalNumberContext();
+        });
+        assertEquals("Required properties \"grouping-separator\", \"minus-sign\", \"percentage-symbol\", \"plus-sign\", \"precision\", \"rounding-mode\" missing.",
+                thrown.getMessage(),
+                "message");
+    }
+
+    @Test
+    public void testDecimalNumberContextPropertiesPresent() {
+        final String currencySymbol = "CS";
+        final Character decimalPoint = 'D';
+        final Character exponentSymbol = 'E';
+        final Character groupingSeparator = 'G';
+        final Character minusSign = 'M';
+        final Character percentSymbol = 'P';
+        final Character plusSign = '+';
+
+        Lists.of(MathContext.DECIMAL32, MathContext.DECIMAL64, MathContext.DECIMAL128, MathContext.UNLIMITED)
+                .stream()
+                .forEach(mc -> {
+                    final int precision = mc.getPrecision();
+                    final RoundingMode roundingMode = mc.getRoundingMode();
+
+                    this.decimalNumberContextAndCheck(SpreadsheetMetadata.EMPTY
+                                    .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, currencySymbol)
+                                    .set(SpreadsheetMetadataPropertyName.DECIMAL_POINT, decimalPoint)
+                                    .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, exponentSymbol)
+                                    .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, groupingSeparator)
+                                    .set(SpreadsheetMetadataPropertyName.MINUS_SIGN, minusSign)
+                                    .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, percentSymbol)
+                                    .set(SpreadsheetMetadataPropertyName.PLUS_SIGN, plusSign)
+                                    .set(SpreadsheetMetadataPropertyName.PRECISION, precision)
+                                    .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, roundingMode),
+                            currencySymbol,
+                            decimalPoint,
+                            exponentSymbol,
+                            groupingSeparator,
+                            minusSign,
+                            percentSymbol,
+                            plusSign,
+                            precision,
+                            roundingMode);
+                });
+    }
+
+    @Test
+    public void testDecimalNumberContextLocaleDefaults() {
+        final Character exponentSymbol = 'E';
+        final Character plusSign = '+';
+
+        Arrays.stream(Locale.getAvailableLocales())
+                .forEach(l -> {
+                    Lists.of(MathContext.DECIMAL32, MathContext.DECIMAL64, MathContext.DECIMAL128, MathContext.UNLIMITED)
+                            .stream()
+                            .forEach(mc -> {
+                                final int precision = mc.getPrecision();
+                                final RoundingMode roundingMode = mc.getRoundingMode();
+
+                                final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(l);
+
+                                this.decimalNumberContextAndCheck(SpreadsheetMetadata.EMPTY
+                                                .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, exponentSymbol)
+                                                .set(SpreadsheetMetadataPropertyName.LOCALE, l)
+                                                .set(SpreadsheetMetadataPropertyName.PLUS_SIGN, plusSign)
+                                                .set(SpreadsheetMetadataPropertyName.PRECISION, precision)
+                                                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, roundingMode),
+                                        symbols.getCurrencySymbol(),
+                                        symbols.getDecimalSeparator(),
+                                        exponentSymbol,
+                                        symbols.getGroupingSeparator(),
+                                        symbols.getMinusSign(),
+                                        symbols.getPercent(),
+                                        plusSign,
+                                        precision,
+                                        roundingMode);
+                            });
+                });
+    }
+
+    private void decimalNumberContextAndCheck(final SpreadsheetMetadata metadata,
+                                              final String currencySymbol,
+                                              final Character decimalPoint,
+                                              final Character exponentSymbol,
+                                              final Character groupingSeparator,
+                                              final Character minusSign,
+                                              final Character percentSymbol,
+                                              final Character plusSign,
+                                              final int precision,
+                                              final RoundingMode roundingMode) {
+        final DecimalNumberContext context = metadata.decimalNumberContext();
+        this.checkCurrencySymbol(context, currencySymbol);
+        this.checkDecimalPoint(context, decimalPoint);
+        this.checkExponentSymbol(context, exponentSymbol);
+        this.checkGroupingSeparator(context, groupingSeparator);
+        this.checkMinusSign(context, minusSign);
+        this.checkPercentageSymbol(context, percentSymbol);
+        this.checkPlusSign(context, plusSign);
+        this.checkMathContext(context, new MathContext(precision, roundingMode));
+    }
+
     // HasMathContext...................................................................................................
 
     @Test
     public void testHasMathContextRequiredPropertiesAbsentFails2() {
-        assertThrows(IllegalStateException.class, () -> {
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
             NonEmptySpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.PRECISION, 1))
                     .mathContext();
         });
+        this.checkMessage(thrown, "Required properties \"rounding-mode\" missing.");
     }
 
     @Test
