@@ -24,8 +24,10 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.text.CharSequences;
 
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
@@ -302,6 +304,29 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
     public void testHateosLinkIdMissingIdFails() {
         assertThrows(IllegalStateException.class, () -> {
             this.createSpreadsheetMetadata().hateosLinkId();
+        });
+    }
+
+    // HasMathContext...................................................................................................
+
+    @Test
+    public void testHasMathContextRequiredPropertiesAbsentFails2() {
+        assertThrows(IllegalStateException.class, () -> {
+            NonEmptySpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.PRECISION, 1))
+                    .mathContext();
+        });
+    }
+
+    @Test
+    public void testMathContext() {
+        final int precision = 11;
+
+        Arrays.stream(RoundingMode.values()).forEach(r -> {
+            final MathContext mathContext = NonEmptySpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.PRECISION, precision,
+                    SpreadsheetMetadataPropertyName.ROUNDING_MODE, r))
+                    .mathContext();
+            assertEquals(precision, mathContext.getPrecision(), "precision");
+            assertEquals(r, mathContext.getRoundingMode(), "roundingMode");
         });
     }
 
