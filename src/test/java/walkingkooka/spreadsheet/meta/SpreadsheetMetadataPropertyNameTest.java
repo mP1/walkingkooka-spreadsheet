@@ -31,9 +31,17 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetadataTestCase2<SpreadsheetMetadataPropertyName<?>>
         implements NameTesting<SpreadsheetMetadataPropertyName<?>, SpreadsheetMetadataPropertyName<?>> {
+
+    @Test
+    public void testUnknownConstantFails() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            SpreadsheetMetadataPropertyName.with("unknown1234567");
+        });
+    }
 
     @Test
     public void testConstants() {
