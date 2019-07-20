@@ -132,6 +132,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitPrecision(final Integer precision) {
+        // nop
+    }
+
     protected void visitRoundingMode(final RoundingMode roundingMode) {
         // nop
     }
