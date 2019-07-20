@@ -20,6 +20,9 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.datetime.HasDateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.HasDecimalNumberContext;
 import walkingkooka.math.HasMathContext;
@@ -32,7 +35,9 @@ import walkingkooka.tree.json.JsonNode;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.text.DateFormatSymbols;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -40,7 +45,8 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetMetadata} holds a {@link Map} of {@link SpreadsheetMetadataPropertyName} and values.
  */
-public abstract class SpreadsheetMetadata implements HasDecimalNumberContext,
+public abstract class SpreadsheetMetadata implements HasDateTimeContext,
+        HasDecimalNumberContext,
         HashCodeEqualsDefined,
         HasJsonNode,
         HasHateosLinkId,
@@ -154,6 +160,25 @@ public abstract class SpreadsheetMetadata implements HasDecimalNumberContext,
 
     abstract void accept(final SpreadsheetMetadataVisitor visitor);
 
+    // HasDateTimeContext...............................................................................................
+
+    /**
+     * Returns a {@link DateTimeContext} if the required properties are present.
+     * <ul>
+     * <li>{@link SpreadsheetMetadataPropertyName#LOCALE}</li>
+     * </ul>
+     */
+    @Override
+    public final DateTimeContext dateTimeContext() {
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        final Locale locale = components.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
+
+        components.reportIfMissing();
+
+        return DateTimeContexts.dateFormatSymbols(DateFormatSymbols.getInstance(locale));
+    }
+    
     // HasDecimalNumberContext..........................................................................................
 
     /**
