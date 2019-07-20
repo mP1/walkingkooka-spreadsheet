@@ -93,6 +93,15 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     }
 
     /**
+     * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles positive {@link Integer} metadata values.
+     */
+    private static SpreadsheetMetadataPropertyName<Integer> registerPositiveIntegerConstant(final String name,
+                                                                                            final BiConsumer<Integer, SpreadsheetMetadataVisitor> visitor) {
+        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.positiveInteger(),
+                visitor);
+    }
+    
+    /**
      * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link RoundingMode} metadata values.
      */
     private static SpreadsheetMetadataPropertyName<RoundingMode> registerRoundingModeConstant(final String name,
@@ -216,6 +225,12 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
      */
     public final static SpreadsheetMetadataPropertyName<RoundingMode> ROUNDING_MODE = registerRoundingModeConstant("rounding-mode",
             (c, v) -> v.visitRoundingMode(c));
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>precision {@link Integer}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<Integer> PRECISION = registerPositiveIntegerConstant("precision",
+            (c, v) -> v.visitPrecision(c));
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheet-id {@link SpreadsheetId}</code>

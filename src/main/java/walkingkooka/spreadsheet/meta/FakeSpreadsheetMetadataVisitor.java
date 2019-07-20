@@ -117,6 +117,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitPrecision(final Integer precision) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitRoundingMode(final RoundingMode roundingMode) {
         throw new UnsupportedOperationException();
     }
