@@ -142,9 +142,10 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testHasMathContextRequiredPropertiesAbsentFails() {
-        assertThrows(IllegalStateException.class, () -> {
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
             this.createObject().mathContext();
         });
+        assertEquals("Required properties \"precision\", \"rounding-mode\" missing.", thrown.getMessage(), "message");
     }
 
     // ClassTesting.....................................................................................................
