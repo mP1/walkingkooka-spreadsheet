@@ -63,6 +63,13 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     }
 
     /**
+     * {@see PositiveIntegerSpreadsheetMetadataPropertyValueHandler}
+     */
+    static PositiveIntegerSpreadsheetMetadataPropertyValueHandler positiveInteger() {
+        return PositiveIntegerSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    }
+    
+    /**
      * {@see RoundingModeSpreadsheetMetadataPropertyValueHandler}
      */
     static RoundingModeSpreadsheetMetadataPropertyValueHandler roundingMode() {
