@@ -22,6 +22,7 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.tree.visit.Visiting;
 import walkingkooka.tree.visit.Visitor;
 
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map.Entry;
@@ -128,6 +129,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitPlusSign(final Character plusSign) {
+        // nop
+    }
+
+    protected void visitRoundingMode(final RoundingMode roundingMode) {
         // nop
     }
 
