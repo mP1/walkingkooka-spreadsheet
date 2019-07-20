@@ -29,6 +29,8 @@ import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 
 import java.math.MathContext;
+import java.math.RoundingMode;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -102,10 +104,15 @@ public abstract class SpreadsheetMetadata implements HashCodeEqualsDefined,
     abstract <V> Optional<V> get0(final SpreadsheetMetadataPropertyName<V> propertyName);
 
     /**
-     * Property getter which fails if absent.
+     * Property getter which returns the value or adds to the missing list.
      */
-    final <V> V getOrFail(final SpreadsheetMetadataPropertyName<V> propertyName) {
-        return this.get(propertyName).orElseThrow(() -> new IllegalStateException("Required property " + propertyName + " missing=" + this));
+    final <V> V getOrRecordMissing(final SpreadsheetMetadataPropertyName<V> propertyName,
+                                   final List<SpreadsheetMetadataPropertyName<?>> missing) {
+        return this.get(propertyName)
+                .orElseGet(() -> {
+                   missing.add(propertyName);
+                   return null;
+                });
     }
 
     // set..............................................................................................................
@@ -155,8 +162,14 @@ public abstract class SpreadsheetMetadata implements HashCodeEqualsDefined,
      */
     @Override
     public final MathContext mathContext() {
-        return new MathContext(this.getOrFail(SpreadsheetMetadataPropertyName.PRECISION),
-                this.getOrFail(SpreadsheetMetadataPropertyName.ROUNDING_MODE));
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        final Integer precision = components.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
+        final RoundingMode roundingMode = components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
+
+        components.reportIfMissing();
+
+        return new MathContext(precision, roundingMode);
     }
 
     // Object...........................................................................................................
