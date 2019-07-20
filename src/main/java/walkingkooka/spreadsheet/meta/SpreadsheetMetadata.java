@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.HasDecimalNumberContext;
 import walkingkooka.math.HasMathContext;
 import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.net.http.server.hateos.HateosResource;
@@ -38,7 +40,8 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetMetadata} holds a {@link Map} of {@link SpreadsheetMetadataPropertyName} and values.
  */
-public abstract class SpreadsheetMetadata implements HashCodeEqualsDefined,
+public abstract class SpreadsheetMetadata implements HasDecimalNumberContext,
+        HashCodeEqualsDefined,
         HasJsonNode,
         HasHateosLinkId,
         HasMathContext,
@@ -150,6 +153,31 @@ public abstract class SpreadsheetMetadata implements HashCodeEqualsDefined,
     // SpreadsheetMetadataStyleVisitor..................................................................................
 
     abstract void accept(final SpreadsheetMetadataVisitor visitor);
+
+    // HasDecimalNumberContext..........................................................................................
+
+    /**
+     * Returns a {@link DecimalNumberContext} if the required properties are present.
+     * <ul>
+     * <li>{@link SpreadsheetMetadataPropertyName#CURRENCY_SYMBOL}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DECIMAL_POINT}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#EXPONENT_SYMBOL}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#GROUPING_SEPARATOR}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#MINUS_SIGN}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#PERCENTAGE_SYMBOL}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#PLUS_SIGN}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#PRECISION}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#ROUNDING_MODE}</li>
+     * </ul>
+     * or
+     * <ul>
+     * <li>{@link SpreadsheetMetadataPropertyName#LOCALE} which may provide some defaults if some of the above properties are missing.</li>
+     * </ul>
+     */
+    @Override
+    public final DecimalNumberContext decimalNumberContext() {
+        return SpreadsheetMetadataDecimalNumberContextComponents.with(this).decimalNumberContext();
+    }
 
     // HasMathContext....................................................................................................
 
