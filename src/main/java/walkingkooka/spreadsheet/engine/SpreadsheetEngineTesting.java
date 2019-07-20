@@ -39,6 +39,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.store.Store;
 import walkingkooka.test.ClassTesting2;
+import walkingkooka.test.ThrowableTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.type.JavaVisibility;
@@ -53,7 +54,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends ClassTesting2<E> {
+public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends ClassTesting2<E>,
+        ThrowableTesting {
 
     SpreadsheetColumnReference COLUMN = SpreadsheetReferenceKind.ABSOLUTE.column(1);
     SpreadsheetRowReference ROW = SpreadsheetReferenceKind.ABSOLUTE.row(2);
@@ -269,7 +271,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                     range,
                     this.createContext());
         });
-        assertEquals("Several cells [B2=1] are outside the range C3", thrown.getMessage(), "message");
+        checkMessage(thrown,"Several cells [B2=1] are outside the range C3");
     }
 
     @Test
@@ -286,7 +288,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                     this.createContext());
         });
 
-        assertEquals("Several cells [B2=1] are outside the range C3:D4", thrown.getMessage(), "message");
+        checkMessage(thrown,"Several cells [B2=1] are outside the range C3:D4");
     }
 
     @Test
@@ -304,7 +306,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                     this.createContext());
         });
 
-        assertEquals("Several cells [B2=1] are outside the range C3:D4", thrown.getMessage(), "message");
+        checkMessage(thrown,"Several cells [B2=1] are outside the range C3:D4");
     }
 
     @Test
@@ -323,7 +325,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                     this.createContext());
         });
 
-        assertEquals("Several cells [B2=1, E5=4] are outside the range C3:D4", thrown.getMessage(), "message");
+        checkMessage(thrown,"Several cells [B2=1, E5=4] are outside the range C3:D4");
     }
 
     @Test
