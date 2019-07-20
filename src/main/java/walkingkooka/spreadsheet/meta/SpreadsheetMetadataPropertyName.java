@@ -27,6 +27,7 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeName;
 
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
@@ -54,7 +55,7 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
         return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.character(),
                 visitor);
     }
-    
+
     /**
      * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link EmailAddress} metadata values.
      */
@@ -90,7 +91,16 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
         return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.nonEmpty(),
                 visitor);
     }
-    
+
+    /**
+     * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link RoundingMode} metadata values.
+     */
+    private static SpreadsheetMetadataPropertyName<RoundingMode> registerRoundingModeConstant(final String name,
+                                                                                              final BiConsumer<RoundingMode, SpreadsheetMetadataVisitor> visitor) {
+        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.roundingMode(),
+                visitor);
+    }
+
     /**
      * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link SpreadsheetId} metadata values.
      */
@@ -164,7 +174,7 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
      */
     public final static SpreadsheetMetadataPropertyName<Character> GROUPING_SEPARATOR = registerCharacterConstant("grouping-Separator",
             (c, v) -> v.visitGroupingSeparator(c));
-    
+
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link Locale}</code>
      */
@@ -200,7 +210,13 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
      */
     public final static SpreadsheetMetadataPropertyName<Character> PLUS_SIGN = registerCharacterConstant("plus-sign",
             (c, v) -> v.visitPlusSign(c));
-    
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>rounding-mode {@link RoundingMode}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<RoundingMode> ROUNDING_MODE = registerRoundingModeConstant("rounding-mode",
+            (c, v) -> v.visitRoundingMode(c));
+
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheet-id {@link SpreadsheetId}</code>
      */
@@ -266,7 +282,7 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
      * Calls the appropriate {@link SpreadsheetMetadataVisitor} visit method
      */
     private final BiConsumer<T, SpreadsheetMetadataVisitor> visitor;
-    
+
     // Object...........................................................................................................
 
     @Override
