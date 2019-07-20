@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.net.email.EmailAddress;
@@ -29,6 +31,7 @@ import walkingkooka.text.CharSequences;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -42,7 +45,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTestCase<NonEmptySpreadsheetMetadata>
-        implements DecimalNumberContextTesting {
+        implements DateTimeContextTesting,
+        DecimalNumberContextTesting {
 
     @Test
     public void testWithSpreadsheetMetadataMap() {
@@ -310,6 +314,25 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         assertThrows(IllegalStateException.class, () -> {
             this.createSpreadsheetMetadata().hateosLinkId();
         });
+    }
+
+    // HasDateTimeContext...............................................................................................
+
+    @Test
+    public void testDateTimeContext() {
+        Arrays.stream(Locale.getAvailableLocales())
+                .forEach(l -> {
+                            final SpreadsheetMetadata metadata = SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.LOCALE, l));
+                            final DateFormatSymbols symbols = DateFormatSymbols.getInstance(l);
+                            final DateTimeContext context = metadata.dateTimeContext();
+                            this.amPmAndCheck(context, 13, symbols.getAmPmStrings()[1]);
+                            this.monthNameAndCheck(context, 2, symbols.getMonths()[2]);
+                            this.monthNameAbbreviationAndCheck(context, 3, symbols.getShortMonths()[3]);
+                            this.weekDayNameAndCheck(context, 1, symbols.getWeekdays()[1]);
+                            this.weekDayNameAbbreviationAndCheck(context, 3, symbols.getShortWeekdays()[3]);
+
+                        }
+                );
     }
 
     // HasDecimalNumberContext..........................................................................................
