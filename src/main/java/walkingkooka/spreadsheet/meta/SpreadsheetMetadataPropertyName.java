@@ -179,9 +179,9 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
             (d, v) -> v.visitGeneralDecimalFormatPattern(d));
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>grouping-Separator {@link Character}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>grouping-separator {@link Character}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<Character> GROUPING_SEPARATOR = registerCharacterConstant("grouping-Separator",
+    public final static SpreadsheetMetadataPropertyName<Character> GROUPING_SEPARATOR = registerCharacterConstant("grouping-separator",
             (c, v) -> v.visitGroupingSeparator(c));
 
     /**
