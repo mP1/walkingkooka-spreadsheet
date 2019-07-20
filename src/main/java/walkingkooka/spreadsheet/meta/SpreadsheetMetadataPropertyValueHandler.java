@@ -63,6 +63,13 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     }
 
     /**
+     * {@see RoundingModeSpreadsheetMetadataPropertyValueHandler}
+     */
+    static RoundingModeSpreadsheetMetadataPropertyValueHandler roundingMode() {
+        return RoundingModeSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    }
+
+    /**
      * {@see SpreadsheetIdSpreadsheetMetadataPropertyValueHandler}
      */
     static SpreadsheetIdSpreadsheetMetadataPropertyValueHandler spreadsheetId() {

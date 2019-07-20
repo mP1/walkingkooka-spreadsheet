@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.tree.visit.Visiting;
 import walkingkooka.type.JavaVisibility;
 
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
@@ -225,6 +226,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = c;
             }
         }.accept(SpreadsheetMetadataPropertyName.PLUS_SIGN, '+');
+    }
+
+    @Test
+    public void testVisitRoundingMode() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitRoundingMode(final RoundingMode r) {
+                this.visited = r;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
     }
     
     @Test
