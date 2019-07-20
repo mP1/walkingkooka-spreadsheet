@@ -23,9 +23,10 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.json.JsonNode;
 
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 
@@ -315,10 +316,33 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         this.toStringAndCheck(NonEmptySpreadsheetMetadata.with(map), map.toString());
     }
 
+    // HasJsonNode......................................................................................................
+
     @Test
-    public void testFromEmptyJsonObject() {
-        assertSame(SpreadsheetMetadata.EMPTY, SpreadsheetMetadata.fromJsonNode(JsonNode.object()));
+    public void testHasJsonNodeRoundtrip() {
+        final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = Maps.ordered();
+
+        properties.put(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.of(2000, 12, 31, 12, 58, 59));
+        properties.put(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"));
+        properties.put(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$AUD");
+        properties.put(SpreadsheetMetadataPropertyName.DECIMAL_POINT, 'D');
+        properties.put(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, 'E');
+        properties.put(SpreadsheetMetadataPropertyName.GENERAL_DECIMAL_FORMAT_PATTERN, "##.##");
+        properties.put(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, 'G');
+        properties.put(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
+        properties.put(SpreadsheetMetadataPropertyName.MINUS_SIGN, 'M');
+        properties.put(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
+        properties.put(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.of(1999, 12, 31, 12, 58, 59));
+        properties.put(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, 'P');
+        properties.put(SpreadsheetMetadataPropertyName.PLUS_SIGN, 'L');
+        properties.put(SpreadsheetMetadataPropertyName.PRECISION, 123);
+        properties.put(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR);
+        properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123));
+
+        this.toJsonNodeRoundTripTwiceAndCheck(SpreadsheetMetadata.with(properties));
     }
+
+    // helpers...........................................................................................................
 
     @Override
     public NonEmptySpreadsheetMetadata createObject() {
