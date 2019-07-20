@@ -21,6 +21,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.tree.visit.Visiting;
 
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
@@ -112,6 +113,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitPlusSign(final Character plusSign) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitRoundingMode(final RoundingMode roundingMode) {
         throw new UnsupportedOperationException();
     }
 
