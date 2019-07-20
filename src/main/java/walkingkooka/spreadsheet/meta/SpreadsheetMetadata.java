@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.math.HasMathContext;
 import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetId;
@@ -27,6 +28,7 @@ import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 
+import java.math.MathContext;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -37,6 +39,7 @@ import java.util.Optional;
 public abstract class SpreadsheetMetadata implements HashCodeEqualsDefined,
         HasJsonNode,
         HasHateosLinkId,
+        HasMathContext,
         HateosResource<Optional<SpreadsheetId>>,
         Value<Map<SpreadsheetMetadataPropertyName<?>, Object>> {
 
@@ -98,6 +101,13 @@ public abstract class SpreadsheetMetadata implements HashCodeEqualsDefined,
 
     abstract <V> Optional<V> get0(final SpreadsheetMetadataPropertyName<V> propertyName);
 
+    /**
+     * Property getter which fails if absent.
+     */
+    final <V> V getOrFail(final SpreadsheetMetadataPropertyName<V> propertyName) {
+        return this.get(propertyName).orElseThrow(() -> new IllegalStateException("Required property " + propertyName + " missing=" + this));
+    }
+
     // set..............................................................................................................
 
     /**
@@ -133,6 +143,21 @@ public abstract class SpreadsheetMetadata implements HashCodeEqualsDefined,
     // SpreadsheetMetadataStyleVisitor..................................................................................
 
     abstract void accept(final SpreadsheetMetadataVisitor visitor);
+
+    // HasMathContext....................................................................................................
+
+    /**
+     * Returns a {@link MathContext} if the required properties are present.
+     * <ul>
+     * <li>{@link SpreadsheetMetadataPropertyName#PRECISION}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#ROUNDING_MODE}</li>
+     * </ul>
+     */
+    @Override
+    public final MathContext mathContext() {
+        return new MathContext(this.getOrFail(SpreadsheetMetadataPropertyName.PRECISION),
+                this.getOrFail(SpreadsheetMetadataPropertyName.ROUNDING_MODE));
+    }
 
     // Object...........................................................................................................
 
