@@ -140,6 +140,17 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         return removed;
     }
 
+    // HasDateTimeContext...............................................................................................
+
+    @Test
+    public final void testHasDateTimeContextRequiredPropertiesAbsentFails() {
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
+            this.createObject().dateTimeContext();
+        });
+        checkMessage(thrown,
+                "Required properties \"locale\" missing.");
+    }
+    
     // HasDecimalNumberContext..........................................................................................
 
     @Test
