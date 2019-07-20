@@ -138,6 +138,15 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         return removed;
     }
 
+    // HasMathContext...................................................................................................
+
+    @Test
+    public final void testHasMathContextRequiredPropertiesAbsentFails() {
+        assertThrows(IllegalStateException.class, () -> {
+            this.createObject().mathContext();
+        });
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override
