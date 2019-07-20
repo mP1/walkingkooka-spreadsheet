@@ -19,14 +19,14 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
-import walkingkooka.datetime.DateTimeContextTesting;
+import walkingkooka.datetime.DateTimeContextTesting2;
 import walkingkooka.math.DecimalNumberContextTesting2;
 import walkingkooka.text.CharSequences;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public interface SpreadsheetTextFormatContextTesting<C extends SpreadsheetTextFormatContext> extends DateTimeContextTesting<C>,
+public interface SpreadsheetTextFormatContextTesting<C extends SpreadsheetTextFormatContext> extends DateTimeContextTesting2<C>,
         DecimalNumberContextTesting2<C> {
 
     default void colorNumberAndCheck(final SpreadsheetTextFormatContext context,
