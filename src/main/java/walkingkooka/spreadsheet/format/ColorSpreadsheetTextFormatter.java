@@ -69,7 +69,8 @@ final class ColorSpreadsheetTextFormatter<T> extends SpreadsheetTextFormatter3<T
 
     @Override
     Optional<SpreadsheetFormattedText> format0(final T value, final SpreadsheetTextFormatContext context) {
-        return this.formatter.format(value, context).map(t -> t.setColor(Optional.of(this.color(context))));
+        return this.formatter.format(value, context)
+                .map(t -> t.setColor(this.color(context)));
     }
 
     /**
@@ -80,7 +81,7 @@ final class ColorSpreadsheetTextFormatter<T> extends SpreadsheetTextFormatter3<T
     /**
      * Fetches the color to be added. While the color reference is static, the actual resolved {@link Color} is not.
      */
-    private Color color(final SpreadsheetTextFormatContext context) {
+    private Optional<Color> color(final SpreadsheetTextFormatContext context) {
         return this.source.resolve(this.sourceValue, context);
     }
 

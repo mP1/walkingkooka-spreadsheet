@@ -29,6 +29,7 @@ import walkingkooka.type.PublicStaticHelper;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -43,8 +44,8 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final Converter converter,
                                                  final DecimalNumberContext decimalNumberContext,
                                                  final DateTimeContext dateTimeContext,
-                                                 final Function<Integer, Color> numberToColor,
-                                                 final Function<String, Color> nameToColor,
+                                                 final Function<Integer, Optional<Color>> numberToColor,
+                                                 final Function<String, Optional<Color>> nameToColor,
                                                  final String generalDecimalFormatPattern,
                                                  final int width,
                                                  final Function<BigDecimal, Fraction> fractioner,

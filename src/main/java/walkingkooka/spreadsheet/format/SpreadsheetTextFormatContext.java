@@ -21,6 +21,8 @@ import walkingkooka.color.Color;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 
+import java.util.Optional;
+
 /**
  * Context that accompanies a value format, holding local sensitive attributes such as the decimal point character.
  */
@@ -29,12 +31,12 @@ public interface SpreadsheetTextFormatContext extends DecimalNumberContext, Date
     /**
      * Returns the {@link Color} with the given number.
      */
-    Color colorNumber(int number);
+    Optional<Color> colorNumber(int number);
 
     /**
      * Returns the {@link Color} with the given name.
      */
-    Color colorName(String name);
+    Optional<Color> colorName(String name);
 
     /**
      * A {@link java.text.DecimalFormat} pattern, that should be used for non text values.

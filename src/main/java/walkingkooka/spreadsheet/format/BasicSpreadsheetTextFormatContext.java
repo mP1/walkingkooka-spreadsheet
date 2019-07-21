@@ -27,6 +27,7 @@ import walkingkooka.math.DecimalNumberContext;
 
 import java.math.MathContext;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
 
 /**
@@ -34,8 +35,8 @@ import java.util.function.Function;
  */
 final class BasicSpreadsheetTextFormatContext implements SpreadsheetTextFormatContext {
 
-    static BasicSpreadsheetTextFormatContext with(final Function<Integer, Color> numberToColor,
-                                                  final Function<String, Color> nameToColor,
+    static BasicSpreadsheetTextFormatContext with(final Function<Integer, Optional<Color>> numberToColor,
+                                                  final Function<String, Optional<Color>> nameToColor,
                                                   final String generalDecimalFormatPattern,
                                                   final int width,
                                                   final Converter converter,
@@ -60,8 +61,8 @@ final class BasicSpreadsheetTextFormatContext implements SpreadsheetTextFormatCo
                 decimalNumberContext);
     }
 
-    private BasicSpreadsheetTextFormatContext(final Function<Integer, Color> numberToColor,
-                                              final Function<String, Color> nameToColor,
+    private BasicSpreadsheetTextFormatContext(final Function<Integer, Optional<Color>> numberToColor,
+                                              final Function<String, Optional<Color>> nameToColor,
                                               final String generalDecimalFormatPattern,
                                               final int width,
                                               final Converter converter,
@@ -85,18 +86,18 @@ final class BasicSpreadsheetTextFormatContext implements SpreadsheetTextFormatCo
     // BasicSpreadsheetTextFormatContext................................................................................
 
     @Override
-    public Color colorNumber(final int number) {
+    public Optional<Color> colorNumber(final int number) {
         return this.numberToColor.apply(number);
     }
 
-    private final Function<Integer, Color> numberToColor;
+    private final Function<Integer, Optional<Color>> numberToColor;
 
     @Override
-    public Color colorName(final String name) {
+    public Optional<Color> colorName(final String name) {
         return this.nameToColor.apply(name);
     }
 
-    private final Function<String, Color> nameToColor;
+    private final Function<String, Optional<Color>> nameToColor;
 
 
     @Override
