@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.tree.json.JsonNode;
 
-public final class StringSpreadsheetMetadataPropertyValueHandlerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase2<StringSpreadsheetMetadataPropertyValueHandler, String> {
+public final class StringSpreadsheetMetadataPropertyValueHandlerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase3<StringSpreadsheetMetadataPropertyValueHandler, String> {
 
     @Test
     public void testCheckEmptyString() {
@@ -56,11 +56,6 @@ public final class StringSpreadsheetMetadataPropertyValueHandlerTest extends Spr
 
     @Override
     String propertyValueType() {
-        return String.class.getSimpleName();
-    }
-
-    @Override
-    String expectedToString() {
         return String.class.getSimpleName();
     }
 
