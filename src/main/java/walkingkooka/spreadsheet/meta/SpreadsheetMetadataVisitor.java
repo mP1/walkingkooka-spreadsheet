@@ -92,6 +92,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitDateTimeOffset(final Long offset) {
+        // nop
+    }
+
     protected void visitDecimalPoint(final Character decimalPoint) {
         // nop
     }
