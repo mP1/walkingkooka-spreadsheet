@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetId;
 
-public final class SpreadsheetIdSpreadsheetMetadataPropertyValueHandlerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase2<SpreadsheetIdSpreadsheetMetadataPropertyValueHandler, SpreadsheetId> {
+public final class SpreadsheetIdSpreadsheetMetadataPropertyValueHandlerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase3<SpreadsheetIdSpreadsheetMetadataPropertyValueHandler, SpreadsheetId> {
 
     @Test
     public void testFromJsonNode() {
@@ -51,11 +51,6 @@ public final class SpreadsheetIdSpreadsheetMetadataPropertyValueHandlerTest exte
 
     @Override
     String propertyValueType() {
-        return SpreadsheetId.class.getSimpleName();
-    }
-
-    @Override
-    String expectedToString() {
         return SpreadsheetId.class.getSimpleName();
     }
 

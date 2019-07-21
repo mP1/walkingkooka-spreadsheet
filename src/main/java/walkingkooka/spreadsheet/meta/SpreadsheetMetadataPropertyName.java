@@ -57,6 +57,16 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     }
 
     /**
+     * Creates and adds a new {@link SpreadsheetMetadataPropertyName} property that holds date {@link java.time.format.DateTimeFormatter pattern}.
+     */
+    private static SpreadsheetMetadataPropertyName<String> registerDateTimeFormatterPatternConstant(final String name,
+                                                                                                    final BiConsumer<String, SpreadsheetMetadataVisitor> visitor) {
+        return registerConstant(name,
+                SpreadsheetMetadataPropertyValueHandler.dateTimeFormatterPattern(),
+                visitor);
+    }
+
+    /**
      * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link Long date-time} metadata values.
      */
     private static SpreadsheetMetadataPropertyName<Long> registerDateTimeOffsetConstant(final String name,
@@ -170,10 +180,22 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
             (c, v) -> v.visitCurrencySymbol(c));
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-pattern {@link String}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<String> DATE_PATTERN = registerDateTimeFormatterPatternConstant("date-pattern",
+            (p, v) -> v.visitDatePattern(p));
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-offset {@link Long}</code>
      */
     public final static SpreadsheetMetadataPropertyName<Long> DATETIME_OFFSET = registerDateTimeOffsetConstant("date-time-offset",
             (c, v) -> v.visitDateTimeOffset(c));
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-pattern {@link String}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<String> DATETIME_PATTERN = registerDateTimeFormatterPatternConstant("date-time-pattern",
+            (p, v) -> v.visitDateTimePattern(p));
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>decimal point {@link Character}</code>
@@ -252,6 +274,12 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
      */
     public final static SpreadsheetMetadataPropertyName<SpreadsheetId> SPREADSHEET_ID = registerSpreadsheetIdConstant("spreadsheet-id",
             (e, v) -> v.visitSpreadsheetId(e));
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>time-pattern {@link String}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<String> TIME_PATTERN = registerDateTimeFormatterPatternConstant("time-pattern",
+            (p, v) -> v.visitTimePattern(p));
 
     /**
      * Factory that assumnes a valid {@link SpreadsheetMetadataPropertyName} or fails.

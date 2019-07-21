@@ -125,11 +125,4 @@ public abstract class SpreadsheetMetadataPropertyValueHandlerTestCase2<P extends
     abstract T propertyValue();
 
     abstract String propertyValueType();
-
-    // TypeNameTesting..................................................................................................
-
-    @Override
-    public final String typeNamePrefix() {
-        return this.propertyValueType();
-    }
 }
