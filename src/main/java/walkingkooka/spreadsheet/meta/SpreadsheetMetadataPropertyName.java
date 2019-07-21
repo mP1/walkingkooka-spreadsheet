@@ -48,7 +48,7 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     final static Map<String, SpreadsheetMetadataPropertyName<?>> CONSTANTS = Maps.sorted(SpreadsheetMetadataPropertyName.CASE_SENSITIVITY.comparator());
 
     /**
-     * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link Character} metadata values.
+     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link Character value}.
      */
     private static SpreadsheetMetadataPropertyName<Character> registerCharacterConstant(final String name,
                                                                                         final BiConsumer<Character, SpreadsheetMetadataVisitor> visitor) {
@@ -57,7 +57,16 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     }
 
     /**
-     * Creates and adds a new {@link SpreadsheetMetadataPropertyName} property that holds date {@link java.time.format.DateTimeFormatter pattern}.
+     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link LocalDateTime value}.
+     */
+    private static SpreadsheetMetadataPropertyName<LocalDateTime> registerDateTimeConstant(final String name,
+                                                                                           final BiConsumer<LocalDateTime, SpreadsheetMetadataVisitor> visitor) {
+        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.localDateTime(),
+                visitor);
+    }
+
+    /**
+     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link String date time formatter pattern}.
      */
     private static SpreadsheetMetadataPropertyName<String> registerDateTimeFormatterPatternConstant(final String name,
                                                                                                     final BiConsumer<String, SpreadsheetMetadataVisitor> visitor) {
@@ -67,7 +76,7 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     }
 
     /**
-     * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link Long date-time} metadata values.
+     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link Long date time offset}.
      */
     private static SpreadsheetMetadataPropertyName<Long> registerDateTimeOffsetConstant(final String name,
                                                                                         final BiConsumer<Long, SpreadsheetMetadataVisitor> visitor) {
@@ -76,7 +85,7 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     }
 
     /**
-     * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link EmailAddress} metadata values.
+     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link EmailAddress value}.
      */
     private static SpreadsheetMetadataPropertyName<EmailAddress> registerEmailAddressConstant(final String name,
                                                                                               final BiConsumer<EmailAddress, SpreadsheetMetadataVisitor> visitor) {
@@ -85,16 +94,7 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     }
 
     /**
-     * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link LocalDateTime} metadata values.
-     */
-    private static SpreadsheetMetadataPropertyName<LocalDateTime> registerDateTimeConstant(final String name,
-                                                                                           final BiConsumer<LocalDateTime, SpreadsheetMetadataVisitor> visitor) {
-        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.localDateTime(),
-                visitor);
-    }
-
-    /**
-     * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link Locale} metadata values.
+     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link Locale value}.
      */
     private static SpreadsheetMetadataPropertyName<Locale> registerLocaleConstant(final String name,
                                                                                   final BiConsumer<Locale, SpreadsheetMetadataVisitor> visitor) {
@@ -103,7 +103,7 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     }
 
     /**
-     * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles non empty string values.
+     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a non {@link String value}.
      */
     private static SpreadsheetMetadataPropertyName<String> registerNonEmptyStringConstant(final String name,
                                                                                           final BiConsumer<String, SpreadsheetMetadataVisitor> visitor) {
@@ -112,7 +112,7 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     }
 
     /**
-     * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles positive {@link Integer} metadata values.
+     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a positive {@link Integer value}.
      */
     private static SpreadsheetMetadataPropertyName<Integer> registerPositiveIntegerConstant(final String name,
                                                                                             final BiConsumer<Integer, SpreadsheetMetadataVisitor> visitor) {
@@ -121,7 +121,7 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     }
 
     /**
-     * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link RoundingMode} metadata values.
+     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link RoundingMode value}.
      */
     private static SpreadsheetMetadataPropertyName<RoundingMode> registerRoundingModeConstant(final String name,
                                                                                               final BiConsumer<RoundingMode, SpreadsheetMetadataVisitor> visitor) {
@@ -130,7 +130,7 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     }
 
     /**
-     * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link SpreadsheetId} metadata values.
+     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link SpreadsheetId value}.
      */
     private static SpreadsheetMetadataPropertyName<SpreadsheetId> registerSpreadsheetIdConstant(final String name,
                                                                                                 final BiConsumer<SpreadsheetId, SpreadsheetMetadataVisitor> visitor) {
@@ -139,7 +139,7 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     }
 
     /**
-     * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link SpreadsheetId} metadata values.
+     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link String value}.
      */
     private static SpreadsheetMetadataPropertyName<String> registerStringConstant(final String name,
                                                                                   final BiConsumer<String, SpreadsheetMetadataVisitor> visitor) {
@@ -149,7 +149,7 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     }
 
     /**
-     * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built.
+     * Registers a new {@link SpreadsheetMetadataPropertyName}.
      */
     private static <T> SpreadsheetMetadataPropertyName<T> registerConstant(final String name,
                                                                            final SpreadsheetMetadataPropertyValueHandler<T> handler,
