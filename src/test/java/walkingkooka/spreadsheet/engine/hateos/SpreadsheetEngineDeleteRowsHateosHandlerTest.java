@@ -101,8 +101,8 @@ public final class SpreadsheetEngineDeleteRowsHateosHandlerTest extends Spreadsh
 
                     @Override
                     public SpreadsheetDelta<Range<SpreadsheetRowReference>> deleteRows(final SpreadsheetRowReference c,
-                                                                                             final int count,
-                                                                                             final SpreadsheetEngineContext context) {
+                                                                                       final int count,
+                                                                                       final SpreadsheetEngineContext context) {
                         assertEquals(row.get(), c, "row");
                         assertEquals(1, count, "count");
                         return SpreadsheetDelta.withRange(Range.singleton(row.get()), cells);

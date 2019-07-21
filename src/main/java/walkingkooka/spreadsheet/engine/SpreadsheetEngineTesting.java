@@ -271,7 +271,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                     range,
                     this.createContext());
         });
-        checkMessage(thrown,"Several cells [B2=1] are outside the range C3");
+        checkMessage(thrown, "Several cells [B2=1] are outside the range C3");
     }
 
     @Test
@@ -288,7 +288,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                     this.createContext());
         });
 
-        checkMessage(thrown,"Several cells [B2=1] are outside the range C3:D4");
+        checkMessage(thrown, "Several cells [B2=1] are outside the range C3:D4");
     }
 
     @Test
@@ -306,7 +306,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                     this.createContext());
         });
 
-        checkMessage(thrown,"Several cells [B2=1] are outside the range C3:D4");
+        checkMessage(thrown, "Several cells [B2=1] are outside the range C3:D4");
     }
 
     @Test
@@ -325,7 +325,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                     this.createContext());
         });
 
-        checkMessage(thrown,"Several cells [B2=1, E5=4] are outside the range C3:D4");
+        checkMessage(thrown, "Several cells [B2=1, E5=4] are outside the range C3:D4");
     }
 
     @Test
@@ -561,7 +561,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                   final SpreadsheetCellReference reference,
                                   final SpreadsheetEngineEvaluation evaluation,
                                   final SpreadsheetEngineContext context,
-                                  final SpreadsheetCell...cells) {
+                                  final SpreadsheetCell... cells) {
         assertEquals(SpreadsheetDelta.withId(Optional.of(reference), Sets.of(cells)),
                 engine.loadCell(reference, evaluation, context),
                 () -> "loadCell " + reference);

@@ -61,7 +61,7 @@ public final class UserTest extends IdentityTestCase<User, UserId> {
         assertEquals(id, different.id(), "id");
         assertEquals(EMAIL, different.email(), "email");
     }
-    
+
     // HasJsonNodeTesting.................................................................................................
 
     @Test

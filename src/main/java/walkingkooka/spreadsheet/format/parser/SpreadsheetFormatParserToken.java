@@ -726,7 +726,7 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     @Override
     public final void accept(final ParserTokenVisitor visitor) {
         if (visitor instanceof SpreadsheetFormatParserTokenVisitor) {
-            final SpreadsheetFormatParserTokenVisitor visitor2 = SpreadsheetFormatParserTokenVisitor.class.cast(visitor);
+            final SpreadsheetFormatParserTokenVisitor visitor2 = (SpreadsheetFormatParserTokenVisitor) visitor;
             if (Visiting.CONTINUE == visitor2.startVisit(this)) {
                 this.accept(visitor2);
             }

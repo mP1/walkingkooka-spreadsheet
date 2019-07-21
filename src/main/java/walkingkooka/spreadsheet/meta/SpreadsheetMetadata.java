@@ -119,8 +119,8 @@ public abstract class SpreadsheetMetadata implements HasDateTimeContext,
                                    final List<SpreadsheetMetadataPropertyName<?>> missing) {
         return this.get(propertyName)
                 .orElseGet(() -> {
-                   missing.add(propertyName);
-                   return null;
+                    missing.add(propertyName);
+                    return null;
                 });
     }
 
@@ -178,7 +178,7 @@ public abstract class SpreadsheetMetadata implements HasDateTimeContext,
 
         return DateTimeContexts.dateFormatSymbols(DateFormatSymbols.getInstance(locale));
     }
-    
+
     // HasDecimalNumberContext..........................................................................................
 
     /**
