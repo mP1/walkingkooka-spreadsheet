@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.convert.Converters;
 import walkingkooka.tree.json.HasJsonNode;
 
-public final class DateTimeOffsetSpreadsheetMetadataPropertyValueHandlerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase<DateTimeOffsetSpreadsheetMetadataPropertyValueHandler, Long> {
+public final class DateTimeOffsetSpreadsheetMetadataPropertyValueHandlerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase2<DateTimeOffsetSpreadsheetMetadataPropertyValueHandler, Long> {
 
     @Override
     public void testTypeNaming() {

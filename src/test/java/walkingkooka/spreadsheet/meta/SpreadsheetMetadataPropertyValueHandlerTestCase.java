@@ -17,117 +17,15 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import org.junit.jupiter.api.Test;
-import walkingkooka.test.ToStringTesting;
 import walkingkooka.test.TypeNameTesting;
-import walkingkooka.text.CharSequences;
-import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.JavaVisibility;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-public abstract class SpreadsheetMetadataPropertyValueHandlerTestCase<P extends SpreadsheetMetadataPropertyValueHandler<T>, T> extends SpreadsheetMetadataTestCase2<P>
-        implements ToStringTesting<P>,
-        TypeNameTesting<P> {
+public abstract class SpreadsheetMetadataPropertyValueHandlerTestCase<P extends SpreadsheetMetadataPropertyValueHandler<?>> extends SpreadsheetMetadataTestCase2<P>
+        implements TypeNameTesting<P> {
 
     SpreadsheetMetadataPropertyValueHandlerTestCase() {
         super();
     }
-
-    @Test
-    public final void testCheckNullValueFails() {
-        this.checkFails(null,
-                "Missing value");
-    }
-
-    @Test
-    public final void testCheckInvalidValueFails() {
-        this.checkFails(this,
-                "Expected " + this.propertyValueType() + " but got " + this + " (" + this.getClass().getSimpleName() + ")");
-    }
-
-    @Test
-    public final void testCheckInvalidValueFails2() {
-        final StringBuilder value = new StringBuilder("123abc");
-        this.checkFails(value,
-                "Expected " + this.propertyValueType() + " but got \"123abc\" (java.lang.StringBuilder)");
-    }
-
-    @Test
-    public final void testCheck() {
-        this.check(this.propertyValue());
-    }
-
-    @Test
-    public final void testRoundtripJson() {
-        final T value = this.propertyValue();
-        final P handler = this.handler();
-
-        final JsonNode json = handler.toJsonNode(value);
-
-        assertEquals(value,
-                handler.fromJsonNode(json, this.propertyName()),
-                () -> "value " + CharSequences.quoteIfChars(value) + " to json " + json);
-    }
-
-    @Test
-    public final void testToString() {
-        this.toStringAndCheck(this.handler(), this.expectedToString());
-    }
-
-    abstract String expectedToString();
-
-    final void check(final Object value) {
-        final SpreadsheetMetadataPropertyName<?> propertyName = this.propertyName();
-        this.handler().check(value, propertyName);
-        propertyName.checkValue(value);
-    }
-
-    final void checkFails(final Object value, final String message) {
-        final SpreadsheetMetadataPropertyName<?> propertyName = this.propertyName();
-
-        final SpreadsheetMetadataPropertyValueException thrown = assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> {
-            this.check(value);
-        });
-        this.checkSpreadsheetMetadataPropertyValueException(thrown, message, propertyName, value);
-
-        final SpreadsheetMetadataPropertyValueException thrown2 = assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> {
-            propertyName.checkValue(value);
-        });
-        this.checkSpreadsheetMetadataPropertyValueException(thrown, message, propertyName, value);
-    }
-
-    private void checkSpreadsheetMetadataPropertyValueException(final SpreadsheetMetadataPropertyValueException thrown,
-                                                                final String message,
-                                                                final SpreadsheetMetadataPropertyName<?> propertyName,
-                                                                final Object value) {
-        assertEquals(message, thrown.getMessage(), "message");
-        assertEquals(propertyName, thrown.name(), "propertyName");
-        assertEquals(value, thrown.value(), "value");
-    }
-
-    final void fromJsonNodeAndCheck(final JsonNode node, final T value) {
-        assertEquals(value,
-                this.handler().fromJsonNode(node, this.propertyName()),
-                () -> "from JsonNode " + node);
-    }
-
-    final void toJsonNodeAndCheck(final T value, final JsonNode node) {
-        assertEquals(node,
-                this.handler().toJsonNode(value),
-                () -> "toJsonNode " + CharSequences.quoteIfChars(value));
-    }
-
-    // helper...........................................................................................................
-
-    abstract P handler();
-
-    abstract SpreadsheetMetadataPropertyName<T> propertyName();
-
-    abstract T propertyValue();
-
-    abstract String propertyValueType();
 
     // ClassTesting.....................................................................................................
 
@@ -137,11 +35,6 @@ public abstract class SpreadsheetMetadataPropertyValueHandlerTestCase<P extends 
     }
 
     // TypeNameTesting..................................................................................................
-
-    @Override
-    public final String typeNamePrefix() {
-        return this.propertyValueType();
-    }
 
     @Override
     public final String typeNameSuffix() {
