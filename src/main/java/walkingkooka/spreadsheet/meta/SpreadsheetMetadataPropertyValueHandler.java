@@ -35,6 +35,13 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     }
 
     /**
+     * {@see DateTimeOffsetSpreadsheetMetadataPropertyValueHandler}
+     */
+    static DateTimeOffsetSpreadsheetMetadataPropertyValueHandler dateTimeOffset() {
+        return DateTimeOffsetSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    }
+
+    /**
      * {@see EmailAddressSpreadsheetMetadataPropertyValueHandler}
      */
     static EmailAddressSpreadsheetMetadataPropertyValueHandler emailAddress() {
