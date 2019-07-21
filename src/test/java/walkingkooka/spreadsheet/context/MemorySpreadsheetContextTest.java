@@ -313,8 +313,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                            final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter,
                            final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                            final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
-                           final Function<SpreadsheetId, Function<String, Color>> spreadsheetIdNameToColor,
-                           final Function<SpreadsheetId, Function<Integer, Color>> spreadsheetIdNumberToColor,
+                           final Function<SpreadsheetId, Function<String, Optional<Color>>> spreadsheetIdNameToColor,
+                           final Function<SpreadsheetId, Function<Integer, Optional<Color>>> spreadsheetIdNumberToColor,
                            final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
         assertThrows(NullPointerException.class, () -> {
             MemorySpreadsheetContext.with(base,
@@ -907,23 +907,23 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         return SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(999)));
     }
 
-    private Function<String, Color> spreadsheetIdNameToColor(final SpreadsheetId spreadsheetId) {
+    private Function<String, Optional<Color>> spreadsheetIdNameToColor(final SpreadsheetId spreadsheetId) {
         this.checkSpreadsheetId(spreadsheetId);
 
         return this::spreadsheetIdNameToColor0;
     }
 
-    private Color spreadsheetIdNameToColor0(final String colorName) {
+    private Optional<Color> spreadsheetIdNameToColor0(final String colorName) {
         throw new UnsupportedOperationException("name to color " + colorName);
     }
 
-    private Function<Integer, Color> spreadsheetIdNumberToColor(final SpreadsheetId spreadsheetId) {
+    private Function<Integer, Optional<Color>> spreadsheetIdNumberToColor(final SpreadsheetId spreadsheetId) {
         this.checkSpreadsheetId(spreadsheetId);
 
         return this::spreadsheetIdNumberToColor0;
     }
 
-    private Color spreadsheetIdNumberToColor0(final Integer colorNumber) {
+    private Optional<Color> spreadsheetIdNumberToColor0(final Integer colorNumber) {
         throw new UnsupportedOperationException("number to color " + colorNumber);
     }
 
