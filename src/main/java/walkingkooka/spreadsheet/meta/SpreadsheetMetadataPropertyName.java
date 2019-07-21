@@ -57,6 +57,15 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     }
 
     /**
+     * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link Long date-time} metadata values.
+     */
+    private static SpreadsheetMetadataPropertyName<Long> registerDateTimeOffsetConstant(final String name,
+                                                                                        final BiConsumer<Long, SpreadsheetMetadataVisitor> visitor) {
+        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.dateTimeOffset(),
+                visitor);
+    }
+
+    /**
      * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link EmailAddress} metadata values.
      */
     private static SpreadsheetMetadataPropertyName<EmailAddress> registerEmailAddressConstant(final String name,
@@ -159,6 +168,12 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
      */
     public final static SpreadsheetMetadataPropertyName<String> CURRENCY_SYMBOL = registerNonEmptyStringConstant("currency-symbol",
             (c, v) -> v.visitCurrencySymbol(c));
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-offset {@link Long}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<Long> DATETIME_OFFSET = registerDateTimeOffsetConstant("date-time-offset",
+            (c, v) -> v.visitDateTimeOffset(c));
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>decimal point {@link Character}</code>

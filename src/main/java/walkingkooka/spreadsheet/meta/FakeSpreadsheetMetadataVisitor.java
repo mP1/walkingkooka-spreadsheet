@@ -67,6 +67,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitDateTimeOffset(final Long offset) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitDecimalPoint(final Character decimalPoint) {
         throw new UnsupportedOperationException();
     }
