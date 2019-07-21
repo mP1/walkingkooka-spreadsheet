@@ -22,7 +22,7 @@ import walkingkooka.tree.json.HasJsonNode;
 
 import java.util.Locale;
 
-public final class LocaleSpreadsheetMetadataPropertyValueHandlerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase<LocaleSpreadsheetMetadataPropertyValueHandler, Locale> {
+public final class LocaleSpreadsheetMetadataPropertyValueHandlerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase2<LocaleSpreadsheetMetadataPropertyValueHandler, Locale> {
 
     @Test
     public void testFromJsonNode() {
