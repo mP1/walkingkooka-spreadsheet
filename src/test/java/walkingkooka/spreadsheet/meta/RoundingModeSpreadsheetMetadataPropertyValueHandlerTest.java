@@ -23,7 +23,7 @@ import walkingkooka.tree.json.HasJsonNode;
 import java.math.RoundingMode;
 import java.util.Arrays;
 
-public final class RoundingModeSpreadsheetMetadataPropertyValueHandlerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase<RoundingModeSpreadsheetMetadataPropertyValueHandler, RoundingMode> {
+public final class RoundingModeSpreadsheetMetadataPropertyValueHandlerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase2<RoundingModeSpreadsheetMetadataPropertyValueHandler, RoundingMode> {
 
     @Test
     public void testInvalidRoundingModeFails() {
