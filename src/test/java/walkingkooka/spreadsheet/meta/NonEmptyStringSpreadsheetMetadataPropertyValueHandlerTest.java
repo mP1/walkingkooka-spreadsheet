@@ -72,4 +72,9 @@ public final class NonEmptyStringSpreadsheetMetadataPropertyValueHandlerTest ext
     public Class<NonEmptyStringSpreadsheetMetadataPropertyValueHandler> type() {
         return NonEmptyStringSpreadsheetMetadataPropertyValueHandler.class;
     }
+
+    @Override
+    public String typeNamePrefix() {
+        return this.expectedToString();
+    }
 }

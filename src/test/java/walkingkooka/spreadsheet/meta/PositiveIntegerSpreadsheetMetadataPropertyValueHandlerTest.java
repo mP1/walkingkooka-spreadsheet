@@ -87,4 +87,9 @@ public final class PositiveIntegerSpreadsheetMetadataPropertyValueHandlerTest ex
     public Class<PositiveIntegerSpreadsheetMetadataPropertyValueHandler> type() {
         return PositiveIntegerSpreadsheetMetadataPropertyValueHandler.class;
     }
+
+    @Override
+    public String typeNamePrefix() {
+        return "PositiveInteger";
+    }
 }
