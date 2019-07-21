@@ -65,4 +65,11 @@ public final class LocalDateTimeSpreadsheetMetadataPropertyValueHandlerTest exte
     public Class<LocalDateTimeSpreadsheetMetadataPropertyValueHandler> type() {
         return LocalDateTimeSpreadsheetMetadataPropertyValueHandler.class;
     }
+
+    // TypeNameTesting..................................................................................................
+
+    @Override
+    public String typeNamePrefix() {
+        return LocalDateTime.class.getSimpleName();
+    }
 }

@@ -23,10 +23,6 @@ import walkingkooka.tree.json.HasJsonNode;
 
 public final class DateTimeOffsetSpreadsheetMetadataPropertyValueHandlerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase2<DateTimeOffsetSpreadsheetMetadataPropertyValueHandler, Long> {
 
-    @Override
-    public void testTypeNaming() {
-    }
-
     @Test
     public void testInvalidOffsetFails() {
         this.checkFails(123L, "Invalid date time offset 123");
@@ -82,5 +78,10 @@ public final class DateTimeOffsetSpreadsheetMetadataPropertyValueHandlerTest ext
     @Override
     public Class<DateTimeOffsetSpreadsheetMetadataPropertyValueHandler> type() {
         return DateTimeOffsetSpreadsheetMetadataPropertyValueHandler.class;
+    }
+
+    @Override
+    public String typeNamePrefix() {
+        return this.expectedToString();
     }
 }
