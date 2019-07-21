@@ -22,7 +22,7 @@ import walkingkooka.tree.json.HasJsonNode;
 
 import java.time.LocalDateTime;
 
-public final class LocalDateTimeSpreadsheetMetadataPropertyValueHandlerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase<LocalDateTimeSpreadsheetMetadataPropertyValueHandler, LocalDateTime> {
+public final class LocalDateTimeSpreadsheetMetadataPropertyValueHandlerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase2<LocalDateTimeSpreadsheetMetadataPropertyValueHandler, LocalDateTime> {
 
     @Test
     public void testFromJsonNode() {
