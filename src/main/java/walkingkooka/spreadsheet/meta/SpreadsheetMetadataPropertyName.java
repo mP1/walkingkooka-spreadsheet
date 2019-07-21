@@ -85,6 +85,16 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     }
 
     /**
+     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link String decimal format pattern}.
+     */
+    private static SpreadsheetMetadataPropertyName<String> registerDecimalFormatPatternConstant(final String name,
+                                                                                                final BiConsumer<String, SpreadsheetMetadataVisitor> visitor) {
+        return registerConstant(name,
+                SpreadsheetMetadataPropertyValueHandler.decimalFormatPattern(),
+                visitor);
+    }
+    
+    /**
      * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link EmailAddress value}.
      */
     private static SpreadsheetMetadataPropertyName<EmailAddress> registerEmailAddressConstant(final String name,
@@ -162,6 +172,18 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     }
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>BigDecimal pattern</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<String> BIG_DECIMAL_PATTERN = registerDecimalFormatPatternConstant("big-decimal-pattern",
+            (p, v) -> v.visitBigDecimalPattern(p));
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>BigInteger pattern</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<String> BIG_INTEGER_PATTERN = registerDecimalFormatPatternConstant("big-integer-pattern",
+            (p, v) -> v.visitBigIntegerPattern(p));
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>creator {@link EmailAddress}</code>
      */
     public final static SpreadsheetMetadataPropertyName<EmailAddress> CREATOR = registerEmailAddressConstant("creator",
@@ -204,6 +226,12 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
             (c, v) -> v.visitDecimalPoint(c));
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>Double pattern</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<String> DOUBLE_PATTERN = registerDecimalFormatPatternConstant("double-pattern",
+            (p, v) -> v.visitDoublePattern(p));
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>exponent-symbol {@link Character}</code>
      */
     public final static SpreadsheetMetadataPropertyName<Character> EXPONENT_SYMBOL = registerCharacterConstant("exponent-symbol",
@@ -226,6 +254,12 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
      */
     public final static SpreadsheetMetadataPropertyName<Locale> LOCALE = registerLocaleConstant("locale",
             (l, v) -> v.visitLocale(l));
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>Long pattern</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<String> LONG_PATTERN = registerDecimalFormatPatternConstant("long-pattern",
+            (p, v) -> v.visitLongPattern(p));
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>minus-sign {@link Character}</code>
