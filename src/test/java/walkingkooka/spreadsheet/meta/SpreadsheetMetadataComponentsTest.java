@@ -109,6 +109,20 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
     }
 
     @Test
+    public void testReportIfMissingMissingSorted() {
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
+        components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_POINT);
+        components.getOrNull(SpreadsheetMetadataPropertyName.CREATOR);
+        components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
+        components.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
+
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
+            components.reportIfMissing();
+        });
+        assertEquals("Required properties \"creator\", \"decimal-point\", \"locale\", \"rounding-mode\" missing.", thrown.getMessage(), "message");
+    }
+
+    @Test
     public void testReportIfMissingNone() {
         final SpreadsheetMetadataPropertyName<EmailAddress> property = SpreadsheetMetadataPropertyName.CREATOR;
         final EmailAddress value = EmailAddress.parse("user@example.com");
