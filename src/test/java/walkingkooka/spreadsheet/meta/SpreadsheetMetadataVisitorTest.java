@@ -130,6 +130,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitDatePattern() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitDatePattern(final String p) {
+                this.visited = p;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.DATE_PATTERN, "DD/MM/YYYY");
+    }
+
+    @Test
     public void testVisitDateTimeOffset() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
@@ -137,6 +147,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = offset;
             }
         }.accept(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.EXCEL_OFFSET);
+    }
+
+    @Test
+    public void testVisitDatePatternTime() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitDateTimePattern(final String f) {
+                this.visited = f;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.DATETIME_PATTERN, "DD/MM/YYYY hh:mm");
     }
 
     @Test
@@ -267,6 +287,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = i;
             }
         }.accept(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123));
+    }
+
+    @Test
+    public void testVisitTimePattern() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitTimePattern(final String f) {
+                this.visited = f;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.TIME_PATTERN, "hh:mm");
     }
 
     private static <T> SpreadsheetMetadata metadata(final SpreadsheetMetadataPropertyName<T> propertyName, final T value) {
