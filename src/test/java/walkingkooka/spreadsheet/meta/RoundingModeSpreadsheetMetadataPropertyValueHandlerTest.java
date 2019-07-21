@@ -65,6 +65,11 @@ public final class RoundingModeSpreadsheetMetadataPropertyValueHandlerTest exten
     }
 
     @Override
+    String expectedToString() {
+        return RoundingMode.class.getSimpleName();
+    }
+
+    @Override
     public Class<RoundingModeSpreadsheetMetadataPropertyValueHandler> type() {
         return RoundingModeSpreadsheetMetadataPropertyValueHandler.class;
     }

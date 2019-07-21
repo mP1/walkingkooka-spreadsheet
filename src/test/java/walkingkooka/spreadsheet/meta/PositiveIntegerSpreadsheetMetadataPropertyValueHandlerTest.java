@@ -79,6 +79,11 @@ public final class PositiveIntegerSpreadsheetMetadataPropertyValueHandlerTest ex
     }
 
     @Override
+    String expectedToString() {
+        return "+" + Integer.class.getSimpleName();
+    }
+
+    @Override
     public Class<PositiveIntegerSpreadsheetMetadataPropertyValueHandler> type() {
         return PositiveIntegerSpreadsheetMetadataPropertyValueHandler.class;
     }
