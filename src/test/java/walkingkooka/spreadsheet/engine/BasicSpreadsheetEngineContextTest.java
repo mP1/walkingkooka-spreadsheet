@@ -442,27 +442,27 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         };
     }
 
-    private Function<Integer, Color> numberToColor() {
+    private Function<Integer, Optional<Color>> numberToColor() {
         return this::numberToColor0;
     }
 
-    private Color numberToColor0(final Integer colorNumber) {
+    private Optional<Color> numberToColor0(final Integer colorNumber) {
         assertEquals(12, colorNumber, "colorNumber");
         return this.color();
     }
 
 
-    private Function<String, Color> nameToColor() {
+    private Function<String, Optional<Color>> nameToColor() {
         return this::nameToColor0;
     }
 
-    private Color nameToColor0(final String colorName) {
+    private Optional<Color> nameToColor0(final String colorName) {
         assertEquals("bingo", colorName, "colorName");
         return this.color();
     }
 
-    private final Color color() {
-        return Color.fromRgb(0x123456);
+    private final Optional<Color> color() {
+        return Optional.of(Color.fromRgb(0x123456));
     }
 
     private final static String GENERAL_DECIMAL_FORMAT_PATTERN = "##.#";

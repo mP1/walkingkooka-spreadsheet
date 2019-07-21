@@ -59,39 +59,73 @@ public final class ColorSpreadsheetTextFormatterTest extends SpreadsheetTextForm
     @Test
     public void testColorNameAndTextFormatted() {
         final String text = "abc123";
-        final Color color = Color.BLACK;
+        final Optional<Color> color = Optional.of(Color.BLACK);
         this.parseFormatAndCheck0(
                 "[RED]",
                 text,
                 new FakeSpreadsheetTextFormatContext() {
                     @Override
-                    public Color colorName(final String name) {
+                    public Optional<Color> colorName(final String name) {
                         assertEquals("RED", name, "color name");
                         return color;
                     }
                 },
-                SpreadsheetFormattedText.with(Optional.of(color), text + text));
+                SpreadsheetFormattedText.with(color, text + text));
+    }
+
+    @Test
+    public void testColorNameAndTextFormattedAbsent() {
+        final String text = "abc123";
+        final Optional<Color> color = Optional.empty();
+        this.parseFormatAndCheck0(
+                "[RED]",
+                text,
+                new FakeSpreadsheetTextFormatContext() {
+                    @Override
+                    public Optional<Color> colorName(final String name) {
+                        assertEquals("RED", name, "color name");
+                        return color;
+                    }
+                },
+                SpreadsheetFormattedText.with(color, text + text));
     }
 
     @Test
     public void testColorNumberAndTextFormatted() {
         final String text = "abc123";
-        final Color color = Color.BLACK;
+        final Optional<Color> color = Optional.of(Color.BLACK);
         this.parseFormatAndCheck0(
                 "[COLOR 15]",
                 text,
                 new FakeSpreadsheetTextFormatContext() {
                     @Override
-                    public Color colorNumber(final int number) {
+                    public Optional<Color> colorNumber(final int number) {
                         assertEquals(15, number);
                         return color;
                     }
                 },
-                SpreadsheetFormattedText.with(Optional.of(color), text + text));
+                SpreadsheetFormattedText.with(color, text + text));
+    }
+
+    @Test
+    public void testColorNumberAndTextFormattedAbsent() {
+        final String text = "abc123";
+        final Optional<Color> color = Optional.empty();
+        this.parseFormatAndCheck0(
+                "[COLOR 15]",
+                text,
+                new FakeSpreadsheetTextFormatContext() {
+                    @Override
+                    public Optional<Color> colorNumber(final int number) {
+                        assertEquals(15, number);
+                        return color;
+                    }
+                },
+                SpreadsheetFormattedText.with(color, text + text));
     }
 
     private void parseFormatAndCheck0(final String pattern,
-                                      String value,
+                                      final String value,
                                       final SpreadsheetTextFormatContext context,
                                       final SpreadsheetFormattedText formattedText) {
         this.formatAndCheck(this.createFormatter(pattern), value, context, Optional.of(formattedText));

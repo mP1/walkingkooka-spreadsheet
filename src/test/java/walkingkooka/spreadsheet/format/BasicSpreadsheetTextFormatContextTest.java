@@ -29,6 +29,7 @@ import walkingkooka.math.DecimalNumberContexts;
 import java.math.MathContext;
 import java.text.DateFormatSymbols;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -128,8 +129,8 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
                 null);
     }
 
-    private void withFails(final Function<Integer, Color> numberToColor,
-                           final Function<String, Color> nameToColor,
+    private void withFails(final Function<Integer, Optional<Color>> numberToColor,
+                           final Function<String, Optional<Color>> nameToColor,
                            final String generalDecimalFormatPattern,
                            final int width,
                            final Converter converter,
@@ -148,12 +149,12 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
 
     @Test
     public void testColorNumber() {
-        this.colorNumberAndCheck(this.createContext(), 1, this.color());
+        this.colorNumberAndCheck(this.createContext(), 1, Optional.of(this.color()));
     }
 
     @Test
     public void testColorName() {
-        this.colorNameAndCheck(this.createContext(), "bingo", this.color());
+        this.colorNameAndCheck(this.createContext(), "bingo", Optional.of(this.color()));
     }
 
     @Test
@@ -189,13 +190,13 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
                 decimalNumberContext());
     }
 
-    private Function<Integer, Color> numberToColor() {
+    private Function<Integer, Optional<Color>> numberToColor() {
         return new Function<>() {
 
             @Override
-            public Color apply(final Integer number) {
+            public Optional<Color> apply(final Integer number) {
                 assertEquals(number, 1, "color number");
-                return BasicSpreadsheetTextFormatContextTest.this.color();
+                return Optional.of(BasicSpreadsheetTextFormatContextTest.this.color());
             }
 
             @Override
@@ -205,13 +206,13 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
         };
     }
 
-    private Function<String, Color> nameToColor() {
+    private Function<String, Optional<Color>> nameToColor() {
         return new Function<>() {
 
             @Override
-            public Color apply(final String name) {
+            public Optional<Color> apply(final String name) {
                 assertEquals(name, "bingo", "color name");
-                return BasicSpreadsheetTextFormatContextTest.this.color();
+                return Optional.of(BasicSpreadsheetTextFormatContextTest.this.color());
             }
 
             @Override

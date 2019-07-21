@@ -63,6 +63,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -87,8 +88,8 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                                                                       final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter,
                                                                       final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                                                                       final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
-                                                                      final Function<SpreadsheetId, Function<String, Color>> spreadsheetIdNameToColor,
-                                                                      final Function<SpreadsheetId, Function<Integer, Color>> spreadsheetIdNumberToColor,
+                                                                      final Function<SpreadsheetId, Function<String, Optional<Color>>> spreadsheetIdNameToColor,
+                                                                      final Function<SpreadsheetId, Function<Integer, Optional<Color>>> spreadsheetIdNumberToColor,
                                                                       final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
         Objects.requireNonNull(base, "base");
         Objects.requireNonNull(contentType, "contentType");
@@ -129,8 +130,8 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                                      final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter,
                                      final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                                      final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
-                                     final Function<SpreadsheetId, Function<String, Color>> spreadsheetIdNameToColor,
-                                     final Function<SpreadsheetId, Function<Integer, Color>> spreadsheetIdNumberToColor,
+                                     final Function<SpreadsheetId, Function<String, Optional<Color>>> spreadsheetIdNameToColor,
+                                     final Function<SpreadsheetId, Function<Integer, Optional<Color>>> spreadsheetIdNumberToColor,
                                      final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
         super();
 
@@ -235,8 +236,8 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
 
         final Converter converter = this.spreadsheetIdConverter.apply(id);
         final BiFunction<ExpressionNodeName, List<Object>, Object> functions = this.spreadsheetIdFunctions.apply(id);
-        final Function<Integer, Color> numberToColor = this.spreadsheetIdNumberToColor.apply(id);
-        final Function<String, Color> nameToColor = this.spreadsheetIdNameToColor.apply(id);
+        final Function<Integer, Optional<Color>> numberToColor = this.spreadsheetIdNumberToColor.apply(id);
+        final Function<String, Optional<Color>> nameToColor = this.spreadsheetIdNameToColor.apply(id);
         final String generalDecimalFormatPattern = this.spreadsheetIdGeneralDecimalFormatPattern.apply(id);
         final int width = this.spreadsheetIdWidth.apply(id);
         final Function<BigDecimal, Fraction> fractioner = this.fractioner;
@@ -292,18 +293,18 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
     private final Supplier<SpreadsheetMetadata> metadata;
 
     @Override
-    public Function<String, Color> nameToColor(final SpreadsheetId id) {
+    public Function<String, Optional<Color>> nameToColor(final SpreadsheetId id) {
         return this.spreadsheetIdNameToColor.apply(id);
     }
 
-    private final Function<SpreadsheetId, Function<String, Color>> spreadsheetIdNameToColor;
+    private final Function<SpreadsheetId, Function<String, Optional<Color>>> spreadsheetIdNameToColor;
 
     @Override
-    public Function<Integer, Color> numberToColor(final SpreadsheetId id) {
+    public Function<Integer, Optional<Color>> numberToColor(final SpreadsheetId id) {
         return this.spreadsheetIdNumberToColor.apply(id);
     }
 
-    private final Function<SpreadsheetId, Function<Integer, Color>> spreadsheetIdNumberToColor;
+    private final Function<SpreadsheetId, Function<Integer, Optional<Color>>> spreadsheetIdNumberToColor;
 
     @Override
     public SpreadsheetStoreRepository storeRepository(final SpreadsheetId id) {
