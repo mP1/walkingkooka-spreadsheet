@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.convert.Converters;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.tree.visit.Visiting;
@@ -126,6 +127,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = c;
             }
         }.accept(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$$");
+    }
+
+    @Test
+    public void testVisitDateTimeOffset() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitDateTimeOffset(final Long offset) {
+                this.visited = offset;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.EXCEL_OFFSET);
     }
 
     @Test
