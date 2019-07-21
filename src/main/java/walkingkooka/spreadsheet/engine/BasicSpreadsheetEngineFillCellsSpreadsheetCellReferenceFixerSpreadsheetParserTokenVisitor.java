@@ -517,6 +517,6 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     public final String toString() {
-        return this.xOffset +"," + this.yOffset + " " + this.children + ", " + this.previousChildren;
+        return this.xOffset + "," + this.yOffset + " " + this.children + ", " + this.previousChildren;
     }
 }

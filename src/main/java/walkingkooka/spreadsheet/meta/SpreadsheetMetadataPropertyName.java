@@ -109,7 +109,7 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
         return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.positiveInteger(),
                 visitor);
     }
-    
+
     /**
      * Creates and adds a new {@link SpreadsheetMetadataPropertyName} to the cache being built that handles {@link RoundingMode} metadata values.
      */

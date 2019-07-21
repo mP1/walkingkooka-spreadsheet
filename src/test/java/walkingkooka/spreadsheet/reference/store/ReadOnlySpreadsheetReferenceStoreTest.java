@@ -36,7 +36,6 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
         final SpreadsheetReferenceStore<SpreadsheetCellReference> store = SpreadsheetReferenceStores.treeMap();
 
         final SpreadsheetCellReference a1 = this.a1();
-        ;
         final SpreadsheetCellReference b1 = this.b1();
 
         store.saveReferences(a1, Sets.of(b1));
@@ -177,7 +176,6 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
         final SpreadsheetReferenceStore<SpreadsheetCellReference> store = SpreadsheetReferenceStores.treeMap();
 
         final SpreadsheetCellReference a1 = this.a1();
-        ;
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
         store.saveReferences(a1, Sets.of(b1, c1));
@@ -196,7 +194,6 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
         final SpreadsheetReferenceStore<SpreadsheetCellReference> store = SpreadsheetReferenceStores.treeMap();
 
         final SpreadsheetCellReference a1 = this.a1();
-        ;
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
         store.saveReferences(a1, Sets.of(b1, c1));

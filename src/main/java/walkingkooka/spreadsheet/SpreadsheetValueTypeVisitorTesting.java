@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
-        import walkingkooka.tree.visit.VisitorTesting;
+import walkingkooka.tree.visit.VisitorTesting;
 
 /**
  * A mixin interface with tests and helpers to assist in testing a {@link SpreadsheetValueTypeVisitor}

@@ -158,7 +158,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             }
         }.accept(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, '.');
     }
-    
+
     @Test
     public void testVisitGeneralDecimalFormatPattern() {
         new TestSpreadsheetMetadataVisitor() {
@@ -258,7 +258,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             }
         }.accept(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP);
     }
-    
+
     @Test
     public void testVisitSpreadsheetId() {
         new TestSpreadsheetMetadataVisitor() {

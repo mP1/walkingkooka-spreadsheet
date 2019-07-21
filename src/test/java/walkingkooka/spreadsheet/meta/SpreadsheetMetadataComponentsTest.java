@@ -82,7 +82,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
         }));
         this.checkMissing(components);
     }
-    
+
     // reportIfMissing..................................................................................................
 
     @Test
@@ -119,7 +119,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
     }
 
     private void checkMissing(final SpreadsheetMetadataComponents components,
-                              final SpreadsheetMetadataPropertyName<?>...missings) {
+                              final SpreadsheetMetadataPropertyName<?>... missings) {
         assertEquals(Lists.of(missings), components.missing, "missing");
     }
 

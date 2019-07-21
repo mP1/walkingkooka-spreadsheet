@@ -140,7 +140,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     private final static Parser<ParserContext> FUNCTION_NAME;
 
     private static ParserToken transformFunctionName(final ParserToken token, final ParserContext context) {
-        return SpreadsheetParserToken.functionName(SpreadsheetFunctionName.with(StringParserToken.class.cast(token).value()), token.text());
+        return SpreadsheetParserToken.functionName(SpreadsheetFunctionName.with(((StringParserToken) token).value()), token.text());
     }
 
     private static void functions(final Map<EbnfIdentifierName, Parser<ParserContext>> predefined) {
@@ -271,7 +271,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
             .transform(SpreadsheetParsers::transformNumber);
 
     private static ParserToken transformNumber(final ParserToken token, final ParserContext context) {
-        return SpreadsheetParserToken.bigDecimal(BigDecimalParserToken.class.cast(token).value(), token.text());
+        return SpreadsheetParserToken.bigDecimal(((BigDecimalParserToken) token).value(), token.text());
     }
 
     private static final EbnfIdentifierName PERCENT_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("PERCENT_SYMBOL");
@@ -302,7 +302,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
             .setToString(SpreadsheetTextParserToken.class.getSimpleName());
 
     private static ParserToken transformText(final ParserToken token, final ParserContext context) {
-        return SpreadsheetParserToken.text(DoubleQuotedParserToken.class.cast(token).value(), token.text());
+        return SpreadsheetParserToken.text(((DoubleQuotedParserToken) token).value(), token.text());
     }
 
     /**
@@ -317,7 +317,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
             .setToString(SpreadsheetWhitespaceParserToken.class.getSimpleName());
 
     private static ParserToken transformWhitespace(final ParserToken token, final ParserContext context) {
-        return SpreadsheetParserToken.whitespace(StringParserToken.class.cast(token).value(), token.text());
+        return SpreadsheetParserToken.whitespace(((StringParserToken) token).value(), token.text());
     }
 
     // helpers ...................................................................................................
@@ -352,7 +352,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                                                 final BiFunction<String, String, ParserToken> factory,
                                                 final Class<? extends SpreadsheetSymbolParserToken> tokenClass) {
         return Parsers.character(CharPredicates.is(c))
-                .transform((charParserToken, context) -> factory.apply(CharacterParserToken.class.cast(charParserToken).value().toString(), charParserToken.text()))
+                .transform((charParserToken, context) -> factory.apply(((CharacterParserToken) charParserToken).value().toString(), charParserToken.text()))
                 .setToString(tokenClass.getSimpleName());
     }
 
@@ -360,7 +360,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                                                 final BiFunction<String, String, ParserToken> factory,
                                                 final Class<? extends SpreadsheetSymbolParserToken> tokenClass) {
         return CaseSensitivity.INSENSITIVE.parser(text)
-                .transform((stringParserToken, context) -> factory.apply(StringParserToken.class.cast(stringParserToken).value(), stringParserToken.text()))
+                .transform((stringParserToken, context) -> factory.apply(((StringParserToken) stringParserToken).value(), stringParserToken.text()))
                 .setToString(tokenClass.getSimpleName());
     }
 

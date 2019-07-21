@@ -150,7 +150,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         checkMessage(thrown,
                 "Required properties \"locale\" missing.");
     }
-    
+
     // HasDecimalNumberContext..........................................................................................
 
     @Test
