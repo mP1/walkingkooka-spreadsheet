@@ -430,7 +430,6 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
                 () -> cell + " range " + other);
 
 
-
         assertEquals(SpreadsheetRange.with(expected),
                 cell.spreadsheetRange(other),
                 () -> cell + " spreadsheetRange " + other);

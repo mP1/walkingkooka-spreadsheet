@@ -102,15 +102,15 @@ final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer implements Ebnf
         final EbnfIdentifierName name = token.value();
         return name.equals(SpreadsheetParsers.EXPRESSION_IDENTIFIER) ?
                 parser.transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::expression) :
-        name.equals(SpreadsheetParsers.FUNCTION_IDENTIFIER) ?
-                parser.transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::function) :
-                name.equals(GROUP_IDENTIFIER) ?
-                        parser.transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::group) :
-                        name.equals(NEGATIVE_IDENTIFIER) ?
-                                parser.transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::negative) :
-                                name.equals(PERCENTAGE_IDENTIFIER) ?
-                                        parser.transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::percentage) :
-                                        this.requiredCheck(name, parser);
+                name.equals(SpreadsheetParsers.FUNCTION_IDENTIFIER) ?
+                        parser.transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::function) :
+                        name.equals(GROUP_IDENTIFIER) ?
+                                parser.transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::group) :
+                                name.equals(NEGATIVE_IDENTIFIER) ?
+                                        parser.transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::negative) :
+                                        name.equals(PERCENTAGE_IDENTIFIER) ?
+                                                parser.transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::percentage) :
+                                                requiredCheck(name, parser);
     }
 
     /**
@@ -122,7 +122,7 @@ final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer implements Ebnf
                                           final ParserContext context) {
         return token instanceof SpreadsheetParserToken ?
                 token :
-                SpreadsheetParserToken.group(SequenceParserToken.class.cast(token).value(), token.text());
+                SpreadsheetParserToken.group(((SequenceParserToken) token).value(), token.text());
     }
 
     private static ParserToken function(final ParserToken token,
@@ -180,7 +180,7 @@ final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer implements Ebnf
 
     private static ParserToken transformRange(final ParserToken token,
                                               final ParserContext context) {
-        return SpreadsheetParserToken.range(SequenceParserToken.class.cast(token).value(), token.text());
+        return SpreadsheetParserToken.range(((SequenceParserToken) token).value(), token.text());
     }
 
     @Override

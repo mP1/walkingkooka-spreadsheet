@@ -113,7 +113,7 @@ public final class SpreadsheetEngineInsertColumnsHateosHandlerTest extends Sprea
                 HateosHandler.NO_PARAMETERS,
                 Optional.of(SpreadsheetDelta.withId(column, this.cellsWithinWindow()).setWindow(window)));
     }
-    
+
     @Test
     public void testInsertAllColumnsFails() {
         this.handleCollectionFails2(Range.all());

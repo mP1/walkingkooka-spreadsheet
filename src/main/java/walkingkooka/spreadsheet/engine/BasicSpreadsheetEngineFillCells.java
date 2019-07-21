@@ -48,13 +48,13 @@ final class BasicSpreadsheetEngineFillCells {
     private void execute(final Collection<SpreadsheetCell> cells,
                          final SpreadsheetRange from,
                          final SpreadsheetRange to) {
-        if(cells.isEmpty()) {
+        if (cells.isEmpty()) {
             this.clear(to);
         } else {
             final List<SpreadsheetCell> out = cells.stream()
                     .filter(c -> false == from.test(c.reference()))
                     .collect(Collectors.toList());
-            if(!out.isEmpty()) {
+            if (!out.isEmpty()) {
                 throw new IllegalArgumentException("Several cells " + out + " are outside the range " + from);
             }
 

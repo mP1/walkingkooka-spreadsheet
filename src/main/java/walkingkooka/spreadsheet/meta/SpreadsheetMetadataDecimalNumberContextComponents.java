@@ -43,7 +43,7 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
 
     final DecimalNumberContext decimalNumberContext() {
         final SpreadsheetMetadataComponents components = this.components;
-                
+
         final String currencySymbol = components.getOrElse(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, this::localeCurrencySymbol);
         final Character decimalPoint = components.getOrElse(SpreadsheetMetadataPropertyName.DECIMAL_POINT, this::localeDecimalPoint);
         final Character exponentSymbol = components.getOrNull(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL);
@@ -51,7 +51,7 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
         final Character minusSign = components.getOrElse(SpreadsheetMetadataPropertyName.MINUS_SIGN, this::localeMinusSign);
         final Character percentSymbol = components.getOrElse(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, this::localePercentageSymbol);
         final Character plusSign = components.getOrElse(SpreadsheetMetadataPropertyName.PLUS_SIGN, this::localePlusSign);
-        
+
         final Integer precision = components.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
         final RoundingMode roundingMode = components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
 
@@ -90,7 +90,7 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
     private Character localePlusSign() {
         return this.tryPropertyFromLocale(DecimalNumberContext::plusSign);
     }
-    
+
     private <T> T tryPropertyFromLocale(final Function<DecimalNumberContext, T> localDecimalNumberContextGetter) {
         final DecimalNumberContext decimalNumberContext = this.localDecimalNumberContext();
         return null != decimalNumberContext ?

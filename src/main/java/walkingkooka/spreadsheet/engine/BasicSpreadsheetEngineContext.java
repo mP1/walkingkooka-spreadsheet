@@ -82,7 +82,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         Objects.requireNonNull(numberToColor, "numberToColor");
         Objects.requireNonNull(nameToColor, "nameToColor");
         Objects.requireNonNull(generalDecimalFormatPattern, "generalDecimalFormatPattern");
-        if(width <= 0) {
+        if (width <= 0) {
             throw new IllegalArgumentException("Invalid width " + width + " <= 0");
         }
         Objects.requireNonNull(fractioner, "fractioner");

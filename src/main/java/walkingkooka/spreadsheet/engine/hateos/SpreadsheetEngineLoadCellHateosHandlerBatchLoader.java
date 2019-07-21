@@ -50,7 +50,7 @@ final class SpreadsheetEngineLoadCellHateosHandlerBatchLoader {
     }
 
     private void maybeLoadCell(final SpreadsheetCellReference reference) {
-        if(false == this.referenceToCell.containsKey(reference)) {
+        if (false == this.referenceToCell.containsKey(reference)) {
             final SpreadsheetDelta<Optional<SpreadsheetCellReference>> loaded = this.handler.loadCell(reference);
             loaded.cells()
                     .stream()

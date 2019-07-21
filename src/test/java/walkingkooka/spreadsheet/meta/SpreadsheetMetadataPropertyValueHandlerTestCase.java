@@ -44,14 +44,14 @@ public abstract class SpreadsheetMetadataPropertyValueHandlerTestCase<P extends 
     @Test
     public final void testCheckInvalidValueFails() {
         this.checkFails(this,
-                "Expected " + this.propertyValueType() + " but got " + this + " (" + this.getClass().getSimpleName() + ")" );
+                "Expected " + this.propertyValueType() + " but got " + this + " (" + this.getClass().getSimpleName() + ")");
     }
 
     @Test
     public final void testCheckInvalidValueFails2() {
         final StringBuilder value = new StringBuilder("123abc");
         this.checkFails(value,
-                "Expected " + this.propertyValueType() + " but got \"123abc\" (java.lang.StringBuilder)" );
+                "Expected " + this.propertyValueType() + " but got \"123abc\" (java.lang.StringBuilder)");
     }
 
     @Test
