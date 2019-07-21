@@ -34,6 +34,7 @@ import walkingkooka.tree.expression.ExpressionNodeName;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -90,12 +91,12 @@ public interface SpreadsheetContext extends Context {
     /**
      * Returns a {@link Function} which maps {@link String color name} to {@link Color} for the given {@link SpreadsheetId}.
      */
-    Function<String, Color> nameToColor(final SpreadsheetId id);
+    Function<String, Optional<Color>> nameToColor(final SpreadsheetId id);
 
     /**
      * Returns a {@link Function} which maps color number to {@link Color} for the given {@link SpreadsheetId}.
      */
-    Function<Integer, Color> numberToColor(final SpreadsheetId id);
+    Function<Integer, Optional<Color>> numberToColor(final SpreadsheetId id);
 
     /**
      * Factory that returns a {@link SpreadsheetStoreRepository} for a given {@link SpreadsheetId}

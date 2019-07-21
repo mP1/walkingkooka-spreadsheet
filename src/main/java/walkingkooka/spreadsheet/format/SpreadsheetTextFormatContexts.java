@@ -23,6 +23,7 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.type.PublicStaticHelper;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 public final class SpreadsheetTextFormatContexts implements PublicStaticHelper {
@@ -30,8 +31,8 @@ public final class SpreadsheetTextFormatContexts implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetTextFormatContext}
      */
-    public static SpreadsheetTextFormatContext basic(final Function<Integer, Color> numberToColor,
-                                                     final Function<String, Color> nameToColor,
+    public static SpreadsheetTextFormatContext basic(final Function<Integer, Optional<Color>> numberToColor,
+                                                     final Function<String, Optional<Color>> nameToColor,
                                                      final String generalDecimalFormatPattern,
                                                      final int width,
                                                      final Converter converter,

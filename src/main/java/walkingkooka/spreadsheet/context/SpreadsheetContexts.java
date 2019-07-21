@@ -33,6 +33,7 @@ import walkingkooka.type.PublicStaticHelper;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -59,8 +60,8 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
                                                                          final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter,
                                                                          final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                                                                          final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
-                                                                         final Function<SpreadsheetId, Function<String, Color>> spreadsheetIdNameToColor,
-                                                                         final Function<SpreadsheetId, Function<Integer, Color>> spreadsheetIdNumberToColor,
+                                                                         final Function<SpreadsheetId, Function<String, Optional<Color>>> spreadsheetIdNameToColor,
+                                                                         final Function<SpreadsheetId, Function<Integer, Optional<Color>>> spreadsheetIdNumberToColor,
                                                                          final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
         return MemorySpreadsheetContext.with(base,
                 contentType,

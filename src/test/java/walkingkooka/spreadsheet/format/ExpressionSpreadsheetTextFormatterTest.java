@@ -287,15 +287,15 @@ public final class ExpressionSpreadsheetTextFormatterTest extends SpreadsheetTex
         return new FakeSpreadsheetTextFormatContext() {
 
             @Override
-            public Color colorName(final String name) {
+            public Optional<Color> colorName(final String name) {
                 assertEquals("RED", name);
-                return RED;
+                return Optional.of(RED);
             }
 
             @Override
-            public Color colorNumber(final int number) {
+            public Optional<Color> colorNumber(final int number) {
                 assertEquals(31, number, "number");
-                return COLOR31;
+                return Optional.of(COLOR31);
             }
 
             @Override

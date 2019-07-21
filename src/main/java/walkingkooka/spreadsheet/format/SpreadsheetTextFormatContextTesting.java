@@ -23,6 +23,8 @@ import walkingkooka.datetime.DateTimeContextTesting2;
 import walkingkooka.math.DecimalNumberContextTesting2;
 import walkingkooka.text.CharSequences;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -31,7 +33,7 @@ public interface SpreadsheetTextFormatContextTesting<C extends SpreadsheetTextFo
 
     default void colorNumberAndCheck(final SpreadsheetTextFormatContext context,
                                      final int number,
-                                     final Color color) {
+                                     final Optional<Color> color) {
         assertEquals(color,
                 context.colorNumber(number),
                 () -> "colorNumber " + number + " " + context);
@@ -39,7 +41,7 @@ public interface SpreadsheetTextFormatContextTesting<C extends SpreadsheetTextFo
 
     default void colorNameAndCheck(final SpreadsheetTextFormatContext context,
                                    final String name,
-                                   final Color color) {
+                                   final Optional<Color> color) {
         assertEquals(color,
                 context.colorName(name),
                 () -> "colorName " + name + " " + context);
