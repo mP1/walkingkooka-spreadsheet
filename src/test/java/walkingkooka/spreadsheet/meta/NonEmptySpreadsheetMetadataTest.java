@@ -504,18 +504,21 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
     public void testHasJsonNodeRoundtrip() {
         final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = Maps.ordered();
 
+        properties.put(SpreadsheetMetadataPropertyName.BIG_DECIMAL_PATTERN, "#0.0");
+        properties.put(SpreadsheetMetadataPropertyName.BIG_INTEGER_PATTERN, "#0");
         properties.put(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.of(2000, 12, 31, 12, 58, 59));
         properties.put(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"));
         properties.put(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$AUD");
+        properties.put(SpreadsheetMetadataPropertyName.DATE_PATTERN, "DD/MM/YYYY");
         properties.put(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET);
+        properties.put(SpreadsheetMetadataPropertyName.DATETIME_PATTERN, "DD/MM/YYYY hh:mm");
         properties.put(SpreadsheetMetadataPropertyName.DECIMAL_POINT, 'D');
+        properties.put(SpreadsheetMetadataPropertyName.DOUBLE_PATTERN, "#0.#");
         properties.put(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, 'E');
         properties.put(SpreadsheetMetadataPropertyName.GENERAL_DECIMAL_FORMAT_PATTERN, "##.##");
         properties.put(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, 'G');
-        properties.put(SpreadsheetMetadataPropertyName.DATE_PATTERN, "DD/MM/YYYY");
-        properties.put(SpreadsheetMetadataPropertyName.DATETIME_PATTERN, "DD/MM/YYYY hh:mm");
-        properties.put(SpreadsheetMetadataPropertyName.TIME_PATTERN, "hh:mm");
         properties.put(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
+        properties.put(SpreadsheetMetadataPropertyName.LONG_PATTERN, "#0");
         properties.put(SpreadsheetMetadataPropertyName.MINUS_SIGN, 'M');
         properties.put(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
         properties.put(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.of(1999, 12, 31, 12, 58, 59));
@@ -524,6 +527,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.PRECISION, 123);
         properties.put(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR);
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123));
+        properties.put(SpreadsheetMetadataPropertyName.TIME_PATTERN, "hh:mm");
 
         final Set<SpreadsheetMetadataPropertyName<?>> missing = Sets.ordered();
         missing.addAll(SpreadsheetMetadataPropertyName.CONSTANTS.values());

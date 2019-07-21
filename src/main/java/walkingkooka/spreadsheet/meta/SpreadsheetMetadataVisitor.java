@@ -80,6 +80,14 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
 
     // properties..........................................................................................................
 
+    protected void visitBigDecimalPattern(final String pattern) {
+        // nop
+    }
+
+    protected void visitBigIntegerPattern(final String pattern) {
+        // nop
+    }
+
     protected void visitCreator(final EmailAddress emailAddress) {
         // nop
     }
@@ -108,6 +116,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitDoublePattern(final String pattern) {
+        // nop
+    }
+
     protected void visitExponentSymbol(final Character exponentSymbol) {
         // nop
     }
@@ -121,6 +133,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitLocale(final Locale locale) {
+        // nop
+    }
+
+    protected void visitLongPattern(final String pattern) {
         // nop
     }
 
