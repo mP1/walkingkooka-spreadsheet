@@ -52,6 +52,16 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitBigDecimalPattern(final String pattern) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitBigIntegerPattern(final String pattern) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitCreator(final EmailAddress emailAddress) {
         throw new UnsupportedOperationException();
     }
@@ -87,6 +97,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitDoublePattern(final String pattern) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitExponentSymbol(final Character exponentSymbol) {
         throw new UnsupportedOperationException();
     }
@@ -103,6 +118,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitLocale(final Locale locale) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitLongPattern(final String pattern) {
         throw new UnsupportedOperationException();
     }
 

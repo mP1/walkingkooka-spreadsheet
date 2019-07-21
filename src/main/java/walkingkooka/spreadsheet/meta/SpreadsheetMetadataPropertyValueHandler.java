@@ -49,6 +49,13 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     }
 
     /**
+     * {@see DecimalFormatPatternStringSpreadsheetMetadataPropertyValueHandler}
+     */
+    static DecimalFormatPatternStringSpreadsheetMetadataPropertyValueHandler decimalFormatPattern() {
+        return DecimalFormatPatternStringSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    }
+    
+    /**
      * {@see EmailAddressSpreadsheetMetadataPropertyValueHandler}
      */
     static EmailAddressSpreadsheetMetadataPropertyValueHandler emailAddress() {
