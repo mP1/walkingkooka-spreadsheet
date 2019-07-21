@@ -55,6 +55,11 @@ public final class CharacterSpreadsheetMetadataPropertyValueHandlerTest extends 
     }
 
     @Override
+    String expectedToString() {
+        return Character.class.getSimpleName();
+    }
+
+    @Override
     public Class<CharacterSpreadsheetMetadataPropertyValueHandler> type() {
         return CharacterSpreadsheetMetadataPropertyValueHandler.class;
     }

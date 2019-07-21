@@ -60,6 +60,11 @@ public final class StringSpreadsheetMetadataPropertyValueHandlerTest extends Spr
     }
 
     @Override
+    String expectedToString() {
+        return String.class.getSimpleName();
+    }
+
+    @Override
     public Class<StringSpreadsheetMetadataPropertyValueHandler> type() {
         return StringSpreadsheetMetadataPropertyValueHandler.class;
     }

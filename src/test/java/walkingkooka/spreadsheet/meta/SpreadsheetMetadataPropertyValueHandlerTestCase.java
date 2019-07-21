@@ -73,8 +73,10 @@ public abstract class SpreadsheetMetadataPropertyValueHandlerTestCase<P extends 
 
     @Test
     public final void testToString() {
-        this.toStringAndCheck(this.handler(), this.propertyValueType());
+        this.toStringAndCheck(this.handler(), this.expectedToString());
     }
+
+    abstract String expectedToString();
 
     final void check(final Object value) {
         final SpreadsheetMetadataPropertyName<?> propertyName = this.propertyName();
