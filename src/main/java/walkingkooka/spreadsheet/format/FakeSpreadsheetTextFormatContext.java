@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.color.Color;
 import walkingkooka.math.FakeDecimalNumberContext;
 
+import java.util.Optional;
+
 public class FakeSpreadsheetTextFormatContext extends FakeDecimalNumberContext implements SpreadsheetTextFormatContext {
 
     @Override
@@ -28,12 +30,12 @@ public class FakeSpreadsheetTextFormatContext extends FakeDecimalNumberContext i
     }
 
     @Override
-    public Color colorNumber(int number) {
+    public Optional<Color> colorNumber(int number) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Color colorName(String name) {
+    public Optional<Color> colorName(String name) {
         throw new UnsupportedOperationException();
     }
 

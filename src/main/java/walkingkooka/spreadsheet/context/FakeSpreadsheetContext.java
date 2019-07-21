@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.ExpressionNodeName;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -79,12 +80,12 @@ public class FakeSpreadsheetContext implements SpreadsheetContext {
     }
 
     @Override
-    public Function<String, Color> nameToColor(final SpreadsheetId id) {
+    public Function<String, Optional<Color>> nameToColor(final SpreadsheetId id) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Function<Integer, Color> numberToColor(final SpreadsheetId id) {
+    public Function<Integer, Optional<Color>> numberToColor(final SpreadsheetId id) {
         throw new UnsupportedOperationException();
     }
 

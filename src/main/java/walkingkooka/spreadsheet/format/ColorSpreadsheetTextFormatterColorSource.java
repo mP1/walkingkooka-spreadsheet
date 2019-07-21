@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
 
+import java.util.Optional;
+
 /**
  * Helper that resolves the reference in the original expression into a context supplied {@link Color}
  */
@@ -26,17 +28,17 @@ enum ColorSpreadsheetTextFormatterColorSource {
 
     NAME {
         @Override
-        Color resolve(final Object value, final SpreadsheetTextFormatContext context) {
+        Optional<Color> resolve(final Object value, final SpreadsheetTextFormatContext context) {
             return context.colorName((String) value);
         }
     },
 
     NUMBER {
         @Override
-        Color resolve(final Object value, final SpreadsheetTextFormatContext context) {
+        Optional<Color> resolve(final Object value, final SpreadsheetTextFormatContext context) {
             return context.colorNumber((Integer) value);
         }
     };
 
-    abstract Color resolve(final Object value, final SpreadsheetTextFormatContext context);
+    abstract Optional<Color> resolve(final Object value, final SpreadsheetTextFormatContext context);
 }
