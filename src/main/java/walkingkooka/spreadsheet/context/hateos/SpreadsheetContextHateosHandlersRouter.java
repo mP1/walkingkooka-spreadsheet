@@ -55,11 +55,11 @@ final class SpreadsheetContextHateosHandlersRouter implements StaticHelper {
      * Builds a {@link Router} that handles all operations, using the given {@link HateosHandler handlers}.
      */
     static <N extends Node<N, ?, ?, ?>> Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> with(final AbsoluteUrl base,
-                                                                                                                      final HateosContentType<N> contentType,
-                                                                                                                      final HateosHandler<SpreadsheetId,
-                                                                                                                              SpreadsheetMetadata,
-                                                                                                                              HateosResource<Range<SpreadsheetId>>> createAndSaveMetadata,
-                                                                                                                      HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> loadMetadata) {
+                                                                                                                    final HateosContentType<N> contentType,
+                                                                                                                    final HateosHandler<SpreadsheetId,
+                                                                                                                            SpreadsheetMetadata,
+                                                                                                                            HateosResource<Range<SpreadsheetId>>> createAndSaveMetadata,
+                                                                                                                    HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> loadMetadata) {
         final HateosHandlerRouterBuilder<N> builder = HateosHandlerRouterBuilder.with(base, contentType);
         Objects.requireNonNull(createAndSaveMetadata, "createAndSaveMetadata");
         Objects.requireNonNull(loadMetadata, "loadMetadata");

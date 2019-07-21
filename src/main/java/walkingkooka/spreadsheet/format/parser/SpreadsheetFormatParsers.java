@@ -52,7 +52,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             .setToString(SpreadsheetFormatWhitespaceParserToken.class.getSimpleName());
 
     private static ParserToken transformWhitespace(final ParserToken token, final ParserContext context) {
-        return SpreadsheetFormatParserToken.whitespace(StringParserToken.class.cast(token).value(), token.text());
+        return SpreadsheetFormatParserToken.whitespace(((StringParserToken) token).value(), token.text());
     }
 
     // color..............................................................................................................
@@ -83,7 +83,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             .setToString(COLOR_NAME_IDENTIFIER.toString());
 
     private static SpreadsheetFormatColorNameParserToken colorName(final ParserToken string, final ParserContext context) {
-        return SpreadsheetFormatParserToken.colorName(StringParserToken.class.cast(string).value(), string.text());
+        return SpreadsheetFormatParserToken.colorName(((StringParserToken) string).value(), string.text());
     }
 
     private static final EbnfIdentifierName COLOR_BIGDECIMAL_IDENTIFIER = EbnfIdentifierName.with("COLOR_NUMBER");
@@ -93,7 +93,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             .setToString(COLOR_BIGDECIMAL_IDENTIFIER.toString());
 
     private static ParserToken transformColorNumber(final ParserToken token, final ParserContext context) {
-        return SpreadsheetFormatParserToken.colorNumber(BigIntegerParserToken.class.cast(token).value().intValueExact(), token.text());
+        return SpreadsheetFormatParserToken.colorNumber(((BigIntegerParserToken) token).value().intValueExact(), token.text());
     }
 
     private static final Parser<ParserContext> COLOR_AND_NUMBER = CaseSensitivity.INSENSITIVE.parser("COLOR")
@@ -105,7 +105,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             .setToString(COLOR_NAME_IDENTIFIER.toString());
 
     private static SpreadsheetFormatColorLiteralSymbolParserToken transformColorLiteral(final ParserToken string, final ParserContext context) {
-        return SpreadsheetFormatParserToken.colorLiteralSymbol(StringParserToken.class.cast(string).value(), string.text());
+        return SpreadsheetFormatParserToken.colorLiteralSymbol(((StringParserToken) string).value(), string.text());
     }
 
     // conditional..............................................................................................................
@@ -135,7 +135,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     private static final EbnfIdentifierName CONDITION_BIGDECIMAL_LITERAL_IDENTIFIER = EbnfIdentifierName.with("CONDITION_NUMBER");
 
     private static SpreadsheetFormatConditionNumberParserToken transformConditionNumber(final ParserToken token, final ParserContext context) {
-        return SpreadsheetFormatConditionNumberParserToken.with(BigDecimalParserToken.class.cast(token).value(), token.text());
+        return SpreadsheetFormatConditionNumberParserToken.with(((BigDecimalParserToken) token).value(), token.text());
     }
 
     private static final Parser<ParserContext> EQUALS_SYMBOL = symbol('=',
@@ -261,7 +261,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             .setToString(GENERAL_SYMBOL_IDENTIFIER.toString());
 
     private static ParserToken transformGeneralSymbol(final ParserToken token, final ParserContext context) {
-        return SpreadsheetFormatParserToken.generalSymbol(StringParserToken.class.cast(token).value(), token.text());
+        return SpreadsheetFormatParserToken.generalSymbol(((StringParserToken) token).value(), token.text());
     }
 
     // fraction..........................................................................................................
@@ -362,7 +362,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             .setToString("QUOTED");
 
     private static ParserToken transformQuoted(final ParserToken token, final ParserContext context) {
-        return SpreadsheetFormatParserToken.quotedText(DoubleQuotedParserToken.class.cast(token).value(), token.text());
+        return SpreadsheetFormatParserToken.quotedText(((DoubleQuotedParserToken) token).value(), token.text());
     }
 
     private static final EbnfIdentifierName STAR_IDENTIFIER = EbnfIdentifierName.with("STAR");
@@ -499,7 +499,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
     private static Parser<ParserContext> literal(final String any, final EbnfIdentifierName name) {
         return Parsers.character(CharPredicates.any(any))
-                .transform(((characterParserToken, parserContext) -> SpreadsheetFormatParserToken.textLiteral(CharacterParserToken.class.cast(characterParserToken).value().toString(), characterParserToken.text())))
+                .transform(((characterParserToken, parserContext) -> SpreadsheetFormatParserToken.textLiteral(((CharacterParserToken) characterParserToken).value().toString(), characterParserToken.text())))
                 .setToString(name.toString());
     }
 
@@ -510,7 +510,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
                                                          final BiFunction<String, String, ParserToken> factory,
                                                          final Class<? extends SpreadsheetFormatLeafParserToken> tokenClass) {
         return Parsers.stringCharPredicate(CaseSensitivity.INSENSITIVE.charPredicate(c), 1, Integer.MAX_VALUE)
-                .transform((stringParserToken, context) -> factory.apply(StringParserToken.class.cast(stringParserToken).value(), stringParserToken.text()))
+                .transform((stringParserToken, context) -> factory.apply(((StringParserToken) stringParserToken).value(), stringParserToken.text()))
                 .setToString(tokenClass.getSimpleName());
     }
 
@@ -521,7 +521,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
                                                 final BiFunction<String, String, ParserToken> factory,
                                                 final Class<? extends SpreadsheetFormatLeafParserToken> tokenClass) {
         return Parsers.character(CaseSensitivity.SENSITIVE.charPredicate(c))
-                .transform((characterParserToken, context) -> factory.apply(CharacterParserToken.class.cast(characterParserToken).value().toString(), characterParserToken.text()))
+                .transform((characterParserToken, context) -> factory.apply(((CharacterParserToken) characterParserToken).value().toString(), characterParserToken.text()))
                 .setToString(tokenClass.getSimpleName());
     }
 
@@ -529,7 +529,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
                                                 final BiFunction<String, String, ParserToken> factory,
                                                 final Class<? extends SpreadsheetFormatLeafParserToken> tokenClass) {
         return CaseSensitivity.INSENSITIVE.parser(text)
-                .transform((stringParserToken, context) -> factory.apply(StringParserToken.class.cast(stringParserToken).value(), stringParserToken.text()))
+                .transform((stringParserToken, context) -> factory.apply(((StringParserToken) stringParserToken).value(), stringParserToken.text()))
                 .setToString(tokenClass.getSimpleName());
     }
 
@@ -537,7 +537,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
                                                                final BiFunction<Character, String, ParserToken> factory,
                                                                final Class<? extends SpreadsheetFormatLeafParserToken> tokenClass) {
         return Parsers.stringInitialAndPartCharPredicate(CharPredicates.is(initial), CharPredicates.always(), 1, 2)
-                .transform((stringParserToken, context) -> factory.apply(StringParserToken.class.cast(stringParserToken).value().charAt(1), stringParserToken.text()))
+                .transform((stringParserToken, context) -> factory.apply(((StringParserToken) stringParserToken).value().charAt(1), stringParserToken.text()))
                 .setToString(tokenClass.getSimpleName());
     }
 

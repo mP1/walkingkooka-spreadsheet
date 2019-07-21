@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class FakeSpreadsheetValueVisitor extends SpreadsheetValueVisitor {
-    
+
     protected FakeSpreadsheetValueVisitor() {
         super();
     }
