@@ -49,7 +49,7 @@ final class PositiveIntegerSpreadsheetMetadataPropertyValueHandler extends Sprea
 
     @Override
     public String toString() {
-        return Integer.class.getSimpleName();
+        return "+Integer";
     }
 
     // HasJsonNode......................................................................................................
