@@ -54,7 +54,7 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
         this.onSaveCell = engine.cellStore.addSaveWatcher(this::onCellSaved);
         this.onDeleteCell = engine.cellStore.addDeleteWatcher(this::onCellDeleted);
         this.onDeleteCellReferences = engine.cellReferencesStore.addRemoveReferenceWatcher(this::onCellReferenceDeleted);
-        
+
         this.onSaveLabel = engine.labelStore.addSaveWatcher(this::onLabelSaved);
         this.onDeleteLabel = engine.labelStore.addDeleteWatcher(this::onLabelDeleted);
 

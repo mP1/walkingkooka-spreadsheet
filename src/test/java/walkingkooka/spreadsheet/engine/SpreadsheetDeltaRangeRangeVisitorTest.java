@@ -35,7 +35,7 @@ public final class SpreadsheetDeltaRangeRangeVisitorTest implements RangeVisitor
     @Test
     public void testAllFails() {
         assertThrows(IllegalArgumentException.class, () -> {
-           new SpreadsheetDeltaRangeRangeVisitor().all(); 
+            new SpreadsheetDeltaRangeRangeVisitor().all();
         });
     }
 
@@ -71,7 +71,7 @@ public final class SpreadsheetDeltaRangeRangeVisitorTest implements RangeVisitor
     public void testSingle() {
         this.rangeToStringAndCheck("B99");
     }
-    
+
     @Test
     public void testToBounded() {
         this.rangeToStringAndCheck("A1:B2");

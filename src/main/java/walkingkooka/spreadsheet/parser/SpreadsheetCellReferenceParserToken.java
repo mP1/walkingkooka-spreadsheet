@@ -39,7 +39,7 @@ public final class SpreadsheetCellReferenceParserToken extends SpreadsheetParent
         final SpreadsheetCellReferenceParserTokenConsumer checker = new SpreadsheetCellReferenceParserTokenConsumer();
         value.stream()
                 .filter(t -> t instanceof SpreadsheetParserToken)
-                .map(t -> SpreadsheetParserToken.class.cast(t))
+                .map(t -> (SpreadsheetParserToken) t)
                 .forEach(checker);
         final SpreadsheetRowReferenceParserToken row = checker.row;
         if (null == row) {

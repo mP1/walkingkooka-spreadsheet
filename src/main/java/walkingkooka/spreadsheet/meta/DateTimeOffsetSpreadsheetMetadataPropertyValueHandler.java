@@ -38,11 +38,11 @@ final class DateTimeOffsetSpreadsheetMetadataPropertyValueHandler extends Spread
     @Override
     void check0(final Object value, final SpreadsheetMetadataPropertyName<?> name) {
         final Long longValue = this.checkType(value, Long.class, name);
-        for(;;) {
-            if(Converters.JAVA_EPOCH_OFFSET ==longValue) {
+        for (; ; ) {
+            if (Converters.JAVA_EPOCH_OFFSET == longValue) {
                 break;
             }
-            if(Converters.EXCEL_OFFSET==longValue) {
+            if (Converters.EXCEL_OFFSET == longValue) {
                 break;
             }
             throw new SpreadsheetMetadataPropertyValueException("Invalid date time offset " + value, name, value);

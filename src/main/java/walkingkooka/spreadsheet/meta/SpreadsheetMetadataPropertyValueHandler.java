@@ -75,7 +75,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     static PositiveIntegerSpreadsheetMetadataPropertyValueHandler positiveInteger() {
         return PositiveIntegerSpreadsheetMetadataPropertyValueHandler.INSTANCE;
     }
-    
+
     /**
      * {@see RoundingModeSpreadsheetMetadataPropertyValueHandler}
      */

@@ -727,7 +727,6 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
         final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
-        ;
         final SpreadsheetCellReference b1 = this.b1();
         final SpreadsheetCellReference c1 = this.c1();
         store.saveReferences(a1, Sets.of(b1, c1));

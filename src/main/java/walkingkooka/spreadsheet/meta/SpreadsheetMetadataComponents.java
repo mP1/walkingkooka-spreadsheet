@@ -48,7 +48,7 @@ final class SpreadsheetMetadataComponents {
         return this.metadata.get0(propertyName)
                 .orElseGet(() -> {
                     final T value = defaultValue.get();
-                    if(null==value) {
+                    if (null == value) {
                         this.addMissing(propertyName);
                     }
                     return value;

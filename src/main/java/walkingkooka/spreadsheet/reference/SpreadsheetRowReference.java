@@ -111,7 +111,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     SpreadsheetRowReference replaceReferenceKind(final SpreadsheetReferenceKind referenceKind) {
         return new SpreadsheetRowReference(this.value, referenceKind);
     }
-    
+
     @Override
     public SpreadsheetRowReference add(final int value) {
         return Cast.to(this.add0(value));
