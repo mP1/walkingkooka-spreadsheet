@@ -140,6 +140,17 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         return removed;
     }
 
+    // HasConverter.....................................................................................................
+
+    @Test
+    public final void testConverterRequiredPropertiesAbsentFails() {
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
+            this.createObject().converter();
+        });
+        checkMessage(thrown,
+                "Required properties \"big-decimal-pattern\", \"big-integer-pattern\", \"date-pattern\", \"date-time-offset\", \"date-time-pattern\", \"double-pattern\", \"long-pattern\", \"time-pattern\" missing.");
+    }
+
     // HasDateTimeContext...............................................................................................
 
     @Test
