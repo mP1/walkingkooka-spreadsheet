@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.tree.json.HasJsonNode;
 
-public final class CharacterSpreadsheetMetadataPropertyValueHandlerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase2<CharacterSpreadsheetMetadataPropertyValueHandler, Character> {
+public final class CharacterSpreadsheetMetadataPropertyValueHandlerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase3<CharacterSpreadsheetMetadataPropertyValueHandler, Character> {
 
     @Test
     public void testFromJsonNode() {
@@ -51,11 +51,6 @@ public final class CharacterSpreadsheetMetadataPropertyValueHandlerTest extends 
 
     @Override
     String propertyValueType() {
-        return Character.class.getSimpleName();
-    }
-
-    @Override
-    String expectedToString() {
         return Character.class.getSimpleName();
     }
 

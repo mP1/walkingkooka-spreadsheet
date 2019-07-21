@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.net.email.EmailAddress;
 
-public final class EmailAddressSpreadsheetMetadataPropertyValueHandlerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase2<EmailAddressSpreadsheetMetadataPropertyValueHandler, EmailAddress> {
+public final class EmailAddressSpreadsheetMetadataPropertyValueHandlerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase3<EmailAddressSpreadsheetMetadataPropertyValueHandler, EmailAddress> {
 
     @Test
     public void testInvalidEmailFails() {
@@ -56,11 +56,6 @@ public final class EmailAddressSpreadsheetMetadataPropertyValueHandlerTest exten
 
     @Override
     String propertyValueType() {
-        return EmailAddress.class.getSimpleName();
-    }
-
-    @Override
-    String expectedToString() {
         return EmailAddress.class.getSimpleName();
     }
 
