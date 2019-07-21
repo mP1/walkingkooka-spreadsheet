@@ -82,11 +82,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitTimePattern(final String dateTimeFormatterPattern) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected void visitDecimalPoint(final Character decimalPoint) {
         throw new UnsupportedOperationException();
     }
@@ -148,6 +143,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitSpreadsheetId(final SpreadsheetId id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitTimePattern(final String dateTimeFormatterPattern) {
         throw new UnsupportedOperationException();
     }
 }
