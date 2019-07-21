@@ -55,6 +55,11 @@ public final class SpreadsheetIdSpreadsheetMetadataPropertyValueHandlerTest exte
     }
 
     @Override
+    String expectedToString() {
+        return SpreadsheetId.class.getSimpleName();
+    }
+
+    @Override
     public Class<SpreadsheetIdSpreadsheetMetadataPropertyValueHandler> type() {
         return SpreadsheetIdSpreadsheetMetadataPropertyValueHandler.class;
     }

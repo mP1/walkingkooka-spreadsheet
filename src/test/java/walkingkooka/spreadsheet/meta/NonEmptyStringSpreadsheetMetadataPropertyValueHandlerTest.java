@@ -64,6 +64,11 @@ public final class NonEmptyStringSpreadsheetMetadataPropertyValueHandlerTest ext
     }
 
     @Override
+    String expectedToString() {
+        return "NonEmptyString";
+    }
+
+    @Override
     public Class<NonEmptyStringSpreadsheetMetadataPropertyValueHandler> type() {
         return NonEmptyStringSpreadsheetMetadataPropertyValueHandler.class;
     }

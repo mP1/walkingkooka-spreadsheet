@@ -60,6 +60,11 @@ public final class EmailAddressSpreadsheetMetadataPropertyValueHandlerTest exten
     }
 
     @Override
+    String expectedToString() {
+        return EmailAddress.class.getSimpleName();
+    }
+
+    @Override
     public Class<EmailAddressSpreadsheetMetadataPropertyValueHandler> type() {
         return EmailAddressSpreadsheetMetadataPropertyValueHandler.class;
     }

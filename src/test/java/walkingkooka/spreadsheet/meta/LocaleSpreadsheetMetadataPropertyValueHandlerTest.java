@@ -57,6 +57,11 @@ public final class LocaleSpreadsheetMetadataPropertyValueHandlerTest extends Spr
     }
 
     @Override
+    String expectedToString() {
+        return Locale.class.getSimpleName();
+    }
+
+    @Override
     public Class<LocaleSpreadsheetMetadataPropertyValueHandler> type() {
         return LocaleSpreadsheetMetadataPropertyValueHandler.class;
     }

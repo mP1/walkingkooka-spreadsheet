@@ -48,7 +48,7 @@ final class NonEmptyStringSpreadsheetMetadataPropertyValueHandler extends Spread
 
     @Override
     public String toString() {
-        return String.class.getSimpleName();
+        return "NonEmpty" + String.class.getSimpleName();
     }
 
     // HasJsonNode......................................................................................................
