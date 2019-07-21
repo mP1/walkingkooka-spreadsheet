@@ -66,6 +66,7 @@ final class SpreadsheetMetadataComponents {
         final List<SpreadsheetMetadataPropertyName<?>> missing = this.missing;
         if (!missing.isEmpty()) {
             throw new IllegalStateException(missing.stream()
+                    .sorted()
                     .map(Object::toString)
                     .map(CharSequences::quoteAndEscape)
                     .collect(Collectors.joining(", ", "Required properties ", " missing.")));
