@@ -18,13 +18,12 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Cast;
-import walkingkooka.test.ClassTesting;
-import walkingkooka.type.JavaVisibility;
 
-public final class SpreadsheetMetadataPropertyValueHandlerTest implements ClassTesting<SpreadsheetMetadataPropertyValueHandler<?>> {
+public final class SpreadsheetMetadataPropertyValueHandlerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase<SpreadsheetMetadataPropertyValueHandler<?>> {
+
     @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
+    public String typeNamePrefix() {
+        return "";
     }
 
     @Override
