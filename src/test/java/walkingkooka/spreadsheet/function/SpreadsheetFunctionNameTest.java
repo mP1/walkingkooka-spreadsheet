@@ -38,7 +38,7 @@ final public class SpreadsheetFunctionNameTest implements ClassTesting2<Spreadsh
         this.compareToArraySortAndCheck(d4, c3, a1, b2,
                 b2, c3, a1, d4);
     }
-    
+
     @Override
     public SpreadsheetFunctionName createName(final String name) {
         return SpreadsheetFunctionName.with(name);

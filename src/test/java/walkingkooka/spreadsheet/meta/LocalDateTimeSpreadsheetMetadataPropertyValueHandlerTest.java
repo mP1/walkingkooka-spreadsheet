@@ -35,7 +35,7 @@ public final class LocalDateTimeSpreadsheetMetadataPropertyValueHandlerTest exte
         final LocalDateTime dateTime = this.propertyValue();
         this.toJsonNodeAndCheck(dateTime, HasJsonNode.toJsonNodeObject(dateTime));
     }
-    
+
     @Override
     LocalDateTimeSpreadsheetMetadataPropertyValueHandler handler() {
         return LocalDateTimeSpreadsheetMetadataPropertyValueHandler.INSTANCE;
