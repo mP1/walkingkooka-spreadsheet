@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.color.Color;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.tree.visit.Visiting;
@@ -138,6 +139,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitModifiedDateTime(final LocalDateTime dateTime) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitNumberedColor(final int number, final Color color) {
         throw new UnsupportedOperationException();
     }
 
