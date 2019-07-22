@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.color.Color;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
@@ -30,6 +31,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.JavaVisibility;
 
 import java.util.Optional;
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -138,6 +140,22 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 removed,
                 () -> metadata + " remove " + propertyName);
         return removed;
+    }
+
+    // NumberToColor....................................................................................................
+
+    @Test
+    public final void testNumberToColor() {
+        this.numberToColorAndCheck(this.createObject(), 99, null);
+    }
+
+    final void numberToColorAndCheck(final SpreadsheetMetadata metadata,
+                                     final int number,
+                                     final Color color) {
+        final Function<Integer, Optional<Color>> numberToColor = metadata.numberToColor();
+        assertEquals(Optional.ofNullable(color),
+                numberToColor.apply(number),
+                () -> number + " to color " + metadata.toString());
     }
 
     // HasConverter.....................................................................................................
