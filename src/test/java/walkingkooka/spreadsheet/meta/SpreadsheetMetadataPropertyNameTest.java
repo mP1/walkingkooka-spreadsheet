@@ -89,6 +89,13 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
+    public void testWithColorInvalidNumberFails() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            SpreadsheetMetadataPropertyName.color(-1);
+        });
+    }
+
+    @Test
     public void testWithColor() {
         final Color color = Color.fromRgb(0);
 
