@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
@@ -240,6 +241,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitNumberedColor() {
+        final int number = 7;
+
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitNumberedColor(final int n, final Color c) {
+                assertEquals(number, n, "number");
+                this.visited = c;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.color(number), this.color());
+    }
+
+    @Test
     public void testVisitPercentageSymbol() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
@@ -343,12 +357,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
         }
     }
 
-    private EmailAddress emailAddress() {
-        return EmailAddress.parse("user@example.com");
+    private Color color() {
+        return Color.parse("#123abc");
     }
 
     private LocalDateTime dateTime() {
         return LocalDateTime.of(2000, 1, 31, 12, 58, 59);
+    }
+
+    private EmailAddress emailAddress() {
+        return EmailAddress.parse("user@example.com");
     }
 
     @Override

@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.color.Color;
 import walkingkooka.naming.Name;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
@@ -32,6 +33,7 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.stream.IntStream;
 
 /**
  * The {@link Name} of metadata property, used to fetch a value given a name.
@@ -321,11 +323,62 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     public static SpreadsheetMetadataPropertyName with(final String name) {
         CharSequences.failIfNullOrEmpty(name, "name");
 
-        final SpreadsheetMetadataPropertyName propertyName = CONSTANTS.get(name);
+        SpreadsheetMetadataPropertyName propertyName = CONSTANTS.get(name);
         if (null == propertyName) {
-            throw new IllegalArgumentException("Unknown metadata property name " + CharSequences.quoteAndEscape(name));
+            if (!name.startsWith(COLOR_PREFIX)) {
+                throw new IllegalArgumentException("Unknown metadata property name " + CharSequences.quoteAndEscape(name));
+            }
+            try {
+                propertyName = withColor(Integer.parseInt(name.substring(COLOR_PREFIX.length())));
+            } catch (final NumberFormatException cause) {
+                throw new IllegalArgumentException("Unknown metadata property name " + CharSequences.quoteAndEscape(name));
+            }
         }
         return propertyName;
+    }
+
+    /**
+     * Retrieves a {@link SpreadsheetMetadataPropertyName} for a numbered {@link Color}.
+     */
+    public static SpreadsheetMetadataPropertyName<Color> color(final int number) {
+        if (number < 0) {
+            throw new IllegalArgumentException("Number " + number + " < 0");
+        }
+
+        return number < NUMBER_TO_COLOR_MAX ?
+                NUMBER_TO_COLOR[number] :
+                withColor(number);
+    }
+
+    final static int NUMBER_TO_COLOR_MAX = 32;
+    private final static String COLOR_PREFIX = "color-";
+
+    /**
+     * Cache of 0 to {@link #NUMBER_TO_COLOR_MAX} names.
+     */
+    private final static SpreadsheetMetadataPropertyName<Color>[] NUMBER_TO_COLOR = Cast.to(new SpreadsheetMetadataPropertyName[NUMBER_TO_COLOR_MAX]);
+
+    /**
+     * Fills the cache of {@link SpreadsheetMetadataPropertyName} for color numbers 0 to {@link #NUMBER_TO_COLOR_MAX}.
+     */
+    static {
+        IntStream.range(0, NUMBER_TO_COLOR_MAX)
+                .forEach(SpreadsheetMetadataPropertyName::registerColor);
+    }
+
+    private static void registerColor(final int i) {
+        final SpreadsheetMetadataPropertyName<Color> name = withColor(i);
+        NUMBER_TO_COLOR[i] = name;
+        CONSTANTS.put(name.value(), name);
+    }
+
+    /**
+     * Factory that creates a new {@link SpreadsheetMetadataPropertyName} color index.
+     */
+    private static SpreadsheetMetadataPropertyName<Color> withColor(final int number) {
+        return new SpreadsheetMetadataPropertyName<>(COLOR_PREFIX + number,
+                SpreadsheetMetadataPropertyValueHandler.color(),
+                (c, v) -> v.visitNumberedColor(number, c));
     }
 
     /**
@@ -421,6 +474,6 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
      * Factory that retrieves a {@link SpreadsheetMetadataPropertyName} from a {@link JsonNode#name()}.
      */
     static SpreadsheetMetadataPropertyName<?> fromJsonNodeName(final JsonNode node) {
-        return CONSTANTS.get(node.name().value());
+        return with(node.name().value());
     }
 }
