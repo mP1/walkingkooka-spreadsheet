@@ -19,10 +19,12 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.color.Color;
 import walkingkooka.tree.json.JsonNode;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * A {@link SpreadsheetMetadata} with no properties and values.
@@ -78,6 +80,13 @@ final class EmptySpreadsheetMetadata extends SpreadsheetMetadata {
     @Override
     SpreadsheetMetadata remove0(final SpreadsheetMetadataPropertyName<?> propertyName) {
         return this;
+    }
+
+    // numberToColor....................................................................................................
+
+    @Override
+    public Function<Integer, Optional<Color>> numberToColor() {
+        return EmptySpreadsheetMetadataNumberToColorFunction.INSTANCE;
     }
 
     // SpreadsheetMetadataVisitor........................................................................................
