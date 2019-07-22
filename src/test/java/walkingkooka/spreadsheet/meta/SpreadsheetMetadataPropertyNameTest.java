@@ -76,7 +76,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     public void testColorConstants() {
         final Color color = Color.fromRgb(0);
 
-        IntStream.range(0, SpreadsheetMetadataPropertyName.NUMBER_TO_COLOR_MAX)
+        IntStream.range(0, SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER)
                 .forEach(i -> {
                     final SpreadsheetMetadataPropertyName<Color> propertyName = SpreadsheetMetadataPropertyName.color(i);
                     final String value = "color-" + i;
@@ -92,7 +92,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     public void testWithColor() {
         final Color color = Color.fromRgb(0);
 
-        IntStream.range(SpreadsheetMetadataPropertyName.NUMBER_TO_COLOR_MAX, SpreadsheetMetadataPropertyName.NUMBER_TO_COLOR_MAX + 10)
+        IntStream.range(SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER, SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER + 10)
                 .forEach(i -> {
                             final String value = "color-" + i;
                             final SpreadsheetMetadataPropertyName<?> propertyName = SpreadsheetMetadataPropertyName.with(value);

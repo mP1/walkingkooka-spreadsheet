@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.HasConverter;
 import walkingkooka.datetime.DateTimeContext;
@@ -44,6 +45,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * A {@link SpreadsheetMetadata} holds a {@link Map} of {@link SpreadsheetMetadataPropertyName} and values.
@@ -146,6 +148,19 @@ public abstract class SpreadsheetMetadata implements HasConverter,
 
     private static void checkPropertyName(final SpreadsheetMetadataPropertyName<?> propertyName) {
         Objects.requireNonNull(propertyName, "propertyName");
+    }
+
+    // Function<Integer, Optional<Color>>................................................................................
+
+    /**
+     * Returns a {@link Function} that returns a {@link Color} given its number.
+     */
+    abstract public Function<Integer, Optional<Color>> numberToColor();
+
+    static void checkColorNumber(final int number) {
+        if (number < 0) {
+            throw new IllegalArgumentException("Number " + number + " < 0");
+        }
     }
 
     // SpreadsheetMetadataStyleVisitor..................................................................................
@@ -289,7 +304,7 @@ public abstract class SpreadsheetMetadata implements HasConverter,
         for (JsonNode child : node.objectOrFail().children()) {
             final SpreadsheetMetadataPropertyName<?> name = SpreadsheetMetadataPropertyName.fromJsonNodeName(child);
             properties.put(name,
-                    name.handler.fromJsonNode(child, name));
+                    name.handler().fromJsonNode(child, name));
         }
 
         return with(properties);
