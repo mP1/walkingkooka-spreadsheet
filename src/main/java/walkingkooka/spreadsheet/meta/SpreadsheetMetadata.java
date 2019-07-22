@@ -40,7 +40,6 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DateFormatSymbols;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -116,19 +115,7 @@ public abstract class SpreadsheetMetadata implements HasConverter,
     }
 
     abstract <V> Optional<V> get0(final SpreadsheetMetadataPropertyName<V> propertyName);
-
-    /**
-     * Property getter which returns the value or adds to the missing list.
-     */
-    final <V> V getOrRecordMissing(final SpreadsheetMetadataPropertyName<V> propertyName,
-                                   final List<SpreadsheetMetadataPropertyName<?>> missing) {
-        return this.get(propertyName)
-                .orElseGet(() -> {
-                    missing.add(propertyName);
-                    return null;
-                });
-    }
-
+    
     // set..............................................................................................................
 
     /**
