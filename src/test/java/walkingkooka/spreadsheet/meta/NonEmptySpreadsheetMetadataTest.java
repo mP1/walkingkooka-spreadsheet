@@ -314,6 +314,53 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
                 this.createSpreadsheetMetadata(property1, value1, property2, value2));
     }
 
+    // NumberToColor....................................................................................................
+
+    @Test
+    public final void testNumberToColorFunction() {
+        final Color color1 = Color.fromRgb(0x111);
+        final int number1 = 1;
+
+        final Color color7 = Color.fromRgb(0x777);
+        final int number7 = 7;
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.BIG_DECIMAL_PATTERN, "'BigDecimal' #0.0")
+                .set(SpreadsheetMetadataPropertyName.color(number1), color1)
+                .set(SpreadsheetMetadataPropertyName.color(number7), color7)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
+        final NonEmptySpreadsheetMetadataNumberToColorFunction function = Cast.to(metadata.numberToColor());
+
+        assertEquals(Maps.of(number1, color1, number7, color7),
+                function.numberToColor,
+                () -> metadata.toString());
+    }
+
+    @Test
+    public final void testNumberToColor2() {
+        final Color color1 = Color.fromRgb(0x111);
+        final int number1 = 1;
+
+        final Color color7 = Color.fromRgb(0x777);
+        final int number7 = 7;
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.BIG_DECIMAL_PATTERN, "'BigDecimal' #0.0")
+                .set(SpreadsheetMetadataPropertyName.color(number1), color1)
+                .set(SpreadsheetMetadataPropertyName.color(number7), color7)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
+
+        for(int i = 0; i < 10; i++) {
+            this.numberToColorAndCheck(metadata,
+                    i,
+                    number1 == i ? color1 :
+                    number7 == i ? color7 :
+                    null);
+        }
+    }
+
     // HateosResource...................................................................................................
 
     @Test
@@ -594,7 +641,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123));
         properties.put(SpreadsheetMetadataPropertyName.TIME_PATTERN, "hh:mm");
 
-        for (int i = 0; i < SpreadsheetMetadataPropertyName.NUMBER_TO_COLOR_MAX + 2; i++) {
+        for (int i = 0; i < SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER + 2; i++) {
             properties.put(SpreadsheetMetadataPropertyName.color(i), Color.fromRgb(i));
         }
 

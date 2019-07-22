@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.naming.Name;
@@ -33,12 +32,11 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.BiConsumer;
-import java.util.stream.IntStream;
 
 /**
  * The {@link Name} of metadata property, used to fetch a value given a name.
  */
-final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparable<SpreadsheetMetadataPropertyName<?>> {
+public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Comparable<SpreadsheetMetadataPropertyName<?>> {
 
     // constants
 
@@ -95,7 +93,7 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
                 SpreadsheetMetadataPropertyValueHandler.decimalFormatPattern(),
                 visitor);
     }
-    
+
     /**
      * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link EmailAddress value}.
      */
@@ -166,7 +164,7 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     private static <T> SpreadsheetMetadataPropertyName<T> registerConstant(final String name,
                                                                            final SpreadsheetMetadataPropertyValueHandler<T> handler,
                                                                            final BiConsumer<T, SpreadsheetMetadataVisitor> visitor) {
-        final SpreadsheetMetadataPropertyName<T> spreadsheetMetadataName = new SpreadsheetMetadataPropertyName<T>(name,
+        final SpreadsheetMetadataPropertyName<T> spreadsheetMetadataName = SpreadsheetMetadataPropertyNameNonColor.with(name,
                 handler,
                 visitor);
         SpreadsheetMetadataPropertyName.CONSTANTS.put(name, spreadsheetMetadataName);
@@ -329,7 +327,7 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
                 throw new IllegalArgumentException("Unknown metadata property name " + CharSequences.quoteAndEscape(name));
             }
             try {
-                propertyName = withColor(Integer.parseInt(name.substring(COLOR_PREFIX.length())));
+                propertyName = color(Integer.parseInt(name.substring(COLOR_PREFIX.length())));
             } catch (final NumberFormatException cause) {
                 throw new IllegalArgumentException("Unknown metadata property name " + CharSequences.quoteAndEscape(name));
             }
@@ -337,63 +335,22 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
         return propertyName;
     }
 
+    final static String COLOR_PREFIX = "color-";
+
     /**
      * Retrieves a {@link SpreadsheetMetadataPropertyName} for a numbered {@link Color}.
      */
     public static SpreadsheetMetadataPropertyName<Color> color(final int number) {
-        if (number < 0) {
-            throw new IllegalArgumentException("Number " + number + " < 0");
-        }
-
-        return number < NUMBER_TO_COLOR_MAX ?
-                NUMBER_TO_COLOR[number] :
-                withColor(number);
-    }
-
-    final static int NUMBER_TO_COLOR_MAX = 32;
-    private final static String COLOR_PREFIX = "color-";
-
-    /**
-     * Cache of 0 to {@link #NUMBER_TO_COLOR_MAX} names.
-     */
-    private final static SpreadsheetMetadataPropertyName<Color>[] NUMBER_TO_COLOR = Cast.to(new SpreadsheetMetadataPropertyName[NUMBER_TO_COLOR_MAX]);
-
-    /**
-     * Fills the cache of {@link SpreadsheetMetadataPropertyName} for color numbers 0 to {@link #NUMBER_TO_COLOR_MAX}.
-     */
-    static {
-        IntStream.range(0, NUMBER_TO_COLOR_MAX)
-                .forEach(SpreadsheetMetadataPropertyName::registerColor);
-    }
-
-    private static void registerColor(final int i) {
-        final SpreadsheetMetadataPropertyName<Color> name = withColor(i);
-        NUMBER_TO_COLOR[i] = name;
-        CONSTANTS.put(name.value(), name);
+        return SpreadsheetMetadataPropertyNameNumberedColor.color0(number);
     }
 
     /**
-     * Factory that creates a new {@link SpreadsheetMetadataPropertyName} color index.
+     * Package private constructor use factory.
      */
-    private static SpreadsheetMetadataPropertyName<Color> withColor(final int number) {
-        return new SpreadsheetMetadataPropertyName<>(COLOR_PREFIX + number,
-                SpreadsheetMetadataPropertyValueHandler.color(),
-                (c, v) -> v.visitNumberedColor(number, c));
-    }
-
-    /**
-     * Private constructor use factory.
-     */
-    private SpreadsheetMetadataPropertyName(final String name,
-                                            final SpreadsheetMetadataPropertyValueHandler<T> handler,
-                                            final BiConsumer<T, SpreadsheetMetadataVisitor> visitor) {
+    SpreadsheetMetadataPropertyName(final String name) {
         super();
         this.name = name;
         this.jsonNodeName = JsonNodeName.with(name);
-
-        this.handler = handler;
-
-        this.visitor = visitor;
     }
 
     @Override
@@ -409,24 +366,24 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
      * Validates the value.
      */
     public T checkValue(final Object value) {
-        return this.handler.check(value, this);
+        return this.handler().check(value, this);
     }
 
-    final SpreadsheetMetadataPropertyValueHandler<T> handler;
+    abstract SpreadsheetMetadataPropertyValueHandler<T> handler();
+
+    // NonEmptySpreadsheetMetadata......................................................................................
+
+    /**
+     * Used by {@link NonEmptySpreadsheetMetadata#numberToColor()}
+     */
+    abstract void addNumberedColor(final Object value, final Map<Integer, Color> numberToColor);
 
     // SpreadsheetMetadataVisitor.......................................................................................
 
     /**
      * Dispatches to the appropriate {@link SpreadsheetMetadataVisitor} visit method.
      */
-    void accept(final Object value, final SpreadsheetMetadataVisitor visitor) {
-        this.visitor.accept(Cast.to(value), visitor);
-    }
-
-    /**
-     * Calls the appropriate {@link SpreadsheetMetadataVisitor} visit method
-     */
-    private final BiConsumer<T, SpreadsheetMetadataVisitor> visitor;
+    abstract void accept(final Object value, final SpreadsheetMetadataVisitor visitor);
 
     // Object...........................................................................................................
 
@@ -436,11 +393,13 @@ final public class SpreadsheetMetadataPropertyName<T> implements Name, Comparabl
     }
 
     @Override
-    public boolean equals(final Object other) {
+    public final boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetMetadataPropertyName &&
+                this.canBeEqual(other) &&
                         this.equals0((SpreadsheetMetadataPropertyName) other);
     }
+
+    abstract boolean canBeEqual(final Object other);
 
     private boolean equals0(final SpreadsheetMetadataPropertyName other) {
         return this.caseSensitivity().equals(this.name, other.name);
