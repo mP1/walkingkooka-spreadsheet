@@ -88,15 +88,15 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitCreateDateTime(final LocalDateTime dateTime) {
+        // nop
+    }
+
     protected void visitCreator(final EmailAddress emailAddress) {
         // nop
     }
 
     protected void visitCurrencySymbol(final String currencySymbol) {
-        // nop
-    }
-
-    protected void visitCreateDateTime(final LocalDateTime dateTime) {
         // nop
     }
 
