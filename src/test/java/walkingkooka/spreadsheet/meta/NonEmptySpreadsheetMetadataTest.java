@@ -22,6 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
@@ -592,6 +593,10 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR);
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123));
         properties.put(SpreadsheetMetadataPropertyName.TIME_PATTERN, "hh:mm");
+
+        for (int i = 0; i < SpreadsheetMetadataPropertyName.NUMBER_TO_COLOR_MAX + 2; i++) {
+            properties.put(SpreadsheetMetadataPropertyName.color(i), Color.fromRgb(i));
+        }
 
         final Set<SpreadsheetMetadataPropertyName<?>> missing = Sets.ordered();
         missing.addAll(SpreadsheetMetadataPropertyName.CONSTANTS.values());
