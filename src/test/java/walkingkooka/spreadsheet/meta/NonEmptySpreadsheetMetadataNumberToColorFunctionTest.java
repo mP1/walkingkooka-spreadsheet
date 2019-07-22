@@ -23,7 +23,16 @@ import walkingkooka.color.Color;
 
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class NonEmptySpreadsheetMetadataNumberToColorFunctionTest extends SpreadsheetMetadataNumberToColorFunctionTestCase<NonEmptySpreadsheetMetadataNumberToColorFunction> {
+
+    @Test
+    public void testInvalidNumberFails() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            NonEmptySpreadsheetMetadataNumberToColorFunction.with(Maps.empty()).apply(-1);
+        });
+    }
 
     @Test
     public void testPresent() {
