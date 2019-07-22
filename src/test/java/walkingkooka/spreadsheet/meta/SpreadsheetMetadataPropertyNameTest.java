@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.color.Color;
 import walkingkooka.naming.NameTesting;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.type.FieldAttributes;
@@ -28,6 +29,7 @@ import walkingkooka.type.JavaVisibility;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -61,6 +63,44 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
         } catch (final Exception cause) {
             throw new AssertionError(cause.getMessage(), cause);
         }
+    }
+
+    @Test
+    public void testWithInvalidColorName() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            SpreadsheetMetadataPropertyName.with("color-X");
+        });
+    }
+
+    @Test
+    public void testColorConstants() {
+        final Color color = Color.fromRgb(0);
+
+        IntStream.range(0, SpreadsheetMetadataPropertyName.NUMBER_TO_COLOR_MAX)
+                .forEach(i -> {
+                    final SpreadsheetMetadataPropertyName<Color> propertyName = SpreadsheetMetadataPropertyName.color(i);
+                    final String value = "color-" + i;
+                    assertSame(propertyName, SpreadsheetMetadataPropertyName.with(value));
+
+                    assertEquals(value, propertyName.value(), "value");
+
+                    propertyName.checkValue(color);
+                });
+    }
+
+    @Test
+    public void testWithColor() {
+        final Color color = Color.fromRgb(0);
+
+        IntStream.range(SpreadsheetMetadataPropertyName.NUMBER_TO_COLOR_MAX, SpreadsheetMetadataPropertyName.NUMBER_TO_COLOR_MAX + 10)
+                .forEach(i -> {
+                            final String value = "color-" + i;
+                            final SpreadsheetMetadataPropertyName<?> propertyName = SpreadsheetMetadataPropertyName.with(value);
+                            assertEquals(value, propertyName.value(), "value");
+
+                            propertyName.checkValue(color);
+                        }
+                );
     }
 
     // Comparator ......................................................................................................
