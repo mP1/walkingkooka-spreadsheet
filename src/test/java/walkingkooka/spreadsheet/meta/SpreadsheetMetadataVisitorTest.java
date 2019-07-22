@@ -101,6 +101,26 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitBigDecimalPattern() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitBigDecimalPattern(final String p) {
+                this.visited = p;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.BIG_DECIMAL_PATTERN, "#0.0");
+    }
+
+    @Test
+    public void testVisitBigIntegerPattern() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitBigIntegerPattern(final String p) {
+                this.visited = p;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.BIG_INTEGER_PATTERN, "#0.0");
+    }
+
+    @Test
     public void testVisitCreator() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
@@ -171,6 +191,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitDoublePattern() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitDoublePattern(final String p) {
+                this.visited = p;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.DOUBLE_PATTERN, "#0.0");
+    }
+
+    @Test
     public void testVisitExponentSymbol() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
@@ -208,6 +238,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = l;
             }
         }.accept(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
+    }
+
+    @Test
+    public void testVisitLongPattern() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitLongPattern(final String p) {
+                this.visited = p;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.LONG_PATTERN, "#0");
     }
 
     @Test
