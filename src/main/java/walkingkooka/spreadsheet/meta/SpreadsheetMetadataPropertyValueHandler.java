@@ -35,6 +35,13 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     }
 
     /**
+     * {@see ColorSpreadsheetMetadataPropertyValueHandler}
+     */
+    static ColorSpreadsheetMetadataPropertyValueHandler color() {
+        return ColorSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    }
+
+    /**
      * {@see DateTimeFormatterPatternStringSpreadsheetMetadataPropertyValueHandler}
      */
     static DateTimeFormatterPatternStringSpreadsheetMetadataPropertyValueHandler dateTimeFormatterPattern() {
