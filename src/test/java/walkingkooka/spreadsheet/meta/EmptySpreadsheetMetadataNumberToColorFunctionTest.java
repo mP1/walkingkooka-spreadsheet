@@ -19,7 +19,16 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class EmptySpreadsheetMetadataNumberToColorFunctionTest extends SpreadsheetMetadataNumberToColorFunctionTestCase<EmptySpreadsheetMetadataNumberToColorFunction> {
+
+    @Test
+    public void testInvalidNumberFails() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            EmptySpreadsheetMetadataNumberToColorFunction.INSTANCE.apply(-1);
+        });
+    }
 
     @Test
     public void testAbsent() {
