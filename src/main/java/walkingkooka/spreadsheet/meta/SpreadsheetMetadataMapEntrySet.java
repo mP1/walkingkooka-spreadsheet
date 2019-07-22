@@ -100,7 +100,7 @@ final class SpreadsheetMetadataMapEntrySet extends AbstractSet<Entry<Spreadsheet
         return this.entries.size();
     }
 
-    private final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> entries;
+    final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> entries;
 
     // SpreadsheetMetadataVisitor.......................................................................................
 
@@ -120,7 +120,7 @@ final class SpreadsheetMetadataMapEntrySet extends AbstractSet<Entry<Spreadsheet
         for (JsonNode child : json.children()) {
             final SpreadsheetMetadataPropertyName<?> name = SpreadsheetMetadataPropertyName.fromJsonNodeName(child);
             properties.put(name,
-                    name.handler.fromJsonNode(child, name));
+                    name.handler().fromJsonNode(child, name));
         }
 
         return with(properties);
@@ -134,7 +134,7 @@ final class SpreadsheetMetadataMapEntrySet extends AbstractSet<Entry<Spreadsheet
 
         for (Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : this.entries) {
             final SpreadsheetMetadataPropertyName<?> propertyName = propertyAndValue.getKey();
-            final JsonNode value = propertyName.handler.toJsonNode(Cast.to(propertyAndValue.getValue()));
+            final JsonNode value = propertyName.handler().toJsonNode(Cast.to(propertyAndValue.getValue()));
 
             json.add(value.setName(propertyName.jsonNodeName));
         }

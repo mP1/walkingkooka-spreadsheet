@@ -33,7 +33,7 @@ public final class ColorSpreadsheetMetadataPropertyValueHandlerTest extends Spre
 
     @Test
     public void testCached() {
-        for (int i = 0; i < SpreadsheetMetadataPropertyName.NUMBER_TO_COLOR_MAX; i++) {
+        for (int i = 0; i < SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER; i++) {
             assertSame(SpreadsheetMetadataPropertyName.color(i),
                     SpreadsheetMetadataPropertyName.color(i));
         }
@@ -41,7 +41,7 @@ public final class ColorSpreadsheetMetadataPropertyValueHandlerTest extends Spre
 
     @Test
     public void testWithUncached() {
-        final int number = SpreadsheetMetadataPropertyName.NUMBER_TO_COLOR_MAX + 1;
+        final int number = SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER + 1;
         final SpreadsheetMetadataPropertyName<Color> name = SpreadsheetMetadataPropertyName.color(number);
         assertEquals("color-" + number, name.value(), "value");
     }

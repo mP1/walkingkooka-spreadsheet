@@ -20,12 +20,14 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.color.Color;
 import walkingkooka.tree.json.JsonNode;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * A {@link NonEmptySpreadsheetMetadata} holds a non empty {@link Map} of {@link SpreadsheetMetadataPropertyName} and values.
@@ -132,6 +134,19 @@ final class NonEmptySpreadsheetMetadata extends SpreadsheetMetadata {
         return list.isEmpty() ?
                 SpreadsheetMetadata.EMPTY :
                 new NonEmptySpreadsheetMetadata(SpreadsheetMetadataMap.withSpreadsheetMetadataMapEntrySet(SpreadsheetMetadataMapEntrySet.withList(list))); // no need to sort after a delete
+    }
+
+    // numberToColor....................................................................................................
+
+    @Override
+    public Function<Integer, Optional<Color>> numberToColor() {
+        final Map<Integer, Color> numberToColor = Maps.sorted();
+
+        for (Entry<SpreadsheetMetadataPropertyName<?>, Object> entries : this.value.entries.entries) {
+            entries.getKey().addNumberedColor(entries.getValue(), numberToColor);
+        }
+
+        return NonEmptySpreadsheetMetadataNumberToColorFunction.with(numberToColor);
     }
 
     // SpreadsheetMetadataVisitor.......................................................................................
