@@ -62,12 +62,12 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitCreator(final EmailAddress emailAddress) {
+    protected void visitCreateDateTime(final LocalDateTime dateTime) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visitCreateDateTime(final LocalDateTime dateTime) {
+    protected void visitCreator(final EmailAddress emailAddress) {
         throw new UnsupportedOperationException();
     }
 
