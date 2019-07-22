@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.color.Color;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.tree.visit.Visiting;
@@ -149,6 +150,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitModifiedDateTime(final LocalDateTime dateTime) {
+        // nop
+    }
+
+    protected void visitNumberedColor(final int number, final Color color) {
         // nop
     }
 
