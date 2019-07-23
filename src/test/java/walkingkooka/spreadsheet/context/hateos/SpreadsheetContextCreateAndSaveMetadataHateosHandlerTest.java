@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.context.hateos;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.net.header.AcceptLanguage;
+import walkingkooka.net.header.HttpHeaderName;
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.context.FakeSpreadsheetContext;
@@ -31,6 +33,7 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.store.Store;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -54,14 +57,34 @@ public final class SpreadsheetContextCreateAndSaveMetadataHateosHandlerTest exte
     }
 
     @Test
-    public void testHandleWithoutIdCreatesMetadata() {
+    public void testHandleWithoutIdCreatesMetadataWithLocale() {
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, this.spreadsheetId(),
+                SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com")));
+
+        final Locale locale = Locale.CANADA_FRENCH;
+
+        this.handleAndCheck(this.createHandler(new FakeSpreadsheetContext() {
+
+                    @Override
+                    public SpreadsheetMetadata metadataWithDefaults(final Optional<Locale> locale) {
+                        return metadata.set(SpreadsheetMetadataPropertyName.LOCALE, locale.get());
+                    }
+                }),
+                Optional.empty(),
+                Optional.empty(),
+                Maps.of(HttpHeaderName.ACCEPT_LANGUAGE, AcceptLanguage.parse("en;q=0.8, fr-CA;q=0.9")),
+                Optional.of(metadata.set(SpreadsheetMetadataPropertyName.LOCALE, locale)));
+    }
+
+    @Test
+    public void testHandleWithoutIdCreatesMetadataWithoutLocale() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, this.spreadsheetId(),
                 SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com")));
 
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetContext() {
 
                     @Override
-                    public SpreadsheetMetadata metadataWithDefaults() {
+                    public SpreadsheetMetadata metadataWithDefaults(final Optional<Locale> locale) {
                         return metadata;
                     }
                 }),
@@ -109,7 +132,7 @@ public final class SpreadsheetContextCreateAndSaveMetadataHateosHandlerTest exte
     SpreadsheetContext context() {
         return new FakeSpreadsheetContext() {
             @Override
-            public SpreadsheetMetadata metadataWithDefaults() {
+            public SpreadsheetMetadata metadataWithDefaults(final Optional<Locale> locale) {
                 return SpreadsheetContextCreateAndSaveMetadataHateosHandlerTest.this.metadataWithDefaults();
             }
         };
