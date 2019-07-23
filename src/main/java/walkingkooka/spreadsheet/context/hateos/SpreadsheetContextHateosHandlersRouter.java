@@ -54,13 +54,11 @@ final class SpreadsheetContextHateosHandlersRouter implements StaticHelper {
     /**
      * Builds a {@link Router} that handles all operations, using the given {@link HateosHandler handlers}.
      */
-    static <N extends Node<N, ?, ?, ?>> Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> with(final AbsoluteUrl base,
+    static <N extends Node<N, ?, ?, ?>> Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> with(final AbsoluteUrl baseUrl,
                                                                                                                     final HateosContentType<N> contentType,
-                                                                                                                    final HateosHandler<SpreadsheetId,
-                                                                                                                            SpreadsheetMetadata,
-                                                                                                                            HateosResource<Range<SpreadsheetId>>> createAndSaveMetadata,
-                                                                                                                    HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> loadMetadata) {
-        final HateosHandlerRouterBuilder<N> builder = HateosHandlerRouterBuilder.with(base, contentType);
+                                                                                                                    final HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> createAndSaveMetadata,
+                                                                                                                    final HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> loadMetadata) {
+        final HateosHandlerRouterBuilder<N> builder = HateosHandlerRouterBuilder.with(baseUrl, contentType);
         Objects.requireNonNull(createAndSaveMetadata, "createAndSaveMetadata");
         Objects.requireNonNull(loadMetadata, "loadMetadata");
 
