@@ -125,6 +125,19 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
                 this.value2());
     }
 
+    // getOrFail........................................................................................................
+
+    @Test
+    public void testGetOrFailPresent() {
+        final SpreadsheetMetadataPropertyName<EmailAddress> propertyName = SpreadsheetMetadataPropertyName.CREATOR;
+        final EmailAddress email = EmailAddress.parse("creator123@example.com");
+
+        final SpreadsheetMetadata metadata = NonEmptySpreadsheetMetadata.with(Maps.of(propertyName, email));
+        assertEquals(email,
+                metadata.getOrFail(propertyName),
+                () -> "getOrFail " + propertyName + " in " + metadata);
+    }
+
     // set..............................................................................................................
 
     @Test
