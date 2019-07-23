@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.ExpressionNodeName;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -75,7 +76,7 @@ public class FakeSpreadsheetContext implements SpreadsheetContext {
     }
 
     @Override
-    public SpreadsheetMetadata metadataWithDefaults() {
+    public SpreadsheetMetadata metadataWithDefaults(final Optional<Locale> locale) {
         throw new UnsupportedOperationException();
     }
 
