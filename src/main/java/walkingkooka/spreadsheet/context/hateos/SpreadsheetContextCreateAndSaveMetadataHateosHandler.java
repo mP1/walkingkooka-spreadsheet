@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.context.hateos;
 
+import walkingkooka.net.header.AcceptLanguage;
+import walkingkooka.net.header.HttpHeaderName;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.spreadsheet.SpreadsheetId;
@@ -24,12 +26,13 @@ import walkingkooka.spreadsheet.context.SpreadsheetContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.store.Store;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A {@link HateosHandler} that invokes {@link SpreadsheetContext#metadataWithDefaults()}
+ * A {@link HateosHandler} that invokes {@link SpreadsheetContext#metadataWithDefaults(Optional<Locale>)}
  */
 final class SpreadsheetContextCreateAndSaveMetadataHateosHandler extends SpreadsheetContextSpreadsheetMetadataStoreHateosHandler {
 
@@ -55,7 +58,7 @@ final class SpreadsheetContextCreateAndSaveMetadataHateosHandler extends Spreads
         checkParameters(parameters);
 
         return id.map(i -> this.saveMetadata(i, this.checkResourceNotEmpty(resource)))
-                .or(() -> this.createMetadata(resource));
+                .or(() -> this.createMetadata(resource, parameters));
     }
 
     private SpreadsheetMetadata saveMetadata(final SpreadsheetId id,
@@ -63,10 +66,16 @@ final class SpreadsheetContextCreateAndSaveMetadataHateosHandler extends Spreads
         return this.store.save(metadata);
     }
 
-    private Optional<SpreadsheetMetadata> createMetadata(final Optional<SpreadsheetMetadata> metadata) {
+    private Optional<SpreadsheetMetadata> createMetadata(final Optional<SpreadsheetMetadata> metadata,
+                                                         final Map<HttpRequestAttribute<?>, Object> parameters) {
         checkResourceEmpty(metadata);
 
-        return Optional.of(this.context.metadataWithDefaults());
+        return Optional.of(this.context.metadataWithDefaults( HttpHeaderName.ACCEPT_LANGUAGE.parameterValue(parameters)
+                .flatMap(this::preferredLocal)));
+    }
+
+    private Optional<Locale> preferredLocal(final AcceptLanguage language) {
+        return language.value().get(0).value().locale();
     }
 
     @Override

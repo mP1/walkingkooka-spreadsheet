@@ -69,6 +69,13 @@ public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends
     }
 
     @Test
+    default void testMetadataWithDefaultsNullLocaleFails() {
+        assertThrows(NullPointerException.class, () -> {
+            this.createContext().metadataWithDefaults(null);
+        });
+    }
+
+    @Test
     default void testNameToColorNullSpreadsheetIdFails() {
         assertThrows(NullPointerException.class, () -> {
             this.createContext().nameToColor(null);
