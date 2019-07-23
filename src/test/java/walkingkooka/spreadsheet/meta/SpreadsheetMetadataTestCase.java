@@ -82,6 +82,21 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 () -> metadata + " get " + propertyName);
     }
 
+    // getOrFail........................................................................................................
+
+    @Test
+    public final void testGetOrFailFails() {
+        final SpreadsheetMetadataPropertyName<String> propertyName = SpreadsheetMetadataPropertyName.BIG_DECIMAL_PATTERN;
+
+        final SpreadsheetMetadataPropertyValueException thrown = assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> {
+            this.createObject().getOrFail(propertyName);
+        });
+
+        this.checkMessage(thrown, "Required property missing");
+        assertEquals(propertyName, thrown.name(), "property name");
+        assertEquals(null, thrown.value(), "property value");
+    }
+
     // set..............................................................................................................
 
     @Test
