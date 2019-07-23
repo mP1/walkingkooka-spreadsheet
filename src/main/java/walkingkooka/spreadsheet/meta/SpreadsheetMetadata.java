@@ -117,7 +117,15 @@ public abstract class SpreadsheetMetadata implements HasConverter,
     }
 
     abstract <V> Optional<V> get0(final SpreadsheetMetadataPropertyName<V> propertyName);
-    
+
+    /**
+     * Fetches the required property or throws a {@link SpreadsheetMetadataPropertyValueException}.
+     */
+    public final <V> V getOrFail(final SpreadsheetMetadataPropertyName<V> propertyName) {
+        return this.get(propertyName)
+                .orElseThrow(() -> new SpreadsheetMetadataPropertyValueException("Required property missing", propertyName, null));
+    }
+
     // set..............................................................................................................
 
     /**
