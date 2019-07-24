@@ -117,6 +117,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitDefaultPattern(final String pattern) {
+        // nop
+    }
+
     protected void visitDoublePattern(final String pattern) {
         // nop
     }

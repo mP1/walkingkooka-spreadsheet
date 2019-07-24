@@ -22,6 +22,7 @@ import walkingkooka.color.Color;
 import walkingkooka.naming.Name;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
@@ -159,6 +160,15 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     }
 
     /**
+     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with {@link SpreadsheetTextFormatter pattern}.
+     */
+    private static SpreadsheetMetadataPropertyName<String> registerSpreadsheetTextFormatterPatternConstant(final String name,
+                                                                                                           final BiConsumer<String, SpreadsheetMetadataVisitor> visitor) {
+        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.textFormatterPattern(),
+                visitor);
+    }
+
+    /**
      * Registers a new {@link SpreadsheetMetadataPropertyName}.
      */
     private static <T> SpreadsheetMetadataPropertyName<T> registerConstant(final String name,
@@ -224,6 +234,12 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      */
     public final static SpreadsheetMetadataPropertyName<Character> DECIMAL_POINT = registerCharacterConstant("decimal-point",
             (c, v) -> v.visitDecimalPoint(c));
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>default-pattern {@link String}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<String> DEFAULT_PATTERN = registerSpreadsheetTextFormatterPatternConstant("default-pattern",
+            (p, v) -> v.visitDefaultPattern(p));
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>Double pattern</code>

@@ -638,6 +638,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET);
         properties.put(SpreadsheetMetadataPropertyName.DATETIME_PATTERN, "DD/MM/YYYY hh:mm");
         properties.put(SpreadsheetMetadataPropertyName.DECIMAL_POINT, 'D');
+        properties.put(SpreadsheetMetadataPropertyName.DEFAULT_PATTERN, "#0.000");
         properties.put(SpreadsheetMetadataPropertyName.DOUBLE_PATTERN, "#0.#");
         properties.put(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, 'E');
         properties.put(SpreadsheetMetadataPropertyName.GENERAL_DECIMAL_FORMAT_PATTERN, "##.##");
