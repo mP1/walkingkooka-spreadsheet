@@ -401,16 +401,15 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                                 final SpreadsheetEngineContext context) {
         SpreadsheetCell result = cell;
 
+        // try and use the cells custom format otherwise use a default from the context.
         SpreadsheetTextFormatter<?> formatter = context.defaultSpreadsheetTextFormatter();
         final Optional<SpreadsheetCellFormat> maybeFormat = cell.format();
         if (maybeFormat.isPresent()) {
             final SpreadsheetCellFormat format = this.parseFormatPatternIfNecessary(maybeFormat.get(), context);
             result = cell.setFormat(Optional.of(format));
-            final Optional<SpreadsheetTextFormatter<?>> maybeFormatter = format.formatter();
-            if (!maybeFormatter.isPresent()) {
-                throw new SpreadsheetEngineException("Failed to make " + SpreadsheetTextFormatter.class.getSimpleName() + " from " + format);
-            }
-            formatter = format.formatter().get();
+
+            formatter = format.formatter()
+                    .orElseThrow(() -> new SpreadsheetEngineException("Invalid cell format " + format));
         }
 
         final SpreadsheetFormula formula = cell.formula();
