@@ -33,6 +33,7 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.ExpressionNodeName;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiConsumer;
@@ -86,7 +87,7 @@ public interface SpreadsheetContext extends Context {
     /**
      * Returns a {@link SpreadsheetMetadata} allocating a new {@link SpreadsheetId}.
      */
-    SpreadsheetMetadata metadataWithDefaults();
+    SpreadsheetMetadata metadataWithDefaults(final Optional<Locale> locale);
 
     /**
      * Returns a {@link Function} which maps {@link String color name} to {@link Color} for the given {@link SpreadsheetId}.
