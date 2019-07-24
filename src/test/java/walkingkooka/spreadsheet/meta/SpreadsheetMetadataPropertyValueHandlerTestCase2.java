@@ -92,14 +92,16 @@ public abstract class SpreadsheetMetadataPropertyValueHandlerTestCase2<P extends
         final SpreadsheetMetadataPropertyValueException thrown2 = assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> {
             propertyName.checkValue(value);
         });
-        this.checkSpreadsheetMetadataPropertyValueException(thrown, message, propertyName, value);
+        this.checkSpreadsheetMetadataPropertyValueException(thrown2, message, propertyName, value);
     }
 
     private void checkSpreadsheetMetadataPropertyValueException(final SpreadsheetMetadataPropertyValueException thrown,
                                                                 final String message,
                                                                 final SpreadsheetMetadataPropertyName<?> propertyName,
                                                                 final Object value) {
-        assertEquals(message, thrown.getMessage(), "message");
+        if(null!=message) {
+            assertEquals(message, thrown.getMessage(), "message");
+        }
         assertEquals(propertyName, thrown.name(), "propertyName");
         assertEquals(value, thrown.value(), "value");
     }
