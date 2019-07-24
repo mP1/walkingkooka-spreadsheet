@@ -33,10 +33,10 @@ import walkingkooka.type.PublicStaticHelper;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 public final class SpreadsheetContexts implements PublicStaticHelper {
 
@@ -53,7 +53,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     public static <N extends Node<N, ?, ?, ?>> SpreadsheetContext memory(final AbsoluteUrl base,
                                                                          final HateosContentType<N> contentType,
                                                                          final Function<BigDecimal, Fraction> fractioner,
-                                                                         final Supplier<SpreadsheetMetadata> metadataWithDefaults,
+                                                                         final Function<Optional<Locale>, SpreadsheetMetadata> metadataWithDefaults,
                                                                          final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
                                                                          final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                                                                          final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext,
