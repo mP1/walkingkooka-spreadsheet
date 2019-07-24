@@ -171,7 +171,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitDatePatternTime() {
+    public void testVisitDateTimePatternTime() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
             protected void visitDateTimePattern(final String f) {
