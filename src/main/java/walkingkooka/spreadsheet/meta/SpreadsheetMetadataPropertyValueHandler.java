@@ -119,6 +119,13 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     }
 
     /**
+     * {@see SpreadsheetTextFormatterPatternStringSpreadsheetMetadataPropertyValueHandler}
+     */
+    static SpreadsheetTextFormatterPatternStringSpreadsheetMetadataPropertyValueHandler textFormatterPattern() {
+        return SpreadsheetTextFormatterPatternStringSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    }
+
+    /**
      * Package private to limit sub classing.
      */
     SpreadsheetMetadataPropertyValueHandler() {
