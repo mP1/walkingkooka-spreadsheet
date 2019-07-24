@@ -61,13 +61,13 @@ import walkingkooka.tree.expression.ExpressionNodeName;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 /**
  * A {@link SpreadsheetContext} that creates a new {@link SpreadsheetStoreRepository} for unknown {@link SpreadsheetId}.
@@ -81,7 +81,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
     static <N extends Node<N, ?, ?, ?>> MemorySpreadsheetContext with(final AbsoluteUrl base,
                                                                       final HateosContentType<N> contentType,
                                                                       final Function<BigDecimal, Fraction> fractioner,
-                                                                      final Supplier<SpreadsheetMetadata> metadata,
+                                                                      final Function<Optional<Locale>, SpreadsheetMetadata> metadata,
                                                                       final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
                                                                       final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                                                                       final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext,
@@ -123,7 +123,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
     private MemorySpreadsheetContext(final AbsoluteUrl base,
                                      final HateosContentType<N> contentType,
                                      final Function<BigDecimal, Fraction> fractioner,
-                                     final Supplier<SpreadsheetMetadata> metadata,
+                                     final Function<Optional<Locale>, SpreadsheetMetadata> metadata,
                                      final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
                                      final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                                      final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext,
@@ -286,11 +286,11 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
     // metadata.........................................................................................................
 
     @Override
-    public SpreadsheetMetadata metadataWithDefaults() {
-        return this.metadata.get();
+    public SpreadsheetMetadata metadataWithDefaults(final Optional<Locale> locale) {
+        return this.metadata.apply(locale);
     }
 
-    private final Supplier<SpreadsheetMetadata> metadata;
+    private final Function<Optional<Locale>, SpreadsheetMetadata> metadata;
 
     @Override
     public Function<String, Optional<Color>> nameToColor(final SpreadsheetId id) {

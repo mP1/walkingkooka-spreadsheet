@@ -67,13 +67,13 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.nio.charset.Charset;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -306,7 +306,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     private void withFails(final AbsoluteUrl base,
                            final HateosContentType<JsonNode> contentType,
                            final Function<BigDecimal, Fraction> fractioner,
-                           final Supplier<SpreadsheetMetadata> metadata,
+                           final Function<Optional<Locale>, SpreadsheetMetadata> metadata,
                            final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
                            final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                            final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext,
@@ -763,10 +763,18 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         assertEquals(Optional.empty(), mapped, "request " + request.parameters());
     }
 
+    @Test
+    public void testMetadataWithDefaultsWithLocale() {
+        final Optional<Locale> locale = Optional.of(Locale.ENGLISH);
+        assertEquals(this.metadataWithDefaults(locale),
+                this.createContext().metadataWithDefaults(locale));
+    }
 
     @Test
-    public void testMetadataWithDefaults() {
-        assertEquals(this.metadataWithDefaults(), this.createContext().metadataWithDefaults());
+    public void testMetadataWithDefaultsWithoutLocale() {
+        final Optional<Locale> locale = Optional.empty();
+        assertEquals(this.metadataWithDefaults(locale),
+                this.createContext().metadataWithDefaults(locale));
     }
 
     @Test
@@ -903,8 +911,12 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         return "Hello123";
     }
 
-    private SpreadsheetMetadata metadataWithDefaults() {
-        return SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(999)));
+    private SpreadsheetMetadata metadataWithDefaults(final Optional<Locale> locale) {
+        SpreadsheetMetadata metadata = SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(999)));
+        if(locale.isPresent()) {
+            metadata = metadata.set(SpreadsheetMetadataPropertyName.LOCALE, locale.get());
+        }
+        return metadata;
     }
 
     private Function<String, Optional<Color>> spreadsheetIdNameToColor(final SpreadsheetId spreadsheetId) {
