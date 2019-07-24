@@ -98,6 +98,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitDefaultPattern(final String textFormatterPattern) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitDoublePattern(final String pattern) {
         throw new UnsupportedOperationException();
     }
