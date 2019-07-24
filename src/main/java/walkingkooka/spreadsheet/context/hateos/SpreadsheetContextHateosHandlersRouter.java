@@ -47,9 +47,17 @@ final class SpreadsheetContextHateosHandlersRouter implements StaticHelper {
     /**
      * A {@link HateosResourceName} with <code>metadata</code>.
      */
-    static HateosResourceName METADATA = HateosResourceName.with("metadata");
+    private final static HateosResourceName SPREADSHEET = HateosResourceName.with("spreadsheet");
 
-    private static final Class<HateosResource<Range<SpreadsheetId>>> RANGE_SPREADSHEET_ID = Cast.to(HateosResource.class);
+    private final static Class<HateosResource<Range<SpreadsheetId>>> RANGE_SPREADSHEET_ID = Cast.to(HateosResource.class);
+
+    /**
+     * Used to form the metadata load and save services
+     * <pre>
+     * /api/spreadsheet/$spreadsheet-id/metadata
+     * </pre>
+     */
+    private final static LinkRelation METADATA_LINK_RELATION = LinkRelation.with("metadata");
 
     /**
      * Builds a {@link Router} that handles all operations, using the given {@link HateosHandler handlers}.
@@ -75,7 +83,7 @@ final class SpreadsheetContextHateosHandlersRouter implements StaticHelper {
             mapper.get(loadMetadata);
             mapper.post(createAndSaveMetadata);
 
-            builder.add(METADATA, LinkRelation.SELF, mapper);
+            builder.add(SPREADSHEET, METADATA_LINK_RELATION, mapper);
         }
 
         return builder.build();
