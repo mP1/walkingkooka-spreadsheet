@@ -106,15 +106,15 @@ public final class SpreadsheetContextHateosHandlersRouterTest extends Spreadshee
     @Test
     public void testHandleMetadataLoadGet() {
         this.routeAndCheck(HttpMethod.GET,
-                URL + "/metadata/12ef",
+                URL + "/spreadsheet/12ef/metadata",
                 HttpStatusCode.OK,
                 "{\n" +
                         "  \"creator\": \"load@example.com\",\n" +
                         "  \"spreadsheet-id\": \"12ef\",\n" +
                         "  \"_links\": [{\n" +
-                        "    \"href\": \"http://example.com/api/metadata/12ef\",\n" +
+                        "    \"href\": \"http://example.com/api/spreadsheet/12ef/metadata\",\n" +
                         "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"self\",\n" +
+                        "    \"rel\": \"metadata\",\n" +
                         "    \"type\": \"application/hal+json\"\n" +
                         "  }]\n" +
                         "}");
@@ -123,31 +123,31 @@ public final class SpreadsheetContextHateosHandlersRouterTest extends Spreadshee
     @Test
     public void testHandleMetadataSavePost() {
         this.routeAndCheck(HttpMethod.POST,
-                URL + "/metadata/12ef",
+                URL + "/spreadsheet/12ef/metadata",
                 HttpStatusCode.OK,
                 "{\n" +
                         "  \"creator\": \"save@example.com\",\n" +
                         "  \"spreadsheet-id\": \"12ef\",\n" +
                         "  \"_links\": [{\n" +
-                        "    \"href\": \"http://example.com/api/metadata/12ef\",\n" +
+                        "    \"href\": \"http://example.com/api/spreadsheet/12ef/metadata\",\n" +
                         "    \"method\": \"POST\",\n" +
-                        "    \"rel\": \"self\",\n" +
+                        "    \"rel\": \"metadata\",\n" +
                         "    \"type\": \"application/hal+json\"\n" +
                         "  }]\n" +
                         "}");
     }
 
     @Test
-    public void testHandleMetadataPut() {
+    public void testHandleMetadataMetadataPut() {
         this.routeAndFail(HttpMethod.PUT,
-                URL + "/metadata/12ef",
+                URL + "/spreadsheet/12ef/metadata",
                 HttpStatusCode.METHOD_NOT_ALLOWED);
     }
 
     @Test
     public void testHandleMetadataDelete() {
         this.routeAndFail(HttpMethod.DELETE,
-                URL + "/metadata/12ef",
+                URL + "/spreadsheet/12ef/metadata",
                 HttpStatusCode.METHOD_NOT_ALLOWED);
     }
 
