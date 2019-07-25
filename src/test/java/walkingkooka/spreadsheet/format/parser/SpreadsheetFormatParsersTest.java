@@ -3901,7 +3901,7 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Override
     public SpreadsheetFormatParserContext createContext() {
-        return SpreadsheetFormatParserContexts.basic(this.decimalNumberContext());
+        return SpreadsheetFormatParserContexts.basic();
     }
 
     private static SpreadsheetFormatParserToken aSlashP() {

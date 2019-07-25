@@ -18,16 +18,12 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserContexts;
 import walkingkooka.text.cursor.parser.ParserReporters;
-
-import java.math.MathContext;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -64,9 +60,7 @@ public abstract class SpreadsheetTextFormatter3TestCase<F extends SpreadsheetTex
     final SpreadsheetFormatParserToken parsePatternOrFail(final Parser<SpreadsheetFormatParserContext> parser, final String pattern) {
         return parser.orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(pattern),
-                        SpreadsheetFormatParserContexts.basic(
-                                ParserContexts.basic(
-                                        DecimalNumberContexts.american(MathContext.DECIMAL32))))
+                        SpreadsheetFormatParserContexts.basic())
                 .get()
                 .cast();
     }
