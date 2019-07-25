@@ -22,7 +22,7 @@ import walkingkooka.ToStringBuilder;
 /**
  * Handles inserting the integer digits into the formatted text.
  */
-final class BigDecimalSpreadsheetTextFormatterIntegerDigits extends BigDecimalSpreadsheetTextFormatterDigits2 {
+final class BigDecimalSpreadsheetTextFormatterIntegerDigits extends BigDecimalSpreadsheetTextFormatterExponentOrIntegerDigits {
 
     /**
      * Creates a new {@link BigDecimalSpreadsheetTextFormatterIntegerDigits}
