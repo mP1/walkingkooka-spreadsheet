@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.format;
 
-import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
 import walkingkooka.datetime.DateTimeContextTesting2;
 import walkingkooka.math.DecimalNumberContextTesting2;
@@ -26,7 +25,6 @@ import walkingkooka.text.CharSequences;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public interface SpreadsheetTextFormatContextTesting<C extends SpreadsheetTextFormatContext> extends DateTimeContextTesting2<C>,
         DecimalNumberContextTesting2<C> {
@@ -47,11 +45,6 @@ public interface SpreadsheetTextFormatContextTesting<C extends SpreadsheetTextFo
                 () -> "colorName " + name + " " + context);
     }
 
-    @Test
-    default void testGeneralDecimalFormatPattern() {
-        assertNotNull("decimalDecimalFormatPattern", this.createContext().generalDecimalFormatPattern());
-    }
-
     default <T> void convertAndCheck(final Object value,
                                      final Class<T> target,
                                      final T expected) {
@@ -68,6 +61,21 @@ public interface SpreadsheetTextFormatContextTesting<C extends SpreadsheetTextFo
         assertEquals(expected,
                 context.convert(value, target),
                 () -> "convert " + CharSequences.quoteIfChars(value) + " target: " + target.getName());
+    }
+
+    default void defaultFormatTextAndCheck(final Object value,
+                                           final Optional<SpreadsheetFormattedText> formattedText) {
+        this.defaultFormatTextAndCheck(this.createContext(),
+                value,
+                formattedText);
+    }
+
+    default void defaultFormatTextAndCheck(final C context,
+                                           final Object value,
+                                           final Optional<SpreadsheetFormattedText> formattedText) {
+        assertEquals(formattedText,
+                context.defaultFormatText(value),
+                () -> context + " " + CharSequences.quoteIfChars(value));
     }
 
     @Override

@@ -52,20 +52,23 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
+import walkingkooka.spreadsheet.format.SpreadsheetFormattedText;
+import walkingkooka.spreadsheet.format.SpreadsheetTextFormatContext;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatters;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.store.Store;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNodeName;
 import walkingkooka.tree.json.JsonNode;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.nio.charset.Charset;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -419,7 +422,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                         "    },\n" +
                         "    \"formatted\": {\n" +
                         "      \"type\": \"text\",\n" +
-                        "      \"value\": \"3.00\"\n" +
+                        "      \"value\": \"003.000\"\n" +
                         "    }\n" +
                         "  }],\n" +
                         "  \"_links\": [{\n" +
@@ -485,7 +488,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                         "    },\n" +
                         "    \"formatted\": {\n" +
                         "      \"type\": \"text\",\n" +
-                        "      \"value\": \"3.00\"\n" +
+                        "      \"value\": \"003.000\"\n" +
                         "    }\n" +
                         "  }],\n" +
                         "  \"_links\": [{\n" +
@@ -551,7 +554,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                         "    },\n" +
                         "    \"formatted\": {\n" +
                         "      \"type\": \"text\",\n" +
-                        "      \"value\": \"3.00\"\n" +
+                        "      \"value\": \"003.000\"\n" +
                         "    }\n" +
                         "  }],\n" +
                         "  \"_links\": [{\n" +
@@ -855,7 +858,27 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     private SpreadsheetTextFormatter spreadsheetIdDefaultSpreadsheetTextFormatter(final SpreadsheetId spreadsheetId) {
         this.checkSpreadsheetId(spreadsheetId);
 
-        return SpreadsheetTextFormatters.general();
+        return new SpreadsheetTextFormatter() {
+            @Override
+            public boolean canFormat(final Object value) {
+                return value instanceof String || value instanceof BigDecimal;
+            }
+
+            @Override
+            public Optional<SpreadsheetFormattedText> format(final Object value, final SpreadsheetTextFormatContext context) {
+                if (value instanceof String) {
+                    return this.formattedText(value.toString());
+                }
+                if (value instanceof BigDecimal) {
+                    return this.formattedText(new DecimalFormat("000.000").format(value));
+                }
+                throw new AssertionError("Format unexpected value " + CharSequences.quoteIfChars(value));
+            }
+
+            private Optional<SpreadsheetFormattedText> formattedText(final String text) {
+                return Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, text));
+            }
+        };
     }
 
     private BiFunction<ExpressionNodeName, List<Object>, Object> spreadsheetIdFunctions(final SpreadsheetId spreadsheetId) {

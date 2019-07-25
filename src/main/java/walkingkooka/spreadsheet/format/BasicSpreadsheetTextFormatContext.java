@@ -37,46 +37,47 @@ final class BasicSpreadsheetTextFormatContext implements SpreadsheetTextFormatCo
 
     static BasicSpreadsheetTextFormatContext with(final Function<Integer, Optional<Color>> numberToColor,
                                                   final Function<String, Optional<Color>> nameToColor,
-                                                  final String generalDecimalFormatPattern,
                                                   final int width,
                                                   final Converter converter,
+                                                  final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter,
                                                   final DateTimeContext dateTimeContext,
                                                   final DecimalNumberContext decimalNumberContext) {
         Objects.requireNonNull(numberToColor, "numberToColor");
         Objects.requireNonNull(nameToColor, "nameToColor");
-        Objects.requireNonNull(generalDecimalFormatPattern, "generalDecimalFormatPattern");
         if (width <= 0) {
             throw new IllegalArgumentException("Width " + width + " <= 0");
         }
         Objects.requireNonNull(converter, "converter");
         Objects.requireNonNull(dateTimeContext, "dateTimeContext");
         Objects.requireNonNull(decimalNumberContext, "decimalNumberContext");
+        Objects.requireNonNull(defaultSpreadsheetTextFormatter, "defaultSpreadsheetTextFormatter");
 
         return new BasicSpreadsheetTextFormatContext(numberToColor,
                 nameToColor,
-                generalDecimalFormatPattern,
                 width,
                 converter,
+                defaultSpreadsheetTextFormatter,
                 dateTimeContext,
                 decimalNumberContext);
     }
 
     private BasicSpreadsheetTextFormatContext(final Function<Integer, Optional<Color>> numberToColor,
                                               final Function<String, Optional<Color>> nameToColor,
-                                              final String generalDecimalFormatPattern,
                                               final int width,
                                               final Converter converter,
+                                              final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter,
                                               final DateTimeContext dateTimeContext,
                                               final DecimalNumberContext decimalNumberContext) {
         super();
 
         this.numberToColor = numberToColor;
         this.nameToColor = nameToColor;
-        this.generalDecimalFormatPattern = generalDecimalFormatPattern;
         this.width = width;
 
         this.converter = converter;
         this.converterContext = ConverterContexts.basic(decimalNumberContext);
+
+        this.defaultSpreadsheetTextFormatter = defaultSpreadsheetTextFormatter;
 
         this.dateTimeContext = dateTimeContext;
 
@@ -99,14 +100,6 @@ final class BasicSpreadsheetTextFormatContext implements SpreadsheetTextFormatCo
 
     private final Function<String, Optional<Color>> nameToColor;
 
-
-    @Override
-    public String generalDecimalFormatPattern() {
-        return this.generalDecimalFormatPattern;
-    }
-
-    private final String generalDecimalFormatPattern;
-
     @Override
     public int width() {
         return this.width;
@@ -127,6 +120,15 @@ final class BasicSpreadsheetTextFormatContext implements SpreadsheetTextFormatCo
      * This {@link ConverterContext} is created using dependencies passed in the factory.
      */
     private final ConverterContext converterContext;
+
+    // defaultFormatText.................................................................................................
+
+    @Override
+    public Optional<SpreadsheetFormattedText> defaultFormatText(final Object value) {
+        return this.defaultSpreadsheetTextFormatter.format(value, this);
+    }
+
+    private final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter;
 
     // DateTimeContext..................................................................................................
 
@@ -208,7 +210,6 @@ final class BasicSpreadsheetTextFormatContext implements SpreadsheetTextFormatCo
         return ToStringBuilder.empty()
                 .label("numberToColor").value(this.numberToColor)
                 .label("nameToColor").value(this.nameToColor)
-                .label("generalDecimalFormatPattern").value(this.generalDecimalFormatPattern)
                 .label("width").value(this.width)
                 .label("converter").value(this.converter)
                 .label("dateTimeContext").value(this.dateTimeContext)

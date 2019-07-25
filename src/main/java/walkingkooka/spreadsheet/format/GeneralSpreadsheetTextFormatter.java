@@ -17,19 +17,10 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.Cast;
-import walkingkooka.convert.ConversionException;
-import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContexts;
-import walkingkooka.convert.Converters;
-
-import java.math.BigDecimal;
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetTextFormatter} that formats any basic spreadsheet value. Any {@link java.time.LocalDate},
- * {@link java.time.LocalDateTime} and {@link java.time.LocalTime} values are first converted to {@link BigDecimal}.
- * {@link String Text} is returned verbatim, and {@link Number numbers} are formatted using a {@link java.text.DecimalFormat formatter}.
+ * A {@link SpreadsheetTextFormatter} that delegates formatting to {@link SpreadsheetTextFormatContext#defaultFormatText(Object)}.
  */
 final class GeneralSpreadsheetTextFormatter extends SpreadsheetTextFormatter2 {
 
@@ -52,28 +43,7 @@ final class GeneralSpreadsheetTextFormatter extends SpreadsheetTextFormatter2 {
 
     @Override
     Optional<SpreadsheetFormattedText> format0(final Object value, final SpreadsheetTextFormatContext context) {
-        return value instanceof String ?
-                formatText(Cast.to(value)) :
-                formatNonText(value, context);
-    }
-
-    private Optional<SpreadsheetFormattedText> formatText(final String value) {
-        return Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, value));
-    }
-
-    private Optional<SpreadsheetFormattedText> formatNonText(final Object value, final SpreadsheetTextFormatContext context) {
-        final BigDecimal bigDecimal = this.toBigDecimal(value, context);
-        final String text = this.decimalFormatConverter(context)
-                .convert(bigDecimal, String.class, ConverterContexts.basic(context));
-        return Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, text));
-    }
-
-    private BigDecimal toBigDecimal(final Object value, final SpreadsheetTextFormatContext context) throws ConversionException {
-        return context.convert(value, BigDecimal.class);
-    }
-
-    private Converter decimalFormatConverter(final SpreadsheetTextFormatContext context) {
-        return Converters.decimalFormatString(context.generalDecimalFormatPattern());
+        return context.defaultFormatText(value);
     }
 
     @Override
