@@ -238,7 +238,6 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                 this.dateTimeContext(id),
                 numberToColor,
                 nameToColor,
-                "#.00",
                 width,
                 fractioner,
                 defaultSpreadsheetTextFormatter);
