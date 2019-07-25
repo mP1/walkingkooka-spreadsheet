@@ -25,6 +25,10 @@ import walkingkooka.tree.visit.VisitorTesting;
 public interface SpreadsheetValueVisitorTesting<V extends SpreadsheetValueVisitor> extends VisitorTesting<V, Object> {
 
     @Override
+    default void testSinglePublicAcceptMethod() {
+    }
+
+    @Override
     default String typeNameSuffix() {
         return SpreadsheetValueVisitor.class.getSimpleName();
     }
