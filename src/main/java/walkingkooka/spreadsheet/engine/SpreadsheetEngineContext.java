@@ -46,9 +46,9 @@ public interface SpreadsheetEngineContext extends Context {
     <T> T convert(Object value, Class<T> target);
 
     /**
-     * Accepts a format pattern and returns the equivalent {@link SpreadsheetTextFormatter}.
+     * Accepts a pattern and returns the equivalent {@link SpreadsheetTextFormatter}.
      */
-    SpreadsheetTextFormatter parseFormatPattern(final String pattern);
+    SpreadsheetTextFormatter parsePattern(final String pattern);
 
     /**
      * The default {@link SpreadsheetTextFormatter} when no pattern is available for a cell.
