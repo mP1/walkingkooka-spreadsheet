@@ -405,7 +405,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         SpreadsheetTextFormatter formatter = context.defaultSpreadsheetTextFormatter();
         final Optional<SpreadsheetCellFormat> maybeFormat = cell.format();
         if (maybeFormat.isPresent()) {
-            final SpreadsheetCellFormat format = this.parseFormatPatternIfNecessary(maybeFormat.get(), context);
+            final SpreadsheetCellFormat format = this.parsePatternIfNecessary(maybeFormat.get(), context);
             result = cell.setFormat(Optional.of(format));
 
             formatter = format.formatter()
@@ -424,20 +424,20 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * Returns a {@link SpreadsheetCellFormat} parsing the pattern if necessary.
      */
-    private SpreadsheetCellFormat parseFormatPatternIfNecessary(final SpreadsheetCellFormat format,
-                                                                final SpreadsheetEngineContext context) {
+    private SpreadsheetCellFormat parsePatternIfNecessary(final SpreadsheetCellFormat format,
+                                                          final SpreadsheetEngineContext context) {
         final Optional<SpreadsheetTextFormatter> formatter = format.formatter();
         return formatter.isPresent() ?
                 format :
-                this.parseFormatPattern(format, context);
+                this.parsePattern(format, context);
     }
 
     /**
      * Returns an updated {@link SpreadsheetCellFormat} after parsing the pattern into a {@link SpreadsheetTextFormatter}.
      */
-    private SpreadsheetCellFormat parseFormatPattern(final SpreadsheetCellFormat format,
-                                                     final SpreadsheetEngineContext context) {
-        return format.setFormatter(Optional.of(context.parseFormatPattern(format.pattern())));
+    private SpreadsheetCellFormat parsePattern(final SpreadsheetCellFormat format,
+                                               final SpreadsheetEngineContext context) {
+        return format.setFormatter(Optional.of(context.parsePattern(format.pattern())));
     }
 
     /**
