@@ -59,7 +59,6 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
                                                                          final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext,
                                                                          final Function<SpreadsheetId, SpreadsheetTextFormatter> spreadsheetIdDefaultSpreadsheetTextFormatter,
                                                                          final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
-                                                                         final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
                                                                          final Function<SpreadsheetId, Function<String, Optional<Color>>> spreadsheetIdNameToColor,
                                                                          final Function<SpreadsheetId, Function<Integer, Optional<Color>>> spreadsheetIdNumberToColor,
                                                                          final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
@@ -72,7 +71,6 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
                 spreadsheetIdDecimalNumberContext,
                 spreadsheetIdDefaultSpreadsheetTextFormatter,
                 spreadsheetIdFunctions,
-                spreadsheetIdGeneralDecimalFormatPattern,
                 spreadsheetIdNameToColor,
                 spreadsheetIdNumberToColor,
                 spreadsheetIdWidth);
