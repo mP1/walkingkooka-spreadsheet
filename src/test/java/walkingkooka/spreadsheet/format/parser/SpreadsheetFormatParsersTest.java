@@ -19,11 +19,14 @@ package walkingkooka.spreadsheet.format.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.test.PublicStaticHelperTesting;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserTesting;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.type.JavaVisibility;
 
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
@@ -32,8 +35,8 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public final class SpreadsheetFormatParsersTest implements ParserTesting<Parser<SpreadsheetFormatParserContext>,
-        SpreadsheetFormatParserContext> {
+public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTesting<SpreadsheetFormatParsers>,
+        ParserTesting<Parser<SpreadsheetFormatParserContext>, SpreadsheetFormatParserContext> {
 
     // color............................................................................................................
 
@@ -4182,5 +4185,22 @@ public final class SpreadsheetFormatParsersTest implements ParserTesting<Parser<
     @Override
     public String parserTokenTypeNamePrefix() {
         return "SpreadsheetFormat";
+    }
+
+    // PublicStaticHelperTesting........................................................................................
+
+    @Override
+    public Class<SpreadsheetFormatParsers> type() {
+        return SpreadsheetFormatParsers.class;
+    }
+
+    @Override
+    public boolean canHavePublicTypes(final Method method) {
+        return false;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
     }
 }
