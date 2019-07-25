@@ -46,21 +46,14 @@ public final class BigDecimalFractionSpreadsheetTextFormatterTest extends Spread
     @Test
     public void testWithNullTokenFails() {
         assertThrows(NullPointerException.class, () -> {
-            BigDecimalFractionSpreadsheetTextFormatter.with(null, mathContext(), fractioner());
-        });
-    }
-
-    @Test
-    public void testWithMathContextFails() {
-        assertThrows(NullPointerException.class, () -> {
-            BigDecimalFractionSpreadsheetTextFormatter.with(this.token(), null, fractioner());
+            BigDecimalFractionSpreadsheetTextFormatter.with(null, fractioner());
         });
     }
 
     @Test
     public void testWithNullFractionerFails() {
         assertThrows(NullPointerException.class, () -> {
-            BigDecimalFractionSpreadsheetTextFormatter.with(this.token(), mathContext(), null);
+            BigDecimalFractionSpreadsheetTextFormatter.with(this.token(), null);
         });
     }
 
@@ -408,14 +401,8 @@ public final class BigDecimalFractionSpreadsheetTextFormatterTest extends Spread
 
     @Override
     BigDecimalFractionSpreadsheetTextFormatter createFormatter0(final SpreadsheetFormatFractionParserToken token) {
-        return BigDecimalFractionSpreadsheetTextFormatter.with(token, this.mathContext(), this.fractioner());
+        return BigDecimalFractionSpreadsheetTextFormatter.with(token, this.fractioner());
     }
-
-    private MathContext mathContext() {
-        return MATH_CONTEXT;
-    }
-
-    private final static MathContext MATH_CONTEXT = MathContext.UNLIMITED;
 
     private Function<BigDecimal, Fraction> fractioner() {
         return this::makeIntoFraction;
@@ -448,6 +435,11 @@ public final class BigDecimalFractionSpreadsheetTextFormatterTest extends Spread
             }
 
             @Override
+            public MathContext mathContext() {
+                return MATH_CONTEXT;
+            }
+
+            @Override
             public char minusSign() {
                 return 'M';
             }
@@ -458,6 +450,8 @@ public final class BigDecimalFractionSpreadsheetTextFormatterTest extends Spread
             }
         };
     }
+
+    private final static MathContext MATH_CONTEXT = MathContext.UNLIMITED;
 
     @Override
     public Class<BigDecimalFractionSpreadsheetTextFormatter> type() {

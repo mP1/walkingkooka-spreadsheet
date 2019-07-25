@@ -24,7 +24,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatFractionParserTok
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.Objects;
@@ -32,7 +31,8 @@ import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * A {@link SpreadsheetTextFormatter} that unconditionally formats a {@link BigDecimal}, without a {@link Color}.
+ * A {@link SpreadsheetTextFormatter} that unconditionally formats a {@link BigDecimal}, without a {@link Color} using a pattern
+ * parsed into a {@link SpreadsheetFormatFractionParserToken}.
  */
 final class BigDecimalFractionSpreadsheetTextFormatter extends SpreadsheetTextFormatter3<BigDecimal, SpreadsheetFormatFractionParserToken> {
 
@@ -40,24 +40,20 @@ final class BigDecimalFractionSpreadsheetTextFormatter extends SpreadsheetTextFo
      * Creates a {@link BigDecimalFractionSpreadsheetTextFormatter} from a {@link SpreadsheetFormatBigDecimalParserToken}.
      */
     static BigDecimalFractionSpreadsheetTextFormatter with(final SpreadsheetFormatFractionParserToken token,
-                                                           final MathContext mathContext,
                                                            final Function<BigDecimal, Fraction> fractioner) {
         check(token);
-        Objects.requireNonNull(mathContext, "mathContext");
         Objects.requireNonNull(fractioner, "fractioner");
 
-        return new BigDecimalFractionSpreadsheetTextFormatter(token, mathContext, fractioner);
+        return new BigDecimalFractionSpreadsheetTextFormatter(token, fractioner);
     }
 
     /**
      * Private ctor use static parse.
      */
     private BigDecimalFractionSpreadsheetTextFormatter(final SpreadsheetFormatFractionParserToken token,
-                                                       final MathContext mathContext,
                                                        final Function<BigDecimal, Fraction> fractioner) {
         super(token);
 
-        this.mathContext = mathContext;
         this.fractioner = fractioner;
 
         final BigDecimalFractionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor visitor =
@@ -87,7 +83,7 @@ final class BigDecimalFractionSpreadsheetTextFormatter extends SpreadsheetTextFo
      * rounding until its the right number of digits.
      */
     private String format1(final BigDecimal value, final SpreadsheetTextFormatContext context) {
-        final BigDecimal rounded = value.multiply(this.multiplier, this.mathContext)
+        final BigDecimal rounded = value.multiply(this.multiplier, context.mathContext())
                 .setScale(this.denominatorDigitSymbolCount, RoundingMode.HALF_UP);
 
         final Fraction fraction = this.fractioner.apply(rounded);
@@ -117,11 +113,6 @@ final class BigDecimalFractionSpreadsheetTextFormatter extends SpreadsheetTextFo
      * A non zero value multiplied against the {@link BigDecimal} being formatted as text.
      */
     private final BigDecimal multiplier;
-
-    /**
-     * Used when the multiplier is applied to the {@link BigDecimal} being formatted as text.
-     */
-    private final MathContext mathContext;
 
     /**
      * Converts a {@link BigDecimal} into a {@link Fraction}.

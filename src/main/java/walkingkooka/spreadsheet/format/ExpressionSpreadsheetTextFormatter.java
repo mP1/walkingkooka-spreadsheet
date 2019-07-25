@@ -22,7 +22,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExpressionParserT
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -38,14 +37,12 @@ final class ExpressionSpreadsheetTextFormatter extends SpreadsheetTextFormatter3
      * Creates a {@link ExpressionSpreadsheetTextFormatter} from a {@link SpreadsheetFormatTextParserToken}.
      */
     static ExpressionSpreadsheetTextFormatter with(final SpreadsheetFormatExpressionParserToken token,
-                                                   final MathContext mathContext,
                                                    final Function<BigDecimal, Fraction> fractioner) {
         check(token);
-        Objects.requireNonNull(mathContext, "mathContext");
         Objects.requireNonNull(fractioner, "fractioner");
 
         return new ExpressionSpreadsheetTextFormatter(token,
-                ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor.analyze(token, mathContext, fractioner));
+                ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor.analyze(token, fractioner));
     }
 
     /**
