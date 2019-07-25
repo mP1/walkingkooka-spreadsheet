@@ -17,14 +17,21 @@
 
 package walkingkooka.spreadsheet;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.PublicStaticHelperTesting;
 import walkingkooka.type.JavaVisibility;
 
 import java.lang.reflect.Method;
+import java.math.MathContext;
 
 public class SpreadsheetFunctionsTest implements ClassTesting2<SpreadsheetFunctions>,
         PublicStaticHelperTesting<SpreadsheetFunctions> {
+
+    @Test
+    public void testPublicStaticMethodsWithoutMathContextParameter() {
+        this.publicStaticMethodParametersTypeCheck(MathContext.class);
+    }
 
     @Override
     public Class<SpreadsheetFunctions> type() {
