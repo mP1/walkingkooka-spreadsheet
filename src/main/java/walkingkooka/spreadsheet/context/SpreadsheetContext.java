@@ -75,11 +75,6 @@ public interface SpreadsheetContext extends Context {
     BiFunction<ExpressionNodeName, List<Object>, Object> functions(final SpreadsheetId id);
 
     /**
-     * Returns a {@link String general decimal format pattern} for the given {@link SpreadsheetId}.
-     */
-    String generalDecimalFormatPattern(final SpreadsheetId id);
-
-    /**
      * A {@link Router} that can handle hateos requests for the given identified spreadsheet.
      */
     Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> hateosRouter(final SpreadsheetId id);

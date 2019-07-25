@@ -66,11 +66,6 @@ public class FakeSpreadsheetContext implements SpreadsheetContext {
     }
 
     @Override
-    public String generalDecimalFormatPattern(final SpreadsheetId id) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> hateosRouter(final SpreadsheetId id) {
         throw new UnsupportedOperationException();
     }
