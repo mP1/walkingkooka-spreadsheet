@@ -17,16 +17,12 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.json.JsonNode;
-
-import java.math.MathContext;
 
 /**
  * A {@link SpreadsheetMetadataPropertyValueHandler} for valid {@link String} {@link SpreadsheetTextFormatter} patterns.
@@ -52,15 +48,12 @@ final class SpreadsheetTextFormatterPatternStringSpreadsheetMetadataPropertyValu
             try {
                 SpreadsheetFormatParsers.expression()
                         .orFailIfCursorNotEmpty(ParserReporters.basic())
-                        .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic(this.decimalNumberContext));
+                        .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic());
             } catch (final RuntimeException cause) {
                 throw new SpreadsheetMetadataPropertyValueException(cause.getMessage(), name, value);
             }
         }
     }
-
-    // is it safe to assume a DecimalNumberContexts.american
-    private final DecimalNumberContext decimalNumberContext = DecimalNumberContexts.american(MathContext.DECIMAL32);
 
     @Override
     String expectedTypeName(final Class<?> type) {
