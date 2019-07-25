@@ -33,16 +33,16 @@ public final class SpreadsheetTextFormatContexts implements PublicStaticHelper {
      */
     public static SpreadsheetTextFormatContext basic(final Function<Integer, Optional<Color>> numberToColor,
                                                      final Function<String, Optional<Color>> nameToColor,
-                                                     final String generalDecimalFormatPattern,
                                                      final int width,
                                                      final Converter converter,
+                                                     final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter,
                                                      final DateTimeContext dateTimeContext,
                                                      final DecimalNumberContext decimalNumberContext) {
         return BasicSpreadsheetTextFormatContext.with(numberToColor,
                 nameToColor,
-                generalDecimalFormatPattern,
                 width,
                 converter,
+                defaultSpreadsheetTextFormatter,
                 dateTimeContext,
                 decimalNumberContext);
     }

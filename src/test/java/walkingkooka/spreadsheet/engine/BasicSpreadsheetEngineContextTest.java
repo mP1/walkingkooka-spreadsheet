@@ -64,7 +64,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.dateTimeContext(),
                     this.numberToColor(),
                     this.nameToColor(),
-                    GENERAL_DECIMAL_FORMAT_PATTERN,
                     WIDTH,
                     FRACTIONER,
                     this.defaultSpreadsheetTextFormatter());
@@ -82,7 +81,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.dateTimeContext(),
                     this.numberToColor(),
                     this.nameToColor(),
-                    GENERAL_DECIMAL_FORMAT_PATTERN,
                     WIDTH,
                     FRACTIONER,
                     this.defaultSpreadsheetTextFormatter());
@@ -100,7 +98,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.dateTimeContext(),
                     this.numberToColor(),
                     this.nameToColor(),
-                    GENERAL_DECIMAL_FORMAT_PATTERN,
                     WIDTH,
                     FRACTIONER,
                     this.defaultSpreadsheetTextFormatter());
@@ -118,7 +115,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.dateTimeContext(),
                     this.numberToColor(),
                     this.nameToColor(),
-                    GENERAL_DECIMAL_FORMAT_PATTERN,
                     WIDTH,
                     FRACTIONER,
                     this.defaultSpreadsheetTextFormatter());
@@ -136,7 +132,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.dateTimeContext(),
                     this.numberToColor(),
                     this.nameToColor(),
-                    GENERAL_DECIMAL_FORMAT_PATTERN,
                     WIDTH,
                     FRACTIONER,
                     this.defaultSpreadsheetTextFormatter());
@@ -154,7 +149,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     null,
                     this.numberToColor(),
                     this.nameToColor(),
-                    GENERAL_DECIMAL_FORMAT_PATTERN,
                     WIDTH,
                     FRACTIONER,
                     this.defaultSpreadsheetTextFormatter());
@@ -172,7 +166,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.dateTimeContext(),
                     null,
                     this.nameToColor(),
-                    GENERAL_DECIMAL_FORMAT_PATTERN,
                     WIDTH,
                     FRACTIONER,
                     this.defaultSpreadsheetTextFormatter());
@@ -189,25 +182,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.decimalNumberContext(),
                     this.dateTimeContext(),
                     this.numberToColor(),
-                    null,
-                    GENERAL_DECIMAL_FORMAT_PATTERN,
-                    WIDTH,
-                    FRACTIONER,
-                    this.defaultSpreadsheetTextFormatter());
-        });
-    }
-
-    @Test
-    public void testWithNullGeneralDecimalFormatPatternFails() {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetEngineContext.with(this.functions(),
-                    this.engine(),
-                    this.labelStore(),
-                    this.converter(),
-                    this.decimalNumberContext(),
-                    this.dateTimeContext(),
-                    this.numberToColor(),
-                    this.nameToColor(),
                     null,
                     WIDTH,
                     FRACTIONER,
@@ -226,7 +200,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.dateTimeContext(),
                     this.numberToColor(),
                     this.nameToColor(),
-                    GENERAL_DECIMAL_FORMAT_PATTERN,
                     0,
                     FRACTIONER,
                     this.defaultSpreadsheetTextFormatter());
@@ -244,7 +217,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.dateTimeContext(),
                     this.numberToColor(),
                     this.nameToColor(),
-                    GENERAL_DECIMAL_FORMAT_PATTERN,
                     WIDTH,
                     null,
                     this.defaultSpreadsheetTextFormatter());
@@ -262,7 +234,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.dateTimeContext(),
                     this.numberToColor(),
                     this.nameToColor(),
-                    GENERAL_DECIMAL_FORMAT_PATTERN,
                     WIDTH,
                     FRACTIONER,
                     null);
@@ -385,7 +356,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.dateTimeContext(),
                 this.numberToColor(),
                 this.nameToColor(),
-                GENERAL_DECIMAL_FORMAT_PATTERN,
                 WIDTH,
                 FRACTIONER,
                 defaultSpreadsheetTextFormatter);
