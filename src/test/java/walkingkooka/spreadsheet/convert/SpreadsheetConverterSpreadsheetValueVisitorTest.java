@@ -29,10 +29,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetConverterSpreadsheetValueVisitorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterSpreadsheetValueVisitor>
         implements SpreadsheetValueVisitorTesting<SpreadsheetConverterSpreadsheetValueVisitor> {
 
-    @Override
-    public void testSinglePublicAcceptMethod() {
-    }
-
     @Test
     public void testAcceptUnknownValue() {
         final ConversionException thrown = assertThrows(ConversionException.class, () -> {
