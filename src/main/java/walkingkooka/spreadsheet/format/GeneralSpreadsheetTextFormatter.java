@@ -24,12 +24,13 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetTextFormatter} that formats any number using a {@link DecimalFormat}.
+ * A {@link SpreadsheetTextFormatter} that formats any basic spreadsheet value. Any {@link java.time.LocalDate},
+ * {@link java.time.LocalDateTime} and {@link java.time.LocalTime} values are first converted to {@link BigDecimal}.
+ * {@link String Text} is returned verbatim, and {@link Number numbers} are formatted using a {@link java.text.DecimalFormat formatter}.
  */
 final class GeneralSpreadsheetTextFormatter implements SpreadsheetTextFormatter<Object> {
 
