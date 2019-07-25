@@ -17,14 +17,21 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.PublicStaticHelperTesting;
 import walkingkooka.type.JavaVisibility;
 
 import java.lang.reflect.Method;
+import java.math.MathContext;
 
 public final class SpreadsheetConvertersTest implements ClassTesting2<SpreadsheetConverters>,
         PublicStaticHelperTesting<SpreadsheetConverters> {
+
+    @Test
+    public void testPublicStaticMethodsWithoutMathContextParameter() {
+        this.publicStaticMethodParametersTypeCheck(MathContext.class);
+    }
 
     @Override
     public Class<SpreadsheetConverters> type() {
