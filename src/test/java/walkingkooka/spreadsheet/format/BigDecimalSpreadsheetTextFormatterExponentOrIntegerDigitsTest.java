@@ -17,9 +17,9 @@
 
 package walkingkooka.spreadsheet.format;
 
-public final class BigDecimalSpreadsheetTextFormatterDigits2Test extends BigDecimalSpreadsheetTextFormatterTestCase<BigDecimalSpreadsheetTextFormatterDigits2> {
+public final class BigDecimalSpreadsheetTextFormatterExponentOrIntegerDigitsTest extends BigDecimalSpreadsheetTextFormatterTestCase<BigDecimalSpreadsheetTextFormatterExponentOrIntegerDigits> {
     @Override
-    public Class<BigDecimalSpreadsheetTextFormatterDigits2> type() {
-        return BigDecimalSpreadsheetTextFormatterDigits2.class;
+    public Class<BigDecimalSpreadsheetTextFormatterExponentOrIntegerDigits> type() {
+        return BigDecimalSpreadsheetTextFormatterExponentOrIntegerDigits.class;
     }
 }
