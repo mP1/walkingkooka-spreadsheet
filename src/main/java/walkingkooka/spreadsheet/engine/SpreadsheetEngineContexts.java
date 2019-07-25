@@ -46,7 +46,6 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final DateTimeContext dateTimeContext,
                                                  final Function<Integer, Optional<Color>> numberToColor,
                                                  final Function<String, Optional<Color>> nameToColor,
-                                                 final String generalDecimalFormatPattern,
                                                  final int width,
                                                  final Function<BigDecimal, Fraction> fractioner,
                                                  final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter) {
@@ -58,7 +57,6 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                 dateTimeContext,
                 numberToColor,
                 nameToColor,
-                generalDecimalFormatPattern,
                 width,
                 fractioner,
                 defaultSpreadsheetTextFormatter);

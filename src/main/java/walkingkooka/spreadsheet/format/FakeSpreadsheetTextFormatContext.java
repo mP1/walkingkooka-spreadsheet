@@ -45,7 +45,7 @@ public class FakeSpreadsheetTextFormatContext extends FakeDecimalNumberContext i
     }
 
     @Override
-    public String generalDecimalFormatPattern() {
+    public Optional<SpreadsheetFormattedText> defaultFormatText(final Object value) {
         throw new UnsupportedOperationException();
     }
 

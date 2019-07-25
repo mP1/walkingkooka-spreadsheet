@@ -23,12 +23,15 @@ import walkingkooka.text.CharSequences;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.Optional;
 
 public final class GeneralSpreadsheetTextFormatterTest extends SpreadsheetTextFormatterTestCase<GeneralSpreadsheetTextFormatter> {
 
+    private final static BigDecimal BIG_DECIMAL = BigDecimal.valueOf(123);
+    private final static String BIGDECIMAL_STRING = "123D00Text";
+    private final static LocalDateTime LOCAL_DATE_TIME = LocalDateTime.of(2000, 12, 31, 12, 58, 59);
     private final static BigDecimal LOCAL_DATE_TIME_BIGDECIMAL = BigDecimal.valueOf(999);
+    private final static String LOCAL_DATE_TIME_STRING = "999D00Text";
 
     @Test
     public void testFormatText() {
@@ -38,12 +41,12 @@ public final class GeneralSpreadsheetTextFormatterTest extends SpreadsheetTextFo
 
     @Test
     public void testFormatBigDecimal() {
-        this.formatAndCheck(BigDecimal.valueOf(123), "123D00Text");
+        this.formatAndCheck(BIG_DECIMAL, BIGDECIMAL_STRING);
     }
 
     @Test
     public void testFormatLocalDateTime() {
-        this.formatAndCheck(LocalDateTime.of(2000, 12, 31, 12, 58, 59), "999D00Text");
+        this.formatAndCheck(LOCAL_DATE_TIME, LOCAL_DATE_TIME_STRING);
     }
 
     @Test
@@ -102,23 +105,33 @@ public final class GeneralSpreadsheetTextFormatterTest extends SpreadsheetTextFo
 
             @Override
             public <T> T convert(final Object value, final Class<T> target) {
-                assertEquals(BigDecimal.class, target, "targetType");
-
-                if (value instanceof String) {
-                    throw new ConversionException("Failed to convert " + value);
-                }
-                if (value instanceof BigDecimal) {
-                    return target.cast(value);
-                }
-                if (value instanceof LocalDateTime) {
-                    return target.cast(LOCAL_DATE_TIME_BIGDECIMAL);
+                if (BigDecimal.class == target) {
+                    if (value instanceof BigDecimal) {
+                        return target.cast(value);
+                    }
+                    if (value instanceof LocalDateTime) {
+                        return target.cast(LOCAL_DATE_TIME_BIGDECIMAL);
+                    }
                 }
                 throw new ConversionException("Failed to convert " + CharSequences.quoteIfChars(value) + " to " + target.getName());
             }
 
             @Override
-            public String generalDecimalFormatPattern() {
-                return "#0.00'Text'";
+            public Optional<SpreadsheetFormattedText> defaultFormatText(final Object value) {
+                if (value instanceof String) {
+                    return this.formattedText(value.toString());
+                }
+                if (BIG_DECIMAL.equals(value)) {
+                    return this.formattedText(BIGDECIMAL_STRING);
+                }
+                if (LOCAL_DATE_TIME.equals(value)) {
+                    return this.formattedText(LOCAL_DATE_TIME_STRING);
+                }
+                throw new AssertionError("Unexpected value " + CharSequences.quoteIfChars(value));
+            }
+
+            private Optional<SpreadsheetFormattedText> formattedText(final String text) {
+                return Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, text));
             }
         };
     }

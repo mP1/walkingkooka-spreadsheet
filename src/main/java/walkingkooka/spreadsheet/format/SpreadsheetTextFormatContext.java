@@ -39,15 +39,15 @@ public interface SpreadsheetTextFormatContext extends DecimalNumberContext, Date
     Optional<Color> colorName(String name);
 
     /**
-     * A {@link java.text.DecimalFormat} pattern, that should be used for non text values.
-     */
-    String generalDecimalFormatPattern();
-
-    /**
      * The width of the "cell" in characters.
      * This value affects STAR operator.
      */
     int width();
+
+    /**
+     * Provides a default format text.
+     */
+    Optional<SpreadsheetFormattedText> defaultFormatText(final Object value);
 
     /**
      * Handles converting the given value to the target.

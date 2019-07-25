@@ -69,7 +69,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                               final DateTimeContext dateTimeContext,
                                               final Function<Integer, Optional<Color>> numberToColor,
                                               final Function<String, Optional<Color>> nameToColor,
-                                              final String generalDecimalFormatPattern,
                                               final int width,
                                               final Function<BigDecimal, Fraction> fractioner,
                                               final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter) {
@@ -81,7 +80,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         Objects.requireNonNull(dateTimeContext, "dateTimeContext");
         Objects.requireNonNull(numberToColor, "numberToColor");
         Objects.requireNonNull(nameToColor, "nameToColor");
-        Objects.requireNonNull(generalDecimalFormatPattern, "generalDecimalFormatPattern");
         if (width <= 0) {
             throw new IllegalArgumentException("Invalid width " + width + " <= 0");
         }
@@ -96,7 +94,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 dateTimeContext,
                 numberToColor,
                 nameToColor,
-                generalDecimalFormatPattern,
                 width,
                 fractioner,
                 defaultSpreadsheetTextFormatter);
@@ -113,7 +110,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final DateTimeContext dateTimeContext,
                                           final Function<Integer, Optional<Color>> numberToColor,
                                           final Function<String, Optional<Color>> nameToColor,
-                                          final String generalDecimalFormatPattern,
                                           final int width,
                                           final Function<BigDecimal, Fraction> fractioner,
                                           final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter) {
@@ -129,9 +125,9 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
         this.spreadsheetTextFormatContext = SpreadsheetTextFormatContexts.basic(numberToColor,
                 nameToColor,
-                generalDecimalFormatPattern,
                 width,
                 converter,
+                defaultSpreadsheetTextFormatter,
                 dateTimeContext,
                 decimalNumberContext);
         this.fractioner = fractioner;
