@@ -17,44 +17,34 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
-
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetTextFormatter} that formats a {@link String}.
+ * A {@link SpreadsheetTextFormatter} that always returns no text with no color.
  */
-final class TextSpreadsheetTextFormatter extends SpreadsheetTextFormatter3<SpreadsheetFormatTextParserToken> {
+final class ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitorFormatterNoTextSpreadsheetTextFormatter extends SpreadsheetTextFormatter2 {
 
     /**
-     * Creates a {@link TextSpreadsheetTextFormatter} from a {@link SpreadsheetFormatTextParserToken}.
+     * Singleton
      */
-    static TextSpreadsheetTextFormatter with(final SpreadsheetFormatTextParserToken token) {
-        check(token);
-        return new TextSpreadsheetTextFormatter(token);
-    }
+    final static ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitorFormatterNoTextSpreadsheetTextFormatter INSTANCE = new ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitorFormatterNoTextSpreadsheetTextFormatter();
 
-    /**
-     * Private ctor use static parse.
-     */
-    private TextSpreadsheetTextFormatter(final SpreadsheetFormatTextParserToken token) {
-        super(token);
+    private ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitorFormatterNoTextSpreadsheetTextFormatter() {
+        super();
     }
 
     @Override
     public boolean canFormat(final Object value) {
-        return value instanceof String;
+        return this.isSpreadsheetValue(value);
     }
 
     @Override
     Optional<SpreadsheetFormattedText> format0(final Object value, final SpreadsheetTextFormatContext context) {
-        return Optional.of(TextSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor.format(this.token,
-                String.class.cast(value),
-                context));
+        return Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, ""));
     }
 
     @Override
-    String toStringSuffix() {
+    public String toString() {
         return "";
     }
 }

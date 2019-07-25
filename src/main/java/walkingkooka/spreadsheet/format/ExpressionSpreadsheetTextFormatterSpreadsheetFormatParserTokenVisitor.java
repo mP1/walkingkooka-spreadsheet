@@ -52,14 +52,10 @@ final class ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisito
     /**
      * Visits all the individual tokens in the given token which was compiled from the given pattern.
      */
-    static List<SpreadsheetTextFormatter<Object>> analyze(final SpreadsheetFormatExpressionParserToken token,
-                                                          final Function<BigDecimal, Fraction> fractioner) {
+    static List<SpreadsheetTextFormatter> analyze(final SpreadsheetFormatExpressionParserToken token,
+                                                  final Function<BigDecimal, Fraction> fractioner) {
         final ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor visitor = new ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor(fractioner);
         return visitor.acceptAndMakeFormatter(token);
-    }
-
-    static SpreadsheetTextFormatter<Object> noText() {
-        return SpreadsheetTextFormatters.fixed(Object.class, SpreadsheetTextFormatter.NO_TEXT);
     }
 
     /**
@@ -158,7 +154,7 @@ final class ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisito
 
     // main..............................................................................................
 
-    private List<SpreadsheetTextFormatter<Object>> acceptAndMakeFormatter(final SpreadsheetFormatExpressionParserToken token) {
+    private List<SpreadsheetTextFormatter> acceptAndMakeFormatter(final SpreadsheetFormatExpressionParserToken token) {
         this.accept(token);
 
         final int count = this.formatters.size();
@@ -172,7 +168,7 @@ final class ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisito
         this.formatters.add(this.formatter);
     }
 
-    private void setSpreadsheetTextFormatter(final SpreadsheetTextFormatter<?> formatter, final SpreadsheetFormatParserToken token) {
+    private void setSpreadsheetTextFormatter(final SpreadsheetTextFormatter formatter, final SpreadsheetFormatParserToken token) {
         this.formatter.setFormatter(formatter);
 
         if (!token.isText()) {

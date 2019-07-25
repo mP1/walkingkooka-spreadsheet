@@ -24,19 +24,19 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetTextFormatter} that always fails.
  */
-public class FakeSpreadsheetTextFormatter<V> implements SpreadsheetTextFormatter<V>, Fake {
+public class FakeSpreadsheetTextFormatter implements SpreadsheetTextFormatter, Fake {
 
     protected FakeSpreadsheetTextFormatter() {
         super();
     }
 
     @Override
-    public Class<V> type() {
+    public boolean canFormat(final Object value) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Optional<SpreadsheetFormattedText> format(final V value, final SpreadsheetTextFormatContext context) {
+    public Optional<SpreadsheetFormattedText> format(final Object value, final SpreadsheetTextFormatContext context) {
         throw new UnsupportedOperationException();
     }
 }
