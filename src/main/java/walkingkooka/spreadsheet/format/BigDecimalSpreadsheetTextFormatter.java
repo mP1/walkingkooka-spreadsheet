@@ -56,7 +56,7 @@ final class BigDecimalSpreadsheetTextFormatter extends SpreadsheetTextFormatter3
         this.fractionDigitSymbolCount = visitor.fractionDigitSymbolCount;
         this.exponentDigitSymbolCount = visitor.exponentDigitSymbolCount;
 
-        this.multiplier = visitor.multiplier;
+        this.decimalPlacesShift = visitor.decimalPlacesShift;
         this.thousandsSeparator = visitor.thousandsSeparator;
     }
 
@@ -83,10 +83,10 @@ final class BigDecimalSpreadsheetTextFormatter extends SpreadsheetTextFormatter3
     }
 
     /**
-     * A non zero value multiplied against the {@link BigDecimal} being formatted as text. This is typically one, but
-     * if a percentage was included in the pattern it will be 100 etc.
+     * Used to move the decimal places because of formatting options such as percentage(multiply by 100) etc.
+     * Positive values represent multiply by 10, and negative represent divide by 10.
      */
-    final BigDecimal multiplier;
+    final int decimalPlacesShift;
 
     /**
      * Components for each symbol in the original pattern.
