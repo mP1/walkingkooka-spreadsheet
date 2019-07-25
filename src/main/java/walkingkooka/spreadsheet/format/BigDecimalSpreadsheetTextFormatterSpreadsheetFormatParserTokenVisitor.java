@@ -32,7 +32,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextLiteralParser
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatThousandsParserToken;
 import walkingkooka.tree.visit.Visiting;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -46,7 +45,7 @@ final class BigDecimalSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisito
     static BigDecimalSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor analyze(final SpreadsheetFormatParserToken token) {
         final BigDecimalSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor visitor = new BigDecimalSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor();
         visitor.accept(token);
-        visitor.computeThousandsSeparatorAndMultiplier();
+        visitor.computeThousandsSeparatorAndCommaAdjust();
         return visitor;
     }
 
@@ -107,7 +106,7 @@ final class BigDecimalSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisito
     protected void visit(final SpreadsheetFormatPercentSymbolParserToken token) {
         if (!this.percentage) {
             this.percentage = true;
-            this.multiplier = this.multiplier.scaleByPowerOfTen(2);// x100
+            this.decimalPlacesShift = this.decimalPlacesShift + 2; // x100
         }
         this.add(BigDecimalSpreadsheetTextFormatterComponent.percentageSymbol());
     }
@@ -161,22 +160,22 @@ final class BigDecimalSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisito
     int exponentDigitSymbolCount = 0;
 
     /**
-     * If the comma count is greater than one update the multiplier and
+     * If the comma count is greater than one update the {@link #decimalPlacesShift}.
      */
-    private void computeThousandsSeparatorAndMultiplier() {
+    private void computeThousandsSeparatorAndCommaAdjust() {
         this.thousandsSeparator = this.thousandsGrouping ?
                 BigDecimalSpreadsheetTextFormatterThousandsSeparator.INCLUDE :
                 BigDecimalSpreadsheetTextFormatterThousandsSeparator.NONE;
 
         final int comma = this.comma;
         if (comma > 0) {
-            this.multiplier = this.multiplier.scaleByPowerOfTen(comma * -3); // divide by 1000 for each "comma".
+            this.decimalPlacesShift = this.decimalPlacesShift - (comma * 3); // divide by 1000 for each "comma".
         }
     }
 
     /**
      * Whenever a comma in the INTEGER portion is found this is incremented. Eventually this might cause
-     * the {@link #multiplier} to be divided.
+     * the {@link #decimalPlacesShift} to be divided.
      */
     int comma = 0;
 
@@ -194,7 +193,14 @@ final class BigDecimalSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisito
      * A multiplier that is applied to the number before formatting.
      * This is increased when the thousands appear after the decimal point and percentage symbol.
      */
-    BigDecimal multiplier = BigDecimal.ONE;
+    //int multiplier = 0;
+
+    //int divider = 0;
+
+    /**
+     * The number of decimal places to adjust, positive values multiply by 10, negative values divide by 10.
+     */
+    int decimalPlacesShift = 0;
 
     /**
      * Adds another component
