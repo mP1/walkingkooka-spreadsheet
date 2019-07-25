@@ -87,7 +87,6 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                                                                       final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext,
                                                                       final Function<SpreadsheetId, SpreadsheetTextFormatter> spreadsheetIdDefaultSpreadsheetTextFormatter,
                                                                       final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
-                                                                      final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
                                                                       final Function<SpreadsheetId, Function<String, Optional<Color>>> spreadsheetIdNameToColor,
                                                                       final Function<SpreadsheetId, Function<Integer, Optional<Color>>> spreadsheetIdNumberToColor,
                                                                       final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
@@ -100,7 +99,6 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
         Objects.requireNonNull(spreadsheetIdDecimalNumberContext, "spreadsheetIdDecimalNumberContext");
         Objects.requireNonNull(spreadsheetIdDefaultSpreadsheetTextFormatter, "spreadsheetIdDefaultSpreadsheetTextFormatter");
         Objects.requireNonNull(spreadsheetIdFunctions, "spreadsheetIdFunctions");
-        Objects.requireNonNull(spreadsheetIdGeneralDecimalFormatPattern, "spreadsheetIdGeneralDecimalFormatPattern");
         Objects.requireNonNull(spreadsheetIdNameToColor, "spreadsheetIdNameToColor");
         Objects.requireNonNull(spreadsheetIdNumberToColor, "spreadsheetIdNumberToColor");
         Objects.requireNonNull(spreadsheetIdWidth, "spreadsheetIdWidth");
@@ -114,7 +112,6 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                 spreadsheetIdDecimalNumberContext,
                 spreadsheetIdDefaultSpreadsheetTextFormatter,
                 spreadsheetIdFunctions,
-                spreadsheetIdGeneralDecimalFormatPattern,
                 spreadsheetIdNameToColor,
                 spreadsheetIdNumberToColor,
                 spreadsheetIdWidth);
@@ -129,7 +126,6 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                                      final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext,
                                      final Function<SpreadsheetId, SpreadsheetTextFormatter> spreadsheetIdDefaultSpreadsheetTextFormatter,
                                      final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
-                                     final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
                                      final Function<SpreadsheetId, Function<String, Optional<Color>>> spreadsheetIdNameToColor,
                                      final Function<SpreadsheetId, Function<Integer, Optional<Color>>> spreadsheetIdNumberToColor,
                                      final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
@@ -145,7 +141,6 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
         this.spreadsheetIdDecimalNumberContext = spreadsheetIdDecimalNumberContext;
         this.spreadsheetIdDefaultSpreadsheetTextFormatter = spreadsheetIdDefaultSpreadsheetTextFormatter;
         this.spreadsheetIdFunctions = spreadsheetIdFunctions;
-        this.spreadsheetIdGeneralDecimalFormatPattern = spreadsheetIdGeneralDecimalFormatPattern;
         this.spreadsheetIdNameToColor = spreadsheetIdNameToColor;
         this.spreadsheetIdNumberToColor = spreadsheetIdNumberToColor;
         this.spreadsheetIdWidth = spreadsheetIdWidth;
@@ -185,13 +180,6 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
     }
 
     private final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions;
-
-    @Override
-    public String generalDecimalFormatPattern(final SpreadsheetId id) {
-        return this.spreadsheetIdGeneralDecimalFormatPattern.apply(id);
-    }
-
-    private final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern;
 
     // hateosRouter.....................................................................................................
 
@@ -238,7 +226,6 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
         final BiFunction<ExpressionNodeName, List<Object>, Object> functions = this.spreadsheetIdFunctions.apply(id);
         final Function<Integer, Optional<Color>> numberToColor = this.spreadsheetIdNumberToColor.apply(id);
         final Function<String, Optional<Color>> nameToColor = this.spreadsheetIdNameToColor.apply(id);
-        final String generalDecimalFormatPattern = this.spreadsheetIdGeneralDecimalFormatPattern.apply(id);
         final int width = this.spreadsheetIdWidth.apply(id);
         final Function<BigDecimal, Fraction> fractioner = this.fractioner;
         final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter = this.defaultSpreadsheetTextFormatter(id);
@@ -251,7 +238,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                 this.dateTimeContext(id),
                 numberToColor,
                 nameToColor,
-                generalDecimalFormatPattern,
+                "#.00",
                 width,
                 fractioner,
                 defaultSpreadsheetTextFormatter);
