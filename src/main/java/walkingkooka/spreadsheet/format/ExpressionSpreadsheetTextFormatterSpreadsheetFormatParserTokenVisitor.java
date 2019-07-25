@@ -38,7 +38,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSeparatorSymbolPa
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -54,9 +53,8 @@ final class ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisito
      * Visits all the individual tokens in the given token which was compiled from the given pattern.
      */
     static List<SpreadsheetTextFormatter<Object>> analyze(final SpreadsheetFormatExpressionParserToken token,
-                                                          final MathContext mathContext,
                                                           final Function<BigDecimal, Fraction> fractioner) {
-        final ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor visitor = new ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor(mathContext, fractioner);
+        final ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor visitor = new ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor(fractioner);
         return visitor.acceptAndMakeFormatter(token);
     }
 
@@ -67,10 +65,8 @@ final class ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisito
     /**
      * Private ctor use static method.
      */
-    ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor(final MathContext mathContext,
-                                                                          final Function<BigDecimal, Fraction> fractioner) {
+    ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor(final Function<BigDecimal, Fraction> fractioner) {
         super();
-        this.mathContext = mathContext;
         this.fractioner = fractioner;
         this.createEmptyFormatter();
     }
@@ -84,10 +80,9 @@ final class ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisito
 
     @Override
     protected void endVisit(final SpreadsheetFormatFractionParserToken token) {
-        this.setSpreadsheetTextFormatter(SpreadsheetTextFormatters.bigDecimalFraction(token, this.mathContext, this.fractioner), token);
+        this.setSpreadsheetTextFormatter(SpreadsheetTextFormatters.bigDecimalFraction(token, this.fractioner), token);
     }
 
-    private final MathContext mathContext;
     private final Function<BigDecimal, Fraction> fractioner;
 
     // Color.....................................................................................

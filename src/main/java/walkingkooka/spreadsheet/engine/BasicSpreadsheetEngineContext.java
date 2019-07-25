@@ -195,7 +195,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     private SpreadsheetTextFormatter<Object> expression(final SpreadsheetFormatExpressionParserToken token) {
         return SpreadsheetTextFormatters.expression(token,
-                this.decimalNumberContext.mathContext(),
                 this.fractioner);
     }
 

@@ -28,7 +28,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.type.PublicStaticHelper;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.function.Function;
@@ -49,9 +48,8 @@ public final class SpreadsheetTextFormatters implements PublicStaticHelper {
      * {@see BigDecimalFractionSpreadsheetTextFormatter}
      */
     public static SpreadsheetTextFormatter<BigDecimal> bigDecimalFraction(final SpreadsheetFormatFractionParserToken token,
-                                                                          final MathContext mathContext,
                                                                           final Function<BigDecimal, Fraction> fractioner) {
-        return BigDecimalFractionSpreadsheetTextFormatter.with(token, mathContext, fractioner);
+        return BigDecimalFractionSpreadsheetTextFormatter.with(token, fractioner);
     }
 
     /**
@@ -74,9 +72,8 @@ public final class SpreadsheetTextFormatters implements PublicStaticHelper {
      * {@see ExpressionSpreadsheetTextFormatter}
      */
     public static SpreadsheetTextFormatter<Object> expression(final SpreadsheetFormatExpressionParserToken token,
-                                                              final MathContext mathContext,
                                                               final Function<BigDecimal, Fraction> fractioner) {
-        return ExpressionSpreadsheetTextFormatter.with(token, mathContext, fractioner);
+        return ExpressionSpreadsheetTextFormatter.with(token, fractioner);
     }
 
     /**
