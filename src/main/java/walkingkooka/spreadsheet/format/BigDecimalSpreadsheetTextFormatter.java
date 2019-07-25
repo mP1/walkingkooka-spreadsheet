@@ -21,34 +21,30 @@ import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatBigDecimalParserToken;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetTextFormatter} that unconditionally formats a {@link BigDecimal}, without a {@link Color}.
+ * A {@link SpreadsheetTextFormatter} that unconditionally formats a {@link BigDecimal} using a pattern, without a {@link Color}.
+ * The pattern would have been a {@link String} but the factory accepts it represented as a {@link SpreadsheetFormatBigDecimalParserToken}.
  */
 final class BigDecimalSpreadsheetTextFormatter extends SpreadsheetTextFormatter3<BigDecimal, SpreadsheetFormatBigDecimalParserToken> {
 
     /**
      * Creates a {@link BigDecimalSpreadsheetTextFormatter} from a {@link SpreadsheetFormatBigDecimalParserToken}.
      */
-    static BigDecimalSpreadsheetTextFormatter with(final SpreadsheetFormatBigDecimalParserToken token,
-                                                   final MathContext mathContext) {
+    static BigDecimalSpreadsheetTextFormatter with(final SpreadsheetFormatBigDecimalParserToken token) {
         check(token);
-        Objects.requireNonNull(mathContext, "mathContext");
 
-        return new BigDecimalSpreadsheetTextFormatter(token, mathContext);
+        return new BigDecimalSpreadsheetTextFormatter(token);
     }
 
     /**
      * Private ctor use static parse.
      */
-    private BigDecimalSpreadsheetTextFormatter(final SpreadsheetFormatBigDecimalParserToken token, final MathContext mathContext) {
+    private BigDecimalSpreadsheetTextFormatter(final SpreadsheetFormatBigDecimalParserToken token) {
         super(token);
 
-        this.mathContext = mathContext;
 
         final BigDecimalSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor visitor =
                 BigDecimalSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor.analyze(token);
@@ -64,6 +60,9 @@ final class BigDecimalSpreadsheetTextFormatter extends SpreadsheetTextFormatter3
         this.thousandsSeparator = visitor.thousandsSeparator;
     }
 
+    /**
+     * Only accepts {@link BigDecimal} values for formatting.
+     */
     @Override
     public Class<BigDecimal> type() {
         return BigDecimal.class;
@@ -84,14 +83,10 @@ final class BigDecimalSpreadsheetTextFormatter extends SpreadsheetTextFormatter3
     }
 
     /**
-     * A non zero value multiplied against the {@link BigDecimal} being formatted as text.
+     * A non zero value multiplied against the {@link BigDecimal} being formatted as text. This is typically one, but
+     * if a percentage was included in the pattern it will be 100 etc.
      */
     final BigDecimal multiplier;
-
-    /**
-     * Used when the multiplier is applied to the {@link BigDecimal} being formatted as text.
-     */
-    final MathContext mathContext;
 
     /**
      * Components for each symbol in the original pattern.
@@ -105,7 +100,7 @@ final class BigDecimalSpreadsheetTextFormatter extends SpreadsheetTextFormatter3
     /**
      * When true thousands separators should appear in the output.
      */
-    final BigDecimalSpreadsheetTextFormatterThousandsSeparator thousandsSeparator;
+    private final BigDecimalSpreadsheetTextFormatterThousandsSeparator thousandsSeparator;
 
     @Override
     String toStringSuffix() {
