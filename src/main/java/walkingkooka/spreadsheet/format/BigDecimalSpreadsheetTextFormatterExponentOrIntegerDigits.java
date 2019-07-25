@@ -21,10 +21,10 @@ package walkingkooka.spreadsheet.format;
  * Base class for both integer and exponent digits. These share several similarities including inserting the sign
  * and adding digits.
  */
-abstract class BigDecimalSpreadsheetTextFormatterDigits2 extends BigDecimalSpreadsheetTextFormatterDigits {
+abstract class BigDecimalSpreadsheetTextFormatterExponentOrIntegerDigits extends BigDecimalSpreadsheetTextFormatterDigits {
 
-    BigDecimalSpreadsheetTextFormatterDigits2(final BigDecimalSpreadsheetTextFormatterMinusSign minusSign,
-                                              final String text) {
+    BigDecimalSpreadsheetTextFormatterExponentOrIntegerDigits(final BigDecimalSpreadsheetTextFormatterMinusSign minusSign,
+                                                              final String text) {
         super(text);
         this.minusSign = minusSign;
     }
