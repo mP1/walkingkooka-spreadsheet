@@ -31,10 +31,9 @@ import java.math.MathContext;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetTextFormatter3TestCase<F extends SpreadsheetTextFormatter3<V, T>,
-        V,
+public abstract class SpreadsheetTextFormatter3TestCase<F extends SpreadsheetTextFormatter3<T>,
         T extends SpreadsheetFormatParserToken>
-        extends SpreadsheetTextFormatter2TestCase<F, V> {
+        extends SpreadsheetTextFormatterTestCase<F> {
 
     SpreadsheetTextFormatter3TestCase() {
         super();

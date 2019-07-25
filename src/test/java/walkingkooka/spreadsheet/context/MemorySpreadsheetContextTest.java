@@ -310,7 +310,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                            final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
                            final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                            final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext,
-                           final Function<SpreadsheetId, SpreadsheetTextFormatter<?>> spreadsheetIdDefaultSpreadsheetTextFormatter,
+                           final Function<SpreadsheetId, SpreadsheetTextFormatter> spreadsheetIdDefaultSpreadsheetTextFormatter,
                            final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                            final Function<SpreadsheetId, String> spreadsheetIdGeneralDecimalFormatPattern,
                            final Function<SpreadsheetId, Function<String, Optional<Color>>> spreadsheetIdNameToColor,
@@ -889,7 +889,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         return DecimalNumberContexts.american(MathContext.DECIMAL32);
     }
 
-    private SpreadsheetTextFormatter<?> spreadsheetIdDefaultSpreadsheetTextFormatter(final SpreadsheetId spreadsheetId) {
+    private SpreadsheetTextFormatter spreadsheetIdDefaultSpreadsheetTextFormatter(final SpreadsheetId spreadsheetId) {
         this.checkSpreadsheetId(spreadsheetId);
 
         return SpreadsheetTextFormatters.general();

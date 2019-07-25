@@ -39,7 +39,7 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
     /**
      * A constant holding no formatter.
      */
-    public final static Optional<SpreadsheetTextFormatter<?>> NO_FORMATTER = Optional.empty();
+    public final static Optional<SpreadsheetTextFormatter> NO_FORMATTER = Optional.empty();
 
     /**
      * Creates a {@link SpreadsheetCellFormat}
@@ -59,7 +59,7 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
      */
     // @VisibleForTesting
     SpreadsheetCellFormat(final String pattern,
-                          final Optional<SpreadsheetTextFormatter<?>> formatter) {
+                          final Optional<SpreadsheetTextFormatter> formatter) {
         super();
         this.pattern = pattern;
         this.formatter = formatter;
@@ -81,11 +81,11 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
 
     // formatter...........................................................................
 
-    public Optional<SpreadsheetTextFormatter<?>> formatter() {
+    public Optional<SpreadsheetTextFormatter> formatter() {
         return this.formatter;
     }
 
-    public SpreadsheetCellFormat setFormatter(final Optional<SpreadsheetTextFormatter<?>> formatter) {
+    public SpreadsheetCellFormat setFormatter(final Optional<SpreadsheetTextFormatter> formatter) {
         Objects.requireNonNull(formatter, "formatter");
 
         return this.formatter.equals(formatter) ?
@@ -96,7 +96,7 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
     /**
      * The cached or compiled form of the {@link #pattern}
      */
-    private final Optional<SpreadsheetTextFormatter<?>> formatter;
+    private final Optional<SpreadsheetTextFormatter> formatter;
 
     // replace.............................................................................
 
@@ -104,7 +104,7 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
      * Factory that creates a new {@link SpreadsheetCellFormat}
      */
     private SpreadsheetCellFormat replace(final String pattern,
-                                          final Optional<SpreadsheetTextFormatter<?>> formatter) {
+                                          final Optional<SpreadsheetTextFormatter> formatter) {
         return new SpreadsheetCellFormat(pattern, formatter);
     }
 

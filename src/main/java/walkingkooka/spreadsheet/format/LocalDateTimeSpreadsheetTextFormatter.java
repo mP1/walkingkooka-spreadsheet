@@ -25,7 +25,7 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetTextFormatter} that formats a {@link LocalDateTime}.
  */
-final class LocalDateTimeSpreadsheetTextFormatter extends SpreadsheetTextFormatter3<LocalDateTime, SpreadsheetFormatDateTimeParserToken> {
+final class LocalDateTimeSpreadsheetTextFormatter extends SpreadsheetTextFormatter3<SpreadsheetFormatDateTimeParserToken> {
 
     /**
      * Creates a {@link LocalDateTimeSpreadsheetTextFormatter} from a {@link SpreadsheetFormatDateTimeParserToken}
@@ -45,13 +45,16 @@ final class LocalDateTimeSpreadsheetTextFormatter extends SpreadsheetTextFormatt
     }
 
     @Override
-    public Class<LocalDateTime> type() {
-        return LocalDateTime.class;
+    public boolean canFormat(final Object value) {
+        return value instanceof LocalDateTime;
     }
 
     @Override
-    Optional<SpreadsheetFormattedText> format0(final LocalDateTime value, final SpreadsheetTextFormatContext context) {
-        return LocalDateTimeSpreadsheetTextFormatterFormattingSpreadsheetFormatParserTokenVisitor.format(this.token, value, context, this.twelveHour);
+    Optional<SpreadsheetFormattedText> format0(final Object value, final SpreadsheetTextFormatContext context) {
+        return LocalDateTimeSpreadsheetTextFormatterFormattingSpreadsheetFormatParserTokenVisitor.format(this.token,
+                LocalDateTime.class.cast(value),
+                context,
+                this.twelveHour);
     }
 
     private final boolean twelveHour;

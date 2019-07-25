@@ -72,7 +72,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                               final String generalDecimalFormatPattern,
                                               final int width,
                                               final Function<BigDecimal, Fraction> fractioner,
-                                              final SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter) {
+                                              final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter) {
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(labelStore, "labelStore");
@@ -116,7 +116,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final String generalDecimalFormatPattern,
                                           final int width,
                                           final Function<BigDecimal, Fraction> fractioner,
-                                          final SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter) {
+                                          final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter) {
         super();
         this.parserContext = SpreadsheetParserContexts.basic(decimalNumberContext);
 
@@ -184,7 +184,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     // parsing and formatting text......................................................................................
 
     @Override
-    public SpreadsheetTextFormatter<?> parseFormatPattern(final String pattern) {
+    public SpreadsheetTextFormatter parseFormatPattern(final String pattern) {
         return SpreadsheetFormatParsers.expression()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic(this.decimalNumberContext))
@@ -193,7 +193,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 .get();
     }
 
-    private SpreadsheetTextFormatter<Object> expression(final SpreadsheetFormatExpressionParserToken token) {
+    private SpreadsheetTextFormatter expression(final SpreadsheetFormatExpressionParserToken token) {
         return SpreadsheetTextFormatters.expression(token,
                 this.fractioner);
     }
@@ -205,18 +205,18 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     @Override
     public Optional<SpreadsheetFormattedText> format(final Object value,
-                                                     final SpreadsheetTextFormatter<?> formatter) {
+                                                     final SpreadsheetTextFormatter formatter) {
         return formatter.format(Cast.to(value), this.spreadsheetTextFormatContext);
     }
 
     private final SpreadsheetTextFormatContext spreadsheetTextFormatContext;
 
     @Override
-    public SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter() {
+    public SpreadsheetTextFormatter defaultSpreadsheetTextFormatter() {
         return this.defaultSpreadsheetTextFormatter;
     }
 
-    private final SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter;
+    private final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter;
 
     // Object...........................................................................................................
 

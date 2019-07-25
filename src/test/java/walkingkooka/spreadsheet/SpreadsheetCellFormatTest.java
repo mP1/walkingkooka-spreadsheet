@@ -41,7 +41,7 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
         ToStringTesting<SpreadsheetCellFormat> {
 
     private final static String PATTERN = "abc123";
-    private final static Optional<SpreadsheetTextFormatter<?>> FORMATTER = Optional.of(SpreadsheetTextFormatters.fake());
+    private final static Optional<SpreadsheetTextFormatter> FORMATTER = Optional.of(SpreadsheetTextFormatters.fake());
 
     @Test
     public void testWithNullPatternFails() {
@@ -112,7 +112,7 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
         this.setFormatterDifferentAndCheck(SpreadsheetCellFormat.NO_FORMATTER);
     }
 
-    private void setFormatterDifferentAndCheck(final Optional<SpreadsheetTextFormatter<?>> differentFormatter) {
+    private void setFormatterDifferentAndCheck(final Optional<SpreadsheetTextFormatter> differentFormatter) {
         final SpreadsheetCellFormat format = this.createObject();
         final SpreadsheetCellFormat different = format.setFormatter(differentFormatter);
         assertNotSame(format, different);
@@ -121,7 +121,7 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
 
     private void check(final SpreadsheetCellFormat format,
                        final String pattern,
-                       final Optional<SpreadsheetTextFormatter<?>> formatter) {
+                       final Optional<SpreadsheetTextFormatter> formatter) {
         assertEquals(pattern, format.pattern(), "pattern");
         assertEquals(formatter, format.formatter(), "formatter");
     }

@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 
-public final class TextSpreadsheetTextFormatterTest extends SpreadsheetTextFormatter3TestCase<TextSpreadsheetTextFormatter, String, SpreadsheetFormatTextParserToken> {
+public final class TextSpreadsheetTextFormatterTest extends SpreadsheetTextFormatter3TestCase<TextSpreadsheetTextFormatter, SpreadsheetFormatTextParserToken> {
 
     private final static String TEXT = "Abc123";
 

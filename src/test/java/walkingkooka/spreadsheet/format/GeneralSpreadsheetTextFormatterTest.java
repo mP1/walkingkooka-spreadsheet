@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.Cast;
 import walkingkooka.convert.ConversionException;
 import walkingkooka.text.CharSequences;
 
@@ -27,7 +26,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public final class GeneralSpreadsheetTextFormatterTest extends SpreadsheetTextFormatterTestCase<GeneralSpreadsheetTextFormatter, Object> {
+public final class GeneralSpreadsheetTextFormatterTest extends SpreadsheetTextFormatterTestCase<GeneralSpreadsheetTextFormatter> {
 
     private final static BigDecimal LOCAL_DATE_TIME_BIGDECIMAL = BigDecimal.valueOf(999);
 
@@ -126,6 +125,6 @@ public final class GeneralSpreadsheetTextFormatterTest extends SpreadsheetTextFo
 
     @Override
     public Class<GeneralSpreadsheetTextFormatter> type() {
-        return Cast.to(GeneralSpreadsheetTextFormatter.class);
+        return GeneralSpreadsheetTextFormatter.class;
     }
 }

@@ -28,8 +28,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.type.PublicStaticHelper;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.function.Function;
 
 /**
@@ -40,75 +38,67 @@ public final class SpreadsheetTextFormatters implements PublicStaticHelper {
     /**
      * {@see BigDecimalSpreadsheetTextFormatter}
      */
-    public static SpreadsheetTextFormatter<BigDecimal> bigDecimal(final SpreadsheetFormatBigDecimalParserToken token) {
+    public static SpreadsheetTextFormatter bigDecimal(final SpreadsheetFormatBigDecimalParserToken token) {
         return BigDecimalSpreadsheetTextFormatter.with(token);
     }
 
     /**
      * {@see BigDecimalFractionSpreadsheetTextFormatter}
      */
-    public static SpreadsheetTextFormatter<BigDecimal> bigDecimalFraction(final SpreadsheetFormatFractionParserToken token,
-                                                                          final Function<BigDecimal, Fraction> fractioner) {
+    public static SpreadsheetTextFormatter bigDecimalFraction(final SpreadsheetFormatFractionParserToken token,
+                                                              final Function<BigDecimal, Fraction> fractioner) {
         return BigDecimalFractionSpreadsheetTextFormatter.with(token, fractioner);
     }
 
     /**
      * {@see ColorSpreadsheetTextFormatter}
      */
-    public static <T> SpreadsheetTextFormatter color(final SpreadsheetFormatColorParserToken token,
-                                                     final SpreadsheetTextFormatter<T> formatter) {
+    public static SpreadsheetTextFormatter color(final SpreadsheetFormatColorParserToken token,
+                                                 final SpreadsheetTextFormatter formatter) {
         return ColorSpreadsheetTextFormatter.with(token, formatter);
     }
 
     /**
      * {@link ConditionSpreadsheetTextFormatter}
      */
-    public static <T> SpreadsheetTextFormatter<T> conditional(final SpreadsheetFormatConditionParserToken token,
-                                                              final SpreadsheetTextFormatter<T> formatter) {
+    public static <T> SpreadsheetTextFormatter conditional(final SpreadsheetFormatConditionParserToken token,
+                                                           final SpreadsheetTextFormatter formatter) {
         return ConditionSpreadsheetTextFormatter.with(token, formatter);
     }
 
     /**
      * {@see ExpressionSpreadsheetTextFormatter}
      */
-    public static SpreadsheetTextFormatter<Object> expression(final SpreadsheetFormatExpressionParserToken token,
-                                                              final Function<BigDecimal, Fraction> fractioner) {
+    public static SpreadsheetTextFormatter expression(final SpreadsheetFormatExpressionParserToken token,
+                                                      final Function<BigDecimal, Fraction> fractioner) {
         return ExpressionSpreadsheetTextFormatter.with(token, fractioner);
     }
 
     /**
      * {@see FakeSpreadsheetTextFormatter}
      */
-    public static <V> SpreadsheetTextFormatter<V> fake() {
-        return new FakeSpreadsheetTextFormatter<V>();
-    }
-
-    /**
-     * {@see FixedSpreadsheetTextFormatter}
-     */
-    public static <V> SpreadsheetTextFormatter<V> fixed(final Class<V> type,
-                                                        final Optional<SpreadsheetFormattedText> formattedText) {
-        return FixedSpreadsheetTextFormatter.with(type, formattedText);
+    public static <V> SpreadsheetTextFormatter fake() {
+        return new FakeSpreadsheetTextFormatter();
     }
 
     /**
      * {@see GeneralSpreadsheetTextFormatter}
      */
-    public static SpreadsheetTextFormatter<Object> general() {
+    public static SpreadsheetTextFormatter general() {
         return GeneralSpreadsheetTextFormatter.INSTANCE;
     }
 
     /**
      * {@see LocalDateTimeSpreadsheetTextFormatter}
      */
-    public static SpreadsheetTextFormatter<LocalDateTime> localDateTime(final SpreadsheetFormatDateTimeParserToken token) {
+    public static SpreadsheetTextFormatter localDateTime(final SpreadsheetFormatDateTimeParserToken token) {
         return LocalDateTimeSpreadsheetTextFormatter.with(token);
     }
 
     /**
      * {@see TextSpreadsheetTextFormatter}
      */
-    public static SpreadsheetTextFormatter<String> text(final SpreadsheetFormatTextParserToken token) {
+    public static SpreadsheetTextFormatter text(final SpreadsheetFormatTextParserToken token) {
         return TextSpreadsheetTextFormatter.with(token);
     }
 
