@@ -49,7 +49,7 @@ import java.util.Set;
 final class SpreadsheetConverter implements Converter {
 
     /**
-     * Singleton. Has no state.
+     * Factory that creates a new {@link SpreadsheetConverter}.
      */
     final static SpreadsheetConverter with(final long dateOffset,
                                            final String bigDecimalFormat,
