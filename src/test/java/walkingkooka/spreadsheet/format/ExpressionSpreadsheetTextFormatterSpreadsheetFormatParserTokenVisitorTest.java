@@ -21,7 +21,7 @@ public final class ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserToke
         TextFormatterSpreadsheetFormatParserTokenVisitorTestCase<ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor> {
     @Override
     public ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor createVisitor() {
-        return new ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor(null, null);
+        return new ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor(null);
     }
 
     @Override
