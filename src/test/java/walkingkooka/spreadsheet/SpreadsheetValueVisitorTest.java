@@ -468,11 +468,6 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     }
 
     @Override
-    public void testSinglePublicAcceptMethod() {
-        // only contains 1 public accept not two because type = Object.
-    }
-
-    @Override
     public void testCheckToStringOverridden() {
         // using FakeSpreadsheetValueVisitor disable test
     }
