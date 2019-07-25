@@ -25,11 +25,13 @@ import walkingkooka.math.Fraction;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExpressionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.Parser;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.function.Function;
@@ -333,18 +335,31 @@ public final class ExpressionSpreadsheetTextFormatterTest extends SpreadsheetTex
             }
 
             @Override
-            public String generalDecimalFormatPattern() {
-                return "000.000"; // used by testGeneralEmptyEmptyTextPlaceholderFormatNumber
-            }
-
-            @Override
             public <T> T convert(final Object value, final Class<T> target) {
                 if (target.isInstance(value)) {
                     return target.cast(value);
                 }
+                if (value instanceof BigDecimal && String.class == target) {
+                    return target.cast(new DecimalFormat("000.000").format(value));
+                }
                 return Converters.localDateTimeBigDecimal(Converters.EXCEL_OFFSET).convert(value,
                         target,
                         ConverterContexts.basic(this));
+            }
+
+            @Override
+            public Optional<SpreadsheetFormattedText> defaultFormatText(final Object value) {
+                if (value instanceof String) {
+                    return this.formattedText(value.toString());
+                }
+                if (value instanceof BigDecimal) {
+                    return this.formattedText(new DecimalFormat("000.000").format(value));
+                }
+                throw new AssertionError("Format unexpected value " + CharSequences.quoteIfChars(value));
+            }
+
+            private Optional<SpreadsheetFormattedText> formattedText(final String text) {
+                return Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, text));
             }
         };
     }
