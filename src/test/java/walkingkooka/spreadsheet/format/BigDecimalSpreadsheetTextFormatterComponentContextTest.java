@@ -17,7 +17,22 @@
 
 package walkingkooka.spreadsheet.format;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
+
 public final class BigDecimalSpreadsheetTextFormatterComponentContextTest extends BigDecimalSpreadsheetTextFormatterTestCase<BigDecimalSpreadsheetTextFormatterComponentContext> {
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(BigDecimalSpreadsheetTextFormatterComponentContext.with(
+                BigDecimalSpreadsheetTextFormatterDigits.integer(BigDecimalSpreadsheetTextFormatterMinusSign.NOT_REQUIRED, "123", BigDecimalSpreadsheetTextFormatterThousandsSeparator.INCLUDE),
+                BigDecimalSpreadsheetTextFormatterDigits.integer(BigDecimalSpreadsheetTextFormatterMinusSign.REQUIRED, "456", BigDecimalSpreadsheetTextFormatterThousandsSeparator.INCLUDE),
+                BigDecimalSpreadsheetTextFormatterDigits.integer(BigDecimalSpreadsheetTextFormatterMinusSign.NOT_REQUIRED, "789", BigDecimalSpreadsheetTextFormatterThousandsSeparator.NONE),
+                BigDecimalSpreadsheetTextFormatter.with(SpreadsheetFormatParserToken.bigDecimal(Lists.of(SpreadsheetFormatParserToken.digit("1", "1")), "1")),
+                SpreadsheetTextFormatContexts.fake()),
+                "123-456789");
+    }
 
     @Override
     public Class<BigDecimalSpreadsheetTextFormatterComponentContext> type() {
