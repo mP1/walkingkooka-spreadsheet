@@ -251,14 +251,8 @@ public final class ExpressionSpreadsheetTextFormatterTest extends SpreadsheetTex
 
     @Override
     ExpressionSpreadsheetTextFormatter createFormatter0(final SpreadsheetFormatExpressionParserToken token) {
-        return ExpressionSpreadsheetTextFormatter.with(token, this.mathContext(), this.fractioner());
+        return ExpressionSpreadsheetTextFormatter.with(token, this.fractioner());
     }
-
-    private MathContext mathContext() {
-        return MATH_CONTEXT;
-    }
-
-    private final static MathContext MATH_CONTEXT = MathContext.UNLIMITED;
 
     private Function<BigDecimal, Fraction> fractioner() {
         return this::makeIntoFraction;
@@ -354,6 +348,8 @@ public final class ExpressionSpreadsheetTextFormatterTest extends SpreadsheetTex
             }
         };
     }
+
+    private final static MathContext MATH_CONTEXT = MathContext.UNLIMITED;
 
     @Override
     public Class<ExpressionSpreadsheetTextFormatter> type() {
