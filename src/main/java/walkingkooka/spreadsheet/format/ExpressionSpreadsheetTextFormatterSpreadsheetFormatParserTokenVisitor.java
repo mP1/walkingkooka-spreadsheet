@@ -79,7 +79,7 @@ final class ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisito
 
     @Override
     protected void endVisit(final SpreadsheetFormatBigDecimalParserToken token) {
-        this.setSpreadsheetTextFormatter(SpreadsheetTextFormatters.bigDecimal(token, this.mathContext), token);
+        this.setSpreadsheetTextFormatter(SpreadsheetTextFormatters.bigDecimal(token), token);
     }
 
     @Override

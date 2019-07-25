@@ -319,6 +319,11 @@ public final class ExpressionSpreadsheetTextFormatterTest extends SpreadsheetTex
             }
 
             @Override
+            public MathContext mathContext() {
+                return MATH_CONTEXT;
+            }
+
+            @Override
             public char minusSign() {
                 return '-';
             }

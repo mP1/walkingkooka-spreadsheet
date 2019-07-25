@@ -41,9 +41,8 @@ public final class SpreadsheetTextFormatters implements PublicStaticHelper {
     /**
      * {@see BigDecimalSpreadsheetTextFormatter}
      */
-    public static SpreadsheetTextFormatter<BigDecimal> bigDecimal(final SpreadsheetFormatBigDecimalParserToken token,
-                                                                  final MathContext mathContext) {
-        return BigDecimalSpreadsheetTextFormatter.with(token, mathContext);
+    public static SpreadsheetTextFormatter<BigDecimal> bigDecimal(final SpreadsheetFormatBigDecimalParserToken token) {
+        return BigDecimalSpreadsheetTextFormatter.with(token);
     }
 
     /**
