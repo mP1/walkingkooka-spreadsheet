@@ -1221,7 +1221,7 @@ public final class BigDecimalSpreadsheetTextFormatterTest extends SpreadsheetTex
 
     @Override
     BigDecimalSpreadsheetTextFormatter createFormatter0(final SpreadsheetFormatBigDecimalParserToken token) {
-        return BigDecimalSpreadsheetTextFormatter.with(token, MathContext.UNLIMITED);
+        return BigDecimalSpreadsheetTextFormatter.with(token);
     }
 
     @Override
@@ -1250,6 +1250,11 @@ public final class BigDecimalSpreadsheetTextFormatterTest extends SpreadsheetTex
             @Override
             public char groupingSeparator() {
                 return 'G';
+            }
+
+            @Override
+            public MathContext mathContext() {
+                return MathContext.UNLIMITED;
             }
 
             @Override
