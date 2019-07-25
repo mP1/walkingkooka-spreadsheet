@@ -107,7 +107,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                             final Object value,
                                             final SpreadsheetTextFormatContext spreadsheetTextFormatContext,
                                             final Optional<SpreadsheetFormattedText> expected) {
-        final SpreadsheetTextFormatter<?> formatter = context.parseFormatPattern(formatPattern);
+        final SpreadsheetTextFormatter formatter = context.parseFormatPattern(formatPattern);
         assertEquals(expected,
                 formatter.format(Cast.to(value), spreadsheetTextFormatContext),
                 () -> "parseFormatPattern " + formatPattern + " " + formatter + " then format " + CharSequences.quoteIfChars(value));
@@ -123,7 +123,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     }
 
     default void formatAndCheck(final Object value,
-                                final SpreadsheetTextFormatter<?> formatter,
+                                final SpreadsheetTextFormatter formatter,
                                 final Optional<SpreadsheetFormattedText> expected) {
         this.formatAndCheck(this.createContext(),
                 value,
@@ -133,7 +133,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
 
     default void formatAndCheck(final SpreadsheetEngineContext context,
                                 final Object value,
-                                final SpreadsheetTextFormatter<?> formatter,
+                                final SpreadsheetTextFormatter formatter,
                                 final Optional<SpreadsheetFormattedText> expected) {
         assertEquals(expected,
                 context.format(value, formatter),

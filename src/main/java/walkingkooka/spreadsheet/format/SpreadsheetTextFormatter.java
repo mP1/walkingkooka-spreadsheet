@@ -22,7 +22,7 @@ import java.util.Optional;
 /**
  * Formats a value
  */
-public interface SpreadsheetTextFormatter<T> {
+public interface SpreadsheetTextFormatter {
 
     /**
      * Constant holding a failed format.
@@ -35,12 +35,12 @@ public interface SpreadsheetTextFormatter<T> {
     Optional<SpreadsheetFormattedText> NO_TEXT = Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, ""));
 
     /**
-     * The type that this formatted can accept and successfully format.
+     * Tests if the given value can be formatted by this formatter.
      */
-    Class<T> type();
+    boolean canFormat(final Object value);
 
     /**
      * Accepts a value and returns a {@link SpreadsheetFormattedText}.
      */
-    Optional<SpreadsheetFormattedText> format(final T value, final SpreadsheetTextFormatContext context);
+    Optional<SpreadsheetFormattedText> format(final Object value, final SpreadsheetTextFormatContext context);
 }

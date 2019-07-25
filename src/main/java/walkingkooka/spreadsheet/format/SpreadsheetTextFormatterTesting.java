@@ -25,14 +25,12 @@ import walkingkooka.text.CharSequences;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Mixin interface with default methods to assist testing of an {@link SpreadsheetTextFormatter}.
  */
-public interface SpreadsheetTextFormatterTesting<F extends SpreadsheetTextFormatter<V>, V>
+public interface SpreadsheetTextFormatterTesting<F extends SpreadsheetTextFormatter>
         extends ToStringTesting<F>,
         TypeNameTesting<F> {
 
@@ -51,51 +49,66 @@ public interface SpreadsheetTextFormatterTesting<F extends SpreadsheetTextFormat
     }
 
     @Test
-    default void testType() {
-        final Class<V> type = this.createFormatter().type();
-        assertNotEquals(null, type);
+    default void testCanFormatTrue() {
+        this.canFormatAndCheck(this.value(), true);
+    }
 
-        final V value = this.value();
-        assertTrue(type.isInstance(value), () -> type.getName() + " " + value.getClass().getName() + "=" + value);
+    @Test
+    default void testCanFormatFalse() {
+        this.canFormatAndCheck(this, false);
     }
 
     F createFormatter();
 
-    V value();
+    Object value();
 
     SpreadsheetTextFormatContext createContext();
 
-    default void formatAndCheck(final V value,
+    default void canFormatAndCheck(final Object value, final boolean expected) {
+        this.canFormatAndCheck(this.createFormatter(),
+                value,
+                expected);
+    }
+
+    default void canFormatAndCheck(final SpreadsheetTextFormatter formatter,
+                                   final Object value,
+                                   final boolean expected) {
+        assertEquals(expected,
+                formatter.canFormat(value),
+                () -> formatter + " canFormat " + CharSequences.quoteIfChars(value));
+    }
+
+    default void formatAndCheck(final Object value,
                                 final String formattedText) {
         this.formatAndCheck(value, this.formattedText(formattedText));
     }
 
-    default void formatAndCheck(final V value,
+    default void formatAndCheck(final Object value,
                                 final SpreadsheetFormattedText formattedText) {
         this.formatAndCheck(this.createFormatter(), value, formattedText);
     }
 
-    default void formatAndCheck(final SpreadsheetTextFormatter<V> formatter,
-                                final V value,
+    default void formatAndCheck(final SpreadsheetTextFormatter formatter,
+                                final Object value,
                                 final String formattedText) {
         this.formatAndCheck(formatter, value, this.formattedText(formattedText));
     }
 
-    default void formatAndCheck(final SpreadsheetTextFormatter<V> formatter,
-                                final V value,
+    default void formatAndCheck(final SpreadsheetTextFormatter formatter,
+                                final Object value,
                                 final SpreadsheetFormattedText formattedText) {
         this.formatAndCheck(formatter, value, this.createContext(), formattedText);
     }
 
-    default void formatAndCheck(final SpreadsheetTextFormatter<V> formatter,
-                                final V value,
+    default void formatAndCheck(final SpreadsheetTextFormatter formatter,
+                                final Object value,
                                 final SpreadsheetTextFormatContext context,
                                 final String formattedText) {
         this.formatAndCheck(formatter, value, context, this.formattedText(formattedText));
     }
 
-    default void formatAndCheck(final SpreadsheetTextFormatter<V> formatter,
-                                final V value,
+    default void formatAndCheck(final SpreadsheetTextFormatter formatter,
+                                final Object value,
                                 final SpreadsheetTextFormatContext context,
                                 final SpreadsheetFormattedText formattedText) {
         this.formatAndCheck(formatter, value, context, Optional.of(formattedText));
@@ -107,30 +120,30 @@ public interface SpreadsheetTextFormatterTesting<F extends SpreadsheetTextFormat
 
     // format fail and check
 
-    default void formatFailAndCheck(final V value) {
+    default void formatFailAndCheck(final Object value) {
         this.formatFailAndCheck(value, this.createContext());
     }
 
-    default void formatFailAndCheck(final V value,
+    default void formatFailAndCheck(final Object value,
                                     final SpreadsheetTextFormatContext context) {
         this.formatFailAndCheck(this.createFormatter(), value, context);
     }
 
-    default void formatFailAndCheck(final SpreadsheetTextFormatter<V> formatter,
-                                    final V value) {
+    default void formatFailAndCheck(final SpreadsheetTextFormatter formatter,
+                                    final Object value) {
         this.formatFailAndCheck(formatter, value, this.createContext());
     }
 
-    default void formatFailAndCheck(final SpreadsheetTextFormatter<V> formatter,
-                                    final V value,
+    default void formatFailAndCheck(final SpreadsheetTextFormatter formatter,
+                                    final Object value,
                                     final SpreadsheetTextFormatContext context) {
         this.formatAndCheck(formatter, value, context, Optional.empty());
     }
 
     // general format and check
 
-    default void formatAndCheck(final SpreadsheetTextFormatter<V> formatter,
-                                final V value,
+    default void formatAndCheck(final SpreadsheetTextFormatter formatter,
+                                final Object value,
                                 final SpreadsheetTextFormatContext context,
                                 final Optional<SpreadsheetFormattedText> formattedText) {
         assertEquals(formattedText,

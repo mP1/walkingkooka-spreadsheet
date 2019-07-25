@@ -28,7 +28,7 @@ import java.util.Optional;
  * A {@link SpreadsheetTextFormatter} that unconditionally formats a {@link BigDecimal} using a pattern, without a {@link Color}.
  * The pattern would have been a {@link String} but the factory accepts it represented as a {@link SpreadsheetFormatBigDecimalParserToken}.
  */
-final class BigDecimalSpreadsheetTextFormatter extends SpreadsheetTextFormatter3<BigDecimal, SpreadsheetFormatBigDecimalParserToken> {
+final class BigDecimalSpreadsheetTextFormatter extends SpreadsheetTextFormatter3<SpreadsheetFormatBigDecimalParserToken> {
 
     /**
      * Creates a {@link BigDecimalSpreadsheetTextFormatter} from a {@link SpreadsheetFormatBigDecimalParserToken}.
@@ -64,15 +64,15 @@ final class BigDecimalSpreadsheetTextFormatter extends SpreadsheetTextFormatter3
      * Only accepts {@link BigDecimal} values for formatting.
      */
     @Override
-    public Class<BigDecimal> type() {
-        return BigDecimal.class;
+    public boolean canFormat(final Object value) {
+        return value instanceof BigDecimal;
     }
 
     @Override
-    Optional<SpreadsheetFormattedText> format0(final BigDecimal value, final SpreadsheetTextFormatContext context) {
+    Optional<SpreadsheetFormattedText> format0(final Object value, final SpreadsheetTextFormatContext context) {
         return Optional.of(SpreadsheetFormattedText.with(
                 SpreadsheetFormattedText.WITHOUT_COLOR,
-                this.format1(this.format.context(value, this.thousandsSeparator, this, context))));
+                this.format1(this.format.context(BigDecimal.class.cast(value), this.thousandsSeparator, this, context))));
     }
 
     final BigDecimalSpreadsheetTextFormatterFormat format;

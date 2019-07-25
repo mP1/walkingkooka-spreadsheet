@@ -31,7 +31,7 @@ import java.util.function.Function;
  * A {@link SpreadsheetTextFormatter} that formats a {@link String}.
  * <a href="https://developers.google.com/sheets/api/guides/formats"></a>
  */
-final class ExpressionSpreadsheetTextFormatter extends SpreadsheetTextFormatter3<Object, SpreadsheetFormatExpressionParserToken> {
+final class ExpressionSpreadsheetTextFormatter extends SpreadsheetTextFormatter3<SpreadsheetFormatExpressionParserToken> {
 
     /**
      * Creates a {@link ExpressionSpreadsheetTextFormatter} from a {@link SpreadsheetFormatTextParserToken}.
@@ -49,7 +49,7 @@ final class ExpressionSpreadsheetTextFormatter extends SpreadsheetTextFormatter3
      * Private ctor use static parse.
      */
     private ExpressionSpreadsheetTextFormatter(final SpreadsheetFormatExpressionParserToken token,
-                                               final List<SpreadsheetTextFormatter<Object>> formatters) {
+                                               final List<SpreadsheetTextFormatter> formatters) {
         super(token);
         if (formatters.size() > 4) {
             throw new IllegalArgumentException("Expected at most 4 formatters but got " + formatters.size() + "=" + formatters);
@@ -58,15 +58,18 @@ final class ExpressionSpreadsheetTextFormatter extends SpreadsheetTextFormatter3
     }
 
     @Override
-    public Class<Object> type() {
-        return Object.class;
+    public boolean canFormat(final Object value) {
+        return this.formatters.stream()
+                .filter(f -> f.canFormat(value))
+                .limit(1)
+                .count() == 1;
     }
 
     @Override
     Optional<SpreadsheetFormattedText> format0(final Object value, final SpreadsheetTextFormatContext context) {
         return this.formatters.stream()
                 .skip(this.skip(value))
-                .filter(f -> f.type().isInstance(value))
+                .filter(f -> f.canFormat(value))
                 .flatMap(f -> f.format(value, context).stream())
                 .findFirst();
     }
@@ -80,7 +83,7 @@ final class ExpressionSpreadsheetTextFormatter extends SpreadsheetTextFormatter3
                 0;
     }
 
-    private final List<SpreadsheetTextFormatter<Object>> formatters;
+    private final List<SpreadsheetTextFormatter> formatters;
 
     @Override
     String toStringSuffix() {

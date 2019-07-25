@@ -48,16 +48,16 @@ public interface SpreadsheetEngineContext extends Context {
     /**
      * Accepts a format pattern and returns the equivalent {@link SpreadsheetTextFormatter}.
      */
-    SpreadsheetTextFormatter<?> parseFormatPattern(final String pattern);
+    SpreadsheetTextFormatter parseFormatPattern(final String pattern);
 
     /**
      * The default {@link SpreadsheetTextFormatter} when no pattern is available for a cell.
      */
-    SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter();
+    SpreadsheetTextFormatter defaultSpreadsheetTextFormatter();
 
     /**
      * Formats the given value using the provided formatter.
      */
     Optional<SpreadsheetFormattedText> format(final Object value,
-                                              final SpreadsheetTextFormatter<?> formatter);
+                                              final SpreadsheetTextFormatter formatter);
 }

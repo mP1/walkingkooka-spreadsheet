@@ -36,7 +36,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormattedText;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatContext;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatters;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
@@ -4821,7 +4820,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public SpreadsheetTextFormatter<?> parseFormatPattern(final String pattern) {
+            public SpreadsheetTextFormatter parseFormatPattern(final String pattern) {
                 if (PATTERN_COLOR.equals(pattern)) {
                     return formatter(pattern, COLOR, FORMATTED_PATTERN_SUFFIX);
                 }
@@ -4829,20 +4828,30 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     return formatter(pattern, SpreadsheetFormattedText.WITHOUT_COLOR, FORMATTED_PATTERN_SUFFIX);
                 }
                 if (PATTERN_FORMAT_FAIL.equals(pattern)) {
-                    return SpreadsheetTextFormatters.fixed(Object.class, Optional.empty());
+                    return new SpreadsheetTextFormatter() {
+                        @Override
+                        public boolean canFormat(final Object value) {
+                            return true;
+                        }
+
+                        @Override
+                        public Optional<SpreadsheetFormattedText> format(final Object value, final SpreadsheetTextFormatContext context) {
+                            return Optional.empty();
+                        }
+                    };
                 }
 
                 throw new AssertionError("Unknown pattern=" + pattern + " expected one of " + PATTERN_FORMAT_FAIL + "|" + PATTERN + "|" + PATTERN_COLOR);
             }
 
             @Override
-            public SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter() {
+            public SpreadsheetTextFormatter defaultSpreadsheetTextFormatter() {
                 return BasicSpreadsheetEngineTest.this.defaultSpreadsheetTextFormatter();
             }
 
             @Override
             public Optional<SpreadsheetFormattedText> format(final Object value,
-                                                             final SpreadsheetTextFormatter<?> formatter) {
+                                                             final SpreadsheetTextFormatter formatter) {
                 assertFalse(value instanceof Optional, () -> "Value must not be optional" + value);
                 return formatter.format(Cast.to(value), SPREADSHEET_TEXT_FORMAT_CONTEXT);
             }
@@ -4851,19 +4860,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private Object counter;
 
-    private SpreadsheetTextFormatter<Object> defaultSpreadsheetTextFormatter() {
+    private SpreadsheetTextFormatter defaultSpreadsheetTextFormatter() {
         return this.formatter(PATTERN_DEFAULT,
                 SpreadsheetFormattedText.WITHOUT_COLOR,
                 FORMATTED_DEFAULT_SUFFIX);
     }
 
-    private SpreadsheetTextFormatter<Object> formatter(final String pattern,
-                                                       final Optional<Color> color,
-                                                       final String suffix) {
-        return new SpreadsheetTextFormatter<Object>() {
+    private SpreadsheetTextFormatter formatter(final String pattern,
+                                               final Optional<Color> color,
+                                               final String suffix) {
+        return new SpreadsheetTextFormatter() {
+
             @Override
-            public Class<Object> type() {
-                return Object.class;
+            public boolean canFormat(final Object value) {
+                return value instanceof BigDecimal;
             }
 
             @Override
