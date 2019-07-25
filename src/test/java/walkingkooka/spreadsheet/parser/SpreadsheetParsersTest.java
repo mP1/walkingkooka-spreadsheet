@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.test.PublicStaticHelperTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
@@ -44,7 +45,9 @@ import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.expression.ExpressionNodeName;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
+import walkingkooka.type.JavaVisibility;
 
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
@@ -60,8 +63,8 @@ import java.util.function.Function;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public final class SpreadsheetParsersTest implements ParserTesting<Parser<SpreadsheetParserContext>,
-        SpreadsheetParserContext> {
+public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<SpreadsheetParsers>,
+        ParserTesting<Parser<SpreadsheetParserContext>, SpreadsheetParserContext> {
 
     @Test
     public void testText() {
@@ -1206,5 +1209,22 @@ public final class SpreadsheetParsersTest implements ParserTesting<Parser<Spread
     @Override
     public String parserTokenTypeNamePrefix() {
         return "Spreadsheet";
+    }
+
+    // PublicStaticHelperTesting........................................................................................
+
+    @Override
+    public Class<SpreadsheetParsers> type() {
+        return SpreadsheetParsers.class;
+    }
+
+    @Override
+    public boolean canHavePublicTypes(final Method method) {
+        return false;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PUBLIC;
     }
 }
