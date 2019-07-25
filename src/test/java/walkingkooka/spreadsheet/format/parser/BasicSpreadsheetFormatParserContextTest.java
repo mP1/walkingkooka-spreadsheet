@@ -25,27 +25,17 @@ import walkingkooka.type.JavaVisibility;
 
 import java.math.MathContext;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 public final class BasicSpreadsheetFormatParserContextTest implements ClassTesting2<BasicSpreadsheetFormatParserContext>,
         SpreadsheetFormatParserContextTesting<BasicSpreadsheetFormatParserContext> {
 
     @Test
-    public void testWithNullDecimalNumberContextFails() {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetFormatParserContext.with(null);
-        });
-    }
-
-    @Test
     public void testToString() {
-        final DecimalNumberContext context = this.decimalNumberContext();
-        this.toStringAndCheck(BasicSpreadsheetFormatParserContext.with(context), context.toString());
+        this.toStringAndCheck(BasicSpreadsheetFormatParserContext.INSTANCE, DecimalNumberContexts.american(MathContext.UNLIMITED).toString());
     }
 
     @Override
     public BasicSpreadsheetFormatParserContext createContext() {
-        return BasicSpreadsheetFormatParserContext.with(this.decimalNumberContext());
+        return BasicSpreadsheetFormatParserContext.INSTANCE;
     }
 
     @Override
@@ -70,7 +60,7 @@ public final class BasicSpreadsheetFormatParserContextTest implements ClassTesti
 
     @Override
     public MathContext mathContext() {
-        return MathContext.DECIMAL32;
+        return MathContext.UNLIMITED;
     }
 
     @Override
