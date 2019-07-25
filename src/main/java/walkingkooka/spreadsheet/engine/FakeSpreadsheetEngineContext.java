@@ -48,19 +48,19 @@ public class FakeSpreadsheetEngineContext implements SpreadsheetEngineContext, F
     }
 
     @Override
-    public SpreadsheetTextFormatter<?> parseFormatPattern(final String pattern) {
+    public SpreadsheetTextFormatter parseFormatPattern(final String pattern) {
         Objects.requireNonNull(pattern, "pattern");
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter() {
+    public SpreadsheetTextFormatter defaultSpreadsheetTextFormatter() {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public Optional<SpreadsheetFormattedText> format(final Object value,
-                                                     final SpreadsheetTextFormatter<?> formatter) {
+                                                     final SpreadsheetTextFormatter formatter) {
         throw new UnsupportedOperationException();
     }
 }

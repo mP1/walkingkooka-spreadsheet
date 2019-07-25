@@ -17,19 +17,29 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.type.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetValueVisitor;
 
-public abstract class SpreadsheetTextFormatterTestCase<F extends SpreadsheetTextFormatter
-        > implements ClassTesting2<F>,
-        SpreadsheetTextFormatterTesting<F> {
+final class SpreadsheetTextFormatter2SpreadsheetValueVisitor extends SpreadsheetValueVisitor {
 
-    SpreadsheetTextFormatterTestCase() {
+    static boolean isSpreadsheetValue(final Object value) {
+        final SpreadsheetTextFormatter2SpreadsheetValueVisitor visitor = new SpreadsheetTextFormatter2SpreadsheetValueVisitor();
+        visitor.accept(value);
+        return visitor.canFormat;
+    }
+
+    SpreadsheetTextFormatter2SpreadsheetValueVisitor() {
         super();
     }
 
     @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
+    protected void visit(final Object value) {
+        this.canFormat = false;
+    }
+
+    private boolean canFormat = true;
+
+    @Override
+    public String toString() {
+        return "canFormat: " + this.canFormat;
     }
 }

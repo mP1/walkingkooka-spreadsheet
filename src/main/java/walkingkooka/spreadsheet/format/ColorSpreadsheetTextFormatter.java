@@ -27,14 +27,14 @@ import java.util.Optional;
 /**
  * Adds a {@link Color} to successfully formatted text, that is decorates the result of the given {@link SpreadsheetTextFormatter}.
  */
-final class ColorSpreadsheetTextFormatter<T> extends SpreadsheetTextFormatter3<T, SpreadsheetFormatColorParserToken> {
+final class ColorSpreadsheetTextFormatter<T> extends SpreadsheetTextFormatter3<SpreadsheetFormatColorParserToken> {
 
 
     /**
      * Creates a {@link ColorSpreadsheetTextFormatter}
      */
     static <T> ColorSpreadsheetTextFormatter<T> with(final SpreadsheetFormatColorParserToken token,
-                                                     final SpreadsheetTextFormatter<T> formatter) {
+                                                     final SpreadsheetTextFormatter formatter) {
         check(token);
         Objects.requireNonNull(formatter, "formatter");
 
@@ -42,8 +42,8 @@ final class ColorSpreadsheetTextFormatter<T> extends SpreadsheetTextFormatter3<T
                 formatter instanceof ColorSpreadsheetTextFormatter ? unwrap(Cast.to(formatter)) : formatter);
     }
 
-    private static <T> SpreadsheetTextFormatter<T> unwrap(final ColorSpreadsheetTextFormatter<T> formatter) {
-        final SpreadsheetTextFormatter<T> wrapped = formatter.formatter;
+    private static <T> SpreadsheetTextFormatter unwrap(final ColorSpreadsheetTextFormatter<T> formatter) {
+        final SpreadsheetTextFormatter wrapped = formatter.formatter;
         return wrapped instanceof ColorSpreadsheetTextFormatter ?
                 unwrap(Cast.to(wrapped)) :
                 wrapped;
@@ -53,7 +53,7 @@ final class ColorSpreadsheetTextFormatter<T> extends SpreadsheetTextFormatter3<T
      * Private use factory
      */
     private ColorSpreadsheetTextFormatter(final SpreadsheetFormatColorParserToken token,
-                                          final SpreadsheetTextFormatter<T> formatter) {
+                                          final SpreadsheetTextFormatter formatter) {
         super(token);
 
         final ColorSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor visitor = ColorSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor.colorNameOrNumberOrFail(token);
@@ -63,12 +63,12 @@ final class ColorSpreadsheetTextFormatter<T> extends SpreadsheetTextFormatter3<T
     }
 
     @Override
-    public Class<T> type() {
-        return this.formatter.type();
+    public boolean canFormat(final Object value) {
+        return this.formatter.canFormat(value);
     }
 
     @Override
-    Optional<SpreadsheetFormattedText> format0(final T value, final SpreadsheetTextFormatContext context) {
+    Optional<SpreadsheetFormattedText> format0(final Object value, final SpreadsheetTextFormatContext context) {
         return this.formatter.format(value, context)
                 .map(t -> t.setColor(this.color(context)));
     }
@@ -76,7 +76,7 @@ final class ColorSpreadsheetTextFormatter<T> extends SpreadsheetTextFormatter3<T
     /**
      * The formatter that will have its color replaced if it was successful.
      */
-    private final SpreadsheetTextFormatter<T> formatter;
+    private final SpreadsheetTextFormatter formatter;
 
     /**
      * Fetches the color to be added. While the color reference is static, the actual resolved {@link Color} is not.

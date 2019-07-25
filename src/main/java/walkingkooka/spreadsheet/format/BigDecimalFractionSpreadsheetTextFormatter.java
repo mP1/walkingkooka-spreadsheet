@@ -34,7 +34,7 @@ import java.util.function.Function;
  * A {@link SpreadsheetTextFormatter} that unconditionally formats a {@link BigDecimal}, without a {@link Color} using a pattern
  * parsed into a {@link SpreadsheetFormatFractionParserToken}.
  */
-final class BigDecimalFractionSpreadsheetTextFormatter extends SpreadsheetTextFormatter3<BigDecimal, SpreadsheetFormatFractionParserToken> {
+final class BigDecimalFractionSpreadsheetTextFormatter extends SpreadsheetTextFormatter3<SpreadsheetFormatFractionParserToken> {
 
     /**
      * Creates a {@link BigDecimalFractionSpreadsheetTextFormatter} from a {@link SpreadsheetFormatBigDecimalParserToken}.
@@ -67,15 +67,15 @@ final class BigDecimalFractionSpreadsheetTextFormatter extends SpreadsheetTextFo
     }
 
     @Override
-    public Class<BigDecimal> type() {
-        return BigDecimal.class;
+    public boolean canFormat(final Object value) {
+        return value instanceof BigDecimal;
     }
 
     @Override
-    Optional<SpreadsheetFormattedText> format0(final BigDecimal value, final SpreadsheetTextFormatContext context) {
+    Optional<SpreadsheetFormattedText> format0(final Object value, final SpreadsheetTextFormatContext context) {
         return Optional.of(SpreadsheetFormattedText.with(
                 SpreadsheetFormattedText.WITHOUT_COLOR,
-                this.format1(value, context)));
+                this.format1(BigDecimal.class.cast(value), context)));
     }
 
     /**

@@ -28,24 +28,24 @@ import java.util.function.Predicate;
 /**
  * Tries to convert a value to a {@link BigDecimal} and then tests a condition and if it is true, executes the given {@link SpreadsheetTextFormatter}.
  */
-final class ConditionSpreadsheetTextFormatter<T> extends SpreadsheetTextFormatter3<T, SpreadsheetFormatConditionParserToken> {
+final class ConditionSpreadsheetTextFormatter extends SpreadsheetTextFormatter3<SpreadsheetFormatConditionParserToken> {
 
     /**
      * Creates a {@link ConditionSpreadsheetTextFormatter}
      */
-    static <T> ConditionSpreadsheetTextFormatter<T> with(final SpreadsheetFormatConditionParserToken token,
-                                                         final SpreadsheetTextFormatter<T> formatter) {
+    static ConditionSpreadsheetTextFormatter with(final SpreadsheetFormatConditionParserToken token,
+                                                  final SpreadsheetTextFormatter formatter) {
         check(token);
         Objects.requireNonNull(formatter, "formatter");
 
-        return new ConditionSpreadsheetTextFormatter<T>(token, formatter);
+        return new ConditionSpreadsheetTextFormatter(token, formatter);
     }
 
     /**
      * Private use factory
      */
     private ConditionSpreadsheetTextFormatter(final SpreadsheetFormatConditionParserToken token,
-                                              final SpreadsheetTextFormatter<T> formatter) {
+                                              final SpreadsheetTextFormatter formatter) {
         super(token);
 
         this.predicate = ConditionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor.predicateOrFail(token);
@@ -53,12 +53,12 @@ final class ConditionSpreadsheetTextFormatter<T> extends SpreadsheetTextFormatte
     }
 
     @Override
-    public Class<T> type() {
-        return this.formatter.type();
+    public boolean canFormat(final Object value) {
+        return this.formatter.canFormat(value);
     }
 
     @Override
-    Optional<SpreadsheetFormattedText> format0(final T value, final SpreadsheetTextFormatContext context) {
+    Optional<SpreadsheetFormattedText> format0(final Object value, final SpreadsheetTextFormatContext context) {
 
         // predicate test result inverted because $value is on the wrong side of compare
         return this.test(value, context) ?
@@ -66,7 +66,7 @@ final class ConditionSpreadsheetTextFormatter<T> extends SpreadsheetTextFormatte
                 Optional.empty();
     }
 
-    private boolean test(final T value, final SpreadsheetTextFormatContext context) {
+    private boolean test(final Object value, final SpreadsheetTextFormatContext context) {
         boolean result;
         try {
             result = this.predicate.test(context.convert(value, BigDecimal.class));
@@ -79,7 +79,7 @@ final class ConditionSpreadsheetTextFormatter<T> extends SpreadsheetTextFormatte
     /**
      * The formatter that will be executed if the guard test passes.
      */
-    private final SpreadsheetTextFormatter<T> formatter;
+    private final SpreadsheetTextFormatter formatter;
 
     /**
      * A guard which only executes the formatter if the condition is true.

@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.Cast;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -27,35 +26,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-public final class FixedSpreadsheetTextFormatterTest extends SpreadsheetTextFormatter2TestCase<FixedSpreadsheetTextFormatter<Object>, Object> {
-
-    private final static Class<Object> TYPE = Object.class;
-
-    @Test
-    public void testWithNullTypeFails() {
-        assertThrows(NullPointerException.class, () -> {
-            FixedSpreadsheetTextFormatter.with(null, this.formattedText());
-        });
-    }
-
-    @Test
-    public void testWithNullFormattedTextFails() {
-        assertThrows(NullPointerException.class, () -> {
-            FixedSpreadsheetTextFormatter.with(TYPE, null);
-        });
-    }
-
-    @Test
-    public void testWithObjectNoText() {
-        final FixedSpreadsheetTextFormatter<Object> formatter = FixedSpreadsheetTextFormatter.with(Object.class,
-                SpreadsheetTextFormatter.NO_TEXT);
-        assertSame(formatter, FixedSpreadsheetTextFormatter.with(Object.class, SpreadsheetTextFormatter.NO_TEXT));
-
-        this.formatAndCheck(formatter, "", this.createContext(), SpreadsheetTextFormatter.NO_TEXT);
-    }
+public final class ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitorFormatterNoTextSpreadsheetTextFormatterTest extends SpreadsheetTextFormatterTestCase<ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitorFormatterNoTextSpreadsheetTextFormatter> {
 
     @Test
     public void testBigInteger() {
@@ -103,16 +74,16 @@ public final class FixedSpreadsheetTextFormatterTest extends SpreadsheetTextForm
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createFormatter(), this.formattedText().toString());
+        this.toStringAndCheck(this.createFormatter(), "");
     }
 
     @Override
-    public FixedSpreadsheetTextFormatter<Object> createFormatter() {
-        return FixedSpreadsheetTextFormatter.with(TYPE, this.formattedText());
+    public ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitorFormatterNoTextSpreadsheetTextFormatter createFormatter() {
+        return ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitorFormatterNoTextSpreadsheetTextFormatter.INSTANCE;
     }
 
     private Optional<SpreadsheetFormattedText> formattedText() {
-        return Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, "Formatted"));
+        return Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, ""));
     }
 
     @Override
@@ -126,7 +97,7 @@ public final class FixedSpreadsheetTextFormatterTest extends SpreadsheetTextForm
     }
 
     @Override
-    public Class<FixedSpreadsheetTextFormatter<Object>> type() {
-        return Cast.to(FixedSpreadsheetTextFormatter.class);
+    public Class<ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitorFormatterNoTextSpreadsheetTextFormatter> type() {
+        return ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitorFormatterNoTextSpreadsheetTextFormatter.class;
     }
 }

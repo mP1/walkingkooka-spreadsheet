@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
@@ -44,21 +43,21 @@ final class ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisito
         super();
     }
 
-    void setFormatter(final SpreadsheetTextFormatter<?> formatter) {
+    void setFormatter(final SpreadsheetTextFormatter formatter) {
         this.formatter = formatter;
     }
 
     SpreadsheetFormatColorParserToken color;
-    SpreadsheetTextFormatter<?> formatter;
+    SpreadsheetTextFormatter formatter;
     SpreadsheetFormatConditionParserToken<?> condition;
 
     /**
      * Factory that returns a {@link SpreadsheetTextFormatter} combining color and defaulting the condition if necessary.
      */
-    SpreadsheetTextFormatter<Object> formatter(final int nth, final int numberFormatters) {
-        SpreadsheetTextFormatter<?> formatter = this.formatter;
+    SpreadsheetTextFormatter formatter(final int nth, final int numberFormatters) {
+        SpreadsheetTextFormatter formatter = this.formatter;
         if (null == formatter) {
-            formatter = noText();
+            formatter = ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitorFormatterNoTextSpreadsheetTextFormatter.INSTANCE;
         }
 
         final SpreadsheetFormatColorParserToken color = this.color;
@@ -96,11 +95,7 @@ final class ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisito
             formatter = SpreadsheetTextFormatters.conditional(condition, formatter);
         }
 
-        return Cast.to(formatter);
-    }
-
-    private static SpreadsheetTextFormatter<Object> noText() {
-        return SpreadsheetTextFormatters.fixed(Object.class, SpreadsheetTextFormatter.NO_TEXT);
+        return formatter;
     }
 
     private static SpreadsheetFormatGreaterThanEqualsParserToken positiveAndZero() {

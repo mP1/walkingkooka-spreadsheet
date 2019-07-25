@@ -33,7 +33,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * In expectations all symbols are doubled, as a means to verify the context is supplying the values.
  */
 public final class BigDecimalSpreadsheetTextFormatterTest extends SpreadsheetTextFormatter3TestCase<BigDecimalSpreadsheetTextFormatter,
-        BigDecimal,
         SpreadsheetFormatBigDecimalParserToken> {
 
     // text-literal, escaped etc........................................................................................

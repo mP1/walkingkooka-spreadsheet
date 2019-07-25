@@ -402,7 +402,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         SpreadsheetCell result = cell;
 
         // try and use the cells custom format otherwise use a default from the context.
-        SpreadsheetTextFormatter<?> formatter = context.defaultSpreadsheetTextFormatter();
+        SpreadsheetTextFormatter formatter = context.defaultSpreadsheetTextFormatter();
         final Optional<SpreadsheetCellFormat> maybeFormat = cell.format();
         if (maybeFormat.isPresent()) {
             final SpreadsheetCellFormat format = this.parseFormatPatternIfNecessary(maybeFormat.get(), context);
@@ -426,7 +426,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      */
     private SpreadsheetCellFormat parseFormatPatternIfNecessary(final SpreadsheetCellFormat format,
                                                                 final SpreadsheetEngineContext context) {
-        final Optional<SpreadsheetTextFormatter<?>> formatter = format.formatter();
+        final Optional<SpreadsheetTextFormatter> formatter = format.formatter();
         return formatter.isPresent() ?
                 format :
                 this.parseFormatPattern(format, context);
@@ -444,7 +444,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * Uses the formatter to format the value, merging the style and returns an updated {@link TextNode}.
      */
     private TextNode formatAndApplyStyle0(final Object value,
-                                          final SpreadsheetTextFormatter<?> formatter,
+                                          final SpreadsheetTextFormatter formatter,
                                           final TextStyle style,
                                           final SpreadsheetEngineContext context) {
         return context.format(value, formatter)
