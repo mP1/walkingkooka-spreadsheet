@@ -18,24 +18,20 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContexts;
 
 import java.math.MathContext;
-import java.util.Objects;
 
 /**
  * A {@link SpreadsheetFormatParserContext} without any functionality.
  */
 final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatParserContext {
 
-    static BasicSpreadsheetFormatParserContext with(final DecimalNumberContext context) {
-        Objects.requireNonNull(context, "context");
+    static BasicSpreadsheetFormatParserContext INSTANCE = new BasicSpreadsheetFormatParserContext();
 
-        return new BasicSpreadsheetFormatParserContext(context);
-    }
-
-    private BasicSpreadsheetFormatParserContext(final DecimalNumberContext context) {
+    private BasicSpreadsheetFormatParserContext() {
         super();
-        this.context = context;
+        this.context = DecimalNumberContexts.american(MathContext.UNLIMITED);
     }
 
     @Override

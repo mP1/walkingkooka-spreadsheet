@@ -187,7 +187,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     public SpreadsheetTextFormatter parseFormatPattern(final String pattern) {
         return SpreadsheetFormatParsers.expression()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic(this.decimalNumberContext))
+                .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic())
                 .map(SpreadsheetFormatExpressionParserToken.class::cast)
                 .map(this::expression)
                 .get();
