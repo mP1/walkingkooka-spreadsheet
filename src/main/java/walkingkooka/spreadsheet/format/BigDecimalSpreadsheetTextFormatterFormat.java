@@ -35,7 +35,7 @@ enum BigDecimalSpreadsheetTextFormatterFormat {
                                                                    final BigDecimalSpreadsheetTextFormatter formatter,
                                                                    final SpreadsheetTextFormatContext context) {
 
-            final BigDecimal rounded = value.multiply(formatter.multiplier, formatter.mathContext)
+            final BigDecimal rounded = value.multiply(formatter.multiplier, context.mathContext())
                     .setScale(formatter.fractionDigitSymbolCount, RoundingMode.HALF_UP);
 
             final int valueSign = rounded.signum();
