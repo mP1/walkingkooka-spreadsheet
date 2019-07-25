@@ -184,7 +184,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     // parsing and formatting text......................................................................................
 
     @Override
-    public SpreadsheetTextFormatter parseFormatPattern(final String pattern) {
+    public SpreadsheetTextFormatter parsePattern(final String pattern) {
         return SpreadsheetFormatParsers.expression()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic())
