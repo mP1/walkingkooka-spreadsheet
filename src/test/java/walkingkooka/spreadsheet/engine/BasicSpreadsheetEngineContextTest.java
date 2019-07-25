@@ -281,7 +281,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testDefaultSpreadsheetTextFormatter() {
-        final SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter = this.defaultSpreadsheetTextFormatter();
+        final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter = this.defaultSpreadsheetTextFormatter();
         assertSame(defaultSpreadsheetTextFormatter, this.createContext(defaultSpreadsheetTextFormatter).defaultSpreadsheetTextFormatter());
     }
 
@@ -376,7 +376,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         return this.createContext(this.defaultSpreadsheetTextFormatter());
     }
 
-    private BasicSpreadsheetEngineContext createContext(final SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter) {
+    private BasicSpreadsheetEngineContext createContext(final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter) {
         return BasicSpreadsheetEngineContext.with(this.functions(),
                 this.engine(),
                 this.labelStore(),
@@ -433,7 +433,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         };
     }
 
-    private SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter() {
+    private SpreadsheetTextFormatter defaultSpreadsheetTextFormatter() {
         return new FakeSpreadsheetTextFormatter() {
             @Override
             public String toString() {

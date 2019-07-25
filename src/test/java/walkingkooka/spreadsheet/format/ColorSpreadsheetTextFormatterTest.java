@@ -31,7 +31,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ColorSpreadsheetTextFormatterTest extends SpreadsheetTextFormatter3TestCase<ColorSpreadsheetTextFormatter<String>,
-        String,
         SpreadsheetFormatColorParserToken> {
 
     private final static String TEXT_PATTERN = "@@";
@@ -46,9 +45,9 @@ public final class ColorSpreadsheetTextFormatterTest extends SpreadsheetTextForm
     @Test
     public void testWrappedFormatterFails() {
         this.formatFailAndCheck(ColorSpreadsheetTextFormatter.with(this.parsePatternOrFail(this.pattern()),
-                new FakeSpreadsheetTextFormatter<String>() {
+                new FakeSpreadsheetTextFormatter() {
                     @Override
-                    public Optional<SpreadsheetFormattedText> format(String value, SpreadsheetTextFormatContext context) {
+                    public Optional<SpreadsheetFormattedText> format(final Object value, final SpreadsheetTextFormatContext context) {
                         return Optional.empty();
                     }
                 }),
@@ -141,7 +140,7 @@ public final class ColorSpreadsheetTextFormatterTest extends SpreadsheetTextForm
         return ColorSpreadsheetTextFormatter.with(token, this.textFormatter());
     }
 
-    private SpreadsheetTextFormatter<String> textFormatter() {
+    private SpreadsheetTextFormatter textFormatter() {
         return SpreadsheetTextFormatters.text(this.parsePatternOrFail(SpreadsheetFormatParsers.text(), TEXT_PATTERN).cast());
     }
 

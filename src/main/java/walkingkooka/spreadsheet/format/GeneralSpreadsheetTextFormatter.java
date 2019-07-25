@@ -24,7 +24,6 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -32,7 +31,7 @@ import java.util.Optional;
  * {@link java.time.LocalDateTime} and {@link java.time.LocalTime} values are first converted to {@link BigDecimal}.
  * {@link String Text} is returned verbatim, and {@link Number numbers} are formatted using a {@link java.text.DecimalFormat formatter}.
  */
-final class GeneralSpreadsheetTextFormatter implements SpreadsheetTextFormatter<Object> {
+final class GeneralSpreadsheetTextFormatter extends SpreadsheetTextFormatter2 {
 
     /**
      * The {@link GeneralSpreadsheetTextFormatter} singleton instance.
@@ -47,15 +46,12 @@ final class GeneralSpreadsheetTextFormatter implements SpreadsheetTextFormatter<
     }
 
     @Override
-    public Class<Object> type() {
-        return Object.class;
+    public boolean canFormat(final Object value) {
+        return this.isSpreadsheetValue(value);
     }
 
     @Override
-    public Optional<SpreadsheetFormattedText> format(final Object value, final SpreadsheetTextFormatContext context) {
-        Objects.requireNonNull(value, "value");
-        Objects.requireNonNull(context, "context");
-
+    Optional<SpreadsheetFormattedText> format0(final Object value, final SpreadsheetTextFormatContext context) {
         return value instanceof String ?
                 formatText(Cast.to(value)) :
                 formatNonText(value, context);

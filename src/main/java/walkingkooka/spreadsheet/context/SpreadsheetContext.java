@@ -67,7 +67,7 @@ public interface SpreadsheetContext extends Context {
     /**
      * Returns the default {@link SpreadsheetTextFormatter }for a given {@link SpreadsheetId}
      */
-    SpreadsheetTextFormatter<?> defaultSpreadsheetTextFormatter(final SpreadsheetId id);
+    SpreadsheetTextFormatter defaultSpreadsheetTextFormatter(final SpreadsheetId id);
 
     /**
      * Returns a {@link BiFunction} which knows available functions for the given {@link SpreadsheetId}.

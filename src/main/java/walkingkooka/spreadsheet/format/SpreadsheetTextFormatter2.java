@@ -21,9 +21,9 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Base class for all {@link SpreadsheetTextFormatter} implementations.
+ * Base class for all {@link SpreadsheetTextFormatter} implementations in this package.
  */
-abstract class SpreadsheetTextFormatter2<V> implements SpreadsheetTextFormatter<V> {
+abstract class SpreadsheetTextFormatter2 implements SpreadsheetTextFormatter {
 
     /**
      * Package private to limit sub classing.
@@ -32,18 +32,22 @@ abstract class SpreadsheetTextFormatter2<V> implements SpreadsheetTextFormatter<
         super();
     }
 
+    final boolean isSpreadsheetValue(final Object value) {
+        return SpreadsheetTextFormatter2SpreadsheetValueVisitor.isSpreadsheetValue(value);
+    }
+
     /**
      * Accepts a value and uses the {@link TextFormatterSpreadsheetFormatParserTokenVisitor} to produce the formatted text.
      */
     @Override
-    public final Optional<SpreadsheetFormattedText> format(final V value, final SpreadsheetTextFormatContext context) {
+    public final Optional<SpreadsheetFormattedText> format(final Object value, final SpreadsheetTextFormatContext context) {
         Objects.requireNonNull(value, "value");
         Objects.requireNonNull(context, "context");
 
         return this.format0(value, context);
     }
 
-    abstract Optional<SpreadsheetFormattedText> format0(final V value, final SpreadsheetTextFormatContext context);
+    abstract Optional<SpreadsheetFormattedText> format0(final Object value, final SpreadsheetTextFormatContext context);
 
     @Override
     public abstract String toString();
