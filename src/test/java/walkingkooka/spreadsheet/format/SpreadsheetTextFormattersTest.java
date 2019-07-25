@@ -17,14 +17,21 @@
 
 package walkingkooka.spreadsheet.format;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.PublicStaticHelperTesting;
 import walkingkooka.type.JavaVisibility;
 
 import java.lang.reflect.Method;
+import java.math.MathContext;
 
 public final class SpreadsheetTextFormattersTest implements ClassTesting2<SpreadsheetTextFormatters>,
         PublicStaticHelperTesting<SpreadsheetTextFormatters> {
+
+    @Test
+    public void testPublicStaticMethodsWithoutMathContextParameter() {
+        this.publicStaticMethodParametersTypeCheck(MathContext.class);
+    }
 
     @Override
     public Class<SpreadsheetTextFormatters> type() {
