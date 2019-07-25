@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.Cast;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
@@ -35,8 +34,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ConditionSpreadsheetTextFormatterTest extends SpreadsheetTextFormatter3TestCase<ConditionSpreadsheetTextFormatter<String>,
-        String,
+public final class ConditionSpreadsheetTextFormatterTest extends SpreadsheetTextFormatter3TestCase<ConditionSpreadsheetTextFormatter,
         SpreadsheetFormatConditionParserToken> {
 
     private final static String TEXT_PATTERN = "!@@";
@@ -155,27 +153,27 @@ public final class ConditionSpreadsheetTextFormatterTest extends SpreadsheetText
         this.toStringAndCheck(this.createFormatter(), this.pattern() + " " + TEXT_PATTERN);
     }
 
-    private ConditionSpreadsheetTextFormatter<String> createFormatter0(final String expression) {
+    private ConditionSpreadsheetTextFormatter createFormatter0(final String expression) {
         return this.createFormatter0(this.parsePatternOrFail(expression));
     }
 
     @Override
-    ConditionSpreadsheetTextFormatter<String> createFormatter0(final SpreadsheetFormatConditionParserToken token) {
+    ConditionSpreadsheetTextFormatter createFormatter0(final SpreadsheetFormatConditionParserToken token) {
         return ConditionSpreadsheetTextFormatter.with(token, this.formatter());
     }
 
-    private SpreadsheetTextFormatter<String> formatter() {
-        return new SpreadsheetTextFormatter<String>() {
+    private SpreadsheetTextFormatter formatter() {
+        return new SpreadsheetTextFormatter() {
 
             @Override
-            public Class<String> type() {
-                return String.class;
+            public boolean canFormat(final Object value) {
+                return value instanceof String;
             }
 
             @Override
-            public Optional<SpreadsheetFormattedText> format(final String value,
+            public Optional<SpreadsheetFormattedText> format(final Object value,
                                                              final SpreadsheetTextFormatContext context) {
-                return Optional.of(formattedText(value));
+                return Optional.of(formattedText(String.class.cast(value)));
             }
 
             @Override
@@ -240,7 +238,7 @@ public final class ConditionSpreadsheetTextFormatterTest extends SpreadsheetText
     }
 
     @Override
-    public Class<ConditionSpreadsheetTextFormatter<String>> type() {
-        return Cast.to(ConditionSpreadsheetTextFormatter.class);
+    public Class<ConditionSpreadsheetTextFormatter> type() {
+        return ConditionSpreadsheetTextFormatter.class;
     }
 }

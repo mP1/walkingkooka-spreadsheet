@@ -36,7 +36,7 @@ import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public final class ExpressionSpreadsheetTextFormatterTest extends SpreadsheetTextFormatter3TestCase<ExpressionSpreadsheetTextFormatter, Object, SpreadsheetFormatExpressionParserToken> {
+public final class ExpressionSpreadsheetTextFormatterTest extends SpreadsheetTextFormatter3TestCase<ExpressionSpreadsheetTextFormatter, SpreadsheetFormatExpressionParserToken> {
 
     private final static String TEXT = "Abc123";
     private final static Color RED = Color.fromRgb(0x0FF);
