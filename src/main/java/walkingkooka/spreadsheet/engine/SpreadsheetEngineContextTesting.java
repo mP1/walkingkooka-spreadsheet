@@ -85,32 +85,32 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     // parseFormat......................................................................................................
 
     @Test
-    default void testParseFormatPatternNullFails() {
+    default void testParsePatternNullFails() {
         assertThrows(NullPointerException.class, () -> {
-            this.createContext().parseFormatPattern(null);
+            this.createContext().parsePattern(null);
         });
     }
 
-    default void parseFormatPatternAndCheck(final String formatPattern,
-                                            final Object value,
-                                            final SpreadsheetTextFormatContext spreadsheetTextFormatContext,
-                                            final Optional<SpreadsheetFormattedText> expected) {
-        this.parseFormatPatternAndCheck(this.createContext(),
-                formatPattern,
+    default void parsePatternAndCheck(final String pattern,
+                                      final Object value,
+                                      final SpreadsheetTextFormatContext spreadsheetTextFormatContext,
+                                      final Optional<SpreadsheetFormattedText> expected) {
+        this.parsePatternAndCheck(this.createContext(),
+                pattern,
                 value,
                 spreadsheetTextFormatContext,
                 expected);
     }
 
-    default void parseFormatPatternAndCheck(final SpreadsheetEngineContext context,
-                                            final String formatPattern,
-                                            final Object value,
-                                            final SpreadsheetTextFormatContext spreadsheetTextFormatContext,
-                                            final Optional<SpreadsheetFormattedText> expected) {
-        final SpreadsheetTextFormatter formatter = context.parseFormatPattern(formatPattern);
+    default void parsePatternAndCheck(final SpreadsheetEngineContext context,
+                                      final String pattern,
+                                      final Object value,
+                                      final SpreadsheetTextFormatContext spreadsheetTextFormatContext,
+                                      final Optional<SpreadsheetFormattedText> expected) {
+        final SpreadsheetTextFormatter formatter = context.parsePattern(pattern);
         assertEquals(expected,
                 formatter.format(Cast.to(value), spreadsheetTextFormatContext),
-                () -> "parseFormatPattern " + formatPattern + " " + formatter + " then format " + CharSequences.quoteIfChars(value));
+                () -> "parsePattern " + pattern + " " + formatter + " then format " + CharSequences.quoteIfChars(value));
     }
 
     // format...........................................................................................................
