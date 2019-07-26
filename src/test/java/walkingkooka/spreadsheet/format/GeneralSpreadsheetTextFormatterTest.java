@@ -127,7 +127,7 @@ public final class GeneralSpreadsheetTextFormatterTest extends SpreadsheetTextFo
                 if (LOCAL_DATE_TIME.equals(value)) {
                     return this.formattedText(LOCAL_DATE_TIME_STRING);
                 }
-                throw new AssertionError("Unexpected value " + CharSequences.quoteIfChars(value));
+                return this.formattedText(value.toString());
             }
 
             private Optional<SpreadsheetFormattedText> formattedText(final String text) {
