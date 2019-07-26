@@ -65,13 +65,17 @@ final class ExpressionSpreadsheetTextFormatter extends SpreadsheetTextFormatter3
                 .count() == 1;
     }
 
+    /**
+     * If none of the formatters match and format do a {@link SpreadsheetTextFormatContext#defaultFormatText}
+     */
     @Override
     Optional<SpreadsheetFormattedText> format0(final Object value, final SpreadsheetTextFormatContext context) {
         return this.formatters.stream()
                 .skip(this.skip(value))
                 .filter(f -> f.canFormat(value))
                 .flatMap(f -> f.format(value, context).stream())
-                .findFirst();
+                .findFirst()
+                .or(() -> context.defaultFormatText(value));
     }
 
     /**
