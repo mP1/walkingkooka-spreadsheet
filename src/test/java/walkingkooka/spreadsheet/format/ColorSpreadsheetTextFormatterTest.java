@@ -27,6 +27,7 @@ import walkingkooka.text.cursor.parser.Parser;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ColorSpreadsheetTextFormatterTest extends SpreadsheetTextFormatter3TestCase<ColorSpreadsheetTextFormatter,
@@ -39,6 +40,14 @@ public final class ColorSpreadsheetTextFormatterTest extends SpreadsheetTextForm
         assertThrows(NullPointerException.class, () -> {
             ColorSpreadsheetTextFormatter.with(this.parsePatternOrFail(this.pattern()), null);
         });
+    }
+
+    @Test
+    public void testWithColorSpreadsheetTextFormatter() {
+        final SpreadsheetTextFormatter text = SpreadsheetTextFormatters.fake();
+        final ColorSpreadsheetTextFormatter color = ColorSpreadsheetTextFormatter.with(this.parsePatternOrFail("[COLOR 1]"), text);
+        final ColorSpreadsheetTextFormatter wrapper = ColorSpreadsheetTextFormatter.with(this.parsePatternOrFail("[COLOR 2]"), color);
+        assertSame(text, wrapper.formatter, "formatter");
     }
 
     @Test
@@ -106,6 +115,36 @@ public final class ColorSpreadsheetTextFormatterTest extends SpreadsheetTextForm
     }
 
     @Test
+    public void testColorNumberAndTextFormattedAfterDoubleWrapping() {
+        final String text = "abc123";
+        final Optional<Color> color = Optional.of(Color.BLACK);
+
+        this.parseFormatAndCheck0(
+                ColorSpreadsheetTextFormatter.with(this.parsePatternOrFail("[COLOR 2]"),
+                        ColorSpreadsheetTextFormatter.with(this.parsePatternOrFail("[COLOR 1]"), new SpreadsheetTextFormatter() {
+                            @Override
+                            public boolean canFormat(final Object value) {
+                                return true;
+                            }
+
+                            @Override
+                            public Optional<SpreadsheetFormattedText> format(final Object value, final SpreadsheetTextFormatContext context) {
+                                assertEquals(text, value, "value");
+                                return Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, text + text));
+                            }
+                        })),
+                text,
+                new FakeSpreadsheetTextFormatContext() {
+                    @Override
+                    public Optional<Color> colorNumber(final int number) {
+                        assertEquals(2, number);
+                        return color;
+                    }
+                },
+                SpreadsheetFormattedText.with(color, text + text));
+    }
+
+    @Test
     public void testColorNumberAndTextFormattedAbsent() {
         final String text = "abc123";
         final Optional<Color> color = Optional.empty();
@@ -126,7 +165,14 @@ public final class ColorSpreadsheetTextFormatterTest extends SpreadsheetTextForm
                                       final String value,
                                       final SpreadsheetTextFormatContext context,
                                       final SpreadsheetFormattedText formattedText) {
-        this.formatAndCheck(this.createFormatter(pattern), value, context, Optional.of(formattedText));
+        this.parseFormatAndCheck0(this.createFormatter(pattern), value, context, formattedText);
+    }
+
+    private void parseFormatAndCheck0(final ColorSpreadsheetTextFormatter formatter,
+                                      final String value,
+                                      final SpreadsheetTextFormatContext context,
+                                      final SpreadsheetFormattedText formattedText) {
+        this.formatAndCheck(formatter, value, context, Optional.of(formattedText));
     }
 
     @Test

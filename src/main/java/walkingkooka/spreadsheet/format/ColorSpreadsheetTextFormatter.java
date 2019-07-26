@@ -39,7 +39,9 @@ final class ColorSpreadsheetTextFormatter extends SpreadsheetTextFormatter3<Spre
         Objects.requireNonNull(formatter, "formatter");
 
         return new ColorSpreadsheetTextFormatter(token,
-                formatter instanceof ColorSpreadsheetTextFormatter ? unwrap(Cast.to(formatter)) : formatter);
+                formatter instanceof ColorSpreadsheetTextFormatter ?
+                        unwrap(Cast.to(formatter)) :
+                        formatter);
     }
 
     private static SpreadsheetTextFormatter unwrap(final ColorSpreadsheetTextFormatter formatter) {
@@ -74,9 +76,9 @@ final class ColorSpreadsheetTextFormatter extends SpreadsheetTextFormatter3<Spre
     }
 
     /**
-     * The formatter that will have its color replaced if it was successful.
+     * The {@link SpreadsheetTextFormatter} that will have its color replaced if it was successful.
      */
-    private final SpreadsheetTextFormatter formatter;
+    final SpreadsheetTextFormatter formatter;
 
     /**
      * Fetches the color to be added. While the color reference is static, the actual resolved {@link Color} is not.
