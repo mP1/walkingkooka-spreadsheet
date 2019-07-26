@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetTextFormatter} that formats a {@link LocalDateTime}.
+ * A {@link SpreadsheetTextFormatter} that formats any value after converting it to a {@link LocalDateTime}.
  */
 final class LocalDateTimeSpreadsheetTextFormatter extends SpreadsheetTextFormatter3<SpreadsheetFormatDateTimeParserToken> {
 
@@ -41,18 +41,17 @@ final class LocalDateTimeSpreadsheetTextFormatter extends SpreadsheetTextFormatt
     private LocalDateTimeSpreadsheetTextFormatter(final SpreadsheetFormatDateTimeParserToken token) {
         super(token);
         this.twelveHour = LocalDateTimeSpreadsheetTextFormatterAmPmSpreadsheetFormatParserTokenVisitor.is12HourTime(token);
-
     }
 
     @Override
     public boolean canFormat(final Object value) {
-        return value instanceof LocalDateTime;
+        return true; // assumption can convert any value
     }
 
     @Override
     Optional<SpreadsheetFormattedText> format0(final Object value, final SpreadsheetTextFormatContext context) {
         return LocalDateTimeSpreadsheetTextFormatterFormattingSpreadsheetFormatParserTokenVisitor.format(this.token,
-                LocalDateTime.class.cast(value),
+                context.convert(value, LocalDateTime.class),
                 context,
                 this.twelveHour);
     }
