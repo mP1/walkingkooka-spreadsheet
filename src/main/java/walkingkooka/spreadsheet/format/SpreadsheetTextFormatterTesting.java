@@ -18,11 +18,19 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.test.TypeNameTesting;
 import walkingkooka.text.CharSequences;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -46,6 +54,44 @@ public interface SpreadsheetTextFormatterTesting<F extends SpreadsheetTextFormat
         assertThrows(NullPointerException.class, () -> {
             this.createFormatter().format(this.value(), null);
         });
+    }
+
+    @Test
+    default void testFormatUnsupportedValueFails() {
+        final List<Object> values = Lists.of(true,
+                BigDecimal.TEN,
+                BigInteger.valueOf(11),
+                Byte.MAX_VALUE,
+                123.5,
+                123.5f,
+                123,
+                LocalDate.of(2000, 12, 31),
+                LocalDateTime.of(2000, 12, 31, 12, 58, 59),
+                LocalTime.of(12, 58, 59),
+                123L,
+                Short.valueOf((short) 123),
+                "abc123",
+                this);
+
+        final F formatter = this.createFormatter();
+        final SpreadsheetTextFormatContext context = this.createContext();
+
+        assertEquals(Lists.empty(),
+                values.stream()
+                        .filter(formatter::canFormat)
+                        .filter((v) -> {
+                            boolean failed = false;
+
+                            try {
+                                formatter.format(v, context);
+                            } catch (final Throwable expected) {
+                                failed = true;
+                            }
+                            return failed;
+                        })
+                        .map(v -> v.getClass().getName() + "=" + CharSequences.quoteIfChars(v))
+                        .collect(Collectors.toList()),
+                () -> "canFormat return false and format didnt fail");
     }
 
     @Test
