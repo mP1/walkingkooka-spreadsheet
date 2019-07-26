@@ -17,8 +17,20 @@
 
 package walkingkooka.spreadsheet.format;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
+
 public final class TextSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitorTest extends
         TextFormatterSpreadsheetFormatParserTokenVisitorTestCase<TextSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor> {
+
+    @Test
+    public void testToString() {
+        final TextSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor visitor = new TextSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor(null, null);
+        visitor.accept(SpreadsheetFormatParserToken.escape('\\', "\\"));
+        visitor.accept(SpreadsheetFormatParserToken.quotedText("abc123", "\"abc123\""));
+        this.toStringAndCheck(visitor, "\\abc123");
+    }
+
     @Override
     public TextSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor createVisitor() {
         return new TextSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisitor(null, null);
