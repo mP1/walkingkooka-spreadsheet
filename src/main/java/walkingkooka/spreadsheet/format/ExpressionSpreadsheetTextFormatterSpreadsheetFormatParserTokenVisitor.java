@@ -71,7 +71,7 @@ final class ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisito
 
     @Override
     protected void endVisit(final SpreadsheetFormatBigDecimalParserToken token) {
-        this.setSpreadsheetTextFormatter(SpreadsheetTextFormatters.bigDecimal(token), token);
+        this.setSpreadsheetTextFormatter(SpreadsheetTextFormatters.number(token), token);
     }
 
     @Override
