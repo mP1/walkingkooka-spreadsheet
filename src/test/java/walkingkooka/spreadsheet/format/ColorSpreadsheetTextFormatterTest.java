@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.Cast;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
@@ -30,7 +29,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ColorSpreadsheetTextFormatterTest extends SpreadsheetTextFormatter3TestCase<ColorSpreadsheetTextFormatter<String>,
+public final class ColorSpreadsheetTextFormatterTest extends SpreadsheetTextFormatter3TestCase<ColorSpreadsheetTextFormatter,
         SpreadsheetFormatColorParserToken> {
 
     private final static String TEXT_PATTERN = "@@";
@@ -136,7 +135,7 @@ public final class ColorSpreadsheetTextFormatterTest extends SpreadsheetTextForm
     }
 
     @Override
-    ColorSpreadsheetTextFormatter<String> createFormatter0(final SpreadsheetFormatColorParserToken token) {
+    ColorSpreadsheetTextFormatter createFormatter0(final SpreadsheetFormatColorParserToken token) {
         return ColorSpreadsheetTextFormatter.with(token, this.textFormatter());
     }
 
@@ -165,7 +164,7 @@ public final class ColorSpreadsheetTextFormatterTest extends SpreadsheetTextForm
     }
 
     @Override
-    public Class<ColorSpreadsheetTextFormatter<String>> type() {
-        return Cast.to(ColorSpreadsheetTextFormatter.class);
+    public Class<ColorSpreadsheetTextFormatter> type() {
+        return ColorSpreadsheetTextFormatter.class;
     }
 }
