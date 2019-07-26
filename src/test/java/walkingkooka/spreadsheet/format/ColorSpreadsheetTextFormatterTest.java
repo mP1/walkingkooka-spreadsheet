@@ -194,9 +194,11 @@ public final class ColorSpreadsheetTextFormatterTest extends SpreadsheetTextForm
         return SpreadsheetFormatParsers.color();
     }
 
+    private final static int COLOR_NUMBER = 13;
+
     @Override
     String pattern() {
-        return "[RED]";
+        return "[COLOR " + COLOR_NUMBER + "]";
     }
 
     @Override
@@ -204,9 +206,22 @@ public final class ColorSpreadsheetTextFormatterTest extends SpreadsheetTextForm
         return "Text123";
     }
 
+    private final static Color COLOR = Color.fromRgb(0xff00ff);
+
     @Override
     public SpreadsheetTextFormatContext createContext() {
-        return SpreadsheetTextFormatContexts.fake();
+        return new FakeSpreadsheetTextFormatContext() {
+            @Override
+            public Optional<Color> colorNumber(final int number) {
+                assertEquals(COLOR_NUMBER, number, "color number");
+                return Optional.of(COLOR);
+            }
+
+            @Override
+            public String toString() {
+                return "colorNumber: " + COLOR_NUMBER + "=" + COLOR;
+            }
+        };
     }
 
     @Override
