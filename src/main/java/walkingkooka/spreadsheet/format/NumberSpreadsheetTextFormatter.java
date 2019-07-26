@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
+import walkingkooka.math.Maths;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatBigDecimalParserToken;
-import walkingkooka.spreadsheet.math.SpreadsheetMaths;
 import walkingkooka.text.CharSequences;
 
 import java.math.BigDecimal;
@@ -90,7 +90,7 @@ final class NumberSpreadsheetTextFormatter extends SpreadsheetTextFormatter3<Spr
     Optional<SpreadsheetFormattedText> format0(final Object value, final SpreadsheetTextFormatContext context) {
         return Optional.of(SpreadsheetFormattedText.with(
                 SpreadsheetFormattedText.WITHOUT_COLOR,
-                this.format1(this.normalOrScientific.context(SpreadsheetMaths.toBigDecimal(value).orElseThrow(() -> new IllegalArgumentException("Non number value " + CharSequences.quoteIfChars(value))), this, context))));
+                this.format1(this.normalOrScientific.context(Maths.toBigDecimal(Number.class.cast(value)).orElseThrow(() -> new IllegalArgumentException("Non number value " + CharSequences.quoteIfChars(value))), this, context))));
     }
 
     /**
