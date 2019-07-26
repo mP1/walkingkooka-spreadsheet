@@ -36,13 +36,6 @@ import java.util.function.Function;
 public final class SpreadsheetTextFormatters implements PublicStaticHelper {
 
     /**
-     * {@see BigDecimalSpreadsheetTextFormatter}
-     */
-    public static SpreadsheetTextFormatter bigDecimal(final SpreadsheetFormatBigDecimalParserToken token) {
-        return BigDecimalSpreadsheetTextFormatter.with(token);
-    }
-
-    /**
      * {@see BigDecimalFractionSpreadsheetTextFormatter}
      */
     public static SpreadsheetTextFormatter bigDecimalFraction(final SpreadsheetFormatFractionParserToken token,
@@ -93,6 +86,13 @@ public final class SpreadsheetTextFormatters implements PublicStaticHelper {
      */
     public static SpreadsheetTextFormatter localDateTime(final SpreadsheetFormatDateTimeParserToken token) {
         return LocalDateTimeSpreadsheetTextFormatter.with(token);
+    }
+
+    /**
+     * {@see NumberSpreadsheetTextFormatter}
+     */
+    public static SpreadsheetTextFormatter number(final SpreadsheetFormatBigDecimalParserToken token) {
+        return NumberSpreadsheetTextFormatter.with(token);
     }
 
     /**
