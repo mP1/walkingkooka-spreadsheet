@@ -25,24 +25,24 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Adds a {@link Color} to successfully formatted text, that is decorates the result of the given {@link SpreadsheetTextFormatter}.
+ * Adds a {@link Color} to a value formatted by another {@link SpreadsheetTextFormatter}.
  */
-final class ColorSpreadsheetTextFormatter<T> extends SpreadsheetTextFormatter3<SpreadsheetFormatColorParserToken> {
+final class ColorSpreadsheetTextFormatter extends SpreadsheetTextFormatter3<SpreadsheetFormatColorParserToken> {
 
 
     /**
      * Creates a {@link ColorSpreadsheetTextFormatter}
      */
-    static <T> ColorSpreadsheetTextFormatter<T> with(final SpreadsheetFormatColorParserToken token,
-                                                     final SpreadsheetTextFormatter formatter) {
+    static ColorSpreadsheetTextFormatter with(final SpreadsheetFormatColorParserToken token,
+                                              final SpreadsheetTextFormatter formatter) {
         check(token);
         Objects.requireNonNull(formatter, "formatter");
 
-        return new ColorSpreadsheetTextFormatter<T>(token,
+        return new ColorSpreadsheetTextFormatter(token,
                 formatter instanceof ColorSpreadsheetTextFormatter ? unwrap(Cast.to(formatter)) : formatter);
     }
 
-    private static <T> SpreadsheetTextFormatter unwrap(final ColorSpreadsheetTextFormatter<T> formatter) {
+    private static SpreadsheetTextFormatter unwrap(final ColorSpreadsheetTextFormatter formatter) {
         final SpreadsheetTextFormatter wrapped = formatter.formatter;
         return wrapped instanceof ColorSpreadsheetTextFormatter ?
                 unwrap(Cast.to(wrapped)) :
