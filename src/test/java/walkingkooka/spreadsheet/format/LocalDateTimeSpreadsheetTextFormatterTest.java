@@ -23,7 +23,9 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.parser.Parser;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,7 +34,16 @@ public final class LocalDateTimeSpreadsheetTextFormatterTest extends Spreadsheet
         LocalDateTimeSpreadsheetTextFormatter,
         SpreadsheetFormatDateTimeParserToken> {
 
-    // year.............................................................................................
+    @Override
+    public void testCanFormatFalse() {
+        // LocalDateTimeSpreadsheetTextFormatter says it can format anything. It converts all values to LocalDateTime before formatting.
+    }
+
+    @Override
+    public void testFormatUnsupportedValueFails() {
+    }
+
+    // year.............................................................................................................
 
     @Test
     public void testYear2000() {
@@ -114,7 +125,7 @@ public final class LocalDateTimeSpreadsheetTextFormatterTest extends Spreadsheet
     private void parseFormatAndCheckMMM(final String date, final int monthNumber, final String monthName) {
         this.parseFormatAndCheck("mmm",
                 date,
-                new FakeSpreadsheetTextFormatContext() {
+                new TestSpreadsheetTextFormatContext() {
                     @Override
                     public String monthNameAbbreviation(final int m) {
                         assertEquals(monthNumber, m, "month");
@@ -137,7 +148,7 @@ public final class LocalDateTimeSpreadsheetTextFormatterTest extends Spreadsheet
     private void parseFormatAndCheckMMMM(final String dateTime, final int monthNumber, final String monthName) {
         this.parseFormatAndCheck("mmmm",
                 dateTime,
-                new FakeSpreadsheetTextFormatContext() {
+                new TestSpreadsheetTextFormatContext() {
                     @Override
                     public String monthName(final int m) {
                         assertEquals(monthNumber, m, "month");
@@ -182,7 +193,7 @@ public final class LocalDateTimeSpreadsheetTextFormatterTest extends Spreadsheet
     private void parseFormatAndCheckDDD(final String dateTime, final int dayNumber, final String dayName) {
         this.parseFormatAndCheck("ddd",
                 dateTime,
-                new FakeSpreadsheetTextFormatContext() {
+                new TestSpreadsheetTextFormatContext() {
                     @Override
                     public String weekDayNameAbbreviation(final int d) {
                         assertEquals(dayNumber, d, "day");
@@ -205,7 +216,7 @@ public final class LocalDateTimeSpreadsheetTextFormatterTest extends Spreadsheet
     private void parseFormatAndCheckDDDD(final String date, final int dayNumber, final String dayName) {
         this.parseFormatAndCheck("dddd",
                 date,
-                new FakeSpreadsheetTextFormatContext() {
+                new TestSpreadsheetTextFormatContext() {
                     @Override
                     public String weekDayName(final int d) {
                         assertEquals(dayNumber, d, "day");
@@ -397,7 +408,7 @@ public final class LocalDateTimeSpreadsheetTextFormatterTest extends Spreadsheet
                                          final String text) {
         this.parseFormatAndCheck(pattern,
                 dateTime,
-                new FakeSpreadsheetTextFormatContext() {
+                new TestSpreadsheetTextFormatContext() {
                     @Override
                     public String ampm(final int h) {
                         assertEquals(hour, h, "hour");
@@ -482,6 +493,38 @@ public final class LocalDateTimeSpreadsheetTextFormatterTest extends Spreadsheet
                 "31/12/2000T15:58:59");
     }
 
+    // Date.............................................................................................................
+
+    @Test
+    public void testDate() {
+        this.formatAndCheck(this.createFormatter("yyyy/mm/dd"),
+                LocalDate.of(2000, 12, 31),
+                new TestSpreadsheetTextFormatContext() {
+                    @Override
+                    public <T> T convert(final Object value, final Class<T> target) {
+                        assertEquals(LocalDateTime.class, target, "target");
+                        return target.cast(LocalDateTime.of(LocalDate.class.cast(value), LocalTime.MIDNIGHT));
+                    }
+                },
+                "2000/12/31");
+    }
+
+    // Time.............................................................................................................
+
+    @Test
+    public void testTime() {
+        this.formatAndCheck(this.createFormatter("hh/mm/ss"),
+                LocalTime.of(12, 58, 59),
+                new TestSpreadsheetTextFormatContext() {
+                    @Override
+                    public <T> T convert(final Object value, final Class<T> target) {
+                        assertEquals(LocalDateTime.class, target, "target");
+                        return target.cast(LocalDateTime.of(LocalDate.of(2000, 10, 31), LocalTime.class.cast(value)));
+                    }
+                },
+                "12/58/59");
+    }
+
     // helpers..........................................................................................................
 
     private void parseFormatAndCheck(final String pattern,
@@ -538,13 +581,21 @@ public final class LocalDateTimeSpreadsheetTextFormatterTest extends Spreadsheet
         return "2000-12-31T15:58:59";
     }
 
-    private LocalDateTime parseLocalDateTime(final String value) {
-        return LocalDateTime.parse(value, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-    }
-
     @Override
     public SpreadsheetTextFormatContext createContext() {
-        return SpreadsheetTextFormatContexts.fake();
+        return new TestSpreadsheetTextFormatContext();
+    }
+
+    class TestSpreadsheetTextFormatContext extends FakeSpreadsheetTextFormatContext {
+        @Override
+        public <T> T convert(final Object value, final Class<T> target) {
+            assertEquals(LocalDateTime.class, target, "target");
+            return target.cast(value);
+        }
+    }
+
+    private LocalDateTime parseLocalDateTime(final String value) {
+        return LocalDateTime.parse(value, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
     }
 
     @Override
