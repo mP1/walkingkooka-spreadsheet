@@ -30,7 +30,7 @@ public final class SpreadsheetConditionalFormattingRulePriorityDescendingCompara
 
     @Test
     public void testEqual() {
-        this.compareAndCheckEqual(this.createRule(1));
+        this.compareAndCheckEquals(this.createRule(1));
     }
 
     @Test
