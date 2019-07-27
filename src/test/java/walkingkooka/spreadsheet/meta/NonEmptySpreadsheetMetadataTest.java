@@ -585,7 +585,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         this.checkMinusSign(context, minusSign);
         this.checkPercentageSymbol(context, percentSymbol);
         this.checkPlusSign(context, plusSign);
-        this.checkMathContext(context, new MathContext(precision, roundingMode));
+        this.hasMathContextAndCheck(context, new MathContext(precision, roundingMode));
     }
 
     // HasMathContext...................................................................................................
