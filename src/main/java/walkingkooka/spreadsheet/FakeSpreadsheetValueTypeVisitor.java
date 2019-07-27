@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.tree.visit.Visiting;
+import walkingkooka.visit.Visiting;
 
 public class FakeSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor {
 

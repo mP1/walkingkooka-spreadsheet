@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.test.Fake;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.visit.Visiting;
+import walkingkooka.visit.Visiting;
 
 public class FakeSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpressionReferenceVisitor implements Fake {
 

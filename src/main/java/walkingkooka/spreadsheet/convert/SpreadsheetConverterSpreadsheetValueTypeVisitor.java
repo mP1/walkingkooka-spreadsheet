@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.SpreadsheetValueTypeVisitor;
-import walkingkooka.tree.visit.Visitor;
+import walkingkooka.visit.Visitor;
 
 /**
  * A {@link Visitor} that locates the appropriate {@link Converter} for a given source and target {@link Class}.
