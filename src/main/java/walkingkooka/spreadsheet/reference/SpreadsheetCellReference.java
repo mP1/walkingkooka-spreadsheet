@@ -18,7 +18,6 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
 import walkingkooka.compare.Comparators;
-import walkingkooka.compare.LowerOrUpper;
 import walkingkooka.compare.Range;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
@@ -37,8 +36,7 @@ import java.util.Objects;
  * A reference that includes a defined name or column and row.
  */
 public final class SpreadsheetCellReference extends SpreadsheetExpressionReference
-        implements Comparable<SpreadsheetCellReference>,
-        LowerOrUpper<SpreadsheetCellReference> {
+        implements Comparable<SpreadsheetCellReference> {
 
     /**
      * Parsers a range of cell referencs.
@@ -150,26 +148,6 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
         return new SpreadsheetCellReference(column, row);
     }
 
-    /**
-     * Returns the lower (Comparison wise) of two {@link SpreadsheetCellReference}
-     */
-    public SpreadsheetCellReference lower(final SpreadsheetCellReference other) {
-        checkOther(other);
-
-        return this.setColumn(this.column.lower(other.column))
-                .setRow(this.row.lower(other.row));
-    }
-
-    /**
-     * Returns the upper (Comparison wise) of two {@link SpreadsheetCellReference}
-     */
-    public SpreadsheetCellReference upper(final SpreadsheetCellReference other) {
-        checkOther(other);
-
-        return this.setColumn(this.column.upper(other.column))
-                .setRow(this.row.upper(other.row));
-    }
-
     private static void checkOther(final SpreadsheetCellReference other) {
         Objects.requireNonNull(other, "other");
     }
@@ -182,11 +160,33 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
     public Range<SpreadsheetCellReference> range(final SpreadsheetCellReference other) {
         Objects.requireNonNull(other, "other");
 
-        final SpreadsheetCellReference begin = this.lower(other);
-        final SpreadsheetCellReference end = this.upper(other);
+        SpreadsheetColumnReference left = this.column;
+        SpreadsheetColumnReference right = left;
 
-        return Range.greaterThanEquals(begin)
-                .and(Range.lessThanEquals(end));
+        SpreadsheetRowReference top = this.row;
+        SpreadsheetRowReference bottom = top;
+
+        final SpreadsheetColumnReference cellColumn = other.column();
+        if (cellColumn.compareTo(left) < Comparators.EQUAL) {
+            left = cellColumn;
+        } else {
+            if (cellColumn.compareTo(right) > Comparators.EQUAL) {
+                right = cellColumn;
+            }
+        }
+
+        // row
+        final SpreadsheetRowReference cellRow = other.row();
+        if (cellRow.compareTo(top) < Comparators.EQUAL) {
+            top = cellRow;
+        } else {
+            if (cellRow.compareTo(bottom) > Comparators.EQUAL) {
+                bottom = cellRow;
+            }
+        }
+
+        return Range.greaterThanEquals(left.setRow(top))
+                    .and(Range.lessThanEquals(right.setRow(bottom)));
     }
 
     /**

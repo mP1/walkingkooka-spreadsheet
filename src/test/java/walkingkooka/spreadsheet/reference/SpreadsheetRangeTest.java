@@ -708,12 +708,6 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
         return this.range(COLUMN1, ROW1, COLUMN2, ROW2);
     }
 
-    private SpreadsheetCell spreadsheetCell(final int column, final int row) {
-        return SpreadsheetCell.with(this.cellReference(column, row), SpreadsheetFormula.with(column + "+" + row))
-                .setFormat(this.format())
-                .setFormatted(this.formatted());
-    }
-
     private Optional<SpreadsheetCellFormat> format() {
         return SpreadsheetCell.NO_FORMAT;
     }
