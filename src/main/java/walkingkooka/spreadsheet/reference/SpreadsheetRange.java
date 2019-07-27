@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.compare.Comparators;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -107,20 +108,43 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference imple
     }
 
     private static SpreadsheetRange computeRangeFromManyCells(final List<SpreadsheetCellReference> cells) {
-        SpreadsheetCellReference topLeft = null;
-        SpreadsheetCellReference bottomRight = null;
+        SpreadsheetColumnReference left = null;
+        SpreadsheetRowReference top = null;
+
+        SpreadsheetColumnReference right = null;
+        SpreadsheetRowReference bottom = null;
 
         for (SpreadsheetCellReference cell : cells) {
-            if (null == topLeft) {
-                topLeft = cell;
-                bottomRight = cell;
+            if (null == left) {
+                left = cell.column();
+                right = left;
+
+                top = cell.row();
+                bottom = top;
             } else {
-                topLeft = topLeft.lower(cell);
-                bottomRight = bottomRight.upper(cell);
+                // column
+                final SpreadsheetColumnReference cellColumn = cell.column();
+                if (cellColumn.compareTo(left) < Comparators.EQUAL) {
+                    left = cellColumn;
+                } else {
+                    if (cellColumn.compareTo(right) > Comparators.EQUAL) {
+                        right = cellColumn;
+                    }
+                }
+
+                // row
+                final SpreadsheetRowReference cellRow = cell.row();
+                if (cellRow.compareTo(top) < Comparators.EQUAL) {
+                    top = cellRow;
+                } else {
+                    if (cellRow.compareTo(bottom) > Comparators.EQUAL) {
+                        bottom = cellRow;
+                    }
+                }
             }
         }
 
-        return topLeft.spreadsheetRange(bottomRight);
+        return left.setRow(top).spreadsheetRange(right.setRow(bottom));
     }
 
     /**

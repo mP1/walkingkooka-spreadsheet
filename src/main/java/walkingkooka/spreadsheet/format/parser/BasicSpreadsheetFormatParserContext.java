@@ -21,6 +21,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 
 import java.math.MathContext;
+import java.util.Locale;
 
 /**
  * A {@link SpreadsheetFormatParserContext} without any functionality.
@@ -67,6 +68,11 @@ final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatPars
     @Override
     public char plusSign() {
         return this.context.plusSign();
+    }
+
+    @Override
+    public Locale locale() {
+        return this.context.locale();
     }
 
     @Override

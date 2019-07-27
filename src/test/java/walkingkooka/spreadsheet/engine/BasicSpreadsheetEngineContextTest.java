@@ -43,6 +43,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -339,7 +340,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createContext(), "decimalNumberContext=\"C\" 'D' 'E' 'G' 'M' 'P' 'L' precision=7 roundingMode=HALF_EVEN converter=value instanceof target type. | Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean fractioner=Fractioner123 defaultSpreadsheetTextFormatter=SpreadsheetTextFormatter123");
+        this.toStringAndCheck(this.createContext(), "decimalNumberContext=\"C\" 'D' 'E' 'G' 'M' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN converter=value instanceof target type. | Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean fractioner=Fractioner123 defaultSpreadsheetTextFormatter=SpreadsheetTextFormatter123");
     }
 
     @Override
@@ -391,7 +392,15 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     private DecimalNumberContext decimalNumberContext() {
-        return DecimalNumberContexts.basic("C", 'D', 'E', 'G', 'M', 'P', 'L', MathContext.DECIMAL32);
+        return DecimalNumberContexts.basic("C",
+                'D',
+                'E',
+                'G',
+                'M',
+                'P',
+                'L',
+                Locale.CANADA_FRENCH,
+                MathContext.DECIMAL32);
     }
 
     private DateTimeContext dateTimeContext() {
