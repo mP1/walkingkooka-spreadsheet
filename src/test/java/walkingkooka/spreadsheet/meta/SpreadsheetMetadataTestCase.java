@@ -203,7 +203,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             this.createObject().decimalNumberContext();
         });
         checkMessage(thrown,
-                "Required properties \"currency-symbol\", \"decimal-point\", \"exponent-symbol\", \"grouping-separator\", \"minus-sign\", \"percentage-symbol\", \"plus-sign\", \"precision\", \"rounding-mode\" missing.");
+                "Required properties \"currency-symbol\", \"decimal-point\", \"exponent-symbol\", \"grouping-separator\", \"locale\", \"minus-sign\", \"percentage-symbol\", \"plus-sign\", \"precision\", \"rounding-mode\" missing.");
     }
 
     // HasMathContext...................................................................................................

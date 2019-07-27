@@ -476,7 +476,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
                     .set(SpreadsheetMetadataPropertyName.MINUS_SIGN, 'M')
                     .decimalNumberContext();
         });
-        assertEquals("Required properties \"percentage-symbol\", \"plus-sign\", \"precision\", \"rounding-mode\" missing.",
+        assertEquals("Required properties \"locale\", \"percentage-symbol\", \"plus-sign\", \"precision\", \"rounding-mode\" missing.",
                 thrown.getMessage(),
                 "message");
     }
@@ -490,7 +490,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
                     .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, 'E')
                     .decimalNumberContext();
         });
-        assertEquals("Required properties \"grouping-separator\", \"minus-sign\", \"percentage-symbol\", \"plus-sign\", \"precision\", \"rounding-mode\" missing.",
+        assertEquals("Required properties \"grouping-separator\", \"locale\", \"minus-sign\", \"percentage-symbol\", \"plus-sign\", \"precision\", \"rounding-mode\" missing.",
                 thrown.getMessage(),
                 "message");
     }
@@ -504,6 +504,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         final Character minusSign = 'M';
         final Character percentSymbol = 'P';
         final Character plusSign = '+';
+        final Locale locale = Locale.CANADA_FRENCH;
 
         Lists.of(MathContext.DECIMAL32, MathContext.DECIMAL64, MathContext.DECIMAL128, MathContext.UNLIMITED)
                 .stream()
@@ -516,6 +517,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
                                     .set(SpreadsheetMetadataPropertyName.DECIMAL_POINT, decimalPoint)
                                     .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, exponentSymbol)
                                     .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, groupingSeparator)
+                                    .set(SpreadsheetMetadataPropertyName.LOCALE, locale)
                                     .set(SpreadsheetMetadataPropertyName.MINUS_SIGN, minusSign)
                                     .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, percentSymbol)
                                     .set(SpreadsheetMetadataPropertyName.PLUS_SIGN, plusSign)
@@ -525,6 +527,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
                             decimalPoint,
                             exponentSymbol,
                             groupingSeparator,
+                            locale,
                             minusSign,
                             percentSymbol,
                             plusSign,
@@ -539,18 +542,18 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         final Character plusSign = '+';
 
         Arrays.stream(Locale.getAvailableLocales())
-                .forEach(l -> {
+                .forEach(locale -> {
                     Lists.of(MathContext.DECIMAL32, MathContext.DECIMAL64, MathContext.DECIMAL128, MathContext.UNLIMITED)
                             .stream()
                             .forEach(mc -> {
                                 final int precision = mc.getPrecision();
                                 final RoundingMode roundingMode = mc.getRoundingMode();
 
-                                final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(l);
+                                final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
 
                                 this.decimalNumberContextAndCheck(SpreadsheetMetadata.EMPTY
                                                 .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, exponentSymbol)
-                                                .set(SpreadsheetMetadataPropertyName.LOCALE, l)
+                                                .set(SpreadsheetMetadataPropertyName.LOCALE, locale)
                                                 .set(SpreadsheetMetadataPropertyName.PLUS_SIGN, plusSign)
                                                 .set(SpreadsheetMetadataPropertyName.PRECISION, precision)
                                                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, roundingMode),
@@ -558,6 +561,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
                                         symbols.getDecimalSeparator(),
                                         exponentSymbol,
                                         symbols.getGroupingSeparator(),
+                                        locale,
                                         symbols.getMinusSign(),
                                         symbols.getPercent(),
                                         plusSign,
@@ -572,6 +576,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
                                               final Character decimalPoint,
                                               final Character exponentSymbol,
                                               final Character groupingSeparator,
+                                              final Locale locale,
                                               final Character minusSign,
                                               final Character percentSymbol,
                                               final Character plusSign,
@@ -585,6 +590,8 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         this.checkMinusSign(context, minusSign);
         this.checkPercentageSymbol(context, percentSymbol);
         this.checkPlusSign(context, plusSign);
+
+        this.hasLocaleAndCheck(context, locale);
         this.hasMathContextAndCheck(context, new MathContext(precision, roundingMode));
     }
 

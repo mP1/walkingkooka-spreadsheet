@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting;
-import walkingkooka.compare.LowerOrUpperTesting;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.test.ToStringTesting;
@@ -34,7 +33,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends SpreadsheetColumnOrRowReference<R>> implements ClassTesting2<R>,
         ComparableTesting<R>,
-        LowerOrUpperTesting<R>,
         HasJsonNodeStringTesting<R>,
         ParseStringTesting<R>,
         ToStringTesting<R> {
@@ -199,43 +197,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         this.checkType(different);
     }
 
-    // lower..........................................................................................
-
-    @Test
-    public void testLowerOtherLess() {
-        final R reference = this.createReference();
-        final R lower = this.createReference(VALUE - 99);
-        assertSame(lower, reference.lower(lower));
-        assertSame(lower, lower.lower(reference));
-    }
-
-    @Test
-    public void testLowerOtherGreater() {
-        final R reference = this.createReference();
-        final R higher = this.createReference(VALUE + 99);
-        assertSame(reference, reference.lower(higher));
-        assertSame(reference, higher.lower(reference));
-    }
-
-    // upper..........................................................................................
-
-    @Test
-    public void testUpperOtherLess() {
-        final R reference = this.createReference();
-        final R lower = this.createReference(VALUE - 99);
-        assertSame(reference, reference.upper(lower));
-        assertSame(reference, lower.upper(reference));
-    }
-
-    @Test
-    public void testUpperOtherGreater() {
-        final R reference = this.createReference();
-        final R higher = this.createReference(VALUE + 99);
-        assertSame(higher, reference.upper(higher));
-        assertSame(higher, higher.upper(reference));
-    }
-
-    // HasJsonNode.......................................................................................
+    // HasJsonNode......................................................................................................
 
     @Test
     public final void testToJsonNode() {
@@ -370,11 +332,6 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
     @Override
     public final boolean compareAndEqualsMatch() {
         return false;
-    }
-
-    @Override
-    public final R createLowerOrUpper() {
-        return this.createComparable();
     }
 
     // HasJsonNode.......................................................................................
