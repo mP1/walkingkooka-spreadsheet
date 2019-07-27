@@ -281,19 +281,19 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @Test
     public void testCompareDifferentTextStyle() {
-        this.compareToAndCheckEqual(this.createComparable()
+        this.compareToAndCheckEquals(this.createComparable()
                 .setStyle(TextStyle.with(Maps.of(TextStylePropertyName.FONT_STYLE, FontStyle.ITALIC))));
     }
 
     @Test
     public void testCompareDifferentFormat() {
-        this.compareToAndCheckEqual(this.createComparable()
+        this.compareToAndCheckEquals(this.createComparable()
                 .setFormat(Optional.of(SpreadsheetCellFormat.with("different-pattern"))));
     }
 
     @Test
     public void testCompareDifferentFormatted() {
-        this.compareToAndCheckEqual(this.createComparable().setFormatted(Optional.of(TextNode.text("different-formatted"))));
+        this.compareToAndCheckEquals(this.createComparable().setFormatted(Optional.of(TextNode.text("different-formatted"))));
     }
 
     // HasJsonNode...............................................................................................
