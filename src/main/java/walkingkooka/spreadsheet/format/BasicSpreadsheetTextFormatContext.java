@@ -26,6 +26,7 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 
 import java.math.MathContext;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
@@ -199,6 +200,11 @@ final class BasicSpreadsheetTextFormatContext implements SpreadsheetTextFormatCo
     @Override
     public char plusSign() {
         return this.decimalNumberContext.plusSign();
+    }
+
+    @Override
+    public Locale locale() {
+        return this.decimalNumberContext.locale();
     }
 
     private final DecimalNumberContext decimalNumberContext;

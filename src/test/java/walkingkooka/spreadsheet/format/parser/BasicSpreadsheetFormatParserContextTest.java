@@ -25,8 +25,17 @@ import walkingkooka.type.JavaVisibility;
 
 import java.math.MathContext;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class BasicSpreadsheetFormatParserContextTest implements ClassTesting2<BasicSpreadsheetFormatParserContext>,
         SpreadsheetFormatParserContextTesting<BasicSpreadsheetFormatParserContext> {
+
+    @Test
+    public void testLocaleFails() {
+        assertThrows(UnsupportedOperationException.class, () -> {
+            BasicSpreadsheetFormatParserContext.INSTANCE.locale();
+        });
+    }
 
     @Test
     public void testToString() {
