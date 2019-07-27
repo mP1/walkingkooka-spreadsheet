@@ -24,6 +24,7 @@ import walkingkooka.tree.expression.ExpressionReference;
 
 import java.math.MathContext;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -113,6 +114,11 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     }
 
     private final Optional<ExpressionNode> value;
+
+    @Override
+    public Locale locale() {
+        return this.context.locale();
+    }
 
     @Override
     public MathContext mathContext() {

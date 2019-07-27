@@ -17,11 +17,13 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.type.JavaVisibility;
 
 import java.math.MathContext;
+import java.util.Locale;
 
 public final class BasicSpreadsheetParserContextTest implements ClassTesting2<BasicSpreadsheetParserContext>,
         SpreadsheetParserContextTesting<BasicSpreadsheetParserContext> {
@@ -33,11 +35,25 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     private final static char MINUS = 'M';
     private final static char PERCENTAGE = 'R';
     private final static char PLUS = 'P';
+    private final static Locale LOCALE = Locale.CANADA_FRENCH;
     private final static MathContext MATH_CONTEXT = MathContext.DECIMAL32;
+
+    @Test
+    public void testLocale() {
+        this.hasLocaleAndCheck(this.createContext(), LOCALE);
+    }
 
     @Override
     public BasicSpreadsheetParserContext createContext() {
-        return BasicSpreadsheetParserContext.with(DecimalNumberContexts.basic(CURRENCY, DECIMAL, EXPONENT, GROUPING, MINUS, PERCENTAGE, PLUS, MATH_CONTEXT));
+        return BasicSpreadsheetParserContext.with(DecimalNumberContexts.basic(CURRENCY,
+                DECIMAL,
+                EXPONENT,
+                GROUPING,
+                MINUS,
+                PERCENTAGE,
+                PLUS,
+                LOCALE,
+                MATH_CONTEXT));
     }
 
     @Override

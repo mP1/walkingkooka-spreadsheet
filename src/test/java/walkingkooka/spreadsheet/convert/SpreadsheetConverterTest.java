@@ -34,6 +34,7 @@ import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -897,6 +898,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 'M',
                 'P',
                 'L',
+                Locale.ENGLISH,
                 MathContext.DECIMAL32));
     }
 

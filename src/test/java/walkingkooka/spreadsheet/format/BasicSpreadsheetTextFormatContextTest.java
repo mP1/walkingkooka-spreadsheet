@@ -39,6 +39,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetTextFormatContextTesting<BasicSpreadsheetTextFormatContext> {
 
+    private final static Locale LOCALE = Locale.CANADA_FRENCH;
+
     @Test
     public void testWithNullNumberToColorFails() {
         this.withFails(null,
@@ -176,11 +178,16 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
     }
 
     @Test
+    public void testLocale() {
+        this.hasLocaleAndCheck(this.createContext(), LOCALE);
+    }
+
+    @Test
     public void testToString() {
         final DateFormatSymbols symbols = DateFormatSymbols.getInstance(Locale.ENGLISH);
 
         this.toStringAndCheck(this.createContext(symbols),
-                "numberToColor=1=#123456 nameToColor=bingo=#123456 width=1 converter=Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean dateTimeContext=" + symbols + " decimalNumberContext=\"$$\" '!' 'E' 'G' 'M' 'P' 'L' precision=7 roundingMode=HALF_EVEN");
+                "numberToColor=1=#123456 nameToColor=bingo=#123456 width=1 converter=Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean dateTimeContext=" + symbols + " decimalNumberContext=\"$$\" '!' 'E' 'G' 'M' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN");
     }
 
     @Override
@@ -267,6 +274,7 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
                 this.minusSign(),
                 this.percentageSymbol(),
                 this.plusSign(),
+                LOCALE,
                 this.mathContext());
     }
 
