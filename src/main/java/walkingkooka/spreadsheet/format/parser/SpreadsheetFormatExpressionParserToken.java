@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.tree.visit.Visiting;
+import walkingkooka.visit.Visiting;
 
 import java.util.List;
 
