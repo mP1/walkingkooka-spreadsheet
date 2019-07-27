@@ -24,8 +24,8 @@ import walkingkooka.naming.PropertiesPath;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.visit.Visiting;
 import walkingkooka.type.JavaVisibility;
+import walkingkooka.visit.Visiting;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;

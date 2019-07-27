@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.Maps;
-import walkingkooka.tree.visit.Visiting;
 import walkingkooka.type.JavaVisibility;
+import walkingkooka.visit.Visiting;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.visit.VisitorTesting;
+import walkingkooka.visit.VisitorTesting;
 
 /**
  * A mixin interface with tests and helpers to assist in testing a {@link SpreadsheetExpressionReferenceVisitor}

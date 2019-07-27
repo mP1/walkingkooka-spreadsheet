@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokenVisitor;
-import walkingkooka.tree.visit.Visiting;
-import walkingkooka.tree.visit.Visitor;
+import walkingkooka.visit.Visiting;
+import walkingkooka.visit.Visitor;
 
 /**
  * A {@link Visitor} for all {@link SpreadsheetFormatParserToken}.

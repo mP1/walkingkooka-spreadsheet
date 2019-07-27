@@ -22,7 +22,7 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.Whitespace;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokenVisitor;
-import walkingkooka.tree.visit.Visiting;
+import walkingkooka.visit.Visiting;
 
 import java.math.BigDecimal;
 import java.util.List;

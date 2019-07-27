@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.tree.visit.Visiting;
-import walkingkooka.tree.visit.Visitor;
+import walkingkooka.visit.Visiting;
+import walkingkooka.visit.Visitor;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
