@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.tree.visit.VisitorTesting;
+import walkingkooka.visit.VisitorTesting;
 
 public interface SpreadsheetMetadataVisitorTesting<V extends SpreadsheetMetadataVisitor> extends VisitorTesting<V, SpreadsheetMetadata> {
 

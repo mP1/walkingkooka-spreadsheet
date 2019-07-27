@@ -19,10 +19,10 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.visit.Visiting;
-import walkingkooka.tree.visit.Visitor;
-import walkingkooka.tree.visit.VisitorTesting;
 import walkingkooka.type.JavaVisibility;
+import walkingkooka.visit.Visiting;
+import walkingkooka.visit.Visitor;
+import walkingkooka.visit.VisitorTesting;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
