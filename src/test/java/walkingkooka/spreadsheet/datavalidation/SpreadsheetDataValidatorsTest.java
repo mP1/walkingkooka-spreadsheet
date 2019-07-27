@@ -306,7 +306,7 @@ public final class SpreadsheetDataValidatorsTest implements ClassTesting2<Spread
         this.validatePassCheck(this.customFormulaSpreadsheetDataValidator(), BIGDECIMAL_UPPER);
     }
 
-    private SpreadsheetDataValidator customFormulaSpreadsheetDataValidator() {
+    private SpreadsheetDataValidator<Object> customFormulaSpreadsheetDataValidator() {
         return SpreadsheetDataValidators.customFormula(this.expression());
     }
 
