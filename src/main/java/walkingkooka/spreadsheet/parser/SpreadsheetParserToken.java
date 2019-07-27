@@ -27,7 +27,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokenVisitor;
 import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.expression.HasExpressionNode;
-import walkingkooka.tree.visit.Visiting;
+import walkingkooka.visit.Visiting;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

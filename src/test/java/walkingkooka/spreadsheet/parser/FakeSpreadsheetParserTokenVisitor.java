@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.test.Fake;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.tree.visit.Visiting;
+import walkingkooka.visit.Visiting;
 
 public class FakeSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVisitor implements Fake {
 
