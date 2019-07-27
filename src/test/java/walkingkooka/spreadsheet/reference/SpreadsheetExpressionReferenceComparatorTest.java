@@ -36,17 +36,17 @@ public final class SpreadsheetExpressionReferenceComparatorTest implements Class
 
     @Test
     public void testCellEqual() {
-        this.compareAndCheckEqual(this.cell(1, 2));
+        this.compareAndCheckEquals(this.cell(1, 2));
     }
 
     @Test
     public void testCellEqualRelativeColumn() {
-        this.compareAndCheckEqual(this.cell(SpreadsheetReferenceKind.RELATIVE, 1, SpreadsheetReferenceKind.ABSOLUTE, 2));
+        this.compareAndCheckEquals(this.cell(SpreadsheetReferenceKind.RELATIVE, 1, SpreadsheetReferenceKind.ABSOLUTE, 2));
     }
 
     @Test
     public void testCellEqualRelativeRow() {
-        this.compareAndCheckEqual(this.cell(SpreadsheetReferenceKind.ABSOLUTE, 1, SpreadsheetReferenceKind.RELATIVE, 2));
+        this.compareAndCheckEquals(this.cell(SpreadsheetReferenceKind.ABSOLUTE, 1, SpreadsheetReferenceKind.RELATIVE, 2));
     }
 
     @Test
@@ -72,29 +72,29 @@ public final class SpreadsheetExpressionReferenceComparatorTest implements Class
 
     @Test
     public void testCellDifferentReferenceKind() {
-        this.compareAndCheckEqual(SpreadsheetExpressionReference.parseCellReference("A1"), SpreadsheetExpressionReference.parseCellReference("$A1"));
+        this.compareAndCheckEquals(SpreadsheetExpressionReference.parseCellReference("A1"), SpreadsheetExpressionReference.parseCellReference("$A1"));
     }
 
     @Test
     public void testCellDifferentReferenceKind2() {
-        this.compareAndCheckEqual(SpreadsheetExpressionReference.parseCellReference("A1"), SpreadsheetExpressionReference.parseCellReference("$A$1"));
+        this.compareAndCheckEquals(SpreadsheetExpressionReference.parseCellReference("A1"), SpreadsheetExpressionReference.parseCellReference("$A$1"));
     }
 
     @Test
     public void testCellDifferentReferenceKind3() {
-        this.compareAndCheckEqual(SpreadsheetExpressionReference.parseCellReference("A1"), SpreadsheetExpressionReference.parseCellReference("A$1"));
+        this.compareAndCheckEquals(SpreadsheetExpressionReference.parseCellReference("A1"), SpreadsheetExpressionReference.parseCellReference("A$1"));
     }
 
     // label v label ....................................................................................................
 
     @Test
     public void testLabelEqual() {
-        this.compareAndCheckEqual(this.label("abcdef"));
+        this.compareAndCheckEquals(this.label("abcdef"));
     }
 
     @Test
     public void testLabelEqualDifferentCase() {
-        this.compareAndCheckEqual(this.label("ABcdef"), this.label("abCDef"));
+        this.compareAndCheckEquals(this.label("ABcdef"), this.label("abCDef"));
     }
 
     @Test
