@@ -45,7 +45,7 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
 
     @Test
     public void testEqualReferenceKindIgnored() {
-        this.compareToAndCheckEqual(SpreadsheetReferenceKind.ABSOLUTE.column(VALUE),
+        this.compareToAndCheckEquals(SpreadsheetReferenceKind.ABSOLUTE.column(VALUE),
                 SpreadsheetReferenceKind.RELATIVE.column(VALUE));
     }
 

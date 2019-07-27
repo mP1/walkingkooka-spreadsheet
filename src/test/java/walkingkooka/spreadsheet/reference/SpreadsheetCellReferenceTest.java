@@ -348,7 +348,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
 
     @Test
     public void testSameColumnSameRowDifferentReferenceKinds() {
-        this.compareToAndCheckEqual(
+        this.compareToAndCheckEquals(
                 this.cell(SpreadsheetReferenceKind.ABSOLUTE, COLUMN, SpreadsheetReferenceKind.ABSOLUTE, ROW),
                 this.cell(SpreadsheetReferenceKind.RELATIVE, COLUMN, SpreadsheetReferenceKind.RELATIVE, ROW));
     }
