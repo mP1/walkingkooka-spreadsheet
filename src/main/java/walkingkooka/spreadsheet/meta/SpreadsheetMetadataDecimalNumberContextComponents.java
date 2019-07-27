@@ -52,6 +52,8 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
         final Character percentSymbol = components.getOrElse(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, this::localePercentageSymbol);
         final Character plusSign = components.getOrElse(SpreadsheetMetadataPropertyName.PLUS_SIGN, this::localePlusSign);
 
+        final Locale locale = components.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
+
         final Integer precision = components.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
         final RoundingMode roundingMode = components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
 
@@ -64,6 +66,7 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
                 minusSign,
                 percentSymbol,
                 plusSign,
+                locale,
                 new MathContext(precision, roundingMode));
     }
 
@@ -115,6 +118,7 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
         return DecimalNumberContexts.decimalFormatSymbols(DecimalFormatSymbols.getInstance(locale),
                 'E',
                 '+',
+                locale,
                 MathContext.DECIMAL32); // exponent, plus, MathContext ignored
     }
 

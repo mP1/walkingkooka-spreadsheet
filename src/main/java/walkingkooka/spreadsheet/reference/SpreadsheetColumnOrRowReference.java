@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
 import walkingkooka.Value;
-import walkingkooka.compare.LowerOrUpper;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
@@ -41,7 +40,6 @@ import java.util.function.IntFunction;
  */
 abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColumnOrRowReference<R>> implements Value<Integer>,
         Comparable<R>,
-        LowerOrUpper<R>,
         HashCodeEqualsDefined,
         HasHateosLinkId,
         HasJsonNode {
