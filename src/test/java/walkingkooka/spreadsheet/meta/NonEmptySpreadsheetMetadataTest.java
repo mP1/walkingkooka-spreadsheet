@@ -332,7 +332,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
-                .set(SpreadsheetMetadataPropertyName.BIG_DECIMAL_PATTERN, "'BigDecimal' #0.0")
+                .set(SpreadsheetMetadataPropertyName.BIG_DECIMAL_PATTERN, "#0.0")
                 .set(SpreadsheetMetadataPropertyName.color(number1), color1)
                 .set(SpreadsheetMetadataPropertyName.color(number7), color7)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
@@ -353,7 +353,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
-                .set(SpreadsheetMetadataPropertyName.BIG_DECIMAL_PATTERN, "'BigDecimal' #0.0")
+                .set(SpreadsheetMetadataPropertyName.BIG_DECIMAL_PATTERN, "#0.0")
                 .set(SpreadsheetMetadataPropertyName.color(number1), color1)
                 .set(SpreadsheetMetadataPropertyName.color(number7), color7)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
