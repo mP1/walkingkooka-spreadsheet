@@ -23,11 +23,6 @@ import walkingkooka.tree.json.JsonNode;
 public final class StringSpreadsheetMetadataPropertyValueHandlerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase3<StringSpreadsheetMetadataPropertyValueHandler, String> {
 
     @Test
-    public void testCheckEmptyString() {
-        this.check("");
-    }
-
-    @Test
     public void testFromJsonNode() {
         final String string = this.propertyValue();
         this.fromJsonNodeAndCheck(JsonNode.string(string), string);
@@ -46,12 +41,12 @@ public final class StringSpreadsheetMetadataPropertyValueHandlerTest extends Spr
 
     @Override
     SpreadsheetMetadataPropertyName<String> propertyName() {
-        return SpreadsheetMetadataPropertyName.GENERAL_DECIMAL_FORMAT_PATTERN;
+        return SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL;
     }
 
     @Override
     String propertyValue() {
-        return "#.#";
+        return "$AUD";
     }
 
     @Override
