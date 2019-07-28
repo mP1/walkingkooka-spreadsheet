@@ -47,13 +47,6 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     static DateTimeOffsetSpreadsheetMetadataPropertyValueHandler dateTimeOffset() {
         return DateTimeOffsetSpreadsheetMetadataPropertyValueHandler.INSTANCE;
     }
-
-    /**
-     * {@see DecimalFormatPatternStringSpreadsheetMetadataPropertyValueHandler}
-     */
-    static DecimalFormatPatternStringSpreadsheetMetadataPropertyValueHandler decimalFormatPattern() {
-        return DecimalFormatPatternStringSpreadsheetMetadataPropertyValueHandler.INSTANCE;
-    }
     
     /**
      * {@see EmailAddressSpreadsheetMetadataPropertyValueHandler}
