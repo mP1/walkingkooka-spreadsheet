@@ -234,12 +234,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
             (c, v) -> v.visitExponentSymbol(c));
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>general decimal format pattern {@link String}</code>
-     */
-    public final static SpreadsheetMetadataPropertyName<String> GENERAL_DECIMAL_FORMAT_PATTERN = registerStringConstant("general-decimal-format-pattern",
-            (d, v) -> v.visitGeneralDecimalFormatPattern(d));
-
-    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>grouping-separator {@link Character}</code>
      */
     public final static SpreadsheetMetadataPropertyName<Character> GROUPING_SEPARATOR = registerCharacterConstant("grouping-separator",
