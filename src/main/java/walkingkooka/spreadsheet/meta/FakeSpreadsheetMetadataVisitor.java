@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.color.Color;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.format.SpreadsheetTextFormatterPattern;
 import walkingkooka.visit.Visiting;
 
 import java.math.RoundingMode;
@@ -53,12 +54,12 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitBigDecimalPattern(final String pattern) {
+    protected void visitBigDecimalPattern(final SpreadsheetTextFormatterPattern pattern) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visitBigIntegerPattern(final String pattern) {
+    protected void visitBigIntegerPattern(final SpreadsheetTextFormatterPattern pattern) {
         throw new UnsupportedOperationException();
     }
 
@@ -78,7 +79,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitDatePattern(final String pattern) {
+    protected void visitDatePattern(final SpreadsheetTextFormatterPattern pattern) {
         throw new UnsupportedOperationException();
     }
 
@@ -88,7 +89,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitDateTimePattern(final String pattern) {
+    protected void visitDateTimePattern(final SpreadsheetTextFormatterPattern pattern) {
         throw new UnsupportedOperationException();
     }
 
@@ -98,7 +99,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitDoublePattern(final String pattern) {
+    protected void visitDoublePattern(final SpreadsheetTextFormatterPattern pattern) {
         throw new UnsupportedOperationException();
     }
 
@@ -118,7 +119,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitLongPattern(final String pattern) {
+    protected void visitLongPattern(final SpreadsheetTextFormatterPattern pattern) {
         throw new UnsupportedOperationException();
     }
 
@@ -168,7 +169,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitTimePattern(final String pattern) {
+    protected void visitTimePattern(final SpreadsheetTextFormatterPattern pattern) {
         throw new UnsupportedOperationException();
     }
 }
