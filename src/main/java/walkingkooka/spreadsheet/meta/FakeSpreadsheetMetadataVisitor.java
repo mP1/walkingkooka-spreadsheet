@@ -113,11 +113,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitGeneralDecimalFormatPattern(final String pattern) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected void visitGroupingSeparator(final Character groupingSeparator) {
         throw new UnsupportedOperationException();
     }
