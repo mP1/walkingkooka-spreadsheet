@@ -22,7 +22,7 @@ import walkingkooka.color.Color;
 import walkingkooka.naming.Name;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetTextFormatterPattern;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
@@ -140,11 +140,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     }
 
     /**
-     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with {@link SpreadsheetTextFormatter pattern}.
+     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with {@link SpreadsheetTextFormatterPattern}.
      */
-    private static SpreadsheetMetadataPropertyName<String> registerSpreadsheetTextFormatterPatternConstant(final String name,
-                                                                                                           final BiConsumer<String, SpreadsheetMetadataVisitor> visitor) {
-        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.textFormatterPattern(),
+    private static SpreadsheetMetadataPropertyName<SpreadsheetTextFormatterPattern> registerSpreadsheetTextFormatterPatternConstant(final String name,
+                                                                                                           final BiConsumer<SpreadsheetTextFormatterPattern, SpreadsheetMetadataVisitor> visitor) {
+        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.spreadsheetTextFormatterPattern(),
                 visitor);
     }
 
@@ -164,13 +164,13 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>BigDecimal pattern</code>
      */
-    public final static SpreadsheetMetadataPropertyName<String> BIG_DECIMAL_PATTERN = registerSpreadsheetTextFormatterPatternConstant("big-decimal-pattern",
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetTextFormatterPattern> BIG_DECIMAL_PATTERN = registerSpreadsheetTextFormatterPatternConstant("big-decimal-pattern",
             (p, v) -> v.visitBigDecimalPattern(p));
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>BigInteger pattern</code>
      */
-    public final static SpreadsheetMetadataPropertyName<String> BIG_INTEGER_PATTERN = registerSpreadsheetTextFormatterPatternConstant("big-integer-pattern",
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetTextFormatterPattern> BIG_INTEGER_PATTERN = registerSpreadsheetTextFormatterPatternConstant("big-integer-pattern",
             (p, v) -> v.visitBigIntegerPattern(p));
 
     /**
@@ -194,7 +194,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-pattern {@link String}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<String> DATE_PATTERN = registerSpreadsheetTextFormatterPatternConstant("date-pattern",
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetTextFormatterPattern> DATE_PATTERN = registerSpreadsheetTextFormatterPatternConstant("date-pattern",
             (p, v) -> v.visitDatePattern(p));
 
     /**
@@ -206,7 +206,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-pattern {@link String}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<String> DATETIME_PATTERN = registerSpreadsheetTextFormatterPatternConstant("date-time-pattern",
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetTextFormatterPattern> DATETIME_PATTERN = registerSpreadsheetTextFormatterPatternConstant("date-time-pattern",
             (p, v) -> v.visitDateTimePattern(p));
 
     /**
@@ -218,7 +218,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>Double pattern</code>
      */
-    public final static SpreadsheetMetadataPropertyName<String> DOUBLE_PATTERN = registerSpreadsheetTextFormatterPatternConstant("double-pattern",
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetTextFormatterPattern> DOUBLE_PATTERN = registerSpreadsheetTextFormatterPatternConstant("double-pattern",
             (p, v) -> v.visitDoublePattern(p));
 
     /**
@@ -242,7 +242,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>Long pattern</code>
      */
-    public final static SpreadsheetMetadataPropertyName<String> LONG_PATTERN = registerSpreadsheetTextFormatterPatternConstant("long-pattern",
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetTextFormatterPattern> LONG_PATTERN = registerSpreadsheetTextFormatterPatternConstant("long-pattern",
             (p, v) -> v.visitLongPattern(p));
 
     /**
@@ -294,9 +294,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
             (e, v) -> v.visitSpreadsheetId(e));
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>time-pattern {@link String}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>time-pattern {@link SpreadsheetTextFormatterPattern}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<String> TIME_PATTERN = registerSpreadsheetTextFormatterPatternConstant("time-pattern",
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetTextFormatterPattern> TIME_PATTERN = registerSpreadsheetTextFormatterPatternConstant("time-pattern",
             (p, v) -> v.visitTimePattern(p));
 
     /**
