@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.color.Color;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.format.SpreadsheetTextFormatterPattern;
 import walkingkooka.visit.Visiting;
 import walkingkooka.visit.Visitor;
 
@@ -81,11 +82,11 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
 
     // properties..........................................................................................................
 
-    protected void visitBigDecimalPattern(final String pattern) {
+    protected void visitBigDecimalPattern(final SpreadsheetTextFormatterPattern pattern) {
         // nop
     }
 
-    protected void visitBigIntegerPattern(final String pattern) {
+    protected void visitBigIntegerPattern(final SpreadsheetTextFormatterPattern pattern) {
         // nop
     }
 
@@ -101,7 +102,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDatePattern(final String pattern) {
+    protected void visitDatePattern(final SpreadsheetTextFormatterPattern pattern) {
         // nop
     }
 
@@ -109,7 +110,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDateTimePattern(final String pattern) {
+    protected void visitDateTimePattern(final SpreadsheetTextFormatterPattern pattern) {
         // nop
     }
 
@@ -117,7 +118,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDoublePattern(final String pattern) {
+    protected void visitDoublePattern(final SpreadsheetTextFormatterPattern pattern) {
         // nop
     }
 
@@ -133,7 +134,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitLongPattern(final String pattern) {
+    protected void visitLongPattern(final SpreadsheetTextFormatterPattern pattern) {
         // nop
     }
 
@@ -173,7 +174,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitTimePattern(final String pattern) {
+    protected void visitTimePattern(final SpreadsheetTextFormatterPattern pattern) {
         // nop
     }
 }
