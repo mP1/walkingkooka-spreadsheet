@@ -23,28 +23,21 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
-import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextTesting;
-import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.text.CharSequences;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
@@ -387,61 +380,6 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         assertThrows(IllegalStateException.class, () -> {
             this.createSpreadsheetMetadata().hateosLinkId();
         });
-    }
-
-    // HasConverter.....................................................................................................
-
-    @Test
-    public void testConverter() {
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
-                .set(SpreadsheetMetadataPropertyName.BIG_DECIMAL_PATTERN, "'BigDecimal' #0.0")
-                .set(SpreadsheetMetadataPropertyName.BIG_INTEGER_PATTERN, "'BigInteger' #0")
-                .set(SpreadsheetMetadataPropertyName.DOUBLE_PATTERN, "'Double' #0.0")
-                .set(SpreadsheetMetadataPropertyName.DATE_PATTERN, "'Date' dd/M/YYYY")
-                .set(SpreadsheetMetadataPropertyName.DATETIME_PATTERN, "'DateTime' dd/M/YYYY hh:mm")
-                .set(SpreadsheetMetadataPropertyName.TIME_PATTERN, "'Time' hh:mm")
-                .set(SpreadsheetMetadataPropertyName.LONG_PATTERN, "'Long' #0");
-
-        final Converter converter = metadata.converter();
-
-        this.convertAndCheck2(converter,
-                BigDecimal.valueOf(123.5),
-                "BigDecimal 123.5");
-
-        this.convertAndCheck2(converter,
-                BigInteger.valueOf(123),
-                "BigInteger 123");
-
-        this.convertAndCheck2(converter,
-                Double.valueOf(123.5),
-                "Double 123.5");
-
-        this.convertAndCheck2(converter,
-                LocalDate.of(2000, 1, 31),
-                "Date 31/1/2000");
-
-        this.convertAndCheck2(converter,
-                LocalDateTime.of(2000, 1, 31, 12, 58, 59),
-                "DateTime 31/1/2000 12:58");
-
-        this.convertAndCheck2(converter,
-                LocalTime.of(12, 58, 59),
-                "Time 12:58");
-
-        this.convertAndCheck2(converter,
-                123L,
-                "Long 123");
-    }
-
-    private void convertAndCheck2(final Converter converter,
-                                  final Object value,
-                                  final String expected) {
-        this.convertAndCheck(converter,
-                value,
-                String.class,
-                ConverterContexts.basic(DecimalNumberContexts.american(MathContext.DECIMAL32)),
-                expected);
     }
 
     // HasDateTimeContext...............................................................................................

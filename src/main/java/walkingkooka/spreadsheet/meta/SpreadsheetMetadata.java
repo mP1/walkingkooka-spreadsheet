@@ -21,8 +21,6 @@ import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
-import walkingkooka.convert.Converter;
-import walkingkooka.convert.HasConverter;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.HasDateTimeContext;
@@ -32,7 +30,6 @@ import walkingkooka.math.HasMathContext;
 import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
@@ -40,7 +37,6 @@ import walkingkooka.tree.json.JsonNode;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DateFormatSymbols;
-import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -50,8 +46,7 @@ import java.util.function.Function;
 /**
  * A {@link SpreadsheetMetadata} holds a {@link Map} of {@link SpreadsheetMetadataPropertyName} and values.
  */
-public abstract class SpreadsheetMetadata implements HasConverter,
-        HasDateTimeContext,
+public abstract class SpreadsheetMetadata implements HasDateTimeContext,
         HasDecimalNumberContext,
         HashCodeEqualsDefined,
         HasJsonNode,
@@ -174,46 +169,6 @@ public abstract class SpreadsheetMetadata implements HasConverter,
     // SpreadsheetMetadataStyleVisitor..................................................................................
 
     abstract void accept(final SpreadsheetMetadataVisitor visitor);
-
-    // HasConverter.....................................................................................................
-
-    /**
-     * Returns a {@link DecimalNumberContext} if the required properties are present.
-     * <ul>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATETIME_OFFSET}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#BIG_DECIMAL_PATTERN}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#BIG_INTEGER_PATTERN}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DOUBLE_PATTERN}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATE_PATTERN}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DATETIME_PATTERN}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#TIME_PATTERN}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#LONG_PATTERN}</li>
-     * </ul>
-     */
-    @Override
-    public final Converter converter() {
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
-
-        final Long dateOffset = components.getOrNull(SpreadsheetMetadataPropertyName.DATETIME_OFFSET);
-        final String bigDecimalFormat = components.getOrNull(SpreadsheetMetadataPropertyName.BIG_DECIMAL_PATTERN);
-        final String bigIntegerFormat = components.getOrNull(SpreadsheetMetadataPropertyName.BIG_INTEGER_PATTERN);
-        final String doubleFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DOUBLE_PATTERN);
-        final String date = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_PATTERN);
-        final String dateTime = components.getOrNull(SpreadsheetMetadataPropertyName.DATETIME_PATTERN);
-        final String time = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_PATTERN);
-        final String longFormat = components.getOrNull(SpreadsheetMetadataPropertyName.LONG_PATTERN);
-
-        components.reportIfMissing();
-
-        return SpreadsheetConverters.converter(dateOffset,
-                bigDecimalFormat,
-                bigIntegerFormat,
-                doubleFormat,
-                DateTimeFormatter.ofPattern(date),
-                DateTimeFormatter.ofPattern(dateTime),
-                DateTimeFormatter.ofPattern(time),
-                longFormat);
-    }
 
     // HasDateTimeContext...............................................................................................
 
