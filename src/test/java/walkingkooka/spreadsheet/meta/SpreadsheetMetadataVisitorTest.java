@@ -174,8 +174,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitDateTimePatternTime() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitDateTimePattern(final String f) {
-                this.visited = f;
+            protected void visitDateTimePattern(final String p) {
+                this.visited = p;
             }
         }.accept(SpreadsheetMetadataPropertyName.DATETIME_PATTERN, "DD/MM/YYYY hh:mm");
     }
@@ -194,8 +194,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitDefaultPattern() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitDefaultPattern(final String f) {
-                this.visited = f;
+            protected void visitDefaultPattern(final String p) {
+                this.visited = p;
             }
         }.accept(SpreadsheetMetadataPropertyName.DEFAULT_PATTERN, "#0.000");
     }
@@ -347,8 +347,8 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitTimePattern() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitTimePattern(final String f) {
-                this.visited = f;
+            protected void visitTimePattern(final String p) {
+                this.visited = p;
             }
         }.accept(SpreadsheetMetadataPropertyName.TIME_PATTERN, "hh:mm");
     }
