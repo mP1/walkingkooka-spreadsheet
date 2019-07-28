@@ -86,7 +86,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testGetOrFailFails() {
-        final SpreadsheetMetadataPropertyName<String> propertyName = SpreadsheetMetadataPropertyName.BIG_DECIMAL_PATTERN;
+        final SpreadsheetMetadataPropertyName<String> propertyName = SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL;
 
         final SpreadsheetMetadataPropertyValueException thrown = assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> {
             this.createObject().getOrFail(propertyName);
