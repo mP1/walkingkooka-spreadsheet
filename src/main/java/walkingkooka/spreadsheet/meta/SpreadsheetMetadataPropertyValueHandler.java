@@ -42,13 +42,6 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     }
 
     /**
-     * {@see DateTimeFormatterPatternStringSpreadsheetMetadataPropertyValueHandler}
-     */
-    static DateTimeFormatterPatternStringSpreadsheetMetadataPropertyValueHandler dateTimeFormatterPattern() {
-        return DateTimeFormatterPatternStringSpreadsheetMetadataPropertyValueHandler.INSTANCE;
-    }
-
-    /**
      * {@see DateTimeOffsetSpreadsheetMetadataPropertyValueHandler}
      */
     static DateTimeOffsetSpreadsheetMetadataPropertyValueHandler dateTimeOffset() {
