@@ -67,16 +67,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     }
 
     /**
-     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link String date time formatter pattern}.
-     */
-    private static SpreadsheetMetadataPropertyName<String> registerDateTimeFormatterPatternConstant(final String name,
-                                                                                                    final BiConsumer<String, SpreadsheetMetadataVisitor> visitor) {
-        return registerConstant(name,
-                SpreadsheetMetadataPropertyValueHandler.dateTimeFormatterPattern(),
-                visitor);
-    }
-
-    /**
      * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link Long date time offset}.
      */
     private static SpreadsheetMetadataPropertyName<Long> registerDateTimeOffsetConstant(final String name,
@@ -214,7 +204,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-pattern {@link String}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<String> DATE_PATTERN = registerDateTimeFormatterPatternConstant("date-pattern",
+    public final static SpreadsheetMetadataPropertyName<String> DATE_PATTERN = registerSpreadsheetTextFormatterPatternConstant("date-pattern",
             (p, v) -> v.visitDatePattern(p));
 
     /**
@@ -226,7 +216,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-pattern {@link String}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<String> DATETIME_PATTERN = registerDateTimeFormatterPatternConstant("date-time-pattern",
+    public final static SpreadsheetMetadataPropertyName<String> DATETIME_PATTERN = registerSpreadsheetTextFormatterPatternConstant("date-time-pattern",
             (p, v) -> v.visitDateTimePattern(p));
 
     /**
@@ -328,7 +318,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>time-pattern {@link String}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<String> TIME_PATTERN = registerDateTimeFormatterPatternConstant("time-pattern",
+    public final static SpreadsheetMetadataPropertyName<String> TIME_PATTERN = registerSpreadsheetTextFormatterPatternConstant("time-pattern",
             (p, v) -> v.visitTimePattern(p));
 
     /**
