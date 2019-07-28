@@ -101,7 +101,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDatePattern(final String dateTimeFormatterPattern) {
+    protected void visitDatePattern(final String pattern) {
         // nop
     }
 
@@ -109,7 +109,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDateTimePattern(final String dateTimeFormatterPattern) {
+    protected void visitDateTimePattern(final String pattern) {
         // nop
     }
 
@@ -177,7 +177,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitTimePattern(final String dateTimeFormatterPattern) {
+    protected void visitTimePattern(final String pattern) {
         // nop
     }
 }
