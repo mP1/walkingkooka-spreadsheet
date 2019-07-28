@@ -76,16 +76,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     }
 
     /**
-     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link String decimal format pattern}.
-     */
-    private static SpreadsheetMetadataPropertyName<String> registerDecimalFormatPatternConstant(final String name,
-                                                                                                final BiConsumer<String, SpreadsheetMetadataVisitor> visitor) {
-        return registerConstant(name,
-                SpreadsheetMetadataPropertyValueHandler.decimalFormatPattern(),
-                visitor);
-    }
-
-    /**
      * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link EmailAddress value}.
      */
     private static SpreadsheetMetadataPropertyName<EmailAddress> registerEmailAddressConstant(final String name,
@@ -174,13 +164,13 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>BigDecimal pattern</code>
      */
-    public final static SpreadsheetMetadataPropertyName<String> BIG_DECIMAL_PATTERN = registerDecimalFormatPatternConstant("big-decimal-pattern",
+    public final static SpreadsheetMetadataPropertyName<String> BIG_DECIMAL_PATTERN = registerSpreadsheetTextFormatterPatternConstant("big-decimal-pattern",
             (p, v) -> v.visitBigDecimalPattern(p));
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>BigInteger pattern</code>
      */
-    public final static SpreadsheetMetadataPropertyName<String> BIG_INTEGER_PATTERN = registerDecimalFormatPatternConstant("big-integer-pattern",
+    public final static SpreadsheetMetadataPropertyName<String> BIG_INTEGER_PATTERN = registerSpreadsheetTextFormatterPatternConstant("big-integer-pattern",
             (p, v) -> v.visitBigIntegerPattern(p));
 
     /**
@@ -234,7 +224,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>Double pattern</code>
      */
-    public final static SpreadsheetMetadataPropertyName<String> DOUBLE_PATTERN = registerDecimalFormatPatternConstant("double-pattern",
+    public final static SpreadsheetMetadataPropertyName<String> DOUBLE_PATTERN = registerSpreadsheetTextFormatterPatternConstant("double-pattern",
             (p, v) -> v.visitDoublePattern(p));
 
     /**
@@ -264,7 +254,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>Long pattern</code>
      */
-    public final static SpreadsheetMetadataPropertyName<String> LONG_PATTERN = registerDecimalFormatPatternConstant("long-pattern",
+    public final static SpreadsheetMetadataPropertyName<String> LONG_PATTERN = registerSpreadsheetTextFormatterPatternConstant("long-pattern",
             (p, v) -> v.visitLongPattern(p));
 
     /**
