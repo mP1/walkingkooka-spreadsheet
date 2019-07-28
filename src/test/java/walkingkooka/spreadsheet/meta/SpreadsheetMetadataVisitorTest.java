@@ -191,16 +191,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitDefaultPattern() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitDefaultPattern(final String p) {
-                this.visited = p;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.DEFAULT_PATTERN, "#0.000");
-    }
-
-    @Test
     public void testVisitDoublePattern() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
