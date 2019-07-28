@@ -129,10 +129,6 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitGeneralDecimalFormatPattern(final String pattern) {
-        // nop
-    }
-
     protected void visitGroupingSeparator(final Character groupingSeparator) {
         // nop
     }
