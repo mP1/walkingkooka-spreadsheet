@@ -216,12 +216,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
             (c, v) -> v.visitDecimalPoint(c));
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>default-pattern {@link String}</code>
-     */
-    public final static SpreadsheetMetadataPropertyName<String> DEFAULT_PATTERN = registerSpreadsheetTextFormatterPatternConstant("default-pattern",
-            (p, v) -> v.visitDefaultPattern(p));
-
-    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>Double pattern</code>
      */
     public final static SpreadsheetMetadataPropertyName<String> DOUBLE_PATTERN = registerSpreadsheetTextFormatterPatternConstant("double-pattern",
