@@ -105,10 +105,10 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     }
 
     /**
-     * {@see SpreadsheetTextFormatterPatternStringSpreadsheetMetadataPropertyValueHandler}
+     * {@see SpreadsheetTextFormatterPatternSpreadsheetMetadataPropertyValueHandler}
      */
-    static SpreadsheetTextFormatterPatternStringSpreadsheetMetadataPropertyValueHandler textFormatterPattern() {
-        return SpreadsheetTextFormatterPatternStringSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    static SpreadsheetTextFormatterPatternSpreadsheetMetadataPropertyValueHandler spreadsheetTextFormatterPattern() {
+        return SpreadsheetTextFormatterPatternSpreadsheetMetadataPropertyValueHandler.INSTANCE;
     }
 
     /**
