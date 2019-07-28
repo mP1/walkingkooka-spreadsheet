@@ -586,7 +586,6 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_PATTERN, "#0.000");
         properties.put(SpreadsheetMetadataPropertyName.DOUBLE_PATTERN, "#0.#");
         properties.put(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, 'E');
-        properties.put(SpreadsheetMetadataPropertyName.GENERAL_DECIMAL_FORMAT_PATTERN, "##.##");
         properties.put(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, 'G');
         properties.put(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
         properties.put(SpreadsheetMetadataPropertyName.LONG_PATTERN, "#0");
