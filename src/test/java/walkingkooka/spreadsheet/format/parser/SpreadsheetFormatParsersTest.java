@@ -3428,6 +3428,33 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
         this.dateTimeParseAndCheck(hour(), monthOrMinute(), second());
     }
 
+    // time with millis..................................................................................................
+
+    @Test
+    public void testDateTimeSecondsDecimalFails() {
+        this.dateParseThrows(second(), decimalPoint());
+    }
+
+    @Test
+    public void testDateTimeSecondsDecimalNonZeroFails() {
+        this.dateParseThrows(second(), decimalPoint(), digitNonZero());
+    }
+
+    @Test
+    public void testDateTimeSecondsDecimalSpaceFails() {
+        this.dateParseThrows(second(), decimalPoint(), digitSpace());
+    }
+
+    @Test
+    public void testDateTimeSecondsDecimalDigitZero() {
+        this.dateTimeParseAndCheck(second(), decimalPoint(), digitZero());
+    }
+
+    @Test
+    public void testDateTimeSecondsDecimalDigitZeroZero() {
+        this.dateTimeParseAndCheck(second(), decimalPoint(), digitZero(), digitZero());
+    }
+
     // date&time........................................................................................................
 
     @Test
@@ -3448,6 +3475,24 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
     @Test
     public void testDateTimeDayMonthYearHourMinuteSecond2() {
         this.dateTimeParseAndCheck(day(), monthOrMinute(), year(), hour(), monthOrMinute(), second(), day(), monthOrMinute(), year(), hour(), monthOrMinute(), second());
+    }
+
+    @Test
+    public void testDateTimeDayMonthYearHourMinuteSecondMillis() {
+        this.dateTimeParseAndCheck(day(),
+                monthOrMinute(),
+                year(),
+                hour(),
+                monthOrMinute(),
+                second(),
+                day(),
+                monthOrMinute(),
+                year(),
+                hour(),
+                monthOrMinute(),
+                second(),
+                decimalPoint(),
+                digitZero());
     }
 
     @Test
@@ -3690,6 +3735,11 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
     @Test
     public void testExpressionDateTimeDayMonthMinuteHourSecond() {
         this.expressionParseAndCheck(token(SpreadsheetFormatParserToken::dateTime, monthOrMinute(), hour(), second()));
+    }
+
+    @Test
+    public void testExpressionDateTimeDayMonthMinuteHourSecondMills() {
+        this.expressionParseAndCheck(token(SpreadsheetFormatParserToken::dateTime, monthOrMinute(), hour(), second(), decimalPoint(), digitZero()));
     }
 
     @Test
