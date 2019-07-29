@@ -97,12 +97,12 @@ abstract class SpreadsheetFormatParentParserToken<T extends SpreadsheetFormatPar
     }
 
     @Override
-    public final boolean isDigitLeadingSpace() {
+    public final boolean isDigitSpace() {
         return false;
     }
 
     @Override
-    public final boolean isDigitLeadingZero() {
+    public final boolean isDigitZero() {
         return false;
     }
 

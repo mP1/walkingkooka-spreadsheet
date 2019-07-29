@@ -18,17 +18,17 @@ package walkingkooka.spreadsheet.format.parser;
 
 
 /**
- * Represents a digit that replaces leading zeroes with spaces.
+ * Represents the digit including leading zeros.
  */
-public final class SpreadsheetFormatDigitLeadingSpaceParserToken extends SpreadsheetFormatNonSymbolParserToken<String> {
+public final class SpreadsheetFormatDigitZeroParserToken extends SpreadsheetFormatNonSymbolParserToken<String> {
 
-    static SpreadsheetFormatDigitLeadingSpaceParserToken with(final String value, final String text) {
+    static SpreadsheetFormatDigitZeroParserToken with(final String value, final String text) {
         checkValueAndText(value, text);
 
-        return new SpreadsheetFormatDigitLeadingSpaceParserToken(value, text);
+        return new SpreadsheetFormatDigitZeroParserToken(value, text);
     }
 
-    private SpreadsheetFormatDigitLeadingSpaceParserToken(final String value, final String text) {
+    private SpreadsheetFormatDigitZeroParserToken(final String value, final String text) {
         super(value, text);
     }
 
@@ -73,13 +73,13 @@ public final class SpreadsheetFormatDigitLeadingSpaceParserToken extends Spreads
     }
 
     @Override
-    public boolean isDigitLeadingSpace() {
-        return true;
+    public boolean isDigitSpace() {
+        return false;
     }
 
     @Override
-    public boolean isDigitLeadingZero() {
-        return false;
+    public boolean isDigitZero() {
+        return true;
     }
 
     @Override
@@ -144,7 +144,7 @@ public final class SpreadsheetFormatDigitLeadingSpaceParserToken extends Spreads
 
     @Override
     boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatDigitLeadingSpaceParserToken;
+        return other instanceof SpreadsheetFormatDigitZeroParserToken;
     }
 
 }

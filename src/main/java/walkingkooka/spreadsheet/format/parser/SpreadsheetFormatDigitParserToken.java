@@ -73,12 +73,12 @@ public final class SpreadsheetFormatDigitParserToken extends SpreadsheetFormatNo
     }
 
     @Override
-    public boolean isDigitLeadingSpace() {
+    public boolean isDigitSpace() {
         return false;
     }
 
     @Override
-    public boolean isDigitLeadingZero() {
+    public boolean isDigitZero() {
         return false;
     }
 

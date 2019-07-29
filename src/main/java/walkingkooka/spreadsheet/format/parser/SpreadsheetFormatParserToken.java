@@ -144,17 +144,17 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     }
 
     /**
-     * {@see SpreadsheetFormatDigitLeadingSpaceParserToken}
+     * {@see SpreadsheetFormatDigitSpaceParserToken}
      */
-    public static SpreadsheetFormatDigitLeadingSpaceParserToken digitLeadingSpace(final String value, final String text) {
-        return SpreadsheetFormatDigitLeadingSpaceParserToken.with(value, text);
+    public static SpreadsheetFormatDigitSpaceParserToken digitSpace(final String value, final String text) {
+        return SpreadsheetFormatDigitSpaceParserToken.with(value, text);
     }
 
     /**
-     * {@see SpreadsheetFormatDigitLeadingZeroParserToken}
+     * {@see SpreadsheetFormatDigitZeroParserToken}
      */
-    public static SpreadsheetFormatDigitLeadingZeroParserToken digitLeadingZero(final String value, final String text) {
-        return SpreadsheetFormatDigitLeadingZeroParserToken.with(value, text);
+    public static SpreadsheetFormatDigitZeroParserToken digitZero(final String value, final String text) {
+        return SpreadsheetFormatDigitZeroParserToken.with(value, text);
     }
 
     /**
@@ -532,14 +532,14 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     public abstract boolean isDigit();
 
     /**
-     * Only {@link SpreadsheetFormatDigitLeadingSpaceParserToken} return true
+     * Only {@link SpreadsheetFormatDigitSpaceParserToken} return true
      */
-    public abstract boolean isDigitLeadingSpace();
+    public abstract boolean isDigitSpace();
 
     /**
-     * Only {@link SpreadsheetFormatDigitLeadingZeroParserToken} return true
+     * Only {@link SpreadsheetFormatDigitZeroParserToken} return true
      */
-    public abstract boolean isDigitLeadingZero();
+    public abstract boolean isDigitZero();
 
     /**
      * Only {@link SpreadsheetFormatEqualsParserToken} return true
