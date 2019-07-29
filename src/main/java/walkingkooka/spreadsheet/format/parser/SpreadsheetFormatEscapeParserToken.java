@@ -74,12 +74,12 @@ public final class SpreadsheetFormatEscapeParserToken extends SpreadsheetFormatN
     }
 
     @Override
-    public boolean isDigitLeadingSpace() {
+    public boolean isDigitSpace() {
         return false;
     }
 
     @Override
-    public boolean isDigitLeadingZero() {
+    public boolean isDigitZero() {
         return false;
     }
 

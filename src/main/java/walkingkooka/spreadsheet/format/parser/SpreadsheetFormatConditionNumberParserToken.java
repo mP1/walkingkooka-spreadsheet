@@ -76,12 +76,12 @@ public final class SpreadsheetFormatConditionNumberParserToken extends Spreadshe
     }
 
     @Override
-    public boolean isDigitLeadingSpace() {
+    public boolean isDigitSpace() {
         return false;
     }
 
     @Override
-    public boolean isDigitLeadingZero() {
+    public boolean isDigitZero() {
         return false;
     }
 
