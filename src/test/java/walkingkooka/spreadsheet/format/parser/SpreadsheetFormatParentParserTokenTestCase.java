@@ -79,27 +79,15 @@ public abstract class SpreadsheetFormatParentParserTokenTestCase<T extends Sprea
 
     abstract List<ParserToken> tokens();
 
-    final void checkValue(final SpreadsheetFormatParserToken token, final ParserToken... value) {
-        this.checkValue(token, Lists.of(value));
-    }
-
-    final void checkValue(final SpreadsheetFormatParserToken token, final List<ParserToken> value) {
-        this.checkValue(SpreadsheetFormatParentParserToken.class.cast(token), value);
-    }
-
-    final void checkValue(final SpreadsheetFormatParentParserToken<?> token, final ParserToken... value) {
-        this.checkValue(token, Lists.of(value));
-    }
-
     final void checkValue(final SpreadsheetFormatParentParserToken<?> token, final List<ParserToken> value) {
         assertEquals(value, token.value(), "value");
     }
 
-    final SpreadsheetFormatParserToken closeBracket() {
+    final SpreadsheetFormatParserToken bracketClose() {
         return SpreadsheetFormatParserToken.bracketCloseSymbol("]", "]");
     }
 
-    final SpreadsheetFormatParserToken openBracket() {
+    final SpreadsheetFormatParserToken bracketOpen() {
         return SpreadsheetFormatParserToken.bracketOpenSymbol("[", "[");
     }
 
@@ -123,16 +111,8 @@ public abstract class SpreadsheetFormatParentParserTokenTestCase<T extends Sprea
         return SpreadsheetFormatParserToken.conditionNumber(BigDecimal.valueOf(value), String.valueOf(value));
     }
 
-    final SpreadsheetFormatPercentSymbolParserToken percentSymbol() {
-        return SpreadsheetFormatParserToken.percentSymbol("%", "%");
-    }
-
     final SpreadsheetFormatWhitespaceParserToken whitespace() {
         return SpreadsheetFormatParserToken.whitespace(WHITESPACE, WHITESPACE);
-    }
-
-    final SpreadsheetFormatWhitespaceParserToken whitespace(final String text) {
-        return SpreadsheetFormatParserToken.whitespace(text, text);
     }
 
     final SpreadsheetFormatTextLiteralParserToken text1() {
