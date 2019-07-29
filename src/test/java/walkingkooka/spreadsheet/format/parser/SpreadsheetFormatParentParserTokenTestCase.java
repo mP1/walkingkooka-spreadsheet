@@ -91,8 +91,16 @@ public abstract class SpreadsheetFormatParentParserTokenTestCase<T extends Sprea
         return SpreadsheetFormatParserToken.bracketOpenSymbol("[", "[");
     }
 
+    final SpreadsheetFormatParserToken decimal() {
+        return SpreadsheetFormatParserToken.decimalPoint(".", ".");
+    }
+
     final SpreadsheetFormatParserToken digit() {
         return SpreadsheetFormatParserToken.digit("#", "#");
+    }
+
+    final SpreadsheetFormatParserToken digitZero() {
+        return SpreadsheetFormatParserToken.digitZero("0", "0");
     }
 
     final SpreadsheetFormatParserToken fractionSymbol() {
@@ -109,6 +117,14 @@ public abstract class SpreadsheetFormatParentParserTokenTestCase<T extends Sprea
 
     final SpreadsheetFormatConditionNumberParserToken number(final int value) {
         return SpreadsheetFormatParserToken.conditionNumber(BigDecimal.valueOf(value), String.valueOf(value));
+    }
+
+    final SpreadsheetFormatPercentSymbolParserToken percentSymbol() {
+        return SpreadsheetFormatParserToken.percentSymbol("%", "%");
+    }
+
+    final SpreadsheetFormatSecondParserToken seconds() {
+        return SpreadsheetFormatParserToken.second("s", "s");
     }
 
     final SpreadsheetFormatWhitespaceParserToken whitespace() {

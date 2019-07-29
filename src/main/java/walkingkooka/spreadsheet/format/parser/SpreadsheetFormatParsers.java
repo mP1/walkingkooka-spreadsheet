@@ -75,7 +75,6 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
     private static final EbnfIdentifierName COLOR_AND_NUMBER_IDENTIFIER = EbnfIdentifierName.with("COLOR_AND_NUMBER");
 
-
     private static final EbnfIdentifierName COLOR_NAME_IDENTIFIER = EbnfIdentifierName.with("COLOR_NAME");
 
     private static final Parser<ParserContext> COLOR_NAME = Parsers.stringCharPredicate(CharPredicates.letter(), 1, Integer.MAX_VALUE)
@@ -286,7 +285,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     private final static Parser<SpreadsheetFormatParserContext> BIGDECIMAL_GENERAL_PARSER;
 
     private static void bigDecimal(final Map<EbnfIdentifierName, Parser<ParserContext>> predefined) {
-        predefined.put(BIGDECIMAL_DECIMAL_POINT_IDENTIFIER, DECIMAL_POINT_PARSER);
+        predefined.put(DECIMAL_POINT_IDENTIFIER, DECIMAL_POINT_PARSER);
         predefined.put(CURRENCY_IDENTIFIER, CURRENCY);
         predefined.put(FRACTION_SYMBOL_IDENTIFIER, FRACTION_SYMBOL);
         predefined.put(ZERO_IDENTIFIER, ZERO);
@@ -296,7 +295,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
         predefined.put(THOUSANDS_IDENTIFIER, THOUSANDS);
     }
 
-    private static final EbnfIdentifierName BIGDECIMAL_DECIMAL_POINT_IDENTIFIER = EbnfIdentifierName.with("BIGDECIMAL_DECIMAL_POINT");
+    private static final EbnfIdentifierName DECIMAL_POINT_IDENTIFIER = EbnfIdentifierName.with("DECIMAL_POINT");
     private static final Parser<ParserContext> DECIMAL_POINT_PARSER = symbol('.',
             SpreadsheetFormatParserToken::decimalPoint,
             SpreadsheetFormatDecimalPointParserToken.class);
