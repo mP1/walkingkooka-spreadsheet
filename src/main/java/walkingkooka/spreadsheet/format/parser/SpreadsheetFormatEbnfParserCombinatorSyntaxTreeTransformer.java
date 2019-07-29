@@ -17,12 +17,12 @@
 
 package walkingkooka.spreadsheet.format.parser;
 
+import walkingkooka.collect.map.Maps;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.RepeatedOrSequenceParserToken;
-import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.text.cursor.parser.StringParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfAlternativeParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfConcatenationParserToken;
@@ -37,6 +37,7 @@ import walkingkooka.text.cursor.parser.ebnf.EbnfTerminalParserToken;
 import walkingkooka.text.cursor.parser.ebnf.combinator.EbnfParserCombinatorSyntaxTreeTransformer;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.BiFunction;
 
 /**
@@ -44,80 +45,7 @@ import java.util.function.BiFunction;
  */
 final class SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer implements EbnfParserCombinatorSyntaxTreeTransformer {
 
-    final static SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer INSTANCE = new SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer();
-
-    private SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer() {
-        super();
-    }
-
-    @Override
-    public Parser<ParserContext> alternatives(final EbnfAlternativeParserToken token,
-                                              final Parser<ParserContext> parser) {
-        return parser;
-    }
-
-    @Override
-    public Parser<ParserContext> concatenation(final EbnfConcatenationParserToken token,
-                                               final Parser<ParserContext> parser) {
-        return parser;
-    }
-
-    @Override
-    public Parser<ParserContext> exception(final EbnfExceptionParserToken token,
-                                           final Parser<ParserContext> parser) {
-        throw new UnsupportedOperationException(token.text()); // there are no exception tokens.
-    }
-
-    @Override
-    public Parser<ParserContext> group(final EbnfGroupParserToken token,
-                                       final Parser<ParserContext> parser) {
-        return parser; //leaver group definitions as they are.
-    }
-
-    /**
-     * For identified rules, the {@link SequenceParserToken} are flattened, missings removed and the {@link SpreadsheetFormatParentParserToken}
-     * created.
-     */
-    @Override
-    public Parser<ParserContext> identifier(final EbnfIdentifierParserToken token,
-                                            final Parser<ParserContext> parser) {
-        final EbnfIdentifierName name = token.value();
-        return name.equals(SpreadsheetFormatParsers.COLOR_IDENTIFIER) ?
-                parser.transform(SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformColor) :
-                name.equals(CONDITION_EQUAL_IDENTIFIER) ?
-                        parser.transform(SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformConditionEqual) :
-                        name.equals(CONDITION_GREATER_THAN_IDENTIFIER) ?
-                                parser.transform(SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformConditionGreaterThan) :
-                                name.equals(CONDITION_GREATER_THAN_EQUAL_IDENTIFIER) ?
-                                        parser.transform(SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformConditionGreaterThanEqual) :
-                                        name.equals(CONDITION_LESS_THAN_IDENTIFIER) ?
-                                                parser.transform(SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformConditionLessThan) :
-                                                name.equals(CONDITION_LESS_THAN_EQUAL_IDENTIFIER) ?
-                                                        parser.transform(SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformConditionLessThanEqual) :
-                                                        name.equals(CONDITION_NOT_EQUAL_IDENTIFIER) ?
-                                                                parser.transform(SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformConditionNotEqual) :
-                                                                name.equals(DATE_IDENTIFIER) || name.equals(DATE2_IDENTIFIER) ?
-                                                                        parser.transform(SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformDate) :
-                                                                        name.equals(DATETIME_IDENTIFIER) || name.equals(DATETIME2_IDENTIFIER) ?
-                                                                                parser.transform(SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformDateTime) :
-                                                                                name.equals(SpreadsheetFormatParsers.EXPRESSION_IDENTIFIER) ?
-                                                                                        parser.transform(SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformExpression) :
-                                                                                        name.equals(BIGDECIMAL_IDENTIFIER) ?
-                                                                                                parser.transform(SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformBigDecimal) :
-                                                                                                name.equals(BIGDECIMAL_EXPONENT_IDENTIFIER) ?
-                                                                                                        parser.transform(SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformBigDecimalExponent) :
-                                                                                                        name.equals(BIGDECIMAL_EXPONENT_SYMBOL_IDENTIFIER) ?
-                                                                                                                parser.transform(SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformExponentSymbol) :
-                                                                                                                name.equals(FRACTION_IDENTIFIER) ?
-                                                                                                                        parser.transform(SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformFraction) :
-                                                                                                                        name.equals(SpreadsheetFormatParsers.GENERAL_IDENTIFIER) ?
-                                                                                                                                parser.transform(SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformGeneral) :
-                                                                                                                                name.equals(SpreadsheetFormatParsers.TEXT_IDENTIFIER) ?
-                                                                                                                                        parser.transform(SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformText) :
-                                                                                                                                        name.equals(TIME_IDENTIFIER) || name.equals(TIME2_IDENTIFIER) ?
-                                                                                                                                                parser.transform(SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformTime) :
-                                                                                                                                                this.requiredCheck(name, parser);
-    }
+    // constants must be init before singleton/ctor is run........................................................................
 
     private static ParserToken transformColor(final ParserToken token,
                                               final ParserContext context) {
@@ -242,6 +170,91 @@ final class SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer implement
         return token.flat()
                 .value();
     }
+
+    /**
+     * Singleton
+     */
+    final static SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer INSTANCE = new SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer();
+
+    /**
+     * Private ctor use singleton
+     */
+    private SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer() {
+        super();
+
+        final Map<EbnfIdentifierName, BiFunction<ParserToken, ParserContext, ParserToken>> identiferToTransform = Maps.sorted();
+
+        identiferToTransform.put(SpreadsheetFormatParsers.COLOR_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformColor);
+
+        identiferToTransform.put(CONDITION_EQUAL_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformConditionEqual);
+        identiferToTransform.put(CONDITION_GREATER_THAN_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformConditionGreaterThan);
+        identiferToTransform.put(CONDITION_GREATER_THAN_EQUAL_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformConditionGreaterThanEqual);
+        identiferToTransform.put(CONDITION_LESS_THAN_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformConditionLessThan);
+        identiferToTransform.put(CONDITION_LESS_THAN_EQUAL_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformConditionLessThanEqual);
+        identiferToTransform.put(CONDITION_NOT_EQUAL_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformConditionNotEqual);
+
+        identiferToTransform.put(BIGDECIMAL_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformBigDecimal);
+        identiferToTransform.put(BIGDECIMAL_EXPONENT_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformBigDecimalExponent);
+        identiferToTransform.put(BIGDECIMAL_EXPONENT_SYMBOL_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformExponentSymbol);
+
+        identiferToTransform.put(FRACTION_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformFraction);
+
+        identiferToTransform.put(DATE_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformDate);
+        identiferToTransform.put(DATE2_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformDate);
+
+        identiferToTransform.put(DATETIME_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformDateTime);
+        identiferToTransform.put(DATETIME2_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformDateTime);
+
+        identiferToTransform.put(TIME_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformTime);
+        identiferToTransform.put(TIME2_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformTime);
+
+        identiferToTransform.put(SpreadsheetFormatParsers.EXPRESSION_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformExpression);
+
+        identiferToTransform.put(SpreadsheetFormatParsers.GENERAL_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformGeneral);
+
+        identiferToTransform.put(SpreadsheetFormatParsers.TEXT_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformText);
+
+        this.identiferToTransform = identiferToTransform;
+    }
+
+    @Override
+    public Parser<ParserContext> alternatives(final EbnfAlternativeParserToken token,
+                                              final Parser<ParserContext> parser) {
+        return parser;
+    }
+
+    @Override
+    public Parser<ParserContext> concatenation(final EbnfConcatenationParserToken token,
+                                               final Parser<ParserContext> parser) {
+        return parser;
+    }
+
+    @Override
+    public Parser<ParserContext> exception(final EbnfExceptionParserToken token,
+                                           final Parser<ParserContext> parser) {
+        throw new UnsupportedOperationException(token.text()); // there are no exception tokens.
+    }
+
+    @Override
+    public Parser<ParserContext> group(final EbnfGroupParserToken token,
+                                       final Parser<ParserContext> parser) {
+        return parser; //leave group definitions as they are.
+    }
+
+    /**
+     * For identified rules, transform or special checks for required rules.
+     */
+    @Override
+    public Parser<ParserContext> identifier(final EbnfIdentifierParserToken token,
+                                            final Parser<ParserContext> parser) {
+        final EbnfIdentifierName name = token.value();
+        final BiFunction<ParserToken, ParserContext, ParserToken> transform = this.identiferToTransform.get(name);
+        return null != transform ?
+                parser.transform(transform) :
+                this.requiredCheck(name, parser);
+    }
+
+    private final Map<EbnfIdentifierName, BiFunction<ParserToken, ParserContext, ParserToken>> identiferToTransform;
 
     private Parser<ParserContext> requiredCheck(final EbnfIdentifierName name,
                                                 final Parser<ParserContext> parser) {
