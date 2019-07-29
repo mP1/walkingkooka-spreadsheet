@@ -273,12 +273,12 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDigitLeadingSpaceParserToken token) {
+    protected void visit(final SpreadsheetFormatDigitSpaceParserToken token) {
         this.add(token);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDigitLeadingZeroParserToken token) {
+    protected void visit(final SpreadsheetFormatDigitZeroParserToken token) {
         this.add(token);
     }
 
