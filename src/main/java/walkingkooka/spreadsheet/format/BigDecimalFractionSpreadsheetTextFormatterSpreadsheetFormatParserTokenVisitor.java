@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatCurrencyParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitLeadingSpaceParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitLeadingZeroParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitSpaceParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitZeroParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEscapeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatFractionSymbolParserToken;
@@ -68,12 +68,12 @@ final class BigDecimalFractionSpreadsheetTextFormatterSpreadsheetFormatParserTok
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDigitLeadingSpaceParserToken token) {
+    protected void visit(final SpreadsheetFormatDigitSpaceParserToken token) {
         this.addDigit(BigDecimalFractionSpreadsheetTextFormatterZero.QUESTION_MARK);
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDigitLeadingZeroParserToken token) {
+    protected void visit(final SpreadsheetFormatDigitZeroParserToken token) {
         this.addDigit(BigDecimalFractionSpreadsheetTextFormatterZero.ZERO);
     }
 

@@ -73,12 +73,12 @@ public final class SpreadsheetFormatTextPlaceholderParserToken extends Spreadshe
     }
 
     @Override
-    public boolean isDigitLeadingSpace() {
+    public boolean isDigitSpace() {
         return false;
     }
 
     @Override
-    public boolean isDigitLeadingZero() {
+    public boolean isDigitZero() {
         return false;
     }
 

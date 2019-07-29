@@ -46,13 +46,13 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
     }
 
     @Test
-    public void testColorDigitLeadingZeroFails() {
-        this.colorThrows(digitLeadingZero());
+    public void testColorDigitZeroFails() {
+        this.colorThrows(digitZero());
     }
 
     @Test
-    public void testColorDigitLeadingSpaceFails() {
-        this.colorThrows(digitLeadingSpace());
+    public void testColorDigitSpaceFails() {
+        this.colorThrows(digitSpace());
     }
 
     @Test
@@ -135,13 +135,13 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
     }
 
     @Test
-    public void testConditionDigitLeadingZeroFails() {
-        this.conditionParseThrows(digitLeadingZero());
+    public void testConditionDigitZeroFails() {
+        this.conditionParseThrows(digitZero());
     }
 
     @Test
-    public void testConditionDigitLeadingSpaceFails() {
-        this.conditionParseThrows(digitLeadingSpace());
+    public void testConditionDigitSpaceFails() {
+        this.conditionParseThrows(digitSpace());
     }
 
     @Test
@@ -326,13 +326,13 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
     }
 
     @Test
-    public void testDateTextDigitLeadingZeroFails() {
-        this.dateParseThrows(digitLeadingZero());
+    public void testDateTextDigitZeroFails() {
+        this.dateParseThrows(digitZero());
     }
 
     @Test
-    public void testDateTextDigitLeadingSpaceFails() {
-        this.dateParseThrows(digitLeadingSpace());
+    public void testDateTextDigitSpaceFails() {
+        this.dateParseThrows(digitSpace());
     }
 
     @Test
@@ -958,13 +958,13 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
     }
 
     @Test
-    public void testBigDecimalDigitLeadingSpaceNumberFails() {
-        this.bigDecimalParseThrows(digitLeadingSpace(), fraction());
+    public void testBigDecimalDigitSpaceNumberFails() {
+        this.bigDecimalParseThrows(digitSpace(), fraction());
     }
 
     @Test
-    public void testBigDecimalDigitLeadingZeroNumberFails() {
-        this.bigDecimalParseThrows(digitLeadingZero(), fraction());
+    public void testBigDecimalDigitZeroNumberFails() {
+        this.bigDecimalParseThrows(digitZero(), fraction());
     }
 
     @Test
@@ -1019,56 +1019,56 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
         this.bigDecimalParseAndCheck(quotedText());
     }
 
-    // digitLeadingSpace
+    // digitSpace
 
     @Test
-    public void testBigDecimalDigitLeadingSpaceNumberDigitLeadingSpace() {
-        this.bigDecimalParseAndCheck(digitLeadingSpace(), decimalPoint(), digitLeadingSpace());
+    public void testBigDecimalDigitSpaceNumberDigitSpace() {
+        this.bigDecimalParseAndCheck(digitSpace(), decimalPoint(), digitSpace());
     }
 
     @Test
-    public void testBigDecimalDigitLeadingSpaceDigitLeadingSpaceNumberDigitLeadingSpace() {
-        this.bigDecimalParseAndCheck(digitLeadingSpace(), digitLeadingSpace(), decimalPoint(), digitLeadingSpace());
+    public void testBigDecimalDigitSpaceDigitSpaceNumberDigitSpace() {
+        this.bigDecimalParseAndCheck(digitSpace(), digitSpace(), decimalPoint(), digitSpace());
     }
 
     @Test
-    public void testBigDecimalDigitLeadingSpaceDigitLeadingZeroNumberDigitLeadingSpace() {
-        this.bigDecimalParseAndCheck(digitLeadingSpace(), digitLeadingZero(), decimalPoint(), digitLeadingSpace());
+    public void testBigDecimalDigitSpaceDigitZeroNumberDigitSpace() {
+        this.bigDecimalParseAndCheck(digitSpace(), digitZero(), decimalPoint(), digitSpace());
     }
 
     @Test
-    public void testBigDecimalDigitLeadingSpaceDigitNonZeroNumberDigitLeadingSpace() {
-        this.bigDecimalParseAndCheck(digitLeadingSpace(), digitNonZero(), decimalPoint(), digitLeadingSpace());
+    public void testBigDecimalDigitSpaceDigitNonZeroNumberDigitSpace() {
+        this.bigDecimalParseAndCheck(digitSpace(), digitNonZero(), decimalPoint(), digitSpace());
     }
 
     @Test
-    public void testBigDecimalDigitLeadingSpaceNumberDigitLeadingSpaceDigitLeadingSpace() {
-        this.bigDecimalParseAndCheck(digitLeadingSpace(), decimalPoint(), digitLeadingSpace(), digitLeadingSpace());
+    public void testBigDecimalDigitSpaceNumberDigitSpaceDigitSpace() {
+        this.bigDecimalParseAndCheck(digitSpace(), decimalPoint(), digitSpace(), digitSpace());
     }
 
-    // digitLeadingSpace
+    // digitSpace
 
     @Test
-    public void testBigDecimalDigitLeadingZeroDigitLeadingSpaceNumberDigitLeadingZero() {
-        this.bigDecimalParseAndCheck(digitLeadingZero(), digitLeadingSpace(), decimalPoint(), digitLeadingZero());
-    }
-
-    @Test
-    public void testBigDecimalDigitLeadingZeroDigitLeadingZeroNumberDigitLeadingZero() {
-        this.bigDecimalParseAndCheck(digitLeadingZero(), digitLeadingZero(), decimalPoint(), digitLeadingZero());
+    public void testBigDecimalDigitZeroDigitSpaceNumberDigitZero() {
+        this.bigDecimalParseAndCheck(digitZero(), digitSpace(), decimalPoint(), digitZero());
     }
 
     @Test
-    public void testBigDecimalDigitLeadingZeroDigitNonZeroNumberDigitLeadingZero() {
-        this.bigDecimalParseAndCheck(digitLeadingZero(), digitNonZero(), decimalPoint(), digitLeadingZero());
+    public void testBigDecimalDigitZeroDigitZeroNumberDigitZero() {
+        this.bigDecimalParseAndCheck(digitZero(), digitZero(), decimalPoint(), digitZero());
     }
 
     @Test
-    public void testBigDecimalDigitLeadingZeroNumberDigitLeadingZeroDigitLeadingZero() {
-        this.bigDecimalParseAndCheck(digitLeadingZero(), decimalPoint(), digitLeadingZero(), digitLeadingZero());
+    public void testBigDecimalDigitZeroDigitNonZeroNumberDigitZero() {
+        this.bigDecimalParseAndCheck(digitZero(), digitNonZero(), decimalPoint(), digitZero());
     }
 
-    // digitLeadingZero
+    @Test
+    public void testBigDecimalDigitZeroNumberDigitZeroDigitZero() {
+        this.bigDecimalParseAndCheck(digitZero(), decimalPoint(), digitZero(), digitZero());
+    }
+
+    // digitZero
 
     @Test
     public void testBigDecimalDigitNonZeroNumberDigitNonZero() {
@@ -1076,13 +1076,13 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
     }
 
     @Test
-    public void testBigDecimalDigitNonZeroDigitLeadingSpaceNumberDigitNonZero() {
-        this.bigDecimalParseAndCheck(digitNonZero(), digitLeadingSpace(), decimalPoint(), digitNonZero());
+    public void testBigDecimalDigitNonZeroDigitSpaceNumberDigitNonZero() {
+        this.bigDecimalParseAndCheck(digitNonZero(), digitSpace(), decimalPoint(), digitNonZero());
     }
 
     @Test
-    public void testBigDecimalDigitNonZeroDigitLeadingZeroNumberDigitNonZero() {
-        this.bigDecimalParseAndCheck(digitNonZero(), digitLeadingZero(), decimalPoint(), digitNonZero());
+    public void testBigDecimalDigitNonZeroDigitZeroNumberDigitNonZero() {
+        this.bigDecimalParseAndCheck(digitNonZero(), digitZero(), decimalPoint(), digitNonZero());
     }
 
     @Test
@@ -1891,13 +1891,13 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
     }
 
     @Test
-    public void testFractionDigitLeadingSpaceFractionFails() {
-        this.fractionParseThrows(digitLeadingSpace(), fraction());
+    public void testFractionDigitSpaceFractionFails() {
+        this.fractionParseThrows(digitSpace(), fraction());
     }
 
     @Test
-    public void testFractionDigitLeadingZeroFractionFails() {
-        this.fractionParseThrows(digitLeadingZero(), fraction());
+    public void testFractionDigitZeroFractionFails() {
+        this.fractionParseThrows(digitZero(), fraction());
     }
 
     @Test
@@ -1920,56 +1920,56 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
         this.parseAndCheck2(this.fractionParser(), SpreadsheetFormatParserToken::general, general());
     }
 
-    // digitLeadingSpace
+    // digitSpace
 
     @Test
-    public void testFractionDigitLeadingSpaceFractionDigitLeadingSpace() {
-        this.fractionParseAndCheck(digitLeadingSpace(), fraction(), digitLeadingSpace());
+    public void testFractionDigitSpaceFractionDigitSpace() {
+        this.fractionParseAndCheck(digitSpace(), fraction(), digitSpace());
     }
 
     @Test
-    public void testFractionDigitLeadingSpaceDigitLeadingSpaceFractionDigitLeadingSpace() {
-        this.fractionParseAndCheck(digitLeadingSpace(), digitLeadingSpace(), fraction(), digitLeadingSpace());
+    public void testFractionDigitSpaceDigitSpaceFractionDigitSpace() {
+        this.fractionParseAndCheck(digitSpace(), digitSpace(), fraction(), digitSpace());
     }
 
     @Test
-    public void testFractionDigitLeadingSpaceDigitLeadingZeroFractionDigitLeadingSpace() {
-        this.fractionParseAndCheck(digitLeadingSpace(), digitLeadingZero(), fraction(), digitLeadingSpace());
+    public void testFractionDigitSpaceDigitZeroFractionDigitSpace() {
+        this.fractionParseAndCheck(digitSpace(), digitZero(), fraction(), digitSpace());
     }
 
     @Test
-    public void testFractionDigitLeadingSpaceDigitNonZeroFractionDigitLeadingSpace() {
-        this.fractionParseAndCheck(digitLeadingSpace(), digitNonZero(), fraction(), digitLeadingSpace());
+    public void testFractionDigitSpaceDigitNonZeroFractionDigitSpace() {
+        this.fractionParseAndCheck(digitSpace(), digitNonZero(), fraction(), digitSpace());
     }
 
     @Test
-    public void testFractionDigitLeadingSpaceFractionDigitLeadingSpaceDigitLeadingSpace() {
-        this.fractionParseAndCheck(digitLeadingSpace(), fraction(), digitLeadingSpace(), digitLeadingSpace());
+    public void testFractionDigitSpaceFractionDigitSpaceDigitSpace() {
+        this.fractionParseAndCheck(digitSpace(), fraction(), digitSpace(), digitSpace());
     }
 
-    // digitLeadingSpace
+    // digitSpace
 
     @Test
-    public void testFractionDigitLeadingZeroDigitLeadingSpaceFractionDigitLeadingZero() {
-        this.fractionParseAndCheck(digitLeadingZero(), digitLeadingSpace(), fraction(), digitLeadingZero());
-    }
-
-    @Test
-    public void testFractionDigitLeadingZeroDigitLeadingZeroFractionDigitLeadingZero() {
-        this.fractionParseAndCheck(digitLeadingZero(), digitLeadingZero(), fraction(), digitLeadingZero());
+    public void testFractionDigitZeroDigitSpaceFractionDigitZero() {
+        this.fractionParseAndCheck(digitZero(), digitSpace(), fraction(), digitZero());
     }
 
     @Test
-    public void testFractionDigitLeadingZeroDigitNonZeroFractionDigitLeadingZero() {
-        this.fractionParseAndCheck(digitLeadingZero(), digitNonZero(), fraction(), digitLeadingZero());
+    public void testFractionDigitZeroDigitZeroFractionDigitZero() {
+        this.fractionParseAndCheck(digitZero(), digitZero(), fraction(), digitZero());
     }
 
     @Test
-    public void testFractionDigitLeadingZeroFractionDigitLeadingZeroDigitLeadingZero() {
-        this.fractionParseAndCheck(digitLeadingZero(), fraction(), digitLeadingZero(), digitLeadingZero());
+    public void testFractionDigitZeroDigitNonZeroFractionDigitZero() {
+        this.fractionParseAndCheck(digitZero(), digitNonZero(), fraction(), digitZero());
     }
 
-    // digitLeadingSpace
+    @Test
+    public void testFractionDigitZeroFractionDigitZeroDigitZero() {
+        this.fractionParseAndCheck(digitZero(), fraction(), digitZero(), digitZero());
+    }
+
+    // digitSpace
 
     @Test
     public void testFractionDigitNonZeroFractionDigitNonZero() {
@@ -1977,13 +1977,13 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
     }
 
     @Test
-    public void testFractionDigitNonZeroDigitLeadingSpaceFractionDigitNonZero() {
-        this.fractionParseAndCheck(digitNonZero(), digitLeadingSpace(), fraction(), digitNonZero());
+    public void testFractionDigitNonZeroDigitSpaceFractionDigitNonZero() {
+        this.fractionParseAndCheck(digitNonZero(), digitSpace(), fraction(), digitNonZero());
     }
 
     @Test
-    public void testFractionDigitNonZeroDigitLeadingZeroFractionDigitNonZero() {
-        this.fractionParseAndCheck(digitNonZero(), digitLeadingZero(), fraction(), digitNonZero());
+    public void testFractionDigitNonZeroDigitZeroFractionDigitNonZero() {
+        this.fractionParseAndCheck(digitNonZero(), digitZero(), fraction(), digitNonZero());
     }
 
     @Test
@@ -2545,13 +2545,13 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
     }
 
     @Test
-    public void testTextTextDigitLeadingZeroFails() {
-        this.textParseThrows(digitLeadingZero());
+    public void testTextTextDigitZeroFails() {
+        this.textParseThrows(digitZero());
     }
 
     @Test
-    public void testTextTextDigitLeadingSpaceFails() {
-        this.textParseThrows(digitLeadingSpace());
+    public void testTextTextDigitSpaceFails() {
+        this.textParseThrows(digitSpace());
     }
 
     @Test
@@ -2731,13 +2731,13 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
     }
 
     @Test
-    public void testTimeTextDigitLeadingZeroFails() {
-        this.timeParseThrows(digitLeadingZero());
+    public void testTimeTextDigitZeroFails() {
+        this.timeParseThrows(digitZero());
     }
 
     @Test
-    public void testTimeTextDigitLeadingSpaceFails() {
-        this.timeParseThrows(digitLeadingSpace());
+    public void testTimeTextDigitSpaceFails() {
+        this.timeParseThrows(digitSpace());
     }
 
     @Test
@@ -3993,12 +3993,12 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
         return SpreadsheetFormatParserToken.digit("#", "#");
     }
 
-    private static SpreadsheetFormatParserToken digitLeadingSpace() {
-        return SpreadsheetFormatParserToken.digitLeadingSpace("?", "?");
+    private static SpreadsheetFormatParserToken digitSpace() {
+        return SpreadsheetFormatParserToken.digitSpace("?", "?");
     }
 
-    private static SpreadsheetFormatParserToken digitLeadingZero() {
-        return SpreadsheetFormatParserToken.digitLeadingZero("0", "0");
+    private static SpreadsheetFormatParserToken digitZero() {
+        return SpreadsheetFormatParserToken.digitZero("0", "0");
     }
 
     private static SpreadsheetFormatParserToken equals() {
@@ -4010,17 +4010,17 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
     }
 
     private static SpreadsheetFormatParserToken exponent1(final SpreadsheetFormatParserToken token) {
-        final List<ParserToken> tokens = Lists.of(exponentSymbol(), token, digitLeadingSpace(), digitLeadingZero(), digitNonZero());
+        final List<ParserToken> tokens = Lists.of(exponentSymbol(), token, digitSpace(), digitZero(), digitNonZero());
         return SpreadsheetFormatParserToken.exponent(tokens, ParserToken.text(tokens));
     }
 
     private static SpreadsheetFormatParserToken exponent2(final SpreadsheetFormatParserToken token) {
-        final List<ParserToken> tokens = Lists.of(exponentSymbol(), digitLeadingSpace(), token, digitLeadingZero(), digitNonZero());
+        final List<ParserToken> tokens = Lists.of(exponentSymbol(), digitSpace(), token, digitZero(), digitNonZero());
         return SpreadsheetFormatParserToken.exponent(tokens, ParserToken.text(tokens));
     }
 
     private static SpreadsheetFormatParserToken exponent3(final SpreadsheetFormatParserToken token) {
-        final List<ParserToken> tokens = Lists.of(exponentSymbol(), digitLeadingSpace(), digitLeadingZero(), digitNonZero(), token);
+        final List<ParserToken> tokens = Lists.of(exponentSymbol(), digitSpace(), digitZero(), digitNonZero(), token);
         return SpreadsheetFormatParserToken.exponent(tokens, ParserToken.text(tokens));
     }
 
