@@ -16,8 +16,6 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
-import java.util.Optional;
-
 /**
  * Base class for a leaf token. A leaf has no further breakdown into more detailed tokens.
  */
@@ -25,13 +23,6 @@ abstract class SpreadsheetFormatNonSymbolParserToken<T> extends SpreadsheetForma
 
     SpreadsheetFormatNonSymbolParserToken(final T value, final String text) {
         super(value, text);
-    }
-
-    /**
-     * All sub classes are leafs and not symbols.
-     */
-    public final Optional<SpreadsheetFormatParserToken> withoutSymbols() {
-        return Optional.of(this);
     }
 
     // is...............................................................................................................
