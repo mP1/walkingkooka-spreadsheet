@@ -96,7 +96,7 @@ DATETIME2                         = [{ DATETIME_LITERAL }],
                                     [{ DATETIME_COMPONENT_LITERAL }];
 
 DATETIME_COMPONENT_LITERAL        = DATETIME_COMPONENT | DATETIME_LITERAL;
-DATETIME_COMPONENT                = DAY | MONTH_MINUTE | YEAR | HOUR | SECOND | AM_SLASH_PM | A_SLASH_P;
+DATETIME_COMPONENT                = DAY | MONTH_MINUTE | YEAR | HOUR | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P;
 DATETIME_LITERAL                  = DATE_DATETIME_TIME_TEXT;
 
 
@@ -111,7 +111,7 @@ TIME2                             = [{ TIME_LITERAL }],
                                     [{ TIME_COMPONENT_TIME_LITERAL }];
 
 TIME_COMPONENT_TIME_LITERAL       = TIME_COMPONENT | TIME_LITERAL;
-TIME_COMPONENT                    = HOUR | MONTH_MINUTE | SECOND | AM_SLASH_PM | A_SLASH_P;
+TIME_COMPONENT                    = HOUR | MONTH_MINUTE | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P;
 TIME_LITERAL                      = DATE_DATETIME_TIME_TEXT;
 
 
@@ -119,6 +119,10 @@ TIME_LITERAL                      = DATE_DATETIME_TIME_TEXT;
 (* date, datetime, time .................................................................................*)
 DATE_DATETIME_TIME_TEXT           = COLOR | CONDITION | ESCAPE | LITERAL | QUOTED;
 
+
+(* seconds decimal zeroes.............................................................................................*)
+SECOND_MILLIS                     = SECOND,
+                                    [ DECIMAL_POINT, ZERO, [{ZERO}]];
 
 
 (* fractions .......................................................................*)
@@ -139,10 +143,10 @@ FRACTION_DIGIT                    = ZERO | SPACE | NON_ZERO | THOUSANDS;
 (* BIGDECIMAL .......................................................................*)
 BIGDECIMAL_GENERAL                = GENERAL | BIGDECIMAL;
 
-BIGDECIMAL                        = [{ BIGDECIMAL_DECIMAL_POINT | BIGDECIMAL_DIGIT | BIGDECIMAL_LITERAL | BIGDECIMAL_EXPONENT | PERCENTAGE }];
+BIGDECIMAL                        = [{ DECIMAL_POINT | BIGDECIMAL_DIGIT | BIGDECIMAL_LITERAL | BIGDECIMAL_EXPONENT | PERCENTAGE }];
 
 BIGDECIMAL_EXPONENT               = BIGDECIMAL_EXPONENT_SYMBOL,
-                                    [{ BIGDECIMAL_DECIMAL_POINT | BIGDECIMAL_DIGIT | BIGDECIMAL_LITERAL }];
+                                    [{ DECIMAL_POINT | BIGDECIMAL_DIGIT | BIGDECIMAL_LITERAL }];
 
 BIGDECIMAL_EXPONENT_SYMBOL        = ( 'E+' | 'e+' | 'E-' | 'e-' );
 
