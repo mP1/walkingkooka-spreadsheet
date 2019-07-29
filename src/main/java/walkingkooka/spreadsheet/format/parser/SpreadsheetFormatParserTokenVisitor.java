@@ -201,11 +201,11 @@ public abstract class SpreadsheetFormatParserTokenVisitor extends ParserTokenVis
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatDigitLeadingSpaceParserToken token) {
+    protected void visit(final SpreadsheetFormatDigitSpaceParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatDigitLeadingZeroParserToken token) {
+    protected void visit(final SpreadsheetFormatDigitZeroParserToken token) {
         // nop
     }
 

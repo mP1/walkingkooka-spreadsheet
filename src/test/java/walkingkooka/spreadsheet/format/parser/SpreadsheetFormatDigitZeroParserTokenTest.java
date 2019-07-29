@@ -23,12 +23,12 @@ import walkingkooka.visit.Visiting;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetFormatDigitLeadingSpaceParserTokenTest extends SpreadsheetFormatNonSymbolParserTokenTestCase<SpreadsheetFormatDigitLeadingSpaceParserToken, String> {
+public final class SpreadsheetFormatDigitZeroParserTokenTest extends SpreadsheetFormatNonSymbolParserTokenTestCase<SpreadsheetFormatDigitZeroParserToken, String> {
 
     @Test
     public void testAccept() {
         final StringBuilder b = new StringBuilder();
-        final SpreadsheetFormatDigitLeadingSpaceParserToken token = this.createToken();
+        final SpreadsheetFormatDigitZeroParserToken token = this.createToken();
 
         new FakeSpreadsheetFormatParserTokenVisitor() {
             @Override
@@ -58,7 +58,7 @@ public final class SpreadsheetFormatDigitLeadingSpaceParserTokenTest extends Spr
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatDigitLeadingSpaceParserToken t) {
+            protected void visit(final SpreadsheetFormatDigitZeroParserToken t) {
                 assertSame(token, t);
                 b.append("5");
             }
@@ -77,17 +77,17 @@ public final class SpreadsheetFormatDigitLeadingSpaceParserTokenTest extends Spr
     }
 
     @Override
-    SpreadsheetFormatDigitLeadingSpaceParserToken createToken(final String value, final String text) {
-        return SpreadsheetFormatDigitLeadingSpaceParserToken.with(value, text);
+    SpreadsheetFormatDigitZeroParserToken createToken(final String value, final String text) {
+        return SpreadsheetFormatDigitZeroParserToken.with(value, text);
     }
 
     @Override
-    public SpreadsheetFormatDigitLeadingSpaceParserToken createDifferentToken() {
-        return SpreadsheetFormatDigitLeadingSpaceParserToken.with("ABC", "'different'");
+    public SpreadsheetFormatDigitZeroParserToken createDifferentToken() {
+        return SpreadsheetFormatDigitZeroParserToken.with("ABC", "'different'");
     }
 
     @Override
-    public Class<SpreadsheetFormatDigitLeadingSpaceParserToken> type() {
-        return SpreadsheetFormatDigitLeadingSpaceParserToken.class;
+    public Class<SpreadsheetFormatDigitZeroParserToken> type() {
+        return SpreadsheetFormatDigitZeroParserToken.class;
     }
 }

@@ -289,8 +289,8 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
         predefined.put(BIGDECIMAL_DECIMAL_POINT_IDENTIFIER, DECIMAL_POINT_PARSER);
         predefined.put(CURRENCY_IDENTIFIER, CURRENCY);
         predefined.put(FRACTION_SYMBOL_IDENTIFIER, FRACTION_SYMBOL);
-        predefined.put(LEADING_ZERO_IDENTIFIER, LEADING_ZERO);
-        predefined.put(LEADING_SPACE_IDENTIFIER, LEADING_SPACE);
+        predefined.put(ZERO_IDENTIFIER, ZERO);
+        predefined.put(SPACE_IDENTIFIER, SPACE);
         predefined.put(NON_ZERO_IDENTIFIER, NON_ZERO);
         predefined.put(PERCENTAGE_IDENTIFIER, PERCENTAGE);
         predefined.put(THOUSANDS_IDENTIFIER, THOUSANDS);
@@ -311,15 +311,15 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             SpreadsheetFormatParserToken::fractionSymbol,
             SpreadsheetFormatFractionSymbolParserToken.class);
 
-    private static final EbnfIdentifierName LEADING_ZERO_IDENTIFIER = EbnfIdentifierName.with("LEADING_ZERO");
-    private static final Parser<ParserContext> LEADING_ZERO = symbol('0',
-            SpreadsheetFormatParserToken::digitLeadingZero,
-            SpreadsheetFormatDigitLeadingZeroParserToken.class);
+    private static final EbnfIdentifierName ZERO_IDENTIFIER = EbnfIdentifierName.with("ZERO");
+    private static final Parser<ParserContext> ZERO = symbol('0',
+            SpreadsheetFormatParserToken::digitZero,
+            SpreadsheetFormatDigitZeroParserToken.class);
 
-    private static final EbnfIdentifierName LEADING_SPACE_IDENTIFIER = EbnfIdentifierName.with("LEADING_SPACE");
-    private static final Parser<ParserContext> LEADING_SPACE = symbol('?',
-            SpreadsheetFormatParserToken::digitLeadingSpace,
-            SpreadsheetFormatDigitLeadingSpaceParserToken.class);
+    private static final EbnfIdentifierName SPACE_IDENTIFIER = EbnfIdentifierName.with("SPACE");
+    private static final Parser<ParserContext> SPACE = symbol('?',
+            SpreadsheetFormatParserToken::digitSpace,
+            SpreadsheetFormatDigitSpaceParserToken.class);
 
     private static final EbnfIdentifierName NON_ZERO_IDENTIFIER = EbnfIdentifierName.with("NON_ZERO");
     private static final Parser<ParserContext> NON_ZERO = symbol('#',

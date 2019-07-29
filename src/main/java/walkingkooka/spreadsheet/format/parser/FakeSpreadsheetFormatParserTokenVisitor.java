@@ -250,12 +250,12 @@ public class FakeSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatPa
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDigitLeadingSpaceParserToken token) {
+    protected void visit(final SpreadsheetFormatDigitSpaceParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDigitLeadingZeroParserToken token) {
+    protected void visit(final SpreadsheetFormatDigitZeroParserToken token) {
         throw new UnsupportedOperationException();
     }
 
