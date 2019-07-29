@@ -68,12 +68,12 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     private final static Parser<SpreadsheetFormatParserContext> COLOR_PARSER;
 
     private static void color(final Map<EbnfIdentifierName, Parser<ParserContext>> predefined) {
-        predefined.put(COLOR_AND_BIGDECIMAL_IDENTIFIER, COLOR_AND_NUMBER);
+        predefined.put(COLOR_AND_NUMBER_IDENTIFIER, COLOR_AND_NUMBER);
         predefined.put(COLOR_NAME_IDENTIFIER, COLOR_NAME);
         predefined.put(COLOR_BIGDECIMAL_IDENTIFIER, COLOR_NUMBER);
     }
 
-    private static final EbnfIdentifierName COLOR_AND_BIGDECIMAL_IDENTIFIER = EbnfIdentifierName.with("COLOR_AND_NUMBER");
+    private static final EbnfIdentifierName COLOR_AND_NUMBER_IDENTIFIER = EbnfIdentifierName.with("COLOR_AND_NUMBER");
 
 
     private static final EbnfIdentifierName COLOR_NAME_IDENTIFIER = EbnfIdentifierName.with("COLOR_NAME");
