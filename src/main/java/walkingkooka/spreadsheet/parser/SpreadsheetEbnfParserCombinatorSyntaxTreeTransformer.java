@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.collect.map.Maps;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -35,83 +36,14 @@ import walkingkooka.text.cursor.parser.ebnf.EbnfTerminalParserToken;
 import walkingkooka.text.cursor.parser.ebnf.combinator.EbnfParserCombinatorSyntaxTreeTransformer;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.BiFunction;
 
 /**
  * A {@link EbnfParserCombinatorSyntaxTreeTransformer} that only transforms terminal and ranges into their corresponding {@link SpreadsheetParserToken} equivalents.
  * Processing of other tokens will be done after this process completes.
  */
 final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer implements EbnfParserCombinatorSyntaxTreeTransformer {
-
-    /**
-     * Singleton
-     */
-    final static SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer INSTANCE = new SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer();
-
-    /**
-     * Private ctor use singleton.
-     */
-    private SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer() {
-        super();
-    }
-
-    @Override
-    public Parser<ParserContext> alternatives(final EbnfAlternativeParserToken token,
-                                              final Parser<ParserContext> parser) {
-        return parser;
-    }
-
-    @Override
-    public Parser<ParserContext> concatenation(final EbnfConcatenationParserToken token,
-                                               final Parser<ParserContext> parser) {
-        return parser.transform(this::concatenation);
-    }
-
-    /**
-     * Special case for binary operators and operator priorities.
-     *
-     * <pre></pre>
-     * (* addition, subtraction, multiplication, division, power, range *)
-     * BINARY_OPERATOR         = "+" | "-" | "*" | "/" | "^" | ":";
-     * BINARY_EXPRESSION       = EXPRESSION2, [ WHITESPACE ], BINARY_OPERATOR, [ WHITESPACE ], EXPRESSION2;
-     * </pre>
-     */
-    private ParserToken concatenation(final ParserToken token,
-                                      final ParserContext context) {
-        return SequenceParserToken.class.cast(token).transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformerBinaryOperatorTransformer.INSTANCE);
-    }
-
-    @Override
-    public Parser<ParserContext> exception(final EbnfExceptionParserToken token,
-                                           final Parser<ParserContext> parser) {
-        return parser;
-    }
-
-    @Override
-    public Parser<ParserContext> group(final EbnfGroupParserToken token,
-                                       final Parser<ParserContext> parser) {
-        return parser;
-    }
-
-    /**
-     * For identified rules, the {@link SequenceParserToken} are flatted, missings removed and the {@link SpreadsheetPowerParserToken}
-     * created.
-     */
-    @Override
-    public Parser<ParserContext> identifier(final EbnfIdentifierParserToken token,
-                                            final Parser<ParserContext> parser) {
-        final EbnfIdentifierName name = token.value();
-        return name.equals(SpreadsheetParsers.EXPRESSION_IDENTIFIER) ?
-                parser.transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::expression) :
-                name.equals(SpreadsheetParsers.FUNCTION_IDENTIFIER) ?
-                        parser.transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::function) :
-                        name.equals(GROUP_IDENTIFIER) ?
-                                parser.transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::group) :
-                                name.equals(NEGATIVE_IDENTIFIER) ?
-                                        parser.transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::negative) :
-                                        name.equals(PERCENTAGE_IDENTIFIER) ?
-                                                parser.transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::percentage) :
-                                                requiredCheck(name, parser);
-    }
 
     /**
      * If the expression had a leading or trailing whitespace it will appear as a {@link SequenceParserToken},
@@ -156,12 +88,82 @@ final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer implements Ebnf
                 .value();
     }
 
-    private static Parser<ParserContext> requiredCheck(final EbnfIdentifierName name,
-                                                       final Parser<ParserContext> parser) {
-        return name.value().endsWith("REQUIRED") ?
-                parser.orReport(ParserReporters.basic()) :
-                parser; // leave as is...
+    /**
+     * Singleton
+     */
+    final static SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer INSTANCE = new SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer();
+
+    /**
+     * Private ctor use singleton.
+     */
+    private SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer() {
+        super();
+
+        final Map<EbnfIdentifierName, BiFunction<ParserToken, ParserContext, ParserToken>> identiferToTransform = Maps.sorted();
+
+        identiferToTransform.put(SpreadsheetParsers.EXPRESSION_IDENTIFIER, SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::expression);
+        identiferToTransform.put(SpreadsheetParsers.FUNCTION_IDENTIFIER, SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::function);
+        identiferToTransform.put(GROUP_IDENTIFIER, SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::group);
+        identiferToTransform.put(NEGATIVE_IDENTIFIER, SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::negative);
+        identiferToTransform.put(PERCENTAGE_IDENTIFIER, SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::percentage);
+
+        this.identiferToTransform = identiferToTransform;
     }
+
+    @Override
+    public Parser<ParserContext> alternatives(final EbnfAlternativeParserToken token,
+                                              final Parser<ParserContext> parser) {
+        return parser;
+    }
+
+    @Override
+    public Parser<ParserContext> concatenation(final EbnfConcatenationParserToken token,
+                                               final Parser<ParserContext> parser) {
+        return parser.transform(this::concatenation);
+    }
+
+    /**
+     * Special case for binary operators and operator priorities.
+     *
+     * <pre></pre>
+     * (* addition, subtraction, multiplication, division, power, range *)
+     * BINARY_OPERATOR         = "+" | "-" | "*" | "/" | "^" | ":";
+     * BINARY_EXPRESSION       = EXPRESSION2, [ WHITESPACE ], BINARY_OPERATOR, [ WHITESPACE ], EXPRESSION2;
+     * </pre>
+     */
+    private ParserToken concatenation(final ParserToken token,
+                                      final ParserContext context) {
+        return SequenceParserToken.class.cast(token).transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformerBinaryOperatorTransformer.INSTANCE);
+    }
+
+    @Override
+    public Parser<ParserContext> exception(final EbnfExceptionParserToken token,
+                                           final Parser<ParserContext> parser) {
+        return parser;
+    }
+
+    @Override
+    public Parser<ParserContext> group(final EbnfGroupParserToken token,
+                                       final Parser<ParserContext> parser) {
+        return parser;
+    }
+
+    /**
+     * For identified rules, invokes the transformer or calls required check as a default.
+     */
+    @Override
+    public Parser<ParserContext> identifier(final EbnfIdentifierParserToken token,
+                                            final Parser<ParserContext> parser) {
+        final EbnfIdentifierName name = token.value();
+        final BiFunction<ParserToken, ParserContext, ParserToken> transform = this.identiferToTransform.get(name);
+        return null != transform ?
+                parser.transform(transform) :
+                name.value().endsWith("REQUIRED") ?
+                        parser.orReport(ParserReporters.basic()) :
+                        parser;
+    }
+
+    private final Map<EbnfIdentifierName, BiFunction<ParserToken, ParserContext, ParserToken>> identiferToTransform;
 
     @Override
     public Parser<ParserContext> optional(final EbnfOptionalParserToken token,
