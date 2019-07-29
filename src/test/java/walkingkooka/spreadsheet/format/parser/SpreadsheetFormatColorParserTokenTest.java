@@ -38,7 +38,7 @@ public final class SpreadsheetFormatColorParserTokenTest extends SpreadsheetForm
     }
 
     private List<ParserToken> missingColorNameOrColorNumber() {
-        return Lists.of(this.openBracket(), this.number1(), this.closeBracket());
+        return Lists.of(this.bracketOpen(), this.number1(), this.bracketClose());
     }
 
     @Test
@@ -140,10 +140,10 @@ public final class SpreadsheetFormatColorParserTokenTest extends SpreadsheetForm
 
     @Override
     List<ParserToken> tokens() {
-        return Lists.of(this.openBracket(),
+        return Lists.of(this.bracketOpen(),
                 SpreadsheetFormatParserToken.colorName("RED", "RED"),
                 this.whitespace(),
-                this.closeBracket());
+                this.bracketClose());
     }
 
     @Override
@@ -153,9 +153,9 @@ public final class SpreadsheetFormatColorParserTokenTest extends SpreadsheetForm
 
     @Override
     public SpreadsheetFormatColorParserToken createDifferentToken() {
-        return SpreadsheetFormatColorParserToken.with(Lists.of(this.openBracket(),
+        return SpreadsheetFormatColorParserToken.with(Lists.of(this.bracketOpen(),
                 SpreadsheetFormatParserToken.colorName("GREEN", "GREEN"),
-                this.closeBracket()),
+                this.bracketClose()),
                 "[GREEN]");
     }
 
