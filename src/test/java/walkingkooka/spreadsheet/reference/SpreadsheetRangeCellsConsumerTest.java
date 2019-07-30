@@ -33,7 +33,7 @@ public final class SpreadsheetRangeCellsConsumerTest implements ClassTesting2<Sp
         final Consumer<SpreadsheetCell> present = this::present;
         final Consumer<SpreadsheetCellReference> absent = this::absent;
 
-        this.toStringAndCheck(new SpreadsheetRangeCellsConsumer(Lists.empty(), present, absent), present + " " + absent);
+        this.toStringAndCheck(SpreadsheetRangeCellsConsumer.with(Lists.empty(), present, absent), present + " " + absent);
     }
 
     private void present(final SpreadsheetCell cells) {

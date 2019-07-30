@@ -41,8 +41,7 @@ final class SpreadsheetRangeCellsConsumer implements Consumer<SpreadsheetCellRef
         return new SpreadsheetRangeCellsConsumer(cells, present, absent);
     }
 
-
-    SpreadsheetRangeCellsConsumer(final Collection<SpreadsheetCell> cells,
+    private SpreadsheetRangeCellsConsumer(final Collection<SpreadsheetCell> cells,
                                   final Consumer<? super SpreadsheetCell> present,
                                   final Consumer<? super SpreadsheetCellReference> absent) {
         Objects.requireNonNull(cells, "cells");

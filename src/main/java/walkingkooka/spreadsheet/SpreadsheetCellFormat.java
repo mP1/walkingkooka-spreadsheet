@@ -54,12 +54,16 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
         Objects.requireNonNull(pattern, "pattern");
     }
 
+    static SpreadsheetCellFormat with(final String pattern,
+                                      final Optional<SpreadsheetTextFormatter> formatter) {
+        return new SpreadsheetCellFormat(pattern, formatter);
+    }
+
     /**
      * Private ctor use factory.
      */
-    // @VisibleForTesting
-    SpreadsheetCellFormat(final String pattern,
-                          final Optional<SpreadsheetTextFormatter> formatter) {
+    private SpreadsheetCellFormat(final String pattern,
+                                  final Optional<SpreadsheetTextFormatter> formatter) {
         super();
         this.pattern = pattern;
         this.formatter = formatter;
