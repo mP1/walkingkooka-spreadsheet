@@ -31,10 +31,10 @@ final class BigDecimalFractionSpreadsheetTextFormatterDigitComponent extends Big
     }
 
     /**
-     * Package private to limit subclassing.
+     * Private ctor use factory
      */
-    BigDecimalFractionSpreadsheetTextFormatterDigitComponent(final int position,
-                                                             final BigDecimalFractionSpreadsheetTextFormatterZero zero) {
+    private BigDecimalFractionSpreadsheetTextFormatterDigitComponent(final int position,
+                                                                     final BigDecimalFractionSpreadsheetTextFormatterZero zero) {
         super();
 
         this.position = position;

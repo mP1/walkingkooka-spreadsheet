@@ -31,10 +31,10 @@ final class NumberSpreadsheetTextFormatterDigitComponent extends NumberSpreadshe
     }
 
     /**
-     * Package private to limit subclassing.
+     * Private ctor use factory
      */
-    NumberSpreadsheetTextFormatterDigitComponent(final int position,
-                                                 final NumberSpreadsheetTextFormatterZero zero) {
+    private NumberSpreadsheetTextFormatterDigitComponent(final int position,
+                                                         final NumberSpreadsheetTextFormatterZero zero) {
         super();
 
         this.position = position;

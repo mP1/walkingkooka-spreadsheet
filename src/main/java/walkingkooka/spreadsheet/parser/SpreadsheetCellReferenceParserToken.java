@@ -36,7 +36,7 @@ public final class SpreadsheetCellReferenceParserToken extends SpreadsheetParent
     private SpreadsheetCellReferenceParserToken(final List<ParserToken> value, final String text) {
         super(value, text);
 
-        final SpreadsheetCellReferenceParserTokenConsumer checker = new SpreadsheetCellReferenceParserTokenConsumer();
+        final SpreadsheetCellReferenceParserTokenConsumer checker = SpreadsheetCellReferenceParserTokenConsumer.with();
         value.stream()
                 .filter(t -> t instanceof SpreadsheetParserToken)
                 .map(t -> (SpreadsheetParserToken) t)
