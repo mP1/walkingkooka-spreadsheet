@@ -40,7 +40,11 @@ final class LocalDateTimeSpreadsheetTextFormatter extends SpreadsheetTextFormatt
      */
     private LocalDateTimeSpreadsheetTextFormatter(final SpreadsheetFormatDateTimeParserToken token) {
         super(token);
-        this.twelveHour = LocalDateTimeSpreadsheetTextFormatterAmPmSpreadsheetFormatParserTokenVisitor.is12HourTime(token);
+
+        final LocalDateTimeSpreadsheetTextFormatterAnalysisSpreadsheetFormatParserTokenVisitor analysis = LocalDateTimeSpreadsheetTextFormatterAnalysisSpreadsheetFormatParserTokenVisitor.with();
+        analysis.accept(token);
+        this.twelveHour = analysis.twelveHour;
+        this.millisecondDecimals = analysis.millisecondDecimals;
     }
 
     @Override
@@ -50,13 +54,15 @@ final class LocalDateTimeSpreadsheetTextFormatter extends SpreadsheetTextFormatt
 
     @Override
     Optional<SpreadsheetFormattedText> format0(final Object value, final SpreadsheetTextFormatContext context) {
-        return LocalDateTimeSpreadsheetTextFormatterFormattingSpreadsheetFormatParserTokenVisitor.format(this.token,
+        return LocalDateTimeSpreadsheetTextFormatterFormatSpreadsheetFormatParserTokenVisitor.format(this.token,
                 context.convert(value, LocalDateTime.class),
                 context,
-                this.twelveHour);
+                this.twelveHour,
+                this.millisecondDecimals);
     }
 
     private final boolean twelveHour;
+    private final int millisecondDecimals;
 
     @Override
     String toStringSuffix() {

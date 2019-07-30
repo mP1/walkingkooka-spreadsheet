@@ -17,11 +17,16 @@
 
 package walkingkooka.spreadsheet.format;
 
-public final class LocalDateTimeSpreadsheetTextFormatterFormattingSpreadsheetFormatParserTokenVisitorTest extends
-        TextFormatterSpreadsheetFormatParserTokenVisitorTestCase<LocalDateTimeSpreadsheetTextFormatterFormattingSpreadsheetFormatParserTokenVisitor> {
+import java.time.LocalDateTime;
+
+public final class LocalDateTimeSpreadsheetTextFormatterFormatSpreadsheetFormatParserTokenVisitorTest extends
+        TextFormatterSpreadsheetFormatParserTokenVisitorTestCase<LocalDateTimeSpreadsheetTextFormatterFormatSpreadsheetFormatParserTokenVisitor> {
     @Override
-    public LocalDateTimeSpreadsheetTextFormatterFormattingSpreadsheetFormatParserTokenVisitor createVisitor() {
-        return new LocalDateTimeSpreadsheetTextFormatterFormattingSpreadsheetFormatParserTokenVisitor(null, null, false);
+    public LocalDateTimeSpreadsheetTextFormatterFormatSpreadsheetFormatParserTokenVisitor createVisitor() {
+        return new LocalDateTimeSpreadsheetTextFormatterFormatSpreadsheetFormatParserTokenVisitor(LocalDateTime.of(2000, 12, 31, 12, 58, 59),
+                null,
+                false,
+                0);
     }
 
     @Override
@@ -30,7 +35,7 @@ public final class LocalDateTimeSpreadsheetTextFormatterFormattingSpreadsheetFor
     }
 
     @Override
-    public Class<LocalDateTimeSpreadsheetTextFormatterFormattingSpreadsheetFormatParserTokenVisitor> type() {
-        return LocalDateTimeSpreadsheetTextFormatterFormattingSpreadsheetFormatParserTokenVisitor.class;
+    public Class<LocalDateTimeSpreadsheetTextFormatterFormatSpreadsheetFormatParserTokenVisitor> type() {
+        return LocalDateTimeSpreadsheetTextFormatterFormatSpreadsheetFormatParserTokenVisitor.class;
     }
 }
