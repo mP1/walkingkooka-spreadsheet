@@ -23,6 +23,14 @@ import java.util.function.Consumer;
  */
 final class SpreadsheetCellReferenceParserTokenConsumer implements Consumer<SpreadsheetParserToken> {
 
+    static SpreadsheetCellReferenceParserTokenConsumer with() {
+        return new SpreadsheetCellReferenceParserTokenConsumer();
+    }
+
+    private SpreadsheetCellReferenceParserTokenConsumer() {
+        super();
+    }
+
     @Override
     public void accept(final SpreadsheetParserToken token) {
         if (token.isColumnReference()) {

@@ -144,7 +144,7 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
     }
 
     @Test
-    public void tesEqualstDifferentNoFormatter() {
+    public void testEqualstDifferentNoFormatter() {
         this.checkNotEquals(this.withoutFormatter());
     }
 
@@ -182,7 +182,7 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
 
     @Override
     public SpreadsheetCellFormat createObject() {
-        return new SpreadsheetCellFormat(PATTERN, FORMATTER);
+        return SpreadsheetCellFormat.with(PATTERN, FORMATTER);
     }
 
     private SpreadsheetCellFormat withoutFormatter() {
