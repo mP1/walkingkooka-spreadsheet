@@ -177,4 +177,8 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     protected void visitTimePattern(final SpreadsheetTextFormatterPattern pattern) {
         // nop
     }
+
+    protected void visitTwoDigitYearInterpretation(final Integer value) {
+        // nop
+    }
 }
