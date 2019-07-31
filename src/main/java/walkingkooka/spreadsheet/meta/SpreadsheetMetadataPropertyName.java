@@ -117,7 +117,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      */
     private static SpreadsheetMetadataPropertyName<SpreadsheetTextFormatterPattern> registerFormatPatternConstant(final String name,
                                                                                                                   final BiConsumer<SpreadsheetTextFormatterPattern, SpreadsheetMetadataVisitor> visitor) {
-        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.spreadsheetTextFormatterPattern(),
+        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.formatPattern(),
                 visitor);
     }
 
