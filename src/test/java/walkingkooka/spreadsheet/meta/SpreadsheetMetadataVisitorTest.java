@@ -344,6 +344,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
         }.accept(SpreadsheetMetadataPropertyName.TIME_PATTERN, SpreadsheetTextFormatterPattern.with("hh:mm"));
     }
 
+    @Test
+    public void testVisitTwoDigitYearInterpretation() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitTwoDigitYearInterpretation(final Integer i) {
+                this.visited = i;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR_INTERPRETATION, 32);
+    }
+
     private static <T> SpreadsheetMetadata metadata(final SpreadsheetMetadataPropertyName<T> propertyName, final T value) {
         return SpreadsheetMetadata.with(Maps.of(propertyName, value));
     }
