@@ -18,9 +18,9 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExpressionParserToken;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.ParseStringTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
@@ -32,38 +32,44 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetTextFormatterPatternTest implements ClassTesting2<SpreadsheetTextFormatterPattern>,
         HashCodeEqualsDefinedTesting<SpreadsheetTextFormatterPattern>,
         HasJsonNodeTesting<SpreadsheetTextFormatterPattern>,
+        ParseStringTesting<SpreadsheetTextFormatterPattern>,
         ToStringTesting<SpreadsheetTextFormatterPattern> {
 
     private final static String PATTERN = "dd/mmm/yyyy hh:mm:ss";
 
     @Test
-    public void testWithNullPatternFails() {
+    public void testWithNullParserTokenFails() {
         assertThrows(NullPointerException.class, () -> {
             SpreadsheetTextFormatterPattern.with(null);
         });
     }
 
     @Test
-    public void testWithIllegalPatternFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            SpreadsheetTextFormatterPattern.with("\"unclosed quoted text inside patterns");
-        });
+    public void testWith() {
+        final SpreadsheetTextFormatterPattern pattern = SpreadsheetTextFormatterPattern.parse(PATTERN);
+
+        final SpreadsheetTextFormatterPattern with = SpreadsheetTextFormatterPattern.with(pattern.value());
+        assertEquals(with.value(), pattern.value(), "value");
+    }
+
+    // Parse............................................................................................................
+
+    @Test
+    public void testParseIllegalPatternFails() {
+        this.parseFails("\"unclosed quoted text inside patterns", IllegalArgumentException.class);
     }
 
     @Test
-    public void testWith() {
-        final SpreadsheetTextFormatterPattern pattern = SpreadsheetTextFormatterPattern.with(PATTERN);
-        assertEquals(PATTERN, pattern.value(), "value");
-
-        final SpreadsheetFormatExpressionParserToken parserToken = pattern.parserToken();
-        assertEquals(PATTERN, parserToken.text(), "parserToken.text");
+    public void testParse() {
+        final SpreadsheetTextFormatterPattern pattern = SpreadsheetTextFormatterPattern.parse(PATTERN);
+        assertEquals(PATTERN, pattern.value().text(), "value.text()");
     }
 
     // HashCodeEqualsDefined............................................................................................
 
     @Test
     public void testDifferentPattern() {
-        this.checkNotEquals(SpreadsheetTextFormatterPattern.with("#.00"));
+        this.checkNotEquals(SpreadsheetTextFormatterPattern.parse("#.00"));
     }
 
     // JsonNodeTesting.................................................................................................
@@ -81,7 +87,7 @@ public final class SpreadsheetTextFormatterPatternTest implements ClassTesting2<
     }
 
     private SpreadsheetTextFormatterPattern createPattern() {
-        return SpreadsheetTextFormatterPattern.with(PATTERN);
+        return SpreadsheetTextFormatterPattern.parse(PATTERN);
     }
 
     // ClassTesting.....................................................................................................
@@ -113,5 +119,22 @@ public final class SpreadsheetTextFormatterPatternTest implements ClassTesting2<
     @Override
     public SpreadsheetTextFormatterPattern fromJsonNode(final JsonNode jsonNode) {
         return SpreadsheetTextFormatterPattern.fromJsonNode(jsonNode);
+    }
+
+    // ParseStringTesting...............................................................................................
+
+    @Override
+    public SpreadsheetTextFormatterPattern parse(final String text) {
+        return SpreadsheetTextFormatterPattern.parse(text);
+    }
+
+    @Override
+    public Class<? extends RuntimeException> parseFailedExpected(final Class<? extends RuntimeException> expected) {
+        return expected;
+    }
+
+    @Override
+    public RuntimeException parseFailedExpected(final RuntimeException expected) {
+        return expected;
     }
 }
