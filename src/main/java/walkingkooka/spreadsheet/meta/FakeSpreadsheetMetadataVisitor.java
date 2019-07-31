@@ -172,4 +172,9 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     protected void visitTimePattern(final SpreadsheetTextFormatterPattern pattern) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    protected void visitTwoDigitYearInterpretation(final Integer value) {
+        // nop
+    }
 }
