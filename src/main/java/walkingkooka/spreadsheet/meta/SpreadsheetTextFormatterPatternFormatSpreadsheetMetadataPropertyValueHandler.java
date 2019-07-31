@@ -23,23 +23,24 @@ import walkingkooka.tree.json.JsonNode;
 /**
  * A {@link SpreadsheetMetadataPropertyValueHandler} for valid {@link SpreadsheetTextFormatterPattern} patterns.
  */
-final class SpreadsheetTextFormatterPatternSpreadsheetMetadataPropertyValueHandler extends SpreadsheetMetadataPropertyValueHandler<SpreadsheetTextFormatterPattern> {
+final class SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPropertyValueHandler extends SpreadsheetMetadataPropertyValueHandler<SpreadsheetTextFormatterPattern> {
 
     /**
      * Singleton
      */
-    final static SpreadsheetTextFormatterPatternSpreadsheetMetadataPropertyValueHandler INSTANCE = new SpreadsheetTextFormatterPatternSpreadsheetMetadataPropertyValueHandler();
+    final static SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPropertyValueHandler INSTANCE = new SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPropertyValueHandler();
 
     /**
      * Private ctor use singleton
      */
-    private SpreadsheetTextFormatterPatternSpreadsheetMetadataPropertyValueHandler() {
+    private SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPropertyValueHandler() {
         super();
     }
 
     @Override
     final void check0(final Object value, final SpreadsheetMetadataPropertyName<?> name) {
-        this.checkType(value, SpreadsheetTextFormatterPattern.class, name);
+        SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatParserTokenVisitor.check(name,
+                this.checkType(value, SpreadsheetTextFormatterPattern.class, name));
     }
 
     @Override
