@@ -29,19 +29,19 @@ public final class SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPrope
 
     @Test
     public void testGeneralFails() {
-        this.checkFails(SpreadsheetTextFormatterPattern.with("GENERAL"), "Invalid pattern \"GENERAL\"");
+        this.checkFails(SpreadsheetTextFormatterPattern.parse("GENERAL"), "Invalid pattern \"GENERAL\"");
     }
 
     @Test
     public void testFromJsonNode() {
         final SpreadsheetTextFormatterPattern value = this.propertyValue();
-        this.fromJsonNodeAndCheck(JsonNode.string(value.value()), value);
+        this.fromJsonNodeAndCheck(JsonNode.string(value.value().text()), value);
     }
 
     @Test
     public void testToJsonNode() {
         final SpreadsheetTextFormatterPattern value = this.propertyValue();
-        this.toJsonNodeAndCheck(value, JsonNode.string(value.value()));
+        this.toJsonNodeAndCheck(value, JsonNode.string(value.value().text()));
     }
 
     @Override
@@ -56,7 +56,7 @@ public final class SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPrope
 
     @Override
     SpreadsheetTextFormatterPattern propertyValue() {
-        return SpreadsheetTextFormatterPattern.with("#0.00");
+        return SpreadsheetTextFormatterPattern.parse("#0.00");
     }
 
     @Override

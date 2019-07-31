@@ -39,7 +39,7 @@ public final class SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPrope
     }
 
     private SpreadsheetTextFormatterPattern pattern() {
-        return SpreadsheetTextFormatterPattern.with("#.00");
+        return SpreadsheetTextFormatterPattern.parse("#.00");
     }
 
     @Override
