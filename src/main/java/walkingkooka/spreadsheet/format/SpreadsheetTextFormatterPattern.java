@@ -36,16 +36,15 @@ import java.util.Objects;
  */
 public final class SpreadsheetTextFormatterPattern implements HashCodeEqualsDefined,
         HasJsonNode,
-        Value<String> {
+        Value<SpreadsheetFormatExpressionParserToken> {
     /**
      * Creates a new {@link SpreadsheetTextFormatterPattern} after checking the value is valid.
      */
-    public static SpreadsheetTextFormatterPattern with(final String value) {
+    public static SpreadsheetTextFormatterPattern parse(final String value) {
         Objects.requireNonNull(value, "value");
 
         try {
-            return new SpreadsheetTextFormatterPattern(value,
-                    SpreadsheetFormatParsers.expression()
+            return new SpreadsheetTextFormatterPattern(SpreadsheetFormatParsers.expression()
                             .orFailIfCursorNotEmpty(ParserReporters.basic())
                             .parse(TextCursors.charSequence(value), SpreadsheetFormatParserContexts.basic())
                             .map(SpreadsheetFormatExpressionParserToken.class::cast)
@@ -55,34 +54,28 @@ public final class SpreadsheetTextFormatterPattern implements HashCodeEqualsDefi
         }
     }
 
+    public static SpreadsheetTextFormatterPattern with(final SpreadsheetFormatExpressionParserToken value) {
+        Objects.requireNonNull(value, "value");
+
+        return new SpreadsheetTextFormatterPattern(value);
+    }
+
     /**
      * Private ctor use factory
      */
-    private SpreadsheetTextFormatterPattern(final String value,
-                                            final SpreadsheetFormatExpressionParserToken parserToken) {
+    private SpreadsheetTextFormatterPattern(final SpreadsheetFormatExpressionParserToken value) {
         super();
         this.value = value;
-        this.parserToken = parserToken;
     }
 
     // Value............................................................................................................
 
     @Override
-    public String value() {
+    public SpreadsheetFormatExpressionParserToken value() {
         return this.value;
     }
 
-    private final String value;
-
-    /**
-     * Returns the {@link SpreadsheetFormatExpressionParserToken} representation of this pattern.
-     */
-    public SpreadsheetFormatExpressionParserToken parserToken() {
-        return this.parserToken;
-    }
-
-    // cached to assist implementing a Visitor
-    private final SpreadsheetFormatExpressionParserToken parserToken;
+    private final SpreadsheetFormatExpressionParserToken value;
 
     // HashCodeEqualsDefined............................................................................................
 
@@ -106,7 +99,7 @@ public final class SpreadsheetTextFormatterPattern implements HashCodeEqualsDefi
 
     @Override
     public String toString() {
-        return this.value;
+        return this.value.text();
     }
 
     // HasJsonNode......................................................................................................
@@ -117,7 +110,7 @@ public final class SpreadsheetTextFormatterPattern implements HashCodeEqualsDefi
     static SpreadsheetTextFormatterPattern fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
-        return SpreadsheetTextFormatterPattern.with(node.stringValueOrFail());
+        return SpreadsheetTextFormatterPattern.parse(node.stringValueOrFail());
     }
 
     /**
@@ -125,7 +118,7 @@ public final class SpreadsheetTextFormatterPattern implements HashCodeEqualsDefi
      */
     @Override
     public JsonNode toJsonNode() {
-        return JsonNode.string(this.value);
+        return JsonNode.string(this.value.text());
     }
 
     static {
