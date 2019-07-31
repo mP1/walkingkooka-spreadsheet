@@ -32,7 +32,7 @@ final class SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPropertyValu
     static void check(final SpreadsheetMetadataPropertyName<?> name,
                       final SpreadsheetTextFormatterPattern pattern) {
         new SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatParserTokenVisitor(name, pattern)
-                .accept(pattern.parserToken());
+                .accept(pattern.value());
     }
 
     SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatParserTokenVisitor(final SpreadsheetMetadataPropertyName<?> name,
