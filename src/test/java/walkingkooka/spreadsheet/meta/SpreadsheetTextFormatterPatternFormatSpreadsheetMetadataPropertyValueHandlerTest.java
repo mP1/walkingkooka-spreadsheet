@@ -21,10 +21,15 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatterPattern;
 import walkingkooka.tree.json.JsonNode;
 
-public final class SpreadsheetTextFormatterPatternSpreadsheetMetadataPropertyValueHandlerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase2<SpreadsheetTextFormatterPatternSpreadsheetMetadataPropertyValueHandler, SpreadsheetTextFormatterPattern> {
+public final class SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPropertyValueHandlerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase2<SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPropertyValueHandler, SpreadsheetTextFormatterPattern> {
 
     @Override
     public void testTypeNaming() {
+    }
+
+    @Test
+    public void testGeneralFails() {
+        this.checkFails(SpreadsheetTextFormatterPattern.with("GENERAL"), "Invalid pattern \"GENERAL\"");
     }
 
     @Test
@@ -40,8 +45,8 @@ public final class SpreadsheetTextFormatterPatternSpreadsheetMetadataPropertyVal
     }
 
     @Override
-    SpreadsheetTextFormatterPatternSpreadsheetMetadataPropertyValueHandler handler() {
-        return SpreadsheetTextFormatterPatternSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPropertyValueHandler handler() {
+        return SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPropertyValueHandler.INSTANCE;
     }
 
     @Override
@@ -65,8 +70,8 @@ public final class SpreadsheetTextFormatterPatternSpreadsheetMetadataPropertyVal
     }
 
     @Override
-    public Class<SpreadsheetTextFormatterPatternSpreadsheetMetadataPropertyValueHandler> type() {
-        return SpreadsheetTextFormatterPatternSpreadsheetMetadataPropertyValueHandler.class;
+    public Class<SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPropertyValueHandler> type() {
+        return SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPropertyValueHandler.class;
     }
 
     @Override
