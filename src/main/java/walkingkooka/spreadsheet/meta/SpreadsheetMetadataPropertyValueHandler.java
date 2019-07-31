@@ -112,6 +112,13 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     }
 
     /**
+     * {@see TwoDigitYearSpreadsheetMetadataPropertyValueHandler}
+     */
+    static TwoDigitYearSpreadsheetMetadataPropertyValueHandler twoDigitYear() {
+        return TwoDigitYearSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    }
+
+    /**
      * Package private to limit sub classing.
      */
     SpreadsheetMetadataPropertyValueHandler() {
