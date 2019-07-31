@@ -276,7 +276,14 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
             (p, v) -> v.visitTimePattern(p));
 
     /**
-     * Factory that assumnes a valid {@link SpreadsheetMetadataPropertyName} or fails.
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>two-digit-year-interpretation {@link SpreadsheetTextFormatterPattern}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<Integer> TWO_DIGIT_YEAR_INTERPRETATION = registerConstant("two-digit-year-interpretation",
+            SpreadsheetMetadataPropertyValueHandler.twoDigitYear(),
+            (two, v) -> v.visitTwoDigitYearInterpretation(two));
+
+    /**
+     * Factory that assumes a valid {@link SpreadsheetMetadataPropertyName} or fails.
      */
     public static SpreadsheetMetadataPropertyName with(final String name) {
         CharSequences.failIfNullOrEmpty(name, "name");
