@@ -56,6 +56,13 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     }
 
     /**
+     * {@see SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPropertyValueHandler}
+     */
+    static SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPropertyValueHandler formatPattern() {
+        return SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    }
+
+    /**
      * {@see LocalDateTimeSpreadsheetMetadataPropertyValueHandler}
      */
     static LocalDateTimeSpreadsheetMetadataPropertyValueHandler localDateTime() {
@@ -102,13 +109,6 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
      */
     static StringSpreadsheetMetadataPropertyValueHandler string() {
         return StringSpreadsheetMetadataPropertyValueHandler.INSTANCE;
-    }
-
-    /**
-     * {@see SpreadsheetTextFormatterPatternSpreadsheetMetadataPropertyValueHandler}
-     */
-    static SpreadsheetTextFormatterPatternSpreadsheetMetadataPropertyValueHandler spreadsheetTextFormatterPattern() {
-        return SpreadsheetTextFormatterPatternSpreadsheetMetadataPropertyValueHandler.INSTANCE;
     }
 
     /**
