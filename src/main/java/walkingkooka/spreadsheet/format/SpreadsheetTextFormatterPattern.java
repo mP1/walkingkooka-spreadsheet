@@ -74,6 +74,13 @@ public final class SpreadsheetTextFormatterPattern implements HashCodeEqualsDefi
 
     private final String value;
 
+    /**
+     * Returns the {@link SpreadsheetFormatExpressionParserToken} representation of this pattern.
+     */
+    public SpreadsheetFormatExpressionParserToken parserToken() {
+        return this.parserToken;
+    }
+
     // cached to assist implementing a Visitor
     private final SpreadsheetFormatExpressionParserToken parserToken;
 
