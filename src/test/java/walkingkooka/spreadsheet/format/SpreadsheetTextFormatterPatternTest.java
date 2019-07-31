@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExpressionParserToken;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
@@ -53,6 +54,9 @@ public final class SpreadsheetTextFormatterPatternTest implements ClassTesting2<
     public void testWith() {
         final SpreadsheetTextFormatterPattern pattern = SpreadsheetTextFormatterPattern.with(PATTERN);
         assertEquals(PATTERN, pattern.value(), "value");
+
+        final SpreadsheetFormatExpressionParserToken parserToken = pattern.parserToken();
+        assertEquals(PATTERN, parserToken.text(), "parserToken.text");
     }
 
     // HashCodeEqualsDefined............................................................................................
