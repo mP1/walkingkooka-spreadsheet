@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format.parser;
 
+import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.text.CaseSensitivity;
@@ -227,15 +228,24 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
     static final EbnfIdentifierName EXPRESSION_IDENTIFIER = EbnfIdentifierName.with("EXPRESSION");
 
-    private static void format(final Map<EbnfIdentifierName, Parser<ParserContext>> predefined) {
-        predefined.put(EXPRESSION_SEPARATOR_IDENTIFIER, EXPRESSION_SEPARATOR_SYMBOL);
+    // expression...............................................................................................................
+
+    /**
+     * Returns a {@link Parser} that given text returns a {@link SpreadsheetFormatParserToken}.
+     */
+    public static Parser<SpreadsheetFormatParserContext> expressionSeparator() {
+        return Cast.to(EXPRESSION_SEPARATOR_SYMBOL_PARSER);
     }
 
-    private static final Parser<ParserContext> EXPRESSION_SEPARATOR_SYMBOL = symbol(';',
+    private static final Parser<ParserContext> EXPRESSION_SEPARATOR_SYMBOL_PARSER = symbol(';',
             SpreadsheetFormatParserToken::separatorSymbol,
             SpreadsheetFormatSeparatorSymbolParserToken.class);
+
     private static final EbnfIdentifierName EXPRESSION_SEPARATOR_IDENTIFIER = EbnfIdentifierName.with("EXPRESSION_SEPARATOR");
 
+    private static void expressionSeparator(final Map<EbnfIdentifierName, Parser<ParserContext>> predefined) {
+        predefined.put(EXPRESSION_SEPARATOR_IDENTIFIER, EXPRESSION_SEPARATOR_SYMBOL_PARSER);
+    }
     // general ..........................................................................................................
 
     /**
@@ -463,7 +473,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
             final Map<EbnfIdentifierName, Parser<ParserContext>> predefined = Maps.sorted();
 
-            format(predefined);
+            expressionSeparator(predefined);
             color(predefined);
             condition(predefined);
             date(predefined);
