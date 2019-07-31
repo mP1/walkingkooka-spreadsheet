@@ -108,7 +108,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             protected void visitBigDecimalPattern(final SpreadsheetTextFormatterPattern p) {
                 this.visited = p;
             }
-        }.accept(SpreadsheetMetadataPropertyName.BIG_DECIMAL_PATTERN, SpreadsheetTextFormatterPattern.with("#0.0"));
+        }.accept(SpreadsheetMetadataPropertyName.BIG_DECIMAL_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.with("#0.0"));
     }
 
     @Test
@@ -118,7 +118,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             protected void visitBigIntegerPattern(final SpreadsheetTextFormatterPattern p) {
                 this.visited = p;
             }
-        }.accept(SpreadsheetMetadataPropertyName.BIG_INTEGER_PATTERN, SpreadsheetTextFormatterPattern.with("#0.0"));
+        }.accept(SpreadsheetMetadataPropertyName.BIG_INTEGER_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.with("#0.0"));
     }
 
     @Test
@@ -158,7 +158,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             protected void visitDatePattern(final SpreadsheetTextFormatterPattern p) {
                 this.visited = p;
             }
-        }.accept(SpreadsheetMetadataPropertyName.DATE_PATTERN, SpreadsheetTextFormatterPattern.with("DD/MM/YYYY"));
+        }.accept(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.with("DD/MM/YYYY"));
     }
 
     @Test
@@ -178,7 +178,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             protected void visitDateTimePattern(final SpreadsheetTextFormatterPattern p) {
                 this.visited = p;
             }
-        }.accept(SpreadsheetMetadataPropertyName.DATETIME_PATTERN, SpreadsheetTextFormatterPattern.with("DD/MM/YYYY hh:mm"));
+        }.accept(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.with("DD/MM/YYYY hh:mm"));
     }
 
     @Test
@@ -198,7 +198,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             protected void visitDoublePattern(final SpreadsheetTextFormatterPattern p) {
                 this.visited = p;
             }
-        }.accept(SpreadsheetMetadataPropertyName.DOUBLE_PATTERN, SpreadsheetTextFormatterPattern.with("#0.0"));
+        }.accept(SpreadsheetMetadataPropertyName.DOUBLE_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.with("#0.0"));
     }
 
     @Test
@@ -238,7 +238,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             protected void visitLongPattern(final SpreadsheetTextFormatterPattern p) {
                 this.visited = p;
             }
-        }.accept(SpreadsheetMetadataPropertyName.LONG_PATTERN, SpreadsheetTextFormatterPattern.with("#0"));
+        }.accept(SpreadsheetMetadataPropertyName.LONG_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.with("#0"));
     }
 
     @Test
@@ -341,7 +341,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             protected void visitTimePattern(final SpreadsheetTextFormatterPattern p) {
                 this.visited = p;
             }
-        }.accept(SpreadsheetMetadataPropertyName.TIME_PATTERN, SpreadsheetTextFormatterPattern.with("hh:mm"));
+        }.accept(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.with("hh:mm"));
     }
 
     @Test
