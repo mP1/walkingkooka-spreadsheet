@@ -85,15 +85,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     }
 
     /**
-     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link Locale value}.
-     */
-    private static SpreadsheetMetadataPropertyName<Locale> registerLocaleConstant(final String name,
-                                                                                  final BiConsumer<Locale, SpreadsheetMetadataVisitor> visitor) {
-        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.locale(),
-                visitor);
-    }
-
-    /**
      * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a non {@link String value}.
      */
     private static SpreadsheetMetadataPropertyName<String> registerNonEmptyStringConstant(final String name,
@@ -108,24 +99,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     private static SpreadsheetMetadataPropertyName<Integer> registerPositiveIntegerConstant(final String name,
                                                                                             final BiConsumer<Integer, SpreadsheetMetadataVisitor> visitor) {
         return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.positiveInteger(),
-                visitor);
-    }
-
-    /**
-     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link RoundingMode value}.
-     */
-    private static SpreadsheetMetadataPropertyName<RoundingMode> registerRoundingModeConstant(final String name,
-                                                                                              final BiConsumer<RoundingMode, SpreadsheetMetadataVisitor> visitor) {
-        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.roundingMode(),
-                visitor);
-    }
-
-    /**
-     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link SpreadsheetId value}.
-     */
-    private static SpreadsheetMetadataPropertyName<SpreadsheetId> registerSpreadsheetIdConstant(final String name,
-                                                                                                final BiConsumer<SpreadsheetId, SpreadsheetMetadataVisitor> visitor) {
-        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.spreadsheetId(),
                 visitor);
     }
 
@@ -236,7 +209,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link Locale}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<Locale> LOCALE = registerLocaleConstant("locale",
+    public final static SpreadsheetMetadataPropertyName<Locale> LOCALE = registerConstant("locale",
+            SpreadsheetMetadataPropertyValueHandler.locale(),
             (l, v) -> v.visitLocale(l));
 
     /**
@@ -278,7 +252,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>rounding-mode {@link RoundingMode}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<RoundingMode> ROUNDING_MODE = registerRoundingModeConstant("rounding-mode",
+    public final static SpreadsheetMetadataPropertyName<RoundingMode> ROUNDING_MODE = registerConstant("rounding-mode",
+            SpreadsheetMetadataPropertyValueHandler.roundingMode(),
             (c, v) -> v.visitRoundingMode(c));
 
     /**
@@ -290,7 +265,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheet-id {@link SpreadsheetId}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetId> SPREADSHEET_ID = registerSpreadsheetIdConstant("spreadsheet-id",
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetId> SPREADSHEET_ID = registerConstant("spreadsheet-id",
+            SpreadsheetMetadataPropertyValueHandler.spreadsheetId(),
             (e, v) -> v.visitSpreadsheetId(e));
 
     /**
