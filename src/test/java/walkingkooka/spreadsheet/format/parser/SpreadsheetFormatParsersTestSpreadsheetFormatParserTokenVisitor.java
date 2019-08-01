@@ -42,17 +42,6 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatNumberParserToken token) {
-        this.enter();
-        return super.startVisit(token);
-    }
-
-    @Override
-    protected void endVisit(final SpreadsheetFormatNumberParserToken token) {
-        this.exit(SpreadsheetFormatParserToken::number);
-    }
-
-    @Override
     protected Visiting startVisit(final SpreadsheetFormatColorParserToken token) {
         this.enter();
         return super.startVisit(token);
@@ -193,6 +182,17 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
     @Override
     protected void endVisit(final SpreadsheetFormatNotEqualsParserToken token) {
         this.exit(SpreadsheetFormatParserToken::notEquals);
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetFormatNumberParserToken token) {
+        this.enter();
+        return super.startVisit(token);
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetFormatNumberParserToken token) {
+        this.exit(SpreadsheetFormatParserToken::number);
     }
 
     @Override
