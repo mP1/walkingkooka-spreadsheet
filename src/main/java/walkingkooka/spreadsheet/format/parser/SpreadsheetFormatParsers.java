@@ -285,16 +285,15 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     private final static Parser<SpreadsheetFormatParserContext> FRACTION_PARSER;
 
     /**
-     * /**
      * Returns a {@link Parser} that given text returns a {@link SpreadsheetFormatParserToken}.
      */
-    public static Parser<SpreadsheetFormatParserContext> bigDecimal() {
-        return BIGDECIMAL_PARSER;
+    public static Parser<SpreadsheetFormatParserContext> number() {
+        return NUMBER_PARSER;
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> BIGDECIMAL_PARSER;
+    private final static Parser<SpreadsheetFormatParserContext> NUMBER_PARSER;
 
-    private static void bigDecimal(final Map<EbnfIdentifierName, Parser<ParserContext>> predefined) {
+    private static void number(final Map<EbnfIdentifierName, Parser<ParserContext>> predefined) {
         predefined.put(DECIMAL_POINT_IDENTIFIER, DECIMAL_POINT_PARSER);
         predefined.put(CURRENCY_IDENTIFIER, CURRENCY);
         predefined.put(FRACTION_SYMBOL_IDENTIFIER, FRACTION_SYMBOL);
@@ -479,7 +478,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             date(predefined);
             dateAndTime(predefined);
             general(predefined);
-            bigDecimal(predefined);
+            number(predefined);
             text(predefined);
             time(predefined);
 
@@ -488,7 +487,6 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             final Map<EbnfIdentifierName, Parser<ParserContext>> result = grammar.get()
                     .combinator(predefined, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer.INSTANCE);
 
-            BIGDECIMAL_PARSER = result.get(EbnfIdentifierName.with("BIGDECIMAL")).cast();
             COLOR_PARSER = result.get(COLOR_IDENTIFIER).cast();
             CONDITION_PARSER = result.get(EbnfIdentifierName.with("CONDITION")).cast();
             DATE_PARSER = result.get(EbnfIdentifierName.with("DATE")).cast();
@@ -496,6 +494,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             EXPRESSION_PARSER = result.get(EXPRESSION_IDENTIFIER).cast();
             FRACTION_PARSER = result.get(EbnfIdentifierName.with("FRACTION")).cast();
             GENERAL_PARSER = result.get(GENERAL_IDENTIFIER).cast();
+            NUMBER_PARSER = result.get(EbnfIdentifierName.with("NUMBER")).cast();
             TEXT_PARSER = result.get(TEXT_IDENTIFIER).cast();
             TIME_PARSER = result.get(EbnfIdentifierName.with("TIME")).cast();
 

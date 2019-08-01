@@ -29,7 +29,7 @@ public final class NumberSpreadsheetTextFormatterComponentContextTest extends Nu
                 NumberSpreadsheetTextFormatterDigits.integer(NumberSpreadsheetTextFormatterMinusSign.NOT_REQUIRED, "123", NumberSpreadsheetTextFormatterThousandsSeparator.INCLUDE),
                 NumberSpreadsheetTextFormatterDigits.integer(NumberSpreadsheetTextFormatterMinusSign.REQUIRED, "456", NumberSpreadsheetTextFormatterThousandsSeparator.INCLUDE),
                 NumberSpreadsheetTextFormatterDigits.integer(NumberSpreadsheetTextFormatterMinusSign.NOT_REQUIRED, "789", NumberSpreadsheetTextFormatterThousandsSeparator.NONE),
-                NumberSpreadsheetTextFormatter.with(SpreadsheetFormatParserToken.bigDecimal(Lists.of(SpreadsheetFormatParserToken.digit("1", "1")), "1")),
+                NumberSpreadsheetTextFormatter.with(SpreadsheetFormatParserToken.number(Lists.of(SpreadsheetFormatParserToken.digit("1", "1")), "1")),
                 SpreadsheetTextFormatContexts.fake()),
                 "123-456789");
     }
