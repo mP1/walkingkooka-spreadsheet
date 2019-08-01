@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
@@ -73,6 +74,13 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
         return SpreadsheetNumberPatterns.withNumber0(value);
     }
 
+    /**
+     * Factory that creates a {@link SpreadsheetTimePatterns} from the given tokens.
+     */
+    public static SpreadsheetPatterns<SpreadsheetFormatTimeParserToken> withTime(final List<SpreadsheetFormatTimeParserToken> value) {
+        return SpreadsheetTimePatterns.withTime0(value);
+    }
+    
     /**
      * Should be called from the factory to check the given tokens.
      */
@@ -158,6 +166,30 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
         return SpreadsheetNumberPatterns.withNumber0(SpreadsheetNumberPatternsSpreadsheetFormatParserTokenVisitor.collect(token));
     }
 
+    // parseTime....................................................................................................
+
+    /**
+     * Creates a new {@link SpreadsheetTimePatterns} after checking the value is valid.
+     */
+    public static SpreadsheetPatterns<SpreadsheetFormatTimeParserToken> parseTime(final String text) {
+        return parseTime0(text);
+    }
+
+    static SpreadsheetTimePatterns parseTime0(final String text) {
+        return parse0(text,
+                TIME_PARSER,
+                SpreadsheetPatterns::transformTime);
+    }
+
+    private final static Parser<SpreadsheetFormatParserContext> TIME_PARSER = parser(SpreadsheetFormatParsers.time().cast());
+
+    /**
+     * Transforms the tokens into a {@link SpreadsheetTimePatterns}
+     */
+    private static SpreadsheetTimePatterns transformTime(final ParserToken token) {
+        return SpreadsheetTimePatterns.withTime0(SpreadsheetTimePatternsSpreadsheetFormatParserTokenVisitor.collect(token));
+    }
+    
     // helper...........................................................................................................
 
     /**
@@ -223,6 +255,8 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
 
     public abstract boolean isNumber();
 
+    public abstract boolean isTime();
+
     // HashCodeEqualsDefined............................................................................................
 
     @Override
@@ -279,6 +313,15 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
         return parseNumber0(node.stringValueOrFail());
     }
 
+    /**
+     * Factory that creates a {@link SpreadsheetTimePatterns} from a {@link JsonNode}.
+     */
+    static SpreadsheetTimePatterns fromJsonNodeTime(final JsonNode node) {
+        checkNode(node);
+
+        return parseTime0(node.stringValueOrFail());
+    }
+
     private static void checkNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
     }
@@ -303,5 +346,9 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
         HasJsonNode.register("spreadsheet-text-formatter-number-pattern",
                 SpreadsheetPatterns::fromJsonNodeNumber,
                 SpreadsheetNumberPatterns.class);
+
+        HasJsonNode.register("spreadsheet-text-formatter-time-pattern",
+                SpreadsheetPatterns::fromJsonNodeTime,
+                SpreadsheetTimePatterns.class);
     }
 }
