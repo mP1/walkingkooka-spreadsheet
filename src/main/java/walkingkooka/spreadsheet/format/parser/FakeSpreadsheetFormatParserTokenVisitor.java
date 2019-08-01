@@ -23,16 +23,6 @@ import walkingkooka.visit.Visiting;
 public class FakeSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor implements Fake {
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatNumberParserToken token) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void endVisit(final SpreadsheetFormatNumberParserToken token) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected Visiting startVisit(final SpreadsheetFormatColorParserToken token) {
         throw new UnsupportedOperationException();
     }
@@ -159,6 +149,16 @@ public class FakeSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatPa
 
     @Override
     protected void endVisit(final SpreadsheetFormatNotEqualsParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetFormatNumberParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetFormatNumberParserToken token) {
         throw new UnsupportedOperationException();
     }
 

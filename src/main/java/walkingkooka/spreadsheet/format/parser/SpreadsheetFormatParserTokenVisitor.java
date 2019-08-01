@@ -27,14 +27,6 @@ import walkingkooka.visit.Visitor;
  */
 public abstract class SpreadsheetFormatParserTokenVisitor extends ParserTokenVisitor {
 
-    protected Visiting startVisit(final SpreadsheetFormatNumberParserToken token) {
-        return Visiting.CONTINUE;
-    }
-
-    protected void endVisit(final SpreadsheetFormatNumberParserToken token) {
-        // nop
-    }
-
     protected Visiting startVisit(final SpreadsheetFormatColorParserToken token) {
         return Visiting.CONTINUE;
     }
@@ -136,6 +128,14 @@ public abstract class SpreadsheetFormatParserTokenVisitor extends ParserTokenVis
     }
 
     protected void endVisit(final SpreadsheetFormatNotEqualsParserToken token) {
+        // nop
+    }
+
+    protected Visiting startVisit(final SpreadsheetFormatNumberParserToken token) {
+        return Visiting.CONTINUE;
+    }
+
+    protected void endVisit(final SpreadsheetFormatNumberParserToken token) {
         // nop
     }
 
