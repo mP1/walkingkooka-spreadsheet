@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
@@ -52,6 +53,13 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
     // with.............................................................................................................
 
     /**
+     * Factory that creates a {@link SpreadsheetDatePatterns} from the given tokens.
+     */
+    public static SpreadsheetPatterns<SpreadsheetFormatDateParserToken> withDate(final List<SpreadsheetFormatDateParserToken> value) {
+        return SpreadsheetDatePatterns.withDate0(value);
+    }
+
+    /**
      * Factory that creates a {@link SpreadsheetDateTimePatterns} from the given tokens.
      */
     public static SpreadsheetPatterns<SpreadsheetFormatDateTimeParserToken> withDateTime(final List<SpreadsheetFormatDateTimeParserToken> value) {
@@ -76,6 +84,30 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
             throw new IllegalArgumentException("Tokens is empty");
         }
         return copy;
+    }
+
+    // parseDate....................................................................................................
+
+    /**
+     * Creates a new {@link SpreadsheetDatePatterns} after checking the value is valid.
+     */
+    public static SpreadsheetPatterns<SpreadsheetFormatDateParserToken> parseDate(final String text) {
+        return parseDate0(text);
+    }
+
+    static SpreadsheetDatePatterns parseDate0(final String text) {
+        return parse0(text,
+                DATE_PARSER,
+                SpreadsheetPatterns::transformDate);
+    }
+
+    private final static Parser<SpreadsheetFormatParserContext> DATE_PARSER = parser(SpreadsheetFormatParsers.date().cast());
+
+    /**
+     * Transforms the tokens into a {@link SpreadsheetDatePatterns}
+     */
+    private static SpreadsheetDatePatterns transformDate(final ParserToken token) {
+        return SpreadsheetDatePatterns.withDate0(SpreadsheetDatePatternsSpreadsheetFormatParserTokenVisitor.collect(token));
     }
 
     // parseDateTime....................................................................................................
@@ -146,18 +178,18 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
     }
 
     /**
-     * Parsers input that requires a single {@link SpreadsheetFormatParserToken datetime or number} followed by an optional separator and more tokens.
+     * Parsers input that requires a single {@link SpreadsheetFormatParserToken token} followed by an optional separator and more tokens.
      */
-    static Parser<SpreadsheetFormatParserContext> parser(final Parser<ParserContext> dateTimeOrNumber) {
+    static Parser<SpreadsheetFormatParserContext> parser(final Parser<ParserContext> parser) {
         final Parser<ParserContext> optional = Parsers.sequenceParserBuilder()
                 .required(SpreadsheetFormatParsers.expressionSeparator().cast())
-                .required(dateTimeOrNumber)
+                .required(parser)
                 .build()
                 .repeating()
                 .cast();
 
         return Parsers.sequenceParserBuilder()
-                .required(dateTimeOrNumber)
+                .required(parser)
                 .optional(optional.repeating())
                 .build()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
@@ -184,6 +216,8 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
     private final List<T> value;
 
     // isXXX............................................................................................................
+
+    public abstract boolean isDate();
 
     public abstract boolean isDateTime();
 
@@ -219,6 +253,15 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
     // HasJsonNode......................................................................................................
 
     /**
+     * Factory that creates a {@link SpreadsheetDatePatterns} from a {@link JsonNode}.
+     */
+    static SpreadsheetDatePatterns fromJsonNodeDate(final JsonNode node) {
+        checkNode(node);
+
+        return parseDate0(node.stringValueOrFail());
+    }
+
+    /**
      * Factory that creates a {@link SpreadsheetDateTimePatterns} from a {@link JsonNode}.
      */
     static SpreadsheetDateTimePatterns fromJsonNodeDateTime(final JsonNode node) {
@@ -249,6 +292,10 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
     }
 
     static {
+        HasJsonNode.register("spreadsheet-text-formatter-date-pattern",
+                SpreadsheetPatterns::fromJsonNodeDate,
+                SpreadsheetDatePatterns.class);
+
         HasJsonNode.register("spreadsheet-text-formatter-datetime-pattern",
                 SpreadsheetPatterns::fromJsonNodeDateTime,
                 SpreadsheetDateTimePatterns.class);

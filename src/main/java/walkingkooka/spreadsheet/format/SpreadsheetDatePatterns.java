@@ -17,32 +17,32 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
 
 import java.util.List;
 
 /**
- * Holds a valid {@link SpreadsheetNumberPatterns}.
+ * Holds a valid {@link SpreadsheetDatePatterns}.
  */
-final class SpreadsheetNumberPatterns extends SpreadsheetPatterns<SpreadsheetFormatNumberParserToken> {
+final class SpreadsheetDatePatterns extends SpreadsheetPatterns<SpreadsheetFormatDateParserToken> {
 
     /**
-     * Factory that creates a {@link SpreadsheetNumberPatterns} from the given tokens.
+     * Factory that creates a {@link SpreadsheetDatePatterns} from the given tokens.
      */
-    static SpreadsheetNumberPatterns withNumber0(final List<SpreadsheetFormatNumberParserToken> value) {
-        return new SpreadsheetNumberPatterns(copyAndNotEmptyCheck(value));
+    static SpreadsheetDatePatterns withDate0(final List<SpreadsheetFormatDateParserToken> value) {
+        return new SpreadsheetDatePatterns(copyAndNotEmptyCheck(value));
     }
 
     /**
      * Private ctor use factory
      */
-    private SpreadsheetNumberPatterns(final List<SpreadsheetFormatNumberParserToken> value) {
+    private SpreadsheetDatePatterns(final List<SpreadsheetFormatDateParserToken> value) {
         super(value);
     }
 
     @Override
     public boolean isDate() {
-        return false;
+        return true;
     }
 
     @Override
@@ -52,13 +52,13 @@ final class SpreadsheetNumberPatterns extends SpreadsheetPatterns<SpreadsheetFor
 
     @Override
     public boolean isNumber() {
-        return true;
+        return false;
     }
 
     // HashCodeEqualsDefined............................................................................................
 
     @Override
     boolean canBeEquals(final Object other) {
-        return other instanceof SpreadsheetNumberPatterns;
+        return other instanceof SpreadsheetDatePatterns;
     }
 }
