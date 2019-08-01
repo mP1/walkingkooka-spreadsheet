@@ -54,16 +54,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitBigDecimalFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitBigIntegerFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected void visitCreateDateTime(final LocalDateTime dateTime) {
         throw new UnsupportedOperationException();
     }
@@ -99,11 +89,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitDoubleFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected void visitExponentSymbol(final Character exponentSymbol) {
         throw new UnsupportedOperationException();
     }
@@ -115,11 +100,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitLocale(final Locale locale) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitLongFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
         throw new UnsupportedOperationException();
     }
 
@@ -140,6 +120,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitNumberedColor(final int number, final Color color) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitNumberFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
         throw new UnsupportedOperationException();
     }
 
