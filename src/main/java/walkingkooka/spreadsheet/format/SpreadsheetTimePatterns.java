@@ -17,26 +17,26 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 
 import java.util.List;
 
 /**
- * Holds a valid {@link SpreadsheetNumberPatterns}.
+ * Holds a valid {@link SpreadsheetTimePatterns}.
  */
-final class SpreadsheetNumberPatterns extends SpreadsheetPatterns<SpreadsheetFormatNumberParserToken> {
+final class SpreadsheetTimePatterns extends SpreadsheetPatterns<SpreadsheetFormatTimeParserToken> {
 
     /**
-     * Factory that creates a {@link SpreadsheetNumberPatterns} from the given tokens.
+     * Factory that creates a {@link SpreadsheetTimePatterns} from the given tokens.
      */
-    static SpreadsheetNumberPatterns withNumber0(final List<SpreadsheetFormatNumberParserToken> value) {
-        return new SpreadsheetNumberPatterns(copyAndNotEmptyCheck(value));
+    static SpreadsheetTimePatterns withTime0(final List<SpreadsheetFormatTimeParserToken> value) {
+        return new SpreadsheetTimePatterns(copyAndNotEmptyCheck(value));
     }
 
     /**
      * Private ctor use factory
      */
-    private SpreadsheetNumberPatterns(final List<SpreadsheetFormatNumberParserToken> value) {
+    private SpreadsheetTimePatterns(final List<SpreadsheetFormatTimeParserToken> value) {
         super(value);
     }
 
@@ -52,18 +52,18 @@ final class SpreadsheetNumberPatterns extends SpreadsheetPatterns<SpreadsheetFor
 
     @Override
     public boolean isNumber() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isTime() {
-        return false;
+        return true;
     }
 
     // HashCodeEqualsDefined............................................................................................
 
     @Override
     boolean canBeEquals(final Object other) {
-        return other instanceof SpreadsheetNumberPatterns;
+        return other instanceof SpreadsheetTimePatterns;
     }
 }
