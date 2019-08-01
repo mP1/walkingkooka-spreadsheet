@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
@@ -39,6 +40,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public final class SpreadsheetPatternsTest implements ClassTesting2<SpreadsheetPatterns<?>> {
 
     @Test
+    public void testWithDate() {
+        final List<SpreadsheetFormatDateParserToken> tokens = Lists.of(this.dmyy(), this.ddmmyyyy());
+        assertEquals(tokens, SpreadsheetPatterns.withDate(tokens).value());
+    }
+
+    @Test
     public void testWithDateTime() {
         final List<SpreadsheetFormatDateTimeParserToken> tokens = Lists.of(this.hhmmyyyy(), this.yyyymmhh());
         assertEquals(tokens, SpreadsheetPatterns.withDateTime(tokens).value());
@@ -48,6 +55,13 @@ public final class SpreadsheetPatternsTest implements ClassTesting2<SpreadsheetP
     public void testWithNumber() {
         final List<SpreadsheetFormatNumberParserToken> tokens = Lists.of(this.number(), this.money());
         assertEquals(tokens, SpreadsheetPatterns.withNumber(tokens).value());
+    }
+
+    @Test
+    public void testParseDate() {
+        this.parseAndCheck("dmyy;ddmmyyyy",
+                SpreadsheetPatterns::parseDate,
+                this.dmyy(), this.ddmmyyyy());
     }
 
     @Test
@@ -70,6 +84,22 @@ public final class SpreadsheetPatternsTest implements ClassTesting2<SpreadsheetP
         assertEquals(Lists.of(tokens),
                 parse.apply(text).value(),
                 () -> "parse " + CharSequences.quoteAndEscape(text));
+    }
+
+    private SpreadsheetFormatDateParserToken dmyy() {
+        return this.parseDateParserToken("dmyy");
+    }
+
+    private SpreadsheetFormatDateParserToken ddmmyyyy() {
+        return this.parseDateParserToken("ddmmyyyy");
+    }
+
+    private SpreadsheetFormatDateParserToken parseDateParserToken(final String text) {
+        return SpreadsheetFormatParsers.date()
+                .orFailIfCursorNotEmpty(ParserReporters.basic())
+                .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
+                .map(SpreadsheetFormatDateParserToken.class::cast)
+                .get();
     }
 
     private SpreadsheetFormatDateTimeParserToken hhmmyyyy() {
