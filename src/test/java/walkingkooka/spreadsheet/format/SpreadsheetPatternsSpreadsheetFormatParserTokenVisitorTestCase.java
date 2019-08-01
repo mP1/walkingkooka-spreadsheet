@@ -21,11 +21,11 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitorTesting;
 import walkingkooka.type.JavaVisibility;
 
-public abstract class SpreadsheetTextFormatterDateTimeOrNumberPatternsSpreadsheetFormatParserTokenVisitorTestCase<V extends SpreadsheetTextFormatterDateTimeOrNumberPatternsSpreadsheetFormatParserTokenVisitor<T>,
+public abstract class SpreadsheetPatternsSpreadsheetFormatParserTokenVisitorTestCase<V extends SpreadsheetPatternsSpreadsheetFormatParserTokenVisitor<T>,
         T extends SpreadsheetFormatParserToken>
         implements SpreadsheetFormatParserTokenVisitorTesting<V> {
 
-    SpreadsheetTextFormatterDateTimeOrNumberPatternsSpreadsheetFormatParserTokenVisitorTestCase() {
+    SpreadsheetPatternsSpreadsheetFormatParserTokenVisitorTestCase() {
         super();
     }
 
