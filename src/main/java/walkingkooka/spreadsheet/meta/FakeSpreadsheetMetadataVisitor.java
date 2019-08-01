@@ -84,12 +84,12 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitDateTimeOffset(final Long offset) {
+    protected void visitDateTimeFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void visitDateTimePattern(final SpreadsheetTextFormatterPattern pattern) {
+    protected void visitDateTimeOffset(final Long offset) {
         throw new UnsupportedOperationException();
     }
 
