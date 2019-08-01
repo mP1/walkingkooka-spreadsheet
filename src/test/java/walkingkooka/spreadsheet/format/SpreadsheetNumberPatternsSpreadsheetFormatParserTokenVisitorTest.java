@@ -22,12 +22,12 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 
-public final class SpreadsheetTextFormatterNumberPatternsSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetTextFormatterDateTimeOrNumberPatternsSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetTextFormatterNumberPatternsSpreadsheetFormatParserTokenVisitor,
+public final class SpreadsheetNumberPatternsSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetPatternsSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetNumberPatternsSpreadsheetFormatParserTokenVisitor,
         SpreadsheetFormatNumberParserToken> {
 
     @Test
     public void testToString() {
-        final SpreadsheetTextFormatterNumberPatternsSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetTextFormatterNumberPatternsSpreadsheetFormatParserTokenVisitor();
+        final SpreadsheetNumberPatternsSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetNumberPatternsSpreadsheetFormatParserTokenVisitor();
 
         final SpreadsheetFormatNumberParserToken token = SpreadsheetFormatParserToken.number(Lists.of(
                 SpreadsheetFormatParserToken.digitSpace("?", "?"),
@@ -42,17 +42,17 @@ public final class SpreadsheetTextFormatterNumberPatternsSpreadsheetFormatParser
     }
 
     @Override
-    public SpreadsheetTextFormatterNumberPatternsSpreadsheetFormatParserTokenVisitor createVisitor() {
-        return new SpreadsheetTextFormatterNumberPatternsSpreadsheetFormatParserTokenVisitor();
+    public SpreadsheetNumberPatternsSpreadsheetFormatParserTokenVisitor createVisitor() {
+        return new SpreadsheetNumberPatternsSpreadsheetFormatParserTokenVisitor();
     }
 
     @Override
-    public Class<SpreadsheetTextFormatterNumberPatternsSpreadsheetFormatParserTokenVisitor> type() {
-        return SpreadsheetTextFormatterNumberPatternsSpreadsheetFormatParserTokenVisitor.class;
+    public Class<SpreadsheetNumberPatternsSpreadsheetFormatParserTokenVisitor> type() {
+        return SpreadsheetNumberPatternsSpreadsheetFormatParserTokenVisitor.class;
     }
 
     @Override
     public String typeNamePrefix() {
-        return SpreadsheetTextFormatterNumberPatterns.class.getSimpleName();
+        return SpreadsheetNumberPatterns.class.getSimpleName();
     }
 }
