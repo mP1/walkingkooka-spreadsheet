@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.math.Fraction;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatBigDecimalParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
@@ -70,7 +70,7 @@ final class ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisito
     // BigDecimal.....................................................................................
 
     @Override
-    protected void endVisit(final SpreadsheetFormatBigDecimalParserToken token) {
+    protected void endVisit(final SpreadsheetFormatNumberParserToken token) {
         this.setSpreadsheetTextFormatter(SpreadsheetTextFormatters.number(token), token);
     }
 

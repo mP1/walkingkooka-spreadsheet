@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.math.Fraction;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatBigDecimalParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
@@ -91,7 +91,7 @@ public final class SpreadsheetTextFormatters implements PublicStaticHelper {
     /**
      * {@see NumberSpreadsheetTextFormatter}
      */
-    public static SpreadsheetTextFormatter number(final SpreadsheetFormatBigDecimalParserToken token) {
+    public static SpreadsheetTextFormatter number(final SpreadsheetFormatNumberParserToken token) {
         return NumberSpreadsheetTextFormatter.with(token);
     }
 

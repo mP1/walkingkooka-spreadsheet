@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatBigDecimalParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.parser.Parser;
@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * In expectations all symbols are changed from defaults to characters to verify the context is supplying such symbols.
  */
 public final class NumberSpreadsheetTextFormatterTest extends SpreadsheetTextFormatter3TestCase<NumberSpreadsheetTextFormatter,
-        SpreadsheetFormatBigDecimalParserToken> {
+        SpreadsheetFormatNumberParserToken> {
 
     // text-literal, escaped etc........................................................................................
 
@@ -1240,11 +1240,11 @@ public final class NumberSpreadsheetTextFormatterTest extends SpreadsheetTextFor
 
     @Override
     Parser<SpreadsheetFormatParserContext> parser() {
-        return SpreadsheetFormatParsers.bigDecimal();
+        return SpreadsheetFormatParsers.number();
     }
 
     @Override
-    NumberSpreadsheetTextFormatter createFormatter0(final SpreadsheetFormatBigDecimalParserToken token) {
+    NumberSpreadsheetTextFormatter createFormatter0(final SpreadsheetFormatNumberParserToken token) {
         return NumberSpreadsheetTextFormatter.with(token);
     }
 

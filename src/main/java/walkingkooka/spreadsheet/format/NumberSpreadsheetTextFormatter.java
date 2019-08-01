@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
 import walkingkooka.math.Maths;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatBigDecimalParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.text.CharSequences;
 
 import java.math.BigDecimal;
@@ -35,14 +35,14 @@ import java.util.Optional;
  * <li>{@link Double}</li>
  * <li>{@link Long}</li>
  * </ul>
- * producing the text equivalent without a {@link Color}. The pattern would have been a {@link String} but the factory accepts it represented as a {@link SpreadsheetFormatBigDecimalParserToken}.
+ * producing the text equivalent without a {@link Color}. The pattern would have been a {@link String} but the factory accepts it represented as a {@link SpreadsheetFormatNumberParserToken}.
  */
-final class NumberSpreadsheetTextFormatter extends SpreadsheetTextFormatter3<SpreadsheetFormatBigDecimalParserToken> {
+final class NumberSpreadsheetTextFormatter extends SpreadsheetTextFormatter3<SpreadsheetFormatNumberParserToken> {
 
     /**
-     * Creates a {@link NumberSpreadsheetTextFormatter} from a {@link SpreadsheetFormatBigDecimalParserToken}.
+     * Creates a {@link NumberSpreadsheetTextFormatter} from a {@link SpreadsheetFormatNumberParserToken}.
      */
-    static NumberSpreadsheetTextFormatter with(final SpreadsheetFormatBigDecimalParserToken token) {
+    static NumberSpreadsheetTextFormatter with(final SpreadsheetFormatNumberParserToken token) {
         check(token);
 
         return new NumberSpreadsheetTextFormatter(token);
@@ -51,7 +51,7 @@ final class NumberSpreadsheetTextFormatter extends SpreadsheetTextFormatter3<Spr
     /**
      * Private ctor use static method.
      */
-    private NumberSpreadsheetTextFormatter(final SpreadsheetFormatBigDecimalParserToken token) {
+    private NumberSpreadsheetTextFormatter(final SpreadsheetFormatNumberParserToken token) {
         super(token);
 
 

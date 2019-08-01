@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatBigDecimalParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.parser.Parser;
@@ -31,7 +31,7 @@ import java.util.Objects;
 /**
  * Holds a valid {@link SpreadsheetTextFormatterNumberPatterns}.
  */
-public final class SpreadsheetTextFormatterNumberPatterns extends SpreadsheetTextFormatterDateTimeOrNumberPatterns<SpreadsheetFormatBigDecimalParserToken> {
+public final class SpreadsheetTextFormatterNumberPatterns extends SpreadsheetTextFormatterDateTimeOrNumberPatterns<SpreadsheetFormatNumberParserToken> {
     /**
      * Creates a new {@link SpreadsheetTextFormatterNumberPatterns} after checking the value is valid.
      */
@@ -41,7 +41,7 @@ public final class SpreadsheetTextFormatterNumberPatterns extends SpreadsheetTex
                 SpreadsheetTextFormatterNumberPatterns::transform);
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> PARSER = parser(SpreadsheetFormatParsers.bigDecimal().cast());
+    private final static Parser<SpreadsheetFormatParserContext> PARSER = parser(SpreadsheetFormatParsers.number().cast());
 
     /**
      * Transforms the tokens into a {@link SpreadsheetTextFormatterNumberPatterns}
@@ -53,14 +53,14 @@ public final class SpreadsheetTextFormatterNumberPatterns extends SpreadsheetTex
     /**
      * Factory that creates a {@link SpreadsheetTextFormatterNumberPatterns} from the given tokens.
      */
-    public static SpreadsheetTextFormatterNumberPatterns with(final List<SpreadsheetFormatBigDecimalParserToken> value) {
+    public static SpreadsheetTextFormatterNumberPatterns with(final List<SpreadsheetFormatNumberParserToken> value) {
        return new SpreadsheetTextFormatterNumberPatterns(copyAndNotEmptyCheck(value));
     }
 
     /**
      * Private ctor use factory
      */
-    private SpreadsheetTextFormatterNumberPatterns(final List<SpreadsheetFormatBigDecimalParserToken> value) {
+    private SpreadsheetTextFormatterNumberPatterns(final List<SpreadsheetFormatNumberParserToken> value) {
         super(value);
     }
 
