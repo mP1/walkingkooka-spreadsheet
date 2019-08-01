@@ -42,12 +42,26 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     }
 
     /**
+     * {@see SpreadsheetDatePatternsSpreadsheetMetadataPropertyValueHandler}
+     */
+    static SpreadsheetDatePatternsSpreadsheetMetadataPropertyValueHandler datePatterns() {
+        return SpreadsheetDatePatternsSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    }
+
+    /**
      * {@see DateTimeOffsetSpreadsheetMetadataPropertyValueHandler}
      */
     static DateTimeOffsetSpreadsheetMetadataPropertyValueHandler dateTimeOffset() {
         return DateTimeOffsetSpreadsheetMetadataPropertyValueHandler.INSTANCE;
     }
-    
+
+    /**
+     * {@see SpreadsheetDateTimePatternsSpreadsheetMetadataPropertyValueHandler}
+     */
+    static SpreadsheetDateTimePatternsSpreadsheetMetadataPropertyValueHandler dateTimePatterns() {
+        return SpreadsheetDateTimePatternsSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    }
+
     /**
      * {@see EmailAddressSpreadsheetMetadataPropertyValueHandler}
      */
@@ -84,6 +98,13 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     }
 
     /**
+     * {@see SpreadsheetNumberPatternsSpreadsheetMetadataPropertyValueHandler}
+     */
+    static SpreadsheetNumberPatternsSpreadsheetMetadataPropertyValueHandler numberPatterns() {
+        return SpreadsheetNumberPatternsSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    }
+    
+    /**
      * {@see PositiveIntegerSpreadsheetMetadataPropertyValueHandler}
      */
     static PositiveIntegerSpreadsheetMetadataPropertyValueHandler positiveInteger() {
@@ -111,6 +132,13 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
         return StringSpreadsheetMetadataPropertyValueHandler.INSTANCE;
     }
 
+    /**
+     * {@see SpreadsheetTimePatternsSpreadsheetMetadataPropertyValueHandler}
+     */
+    static SpreadsheetTimePatternsSpreadsheetMetadataPropertyValueHandler timePatterns() {
+        return SpreadsheetTimePatternsSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    }
+    
     /**
      * {@see TwoDigitYearSpreadsheetMetadataPropertyValueHandler}
      */
