@@ -174,10 +174,10 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
      * Returns a {@link Parser} that returns a date format expression as {@link SpreadsheetFormatParserToken tokens}.
      */
     public static Parser<SpreadsheetFormatParserContext> date() {
-        return DATE_GENERAL_PARSER;
+        return DATE_PARSER;
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> DATE_GENERAL_PARSER;
+    private final static Parser<SpreadsheetFormatParserContext> DATE_PARSER;
 
     private static void date(final Map<EbnfIdentifierName, Parser<ParserContext>> parsers) {
         parsers.put(DAY_IDENTIFIER, DAY);
@@ -200,10 +200,10 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
      * Returns a {@link Parser} that returns a datetime format expression as {@link SpreadsheetFormatParserToken tokens}.
      */
     public static Parser<SpreadsheetFormatParserContext> dateTime() {
-        return DATETIME_GENERAL_PARSER;
+        return DATETIME_PARSER;
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> DATETIME_GENERAL_PARSER;
+    private final static Parser<SpreadsheetFormatParserContext> DATETIME_PARSER;
 
     private static void dateAndTime(final Map<EbnfIdentifierName, Parser<ParserContext>> predefined) {
         predefined.put(MONTH_MINUTE_IDENTIFIER, MONTH_MINUTE);
@@ -279,20 +279,20 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
      * Returns a {@link Parser} that given text returns a {@link SpreadsheetFormatParserToken}.
      */
     public static Parser<SpreadsheetFormatParserContext> fraction() {
-        return FRACTION_GENERAL_PARSER;
+        return FRACTION_PARSER;
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> FRACTION_GENERAL_PARSER;
+    private final static Parser<SpreadsheetFormatParserContext> FRACTION_PARSER;
 
     /**
      * /**
      * Returns a {@link Parser} that given text returns a {@link SpreadsheetFormatParserToken}.
      */
     public static Parser<SpreadsheetFormatParserContext> bigDecimal() {
-        return BIGDECIMAL_GENERAL_PARSER;
+        return BIGDECIMAL_PARSER;
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> BIGDECIMAL_GENERAL_PARSER;
+    private final static Parser<SpreadsheetFormatParserContext> BIGDECIMAL_PARSER;
 
     private static void bigDecimal(final Map<EbnfIdentifierName, Parser<ParserContext>> predefined) {
         predefined.put(DECIMAL_POINT_IDENTIFIER, DECIMAL_POINT_PARSER);
@@ -395,10 +395,10 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
      * Returns a {@link Parser} that returns a time format expression as {@link SpreadsheetFormatParserToken tokens}.
      */
     public static Parser<SpreadsheetFormatParserContext> time() {
-        return TIME_GENERAL_PARSER;
+        return TIME_PARSER;
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> TIME_GENERAL_PARSER;
+    private final static Parser<SpreadsheetFormatParserContext> TIME_PARSER;
 
     private static void time(final Map<EbnfIdentifierName, Parser<ParserContext>> predefined) {
         predefined.put(A_SLASH_P_IDENTIFIER, A_SLASH_P);
@@ -488,16 +488,16 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             final Map<EbnfIdentifierName, Parser<ParserContext>> result = grammar.get()
                     .combinator(predefined, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer.INSTANCE);
 
-            BIGDECIMAL_GENERAL_PARSER = result.get(EbnfIdentifierName.with("BIGDECIMAL_GENERAL")).cast();
+            BIGDECIMAL_PARSER = result.get(EbnfIdentifierName.with("BIGDECIMAL")).cast();
             COLOR_PARSER = result.get(COLOR_IDENTIFIER).cast();
             CONDITION_PARSER = result.get(EbnfIdentifierName.with("CONDITION")).cast();
-            DATE_GENERAL_PARSER = result.get(EbnfIdentifierName.with("DATE_GENERAL")).cast();
-            DATETIME_GENERAL_PARSER = result.get(EbnfIdentifierName.with("DATETIME_GENERAL")).cast();
+            DATE_PARSER = result.get(EbnfIdentifierName.with("DATE")).cast();
+            DATETIME_PARSER = result.get(EbnfIdentifierName.with("DATETIME")).cast();
             EXPRESSION_PARSER = result.get(EXPRESSION_IDENTIFIER).cast();
-            FRACTION_GENERAL_PARSER = result.get(EbnfIdentifierName.with("FRACTION_GENERAL")).cast();
+            FRACTION_PARSER = result.get(EbnfIdentifierName.with("FRACTION")).cast();
             GENERAL_PARSER = result.get(GENERAL_IDENTIFIER).cast();
             TEXT_PARSER = result.get(TEXT_IDENTIFIER).cast();
-            TIME_GENERAL_PARSER = result.get(EbnfIdentifierName.with("TIME_GENERAL")).cast();
+            TIME_PARSER = result.get(EbnfIdentifierName.with("TIME")).cast();
 
         } catch (final SpreadsheetFormatParserException rethrow) {
             throw rethrow;

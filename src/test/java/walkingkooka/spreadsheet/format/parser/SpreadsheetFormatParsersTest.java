@@ -356,8 +356,8 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
     }
 
     @Test
-    public void testDateGeneral() {
-        this.parseAndCheck2(this.dateParser(), SpreadsheetFormatParserToken::general, general());
+    public void testDateGeneralFails() {
+        this.dateParseThrows(general());
     }
 
     @Test
@@ -973,8 +973,8 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
     }
 
     @Test
-    public void testBigDecimalGeneral() {
-        this.parseAndCheck2(this.bigDecimalParser(), SpreadsheetFormatParserToken::general, general());
+    public void testBigDecimalGeneralFails() {
+        this.bigDecimalParseThrows(general());
     }
 
     // literals only...........................................................................
@@ -1916,8 +1916,8 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
     }
 
     @Test
-    public void testFractionGeneral() {
-        this.parseAndCheck2(this.fractionParser(), SpreadsheetFormatParserToken::general, general());
+    public void testFractionGeneralFails() {
+        this.fractionParseThrows(general());
     }
 
     // digitSpace
@@ -2761,8 +2761,8 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
     }
 
     @Test
-    public void testTimeGeneral() {
-        this.parseAndCheck2(this.timeParser(), SpreadsheetFormatParserToken::general, general());
+    public void testTimeGeneralFails() {
+        this.timeParseThrows(general());
     }
 
     @Test
@@ -3335,14 +3335,14 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
         return SpreadsheetFormatParsers.time();
     }
 
-    // dateAndTime....................................................................................................
+    // dateAndTime......................................................................................................
 
     @Test
-    public void testDateTimeGeneral() {
-        this.parseAndCheck2(this.dateTimeParser(), SpreadsheetFormatParserToken::general, general());
+    public void testDateTimeGeneralFails() {
+        this.parseThrows2(this.dateTimeParser(), general());
     }
 
-    // literals only...........................................................................
+    // literals only....................................................................................................
 
     @Test
     public void testDateTimeEscaped() {

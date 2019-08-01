@@ -71,9 +71,7 @@ CONDITION_NOT_EQUAL               = BRACKET_OPEN,
 
 
 
-(* date .................................................................................*)
-DATE_GENERAL                      = GENERAL | DATE;
-
+(* date ..............................................................................................................*)
 DATE                              = [{ DATE_COMPONENT_LITERAL }];
 
 DATE2                             = [{ DATE_LITERAL }],
@@ -86,9 +84,7 @@ DATE_LITERAL                      = DATE_DATETIME_TIME_TEXT;
 
 
 
-(* date/time ...............................................................................*)
-DATETIME_GENERAL                  = GENERAL | DATETIME;
-
+(* date/time .........................................................................................................*)
 DATETIME                          = [{ DATETIME_COMPONENT_LITERAL }];
 
 DATETIME2                         = [{ DATETIME_LITERAL }],
@@ -101,9 +97,7 @@ DATETIME_LITERAL                  = DATE_DATETIME_TIME_TEXT;
 
 
 
-(* time .................................................................................*)
-TIME_GENERAL                      = GENERAL | TIME;
-
+(* time ..............................................................................................................*)
 TIME                              = [{ TIME_COMPONENT_TIME_LITERAL }];
 
 TIME2                             = [{ TIME_LITERAL }],
@@ -125,9 +119,7 @@ SECOND_MILLIS                     = SECOND,
                                     [ DECIMAL_POINT, ZERO, [{ZERO}]];
 
 
-(* fractions .......................................................................*)
-FRACTION_GENERAL                  = GENERAL | FRACTION;
-
+(* fractions .........................................................................................................*)
 FRACTION                          = FRACTION_COMPONENT,
                                     FRACTION_SYMBOL,
                                     FRACTION_COMPONENT;
@@ -140,9 +132,7 @@ FRACTION_DIGIT                    = ZERO | SPACE | NON_ZERO | THOUSANDS;
 
 
 
-(* BIGDECIMAL .......................................................................*)
-BIGDECIMAL_GENERAL                = GENERAL | BIGDECIMAL;
-
+(* BIGDECIMAL .........................................................................................................*)
 BIGDECIMAL                        = [{ DECIMAL_POINT | BIGDECIMAL_DIGIT | BIGDECIMAL_LITERAL | BIGDECIMAL_EXPONENT | PERCENTAGE }];
 
 BIGDECIMAL_EXPONENT               = BIGDECIMAL_EXPONENT_SYMBOL,
@@ -155,7 +145,7 @@ BIGDECIMAL_DIGIT                  = ZERO | SPACE | NON_ZERO | THOUSANDS;
 
 
 
-(* general ..........................................................................*)
+(* general ...........................................................................................................*)
 GENERAL                           = [{ GENERAL_COLOR_WHITESPACE }],
                                     GENERAL_SYMBOL,
                                     [{ GENERAL_COLOR_WHITESPACE }];
