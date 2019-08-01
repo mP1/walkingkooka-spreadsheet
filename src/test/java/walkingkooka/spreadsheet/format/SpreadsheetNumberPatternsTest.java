@@ -86,6 +86,6 @@ public final class SpreadsheetNumberPatternsTest extends SpreadsheetPatternsTest
 
     @Override
     public SpreadsheetNumberPatterns parse(final String text) {
-        return SpreadsheetNumberPatterns.parseNumber0(text);
+        return SpreadsheetNumberPatterns.parseNumber(text);
     }
 }
