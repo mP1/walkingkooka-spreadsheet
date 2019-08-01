@@ -19,44 +19,41 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 
-public final class SpreadsheetDateTimePatternsSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetPatternsSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetDateTimePatternsSpreadsheetFormatParserTokenVisitor,
-        SpreadsheetFormatDateTimeParserToken> {
+public final class SpreadsheetTimePatternsSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetPatternsSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetTimePatternsSpreadsheetFormatParserTokenVisitor,
+        SpreadsheetFormatTimeParserToken> {
 
     @Test
     public void testToString() {
-        final SpreadsheetDateTimePatternsSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetDateTimePatternsSpreadsheetFormatParserTokenVisitor();
+        final SpreadsheetTimePatternsSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetTimePatternsSpreadsheetFormatParserTokenVisitor();
 
-        final SpreadsheetFormatDateTimeParserToken token = SpreadsheetFormatParserToken.dateTime(Lists.of(
-                SpreadsheetFormatParserToken.day("d", "d"),
-                SpreadsheetFormatParserToken.monthOrMinute("m", "m"),
-                SpreadsheetFormatParserToken.year("yyyy", "yyyy"),
+        final SpreadsheetFormatTimeParserToken token = SpreadsheetFormatParserToken.time(Lists.of(
                 SpreadsheetFormatParserToken.hour("h", "h"),
                 SpreadsheetFormatParserToken.monthOrMinute("m", "m"),
                 SpreadsheetFormatParserToken.second("s", "s"),
                 SpreadsheetFormatParserToken.decimalPoint(".", "."),
                 SpreadsheetFormatParserToken.digit("0", "0")
-        ), "dmyyyyhms.0");
+        ), "hms.0");
 
         visitor.accept(token);
 
-        this.toStringAndCheck(visitor, "dmyyyyhms.0");
+        this.toStringAndCheck(visitor, "hms.0");
     }
 
     @Override
-    public SpreadsheetDateTimePatternsSpreadsheetFormatParserTokenVisitor createVisitor() {
-        return new SpreadsheetDateTimePatternsSpreadsheetFormatParserTokenVisitor();
+    public SpreadsheetTimePatternsSpreadsheetFormatParserTokenVisitor createVisitor() {
+        return new SpreadsheetTimePatternsSpreadsheetFormatParserTokenVisitor();
     }
 
     @Override
-    public Class<SpreadsheetDateTimePatternsSpreadsheetFormatParserTokenVisitor> type() {
-        return SpreadsheetDateTimePatternsSpreadsheetFormatParserTokenVisitor.class;
+    public Class<SpreadsheetTimePatternsSpreadsheetFormatParserTokenVisitor> type() {
+        return SpreadsheetTimePatternsSpreadsheetFormatParserTokenVisitor.class;
     }
 
     @Override
     public String typeNamePrefix() {
-        return SpreadsheetDateTimePatterns.class.getSimpleName();
+        return SpreadsheetTimePatterns.class.getSimpleName();
     }
 }
