@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
@@ -27,65 +27,56 @@ import walkingkooka.tree.json.JsonNode;
 
 import java.util.List;
 
-public final class SpreadsheetTextFormatterNumberPatternsTest extends SpreadsheetTextFormatterDateTimeOrNumberPatternsTestCase<SpreadsheetTextFormatterNumberPatterns,
-        SpreadsheetFormatNumberParserToken> {
+public final class SpreadsheetDateTimePatternsTest extends SpreadsheetPatternsTestCase<SpreadsheetDateTimePatterns,
+        SpreadsheetFormatDateTimeParserToken> {
 
     // Parse............................................................................................................
 
     @Test
-    public void testParseDatePatternFails() {
-        this.parseFails("dd/mm/yyyy", IllegalArgumentException.class);
-    }
-
-    @Test
-    public void testParseDateTimePatternFails() {
-        this.parseFails("dd/mm/yyyy hh:mm:sss", IllegalArgumentException.class);
-    }
-
-    @Test
-    public void testParseTimePatternFails() {
-        this.parseFails("hh:mm:sss", IllegalArgumentException.class);
+    public void testParseNumberPatternFails() {
+        this.parseFails("0#00", IllegalArgumentException.class);
     }
 
     // helpers.........................................................................................................
 
     @Override
-    SpreadsheetTextFormatterNumberPatterns createPattern(final List<SpreadsheetFormatNumberParserToken> tokens) {
-        return SpreadsheetTextFormatterNumberPatterns.with(tokens);
+    SpreadsheetDateTimePatterns createPattern(final List<SpreadsheetFormatDateTimeParserToken> tokens) {
+        return SpreadsheetDateTimePatterns.withDateTime0(tokens);
     }
 
     @Override
     String patternText() {
-        return "$ ###,##0.00";
+        return "hh:mm:ss.000";
     }
 
     @Override
-    SpreadsheetFormatNumberParserToken parseParserToken(String text) {
-        return SpreadsheetFormatParsers.number()
+    SpreadsheetFormatDateTimeParserToken parseParserToken(final String text) {
+        return SpreadsheetFormatParsers.dateTime()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
-                .map(SpreadsheetFormatNumberParserToken.class::cast)
+                .map(SpreadsheetFormatDateTimeParserToken.class::cast)
                 .get();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetTextFormatterNumberPatterns> type() {
-        return SpreadsheetTextFormatterNumberPatterns.class;
+    public Class<SpreadsheetDateTimePatterns> type() {
+        return SpreadsheetDateTimePatterns.class;
     }
 
     // HasJsonNodeTesting................................................................................................
 
     @Override
-    public SpreadsheetTextFormatterNumberPatterns fromJsonNode(final JsonNode jsonNode) {
-        return SpreadsheetTextFormatterNumberPatterns.fromJsonNode(jsonNode);
+    public SpreadsheetDateTimePatterns fromJsonNode(final JsonNode jsonNode) {
+        return SpreadsheetDateTimePatterns.fromJsonNodeDateTime(jsonNode);
     }
 
     // ParseStringTesting...............................................................................................
 
     @Override
-    public SpreadsheetTextFormatterNumberPatterns parse(final String text) {
-        return SpreadsheetTextFormatterNumberPatterns.parse(text);
+    public SpreadsheetDateTimePatterns parse(final String text) {
+        return SpreadsheetDateTimePatterns.parseDateTime0(text);
     }
 }
+

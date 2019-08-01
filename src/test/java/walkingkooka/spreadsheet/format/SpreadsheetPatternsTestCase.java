@@ -19,9 +19,11 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.IsMethodTesting;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.HasJsonNodeTesting;
@@ -29,19 +31,21 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.JavaVisibility;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetTextFormatterDateTimeOrNumberPatternsTestCase<P extends SpreadsheetTextFormatterDateTimeOrNumberPatterns<T>,
+public abstract class SpreadsheetPatternsTestCase<P extends SpreadsheetPatterns<T>,
         T extends SpreadsheetFormatParserToken>
         implements ClassTesting2<P>,
         HashCodeEqualsDefinedTesting<P>,
         HasJsonNodeTesting<P>,
+        IsMethodTesting<P>,
         ParseStringTesting<P>,
         ToStringTesting<P> {
 
-    SpreadsheetTextFormatterDateTimeOrNumberPatternsTestCase() {
+    SpreadsheetPatternsTestCase() {
         super();
     }
 
@@ -143,7 +147,7 @@ public abstract class SpreadsheetTextFormatterDateTimeOrNumberPatternsTestCase<P
 
     @Override
     public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     // HashCodeEqualityDefinedTesting...................................................................................
@@ -158,6 +162,28 @@ public abstract class SpreadsheetTextFormatterDateTimeOrNumberPatternsTestCase<P
     @Override
     public final P createHasJsonNode() {
         return this.createPattern();
+    }
+
+    // IsMethodTesting..................................................................................................
+
+    @Override
+    public final P createIsMethodObject() {
+        return this.createPattern();
+    }
+
+    @Override
+    public final String isMethodTypeNamePrefix() {
+        return "Spreadsheet";
+    }
+
+    @Override
+    public final String isMethodTypeNameSuffix() {
+        return "Patterns";
+    }
+
+    @Override
+    public final Predicate<String> isMethodIgnoreMethodFilter() {
+        return Predicates.never();
     }
 
     // ParseStringTesting...............................................................................................

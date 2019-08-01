@@ -25,9 +25,9 @@ import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
 
-abstract class SpreadsheetTextFormatterDateTimeOrNumberPatternsSpreadsheetFormatParserTokenVisitor<P extends SpreadsheetFormatParserToken> extends SpreadsheetFormatParserTokenVisitor {
+abstract class SpreadsheetPatternsSpreadsheetFormatParserTokenVisitor<P extends SpreadsheetFormatParserToken> extends SpreadsheetFormatParserTokenVisitor {
 
-    SpreadsheetTextFormatterDateTimeOrNumberPatternsSpreadsheetFormatParserTokenVisitor() {
+    SpreadsheetPatternsSpreadsheetFormatParserTokenVisitor() {
         super();
     }
 
