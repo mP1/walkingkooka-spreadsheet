@@ -67,7 +67,7 @@ final class ExpressionSpreadsheetTextFormatterSpreadsheetFormatParserTokenVisito
         this.createEmptyFormatter();
     }
 
-    // BigDecimal.....................................................................................
+    // number.....................................................................................
 
     @Override
     protected void endVisit(final SpreadsheetFormatNumberParserToken token) {
