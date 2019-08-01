@@ -82,11 +82,11 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
 
     // properties..........................................................................................................
 
-    protected void visitBigDecimalPattern(final SpreadsheetTextFormatterPattern pattern) {
+    protected void visitBigDecimalFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
         // nop
     }
 
-    protected void visitBigIntegerPattern(final SpreadsheetTextFormatterPattern pattern) {
+    protected void visitBigIntegerFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
         // nop
     }
 
@@ -102,7 +102,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDatePattern(final SpreadsheetTextFormatterPattern pattern) {
+    protected void visitDateFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
         // nop
     }
 
@@ -118,7 +118,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDoublePattern(final SpreadsheetTextFormatterPattern pattern) {
+    protected void visitDoubleFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
         // nop
     }
 
@@ -134,7 +134,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitLongPattern(final SpreadsheetTextFormatterPattern pattern) {
+    protected void visitLongFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
         // nop
     }
 
@@ -174,7 +174,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitTimePattern(final SpreadsheetTextFormatterPattern pattern) {
+    protected void visitTimeFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
         // nop
     }
 
