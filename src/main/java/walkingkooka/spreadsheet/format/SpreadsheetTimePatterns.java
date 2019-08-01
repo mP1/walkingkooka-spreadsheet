@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Holds a valid {@link SpreadsheetTimePatterns}.
  */
-final class SpreadsheetTimePatterns extends SpreadsheetPatterns<SpreadsheetFormatTimeParserToken> {
+public final class SpreadsheetTimePatterns extends SpreadsheetPatterns<SpreadsheetFormatTimeParserToken> {
 
     /**
      * Factory that creates a {@link SpreadsheetTimePatterns} from the given tokens.

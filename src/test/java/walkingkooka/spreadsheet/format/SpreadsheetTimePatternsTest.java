@@ -81,7 +81,7 @@ public final class SpreadsheetTimePatternsTest extends SpreadsheetPatternsTestCa
 
     @Override
     public SpreadsheetTimePatterns parse(final String text) {
-        return SpreadsheetTimePatterns.parseTime0(text);
+        return SpreadsheetTimePatterns.parseTime(text);
     }
 }
 
