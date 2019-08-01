@@ -23,12 +23,12 @@ import walkingkooka.visit.Visiting;
 public class FakeSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor implements Fake {
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatBigDecimalParserToken token) {
+    protected Visiting startVisit(final SpreadsheetFormatNumberParserToken token) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatBigDecimalParserToken token) {
+    protected void endVisit(final SpreadsheetFormatNumberParserToken token) {
         throw new UnsupportedOperationException();
     }
 

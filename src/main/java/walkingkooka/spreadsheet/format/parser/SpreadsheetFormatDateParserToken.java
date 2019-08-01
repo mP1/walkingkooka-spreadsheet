@@ -45,11 +45,6 @@ public final class SpreadsheetFormatDateParserToken extends SpreadsheetFormatPar
     // isXXX...........................................................................................................
 
     @Override
-    public boolean isBigDecimal() {
-        return false;
-    }
-
-    @Override
     public boolean isColor() {
         return false;
     }
@@ -116,6 +111,11 @@ public final class SpreadsheetFormatDateParserToken extends SpreadsheetFormatPar
 
     @Override
     public boolean isNotEquals() {
+        return false;
+    }
+
+    @Override
+    public boolean isNumber() {
         return false;
     }
 
