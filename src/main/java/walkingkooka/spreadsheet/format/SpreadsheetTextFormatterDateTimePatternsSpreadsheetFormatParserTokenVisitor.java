@@ -17,25 +17,25 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatBigDecimalParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
 
-final class SpreadsheetTextFormatterNumberPatternsSpreadsheetFormatParserTokenVisitor extends SpreadsheetTextFormatterDateTimeOrNumberPatternsSpreadsheetFormatParserTokenVisitor<SpreadsheetFormatBigDecimalParserToken> {
+final class SpreadsheetTextFormatterDateTimePatternsSpreadsheetFormatParserTokenVisitor extends SpreadsheetTextFormatterDateTimeOrNumberPatternsSpreadsheetFormatParserTokenVisitor<SpreadsheetFormatDateTimeParserToken> {
 
-    static List<SpreadsheetFormatBigDecimalParserToken> collect(final ParserToken token) {
-        return new SpreadsheetTextFormatterNumberPatternsSpreadsheetFormatParserTokenVisitor()
+    static List<SpreadsheetFormatDateTimeParserToken> collect(final ParserToken token) {
+        return new SpreadsheetTextFormatterDateTimePatternsSpreadsheetFormatParserTokenVisitor()
                 .acceptAndCollect(token);
     }
 
-    SpreadsheetTextFormatterNumberPatternsSpreadsheetFormatParserTokenVisitor() {
+    SpreadsheetTextFormatterDateTimePatternsSpreadsheetFormatParserTokenVisitor() {
         super();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatBigDecimalParserToken token) {
+    protected Visiting startVisit(final SpreadsheetFormatDateTimeParserToken token) {
         this.tokens.add(token);
         return Visiting.CONTINUE;
     }

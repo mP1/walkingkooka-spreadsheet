@@ -21,10 +21,9 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatBigDecimalParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitorTesting;
-import walkingkooka.type.JavaVisibility;
 
-public final class SpreadsheetTextFormatterNumberPatternsSpreadsheetFormatParserTokenVisitorTest implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetTextFormatterNumberPatternsSpreadsheetFormatParserTokenVisitor> {
+public final class SpreadsheetTextFormatterNumberPatternsSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetTextFormatterDateTimeOrNumberPatternsSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetTextFormatterNumberPatternsSpreadsheetFormatParserTokenVisitor,
+        SpreadsheetFormatBigDecimalParserToken> {
 
     @Test
     public void testToString() {
@@ -50,11 +49,6 @@ public final class SpreadsheetTextFormatterNumberPatternsSpreadsheetFormatParser
     @Override
     public Class<SpreadsheetTextFormatterNumberPatternsSpreadsheetFormatParserTokenVisitor> type() {
         return SpreadsheetTextFormatterNumberPatternsSpreadsheetFormatParserTokenVisitor.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     @Override
