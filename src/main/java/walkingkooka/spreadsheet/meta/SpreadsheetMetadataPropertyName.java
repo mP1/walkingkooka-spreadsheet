@@ -135,18 +135,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     }
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>big-decimal-pattern</code>
-     */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetTextFormatterPattern> BIG_DECIMAL_FORMAT_PATTERN = registerFormatPatternConstant("big-decimal-format-pattern",
-            (p, v) -> v.visitBigDecimalFormatPattern(p));
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>big-integer-format-pattern</code>
-     */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetTextFormatterPattern> BIG_INTEGER_FORMAT_PATTERN = registerFormatPatternConstant("big-integer-format-pattern",
-            (p, v) -> v.visitBigIntegerFormatPattern(p));
-
-    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>creator {@link EmailAddress}</code>
      */
     public final static SpreadsheetMetadataPropertyName<EmailAddress> CREATOR = registerEmailAddressConstant("creator",
@@ -189,12 +177,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
             (c, v) -> v.visitDecimalPoint(c));
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>Double pattern</code>
-     */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetTextFormatterPattern> DOUBLE_FORMAT_PATTERN = registerFormatPatternConstant("double-format-pattern",
-            (p, v) -> v.visitDoubleFormatPattern(p));
-
-    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>exponent-symbol {@link Character}</code>
      */
     public final static SpreadsheetMetadataPropertyName<Character> EXPONENT_SYMBOL = registerCharacterConstant("exponent-symbol",
@@ -214,12 +196,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
             (l, v) -> v.visitLocale(l));
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>Long pattern</code>
-     */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetTextFormatterPattern> LONG_FORMAT_PATTERN = registerFormatPatternConstant("long-format-pattern",
-            (p, v) -> v.visitLongFormatPattern(p));
-
-    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>minus-sign {@link Character}</code>
      */
     public final static SpreadsheetMetadataPropertyName<Character> MINUS_SIGN = registerCharacterConstant("minus-sign",
@@ -236,6 +212,12 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      */
     public final static SpreadsheetMetadataPropertyName<LocalDateTime> MODIFIED_DATE_TIME = registerDateTimeConstant("modified-date-time",
             (d, v) -> v.visitModifiedDateTime(d));
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>number-format-pattern</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetTextFormatterPattern> NUMBER_FORMAT_PATTERN = registerFormatPatternConstant("number-format-pattern",
+            (p, v) -> v.visitNumberFormatPattern(p));
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>percentage-symbol {@link Character}</code>

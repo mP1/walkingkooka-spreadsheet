@@ -82,14 +82,6 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
 
     // properties..........................................................................................................
 
-    protected void visitBigDecimalFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
-        // nop
-    }
-
-    protected void visitBigIntegerFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
-        // nop
-    }
-
     protected void visitCreateDateTime(final LocalDateTime dateTime) {
         // nop
     }
@@ -134,10 +126,6 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitLongFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
-        // nop
-    }
-
     protected void visitMinusSign(final Character minusSign) {
         // nop
     }
@@ -151,6 +139,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitNumberedColor(final int number, final Color color) {
+        // nop
+    }
+
+    protected void visitNumberFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
         // nop
     }
 

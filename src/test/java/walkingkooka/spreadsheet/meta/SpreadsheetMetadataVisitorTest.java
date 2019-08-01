@@ -102,26 +102,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitBigDecimalFormatPattern() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitBigDecimalFormatPattern(final SpreadsheetTextFormatterPattern p) {
-                this.visited = p;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.BIG_DECIMAL_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("#0.0"));
-    }
-
-    @Test
-    public void testVisitBigIntegerFormatPattern() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitBigIntegerFormatPattern(final SpreadsheetTextFormatterPattern p) {
-                this.visited = p;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.BIG_INTEGER_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("#0.0"));
-    }
-
-    @Test
     public void testVisitCreator() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
@@ -192,16 +172,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitDoubleFormatPattern() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitDoubleFormatPattern(final SpreadsheetTextFormatterPattern p) {
-                this.visited = p;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.DOUBLE_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("#0.0"));
-    }
-
-    @Test
     public void testVisitExponentSymbol() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
@@ -229,16 +199,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = l;
             }
         }.accept(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
-    }
-
-    @Test
-    public void testVisitLongFormatPattern() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitLongFormatPattern(final SpreadsheetTextFormatterPattern p) {
-                this.visited = p;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.LONG_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("#0"));
     }
 
     @Test
@@ -282,6 +242,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = c;
             }
         }.accept(SpreadsheetMetadataPropertyName.color(number), this.color());
+    }
+
+    @Test
+    public void testVisitNumberFormatPattern() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitNumberFormatPattern(final SpreadsheetTextFormatterPattern p) {
+                this.visited = p;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("#0.0"));
     }
 
     @Test

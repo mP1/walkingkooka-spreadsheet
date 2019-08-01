@@ -333,10 +333,10 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
-                .set(SpreadsheetMetadataPropertyName.BIG_DECIMAL_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("#0.0"))
                 .set(SpreadsheetMetadataPropertyName.color(number1), color1)
                 .set(SpreadsheetMetadataPropertyName.color(number7), color7)
-                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
+                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("#0.0"));
         final NonEmptySpreadsheetMetadataNumberToColorFunction function = Cast.to(metadata.numberToColor());
 
         assertEquals(Maps.of(number1, color1, number7, color7),
@@ -354,10 +354,10 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
-                .set(SpreadsheetMetadataPropertyName.BIG_DECIMAL_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("#0.0"))
                 .set(SpreadsheetMetadataPropertyName.color(number1), color1)
                 .set(SpreadsheetMetadataPropertyName.color(number7), color7)
-                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
+                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("#0.0"));
 
         for(int i = 0; i < 10; i++) {
             this.numberToColorAndCheck(metadata,
@@ -575,8 +575,6 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
     public void testHasJsonNodeRoundtrip() {
         final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = Maps.ordered();
 
-        properties.put(SpreadsheetMetadataPropertyName.BIG_DECIMAL_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("#0.0"));
-        properties.put(SpreadsheetMetadataPropertyName.BIG_INTEGER_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("#0"));
         properties.put(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.of(2000, 12, 31, 12, 58, 59));
         properties.put(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"));
         properties.put(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$AUD");
@@ -584,14 +582,13 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET);
         properties.put(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("DD/MM/YYYY hh:mm"));
         properties.put(SpreadsheetMetadataPropertyName.DECIMAL_POINT, 'D');
-        properties.put(SpreadsheetMetadataPropertyName.DOUBLE_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("#0.#"));
         properties.put(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, 'E');
         properties.put(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, 'G');
         properties.put(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
-        properties.put(SpreadsheetMetadataPropertyName.LONG_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("#0"));
         properties.put(SpreadsheetMetadataPropertyName.MINUS_SIGN, 'M');
         properties.put(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
         properties.put(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.of(1999, 12, 31, 12, 58, 59));
+        properties.put(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("#0.0"));
         properties.put(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, 'P');
         properties.put(SpreadsheetMetadataPropertyName.PLUS_SIGN, 'L');
         properties.put(SpreadsheetMetadataPropertyName.PRECISION, 123);
