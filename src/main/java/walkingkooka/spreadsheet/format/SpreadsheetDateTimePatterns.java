@@ -41,6 +41,11 @@ final class SpreadsheetDateTimePatterns extends SpreadsheetPatterns<SpreadsheetF
     }
 
     @Override
+    public boolean isDate() {
+        return false;
+    }
+
+    @Override
     public boolean isDateTime() {
         return true;
     }
