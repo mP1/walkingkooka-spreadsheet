@@ -22,12 +22,12 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 
-public final class SpreadsheetTextFormatterDateTimePatternsSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetTextFormatterDateTimeOrNumberPatternsSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetTextFormatterDateTimePatternsSpreadsheetFormatParserTokenVisitor,
+public final class SpreadsheetDateTimePatternsSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetPatternsSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetDateTimePatternsSpreadsheetFormatParserTokenVisitor,
         SpreadsheetFormatDateTimeParserToken> {
 
     @Test
     public void testToString() {
-        final SpreadsheetTextFormatterDateTimePatternsSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetTextFormatterDateTimePatternsSpreadsheetFormatParserTokenVisitor();
+        final SpreadsheetDateTimePatternsSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetDateTimePatternsSpreadsheetFormatParserTokenVisitor();
 
         final SpreadsheetFormatDateTimeParserToken token = SpreadsheetFormatParserToken.dateTime(Lists.of(
                 SpreadsheetFormatParserToken.hour("h", "h"),
@@ -43,17 +43,17 @@ public final class SpreadsheetTextFormatterDateTimePatternsSpreadsheetFormatPars
     }
 
     @Override
-    public SpreadsheetTextFormatterDateTimePatternsSpreadsheetFormatParserTokenVisitor createVisitor() {
-        return new SpreadsheetTextFormatterDateTimePatternsSpreadsheetFormatParserTokenVisitor();
+    public SpreadsheetDateTimePatternsSpreadsheetFormatParserTokenVisitor createVisitor() {
+        return new SpreadsheetDateTimePatternsSpreadsheetFormatParserTokenVisitor();
     }
 
     @Override
-    public Class<SpreadsheetTextFormatterDateTimePatternsSpreadsheetFormatParserTokenVisitor> type() {
-        return SpreadsheetTextFormatterDateTimePatternsSpreadsheetFormatParserTokenVisitor.class;
+    public Class<SpreadsheetDateTimePatternsSpreadsheetFormatParserTokenVisitor> type() {
+        return SpreadsheetDateTimePatternsSpreadsheetFormatParserTokenVisitor.class;
     }
 
     @Override
     public String typeNamePrefix() {
-        return SpreadsheetTextFormatterDateTimePatterns.class.getSimpleName();
+        return SpreadsheetDateTimePatterns.class.getSimpleName();
     }
 }
