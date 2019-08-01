@@ -180,7 +180,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-format-pattern {@link String}</code>
      */
     public final static SpreadsheetMetadataPropertyName<SpreadsheetTextFormatterPattern> DATETIME_FORMAT_PATTERN = registerFormatPatternConstant("date-time-format-pattern",
-            (p, v) -> v.visitDateTimePattern(p));
+            (p, v) -> v.visitDateTimeFormatPattern(p));
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>decimal point {@link Character}</code>
