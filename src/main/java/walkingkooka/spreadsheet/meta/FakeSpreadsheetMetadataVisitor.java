@@ -20,7 +20,11 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.color.Color;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.format.SpreadsheetDatePatterns;
+import walkingkooka.spreadsheet.format.SpreadsheetDateTimePatterns;
+import walkingkooka.spreadsheet.format.SpreadsheetNumberPatterns;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatterPattern;
+import walkingkooka.spreadsheet.format.SpreadsheetTimePatterns;
 import walkingkooka.visit.Visiting;
 
 import java.math.RoundingMode;
@@ -74,12 +78,22 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitDateParsePatterns(final SpreadsheetDatePatterns patterns) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitDateTimeFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visitDateTimeOffset(final Long offset) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitDateTimeParsePatterns(final SpreadsheetDateTimePatterns pattern) {
         throw new UnsupportedOperationException();
     }
 
@@ -129,6 +143,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitNumberParsePatterns(final SpreadsheetNumberPatterns patterns) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitPercentageSymbol(final Character percentageSymbol) {
         throw new UnsupportedOperationException();
     }
@@ -155,6 +174,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitTimeFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitTimeParsePatterns(final SpreadsheetTimePatterns patterns) {
         throw new UnsupportedOperationException();
     }
 

@@ -23,7 +23,12 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.format.SpreadsheetDatePatterns;
+import walkingkooka.spreadsheet.format.SpreadsheetDateTimePatterns;
+import walkingkooka.spreadsheet.format.SpreadsheetNumberPatterns;
+import walkingkooka.spreadsheet.format.SpreadsheetPatterns;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatterPattern;
+import walkingkooka.spreadsheet.format.SpreadsheetTimePatterns;
 import walkingkooka.type.JavaVisibility;
 import walkingkooka.visit.Visiting;
 
@@ -142,6 +147,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitDateParsePatterns() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitDateParsePatterns(final SpreadsheetDatePatterns p) {
+                this.visited = p;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS, SpreadsheetDateTimePatterns.parseDate("DD/MM/YYYY"));
+    }
+
+    @Test
     public void testVisitDateTimeFormatPattern() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
@@ -159,6 +174,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = offset;
             }
         }.accept(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.EXCEL_OFFSET);
+    }
+
+    @Test
+    public void testVisitDateTimeParsePatterns() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitDateTimeParsePatterns(final SpreadsheetDateTimePatterns p) {
+                this.visited = p;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetDateTimePatterns.parseDateTime("DD/MM/YYYY HH:MM:SS;DDMMYYYY HHMMSS"));
     }
 
     @Test
@@ -255,6 +280,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitNumberParsePatterns() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitNumberParsePatterns(final SpreadsheetNumberPatterns p) {
+                this.visited = p;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERNS, SpreadsheetPatterns.parseNumber("#0.0;#0.00"));
+    }
+
+    @Test
     public void testVisitPercentageSymbol() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
@@ -312,6 +347,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = p;
             }
         }.accept(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("hh:mm"));
+    }
+
+    @Test
+    public void testVisitTimeParsePatterns() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitTimeParsePatterns(final SpreadsheetTimePatterns p) {
+                this.visited = p;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetPatterns.parseTime("hh:mm;hh:mm:ss;hh:mm:ss.000"));
     }
 
     @Test
