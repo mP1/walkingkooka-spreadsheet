@@ -51,7 +51,7 @@ public final class SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPrope
 
     @Override
     SpreadsheetMetadataPropertyName<SpreadsheetTextFormatterPattern> propertyName() {
-        return SpreadsheetMetadataPropertyName.BIG_DECIMAL_FORMAT_PATTERN;
+        return SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN;
     }
 
     @Override
