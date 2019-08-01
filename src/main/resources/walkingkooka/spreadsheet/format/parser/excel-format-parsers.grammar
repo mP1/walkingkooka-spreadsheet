@@ -5,7 +5,7 @@ EXPRESSION                        = [ EXPRESSION_COMPONENT ],
                                     [ EXPRESSION_SEPARATOR, [ (GENERAL | TEXT) ]]
                                     ]];
 
-EXPRESSION_COMPONENT              = GENERAL | DATETIME2 | FRACTION | BIGDECIMAL;
+EXPRESSION_COMPONENT              = GENERAL | DATETIME2 | FRACTION | NUMBER;
 
 
 
@@ -132,16 +132,16 @@ FRACTION_DIGIT                    = ZERO | SPACE | NON_ZERO | THOUSANDS;
 
 
 
-(* BIGDECIMAL .........................................................................................................*)
-BIGDECIMAL                        = [{ DECIMAL_POINT | BIGDECIMAL_DIGIT | BIGDECIMAL_LITERAL | BIGDECIMAL_EXPONENT | PERCENTAGE }];
+(* NUMBER .............................................................................................................*)
+NUMBER                        = [{ DECIMAL_POINT | NUMBER_DIGIT | NUMBER_LITERAL | NUMBER_EXPONENT | PERCENTAGE }];
 
-BIGDECIMAL_EXPONENT               = BIGDECIMAL_EXPONENT_SYMBOL,
-                                    [{ DECIMAL_POINT | BIGDECIMAL_DIGIT | BIGDECIMAL_LITERAL }];
+NUMBER_EXPONENT               = NUMBER_EXPONENT_SYMBOL,
+                                    [{ DECIMAL_POINT | NUMBER_DIGIT | NUMBER_LITERAL }];
 
-BIGDECIMAL_EXPONENT_SYMBOL        = ( 'E+' | 'e+' | 'E-' | 'e-' );
+NUMBER_EXPONENT_SYMBOL        = ( 'E+' | 'e+' | 'E-' | 'e-' );
 
-BIGDECIMAL_LITERAL                = COLOR | CONDITION | CURRENCY | ESCAPE | LITERAL2 | PERCENTAGE | QUOTED;
-BIGDECIMAL_DIGIT                  = ZERO | SPACE | NON_ZERO | THOUSANDS;
+NUMBER_LITERAL                = COLOR | CONDITION | CURRENCY | ESCAPE | LITERAL2 | PERCENTAGE | QUOTED;
+NUMBER_DIGIT                  = ZERO | SPACE | NON_ZERO | THOUSANDS;
 
 
 

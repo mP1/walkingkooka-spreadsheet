@@ -42,14 +42,14 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatBigDecimalParserToken token) {
+    protected Visiting startVisit(final SpreadsheetFormatNumberParserToken token) {
         this.enter();
         return super.startVisit(token);
     }
 
     @Override
-    protected void endVisit(final SpreadsheetFormatBigDecimalParserToken token) {
-        this.exit(SpreadsheetFormatParserToken::bigDecimal);
+    protected void endVisit(final SpreadsheetFormatNumberParserToken token) {
+        this.exit(SpreadsheetFormatParserToken::number);
     }
 
     @Override

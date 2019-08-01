@@ -19,17 +19,17 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatBigDecimalParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 
 public final class SpreadsheetTextFormatterNumberPatternsSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetTextFormatterDateTimeOrNumberPatternsSpreadsheetFormatParserTokenVisitorTestCase<SpreadsheetTextFormatterNumberPatternsSpreadsheetFormatParserTokenVisitor,
-        SpreadsheetFormatBigDecimalParserToken> {
+        SpreadsheetFormatNumberParserToken> {
 
     @Test
     public void testToString() {
         final SpreadsheetTextFormatterNumberPatternsSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetTextFormatterNumberPatternsSpreadsheetFormatParserTokenVisitor();
 
-        final SpreadsheetFormatBigDecimalParserToken token = SpreadsheetFormatParserToken.bigDecimal(Lists.of(
+        final SpreadsheetFormatNumberParserToken token = SpreadsheetFormatParserToken.number(Lists.of(
                 SpreadsheetFormatParserToken.digitSpace("?", "?"),
                 SpreadsheetFormatParserToken.digit("0", "0"),
                 SpreadsheetFormatParserToken.decimalPoint(".", "."),

@@ -27,7 +27,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetFormatBigDecimalParserTokenTest extends SpreadsheetFormatParentParserTokenTestCase<SpreadsheetFormatBigDecimalParserToken> {
+public final class SpreadsheetFormatNumberParserTokenTest extends SpreadsheetFormatParentParserTokenTestCase<SpreadsheetFormatNumberParserToken> {
 
     @Override
     public void testWithWhitespaceTextFails() {
@@ -38,7 +38,7 @@ public final class SpreadsheetFormatBigDecimalParserTokenTest extends Spreadshee
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
 
-        final SpreadsheetFormatBigDecimalParserToken token = this.createToken();
+        final SpreadsheetFormatNumberParserToken token = this.createToken();
         final SpreadsheetFormatParserToken text = token.value().get(0).cast();
         final SpreadsheetFormatParserToken digit = token.value().get(1).cast();
 
@@ -57,7 +57,7 @@ public final class SpreadsheetFormatBigDecimalParserTokenTest extends Spreadshee
             }
 
             @Override
-            protected Visiting startVisit(final SpreadsheetFormatBigDecimalParserToken t) {
+            protected Visiting startVisit(final SpreadsheetFormatNumberParserToken t) {
                 assertSame(token, t);
                 b.append("3");
                 visited.add(t);
@@ -65,7 +65,7 @@ public final class SpreadsheetFormatBigDecimalParserTokenTest extends Spreadshee
             }
 
             @Override
-            protected void endVisit(final SpreadsheetFormatBigDecimalParserToken t) {
+            protected void endVisit(final SpreadsheetFormatNumberParserToken t) {
                 assertSame(token, t);
                 b.append("4");
                 visited.add(t);
@@ -108,8 +108,8 @@ public final class SpreadsheetFormatBigDecimalParserTokenTest extends Spreadshee
     }
 
     @Override
-    SpreadsheetFormatBigDecimalParserToken createToken(final String text, final List<ParserToken> tokens) {
-        return SpreadsheetFormatBigDecimalParserToken.with(tokens, text);
+    SpreadsheetFormatNumberParserToken createToken(final String text, final List<ParserToken> tokens) {
+        return SpreadsheetFormatNumberParserToken.with(tokens, text);
     }
 
     @Override
@@ -123,12 +123,12 @@ public final class SpreadsheetFormatBigDecimalParserTokenTest extends Spreadshee
     }
 
     @Override
-    public SpreadsheetFormatBigDecimalParserToken createDifferentToken() {
-        return SpreadsheetFormatBigDecimalParserToken.with(Lists.of(this.text2()), TEXT2);
+    public SpreadsheetFormatNumberParserToken createDifferentToken() {
+        return SpreadsheetFormatNumberParserToken.with(Lists.of(this.text2()), TEXT2);
     }
 
     @Override
-    public Class<SpreadsheetFormatBigDecimalParserToken> type() {
-        return SpreadsheetFormatBigDecimalParserToken.class;
+    public Class<SpreadsheetFormatNumberParserToken> type() {
+        return SpreadsheetFormatNumberParserToken.class;
     }
 }

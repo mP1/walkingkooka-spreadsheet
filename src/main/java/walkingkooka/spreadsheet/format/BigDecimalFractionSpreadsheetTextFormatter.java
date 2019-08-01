@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
 import walkingkooka.math.Fraction;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatBigDecimalParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatFractionParserToken;
 
 import java.math.BigDecimal;
@@ -37,7 +37,7 @@ import java.util.function.Function;
 final class BigDecimalFractionSpreadsheetTextFormatter extends SpreadsheetTextFormatter3<SpreadsheetFormatFractionParserToken> {
 
     /**
-     * Creates a {@link BigDecimalFractionSpreadsheetTextFormatter} from a {@link SpreadsheetFormatBigDecimalParserToken}.
+     * Creates a {@link BigDecimalFractionSpreadsheetTextFormatter} from a {@link SpreadsheetFormatNumberParserToken}.
      */
     static BigDecimalFractionSpreadsheetTextFormatter with(final SpreadsheetFormatFractionParserToken token,
                                                            final Function<BigDecimal, Fraction> fractioner) {
