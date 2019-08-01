@@ -110,22 +110,6 @@ final class SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer implement
     private static final EbnfIdentifierName DATETIME_IDENTIFIER = EbnfIdentifierName.with("DATETIME");
     private static final EbnfIdentifierName DATETIME2_IDENTIFIER = EbnfIdentifierName.with("DATETIME2");
 
-    private static ParserToken transformBigDecimal(final ParserToken token,
-                                                   final ParserContext context) {
-        return clean(token, SpreadsheetFormatParserToken::bigDecimal);
-    }
-
-    private static final EbnfIdentifierName BIGDECIMAL_IDENTIFIER = EbnfIdentifierName.with("BIGDECIMAL");
-
-    private static final EbnfIdentifierName BIGDECIMAL_EXPONENT_IDENTIFIER = EbnfIdentifierName.with("BIGDECIMAL_EXPONENT");
-
-    private static ParserToken transformBigDecimalExponent(final ParserToken token,
-                                                           final ParserContext context) {
-        return clean(token, SpreadsheetFormatParserToken::exponent);
-    }
-
-    private static final EbnfIdentifierName BIGDECIMAL_EXPONENT_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("BIGDECIMAL_EXPONENT_SYMBOL");
-
     private static ParserToken transformExponentSymbol(final ParserToken token,
                                                        final ParserContext context) {
         return SpreadsheetFormatParserToken.exponentSymbol(StringParserToken.class.cast(token).value(), token.text());
@@ -157,6 +141,22 @@ final class SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer implement
                                              final ParserContext context) {
         return clean(token, SpreadsheetFormatParserToken::time);
     }
+
+    private static ParserToken transformNumber(final ParserToken token,
+                                               final ParserContext context) {
+        return clean(token, SpreadsheetFormatParserToken::number);
+    }
+
+    private static final EbnfIdentifierName NUMBER_IDENTIFIER = EbnfIdentifierName.with("NUMBER");
+
+    private static final EbnfIdentifierName NUMBER_EXPONENT_IDENTIFIER = EbnfIdentifierName.with("NUMBER_EXPONENT");
+
+    private static ParserToken transformBigDecimalExponent(final ParserToken token,
+                                                           final ParserContext context) {
+        return clean(token, SpreadsheetFormatParserToken::exponent);
+    }
+
+    private static final EbnfIdentifierName NUMBER_EXPONENT_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("NUMBER_EXPONENT_SYMBOL");
 
     private static final EbnfIdentifierName TIME_IDENTIFIER = EbnfIdentifierName.with("TIME");
     private static final EbnfIdentifierName TIME2_IDENTIFIER = EbnfIdentifierName.with("TIME2");
@@ -193,9 +193,9 @@ final class SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer implement
         identiferToTransform.put(CONDITION_LESS_THAN_EQUAL_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformConditionLessThanEqual);
         identiferToTransform.put(CONDITION_NOT_EQUAL_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformConditionNotEqual);
 
-        identiferToTransform.put(BIGDECIMAL_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformBigDecimal);
-        identiferToTransform.put(BIGDECIMAL_EXPONENT_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformBigDecimalExponent);
-        identiferToTransform.put(BIGDECIMAL_EXPONENT_SYMBOL_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformExponentSymbol);
+        identiferToTransform.put(NUMBER_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformNumber);
+        identiferToTransform.put(NUMBER_EXPONENT_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformBigDecimalExponent);
+        identiferToTransform.put(NUMBER_EXPONENT_SYMBOL_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformExponentSymbol);
 
         identiferToTransform.put(FRACTION_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformFraction);
 
