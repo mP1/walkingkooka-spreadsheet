@@ -102,20 +102,20 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitBigDecimalPattern() {
+    public void testVisitBigDecimalFormatPattern() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitBigDecimalPattern(final SpreadsheetTextFormatterPattern p) {
+            protected void visitBigDecimalFormatPattern(final SpreadsheetTextFormatterPattern p) {
                 this.visited = p;
             }
         }.accept(SpreadsheetMetadataPropertyName.BIG_DECIMAL_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("#0.0"));
     }
 
     @Test
-    public void testVisitBigIntegerPattern() {
+    public void testVisitBigIntegerFormatPattern() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitBigIntegerPattern(final SpreadsheetTextFormatterPattern p) {
+            protected void visitBigIntegerFormatPattern(final SpreadsheetTextFormatterPattern p) {
                 this.visited = p;
             }
         }.accept(SpreadsheetMetadataPropertyName.BIG_INTEGER_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("#0.0"));
@@ -152,10 +152,10 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitDatePattern() {
+    public void testVisitDateFormatPattern() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitDatePattern(final SpreadsheetTextFormatterPattern p) {
+            protected void visitDateFormatPattern(final SpreadsheetTextFormatterPattern p) {
                 this.visited = p;
             }
         }.accept(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("DD/MM/YYYY"));
@@ -172,7 +172,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitDateTimePatternTime() {
+    public void testVisitDateTimeFormatPattern() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
             protected void visitDateTimePattern(final SpreadsheetTextFormatterPattern p) {
@@ -192,10 +192,10 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitDoublePattern() {
+    public void testVisitDoubleFormatPattern() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitDoublePattern(final SpreadsheetTextFormatterPattern p) {
+            protected void visitDoubleFormatPattern(final SpreadsheetTextFormatterPattern p) {
                 this.visited = p;
             }
         }.accept(SpreadsheetMetadataPropertyName.DOUBLE_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("#0.0"));
@@ -232,10 +232,10 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitLongPattern() {
+    public void testVisitLongFormatPattern() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitLongPattern(final SpreadsheetTextFormatterPattern p) {
+            protected void visitLongFormatPattern(final SpreadsheetTextFormatterPattern p) {
                 this.visited = p;
             }
         }.accept(SpreadsheetMetadataPropertyName.LONG_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("#0"));
@@ -335,10 +335,10 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitTimePattern() {
+    public void testVisitTimeFormatPattern() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitTimePattern(final SpreadsheetTextFormatterPattern p) {
+            protected void visitTimeFormatPattern(final SpreadsheetTextFormatterPattern p) {
                 this.visited = p;
             }
         }.accept(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("hh:mm"));
