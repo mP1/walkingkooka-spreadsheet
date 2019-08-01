@@ -17,25 +17,25 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
 
-final class SpreadsheetTextFormatterDateTimePatternsSpreadsheetFormatParserTokenVisitor extends SpreadsheetTextFormatterDateTimeOrNumberPatternsSpreadsheetFormatParserTokenVisitor<SpreadsheetFormatDateTimeParserToken> {
+final class SpreadsheetNumberPatternsSpreadsheetFormatParserTokenVisitor extends SpreadsheetPatternsSpreadsheetFormatParserTokenVisitor<SpreadsheetFormatNumberParserToken> {
 
-    static List<SpreadsheetFormatDateTimeParserToken> collect(final ParserToken token) {
-        return new SpreadsheetTextFormatterDateTimePatternsSpreadsheetFormatParserTokenVisitor()
+    static List<SpreadsheetFormatNumberParserToken> collect(final ParserToken token) {
+        return new SpreadsheetNumberPatternsSpreadsheetFormatParserTokenVisitor()
                 .acceptAndCollect(token);
     }
 
-    SpreadsheetTextFormatterDateTimePatternsSpreadsheetFormatParserTokenVisitor() {
+    SpreadsheetNumberPatternsSpreadsheetFormatParserTokenVisitor() {
         super();
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatDateTimeParserToken token) {
+    protected Visiting startVisit(final SpreadsheetFormatNumberParserToken token) {
         this.tokens.add(token);
         return Visiting.CONTINUE;
     }
