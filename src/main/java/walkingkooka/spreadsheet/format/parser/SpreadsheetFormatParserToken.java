@@ -46,13 +46,6 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     }
 
     /**
-     * {@see SpreadsheetFormatBigDecimalParserToken}
-     */
-    public static SpreadsheetFormatBigDecimalParserToken bigDecimal(final List<ParserToken> value, final String text) {
-        return SpreadsheetFormatBigDecimalParserToken.with(value, text);
-    }
-
-    /**
      * {@see SpreadsheetFormatBracketCloseSymbolParserToken}
      */
     public static SpreadsheetFormatBracketCloseSymbolParserToken bracketCloseSymbol(final String value, final String text) {
@@ -312,6 +305,13 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetFormatNumberParserToken}
+     */
+    public static SpreadsheetFormatNumberParserToken number(final List<ParserToken> value, final String text) {
+        return SpreadsheetFormatNumberParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetFormatPercentSymbolParserToken}
      */
     public static SpreadsheetFormatPercentSymbolParserToken percentSymbol(final String value, final String text) {
@@ -457,9 +457,9 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     public abstract boolean isAmPm();
 
     /**
-     * Only {@link SpreadsheetFormatBigDecimalParserToken} return true
+     * Only {@link SpreadsheetFormatNumberParserToken} return true
      */
-    public abstract boolean isBigDecimal();
+    public abstract boolean isNumber();
 
     /**
      * Only {@link SpreadsheetFormatBracketCloseSymbolParserToken} return true

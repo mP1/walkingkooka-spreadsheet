@@ -65,11 +65,6 @@ abstract public class SpreadsheetFormatConditionParserToken<T extends Spreadshee
     // is...............................................................................................................
 
     @Override
-    public final boolean isBigDecimal() {
-        return false;
-    }
-
-    @Override
     public final boolean isColor() {
         return false;
     }
@@ -106,6 +101,11 @@ abstract public class SpreadsheetFormatConditionParserToken<T extends Spreadshee
 
     @Override
     public final boolean isGeneral() {
+        return false;
+    }
+
+    @Override
+    public final boolean isNumber() {
         return false;
     }
 

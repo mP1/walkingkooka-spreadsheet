@@ -25,29 +25,24 @@ import java.util.List;
 /**
  * A token that contains number formatting tokens.
  */
-public final class SpreadsheetFormatBigDecimalParserToken extends SpreadsheetFormatParentParserToken<SpreadsheetFormatBigDecimalParserToken> {
+public final class SpreadsheetFormatNumberParserToken extends SpreadsheetFormatParentParserToken<SpreadsheetFormatNumberParserToken> {
 
     /**
-     * Factory that creates a new {@link SpreadsheetFormatBigDecimalParserToken}.
+     * Factory that creates a new {@link SpreadsheetFormatNumberParserToken}.
      */
-    static SpreadsheetFormatBigDecimalParserToken with(final List<ParserToken> value, final String text) {
-        return new SpreadsheetFormatBigDecimalParserToken(copyAndCheckTokensFailIfEmpty(value),
+    static SpreadsheetFormatNumberParserToken with(final List<ParserToken> value, final String text) {
+        return new SpreadsheetFormatNumberParserToken(copyAndCheckTokensFailIfEmpty(value),
                 checkTextNotEmpty(text));
     }
 
     /**
      * Private ctor use helper.
      */
-    private SpreadsheetFormatBigDecimalParserToken(final List<ParserToken> value, final String text) {
+    private SpreadsheetFormatNumberParserToken(final List<ParserToken> value, final String text) {
         super(value, text);
     }
 
     // isXXX...........................................................................................................
-
-    @Override
-    public boolean isBigDecimal() {
-        return true;
-    }
 
     @Override
     public boolean isColor() {
@@ -120,6 +115,11 @@ public final class SpreadsheetFormatBigDecimalParserToken extends SpreadsheetFor
     }
 
     @Override
+    public boolean isNumber() {
+        return true;
+    }
+
+    @Override
     public boolean isText() {
         return false;
     }
@@ -139,7 +139,7 @@ public final class SpreadsheetFormatBigDecimalParserToken extends SpreadsheetFor
 
     @Override
     boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatBigDecimalParserToken;
+        return other instanceof SpreadsheetFormatNumberParserToken;
     }
 
 }

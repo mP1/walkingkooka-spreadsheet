@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -41,7 +42,7 @@ import java.util.Objects;
 import java.util.function.Function;
 
 /**
- * Holds a a {@link List} of {@link walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken date/time} or {@link walkingkooka.spreadsheet.format.parser.SpreadsheetFormatBigDecimalParserToken} number tokens and some common functionality.
+ * Holds a a {@link List} of {@link walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken date/time} or {@link SpreadsheetFormatNumberParserToken} number tokens and some common functionality.
  */
 abstract class SpreadsheetTextFormatterDateTimeOrNumberPatterns<T extends SpreadsheetFormatParserToken> implements HashCodeEqualsDefined,
         HasJsonNode,

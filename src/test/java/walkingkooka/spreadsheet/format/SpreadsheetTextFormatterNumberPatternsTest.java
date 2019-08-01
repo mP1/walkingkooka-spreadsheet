@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatBigDecimalParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
@@ -28,7 +28,7 @@ import walkingkooka.tree.json.JsonNode;
 import java.util.List;
 
 public final class SpreadsheetTextFormatterNumberPatternsTest extends SpreadsheetTextFormatterDateTimeOrNumberPatternsTestCase<SpreadsheetTextFormatterNumberPatterns,
-        SpreadsheetFormatBigDecimalParserToken> {
+        SpreadsheetFormatNumberParserToken> {
 
     // Parse............................................................................................................
 
@@ -50,7 +50,7 @@ public final class SpreadsheetTextFormatterNumberPatternsTest extends Spreadshee
     // helpers.........................................................................................................
 
     @Override
-    SpreadsheetTextFormatterNumberPatterns createPattern(final List<SpreadsheetFormatBigDecimalParserToken> tokens) {
+    SpreadsheetTextFormatterNumberPatterns createPattern(final List<SpreadsheetFormatNumberParserToken> tokens) {
         return SpreadsheetTextFormatterNumberPatterns.with(tokens);
     }
 
@@ -60,11 +60,11 @@ public final class SpreadsheetTextFormatterNumberPatternsTest extends Spreadshee
     }
 
     @Override
-    SpreadsheetFormatBigDecimalParserToken parseParserToken(String text) {
-        return SpreadsheetFormatParsers.bigDecimal()
+    SpreadsheetFormatNumberParserToken parseParserToken(String text) {
+        return SpreadsheetFormatParsers.number()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
-                .map(SpreadsheetFormatBigDecimalParserToken.class::cast)
+                .map(SpreadsheetFormatNumberParserToken.class::cast)
                 .get();
     }
 
