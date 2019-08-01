@@ -55,6 +55,11 @@ final class SpreadsheetDatePatterns extends SpreadsheetPatterns<SpreadsheetForma
         return false;
     }
 
+    @Override
+    public boolean isTime() {
+        return false;
+    }
+
     // HashCodeEqualsDefined............................................................................................
 
     @Override
