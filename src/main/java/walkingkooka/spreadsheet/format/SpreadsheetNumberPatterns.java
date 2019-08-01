@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Holds a valid {@link SpreadsheetNumberPatterns}.
  */
-final class SpreadsheetNumberPatterns extends SpreadsheetPatterns<SpreadsheetFormatNumberParserToken> {
+public final class SpreadsheetNumberPatterns extends SpreadsheetPatterns<SpreadsheetFormatNumberParserToken> {
 
     /**
      * Factory that creates a {@link SpreadsheetNumberPatterns} from the given tokens.

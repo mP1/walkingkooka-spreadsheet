@@ -147,7 +147,7 @@ public abstract class SpreadsheetPatternsTestCase<P extends SpreadsheetPatterns<
 
     @Override
     public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
+        return JavaVisibility.PUBLIC;
     }
 
     // HashCodeEqualityDefinedTesting...................................................................................

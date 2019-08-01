@@ -81,7 +81,7 @@ public final class SpreadsheetDatePatternsTest extends SpreadsheetPatternsTestCa
 
     @Override
     public SpreadsheetDatePatterns parse(final String text) {
-        return SpreadsheetDatePatterns.parseDate0(text);
+        return SpreadsheetDatePatterns.parseDate(text);
     }
 }
 
