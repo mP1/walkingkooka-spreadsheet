@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatBigDecimalParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
@@ -27,65 +27,56 @@ import walkingkooka.tree.json.JsonNode;
 
 import java.util.List;
 
-public final class SpreadsheetTextFormatterNumberPatternsTest extends SpreadsheetTextFormatterDateTimeOrNumberPatternsTestCase<SpreadsheetTextFormatterNumberPatterns,
-        SpreadsheetFormatBigDecimalParserToken> {
+public final class SpreadsheetTextFormatterDateTimePatternsTest extends SpreadsheetTextFormatterDateTimeOrNumberPatternsTestCase<SpreadsheetTextFormatterDateTimePatterns,
+        SpreadsheetFormatDateTimeParserToken> {
 
     // Parse............................................................................................................
 
     @Test
-    public void testParseDatePatternFails() {
-        this.parseFails("dd/mm/yyyy", IllegalArgumentException.class);
-    }
-
-    @Test
-    public void testParseDateTimePatternFails() {
-        this.parseFails("dd/mm/yyyy hh:mm:sss", IllegalArgumentException.class);
-    }
-
-    @Test
-    public void testParseTimePatternFails() {
-        this.parseFails("hh:mm:sss", IllegalArgumentException.class);
+    public void testParseNumberPatternFails() {
+        this.parseFails("0#00", IllegalArgumentException.class);
     }
 
     // helpers.........................................................................................................
 
     @Override
-    SpreadsheetTextFormatterNumberPatterns createPattern(final List<SpreadsheetFormatBigDecimalParserToken> tokens) {
-        return SpreadsheetTextFormatterNumberPatterns.with(tokens);
+    SpreadsheetTextFormatterDateTimePatterns createPattern(final List<SpreadsheetFormatDateTimeParserToken> tokens) {
+        return SpreadsheetTextFormatterDateTimePatterns.with(tokens);
     }
 
     @Override
     String patternText() {
-        return "$ ###,##0.00";
+        return "hh:mm:ss.000";
     }
 
     @Override
-    SpreadsheetFormatBigDecimalParserToken parseParserToken(String text) {
-        return SpreadsheetFormatParsers.bigDecimal()
+    SpreadsheetFormatDateTimeParserToken parseParserToken(String text) {
+        return SpreadsheetFormatParsers.dateTime()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
-                .map(SpreadsheetFormatBigDecimalParserToken.class::cast)
+                .map(SpreadsheetFormatDateTimeParserToken.class::cast)
                 .get();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetTextFormatterNumberPatterns> type() {
-        return SpreadsheetTextFormatterNumberPatterns.class;
+    public Class<SpreadsheetTextFormatterDateTimePatterns> type() {
+        return SpreadsheetTextFormatterDateTimePatterns.class;
     }
 
     // HasJsonNodeTesting................................................................................................
 
     @Override
-    public SpreadsheetTextFormatterNumberPatterns fromJsonNode(final JsonNode jsonNode) {
-        return SpreadsheetTextFormatterNumberPatterns.fromJsonNode(jsonNode);
+    public SpreadsheetTextFormatterDateTimePatterns fromJsonNode(final JsonNode jsonNode) {
+        return SpreadsheetTextFormatterDateTimePatterns.fromJsonNode(jsonNode);
     }
 
     // ParseStringTesting...............................................................................................
 
     @Override
-    public SpreadsheetTextFormatterNumberPatterns parse(final String text) {
-        return SpreadsheetTextFormatterNumberPatterns.parse(text);
+    public SpreadsheetTextFormatterDateTimePatterns parse(final String text) {
+        return SpreadsheetTextFormatterDateTimePatterns.parse(text);
     }
 }
+
