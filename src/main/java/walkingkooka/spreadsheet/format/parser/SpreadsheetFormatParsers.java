@@ -71,7 +71,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     private static void color(final Map<EbnfIdentifierName, Parser<ParserContext>> predefined) {
         predefined.put(COLOR_AND_NUMBER_IDENTIFIER, COLOR_AND_NUMBER);
         predefined.put(COLOR_NAME_IDENTIFIER, COLOR_NAME);
-        predefined.put(COLOR_BIGDECIMAL_IDENTIFIER, COLOR_NUMBER);
+        predefined.put(COLOR_NUMBER_IDENTIFIER, COLOR_NUMBER);
     }
 
     private static final EbnfIdentifierName COLOR_AND_NUMBER_IDENTIFIER = EbnfIdentifierName.with("COLOR_AND_NUMBER");
@@ -86,11 +86,11 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
         return SpreadsheetFormatParserToken.colorName(((StringParserToken) string).value(), string.text());
     }
 
-    private static final EbnfIdentifierName COLOR_BIGDECIMAL_IDENTIFIER = EbnfIdentifierName.with("COLOR_NUMBER");
+    private static final EbnfIdentifierName COLOR_NUMBER_IDENTIFIER = EbnfIdentifierName.with("COLOR_NUMBER");
 
     private static final Parser<ParserContext> COLOR_NUMBER = Parsers.bigInteger(10)
             .transform(SpreadsheetFormatParsers::transformColorNumber)
-            .setToString(COLOR_BIGDECIMAL_IDENTIFIER.toString());
+            .setToString(COLOR_NUMBER_IDENTIFIER.toString());
 
     private static ParserToken transformColorNumber(final ParserToken token, final ParserContext context) {
         return SpreadsheetFormatParserToken.colorNumber(((BigIntegerParserToken) token).value().intValueExact(), token.text());
@@ -120,9 +120,9 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     private final static Parser<SpreadsheetFormatParserContext> CONDITION_PARSER;
 
     private static void condition(final Map<EbnfIdentifierName, Parser<ParserContext>> predefined) {
-        predefined.put(CONDITION_BIGDECIMAL_LITERAL_IDENTIFIER, Parsers.bigDecimal()
+        predefined.put(CONDITION_NUMBER_LITERAL_IDENTIFIER, Parsers.bigDecimal()
                 .transform(SpreadsheetFormatParsers::transformConditionNumber)
-                .setToString(CONDITION_BIGDECIMAL_LITERAL_IDENTIFIER.toString()));
+                .setToString(CONDITION_NUMBER_LITERAL_IDENTIFIER.toString()));
 
         predefined.put(EQUALS_SYMBOL_IDENTIFIER, EQUALS_SYMBOL);
         predefined.put(NOT_EQUALS_SYMBOL_IDENTIFIER, NOT_EQUALS_SYMBOL);
@@ -132,7 +132,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
         predefined.put(LESS_THAN_EQUALS_SYMBOL_IDENTIFIER, LESS_THAN_EQUALS_SYMBOL);
     }
 
-    private static final EbnfIdentifierName CONDITION_BIGDECIMAL_LITERAL_IDENTIFIER = EbnfIdentifierName.with("CONDITION_NUMBER");
+    private static final EbnfIdentifierName CONDITION_NUMBER_LITERAL_IDENTIFIER = EbnfIdentifierName.with("CONDITION_NUMBER");
 
     private static SpreadsheetFormatConditionNumberParserToken transformConditionNumber(final ParserToken token, final ParserContext context) {
         return SpreadsheetFormatConditionNumberParserToken.with(((BigDecimalParserToken) token).value(), token.text());
