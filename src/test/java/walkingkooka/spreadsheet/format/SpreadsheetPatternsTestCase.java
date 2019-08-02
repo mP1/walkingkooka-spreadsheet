@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -26,10 +27,12 @@ import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.IsMethodTesting;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.test.ToStringTesting;
+import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.type.JavaVisibility;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -70,6 +73,202 @@ public abstract class SpreadsheetPatternsTestCase<P extends SpreadsheetPatterns<
 
         final P patterns = this.createPattern(tokens);
         assertEquals(patterns.value(), tokens, "value");
+    }
+
+    @Test
+    public final void testWithBracketOpenFails() {
+        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.bracketOpenSymbol("[", "["));
+    }
+
+    @Test
+    public final void testWithBracketCloseFails() {
+        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.bracketCloseSymbol("]", "]"));
+    }
+
+    @Test
+    public final void testWithColorLiteralSymbolFails() {
+        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.colorLiteralSymbol("#123", "#123"));
+    }
+
+    @Test
+    public final void testWithColorNameFails() {
+        this.withInvalidCharacterFails(colorName());
+    }
+
+    @Test
+    public final void testWithColorNumberFails() {
+        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.colorNumber(1, "1"));
+    }
+
+    @Test
+    public final void testWithConditionNumberFails() {
+        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.conditionNumber(BigDecimal.TEN, "10"));
+    }
+
+    @Test
+    public final void testWithEqualsSymbolFails() {
+        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.equalsSymbol("=", "="));
+    }
+
+    @Test
+    public final void testWithEscape() {
+        final List<T> tokens = Lists.of(this.createParserToken(Lists.of(SpreadsheetFormatParserToken.escape('\t', "\\t"))));
+        final P patterns = this.createPattern(tokens);
+        assertEquals(patterns.value(), tokens, "value");
+    }
+
+    @Test
+    public final void testWithGeneralFails() {
+        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.generalSymbol("GENERAL", "GENERAL"));
+    }
+
+    @Test
+    public final void testWithGreaterThanSymbolFails() {
+        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.greaterThanSymbol(">", ">"));
+    }
+
+    @Test
+    public final void testWithGreaterThanEqualsSymbolFails() {
+        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.greaterThanEqualsSymbol(">=", ">="));
+    }
+
+    @Test
+    public final void testWithLessThanSymbolFails() {
+        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.lessThanSymbol("<", "<"));
+    }
+
+    @Test
+    public final void testWithLessThanEqualsSymbolFails() {
+        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.lessThanEqualsSymbol("<=", "<="));
+    }
+
+    @Test
+    public final void testWithNotEqualsSymbolFails() {
+        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.notEqualsSymbol("!=", "!="));
+    }
+
+    @Test
+    public final void testWithStarFails() {
+        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.star('*', "*"));
+    }
+
+    @Test
+    public final void testWithTextPlaceholderFails() {
+        this.withInvalidCharacterFails(SpreadsheetFormatParserToken.textPlaceholder("@", "@"));
+    }
+
+    @Test
+    public final void testWithUnderscoreFails() {
+        this.withInvalidCharacterFails(this.underscore());
+    }
+
+    @Test
+    public final void testWithWhitespace() {
+        final List<T> tokens = Lists.of(this.createParserToken(Lists.of(whitespace())));
+        final P patterns = this.createPattern(tokens);
+        assertEquals(patterns.value(), tokens, "value");
+    }
+
+    final void withInvalidCharacterFails(final ParserToken token) {
+        final List<ParserToken> tokens = Lists.array();
+        tokens.addAll(this.parseTokens());
+
+        final int position = ParserToken.text(tokens).length();
+
+        tokens.add(token);
+
+        final InvalidCharacterException thrown = assertThrows(InvalidCharacterException.class, () -> {
+            this.createPattern(Lists.of(this.createParserToken(tokens)));
+        });
+        assertEquals(position, thrown.position(), () -> "position pattern=" + ParserToken.text(tokens));
+    }
+
+    final SpreadsheetFormatParserToken ampm() {
+        return SpreadsheetFormatParserToken.amPm("A/P", "A/P");
+    }
+
+    final SpreadsheetFormatParserToken color() {
+        return SpreadsheetFormatParserToken.color(Lists.of(colorName()), "[RED]");
+    }
+
+    final SpreadsheetFormatParserToken colorName() {
+        return SpreadsheetFormatParserToken.colorName("RED", "RED");
+    }
+
+    final SpreadsheetFormatParserToken currency() {
+        return SpreadsheetFormatParserToken.currency("%", "%");
+    }
+
+    final SpreadsheetFormatParserToken date() {
+        return SpreadsheetFormatParserToken.date(Lists.of(color()), "[RED]");
+    }
+
+    final SpreadsheetFormatParserToken dateTime() {
+        return SpreadsheetFormatParserToken.dateTime(Lists.of(color()), "[RED]");
+    }
+
+    final SpreadsheetFormatParserToken day() {
+        return SpreadsheetFormatParserToken.day("d", "d");
+    }
+
+    final SpreadsheetFormatParserToken decimalPoint() {
+        return SpreadsheetFormatParserToken.decimalPoint(".", ".");
+    }
+
+    final SpreadsheetFormatParserToken digit() {
+        return SpreadsheetFormatParserToken.digit("#", "#");
+    }
+
+    final SpreadsheetFormatParserToken digitSpace() {
+        return SpreadsheetFormatParserToken.digitSpace("?", "?");
+    }
+
+    final SpreadsheetFormatParserToken digitZero() {
+        return SpreadsheetFormatParserToken.digitZero("0", "0");
+    }
+
+    final SpreadsheetFormatParserToken exponentSymbol() {
+        return SpreadsheetFormatParserToken.exponentSymbol("^", "^");
+    }
+
+    final SpreadsheetFormatParserToken hour() {
+        return SpreadsheetFormatParserToken.hour("h", "h");
+    }
+
+    final SpreadsheetFormatParserToken monthOrMinute() {
+        return SpreadsheetFormatParserToken.monthOrMinute("m", "m");
+    }
+
+    final SpreadsheetFormatParserToken number() {
+        return SpreadsheetFormatParserToken.number(Lists.of(color()), "[RED]");
+    }
+
+    final SpreadsheetFormatParserToken percentSymbol() {
+        return SpreadsheetFormatParserToken.percentSymbol("%", "%");
+    }
+
+    final SpreadsheetFormatParserToken second() {
+        return SpreadsheetFormatParserToken.second("s", "s");
+    }
+
+    final SpreadsheetFormatParserToken thousands() {
+        return SpreadsheetFormatParserToken.thousands(",", ",");
+    }
+
+    final SpreadsheetFormatParserToken time() {
+        return SpreadsheetFormatParserToken.time(Lists.of(color()), "[RED]");
+    }
+
+    final SpreadsheetFormatParserToken underscore() {
+        return SpreadsheetFormatParserToken.underscore('_', "_");
+    }
+
+    final SpreadsheetFormatParserToken whitespace() {
+        return SpreadsheetFormatParserToken.whitespace(" ", " ");
+    }
+
+    final SpreadsheetFormatParserToken year() {
+        return SpreadsheetFormatParserToken.year("y", "y");
     }
 
     // Parse............................................................................................................
@@ -142,6 +341,12 @@ public abstract class SpreadsheetPatternsTestCase<P extends SpreadsheetPatterns<
     }
 
     abstract T parseParserToken(final String text);
+
+    private T createParserToken(final List<ParserToken> tokens) {
+        return this.createParserToken(tokens, ParserToken.text(tokens));
+    }
+
+    abstract T createParserToken(final List<ParserToken> tokens, final String text);
 
     // ClassTesting.....................................................................................................
 

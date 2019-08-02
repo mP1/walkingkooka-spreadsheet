@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Cast;
 import walkingkooka.Value;
-import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
@@ -43,6 +42,7 @@ import walkingkooka.tree.json.JsonNode;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Holds a a {@link List} of {@link SpreadsheetFormatDateTimeParserToken date/time} or {@link SpreadsheetFormatNumberParserToken} number tokens and some common functionality.
@@ -80,14 +80,16 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
     public static SpreadsheetTimePatterns withTime(final List<SpreadsheetFormatTimeParserToken> value) {
         return SpreadsheetTimePatterns.withTime0(value);
     }
-    
-    /**
-     * Should be called from the factory to check the given tokens.
-     */
-    static <T extends SpreadsheetFormatParserToken> List<T> copyAndNotEmptyCheck(final List<T> value) {
-        Objects.requireNonNull(value, "value");
 
-        final List<T> copy = Lists.immutable(value);
+    /**
+     * Verifies the {@link List} is not null or empty and checks each and every {@link SpreadsheetFormatParserToken}
+     */
+    static <T extends SpreadsheetFormatParserToken> List<T> copyAndCheck(final List<T> tokens,
+                                                                         final SpreadsheetPatternsSpreadsheetFormatParserTokenVisitor<T> visitor) {
+        Objects.requireNonNull(tokens, "tokens");
+        final List<T> copy = tokens.stream()
+            .peek(visitor::acceptAndCollect)
+                .collect(Collectors.toList());
         if (copy.isEmpty()) {
             throw new IllegalArgumentException("Tokens is empty");
         }
@@ -111,7 +113,7 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
      * Transforms the tokens into a {@link SpreadsheetDatePatterns}
      */
     private static SpreadsheetDatePatterns transformDate(final ParserToken token) {
-        return SpreadsheetDatePatterns.withDate(SpreadsheetDatePatternsSpreadsheetFormatParserTokenVisitor.collect(token));
+        return SpreadsheetDatePatterns.withDate(SpreadsheetDatePatternsSpreadsheetFormatParserTokenVisitor.with().acceptAndCollect(token));
     }
 
     // parseDateTime....................................................................................................
@@ -131,7 +133,7 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
      * Transforms the tokens into a {@link SpreadsheetDateTimePatterns}
      */
     private static SpreadsheetDateTimePatterns transformDateTime(final ParserToken token) {
-        return SpreadsheetDateTimePatterns.withDateTime(SpreadsheetDateTimePatternsSpreadsheetFormatParserTokenVisitor.collect(token));
+        return SpreadsheetDateTimePatterns.withDateTime(SpreadsheetDateTimePatternsSpreadsheetFormatParserTokenVisitor.with().acceptAndCollect(token));
     }
 
     // parseNumber.......................................................................................................
@@ -151,7 +153,7 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
      * Transforms the tokens into a {@link SpreadsheetNumberPatterns}
      */
     private static SpreadsheetNumberPatterns transformNumber(final ParserToken token) {
-        return SpreadsheetNumberPatterns.withNumber(SpreadsheetNumberPatternsSpreadsheetFormatParserTokenVisitor.collect(token));
+        return SpreadsheetNumberPatterns.withNumber(SpreadsheetNumberPatternsSpreadsheetFormatParserTokenVisitor.with().acceptAndCollect(token));
     }
 
     // parseTime....................................................................................................
@@ -171,7 +173,7 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
      * Transforms the tokens into a {@link SpreadsheetTimePatterns}
      */
     private static SpreadsheetTimePatterns transformTime(final ParserToken token) {
-        return SpreadsheetTimePatterns.withTime(SpreadsheetTimePatternsSpreadsheetFormatParserTokenVisitor.collect(token));
+        return SpreadsheetDateTimePatterns.withTime(SpreadsheetTimePatternsSpreadsheetFormatParserTokenVisitor.with().acceptAndCollect(token));
     }
     
     // helper...........................................................................................................
