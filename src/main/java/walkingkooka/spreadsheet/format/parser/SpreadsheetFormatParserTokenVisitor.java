@@ -27,6 +27,10 @@ import walkingkooka.visit.Visitor;
  */
 public abstract class SpreadsheetFormatParserTokenVisitor extends ParserTokenVisitor {
 
+    protected SpreadsheetFormatParserTokenVisitor() {
+        super();
+    }
+
     protected Visiting startVisit(final SpreadsheetFormatColorParserToken token) {
         return Visiting.CONTINUE;
     }
