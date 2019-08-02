@@ -30,7 +30,7 @@ public final class SpreadsheetDateTimePatterns extends SpreadsheetPatterns<Sprea
      * Factory that creates a {@link SpreadsheetDateTimePatterns} from the given tokens.
      */
     static SpreadsheetDateTimePatterns withDateTime0(final List<SpreadsheetFormatDateTimeParserToken> value) {
-        return new SpreadsheetDateTimePatterns(copyAndNotEmptyCheck(value));
+        return new SpreadsheetDateTimePatterns(copyAndCheck(value, SpreadsheetDateTimePatternsSpreadsheetFormatParserTokenVisitor.with()));
     }
 
     /**

@@ -20,15 +20,87 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
+import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.JsonNode;
 
 import java.util.List;
 
 public final class SpreadsheetDatePatternsTest extends SpreadsheetPatternsTestCase<SpreadsheetDatePatterns,
         SpreadsheetFormatDateParserToken> {
+
+    @Test
+    public void testWithAmpmFails() {
+        this.withInvalidCharacterFails(this.ampm());
+    }
+
+    @Test
+    public void testWithCurrencyFails() {
+        this.withInvalidCharacterFails(this.currency());
+    }
+
+    @Test
+    public void testWithDateTimeFails() {
+        this.withInvalidCharacterFails(this.dateTime());
+    }
+
+    @Test
+    public void testWithDecimalPointFails() {
+        this.withInvalidCharacterFails(this.decimalPoint());
+    }
+
+    @Test
+    public void testWithDigitFails() {
+        this.withInvalidCharacterFails(this.digit());
+    }
+
+    @Test
+    public void testWithDigitSpaceFails() {
+        this.withInvalidCharacterFails(this.digitSpace());
+    }
+
+    @Test
+    public void testWithDigitZeroFails() {
+        this.withInvalidCharacterFails(this.digitZero());
+    }
+
+    @Test
+    public void testWithExponentSymbolFails() {
+        this.withInvalidCharacterFails(this.exponentSymbol());
+    }
+
+    @Test
+    public void testWithHourFails() {
+        this.withInvalidCharacterFails(this.hour());
+    }
+
+    @Test
+    public void testWithNumberFails() {
+        this.withInvalidCharacterFails(this.number());
+    }
+
+    @Test
+    public void testWithPercentSymbolFails() {
+        this.withInvalidCharacterFails(this.percentSymbol());
+    }
+
+    @Test
+    public void testWithSecondsFails() {
+        this.withInvalidCharacterFails(this.second());
+    }
+
+    @Test
+    public void testWithThousandFails() {
+        this.withInvalidCharacterFails(this.thousands());
+    }
+
+    @Test
+    public void testWithTimeFails() {
+        this.withInvalidCharacterFails(this.time());
+    }
 
     // Parse............................................................................................................
 
@@ -51,7 +123,7 @@ public final class SpreadsheetDatePatternsTest extends SpreadsheetPatternsTestCa
 
     @Override
     String patternText() {
-        return "ddmmyyyy";
+        return "ddmmyyyy \"text-literal\" \\!";
     }
 
     @Override
@@ -61,6 +133,12 @@ public final class SpreadsheetDatePatternsTest extends SpreadsheetPatternsTestCa
                 .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
                 .map(SpreadsheetFormatDateParserToken.class::cast)
                 .get();
+    }
+
+    @Override
+    SpreadsheetFormatDateParserToken createParserToken(final List<ParserToken> tokens,
+                                                       final String text) {
+        return SpreadsheetFormatParserToken.date(tokens, text);
     }
 
     // ClassTesting.....................................................................................................

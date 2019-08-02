@@ -30,7 +30,7 @@ public final class SpreadsheetNumberPatterns extends SpreadsheetPatterns<Spreads
      * Factory that creates a {@link SpreadsheetNumberPatterns} from the given tokens.
      */
     static SpreadsheetNumberPatterns withNumber0(final List<SpreadsheetFormatNumberParserToken> value) {
-        return new SpreadsheetNumberPatterns(copyAndNotEmptyCheck(value));
+        return new SpreadsheetNumberPatterns(copyAndCheck(value, SpreadsheetNumberPatternsSpreadsheetFormatParserTokenVisitor.with()));
     }
 
     /**

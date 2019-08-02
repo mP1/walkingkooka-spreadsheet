@@ -20,15 +20,57 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
+import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.JsonNode;
 
 import java.util.List;
 
 public final class SpreadsheetNumberPatternsTest extends SpreadsheetPatternsTestCase<SpreadsheetNumberPatterns,
         SpreadsheetFormatNumberParserToken> {
+
+    @Test
+    public void testWithAmpmFails() {
+        this.withInvalidCharacterFails(this.ampm());
+    }
+
+    @Test
+    public void testWithDateFails() {
+        this.withInvalidCharacterFails(this.date());
+    }
+
+    @Test
+    public void testWithDateTimeFails() {
+        this.withInvalidCharacterFails(this.dateTime());
+    }
+
+    @Test
+    public void testWithDayFails() {
+        this.withInvalidCharacterFails(this.day());
+    }
+
+    @Test
+    public void testWithMonthOrMinuteFails() {
+        this.withInvalidCharacterFails(this.monthOrMinute());
+    }
+
+    @Test
+    public void testWithSecondsFails() {
+        this.withInvalidCharacterFails(this.second());
+    }
+
+    @Test
+    public void testWithTimeFails() {
+        this.withInvalidCharacterFails(this.time());
+    }
+
+    @Test
+    public void testWithYearFails() {
+        this.withInvalidCharacterFails(this.year());
+    }
 
     // Parse............................................................................................................
 
@@ -56,7 +98,7 @@ public final class SpreadsheetNumberPatternsTest extends SpreadsheetPatternsTest
 
     @Override
     String patternText() {
-        return "$ ###,##0.00";
+        return "$ ???,##0.00 \"text-literal\" \\!";
     }
 
     @Override
@@ -66,6 +108,12 @@ public final class SpreadsheetNumberPatternsTest extends SpreadsheetPatternsTest
                 .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
                 .map(SpreadsheetFormatNumberParserToken.class::cast)
                 .get();
+    }
+
+    @Override
+    SpreadsheetFormatNumberParserToken createParserToken(final List<ParserToken> tokens,
+                                                         final String text) {
+        return SpreadsheetFormatParserToken.number(tokens, text);
     }
 
     // ClassTesting.....................................................................................................
