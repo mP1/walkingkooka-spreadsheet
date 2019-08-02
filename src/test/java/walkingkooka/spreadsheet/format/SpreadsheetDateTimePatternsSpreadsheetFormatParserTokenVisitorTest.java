@@ -37,7 +37,7 @@ public final class SpreadsheetDateTimePatternsSpreadsheetFormatParserTokenVisito
                 SpreadsheetFormatParserToken.monthOrMinute("m", "m"),
                 SpreadsheetFormatParserToken.second("s", "s"),
                 SpreadsheetFormatParserToken.decimalPoint(".", "."),
-                SpreadsheetFormatParserToken.digit("0", "0")
+                SpreadsheetFormatParserToken.digitZero("0", "0")
         ), "dmyyyyhms.0");
 
         visitor.accept(token);
