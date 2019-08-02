@@ -27,7 +27,6 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.type.JavaVisibility;
 
 import java.lang.reflect.Method;
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiFunction;
@@ -35,7 +34,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTesting<SpreadsheetFormatParsers>,
+public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserTestCase implements PublicStaticHelperTesting<SpreadsheetFormatParsers>,
         ParserTesting<Parser<SpreadsheetFormatParserContext>, SpreadsheetFormatParserContext> {
 
     // color............................................................................................................
@@ -82,22 +81,22 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testColorName() {
-        this.colorParseAndCheck(openSquareBracket(), red(), closeSquareBracket());
+        this.colorParseAndCheck(bracketOpenSymbol(), red(), bracketCloseSymbol());
     }
 
     @Test
     public void testColorNameWhitespace() {
-        this.colorParseAndCheck(openSquareBracket(), red(), whitespace(), closeSquareBracket());
+        this.colorParseAndCheck(bracketOpenSymbol(), red(), whitespace(), bracketCloseSymbol());
     }
 
     @Test
     public void testColorNumber() {
-        this.colorParseAndCheck(openSquareBracket(), colorLiteral(), whitespace(), colorNumberFive(), closeSquareBracket());
+        this.colorParseAndCheck(bracketOpenSymbol(), colorLiteral(), whitespace(), colorNumberFive(), bracketCloseSymbol());
     }
 
     @Test
     public void testColorNumberWhitespace() {
-        this.colorParseAndCheck(openSquareBracket(), colorLiteral(), whitespace(), colorNumberFive(), whitespace(), closeSquareBracket());
+        this.colorParseAndCheck(bracketOpenSymbol(), colorLiteral(), whitespace(), colorNumberFive(), whitespace(), bracketCloseSymbol());
     }
 
     private void colorParseAndCheck(final SpreadsheetFormatParserToken... tokens) {
@@ -151,7 +150,7 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testConditionFractionFails() {
-        this.conditionParseThrows(fraction());
+        this.conditionParseThrows(fractionSymbol());
     }
 
     @Test
@@ -206,103 +205,103 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testConditionOpenSquareBracketFails() {
-        this.conditionParseThrows(openSquareBracket());
+        this.conditionParseThrows(bracketOpenSymbol());
     }
 
     @Test
     public void testConditionOpenSquareBracketEqualsFails() {
-        this.conditionParseThrows(openSquareBracket(), equals());
+        this.conditionParseThrows(bracketOpenSymbol(), equalsSymbol());
     }
 
     @Test
     public void testConditionOpenSquareBracketGreaterThanFails() {
-        this.conditionParseThrows(openSquareBracket(), greaterThan());
+        this.conditionParseThrows(bracketOpenSymbol(), greaterThan());
     }
 
     @Test
     public void testConditionOpenSquareBracketGreaterThanEqualsFails() {
-        this.conditionParseThrows(openSquareBracket(), greaterThanEquals());
+        this.conditionParseThrows(bracketOpenSymbol(), greaterThanEquals());
     }
 
     @Test
     public void testConditionOpenSquareBracketLessThanFails() {
-        this.conditionParseThrows(openSquareBracket(), lessThan());
+        this.conditionParseThrows(bracketOpenSymbol(), lessThan());
     }
 
     @Test
     public void testConditionOpenSquareBracketLessThanEqualsFails() {
-        this.conditionParseThrows(openSquareBracket(), lessThanEquals());
+        this.conditionParseThrows(bracketOpenSymbol(), lessThanEquals());
     }
 
     @Test
     public void testConditionOpenSquareBracketNotEqualsFails() {
-        this.conditionParseThrows(openSquareBracket(), notEquals());
+        this.conditionParseThrows(bracketOpenSymbol(), notEquals());
     }
 
     @Test
     public void testConditionOpenSquareBracketEqualsNumberFails() {
-        this.conditionParseThrows(openSquareBracket(), equals(), conditionNumber());
+        this.conditionParseThrows(bracketOpenSymbol(), equalsSymbol(), conditionNumber());
     }
 
     @Test
     public void testConditionOpenSquareBracketGreaterThanNumberFails() {
-        this.conditionParseThrows(openSquareBracket(), greaterThan(), conditionNumber());
+        this.conditionParseThrows(bracketOpenSymbol(), greaterThan(), conditionNumber());
     }
 
     @Test
     public void testConditionOpenSquareBracketGreaterThanEqualsNumberFails() {
-        this.conditionParseThrows(openSquareBracket(), greaterThanEquals(), conditionNumber());
+        this.conditionParseThrows(bracketOpenSymbol(), greaterThanEquals(), conditionNumber());
     }
 
     @Test
     public void testConditionOpenSquareBracketLessThanNumberFails() {
-        this.conditionParseThrows(openSquareBracket(), lessThan(), conditionNumber());
+        this.conditionParseThrows(bracketOpenSymbol(), lessThan(), conditionNumber());
     }
 
     @Test
     public void testConditionOpenSquareBracketLessThanEqualsNumberFails() {
-        this.conditionParseThrows(openSquareBracket(), lessThanEquals(), conditionNumber());
+        this.conditionParseThrows(bracketOpenSymbol(), lessThanEquals(), conditionNumber());
     }
 
     @Test
     public void testConditionOpenSquareBracketNotEqualsNumberFails() {
-        this.conditionParseThrows(openSquareBracket(), notEquals(), conditionNumber());
+        this.conditionParseThrows(bracketOpenSymbol(), notEquals(), conditionNumber());
     }
 
     @Test
     public void testConditionOpenSquareBracketEqualsNumber() {
         this.conditionParseAndCheck(SpreadsheetFormatParserToken::equalsParserToken,
-                openSquareBracket(), equals(), conditionNumber(), closeSquareBracket());
+                bracketOpenSymbol(), equalsSymbol(), conditionNumber(), bracketCloseSymbol());
     }
 
     @Test
     public void testConditionOpenSquareBracketGreaterThanNumber() {
         this.conditionParseAndCheck(SpreadsheetFormatParserToken::greaterThan,
-                openSquareBracket(), greaterThan(), conditionNumber(), closeSquareBracket());
+                bracketOpenSymbol(), greaterThan(), conditionNumber(), bracketCloseSymbol());
     }
 
     @Test
     public void testConditionOpenSquareBracketGreaterThanEqualsNumber() {
         this.conditionParseAndCheck(SpreadsheetFormatParserToken::greaterThanEquals,
-                openSquareBracket(), greaterThanEquals(), conditionNumber(), closeSquareBracket());
+                bracketOpenSymbol(), greaterThanEquals(), conditionNumber(), bracketCloseSymbol());
     }
 
     @Test
     public void testConditionOpenSquareBracketLessThanNumber() {
         this.conditionParseAndCheck(SpreadsheetFormatParserToken::lessThan,
-                openSquareBracket(), lessThan(), conditionNumber(), closeSquareBracket());
+                bracketOpenSymbol(), lessThan(), conditionNumber(), bracketCloseSymbol());
     }
 
     @Test
     public void testConditionOpenSquareBracketLessThanEqualsNumber() {
         this.conditionParseAndCheck(SpreadsheetFormatParserToken::lessThanEquals,
-                openSquareBracket(), lessThanEquals(), conditionNumber(), closeSquareBracket());
+                bracketOpenSymbol(), lessThanEquals(), conditionNumber(), bracketCloseSymbol());
     }
 
     @Test
     public void testConditionOpenSquareBracketNotEqualsNumber() {
         this.conditionParseAndCheck(SpreadsheetFormatParserToken::notEquals,
-                openSquareBracket(), notEquals(), conditionNumber(), closeSquareBracket());
+                bracketOpenSymbol(), notEquals(), conditionNumber(), bracketCloseSymbol());
     }
 
     private void conditionParseAndCheck(final BiFunction<List<ParserToken>, String, SpreadsheetFormatParserToken> factory,
@@ -357,12 +356,12 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testDateGeneralFails() {
-        this.dateParseThrows(general());
+        this.dateParseThrows(generalSymbol());
     }
 
     @Test
     public void testDateEscaped() {
-        this.dateParseAndCheck(escaped());
+        this.dateParseAndCheck(escape());
     }
 
     @Test
@@ -454,22 +453,22 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testDateEscapedDayMonthYear() {
-        this.dateParseAndCheck(escaped(), day(), monthOrMinute(), year());
+        this.dateParseAndCheck(escape(), day(), monthOrMinute(), year());
     }
 
     @Test
     public void testDateDayEscapedMonthYear() {
-        this.dateParseAndCheck(day(), escaped(), monthOrMinute(), year());
+        this.dateParseAndCheck(day(), escape(), monthOrMinute(), year());
     }
 
     @Test
     public void testDateDayMonthEscapedYear() {
-        this.dateParseAndCheck(day(), monthOrMinute(), escaped(), year());
+        this.dateParseAndCheck(day(), monthOrMinute(), escape(), year());
     }
 
     @Test
     public void testDateDayMonthYearEscaped() {
-        this.dateParseAndCheck(day(), monthOrMinute(), year(), escaped());
+        this.dateParseAndCheck(day(), monthOrMinute(), year(), escape());
     }
 
     // quotedText
@@ -674,22 +673,22 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testDateEqualsDayMonthYearFails() {
-        this.dateParseThrows(equals(), day(), monthOrMinute(), year());
+        this.dateParseThrows(equalsSymbol(), day(), monthOrMinute(), year());
     }
 
     @Test
     public void testDateDayEqualsMonthYearFails() {
-        this.dateParseThrows(day(), equals(), monthOrMinute(), year());
+        this.dateParseThrows(day(), equalsSymbol(), monthOrMinute(), year());
     }
 
     @Test
     public void testDateDayMonthEqualsYearFails() {
-        this.dateParseThrows(day(), monthOrMinute(), equals(), year());
+        this.dateParseThrows(day(), monthOrMinute(), equalsSymbol(), year());
     }
 
     @Test
     public void testDateDayMonthYearEqualsFails() {
-        this.dateParseThrows(day(), monthOrMinute(), year(), equals());
+        this.dateParseThrows(day(), monthOrMinute(), year(), equalsSymbol());
     }
 
     // greaterThan
@@ -954,34 +953,34 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testNumberSlashFails() {
-        this.numberParseThrows(fraction());
+        this.numberParseThrows(fractionSymbol());
     }
 
     @Test
     public void testNumberDigitSpaceNumberFails() {
-        this.numberParseThrows(digitSpace(), fraction());
+        this.numberParseThrows(digitSpace(), fractionSymbol());
     }
 
     @Test
     public void testNumberDigitZeroNumberFails() {
-        this.numberParseThrows(digitZero(), fraction());
+        this.numberParseThrows(digitZero(), fractionSymbol());
     }
 
     @Test
     public void testNumberDigitNonZeroNumberFails() {
-        this.numberParseThrows(digitNonZero(), fraction());
+        this.numberParseThrows(digitNonZero(), fractionSymbol());
     }
 
     @Test
     public void testNumberGeneralFails() {
-        this.numberParseThrows(general());
+        this.numberParseThrows(generalSymbol());
     }
 
     // literals only...........................................................................
 
     @Test
     public void testNumberEscaped() {
-        this.numberParseAndCheck(escaped());
+        this.numberParseAndCheck(escape());
     }
 
     @Test
@@ -1121,22 +1120,22 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testNumberPercentageDigitSlashDigit() {
-        this.numberParseAndCheck(percentage(), digitNonZero(), decimalPoint(), digitNonZero());
+        this.numberParseAndCheck(percentSymbol(), digitNonZero(), decimalPoint(), digitNonZero());
     }
 
     @Test
     public void testNumberDigitPercentageSlashDigit() {
-        this.numberParseAndCheck(digitNonZero(), percentage(), decimalPoint(), digitNonZero());
+        this.numberParseAndCheck(digitNonZero(), percentSymbol(), decimalPoint(), digitNonZero());
     }
 
     @Test
     public void testNumberDigitSlashPercentageDigit() {
-        this.numberParseAndCheck(percentage(), digitNonZero(), decimalPoint(), percentage(), digitNonZero());
+        this.numberParseAndCheck(percentSymbol(), digitNonZero(), decimalPoint(), percentSymbol(), digitNonZero());
     }
 
     @Test
     public void testNumberDigitSlashDigitPercentage() {
-        this.numberParseAndCheck(digitNonZero(), decimalPoint(), digitNonZero(), percentage());
+        this.numberParseAndCheck(digitNonZero(), decimalPoint(), digitNonZero(), percentSymbol());
     }
 
     // thousands
@@ -1167,22 +1166,22 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testNumberDigitEscapedDigitSlashDigit() {
-        this.numberParseAndCheck(digitNonZero(), escaped());
+        this.numberParseAndCheck(digitNonZero(), escape());
     }
 
     @Test
     public void testNumberDigitEscapedSlashDigit() {
-        this.numberParseAndCheck(digitNonZero(), escaped(), decimalPoint(), digitNonZero());
+        this.numberParseAndCheck(digitNonZero(), escape(), decimalPoint(), digitNonZero());
     }
 
     @Test
     public void testNumberDigitSlashEscapedDigit() {
-        this.numberParseAndCheck(escaped(), digitNonZero(), decimalPoint(), escaped(), digitNonZero());
+        this.numberParseAndCheck(escape(), digitNonZero(), decimalPoint(), escape(), digitNonZero());
     }
 
     @Test
     public void testNumberDigitSlashDigitEscaped() {
-        this.numberParseAndCheck(digitNonZero(), decimalPoint(), digitNonZero(), escaped());
+        this.numberParseAndCheck(digitNonZero(), decimalPoint(), digitNonZero(), escape());
     }
 
     // quotedText
@@ -1343,22 +1342,22 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testNumberEqualsDigitNonZeroDecimalPointDigitNonZeroFails() {
-        this.numberParseThrows(equals(), digitNonZero(), decimalPoint(), digitNonZero());
+        this.numberParseThrows(equalsSymbol(), digitNonZero(), decimalPoint(), digitNonZero());
     }
 
     @Test
     public void testNumberDigitNonZeroEqualsDecimalPointDigitNonZeroFails() {
-        this.numberParseThrows(digitNonZero(), equals(), decimalPoint(), digitNonZero());
+        this.numberParseThrows(digitNonZero(), equalsSymbol(), decimalPoint(), digitNonZero());
     }
 
     @Test
     public void testNumberDigitNonZeroDecimalPointEqualsDigitNonZeroFails() {
-        this.numberParseThrows(digitNonZero(), decimalPoint(), equals(), digitNonZero());
+        this.numberParseThrows(digitNonZero(), decimalPoint(), equalsSymbol(), digitNonZero());
     }
 
     @Test
     public void testNumberDigitNonZeroDecimalPointDigitNonZeroEqualsFails() {
-        this.numberParseThrows(digitNonZero(), decimalPoint(), digitNonZero(), equals());
+        this.numberParseThrows(digitNonZero(), decimalPoint(), digitNonZero(), equalsSymbol());
     }
 
     // greaterThan
@@ -1496,17 +1495,17 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testNumberDigitExponentEscapedDigit() {
-        this.numberParseAndCheck(digitNonZero(), exponent1(escaped()));
+        this.numberParseAndCheck(digitNonZero(), exponent1(escape()));
     }
 
     @Test
     public void testNumberDigitExponentDigitEscapedDigit() {
-        this.numberParseAndCheck(digitNonZero(), exponent2(escaped()));
+        this.numberParseAndCheck(digitNonZero(), exponent2(escape()));
     }
 
     @Test
     public void testNumberDigitExponentDigitEscaped() {
-        this.numberParseAndCheck(digitNonZero(), exponent3(escaped()));
+        this.numberParseAndCheck(digitNonZero(), exponent3(escape()));
     }
 
     // quotedText
@@ -1632,17 +1631,17 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testNumberDigitExponentEqualsDigit() {
-        this.numberParseThrows(digitNonZero(), exponent1(equals()));
+        this.numberParseThrows(digitNonZero(), exponent1(equalsSymbol()));
     }
 
     @Test
     public void testNumberDigitExponentDigitEqualsDigit() {
-        this.numberParseThrows(digitNonZero(), exponent2(equals()));
+        this.numberParseThrows(digitNonZero(), exponent2(equalsSymbol()));
     }
 
     @Test
     public void testNumberDigitExponentDigitEquals() {
-        this.numberParseThrows(digitNonZero(), exponent3(equals()));
+        this.numberParseThrows(digitNonZero(), exponent3(equalsSymbol()));
     }
 
     // greaterThan
@@ -1887,22 +1886,22 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testFractionSlashFails() {
-        this.fractionParseThrows(fraction());
+        this.fractionParseThrows(fractionSymbol());
     }
 
     @Test
     public void testFractionDigitSpaceFractionFails() {
-        this.fractionParseThrows(digitSpace(), fraction());
+        this.fractionParseThrows(digitSpace(), fractionSymbol());
     }
 
     @Test
     public void testFractionDigitZeroFractionFails() {
-        this.fractionParseThrows(digitZero(), fraction());
+        this.fractionParseThrows(digitZero(), fractionSymbol());
     }
 
     @Test
     public void testFractionDigitNonZeroFractionFails() {
-        this.fractionParseThrows(digitNonZero(), fraction());
+        this.fractionParseThrows(digitNonZero(), fractionSymbol());
     }
 
     @Test
@@ -1917,105 +1916,105 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testFractionGeneralFails() {
-        this.fractionParseThrows(general());
+        this.fractionParseThrows(generalSymbol());
     }
 
     // digitSpace
 
     @Test
     public void testFractionDigitSpaceFractionDigitSpace() {
-        this.fractionParseAndCheck(digitSpace(), fraction(), digitSpace());
+        this.fractionParseAndCheck(digitSpace(), fractionSymbol(), digitSpace());
     }
 
     @Test
     public void testFractionDigitSpaceDigitSpaceFractionDigitSpace() {
-        this.fractionParseAndCheck(digitSpace(), digitSpace(), fraction(), digitSpace());
+        this.fractionParseAndCheck(digitSpace(), digitSpace(), fractionSymbol(), digitSpace());
     }
 
     @Test
     public void testFractionDigitSpaceDigitZeroFractionDigitSpace() {
-        this.fractionParseAndCheck(digitSpace(), digitZero(), fraction(), digitSpace());
+        this.fractionParseAndCheck(digitSpace(), digitZero(), fractionSymbol(), digitSpace());
     }
 
     @Test
     public void testFractionDigitSpaceDigitNonZeroFractionDigitSpace() {
-        this.fractionParseAndCheck(digitSpace(), digitNonZero(), fraction(), digitSpace());
+        this.fractionParseAndCheck(digitSpace(), digitNonZero(), fractionSymbol(), digitSpace());
     }
 
     @Test
     public void testFractionDigitSpaceFractionDigitSpaceDigitSpace() {
-        this.fractionParseAndCheck(digitSpace(), fraction(), digitSpace(), digitSpace());
+        this.fractionParseAndCheck(digitSpace(), fractionSymbol(), digitSpace(), digitSpace());
     }
 
     // digitSpace
 
     @Test
     public void testFractionDigitZeroDigitSpaceFractionDigitZero() {
-        this.fractionParseAndCheck(digitZero(), digitSpace(), fraction(), digitZero());
+        this.fractionParseAndCheck(digitZero(), digitSpace(), fractionSymbol(), digitZero());
     }
 
     @Test
     public void testFractionDigitZeroDigitZeroFractionDigitZero() {
-        this.fractionParseAndCheck(digitZero(), digitZero(), fraction(), digitZero());
+        this.fractionParseAndCheck(digitZero(), digitZero(), fractionSymbol(), digitZero());
     }
 
     @Test
     public void testFractionDigitZeroDigitNonZeroFractionDigitZero() {
-        this.fractionParseAndCheck(digitZero(), digitNonZero(), fraction(), digitZero());
+        this.fractionParseAndCheck(digitZero(), digitNonZero(), fractionSymbol(), digitZero());
     }
 
     @Test
     public void testFractionDigitZeroFractionDigitZeroDigitZero() {
-        this.fractionParseAndCheck(digitZero(), fraction(), digitZero(), digitZero());
+        this.fractionParseAndCheck(digitZero(), fractionSymbol(), digitZero(), digitZero());
     }
 
     // digitSpace
 
     @Test
     public void testFractionDigitNonZeroFractionDigitNonZero() {
-        this.fractionParseAndCheck(digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitNonZeroDigitSpaceFractionDigitNonZero() {
-        this.fractionParseAndCheck(digitNonZero(), digitSpace(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(digitNonZero(), digitSpace(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitNonZeroDigitZeroFractionDigitNonZero() {
-        this.fractionParseAndCheck(digitNonZero(), digitZero(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(digitNonZero(), digitZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitNonZeroDigitNonZeroFractionDigitNonZero() {
-        this.fractionParseAndCheck(digitNonZero(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(digitNonZero(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitNonZeroFractionDigitNonZeroDigitNonZero() {
-        this.fractionParseAndCheck(digitNonZero(), fraction(), digitNonZero(), digitNonZero());
+        this.fractionParseAndCheck(digitNonZero(), fractionSymbol(), digitNonZero(), digitNonZero());
     }
 
     // currency
 
     @Test
     public void testFractioncurrencyDigitSlashDigit() {
-        this.fractionParseAndCheck(currency(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(currency(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitcurrencySlashDigit() {
-        this.fractionParseAndCheck(digitNonZero(), currency(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(digitNonZero(), currency(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitSlashcurrencyDigit() {
-        this.fractionParseAndCheck(currency(), digitNonZero(), fraction(), currency(), digitNonZero());
+        this.fractionParseAndCheck(currency(), digitNonZero(), fractionSymbol(), currency(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitSlashDigitcurrency() {
-        this.fractionParseAndCheck(digitNonZero(), fraction(), digitNonZero(), currency());
+        this.fractionParseAndCheck(digitNonZero(), fractionSymbol(), digitNonZero(), currency());
     }
 
     // text literals
@@ -2024,446 +2023,446 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testFractionEscapedDigitSlashDigit() {
-        this.fractionParseAndCheck(escaped(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(escape(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitEscapedSlashDigit() {
-        this.fractionParseAndCheck(digitNonZero(), escaped(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(digitNonZero(), escape(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitSlashEscapedDigit() {
-        this.fractionParseAndCheck(escaped(), digitNonZero(), fraction(), escaped(), digitNonZero());
+        this.fractionParseAndCheck(escape(), digitNonZero(), fractionSymbol(), escape(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitSlashDigitEscaped() {
-        this.fractionParseAndCheck(digitNonZero(), fraction(), digitNonZero(), escaped());
+        this.fractionParseAndCheck(digitNonZero(), fractionSymbol(), digitNonZero(), escape());
     }
 
     // quotedText
 
     @Test
     public void testFractionQuotedTextDigitSlashDigit() {
-        this.fractionParseAndCheck(quotedText(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(quotedText(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitQuotedTextSlashDigit() {
-        this.fractionParseAndCheck(digitNonZero(), quotedText(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(digitNonZero(), quotedText(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitSlashQuotedTextDigit() {
-        this.fractionParseAndCheck(quotedText(), digitNonZero(), fraction(), quotedText(), digitNonZero());
+        this.fractionParseAndCheck(quotedText(), digitNonZero(), fractionSymbol(), quotedText(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitSlashDigitQuotedText() {
-        this.fractionParseAndCheck(digitNonZero(), fraction(), digitNonZero(), quotedText());
+        this.fractionParseAndCheck(digitNonZero(), fractionSymbol(), digitNonZero(), quotedText());
     }
 
     // closeParens
 
     @Test
     public void testFractionCloseParensDigitSlashDigit() {
-        this.fractionParseAndCheck(textLiteralCloseParens(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(textLiteralCloseParens(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitCloseParensSlashDigit() {
-        this.fractionParseAndCheck(digitNonZero(), textLiteralCloseParens(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(digitNonZero(), textLiteralCloseParens(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitSlashCloseParensDigit() {
-        this.fractionParseAndCheck(textLiteralCloseParens(), digitNonZero(), fraction(), textLiteralCloseParens(), digitNonZero());
+        this.fractionParseAndCheck(textLiteralCloseParens(), digitNonZero(), fractionSymbol(), textLiteralCloseParens(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitSlashDigitCloseParens() {
-        this.fractionParseAndCheck(digitNonZero(), fraction(), digitNonZero(), textLiteralCloseParens());
+        this.fractionParseAndCheck(digitNonZero(), fractionSymbol(), digitNonZero(), textLiteralCloseParens());
     }
 
     // colon
 
     @Test
     public void testFractionColonDigitSlashDigit() {
-        this.fractionParseAndCheck(textLiteralColon(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(textLiteralColon(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitColonSlashDigit() {
-        this.fractionParseAndCheck(digitNonZero(), textLiteralColon(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(digitNonZero(), textLiteralColon(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitSlashColonDigit() {
-        this.fractionParseAndCheck(textLiteralColon(), digitNonZero(), fraction(), textLiteralColon(), digitNonZero());
+        this.fractionParseAndCheck(textLiteralColon(), digitNonZero(), fractionSymbol(), textLiteralColon(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitSlashDigitColon() {
-        this.fractionParseAndCheck(digitNonZero(), fraction(), digitNonZero(), textLiteralColon());
+        this.fractionParseAndCheck(digitNonZero(), fractionSymbol(), digitNonZero(), textLiteralColon());
     }
 
     // minus
 
     @Test
     public void testFractionMinusDigitSlashDigit() {
-        this.fractionParseAndCheck(textLiteralMinus(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(textLiteralMinus(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitMinusSlashDigit() {
-        this.fractionParseAndCheck(digitNonZero(), textLiteralMinus(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(digitNonZero(), textLiteralMinus(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitSlashMinusDigit() {
-        this.fractionParseAndCheck(textLiteralMinus(), digitNonZero(), fraction(), textLiteralMinus(), digitNonZero());
+        this.fractionParseAndCheck(textLiteralMinus(), digitNonZero(), fractionSymbol(), textLiteralMinus(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitSlashDigitMinus() {
-        this.fractionParseAndCheck(digitNonZero(), fraction(), digitNonZero(), textLiteralMinus());
+        this.fractionParseAndCheck(digitNonZero(), fractionSymbol(), digitNonZero(), textLiteralMinus());
     }
 
     // openParens
 
     @Test
     public void testFractionOpenParensDigitSlashDigit() {
-        this.fractionParseAndCheck(textLiteralOpenParens(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(textLiteralOpenParens(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitOpenParensSlashDigit() {
-        this.fractionParseAndCheck(digitNonZero(), textLiteralOpenParens(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(digitNonZero(), textLiteralOpenParens(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitSlashOpenParensDigit() {
-        this.fractionParseAndCheck(textLiteralOpenParens(), digitNonZero(), fraction(), textLiteralOpenParens(), digitNonZero());
+        this.fractionParseAndCheck(textLiteralOpenParens(), digitNonZero(), fractionSymbol(), textLiteralOpenParens(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitSlashDigitOpenParens() {
-        this.fractionParseAndCheck(digitNonZero(), fraction(), digitNonZero(), textLiteralOpenParens());
+        this.fractionParseAndCheck(digitNonZero(), fractionSymbol(), digitNonZero(), textLiteralOpenParens());
     }
 
     // percentage
 
     @Test
     public void testFractionPercentageDigitSlashDigit() {
-        this.fractionParseAndCheck(percentage(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(percentSymbol(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitPercentageSlashDigit() {
-        this.fractionParseAndCheck(digitNonZero(), percentage(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(digitNonZero(), percentSymbol(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitSlashPercentageDigit() {
-        this.fractionParseAndCheck(percentage(), digitNonZero(), fraction(), percentage(), digitNonZero());
+        this.fractionParseAndCheck(percentSymbol(), digitNonZero(), fractionSymbol(), percentSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitSlashDigitPercentage() {
-        this.fractionParseAndCheck(digitNonZero(), fraction(), digitNonZero(), percentage());
+        this.fractionParseAndCheck(digitNonZero(), fractionSymbol(), digitNonZero(), percentSymbol());
     }
 
     // plus
 
     @Test
     public void testFractionPlusDigitSlashDigit() {
-        this.fractionParseAndCheck(textLiteralPlus(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(textLiteralPlus(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitPlusSlashDigit() {
-        this.fractionParseAndCheck(digitNonZero(), textLiteralPlus(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(digitNonZero(), textLiteralPlus(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitSlashPlusDigit() {
-        this.fractionParseAndCheck(textLiteralPlus(), digitNonZero(), fraction(), textLiteralPlus(), digitNonZero());
+        this.fractionParseAndCheck(textLiteralPlus(), digitNonZero(), fractionSymbol(), textLiteralPlus(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitSlashDigitPlus() {
-        this.fractionParseAndCheck(digitNonZero(), fraction(), digitNonZero(), textLiteralPlus());
+        this.fractionParseAndCheck(digitNonZero(), fractionSymbol(), digitNonZero(), textLiteralPlus());
     }
 
     // space
 
     @Test
     public void testFractionSpaceDigitSlashDigit() {
-        this.fractionParseAndCheck(textLiteralSpace(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(textLiteralSpace(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitSpaceSlashDigit() {
-        this.fractionParseAndCheck(digitNonZero(), textLiteralSpace(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(digitNonZero(), textLiteralSpace(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitSlashSpaceDigit() {
-        this.fractionParseAndCheck(textLiteralSpace(), digitNonZero(), fraction(), textLiteralSpace(), digitNonZero());
+        this.fractionParseAndCheck(textLiteralSpace(), digitNonZero(), fractionSymbol(), textLiteralSpace(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitSlashDigitSpace() {
-        this.fractionParseAndCheck(digitNonZero(), fraction(), digitNonZero(), textLiteralSpace());
+        this.fractionParseAndCheck(digitNonZero(), fractionSymbol(), digitNonZero(), textLiteralSpace());
     }
 
     // thousands
 
     @Test
     public void testFractionThousandsDigitSlashDigit() {
-        this.fractionParseAndCheck(thousands(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(thousands(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitThousandsSlashDigit() {
-        this.fractionParseAndCheck(digitNonZero(), thousands(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(digitNonZero(), thousands(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitSlashThousandsDigit() {
-        this.fractionParseAndCheck(thousands(), digitNonZero(), fraction(), thousands(), digitNonZero());
+        this.fractionParseAndCheck(thousands(), digitNonZero(), fractionSymbol(), thousands(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitSlashDigitThousands() {
-        this.fractionParseAndCheck(digitNonZero(), fraction(), digitNonZero(), thousands());
+        this.fractionParseAndCheck(digitNonZero(), fractionSymbol(), digitNonZero(), thousands());
     }
 
     // equals
 
     @Test
     public void testFractionEqualsDigitNonZeroFractionDigitNonZeroFails() {
-        this.fractionParseThrows(equals(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseThrows(equalsSymbol(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitNonZeroEqualsFractionDigitNonZeroFails() {
-        this.fractionParseThrows(digitNonZero(), equals(), fraction(), digitNonZero());
+        this.fractionParseThrows(digitNonZero(), equalsSymbol(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitNonZeroFractionEqualsDigitNonZeroFails() {
-        this.fractionParseThrows(digitNonZero(), fraction(), equals(), digitNonZero());
+        this.fractionParseThrows(digitNonZero(), fractionSymbol(), equalsSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitNonZeroFractionDigitNonZeroEqualsFails() {
-        this.fractionParseThrows(digitNonZero(), fraction(), digitNonZero(), equals());
+        this.fractionParseThrows(digitNonZero(), fractionSymbol(), digitNonZero(), equalsSymbol());
     }
 
     // greaterThan
 
     @Test
     public void testFractionGreaterThanDigitNonZeroFractionDigitNonZeroFails() {
-        this.fractionParseThrows(greaterThan(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseThrows(greaterThan(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitNonZeroGreaterThanFractionDigitNonZeroFails() {
-        this.fractionParseThrows(digitNonZero(), greaterThan(), fraction(), digitNonZero());
+        this.fractionParseThrows(digitNonZero(), greaterThan(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitNonZeroFractionGreaterThanDigitNonZeroFails() {
-        this.fractionParseThrows(digitNonZero(), fraction(), greaterThan(), digitNonZero());
+        this.fractionParseThrows(digitNonZero(), fractionSymbol(), greaterThan(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitNonZeroFractionDigitNonZeroGreaterThanFails() {
-        this.fractionParseThrows(digitNonZero(), fraction(), digitNonZero(), greaterThan());
+        this.fractionParseThrows(digitNonZero(), fractionSymbol(), digitNonZero(), greaterThan());
     }
 
     // greaterThanEquals
 
     @Test
     public void testFractionGreaterThanEqualsDigitNonZeroFractionDigitNonZeroFails() {
-        this.fractionParseThrows(greaterThanEquals(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseThrows(greaterThanEquals(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitNonZeroGreaterThanEqualsFractionDigitNonZeroFails() {
-        this.fractionParseThrows(digitNonZero(), greaterThanEquals(), fraction(), digitNonZero());
+        this.fractionParseThrows(digitNonZero(), greaterThanEquals(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitNonZeroFractionGreaterThanEqualsDigitNonZeroFails() {
-        this.fractionParseThrows(digitNonZero(), fraction(), greaterThanEquals(), digitNonZero());
+        this.fractionParseThrows(digitNonZero(), fractionSymbol(), greaterThanEquals(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitNonZeroFractionDigitNonZeroGreaterThanEqualsFails() {
-        this.fractionParseThrows(digitNonZero(), fraction(), digitNonZero(), greaterThanEquals());
+        this.fractionParseThrows(digitNonZero(), fractionSymbol(), digitNonZero(), greaterThanEquals());
     }
 
     // lessThan
 
     @Test
     public void testFractionLessThanDigitNonZeroFractionDigitNonZeroFails() {
-        this.fractionParseThrows(lessThan(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseThrows(lessThan(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitNonZeroLessThanFractionDigitNonZeroFails() {
-        this.fractionParseThrows(digitNonZero(), lessThan(), fraction(), digitNonZero());
+        this.fractionParseThrows(digitNonZero(), lessThan(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitNonZeroFractionLessThanDigitNonZeroFails() {
-        this.fractionParseThrows(digitNonZero(), fraction(), lessThan(), digitNonZero());
+        this.fractionParseThrows(digitNonZero(), fractionSymbol(), lessThan(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitNonZeroFractionDigitNonZeroLessThanFails() {
-        this.fractionParseThrows(digitNonZero(), fraction(), digitNonZero(), lessThan());
+        this.fractionParseThrows(digitNonZero(), fractionSymbol(), digitNonZero(), lessThan());
     }
 
     // lessThanEquals
 
     @Test
     public void testFractionLessThanEqualsDigitNonZeroFractionDigitNonZeroFails() {
-        this.fractionParseThrows(lessThanEquals(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseThrows(lessThanEquals(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitNonZeroLessThanEqualsFractionDigitNonZeroFails() {
-        this.fractionParseThrows(digitNonZero(), lessThanEquals(), fraction(), digitNonZero());
+        this.fractionParseThrows(digitNonZero(), lessThanEquals(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitNonZeroFractionLessThanEqualsDigitNonZeroFails() {
-        this.fractionParseThrows(digitNonZero(), fraction(), lessThanEquals(), digitNonZero());
+        this.fractionParseThrows(digitNonZero(), fractionSymbol(), lessThanEquals(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitNonZeroFractionDigitNonZeroLessThanEqualsFails() {
-        this.fractionParseThrows(digitNonZero(), fraction(), digitNonZero(), lessThanEquals());
+        this.fractionParseThrows(digitNonZero(), fractionSymbol(), digitNonZero(), lessThanEquals());
     }
 
     // notEquals
 
     @Test
     public void testFractionNotEqualsDigitNonZeroFractionDigitNonZeroFails() {
-        this.fractionParseThrows(notEquals(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseThrows(notEquals(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitNonZeroNotEqualsFractionDigitNonZeroFails() {
-        this.fractionParseThrows(digitNonZero(), notEquals(), fraction(), digitNonZero());
+        this.fractionParseThrows(digitNonZero(), notEquals(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitNonZeroFractionNotEqualsDigitNonZeroFails() {
-        this.fractionParseThrows(digitNonZero(), fraction(), notEquals(), digitNonZero());
+        this.fractionParseThrows(digitNonZero(), fractionSymbol(), notEquals(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitNonZeroFractionDigitNonZeroNotEqualsFails() {
-        this.fractionParseThrows(digitNonZero(), fraction(), digitNonZero(), notEquals());
+        this.fractionParseThrows(digitNonZero(), fractionSymbol(), digitNonZero(), notEquals());
     }
 
     // color
 
     @Test
     public void testFractionColorDigitFractionDigit() {
-        this.fractionParseAndCheck(color(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(color(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitColorFractionDigit() {
-        this.fractionParseAndCheck(digitNonZero(), color(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(digitNonZero(), color(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitColorDigitFractionDigit() {
-        this.fractionParseAndCheck(digitNonZero(), color(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(digitNonZero(), color(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitFractionColorDigit() {
-        this.fractionParseAndCheck(digitNonZero(), fraction(), color(), digitNonZero());
+        this.fractionParseAndCheck(digitNonZero(), fractionSymbol(), color(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitFractionDigitColorDigit() {
-        this.fractionParseAndCheck(digitNonZero(), fraction(), digitNonZero(), color(), digitNonZero());
+        this.fractionParseAndCheck(digitNonZero(), fractionSymbol(), digitNonZero(), color(), digitNonZero());
     }
 
     @Test
     public void testFractionDigitFractionDigitColor() {
-        this.fractionParseAndCheck(digitNonZero(), fraction(), digitNonZero(), color());
+        this.fractionParseAndCheck(digitNonZero(), fractionSymbol(), digitNonZero(), color());
     }
 
     // condition
 
     @Test
     public void testFractionConditionEqualsFraction() {
-        this.fractionParseAndCheck(conditionEquals(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(conditionEquals(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionConditionGreaterThanFraction() {
-        this.fractionParseAndCheck(conditionGreaterThan(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(conditionGreaterThan(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionConditionGreaterThanEqualsFraction() {
-        this.fractionParseAndCheck(conditionGreaterThanEquals(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(conditionGreaterThanEquals(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionConditionLessThanFraction() {
-        this.fractionParseAndCheck(conditionLessThan(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(conditionLessThan(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionConditionLessThanEqualsFraction() {
-        this.fractionParseAndCheck(conditionLessThanEquals(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(conditionLessThanEquals(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionConditionNotEqualsFraction() {
-        this.fractionParseAndCheck(conditionNotEquals(), digitNonZero(), fraction(), digitNonZero());
+        this.fractionParseAndCheck(conditionNotEquals(), digitNonZero(), fractionSymbol(), digitNonZero());
     }
 
     @Test
     public void testFractionFractionConditionEquals() {
-        this.fractionParseAndCheck(digitNonZero(), fraction(), digitNonZero(), conditionEquals());
+        this.fractionParseAndCheck(digitNonZero(), fractionSymbol(), digitNonZero(), conditionEquals());
     }
 
     @Test
     public void testFractionFractionConditionGreaterThan() {
-        this.fractionParseAndCheck(digitNonZero(), fraction(), digitNonZero(), conditionGreaterThan());
+        this.fractionParseAndCheck(digitNonZero(), fractionSymbol(), digitNonZero(), conditionGreaterThan());
     }
 
     @Test
     public void testFractionFractionConditionGreaterThanEquals() {
-        this.fractionParseAndCheck(digitNonZero(), fraction(), digitNonZero(), conditionGreaterThanEquals());
+        this.fractionParseAndCheck(digitNonZero(), fractionSymbol(), digitNonZero(), conditionGreaterThanEquals());
     }
 
     @Test
     public void testFractionFractionConditionLessThan() {
-        this.fractionParseAndCheck(digitNonZero(), fraction(), digitNonZero(), conditionLessThan());
+        this.fractionParseAndCheck(digitNonZero(), fractionSymbol(), digitNonZero(), conditionLessThan());
     }
 
     @Test
     public void testFractionFractionConditionLessThanEquals() {
-        this.fractionParseAndCheck(digitNonZero(), fraction(), digitNonZero(), conditionLessThanEquals());
+        this.fractionParseAndCheck(digitNonZero(), fractionSymbol(), digitNonZero(), conditionLessThanEquals());
     }
 
     @Test
     public void testFractionFractionConditionNotEquals() {
-        this.fractionParseAndCheck(digitNonZero(), fraction(), digitNonZero(), conditionNotEquals());
+        this.fractionParseAndCheck(digitNonZero(), fractionSymbol(), digitNonZero(), conditionNotEquals());
     }
 
     // fraction helpers...
@@ -2484,42 +2483,42 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testGeneralGeneral() {
-        this.generalParseAndCheck(general());
+        this.generalParseAndCheck(generalSymbol());
     }
 
     @Test
     public void testGeneralWhitespaceGeneral() {
-        this.generalParseAndCheck(whitespace(), general());
+        this.generalParseAndCheck(whitespace(), generalSymbol());
     }
 
     @Test
     public void testGeneralGeneralWhitespace() {
-        this.generalParseAndCheck(general(), whitespace());
+        this.generalParseAndCheck(generalSymbol(), whitespace());
     }
 
     @Test
     public void testGeneralColorGeneral() {
-        this.generalParseAndCheck(color(), general());
+        this.generalParseAndCheck(color(), generalSymbol());
     }
 
     @Test
     public void testGeneralColorWhitespaceGeneral() {
-        this.generalParseAndCheck(color(), whitespace(), general());
+        this.generalParseAndCheck(color(), whitespace(), generalSymbol());
     }
 
     @Test
     public void testGeneralGeneralColor() {
-        this.generalParseAndCheck(general(), color());
+        this.generalParseAndCheck(generalSymbol(), color());
     }
 
     @Test
     public void testGeneralGeneralColorWhitespace() {
-        this.generalParseAndCheck(general(), color(), whitespace());
+        this.generalParseAndCheck(generalSymbol(), color(), whitespace());
     }
 
     @Test
     public void testGeneralGeneralWhitespaceColor() {
-        this.generalParseAndCheck(general(), whitespace(), color());
+        this.generalParseAndCheck(generalSymbol(), whitespace(), color());
     }
 
     /**
@@ -2566,12 +2565,12 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testTextGeneraFailsl() {
-        this.textParseThrows(general());
+        this.textParseThrows(generalSymbol());
     }
 
     @Test
     public void testTextEscaped() {
-        this.textParseAndCheck(escaped());
+        this.textParseAndCheck(escape());
     }
 
     @Test
@@ -2668,7 +2667,7 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testTextEqualsFails() {
-        this.textParseThrows(equals());
+        this.textParseThrows(equalsSymbol());
     }
 
     @Test
@@ -2762,12 +2761,12 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testTimeGeneralFails() {
-        this.timeParseThrows(general());
+        this.timeParseThrows(generalSymbol());
     }
 
     @Test
     public void testTimeEscaped() {
-        this.timeParseAndCheck(escaped());
+        this.timeParseAndCheck(escape());
     }
 
     @Test
@@ -2879,22 +2878,22 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testTimeEscapedHourMonthSecond() {
-        this.timeParseAndCheck(escaped(), hour(), monthOrMinute(), second());
+        this.timeParseAndCheck(escape(), hour(), monthOrMinute(), second());
     }
 
     @Test
     public void testTimeHourEscapedMonthSecond() {
-        this.timeParseAndCheck(hour(), escaped(), monthOrMinute(), second());
+        this.timeParseAndCheck(hour(), escape(), monthOrMinute(), second());
     }
 
     @Test
     public void testTimeHourMonthEscapedSecond() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), escaped(), second());
+        this.timeParseAndCheck(hour(), monthOrMinute(), escape(), second());
     }
 
     @Test
     public void testTimeHourMonthSecondsEscaped() {
-        this.timeParseAndCheck(hour(), monthOrMinute(), second(), escaped());
+        this.timeParseAndCheck(hour(), monthOrMinute(), second(), escape());
     }
 
     // quotedText
@@ -3099,22 +3098,22 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testTimeEqualsHourMonthSecondFails() {
-        this.timeParseThrows(equals(), hour(), monthOrMinute(), second());
+        this.timeParseThrows(equalsSymbol(), hour(), monthOrMinute(), second());
     }
 
     @Test
     public void testTimeHourEqualsMonthSecondFails() {
-        this.timeParseThrows(hour(), equals(), monthOrMinute(), second());
+        this.timeParseThrows(hour(), equalsSymbol(), monthOrMinute(), second());
     }
 
     @Test
     public void testTimeHourMonthEqualsSecondFails() {
-        this.timeParseThrows(hour(), monthOrMinute(), equals(), second());
+        this.timeParseThrows(hour(), monthOrMinute(), equalsSymbol(), second());
     }
 
     @Test
     public void testTimeHourMonthSecondsEqualsFails() {
-        this.timeParseThrows(hour(), monthOrMinute(), second(), equals());
+        this.timeParseThrows(hour(), monthOrMinute(), second(), equalsSymbol());
     }
 
     // greaterThan
@@ -3339,14 +3338,14 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testDateTimeGeneralFails() {
-        this.parseThrows2(this.dateTimeParser(), general());
+        this.parseThrows2(this.dateTimeParser(), generalSymbol());
     }
 
     // literals only....................................................................................................
 
     @Test
     public void testDateTimeEscaped() {
-        this.dateTimeParseAndCheck(escaped());
+        this.dateTimeParseAndCheck(escape());
     }
 
     @Test
@@ -3644,7 +3643,7 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testExpressionEscaped() {
-        this.expressionParseAndCheck(token(SpreadsheetFormatParserToken::number, escaped()));
+        this.expressionParseAndCheck(token(SpreadsheetFormatParserToken::number, escape()));
     }
 
     @Test
@@ -3749,7 +3748,7 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testExpressionFractionDigitSlashDigit() {
-        this.expressionParseAndCheck(token(SpreadsheetFormatParserToken::fraction, digitNonZero(), fraction(), digitNonZero()));
+        this.expressionParseAndCheck(token(SpreadsheetFormatParserToken::fraction, digitNonZero(), fractionSymbol(), digitNonZero()));
     }
 
     @Test
@@ -3858,7 +3857,7 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
 
     @Test
     public void testExpressionGeneralSeparatorSeparatorSeparator() {
-        this.expressionParseAndCheck(general(),
+        this.expressionParseAndCheck(generalSymbol(),
                 separator(),
                 separator(),
                 separator());
@@ -3867,7 +3866,7 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
     @Test
     public void testExpressionSeparatorGeneralSeparatorSeparator() {
         this.expressionParseAndCheck(separator(),
-                general(),
+                generalSymbol(),
                 separator(),
                 separator());
     }
@@ -3876,7 +3875,7 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
     public void testExpressionSeparatorSeparatorGeneralSeparator() {
         this.expressionParseAndCheck(separator(),
                 separator(),
-                general(),
+                generalSymbol(),
                 separator());
     }
 
@@ -3885,7 +3884,7 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
         this.expressionParseAndCheck(separator(),
                 separator(),
                 separator(),
-                general());
+                generalSymbol());
     }
 
     @Test
@@ -3952,284 +3951,6 @@ public final class SpreadsheetFormatParsersTest implements PublicStaticHelperTes
     @Override
     public SpreadsheetFormatParserContext createContext() {
         return SpreadsheetFormatParserContexts.basic();
-    }
-
-    private static SpreadsheetFormatParserToken aSlashP() {
-        return SpreadsheetFormatParserToken.amPm("A/P", "A/P");
-    }
-
-    private static SpreadsheetFormatParserToken amSlashPm() {
-        return SpreadsheetFormatParserToken.amPm("AM/PM", "AM/PM");
-    }
-
-    private static SpreadsheetFormatParserToken closeSquareBracket() {
-        return SpreadsheetFormatParserToken.bracketCloseSymbol("]", "]");
-    }
-
-    private static SpreadsheetFormatParserToken color() {
-        final List<ParserToken> tokens = Lists.of(openSquareBracket(), colorLiteral(), whitespace(), colorNumberFive(), closeSquareBracket());
-        return SpreadsheetFormatParserToken.color(tokens, ParserToken.text(tokens));
-    }
-
-    private static SpreadsheetFormatParserToken colorName(final String name) {
-        return SpreadsheetFormatParserToken.colorName(name, name);
-    }
-
-    private static SpreadsheetFormatParserToken colorNumberFive() {
-        return colorNumber(5);
-    }
-
-    private static SpreadsheetFormatParserToken colorLiteral() {
-        return SpreadsheetFormatParserToken.colorLiteralSymbol("COLOR", "COLOR");
-    }
-
-    private static SpreadsheetFormatParserToken colorNumber(final int number) {
-        return SpreadsheetFormatParserToken.colorNumber(number, String.valueOf(number));
-    }
-
-    private static SpreadsheetFormatParserToken conditionEquals() {
-        final List<ParserToken> list = Lists.of(openSquareBracket(), whitespace(), equals(), conditionNumber(), closeSquareBracket());
-        return SpreadsheetFormatParserToken.equalsParserToken(list, ParserToken.text(list));
-    }
-
-    private static SpreadsheetFormatParserToken conditionGreaterThanEquals() {
-        final List<ParserToken> list = Lists.of(openSquareBracket(), greaterThanEquals(), conditionNumber(), closeSquareBracket());
-        return SpreadsheetFormatParserToken.greaterThanEquals(list, ParserToken.text(list));
-    }
-
-    private static SpreadsheetFormatParserToken conditionGreaterThan() {
-        final List<ParserToken> list = Lists.of(openSquareBracket(), greaterThan(), conditionNumber(), closeSquareBracket());
-        return SpreadsheetFormatParserToken.greaterThan(list, ParserToken.text(list));
-    }
-
-    private static SpreadsheetFormatParserToken conditionLessThanEquals() {
-        final List<ParserToken> list = Lists.of(openSquareBracket(), lessThanEquals(), conditionNumber(), closeSquareBracket());
-        return SpreadsheetFormatParserToken.lessThanEquals(list, ParserToken.text(list));
-    }
-
-    private static SpreadsheetFormatParserToken conditionLessThan() {
-        final List<ParserToken> list = Lists.of(openSquareBracket(), lessThan(), conditionNumber(), closeSquareBracket());
-        return SpreadsheetFormatParserToken.lessThan(list, ParserToken.text(list));
-    }
-
-    private static SpreadsheetFormatParserToken conditionNotEquals() {
-        final List<ParserToken> list = Lists.of(openSquareBracket(), notEquals(), conditionNumber(), closeSquareBracket());
-        return SpreadsheetFormatParserToken.notEquals(list, ParserToken.text(list));
-    }
-
-    private static SpreadsheetFormatParserToken conditionNumber() {
-        final String text = "12.75";
-        return SpreadsheetFormatParserToken.conditionNumber(new BigDecimal(text), text);
-    }
-
-    private static SpreadsheetFormatParserToken currency() {
-        return SpreadsheetFormatParserToken.currency("$", "$");
-    }
-
-    private static SpreadsheetFormatParserToken day() {
-        return day(1);
-    }
-
-    private static SpreadsheetFormatParserToken day(final int count) {
-        final String text = repeat('D', count);
-        return SpreadsheetFormatParserToken.day(text, text);
-    }
-
-    private static SpreadsheetFormatParserToken decimalPoint() {
-        return SpreadsheetFormatParserToken.decimalPoint(".", ".");
-    }
-
-    private static SpreadsheetFormatParserToken digitNonZero() {
-        return SpreadsheetFormatParserToken.digit("#", "#");
-    }
-
-    private static SpreadsheetFormatParserToken digitSpace() {
-        return SpreadsheetFormatParserToken.digitSpace("?", "?");
-    }
-
-    private static SpreadsheetFormatParserToken digitZero() {
-        return SpreadsheetFormatParserToken.digitZero("0", "0");
-    }
-
-    private static SpreadsheetFormatParserToken equals() {
-        return SpreadsheetFormatParserToken.equalsSymbol("=", "=");
-    }
-
-    private static SpreadsheetFormatParserToken escaped() {
-        return SpreadsheetFormatParserToken.escape('A', "\\A");
-    }
-
-    private static SpreadsheetFormatParserToken exponent1(final SpreadsheetFormatParserToken token) {
-        final List<ParserToken> tokens = Lists.of(exponentSymbol(), token, digitSpace(), digitZero(), digitNonZero());
-        return SpreadsheetFormatParserToken.exponent(tokens, ParserToken.text(tokens));
-    }
-
-    private static SpreadsheetFormatParserToken exponent2(final SpreadsheetFormatParserToken token) {
-        final List<ParserToken> tokens = Lists.of(exponentSymbol(), digitSpace(), token, digitZero(), digitNonZero());
-        return SpreadsheetFormatParserToken.exponent(tokens, ParserToken.text(tokens));
-    }
-
-    private static SpreadsheetFormatParserToken exponent3(final SpreadsheetFormatParserToken token) {
-        final List<ParserToken> tokens = Lists.of(exponentSymbol(), digitSpace(), digitZero(), digitNonZero(), token);
-        return SpreadsheetFormatParserToken.exponent(tokens, ParserToken.text(tokens));
-    }
-
-    private static SpreadsheetFormatParserToken exponentSymbol() {
-        return SpreadsheetFormatParserToken.exponentSymbol("E+", "E+");
-    }
-
-    private static SpreadsheetFormatParserToken fraction() {
-        return SpreadsheetFormatParserToken.fractionSymbol("/", "/");
-    }
-
-    private static SpreadsheetFormatParserToken general() {
-        return SpreadsheetFormatParserToken.generalSymbol("GENERAL", "GENERAL");
-    }
-
-    private static SpreadsheetFormatParserToken greaterThan() {
-        return SpreadsheetFormatParserToken.greaterThanSymbol(">", ">");
-    }
-
-    private static SpreadsheetFormatParserToken greaterThanEquals() {
-        return SpreadsheetFormatParserToken.greaterThanEqualsSymbol(">=", ">=");
-    }
-
-    private static SpreadsheetFormatParserToken hour() {
-        return hour(1);
-    }
-
-    private static SpreadsheetFormatParserToken hour(final int count) {
-        final String text = repeat('H', count);
-        return SpreadsheetFormatParserToken.hour(text, text);
-    }
-
-    private static SpreadsheetFormatParserToken lessThan() {
-        return SpreadsheetFormatParserToken.lessThanSymbol("<", "<");
-    }
-
-    private static SpreadsheetFormatParserToken lessThanEquals() {
-        return SpreadsheetFormatParserToken.lessThanEqualsSymbol("<=", "<=");
-    }
-
-    private static SpreadsheetFormatParserToken monthOrMinute() {
-        return monthOrMinute(1);
-    }
-
-    private static SpreadsheetFormatParserToken monthOrMinute(final int count) {
-        final String text = repeat('M', count);
-        return SpreadsheetFormatParserToken.monthOrMinute(text, text);
-    }
-
-    private static SpreadsheetFormatParserToken notEquals() {
-        return SpreadsheetFormatParserToken.notEqualsSymbol("!=", "!=");
-    }
-
-    private static SpreadsheetFormatParserToken openSquareBracket() {
-        return SpreadsheetFormatParserToken.bracketOpenSymbol("[", "[");
-    }
-
-    private static SpreadsheetFormatParserToken percentage() {
-        return SpreadsheetFormatParserToken.percentSymbol("%", "%");
-    }
-
-    private static SpreadsheetFormatParserToken quotedText() {
-        return SpreadsheetFormatParserToken.quotedText("HELLO!", "\"HELLO!\"");
-    }
-
-    private static SpreadsheetFormatParserToken red() {
-        return colorName("RED");
-    }
-
-    private static SpreadsheetFormatParserToken second() {
-        return second(1);
-    }
-
-    private static SpreadsheetFormatParserToken second(final int count) {
-        final String text = repeat('S', count);
-        return SpreadsheetFormatParserToken.second(text, text);
-    }
-
-    private static SpreadsheetFormatParserToken separator() {
-        return SpreadsheetFormatParserToken.separatorSymbol(";", ";");
-    }
-
-    private static SpreadsheetFormatParserToken star() {
-        return SpreadsheetFormatParserToken.star('?', "*?");
-    }
-
-    private static SpreadsheetFormatParserToken star2() {
-        return SpreadsheetFormatParserToken.star('#', "*#");
-    }
-
-    private static SpreadsheetFormatParserToken textPlaceholder() {
-        return SpreadsheetFormatParserToken.textPlaceholder("@", "@");
-    }
-
-    private static SpreadsheetFormatParserToken textLiteralCloseParens() {
-        return textLiteral(')');
-    }
-
-    private static SpreadsheetFormatParserToken textLiteralColon() {
-        return textLiteral(':');
-    }
-
-    private static SpreadsheetFormatParserToken textLiteralDollar() {
-        return textLiteral('$');
-    }
-
-    private static SpreadsheetFormatParserToken textLiteralMinus() {
-        return textLiteral('-');
-    }
-
-    private static SpreadsheetFormatParserToken textLiteralPlus() {
-        return textLiteral('+');
-    }
-
-    private static SpreadsheetFormatParserToken textLiteralOpenParens() {
-        return textLiteral('(');
-    }
-
-    private static SpreadsheetFormatParserToken textLiteralSlash() {
-        return textLiteral('/');
-    }
-
-    private static SpreadsheetFormatParserToken textLiteralSpace() {
-        return textLiteral(' ');
-    }
-
-    private static SpreadsheetFormatParserToken textLiteral(final char c) {
-        return SpreadsheetFormatParserToken.textLiteral("" + c, "" + c);
-    }
-
-    private static SpreadsheetFormatParserToken thousands() {
-        return SpreadsheetFormatParserToken.thousands(",", ",");
-    }
-
-    private static SpreadsheetFormatParserToken underscore() {
-        return SpreadsheetFormatParserToken.underscore('?', "_?");
-    }
-
-    private static SpreadsheetFormatParserToken underscore2() {
-        return SpreadsheetFormatParserToken.underscore('#', "_#");
-    }
-
-    private static SpreadsheetFormatParserToken whitespace() {
-        return SpreadsheetFormatParserToken.whitespace("   ", "   ");
-    }
-
-    private static SpreadsheetFormatParserToken year() {
-        return year(1);
-    }
-
-    private static SpreadsheetFormatParserToken year(final int count) {
-        final String text = repeat('Y', count);
-        return SpreadsheetFormatParserToken.year(text, text);
-    }
-
-    private static String repeat(final char c, final int count) {
-        final char[] chars = new char[count];
-        Arrays.fill(chars, c);
-        return new String(chars);
     }
 
     @Override
