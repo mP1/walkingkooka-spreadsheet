@@ -22,9 +22,6 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
-import walkingkooka.convert.ConverterContexts;
-import walkingkooka.datetime.DateTimeContext;
-import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.Fraction;
 import walkingkooka.spreadsheet.format.SpreadsheetFormattedText;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatContext;
@@ -65,8 +62,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                               final SpreadsheetEngine engine,
                                               final SpreadsheetLabelStore labelStore,
                                               final Converter converter,
-                                              final DecimalNumberContext decimalNumberContext,
-                                              final DateTimeContext dateTimeContext,
+                                              final ConverterContext converterContext,
                                               final Function<Integer, Optional<Color>> numberToColor,
                                               final Function<String, Optional<Color>> nameToColor,
                                               final int width,
@@ -76,8 +72,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(labelStore, "labelStore");
         Objects.requireNonNull(converter, "converter");
-        Objects.requireNonNull(decimalNumberContext, "decimalNumberContext");
-        Objects.requireNonNull(dateTimeContext, "dateTimeContext");
+        Objects.requireNonNull(converterContext, "converterContext");
         Objects.requireNonNull(numberToColor, "numberToColor");
         Objects.requireNonNull(nameToColor, "nameToColor");
         if (width <= 0) {
@@ -90,8 +85,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 engine,
                 labelStore,
                 converter,
-                decimalNumberContext,
-                dateTimeContext,
+                converterContext,
                 numberToColor,
                 nameToColor,
                 width,
@@ -106,30 +100,27 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final SpreadsheetEngine engine,
                                           final SpreadsheetLabelStore labelStore,
                                           final Converter converter,
-                                          final DecimalNumberContext decimalNumberContext,
-                                          final DateTimeContext dateTimeContext,
+                                          final ConverterContext converterContext,
                                           final Function<Integer, Optional<Color>> numberToColor,
                                           final Function<String, Optional<Color>> nameToColor,
                                           final int width,
                                           final Function<BigDecimal, Fraction> fractioner,
                                           final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter) {
         super();
-        this.parserContext = SpreadsheetParserContexts.basic(decimalNumberContext);
+        this.parserContext = SpreadsheetParserContexts.basic(converterContext);
 
         this.functions = functions;
         this.function = SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(engine, labelStore, this);
 
         this.converter = converter;
-        this.converterContext = ConverterContexts.basic(decimalNumberContext);
-        this.decimalNumberContext = decimalNumberContext;
+        this.converterContext = converterContext;
 
         this.spreadsheetTextFormatContext = SpreadsheetTextFormatContexts.basic(numberToColor,
                 nameToColor,
                 width,
                 converter,
                 defaultSpreadsheetTextFormatter,
-                dateTimeContext,
-                decimalNumberContext);
+                converterContext);
         this.fractioner = fractioner;
         this.defaultSpreadsheetTextFormatter = defaultSpreadsheetTextFormatter;
     }
@@ -152,7 +143,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         return node.toValue(ExpressionEvaluationContexts.basic(this.functions,
                 this.function,
                 this.converter,
-                this.decimalNumberContext));
+                this.converterContext));
     }
 
     /**
@@ -161,11 +152,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     private final BiFunction<ExpressionNodeName, List<Object>, Object> functions;
 
     private final SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction function;
-
-    /**
-     * Should be a locale and user aware {@link DecimalNumberContext}.
-     */
-    private final DecimalNumberContext decimalNumberContext;
 
     // Converter........................................................................................................
 
@@ -219,8 +205,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .label("decimalNumberContext").value(this.decimalNumberContext)
                 .label("converter").value(this.converter)
+                .label("converterContext").value(this.converterContext)
                 .label("fractioner").value(this.fractioner)
                 .label("defaultSpreadsheetTextFormatter").value(this.defaultSpreadsheetTextFormatter)
                 .build();

@@ -22,6 +22,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.Fraction;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExpressionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
@@ -340,7 +341,7 @@ public final class ExpressionSpreadsheetTextFormatterTest extends SpreadsheetTex
             }
 
             private ConverterContext converterContext() {
-                return ConverterContexts.basic(this);
+                return ConverterContexts.basic(DateTimeContexts.fake(), this);
             }
 
             @Override

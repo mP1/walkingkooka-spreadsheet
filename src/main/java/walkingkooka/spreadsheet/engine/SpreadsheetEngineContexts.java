@@ -19,8 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
-import walkingkooka.datetime.DateTimeContext;
-import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.convert.ConverterContext;
 import walkingkooka.math.Fraction;
 import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
@@ -42,8 +41,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final SpreadsheetEngine engine,
                                                  final SpreadsheetLabelStore labelStore,
                                                  final Converter converter,
-                                                 final DecimalNumberContext decimalNumberContext,
-                                                 final DateTimeContext dateTimeContext,
+                                                 final ConverterContext converterContext,
                                                  final Function<Integer, Optional<Color>> numberToColor,
                                                  final Function<String, Optional<Color>> nameToColor,
                                                  final int width,
@@ -53,8 +51,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                 engine,
                 labelStore,
                 converter,
-                decimalNumberContext,
-                dateTimeContext,
+                converterContext,
                 numberToColor,
                 nameToColor,
                 width,

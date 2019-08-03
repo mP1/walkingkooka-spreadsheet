@@ -4780,7 +4780,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             public SpreadsheetParserToken parseFormula(final String formula) {
                 return SpreadsheetParsers.expression()
                         .orFailIfCursorNotEmpty(ParserReporters.basic())
-                        .parse(TextCursors.charSequence(formula), SpreadsheetParserContexts.basic(decimalNumberContext()))
+                        .parse(TextCursors.charSequence(formula), SpreadsheetParserContexts.basic(converterContext()))
                         .get().cast();
             }
 
@@ -4806,7 +4806,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 return node.toValue(ExpressionEvaluationContexts.basic(functions,
                         SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(engine, labelStore, this),
                         this.converter(),
-                        decimalNumberContext()));
+                        converterContext()));
             }
 
             private Converter converter() {
@@ -4974,7 +4974,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final String formulaText = formula.text();
         final SpreadsheetParserToken token = SpreadsheetParsers.expression()
                 .parse(TextCursors.charSequence(formulaText),
-                        SpreadsheetParserContexts.basic(decimalNumberContext()))
+                        SpreadsheetParserContexts.basic(converterContext()))
                 .orElseThrow(() -> new AssertionError("Failed to parse " + CharSequences.quote(formulaText)))
                 .cast();
         return token.expressionNode();
