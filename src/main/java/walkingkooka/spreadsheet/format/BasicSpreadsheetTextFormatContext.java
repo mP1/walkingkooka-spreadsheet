@@ -21,9 +21,6 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
-import walkingkooka.convert.ConverterContexts;
-import walkingkooka.datetime.DateTimeContext;
-import walkingkooka.math.DecimalNumberContext;
 
 import java.math.MathContext;
 import java.util.Locale;
@@ -41,16 +38,15 @@ final class BasicSpreadsheetTextFormatContext implements SpreadsheetTextFormatCo
                                                   final int width,
                                                   final Converter converter,
                                                   final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter,
-                                                  final DateTimeContext dateTimeContext,
-                                                  final DecimalNumberContext decimalNumberContext) {
+                                                  final ConverterContext converterContext) {
         Objects.requireNonNull(numberToColor, "numberToColor");
         Objects.requireNonNull(nameToColor, "nameToColor");
         if (width <= 0) {
             throw new IllegalArgumentException("Width " + width + " <= 0");
         }
         Objects.requireNonNull(converter, "converter");
-        Objects.requireNonNull(dateTimeContext, "dateTimeContext");
-        Objects.requireNonNull(decimalNumberContext, "decimalNumberContext");
+        Objects.requireNonNull(converterContext, "converterContext");
+        Objects.requireNonNull(converterContext, "converterContext");
         Objects.requireNonNull(defaultSpreadsheetTextFormatter, "defaultSpreadsheetTextFormatter");
 
         return new BasicSpreadsheetTextFormatContext(numberToColor,
@@ -58,8 +54,7 @@ final class BasicSpreadsheetTextFormatContext implements SpreadsheetTextFormatCo
                 width,
                 converter,
                 defaultSpreadsheetTextFormatter,
-                dateTimeContext,
-                decimalNumberContext);
+                converterContext);
     }
 
     private BasicSpreadsheetTextFormatContext(final Function<Integer, Optional<Color>> numberToColor,
@@ -67,8 +62,7 @@ final class BasicSpreadsheetTextFormatContext implements SpreadsheetTextFormatCo
                                               final int width,
                                               final Converter converter,
                                               final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter,
-                                              final DateTimeContext dateTimeContext,
-                                              final DecimalNumberContext decimalNumberContext) {
+                                              final ConverterContext converterContext) {
         super();
 
         this.numberToColor = numberToColor;
@@ -76,13 +70,9 @@ final class BasicSpreadsheetTextFormatContext implements SpreadsheetTextFormatCo
         this.width = width;
 
         this.converter = converter;
-        this.converterContext = ConverterContexts.basic(decimalNumberContext);
+        this.converterContext = converterContext;
 
         this.defaultSpreadsheetTextFormatter = defaultSpreadsheetTextFormatter;
-
-        this.dateTimeContext = dateTimeContext;
-
-        this.decimalNumberContext = decimalNumberContext;
     }
 
     // BasicSpreadsheetTextFormatContext................................................................................
@@ -117,11 +107,6 @@ final class BasicSpreadsheetTextFormatContext implements SpreadsheetTextFormatCo
 
     private final Converter converter;
 
-    /**
-     * This {@link ConverterContext} is created using dependencies passed in the factory.
-     */
-    private final ConverterContext converterContext;
-
     // defaultFormatText.................................................................................................
 
     @Override
@@ -135,79 +120,77 @@ final class BasicSpreadsheetTextFormatContext implements SpreadsheetTextFormatCo
 
     @Override
     public String ampm(final int hours) {
-        return this.dateTimeContext.ampm(hours);
+        return this.converterContext.ampm(hours);
     }
 
     @Override
     public String monthName(final int month) {
-        return this.dateTimeContext.monthName(month);
+        return this.converterContext.monthName(month);
     }
 
     @Override
     public String monthNameAbbreviation(final int month) {
-        return this.dateTimeContext.monthNameAbbreviation(month);
+        return this.converterContext.monthNameAbbreviation(month);
     }
 
     @Override
     public String weekDayName(final int day) {
-        return this.dateTimeContext.weekDayName(day);
+        return this.converterContext.weekDayName(day);
     }
 
     @Override
     public String weekDayNameAbbreviation(final int day) {
-        return this.dateTimeContext.weekDayNameAbbreviation(day);
+        return this.converterContext.weekDayNameAbbreviation(day);
     }
-
-    private final DateTimeContext dateTimeContext;
 
     // DecimalNumberContext.............................................................................................
 
     @Override
     public String currencySymbol() {
-        return this.decimalNumberContext.currencySymbol();
+        return this.converterContext.currencySymbol();
     }
 
     @Override
     public char decimalPoint() {
-        return this.decimalNumberContext.decimalPoint();
+        return this.converterContext.decimalPoint();
     }
 
     @Override
     public char exponentSymbol() {
-        return this.decimalNumberContext.exponentSymbol();
+        return this.converterContext.exponentSymbol();
     }
 
     @Override
     public char groupingSeparator() {
-        return this.decimalNumberContext.groupingSeparator();
+        return this.converterContext.groupingSeparator();
     }
 
     @Override
     public char percentageSymbol() {
-        return this.decimalNumberContext.percentageSymbol();
+        return this.converterContext.percentageSymbol();
     }
 
     @Override
     public MathContext mathContext() {
-        return this.decimalNumberContext.mathContext();
+        return this.converterContext.mathContext();
     }
 
     @Override
     public char minusSign() {
-        return this.decimalNumberContext.minusSign();
+        return this.converterContext.minusSign();
     }
 
     @Override
     public char plusSign() {
-        return this.decimalNumberContext.plusSign();
+        return this.converterContext.plusSign();
     }
 
     @Override
     public Locale locale() {
-        return this.decimalNumberContext.locale();
+        return this.converterContext.locale();
     }
 
-    private final DecimalNumberContext decimalNumberContext;
+    private final ConverterContext converterContext;
 
     // Object...........................................................................................................
 
@@ -218,8 +201,7 @@ final class BasicSpreadsheetTextFormatContext implements SpreadsheetTextFormatCo
                 .label("nameToColor").value(this.nameToColor)
                 .label("width").value(this.width)
                 .label("converter").value(this.converter)
-                .label("dateTimeContext").value(this.dateTimeContext)
-                .label("decimalNumberContext").value(this.decimalNumberContext)
+                .label("converterContext").value(this.converterContext)
                 .build();
     }
 }

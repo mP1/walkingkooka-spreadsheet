@@ -22,7 +22,9 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Range;
-import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.convert.ConverterContext;
+import walkingkooka.convert.ConverterContexts;
+import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
@@ -780,8 +782,9 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         assertEquals(text, cell.formatted().get().text(), "formattedText");
     }
 
-    default DecimalNumberContext decimalNumberContext() {
-        return DecimalNumberContexts.american(MathContext.DECIMAL32);
+    default ConverterContext converterContext() {
+        return ConverterContexts.basic(DateTimeContexts.fake(),
+                DecimalNumberContexts.american(MathContext.DECIMAL32));
     }
 
     @Override
