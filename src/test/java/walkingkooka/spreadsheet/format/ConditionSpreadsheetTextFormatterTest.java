@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -228,7 +229,7 @@ public final class ConditionSpreadsheetTextFormatterTest extends SpreadsheetText
 
             @Override
             public <T> T convert(final Object value, final Class<T> target) {
-                return this.converter.convert(value, target, ConverterContexts.basic(this));
+                return this.converter.convert(value, target, ConverterContexts.basic(DateTimeContexts.fake(), this));
             }
 
             private final Converter converter = Converters.parser(BigDecimal.class,
