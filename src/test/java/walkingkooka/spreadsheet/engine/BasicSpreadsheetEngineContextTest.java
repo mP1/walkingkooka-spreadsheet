@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
@@ -61,8 +62,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.engine(),
                     this.labelStore(),
                     this.converter(),
-                    this.decimalNumberContext(),
-                    this.dateTimeContext(),
+                    this.converterContext(),
                     this.numberToColor(),
                     this.nameToColor(),
                     WIDTH,
@@ -78,8 +78,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     null,
                     this.labelStore(),
                     this.converter(),
-                    this.decimalNumberContext(),
-                    this.dateTimeContext(),
+                    this.converterContext(),
                     this.numberToColor(),
                     this.nameToColor(),
                     WIDTH,
@@ -95,8 +94,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.engine(),
                     null,
                     this.converter(),
-                    this.decimalNumberContext(),
-                    this.dateTimeContext(),
+                    this.converterContext(),
                     this.numberToColor(),
                     this.nameToColor(),
                     WIDTH,
@@ -112,8 +110,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.engine(),
                     this.labelStore(),
                     null,
-                    this.decimalNumberContext(),
-                    this.dateTimeContext(),
+                    this.converterContext(),
                     this.numberToColor(),
                     this.nameToColor(),
                     WIDTH,
@@ -123,30 +120,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     @Test
-    public void testWithNullDecimalNumberContextFails() {
+    public void testWithNullConverterContextFails() {
         assertThrows(NullPointerException.class, () -> {
             BasicSpreadsheetEngineContext.with(this.functions(),
                     this.engine(),
                     this.labelStore(),
                     this.converter(),
-                    null,
-                    this.dateTimeContext(),
-                    this.numberToColor(),
-                    this.nameToColor(),
-                    WIDTH,
-                    FRACTIONER,
-                    this.defaultSpreadsheetTextFormatter());
-        });
-    }
-
-    @Test
-    public void testWithNullDateTimeContextFails() {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetEngineContext.with(this.functions(),
-                    this.engine(),
-                    this.labelStore(),
-                    this.converter(),
-                    this.decimalNumberContext(),
                     null,
                     this.numberToColor(),
                     this.nameToColor(),
@@ -163,8 +142,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.engine(),
                     this.labelStore(),
                     this.converter(),
-                    this.decimalNumberContext(),
-                    this.dateTimeContext(),
+                    this.converterContext(),
                     null,
                     this.nameToColor(),
                     WIDTH,
@@ -180,8 +158,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.engine(),
                     this.labelStore(),
                     this.converter(),
-                    this.decimalNumberContext(),
-                    this.dateTimeContext(),
+                    this.converterContext(),
                     this.numberToColor(),
                     null,
                     WIDTH,
@@ -197,8 +174,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.engine(),
                     this.labelStore(),
                     this.converter(),
-                    this.decimalNumberContext(),
-                    this.dateTimeContext(),
+                    this.converterContext(),
                     this.numberToColor(),
                     this.nameToColor(),
                     0,
@@ -214,8 +190,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.engine(),
                     this.labelStore(),
                     this.converter(),
-                    this.decimalNumberContext(),
-                    this.dateTimeContext(),
+                    this.converterContext(),
                     this.numberToColor(),
                     this.nameToColor(),
                     WIDTH,
@@ -231,8 +206,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.engine(),
                     this.labelStore(),
                     this.converter(),
-                    this.decimalNumberContext(),
-                    this.dateTimeContext(),
+                    this.converterContext(),
                     this.numberToColor(),
                     this.nameToColor(),
                     WIDTH,
@@ -340,7 +314,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createContext(), "decimalNumberContext=\"C\" 'D' 'E' 'G' 'M' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN converter=value instanceof target type. | Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean fractioner=Fractioner123 defaultSpreadsheetTextFormatter=SpreadsheetTextFormatter123");
+        this.toStringAndCheck(this.createContext(),
+                "converter=value instanceof target type. | Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean converterContext=DateTimeContext123 \"C\" 'D' 'E' 'G' 'M' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN fractioner=Fractioner123 defaultSpreadsheetTextFormatter=SpreadsheetTextFormatter123");
     }
 
     @Override
@@ -353,8 +328,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.engine(),
                 this.labelStore(),
                 this.converter(),
-                this.decimalNumberContext(),
-                this.dateTimeContext(),
+                this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),
                 WIDTH,
@@ -391,6 +365,19 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                         Converters.truthyNumberBoolean()));
     }
 
+    private ConverterContext converterContext() {
+        return ConverterContexts.basic(this.dateTimeContext(), this.decimalNumberContext());
+    }
+
+    private DateTimeContext dateTimeContext() {
+        return new FakeDateTimeContext() {
+            @Override
+            public String toString() {
+                return "DateTimeContext123";
+            }
+        };
+    }
+
     private DecimalNumberContext decimalNumberContext() {
         return DecimalNumberContexts.basic("C",
                 'D',
@@ -401,15 +388,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 'L',
                 Locale.CANADA_FRENCH,
                 MathContext.DECIMAL32);
-    }
-
-    private DateTimeContext dateTimeContext() {
-        return new FakeDateTimeContext() {
-            @Override
-            public String toString() {
-                return "DateTimeContext123";
-            }
-        };
     }
 
     private SpreadsheetTextFormatter defaultSpreadsheetTextFormatter() {

@@ -22,6 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.PublicStaticHelperTesting;
@@ -673,7 +674,7 @@ public final class SpreadsheetDataValidatorsTest implements ClassTesting2<Spread
         return new FakeExpressionEvaluationContext() {
             @Override
             public <T> T convert(final Object value, final Class<T> target) {
-                return all.convert(value, target, ConverterContexts.basic(this));
+                return all.convert(value, target, ConverterContexts.basic(DateTimeContexts.fake(), this));
             }
         };
     }

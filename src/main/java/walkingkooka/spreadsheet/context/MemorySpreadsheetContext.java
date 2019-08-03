@@ -21,6 +21,7 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContexts;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.Fraction;
@@ -234,8 +235,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                 engine,
                 labelStore,
                 converter,
-                this.decimalNumberContext(id),
-                this.dateTimeContext(id),
+                ConverterContexts.basic(this.dateTimeContext(id), this.decimalNumberContext(id)),
                 numberToColor,
                 nameToColor,
                 width,
