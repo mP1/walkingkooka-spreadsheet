@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContext;
+import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
@@ -48,8 +50,7 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
                 WIDTH,
                 CONVERTER,
                 this.defaultSpreadsheetTextFormatter(),
-                this.dateTimeContext(),
-                this.decimalNumberContext());
+                this.converterContext());
     }
 
     @Test
@@ -59,8 +60,7 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
                 WIDTH,
                 CONVERTER,
                 this.defaultSpreadsheetTextFormatter(),
-                this.dateTimeContext(),
-                this.decimalNumberContext());
+                this.converterContext());
     }
 
     @Test
@@ -71,8 +71,7 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
                     -1,
                     CONVERTER,
                     this.defaultSpreadsheetTextFormatter(),
-                    this.dateTimeContext(),
-                    this.decimalNumberContext());
+                    this.converterContext());
         });
     }
 
@@ -84,8 +83,7 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
                     0,
                     CONVERTER,
                     this.defaultSpreadsheetTextFormatter(),
-                    this.dateTimeContext(),
-                    this.decimalNumberContext());
+                    this.converterContext());
         });
     }
 
@@ -96,8 +94,7 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
                 WIDTH,
                 null,
                 this.defaultSpreadsheetTextFormatter(),
-                this.dateTimeContext(),
-                this.decimalNumberContext());
+                this.converterContext());
     }
 
     @Test
@@ -107,29 +104,16 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
                 WIDTH,
                 CONVERTER,
                 null,
-                this.dateTimeContext(),
-                this.decimalNumberContext());
+                this.converterContext());
     }
 
     @Test
-    public void testWIthNullDateTimeContextFails() {
+    public void testWIthNullConverterContextFails() {
         this.withFails(this.numberToColor(),
                 this.nameToColor(),
                 WIDTH,
                 CONVERTER,
                 this.defaultSpreadsheetTextFormatter(),
-                null,
-                this.decimalNumberContext());
-    }
-
-    @Test
-    public void testWithNullDecimalNumberContextFails() {
-        this.withFails(this.numberToColor(),
-                this.nameToColor(),
-                WIDTH,
-                CONVERTER,
-                this.defaultSpreadsheetTextFormatter(),
-                this.dateTimeContext(),
                 null);
     }
 
@@ -138,16 +122,14 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
                            final int width,
                            final Converter converter,
                            final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter,
-                           final DateTimeContext dateTimeContext,
-                           final DecimalNumberContext decimalNumberContext) {
+                           final ConverterContext converterContext) {
         assertThrows(NullPointerException.class, () -> {
             BasicSpreadsheetTextFormatContext.with(numberToColor,
                     nameToColor,
                     width,
                     converter,
                     defaultSpreadsheetTextFormatter,
-                    dateTimeContext,
-                    decimalNumberContext);
+                    converterContext);
         });
     }
 
@@ -187,7 +169,7 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
         final DateFormatSymbols symbols = DateFormatSymbols.getInstance(Locale.ENGLISH);
 
         this.toStringAndCheck(this.createContext(symbols),
-                "numberToColor=1=#123456 nameToColor=bingo=#123456 width=1 converter=Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean dateTimeContext=" + symbols + " decimalNumberContext=\"$$\" '!' 'E' 'G' 'M' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN");
+                "numberToColor=1=#123456 nameToColor=bingo=#123456 width=1 converter=Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean converterContext=java.text.DateFormatSymbols@c6a54a88 \"$$\" '!' 'E' 'G' 'M' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN");
     }
 
     @Override
@@ -201,8 +183,7 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
                 WIDTH,
                 CONVERTER,
                 this.defaultSpreadsheetTextFormatter(),
-                DateTimeContexts.dateFormatSymbols(dateFormatSymbols),
-                decimalNumberContext());
+                ConverterContexts.basic(DateTimeContexts.dateFormatSymbols(dateFormatSymbols), decimalNumberContext()));
     }
 
     private Function<Integer, Optional<Color>> numberToColor() {
@@ -256,6 +237,10 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
                 return Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, new DecimalFormat("000.000").format(value)));
             }
         };
+    }
+
+    private ConverterContext converterContext() {
+        return ConverterContexts.basic(this.dateTimeContext(), this.decimalNumberContext());
     }
 
     private DateTimeContext dateTimeContext() {
