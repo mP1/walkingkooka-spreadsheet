@@ -23,6 +23,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.function.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -1092,7 +1093,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
             public <T> T convert(final Object value, final Class<T> target) {
                 return converter.convert(value,
                         target,
-                        ConverterContexts.basic(this));
+                        ConverterContexts.basic(DateTimeContexts.fake(), this));
             }
         };
     }
