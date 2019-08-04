@@ -58,19 +58,19 @@ public abstract class SpreadsheetMetadata implements HasDateTimeContext,
     /**
      * A {@link SpreadsheetMetadata} with no textStyle.
      */
-    public final static SpreadsheetMetadata EMPTY = EmptySpreadsheetMetadata.instance();
+    public final static SpreadsheetMetadata EMPTY = SpreadsheetMetadataEmpty.instance();
 
     /**
      * Factory that creates a {@link SpreadsheetMetadata} from a {@link Map}.
      */
     public static SpreadsheetMetadata with(final Map<SpreadsheetMetadataPropertyName<?>, Object> value) {
-        return withSpreadsheetMetadataMap(SpreadsheetMetadataMap.with(value));
+        return withSpreadsheetMetadataMap(SpreadsheetMetadataNonEmptyMap.with(value));
     }
 
-    static SpreadsheetMetadata withSpreadsheetMetadataMap(final SpreadsheetMetadataMap map) {
+    static SpreadsheetMetadata withSpreadsheetMetadataMap(final SpreadsheetMetadataNonEmptyMap map) {
         return map.isEmpty() ?
                 EMPTY :
-                NonEmptySpreadsheetMetadata.with(map);
+                SpreadsheetMetadataNonEmpty.with(map);
     }
 
     /**
@@ -275,7 +275,7 @@ public abstract class SpreadsheetMetadata implements HasDateTimeContext,
 
     static {
         HasJsonNode.register("metadata", SpreadsheetMetadata::fromJsonNode, SpreadsheetMetadata.class,
-                NonEmptySpreadsheetMetadata.class,
-                EmptySpreadsheetMetadata.class);
+                SpreadsheetMetadataNonEmpty.class,
+                SpreadsheetMetadataEmpty.class);
     }
 }

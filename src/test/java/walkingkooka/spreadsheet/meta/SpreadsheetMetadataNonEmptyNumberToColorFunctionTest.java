@@ -25,12 +25,12 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class NonEmptySpreadsheetMetadataNumberToColorFunctionTest extends SpreadsheetMetadataNumberToColorFunctionTestCase<NonEmptySpreadsheetMetadataNumberToColorFunction> {
+public final class SpreadsheetMetadataNonEmptyNumberToColorFunctionTest extends SpreadsheetMetadataNumberToColorFunctionTestCase<SpreadsheetMetadataNonEmptyNumberToColorFunction> {
 
     @Test
     public void testInvalidNumberFails() {
         assertThrows(IllegalArgumentException.class, () -> {
-            NonEmptySpreadsheetMetadataNumberToColorFunction.with(Maps.empty()).apply(-1);
+            SpreadsheetMetadataNonEmptyNumberToColorFunction.with(Maps.empty()).apply(-1);
         });
     }
 
@@ -39,14 +39,14 @@ public final class NonEmptySpreadsheetMetadataNumberToColorFunctionTest extends 
         final int number = 1;
         final Color color = Color.fromRgb(0x111);
 
-        this.numberToColorAndCheck(NonEmptySpreadsheetMetadataNumberToColorFunction.with(Maps.of(number, color)),
+        this.numberToColorAndCheck(SpreadsheetMetadataNonEmptyNumberToColorFunction.with(Maps.of(number, color)),
                 number,
                 color);
     }
 
     @Test
     public void testAbsent() {
-        this.numberToColorAndCheck(NonEmptySpreadsheetMetadataNumberToColorFunction.with(Maps.of(1, Color.fromRgb(0x111))),
+        this.numberToColorAndCheck(SpreadsheetMetadataNonEmptyNumberToColorFunction.with(Maps.of(1, Color.fromRgb(0x111))),
                 2,
                 null);
     }
@@ -55,11 +55,20 @@ public final class NonEmptySpreadsheetMetadataNumberToColorFunctionTest extends 
     public void testToString() {
         final Map<Integer, Color> map = Maps.of(1, Color.fromRgb(0x111), 2, Color.fromRgb(0x222));
 
-        this.toStringAndCheck(NonEmptySpreadsheetMetadataNumberToColorFunction.with(map), map.toString());
+        this.toStringAndCheck(SpreadsheetMetadataNonEmptyNumberToColorFunction.with(map), map.toString());
     }
 
+    // ClassTesting......................................................................................................
+
     @Override
-    public Class<NonEmptySpreadsheetMetadataNumberToColorFunction> type() {
-        return NonEmptySpreadsheetMetadataNumberToColorFunction.class;
+    public Class<SpreadsheetMetadataNonEmptyNumberToColorFunction> type() {
+        return SpreadsheetMetadataNonEmptyNumberToColorFunction.class;
+    }
+
+    // TypeNameTesting...................................................................................................
+
+    @Override
+    public final String typeNamePrefix() {
+        return SpreadsheetMetadataNonEmpty.class.getSimpleName();
     }
 }

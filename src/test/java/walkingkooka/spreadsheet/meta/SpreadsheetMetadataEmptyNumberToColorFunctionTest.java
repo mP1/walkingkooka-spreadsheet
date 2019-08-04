@@ -21,29 +21,38 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class EmptySpreadsheetMetadataNumberToColorFunctionTest extends SpreadsheetMetadataNumberToColorFunctionTestCase<EmptySpreadsheetMetadataNumberToColorFunction> {
+public final class SpreadsheetMetadataEmptyNumberToColorFunctionTest extends SpreadsheetMetadataNumberToColorFunctionTestCase<SpreadsheetMetadataEmptyNumberToColorFunction> {
 
     @Test
     public void testInvalidNumberFails() {
         assertThrows(IllegalArgumentException.class, () -> {
-            EmptySpreadsheetMetadataNumberToColorFunction.INSTANCE.apply(-1);
+            SpreadsheetMetadataEmptyNumberToColorFunction.INSTANCE.apply(-1);
         });
     }
 
     @Test
     public void testAbsent() {
-        this.numberToColorAndCheck(EmptySpreadsheetMetadataNumberToColorFunction.INSTANCE,
+        this.numberToColorAndCheck(SpreadsheetMetadataEmptyNumberToColorFunction.INSTANCE,
                 2,
                 null);
     }
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(EmptySpreadsheetMetadataNumberToColorFunction.INSTANCE, "{}");
+        this.toStringAndCheck(SpreadsheetMetadataEmptyNumberToColorFunction.INSTANCE, "{}");
     }
 
+    // ClassTesting.....................................................................................................
+
     @Override
-    public Class<EmptySpreadsheetMetadataNumberToColorFunction> type() {
-        return EmptySpreadsheetMetadataNumberToColorFunction.class;
+    public Class<SpreadsheetMetadataEmptyNumberToColorFunction> type() {
+        return SpreadsheetMetadataEmptyNumberToColorFunction.class;
+    }
+
+    // TypeNameTesting...................................................................................................
+
+    @Override
+    public final String typeNamePrefix() {
+        return SpreadsheetMetadataEmpty.class.getSimpleName();
     }
 }

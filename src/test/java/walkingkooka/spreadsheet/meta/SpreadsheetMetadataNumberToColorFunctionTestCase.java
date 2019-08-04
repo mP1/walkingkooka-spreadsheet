@@ -50,12 +50,7 @@ public abstract class SpreadsheetMetadataNumberToColorFunctionTestCase<F extends
     // TypeNameTesting...................................................................................................
 
     @Override
-    public final String typeNamePrefix() {
-        return "";
-    }
-
-    @Override
     public final String typeNameSuffix() {
-        return SpreadsheetMetadataNumberToColorFunction.class.getSimpleName();
+        return "NumberToColorFunction";
     }
 }
