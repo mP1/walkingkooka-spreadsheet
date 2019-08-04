@@ -29,24 +29,24 @@ import java.util.function.Function;
 /**
  * A {@link SpreadsheetMetadata} with no properties and values.
  */
-final class EmptySpreadsheetMetadata extends SpreadsheetMetadata {
+final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
 
     /**
      * Lazy singleton necessary to avoid race conditions to a init'd static field
      */
-    static EmptySpreadsheetMetadata instance() {
+    static SpreadsheetMetadataEmpty instance() {
         if (null == instance) {
-            instance = new EmptySpreadsheetMetadata();
+            instance = new SpreadsheetMetadataEmpty();
         }
         return instance;
     }
 
-    private static EmptySpreadsheetMetadata instance;
+    private static SpreadsheetMetadataEmpty instance;
 
     /**
      * Private ctor
      */
-    private EmptySpreadsheetMetadata() {
+    private SpreadsheetMetadataEmpty() {
         super();
     }
 
@@ -74,7 +74,7 @@ final class EmptySpreadsheetMetadata extends SpreadsheetMetadata {
 
     @Override
     <V> SpreadsheetMetadata set0(final SpreadsheetMetadataPropertyName<V> propertyName, final V value) {
-        return NonEmptySpreadsheetMetadata.with(SpreadsheetMetadataMap.withSpreadsheetMetadataMapEntrySet(SpreadsheetMetadataMapEntrySet.withList(Lists.of(Maps.entry(propertyName, value)))));
+        return SpreadsheetMetadataNonEmpty.with(SpreadsheetMetadataNonEmptyMap.withSpreadsheetMetadataMapEntrySet(SpreadsheetMetadataNonEmptyMapEntrySet.withList(Lists.of(Maps.entry(propertyName, value)))));
     }
 
     @Override
@@ -86,7 +86,7 @@ final class EmptySpreadsheetMetadata extends SpreadsheetMetadata {
 
     @Override
     public Function<Integer, Optional<Color>> numberToColor() {
-        return EmptySpreadsheetMetadataNumberToColorFunction.INSTANCE;
+        return SpreadsheetMetadataEmptyNumberToColorFunction.INSTANCE;
     }
 
     // SpreadsheetMetadataVisitor........................................................................................
@@ -105,7 +105,7 @@ final class EmptySpreadsheetMetadata extends SpreadsheetMetadata {
 
     @Override
     final boolean canBeEquals(final Object other) {
-        return other instanceof EmptySpreadsheetMetadata;
+        return other instanceof SpreadsheetMetadataEmpty;
     }
 
     @Override

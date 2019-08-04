@@ -352,10 +352,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
 
     abstract SpreadsheetMetadataPropertyValueHandler<T> handler();
 
-    // NonEmptySpreadsheetMetadata......................................................................................
+    // SpreadsheetMetadataNonEmpty......................................................................................
 
     /**
-     * Used by {@link NonEmptySpreadsheetMetadata#numberToColor()}
+     * Used by {@link SpreadsheetMetadataNonEmpty#numberToColor()}
      */
     abstract void addNumberedColor(final Object value, final Map<Integer, Color> numberToColor);
 

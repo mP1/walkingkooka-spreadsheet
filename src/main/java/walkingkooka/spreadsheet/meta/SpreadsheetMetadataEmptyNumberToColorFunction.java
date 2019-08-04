@@ -24,14 +24,14 @@ import java.util.Optional;
 /**
  * A {@link java.util.function.Function} that always returns nothing.
  */
-final class EmptySpreadsheetMetadataNumberToColorFunction extends SpreadsheetMetadataNumberToColorFunction {
+final class SpreadsheetMetadataEmptyNumberToColorFunction extends SpreadsheetMetadataNumberToColorFunction {
 
     /**
      * Singleton
      */
-    static EmptySpreadsheetMetadataNumberToColorFunction INSTANCE = new EmptySpreadsheetMetadataNumberToColorFunction();
+    static SpreadsheetMetadataEmptyNumberToColorFunction INSTANCE = new SpreadsheetMetadataEmptyNumberToColorFunction();
 
-    private EmptySpreadsheetMetadataNumberToColorFunction() {
+    private SpreadsheetMetadataEmptyNumberToColorFunction() {
         super();
     }
 
