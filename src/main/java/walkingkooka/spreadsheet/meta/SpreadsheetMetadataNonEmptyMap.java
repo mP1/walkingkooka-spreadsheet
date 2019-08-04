@@ -28,43 +28,43 @@ import java.util.Set;
 /**
  * A read only sorted view of metadata entries.
  */
-final class SpreadsheetMetadataMap extends AbstractMap<SpreadsheetMetadataPropertyName<?>, Object> {
+final class SpreadsheetMetadataNonEmptyMap extends AbstractMap<SpreadsheetMetadataPropertyName<?>, Object> {
 
     static {
-        Maps.registerImmutableType(SpreadsheetMetadataMap.class);
+        Maps.registerImmutableType(SpreadsheetMetadataNonEmptyMap.class);
     }
 
     /**
-     * An empty {@link SpreadsheetMetadataMap}.
+     * An empty {@link SpreadsheetMetadataNonEmptyMap}.
      */
-    static final SpreadsheetMetadataMap EMPTY = new SpreadsheetMetadataMap(SpreadsheetMetadataMapEntrySet.EMPTY);
+    static final SpreadsheetMetadataNonEmptyMap EMPTY = new SpreadsheetMetadataNonEmptyMap(SpreadsheetMetadataNonEmptyMapEntrySet.EMPTY);
 
     /**
-     * Factory that takes a copy if the given {@link Map} is not a {@link SpreadsheetMetadataMap}.
+     * Factory that takes a copy if the given {@link Map} is not a {@link SpreadsheetMetadataNonEmptyMap}.
      */
-    static SpreadsheetMetadataMap with(final Map<SpreadsheetMetadataPropertyName<?>, Object> map) {
+    static SpreadsheetMetadataNonEmptyMap with(final Map<SpreadsheetMetadataPropertyName<?>, Object> map) {
         Objects.requireNonNull(map, "map");
 
-        return map instanceof SpreadsheetMetadataMap ?
-                (SpreadsheetMetadataMap) map :
+        return map instanceof SpreadsheetMetadataNonEmptyMap ?
+                (SpreadsheetMetadataNonEmptyMap) map :
                 with0(map);
     }
 
-    private static SpreadsheetMetadataMap with0(final Map<SpreadsheetMetadataPropertyName<?>, Object> map) {
-        return with1(SpreadsheetMetadataMapEntrySet.with(map));
+    private static SpreadsheetMetadataNonEmptyMap with0(final Map<SpreadsheetMetadataPropertyName<?>, Object> map) {
+        return with1(SpreadsheetMetadataNonEmptyMapEntrySet.with(map));
     }
 
-    private static SpreadsheetMetadataMap with1(final SpreadsheetMetadataMapEntrySet entrySet) {
+    private static SpreadsheetMetadataNonEmptyMap with1(final SpreadsheetMetadataNonEmptyMapEntrySet entrySet) {
         return entrySet.isEmpty() ?
                 EMPTY :
                 withSpreadsheetMetadataMapEntrySet(entrySet);
     }
 
-    static SpreadsheetMetadataMap withSpreadsheetMetadataMapEntrySet(final SpreadsheetMetadataMapEntrySet entrySet) {
-        return new SpreadsheetMetadataMap(entrySet);
+    static SpreadsheetMetadataNonEmptyMap withSpreadsheetMetadataMapEntrySet(final SpreadsheetMetadataNonEmptyMapEntrySet entrySet) {
+        return new SpreadsheetMetadataNonEmptyMap(entrySet);
     }
 
-    private SpreadsheetMetadataMap(final SpreadsheetMetadataMapEntrySet entries) {
+    private SpreadsheetMetadataNonEmptyMap(final SpreadsheetMetadataNonEmptyMapEntrySet entries) {
         super();
         this.entries = entries;
     }
@@ -74,7 +74,7 @@ final class SpreadsheetMetadataMap extends AbstractMap<SpreadsheetMetadataProper
         return this.entries;
     }
 
-    final SpreadsheetMetadataMapEntrySet entries;
+    final SpreadsheetMetadataNonEmptyMapEntrySet entries;
 
     // SpreadsheetMetadataVisitor.......................................................................................
 
@@ -84,8 +84,8 @@ final class SpreadsheetMetadataMap extends AbstractMap<SpreadsheetMetadataProper
 
     // HasJsonNode......................................................................................................
 
-    static SpreadsheetMetadataMap fromJson(final JsonNode json) {
-        return SpreadsheetMetadataMap.with1(SpreadsheetMetadataMapEntrySet.fromJson(json));
+    static SpreadsheetMetadataNonEmptyMap fromJson(final JsonNode json) {
+        return SpreadsheetMetadataNonEmptyMap.with1(SpreadsheetMetadataNonEmptyMapEntrySet.fromJson(json));
     }
 
     JsonNode toJson() {

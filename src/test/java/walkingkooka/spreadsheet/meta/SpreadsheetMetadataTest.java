@@ -56,7 +56,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     @Test
     public void testWithSpreadsheetMetadataMap() {
         final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.of(this.property1(), this.value1());
-        final SpreadsheetMetadataMap metadataMap = SpreadsheetMetadataMap.with(map);
+        final SpreadsheetMetadataNonEmptyMap metadataMap = SpreadsheetMetadataNonEmptyMap.with(map);
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.with(metadataMap);
         assertSame(metadataMap, metadata.value(), "value");
@@ -79,7 +79,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
     @Test
     public void testEmpty() {
-        assertSame(SpreadsheetMetadataMap.EMPTY, SpreadsheetMetadataMap.with(Maps.empty()));
+        assertSame(SpreadsheetMetadataNonEmptyMap.EMPTY, SpreadsheetMetadataNonEmptyMap.with(Maps.empty()));
     }
 
     @Test
@@ -87,7 +87,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.of(this.property1(), this.value1());
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.with(map);
-        assertEquals(SpreadsheetMetadataMap.class, metadata.value().getClass(), () -> "" + metadata);
+        assertEquals(SpreadsheetMetadataNonEmptyMap.class, metadata.value().getClass(), () -> "" + metadata);
     }
 
     // toString.........................................................................................................
