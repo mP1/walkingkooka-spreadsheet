@@ -51,7 +51,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTestCase<NonEmptySpreadsheetMetadata>
+public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTestCase<SpreadsheetMetadataNonEmpty>
         implements ConverterTesting,
         DateTimeContextTesting,
         DecimalNumberContextTesting {
@@ -61,9 +61,9 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.sorted();
         map.put(this.property1(), this.value1());
         map.put(this.property2(), this.value2());
-        final SpreadsheetMetadataMap metadataMap = SpreadsheetMetadataMap.with(map);
+        final SpreadsheetMetadataNonEmptyMap metadataMap = SpreadsheetMetadataNonEmptyMap.with(map);
 
-        final NonEmptySpreadsheetMetadata metadata = this.createSpreadsheetMetadata(metadataMap);
+        final SpreadsheetMetadataNonEmpty metadata = this.createSpreadsheetMetadata(metadataMap);
         assertSame(metadataMap, metadata.value(), "value");
     }
 
@@ -76,7 +76,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         final Map<SpreadsheetMetadataPropertyName<?>, Object> copy = Maps.sorted();
         copy.putAll(map);
 
-        final NonEmptySpreadsheetMetadata metadata = this.createSpreadsheetMetadata(map);
+        final SpreadsheetMetadataNonEmpty metadata = this.createSpreadsheetMetadata(map);
 
         map.clear();
         assertEquals(copy, metadata.value(), "value");
@@ -84,7 +84,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
 
     @Test
     public void testEmpty() {
-        assertSame(SpreadsheetMetadataMap.EMPTY, SpreadsheetMetadataMap.with(Maps.empty()));
+        assertSame(SpreadsheetMetadataNonEmptyMap.EMPTY, SpreadsheetMetadataNonEmptyMap.with(Maps.empty()));
     }
 
     @Test
@@ -100,8 +100,8 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         map.put(this.property1(), this.value1());
         map.put(this.property2(), this.value2());
 
-        final NonEmptySpreadsheetMetadata metadata = this.createSpreadsheetMetadata(map);
-        assertEquals(SpreadsheetMetadataMap.class, metadata.value().getClass(), () -> "" + metadata.value);
+        final SpreadsheetMetadataNonEmpty metadata = this.createSpreadsheetMetadata(map);
+        assertEquals(SpreadsheetMetadataNonEmptyMap.class, metadata.value().getClass(), () -> "" + metadata.value);
     }
 
     // get..............................................................................................................
@@ -127,7 +127,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         final SpreadsheetMetadataPropertyName<EmailAddress> propertyName = SpreadsheetMetadataPropertyName.CREATOR;
         final EmailAddress email = EmailAddress.parse("creator123@example.com");
 
-        final SpreadsheetMetadata metadata = NonEmptySpreadsheetMetadata.with(Maps.of(propertyName, email));
+        final SpreadsheetMetadata metadata = SpreadsheetMetadataNonEmpty.with(Maps.of(propertyName, email));
         assertEquals(email,
                 metadata.getOrFail(propertyName),
                 () -> "getOrFail " + propertyName + " in " + metadata);
@@ -338,7 +338,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.color(number7), color7)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("#0.0"));
-        final NonEmptySpreadsheetMetadataNumberToColorFunction function = Cast.to(metadata.numberToColor());
+        final SpreadsheetMetadataNonEmptyNumberToColorFunction function = Cast.to(metadata.numberToColor());
 
         assertEquals(Maps.of(number1, color1, number7, color7),
                 function.numberToColor,
@@ -373,7 +373,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
 
     @Test
     public void testHateosLinkId() {
-        this.hateosLinkIdAndCheck(NonEmptySpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(0x12347f))),
+        this.hateosLinkIdAndCheck(SpreadsheetMetadataNonEmpty.with(Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(0x12347f))),
                 "12347f");
     }
 
@@ -540,7 +540,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
     @Test
     public void testHasMathContextRequiredPropertiesAbsentFails2() {
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
-            NonEmptySpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.PRECISION, 1))
+            SpreadsheetMetadataNonEmpty.with(Maps.of(SpreadsheetMetadataPropertyName.PRECISION, 1))
                     .mathContext();
         });
         this.checkMessage(thrown, "Required properties \"rounding-mode\" missing.");
@@ -551,7 +551,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         final int precision = 11;
 
         Arrays.stream(RoundingMode.values()).forEach(r -> {
-            final MathContext mathContext = NonEmptySpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.PRECISION, precision,
+            final MathContext mathContext = SpreadsheetMetadataNonEmpty.with(Maps.of(SpreadsheetMetadataPropertyName.PRECISION, precision,
                     SpreadsheetMetadataPropertyName.ROUNDING_MODE, r))
                     .mathContext();
             assertEquals(precision, mathContext.getPrecision(), "precision");
@@ -567,7 +567,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         map.put(this.property1(), this.value1());
         map.put(this.property2(), this.value2());
 
-        this.toStringAndCheck(NonEmptySpreadsheetMetadata.with(map), map.toString());
+        this.toStringAndCheck(SpreadsheetMetadataNonEmpty.with(map), map.toString());
     }
 
     // HasJsonNode......................................................................................................
@@ -620,20 +620,20 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
     // helpers...........................................................................................................
 
     @Override
-    public NonEmptySpreadsheetMetadata createObject() {
+    public SpreadsheetMetadataNonEmpty createObject() {
         return this.createSpreadsheetMetadata();
     }
 
-    private NonEmptySpreadsheetMetadata createSpreadsheetMetadata() {
+    private SpreadsheetMetadataNonEmpty createSpreadsheetMetadata() {
         return this.createSpreadsheetMetadata(this.property1(), this.value1(), this.property2(), this.value2());
     }
 
-    private <X> NonEmptySpreadsheetMetadata createSpreadsheetMetadata(final SpreadsheetMetadataPropertyName<X> property1,
+    private <X> SpreadsheetMetadataNonEmpty createSpreadsheetMetadata(final SpreadsheetMetadataPropertyName<X> property1,
                                                                       final X value1) {
         return this.createSpreadsheetMetadata(Maps.of(property1, value1));
     }
 
-    private <X, Y> NonEmptySpreadsheetMetadata createSpreadsheetMetadata(final SpreadsheetMetadataPropertyName<X> property1,
+    private <X, Y> SpreadsheetMetadataNonEmpty createSpreadsheetMetadata(final SpreadsheetMetadataPropertyName<X> property1,
                                                                          final X value1,
                                                                          final SpreadsheetMetadataPropertyName<Y> property2,
                                                                          final Y value2) {
@@ -643,7 +643,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         return this.createSpreadsheetMetadata(map);
     }
 
-    private <X, Y, Z> NonEmptySpreadsheetMetadata createSpreadsheetMetadata(final SpreadsheetMetadataPropertyName<X> property1,
+    private <X, Y, Z> SpreadsheetMetadataNonEmpty createSpreadsheetMetadata(final SpreadsheetMetadataPropertyName<X> property1,
                                                                             final X value1,
                                                                             final SpreadsheetMetadataPropertyName<Y> property2,
                                                                             final Y value2,
@@ -656,7 +656,7 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
         return this.createSpreadsheetMetadata(map);
     }
 
-    private NonEmptySpreadsheetMetadata createSpreadsheetMetadata(final Map<SpreadsheetMetadataPropertyName<?>, Object> map) {
+    private SpreadsheetMetadataNonEmpty createSpreadsheetMetadata(final Map<SpreadsheetMetadataPropertyName<?>, Object> map) {
         return Cast.to(SpreadsheetMetadata.with(map));
     }
 
@@ -685,8 +685,8 @@ public final class NonEmptySpreadsheetMetadataTest extends SpreadsheetMetadataTe
     }
 
     @Override
-    Class<NonEmptySpreadsheetMetadata> metadataType() {
-        return NonEmptySpreadsheetMetadata.class;
+    Class<SpreadsheetMetadataNonEmpty> metadataType() {
+        return SpreadsheetMetadataNonEmpty.class;
     }
 
 }

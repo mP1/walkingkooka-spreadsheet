@@ -57,7 +57,7 @@ final class SpreadsheetMetadataPropertyNameNonColor<T> extends SpreadsheetMetada
 
     final SpreadsheetMetadataPropertyValueHandler<T> handler;
 
-    // NonEmptySpreadsheetMetadata......................................................................................
+    // SpreadsheetMetadataNonEmpty......................................................................................
 
     @Override
     void addNumberedColor(final Object value, final Map<Integer, Color> numberToColor) {

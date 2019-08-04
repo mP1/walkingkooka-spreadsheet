@@ -31,19 +31,19 @@ import java.util.Map.Entry;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetMetadataMapEntrySetTest implements SetTesting<SpreadsheetMetadataMapEntrySet, Entry<SpreadsheetMetadataPropertyName<?>, Object>>,
+public final class SpreadsheetMetadataNonEmptyMapEntrySetTest implements SetTesting<SpreadsheetMetadataNonEmptyMapEntrySet, Entry<SpreadsheetMetadataPropertyName<?>, Object>>,
         IteratorTesting {
 
     @Test
     public void testWithInvalidPropertyFails() {
         assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> {
-            SpreadsheetMetadataMapEntrySet.with(Maps.of(SpreadsheetMetadataPropertyName.CREATOR, null));
+            SpreadsheetMetadataNonEmptyMapEntrySet.with(Maps.of(SpreadsheetMetadataPropertyName.CREATOR, null));
         });
     }
 
     @Test
     public void testEmpty() {
-        assertSame(SpreadsheetMetadataMapEntrySet.EMPTY, SpreadsheetMetadataMapEntrySet.with(Maps.empty()));
+        assertSame(SpreadsheetMetadataNonEmptyMapEntrySet.EMPTY, SpreadsheetMetadataNonEmptyMapEntrySet.with(Maps.empty()));
     }
 
     @Test
@@ -76,11 +76,11 @@ public final class SpreadsheetMetadataMapEntrySetTest implements SetTesting<Spre
     }
 
     @Override
-    public SpreadsheetMetadataMapEntrySet createSet() {
+    public SpreadsheetMetadataNonEmptyMapEntrySet createSet() {
         final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.ordered();
         map.put(this.property1(), this.value1());
         map.put(this.property2(), this.value2());
-        return SpreadsheetMetadataMapEntrySet.with(map);
+        return SpreadsheetMetadataNonEmptyMapEntrySet.with(map);
     }
 
     private SpreadsheetMetadataPropertyName<?> property1() {
@@ -100,7 +100,7 @@ public final class SpreadsheetMetadataMapEntrySetTest implements SetTesting<Spre
     }
 
     @Override
-    public Class<SpreadsheetMetadataMapEntrySet> type() {
-        return SpreadsheetMetadataMapEntrySet.class;
+    public Class<SpreadsheetMetadataNonEmptyMapEntrySet> type() {
+        return SpreadsheetMetadataNonEmptyMapEntrySet.class;
     }
 }

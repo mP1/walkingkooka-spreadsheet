@@ -32,12 +32,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetMetadataMapTest implements MapTesting2<SpreadsheetMetadataMap, SpreadsheetMetadataPropertyName<?>, Object> {
+public final class SpreadsheetMetadataNonEmptyMapTest implements MapTesting2<SpreadsheetMetadataNonEmptyMap, SpreadsheetMetadataPropertyName<?>, Object> {
 
     @Test
     public void testWithInvalidPropertyFails() {
         assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> {
-            SpreadsheetMetadataMap.with(Maps.of(SpreadsheetMetadataPropertyName.CREATOR, null));
+            SpreadsheetMetadataNonEmptyMap.with(Maps.of(SpreadsheetMetadataPropertyName.CREATOR, null));
         });
     }
 
@@ -47,7 +47,7 @@ public final class SpreadsheetMetadataMapTest implements MapTesting2<Spreadsheet
         from.put(this.property1(), this.value1());
         from.put(this.property2(), this.value2());
 
-        final SpreadsheetMetadataMap map = SpreadsheetMetadataMap.with(from);
+        final SpreadsheetMetadataNonEmptyMap map = SpreadsheetMetadataNonEmptyMap.with(from);
 
         from.clear();
         this.sizeAndCheck(map, 2);
@@ -88,7 +88,7 @@ public final class SpreadsheetMetadataMapTest implements MapTesting2<Spreadsheet
 
     @Test
     public void testFromEmptyJsonObject() {
-        assertSame(SpreadsheetMetadataMap.EMPTY, SpreadsheetMetadataMap.fromJson(JsonNode.object()));
+        assertSame(SpreadsheetMetadataNonEmptyMap.EMPTY, SpreadsheetMetadataNonEmptyMap.fromJson(JsonNode.object()));
     }
 
     @Test
@@ -101,11 +101,11 @@ public final class SpreadsheetMetadataMapTest implements MapTesting2<Spreadsheet
     }
 
     @Override
-    public SpreadsheetMetadataMap createMap() {
+    public SpreadsheetMetadataNonEmptyMap createMap() {
         final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.ordered();
         map.put(this.property1(), this.value1());
         map.put(this.property2(), this.value2());
-        return SpreadsheetMetadataMap.with(map);
+        return SpreadsheetMetadataNonEmptyMap.with(map);
     }
 
     private SpreadsheetMetadataPropertyName<?> property1() {
@@ -127,7 +127,7 @@ public final class SpreadsheetMetadataMapTest implements MapTesting2<Spreadsheet
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataMap> type() {
-        return SpreadsheetMetadataMap.class;
+    public Class<SpreadsheetMetadataNonEmptyMap> type() {
+        return SpreadsheetMetadataNonEmptyMap.class;
     }
 }

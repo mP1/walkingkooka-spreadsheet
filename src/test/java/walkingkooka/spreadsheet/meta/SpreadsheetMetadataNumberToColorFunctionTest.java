@@ -18,8 +18,18 @@
 package walkingkooka.spreadsheet.meta;
 
 public final class SpreadsheetMetadataNumberToColorFunctionTest extends SpreadsheetMetadataNumberToColorFunctionTestCase<SpreadsheetMetadataNumberToColorFunction> {
+
+    // ClassTesting.....................................................................................................
+
     @Override
     public Class<SpreadsheetMetadataNumberToColorFunction> type() {
         return SpreadsheetMetadataNumberToColorFunction.class;
+    }
+
+    // TypeNameTesting...................................................................................................
+
+    @Override
+    public final String typeNamePrefix() {
+        return SpreadsheetMetadata.class.getSimpleName();
     }
 }

@@ -30,18 +30,18 @@ import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * A {@link NonEmptySpreadsheetMetadata} holds a non empty {@link Map} of {@link SpreadsheetMetadataPropertyName} and values.
+ * A {@link SpreadsheetMetadataNonEmpty} holds a non empty {@link Map} of {@link SpreadsheetMetadataPropertyName} and values.
  */
-final class NonEmptySpreadsheetMetadata extends SpreadsheetMetadata {
+final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
 
     /**
-     * Factory that creates a {@link NonEmptySpreadsheetMetadata} from a {@link SpreadsheetMetadataMap}.
+     * Factory that creates a {@link SpreadsheetMetadataNonEmpty} from a {@link SpreadsheetMetadataNonEmptyMap}.
      */
-    static NonEmptySpreadsheetMetadata with(final SpreadsheetMetadataMap value) {
-        return new NonEmptySpreadsheetMetadata(value);
+    static SpreadsheetMetadataNonEmpty with(final SpreadsheetMetadataNonEmptyMap value) {
+        return new SpreadsheetMetadataNonEmpty(value);
     }
 
-    private NonEmptySpreadsheetMetadata(final SpreadsheetMetadataMap value) {
+    private SpreadsheetMetadataNonEmpty(final SpreadsheetMetadataNonEmptyMap value) {
         super();
         this.value = value;
     }
@@ -61,7 +61,7 @@ final class NonEmptySpreadsheetMetadata extends SpreadsheetMetadata {
         return this.value;
     }
 
-    final SpreadsheetMetadataMap value;
+    final SpreadsheetMetadataNonEmptyMap value;
 
     // get..............................................................................................................
 
@@ -74,7 +74,7 @@ final class NonEmptySpreadsheetMetadata extends SpreadsheetMetadata {
 
     @Override
     <V> SpreadsheetMetadata set0(final SpreadsheetMetadataPropertyName<V> propertyName, final V value) {
-        SpreadsheetMetadataMap map = this.value;
+        SpreadsheetMetadataNonEmptyMap map = this.value;
         final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> list = Lists.array();
 
         int mode = 0; // new property added.
@@ -98,12 +98,12 @@ final class NonEmptySpreadsheetMetadata extends SpreadsheetMetadata {
         // replace didnt happen
         if (0 == mode) {
             list.add(Maps.entry(propertyName, value));
-            SpreadsheetMetadataMapEntrySet.sort(list);
+            SpreadsheetMetadataNonEmptyMapEntrySet.sort(list);
         }
 
         return 1 == mode ?
                 this :
-                new NonEmptySpreadsheetMetadata(SpreadsheetMetadataMap.withSpreadsheetMetadataMapEntrySet(SpreadsheetMetadataMapEntrySet.withList(list)));
+                new SpreadsheetMetadataNonEmpty(SpreadsheetMetadataNonEmptyMap.withSpreadsheetMetadataMapEntrySet(SpreadsheetMetadataNonEmptyMapEntrySet.withList(list)));
     }
 
     // remove...........................................................................................................
@@ -133,7 +133,7 @@ final class NonEmptySpreadsheetMetadata extends SpreadsheetMetadata {
     private SpreadsheetMetadata remove1(List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> list) {
         return list.isEmpty() ?
                 SpreadsheetMetadata.EMPTY :
-                new NonEmptySpreadsheetMetadata(SpreadsheetMetadataMap.withSpreadsheetMetadataMapEntrySet(SpreadsheetMetadataMapEntrySet.withList(list))); // no need to sort after a delete
+                new SpreadsheetMetadataNonEmpty(SpreadsheetMetadataNonEmptyMap.withSpreadsheetMetadataMapEntrySet(SpreadsheetMetadataNonEmptyMapEntrySet.withList(list))); // no need to sort after a delete
     }
 
     // numberToColor....................................................................................................
@@ -146,7 +146,7 @@ final class NonEmptySpreadsheetMetadata extends SpreadsheetMetadata {
             entries.getKey().addNumberedColor(entries.getValue(), numberToColor);
         }
 
-        return NonEmptySpreadsheetMetadataNumberToColorFunction.with(numberToColor);
+        return SpreadsheetMetadataNonEmptyNumberToColorFunction.with(numberToColor);
     }
 
     // SpreadsheetMetadataVisitor.......................................................................................
@@ -165,7 +165,7 @@ final class NonEmptySpreadsheetMetadata extends SpreadsheetMetadata {
 
     @Override
     boolean canBeEquals(final Object other) {
-        return other instanceof NonEmptySpreadsheetMetadata;
+        return other instanceof SpreadsheetMetadataNonEmpty;
     }
 
     @Override
