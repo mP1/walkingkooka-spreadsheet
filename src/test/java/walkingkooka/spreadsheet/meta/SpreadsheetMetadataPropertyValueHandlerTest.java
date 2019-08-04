@@ -22,12 +22,12 @@ import walkingkooka.Cast;
 public final class SpreadsheetMetadataPropertyValueHandlerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase<SpreadsheetMetadataPropertyValueHandler<?>> {
 
     @Override
-    public String typeNamePrefix() {
-        return "";
+    public Class<SpreadsheetMetadataPropertyValueHandler<?>> type() {
+        return Cast.to(SpreadsheetMetadataPropertyValueHandler.class);
     }
 
     @Override
-    public Class<SpreadsheetMetadataPropertyValueHandler<?>> type() {
-        return Cast.to(SpreadsheetMetadataPropertyValueHandler.class);
+    public String typeNameSuffix() {
+        return "";
     }
 }
