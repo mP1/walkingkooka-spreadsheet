@@ -35,21 +35,21 @@ import java.util.Set;
 /**
  * A read only {@link Set} sorted view of textStyle that have had their values checked.
  */
-final class SpreadsheetMetadataMapEntrySet extends AbstractSet<Entry<SpreadsheetMetadataPropertyName<?>, Object>> {
+final class SpreadsheetMetadataNonEmptyMapEntrySet extends AbstractSet<Entry<SpreadsheetMetadataPropertyName<?>, Object>> {
 
     static {
-        Sets.registerImmutableType(SpreadsheetMetadataMapEntrySet.class);
+        Sets.registerImmutableType(SpreadsheetMetadataNonEmptyMapEntrySet.class);
     }
 
     /**
-     * An empty {@link SpreadsheetMetadataMap}.
+     * An empty {@link SpreadsheetMetadataNonEmptyMap}.
      */
-    static final SpreadsheetMetadataMapEntrySet EMPTY = new SpreadsheetMetadataMapEntrySet(Lists.empty());
+    static final SpreadsheetMetadataNonEmptyMapEntrySet EMPTY = new SpreadsheetMetadataNonEmptyMapEntrySet(Lists.empty());
 
     /**
-     * Factory that creates a {@link SpreadsheetMetadataMapEntrySet}.
+     * Factory that creates a {@link SpreadsheetMetadataNonEmptyMapEntrySet}.
      */
-    static SpreadsheetMetadataMapEntrySet with(final Map<SpreadsheetMetadataPropertyName<?>, Object> entries) {
+    static SpreadsheetMetadataNonEmptyMapEntrySet with(final Map<SpreadsheetMetadataPropertyName<?>, Object> entries) {
         final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> list = Lists.array();
 
         for (Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : entries.entrySet()) {
@@ -70,7 +70,7 @@ final class SpreadsheetMetadataMapEntrySet extends AbstractSet<Entry<Spreadsheet
      * Sorts the {@link List} so all textStyle using the {@link SpreadsheetMetadataPropertyName} {@link Comparator}.
      */
     static void sort(final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> list) {
-        list.sort(SpreadsheetMetadataMapEntrySet::comparator);
+        list.sort(SpreadsheetMetadataNonEmptyMapEntrySet::comparator);
     }
 
     /**
@@ -81,11 +81,11 @@ final class SpreadsheetMetadataMapEntrySet extends AbstractSet<Entry<Spreadsheet
         return first.getKey().compareTo(second.getKey());
     }
 
-    static SpreadsheetMetadataMapEntrySet withList(final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> entries) {
-        return new SpreadsheetMetadataMapEntrySet(entries);
+    static SpreadsheetMetadataNonEmptyMapEntrySet withList(final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> entries) {
+        return new SpreadsheetMetadataNonEmptyMapEntrySet(entries);
     }
 
-    private SpreadsheetMetadataMapEntrySet(final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> entries) {
+    private SpreadsheetMetadataNonEmptyMapEntrySet(final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> entries) {
         super();
         this.entries = entries;
     }
@@ -112,9 +112,9 @@ final class SpreadsheetMetadataMapEntrySet extends AbstractSet<Entry<Spreadsheet
     // HasJsonNode......................................................................................................
 
     /**
-     * Recreates this {@link SpreadsheetMetadataMapEntrySet} from the json object.
+     * Recreates this {@link SpreadsheetMetadataNonEmptyMapEntrySet} from the json object.
      */
-    static SpreadsheetMetadataMapEntrySet fromJson(final JsonNode json) {
+    static SpreadsheetMetadataNonEmptyMapEntrySet fromJson(final JsonNode json) {
         final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = Maps.ordered();
 
         for (JsonNode child : json.children()) {
