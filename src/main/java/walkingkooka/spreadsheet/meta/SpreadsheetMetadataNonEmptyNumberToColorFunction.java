@@ -25,13 +25,13 @@ import java.util.Optional;
 /**
  * A {@link java.util.function.Function} that uses a map using the number as a key.
  */
-final class NonEmptySpreadsheetMetadataNumberToColorFunction extends SpreadsheetMetadataNumberToColorFunction {
+final class SpreadsheetMetadataNonEmptyNumberToColorFunction extends SpreadsheetMetadataNumberToColorFunction {
 
-    static NonEmptySpreadsheetMetadataNumberToColorFunction with(final Map<Integer, Color> numberToColor) {
-        return new NonEmptySpreadsheetMetadataNumberToColorFunction(numberToColor);
+    static SpreadsheetMetadataNonEmptyNumberToColorFunction with(final Map<Integer, Color> numberToColor) {
+        return new SpreadsheetMetadataNonEmptyNumberToColorFunction(numberToColor);
     }
 
-    private NonEmptySpreadsheetMetadataNumberToColorFunction(final Map<Integer, Color> numberToColor) {
+    private SpreadsheetMetadataNonEmptyNumberToColorFunction(final Map<Integer, Color> numberToColor) {
         super();
         this.numberToColor = numberToColor;
     }

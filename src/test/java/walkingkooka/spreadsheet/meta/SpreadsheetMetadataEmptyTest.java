@@ -26,7 +26,7 @@ import walkingkooka.tree.json.JsonNode;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class EmptySpreadsheetMetadataTest extends SpreadsheetMetadataTestCase<EmptySpreadsheetMetadata> {
+public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestCase<SpreadsheetMetadataEmpty> {
 
     @Test
     public void testEmpty() {
@@ -56,7 +56,7 @@ public final class EmptySpreadsheetMetadataTest extends SpreadsheetMetadataTestC
     @Test
     public void testHateosLinkIdMissingIdFails() {
         assertThrows(IllegalStateException.class, () -> {
-            EmptySpreadsheetMetadata.instance().hateosLinkId();
+            SpreadsheetMetadataEmpty.instance().hateosLinkId();
         });
     }
 
@@ -85,12 +85,12 @@ public final class EmptySpreadsheetMetadataTest extends SpreadsheetMetadataTestC
     // helper...........................................................................................................
 
     @Override
-    public EmptySpreadsheetMetadata createObject() {
+    public SpreadsheetMetadataEmpty createObject() {
         return Cast.to(SpreadsheetMetadata.EMPTY);
     }
 
     @Override
-    Class<EmptySpreadsheetMetadata> metadataType() {
-        return EmptySpreadsheetMetadata.class;
+    Class<SpreadsheetMetadataEmpty> metadataType() {
+        return SpreadsheetMetadataEmpty.class;
     }
 }
