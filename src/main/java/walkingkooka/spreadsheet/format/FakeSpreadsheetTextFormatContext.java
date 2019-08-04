@@ -20,9 +20,15 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.color.Color;
 import walkingkooka.math.FakeDecimalNumberContext;
 
+import java.util.List;
 import java.util.Optional;
 
 public class FakeSpreadsheetTextFormatContext extends FakeDecimalNumberContext implements SpreadsheetTextFormatContext {
+
+    @Override
+    public List<String> ampms() {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public String ampm(final int hourOfDay) {
@@ -50,7 +56,17 @@ public class FakeSpreadsheetTextFormatContext extends FakeDecimalNumberContext i
     }
 
     @Override
+    public List<String> monthNames() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public String monthName(final int month) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<String> monthNameAbbreviations() {
         throw new UnsupportedOperationException();
     }
 
@@ -65,10 +81,20 @@ public class FakeSpreadsheetTextFormatContext extends FakeDecimalNumberContext i
     }
 
     @Override
+    public List<String> weekDayNames() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public String weekDayName(final int day) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public List<String> weekDayNameAbbreviations() {
+        throw new UnsupportedOperationException();
+    }
+    
     @Override
     public String weekDayNameAbbreviation(final int day) {
         throw new UnsupportedOperationException();
