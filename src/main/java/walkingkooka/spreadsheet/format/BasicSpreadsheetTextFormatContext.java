@@ -23,6 +23,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 
 import java.math.MathContext;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
@@ -119,28 +120,28 @@ final class BasicSpreadsheetTextFormatContext implements SpreadsheetTextFormatCo
     // DateTimeContext..................................................................................................
 
     @Override
-    public String ampm(final int hours) {
-        return this.converterContext.ampm(hours);
+    public List<String> ampms() {
+        return this.converterContext.ampms();
     }
 
     @Override
-    public String monthName(final int month) {
-        return this.converterContext.monthName(month);
+    public List<String> monthNames() {
+        return this.converterContext.monthNames();
     }
 
     @Override
-    public String monthNameAbbreviation(final int month) {
-        return this.converterContext.monthNameAbbreviation(month);
+    public List<String> monthNameAbbreviations() {
+        return this.converterContext.monthNameAbbreviations();
     }
 
     @Override
-    public String weekDayName(final int day) {
-        return this.converterContext.weekDayName(day);
+    public List<String> weekDayNames() {
+        return this.converterContext.weekDayNames();
     }
 
     @Override
-    public String weekDayNameAbbreviation(final int day) {
-        return this.converterContext.weekDayNameAbbreviation(day);
+    public List<String> weekDayNameAbbreviations() {
+        return this.converterContext.weekDayNameAbbreviations();
     }
 
     // DecimalNumberContext.............................................................................................
