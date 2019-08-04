@@ -181,7 +181,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             this.createObject().dateTimeContext();
         });
         checkMessage(thrown,
-                "Required properties \"locale\" missing.");
+                "Required properties \"locale\", \"two-digit-year-interpretation\" missing.");
     }
 
     // HasDecimalNumberContext..........................................................................................
