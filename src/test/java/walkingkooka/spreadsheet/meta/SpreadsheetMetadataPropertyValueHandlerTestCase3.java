@@ -32,7 +32,7 @@ public abstract class SpreadsheetMetadataPropertyValueHandlerTestCase3<P extends
     // TypeNameTesting..................................................................................................
 
     @Override
-    public final String typeNamePrefix() {
+    public final String typeNameSuffix() {
         return this.propertyValueType();
     }
 }
