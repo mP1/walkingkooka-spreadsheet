@@ -135,6 +135,11 @@ final class BasicSpreadsheetTextFormatContext implements SpreadsheetTextFormatCo
     }
 
     @Override
+    public int twoDigitYear() {
+        return this.converterContext.twoDigitYear();
+    }
+
+    @Override
     public List<String> weekDayNames() {
         return this.converterContext.weekDayNames();
     }
