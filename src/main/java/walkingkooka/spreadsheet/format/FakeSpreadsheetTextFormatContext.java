@@ -81,6 +81,11 @@ public class FakeSpreadsheetTextFormatContext extends FakeDecimalNumberContext i
     }
 
     @Override
+    public int twoDigitYear() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public List<String> weekDayNames() {
         throw new UnsupportedOperationException();
     }

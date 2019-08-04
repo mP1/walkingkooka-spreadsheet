@@ -390,12 +390,16 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testDateTimeContext() {
         Arrays.stream(Locale.getAvailableLocales())
                 .forEach(l -> {
-                            final SpreadsheetMetadata metadata = SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.LOCALE, l));
+                            final int twoDigitYear = 49;
+                            final SpreadsheetMetadata metadata = SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.LOCALE, l,
+                                    SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR_INTERPRETATION, twoDigitYear));
+
                             final DateFormatSymbols symbols = DateFormatSymbols.getInstance(l);
                             final DateTimeContext context = metadata.dateTimeContext();
                             this.amPmAndCheck(context, 13, symbols.getAmPmStrings()[1]);
                             this.monthNameAndCheck(context, 2, symbols.getMonths()[2]);
                             this.monthNameAbbreviationAndCheck(context, 3, symbols.getShortMonths()[3]);
+                            this.twoDigitYearAndCheck(context, twoDigitYear);
                             this.weekDayNameAndCheck(context, 1, symbols.getWeekdays()[1]);
                             this.weekDayNameAbbreviationAndCheck(context, 3, symbols.getShortWeekdays()[3]);
 
