@@ -169,7 +169,7 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
         final DateFormatSymbols symbols = DateFormatSymbols.getInstance(Locale.ENGLISH);
 
         this.toStringAndCheck(this.createContext(symbols),
-                "numberToColor=1=#123456 nameToColor=bingo=#123456 width=1 converter=Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean converterContext=ampm=\"AM\", \"PM\" month=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthsAbbreviations=\"Jan\", \"Feb\", \"Mar\", \"Apr\", \"May\", \"Jun\", \"Jul\", \"Aug\", \"Sep\", \"Oct\", \"Nov\", \"Dec\" weekDays=\"\", \"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weeDayNameAbbreviations=\"\", \"Sun\", \"Mon\", \"Tue\", \"Wed\", \"Thu\", \"Fri\", \"Sat\" \"$$\" '!' 'E' 'G' 'M' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN");
+                "numberToColor=1=#123456 nameToColor=bingo=#123456 width=1 converter=Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean converterContext=ampm=\"AM\", \"PM\" month=\"January\", \"February\", \"March\", \"April\", \"May\", \"June\", \"July\", \"August\", \"September\", \"October\", \"November\", \"December\" monthsAbbreviations=\"Jan\", \"Feb\", \"Mar\", \"Apr\", \"May\", \"Jun\", \"Jul\", \"Aug\", \"Sep\", \"Oct\", \"Nov\", \"Dec\" twoDigitYear=50 weekDays=\"\", \"Sunday\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\" weeDayNameAbbreviations=\"\", \"Sun\", \"Mon\", \"Tue\", \"Wed\", \"Thu\", \"Fri\", \"Sat\" \"$$\" '!' 'E' 'G' 'M' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN");
     }
 
     @Override
@@ -183,7 +183,7 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
                 WIDTH,
                 CONVERTER,
                 this.defaultSpreadsheetTextFormatter(),
-                ConverterContexts.basic(DateTimeContexts.dateFormatSymbols(dateFormatSymbols), decimalNumberContext()));
+                ConverterContexts.basic(DateTimeContexts.dateFormatSymbols(dateFormatSymbols, 50), decimalNumberContext()));
     }
 
     private Function<Integer, Optional<Color>> numberToColor() {
@@ -244,7 +244,7 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
     }
 
     private DateTimeContext dateTimeContext() {
-        return DateTimeContexts.dateFormatSymbols(this.dateFormatSymbols());
+        return DateTimeContexts.dateFormatSymbols(this.dateFormatSymbols(), 50);
     }
 
     private DateFormatSymbols dateFormatSymbols() {

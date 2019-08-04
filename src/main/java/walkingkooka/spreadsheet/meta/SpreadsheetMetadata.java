@@ -183,10 +183,11 @@ public abstract class SpreadsheetMetadata implements HasDateTimeContext,
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
         final Locale locale = components.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
+        final Integer twoYearDigit = components.getOrNull(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR_INTERPRETATION);
 
         components.reportIfMissing();
 
-        return DateTimeContexts.dateFormatSymbols(DateFormatSymbols.getInstance(locale));
+        return DateTimeContexts.dateFormatSymbols(DateFormatSymbols.getInstance(locale), twoYearDigit);
     }
 
     // HasDecimalNumberContext..........................................................................................
