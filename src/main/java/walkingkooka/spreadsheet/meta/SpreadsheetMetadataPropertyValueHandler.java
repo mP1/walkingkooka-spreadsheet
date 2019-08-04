@@ -28,122 +28,122 @@ import walkingkooka.tree.json.JsonNode;
 abstract class SpreadsheetMetadataPropertyValueHandler<T> {
 
     /**
-     * {@see CharacterSpreadsheetMetadataPropertyValueHandler}
+     * {@see SpreadsheetMetadataPropertyValueHandlerCharacter}
      */
-    static CharacterSpreadsheetMetadataPropertyValueHandler character() {
-        return CharacterSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerCharacter character() {
+        return SpreadsheetMetadataPropertyValueHandlerCharacter.INSTANCE;
     }
 
     /**
-     * {@see ColorSpreadsheetMetadataPropertyValueHandler}
+     * {@see SpreadsheetMetadataPropertyValueHandlerColor}
      */
-    static ColorSpreadsheetMetadataPropertyValueHandler color() {
-        return ColorSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerColor color() {
+        return SpreadsheetMetadataPropertyValueHandlerColor.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetDatePatternsSpreadsheetMetadataPropertyValueHandler}
+     * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetDatePatterns}
      */
-    static SpreadsheetDatePatternsSpreadsheetMetadataPropertyValueHandler datePatterns() {
-        return SpreadsheetDatePatternsSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerSpreadsheetDatePatterns datePatterns() {
+        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetDatePatterns.INSTANCE;
     }
 
     /**
-     * {@see DateTimeOffsetSpreadsheetMetadataPropertyValueHandler}
+     * {@see SpreadsheetMetadataPropertyValueHandlerDateTimeOffset}
      */
-    static DateTimeOffsetSpreadsheetMetadataPropertyValueHandler dateTimeOffset() {
-        return DateTimeOffsetSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerDateTimeOffset dateTimeOffset() {
+        return SpreadsheetMetadataPropertyValueHandlerDateTimeOffset.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetDateTimePatternsSpreadsheetMetadataPropertyValueHandler}
+     * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimePatterns}
      */
-    static SpreadsheetDateTimePatternsSpreadsheetMetadataPropertyValueHandler dateTimePatterns() {
-        return SpreadsheetDateTimePatternsSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimePatterns dateTimePatterns() {
+        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimePatterns.INSTANCE;
     }
 
     /**
-     * {@see EmailAddressSpreadsheetMetadataPropertyValueHandler}
+     * {@see SpreadsheetMetadataPropertyValueHandlerEmailAddress}
      */
-    static EmailAddressSpreadsheetMetadataPropertyValueHandler emailAddress() {
-        return EmailAddressSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerEmailAddress emailAddress() {
+        return SpreadsheetMetadataPropertyValueHandlerEmailAddress.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPropertyValueHandler}
+     * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetTextFormatterPatternFormat}
      */
-    static SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPropertyValueHandler formatPattern() {
-        return SpreadsheetTextFormatterPatternFormatSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerSpreadsheetTextFormatterPatternFormat formatPattern() {
+        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetTextFormatterPatternFormat.INSTANCE;
     }
 
     /**
-     * {@see LocalDateTimeSpreadsheetMetadataPropertyValueHandler}
+     * {@see SpreadsheetMetadataPropertyValueHandlerLocalDateTime}
      */
-    static LocalDateTimeSpreadsheetMetadataPropertyValueHandler localDateTime() {
-        return LocalDateTimeSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerLocalDateTime localDateTime() {
+        return SpreadsheetMetadataPropertyValueHandlerLocalDateTime.INSTANCE;
     }
 
     /**
-     * {@see LocaleSpreadsheetMetadataPropertyValueHandler}
+     * {@see SpreadsheetMetadataPropertyValueHandlerLocale}
      */
-    static LocaleSpreadsheetMetadataPropertyValueHandler locale() {
-        return LocaleSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerLocale locale() {
+        return SpreadsheetMetadataPropertyValueHandlerLocale.INSTANCE;
     }
 
     /**
-     * {@see NonEmptyStringSpreadsheetMetadataPropertyValueHandler}
+     * {@see SpreadsheetMetadataPropertyValueHandlerNonEmptyString}
      */
-    static NonEmptyStringSpreadsheetMetadataPropertyValueHandler nonEmpty() {
-        return NonEmptyStringSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerNonEmptyString nonEmpty() {
+        return SpreadsheetMetadataPropertyValueHandlerNonEmptyString.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetNumberPatternsSpreadsheetMetadataPropertyValueHandler}
+     * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetNumberPatterns}
      */
-    static SpreadsheetNumberPatternsSpreadsheetMetadataPropertyValueHandler numberPatterns() {
-        return SpreadsheetNumberPatternsSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerSpreadsheetNumberPatterns numberPatterns() {
+        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetNumberPatterns.INSTANCE;
     }
     
     /**
-     * {@see PositiveIntegerSpreadsheetMetadataPropertyValueHandler}
+     * {@see SpreadsheetMetadataPropertyValueHandlerPositiveInteger}
      */
-    static PositiveIntegerSpreadsheetMetadataPropertyValueHandler positiveInteger() {
-        return PositiveIntegerSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerPositiveInteger positiveInteger() {
+        return SpreadsheetMetadataPropertyValueHandlerPositiveInteger.INSTANCE;
     }
 
     /**
-     * {@see RoundingModeSpreadsheetMetadataPropertyValueHandler}
+     * {@see SpreadsheetMetadataPropertyValueHandlerRoundingMode}
      */
-    static RoundingModeSpreadsheetMetadataPropertyValueHandler roundingMode() {
-        return RoundingModeSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerRoundingMode roundingMode() {
+        return SpreadsheetMetadataPropertyValueHandlerRoundingMode.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetIdSpreadsheetMetadataPropertyValueHandler}
+     * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetId}
      */
-    static SpreadsheetIdSpreadsheetMetadataPropertyValueHandler spreadsheetId() {
-        return SpreadsheetIdSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerSpreadsheetId spreadsheetId() {
+        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetId.INSTANCE;
     }
 
     /**
-     * {@see StringSpreadsheetMetadataPropertyValueHandler}
+     * {@see SpreadsheetMetadataPropertyValueHandlerString}
      */
-    static StringSpreadsheetMetadataPropertyValueHandler string() {
-        return StringSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerString string() {
+        return SpreadsheetMetadataPropertyValueHandlerString.INSTANCE;
     }
 
     /**
-     * {@see SpreadsheetTimePatternsSpreadsheetMetadataPropertyValueHandler}
+     * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimePatterns}
      */
-    static SpreadsheetTimePatternsSpreadsheetMetadataPropertyValueHandler timePatterns() {
-        return SpreadsheetTimePatternsSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimePatterns timePatterns() {
+        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimePatterns.INSTANCE;
     }
     
     /**
-     * {@see TwoDigitYearSpreadsheetMetadataPropertyValueHandler}
+     * {@see SpreadsheetMetadataPropertyValueHandlerTwoDigitYear}
      */
-    static TwoDigitYearSpreadsheetMetadataPropertyValueHandler twoDigitYear() {
-        return TwoDigitYearSpreadsheetMetadataPropertyValueHandler.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerTwoDigitYear twoDigitYear() {
+        return SpreadsheetMetadataPropertyValueHandlerTwoDigitYear.INSTANCE;
     }
 
     /**
