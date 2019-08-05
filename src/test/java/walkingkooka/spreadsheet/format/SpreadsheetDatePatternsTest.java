@@ -25,12 +25,15 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.text.cursor.parser.ParserTokens;
 import walkingkooka.tree.json.JsonNode;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public final class SpreadsheetDatePatternsTest extends SpreadsheetPatternsTestCase<SpreadsheetDatePatterns,
-        SpreadsheetFormatDateParserToken> {
+        SpreadsheetFormatDateParserToken,
+        LocalDate> {
 
     @Test
     public void testWithAmpmFails() {
@@ -102,7 +105,7 @@ public final class SpreadsheetDatePatternsTest extends SpreadsheetPatternsTestCa
         this.withInvalidCharacterFails(this.time());
     }
 
-    // Parse............................................................................................................
+    // ParseString......................................................................................................
 
     @Test
     public void testParseStringDateTimePatternFails() {
@@ -114,11 +117,75 @@ public final class SpreadsheetDatePatternsTest extends SpreadsheetPatternsTestCa
         this.parseStringFails("0#00", IllegalArgumentException.class);
     }
 
-    // helpers.........................................................................................................
+    // parser...........................................................................................................
+
+    @Test
+    public void testParseDateFails() {
+        this.parseFails2("dd/mm/yyyy;yyyy/mm/dd",
+                "123456");
+    }
+
+    @Test
+    public void testParseDateOnlyPattern() {
+        this.parseAndCheck2("dd/mm/yyyy",
+                "31/12/2000",
+                LocalDate.of(2000, 12, 31));
+    }
+
+    @Test
+    public void testParseDateOnlyPatternTwoDigitYear() {
+        this.parseAndCheck2("dd/mm/yy",
+                "31/12/20",
+                LocalDate.of(2020, 12, 31));
+    }
+
+    @Test
+    public void testParseDateOnlyPatternDefaultsYear() {
+        this.parseAndCheck2("dd/mm",
+                "31/12",
+                LocalDate.of(1900, 12, 31));
+    }
+
+    @Test
+    public void testParseDateOnlyPatternDefaultsMonth() {
+        this.parseAndCheck2("dd yyyy",
+                "31 2000",
+                LocalDate.of(2000, 1, 31));
+    }
+
+    @Test
+    public void testParseDateOnlyPatternDefaultsDay() {
+        this.parseAndCheck2("mm yyyy",
+                "12 2000",
+                LocalDate.of(2000, 12, 1));
+    }
+
+    @Test
+    public void testParseDateFirstPattern() {
+        this.parseAndCheck2("dd/mm/yyyy;yyyy/mm/dd",
+                "31/12/2000",
+                LocalDate.of(2000, 12, 31));
+    }
+
+    @Test
+    public void testParseDateSecondPattern() {
+        this.parseAndCheck2("dd/mm/yyyy;yyyy/mm/dd",
+                "2000/12/31",
+                LocalDate.of(2000, 12, 31));
+    }
+
+    @Test
+    public void testParseDateShortMonth() {
+        this.parseAndCheck2("dd/mmm/yyy;yyyy/mm/dd",
+                "31/Dec/2000",
+                LocalDate.of(2000, 12, 31));
+    }
+
+    // helpers..........................................................................................................
 
     @Override
     SpreadsheetDatePatterns createPattern(final List<SpreadsheetFormatDateParserToken> tokens) {
-        return SpreadsheetDatePatterns.withDate0(tokens);
+        return SpreadsheetDatePatterns.withTokens(tokens);
     }
 
     @Override
@@ -127,7 +194,7 @@ public final class SpreadsheetDatePatternsTest extends SpreadsheetPatternsTestCa
     }
 
     @Override
-    SpreadsheetFormatDateParserToken parseParserToken(final String text) {
+    SpreadsheetFormatDateParserToken parseFormatParserToken(final String text) {
         return SpreadsheetFormatParsers.date()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
@@ -136,9 +203,14 @@ public final class SpreadsheetDatePatternsTest extends SpreadsheetPatternsTestCa
     }
 
     @Override
-    SpreadsheetFormatDateParserToken createParserToken(final List<ParserToken> tokens,
-                                                       final String text) {
+    SpreadsheetFormatDateParserToken createFormatParserToken(final List<ParserToken> tokens,
+                                                             final String text) {
         return SpreadsheetFormatParserToken.date(tokens, text);
+    }
+
+    @Override
+    ParserToken parserParserToken(final LocalDate value, final String text) {
+        return ParserTokens.localDate(value, text);
     }
 
     // ClassTesting.....................................................................................................
