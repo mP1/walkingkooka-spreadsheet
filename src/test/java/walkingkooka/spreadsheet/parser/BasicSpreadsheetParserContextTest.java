@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.type.JavaVisibility;
@@ -45,7 +46,9 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
 
     @Override
     public BasicSpreadsheetParserContext createContext() {
-        return BasicSpreadsheetParserContext.with(DecimalNumberContexts.basic(CURRENCY,
+        return BasicSpreadsheetParserContext.with(
+                DateTimeContexts.fake(),
+                DecimalNumberContexts.basic(CURRENCY,
                 DECIMAL,
                 EXPONENT,
                 GROUPING,

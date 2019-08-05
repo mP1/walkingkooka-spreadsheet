@@ -107,7 +107,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final Function<BigDecimal, Fraction> fractioner,
                                           final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter) {
         super();
-        this.parserContext = SpreadsheetParserContexts.basic(converterContext);
+        this.parserContext = SpreadsheetParserContexts.basic(converterContext, converterContext);
 
         this.functions = functions;
         this.function = SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(engine, labelStore, this);
