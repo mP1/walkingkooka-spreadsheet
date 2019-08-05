@@ -18,6 +18,9 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
+import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.ParserContext;
+import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
 
@@ -29,15 +32,28 @@ public final class SpreadsheetNumberPatterns extends SpreadsheetPatterns<Spreads
     /**
      * Factory that creates a {@link SpreadsheetNumberPatterns} from the given tokens.
      */
-    static SpreadsheetNumberPatterns withNumber0(final List<SpreadsheetFormatNumberParserToken> value) {
-        return new SpreadsheetNumberPatterns(copyAndCheck(value, SpreadsheetNumberPatternsSpreadsheetFormatParserTokenVisitor.with()));
+    static SpreadsheetNumberPatterns withToken(final ParserToken token) {
+        final SpreadsheetNumberPatternsSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetNumberPatternsSpreadsheetFormatParserTokenVisitor.with();
+        visitor.startAccept(token);
+        return new SpreadsheetNumberPatterns(visitor.tokens());
+    }
+
+    /**
+     * Factory that creates a {@link SpreadsheetNumberPatterns} from the given tokens.
+     */
+    static SpreadsheetNumberPatterns withTokens(final List<SpreadsheetFormatNumberParserToken> tokens) {
+        check(tokens);
+
+        final SpreadsheetNumberPatternsSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetNumberPatternsSpreadsheetFormatParserTokenVisitor.with();
+        tokens.forEach(visitor::startAccept);
+        return new SpreadsheetNumberPatterns(visitor.tokens());
     }
 
     /**
      * Private ctor use factory
      */
-    private SpreadsheetNumberPatterns(final List<SpreadsheetFormatNumberParserToken> value) {
-        super(value);
+    private SpreadsheetNumberPatterns(final List<SpreadsheetFormatNumberParserToken> tokens) {
+        super(tokens);
     }
 
     @Override
@@ -65,5 +81,12 @@ public final class SpreadsheetNumberPatterns extends SpreadsheetPatterns<Spreads
     @Override
     boolean canBeEquals(final Object other) {
         return other instanceof SpreadsheetNumberPatterns;
+    }
+
+    // HasParser........................................................................................................
+
+    @Override
+    Parser<ParserContext> createParser() {
+        throw new UnsupportedOperationException();
     }
 }
