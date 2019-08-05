@@ -234,7 +234,7 @@ public final class ConditionSpreadsheetTextFormatterTest extends SpreadsheetText
 
             private final Converter converter = Converters.parser(BigDecimal.class,
                     Parsers.bigDecimal(),
-                    (c) -> ParserContexts.basic(c));
+                    (c) -> ParserContexts.basic(c, c));
         };
     }
 

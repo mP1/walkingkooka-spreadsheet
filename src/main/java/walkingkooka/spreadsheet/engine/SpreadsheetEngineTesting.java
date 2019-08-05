@@ -24,7 +24,9 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Range;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
+import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetError;
@@ -47,7 +49,9 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.type.JavaVisibility;
 
 import java.math.MathContext;
+import java.text.DateFormatSymbols;
 import java.util.Collection;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
@@ -783,8 +787,15 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default ConverterContext converterContext() {
-        return ConverterContexts.basic(DateTimeContexts.fake(),
-                DecimalNumberContexts.american(MathContext.DECIMAL32));
+        return ConverterContexts.basic(this.dateTimeContext(), this.decimalNumberContext());
+    }
+
+    default DateTimeContext dateTimeContext() {
+        return DateTimeContexts.dateFormatSymbols(new DateFormatSymbols(Locale.ENGLISH), 50);
+    }
+
+    default DecimalNumberContext decimalNumberContext() {
+        return DecimalNumberContexts.american(MathContext.DECIMAL32);
     }
 
     @Override
