@@ -19,8 +19,10 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.Cast;
 import walkingkooka.compare.Comparators;
 import walkingkooka.compare.Range;
+import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.text.cursor.TextCursors;
@@ -53,7 +55,7 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
     static SpreadsheetCellReference parseCellReference0(final String text) {
         try {
             final SpreadsheetCellReferenceParserToken token = PARSER.parse(TextCursors.charSequence(text),
-                    SpreadsheetParserContexts.basic(DecimalNumberContexts.american(MathContext.DECIMAL32)))
+                    CONTEXT)
                     .get().cast();
             return token.cell();
         } catch (final ParserException cause) {
@@ -62,6 +64,8 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
     }
 
     private static final Parser<ParserContext> PARSER = SpreadsheetParsers.columnAndRow().orReport(ParserReporters.basic());
+    private static final SpreadsheetParserContext CONTEXT = SpreadsheetParserContexts.basic(DateTimeContexts.fake(),
+            DecimalNumberContexts.american(MathContext.DECIMAL32));
 
     /**
      * Factory that creates a {@link SpreadsheetCellReference} with the given column and row.

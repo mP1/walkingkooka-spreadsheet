@@ -25,6 +25,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
+import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
@@ -4780,7 +4781,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             public SpreadsheetParserToken parseFormula(final String formula) {
                 return SpreadsheetParsers.expression()
                         .orFailIfCursorNotEmpty(ParserReporters.basic())
-                        .parse(TextCursors.charSequence(formula), SpreadsheetParserContexts.basic(converterContext()))
+                        .parse(TextCursors.charSequence(formula), SpreadsheetParserContexts.basic(DateTimeContexts.fake(), converterContext()))
                         .get().cast();
             }
 
@@ -4974,7 +4975,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final String formulaText = formula.text();
         final SpreadsheetParserToken token = SpreadsheetParsers.expression()
                 .parse(TextCursors.charSequence(formulaText),
-                        SpreadsheetParserContexts.basic(converterContext()))
+                        SpreadsheetParserContexts.basic(this.dateTimeContext(), this.decimalNumberContext()))
                 .orElseThrow(() -> new AssertionError("Failed to parse " + CharSequences.quote(formulaText)))
                 .cast();
         return token.expressionNode();

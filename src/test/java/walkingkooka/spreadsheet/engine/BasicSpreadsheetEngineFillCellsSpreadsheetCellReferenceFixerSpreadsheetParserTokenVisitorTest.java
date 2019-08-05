@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -34,7 +35,8 @@ public final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerS
 
     @Test
     public void testZeroZeroOffset() {
-        final SpreadsheetParserToken token = SpreadsheetParsers.cellReferences().parse(TextCursors.charSequence("$A$1"), SpreadsheetParserContexts.basic(DecimalNumberContexts.american(MathContext.DECIMAL32)))
+        final SpreadsheetParserToken token = SpreadsheetParsers.cellReferences()
+                .parse(TextCursors.charSequence("$A$1"), SpreadsheetParserContexts.basic(DateTimeContexts.fake(), DecimalNumberContexts.american(MathContext.DECIMAL32)))
                 .map(SpreadsheetParserToken.class::cast)
                 .orElseThrow(() -> new Error("Unable to parse"));
         assertSame(token,

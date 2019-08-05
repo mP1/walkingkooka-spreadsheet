@@ -17,9 +17,11 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 
 import java.math.MathContext;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -28,66 +30,112 @@ import java.util.Objects;
  */
 final class BasicSpreadsheetParserContext implements SpreadsheetParserContext {
 
-    static BasicSpreadsheetParserContext with(final DecimalNumberContext context) {
-        Objects.requireNonNull(context, "context");
+    /**
+     * Creates a new {@link BasicSpreadsheetParserContext}.
+     */
+    static BasicSpreadsheetParserContext with(final DateTimeContext dateTimeContext,
+                                              final DecimalNumberContext decimalNumberContext) {
+        Objects.requireNonNull(dateTimeContext, "dateTimeContext");
+        Objects.requireNonNull(decimalNumberContext, "decimalNumberContext");
 
-        return new BasicSpreadsheetParserContext(context);
+        return new BasicSpreadsheetParserContext(dateTimeContext, decimalNumberContext);
     }
 
-    private BasicSpreadsheetParserContext(final DecimalNumberContext context) {
+    /**
+     * Private ctor use factory
+     */
+    private BasicSpreadsheetParserContext(final DateTimeContext dateTimeContext,
+                                          final DecimalNumberContext decimalNumberContext) {
         super();
-        this.context = context;
+        this.dateTimeContext = dateTimeContext;
+        this.decimalNumberContext = decimalNumberContext;
+    }
+
+    // DateTimeContext..................................................................................................
+
+    @Override
+    public List<String> ampms() {
+        return this.dateTimeContext.ampms();
     }
 
     @Override
+    public List<String> monthNames() {
+        return this.dateTimeContext.monthNames();
+    }
+
+    @Override
+    public List<String> monthNameAbbreviations() {
+        return this.dateTimeContext.monthNameAbbreviations();
+    }
+
+    @Override
+    public int twoDigitYear() {
+        return this.dateTimeContext.twoDigitYear();
+    }
+
+    @Override
+    public List<String> weekDayNames() {
+        return this.dateTimeContext.weekDayNames();
+    }
+
+    @Override
+    public List<String> weekDayNameAbbreviations() {
+        return this.dateTimeContext.weekDayNameAbbreviations();
+    }
+
+    private final DateTimeContext dateTimeContext;
+
+    // DecimalNumberContext.............................................................................................
+
+    @Override
     public String currencySymbol() {
-        return this.context.currencySymbol();
+        return this.decimalNumberContext.currencySymbol();
     }
 
     @Override
     public char decimalPoint() {
-        return this.context.decimalPoint();
+        return this.decimalNumberContext.decimalPoint();
     }
 
     @Override
     public char exponentSymbol() {
-        return this.context.exponentSymbol();
+        return this.decimalNumberContext.exponentSymbol();
     }
 
     @Override
     public char groupingSeparator() {
-        return this.context.groupingSeparator();
+        return this.decimalNumberContext.groupingSeparator();
     }
 
     @Override
     public char minusSign() {
-        return this.context.minusSign();
+        return this.decimalNumberContext.minusSign();
     }
 
     @Override
     public char percentageSymbol() {
-        return this.context.percentageSymbol();
+        return this.decimalNumberContext.percentageSymbol();
     }
 
     @Override
     public char plusSign() {
-        return this.context.plusSign();
+        return this.decimalNumberContext.plusSign();
     }
 
     @Override
     public Locale locale() {
-        return this.context.locale();
+        return this.decimalNumberContext.locale();
     }
 
     @Override
     public MathContext mathContext() {
-        return this.context.mathContext();
+        return this.decimalNumberContext.mathContext();
     }
 
-    private final DecimalNumberContext context;
+    private final DecimalNumberContext decimalNumberContext;
 
     @Override
     public String toString() {
-        return this.context.toString();
+        return this.dateTimeContext + " " + this.decimalNumberContext;
     }
 }

@@ -24,7 +24,6 @@ import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.function.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -993,8 +992,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private SpreadsheetParserToken parse(final String parse) {
         final TextCursor cursor = TextCursors.charSequence(parse);
-        final Optional<ParserToken> spreadsheetFormula = this.createParser().parse(cursor,
-                SpreadsheetParserContexts.basic(DecimalNumberContexts.american(MathContext.DECIMAL32)));
+        final Optional<ParserToken> spreadsheetFormula = this.createParser().parse(cursor, this.createContext());
         if (!spreadsheetFormula.isPresent()) {
             fail("Parser failed to parseCellReference " + CharSequences.quoteAndEscape(parse));
         }
@@ -1013,7 +1011,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final ExpressionNodeName toDateTime = ExpressionNodeName.with("toDateTime");
         final ExpressionNodeName toTime = ExpressionNodeName.with("toTime");
 
-        final Function<ConverterContext, ParserContext> parserContext = (c) -> ParserContexts.basic(c);
+        final Function<ConverterContext, ParserContext> parserContext = (c) -> ParserContexts.basic(c, c);
 
         final Converter stringBigDecimal = Converters.parser(BigDecimal.class,
                 Parsers.bigDecimal(),
@@ -1105,7 +1103,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     @Override
     public SpreadsheetParserContext createContext() {
-        return SpreadsheetParserContexts.basic(this.decimalNumberContext());
+        return SpreadsheetParserContexts.basic(this.dateTimeContext(), this.decimalNumberContext());
     }
 
     private SpreadsheetParserToken bigDecimal(final double value) {
