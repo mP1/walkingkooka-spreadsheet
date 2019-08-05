@@ -19,8 +19,10 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
 import walkingkooka.Value;
+import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.http.server.hateos.HasHateosLinkId;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.test.HashCodeEqualsDefined;
@@ -51,13 +53,15 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
                                                        final Parser<ParserContext> parser,
                                                        final Class<T> type) {
         try {
-            return type.cast(parser.parse(TextCursors.charSequence(text),
-                    SpreadsheetParserContexts.basic(DecimalNumberContexts.american(MathContext.DECIMAL32)))
+            return type.cast(parser.parse(TextCursors.charSequence(text), CONTEXT)
                     .get());
         } catch (final ParserException cause) {
             throw new IllegalArgumentException(cause.getMessage(), cause);
         }
     }
+
+    private final static SpreadsheetParserContext CONTEXT = SpreadsheetParserContexts.basic(DateTimeContexts.fake(),
+            DecimalNumberContexts.american(MathContext.DECIMAL32));
 
     final static int CACHE_SIZE = 100;
 
