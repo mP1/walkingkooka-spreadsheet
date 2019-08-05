@@ -18,26 +18,43 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
+import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.ParserContext;
+import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.text.cursor.parser.Parsers;
 
 import java.util.List;
 
 /**
  * Holds a valid {@link SpreadsheetDatePatterns}.
  */
-public final class SpreadsheetDatePatterns extends SpreadsheetPatterns<SpreadsheetFormatDateParserToken> {
+public final class SpreadsheetDatePatterns extends SpreadsheetPatterns2<SpreadsheetFormatDateParserToken> {
+    
+     /**
+     * Factory that creates a {@link SpreadsheetDatePatterns} from the given tokens.
+     */
+    static SpreadsheetDatePatterns withToken(final ParserToken token) {
+        final SpreadsheetDatePatternsSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetDatePatternsSpreadsheetFormatParserTokenVisitor.with();
+        visitor.startAccept(token);
+        return new SpreadsheetDatePatterns(visitor.tokens());
+    }
 
     /**
      * Factory that creates a {@link SpreadsheetDatePatterns} from the given tokens.
      */
-    static SpreadsheetDatePatterns withDate0(final List<SpreadsheetFormatDateParserToken> value) {
-        return new SpreadsheetDatePatterns(copyAndCheck(value, SpreadsheetDatePatternsSpreadsheetFormatParserTokenVisitor.with()));
+    static SpreadsheetDatePatterns withTokens(final List<SpreadsheetFormatDateParserToken> tokens) {
+        check(tokens);
+
+        final SpreadsheetDatePatternsSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetDatePatternsSpreadsheetFormatParserTokenVisitor.with();
+        tokens.forEach(visitor::startAccept);
+        return new SpreadsheetDatePatterns(visitor.tokens());
     }
 
     /**
      * Private ctor use factory
      */
-    private SpreadsheetDatePatterns(final List<SpreadsheetFormatDateParserToken> value) {
-        super(value);
+    private SpreadsheetDatePatterns(final List<SpreadsheetFormatDateParserToken> tokens) {
+        super(tokens);
     }
 
     @Override
@@ -51,11 +68,6 @@ public final class SpreadsheetDatePatterns extends SpreadsheetPatterns<Spreadshe
     }
 
     @Override
-    public boolean isNumber() {
-        return false;
-    }
-
-    @Override
     public boolean isTime() {
         return false;
     }
@@ -65,5 +77,13 @@ public final class SpreadsheetDatePatterns extends SpreadsheetPatterns<Spreadshe
     @Override
     boolean canBeEquals(final Object other) {
         return other instanceof SpreadsheetDatePatterns;
+    }
+
+    // HasParser........................................................................................................
+
+    @Override
+    Parser<ParserContext> createDateTimeFormatterParser(final int i) {
+        return Parsers.localDate(SpreadsheetPatterns2DateTimeContextDateTimeFormatterFunction.with(this.value().get(i),
+                false)); // AMPM=false
     }
 }

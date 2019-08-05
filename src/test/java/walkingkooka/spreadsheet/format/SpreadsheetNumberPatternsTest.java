@@ -25,12 +25,15 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.text.cursor.parser.ParserTokens;
 import walkingkooka.tree.json.JsonNode;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public final class SpreadsheetNumberPatternsTest extends SpreadsheetPatternsTestCase<SpreadsheetNumberPatterns,
-        SpreadsheetFormatNumberParserToken> {
+        SpreadsheetFormatNumberParserToken,
+        BigDecimal> {
 
     @Test
     public void testWithAmpmFails() {
@@ -93,7 +96,7 @@ public final class SpreadsheetNumberPatternsTest extends SpreadsheetPatternsTest
 
     @Override
     SpreadsheetNumberPatterns createPattern(final List<SpreadsheetFormatNumberParserToken> tokens) {
-        return SpreadsheetNumberPatterns.withNumber0(tokens);
+        return SpreadsheetNumberPatterns.withTokens(tokens);
     }
 
     @Override
@@ -102,7 +105,7 @@ public final class SpreadsheetNumberPatternsTest extends SpreadsheetPatternsTest
     }
 
     @Override
-    SpreadsheetFormatNumberParserToken parseParserToken(final String text) {
+    SpreadsheetFormatNumberParserToken parseFormatParserToken(final String text) {
         return SpreadsheetFormatParsers.number()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
@@ -111,9 +114,14 @@ public final class SpreadsheetNumberPatternsTest extends SpreadsheetPatternsTest
     }
 
     @Override
-    SpreadsheetFormatNumberParserToken createParserToken(final List<ParserToken> tokens,
-                                                         final String text) {
+    SpreadsheetFormatNumberParserToken createFormatParserToken(final List<ParserToken> tokens,
+                                                               final String text) {
         return SpreadsheetFormatParserToken.number(tokens, text);
+    }
+
+    @Override
+    ParserToken parserParserToken(final BigDecimal value, final String text) {
+        return ParserTokens.bigDecimal(value, text);
     }
 
     // ClassTesting.....................................................................................................

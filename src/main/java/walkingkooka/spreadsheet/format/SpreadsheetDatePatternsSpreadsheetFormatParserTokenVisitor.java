@@ -46,7 +46,7 @@ final class SpreadsheetDatePatternsSpreadsheetFormatParserTokenVisitor extends S
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatDateParserToken token) {
-        this.tokens.add(token);
+        this.addToken(token);
         return Visiting.CONTINUE;
     }
 

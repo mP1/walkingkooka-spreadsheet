@@ -25,12 +25,15 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.text.cursor.parser.ParserTokens;
 import walkingkooka.tree.json.JsonNode;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public final class SpreadsheetDateTimePatternsTest extends SpreadsheetPatternsTestCase<SpreadsheetDateTimePatterns,
-        SpreadsheetFormatDateTimeParserToken> {
+        SpreadsheetFormatDateTimeParserToken,
+        LocalDateTime> {
 
     @Test
     public void testWithCurrencyFails() {
@@ -77,18 +80,82 @@ public final class SpreadsheetDateTimePatternsTest extends SpreadsheetPatternsTe
         this.withInvalidCharacterFails(this.time());
     }
 
-    // ParseString............................................................................................................
+    // ParseString.......................................................................................................
 
     @Test
     public void testParseStringNumberPatternFails() {
         this.parseStringFails("0#00", IllegalArgumentException.class);
     }
 
+    // parser...........................................................................................................
+
+    @Test
+    public void testParseDateTimeFails() {
+        this.parseFails2("hhmmss ddmmss",
+                "12345!");
+    }
+
+    @Test
+    public void testParseHourMinutesOnlyPattern() {
+        this.parseAndCheck2("hh:mm",
+                "11:59",
+                LocalDateTime.of(1900, 1, 1, 11, 59));
+    }
+
+    @Test
+    public void testParseHourMinutesSecondsOnlyPattern() {
+        this.parseAndCheck2("hh:mm:ss",
+                "11:58:59",
+                LocalDateTime.of(1900, 1, 1, 11, 58, 59));
+    }
+
+    @Test
+    public void testParseHourMinutesSecondsAmpmOnlyPattern() {
+        this.parseAndCheck2("hh:mm:ss AM/PM",
+                "11:58:59 PM",
+                LocalDateTime.of(1900, 1, 1, 23, 58, 59));
+    }
+
+    @Test
+    public void testParseHourDefaultsMinutes() {
+        this.parseAndCheck2("hh",
+                "11",
+                LocalDateTime.of(1900, 1, 1, 11, 0, 0));
+    }
+
+    @Test
+    public void testParseDateTimeYearMonthDay() {
+        this.parseAndCheck2("yyyymmdd",
+                "20001231",
+                LocalDateTime.of(2000, 12, 31, 0, 0, 0));
+    }
+
+    @Test
+    public void testParseDateTimeYear() {
+        this.parseAndCheck2("yyyy",
+                "2000",
+                LocalDateTime.of(2000, 1, 1, 0, 0, 0));
+    }
+
+    @Test
+    public void testParseDateTimeYearMonth() {
+        this.parseAndCheck2("yyyymm",
+                "200012",
+                LocalDateTime.of(2000, 12, 1, 0, 0, 0));
+    }
+
+    @Test
+    public void testParseDateTimeMultiplePatterns() {
+        this.parseAndCheck2("\"A\"ddmmyyyy hhmmss;\"B\"ddmmyyyy hhmmss",
+                "B31122000 115859",
+                LocalDateTime.of(2000, 12, 31, 11, 58, 59));
+    }
+
     // helpers.........................................................................................................
 
     @Override
     SpreadsheetDateTimePatterns createPattern(final List<SpreadsheetFormatDateTimeParserToken> tokens) {
-        return SpreadsheetDateTimePatterns.withDateTime0(tokens);
+        return SpreadsheetDateTimePatterns.withTokens(tokens);
     }
 
     @Override
@@ -97,7 +164,7 @@ public final class SpreadsheetDateTimePatternsTest extends SpreadsheetPatternsTe
     }
 
     @Override
-    SpreadsheetFormatDateTimeParserToken parseParserToken(final String text) {
+    SpreadsheetFormatDateTimeParserToken parseFormatParserToken(final String text) {
         return SpreadsheetFormatParsers.dateTime()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
@@ -106,9 +173,14 @@ public final class SpreadsheetDateTimePatternsTest extends SpreadsheetPatternsTe
     }
 
     @Override
-    SpreadsheetFormatDateTimeParserToken createParserToken(final List<ParserToken> tokens,
-                                                           final String text) {
+    SpreadsheetFormatDateTimeParserToken createFormatParserToken(final List<ParserToken> tokens,
+                                                                 final String text) {
         return SpreadsheetFormatParserToken.dateTime(tokens, text);
+    }
+
+    @Override
+    ParserToken parserParserToken(final LocalDateTime value, final String text) {
+        return ParserTokens.localDateTime(value, text);
     }
 
     // ClassTesting.....................................................................................................
