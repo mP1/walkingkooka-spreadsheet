@@ -21,6 +21,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 
 import java.math.MathContext;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -33,6 +34,11 @@ final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatPars
     private BasicSpreadsheetFormatParserContext() {
         super();
         this.context = DecimalNumberContexts.american(MathContext.UNLIMITED);
+    }
+
+    @Override
+    public List<String> ampms() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -56,8 +62,28 @@ final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatPars
     }
 
     @Override
+    public Locale locale() {
+        return this.context.locale();
+    }
+
+    @Override
+    public MathContext mathContext() {
+        return this.context.mathContext();
+    }
+
+    @Override
     public char minusSign() {
         return this.context.minusSign();
+    }
+
+    @Override
+    public List<String> monthNames() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<String> monthNameAbbreviations() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -71,13 +97,18 @@ final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatPars
     }
 
     @Override
-    public Locale locale() {
-        return this.context.locale();
+    public int twoDigitYear() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public MathContext mathContext() {
-        return this.context.mathContext();
+    public List<String> weekDayNames() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<String> weekDayNameAbbreviations() {
+        throw new UnsupportedOperationException();
     }
 
     private final DecimalNumberContext context;
