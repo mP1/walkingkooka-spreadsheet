@@ -36,7 +36,6 @@ import walkingkooka.tree.json.JsonNode;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.text.DateFormatSymbols;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -187,7 +186,7 @@ public abstract class SpreadsheetMetadata implements HasDateTimeContext,
 
         components.reportIfMissing();
 
-        return DateTimeContexts.dateFormatSymbols(DateFormatSymbols.getInstance(locale), twoYearDigit);
+        return DateTimeContexts.locale(locale, twoYearDigit);
     }
 
     // HasDecimalNumberContext..........................................................................................
