@@ -49,9 +49,7 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.type.JavaVisibility;
 
 import java.math.MathContext;
-import java.text.DateFormatSymbols;
 import java.util.Collection;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
@@ -791,7 +789,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default DateTimeContext dateTimeContext() {
-        return DateTimeContexts.dateFormatSymbols(new DateFormatSymbols(Locale.ENGLISH), 50);
+        return DateTimeContexts.locale(this.decimalNumberContext().locale(), 50);
     }
 
     default DecimalNumberContext decimalNumberContext() {
