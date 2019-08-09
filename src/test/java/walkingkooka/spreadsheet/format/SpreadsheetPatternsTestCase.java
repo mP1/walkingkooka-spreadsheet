@@ -274,34 +274,34 @@ public abstract class SpreadsheetPatternsTestCase<P extends SpreadsheetPatterns<
     // Parse............................................................................................................
 
     @Test
-    public final void testParseIllegalPatternFails() {
-        this.parseFails("\"unclosed quoted text inside patterns", IllegalArgumentException.class);
+    public final void testParseStringIllegalPatternFails() {
+        this.parseStringFails("\"unclosed quoted text inside patterns", IllegalArgumentException.class);
     }
 
     @Test
-    public final void testParseHangingSeparatorFails() {
-        this.parseFails(this.patternText() + ";", IllegalArgumentException.class);
+    public final void testParseStringHangingSeparatorFails() {
+        this.parseStringFails(this.patternText() + ";", IllegalArgumentException.class);
     }
 
     @Test
-    public final void testParseGeneralFails() {
-        this.parseFails("General", IllegalArgumentException.class);
+    public final void testParseStringGeneralFails() {
+        this.parseStringFails("General", IllegalArgumentException.class);
     }
 
     @Test
-    public final void testParse() {
+    public final void testParseString() {
         final String patternText = this.patternText();
 
-        this.parseAndCheck(patternText,
+        this.parseStringAndCheck(patternText,
                 this.createPattern(Lists.of(this.parseParserToken(patternText))));
     }
 
     @Test
-    public final void testParseSeveralTokens() {
+    public final void testParseStringSeveralTokens() {
         final String patternText = "\"text-literal-123\"";
         final String patternText2 = this.patternText();
 
-        this.parseAndCheck(patternText + ";" + patternText2,
+        this.parseStringAndCheck(patternText + ";" + patternText2,
                 this.createPattern(Lists.of(parseParserToken(patternText), parseParserToken(patternText2))));
     }
 
@@ -394,12 +394,12 @@ public abstract class SpreadsheetPatternsTestCase<P extends SpreadsheetPatterns<
     // ParseStringTesting...............................................................................................
 
     @Override
-    public final Class<? extends RuntimeException> parseFailedExpected(final Class<? extends RuntimeException> expected) {
+    public final Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> expected) {
         return expected;
     }
 
     @Override
-    public final RuntimeException parseFailedExpected(final RuntimeException expected) {
+    public final RuntimeException parseStringFailedExpected(final RuntimeException expected) {
         return expected;
     }
 }

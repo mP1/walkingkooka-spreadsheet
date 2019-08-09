@@ -79,32 +79,32 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testParseEmptyFails() {
-        this.parseFails("", IllegalArgumentException.class);
+        this.parseStringFails("", IllegalArgumentException.class);
     }
 
     @Test
     public void testParseInvalidFails() {
-        this.parseFails("!9", IllegalArgumentException.class);
+        this.parseStringFails("!9", IllegalArgumentException.class);
     }
 
     @Test
     public void testParseAbsolute() {
-        this.parseAndCheck("$1", SpreadsheetReferenceKind.ABSOLUTE.row(0));
+        this.parseStringAndCheck("$1", SpreadsheetReferenceKind.ABSOLUTE.row(0));
     }
 
     @Test
     public void testParseAbsolute2() {
-        this.parseAndCheck("$2", SpreadsheetReferenceKind.ABSOLUTE.row(1));
+        this.parseStringAndCheck("$2", SpreadsheetReferenceKind.ABSOLUTE.row(1));
     }
 
     @Test
     public void testParseRelative() {
-        this.parseAndCheck("1", SpreadsheetReferenceKind.RELATIVE.row(0));
+        this.parseStringAndCheck("1", SpreadsheetReferenceKind.RELATIVE.row(0));
     }
 
     @Test
     public void testParseRelative2() {
-        this.parseAndCheck("2", SpreadsheetReferenceKind.RELATIVE.row(1));
+        this.parseStringAndCheck("2", SpreadsheetReferenceKind.RELATIVE.row(1));
     }
 
     // parseRange....................................................................................................
@@ -192,17 +192,17 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     // ParseStringTesting............................................................................................
 
     @Override
-    public SpreadsheetRowReference parse(final String text) {
+    public SpreadsheetRowReference parseString(final String text) {
         return SpreadsheetRowReference.parse(text);
     }
 
     @Override
-    public Class<? extends RuntimeException> parseFailedExpected(final Class<? extends RuntimeException> expected) {
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> expected) {
         return expected;
     }
 
     @Override
-    public RuntimeException parseFailedExpected(final RuntimeException expected) {
+    public RuntimeException parseStringFailedExpected(final RuntimeException expected) {
         return expected;
     }
 }
