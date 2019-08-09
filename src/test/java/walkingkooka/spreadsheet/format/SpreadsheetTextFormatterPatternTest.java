@@ -52,11 +52,11 @@ public final class SpreadsheetTextFormatterPatternTest implements ClassTesting2<
         assertEquals(with.value(), pattern.value(), "value");
     }
 
-    // Parse............................................................................................................
+    // ParseString.......................................................................................................
 
     @Test
-    public void testParseIllegalPatternFails() {
-        this.parseFails("\"unclosed quoted text inside patterns", IllegalArgumentException.class);
+    public void testParseStringIllegalPatternFails() {
+        this.parseStringFails("\"unclosed quoted text inside patterns", IllegalArgumentException.class);
     }
 
     @Test
@@ -124,17 +124,17 @@ public final class SpreadsheetTextFormatterPatternTest implements ClassTesting2<
     // ParseStringTesting...............................................................................................
 
     @Override
-    public SpreadsheetTextFormatterPattern parse(final String text) {
+    public SpreadsheetTextFormatterPattern parseString(final String text) {
         return SpreadsheetTextFormatterPattern.parse(text);
     }
 
     @Override
-    public Class<? extends RuntimeException> parseFailedExpected(final Class<? extends RuntimeException> expected) {
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> expected) {
         return expected;
     }
 
     @Override
-    public RuntimeException parseFailedExpected(final RuntimeException expected) {
+    public RuntimeException parseStringFailedExpected(final RuntimeException expected) {
         return expected;
     }
 }
