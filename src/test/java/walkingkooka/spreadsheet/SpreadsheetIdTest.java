@@ -55,16 +55,16 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
         this.hateosLinkIdAndCheck(SpreadsheetId.with(0x1f), "1f");
     }
 
-    // Parse............................................................................................................
+    // ParseString............................................................................................................
 
     @Test
     public void testParseInvalidFails() {
-        this.parseFails("XYZ", IllegalArgumentException.class);
+        this.parseStringFails("XYZ", IllegalArgumentException.class);
     }
 
     @Test
     public void testParse() {
-        this.parseAndCheck("1A", SpreadsheetId.with(0x1a));
+        this.parseStringAndCheck("1A", SpreadsheetId.with(0x1a));
     }
 
     @Test
@@ -163,20 +163,20 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
         return SpreadsheetId.fromJsonNode(node);
     }
 
-    // ParseStringTesting...............................................................................................
+    // ParseStringStringTesting...............................................................................................
 
     @Override
-    public SpreadsheetId parse(final String text) {
+    public SpreadsheetId parseString(final String text) {
         return SpreadsheetId.parse(text);
     }
 
     @Override
-    public Class<? extends RuntimeException> parseFailedExpected(final Class<? extends RuntimeException> type) {
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> type) {
         return type;
     }
 
     @Override
-    public RuntimeException parseFailedExpected(final RuntimeException cause) {
+    public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
         return cause;
     }
 }

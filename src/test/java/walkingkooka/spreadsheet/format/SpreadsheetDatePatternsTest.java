@@ -105,13 +105,13 @@ public final class SpreadsheetDatePatternsTest extends SpreadsheetPatternsTestCa
     // Parse............................................................................................................
 
     @Test
-    public void testParseDateTimePatternFails() {
-        this.parseFails("ddmmyyyy hhmmss", IllegalArgumentException.class);
+    public void testParseStringDateTimePatternFails() {
+        this.parseStringFails("ddmmyyyy hhmmss", IllegalArgumentException.class);
     }
 
     @Test
-    public void testParseNumberPatternFails() {
-        this.parseFails("0#00", IllegalArgumentException.class);
+    public void testParseStringNumberPatternFails() {
+        this.parseStringFails("0#00", IllegalArgumentException.class);
     }
 
     // helpers.........................................................................................................
@@ -158,7 +158,7 @@ public final class SpreadsheetDatePatternsTest extends SpreadsheetPatternsTestCa
     // ParseStringTesting...............................................................................................
 
     @Override
-    public SpreadsheetDatePatterns parse(final String text) {
+    public SpreadsheetDatePatterns parseString(final String text) {
         return SpreadsheetDatePatterns.parseDate(text);
     }
 }
