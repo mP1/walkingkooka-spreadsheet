@@ -1025,13 +1025,13 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 Parsers.doubleParser(),
                 parserContext);
         final Converter stringLocalDate = Converters.parser(LocalDate.class,
-                Parsers.localDate(DateTimeFormatter.ISO_LOCAL_DATE, "yyyy-MM-dd"),
+                Parsers.localDate((c) -> DateTimeFormatter.ISO_LOCAL_DATE),
                 parserContext);
         final Converter stringLocalDateTime = Converters.parser(LocalDateTime.class,
-                Parsers.localDateTime(DateTimeFormatter.ISO_LOCAL_DATE_TIME, "yyyy-MM-dd'T'hh:mm"),
+                Parsers.localDateTime((c) -> DateTimeFormatter.ISO_LOCAL_DATE_TIME),
                 parserContext);
         final Converter stringLocalTime = Converters.parser(LocalTime.class,
-                Parsers.localTime(DateTimeFormatter.ISO_LOCAL_TIME, "hh:mm"),
+                Parsers.localTime((c) -> DateTimeFormatter.ISO_LOCAL_TIME),
                 parserContext);
         final Converter stringLong = Converters.parser(Long.class,
                 Parsers.longParser(10),
