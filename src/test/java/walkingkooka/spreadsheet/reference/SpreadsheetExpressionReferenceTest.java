@@ -91,13 +91,13 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     @Test
     public void testParseCellReference() {
         final String reference = "A1";
-        this.parseAndCheck(reference, SpreadsheetExpressionReference.parseCellReference(reference));
+        this.parseStringAndCheck(reference, SpreadsheetExpressionReference.parseCellReference(reference));
     }
 
     @Test
     public void testParseLabel() {
         final String label = "label123";
-        this.parseAndCheck(label, SpreadsheetExpressionReference.labelName(label));
+        this.parseStringAndCheck(label, SpreadsheetExpressionReference.labelName(label));
     }
 
     // ClassTesting.....................................................................................................
@@ -115,17 +115,17 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     // ParseStringTesting...............................................................................................
 
     @Override
-    public SpreadsheetExpressionReference parse(final String text) {
+    public SpreadsheetExpressionReference parseString(final String text) {
         return SpreadsheetExpressionReference.parse(text);
     }
 
     @Override
-    public Class<? extends RuntimeException> parseFailedExpected(Class<? extends RuntimeException> throwing) {
+    public Class<? extends RuntimeException> parseStringFailedExpected(Class<? extends RuntimeException> throwing) {
         return throwing;
     }
 
     @Override
-    public RuntimeException parseFailedExpected(final RuntimeException expected) {
+    public RuntimeException parseStringFailedExpected(final RuntimeException expected) {
         return expected;
     }
 }

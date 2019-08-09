@@ -780,32 +780,32 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
 
     @Test
     public void testParseMissingSeparatorSingleton() {
-        this.parseAndCheck("A1", SpreadsheetRange.cellToRange(SpreadsheetExpressionReference.parseCellReference("A1")));
+        this.parseStringAndCheck("A1", SpreadsheetRange.cellToRange(SpreadsheetExpressionReference.parseCellReference("A1")));
     }
 
     @Test
     public void testParseMissingBeginFails() {
-        this.parseFails(":A2", IllegalArgumentException.class);
+        this.parseStringFails(":A2", IllegalArgumentException.class);
     }
 
     @Test
     public void testParseMissingEndFails() {
-        this.parseFails("A2:", IllegalArgumentException.class);
+        this.parseStringFails("A2:", IllegalArgumentException.class);
     }
 
     @Test
     public void testParseInvalidBeginFails() {
-        this.parseFails("##..A2", IllegalArgumentException.class);
+        this.parseStringFails("##..A2", IllegalArgumentException.class);
     }
 
     @Test
     public void testParseInvalidEndFails() {
-        this.parseFails("A1:##", IllegalArgumentException.class);
+        this.parseStringFails("A1:##", IllegalArgumentException.class);
     }
 
     @Test
     public void testParse() {
-        this.parseAndCheck("A1:A2", SpreadsheetRange.with(SpreadsheetExpressionReference.parseCellReference("A1").range(SpreadsheetExpressionReference.parseCellReference("A2"))));
+        this.parseStringAndCheck("A1:A2", SpreadsheetRange.with(SpreadsheetExpressionReference.parseCellReference("A1").range(SpreadsheetExpressionReference.parseCellReference("A2"))));
     }
 
     // HasJsonNode......................................................................................................
@@ -978,17 +978,17 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
     // ParseStringTesting..................................................................................................
 
     @Override
-    public SpreadsheetRange parse(final String text) {
+    public SpreadsheetRange parseString(final String text) {
         return SpreadsheetRange.parseRange0(text);
     }
 
     @Override
-    public Class<? extends RuntimeException> parseFailedExpected(final Class<? extends RuntimeException> classs) {
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> classs) {
         return classs;
     }
 
     @Override
-    public RuntimeException parseFailedExpected(final RuntimeException cause) {
+    public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
         return cause;
     }
 
