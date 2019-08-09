@@ -338,20 +338,20 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
 
     @Test
     public void testParseInvalidCellReferenceFails() {
-        this.parseFails("Invalid",
+        this.parseStringFails("Invalid",
                 IllegalArgumentException.class);
     }
 
     @Test
     public void testParseCellReferenceRelative() {
-        this.parseAndCheck("A98",
+        this.parseStringAndCheck("A98",
                 SpreadsheetColumnReference.with(0, SpreadsheetReferenceKind.RELATIVE)
                         .setRow(SpreadsheetRowReference.with(97, SpreadsheetReferenceKind.RELATIVE)));
     }
 
     @Test
     public void testParseCellReferenceAbsolute() {
-        this.parseAndCheck("$A$98",
+        this.parseStringAndCheck("$A$98",
                 SpreadsheetColumnReference.with(0, SpreadsheetReferenceKind.ABSOLUTE)
                         .setRow(SpreadsheetRowReference.with(97, SpreadsheetReferenceKind.ABSOLUTE)));
     }
@@ -575,17 +575,17 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
     // ParseStringTesting.........................................................................................
 
     @Override
-    public SpreadsheetCellReference parse(final String text) {
+    public SpreadsheetCellReference parseString(final String text) {
         return SpreadsheetExpressionReference.parseCellReference(text);
     }
 
     @Override
-    public Class<? extends RuntimeException> parseFailedExpected(final Class<? extends RuntimeException> expected) {
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> expected) {
         return expected;
     }
 
     @Override
-    public RuntimeException parseFailedExpected(final RuntimeException expected) {
+    public RuntimeException parseStringFailedExpected(final RuntimeException expected) {
         return expected;
     }
 
