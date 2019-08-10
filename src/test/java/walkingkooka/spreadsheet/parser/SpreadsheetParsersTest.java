@@ -36,7 +36,7 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserContexts;
-import walkingkooka.text.cursor.parser.ParserTesting;
+import walkingkooka.text.cursor.parser.ParserTesting2;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -63,13 +63,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<SpreadsheetParsers>,
-        ParserTesting<Parser<SpreadsheetParserContext>, SpreadsheetParserContext> {
+        ParserTesting2<Parser<SpreadsheetParserContext>, SpreadsheetParserContext> {
 
     @Test
     public void testText() {
         final String text = "\"abc-123\"";
 
-        this.parseAndCheck(text, SpreadsheetTextParserToken.text("abc-123", text), text);
+        this.parseAndCheck(text,
+                SpreadsheetTextParserToken.text("abc-123", text),
+                text);
     }
 
     @Test
