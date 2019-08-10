@@ -158,6 +158,11 @@ public abstract class SpreadsheetFormatParserTestCase {
         return SpreadsheetFormatParserToken.fractionSymbol("/", "/");
     }
 
+    static SpreadsheetFormatParserToken general() {
+        final List<ParserToken> tokens = Lists.of(generalSymbol());
+        return SpreadsheetFormatParserToken.general(tokens, ParserToken.text(tokens));
+    }
+
     static SpreadsheetFormatParserToken generalSymbol() {
         return SpreadsheetFormatParserToken.generalSymbol("GENERAL", "GENERAL");
     }
