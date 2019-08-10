@@ -66,7 +66,7 @@ public abstract class SpreadsheetBinaryParserTokenTestCase<T extends Spreadsheet
 
         final String text = left.text() + operator.text() + right.text();
         final T token = this.createToken(text, left, right);
-        this.checkText(token, text);
+        this.textAndCheck(token, text);
         this.checkValue(token, left, right);
     }
 
@@ -80,7 +80,7 @@ public abstract class SpreadsheetBinaryParserTokenTestCase<T extends Spreadsheet
 
         final String text = left.text() + whitespace1 + operator.text() + whitespace2 + right.text();
         final T token = this.createToken(text, left, operator, right);
-        this.checkText(token, text);
+        this.textAndCheck(token, text);
         this.checkValue(token, left, operator, right);
     }
 
