@@ -234,7 +234,7 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
 
     @Override
     protected void visit(final SpreadsheetFormatColorLiteralSymbolParserToken token) {
-        this.add(token);
+        this.addString(token, SpreadsheetFormatParserToken::colorLiteralSymbol);
     }
 
     @Override

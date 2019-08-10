@@ -3857,7 +3857,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
 
     @Test
     public void testExpressionGeneralSeparatorSeparatorSeparator() {
-        this.expressionParseAndCheck(generalSymbol(),
+        this.expressionParseAndCheck(general(),
                 separator(),
                 separator(),
                 separator());
@@ -3866,7 +3866,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testExpressionSeparatorGeneralSeparatorSeparator() {
         this.expressionParseAndCheck(separator(),
-                generalSymbol(),
+                general(),
                 separator(),
                 separator());
     }
@@ -3875,7 +3875,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     public void testExpressionSeparatorSeparatorGeneralSeparator() {
         this.expressionParseAndCheck(separator(),
                 separator(),
-                generalSymbol(),
+                general(),
                 separator());
     }
 
@@ -3884,7 +3884,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         this.expressionParseAndCheck(separator(),
                 separator(),
                 separator(),
-                generalSymbol());
+                general());
     }
 
     @Test

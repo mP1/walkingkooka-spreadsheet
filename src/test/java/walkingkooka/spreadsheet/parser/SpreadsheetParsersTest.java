@@ -48,9 +48,7 @@ import walkingkooka.type.JavaVisibility;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.MathContext;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -80,24 +78,6 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
         this.parseAndCheck(text,
                 bigDecimal(1.5),
-                text);
-    }
-
-    @Test
-    public void testBigInteger() {
-        final String text = "1";
-
-        this.parseAndCheck(text,
-                bigInteger(1),
-                text);
-    }
-
-    @Test
-    public void testBigInteger2() {
-        final String text = "234";
-
-        this.parseAndCheck(text,
-                bigInteger(234),
                 text);
     }
 
@@ -235,20 +215,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testNegativeBigInteger() {
+    public void testNegativeBigDecimal2() {
         final String text = "-1";
 
         this.parseAndCheck(text,
-                SpreadsheetParserToken.negative(Lists.of(minus(), bigInteger(1)), text),
-                text);
-    }
-
-    @Test
-    public void testNegativeWhitespaceBigInteger() {
-        final String text = "-  1.5";
-
-        this.parseAndCheck(text,
-                SpreadsheetParserToken.negative(Lists.of(minus(), whitespace(), bigInteger(1)), text),
+                SpreadsheetParserToken.negative(Lists.of(minus(), bigDecimal(1)), text),
                 text);
     }
 
@@ -1014,14 +985,8 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
         final Function<ConverterContext, ParserContext> parserContext = (c) -> ParserContexts.basic(c, c);
 
-        final Converter stringBigDecimal = Converters.parser(BigDecimal.class,
-                Parsers.bigDecimal(),
-                parserContext);
         final Converter stringNumber = Converters.parser(Number.class,
                 Parsers.bigDecimal(),
-                parserContext);
-        final Converter stringBigInteger = Converters.parser(BigInteger.class,
-                Parsers.bigInteger(10),
                 parserContext);
         final Converter stringDouble = Converters.parser(Double.class,
                 Parsers.doubleParser(),
@@ -1108,11 +1073,8 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private SpreadsheetParserToken bigDecimal(final double value) {
-        return SpreadsheetParserToken.bigDecimal(BigDecimal.valueOf(value).setScale(1, RoundingMode.HALF_UP), String.valueOf(value));
-    }
-
-    private SpreadsheetParserToken bigInteger(final long value) {
-        return SpreadsheetParserToken.bigInteger(BigInteger.valueOf(value), String.valueOf(value));
+        final BigDecimal bigDecimal = BigDecimal.valueOf(value).stripTrailingZeros();
+        return SpreadsheetParserToken.bigDecimal(bigDecimal, bigDecimal.toString());
     }
 
     private SpreadsheetCellReferenceParserToken cell(final int column, final String columnText, final int row) {
