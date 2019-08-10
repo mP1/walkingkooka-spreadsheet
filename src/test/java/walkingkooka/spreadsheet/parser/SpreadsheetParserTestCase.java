@@ -38,11 +38,6 @@ public abstract class SpreadsheetParserTestCase<P extends Parser<SpreadsheetPars
         return SpreadsheetParserContexts.basic(this.dateTimeContext(), this.decimalNumberContext());
     }
 
-    @Override
-    public String parserTokenTypeNamePrefix() {
-        return "Spreadsheet";
-    }
-
     // TypeNameTesting .........................................................................................
 
     @Override

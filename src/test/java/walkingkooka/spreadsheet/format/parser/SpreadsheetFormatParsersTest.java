@@ -3953,11 +3953,6 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
         return SpreadsheetFormatParserContexts.basic();
     }
 
-    @Override
-    public String parserTokenTypeNamePrefix() {
-        return "SpreadsheetFormat";
-    }
-
     // PublicStaticHelperTesting........................................................................................
 
     @Override
