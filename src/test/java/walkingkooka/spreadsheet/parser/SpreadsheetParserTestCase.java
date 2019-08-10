@@ -20,13 +20,13 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.TypeNameTesting;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserTesting;
+import walkingkooka.text.cursor.parser.ParserTesting2;
 import walkingkooka.type.JavaVisibility;
 
 public abstract class SpreadsheetParserTestCase<P extends Parser<SpreadsheetParserContext>,
         T extends SpreadsheetParserToken>
         implements ClassTesting2<P>,
-        ParserTesting<P, SpreadsheetParserContext>,
+        ParserTesting2<P, SpreadsheetParserContext>,
         TypeNameTesting<P> {
 
     SpreadsheetParserTestCase() {
