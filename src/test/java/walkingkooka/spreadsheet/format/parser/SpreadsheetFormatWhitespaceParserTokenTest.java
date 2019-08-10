@@ -28,7 +28,7 @@ public final class SpreadsheetFormatWhitespaceParserTokenTest extends Spreadshee
     @Test
     public void testWithWHitespaceText() {
         final SpreadsheetFormatWhitespaceParserToken token = SpreadsheetFormatWhitespaceParserToken.with(" \t", " \t");
-        this.checkText(token, " \t");
+        this.textAndCheck(token, " \t");
     }
 
     @Override

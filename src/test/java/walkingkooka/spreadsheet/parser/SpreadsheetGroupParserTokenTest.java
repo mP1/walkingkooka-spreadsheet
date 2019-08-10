@@ -41,7 +41,7 @@ public final class SpreadsheetGroupParserTokenTest extends SpreadsheetParentPars
     public void testWith() {
         final String text = "(" + NUMBER1 + ")";
         final SpreadsheetGroupParserToken token = this.createToken(text, this.number1());
-        this.checkText(token, text);
+        this.textAndCheck(token, text);
     }
 
     @Test
@@ -53,7 +53,7 @@ public final class SpreadsheetGroupParserTokenTest extends SpreadsheetParentPars
         final SpreadsheetParenthesisCloseSymbolParserToken right = closeParenthesisSymbol();
 
         final SpreadsheetGroupParserToken token = this.createToken(text, left, number, right);
-        this.checkText(token, text);
+        this.textAndCheck(token, text);
         this.checkValue(token, left, number, right);
     }
 
@@ -68,7 +68,7 @@ public final class SpreadsheetGroupParserTokenTest extends SpreadsheetParentPars
         final SpreadsheetParenthesisCloseSymbolParserToken right = this.closeParenthesisSymbol();
 
         final SpreadsheetGroupParserToken token = this.createToken(text, left, whitespace1, number, whitespace2, right);
-        this.checkText(token, text);
+        this.textAndCheck(token, text);
         this.checkValue(token, left, whitespace1, number, whitespace2, right);
     }
 
