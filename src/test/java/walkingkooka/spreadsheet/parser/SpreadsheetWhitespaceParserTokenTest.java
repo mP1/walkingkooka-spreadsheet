@@ -33,7 +33,7 @@ public final class SpreadsheetWhitespaceParserTokenTest extends SpreadsheetSymbo
     @Test
     public void testWithWhitespace() {
         final SpreadsheetWhitespaceParserToken token = this.createToken("   ");
-        this.checkText(token, "   ");
+        this.textAndCheck(token, "   ");
     }
 
     @Test
