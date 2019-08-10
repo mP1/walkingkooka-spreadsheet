@@ -1206,11 +1206,6 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         return SpreadsheetParserToken.range(Lists.of(from, between(), to), text);
     }
 
-    @Override
-    public String parserTokenTypeNamePrefix() {
-        return "Spreadsheet";
-    }
-
     // PublicStaticHelperTesting........................................................................................
 
     @Override
