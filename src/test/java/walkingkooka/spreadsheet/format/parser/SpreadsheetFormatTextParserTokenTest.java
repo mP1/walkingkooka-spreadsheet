@@ -48,14 +48,14 @@ public final class SpreadsheetFormatTextParserTokenTest extends SpreadsheetForma
         final List<ParserToken> tokens = this.tokens();
         final SpreadsheetFormatTextParserToken token = SpreadsheetFormatTextParserToken.with(tokens, "");
         this.checkValue(token, tokens);
-        this.checkText(token, "");
+        this.textAndCheck(token, "");
     }
 
     @Test
     public void testWithEmptyValue() {
         final SpreadsheetFormatTextParserToken token = SpreadsheetFormatTextParserToken.with(SpreadsheetFormatTextParserToken.EMPTY, "a");
         this.checkValue(token, SpreadsheetFormatTextParserToken.EMPTY);
-        this.checkText(token, "a");
+        this.textAndCheck(token, "a");
     }
 
     @Test
