@@ -63,7 +63,7 @@ public final class SpreadsheetCellReferenceParserTokenTest extends SpreadsheetPa
         final SpreadsheetRowReferenceParserToken row = this.row();
         final String text = ROW_TEXT + ":" + COLUMN_TEXT;
         final SpreadsheetCellReferenceParserToken cell = this.createToken(text, row, column);
-        this.checkText(cell, text);
+        this.textAndCheck(cell, text);
         this.checkValue(cell, row, column);
         this.checkCell(cell, row, column);
     }
