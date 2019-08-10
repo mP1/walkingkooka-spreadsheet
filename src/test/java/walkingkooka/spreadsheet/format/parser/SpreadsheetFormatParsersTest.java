@@ -22,7 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.test.PublicStaticHelperTesting;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
-import walkingkooka.text.cursor.parser.ParserTesting;
+import walkingkooka.text.cursor.parser.ParserTesting2;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.type.JavaVisibility;
 
@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserTestCase implements PublicStaticHelperTesting<SpreadsheetFormatParsers>,
-        ParserTesting<Parser<SpreadsheetFormatParserContext>, SpreadsheetFormatParserContext> {
+        ParserTesting2<Parser<SpreadsheetFormatParserContext>, SpreadsheetFormatParserContext> {
 
     // color............................................................................................................
 
