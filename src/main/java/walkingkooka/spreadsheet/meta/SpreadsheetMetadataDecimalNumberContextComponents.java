@@ -45,7 +45,7 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
         final SpreadsheetMetadataComponents components = this.components;
 
         final String currencySymbol = components.getOrElse(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, this::localeCurrencySymbol);
-        final Character decimalSeparator = components.getOrElse(SpreadsheetMetadataPropertyName.DECIMAL_POINT, this::localeDecimalSeparator);
+        final Character decimalSeparator = components.getOrElse(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, this::localeDecimalSeparator);
         final Character exponentSymbol = components.getOrNull(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL);
         final Character groupingSeparator = components.getOrElse(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, this::localeGroupingSeparator);
         final Character negativeSign = components.getOrElse(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, this::localeNegativeSign);

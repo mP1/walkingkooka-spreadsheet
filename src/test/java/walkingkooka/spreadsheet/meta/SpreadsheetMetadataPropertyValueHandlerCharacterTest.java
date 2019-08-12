@@ -41,7 +41,7 @@ public final class SpreadsheetMetadataPropertyValueHandlerCharacterTest extends 
 
     @Override
     SpreadsheetMetadataPropertyName<Character> propertyName() {
-        return SpreadsheetMetadataPropertyName.DECIMAL_POINT;
+        return SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR;
     }
 
     @Override

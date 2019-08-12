@@ -195,7 +195,7 @@ public abstract class SpreadsheetMetadata implements HasDateTimeContext,
      * Returns a {@link DecimalNumberContext} if the required properties are present.
      * <ul>
      * <li>{@link SpreadsheetMetadataPropertyName#CURRENCY_SYMBOL}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#DECIMAL_POINT}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DECIMAL_SEPARATOR}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#EXPONENT_SYMBOL}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#GROUPING_SEPARATOR}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#NEGATIVE_SIGN}</li>

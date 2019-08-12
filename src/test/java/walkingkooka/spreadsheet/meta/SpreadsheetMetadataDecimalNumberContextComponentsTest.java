@@ -35,9 +35,9 @@ public final class SpreadsheetMetadataDecimalNumberContextComponentsTest impleme
     public void testToString() {
         final SpreadsheetMetadataDecimalNumberContextComponents components = SpreadsheetMetadataDecimalNumberContextComponents.with(SpreadsheetMetadata.EMPTY);
         components.components.getOrNull(SpreadsheetMetadataPropertyName.CREATOR);
-        components.components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_POINT);
+        components.components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
 
-        this.toStringAndCheck(components, Lists.of(SpreadsheetMetadataPropertyName.CREATOR, SpreadsheetMetadataPropertyName.DECIMAL_POINT).toString());
+        this.toStringAndCheck(components, Lists.of(SpreadsheetMetadataPropertyName.CREATOR, SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR).toString());
     }
 
     // ClassTesting.....................................................................................................
