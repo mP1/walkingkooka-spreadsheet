@@ -417,10 +417,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     .set(SpreadsheetMetadataPropertyName.DECIMAL_POINT, 'D')
                     .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, 'E')
                     .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, 'G')
-                    .set(SpreadsheetMetadataPropertyName.MINUS_SIGN, 'M')
+                    .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, 'M')
                     .decimalNumberContext();
         });
-        assertEquals("Required properties \"locale\", \"percentage-symbol\", \"plus-sign\", \"precision\", \"rounding-mode\" missing.",
+        assertEquals("Required properties \"locale\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\" missing.",
                 thrown.getMessage(),
                 "message");
     }
@@ -434,7 +434,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                     .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, 'E')
                     .decimalNumberContext();
         });
-        assertEquals("Required properties \"grouping-separator\", \"locale\", \"minus-sign\", \"percentage-symbol\", \"plus-sign\", \"precision\", \"rounding-mode\" missing.",
+        assertEquals("Required properties \"grouping-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\" missing.",
                 thrown.getMessage(),
                 "message");
     }
@@ -445,7 +445,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final Character decimalPoint = 'D';
         final Character exponentSymbol = 'E';
         final Character groupingSeparator = 'G';
-        final Character minusSign = 'M';
+        final Character negativeSign = 'N';
         final Character percentSymbol = 'P';
         final Character positiveSign = '+';
         final Locale locale = Locale.CANADA_FRENCH;
@@ -462,9 +462,9 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                     .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, exponentSymbol)
                                     .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, groupingSeparator)
                                     .set(SpreadsheetMetadataPropertyName.LOCALE, locale)
-                                    .set(SpreadsheetMetadataPropertyName.MINUS_SIGN, minusSign)
+                                    .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, negativeSign)
                                     .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, percentSymbol)
-                                    .set(SpreadsheetMetadataPropertyName.PLUS_SIGN, positiveSign)
+                                    .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, positiveSign)
                                     .set(SpreadsheetMetadataPropertyName.PRECISION, precision)
                                     .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, roundingMode),
                             currencySymbol,
@@ -472,7 +472,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                             exponentSymbol,
                             groupingSeparator,
                             locale,
-                            minusSign,
+                            negativeSign,
                             percentSymbol,
                             positiveSign,
                             precision,
@@ -498,7 +498,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                 this.decimalNumberContextAndCheck(SpreadsheetMetadata.EMPTY
                                                 .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, exponentSymbol)
                                                 .set(SpreadsheetMetadataPropertyName.LOCALE, locale)
-                                                .set(SpreadsheetMetadataPropertyName.PLUS_SIGN, positiveSign)
+                                                .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, positiveSign)
                                                 .set(SpreadsheetMetadataPropertyName.PRECISION, precision)
                                                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, roundingMode),
                                         symbols.getCurrencySymbol(),
@@ -592,13 +592,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, 'E');
         properties.put(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, 'G');
         properties.put(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
-        properties.put(SpreadsheetMetadataPropertyName.MINUS_SIGN, 'M');
         properties.put(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
         properties.put(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.of(1999, 12, 31, 12, 58, 59));
+        properties.put(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, 'N');
         properties.put(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("#0.0"));
         properties.put(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERNS, SpreadsheetPatterns.parseNumber("#0.0;$#0.00"));
         properties.put(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, 'P');
-        properties.put(SpreadsheetMetadataPropertyName.PLUS_SIGN, 'L');
+        properties.put(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, 'O');
         properties.put(SpreadsheetMetadataPropertyName.PRECISION, 123);
         properties.put(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR);
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123));

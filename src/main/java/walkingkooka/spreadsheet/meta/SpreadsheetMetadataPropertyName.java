@@ -214,12 +214,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
             (l, v) -> v.visitLocale(l));
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>minus-sign {@link Character}</code>
-     */
-    public final static SpreadsheetMetadataPropertyName<Character> MINUS_SIGN = registerCharacterConstant("minus-sign",
-            (c, v) -> v.visitMinusSign(c));
-
-    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>last modified by {@link EmailAddress}</code>
      */
     public final static SpreadsheetMetadataPropertyName<EmailAddress> MODIFIED_BY = registerEmailAddressConstant("modified-by",
@@ -230,6 +224,12 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      */
     public final static SpreadsheetMetadataPropertyName<LocalDateTime> MODIFIED_DATE_TIME = registerDateTimeConstant("modified-date-time",
             (d, v) -> v.visitModifiedDateTime(d));
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>negative-sign {@link Character}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<Character> NEGATIVE_SIGN = registerCharacterConstant("negative-sign",
+            (c, v) -> v.visitNegativeSign(c));
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>number-format-pattern</code>
@@ -251,10 +251,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
             (c, v) -> v.visitPercentageSymbol(c));
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>plus-sign {@link Character}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>positive-sign {@link Character}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<Character> PLUS_SIGN = registerCharacterConstant("plus-sign",
-            (c, v) -> v.visitPlusSign(c));
+    public final static SpreadsheetMetadataPropertyName<Character> POSITIVE_SIGN = registerCharacterConstant("positive-sign",
+            (c, v) -> v.visitPositiveSign(c));
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>rounding-mode {@link RoundingMode}</code>
