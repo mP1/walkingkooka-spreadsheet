@@ -187,13 +187,13 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitDecimalPoint() {
+    public void testVisitDecimalSeparator() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitDecimalPoint(final Character c) {
+            protected void visitDecimalSeparator(final Character c) {
                 this.visited = c;
             }
-        }.accept(SpreadsheetMetadataPropertyName.DECIMAL_POINT, '.');
+        }.accept(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.');
     }
 
     @Test
