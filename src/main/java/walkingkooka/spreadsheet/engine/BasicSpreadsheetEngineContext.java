@@ -24,10 +24,10 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.math.Fraction;
 import walkingkooka.spreadsheet.format.SpreadsheetFormattedText;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatContext;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatContexts;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatters;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExpressionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -67,7 +67,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                               final Function<String, Optional<Color>> nameToColor,
                                               final int width,
                                               final Function<BigDecimal, Fraction> fractioner,
-                                              final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter) {
+                                              final SpreadsheetFormatter defaultSpreadsheetTextFormatter) {
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(labelStore, "labelStore");
@@ -105,7 +105,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final Function<String, Optional<Color>> nameToColor,
                                           final int width,
                                           final Function<BigDecimal, Fraction> fractioner,
-                                          final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter) {
+                                          final SpreadsheetFormatter defaultSpreadsheetTextFormatter) {
         super();
         this.parserContext = SpreadsheetParserContexts.basic(converterContext, converterContext);
 
@@ -115,7 +115,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         this.converter = converter;
         this.converterContext = converterContext;
 
-        this.spreadsheetTextFormatContext = SpreadsheetTextFormatContexts.basic(numberToColor,
+        this.spreadsheetTextFormatContext = SpreadsheetFormatterContexts.basic(numberToColor,
                 nameToColor,
                 width,
                 converter,
@@ -166,7 +166,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     // parsing and formatting text......................................................................................
 
     @Override
-    public SpreadsheetTextFormatter parsePattern(final String pattern) {
+    public SpreadsheetFormatter parsePattern(final String pattern) {
         return SpreadsheetFormatParsers.expression()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic())
@@ -175,8 +175,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 .get();
     }
 
-    private SpreadsheetTextFormatter expression(final SpreadsheetFormatExpressionParserToken token) {
-        return SpreadsheetTextFormatters.expression(token,
+    private SpreadsheetFormatter expression(final SpreadsheetFormatExpressionParserToken token) {
+        return SpreadsheetFormatters.expression(token,
                 this.fractioner);
     }
 
@@ -187,18 +187,18 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     @Override
     public Optional<SpreadsheetFormattedText> format(final Object value,
-                                                     final SpreadsheetTextFormatter formatter) {
+                                                     final SpreadsheetFormatter formatter) {
         return formatter.format(Cast.to(value), this.spreadsheetTextFormatContext);
     }
 
-    private final SpreadsheetTextFormatContext spreadsheetTextFormatContext;
+    private final SpreadsheetFormatterContext spreadsheetTextFormatContext;
 
     @Override
-    public SpreadsheetTextFormatter defaultSpreadsheetTextFormatter() {
+    public SpreadsheetFormatter defaultSpreadsheetTextFormatter() {
         return this.defaultSpreadsheetTextFormatter;
     }
 
-    private final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter;
+    private final SpreadsheetFormatter defaultSpreadsheetTextFormatter;
 
     // Object...........................................................................................................
 

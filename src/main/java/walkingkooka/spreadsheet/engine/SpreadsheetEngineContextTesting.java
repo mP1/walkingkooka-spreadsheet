@@ -21,8 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.ContextTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetFormattedText;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatContext;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNode;
@@ -93,7 +93,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
 
     default void parsePatternAndCheck(final String pattern,
                                       final Object value,
-                                      final SpreadsheetTextFormatContext spreadsheetTextFormatContext,
+                                      final SpreadsheetFormatterContext spreadsheetTextFormatContext,
                                       final Optional<SpreadsheetFormattedText> expected) {
         this.parsePatternAndCheck(this.createContext(),
                 pattern,
@@ -105,9 +105,9 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     default void parsePatternAndCheck(final SpreadsheetEngineContext context,
                                       final String pattern,
                                       final Object value,
-                                      final SpreadsheetTextFormatContext spreadsheetTextFormatContext,
+                                      final SpreadsheetFormatterContext spreadsheetTextFormatContext,
                                       final Optional<SpreadsheetFormattedText> expected) {
-        final SpreadsheetTextFormatter formatter = context.parsePattern(pattern);
+        final SpreadsheetFormatter formatter = context.parsePattern(pattern);
         assertEquals(expected,
                 formatter.format(Cast.to(value), spreadsheetTextFormatContext),
                 () -> "parsePattern " + pattern + " " + formatter + " then format " + CharSequences.quoteIfChars(value));
@@ -123,7 +123,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     }
 
     default void formatAndCheck(final Object value,
-                                final SpreadsheetTextFormatter formatter,
+                                final SpreadsheetFormatter formatter,
                                 final Optional<SpreadsheetFormattedText> expected) {
         this.formatAndCheck(this.createContext(),
                 value,
@@ -133,7 +133,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
 
     default void formatAndCheck(final SpreadsheetEngineContext context,
                                 final Object value,
-                                final SpreadsheetTextFormatter formatter,
+                                final SpreadsheetFormatter formatter,
                                 final Optional<SpreadsheetFormattedText> expected) {
         assertEquals(expected,
                 context.format(value, formatter),

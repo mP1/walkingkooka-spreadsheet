@@ -26,7 +26,7 @@ import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -402,7 +402,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         SpreadsheetCell result = cell;
 
         // try and use the cells custom format otherwise use a default from the context.
-        SpreadsheetTextFormatter formatter = context.defaultSpreadsheetTextFormatter();
+        SpreadsheetFormatter formatter = context.defaultSpreadsheetTextFormatter();
         final Optional<SpreadsheetCellFormat> maybeFormat = cell.format();
         if (maybeFormat.isPresent()) {
             final SpreadsheetCellFormat format = this.parsePatternIfNecessary(maybeFormat.get(), context);
@@ -426,14 +426,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      */
     private SpreadsheetCellFormat parsePatternIfNecessary(final SpreadsheetCellFormat format,
                                                           final SpreadsheetEngineContext context) {
-        final Optional<SpreadsheetTextFormatter> formatter = format.formatter();
+        final Optional<SpreadsheetFormatter> formatter = format.formatter();
         return formatter.isPresent() ?
                 format :
                 this.parsePattern(format, context);
     }
 
     /**
-     * Returns an updated {@link SpreadsheetCellFormat} after parsing the pattern into a {@link SpreadsheetTextFormatter}.
+     * Returns an updated {@link SpreadsheetCellFormat} after parsing the pattern into a {@link SpreadsheetFormatter}.
      */
     private SpreadsheetCellFormat parsePattern(final SpreadsheetCellFormat format,
                                                final SpreadsheetEngineContext context) {
@@ -444,7 +444,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * Uses the formatter to format the value, merging the style and returns an updated {@link TextNode}.
      */
     private TextNode formatAndApplyStyle0(final Object value,
-                                          final SpreadsheetTextFormatter formatter,
+                                          final SpreadsheetFormatter formatter,
                                           final TextStyle style,
                                           final SpreadsheetEngineContext context) {
         return context.format(value, formatter)

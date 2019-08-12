@@ -27,7 +27,7 @@ import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.HttpResponse;
 import walkingkooka.routing.Router;
 import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.ExpressionNodeName;
@@ -65,9 +65,9 @@ public interface SpreadsheetContext extends Context {
     DecimalNumberContext decimalNumberContext(final SpreadsheetId id);
 
     /**
-     * Returns the default {@link SpreadsheetTextFormatter }for a given {@link SpreadsheetId}
+     * Returns the default {@link SpreadsheetFormatter }for a given {@link SpreadsheetId}
      */
-    SpreadsheetTextFormatter defaultSpreadsheetTextFormatter(final SpreadsheetId id);
+    SpreadsheetFormatter defaultSpreadsheetTextFormatter(final SpreadsheetId id);
 
     /**
      * Returns a {@link BiFunction} which knows available functions for the given {@link SpreadsheetId}.

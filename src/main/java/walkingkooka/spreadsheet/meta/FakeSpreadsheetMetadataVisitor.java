@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.format.SpreadsheetDatePatterns;
 import walkingkooka.spreadsheet.format.SpreadsheetDateTimePatterns;
 import walkingkooka.spreadsheet.format.SpreadsheetNumberPatterns;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatterPattern;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterPattern;
 import walkingkooka.spreadsheet.format.SpreadsheetTimePatterns;
 import walkingkooka.visit.Visiting;
 
@@ -73,7 +73,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitDateFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
+    protected void visitDateFormatPattern(final SpreadsheetFormatterPattern pattern) {
         throw new UnsupportedOperationException();
     }
 
@@ -83,7 +83,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitDateTimeFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
+    protected void visitDateTimeFormatPattern(final SpreadsheetFormatterPattern pattern) {
         throw new UnsupportedOperationException();
     }
 
@@ -138,7 +138,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitNumberFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
+    protected void visitNumberFormatPattern(final SpreadsheetFormatterPattern pattern) {
         throw new UnsupportedOperationException();
     }
 
@@ -173,7 +173,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitTimeFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
+    protected void visitTimeFormatPattern(final SpreadsheetFormatterPattern pattern) {
         throw new UnsupportedOperationException();
     }
 

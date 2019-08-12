@@ -29,11 +29,11 @@ import walkingkooka.datetime.FakeDateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.Fraction;
-import walkingkooka.spreadsheet.format.FakeSpreadsheetTextFormatContext;
-import walkingkooka.spreadsheet.format.FakeSpreadsheetTextFormatter;
+import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormattedText;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatContext;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
@@ -227,7 +227,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testDefaultSpreadsheetTextFormatter() {
-        final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter = this.defaultSpreadsheetTextFormatter();
+        final SpreadsheetFormatter defaultSpreadsheetTextFormatter = this.defaultSpreadsheetTextFormatter();
         assertSame(defaultSpreadsheetTextFormatter, this.createContext(defaultSpreadsheetTextFormatter).defaultSpreadsheetTextFormatter());
     }
 
@@ -263,10 +263,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, "N123D5")));
     }
 
-    private SpreadsheetTextFormatContext spreadsheetTextFormatContext() {
+    private SpreadsheetFormatterContext spreadsheetTextFormatContext() {
         final DecimalNumberContext decimalNumberContext = this.decimalNumberContext();
 
-        return new FakeSpreadsheetTextFormatContext() {
+        return new FakeSpreadsheetFormatterContext() {
             @Override
             public String currencySymbol() {
                 return decimalNumberContext.currencySymbol();
@@ -323,7 +323,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         return this.createContext(this.defaultSpreadsheetTextFormatter());
     }
 
-    private BasicSpreadsheetEngineContext createContext(final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter) {
+    private BasicSpreadsheetEngineContext createContext(final SpreadsheetFormatter defaultSpreadsheetTextFormatter) {
         return BasicSpreadsheetEngineContext.with(this.functions(),
                 this.engine(),
                 this.labelStore(),
@@ -390,8 +390,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 MathContext.DECIMAL32);
     }
 
-    private SpreadsheetTextFormatter defaultSpreadsheetTextFormatter() {
-        return new FakeSpreadsheetTextFormatter() {
+    private SpreadsheetFormatter defaultSpreadsheetTextFormatter() {
+        return new FakeSpreadsheetFormatter() {
             @Override
             public String toString() {
                 return "SpreadsheetTextFormatter123";

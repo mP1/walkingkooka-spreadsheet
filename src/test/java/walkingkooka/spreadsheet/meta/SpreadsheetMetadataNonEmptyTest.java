@@ -32,7 +32,7 @@ import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.format.SpreadsheetPatterns;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatterPattern;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterPattern;
 import walkingkooka.text.CharSequences;
 
 import java.math.MathContext;
@@ -337,7 +337,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.color(number1), color1)
                 .set(SpreadsheetMetadataPropertyName.color(number7), color7)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
-                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("#0.0"));
+                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetFormatterPattern.parse("#0.0"));
         final SpreadsheetMetadataNonEmptyNumberToColorFunction function = Cast.to(metadata.numberToColor());
 
         assertEquals(Maps.of(number1, color1, number7, color7),
@@ -358,7 +358,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.color(number1), color1)
                 .set(SpreadsheetMetadataPropertyName.color(number7), color7)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
-                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("#0.0"));
+                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetFormatterPattern.parse("#0.0"));
 
         for(int i = 0; i < 10; i++) {
             this.numberToColorAndCheck(metadata,
@@ -583,10 +583,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.of(2000, 12, 31, 12, 58, 59));
         properties.put(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"));
         properties.put(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$AUD");
-        properties.put(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("DD/MM/YYYY"));
+        properties.put(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetFormatterPattern.parse("DD/MM/YYYY"));
         properties.put(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS, SpreadsheetPatterns.parseDate("DD/MM/YYYY;DDMMYYYY"));
         properties.put(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET);
-        properties.put(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("DD/MM/YYYY hh:mm"));
+        properties.put(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetFormatterPattern.parse("DD/MM/YYYY hh:mm"));
         properties.put(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetPatterns.parseDateTime("DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM"));
         properties.put(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, 'D');
         properties.put(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, 'E');
@@ -595,14 +595,14 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
         properties.put(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.of(1999, 12, 31, 12, 58, 59));
         properties.put(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, 'N');
-        properties.put(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("#0.0"));
+        properties.put(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetFormatterPattern.parse("#0.0"));
         properties.put(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERNS, SpreadsheetPatterns.parseNumber("#0.0;$#0.00"));
         properties.put(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, 'P');
         properties.put(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, 'O');
         properties.put(SpreadsheetMetadataPropertyName.PRECISION, 123);
         properties.put(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR);
         properties.put(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123));
-        properties.put(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("hh:mm"));
+        properties.put(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetFormatterPattern.parse("hh:mm"));
         properties.put(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetPatterns.parseTime("hh:mm;hh:mm:ss.000"));
         properties.put(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR_INTERPRETATION, 31);
 

@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Context;
 import walkingkooka.spreadsheet.format.SpreadsheetFormattedText;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.tree.expression.ExpressionNode;
 
@@ -46,18 +46,18 @@ public interface SpreadsheetEngineContext extends Context {
     <T> T convert(Object value, Class<T> target);
 
     /**
-     * Accepts a pattern and returns the equivalent {@link SpreadsheetTextFormatter}.
+     * Accepts a pattern and returns the equivalent {@link SpreadsheetFormatter}.
      */
-    SpreadsheetTextFormatter parsePattern(final String pattern);
+    SpreadsheetFormatter parsePattern(final String pattern);
 
     /**
-     * The default {@link SpreadsheetTextFormatter} when no pattern is available for a cell.
+     * The default {@link SpreadsheetFormatter} when no pattern is available for a cell.
      */
-    SpreadsheetTextFormatter defaultSpreadsheetTextFormatter();
+    SpreadsheetFormatter defaultSpreadsheetTextFormatter();
 
     /**
      * Formats the given value using the provided formatter.
      */
     Optional<SpreadsheetFormattedText> format(final Object value,
-                                              final SpreadsheetTextFormatter formatter);
+                                              final SpreadsheetFormatter formatter);
 }
