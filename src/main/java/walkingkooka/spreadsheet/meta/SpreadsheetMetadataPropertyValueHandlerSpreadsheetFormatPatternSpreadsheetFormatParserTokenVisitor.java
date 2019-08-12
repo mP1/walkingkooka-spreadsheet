@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterPattern;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGeneralParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
@@ -27,16 +27,16 @@ import walkingkooka.visit.Visiting;
 /**
  * A {@link SpreadsheetFormatParserTokenVisitor} that visits a pattern and fails if any invalid token is encountered.
  */
-final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormatSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
+final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
     static void check(final SpreadsheetMetadataPropertyName<?> name,
-                      final SpreadsheetFormatterPattern pattern) {
-        new SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormatSpreadsheetFormatParserTokenVisitor(name, pattern)
+                      final SpreadsheetFormatPattern pattern) {
+        new SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitor(name, pattern)
                 .accept(pattern.value());
     }
 
-    SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormatSpreadsheetFormatParserTokenVisitor(final SpreadsheetMetadataPropertyName<?> name,
-                                                                                                                final SpreadsheetFormatterPattern pattern) {
+    SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitor(final SpreadsheetMetadataPropertyName<?> name,
+                                                                                                       final SpreadsheetFormatPattern pattern) {
         super();
         this.name = name;
         this.pattern = pattern;
@@ -57,7 +57,7 @@ final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFo
     }
 
     private final SpreadsheetMetadataPropertyName<?> name;
-    private final SpreadsheetFormatterPattern pattern;
+    private final SpreadsheetFormatPattern pattern;
 
     @Override
     public final String toString() {

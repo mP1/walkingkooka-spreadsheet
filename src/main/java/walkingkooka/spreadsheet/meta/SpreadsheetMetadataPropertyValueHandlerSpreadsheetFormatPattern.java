@@ -17,53 +17,53 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterPattern;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatPattern;
 import walkingkooka.tree.json.JsonNode;
 
 /**
- * A {@link SpreadsheetMetadataPropertyValueHandler} for valid {@link SpreadsheetFormatterPattern} patterns.
+ * A {@link SpreadsheetMetadataPropertyValueHandler} for valid {@link SpreadsheetFormatPattern} patterns.
  */
-final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormat extends SpreadsheetMetadataPropertyValueHandler<SpreadsheetFormatterPattern> {
+final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPattern extends SpreadsheetMetadataPropertyValueHandler<SpreadsheetFormatPattern> {
 
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormat INSTANCE = new SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormat();
+    final static SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPattern INSTANCE = new SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPattern();
 
     /**
      * Private ctor use singleton
      */
-    private SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormat() {
+    private SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPattern() {
         super();
     }
 
     @Override
     final void check0(final Object value, final SpreadsheetMetadataPropertyName<?> name) {
-        SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormatSpreadsheetFormatParserTokenVisitor.check(name,
-                this.checkType(value, SpreadsheetFormatterPattern.class, name));
+        SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitor.check(name,
+                this.checkType(value, SpreadsheetFormatPattern.class, name));
     }
 
     @Override
     String expectedTypeName(final Class<?> type) {
-        return SpreadsheetFormatterPattern.class.getSimpleName();
+        return SpreadsheetFormatPattern.class.getSimpleName();
     }
 
     // ToString.........................................................................................................
 
     @Override
     public final String toString() {
-        return SpreadsheetFormatterPattern.class.getSimpleName();
+        return SpreadsheetFormatPattern.class.getSimpleName();
     }
 
     // HasJsonNode......................................................................................................
 
     @Override
-    final SpreadsheetFormatterPattern fromJsonNode(final JsonNode node, final SpreadsheetMetadataPropertyName<?> name) {
-        return node.fromJsonNode(SpreadsheetFormatterPattern.class);
+    final SpreadsheetFormatPattern fromJsonNode(final JsonNode node, final SpreadsheetMetadataPropertyName<?> name) {
+        return node.fromJsonNode(SpreadsheetFormatPattern.class);
     }
 
     @Override
-    final JsonNode toJsonNode(final SpreadsheetFormatterPattern value) {
+    final JsonNode toJsonNode(final SpreadsheetFormatPattern value) {
         return value.toJsonNode();
     }
 }

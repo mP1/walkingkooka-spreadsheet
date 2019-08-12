@@ -18,11 +18,11 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterPattern;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitorTesting;
 import walkingkooka.type.JavaVisibility;
 
-public final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormatSpreadsheetFormatParserTokenVisitorTest implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormatSpreadsheetFormatParserTokenVisitor> {
+public final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitorTest implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitor> {
 
     @Test
     public void testToString() {
@@ -30,21 +30,21 @@ public final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPa
     }
 
     @Override
-    public SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormatSpreadsheetFormatParserTokenVisitor createVisitor() {
-        return new SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormatSpreadsheetFormatParserTokenVisitor(this.name(), this.pattern());
+    public SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitor createVisitor() {
+        return new SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitor(this.name(), this.pattern());
     }
 
     private SpreadsheetMetadataPropertyName<?> name() {
         return SpreadsheetMetadataPropertyName.CREATOR;
     }
 
-    private SpreadsheetFormatterPattern pattern() {
-        return SpreadsheetFormatterPattern.parse("#.00");
+    private SpreadsheetFormatPattern pattern() {
+        return SpreadsheetFormatPattern.parse("#.00");
     }
 
     @Override
-    public Class<SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormatSpreadsheetFormatParserTokenVisitor> type() {
-        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormatSpreadsheetFormatParserTokenVisitor.class;
+    public Class<SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitor> type() {
+        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitor.class;
     }
 
     @Override
@@ -54,6 +54,6 @@ public final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPa
 
     @Override
     public String typeNamePrefix() {
-        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormat.class.getSimpleName();
+        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPattern.class.getSimpleName();
     }
 }
