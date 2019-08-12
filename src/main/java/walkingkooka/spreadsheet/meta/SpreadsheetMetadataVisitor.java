@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.format.SpreadsheetDatePatterns;
 import walkingkooka.spreadsheet.format.SpreadsheetDateTimePatterns;
 import walkingkooka.spreadsheet.format.SpreadsheetNumberPatterns;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatterPattern;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterPattern;
 import walkingkooka.spreadsheet.format.SpreadsheetTimePatterns;
 import walkingkooka.visit.Visiting;
 import walkingkooka.visit.Visitor;
@@ -98,7 +98,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDateFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
+    protected void visitDateFormatPattern(final SpreadsheetFormatterPattern pattern) {
         // nop
     }
 
@@ -106,7 +106,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDateTimeFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
+    protected void visitDateTimeFormatPattern(final SpreadsheetFormatterPattern pattern) {
         // nop
     }
 
@@ -150,7 +150,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitNumberFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
+    protected void visitNumberFormatPattern(final SpreadsheetFormatterPattern pattern) {
         // nop
     }
 
@@ -178,7 +178,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitTimeFormatPattern(final SpreadsheetTextFormatterPattern pattern) {
+    protected void visitTimeFormatPattern(final SpreadsheetFormatterPattern pattern) {
         // nop
     }
 

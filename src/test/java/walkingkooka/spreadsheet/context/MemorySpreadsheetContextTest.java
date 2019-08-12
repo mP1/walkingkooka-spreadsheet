@@ -53,8 +53,8 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 import walkingkooka.spreadsheet.format.SpreadsheetFormattedText;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatContext;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -284,7 +284,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                            final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
                            final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                            final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext,
-                           final Function<SpreadsheetId, SpreadsheetTextFormatter> spreadsheetIdDefaultSpreadsheetTextFormatter,
+                           final Function<SpreadsheetId, SpreadsheetFormatter> spreadsheetIdDefaultSpreadsheetTextFormatter,
                            final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                            final Function<SpreadsheetId, Function<String, Optional<Color>>> spreadsheetIdNameToColor,
                            final Function<SpreadsheetId, Function<Integer, Optional<Color>>> spreadsheetIdNumberToColor,
@@ -855,17 +855,17 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         return DecimalNumberContexts.american(MathContext.DECIMAL32);
     }
 
-    private SpreadsheetTextFormatter spreadsheetIdDefaultSpreadsheetTextFormatter(final SpreadsheetId spreadsheetId) {
+    private SpreadsheetFormatter spreadsheetIdDefaultSpreadsheetTextFormatter(final SpreadsheetId spreadsheetId) {
         this.checkSpreadsheetId(spreadsheetId);
 
-        return new SpreadsheetTextFormatter() {
+        return new SpreadsheetFormatter() {
             @Override
             public boolean canFormat(final Object value) {
                 return value instanceof String || value instanceof BigDecimal;
             }
 
             @Override
-            public Optional<SpreadsheetFormattedText> format(final Object value, final SpreadsheetTextFormatContext context) {
+            public Optional<SpreadsheetFormattedText> format(final Object value, final SpreadsheetFormatterContext context) {
                 if (value instanceof String) {
                     return this.formattedText(value.toString());
                 }
