@@ -105,7 +105,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
             components.reportIfMissing();
         });
-        assertEquals("Required properties \"creator\", \"decimal-point\" missing.", thrown.getMessage(), "message");
+        assertEquals("Required properties \"creator\", \"decimal-separator\" missing.", thrown.getMessage(), "message");
     }
 
     @Test
@@ -119,7 +119,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
             components.reportIfMissing();
         });
-        assertEquals("Required properties \"creator\", \"decimal-point\", \"locale\", \"rounding-mode\" missing.", thrown.getMessage(), "message");
+        assertEquals("Required properties \"creator\", \"decimal-separator\", \"locale\", \"rounding-mode\" missing.", thrown.getMessage(), "message");
     }
 
     @Test
