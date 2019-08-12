@@ -22,11 +22,14 @@ import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.IsMethodTesting;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.test.ToStringTesting;
+import walkingkooka.text.cursor.parser.ParserTesting;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
@@ -40,11 +43,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetPatternsTestCase<P extends SpreadsheetPatterns<T>,
-        T extends SpreadsheetFormatParserToken>
+        T extends SpreadsheetFormatParserToken,
+        V>
         implements ClassTesting2<P>,
         HashCodeEqualsDefinedTesting<P>,
         HasJsonNodeTesting<P>,
         IsMethodTesting<P>,
+        ParserTesting,
         ParseStringTesting<P>,
         ToStringTesting<P> {
 
@@ -68,8 +73,8 @@ public abstract class SpreadsheetPatternsTestCase<P extends SpreadsheetPatterns<
 
     @Test
     public final void testWith() {
-        final List<T> tokens = Lists.of(this.parseParserToken(this.patternText()),
-                this.parseParserToken("\"text-literal-2\""));
+        final List<T> tokens = Lists.of(this.parseFormatParserToken(this.patternText()),
+                this.parseFormatParserToken("\"text-literal-2\""));
 
         final P patterns = this.createPattern(tokens);
         assertEquals(patterns.value(), tokens, "value");
@@ -112,7 +117,7 @@ public abstract class SpreadsheetPatternsTestCase<P extends SpreadsheetPatterns<
 
     @Test
     public final void testWithEscape() {
-        final List<T> tokens = Lists.of(this.createParserToken(Lists.of(SpreadsheetFormatParserToken.escape('\t', "\\t"))));
+        final List<T> tokens = Lists.of(this.createFormatParserToken(Lists.of(SpreadsheetFormatParserToken.escape('\t', "\\t"))));
         final P patterns = this.createPattern(tokens);
         assertEquals(patterns.value(), tokens, "value");
     }
@@ -164,21 +169,21 @@ public abstract class SpreadsheetPatternsTestCase<P extends SpreadsheetPatterns<
 
     @Test
     public final void testWithWhitespace() {
-        final List<T> tokens = Lists.of(this.createParserToken(Lists.of(whitespace())));
+        final List<T> tokens = Lists.of(this.createFormatParserToken(Lists.of(whitespace())));
         final P patterns = this.createPattern(tokens);
         assertEquals(patterns.value(), tokens, "value");
     }
 
     final void withInvalidCharacterFails(final ParserToken token) {
         final List<ParserToken> tokens = Lists.array();
-        tokens.addAll(this.parseTokens());
+        tokens.addAll(this.parseFormatParserTokens());
 
         final int position = ParserToken.text(tokens).length();
 
         tokens.add(token);
 
         final InvalidCharacterException thrown = assertThrows(InvalidCharacterException.class, () -> {
-            this.createPattern(Lists.of(this.createParserToken(tokens)));
+            this.createPattern(Lists.of(this.createFormatParserToken(tokens)));
         });
         assertEquals(position, thrown.position(), () -> "position pattern=" + ParserToken.text(tokens));
     }
@@ -293,7 +298,7 @@ public abstract class SpreadsheetPatternsTestCase<P extends SpreadsheetPatterns<
         final String patternText = this.patternText();
 
         this.parseStringAndCheck(patternText,
-                this.createPattern(Lists.of(this.parseParserToken(patternText))));
+                this.createPattern(Lists.of(this.parseFormatParserToken(patternText))));
     }
 
     @Test
@@ -302,14 +307,14 @@ public abstract class SpreadsheetPatternsTestCase<P extends SpreadsheetPatterns<
         final String patternText2 = this.patternText();
 
         this.parseStringAndCheck(patternText + ";" + patternText2,
-                this.createPattern(Lists.of(parseParserToken(patternText), parseParserToken(patternText2))));
+                this.createPattern(Lists.of(parseFormatParserToken(patternText), parseFormatParserToken(patternText2))));
     }
 
     // HashCodeEqualsDefined............................................................................................
 
     @Test
     public final void testDifferentPattern() {
-        this.checkNotEquals(this.createPattern(Lists.of(this.parseParserToken("\"different-text-literal\""))));
+        this.checkNotEquals(this.createPattern(Lists.of(this.parseFormatParserToken("\"different-text-literal\""))));
     }
 
     // JsonNodeTesting.................................................................................................
@@ -323,30 +328,64 @@ public abstract class SpreadsheetPatternsTestCase<P extends SpreadsheetPatterns<
 
     @Test
     public final void testToString() {
-        this.toStringAndCheck(this.createPattern(this.parseTokens()), this.patternText());
+        this.toStringAndCheck(this.createPattern(this.parseFormatParserTokens()), this.patternText());
     }
 
     // helpers..........................................................................................................
 
     final P createPattern() {
-        return this.createPattern(Lists.of(this.parseParserToken(this.patternText())));
+        return this.createPattern(Lists.of(this.parseFormatParserToken(this.patternText())));
     }
 
     abstract P createPattern(final List<T> tokens);
 
     abstract String patternText();
 
-    final List<T> parseTokens() {
-        return Lists.of(this.parseParserToken(this.patternText()));
+    final List<T> parseFormatParserTokens() {
+        return Lists.of(this.parseFormatParserToken(this.patternText()));
     }
 
-    abstract T parseParserToken(final String text);
+    abstract T parseFormatParserToken(final String text);
 
-    private T createParserToken(final List<ParserToken> tokens) {
-        return this.createParserToken(tokens, ParserToken.text(tokens));
+    private T createFormatParserToken(final List<ParserToken> tokens) {
+        return this.createFormatParserToken(tokens, ParserToken.text(tokens));
     }
 
-    abstract T createParserToken(final List<ParserToken> tokens, final String text);
+    abstract T createFormatParserToken(final List<ParserToken> tokens, final String text);
+
+    final void parseAndCheck2(final String pattern,
+                              final String text,
+                              final V value) {
+        this.parseAndCheck2(pattern,
+                text,
+                value,
+                "");
+    }
+
+    final void parseAndCheck2(final String pattern,
+                              final String text,
+                              final V value,
+                              final String textAfter) {
+        this.parseAndCheck(this.parseString(pattern).parser(),
+                this.parserContext(),
+                text,
+                this.parserParserToken(value, text),
+                text,
+                textAfter);
+    }
+
+    abstract ParserToken parserParserToken(final V value, final String text);
+
+    final void parseFails2(final String pattern,
+                           final String text) {
+        this.parseFailAndCheck(this.parseString(pattern).parser(),
+                this.parserContext(),
+                text);
+    }
+
+    private SpreadsheetParserContext parserContext() {
+        return SpreadsheetParserContexts.basic(this.dateTimeContext(), this.decimalNumberContext());
+    }
 
     // ClassTesting.....................................................................................................
 

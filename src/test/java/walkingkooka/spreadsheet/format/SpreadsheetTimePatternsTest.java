@@ -25,12 +25,15 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.text.cursor.parser.ParserTokens;
 import walkingkooka.tree.json.JsonNode;
 
+import java.time.LocalTime;
 import java.util.List;
 
 public final class SpreadsheetTimePatternsTest extends SpreadsheetPatternsTestCase<SpreadsheetTimePatterns,
-        SpreadsheetFormatTimeParserToken> {
+        SpreadsheetFormatTimeParserToken,
+        LocalTime> {
 
     @Test
     public void testWithDateFails() {
@@ -99,11 +102,54 @@ public final class SpreadsheetTimePatternsTest extends SpreadsheetPatternsTestCa
         this.parseStringFails("0#00", IllegalArgumentException.class);
     }
 
-    // helpers.........................................................................................................
+    // parser...........................................................................................................
 
+    @Test
+    public void testParseTimeFails() {
+        this.parseFails2("hhmmss",
+                "12345!");
+    }
+
+    @Test
+    public void testParseHourMinutesOnlyPattern() {
+        this.parseAndCheck2("hh:mm",
+                "11:59",
+                LocalTime.of(11, 59));
+    }
+
+    @Test
+    public void testParseHourMinutesSecondsOnlyPattern() {
+        this.parseAndCheck2("hh:mm:ss",
+                "11:58:59",
+                LocalTime.of(11, 58, 59));
+    }
+
+    @Test
+    public void testParseHourMinutesSecondsAmpmOnlyPattern() {
+        this.parseAndCheck2("hh:mm:ss AM/PM",
+                "11:58:59 PM",
+                LocalTime.of(23, 58, 59));
+    }
+
+    @Test
+    public void testParseHourDefaultsMinutes() {
+        this.parseAndCheck2("hh",
+                "11",
+                LocalTime.of(11, 0, 0));
+    }
+
+    @Test
+    public void testParseHourMultiplePatterns() {
+        this.parseAndCheck2("\"A\"hhmmss;\"B\"hhmmss",
+                "B115859",
+                LocalTime.of(11, 58, 59));
+    }
+
+    // helpers..........................................................................................................
+    
     @Override
     SpreadsheetTimePatterns createPattern(final List<SpreadsheetFormatTimeParserToken> tokens) {
-        return SpreadsheetTimePatterns.withTime0(tokens);
+        return SpreadsheetTimePatterns.withTokens(tokens);
     }
 
     @Override
@@ -112,7 +158,7 @@ public final class SpreadsheetTimePatternsTest extends SpreadsheetPatternsTestCa
     }
 
     @Override
-    SpreadsheetFormatTimeParserToken parseParserToken(final String text) {
+    SpreadsheetFormatTimeParserToken parseFormatParserToken(final String text) {
         return SpreadsheetFormatParsers.time()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
@@ -121,9 +167,14 @@ public final class SpreadsheetTimePatternsTest extends SpreadsheetPatternsTestCa
     }
 
     @Override
-    SpreadsheetFormatTimeParserToken createParserToken(final List<ParserToken> tokens,
-                                                       final String text) {
+    SpreadsheetFormatTimeParserToken createFormatParserToken(final List<ParserToken> tokens,
+                                                             final String text) {
         return SpreadsheetFormatParserToken.time(tokens, text);
+    }
+
+    @Override
+    ParserToken parserParserToken(final LocalTime value, final String text) {
+        return ParserTokens.localTime(value, text);
     }
 
     // ClassTesting.....................................................................................................
