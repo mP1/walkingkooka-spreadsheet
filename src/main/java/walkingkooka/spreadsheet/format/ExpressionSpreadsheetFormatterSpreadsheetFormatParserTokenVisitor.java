@@ -71,12 +71,12 @@ final class ExpressionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor ex
 
     @Override
     protected void endVisit(final SpreadsheetFormatNumberParserToken token) {
-        this.setSpreadsheetTextFormatter(SpreadsheetFormatters.number(token), token);
+        this.setSpreadsheetFormatter(SpreadsheetFormatters.number(token), token);
     }
 
     @Override
     protected void endVisit(final SpreadsheetFormatFractionParserToken token) {
-        this.setSpreadsheetTextFormatter(SpreadsheetFormatters.bigDecimalFraction(token, this.fractioner), token);
+        this.setSpreadsheetFormatter(SpreadsheetFormatters.bigDecimalFraction(token, this.fractioner), token);
     }
 
     private final Function<BigDecimal, Fraction> fractioner;
@@ -128,21 +128,21 @@ final class ExpressionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor ex
 
     @Override
     protected void endVisit(final SpreadsheetFormatDateTimeParserToken token) {
-        this.setSpreadsheetTextFormatter(SpreadsheetFormatters.localDateTime(token), token);
+        this.setSpreadsheetFormatter(SpreadsheetFormatters.localDateTime(token), token);
     }
 
     // General................................................................................................
 
     @Override
     protected void endVisit(final SpreadsheetFormatGeneralParserToken token) {
-        this.setSpreadsheetTextFormatter(SpreadsheetFormatters.general(), token);
+        this.setSpreadsheetFormatter(SpreadsheetFormatters.general(), token);
     }
 
     // Text..................................................................................................
 
     @Override
     protected void endVisit(final SpreadsheetFormatTextParserToken token) {
-        this.setSpreadsheetTextFormatter(SpreadsheetFormatters.text(token), token);
+        this.setSpreadsheetFormatter(SpreadsheetFormatters.text(token), token);
     }
 
     // Separator.................................................................................................
@@ -168,7 +168,7 @@ final class ExpressionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor ex
         this.formatters.add(this.formatter);
     }
 
-    private void setSpreadsheetTextFormatter(final SpreadsheetFormatter formatter, final SpreadsheetFormatParserToken token) {
+    private void setSpreadsheetFormatter(final SpreadsheetFormatter formatter, final SpreadsheetFormatParserToken token) {
         this.formatter.setFormatter(formatter);
 
         if (!token.isText()) {
