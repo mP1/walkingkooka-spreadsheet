@@ -118,17 +118,17 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitMinusSign(final Character minusSign) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected void visitModifiedBy(final EmailAddress emailAddress) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visitModifiedDateTime(final LocalDateTime dateTime) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitNegativeSign(final Character negativeSign) {
         throw new UnsupportedOperationException();
     }
 
@@ -153,7 +153,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitPlusSign(final Character plusSign) {
+    protected void visitPositiveSign(final Character positiveSign) {
         throw new UnsupportedOperationException();
     }
 

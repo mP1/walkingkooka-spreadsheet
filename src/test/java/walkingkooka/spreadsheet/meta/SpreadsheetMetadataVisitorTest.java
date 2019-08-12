@@ -227,16 +227,6 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitMinusSign() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitMinusSign(final Character c) {
-                this.visited = c;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.MINUS_SIGN, '-');
-    }
-
-    @Test
     public void testVisitModifiedBy() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
@@ -254,6 +244,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = d;
             }
         }.accept(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, this.dateTime());
+    }
+
+    @Test
+    public void testVisitNegativeSign() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitNegativeSign(final Character c) {
+                this.visited = c;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, '-');
     }
 
     @Test
@@ -300,13 +300,13 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitPlusSign() {
+    public void testVisitPositiveSign() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitPlusSign(final Character c) {
+            protected void visitPositiveSign(final Character c) {
                 this.visited = c;
             }
-        }.accept(SpreadsheetMetadataPropertyName.PLUS_SIGN, '+');
+        }.accept(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, '+');
     }
 
     @Test
