@@ -53,7 +53,7 @@ final class LocalDateTimeSpreadsheetFormatter extends SpreadsheetFormatter3<Spre
     }
 
     @Override
-    Optional<SpreadsheetFormattedText> format0(final Object value, final SpreadsheetFormatterContext context) {
+    Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
         return LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor.format(this.token,
                 context.convert(value, LocalDateTime.class),
                 context,

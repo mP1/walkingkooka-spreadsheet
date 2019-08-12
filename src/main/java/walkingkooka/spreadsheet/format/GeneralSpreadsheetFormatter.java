@@ -42,7 +42,7 @@ final class GeneralSpreadsheetFormatter extends SpreadsheetFormatter2 {
     }
 
     @Override
-    Optional<SpreadsheetFormattedText> format0(final Object value, final SpreadsheetFormatterContext context) {
+    Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
         return context.defaultFormatText(value);
     }
 

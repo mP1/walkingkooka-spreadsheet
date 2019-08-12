@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.ContextTesting;
-import walkingkooka.spreadsheet.format.SpreadsheetFormattedText;
+import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -94,7 +94,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     default void parsePatternAndCheck(final String pattern,
                                       final Object value,
                                       final SpreadsheetFormatterContext spreadsheetTextFormatContext,
-                                      final Optional<SpreadsheetFormattedText> expected) {
+                                      final Optional<SpreadsheetText> expected) {
         this.parsePatternAndCheck(this.createContext(),
                 pattern,
                 value,
@@ -106,7 +106,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                       final String pattern,
                                       final Object value,
                                       final SpreadsheetFormatterContext spreadsheetTextFormatContext,
-                                      final Optional<SpreadsheetFormattedText> expected) {
+                                      final Optional<SpreadsheetText> expected) {
         final SpreadsheetFormatter formatter = context.parsePattern(pattern);
         assertEquals(expected,
                 formatter.format(Cast.to(value), spreadsheetTextFormatContext),
@@ -124,7 +124,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
 
     default void formatAndCheck(final Object value,
                                 final SpreadsheetFormatter formatter,
-                                final Optional<SpreadsheetFormattedText> expected) {
+                                final Optional<SpreadsheetText> expected) {
         this.formatAndCheck(this.createContext(),
                 value,
                 formatter,
@@ -134,7 +134,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     default void formatAndCheck(final SpreadsheetEngineContext context,
                                 final Object value,
                                 final SpreadsheetFormatter formatter,
-                                final Optional<SpreadsheetFormattedText> expected) {
+                                final Optional<SpreadsheetText> expected) {
         assertEquals(expected,
                 context.format(value, formatter),
                 () -> "format " + CharSequences.quoteIfChars(value) + " " + formatter);

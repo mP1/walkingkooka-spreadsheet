@@ -52,7 +52,7 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
-import walkingkooka.spreadsheet.format.SpreadsheetFormattedText;
+import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -865,7 +865,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
             }
 
             @Override
-            public Optional<SpreadsheetFormattedText> format(final Object value, final SpreadsheetFormatterContext context) {
+            public Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) {
                 if (value instanceof String) {
                     return this.formattedText(value.toString());
                 }
@@ -875,8 +875,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 throw new AssertionError("Format unexpected value " + CharSequences.quoteIfChars(value));
             }
 
-            private Optional<SpreadsheetFormattedText> formattedText(final String text) {
-                return Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, text));
+            private Optional<SpreadsheetText> formattedText(final String text) {
+                return Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text));
             }
         };
     }

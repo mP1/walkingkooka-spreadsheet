@@ -155,7 +155,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     @Test
     public void testDefaultFormatText() {
         this.defaultFormatTextAndCheck(BigDecimal.valueOf(12.5),
-                Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, "012.500")));
+                Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, "012.500")));
     }
 
     @Test
@@ -228,8 +228,8 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
             }
 
             @Override
-            public Optional<SpreadsheetFormattedText> format(final Object value, final SpreadsheetFormatterContext context) {
-                return Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, new DecimalFormat("000.000").format(value)));
+            public Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) {
+                return Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, new DecimalFormat("000.000").format(value)));
             }
         };
     }

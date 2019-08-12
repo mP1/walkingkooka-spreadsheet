@@ -117,7 +117,7 @@ public final class GeneralSpreadsheetFormatterTest extends SpreadsheetFormatterT
             }
 
             @Override
-            public Optional<SpreadsheetFormattedText> defaultFormatText(final Object value) {
+            public Optional<SpreadsheetText> defaultFormatText(final Object value) {
                 if (value instanceof String) {
                     return this.formattedText(value.toString());
                 }
@@ -130,8 +130,8 @@ public final class GeneralSpreadsheetFormatterTest extends SpreadsheetFormatterT
                 return this.formattedText(value.toString());
             }
 
-            private Optional<SpreadsheetFormattedText> formattedText(final String text) {
-                return Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, text));
+            private Optional<SpreadsheetText> formattedText(final String text) {
+                return Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text));
             }
         };
     }

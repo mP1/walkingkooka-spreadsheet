@@ -70,7 +70,7 @@ final class ColorSpreadsheetFormatter extends SpreadsheetFormatter3<SpreadsheetF
     }
 
     @Override
-    Optional<SpreadsheetFormattedText> format0(final Object value, final SpreadsheetFormatterContext context) {
+    Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
         return this.formatter.format(value, context)
                 .map(t -> t.setColor(this.color(context)));
     }
