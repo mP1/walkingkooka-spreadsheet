@@ -243,7 +243,7 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
     }
     private DecimalNumberContext decimalNumberContext() {
         return DecimalNumberContexts.basic(this.currencySymbol(),
-                this.decimalPoint(),
+                this.decimalSeparator(),
                 this.exponentSymbol(),
                 this.groupingSeparator(),
                 this.negativeSign(),
@@ -259,7 +259,7 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
     }
 
     @Override
-    public char decimalPoint() {
+    public char decimalSeparator() {
         return '!';
     }
 

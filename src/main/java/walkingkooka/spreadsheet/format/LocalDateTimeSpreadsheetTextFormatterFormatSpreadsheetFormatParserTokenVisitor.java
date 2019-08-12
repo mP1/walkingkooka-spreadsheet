@@ -221,7 +221,7 @@ final class LocalDateTimeSpreadsheetTextFormatterFormatSpreadsheetFormatParserTo
         // only add decimal point followed by millis as a decimal if decimal places were present.
         final int millisecondDecimals = this.millisecondDecimals;
         if (millisecondDecimals > 0) {
-            this.append(this.context.decimalPoint());
+            this.append(this.context.decimalSeparator());
 
             float millis = secondsAndMills - seconds;
 
