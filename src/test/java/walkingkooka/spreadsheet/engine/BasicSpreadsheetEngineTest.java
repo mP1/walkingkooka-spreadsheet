@@ -4846,8 +4846,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public SpreadsheetFormatter defaultSpreadsheetTextFormatter() {
-                return BasicSpreadsheetEngineTest.this.defaultSpreadsheetTextFormatter();
+            public SpreadsheetFormatter defaultSpreadsheetFormatter() {
+                return BasicSpreadsheetEngineTest.this.defaultSpreadsheetFormatter();
             }
 
             @Override
@@ -4861,7 +4861,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private Object counter;
 
-    private SpreadsheetFormatter defaultSpreadsheetTextFormatter() {
+    private SpreadsheetFormatter defaultSpreadsheetFormatter() {
         return this.formatter(PATTERN_DEFAULT,
                 SpreadsheetText.WITHOUT_COLOR,
                 FORMATTED_DEFAULT_SUFFIX);
@@ -4926,7 +4926,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private SpreadsheetCell formattedCellWithValue(final SpreadsheetCell cell,
                                                    final Object value) {
 
-        final SpreadsheetText formattedText = this.defaultSpreadsheetTextFormatter().format(value, SPREADSHEET_TEXT_FORMAT_CONTEXT)
+        final SpreadsheetText formattedText = this.defaultSpreadsheetFormatter().format(value, SPREADSHEET_TEXT_FORMAT_CONTEXT)
                 .orElseThrow(() -> new AssertionError("Failed to format " + CharSequences.quoteIfChars(value)));
         final Optional<TextNode> formattedCell = Optional.of(this.style()
                 .replace(formattedText.toTextNode())

@@ -56,7 +56,7 @@ public class FakeSpreadsheetContext implements SpreadsheetContext {
     }
 
     @Override
-    public SpreadsheetFormatter defaultSpreadsheetTextFormatter(final SpreadsheetId id) {
+    public SpreadsheetFormatter defaultSpreadsheetFormatter(final SpreadsheetId id) {
         throw new UnsupportedOperationException();
     }
 

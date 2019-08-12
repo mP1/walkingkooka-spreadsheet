@@ -67,7 +67,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.nameToColor(),
                     WIDTH,
                     FRACTIONER,
-                    this.defaultSpreadsheetTextFormatter());
+                    this.defaultSpreadsheetFormatter());
         });
     }
 
@@ -83,7 +83,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.nameToColor(),
                     WIDTH,
                     FRACTIONER,
-                    this.defaultSpreadsheetTextFormatter());
+                    this.defaultSpreadsheetFormatter());
         });
     }
 
@@ -99,7 +99,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.nameToColor(),
                     WIDTH,
                     FRACTIONER,
-                    this.defaultSpreadsheetTextFormatter());
+                    this.defaultSpreadsheetFormatter());
         });
     }
 
@@ -115,7 +115,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.nameToColor(),
                     WIDTH,
                     FRACTIONER,
-                    this.defaultSpreadsheetTextFormatter());
+                    this.defaultSpreadsheetFormatter());
         });
     }
 
@@ -131,7 +131,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.nameToColor(),
                     WIDTH,
                     FRACTIONER,
-                    this.defaultSpreadsheetTextFormatter());
+                    this.defaultSpreadsheetFormatter());
         });
     }
 
@@ -147,7 +147,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.nameToColor(),
                     WIDTH,
                     FRACTIONER,
-                    this.defaultSpreadsheetTextFormatter());
+                    this.defaultSpreadsheetFormatter());
         });
     }
 
@@ -163,7 +163,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     null,
                     WIDTH,
                     FRACTIONER,
-                    this.defaultSpreadsheetTextFormatter());
+                    this.defaultSpreadsheetFormatter());
         });
     }
 
@@ -179,7 +179,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.nameToColor(),
                     0,
                     FRACTIONER,
-                    this.defaultSpreadsheetTextFormatter());
+                    this.defaultSpreadsheetFormatter());
         });
     }
 
@@ -195,12 +195,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                     this.nameToColor(),
                     WIDTH,
                     null,
-                    this.defaultSpreadsheetTextFormatter());
+                    this.defaultSpreadsheetFormatter());
         });
     }
 
     @Test
-    public void testWithNullDefaultSpreadsheetTextFormatterFails() {
+    public void testWithNullDefaultSpreadsheetFormatterFails() {
         assertThrows(NullPointerException.class, () -> {
             BasicSpreadsheetEngineContext.with(this.functions(),
                     this.engine(),
@@ -226,9 +226,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     @Test
-    public void testDefaultSpreadsheetTextFormatter() {
-        final SpreadsheetFormatter defaultSpreadsheetTextFormatter = this.defaultSpreadsheetTextFormatter();
-        assertSame(defaultSpreadsheetTextFormatter, this.createContext(defaultSpreadsheetTextFormatter).defaultSpreadsheetTextFormatter());
+    public void testDefaultSpreadsheetFormatter() {
+        final SpreadsheetFormatter defaultSpreadsheetFormatter = this.defaultSpreadsheetFormatter();
+        assertSame(defaultSpreadsheetFormatter, this.createContext(defaultSpreadsheetFormatter).defaultSpreadsheetFormatter());
     }
 
     @Test
@@ -259,11 +259,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
         this.parsePatternAndCheck("####.#",
                 BigDecimal.valueOf(-123.456),
-                this.spreadsheetTextFormatContext(),
+                this.spreadsheetFormatContext(),
                 Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, "N123D5")));
     }
 
-    private SpreadsheetFormatterContext spreadsheetTextFormatContext() {
+    private SpreadsheetFormatterContext spreadsheetFormatContext() {
         final DecimalNumberContext decimalNumberContext = this.decimalNumberContext();
 
         return new FakeSpreadsheetFormatterContext() {
@@ -315,15 +315,15 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testToString() {
         this.toStringAndCheck(this.createContext(),
-                "converter=value instanceof target type. | Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean converterContext=DateTimeContext123 \"C\" 'D' 'E' 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN fractioner=Fractioner123 defaultSpreadsheetTextFormatter=SpreadsheetTextFormatter123");
+                "converter=value instanceof target type. | Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean converterContext=DateTimeContext123 \"C\" 'D' 'E' 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN fractioner=Fractioner123 defaultSpreadsheetFormatter=SpreadsheetFormatter123");
     }
 
     @Override
     public BasicSpreadsheetEngineContext createContext() {
-        return this.createContext(this.defaultSpreadsheetTextFormatter());
+        return this.createContext(this.defaultSpreadsheetFormatter());
     }
 
-    private BasicSpreadsheetEngineContext createContext(final SpreadsheetFormatter defaultSpreadsheetTextFormatter) {
+    private BasicSpreadsheetEngineContext createContext(final SpreadsheetFormatter defaultSpreadsheetFormatter) {
         return BasicSpreadsheetEngineContext.with(this.functions(),
                 this.engine(),
                 this.labelStore(),
@@ -333,7 +333,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.nameToColor(),
                 WIDTH,
                 FRACTIONER,
-                defaultSpreadsheetTextFormatter);
+                defaultSpreadsheetFormatter);
     }
 
     private BiFunction<ExpressionNodeName, List<Object>, Object> functions() {
@@ -390,11 +390,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 MathContext.DECIMAL32);
     }
 
-    private SpreadsheetFormatter defaultSpreadsheetTextFormatter() {
+    private SpreadsheetFormatter defaultSpreadsheetFormatter() {
         return new FakeSpreadsheetFormatter() {
             @Override
             public String toString() {
-                return "SpreadsheetTextFormatter123";
+                return "SpreadsheetFormatter123";
             }
         };
     }

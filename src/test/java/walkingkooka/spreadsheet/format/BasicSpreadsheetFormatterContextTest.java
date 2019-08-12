@@ -48,7 +48,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 this.nameToColor(),
                 WIDTH,
                 CONVERTER,
-                this.defaultSpreadsheetTextFormatter(),
+                this.defaultSpreadsheetFormatter(),
                 this.converterContext());
     }
 
@@ -58,7 +58,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 null,
                 WIDTH,
                 CONVERTER,
-                this.defaultSpreadsheetTextFormatter(),
+                this.defaultSpreadsheetFormatter(),
                 this.converterContext());
     }
 
@@ -69,7 +69,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                     this.nameToColor(),
                     -1,
                     CONVERTER,
-                    this.defaultSpreadsheetTextFormatter(),
+                    this.defaultSpreadsheetFormatter(),
                     this.converterContext());
         });
     }
@@ -81,7 +81,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                     this.nameToColor(),
                     0,
                     CONVERTER,
-                    this.defaultSpreadsheetTextFormatter(),
+                    this.defaultSpreadsheetFormatter(),
                     this.converterContext());
         });
     }
@@ -92,12 +92,12 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 this.nameToColor(),
                 WIDTH,
                 null,
-                this.defaultSpreadsheetTextFormatter(),
+                this.defaultSpreadsheetFormatter(),
                 this.converterContext());
     }
 
     @Test
-    public void testWithNullDefaultSpreadsheetTextFormatterFails() {
+    public void testWithNullDefaultSpreadsheetFormatterFails() {
         this.withFails(this.numberToColor(),
                 this.nameToColor(),
                 WIDTH,
@@ -112,7 +112,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 this.nameToColor(),
                 WIDTH,
                 CONVERTER,
-                this.defaultSpreadsheetTextFormatter(),
+                this.defaultSpreadsheetFormatter(),
                 null);
     }
 
@@ -120,14 +120,14 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                            final Function<String, Optional<Color>> nameToColor,
                            final int width,
                            final Converter converter,
-                           final SpreadsheetFormatter defaultSpreadsheetTextFormatter,
+                           final SpreadsheetFormatter defaultSpreadsheetFormatter,
                            final ConverterContext converterContext) {
         assertThrows(NullPointerException.class, () -> {
             BasicSpreadsheetFormatterContext.with(numberToColor,
                     nameToColor,
                     width,
                     converter,
-                    defaultSpreadsheetTextFormatter,
+                    defaultSpreadsheetFormatter,
                     converterContext);
         });
     }
@@ -177,7 +177,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 this.nameToColor(),
                 WIDTH,
                 CONVERTER,
-                this.defaultSpreadsheetTextFormatter(),
+                this.defaultSpreadsheetFormatter(),
                 ConverterContexts.basic(DateTimeContexts.locale(decimalNumberContext.locale(), 50), decimalNumberContext));
     }
 
@@ -220,7 +220,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     private final static int WIDTH = 1;
     private final Converter CONVERTER = Converters.truthyNumberBoolean();
 
-    private SpreadsheetFormatter defaultSpreadsheetTextFormatter() {
+    private SpreadsheetFormatter defaultSpreadsheetFormatter() {
         return new SpreadsheetFormatter() {
             @Override
             public boolean canFormat(final Object value) {

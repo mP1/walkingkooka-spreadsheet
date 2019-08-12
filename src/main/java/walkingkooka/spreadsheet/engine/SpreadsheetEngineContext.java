@@ -53,7 +53,7 @@ public interface SpreadsheetEngineContext extends Context {
     /**
      * The default {@link SpreadsheetFormatter} when no pattern is available for a cell.
      */
-    SpreadsheetFormatter defaultSpreadsheetTextFormatter();
+    SpreadsheetFormatter defaultSpreadsheetFormatter();
 
     /**
      * Formats the given value using the provided formatter.
