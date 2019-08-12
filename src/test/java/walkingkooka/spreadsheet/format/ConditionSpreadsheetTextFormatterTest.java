@@ -203,7 +203,7 @@ public final class ConditionSpreadsheetTextFormatterTest extends SpreadsheetText
     public SpreadsheetTextFormatContext createContext() {
         return new FakeSpreadsheetTextFormatContext() {
             @Override
-            public char decimalPoint() {
+            public char decimalSeparator() {
                 return '.';
             }
 

@@ -290,7 +290,7 @@ public final class ExpressionSpreadsheetTextFormatterTest extends SpreadsheetTex
             }
 
             @Override
-            public char decimalPoint() {
+            public char decimalSeparator() {
                 return '.';
             }
 

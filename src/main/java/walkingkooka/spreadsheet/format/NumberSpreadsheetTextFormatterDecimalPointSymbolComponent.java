@@ -36,7 +36,7 @@ final class NumberSpreadsheetTextFormatterDecimalPointSymbolComponent extends Nu
 
     @Override
     void append(final NumberSpreadsheetTextFormatterComponentContext context) {
-        context.appendDecimalPoint(context.fraction);
+        context.appendDecimalSeparator(context.fraction);
     }
 
     @Override

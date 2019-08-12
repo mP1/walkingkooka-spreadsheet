@@ -517,7 +517,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     private void decimalNumberContextAndCheck(final SpreadsheetMetadata metadata,
                                               final String currencySymbol,
-                                              final Character decimalPoint,
+                                              final Character decimalSeparator,
                                               final Character exponentSymbol,
                                               final Character groupingSeparator,
                                               final Locale locale,
@@ -528,7 +528,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                               final RoundingMode roundingMode) {
         final DecimalNumberContext context = metadata.decimalNumberContext();
         this.checkCurrencySymbol(context, currencySymbol);
-        this.checkDecimalPoint(context, decimalPoint);
+        this.checkDecimalSeparator(context, decimalSeparator);
         this.checkExponentSymbol(context, exponentSymbol);
         this.checkGroupingSeparator(context, groupingSeparator);
         this.checkNegativeSign(context, negativeSign);
