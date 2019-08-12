@@ -182,13 +182,13 @@ final class BasicSpreadsheetTextFormatContext implements SpreadsheetTextFormatCo
     }
 
     @Override
-    public char minusSign() {
-        return this.converterContext.minusSign();
+    public char negativeSign() {
+        return this.converterContext.negativeSign();
     }
 
     @Override
-    public char plusSign() {
-        return this.converterContext.plusSign();
+    public char positiveSign() {
+        return this.converterContext.positiveSign();
     }
 
     @Override

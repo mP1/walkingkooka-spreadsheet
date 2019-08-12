@@ -166,7 +166,7 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
     @Test
     public void testToString() {
         this.toStringAndCheck(this.createContext(),
-                "numberToColor=1=#123456 nameToColor=bingo=#123456 width=1 converter=Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean converterContext=locale=\"fr-CA\" twoDigitYear=50 \"$$\" '!' 'E' 'G' 'M' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN");
+                "numberToColor=1=#123456 nameToColor=bingo=#123456 width=1 converter=Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean converterContext=locale=\"fr-CA\" twoDigitYear=50 \"$$\" '!' 'E' 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN");
     }
 
     @Override
@@ -246,9 +246,9 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
                 this.decimalPoint(),
                 this.exponentSymbol(),
                 this.groupingSeparator(),
-                this.minusSign(),
+                this.negativeSign(),
                 this.percentageSymbol(),
-                this.plusSign(),
+                this.positiveSign(),
                 LOCALE,
                 this.mathContext());
     }
@@ -279,8 +279,8 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
     }
 
     @Override
-    public char minusSign() {
-        return 'M';
+    public char negativeSign() {
+        return 'N';
     }
 
     @Override
@@ -289,7 +289,7 @@ public final class BasicSpreadsheetTextFormatContextTest implements SpreadsheetT
     }
 
     @Override
-    public char plusSign() {
+    public char positiveSign() {
         return 'L';
     }
 
