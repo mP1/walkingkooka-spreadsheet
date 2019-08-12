@@ -189,10 +189,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
             (p, v) -> v.visitDateTimeParsePatterns(p));
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>decimal point {@link Character}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>decimal-separator {@link Character}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<Character> DECIMAL_POINT = registerCharacterConstant("decimal-point",
-            (c, v) -> v.visitDecimalPoint(c));
+    public final static SpreadsheetMetadataPropertyName<Character> DECIMAL_SEPARATOR = registerCharacterConstant("decimal-separator",
+            (c, v) -> v.visitDecimalSeparator(c));
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>exponent-symbol {@link Character}</code>

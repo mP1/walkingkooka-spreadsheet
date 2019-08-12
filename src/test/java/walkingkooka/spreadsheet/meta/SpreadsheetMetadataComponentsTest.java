@@ -100,7 +100,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
     public void testReportIfMissingMissingTwo() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
         components.getOrNull(SpreadsheetMetadataPropertyName.CREATOR);
-        components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_POINT);
+        components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
 
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
             components.reportIfMissing();
@@ -111,7 +111,7 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
     @Test
     public void testReportIfMissingMissingSorted() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
-        components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_POINT);
+        components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
         components.getOrNull(SpreadsheetMetadataPropertyName.CREATOR);
         components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
         components.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
@@ -143,9 +143,9 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
     public void testToString() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
         components.getOrNull(SpreadsheetMetadataPropertyName.CREATOR);
-        components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_POINT);
+        components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
 
-        this.toStringAndCheck(components, Lists.of(SpreadsheetMetadataPropertyName.CREATOR, SpreadsheetMetadataPropertyName.DECIMAL_POINT).toString());
+        this.toStringAndCheck(components, Lists.of(SpreadsheetMetadataPropertyName.CREATOR, SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR).toString());
     }
 
     // ClassTesting.....................................................................................................
