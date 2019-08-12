@@ -72,9 +72,9 @@ final class BigDecimalFractionSpreadsheetFormatter extends SpreadsheetFormatter3
     }
 
     @Override
-    Optional<SpreadsheetFormattedText> format0(final Object value, final SpreadsheetFormatterContext context) {
-        return Optional.of(SpreadsheetFormattedText.with(
-                SpreadsheetFormattedText.WITHOUT_COLOR,
+    Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
+        return Optional.of(SpreadsheetText.with(
+                SpreadsheetText.WITHOUT_COLOR,
                 this.format1(BigDecimal.class.cast(value), context)));
     }
 

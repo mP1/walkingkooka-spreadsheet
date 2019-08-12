@@ -82,8 +82,8 @@ public final class ExpressionSpreadsheetFormatterSpreadsheetFormatParserTokenVis
         return ExpressionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorFormatterNoTextSpreadsheetFormatter.INSTANCE;
     }
 
-    private Optional<SpreadsheetFormattedText> formattedText() {
-        return Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, ""));
+    private Optional<SpreadsheetText> formattedText() {
+        return Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, ""));
     }
 
     @Override

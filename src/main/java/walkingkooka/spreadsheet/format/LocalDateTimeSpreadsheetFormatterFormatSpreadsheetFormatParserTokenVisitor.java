@@ -41,17 +41,17 @@ final class LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenV
     /**
      * Visits all the individual tokens in the given token which was compiled from the given pattern.
      */
-    static Optional<SpreadsheetFormattedText> format(final SpreadsheetFormatParserToken token,
-                                                     final LocalDateTime value,
-                                                     final SpreadsheetFormatterContext context,
-                                                     final boolean twelveHourTime,
-                                                     final int millisecondDecimals) {
+    static Optional<SpreadsheetText> format(final SpreadsheetFormatParserToken token,
+                                            final LocalDateTime value,
+                                            final SpreadsheetFormatterContext context,
+                                            final boolean twelveHourTime,
+                                            final int millisecondDecimals) {
         final LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor visitor = new LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor(value,
                 context,
                 twelveHourTime,
                 millisecondDecimals);
         visitor.accept(token);
-        return Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, visitor.text.toString()));
+        return Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, visitor.text.toString()));
     }
 
     /**

@@ -111,7 +111,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     // defaultFormatText.................................................................................................
 
     @Override
-    public Optional<SpreadsheetFormattedText> defaultFormatText(final Object value) {
+    public Optional<SpreadsheetText> defaultFormatText(final Object value) {
         return this.defaultSpreadsheetTextFormatter.format(value, this);
     }
 

@@ -69,7 +69,7 @@ final class ExpressionSpreadsheetFormatter extends SpreadsheetFormatter3<Spreads
      * If none of the formatters match and format do a {@link SpreadsheetFormatterContext#defaultFormatText}
      */
     @Override
-    Optional<SpreadsheetFormattedText> format0(final Object value, final SpreadsheetFormatterContext context) {
+    Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
         return this.formatters.stream()
                 .skip(this.skip(value))
                 .filter(f -> f.canFormat(value))
