@@ -29,26 +29,26 @@ import walkingkooka.type.JavaVisibility;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetFormatterPatternTest implements ClassTesting2<SpreadsheetFormatterPattern>,
-        HashCodeEqualsDefinedTesting<SpreadsheetFormatterPattern>,
-        HasJsonNodeTesting<SpreadsheetFormatterPattern>,
-        ParseStringTesting<SpreadsheetFormatterPattern>,
-        ToStringTesting<SpreadsheetFormatterPattern> {
+public final class SpreadsheetFormatPatternTest implements ClassTesting2<SpreadsheetFormatPattern>,
+        HashCodeEqualsDefinedTesting<SpreadsheetFormatPattern>,
+        HasJsonNodeTesting<SpreadsheetFormatPattern>,
+        ParseStringTesting<SpreadsheetFormatPattern>,
+        ToStringTesting<SpreadsheetFormatPattern> {
 
     private final static String PATTERN = "dd/mmm/yyyy hh:mm:ss";
 
     @Test
     public void testWithNullParserTokenFails() {
         assertThrows(NullPointerException.class, () -> {
-            SpreadsheetFormatterPattern.with(null);
+            SpreadsheetFormatPattern.with(null);
         });
     }
 
     @Test
     public void testWith() {
-        final SpreadsheetFormatterPattern pattern = SpreadsheetFormatterPattern.parse(PATTERN);
+        final SpreadsheetFormatPattern pattern = SpreadsheetFormatPattern.parse(PATTERN);
 
-        final SpreadsheetFormatterPattern with = SpreadsheetFormatterPattern.with(pattern.value());
+        final SpreadsheetFormatPattern with = SpreadsheetFormatPattern.with(pattern.value());
         assertEquals(with.value(), pattern.value(), "value");
     }
 
@@ -61,7 +61,7 @@ public final class SpreadsheetFormatterPatternTest implements ClassTesting2<Spre
 
     @Test
     public void testParse() {
-        final SpreadsheetFormatterPattern pattern = SpreadsheetFormatterPattern.parse(PATTERN);
+        final SpreadsheetFormatPattern pattern = SpreadsheetFormatPattern.parse(PATTERN);
         assertEquals(PATTERN, pattern.value().text(), "value.text()");
     }
 
@@ -69,7 +69,7 @@ public final class SpreadsheetFormatterPatternTest implements ClassTesting2<Spre
 
     @Test
     public void testDifferentPattern() {
-        this.checkNotEquals(SpreadsheetFormatterPattern.parse("#.00"));
+        this.checkNotEquals(SpreadsheetFormatPattern.parse("#.00"));
     }
 
     // JsonNodeTesting.................................................................................................
@@ -86,15 +86,15 @@ public final class SpreadsheetFormatterPatternTest implements ClassTesting2<Spre
         this.toStringAndCheck(this.createPattern(), PATTERN);
     }
 
-    private SpreadsheetFormatterPattern createPattern() {
-        return SpreadsheetFormatterPattern.parse(PATTERN);
+    private SpreadsheetFormatPattern createPattern() {
+        return SpreadsheetFormatPattern.parse(PATTERN);
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetFormatterPattern> type() {
-        return SpreadsheetFormatterPattern.class;
+    public Class<SpreadsheetFormatPattern> type() {
+        return SpreadsheetFormatPattern.class;
     }
 
     @Override
@@ -105,27 +105,27 @@ public final class SpreadsheetFormatterPatternTest implements ClassTesting2<Spre
     // ClassTesting.....................................................................................................
 
     @Override
-    public SpreadsheetFormatterPattern createObject() {
+    public SpreadsheetFormatPattern createObject() {
         return this.createPattern();
     }
 
     // HasJsonNodeTesting................................................................................................
 
     @Override
-    public SpreadsheetFormatterPattern createHasJsonNode() {
+    public SpreadsheetFormatPattern createHasJsonNode() {
         return this.createPattern();
     }
 
     @Override
-    public SpreadsheetFormatterPattern fromJsonNode(final JsonNode jsonNode) {
-        return SpreadsheetFormatterPattern.fromJsonNode(jsonNode);
+    public SpreadsheetFormatPattern fromJsonNode(final JsonNode jsonNode) {
+        return SpreadsheetFormatPattern.fromJsonNode(jsonNode);
     }
 
     // ParseStringTesting...............................................................................................
 
     @Override
-    public SpreadsheetFormatterPattern parseString(final String text) {
-        return SpreadsheetFormatterPattern.parse(text);
+    public SpreadsheetFormatPattern parseString(final String text) {
+        return SpreadsheetFormatPattern.parse(text);
     }
 
     @Override
