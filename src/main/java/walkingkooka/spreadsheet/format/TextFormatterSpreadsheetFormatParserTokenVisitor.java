@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 
 /**
- * A {@link SpreadsheetFormatParserTokenVisitor} sub classed and used by {@link SpreadsheetTextFormatter3}.
+ * A {@link SpreadsheetFormatParserTokenVisitor} sub classed and used by {@link SpreadsheetFormatter3}.
  */
 abstract class TextFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 

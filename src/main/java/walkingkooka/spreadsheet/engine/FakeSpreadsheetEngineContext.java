@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.format.SpreadsheetFormattedText;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.test.Fake;
 import walkingkooka.tree.expression.ExpressionNode;
@@ -48,19 +48,19 @@ public class FakeSpreadsheetEngineContext implements SpreadsheetEngineContext, F
     }
 
     @Override
-    public SpreadsheetTextFormatter parsePattern(final String pattern) {
+    public SpreadsheetFormatter parsePattern(final String pattern) {
         Objects.requireNonNull(pattern, "pattern");
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public SpreadsheetTextFormatter defaultSpreadsheetTextFormatter() {
+    public SpreadsheetFormatter defaultSpreadsheetTextFormatter() {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public Optional<SpreadsheetFormattedText> format(final Object value,
-                                                     final SpreadsheetTextFormatter formatter) {
+                                                     final SpreadsheetFormatter formatter) {
         throw new UnsupportedOperationException();
     }
 }
