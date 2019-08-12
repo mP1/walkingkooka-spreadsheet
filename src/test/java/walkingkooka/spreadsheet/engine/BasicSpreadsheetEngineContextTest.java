@@ -260,7 +260,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         this.parsePatternAndCheck("####.#",
                 BigDecimal.valueOf(-123.456),
                 this.spreadsheetTextFormatContext(),
-                Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, "M123D5")));
+                Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, "N123D5")));
     }
 
     private SpreadsheetTextFormatContext spreadsheetTextFormatContext() {
@@ -288,13 +288,13 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             }
 
             @Override
-            public char minusSign() {
-                return decimalNumberContext.minusSign();
+            public char negativeSign() {
+                return decimalNumberContext.negativeSign();
             }
 
             @Override
-            public char plusSign() {
-                return decimalNumberContext.plusSign();
+            public char positiveSign() {
+                return decimalNumberContext.positiveSign();
             }
 
             @Override
@@ -309,13 +309,13 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         // DecimalNumberContext returns 'D' for the decimal point character and 'M' for minus sign
         this.formatAndCheck(BigDecimal.valueOf(-123.45),
                 this.createContext().parsePattern("#.#\"Abc123\""),
-                Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, "M123D5Abc123")));
+                Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, "N123D5Abc123")));
     }
 
     @Test
     public void testToString() {
         this.toStringAndCheck(this.createContext(),
-                "converter=value instanceof target type. | Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean converterContext=DateTimeContext123 \"C\" 'D' 'E' 'G' 'M' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN fractioner=Fractioner123 defaultSpreadsheetTextFormatter=SpreadsheetTextFormatter123");
+                "converter=value instanceof target type. | Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean converterContext=DateTimeContext123 \"C\" 'D' 'E' 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN fractioner=Fractioner123 defaultSpreadsheetTextFormatter=SpreadsheetTextFormatter123");
     }
 
     @Override
@@ -383,7 +383,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 'D',
                 'E',
                 'G',
-                'M',
+                'N',
                 'P',
                 'L',
                 Locale.CANADA_FRENCH,

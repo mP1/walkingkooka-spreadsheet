@@ -80,8 +80,8 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     }
 
     @Override
-    public char minusSign() {
-        return this.context.minusSign();
+    public char negativeSign() {
+        return this.context.negativeSign();
     }
 
     @Override
@@ -90,8 +90,8 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     }
 
     @Override
-    public char plusSign() {
-        return this.context.plusSign();
+    public char positiveSign() {
+        return this.context.positiveSign();
     }
 
     @Override

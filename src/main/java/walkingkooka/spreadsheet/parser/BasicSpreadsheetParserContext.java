@@ -108,8 +108,8 @@ final class BasicSpreadsheetParserContext implements SpreadsheetParserContext {
     }
 
     @Override
-    public char minusSign() {
-        return this.decimalNumberContext.minusSign();
+    public char negativeSign() {
+        return this.decimalNumberContext.negativeSign();
     }
 
     @Override
@@ -118,8 +118,8 @@ final class BasicSpreadsheetParserContext implements SpreadsheetParserContext {
     }
 
     @Override
-    public char plusSign() {
-        return this.decimalNumberContext.plusSign();
+    public char positiveSign() {
+        return this.decimalNumberContext.positiveSign();
     }
 
     @Override

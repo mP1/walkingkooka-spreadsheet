@@ -48,9 +48,9 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
         final Character decimalPoint = components.getOrElse(SpreadsheetMetadataPropertyName.DECIMAL_POINT, this::localeDecimalPoint);
         final Character exponentSymbol = components.getOrNull(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL);
         final Character groupingSeparator = components.getOrElse(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, this::localeGroupingSeparator);
-        final Character minusSign = components.getOrElse(SpreadsheetMetadataPropertyName.MINUS_SIGN, this::localeMinusSign);
+        final Character negativeSign = components.getOrElse(SpreadsheetMetadataPropertyName.MINUS_SIGN, this::localeNegativeSign);
         final Character percentSymbol = components.getOrElse(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, this::localePercentageSymbol);
-        final Character plusSign = components.getOrElse(SpreadsheetMetadataPropertyName.PLUS_SIGN, this::localePlusSign);
+        final Character positiveSign = components.getOrElse(SpreadsheetMetadataPropertyName.PLUS_SIGN, this::localePositiveSign);
 
         final Locale locale = components.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
 
@@ -63,9 +63,9 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
                 decimalPoint,
                 exponentSymbol,
                 groupingSeparator,
-                minusSign,
+                negativeSign,
                 percentSymbol,
-                plusSign,
+                positiveSign,
                 locale,
                 new MathContext(precision, roundingMode));
     }
@@ -82,16 +82,16 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
         return this.tryPropertyFromLocale(DecimalNumberContext::groupingSeparator);
     }
 
-    private Character localeMinusSign() {
-        return this.tryPropertyFromLocale(DecimalNumberContext::minusSign);
+    private Character localeNegativeSign() {
+        return this.tryPropertyFromLocale(DecimalNumberContext::negativeSign);
     }
 
     private Character localePercentageSymbol() {
         return this.tryPropertyFromLocale(DecimalNumberContext::percentageSymbol);
     }
 
-    private Character localePlusSign() {
-        return this.tryPropertyFromLocale(DecimalNumberContext::plusSign);
+    private Character localePositiveSign() {
+        return this.tryPropertyFromLocale(DecimalNumberContext::positiveSign);
     }
 
     private <T> T tryPropertyFromLocale(final Function<DecimalNumberContext, T> localDecimalNumberContextGetter) {
