@@ -18,10 +18,10 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterPattern;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatPattern;
 import walkingkooka.tree.json.JsonNode;
 
-public final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormatTest extends SpreadsheetMetadataPropertyValueHandlerTestCase2<SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormat, SpreadsheetFormatterPattern> {
+public final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPatternTest extends SpreadsheetMetadataPropertyValueHandlerTestCase2<SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPattern, SpreadsheetFormatPattern> {
 
     @Override
     public void testTypeNaming() {
@@ -29,39 +29,39 @@ public final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPa
 
     @Test
     public void testGeneralFails() {
-        this.checkFails(SpreadsheetFormatterPattern.parse("GENERAL"), "Invalid pattern \"GENERAL\"");
+        this.checkFails(SpreadsheetFormatPattern.parse("GENERAL"), "Invalid pattern \"GENERAL\"");
     }
 
     @Test
     public void testFromJsonNode() {
-        final SpreadsheetFormatterPattern value = this.propertyValue();
+        final SpreadsheetFormatPattern value = this.propertyValue();
         this.fromJsonNodeAndCheck(JsonNode.string(value.value().text()), value);
     }
 
     @Test
     public void testToJsonNode() {
-        final SpreadsheetFormatterPattern value = this.propertyValue();
+        final SpreadsheetFormatPattern value = this.propertyValue();
         this.toJsonNodeAndCheck(value, JsonNode.string(value.value().text()));
     }
 
     @Override
-    SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormat handler() {
-        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormat.INSTANCE;
+    SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPattern handler() {
+        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPattern.INSTANCE;
     }
 
     @Override
-    SpreadsheetMetadataPropertyName<SpreadsheetFormatterPattern> propertyName() {
+    SpreadsheetMetadataPropertyName<SpreadsheetFormatPattern> propertyName() {
         return SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN;
     }
 
     @Override
-    SpreadsheetFormatterPattern propertyValue() {
-        return SpreadsheetFormatterPattern.parse("#0.00");
+    SpreadsheetFormatPattern propertyValue() {
+        return SpreadsheetFormatPattern.parse("#0.00");
     }
 
     @Override
     String propertyValueType() {
-        return SpreadsheetFormatterPattern.class.getSimpleName();
+        return SpreadsheetFormatPattern.class.getSimpleName();
     }
 
     @Override
@@ -70,8 +70,8 @@ public final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPa
     }
 
     @Override
-    public Class<SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormat> type() {
-        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormat.class;
+    public Class<SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPattern> type() {
+        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPattern.class;
     }
 
     @Override
