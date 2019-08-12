@@ -74,7 +74,7 @@ final class BigDecimalFractionSpreadsheetTextFormatterComponentContext implement
     void appendMinusSign() {
         final BigDecimalFractionSpreadsheetTextFormatterMinusSign sign = this.sign;
         if (sign.shouldAppendSymbol()) {
-            this.text.append(this.context.minusSign());
+            this.text.append(this.context.negativeSign());
             this.sign = BigDecimalFractionSpreadsheetTextFormatterMinusSign.NOT_REQUIRED;
         }
     }
