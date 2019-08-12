@@ -98,7 +98,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitDecimalPoint(final Character decimalPoint) {
+    protected void visitDecimalSeparator(final Character decimalSeparator) {
         throw new UnsupportedOperationException();
     }
 

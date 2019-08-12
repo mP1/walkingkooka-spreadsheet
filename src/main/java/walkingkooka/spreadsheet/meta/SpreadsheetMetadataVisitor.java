@@ -118,7 +118,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDecimalPoint(final Character decimalPoint) {
+    protected void visitDecimalSeparator(final Character decimalSeparator) {
         // nop
     }
 

@@ -414,7 +414,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
             SpreadsheetMetadata.EMPTY
                     .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "CS")
-                    .set(SpreadsheetMetadataPropertyName.DECIMAL_POINT, 'D')
+                    .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, 'D')
                     .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, 'E')
                     .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, 'G')
                     .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, 'M')
@@ -430,7 +430,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
             SpreadsheetMetadata.EMPTY
                     .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "CS")
-                    .set(SpreadsheetMetadataPropertyName.DECIMAL_POINT, 'D')
+                    .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, 'D')
                     .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, 'E')
                     .decimalNumberContext();
         });
@@ -442,7 +442,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testDecimalNumberContextPropertiesPresent() {
         final String currencySymbol = "CS";
-        final Character decimalPoint = 'D';
+        final Character decimalSeparator = 'D';
         final Character exponentSymbol = 'E';
         final Character groupingSeparator = 'G';
         final Character negativeSign = 'N';
@@ -458,7 +458,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
                     this.decimalNumberContextAndCheck(SpreadsheetMetadata.EMPTY
                                     .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, currencySymbol)
-                                    .set(SpreadsheetMetadataPropertyName.DECIMAL_POINT, decimalPoint)
+                                    .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, decimalSeparator)
                                     .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, exponentSymbol)
                                     .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, groupingSeparator)
                                     .set(SpreadsheetMetadataPropertyName.LOCALE, locale)
@@ -468,7 +468,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                     .set(SpreadsheetMetadataPropertyName.PRECISION, precision)
                                     .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, roundingMode),
                             currencySymbol,
-                            decimalPoint,
+                            decimalSeparator,
                             exponentSymbol,
                             groupingSeparator,
                             locale,
@@ -588,7 +588,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET);
         properties.put(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetTextFormatterPattern.parse("DD/MM/YYYY hh:mm"));
         properties.put(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetPatterns.parseDateTime("DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM"));
-        properties.put(SpreadsheetMetadataPropertyName.DECIMAL_POINT, 'D');
+        properties.put(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, 'D');
         properties.put(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, 'E');
         properties.put(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, 'G');
         properties.put(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
