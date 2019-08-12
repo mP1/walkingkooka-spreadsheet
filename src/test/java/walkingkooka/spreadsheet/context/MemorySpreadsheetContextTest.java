@@ -94,7 +94,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdConverter,
                 this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
-                this::spreadsheetIdDefaultSpreadsheetTextFormatter,
+                this::spreadsheetIdDefaultSpreadsheetFormatter,
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdNameToColor,
                 this::spreadsheetIdNumberToColor,
@@ -110,7 +110,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdConverter,
                 this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
-                this::spreadsheetIdDefaultSpreadsheetTextFormatter,
+                this::spreadsheetIdDefaultSpreadsheetFormatter,
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdNameToColor,
                 this::spreadsheetIdNumberToColor,
@@ -126,7 +126,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdConverter,
                 this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
-                this::spreadsheetIdDefaultSpreadsheetTextFormatter,
+                this::spreadsheetIdDefaultSpreadsheetFormatter,
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdNameToColor,
                 this::spreadsheetIdNumberToColor,
@@ -142,7 +142,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdConverter,
                 this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
-                this::spreadsheetIdDefaultSpreadsheetTextFormatter,
+                this::spreadsheetIdDefaultSpreadsheetFormatter,
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdNameToColor,
                 this::spreadsheetIdNumberToColor,
@@ -158,7 +158,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 null,
                 this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
-                this::spreadsheetIdDefaultSpreadsheetTextFormatter,
+                this::spreadsheetIdDefaultSpreadsheetFormatter,
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdNameToColor,
                 this::spreadsheetIdNumberToColor,
@@ -174,7 +174,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdConverter,
                 null,
                 this::spreadsheetIdDecimalNumberContext,
-                this::spreadsheetIdDefaultSpreadsheetTextFormatter,
+                this::spreadsheetIdDefaultSpreadsheetFormatter,
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdNameToColor,
                 this::spreadsheetIdNumberToColor,
@@ -190,7 +190,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdConverter,
                 this::spreadsheetIdDateTimeContext,
                 null,
-                this::spreadsheetIdDefaultSpreadsheetTextFormatter,
+                this::spreadsheetIdDefaultSpreadsheetFormatter,
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdNameToColor,
                 this::spreadsheetIdNumberToColor,
@@ -198,7 +198,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     }
 
     @Test
-    public void testWithNullSpreadsheetIdDefaultSpreadsheetTextFormatterFails() {
+    public void testWithNullSpreadsheetIdDefaultSpreadsheetFormatterFails() {
         this.withFails(this.base(),
                 this.contentType(),
                 this::fractioner,
@@ -238,7 +238,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdConverter,
                 this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
-                this::spreadsheetIdDefaultSpreadsheetTextFormatter,
+                this::spreadsheetIdDefaultSpreadsheetFormatter,
                 this::spreadsheetIdFunctions,
                 null,
                 this::spreadsheetIdNumberToColor,
@@ -254,7 +254,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdConverter,
                 this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
-                this::spreadsheetIdDefaultSpreadsheetTextFormatter,
+                this::spreadsheetIdDefaultSpreadsheetFormatter,
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdNameToColor,
                 null,
@@ -270,7 +270,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdConverter,
                 this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
-                this::spreadsheetIdDefaultSpreadsheetTextFormatter,
+                this::spreadsheetIdDefaultSpreadsheetFormatter,
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdNameToColor,
                 this::spreadsheetIdNumberToColor,
@@ -284,7 +284,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                            final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
                            final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                            final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext,
-                           final Function<SpreadsheetId, SpreadsheetFormatter> spreadsheetIdDefaultSpreadsheetTextFormatter,
+                           final Function<SpreadsheetId, SpreadsheetFormatter> spreadsheetIdDefaultSpreadsheetFormatter,
                            final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                            final Function<SpreadsheetId, Function<String, Optional<Color>>> spreadsheetIdNameToColor,
                            final Function<SpreadsheetId, Function<Integer, Optional<Color>>> spreadsheetIdNumberToColor,
@@ -297,7 +297,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                     spreadsheetIdConverter,
                     spreadsheetIdDateTimeContext,
                     spreadsheetIdDecimalNumberContext,
-                    spreadsheetIdDefaultSpreadsheetTextFormatter,
+                    spreadsheetIdDefaultSpreadsheetFormatter,
                     spreadsheetIdFunctions,
                     spreadsheetIdNameToColor,
                     spreadsheetIdNumberToColor,
@@ -321,8 +321,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     }
 
     @Test
-    public void testDefaultSpreadsheetTextFormatter() {
-        assertNotEquals(null, this.createContext().defaultSpreadsheetTextFormatter(this.spreadsheetId()));
+    public void testDefaultSpreadsheetFormatter() {
+        assertNotEquals(null, this.createContext().defaultSpreadsheetFormatter(this.spreadsheetId()));
     }
 
     @Test
@@ -818,7 +818,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdConverter,
                 this::spreadsheetIdDateTimeContext,
                 this::spreadsheetIdDecimalNumberContext,
-                this::spreadsheetIdDefaultSpreadsheetTextFormatter,
+                this::spreadsheetIdDefaultSpreadsheetFormatter,
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdNameToColor,
                 this::spreadsheetIdNumberToColor,
@@ -855,7 +855,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         return DecimalNumberContexts.american(MathContext.DECIMAL32);
     }
 
-    private SpreadsheetFormatter spreadsheetIdDefaultSpreadsheetTextFormatter(final SpreadsheetId spreadsheetId) {
+    private SpreadsheetFormatter spreadsheetIdDefaultSpreadsheetFormatter(final SpreadsheetId spreadsheetId) {
         this.checkSpreadsheetId(spreadsheetId);
 
         return new SpreadsheetFormatter() {

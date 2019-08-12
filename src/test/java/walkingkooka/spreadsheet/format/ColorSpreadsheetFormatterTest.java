@@ -43,7 +43,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
     }
 
     @Test
-    public void testWithColorSpreadsheetTextFormatter() {
+    public void testWithColorSpreadsheetFormatter() {
         final SpreadsheetFormatter text = SpreadsheetFormatters.fake();
         final ColorSpreadsheetFormatter color = ColorSpreadsheetFormatter.with(this.parsePatternOrFail("[COLOR 1]"), text);
         final ColorSpreadsheetFormatter wrapper = ColorSpreadsheetFormatter.with(this.parsePatternOrFail("[COLOR 2]"), color);

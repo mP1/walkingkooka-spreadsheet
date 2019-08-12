@@ -38,7 +38,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                                                  final Function<String, Optional<Color>> nameToColor,
                                                  final int width,
                                                  final Converter converter,
-                                                 final SpreadsheetFormatter defaultSpreadsheetTextFormatter,
+                                                 final SpreadsheetFormatter defaultSpreadsheetFormatter,
                                                  final ConverterContext converterContext) {
         Objects.requireNonNull(numberToColor, "numberToColor");
         Objects.requireNonNull(nameToColor, "nameToColor");
@@ -48,13 +48,13 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         Objects.requireNonNull(converter, "converter");
         Objects.requireNonNull(converterContext, "converterContext");
         Objects.requireNonNull(converterContext, "converterContext");
-        Objects.requireNonNull(defaultSpreadsheetTextFormatter, "defaultSpreadsheetTextFormatter");
+        Objects.requireNonNull(defaultSpreadsheetFormatter, "defaultSpreadsheetFormatter");
 
         return new BasicSpreadsheetFormatterContext(numberToColor,
                 nameToColor,
                 width,
                 converter,
-                defaultSpreadsheetTextFormatter,
+                defaultSpreadsheetFormatter,
                 converterContext);
     }
 
@@ -62,7 +62,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                                              final Function<String, Optional<Color>> nameToColor,
                                              final int width,
                                              final Converter converter,
-                                             final SpreadsheetFormatter defaultSpreadsheetTextFormatter,
+                                             final SpreadsheetFormatter defaultSpreadsheetFormatter,
                                              final ConverterContext converterContext) {
         super();
 
@@ -73,7 +73,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         this.converter = converter;
         this.converterContext = converterContext;
 
-        this.defaultSpreadsheetTextFormatter = defaultSpreadsheetTextFormatter;
+        this.defaultSpreadsheetFormatter = defaultSpreadsheetFormatter;
     }
 
     // BasicSpreadsheetFormatterContext................................................................................
@@ -112,10 +112,10 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
 
     @Override
     public Optional<SpreadsheetText> defaultFormatText(final Object value) {
-        return this.defaultSpreadsheetTextFormatter.format(value, this);
+        return this.defaultSpreadsheetFormatter.format(value, this);
     }
 
-    private final SpreadsheetFormatter defaultSpreadsheetTextFormatter;
+    private final SpreadsheetFormatter defaultSpreadsheetFormatter;
 
     // DateTimeContext..................................................................................................
 
