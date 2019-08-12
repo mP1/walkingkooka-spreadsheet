@@ -642,7 +642,7 @@ public final class LocalDateTimeSpreadsheetTextFormatterTest extends Spreadsheet
     class TestSpreadsheetTextFormatContext extends FakeSpreadsheetTextFormatContext {
 
         @Override
-        public char decimalPoint() {
+        public char decimalSeparator() {
             return 'D';
         }
 

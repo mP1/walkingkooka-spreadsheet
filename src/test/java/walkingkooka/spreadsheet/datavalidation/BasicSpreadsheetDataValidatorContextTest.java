@@ -96,8 +96,8 @@ public final class BasicSpreadsheetDataValidatorContextTest implements Spreadshe
             }
 
             @Override
-            public char decimalPoint() {
-                return decimalNumberContext.decimalPoint();
+            public char decimalSeparator() {
+                return decimalNumberContext.decimalSeparator();
             }
 
             @Override
@@ -137,8 +137,8 @@ public final class BasicSpreadsheetDataValidatorContextTest implements Spreadshe
     }
 
     @Override
-    public char decimalPoint() {
-        return this.decimalNumberContext().decimalPoint();
+    public char decimalSeparator() {
+        return this.decimalNumberContext().decimalSeparator();
     }
 
     @Override

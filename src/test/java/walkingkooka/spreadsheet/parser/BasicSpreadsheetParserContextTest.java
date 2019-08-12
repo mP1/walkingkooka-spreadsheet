@@ -65,7 +65,7 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     }
 
     @Override
-    public char decimalPoint() {
+    public char decimalSeparator() {
         return DECIMAL;
     }
 
