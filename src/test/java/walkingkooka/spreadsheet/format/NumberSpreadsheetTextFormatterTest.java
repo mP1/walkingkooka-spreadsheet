@@ -271,7 +271,7 @@ public final class NumberSpreadsheetTextFormatterTest extends SpreadsheetTextFor
 
     @Test
     public void testHashHashZeroZeroQuestionQuestionHashNegative5() {
-        this.parseFormatAndCheck("##00??#", -5, "M00  5");
+        this.parseFormatAndCheck("##00??#", -5, "N00  5");
     }
 
     // fraction.......................................................................................................
@@ -623,7 +623,7 @@ public final class NumberSpreadsheetTextFormatterTest extends SpreadsheetTextFor
 
     @Test
     public void testZeroExponentZero0_0123() {
-        this.parseFormatAndCheck("0E-0", 0.0123, "1EM2");
+        this.parseFormatAndCheck("0E-0", 0.0123, "1EN2");
     }
 
     // hash exponent minus.......................................................................................
@@ -665,7 +665,7 @@ public final class NumberSpreadsheetTextFormatterTest extends SpreadsheetTextFor
 
     @Test
     public void testHashExponentHash0_0123() {
-        this.parseFormatAndCheck("#E-#", 0.0123, "1EM2");
+        this.parseFormatAndCheck("#E-#", 0.0123, "1EN2");
     }
 
     // question exponent minus.......................................................................................
@@ -707,7 +707,7 @@ public final class NumberSpreadsheetTextFormatterTest extends SpreadsheetTextFor
 
     @Test
     public void testQuestionExponentQuestion0_0123() {
-        this.parseFormatAndCheck("?E-?", 0.0123, "1EM2");
+        this.parseFormatAndCheck("?E-?", 0.0123, "1EN2");
     }
 
     // zero decimal Exponent.......................................................................................
@@ -749,7 +749,7 @@ public final class NumberSpreadsheetTextFormatterTest extends SpreadsheetTextFor
 
     @Test
     public void testZeroDecimalExponentZero0_0123() {
-        this.parseFormatAndCheck("0.E-0", 0.0123, "1!EM2");
+        this.parseFormatAndCheck("0.E-0", 0.0123, "1!EN2");
     }
 
     // hash decimal Exponent.......................................................................................
@@ -786,7 +786,7 @@ public final class NumberSpreadsheetTextFormatterTest extends SpreadsheetTextFor
 
     @Test
     public void testHashDecimalExponentHash0_0123() {
-        this.parseFormatAndCheck("#.E-#", 0.0123, "1!EM2");
+        this.parseFormatAndCheck("#.E-#", 0.0123, "1!EN2");
     }
 
     // question decimal Exponent.......................................................................................
@@ -823,7 +823,7 @@ public final class NumberSpreadsheetTextFormatterTest extends SpreadsheetTextFor
 
     @Test
     public void testQuestionDecimalExponentQuestion0_0123() {
-        this.parseFormatAndCheck("?.E-?", 0.0123, "1!EM2");
+        this.parseFormatAndCheck("?.E-?", 0.0123, "1!EN2");
     }
 
     @Test
@@ -858,7 +858,7 @@ public final class NumberSpreadsheetTextFormatterTest extends SpreadsheetTextFor
 
     @Test
     public void testZeroDecimalZeroExponentZero0_0123() {
-        this.parseFormatAndCheck("0.E-0", 0.0123, "1!EM2");
+        this.parseFormatAndCheck("0.E-0", 0.0123, "1!EN2");
     }
 
     // hash decimal hash Exponent.......................................................................................
@@ -895,7 +895,7 @@ public final class NumberSpreadsheetTextFormatterTest extends SpreadsheetTextFor
 
     @Test
     public void testHashDecimalHashExponentHash0_0123() {
-        this.parseFormatAndCheck("#.#E-#", 0.0123, "1!2EM2");
+        this.parseFormatAndCheck("#.#E-#", 0.0123, "1!2EN2");
     }
 
     // question decimal question Exponent.......................................................................................
@@ -932,7 +932,7 @@ public final class NumberSpreadsheetTextFormatterTest extends SpreadsheetTextFor
 
     @Test
     public void testQuestionDecimalQuestionExponentQuestion0_0123() {
-        this.parseFormatAndCheck("?.?E-?", 0.0123, "1!2EM2");
+        this.parseFormatAndCheck("?.?E-?", 0.0123, "1!2EN2");
     }
 
     // zero decimal zero Exponent plus.......................................................................................
@@ -969,7 +969,7 @@ public final class NumberSpreadsheetTextFormatterTest extends SpreadsheetTextFor
 
     @Test
     public void testZeroDecimalZeroZeroExponentZero0_0123() {
-        this.parseFormatAndCheck("0.00E-0", 0.0123, "1!23EM2");
+        this.parseFormatAndCheck("0.00E-0", 0.0123, "1!23EN2");
     }
 
     // hash decimal hash Exponent.......................................................................................
@@ -1006,7 +1006,7 @@ public final class NumberSpreadsheetTextFormatterTest extends SpreadsheetTextFor
 
     @Test
     public void testHashDecimalHashHashExponentHash0_0123() {
-        this.parseFormatAndCheck("#.##E-#", 0.0123, "1!23EM2");
+        this.parseFormatAndCheck("#.##E-#", 0.0123, "1!23EN2");
     }
 
     // question decimal question Exponent.......................................................................................
@@ -1043,7 +1043,7 @@ public final class NumberSpreadsheetTextFormatterTest extends SpreadsheetTextFor
 
     @Test
     public void testQuestionDecimalQuestionQuestionExponentQuestion0_0123() {
-        this.parseFormatAndCheck("?.??E-?", 0.0123, "1!23EM2");
+        this.parseFormatAndCheck("?.??E-?", 0.0123, "1!23EN2");
     }
 
     // exponent plus.
@@ -1069,7 +1069,7 @@ public final class NumberSpreadsheetTextFormatterTest extends SpreadsheetTextFor
 
     @Test
     public void testPercentageNegative1() {
-        this.parseFormatAndCheck("0%", -1, "M100R");
+        this.parseFormatAndCheck("0%", -1, "N100R");
     }
 
     @Test
@@ -1096,7 +1096,7 @@ public final class NumberSpreadsheetTextFormatterTest extends SpreadsheetTextFor
 
     @Test
     public void testThousandsGroupingNegative1() {
-        this.parseFormatAndCheck("#,0", -1, "M1");
+        this.parseFormatAndCheck("#,0", -1, "N1");
     }
 
     @Test
@@ -1282,8 +1282,8 @@ public final class NumberSpreadsheetTextFormatterTest extends SpreadsheetTextFor
             }
 
             @Override
-            public char minusSign() {
-                return 'M';
+            public char negativeSign() {
+                return 'N';
             }
 
             @Override
@@ -1292,7 +1292,7 @@ public final class NumberSpreadsheetTextFormatterTest extends SpreadsheetTextFor
             }
 
             @Override
-            public char plusSign() {
+            public char positiveSign() {
                 return 'P';
             }
         };
