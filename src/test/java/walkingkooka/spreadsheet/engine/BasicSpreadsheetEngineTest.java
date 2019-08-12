@@ -34,9 +34,9 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.format.SpreadsheetFormattedText;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatContext;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatContexts;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
@@ -99,7 +99,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static String PATTERN_COLOR = "$text+" + FORMATTED_PATTERN_SUFFIX + "+" + COLOR.get();
     private final static String PATTERN_FORMAT_FAIL = "<none>";
 
-    private final static SpreadsheetTextFormatContext SPREADSHEET_TEXT_FORMAT_CONTEXT = SpreadsheetTextFormatContexts.fake();
+    private final static SpreadsheetFormatterContext SPREADSHEET_TEXT_FORMAT_CONTEXT = SpreadsheetFormatterContexts.fake();
 
     @Test
     public void testWithNullIdFails() {
@@ -4821,7 +4821,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public SpreadsheetTextFormatter parsePattern(final String pattern) {
+            public SpreadsheetFormatter parsePattern(final String pattern) {
                 if (PATTERN_COLOR.equals(pattern)) {
                     return formatter(pattern, COLOR, FORMATTED_PATTERN_SUFFIX);
                 }
@@ -4829,14 +4829,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     return formatter(pattern, SpreadsheetFormattedText.WITHOUT_COLOR, FORMATTED_PATTERN_SUFFIX);
                 }
                 if (PATTERN_FORMAT_FAIL.equals(pattern)) {
-                    return new SpreadsheetTextFormatter() {
+                    return new SpreadsheetFormatter() {
                         @Override
                         public boolean canFormat(final Object value) {
                             return true;
                         }
 
                         @Override
-                        public Optional<SpreadsheetFormattedText> format(final Object value, final SpreadsheetTextFormatContext context) {
+                        public Optional<SpreadsheetFormattedText> format(final Object value, final SpreadsheetFormatterContext context) {
                             return Optional.empty();
                         }
                     };
@@ -4846,13 +4846,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public SpreadsheetTextFormatter defaultSpreadsheetTextFormatter() {
+            public SpreadsheetFormatter defaultSpreadsheetTextFormatter() {
                 return BasicSpreadsheetEngineTest.this.defaultSpreadsheetTextFormatter();
             }
 
             @Override
             public Optional<SpreadsheetFormattedText> format(final Object value,
-                                                             final SpreadsheetTextFormatter formatter) {
+                                                             final SpreadsheetFormatter formatter) {
                 assertFalse(value instanceof Optional, () -> "Value must not be optional" + value);
                 return formatter.format(Cast.to(value), SPREADSHEET_TEXT_FORMAT_CONTEXT);
             }
@@ -4861,16 +4861,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private Object counter;
 
-    private SpreadsheetTextFormatter defaultSpreadsheetTextFormatter() {
+    private SpreadsheetFormatter defaultSpreadsheetTextFormatter() {
         return this.formatter(PATTERN_DEFAULT,
                 SpreadsheetFormattedText.WITHOUT_COLOR,
                 FORMATTED_DEFAULT_SUFFIX);
     }
 
-    private SpreadsheetTextFormatter formatter(final String pattern,
-                                               final Optional<Color> color,
-                                               final String suffix) {
-        return new SpreadsheetTextFormatter() {
+    private SpreadsheetFormatter formatter(final String pattern,
+                                           final Optional<Color> color,
+                                           final String suffix) {
+        return new SpreadsheetFormatter() {
 
             @Override
             public boolean canFormat(final Object value) {
@@ -4879,9 +4879,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
             @Override
             public Optional<SpreadsheetFormattedText> format(final Object value,
-                                                             final SpreadsheetTextFormatContext context) {
+                                                             final SpreadsheetFormatterContext context) {
                 assertNotNull(value, "value");
-                assertSame(SPREADSHEET_TEXT_FORMAT_CONTEXT, context, "Wrong SpreadsheetTextFormatContext passed");
+                assertSame(SPREADSHEET_TEXT_FORMAT_CONTEXT, context, "Wrong SpreadsheetFormatterContext passed");
 
                 return Optional.of(SpreadsheetFormattedText.with(color, value + " " + suffix));
             }
