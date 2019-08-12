@@ -198,9 +198,9 @@ public abstract class SpreadsheetMetadata implements HasDateTimeContext,
      * <li>{@link SpreadsheetMetadataPropertyName#DECIMAL_POINT}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#EXPONENT_SYMBOL}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#GROUPING_SEPARATOR}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#MINUS_SIGN}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#NEGATIVE_SIGN}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#PERCENTAGE_SYMBOL}</li>
-     * <li>{@link SpreadsheetMetadataPropertyName#PLUS_SIGN}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#POSITIVE_SIGN}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#PRECISION}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#ROUNDING_MODE}</li>
      * </ul>

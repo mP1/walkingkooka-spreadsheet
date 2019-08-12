@@ -134,15 +134,15 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitMinusSign(final Character minusSign) {
-        // nop
-    }
-
     protected void visitModifiedBy(final EmailAddress emailAddress) {
         // nop
     }
 
     protected void visitModifiedDateTime(final LocalDateTime dateTime) {
+        // nop
+    }
+
+    protected void visitNegativeSign(final Character negativeSign) {
         // nop
     }
 
@@ -162,7 +162,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitPlusSign(final Character plusSign) {
+    protected void visitPositiveSign(final Character positiveSign) {
         // nop
     }
 

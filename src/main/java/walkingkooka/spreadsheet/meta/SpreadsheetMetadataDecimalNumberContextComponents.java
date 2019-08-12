@@ -48,9 +48,9 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
         final Character decimalPoint = components.getOrElse(SpreadsheetMetadataPropertyName.DECIMAL_POINT, this::localeDecimalPoint);
         final Character exponentSymbol = components.getOrNull(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL);
         final Character groupingSeparator = components.getOrElse(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, this::localeGroupingSeparator);
-        final Character negativeSign = components.getOrElse(SpreadsheetMetadataPropertyName.MINUS_SIGN, this::localeNegativeSign);
+        final Character negativeSign = components.getOrElse(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, this::localeNegativeSign);
         final Character percentSymbol = components.getOrElse(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, this::localePercentageSymbol);
-        final Character positiveSign = components.getOrElse(SpreadsheetMetadataPropertyName.PLUS_SIGN, this::localePositiveSign);
+        final Character positiveSign = components.getOrElse(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, this::localePositiveSign);
 
         final Locale locale = components.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
 
