@@ -192,7 +192,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             this.createObject().decimalNumberContext();
         });
         checkMessage(thrown,
-                "Required properties \"currency-symbol\", \"decimal-point\", \"exponent-symbol\", \"grouping-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\" missing.");
+                "Required properties \"currency-symbol\", \"decimal-separator\", \"exponent-symbol\", \"grouping-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\" missing.");
     }
 
     // HasMathContext...................................................................................................
