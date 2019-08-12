@@ -20,11 +20,11 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.color.Color;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.spreadsheet.format.SpreadsheetDatePatterns;
-import walkingkooka.spreadsheet.format.SpreadsheetDateTimePatterns;
-import walkingkooka.spreadsheet.format.SpreadsheetNumberPatterns;
+import walkingkooka.spreadsheet.format.SpreadsheetDateParsePatterns;
+import walkingkooka.spreadsheet.format.SpreadsheetDateTimeParsePatterns;
+import walkingkooka.spreadsheet.format.SpreadsheetNumberParsePatterns;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterPattern;
-import walkingkooka.spreadsheet.format.SpreadsheetTimePatterns;
+import walkingkooka.spreadsheet.format.SpreadsheetTimeParsePatterns;
 import walkingkooka.visit.Visiting;
 import walkingkooka.visit.Visitor;
 
@@ -102,7 +102,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDateParsePatterns(final SpreadsheetDatePatterns patterns) {
+    protected void visitDateParsePatterns(final SpreadsheetDateParsePatterns patterns) {
         // nop
     }
 
@@ -114,7 +114,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDateTimeParsePatterns(final SpreadsheetDateTimePatterns patterns) {
+    protected void visitDateTimeParsePatterns(final SpreadsheetDateTimeParsePatterns patterns) {
         // nop
     }
 
@@ -154,7 +154,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitNumberParsePatterns(final SpreadsheetNumberPatterns patterns) {
+    protected void visitNumberParsePatterns(final SpreadsheetNumberParsePatterns patterns) {
         // nop
     }
 
@@ -182,7 +182,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitTimeParsePatterns(final SpreadsheetTimePatterns patterns) {
+    protected void visitTimeParsePatterns(final SpreadsheetTimeParsePatterns patterns) {
         // nop
     }
 
