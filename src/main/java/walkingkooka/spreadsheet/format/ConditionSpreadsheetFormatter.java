@@ -58,7 +58,7 @@ final class ConditionSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsh
     }
 
     @Override
-    Optional<SpreadsheetFormattedText> format0(final Object value, final SpreadsheetFormatterContext context) {
+    Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
 
         // predicate test result inverted because $value is on the wrong side of compare
         return this.test(value, context) ?

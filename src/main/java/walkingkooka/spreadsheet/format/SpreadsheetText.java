@@ -36,7 +36,7 @@ import java.util.Optional;
 /**
  * Holds the {@link Color} and text that results from formatting a value.
  */
-public final class SpreadsheetFormattedText implements HasText,
+public final class SpreadsheetText implements HasText,
         HasTextNode,
         HashCodeEqualsDefined,
         UsesToStringBuilder {
@@ -47,13 +47,13 @@ public final class SpreadsheetFormattedText implements HasText,
     public final static Optional<Color> WITHOUT_COLOR = Optional.empty();
 
     /**
-     * Creates a {@link SpreadsheetFormattedText}
+     * Creates a {@link SpreadsheetText}
      */
-    public static SpreadsheetFormattedText with(final Optional<Color> color, final String text) {
+    public static SpreadsheetText with(final Optional<Color> color, final String text) {
         checkColor(color);
         checkText(text);
 
-        return new SpreadsheetFormattedText(color, text);
+        return new SpreadsheetText(color, text);
     }
 
     private static void checkColor(final Optional<Color> color) {
@@ -67,7 +67,7 @@ public final class SpreadsheetFormattedText implements HasText,
     /**
      * Private ctor use factory.
      */
-    private SpreadsheetFormattedText(final Optional<Color> color, final String text) {
+    private SpreadsheetText(final Optional<Color> color, final String text) {
         this.color = color;
         this.text = text;
     }
@@ -76,7 +76,7 @@ public final class SpreadsheetFormattedText implements HasText,
         return this.color;
     }
 
-    public SpreadsheetFormattedText setColor(final Optional<Color> color) {
+    public SpreadsheetText setColor(final Optional<Color> color) {
         checkColor(color);
 
         return this.color.equals(color) ?
@@ -91,7 +91,7 @@ public final class SpreadsheetFormattedText implements HasText,
         return this.text;
     }
 
-    public SpreadsheetFormattedText setText(final String text) {
+    public SpreadsheetText setText(final String text) {
         checkText(text);
 
         return this.text.equals(text) ?
@@ -101,8 +101,8 @@ public final class SpreadsheetFormattedText implements HasText,
 
     private final String text;
 
-    private SpreadsheetFormattedText replace(final Optional<Color> color, final String text) {
-        return new SpreadsheetFormattedText(color, text);
+    private SpreadsheetText replace(final Optional<Color> color, final String text) {
+        return new SpreadsheetText(color, text);
     }
 
     // HasTextNode......................................................................................................
@@ -124,11 +124,11 @@ public final class SpreadsheetFormattedText implements HasText,
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetFormattedText &&
+                other instanceof SpreadsheetText &&
                         this.equals0(Cast.to(other));
     }
 
-    private boolean equals0(final SpreadsheetFormattedText other) {
+    private boolean equals0(final SpreadsheetText other) {
         return this.color.equals(other.color) &&
                 this.text.equals(other.text);
     }

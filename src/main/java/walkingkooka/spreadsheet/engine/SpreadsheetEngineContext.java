@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Context;
-import walkingkooka.spreadsheet.format.SpreadsheetFormattedText;
+import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.tree.expression.ExpressionNode;
@@ -58,6 +58,6 @@ public interface SpreadsheetEngineContext extends Context {
     /**
      * Formats the given value using the provided formatter.
      */
-    Optional<SpreadsheetFormattedText> format(final Object value,
-                                              final SpreadsheetFormatter formatter);
+    Optional<SpreadsheetText> format(final Object value,
+                                     final SpreadsheetFormatter formatter);
 }

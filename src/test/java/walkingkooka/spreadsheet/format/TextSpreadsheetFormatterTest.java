@@ -82,13 +82,13 @@ public final class TextSpreadsheetFormatterTest extends SpreadsheetFormatter3Tes
                                      final String value,
                                      final SpreadsheetFormatterContext context,
                                      final String text) {
-        this.parseFormatAndCheck0(pattern, value, context, SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, text));
+        this.parseFormatAndCheck0(pattern, value, context, SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text));
     }
 
     private void parseFormatAndCheck0(final String pattern,
                                       final String value,
                                       final SpreadsheetFormatterContext context,
-                                      final SpreadsheetFormattedText text) {
+                                      final SpreadsheetText text) {
         this.formatAndCheck(this.createFormatter(pattern), value, context, text);
     }
 

@@ -27,12 +27,12 @@ public interface SpreadsheetFormatter {
     /**
      * Constant holding a failed format.
      */
-    Optional<SpreadsheetFormattedText> EMPTY = Optional.empty();
+    Optional<SpreadsheetText> EMPTY = Optional.empty();
 
     /**
-     * Constant holding {@link SpreadsheetFormattedText} without color or text (aka empty {@link String}.
+     * Constant holding {@link SpreadsheetText} without color or text (aka empty {@link String}.
      */
-    Optional<SpreadsheetFormattedText> NO_TEXT = Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, ""));
+    Optional<SpreadsheetText> NO_TEXT = Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, ""));
 
     /**
      * Tests if the given value can be formatted by this formatter.
@@ -40,7 +40,7 @@ public interface SpreadsheetFormatter {
     boolean canFormat(final Object value);
 
     /**
-     * Accepts a value and returns a {@link SpreadsheetFormattedText}.
+     * Accepts a value and returns a {@link SpreadsheetText}.
      */
-    Optional<SpreadsheetFormattedText> format(final Object value, final SpreadsheetFormatterContext context);
+    Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context);
 }
