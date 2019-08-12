@@ -67,7 +67,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                               final Function<String, Optional<Color>> nameToColor,
                                               final int width,
                                               final Function<BigDecimal, Fraction> fractioner,
-                                              final SpreadsheetFormatter defaultSpreadsheetTextFormatter) {
+                                              final SpreadsheetFormatter defaultSpreadsheetFormatter) {
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(labelStore, "labelStore");
@@ -79,7 +79,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
             throw new IllegalArgumentException("Invalid width " + width + " <= 0");
         }
         Objects.requireNonNull(fractioner, "fractioner");
-        Objects.requireNonNull(defaultSpreadsheetTextFormatter, "defaultSpreadsheetTextFormatter");
+        Objects.requireNonNull(defaultSpreadsheetFormatter, "defaultSpreadsheetFormatter");
 
         return new BasicSpreadsheetEngineContext(functions,
                 engine,
@@ -90,7 +90,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 nameToColor,
                 width,
                 fractioner,
-                defaultSpreadsheetTextFormatter);
+                defaultSpreadsheetFormatter);
     }
 
     /**
@@ -105,7 +105,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final Function<String, Optional<Color>> nameToColor,
                                           final int width,
                                           final Function<BigDecimal, Fraction> fractioner,
-                                          final SpreadsheetFormatter defaultSpreadsheetTextFormatter) {
+                                          final SpreadsheetFormatter defaultSpreadsheetFormatter) {
         super();
         this.parserContext = SpreadsheetParserContexts.basic(converterContext, converterContext);
 
@@ -115,14 +115,14 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         this.converter = converter;
         this.converterContext = converterContext;
 
-        this.spreadsheetTextFormatContext = SpreadsheetFormatterContexts.basic(numberToColor,
+        this.spreadsheetFormatContext = SpreadsheetFormatterContexts.basic(numberToColor,
                 nameToColor,
                 width,
                 converter,
-                defaultSpreadsheetTextFormatter,
+                defaultSpreadsheetFormatter,
                 converterContext);
         this.fractioner = fractioner;
-        this.defaultSpreadsheetTextFormatter = defaultSpreadsheetTextFormatter;
+        this.defaultSpreadsheetFormatter = defaultSpreadsheetFormatter;
     }
 
     // parsing formula and executing.....................................................................................
@@ -188,17 +188,17 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     @Override
     public Optional<SpreadsheetText> format(final Object value,
                                             final SpreadsheetFormatter formatter) {
-        return formatter.format(Cast.to(value), this.spreadsheetTextFormatContext);
+        return formatter.format(Cast.to(value), this.spreadsheetFormatContext);
     }
 
-    private final SpreadsheetFormatterContext spreadsheetTextFormatContext;
+    private final SpreadsheetFormatterContext spreadsheetFormatContext;
 
     @Override
-    public SpreadsheetFormatter defaultSpreadsheetTextFormatter() {
-        return this.defaultSpreadsheetTextFormatter;
+    public SpreadsheetFormatter defaultSpreadsheetFormatter() {
+        return this.defaultSpreadsheetFormatter;
     }
 
-    private final SpreadsheetFormatter defaultSpreadsheetTextFormatter;
+    private final SpreadsheetFormatter defaultSpreadsheetFormatter;
 
     // Object...........................................................................................................
 
@@ -208,7 +208,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 .label("converter").value(this.converter)
                 .label("converterContext").value(this.converterContext)
                 .label("fractioner").value(this.fractioner)
-                .label("defaultSpreadsheetTextFormatter").value(this.defaultSpreadsheetTextFormatter)
+                .label("defaultSpreadsheetFormatter").value(this.defaultSpreadsheetFormatter)
                 .build();
     }
 }

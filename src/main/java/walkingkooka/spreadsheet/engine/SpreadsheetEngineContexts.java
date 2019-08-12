@@ -46,7 +46,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final Function<String, Optional<Color>> nameToColor,
                                                  final int width,
                                                  final Function<BigDecimal, Fraction> fractioner,
-                                                 final SpreadsheetFormatter defaultSpreadsheetTextFormatter) {
+                                                 final SpreadsheetFormatter defaultSpreadsheetFormatter) {
         return BasicSpreadsheetEngineContext.with(functions,
                 engine,
                 labelStore,
@@ -56,7 +56,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                 nameToColor,
                 width,
                 fractioner,
-                defaultSpreadsheetTextFormatter);
+                defaultSpreadsheetFormatter);
     }
 
     /**

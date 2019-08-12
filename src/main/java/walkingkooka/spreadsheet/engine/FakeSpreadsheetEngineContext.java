@@ -54,7 +54,7 @@ public class FakeSpreadsheetEngineContext implements SpreadsheetEngineContext, F
     }
 
     @Override
-    public SpreadsheetFormatter defaultSpreadsheetTextFormatter() {
+    public SpreadsheetFormatter defaultSpreadsheetFormatter() {
         throw new UnsupportedOperationException();
     }
 
