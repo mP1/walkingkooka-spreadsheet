@@ -439,7 +439,7 @@ public final class BigDecimalFractionSpreadsheetTextFormatterTest extends Spread
             }
 
             @Override
-            public char minusSign() {
+            public char negativeSign() {
                 return 'M';
             }
 

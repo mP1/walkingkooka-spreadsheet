@@ -86,8 +86,8 @@ final class NumberSpreadsheetTextFormatterComponentContext implements Context {
         this.text.append(this.context.groupingSeparator());
     }
 
-    void appendMinusSign() {
-        this.text.append(this.context.minusSign());
+    void appendNegativeSign() {
+        this.text.append(this.context.negativeSign());
     }
 
     void appendPercentage() {
