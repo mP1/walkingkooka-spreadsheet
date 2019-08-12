@@ -402,7 +402,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         SpreadsheetCell result = cell;
 
         // try and use the cells custom format otherwise use a default from the context.
-        SpreadsheetFormatter formatter = context.defaultSpreadsheetTextFormatter();
+        SpreadsheetFormatter formatter = context.defaultSpreadsheetFormatter();
         final Optional<SpreadsheetCellFormat> maybeFormat = cell.format();
         if (maybeFormat.isPresent()) {
             final SpreadsheetCellFormat format = this.parsePatternIfNecessary(maybeFormat.get(), context);
