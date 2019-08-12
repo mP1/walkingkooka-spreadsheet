@@ -70,10 +70,10 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     }
 
     /**
-     * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormat}
+     * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPattern}
      */
-    static SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormat formatPattern() {
-        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatterPatternFormat.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPattern formatPattern() {
+        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetFormatPattern.INSTANCE;
     }
 
     /**

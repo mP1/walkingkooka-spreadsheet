@@ -32,19 +32,19 @@ import walkingkooka.tree.json.JsonNode;
 import java.util.Objects;
 
 /**
- * Holds a valid {@link SpreadsheetFormatterPattern}.
+ * Holds a valid {@link SpreadsheetFormatPattern}.
  */
-public final class SpreadsheetFormatterPattern implements HashCodeEqualsDefined,
+public final class SpreadsheetFormatPattern implements HashCodeEqualsDefined,
         HasJsonNode,
         Value<SpreadsheetFormatExpressionParserToken> {
     /**
-     * Creates a new {@link SpreadsheetFormatterPattern} after checking the value is valid.
+     * Creates a new {@link SpreadsheetFormatPattern} after checking the value is valid.
      */
-    public static SpreadsheetFormatterPattern parse(final String value) {
+    public static SpreadsheetFormatPattern parse(final String value) {
         Objects.requireNonNull(value, "value");
 
         try {
-            return new SpreadsheetFormatterPattern(SpreadsheetFormatParsers.expression()
+            return new SpreadsheetFormatPattern(SpreadsheetFormatParsers.expression()
                             .orFailIfCursorNotEmpty(ParserReporters.basic())
                             .parse(TextCursors.charSequence(value), SpreadsheetFormatParserContexts.basic())
                             .map(SpreadsheetFormatExpressionParserToken.class::cast)
@@ -54,16 +54,16 @@ public final class SpreadsheetFormatterPattern implements HashCodeEqualsDefined,
         }
     }
 
-    public static SpreadsheetFormatterPattern with(final SpreadsheetFormatExpressionParserToken value) {
+    public static SpreadsheetFormatPattern with(final SpreadsheetFormatExpressionParserToken value) {
         Objects.requireNonNull(value, "value");
 
-        return new SpreadsheetFormatterPattern(value);
+        return new SpreadsheetFormatPattern(value);
     }
 
     /**
      * Private ctor use factory
      */
-    private SpreadsheetFormatterPattern(final SpreadsheetFormatExpressionParserToken value) {
+    private SpreadsheetFormatPattern(final SpreadsheetFormatExpressionParserToken value) {
         super();
         this.value = value;
     }
@@ -87,11 +87,11 @@ public final class SpreadsheetFormatterPattern implements HashCodeEqualsDefined,
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof SpreadsheetFormatterPattern &&
+                other instanceof SpreadsheetFormatPattern &&
                         this.equals0(Cast.to(other));
     }
 
-    private boolean equals0(final SpreadsheetFormatterPattern other) {
+    private boolean equals0(final SpreadsheetFormatPattern other) {
         return this.value.equals(other.value);
     }
 
@@ -105,12 +105,12 @@ public final class SpreadsheetFormatterPattern implements HashCodeEqualsDefined,
     // HasJsonNode......................................................................................................
 
     /**
-     * Factory that creates a {@link SpreadsheetFormatterPattern} from a {@link JsonNode}.
+     * Factory that creates a {@link SpreadsheetFormatPattern} from a {@link JsonNode}.
      */
-    static SpreadsheetFormatterPattern fromJsonNode(final JsonNode node) {
+    static SpreadsheetFormatPattern fromJsonNode(final JsonNode node) {
         Objects.requireNonNull(node, "node");
 
-        return SpreadsheetFormatterPattern.parse(node.stringValueOrFail());
+        return SpreadsheetFormatPattern.parse(node.stringValueOrFail());
     }
 
     /**
@@ -123,7 +123,7 @@ public final class SpreadsheetFormatterPattern implements HashCodeEqualsDefined,
 
     static {
         HasJsonNode.register("spreadsheet-text-formatter-pattern",
-                SpreadsheetFormatterPattern::fromJsonNode,
-                SpreadsheetFormatterPattern.class);
+                SpreadsheetFormatPattern::fromJsonNode,
+                SpreadsheetFormatPattern.class);
     }
 }
