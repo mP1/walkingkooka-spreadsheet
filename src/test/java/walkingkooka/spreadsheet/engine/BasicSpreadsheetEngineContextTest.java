@@ -273,8 +273,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             }
 
             @Override
-            public char decimalPoint() {
-                return decimalNumberContext.decimalPoint();
+            public char decimalSeparator() {
+                return decimalNumberContext.decimalSeparator();
             }
 
             @Override

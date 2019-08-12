@@ -157,8 +157,8 @@ final class BasicSpreadsheetTextFormatContext implements SpreadsheetTextFormatCo
     }
 
     @Override
-    public char decimalPoint() {
-        return this.converterContext.decimalPoint();
+    public char decimalSeparator() {
+        return this.converterContext.decimalSeparator();
     }
 
     @Override

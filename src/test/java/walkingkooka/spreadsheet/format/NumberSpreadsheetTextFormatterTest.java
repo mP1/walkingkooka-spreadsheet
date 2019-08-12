@@ -1262,7 +1262,7 @@ public final class NumberSpreadsheetTextFormatterTest extends SpreadsheetTextFor
             }
 
             @Override
-            public char decimalPoint() {
+            public char decimalSeparator() {
                 return '!';
             }
 
