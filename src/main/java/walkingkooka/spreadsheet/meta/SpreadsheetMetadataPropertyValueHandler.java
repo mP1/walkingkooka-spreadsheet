@@ -42,10 +42,10 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     }
 
     /**
-     * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetDatePatterns}
+     * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateParsePatterns}
      */
-    static SpreadsheetMetadataPropertyValueHandlerSpreadsheetDatePatterns datePatterns() {
-        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetDatePatterns.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateParsePatterns dateParsePatterns() {
+        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateParsePatterns.INSTANCE;
     }
 
     /**
@@ -56,10 +56,10 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     }
 
     /**
-     * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimePatterns}
+     * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimeParsePatterns}
      */
-    static SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimePatterns dateTimePatterns() {
-        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimePatterns.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimeParsePatterns dateTimeParsePatterns() {
+        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimeParsePatterns.INSTANCE;
     }
 
     /**
@@ -98,10 +98,10 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     }
 
     /**
-     * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetNumberPatterns}
+     * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetNumberParsePatterns}
      */
-    static SpreadsheetMetadataPropertyValueHandlerSpreadsheetNumberPatterns numberPatterns() {
-        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetNumberPatterns.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerSpreadsheetNumberParsePatterns numberParsePatterns() {
+        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetNumberParsePatterns.INSTANCE;
     }
     
     /**
@@ -133,10 +133,10 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     }
 
     /**
-     * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimePatterns}
+     * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimeParsePatterns}
      */
-    static SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimePatterns timePatterns() {
-        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimePatterns.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimeParsePatterns timeParsePatterns() {
+        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimeParsePatterns.INSTANCE;
     }
     
     /**
