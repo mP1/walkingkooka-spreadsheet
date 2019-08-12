@@ -372,12 +372,12 @@ public final class BigDecimalFractionSpreadsheetFormatterTest extends Spreadshee
     private void parseFormatAndCheck(final String pattern,
                                      final String value,
                                      final String text) {
-        this.parseFormatAndCheck0(pattern, value, SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, text));
+        this.parseFormatAndCheck0(pattern, value, SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text));
     }
 
     private void parseFormatAndCheck0(final String pattern,
                                       final String value,
-                                      final SpreadsheetFormattedText text) {
+                                      final SpreadsheetText text) {
         this.formatAndCheck(this.createFormatter(pattern), new BigDecimal(value), text);
     }
 

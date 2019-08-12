@@ -172,8 +172,8 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatte
             }
 
             @Override
-            public Optional<SpreadsheetFormattedText> format(final Object value,
-                                                             final SpreadsheetFormatterContext context) {
+            public Optional<SpreadsheetText> format(final Object value,
+                                                    final SpreadsheetFormatterContext context) {
                 return Optional.of(formattedText(String.class.cast(value)));
             }
 

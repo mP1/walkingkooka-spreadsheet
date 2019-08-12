@@ -23,7 +23,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.math.Fraction;
-import walkingkooka.spreadsheet.format.SpreadsheetFormattedText;
+import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
@@ -186,8 +186,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     private final Function<BigDecimal, Fraction> fractioner;
 
     @Override
-    public Optional<SpreadsheetFormattedText> format(final Object value,
-                                                     final SpreadsheetFormatter formatter) {
+    public Optional<SpreadsheetText> format(final Object value,
+                                            final SpreadsheetFormatter formatter) {
         return formatter.format(Cast.to(value), this.spreadsheetTextFormatContext);
     }
 

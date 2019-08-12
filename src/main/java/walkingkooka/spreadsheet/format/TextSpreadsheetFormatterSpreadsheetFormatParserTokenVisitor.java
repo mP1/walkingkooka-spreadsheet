@@ -35,10 +35,10 @@ final class TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends 
     /**
      * Visits all the individual tokens in the given token which was compiled from the given pattern.
      */
-    static SpreadsheetFormattedText format(final SpreadsheetFormatTextParserToken token, final String value, final SpreadsheetFormatterContext context) {
+    static SpreadsheetText format(final SpreadsheetFormatTextParserToken token, final String value, final SpreadsheetFormatterContext context) {
         final TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor = new TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor(value, context);
         visitor.accept(token);
-        return SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, visitor.text.toString());
+        return SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, visitor.text.toString());
     }
 
     /**

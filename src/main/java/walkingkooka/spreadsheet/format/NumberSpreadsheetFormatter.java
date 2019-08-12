@@ -87,9 +87,9 @@ final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsheet
     }
 
     @Override
-    Optional<SpreadsheetFormattedText> format0(final Object value, final SpreadsheetFormatterContext context) {
-        return Optional.of(SpreadsheetFormattedText.with(
-                SpreadsheetFormattedText.WITHOUT_COLOR,
+    Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
+        return Optional.of(SpreadsheetText.with(
+                SpreadsheetText.WITHOUT_COLOR,
                 this.format1(this.normalOrScientific.context(Maths.toBigDecimal(Number.class.cast(value)).orElseThrow(() -> new IllegalArgumentException("Non number value " + CharSequences.quoteIfChars(value))), this, context))));
     }
 
