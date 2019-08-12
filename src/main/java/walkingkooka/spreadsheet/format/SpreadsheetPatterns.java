@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Cast;
 import walkingkooka.Value;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
@@ -30,6 +31,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.HasParser;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserException;
@@ -42,13 +44,13 @@ import walkingkooka.tree.json.JsonNode;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * Holds a a {@link List} of {@link SpreadsheetFormatDateTimeParserToken date/time} or {@link SpreadsheetFormatNumberParserToken} number tokens and some common functionality.
  */
 public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken> implements HashCodeEqualsDefined,
         HasJsonNode,
+        HasParser<ParserContext>,
         Value<List<T>> {
 
     // with.............................................................................................................
@@ -57,43 +59,28 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
      * Factory that creates a {@link SpreadsheetDatePatterns} from the given tokens.
      */
     public static SpreadsheetDatePatterns withDate(final List<SpreadsheetFormatDateParserToken> value) {
-        return SpreadsheetDatePatterns.withDate0(value);
+        return SpreadsheetDatePatterns.withTokens(value);
     }
 
     /**
      * Factory that creates a {@link SpreadsheetDateTimePatterns} from the given tokens.
      */
     public static SpreadsheetDateTimePatterns withDateTime(final List<SpreadsheetFormatDateTimeParserToken> value) {
-        return SpreadsheetDateTimePatterns.withDateTime0(value);
+        return SpreadsheetDateTimePatterns.withTokens(value);
     }
 
     /**
      * Factory that creates a {@link SpreadsheetNumberPatterns} from the given tokens.
      */
     public static SpreadsheetNumberPatterns withNumber(final List<SpreadsheetFormatNumberParserToken> value) {
-        return SpreadsheetNumberPatterns.withNumber0(value);
+        return SpreadsheetNumberPatterns.withTokens(value);
     }
 
     /**
      * Factory that creates a {@link SpreadsheetTimePatterns} from the given tokens.
      */
     public static SpreadsheetTimePatterns withTime(final List<SpreadsheetFormatTimeParserToken> value) {
-        return SpreadsheetTimePatterns.withTime0(value);
-    }
-
-    /**
-     * Verifies the {@link List} is not null or empty and checks each and every {@link SpreadsheetFormatParserToken}
-     */
-    static <T extends SpreadsheetFormatParserToken> List<T> copyAndCheck(final List<T> tokens,
-                                                                         final SpreadsheetPatternsSpreadsheetFormatParserTokenVisitor<T> visitor) {
-        Objects.requireNonNull(tokens, "tokens");
-        final List<T> copy = tokens.stream()
-            .peek(visitor::acceptAndCollect)
-                .collect(Collectors.toList());
-        if (copy.isEmpty()) {
-            throw new IllegalArgumentException("Tokens is empty");
-        }
-        return copy;
+        return SpreadsheetTimePatterns.withTokens(value);
     }
 
     // parseDate........................................................................................................
@@ -102,18 +89,18 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
      * Creates a new {@link SpreadsheetDatePatterns} after checking the value is valid.
      */
     public static SpreadsheetDatePatterns parseDate(final String text) {
-        return parse0(text,
+        return parsePattern(text,
                 DATE_PARSER,
                 SpreadsheetPatterns::transformDate);
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> DATE_PARSER = parserOrFail(SpreadsheetFormatParsers.date().cast());
+    private final static Parser<SpreadsheetFormatParserContext> DATE_PARSER = patternParserOrFail(SpreadsheetFormatParsers.date().cast());
 
     /**
      * Transforms the tokens into a {@link SpreadsheetDatePatterns}
      */
     private static SpreadsheetDatePatterns transformDate(final ParserToken token) {
-        return SpreadsheetDatePatterns.withDate(SpreadsheetDatePatternsSpreadsheetFormatParserTokenVisitor.with().acceptAndCollect(token));
+        return SpreadsheetDatePatterns.withToken(token);
     }
 
     // parseDateTime....................................................................................................
@@ -122,18 +109,18 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
      * Creates a new {@link SpreadsheetDateTimePatterns} after checking the value is valid.
      */
     public static SpreadsheetDateTimePatterns parseDateTime(final String text) {
-        return parse0(text,
+        return parsePattern(text,
                 DATETIME_PARSER,
                 SpreadsheetPatterns::transformDateTime);
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> DATETIME_PARSER = parserOrFail(SpreadsheetFormatParsers.dateTime().cast());
+    private final static Parser<SpreadsheetFormatParserContext> DATETIME_PARSER = patternParserOrFail(SpreadsheetFormatParsers.dateTime().cast());
 
     /**
      * Transforms the tokens into a {@link SpreadsheetDateTimePatterns}
      */
     private static SpreadsheetDateTimePatterns transformDateTime(final ParserToken token) {
-        return SpreadsheetDateTimePatterns.withDateTime(SpreadsheetDateTimePatternsSpreadsheetFormatParserTokenVisitor.with().acceptAndCollect(token));
+        return SpreadsheetDateTimePatterns.withToken(token);
     }
 
     // parseNumber.......................................................................................................
@@ -142,18 +129,18 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
      * Creates a new {@link SpreadsheetNumberPatterns} after checking the value is valid.
      */
     public static SpreadsheetNumberPatterns parseNumber(final String text) {
-        return parse0(text,
+        return parsePattern(text,
                 NUMBER_PARSER,
                 SpreadsheetPatterns::transformNumber);
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> NUMBER_PARSER = parserOrFail(SpreadsheetFormatParsers.number().cast());
+    private final static Parser<SpreadsheetFormatParserContext> NUMBER_PARSER = patternParserOrFail(SpreadsheetFormatParsers.number().cast());
 
     /**
      * Transforms the tokens into a {@link SpreadsheetNumberPatterns}
      */
     private static SpreadsheetNumberPatterns transformNumber(final ParserToken token) {
-        return SpreadsheetNumberPatterns.withNumber(SpreadsheetNumberPatternsSpreadsheetFormatParserTokenVisitor.with().acceptAndCollect(token));
+        return SpreadsheetNumberPatterns.withToken(token);
     }
 
     // parseTime....................................................................................................
@@ -162,18 +149,18 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
      * Creates a new {@link SpreadsheetTimePatterns} after checking the value is valid.
      */
     public static SpreadsheetTimePatterns parseTime(final String text) {
-        return parse0(text,
+        return parsePattern(text,
                 TIME_PARSER,
                 SpreadsheetPatterns::transformTime);
     }
 
-    private final static Parser<SpreadsheetFormatParserContext> TIME_PARSER = parserOrFail(SpreadsheetFormatParsers.time().cast());
+    private final static Parser<SpreadsheetFormatParserContext> TIME_PARSER = patternParserOrFail(SpreadsheetFormatParsers.time().cast());
 
     /**
      * Transforms the tokens into a {@link SpreadsheetTimePatterns}
      */
     private static SpreadsheetTimePatterns transformTime(final ParserToken token) {
-        return SpreadsheetDateTimePatterns.withTime(SpreadsheetTimePatternsSpreadsheetFormatParserTokenVisitor.with().acceptAndCollect(token));
+        return SpreadsheetTimePatterns.withToken(token);
     }
     
     // helper...........................................................................................................
@@ -181,10 +168,10 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
     /**
      * Parses text using the given parser and transformer.
      */
-    static <P extends SpreadsheetPatterns> P parse0(final String text,
-                                                    final Parser<SpreadsheetFormatParserContext> parser,
-                                                    final Function<ParserToken, P> transformer) {
-        Objects.requireNonNull(text, "value");
+    static <P extends SpreadsheetPatterns> P parsePattern(final String text,
+                                                          final Parser<SpreadsheetFormatParserContext> parser,
+                                                          final Function<ParserToken, P> transformer) {
+        Objects.requireNonNull(text, "text");
 
         try {
             return parser.parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
@@ -198,7 +185,7 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
     /**
      * Parsers input that requires a single {@link SpreadsheetFormatParserToken token} followed by an optional separator and more tokens.
      */
-    static Parser<SpreadsheetFormatParserContext> parser(final Parser<ParserContext> parser) {
+    static Parser<SpreadsheetFormatParserContext> patternParser(final Parser<ParserContext> parser) {
         final Parser<ParserContext> optional = Parsers.sequenceParserBuilder()
                 .required(SpreadsheetFormatParsers.expressionSeparator().cast())
                 .required(parser)
@@ -216,8 +203,14 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
     /**
      * Parsers input that requires a single {@link SpreadsheetFormatParserToken token} followed by an optional separator and more tokens.
      */
-    static Parser<SpreadsheetFormatParserContext> parserOrFail(final Parser<ParserContext> parser) {
-        return parser(parser).orFailIfCursorNotEmpty(ParserReporters.basic());
+    static Parser<SpreadsheetFormatParserContext> patternParserOrFail(final Parser<ParserContext> parser) {
+        return patternParser(parser).orFailIfCursorNotEmpty(ParserReporters.basic());
+    }
+
+    // helpers..........................................................................................................
+
+    static void check(final List<? extends SpreadsheetFormatParserToken> tokens) {
+        Objects.requireNonNull(tokens, "tokens");
     }
 
     // ctor.............................................................................................................
@@ -225,19 +218,19 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
     /**
      * Package private ctor use factory
      */
-    SpreadsheetPatterns(final List<T> value) {
+    SpreadsheetPatterns(final List<T> tokens) {
         super();
-        this.value = value;
+        this.tokens = Lists.immutable(tokens);
     }
 
     // Value............................................................................................................
 
     @Override
     public final List<T> value() {
-        return this.value;
+        return this.tokens;
     }
 
-    private final List<T> value;
+    private final List<T> tokens;
 
     // isXXX............................................................................................................
 
@@ -265,7 +258,7 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
 
     @Override
     public final int hashCode() {
-        return this.value.hashCode();
+        return this.tokens.hashCode();
     }
 
     @Override
@@ -278,14 +271,14 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
     abstract boolean canBeEquals(final Object other);
 
     private boolean equals0(final SpreadsheetPatterns other) {
-        return this.value.equals(other.value);
+        return this.tokens.equals(other.tokens);
     }
 
     // Object...........................................................................................................
 
     @Override
     public final String toString() {
-        return ParserToken.text(this.value);
+        return ParserToken.text(this.tokens);
     }
 
     // HasJsonNode......................................................................................................
@@ -355,4 +348,23 @@ public abstract class SpreadsheetPatterns<T extends SpreadsheetFormatParserToken
                 SpreadsheetPatterns::fromJsonNodeTime,
                 SpreadsheetTimePatterns.class);
     }
+
+    // HasParser........................................................................................................
+
+    /**
+     * Returns a {@link Parser} which will try all the patterns.
+     */
+    public final Parser<ParserContext> parser() {
+        if (null == this.parser) {
+            this.parser = this.createParser();
+        }
+        return this.parser;
+    }
+
+    private Parser<ParserContext> parser;
+
+    /**
+     * Factory that lazily creates a {@link Parser}
+     */
+    abstract Parser<ParserContext> createParser();
 }

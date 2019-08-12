@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatAmPmParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatCurrencyParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDayParserToken;
@@ -34,6 +35,8 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatYearParserToken;
 import walkingkooka.visit.Visiting;
 
+import java.util.List;
+
 final class SpreadsheetTimePatternsSpreadsheetFormatParserTokenVisitor extends SpreadsheetPatternsSpreadsheetFormatParserTokenVisitor<SpreadsheetFormatTimeParserToken> {
 
     static SpreadsheetTimePatternsSpreadsheetFormatParserTokenVisitor with() {
@@ -46,14 +49,28 @@ final class SpreadsheetTimePatternsSpreadsheetFormatParserTokenVisitor extends S
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatTimeParserToken token) {
-        this.tokens.add(token);
+        this.ampm = false;
         return Visiting.CONTINUE;
     }
 
     @Override
+    protected void endVisit(final SpreadsheetFormatTimeParserToken token) {
+        this.addToken(token);
+        this.ampms.add(this.ampm);
+    }
+
+    final List<Boolean> ampms = Lists.array();
+
+    @Override
     protected void visit(final SpreadsheetFormatAmPmParserToken token) {
         this.advancePosition(token);
+        this.ampm = true;
     }
+
+    /**
+     * When true 12 hour patterns must be used.
+     */
+    boolean ampm = false;
 
     @Override
     protected void visit(final SpreadsheetFormatCurrencyParserToken token) {

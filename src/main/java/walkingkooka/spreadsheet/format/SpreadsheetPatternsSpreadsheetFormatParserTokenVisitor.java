@@ -49,16 +49,20 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 
+/**
+ * A base {@link SpreadsheetFormatParserTokenVisitor} where most (almost all overrides fail when an unexpected or invalid
+ * {@link SpreadsheetFormatParserToken} is found.
+ */
 abstract class SpreadsheetPatternsSpreadsheetFormatParserTokenVisitor<P extends SpreadsheetFormatParserToken> extends SpreadsheetFormatParserTokenVisitor {
 
     SpreadsheetPatternsSpreadsheetFormatParserTokenVisitor() {
         super();
     }
 
-    final List<P> acceptAndCollect(final ParserToken token) {
-        this.pattern = token;
+    final void startAccept(final ParserToken token) {
+        this.token = token;
+        this.position = 0;
         this.accept(token);
-        return this.tokens;
     }
 
     @Override
@@ -176,15 +180,24 @@ abstract class SpreadsheetPatternsSpreadsheetFormatParserTokenVisitor<P extends 
     }
 
     final Visiting failInvalid(final SpreadsheetFormatParserToken token) {
-        throw new InvalidCharacterException(this.pattern.text(), this.position);
+        throw new InvalidCharacterException(this.token.text(), this.position);
     }
 
-    private ParserToken pattern;
+    final void addToken(final P token) {
+        this.tokens.add(token);
+    }
+
+    final List<P> tokens() {
+        if(this.tokens.isEmpty()) {
+            throw new IllegalArgumentException("Empty tokens");
+        }
+        return Lists.immutable(this.tokens);
+    }
 
     // package private so sub classes can add.
-    final List<P> tokens = Lists.array();
+    private final List<P> tokens = Lists.array();
 
-    private int position = 0;
+    private int position;
 
     @Override
     public final String toString() {
@@ -192,4 +205,6 @@ abstract class SpreadsheetPatternsSpreadsheetFormatParserTokenVisitor<P extends 
                 .value(this.tokens)
                 .build();
     }
+
+    private ParserToken token;
 }
