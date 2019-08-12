@@ -22,11 +22,11 @@ import walkingkooka.color.Color;
 import walkingkooka.naming.Name;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.spreadsheet.format.SpreadsheetDatePatterns;
-import walkingkooka.spreadsheet.format.SpreadsheetDateTimePatterns;
-import walkingkooka.spreadsheet.format.SpreadsheetNumberPatterns;
+import walkingkooka.spreadsheet.format.SpreadsheetDateParsePatterns;
+import walkingkooka.spreadsheet.format.SpreadsheetDateTimeParsePatterns;
+import walkingkooka.spreadsheet.format.SpreadsheetNumberParsePatterns;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterPattern;
-import walkingkooka.spreadsheet.format.SpreadsheetTimePatterns;
+import walkingkooka.spreadsheet.format.SpreadsheetTimeParsePatterns;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
@@ -165,8 +165,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-parse-patterns {@link String}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetDatePatterns> DATE_PARSE_PATTERNS = registerConstant("date-parse-pattern",
-            SpreadsheetMetadataPropertyValueHandler.datePatterns(),
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetDateParsePatterns> DATE_PARSE_PATTERNS = registerConstant("date-parse-pattern",
+            SpreadsheetMetadataPropertyValueHandler.dateParsePatterns(),
             (p, v) -> v.visitDateParsePatterns(p));
 
     /**
@@ -184,8 +184,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-parse-patterns</code>
      */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetDateTimePatterns> DATETIME_PARSE_PATTERNS = registerConstant("date-time-parse-patterns",
-            SpreadsheetMetadataPropertyValueHandler.dateTimePatterns(),
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetDateTimeParsePatterns> DATETIME_PARSE_PATTERNS = registerConstant("date-time-parse-patterns",
+            SpreadsheetMetadataPropertyValueHandler.dateTimeParsePatterns(),
             (p, v) -> v.visitDateTimeParsePatterns(p));
 
     /**
@@ -240,8 +240,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>number-parse-pattern</code>
      */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetNumberPatterns> NUMBER_PARSE_PATTERNS = registerConstant("number-parse-patterns",
-            SpreadsheetMetadataPropertyValueHandler.numberPatterns(),
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetNumberParsePatterns> NUMBER_PARSE_PATTERNS = registerConstant("number-parse-patterns",
+            SpreadsheetMetadataPropertyValueHandler.numberParsePatterns(),
             (p, v) -> v.visitNumberParsePatterns(p));
 
     /**
@@ -285,8 +285,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>time-parse-patterns</code>
      */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetTimePatterns> TIME_PARSE_PATTERNS = registerConstant("time-parse-patterns",
-            SpreadsheetMetadataPropertyValueHandler.timePatterns(),
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetTimeParsePatterns> TIME_PARSE_PATTERNS = registerConstant("time-parse-patterns",
+            SpreadsheetMetadataPropertyValueHandler.timeParsePatterns(),
             (p, v) -> v.visitTimeParsePatterns(p));
 
     /**
