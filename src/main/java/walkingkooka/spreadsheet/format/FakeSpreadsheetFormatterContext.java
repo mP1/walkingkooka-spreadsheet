@@ -51,7 +51,7 @@ public class FakeSpreadsheetFormatterContext extends FakeDecimalNumberContext im
     }
 
     @Override
-    public Optional<SpreadsheetFormattedText> defaultFormatText(final Object value) {
+    public Optional<SpreadsheetText> defaultFormatText(final Object value) {
         throw new UnsupportedOperationException();
     }
 

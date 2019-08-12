@@ -55,7 +55,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
         this.formatFailAndCheck(ColorSpreadsheetFormatter.with(this.parsePatternOrFail(this.pattern()),
                 new FakeSpreadsheetFormatter() {
                     @Override
-                    public Optional<SpreadsheetFormattedText> format(final Object value, final SpreadsheetFormatterContext context) {
+                    public Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) {
                         return Optional.empty();
                     }
                 }),
@@ -77,7 +77,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
                         return color;
                     }
                 },
-                SpreadsheetFormattedText.with(color, text + text));
+                SpreadsheetText.with(color, text + text));
     }
 
     @Test
@@ -94,7 +94,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
                         return color;
                     }
                 },
-                SpreadsheetFormattedText.with(color, text + text));
+                SpreadsheetText.with(color, text + text));
     }
 
     @Test
@@ -111,7 +111,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
                         return color;
                     }
                 },
-                SpreadsheetFormattedText.with(color, text + text));
+                SpreadsheetText.with(color, text + text));
     }
 
     @Test
@@ -128,9 +128,9 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
                             }
 
                             @Override
-                            public Optional<SpreadsheetFormattedText> format(final Object value, final SpreadsheetFormatterContext context) {
+                            public Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) {
                                 assertEquals(text, value, "value");
-                                return Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, text + text));
+                                return Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text + text));
                             }
                         })),
                 text,
@@ -141,7 +141,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
                         return color;
                     }
                 },
-                SpreadsheetFormattedText.with(color, text + text));
+                SpreadsheetText.with(color, text + text));
     }
 
     @Test
@@ -158,20 +158,20 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
                         return color;
                     }
                 },
-                SpreadsheetFormattedText.with(color, text + text));
+                SpreadsheetText.with(color, text + text));
     }
 
     private void parseFormatAndCheck0(final String pattern,
                                       final String value,
                                       final SpreadsheetFormatterContext context,
-                                      final SpreadsheetFormattedText formattedText) {
+                                      final SpreadsheetText formattedText) {
         this.parseFormatAndCheck0(this.createFormatter(pattern), value, context, formattedText);
     }
 
     private void parseFormatAndCheck0(final ColorSpreadsheetFormatter formatter,
                                       final String value,
                                       final SpreadsheetFormatterContext context,
-                                      final SpreadsheetFormattedText formattedText) {
+                                      final SpreadsheetText formattedText) {
         this.formatAndCheck(formatter, value, context, Optional.of(formattedText));
     }
 

@@ -47,7 +47,7 @@ public interface SpreadsheetFormatterContext extends DecimalNumberContext, DateT
     /**
      * Provides a default format text.
      */
-    Optional<SpreadsheetFormattedText> defaultFormatText(final Object value);
+    Optional<SpreadsheetText> defaultFormatText(final Object value);
 
     /**
      * Handles converting the given value to the target.

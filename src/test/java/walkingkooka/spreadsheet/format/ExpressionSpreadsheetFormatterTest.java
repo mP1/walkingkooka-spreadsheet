@@ -205,19 +205,19 @@ public final class ExpressionSpreadsheetFormatterTest extends SpreadsheetFormatt
                                      final String text) {
 
 
-        this.parseFormatAndCheck(pattern, value, SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, text));
+        this.parseFormatAndCheck(pattern, value, SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text));
     }
 
     private void parseFormatAndCheck(final String pattern,
                                      final Object value,
                                      final Color color,
                                      final String text) {
-        this.parseFormatAndCheck(pattern, value, SpreadsheetFormattedText.with(Optional.of(color), text));
+        this.parseFormatAndCheck(pattern, value, SpreadsheetText.with(Optional.of(color), text));
     }
 
     private void parseFormatAndCheck(final String pattern,
                                      final Object value,
-                                     final SpreadsheetFormattedText text) {
+                                     final SpreadsheetText text) {
         this.formatAndCheck(this.createFormatter(pattern),
                 value,
                 this.createContext(),
@@ -345,8 +345,8 @@ public final class ExpressionSpreadsheetFormatterTest extends SpreadsheetFormatt
             }
 
             @Override
-            public Optional<SpreadsheetFormattedText> defaultFormatText(final Object value) {
-                return Optional.of(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, DEFAULT_PREFIX + value));
+            public Optional<SpreadsheetText> defaultFormatText(final Object value) {
+                return Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, DEFAULT_PREFIX + value));
             }
         };
     }
