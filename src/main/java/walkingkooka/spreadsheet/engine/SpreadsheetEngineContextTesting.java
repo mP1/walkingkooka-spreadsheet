@@ -93,23 +93,23 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
 
     default void parsePatternAndCheck(final String pattern,
                                       final Object value,
-                                      final SpreadsheetFormatterContext spreadsheetTextFormatContext,
+                                      final SpreadsheetFormatterContext spreadsheetFormatContext,
                                       final Optional<SpreadsheetText> expected) {
         this.parsePatternAndCheck(this.createContext(),
                 pattern,
                 value,
-                spreadsheetTextFormatContext,
+                spreadsheetFormatContext,
                 expected);
     }
 
     default void parsePatternAndCheck(final SpreadsheetEngineContext context,
                                       final String pattern,
                                       final Object value,
-                                      final SpreadsheetFormatterContext spreadsheetTextFormatContext,
+                                      final SpreadsheetFormatterContext spreadsheetFormatContext,
                                       final Optional<SpreadsheetText> expected) {
         final SpreadsheetFormatter formatter = context.parsePattern(pattern);
         assertEquals(expected,
-                formatter.format(Cast.to(value), spreadsheetTextFormatContext),
+                formatter.format(Cast.to(value), spreadsheetFormatContext),
                 () -> "parsePattern " + pattern + " " + formatter + " then format " + CharSequences.quoteIfChars(value));
     }
 
