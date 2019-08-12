@@ -42,7 +42,7 @@ abstract class NumberSpreadsheetTextFormatterExponentOrIntegerDigits extends Num
     @Override
     final void sign(final NumberSpreadsheetTextFormatterComponentContext context) {
         if (this.minusSign.shouldAppendSymbol()) {
-            context.appendMinusSign();
+            context.appendNegativeSign();
             this.minusSign = NumberSpreadsheetTextFormatterMinusSign.NOT_REQUIRED;
         }
     }

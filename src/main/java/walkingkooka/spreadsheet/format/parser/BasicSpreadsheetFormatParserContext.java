@@ -72,11 +72,6 @@ final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatPars
     }
 
     @Override
-    public char minusSign() {
-        return this.context.minusSign();
-    }
-
-    @Override
     public List<String> monthNames() {
         throw new UnsupportedOperationException();
     }
@@ -87,13 +82,18 @@ final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatPars
     }
 
     @Override
+    public char negativeSign() {
+        return this.context.negativeSign();
+    }
+
+    @Override
     public char percentageSymbol() {
         return this.context.percentageSymbol();
     }
 
     @Override
-    public char plusSign() {
-        return this.context.plusSign();
+    public char positiveSign() {
+        return this.context.positiveSign();
     }
 
     @Override

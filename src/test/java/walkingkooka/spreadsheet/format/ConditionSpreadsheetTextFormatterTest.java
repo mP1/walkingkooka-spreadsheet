@@ -213,12 +213,12 @@ public final class ConditionSpreadsheetTextFormatterTest extends SpreadsheetText
             }
 
             @Override
-            public char minusSign() {
+            public char negativeSign() {
                 return '-';
             }
 
             @Override
-            public char plusSign() {
+            public char positiveSign() {
                 return '+';
             }
 

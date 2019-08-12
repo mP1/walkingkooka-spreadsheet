@@ -89,8 +89,8 @@ public final class GeneralSpreadsheetTextFormatterTest extends SpreadsheetTextFo
             }
 
             @Override
-            public char minusSign() {
-                return 'M';
+            public char negativeSign() {
+                return 'N';
             }
 
             @Override
@@ -99,7 +99,7 @@ public final class GeneralSpreadsheetTextFormatterTest extends SpreadsheetTextFo
             }
 
             @Override
-            public char plusSign() {
+            public char positiveSign() {
                 return 'P';
             }
 

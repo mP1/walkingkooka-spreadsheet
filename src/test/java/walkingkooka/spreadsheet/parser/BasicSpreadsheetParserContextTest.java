@@ -33,9 +33,9 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     private final static char DECIMAL = 'D';
     private final static char EXPONENT = 'X';
     private final static char GROUPING = 'G';
-    private final static char MINUS = 'M';
+    private final static char NEGATIVE = 'N';
     private final static char PERCENTAGE = 'R';
-    private final static char PLUS = 'P';
+    private final static char POSITIVE = 'P';
     private final static Locale LOCALE = Locale.CANADA_FRENCH;
     private final static MathContext MATH_CONTEXT = MathContext.DECIMAL32;
 
@@ -49,14 +49,14 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
         return BasicSpreadsheetParserContext.with(
                 DateTimeContexts.fake(),
                 DecimalNumberContexts.basic(CURRENCY,
-                DECIMAL,
-                EXPONENT,
-                GROUPING,
-                MINUS,
-                PERCENTAGE,
-                PLUS,
-                LOCALE,
-                MATH_CONTEXT));
+                        DECIMAL,
+                        EXPONENT,
+                        GROUPING,
+                        NEGATIVE,
+                        PERCENTAGE,
+                        POSITIVE,
+                        LOCALE,
+                        MATH_CONTEXT));
     }
 
     @Override
@@ -85,8 +85,8 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     }
 
     @Override
-    public char minusSign() {
-        return MINUS;
+    public char negativeSign() {
+        return NEGATIVE;
     }
 
     @Override
@@ -95,8 +95,8 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     }
 
     @Override
-    public char plusSign() {
-        return PLUS;
+    public char positiveSign() {
+        return POSITIVE;
     }
 
     @Override

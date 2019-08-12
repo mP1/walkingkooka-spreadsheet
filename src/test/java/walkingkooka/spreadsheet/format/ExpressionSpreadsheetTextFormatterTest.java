@@ -310,7 +310,7 @@ public final class ExpressionSpreadsheetTextFormatterTest extends SpreadsheetTex
             }
 
             @Override
-            public char minusSign() {
+            public char negativeSign() {
                 return '-';
             }
 
@@ -320,7 +320,7 @@ public final class ExpressionSpreadsheetTextFormatterTest extends SpreadsheetTex
             }
 
             @Override
-            public char plusSign() {
+            public char positiveSign() {
                 return '+';
             }
 

@@ -69,8 +69,8 @@ public final class BasicSpreadsheetFormatParserContextTest implements ClassTesti
     }
 
     @Override
-    public char minusSign() {
-        return this.decimalNumberContext().minusSign();
+    public char negativeSign() {
+        return this.decimalNumberContext().negativeSign();
     }
 
     @Override
@@ -79,8 +79,8 @@ public final class BasicSpreadsheetFormatParserContextTest implements ClassTesti
     }
 
     @Override
-    public char plusSign() {
-        return this.decimalNumberContext().plusSign();
+    public char positiveSign() {
+        return this.decimalNumberContext().positiveSign();
     }
 
     private DecimalNumberContext decimalNumberContext() {
