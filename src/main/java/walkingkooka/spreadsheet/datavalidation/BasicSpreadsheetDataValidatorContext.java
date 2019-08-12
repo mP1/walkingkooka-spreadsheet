@@ -65,8 +65,8 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     }
 
     @Override
-    public char decimalPoint() {
-        return this.context.decimalPoint();
+    public char decimalSeparator() {
+        return this.context.decimalSeparator();
     }
 
     @Override

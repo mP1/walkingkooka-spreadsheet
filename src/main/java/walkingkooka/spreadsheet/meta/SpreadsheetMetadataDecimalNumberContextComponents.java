@@ -45,7 +45,7 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
         final SpreadsheetMetadataComponents components = this.components;
 
         final String currencySymbol = components.getOrElse(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, this::localeCurrencySymbol);
-        final Character decimalPoint = components.getOrElse(SpreadsheetMetadataPropertyName.DECIMAL_POINT, this::localeDecimalPoint);
+        final Character decimalSeparator = components.getOrElse(SpreadsheetMetadataPropertyName.DECIMAL_POINT, this::localeDecimalSeparator);
         final Character exponentSymbol = components.getOrNull(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL);
         final Character groupingSeparator = components.getOrElse(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, this::localeGroupingSeparator);
         final Character negativeSign = components.getOrElse(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, this::localeNegativeSign);
@@ -60,7 +60,7 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
         components.reportIfMissing();
 
         return DecimalNumberContexts.basic(currencySymbol,
-                decimalPoint,
+                decimalSeparator,
                 exponentSymbol,
                 groupingSeparator,
                 negativeSign,
@@ -74,8 +74,8 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
         return this.tryPropertyFromLocale(DecimalNumberContext::currencySymbol);
     }
 
-    private Character localeDecimalPoint() {
-        return this.tryPropertyFromLocale(DecimalNumberContext::decimalPoint);
+    private Character localeDecimalSeparator() {
+        return this.tryPropertyFromLocale(DecimalNumberContext::decimalSeparator);
     }
 
     private Character localeGroupingSeparator() {
