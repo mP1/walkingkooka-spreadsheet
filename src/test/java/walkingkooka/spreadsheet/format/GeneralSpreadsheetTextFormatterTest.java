@@ -74,7 +74,7 @@ public final class GeneralSpreadsheetTextFormatterTest extends SpreadsheetTextFo
             }
 
             @Override
-            public char decimalPoint() {
+            public char decimalSeparator() {
                 return 'D';
             }
 

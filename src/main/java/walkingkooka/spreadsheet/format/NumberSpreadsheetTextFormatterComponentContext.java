@@ -71,9 +71,9 @@ final class NumberSpreadsheetTextFormatterComponentContext implements Context {
         this.digits.thousandsSeparator(numberDigitPosition, this);
     }
 
-    void appendDecimalPoint(final NumberSpreadsheetTextFormatterDigits next) {
+    void appendDecimalSeparator(final NumberSpreadsheetTextFormatterDigits next) {
         this.digits.sign(this);
-        this.text.append(this.context.decimalPoint());
+        this.text.append(this.context.decimalSeparator());
         this.digits = next;
     }
 
