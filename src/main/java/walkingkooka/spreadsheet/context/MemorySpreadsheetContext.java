@@ -40,7 +40,7 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.engine.hateos.SpreadsheetEngineHateosHandlers;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -86,7 +86,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                                                                       final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
                                                                       final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                                                                       final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext,
-                                                                      final Function<SpreadsheetId, SpreadsheetTextFormatter> spreadsheetIdDefaultSpreadsheetTextFormatter,
+                                                                      final Function<SpreadsheetId, SpreadsheetFormatter> spreadsheetIdDefaultSpreadsheetTextFormatter,
                                                                       final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                                                                       final Function<SpreadsheetId, Function<String, Optional<Color>>> spreadsheetIdNameToColor,
                                                                       final Function<SpreadsheetId, Function<Integer, Optional<Color>>> spreadsheetIdNumberToColor,
@@ -125,7 +125,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                                      final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
                                      final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
                                      final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext,
-                                     final Function<SpreadsheetId, SpreadsheetTextFormatter> spreadsheetIdDefaultSpreadsheetTextFormatter,
+                                     final Function<SpreadsheetId, SpreadsheetFormatter> spreadsheetIdDefaultSpreadsheetTextFormatter,
                                      final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                                      final Function<SpreadsheetId, Function<String, Optional<Color>>> spreadsheetIdNameToColor,
                                      final Function<SpreadsheetId, Function<Integer, Optional<Color>>> spreadsheetIdNumberToColor,
@@ -169,11 +169,11 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
     private final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext;
 
     @Override
-    public SpreadsheetTextFormatter defaultSpreadsheetTextFormatter(final SpreadsheetId id) {
+    public SpreadsheetFormatter defaultSpreadsheetTextFormatter(final SpreadsheetId id) {
         return this.spreadsheetIdDefaultSpreadsheetTextFormatter.apply(id);
     }
 
-    private final Function<SpreadsheetId, SpreadsheetTextFormatter> spreadsheetIdDefaultSpreadsheetTextFormatter;
+    private final Function<SpreadsheetId, SpreadsheetFormatter> spreadsheetIdDefaultSpreadsheetTextFormatter;
 
     @Override
     public BiFunction<ExpressionNodeName, List<Object>, Object> functions(final SpreadsheetId id) {
@@ -229,7 +229,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
         final Function<String, Optional<Color>> nameToColor = this.spreadsheetIdNameToColor.apply(id);
         final int width = this.spreadsheetIdWidth.apply(id);
         final Function<BigDecimal, Fraction> fractioner = this.fractioner;
-        final SpreadsheetTextFormatter defaultSpreadsheetTextFormatter = this.defaultSpreadsheetTextFormatter(id);
+        final SpreadsheetFormatter defaultSpreadsheetTextFormatter = this.defaultSpreadsheetTextFormatter(id);
 
         final SpreadsheetEngineContext engineContext = SpreadsheetEngineContexts.basic(functions,
                 engine,

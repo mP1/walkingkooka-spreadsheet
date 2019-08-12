@@ -21,7 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
-import walkingkooka.spreadsheet.format.SpreadsheetTextFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
@@ -39,7 +39,7 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
     /**
      * A constant holding no formatter.
      */
-    public final static Optional<SpreadsheetTextFormatter> NO_FORMATTER = Optional.empty();
+    public final static Optional<SpreadsheetFormatter> NO_FORMATTER = Optional.empty();
 
     /**
      * Creates a {@link SpreadsheetCellFormat}
@@ -55,7 +55,7 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
     }
 
     static SpreadsheetCellFormat with(final String pattern,
-                                      final Optional<SpreadsheetTextFormatter> formatter) {
+                                      final Optional<SpreadsheetFormatter> formatter) {
         return new SpreadsheetCellFormat(pattern, formatter);
     }
 
@@ -63,7 +63,7 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
      * Private ctor use factory.
      */
     private SpreadsheetCellFormat(final String pattern,
-                                  final Optional<SpreadsheetTextFormatter> formatter) {
+                                  final Optional<SpreadsheetFormatter> formatter) {
         super();
         this.pattern = pattern;
         this.formatter = formatter;
@@ -85,11 +85,11 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
 
     // formatter...........................................................................
 
-    public Optional<SpreadsheetTextFormatter> formatter() {
+    public Optional<SpreadsheetFormatter> formatter() {
         return this.formatter;
     }
 
-    public SpreadsheetCellFormat setFormatter(final Optional<SpreadsheetTextFormatter> formatter) {
+    public SpreadsheetCellFormat setFormatter(final Optional<SpreadsheetFormatter> formatter) {
         Objects.requireNonNull(formatter, "formatter");
 
         return this.formatter.equals(formatter) ?
@@ -100,7 +100,7 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
     /**
      * The cached or compiled form of the {@link #pattern}
      */
-    private final Optional<SpreadsheetTextFormatter> formatter;
+    private final Optional<SpreadsheetFormatter> formatter;
 
     // replace.............................................................................
 
@@ -108,7 +108,7 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
      * Factory that creates a new {@link SpreadsheetCellFormat}
      */
     private SpreadsheetCellFormat replace(final String pattern,
-                                          final Optional<SpreadsheetTextFormatter> formatter) {
+                                          final Optional<SpreadsheetFormatter> formatter) {
         return new SpreadsheetCellFormat(pattern, formatter);
     }
 
