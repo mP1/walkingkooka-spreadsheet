@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.spreadsheet.format.SpreadsheetFormattedText;
+import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.test.Fake;
@@ -59,8 +59,8 @@ public class FakeSpreadsheetEngineContext implements SpreadsheetEngineContext, F
     }
 
     @Override
-    public Optional<SpreadsheetFormattedText> format(final Object value,
-                                                     final SpreadsheetFormatter formatter) {
+    public Optional<SpreadsheetText> format(final Object value,
+                                            final SpreadsheetFormatter formatter) {
         throw new UnsupportedOperationException();
     }
 }

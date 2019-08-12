@@ -64,7 +64,7 @@ public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatt
     }
 
     default void defaultFormatTextAndCheck(final Object value,
-                                           final Optional<SpreadsheetFormattedText> formattedText) {
+                                           final Optional<SpreadsheetText> formattedText) {
         this.defaultFormatTextAndCheck(this.createContext(),
                 value,
                 formattedText);
@@ -72,7 +72,7 @@ public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatt
 
     default void defaultFormatTextAndCheck(final C context,
                                            final Object value,
-                                           final Optional<SpreadsheetFormattedText> formattedText) {
+                                           final Optional<SpreadsheetText> formattedText) {
         assertEquals(formattedText,
                 context.defaultFormatText(value),
                 () -> context + " " + CharSequences.quoteIfChars(value));

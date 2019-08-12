@@ -36,10 +36,10 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetFormattedTextTest implements ClassTesting2<SpreadsheetFormattedText>,
-        HashCodeEqualsDefinedTesting<SpreadsheetFormattedText>,
+public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>,
+        HashCodeEqualsDefinedTesting<SpreadsheetText>,
         HasTextNodeTesting,
-        ToStringTesting<SpreadsheetFormattedText> {
+        ToStringTesting<SpreadsheetText> {
 
     private final static Optional<Color> COLOR = Optional.of(Color.BLACK);
     private final static String TEXT = "1/1/2000";
@@ -47,26 +47,26 @@ public final class SpreadsheetFormattedTextTest implements ClassTesting2<Spreads
     @Test
     public void testWithNullColorFails() {
         assertThrows(NullPointerException.class, () -> {
-            SpreadsheetFormattedText.with(null, TEXT);
+            SpreadsheetText.with(null, TEXT);
         });
     }
 
     @Test
     public void testWithNullTextFails() {
         assertThrows(NullPointerException.class, () -> {
-            SpreadsheetFormattedText.with(COLOR, null);
+            SpreadsheetText.with(COLOR, null);
         });
     }
 
     @Test
     public void testWith() {
-        final SpreadsheetFormattedText formatted = this.createFormattedText();
+        final SpreadsheetText formatted = this.createFormattedText();
         this.check(formatted, COLOR, TEXT);
     }
 
     @Test
     public void testWithEmptyColor() {
-        this.createAndCheck(SpreadsheetFormattedText.WITHOUT_COLOR, TEXT);
+        this.createAndCheck(SpreadsheetText.WITHOUT_COLOR, TEXT);
     }
 
     @Test
@@ -75,7 +75,7 @@ public final class SpreadsheetFormattedTextTest implements ClassTesting2<Spreads
     }
 
     private void createAndCheck(final Optional<Color> color, final String text) {
-        final SpreadsheetFormattedText formatted = SpreadsheetFormattedText.with(color, text);
+        final SpreadsheetText formatted = SpreadsheetText.with(color, text);
         this.check(formatted, color, text);
     }
 
@@ -90,20 +90,20 @@ public final class SpreadsheetFormattedTextTest implements ClassTesting2<Spreads
 
     @Test
     public void testSetColorSame() {
-        final SpreadsheetFormattedText formatted = this.createFormattedText();
+        final SpreadsheetText formatted = this.createFormattedText();
         assertSame(formatted, formatted.setColor(COLOR));
     }
 
     @Test
     public void testSetColorDifferent() {
         final Optional<Color> differentColor = Optional.of(Color.fromRgb(123));
-        final SpreadsheetFormattedText formatted = this.createFormattedText();
-        final SpreadsheetFormattedText different = formatted.setColor(differentColor);
+        final SpreadsheetText formatted = this.createFormattedText();
+        final SpreadsheetText different = formatted.setColor(differentColor);
         assertNotSame(formatted, different);
         this.check(different, differentColor, TEXT);
     }
 
-    private void check(final SpreadsheetFormattedText formatted, final Optional<Color> color, final String text) {
+    private void check(final SpreadsheetText formatted, final Optional<Color> color, final String text) {
         assertEquals(color, formatted.color(), "color");
         assertEquals(text, formatted.text(), "text");
     }
@@ -114,7 +114,7 @@ public final class SpreadsheetFormattedTextTest implements ClassTesting2<Spreads
     public void testToTextNodeWithoutColor() {
         final String text = "abc123";
 
-        this.toTextNodeAndCheck(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, text),
+        this.toTextNodeAndCheck(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text),
                 TextNode.text(text));
     }
 
@@ -123,7 +123,7 @@ public final class SpreadsheetFormattedTextTest implements ClassTesting2<Spreads
         final String text = "abc123";
         final Color color = Color.fromRgb(0x123456);
 
-        this.toTextNodeAndCheck(SpreadsheetFormattedText.with(Optional.of(color), text),
+        this.toTextNodeAndCheck(SpreadsheetText.with(Optional.of(color), text),
                 TextNode.text(text).setAttributes(Maps.of(TextStylePropertyName.TEXT_COLOR, color)));
     }
 
@@ -131,17 +131,17 @@ public final class SpreadsheetFormattedTextTest implements ClassTesting2<Spreads
 
     @Test
     public void testEqualsDifferentColor() {
-        this.checkNotEquals(SpreadsheetFormattedText.with(Optional.of(Color.WHITE), TEXT));
+        this.checkNotEquals(SpreadsheetText.with(Optional.of(Color.WHITE), TEXT));
     }
 
     @Test
     public void testEqualsDifferentColor2() {
-        this.checkNotEquals(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, TEXT));
+        this.checkNotEquals(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, TEXT));
     }
 
     @Test
     public void testEqualsDifferentText() {
-        this.checkNotEquals(SpreadsheetFormattedText.with(COLOR, "different"));
+        this.checkNotEquals(SpreadsheetText.with(COLOR, "different"));
     }
 
     // toString ..................................................................................................
@@ -153,17 +153,17 @@ public final class SpreadsheetFormattedTextTest implements ClassTesting2<Spreads
 
     @Test
     public void testToStringWithoutColor() {
-        this.toStringAndCheck(SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, TEXT),
+        this.toStringAndCheck(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, TEXT),
                 CharSequences.quote(TEXT).toString());
     }
 
-    private SpreadsheetFormattedText createFormattedText() {
-        return SpreadsheetFormattedText.with(COLOR, TEXT);
+    private SpreadsheetText createFormattedText() {
+        return SpreadsheetText.with(COLOR, TEXT);
     }
 
     @Override
-    public Class<SpreadsheetFormattedText> type() {
-        return SpreadsheetFormattedText.class;
+    public Class<SpreadsheetText> type() {
+        return SpreadsheetText.class;
     }
 
     @Override
@@ -172,7 +172,7 @@ public final class SpreadsheetFormattedTextTest implements ClassTesting2<Spreads
     }
 
     @Override
-    public SpreadsheetFormattedText createObject() {
-        return SpreadsheetFormattedText.with(COLOR, TEXT);
+    public SpreadsheetText createObject() {
+        return SpreadsheetText.with(COLOR, TEXT);
     }
 }

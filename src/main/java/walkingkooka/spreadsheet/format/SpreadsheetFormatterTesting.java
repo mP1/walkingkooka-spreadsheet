@@ -130,7 +130,7 @@ public interface SpreadsheetFormatterTesting<F extends SpreadsheetFormatter>
     }
 
     default void formatAndCheck(final Object value,
-                                final SpreadsheetFormattedText formattedText) {
+                                final SpreadsheetText formattedText) {
         this.formatAndCheck(this.createFormatter(), value, formattedText);
     }
 
@@ -142,7 +142,7 @@ public interface SpreadsheetFormatterTesting<F extends SpreadsheetFormatter>
 
     default void formatAndCheck(final SpreadsheetFormatter formatter,
                                 final Object value,
-                                final SpreadsheetFormattedText formattedText) {
+                                final SpreadsheetText formattedText) {
         this.formatAndCheck(formatter, value, this.createContext(), formattedText);
     }
 
@@ -156,12 +156,12 @@ public interface SpreadsheetFormatterTesting<F extends SpreadsheetFormatter>
     default void formatAndCheck(final SpreadsheetFormatter formatter,
                                 final Object value,
                                 final SpreadsheetFormatterContext context,
-                                final SpreadsheetFormattedText formattedText) {
+                                final SpreadsheetText formattedText) {
         this.formatAndCheck(formatter, value, context, Optional.of(formattedText));
     }
 
-    default SpreadsheetFormattedText formattedText(final String text) {
-        return SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, text);
+    default SpreadsheetText formattedText(final String text) {
+        return SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text);
     }
 
     // format fail and check
@@ -191,7 +191,7 @@ public interface SpreadsheetFormatterTesting<F extends SpreadsheetFormatter>
     default void formatAndCheck(final SpreadsheetFormatter formatter,
                                 final Object value,
                                 final SpreadsheetFormatterContext context,
-                                final Optional<SpreadsheetFormattedText> formattedText) {
+                                final Optional<SpreadsheetText> formattedText) {
         assertEquals(formattedText,
                 formatter.format(value, context),
                 () -> formatter + " " + CharSequences.quoteIfChars(value));

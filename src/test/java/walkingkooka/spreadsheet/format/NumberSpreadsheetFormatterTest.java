@@ -1200,12 +1200,12 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     private void parseFormatAndCheck(final String pattern,
                                      final String value,
                                      final String text) {
-        this.parseFormatAndCheck0(pattern, value, SpreadsheetFormattedText.with(SpreadsheetFormattedText.WITHOUT_COLOR, text));
+        this.parseFormatAndCheck0(pattern, value, SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text));
     }
 
     private void parseFormatAndCheck0(final String pattern,
                                       final String value,
-                                      final SpreadsheetFormattedText text) {
+                                      final SpreadsheetText text) {
         final NumberSpreadsheetFormatter formatter = this.createFormatter(pattern);
 
         this.formatAndCheck(formatter, new BigDecimal(value), text);
