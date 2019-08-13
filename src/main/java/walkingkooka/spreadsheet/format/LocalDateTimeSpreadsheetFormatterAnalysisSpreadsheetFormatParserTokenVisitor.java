@@ -23,10 +23,10 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatAmPmParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitZeroParserToken;
 
 /**
- * A {@link TextFormatterSpreadsheetFormatParserTokenVisitor} which sets some properties recording whether the time is
+ * A {@link SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor} which sets some properties recording whether the time is
  * an AMPM formatted time and the number of millisecond decimals.
  */
-final class LocalDateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor extends TextFormatterSpreadsheetFormatParserTokenVisitor {
+final class LocalDateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor {
 
     /**
      * Creates a {@link LocalDateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor}.
