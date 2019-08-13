@@ -4811,7 +4811,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             private Converter converter() {
-                return Converters.collection(Lists.of(Converters.simple(), Converters.numberBigDecimal()));
+                return Converters.collection(Lists.of(Converters.simple(), Converters.numberNumber()));
             }
 
             @Override
