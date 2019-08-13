@@ -151,6 +151,70 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
                 LocalDateTime.of(2000, 12, 31, 11, 58, 59));
     }
 
+    // converter........................................................................................................
+
+    @Test
+    public void testConvertDateTimeFails() {
+        this.convertFails2("hhmmss ddmmss",
+                "12345!");
+    }
+
+    @Test
+    public void testConvertHourMinutesOnlyPattern() {
+        this.convertAndCheck2("hh:mm",
+                "11:59",
+                LocalDateTime.of(1900, 1, 1, 11, 59));
+    }
+
+    @Test
+    public void testConvertHourMinutesSecondsOnlyPattern() {
+        this.convertAndCheck2("hh:mm:ss",
+                "11:58:59",
+                LocalDateTime.of(1900, 1, 1, 11, 58, 59));
+    }
+
+    @Test
+    public void testConvertHourMinutesSecondsAmpmOnlyPattern() {
+        this.convertAndCheck2("hh:mm:ss AM/PM",
+                "11:58:59 PM",
+                LocalDateTime.of(1900, 1, 1, 23, 58, 59));
+    }
+
+    @Test
+    public void testConvertHourDefaultsMinutes() {
+        this.convertAndCheck2("hh",
+                "11",
+                LocalDateTime.of(1900, 1, 1, 11, 0, 0));
+    }
+
+    @Test
+    public void testConvertDateTimeYearMonthDay() {
+        this.convertAndCheck2("yyyymmdd",
+                "20001231",
+                LocalDateTime.of(2000, 12, 31, 0, 0, 0));
+    }
+
+    @Test
+    public void testConvertDateTimeYear() {
+        this.convertAndCheck2("yyyy",
+                "2000",
+                LocalDateTime.of(2000, 1, 1, 0, 0, 0));
+    }
+
+    @Test
+    public void testConvertDateTimeYearMonth() {
+        this.convertAndCheck2("yyyymm",
+                "200012",
+                LocalDateTime.of(2000, 12, 1, 0, 0, 0));
+    }
+
+    @Test
+    public void testConvertDateTimeMultiplePatterns() {
+        this.convertAndCheck2("\"A\"ddmmyyyy hhmmss;\"B\"ddmmyyyy hhmmss",
+                "B31122000 115859",
+                LocalDateTime.of(2000, 12, 31, 11, 58, 59));
+    }
+
     // helpers.........................................................................................................
 
     @Override
@@ -181,6 +245,11 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
     @Override
     ParserToken parserParserToken(final LocalDateTime value, final String text) {
         return ParserTokens.localDateTime(value, text);
+    }
+
+    @Override
+    Class<LocalDateTime> targetType() {
+        return LocalDateTime.class;
     }
 
     // ClassTesting.....................................................................................................
