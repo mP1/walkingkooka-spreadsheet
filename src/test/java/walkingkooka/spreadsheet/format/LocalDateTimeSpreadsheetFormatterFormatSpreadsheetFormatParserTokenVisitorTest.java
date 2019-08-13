@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.format;
 import java.time.LocalDateTime;
 
 public final class LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitorTest extends
-        TextFormatterSpreadsheetFormatParserTokenVisitorTestCase<LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor> {
+        SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitorTestCase<LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor> {
     @Override
     public LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor createVisitor() {
         return new LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor(LocalDateTime.of(2000, 12, 31, 12, 58, 59),
