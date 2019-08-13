@@ -142,7 +142,7 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatte
     // helpers.........................................................................
 
     private void formatAndCheck2(final String pattern, final String text) {
-        this.formatAndCheck(this.createFormatter0(pattern), text, this.formattedText(text));
+        this.formatAndCheck(this.createFormatter0(pattern), text, text);
     }
 
     private void formatFailAndCheck2(final String pattern, final String text) {
@@ -174,7 +174,7 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatte
             @Override
             public Optional<SpreadsheetText> format(final Object value,
                                                     final SpreadsheetFormatterContext context) {
-                return Optional.of(formattedText(String.class.cast(value)));
+                return Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, String.class.cast(value)));
             }
 
             @Override
