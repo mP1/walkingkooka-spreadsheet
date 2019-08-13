@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * Counts the number of pattern tokens for digits and percentage symbols and other components.
  */
-final class BigDecimalFractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends TextFormatterSpreadsheetFormatParserTokenVisitor {
+final class BigDecimalFractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor {
 
     /**
      * Analyzes the given {@link SpreadsheetFormatParserToken}.

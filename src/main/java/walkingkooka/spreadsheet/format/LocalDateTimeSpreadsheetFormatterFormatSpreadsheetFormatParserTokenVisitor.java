@@ -36,7 +36,7 @@ import java.util.Optional;
  * This visitor is used exclusively by {@link TextSpreadsheetFormatter#format(Object, SpreadsheetFormatterContext)}.
  * Only some methods in {@link SpreadsheetFormatParserTokenVisitor} are overridden, all other tokens will be ignored.
  */
-final class LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor extends TextFormatterSpreadsheetFormatParserTokenVisitor {
+final class LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor {
 
     /**
      * Visits all the individual tokens in the given token which was compiled from the given pattern.
