@@ -59,19 +59,4 @@ abstract class SpreadsheetParsePatterns2<T extends SpreadsheetFormatParserToken>
      * Sub classes should create a {@link Parser} using the given nth {@link SpreadsheetFormatParserToken}.
      */
     abstract Parser<ParserContext> createDateTimeFormatterParser(final int i);
-//
-//    @Override
-//    Parser<ParserContext> createDateTimeFormatterParser0(final int i) {
-//        return Parsers.localDate(SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunction.with(this.value().get(i),
-//                false)); // AMPM=false
-//    }
-//
-//    public static <C extends ParserContext> Parser<C> localDate(Function<DateTimeContext, DateTimeFormatter> formatter) {
-//        return DateTimeFormatterParserLocalDate.with(formatter);
-//    }
-//
-//    /**
-//     * Sub classes must call a factory on {@link Parsers}
-//     */
-//    abstract Parser<ParserContext> createDateTimeFormatterParser(final DateTimeFormatter formatter);
 }
