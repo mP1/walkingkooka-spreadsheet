@@ -27,7 +27,7 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class LocalDateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitorTest extends
-        TextFormatterSpreadsheetFormatParserTokenVisitorTestCase<LocalDateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor> {
+        SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitorTestCase<LocalDateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor> {
 
     @Test
     public void testHHMMSS() {

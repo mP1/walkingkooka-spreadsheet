@@ -17,17 +17,19 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
+import walkingkooka.test.ClassTesting;
+import walkingkooka.type.JavaVisibility;
 
-/**
- * A {@link SpreadsheetFormatParserTokenVisitor} sub classed and used by {@link SpreadsheetFormatter3}.
- */
-abstract class TextFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
+public abstract class SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitorTestCase<V extends SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor>
+        implements SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitorTesting<V>,
+        ClassTesting<V> {
 
-    /**
-     * Package private to limit sub classing.
-     */
-    TextFormatterSpreadsheetFormatParserTokenVisitor() {
+    SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitorTestCase() {
         super();
+    }
+
+    @Override
+    public final JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
