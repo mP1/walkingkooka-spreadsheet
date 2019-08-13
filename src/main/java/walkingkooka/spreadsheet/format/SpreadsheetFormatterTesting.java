@@ -125,43 +125,55 @@ public interface SpreadsheetFormatterTesting<F extends SpreadsheetFormatter>
     }
 
     default void formatAndCheck(final Object value,
-                                final String formattedText) {
-        this.formatAndCheck(value, this.formattedText(formattedText));
+                                final String text) {
+        this.formatAndCheck(this.createFormatter(),
+                value,
+                text);
     }
 
     default void formatAndCheck(final Object value,
-                                final SpreadsheetText formattedText) {
-        this.formatAndCheck(this.createFormatter(), value, formattedText);
+                                final SpreadsheetText text) {
+        this.formatAndCheck(this.createFormatter(),
+                value,
+                text);
     }
 
     default void formatAndCheck(final SpreadsheetFormatter formatter,
                                 final Object value,
-                                final String formattedText) {
-        this.formatAndCheck(formatter, value, this.formattedText(formattedText));
+                                final String text) {
+        this.formatAndCheck(formatter,
+                value,
+                this.createContext(),
+                text);
     }
 
     default void formatAndCheck(final SpreadsheetFormatter formatter,
                                 final Object value,
-                                final SpreadsheetText formattedText) {
-        this.formatAndCheck(formatter, value, this.createContext(), formattedText);
+                                final SpreadsheetText text) {
+        this.formatAndCheck(formatter,
+                value,
+                this.createContext(),
+                text);
     }
 
     default void formatAndCheck(final SpreadsheetFormatter formatter,
                                 final Object value,
                                 final SpreadsheetFormatterContext context,
-                                final String formattedText) {
-        this.formatAndCheck(formatter, value, context, this.formattedText(formattedText));
+                                final String text) {
+        this.formatAndCheck(formatter,
+                value,
+                context,
+                SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text));
     }
 
     default void formatAndCheck(final SpreadsheetFormatter formatter,
                                 final Object value,
                                 final SpreadsheetFormatterContext context,
-                                final SpreadsheetText formattedText) {
-        this.formatAndCheck(formatter, value, context, Optional.of(formattedText));
-    }
-
-    default SpreadsheetText formattedText(final String text) {
-        return SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text);
+                                final SpreadsheetText text) {
+        this.formatAndCheck(formatter,
+                value,
+                context,
+                Optional.of(text));
     }
 
     // format fail and check
@@ -172,18 +184,25 @@ public interface SpreadsheetFormatterTesting<F extends SpreadsheetFormatter>
 
     default void formatFailAndCheck(final Object value,
                                     final SpreadsheetFormatterContext context) {
-        this.formatFailAndCheck(this.createFormatter(), value, context);
+        this.formatFailAndCheck(this.createFormatter(),
+                value,
+                context);
     }
 
     default void formatFailAndCheck(final SpreadsheetFormatter formatter,
                                     final Object value) {
-        this.formatFailAndCheck(formatter, value, this.createContext());
+        this.formatFailAndCheck(formatter,
+                value,
+                this.createContext());
     }
 
     default void formatFailAndCheck(final SpreadsheetFormatter formatter,
                                     final Object value,
                                     final SpreadsheetFormatterContext context) {
-        this.formatAndCheck(formatter, value, context, Optional.empty());
+        this.formatAndCheck(formatter,
+                value,
+                context,
+                Optional.empty());
     }
 
     // general format and check
@@ -191,8 +210,8 @@ public interface SpreadsheetFormatterTesting<F extends SpreadsheetFormatter>
     default void formatAndCheck(final SpreadsheetFormatter formatter,
                                 final Object value,
                                 final SpreadsheetFormatterContext context,
-                                final Optional<SpreadsheetText> formattedText) {
-        assertEquals(formattedText,
+                                final Optional<SpreadsheetText> text) {
+        assertEquals(text,
                 formatter.format(value, context),
                 () -> formatter + " " + CharSequences.quoteIfChars(value));
     }
