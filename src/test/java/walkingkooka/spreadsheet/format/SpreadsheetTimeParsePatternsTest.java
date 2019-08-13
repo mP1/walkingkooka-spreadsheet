@@ -145,6 +145,49 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
                 LocalTime.of(11, 58, 59));
     }
 
+    // converter........................................................................................................
+
+    @Test
+    public void testConvertTimeFails() {
+        this.convertFails2("hhmmss",
+                "12345!");
+    }
+
+    @Test
+    public void testConvertHourMinutesOnlyPattern() {
+        this.convertAndCheck2("hh:mm",
+                "11:59",
+                LocalTime.of(11, 59));
+    }
+
+    @Test
+    public void testConvertHourMinutesSecondsOnlyPattern() {
+        this.convertAndCheck2("hh:mm:ss",
+                "11:58:59",
+                LocalTime.of(11, 58, 59));
+    }
+
+    @Test
+    public void testConvertHourMinutesSecondsAmpmOnlyPattern() {
+        this.convertAndCheck2("hh:mm:ss AM/PM",
+                "11:58:59 PM",
+                LocalTime.of(23, 58, 59));
+    }
+
+    @Test
+    public void testConvertHourDefaultsMinutes() {
+        this.convertAndCheck2("hh",
+                "11",
+                LocalTime.of(11, 0, 0));
+    }
+
+    @Test
+    public void testConvertHourMultiplePatterns() {
+        this.convertAndCheck2("\"A\"hhmmss;\"B\"hhmmss",
+                "B115859",
+                LocalTime.of(11, 58, 59));
+    }
+
     // helpers..........................................................................................................
     
     @Override
@@ -175,6 +218,11 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     @Override
     ParserToken parserParserToken(final LocalTime value, final String text) {
         return ParserTokens.localTime(value, text);
+    }
+
+    @Override
+    Class<LocalTime> targetType() {
+        return LocalTime.class;
     }
 
     // ClassTesting.....................................................................................................

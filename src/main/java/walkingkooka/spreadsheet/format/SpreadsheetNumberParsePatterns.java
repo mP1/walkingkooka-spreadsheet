@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
@@ -81,6 +82,13 @@ public final class SpreadsheetNumberParsePatterns extends SpreadsheetParsePatter
     @Override
     boolean canBeEquals(final Object other) {
         return other instanceof SpreadsheetNumberParsePatterns;
+    }
+
+    // HasConverter.....................................................................................................
+
+    @Override
+    Converter createConverter() {
+        throw new UnsupportedOperationException();
     }
 
     // HasParser........................................................................................................
