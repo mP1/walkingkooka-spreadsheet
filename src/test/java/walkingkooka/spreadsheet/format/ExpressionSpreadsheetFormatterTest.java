@@ -329,8 +329,8 @@ public final class ExpressionSpreadsheetFormatterTest extends SpreadsheetFormatt
                 if (target.isInstance(value)) {
                     return target.cast(value);
                 }
-                if (value instanceof Long && BigDecimal.class == target) {
-                    return Converters.numberBigDecimal().convert(value, target, this.converterContext());
+                if (value instanceof Long && Number.class.isAssignableFrom(target)) {
+                    return Converters.numberNumber().convert(value, target, this.converterContext());
                 }
                 if (value instanceof BigDecimal && String.class == target) {
                     return target.cast(new DecimalFormat("000.000").format(value));
