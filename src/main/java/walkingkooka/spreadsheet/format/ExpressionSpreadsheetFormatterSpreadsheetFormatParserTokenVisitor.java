@@ -47,7 +47,7 @@ import java.util.stream.IntStream;
  * This visitor is used exclusively by {@link ExpressionSpreadsheetFormatter} to create formatters for all individual formatters
  * in an expressioned.
  */
-final class ExpressionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends TextFormatterSpreadsheetFormatParserTokenVisitor {
+final class ExpressionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor {
 
     /**
      * Visits all the individual tokens in the given token which was compiled from the given pattern.
