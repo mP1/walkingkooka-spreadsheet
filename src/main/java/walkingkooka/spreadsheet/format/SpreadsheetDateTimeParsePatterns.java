@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.convert.Converter;
+import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
@@ -81,12 +83,22 @@ public final class SpreadsheetDateTimeParsePatterns extends SpreadsheetParsePatt
         return other instanceof SpreadsheetDateTimeParsePatterns;
     }
 
+    // HasConverter.....................................................................................................
+
+    @Override
+    Converter createDateTimeFormatterConverter(final int i) {
+        return Converters.stringLocalDateTime(this.dateTimeContextDateTimeFormatterFunction(i));
+    }
+
     // HasParser........................................................................................................
 
     @Override
     Parser<ParserContext> createDateTimeFormatterParser(final int i) {
-        return Parsers.localDateTime(SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunction.with(this.value().get(i),
-                this.ampms.get(i)));
+        return Parsers.localDateTime(this.dateTimeContextDateTimeFormatterFunction(i));
+    }
+
+    private SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunction dateTimeContextDateTimeFormatterFunction(final int i) {
+        return SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunction.with(this.value().get(i), this.ampms.get(i));
     }
 
     private final List<Boolean> ampms;

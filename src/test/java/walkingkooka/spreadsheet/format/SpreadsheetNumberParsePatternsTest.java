@@ -124,6 +124,11 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
         return ParserTokens.bigDecimal(value, text);
     }
 
+    @Override
+    Class<BigDecimal> targetType() {
+        return BigDecimal.class;
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

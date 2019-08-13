@@ -181,6 +181,70 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
                 LocalDate.of(2000, 12, 31));
     }
 
+    // converter........................................................................................................
+
+    @Test
+    public void testConvertDateFails() {
+        this.convertFails2("dd/mm/yyyy;yyyy/mm/dd",
+                "123456");
+    }
+
+    @Test
+    public void testConvertDateOnlyPattern() {
+        this.convertAndCheck2("dd/mm/yyyy",
+                "31/12/2000",
+                LocalDate.of(2000, 12, 31));
+    }
+
+    @Test
+    public void testConvertDateOnlyPatternTwoDigitYear() {
+        this.convertAndCheck2("dd/mm/yy",
+                "31/12/20",
+                LocalDate.of(2020, 12, 31));
+    }
+
+    @Test
+    public void testConvertDateOnlyPatternDefaultsYear() {
+        this.convertAndCheck2("dd/mm",
+                "31/12",
+                LocalDate.of(1900, 12, 31));
+    }
+
+    @Test
+    public void testConvertDateOnlyPatternDefaultsMonth() {
+        this.convertAndCheck2("dd yyyy",
+                "31 2000",
+                LocalDate.of(2000, 1, 31));
+    }
+
+    @Test
+    public void testConvertDateOnlyPatternDefaultsDay() {
+        this.convertAndCheck2("mm yyyy",
+                "12 2000",
+                LocalDate.of(2000, 12, 1));
+    }
+
+    @Test
+    public void testConvertDateFirstPattern() {
+        this.convertAndCheck2("dd/mm/yyyy;yyyy/mm/dd",
+                "31/12/2000",
+                LocalDate.of(2000, 12, 31));
+    }
+
+    @Test
+    public void testConvertDateSecondPattern() {
+        this.convertAndCheck2("dd/mm/yyyy;yyyy/mm/dd",
+                "2000/12/31",
+                LocalDate.of(2000, 12, 31));
+    }
+
+    @Test
+    public void testConvertDateShortMonth() {
+        this.convertAndCheck2("dd/mmm/yyy;yyyy/mm/dd",
+                "31/Dec/2000",
+                LocalDate.of(2000, 12, 31));
+    }
+
     // helpers..........................................................................................................
 
     @Override
@@ -211,6 +275,11 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
     @Override
     ParserToken parserParserToken(final LocalDate value, final String text) {
         return ParserTokens.localDate(value, text);
+    }
+
+    @Override
+    Class<LocalDate> targetType() {
+        return LocalDate.class;
     }
 
     // ClassTesting.....................................................................................................

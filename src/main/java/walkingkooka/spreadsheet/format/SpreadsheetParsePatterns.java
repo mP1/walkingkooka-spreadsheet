@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.convert.Converter;
+import walkingkooka.convert.HasConverter;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
@@ -49,6 +51,7 @@ import java.util.function.Function;
  * Holds a a {@link List} of {@link SpreadsheetFormatDateTimeParserToken date/time} or {@link SpreadsheetFormatNumberParserToken} number tokens and some common functionality.
  */
 public abstract class SpreadsheetParsePatterns<T extends SpreadsheetFormatParserToken> implements HashCodeEqualsDefined,
+        HasConverter,
         HasJsonNode,
         HasParser<ParserContext>,
         Value<List<T>> {
@@ -349,6 +352,25 @@ public abstract class SpreadsheetParsePatterns<T extends SpreadsheetFormatParser
                 SpreadsheetTimeParsePatterns.class);
     }
 
+    // HasConverter........................................................................................................
+
+    /**
+     * Returns a {@link Converter} which will try all the patterns.
+     */
+    public final Converter converter() {
+        if (null == this.converter) {
+            this.converter = this.createConverter();
+        }
+        return this.converter;
+    }
+
+    private Converter converter;
+
+    /**
+     * Factory that lazily creates a {@link Converter}
+     */
+    abstract Converter createConverter();
+    
     // HasParser........................................................................................................
 
     /**

@@ -20,6 +20,9 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.convert.ConverterContext;
+import walkingkooka.convert.ConverterContexts;
+import walkingkooka.convert.ConverterTesting;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
@@ -46,6 +49,7 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
         T extends SpreadsheetFormatParserToken,
         V>
         implements ClassTesting2<P>,
+        ConverterTesting,
         HashCodeEqualsDefinedTesting<P>,
         HasJsonNodeTesting<P>,
         IsMethodTesting<P>,
@@ -352,6 +356,34 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
     }
 
     abstract T createFormatParserToken(final List<ParserToken> tokens, final String text);
+
+    // ConverterTesting.................................................................................................
+
+    final void convertAndCheck2(final String pattern,
+                              final String text,
+                              final V value) {
+        this.convertAndCheck(this.parseString(pattern).converter(),
+                text,
+                this.targetType(),
+                this.converterContext(),
+                value);
+    }
+
+    final void convertFails2(final String pattern,
+                             final String text) {
+        this.convertFails(this.parseString(pattern).converter(),
+                text,
+                this.targetType(),
+                this.converterContext());
+    }
+
+    abstract Class<V> targetType();
+
+    private ConverterContext converterContext() {
+        return ConverterContexts.basic(this.dateTimeContext(), this.decimalNumberContext());
+    }
+    
+    // ParserTesting....................................................................................................
 
     final void parseAndCheck2(final String pattern,
                               final String text,
