@@ -335,9 +335,10 @@ public final class ExpressionSpreadsheetFormatterTest extends SpreadsheetFormatt
                 if (value instanceof BigDecimal && String.class == target) {
                     return target.cast(new DecimalFormat("000.000").format(value));
                 }
-                return Converters.localDateTimeBigDecimal(Converters.EXCEL_OFFSET).convert(value,
-                        target,
-                        this.converterContext());
+                return Converters.localDateTimeNumber(Converters.EXCEL_OFFSET)
+                        .convert(value,
+                                target,
+                                this.converterContext());
             }
 
             private ConverterContext converterContext() {
