@@ -136,4 +136,9 @@ final class SpreadsheetTimeParsePatternsSpreadsheetFormatParserTokenVisitor exte
     protected void visit(final SpreadsheetFormatYearParserToken token) {
         this.failInvalid(token);
     }
+
+    @Override
+    void text(final String text) {
+        // nop
+    }
 }

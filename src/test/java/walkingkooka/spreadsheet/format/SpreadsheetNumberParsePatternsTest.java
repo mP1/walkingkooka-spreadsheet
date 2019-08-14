@@ -92,6 +92,34 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
         this.parseStringFails("hh:mm:sss", IllegalArgumentException.class);
     }
 
+    // converter........................................................................................................
+
+    @Test
+    public void testConvertFails() {
+        this.convertFails2("#.00",
+                "abc123");
+    }
+
+    @Test
+    public void testConvertFails2() {
+        this.convertFails2("$ #.00",
+                "1.23");
+    }
+
+    @Test
+    public void testConvertNumber() {
+        this.convertAndCheck2("#.00",
+                "1.23",
+                BigDecimal.valueOf(1.23));
+    }
+
+    @Test
+    public void testConvertNumberWithCurrency() {
+        this.convertAndCheck2("$ #.00",
+                "$ 1.23",
+                BigDecimal.valueOf(1.23));
+    }
+
     // helpers.........................................................................................................
 
     @Override
@@ -101,7 +129,7 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
 
     @Override
     String patternText() {
-        return "$ ???,##0.00 \"text-literal\" \\!";
+        return "$ ###,##0.00 \"text-literal\" \\!";
     }
 
     @Override
