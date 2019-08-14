@@ -1006,8 +1006,8 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
         final Converter converter = Converters.collection(Lists.of(
                 Converters.simple(),
-                Converters.localDateBigDecimal(Converters.JAVA_EPOCH_OFFSET),
-                Converters.localDateTimeBigDecimal(Converters.JAVA_EPOCH_OFFSET),
+                Converters.localDateNumber(Converters.JAVA_EPOCH_OFFSET),
+                Converters.localDateTimeNumber(Converters.JAVA_EPOCH_OFFSET),
                 Converters.localTimeNumber(),
                 Converters.numberLocalTime(),
                 stringDouble,
