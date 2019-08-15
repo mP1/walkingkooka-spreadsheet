@@ -98,6 +98,11 @@ public final class SpreadsheetFormatTextPlaceholderParserToken extends Spreadshe
     }
 
     @Override
+    public boolean isPercent() {
+        return false;
+    }
+
+    @Override
     public boolean isQuotedText() {
         return false;
     }

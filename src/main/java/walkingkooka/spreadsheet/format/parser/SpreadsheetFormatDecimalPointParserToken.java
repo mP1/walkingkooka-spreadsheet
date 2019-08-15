@@ -98,6 +98,11 @@ public final class SpreadsheetFormatDecimalPointParserToken extends SpreadsheetF
     }
 
     @Override
+    public boolean isPercent() {
+        return false;
+    }
+
+    @Override
     public boolean isQuotedText() {
         return false;
     }

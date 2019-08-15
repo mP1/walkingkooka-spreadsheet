@@ -98,6 +98,11 @@ public final class SpreadsheetFormatDigitZeroParserToken extends SpreadsheetForm
     }
 
     @Override
+    public boolean isPercent() {
+        return false;
+    }
+
+    @Override
     public boolean isQuotedText() {
         return false;
     }
