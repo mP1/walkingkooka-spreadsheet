@@ -115,7 +115,7 @@ public abstract class SpreadsheetFormatParserTestCase {
         return SpreadsheetFormatParserToken.decimalPoint(".", ".");
     }
 
-    static SpreadsheetFormatParserToken digitNonZero() {
+    static SpreadsheetFormatParserToken digit() {
         return SpreadsheetFormatParserToken.digit("#", "#");
     }
 
@@ -136,17 +136,17 @@ public abstract class SpreadsheetFormatParserTestCase {
     }
 
     static SpreadsheetFormatParserToken exponent1(final SpreadsheetFormatParserToken token) {
-        final List<ParserToken> tokens = Lists.of(exponentSymbol(), token, digitSpace(), digitZero(), digitNonZero());
+        final List<ParserToken> tokens = Lists.of(exponentSymbol(), token, digitSpace(), digitZero(), digit());
         return SpreadsheetFormatParserToken.exponent(tokens, ParserToken.text(tokens));
     }
 
     static SpreadsheetFormatParserToken exponent2(final SpreadsheetFormatParserToken token) {
-        final List<ParserToken> tokens = Lists.of(exponentSymbol(), digitSpace(), token, digitZero(), digitNonZero());
+        final List<ParserToken> tokens = Lists.of(exponentSymbol(), digitSpace(), token, digitZero(), digit());
         return SpreadsheetFormatParserToken.exponent(tokens, ParserToken.text(tokens));
     }
 
     static SpreadsheetFormatParserToken exponent3(final SpreadsheetFormatParserToken token) {
-        final List<ParserToken> tokens = Lists.of(exponentSymbol(), digitSpace(), digitZero(), digitNonZero(), token);
+        final List<ParserToken> tokens = Lists.of(exponentSymbol(), digitSpace(), digitZero(), digit(), token);
         return SpreadsheetFormatParserToken.exponent(tokens, ParserToken.text(tokens));
     }
 
