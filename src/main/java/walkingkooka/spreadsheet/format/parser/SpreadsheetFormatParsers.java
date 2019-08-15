@@ -294,45 +294,45 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     private final static Parser<SpreadsheetFormatParserContext> NUMBER_PARSER;
 
     private static void number(final Map<EbnfIdentifierName, Parser<ParserContext>> predefined) {
-        predefined.put(DECIMAL_POINT_IDENTIFIER, DECIMAL_POINT_PARSER);
         predefined.put(CURRENCY_IDENTIFIER, CURRENCY);
+        predefined.put(DECIMAL_POINT_IDENTIFIER, DECIMAL_POINT_PARSER);
+        predefined.put(DIGIT_IDENTIFIER, DIGIT);
+        predefined.put(DIGIT_SPACE_IDENTIFIER, DIGIT_SPACE);
+        predefined.put(DIGIT_ZERO_IDENTIFIER, DIGIT_ZERO);
         predefined.put(FRACTION_SYMBOL_IDENTIFIER, FRACTION_SYMBOL);
-        predefined.put(ZERO_IDENTIFIER, ZERO);
-        predefined.put(SPACE_IDENTIFIER, SPACE);
-        predefined.put(NON_ZERO_IDENTIFIER, NON_ZERO);
         predefined.put(PERCENTAGE_IDENTIFIER, PERCENTAGE);
         predefined.put(THOUSANDS_IDENTIFIER, THOUSANDS);
     }
-
-    private static final EbnfIdentifierName DECIMAL_POINT_IDENTIFIER = EbnfIdentifierName.with("DECIMAL_POINT");
-    private static final Parser<ParserContext> DECIMAL_POINT_PARSER = symbol('.',
-            SpreadsheetFormatParserToken::decimalPoint,
-            SpreadsheetFormatDecimalPointParserToken.class);
 
     private static final EbnfIdentifierName CURRENCY_IDENTIFIER = EbnfIdentifierName.with("CURRENCY");
     private static final Parser<ParserContext> CURRENCY = symbol('$',
             SpreadsheetFormatParserToken::currency,
             SpreadsheetFormatCurrencyParserToken.class);
 
+    private static final EbnfIdentifierName DECIMAL_POINT_IDENTIFIER = EbnfIdentifierName.with("DECIMAL_POINT");
+    private static final Parser<ParserContext> DECIMAL_POINT_PARSER = symbol('.',
+            SpreadsheetFormatParserToken::decimalPoint,
+            SpreadsheetFormatDecimalPointParserToken.class);
+
+    private static final EbnfIdentifierName DIGIT_IDENTIFIER = EbnfIdentifierName.with("DIGIT");
+    private static final Parser<ParserContext> DIGIT = symbol('#',
+            SpreadsheetFormatParserToken::digit,
+            SpreadsheetFormatDigitParserToken.class);
+
+    private static final EbnfIdentifierName DIGIT_SPACE_IDENTIFIER = EbnfIdentifierName.with("DIGIT_SPACE");
+    private static final Parser<ParserContext> DIGIT_SPACE = symbol('?',
+            SpreadsheetFormatParserToken::digitSpace,
+            SpreadsheetFormatDigitSpaceParserToken.class);
+
+    private static final EbnfIdentifierName DIGIT_ZERO_IDENTIFIER = EbnfIdentifierName.with("DIGIT_ZERO");
+    private static final Parser<ParserContext> DIGIT_ZERO = symbol('0',
+            SpreadsheetFormatParserToken::digitZero,
+            SpreadsheetFormatDigitZeroParserToken.class);
+
     private static final EbnfIdentifierName FRACTION_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("FRACTION_SYMBOL");
     private static final Parser<ParserContext> FRACTION_SYMBOL = symbol('/',
             SpreadsheetFormatParserToken::fractionSymbol,
             SpreadsheetFormatFractionSymbolParserToken.class);
-
-    private static final EbnfIdentifierName ZERO_IDENTIFIER = EbnfIdentifierName.with("ZERO");
-    private static final Parser<ParserContext> ZERO = symbol('0',
-            SpreadsheetFormatParserToken::digitZero,
-            SpreadsheetFormatDigitZeroParserToken.class);
-
-    private static final EbnfIdentifierName SPACE_IDENTIFIER = EbnfIdentifierName.with("SPACE");
-    private static final Parser<ParserContext> SPACE = symbol('?',
-            SpreadsheetFormatParserToken::digitSpace,
-            SpreadsheetFormatDigitSpaceParserToken.class);
-
-    private static final EbnfIdentifierName NON_ZERO_IDENTIFIER = EbnfIdentifierName.with("NON_ZERO");
-    private static final Parser<ParserContext> NON_ZERO = symbol('#',
-            SpreadsheetFormatParserToken::digit,
-            SpreadsheetFormatDigitParserToken.class);
 
     private static final EbnfIdentifierName PERCENTAGE_IDENTIFIER = EbnfIdentifierName.with("PERCENTAGE");
     private static final Parser<ParserContext> PERCENTAGE = symbol('%',
