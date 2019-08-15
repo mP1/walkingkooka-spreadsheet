@@ -117,7 +117,7 @@ DATE_DATETIME_TIME_TEXT       = COLOR | CONDITION | ESCAPE | LITERAL | QUOTED;
 
 (* seconds decimal zeroes.............................................................................................*)
 SECOND_MILLIS                 = SECOND,
-                                [ DECIMAL_POINT, ZERO, [{ZERO}]];
+                                [ DECIMAL_POINT, DIGIT_ZERO, [{DIGIT_ZERO}]];
 
 
 
@@ -130,7 +130,7 @@ FRACTION_COMPONENT            = [{ FRACTION_LITERAL }],
                                 FRACTION_DIGIT,
                                 [{ FRACTION_DIGIT | FRACTION_LITERAL }];
 FRACTION_LITERAL              = COLOR | CONDITION | CURRENCY | ESCAPE | LITERAL2 | PERCENTAGE | QUOTED;
-FRACTION_DIGIT                = ZERO | SPACE | NON_ZERO | THOUSANDS;
+FRACTION_DIGIT                = DIGIT | DIGIT_SPACE | DIGIT_ZERO | THOUSANDS;
 
 
 
@@ -144,7 +144,7 @@ NUMBER_EXPONENT_SYMBOL        = ( 'E+' | 'e+' | 'E-' | 'e-' );
 
 
 NUMBER_LITERAL                = COLOR | CONDITION | CURRENCY | ESCAPE | LITERAL2 | PERCENTAGE | QUOTED;
-NUMBER_DIGIT                  = ZERO | SPACE | NON_ZERO | THOUSANDS;
+NUMBER_DIGIT                  = DIGIT | DIGIT_ZERO | DIGIT_SPACE | THOUSANDS;
 
 
 
