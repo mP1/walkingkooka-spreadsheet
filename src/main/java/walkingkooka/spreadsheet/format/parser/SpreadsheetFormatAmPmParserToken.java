@@ -98,6 +98,11 @@ public final class SpreadsheetFormatAmPmParserToken extends SpreadsheetFormatNon
     }
 
     @Override
+    public boolean isPercent() {
+        return false;
+    }
+
+    @Override
     public boolean isQuotedText() {
         return false;
     }

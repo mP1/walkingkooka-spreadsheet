@@ -98,11 +98,6 @@ public final class SpreadsheetFormatWhitespaceParserToken extends SpreadsheetFor
     }
 
     @Override
-    public boolean isPercentSymbol() {
-        return false;
-    }
-
-    @Override
     public boolean isSeparatorSymbol() {
         return false;
     }

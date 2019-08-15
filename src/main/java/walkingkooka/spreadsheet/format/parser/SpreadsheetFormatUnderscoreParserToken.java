@@ -97,6 +97,11 @@ public final class SpreadsheetFormatUnderscoreParserToken extends SpreadsheetFor
     }
 
     @Override
+    public boolean isPercent() {
+        return false;
+    }
+
+    @Override
     public boolean isQuotedText() {
         return false;
     }

@@ -100,6 +100,11 @@ public final class SpreadsheetFormatColorNumberParserToken extends SpreadsheetFo
     }
 
     @Override
+    public boolean isPercent() {
+        return false;
+    }
+
+    @Override
     public boolean isQuotedText() {
         return false;
     }
