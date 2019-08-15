@@ -19,92 +19,127 @@ package walkingkooka.spreadsheet.format.parser;
 /**
  * Represents a percent symbol token.
  */
-public final class SpreadsheetFormatPercentSymbolParserToken extends SpreadsheetFormatSymbolParserToken {
+public final class SpreadsheetFormatPercentParserToken extends SpreadsheetFormatNonSymbolParserToken<String> {
 
-    static SpreadsheetFormatPercentSymbolParserToken with(final String value, final String text) {
+    static SpreadsheetFormatPercentParserToken with(final String value, final String text) {
         checkValueAndText(value, text);
 
-        return new SpreadsheetFormatPercentSymbolParserToken(value, text);
+        return new SpreadsheetFormatPercentParserToken(value, text);
     }
 
-    private SpreadsheetFormatPercentSymbolParserToken(final String value, final String text) {
+    private SpreadsheetFormatPercentParserToken(final String value, final String text) {
         super(value, text);
     }
 
     // is...............................................................................................................
 
     @Override
-    public boolean isBracketCloseSymbol() {
+    public boolean isAmPm() {
         return false;
     }
 
     @Override
-    public boolean isBracketOpenSymbol() {
+    public boolean isColorName() {
         return false;
     }
 
     @Override
-    public boolean isColorLiteralSymbol() {
+    public boolean isColorNumber() {
         return false;
     }
 
     @Override
-    public boolean isEqualsSymbol() {
+    public boolean isConditionNumber() {
         return false;
     }
 
     @Override
-    public boolean isExponentSymbol() {
+    public boolean isCurrency() {
         return false;
     }
 
     @Override
-    public boolean isFractionSymbol() {
+    public boolean isDay() {
         return false;
     }
 
     @Override
-    public boolean isGeneralSymbol() {
+    public boolean isDecimalPoint() {
         return false;
     }
 
     @Override
-    public boolean isGreaterThanSymbol() {
+    public boolean isDigit() {
         return false;
     }
 
     @Override
-    public boolean isGreaterThanEqualsSymbol() {
+    public boolean isDigitSpace() {
         return false;
     }
 
     @Override
-    public boolean isLessThanSymbol() {
+    public boolean isDigitZero() {
         return false;
     }
 
     @Override
-    public boolean isLessThanEqualsSymbol() {
+    public boolean isEscape() {
         return false;
     }
 
     @Override
-    public boolean isNotEqualsSymbol() {
+    public boolean isHour() {
         return false;
     }
 
     @Override
-    public boolean isPercentSymbol() {
+    public boolean isMonthOrMinute() {
+        return false;
+    }
+
+    @Override
+    public boolean isPercent() {
         return true;
     }
 
     @Override
-    public boolean isSeparatorSymbol() {
+    public boolean isQuotedText() {
         return false;
     }
 
     @Override
-    public boolean isWhitespace() {
+    public boolean isSecond() {
+        return false;
+    }
+
+    @Override
+    public boolean isStar() {
+        return false;
+    }
+
+    @Override
+    public boolean isTextLiteral() {
+        return false;
+    }
+
+    @Override
+    public boolean isTextPlaceholder() {
+        return false;
+    }
+
+    @Override
+    public boolean isThousands() {
+        return false;
+    }
+
+    @Override
+    public boolean isUnderscore() {
+        return false;
+    }
+
+    @Override
+    public boolean isYear() {
         return false;
     }
 
@@ -119,7 +154,7 @@ public final class SpreadsheetFormatPercentSymbolParserToken extends Spreadsheet
 
     @Override
     boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFormatPercentSymbolParserToken;
+        return other instanceof SpreadsheetFormatPercentParserToken;
     }
 
 }

@@ -312,10 +312,10 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     }
 
     /**
-     * {@see SpreadsheetFormatPercentSymbolParserToken}
+     * {@see SpreadsheetFormatPercentParserToken}
      */
-    public static SpreadsheetFormatPercentSymbolParserToken percentSymbol(final String value, final String text) {
-        return SpreadsheetFormatPercentSymbolParserToken.with(value, text);
+    public static SpreadsheetFormatPercentParserToken percent(final String value, final String text) {
+        return SpreadsheetFormatPercentParserToken.with(value, text);
     }
 
     /**
@@ -652,9 +652,9 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     public abstract boolean isNotEqualsSymbol();
 
     /**
-     * Only {@link SpreadsheetFormatPercentSymbolParserToken} return true
+     * Only {@link SpreadsheetFormatPercentParserToken} return true
      */
-    public abstract boolean isPercentSymbol();
+    public abstract boolean isPercent();
 
     /**
      * Only {@link SpreadsheetFormatQuotedTextParserToken} return true
