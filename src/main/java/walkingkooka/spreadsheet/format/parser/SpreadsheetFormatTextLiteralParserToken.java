@@ -101,6 +101,11 @@ public final class SpreadsheetFormatTextLiteralParserToken extends SpreadsheetFo
     }
 
     @Override
+    public boolean isPercent() {
+        return false;
+    }
+
+    @Override
     public boolean isQuotedText() {
         return false;
     }

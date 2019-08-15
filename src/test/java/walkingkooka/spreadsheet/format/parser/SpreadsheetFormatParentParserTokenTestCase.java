@@ -119,8 +119,8 @@ public abstract class SpreadsheetFormatParentParserTokenTestCase<T extends Sprea
         return SpreadsheetFormatParserToken.conditionNumber(BigDecimal.valueOf(value), String.valueOf(value));
     }
 
-    final SpreadsheetFormatPercentSymbolParserToken percentSymbol() {
-        return SpreadsheetFormatParserToken.percentSymbol("%", "%");
+    final SpreadsheetFormatPercentParserToken percent() {
+        return SpreadsheetFormatParserToken.percent("%", "%");
     }
 
     final SpreadsheetFormatSecondParserToken seconds() {

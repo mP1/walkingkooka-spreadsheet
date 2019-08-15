@@ -167,7 +167,7 @@ abstract class SpreadsheetFormatParentParserToken<T extends SpreadsheetFormatPar
     }
 
     @Override
-    public final boolean isPercentSymbol() {
+    public final boolean isPercent() {
         return false;
     }
 

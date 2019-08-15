@@ -261,7 +261,7 @@ public abstract class SpreadsheetFormatParserTokenVisitor extends ParserTokenVis
         // nop
     }
 
-    protected void visit(final SpreadsheetFormatPercentSymbolParserToken token) {
+    protected void visit(final SpreadsheetFormatPercentParserToken token) {
         // nop
     }
 

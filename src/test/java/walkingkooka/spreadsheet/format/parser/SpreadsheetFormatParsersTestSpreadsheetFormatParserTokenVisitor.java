@@ -327,7 +327,7 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatPercentSymbolParserToken token) {
+    protected void visit(final SpreadsheetFormatPercentParserToken token) {
         this.add(token);
     }
 

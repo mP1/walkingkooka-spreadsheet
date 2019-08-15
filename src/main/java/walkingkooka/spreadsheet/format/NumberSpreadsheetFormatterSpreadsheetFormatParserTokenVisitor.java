@@ -26,7 +26,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEscapeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExponentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatPercentSymbolParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatPercentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatQuotedTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextLiteralParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatThousandsParserToken;
@@ -103,7 +103,7 @@ final class NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extend
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatPercentSymbolParserToken token) {
+    protected void visit(final SpreadsheetFormatPercentParserToken token) {
         if (!this.percentage) {
             this.percentage = true;
             this.decimalPlacesShift = this.decimalPlacesShift + 2; // x100
