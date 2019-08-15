@@ -684,7 +684,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
 
     @Test
     public void testExponent() {
-        final SpreadsheetFormatParserToken e = exponentSymbol();
+        final SpreadsheetFormatParserToken e = exponentSymbolPlus();
         final SpreadsheetFormatParserToken digit = digit();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.exponent(Lists.of(
@@ -734,7 +734,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
     @Test
     public void testExponent2() {
         new SpreadsheetFormatParserTokenVisitor() {
-        }.accept(SpreadsheetFormatParserToken.exponent(Lists.of(exponentSymbol()),
+        }.accept(SpreadsheetFormatParserToken.exponent(Lists.of(exponentSymbolPlus()),
                 "e"));
     }
 
@@ -1817,7 +1817,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
 
     @Test
     public void testExponentSymbol() {
-        final SpreadsheetFormatParserToken token = exponentSymbol();
+        final SpreadsheetFormatParserToken token = exponentSymbolPlus();
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
 
@@ -1839,7 +1839,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
     @Test
     public void testExponentSymbol2() {
         new SpreadsheetFormatParserTokenVisitor() {
-        }.accept(exponentSymbol());
+        }.accept(exponentSymbolPlus());
     }
 
     @Test
