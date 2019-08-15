@@ -42,6 +42,7 @@ import java.util.function.BiFunction;
 /**
  * Parsers that know how to parse formatting patterns<br>.
  * <a href="https://support.office.com/en-us/article/number-format-codes-5026bbd6-04bc-48cd-bf33-80f18b4eae68>Formatting</a>
+ * <a href="https://support.google.com/docs/answer/56470?p=drive_custom_numbers&visit_id=637014719918429541-764379239&rd=1"</a>
  */
 public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
@@ -192,7 +193,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     private static final EbnfIdentifierName YEAR_IDENTIFIER = EbnfIdentifierName.with("YEAR");
     private static final Parser<ParserContext> YEAR = repeatingSymbol('Y',
             SpreadsheetFormatParserToken::year,
-            SpreadsheetFormatSecondParserToken.class);
+            SpreadsheetFormatYearParserToken.class);
 
     // dateTime..............................................................................................................
 
@@ -433,8 +434,8 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
         predefined.put(BRACKET_CLOSE_IDENTIFIER, BRACKET_CLOSE);
 
         predefined.put(ESCAPE_IDENTIFIER, ESCAPE);
-        predefined.put(LITERAL_IDENTIFIER, LITERAL);
-        predefined.put(LITERAL2_IDENTIFIER, LITERAL2);
+        predefined.put(NUMBER_LITERAL_IDENTIFIER, NUMBER_LITERAL);
+        predefined.put(DATETIME_TEXT_LITERAL_IDENTIFIER, DATETIME_TEXT_LITERAL);
     }
 
     private static final EbnfIdentifierName BRACKET_OPEN_IDENTIFIER = EbnfIdentifierName.with("BRACKET_OPEN");
@@ -452,13 +453,11 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
             SpreadsheetFormatParserToken::escape,
             SpreadsheetFormatEscapeParserToken.class);
 
-    // used by all formatters except for NUMBER which loses the slash which is reserved for fractions.
-    private static final EbnfIdentifierName LITERAL_IDENTIFIER = EbnfIdentifierName.with("LITERAL");
-    private static final Parser<ParserContext> LITERAL = literal("$-+/(): ", LITERAL_IDENTIFIER);
+    private static final EbnfIdentifierName NUMBER_LITERAL_IDENTIFIER = EbnfIdentifierName.with("NUMBER_LITERAL");
+    private static final Parser<ParserContext> NUMBER_LITERAL = literal("(): +-", NUMBER_LITERAL_IDENTIFIER);
 
-    // identical to {@link #LITERAL} less '$' and '/'. $ for number/fraction should will be matched as a currency
-    private static final EbnfIdentifierName LITERAL2_IDENTIFIER = EbnfIdentifierName.with("LITERAL2");
-    private static final Parser<ParserContext> LITERAL2 = literal("-+(): ", LITERAL2_IDENTIFIER);
+    private static final EbnfIdentifierName DATETIME_TEXT_LITERAL_IDENTIFIER = EbnfIdentifierName.with("DATETIME_TEXT_LITERAL");
+    private static final Parser<ParserContext> DATETIME_TEXT_LITERAL = literal("$-+(): /+-", DATETIME_TEXT_LITERAL_IDENTIFIER);
 
     // helpers..............................................................................................................
 
@@ -467,7 +466,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
      */
     static {
         try {
-            final Optional<EbnfGrammarParserToken> grammar = EbnfGrammarLoader.with("excel-format-parsers.grammar", SpreadsheetFormatParsers.class)
+            final Optional<EbnfGrammarParserToken> grammar = EbnfGrammarLoader.with("format.grammar", SpreadsheetFormatParsers.class)
                     .grammar();
 
             final Map<EbnfIdentifierName, Parser<ParserContext>> predefined = Maps.sorted();
