@@ -253,7 +253,7 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
     }
 
     final SpreadsheetFormatParserToken percentSymbol() {
-        return SpreadsheetFormatParserToken.percentSymbol("%", "%");
+        return SpreadsheetFormatParserToken.percent("%", "%");
     }
 
     final SpreadsheetFormatParserToken second() {

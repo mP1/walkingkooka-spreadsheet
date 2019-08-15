@@ -336,8 +336,8 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
     private static final EbnfIdentifierName PERCENTAGE_IDENTIFIER = EbnfIdentifierName.with("PERCENTAGE");
     private static final Parser<ParserContext> PERCENTAGE = symbol('%',
-            SpreadsheetFormatParserToken::percentSymbol,
-            SpreadsheetFormatPercentSymbolParserToken.class);
+            SpreadsheetFormatParserToken::percent,
+            SpreadsheetFormatPercentParserToken.class);
 
     private static final Parser<ParserContext> THOUSANDS = symbol(',',
             SpreadsheetFormatParserToken::thousands,

@@ -93,11 +93,6 @@ abstract class SpreadsheetFormatNonSymbolParserToken<T> extends SpreadsheetForma
     }
 
     @Override
-    public final boolean isPercentSymbol() {
-        return false;
-    }
-
-    @Override
     public final boolean isSymbol() {
         return false;
     }

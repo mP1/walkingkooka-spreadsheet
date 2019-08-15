@@ -100,6 +100,11 @@ abstract class SpreadsheetFormatSymbolParserToken extends SpreadsheetFormatLeafP
     }
 
     @Override
+    public final boolean isPercent() {
+        return false;
+    }
+
+    @Override
     public final boolean isQuotedText() {
         return false;
     }

@@ -98,6 +98,11 @@ public final class SpreadsheetFormatDayParserToken extends SpreadsheetFormatNonS
     }
 
     @Override
+    public boolean isPercent() {
+        return false;
+    }
+
+    @Override
     public boolean isQuotedText() {
         return false;
     }

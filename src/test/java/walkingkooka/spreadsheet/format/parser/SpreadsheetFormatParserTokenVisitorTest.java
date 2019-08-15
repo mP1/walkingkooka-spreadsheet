@@ -1464,6 +1464,33 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
     }
 
     @Test
+    public void testPercent() {
+        final SpreadsheetFormatParserToken token = percentSymbol();
+        final StringBuilder b = new StringBuilder();
+        final List<ParserToken> visited = Lists.array();
+
+        final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
+
+            @Override
+            protected void visit(final SpreadsheetFormatPercentParserToken token) {
+                b.append("5");
+                visited.add(token);
+            }
+        };
+        visitor.accept(token);
+        assertEquals("13542", b.toString(), "visited");
+        assertEquals(Lists.of(token, token, token, token, token),
+                visited,
+                "visitedTokens");
+    }
+
+    @Test
+    public void testPercent2() {
+        new SpreadsheetFormatParserTokenVisitor() {
+        }.accept(percentSymbol());
+    }
+
+    @Test
     public void testQuotedText() {
         final SpreadsheetFormatParserToken token = quotedText();
         final StringBuilder b = new StringBuilder();
@@ -1975,33 +2002,6 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
     public void testNotEqualsSymbol2() {
         new SpreadsheetFormatParserTokenVisitor() {
         }.accept(notEquals());
-    }
-
-    @Test
-    public void testPercentSymbol() {
-        final SpreadsheetFormatParserToken token = percentSymbol();
-        final StringBuilder b = new StringBuilder();
-        final List<ParserToken> visited = Lists.array();
-
-        final SpreadsheetFormatParserTokenVisitor visitor = new TestSpreadsheetFormatParserTokenVisitor(b, visited) {
-
-            @Override
-            protected void visit(final SpreadsheetFormatPercentSymbolParserToken token) {
-                b.append("5");
-                visited.add(token);
-            }
-        };
-        visitor.accept(token);
-        assertEquals("13542", b.toString(), "visited");
-        assertEquals(Lists.of(token, token, token, token, token),
-                visited,
-                "visitedTokens");
-    }
-
-    @Test
-    public void testPercentSymbol2() {
-        new SpreadsheetFormatParserTokenVisitor() {
-        }.accept(percentSymbol());
     }
 
     @Test

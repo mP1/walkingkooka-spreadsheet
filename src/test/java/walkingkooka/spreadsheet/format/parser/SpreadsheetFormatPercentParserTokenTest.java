@@ -23,12 +23,12 @@ import walkingkooka.visit.Visiting;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetFormatPercentSymbolParserTokenTest extends SpreadsheetFormatSymbolParserTokenTestCase<SpreadsheetFormatPercentSymbolParserToken> {
+public final class SpreadsheetFormatPercentParserTokenTest extends SpreadsheetFormatNonSymbolParserTokenTestCase<SpreadsheetFormatPercentParserToken, String> {
 
     @Test
     public void testAccept() {
         final StringBuilder b = new StringBuilder();
-        final SpreadsheetFormatSymbolParserToken token = this.createToken();
+        final SpreadsheetFormatParserToken token = this.createToken();
 
         new FakeSpreadsheetFormatParserTokenVisitor() {
             @Override
@@ -58,7 +58,7 @@ public final class SpreadsheetFormatPercentSymbolParserTokenTest extends Spreads
             }
 
             @Override
-            protected void visit(final SpreadsheetFormatPercentSymbolParserToken t) {
+            protected void visit(final SpreadsheetFormatPercentParserToken t) {
                 assertSame(token, t);
                 b.append("5");
             }
@@ -67,22 +67,27 @@ public final class SpreadsheetFormatPercentSymbolParserTokenTest extends Spreads
     }
 
     @Override
+    String value() {
+        return "%";
+    }
+
+    @Override
     public String text() {
-        return "!=";
+        return this.value();
     }
 
     @Override
-    SpreadsheetFormatPercentSymbolParserToken createToken(final String value, final String text) {
-        return SpreadsheetFormatPercentSymbolParserToken.with(value, text);
+    SpreadsheetFormatPercentParserToken createToken(final String value, final String text) {
+        return SpreadsheetFormatPercentParserToken.with(value, text);
     }
 
     @Override
-    public SpreadsheetFormatPercentSymbolParserToken createDifferentToken() {
-        return SpreadsheetFormatPercentSymbolParserToken.with(this.text(), "different");
+    public SpreadsheetFormatPercentParserToken createDifferentToken() {
+        return SpreadsheetFormatPercentParserToken.with(this.text(), "different");
     }
 
     @Override
-    public Class<SpreadsheetFormatPercentSymbolParserToken> type() {
-        return SpreadsheetFormatPercentSymbolParserToken.class;
+    public Class<SpreadsheetFormatPercentParserToken> type() {
+        return SpreadsheetFormatPercentParserToken.class;
     }
 }

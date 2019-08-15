@@ -98,6 +98,11 @@ public final class SpreadsheetFormatSecondParserToken extends SpreadsheetFormatN
     }
 
     @Override
+    public boolean isPercent() {
+        return false;
+    }
+
+    @Override
     public boolean isQuotedText() {
         return false;
     }
