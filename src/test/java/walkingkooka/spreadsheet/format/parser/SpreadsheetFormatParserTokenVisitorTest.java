@@ -685,7 +685,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
     @Test
     public void testExponent() {
         final SpreadsheetFormatParserToken e = exponentSymbol();
-        final SpreadsheetFormatParserToken digit = digitNonZero();
+        final SpreadsheetFormatParserToken digit = digit();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.exponent(Lists.of(
                 e,
@@ -822,9 +822,9 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
 
     @Test
     public void testFraction() {
-        final SpreadsheetFormatParserToken top = digitNonZero();
+        final SpreadsheetFormatParserToken top = digit();
         final SpreadsheetFormatParserToken symbol = fractionSymbol();
-        final SpreadsheetFormatParserToken bottom = digitNonZero();
+        final SpreadsheetFormatParserToken bottom = digit();
 
         final SpreadsheetFormatParserToken token = SpreadsheetFormatParserToken.fraction(Lists.of(
                 top,
@@ -876,9 +876,9 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
     public void testFraction2() {
         new SpreadsheetFormatParserTokenVisitor() {
         }.accept(SpreadsheetFormatParserToken.fraction(Lists.of(
-                digitNonZero(),
+                digit(),
                 fractionSymbol(),
-                digitNonZero()),
+                digit()),
                 "#/#"));
     }
 
@@ -930,7 +930,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
 
     @Test
     public void testNumber() {
-        final SpreadsheetFormatParserToken integer = digitNonZero();
+        final SpreadsheetFormatParserToken integer = digit();
         final SpreadsheetFormatParserToken decimalPoint = decimalPoint();
         final SpreadsheetFormatParserToken decimals = digitZero();
 
@@ -989,7 +989,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
     @Test
     public void testNumber2() {
         new SpreadsheetFormatParserTokenVisitor() {
-        }.accept(SpreadsheetFormatParserToken.number(Lists.of(digitNonZero()), "#"));
+        }.accept(SpreadsheetFormatParserToken.number(Lists.of(digit()), "#"));
     }
 
     @Test
@@ -1303,7 +1303,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
 
     @Test
     public void testDigit() {
-        final SpreadsheetFormatParserToken token = digitNonZero();
+        final SpreadsheetFormatParserToken token = digit();
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();
 
@@ -1325,7 +1325,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
     @Test
     public void testDigit2() {
         new SpreadsheetFormatParserTokenVisitor() {
-        }.accept(digitNonZero());
+        }.accept(digit());
     }
 
     @Test
