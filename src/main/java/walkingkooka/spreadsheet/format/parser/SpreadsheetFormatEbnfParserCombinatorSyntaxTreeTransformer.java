@@ -100,7 +100,7 @@ final class SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer implement
     }
 
     private static final EbnfIdentifierName DATE_IDENTIFIER = EbnfIdentifierName.with("DATE");
-    private static final EbnfIdentifierName DATE2_IDENTIFIER = EbnfIdentifierName.with("DATE2");
+    private static final EbnfIdentifierName DATE_LIST_IDENTIFIER = EbnfIdentifierName.with("DATE_LIST");
 
     private static ParserToken transformDateTime(final ParserToken token,
                                                  final ParserContext context) {
@@ -108,7 +108,7 @@ final class SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer implement
     }
 
     private static final EbnfIdentifierName DATETIME_IDENTIFIER = EbnfIdentifierName.with("DATETIME");
-    private static final EbnfIdentifierName DATETIME2_IDENTIFIER = EbnfIdentifierName.with("DATETIME2");
+    private static final EbnfIdentifierName DATETIME_LIST_IDENTIFIER = EbnfIdentifierName.with("DATETIME_LIST");
 
     private static ParserToken transformExponentSymbol(final ParserToken token,
                                                        final ParserContext context) {
@@ -159,7 +159,7 @@ final class SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer implement
     private static final EbnfIdentifierName NUMBER_EXPONENT_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("NUMBER_EXPONENT_SYMBOL");
 
     private static final EbnfIdentifierName TIME_IDENTIFIER = EbnfIdentifierName.with("TIME");
-    private static final EbnfIdentifierName TIME2_IDENTIFIER = EbnfIdentifierName.with("TIME2");
+    private static final EbnfIdentifierName TIME_LIST_IDENTIFIER = EbnfIdentifierName.with("TIME_LIST");
 
     private static ParserToken clean(final ParserToken token,
                                      final BiFunction<List<ParserToken>, String, ParserToken> factory) {
@@ -200,13 +200,13 @@ final class SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer implement
         identiferToTransform.put(FRACTION_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformFraction);
 
         identiferToTransform.put(DATE_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformDate);
-        identiferToTransform.put(DATE2_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformDate);
+        identiferToTransform.put(DATE_LIST_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformDate);
 
         identiferToTransform.put(DATETIME_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformDateTime);
-        identiferToTransform.put(DATETIME2_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformDateTime);
+        identiferToTransform.put(DATETIME_LIST_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformDateTime);
 
         identiferToTransform.put(TIME_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformTime);
-        identiferToTransform.put(TIME2_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformTime);
+        identiferToTransform.put(TIME_LIST_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformTime);
 
         identiferToTransform.put(SpreadsheetFormatParsers.EXPRESSION_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformExpression);
 
