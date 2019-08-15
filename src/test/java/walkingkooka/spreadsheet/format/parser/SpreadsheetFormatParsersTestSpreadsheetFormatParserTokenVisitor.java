@@ -43,8 +43,7 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatColorParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -54,8 +53,7 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatDateParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -65,8 +63,7 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatDateTimeParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -76,8 +73,7 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatEqualsParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -87,8 +83,7 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatExponentParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -98,8 +93,7 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatExpressionParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -109,8 +103,7 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatFractionParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -120,8 +113,7 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatGeneralParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -131,8 +123,7 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatGreaterThanEqualsParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -142,8 +133,7 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatGreaterThanParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -153,8 +143,7 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatLessThanEqualsParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -164,8 +153,7 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatLessThanParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -175,8 +163,7 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatNotEqualsParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -186,8 +173,7 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatNumberParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -197,8 +183,7 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatTextParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -208,8 +193,7 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatTimeParserToken token) {
-        this.enter();
-        return super.startVisit(token);
+        return this.enter();
     }
 
     @Override
@@ -399,9 +383,10 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
 
     // GENERAL PURPOSE .................................................................................................
 
-    private void enter() {
+    private Visiting enter() {
         this.previousChildren = this.previousChildren.push(this.children);
         this.children = Lists.array();
+        return Visiting.CONTINUE;
     }
 
     private void exit(final BiFunction<List<ParserToken>, String, SpreadsheetFormatParserToken> factory) {
