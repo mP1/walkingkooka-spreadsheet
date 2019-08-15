@@ -267,11 +267,35 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
         this.parseFormatAndCheck("##00??#", 5, "00  5");
     }
 
-    // negative.........................................................................................
+    // negative.........................................................................................................
 
     @Test
     public void testHashHashZeroZeroQuestionQuestionHashNegative5() {
         this.parseFormatAndCheck("##00??#", -5, "N00  5");
+    }
+
+    // plus.............................................................................................................
+
+    @Test
+    public void testPlusNegativeNumber() {
+        this.parseFormatAndCheck("+#", -5, "+N5");
+    }
+
+    @Test
+    public void testPlusPositiveNumber() {
+        this.parseFormatAndCheck("+#", +5, "+5");
+    }
+
+    // minus............................................................................................................
+
+    @Test
+    public void testMinusNegativeNumber() {
+        this.parseFormatAndCheck("-#", -5, "-N5");
+    }
+
+    @Test
+    public void testMinusPositiveNumber() {
+        this.parseFormatAndCheck("-#", +5, "-5");
     }
 
     // fraction.......................................................................................................
