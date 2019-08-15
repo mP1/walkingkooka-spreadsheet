@@ -3662,8 +3662,8 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testExpressionSlashFails() {
-        this.parseFailAndCheck(this.expressionParser(), "/");
+    public void testExpressionSlash() {
+        this.expressionParseAndCheck(token(SpreadsheetFormatParserToken::dateTime, textLiteralSlash()));
     }
 
     @Test

@@ -5,7 +5,7 @@ EXPRESSION                    = [ EXPRESSION_COMPONENT ],
                                 [ EXPRESSION_SEPARATOR, [ (GENERAL | TEXT) ]]
                                 ]];
 
-EXPRESSION_COMPONENT          = GENERAL | DATETIME_LIST | FRACTION | NUMBER;
+EXPRESSION_COMPONENT          = GENERAL | FRACTION | NUMBER | DATETIME;
 
 
 
@@ -72,47 +72,22 @@ CONDITION_NOT_EQUAL           = BRACKET_OPEN,
 
 
 (* date ..............................................................................................................*)
-DATE                          = [{ DATE_COMPONENT_LITERAL }];
-
-DATE_LIST                     = [{ DATE_LITERAL }],
-                                DATE_COMPONENT,
-                                [{ DATE_COMPONENT_LITERAL }];
-
-DATE_COMPONENT_LITERAL        = DATE_COMPONENT | DATE_LITERAL;
-DATE_COMPONENT                = { DAY | MONTH_MINUTE | YEAR };
-DATE_LITERAL                  = DATE_DATETIME_TIME_TEXT;
+DATE                          = [{ DAY | MONTH_MINUTE | YEAR | DATE_DATETIME_TIME }];
 
 
 
 (* date/time .........................................................................................................*)
-DATETIME                      = [{ DATETIME_COMPONENT_LITERAL }];
-
-DATETIME_LIST                 = [{ DATETIME_LITERAL }],
-                                DATETIME_COMPONENT,
-                                [{ DATETIME_COMPONENT_LITERAL }];
-
-DATETIME_COMPONENT_LITERAL    = DATETIME_COMPONENT | DATETIME_LITERAL;
-DATETIME_COMPONENT            = DAY | MONTH_MINUTE | YEAR | HOUR | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P;
-DATETIME_LITERAL              = DATE_DATETIME_TIME_TEXT;
+DATETIME                      = [{ DAY | MONTH_MINUTE | YEAR | HOUR | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P | DATE_DATETIME_TIME }];
 
 
 
 (* time ..............................................................................................................*)
-TIME                          = [{ TIME_COMPONENT_TIME_LITERAL }];
-
-TIME_LIST                     = [{ TIME_LITERAL }],
-                                TIME_COMPONENT,
-                                [{ TIME_COMPONENT_TIME_LITERAL }];
-
-TIME_COMPONENT_TIME_LITERAL   = TIME_COMPONENT | TIME_LITERAL;
-TIME_COMPONENT                = HOUR | MONTH_MINUTE | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P;
-TIME_LITERAL                  = DATE_DATETIME_TIME_TEXT;
+TIME                          = [{ HOUR | MONTH_MINUTE | SECOND_MILLIS | AM_SLASH_PM | A_SLASH_P | DATE_DATETIME_TIME }];
 
 
 
-(* date, datetime, time .................................................................................*)
-DATE_DATETIME_TIME_TEXT       = COLOR | CONDITION | ESCAPE | LITERAL | QUOTED;
-
+(* date, datetime, time ..............................................................................................*)
+DATE_DATETIME_TIME            = COLOR | CONDITION | ESCAPE | DATETIME_TEXT_LITERAL | QUOTED;
 
 
 (* seconds decimal zeroes.............................................................................................*)
@@ -126,25 +101,23 @@ FRACTION                      = FRACTION_COMPONENT,
                                 FRACTION_SYMBOL,
                                 FRACTION_COMPONENT;
 
-FRACTION_COMPONENT            = [{ FRACTION_LITERAL }],
+FRACTION_COMPONENT            = [{ FRACTION_OR_LITERAL }],
                                 FRACTION_DIGIT,
-                                [{ FRACTION_DIGIT | FRACTION_LITERAL }];
-FRACTION_LITERAL              = COLOR | CONDITION | CURRENCY | ESCAPE | LITERAL2 | PERCENTAGE | QUOTED;
+                                [{ FRACTION_DIGIT | FRACTION_OR_LITERAL }];
+FRACTION_OR_LITERAL           = COLOR | CONDITION | CURRENCY | ESCAPE | NUMBER_LITERAL | PERCENTAGE | QUOTED;
 FRACTION_DIGIT                = DIGIT | DIGIT_SPACE | DIGIT_ZERO | THOUSANDS;
 
 
 
 (* NUMBER .............................................................................................................*)
-NUMBER                        = [{ DECIMAL_POINT | NUMBER_DIGIT | NUMBER_LITERAL | NUMBER_EXPONENT | PERCENTAGE }];
+NUMBER                        = [{ DECIMAL_POINT | NUMBER_DIGIT | NUMBER_EXPONENT | NUMBER_OR_LITERAL | PERCENTAGE }];
 
 NUMBER_EXPONENT               = NUMBER_EXPONENT_SYMBOL,
-                                [{ DECIMAL_POINT | NUMBER_DIGIT | NUMBER_LITERAL }];
-
+                                [{ DECIMAL_POINT | NUMBER_DIGIT | NUMBER_OR_LITERAL }];
 NUMBER_EXPONENT_SYMBOL        = ( 'E+' | 'e+' | 'E-' | 'e-' );
 
-
-NUMBER_LITERAL                = COLOR | CONDITION | CURRENCY | ESCAPE | LITERAL2 | PERCENTAGE | QUOTED;
-NUMBER_DIGIT                  = DIGIT | DIGIT_ZERO | DIGIT_SPACE | THOUSANDS;
+NUMBER_OR_LITERAL             = COLOR | CONDITION | CURRENCY | ESCAPE | NUMBER_LITERAL | PERCENTAGE | QUOTED;
+NUMBER_DIGIT                  = DIGIT | DIGIT_SPACE | DIGIT_ZERO | THOUSANDS;
 
 
 
@@ -166,6 +139,6 @@ TEXT_WITH_STAR                = [{ TEXT_COMPONENT }],
 
 TEXT_WITHOUT_STAR             = [{ TEXT_COMPONENT }];
 
-TEXT_COMPONENT                = COLOR | ESCAPE | LITERAL | QUOTED | TEXT_PLACEHOLDER | UNDERSCORE;
+TEXT_COMPONENT                = COLOR | DATETIME_TEXT_LITERAL | ESCAPE | QUOTED | TEXT_PLACEHOLDER | UNDERSCORE;
 
 
