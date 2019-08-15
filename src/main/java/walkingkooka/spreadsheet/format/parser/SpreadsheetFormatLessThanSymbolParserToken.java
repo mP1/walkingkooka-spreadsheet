@@ -94,11 +94,6 @@ public final class SpreadsheetFormatLessThanSymbolParserToken extends Spreadshee
     }
 
     @Override
-    public boolean isPercentSymbol() {
-        return false;
-    }
-
-    @Override
     public boolean isSeparatorSymbol() {
         return false;
     }

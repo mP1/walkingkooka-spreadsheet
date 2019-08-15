@@ -94,11 +94,6 @@ public final class SpreadsheetFormatGreaterThanEqualsSymbolParserToken extends S
     }
 
     @Override
-    public boolean isPercentSymbol() {
-        return false;
-    }
-
-    @Override
     public boolean isSeparatorSymbol() {
         return false;
     }

@@ -210,7 +210,7 @@ public abstract class SpreadsheetFormatParserTestCase {
     }
 
     static SpreadsheetFormatParserToken percentSymbol() {
-        return SpreadsheetFormatParserToken.percentSymbol("%", "%");
+        return SpreadsheetFormatParserToken.percent("%", "%");
     }
 
     static SpreadsheetFormatParserToken quotedText() {

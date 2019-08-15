@@ -99,6 +99,11 @@ public final class SpreadsheetFormatEscapeParserToken extends SpreadsheetFormatN
     }
 
     @Override
+    public boolean isPercent() {
+        return false;
+    }
+
+    @Override
     public boolean isQuotedText() {
         return false;
     }
