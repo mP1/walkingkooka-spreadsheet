@@ -22,12 +22,12 @@ import walkingkooka.ToStringBuilder;
 /**
  * Handles copy fraction digits including adding zero or spaces for trailing "zero" digits.
  */
-final class NumberSpreadsheetFormatterFractionDigits extends NumberSpreadsheetFormatterDigits {
+final class NumberSpreadsheetFormatterDigitsFraction extends NumberSpreadsheetFormatterDigits {
 
     /**
-     * Creates a new {@link NumberSpreadsheetFormatterFractionDigits}
+     * Creates a new {@link NumberSpreadsheetFormatterDigitsFraction}
      */
-    static NumberSpreadsheetFormatterFractionDigits with(final String text) {
+    static NumberSpreadsheetFormatterDigitsFraction with(final String text) {
 
         // remove any trailing zeros...
         int end = text.length();
@@ -38,13 +38,13 @@ final class NumberSpreadsheetFormatterFractionDigits extends NumberSpreadsheetFo
             end--;
         }
 
-        return new NumberSpreadsheetFormatterFractionDigits(text.substring(0, end));
+        return new NumberSpreadsheetFormatterDigitsFraction(text.substring(0, end));
     }
 
     /**
      * Private ctor use factory
      */
-    private NumberSpreadsheetFormatterFractionDigits(final String text) {
+    private NumberSpreadsheetFormatterDigitsFraction(final String text) {
         super(text);
     }
 
