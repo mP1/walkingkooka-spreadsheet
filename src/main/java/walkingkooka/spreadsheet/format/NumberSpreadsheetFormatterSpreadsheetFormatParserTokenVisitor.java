@@ -72,7 +72,7 @@ final class NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extend
 
     @Override
     protected void visit(final SpreadsheetFormatDecimalPointParserToken token) {
-        this.add(NumberSpreadsheetFormatterComponent.decimalPointSymbol());
+        this.add(NumberSpreadsheetFormatterComponent.decimalSeparator());
         this.digitMode.decimalPoint(this);
     }
 
