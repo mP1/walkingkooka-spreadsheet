@@ -19,16 +19,16 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 
-public final class NumberSpreadsheetFormatterDigitComponentTest extends NumberSpreadsheetFormatterComponentTestCase<NumberSpreadsheetFormatterDigitComponent> {
+public final class NumberSpreadsheetFormatterComponentTextLiteralTest extends NumberSpreadsheetFormatterComponentTestCase<NumberSpreadsheetFormatterComponentTextLiteral> {
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(NumberSpreadsheetFormatterDigitComponent.with(1, NumberSpreadsheetFormatterZero.ZERO),
-                "0");
+        final String text = "abc123";
+        this.toStringAndCheck(NumberSpreadsheetFormatterComponentTextLiteral.with(text), text);
     }
 
     @Override
-    public Class<NumberSpreadsheetFormatterDigitComponent> type() {
-        return NumberSpreadsheetFormatterDigitComponent.class;
+    public Class<NumberSpreadsheetFormatterComponentTextLiteral> type() {
+        return NumberSpreadsheetFormatterComponentTextLiteral.class;
     }
 }

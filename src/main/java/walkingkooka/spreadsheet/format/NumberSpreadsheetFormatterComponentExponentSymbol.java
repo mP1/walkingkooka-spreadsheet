@@ -18,29 +18,29 @@
 package walkingkooka.spreadsheet.format;
 
 /**
- * Unconditionally inserts the decimal point from the {@link SpreadsheetFormatterContext}.
+ * Inserts the exponent symbol taken from the {@link SpreadsheetFormatterContext} into the formatted text output.
  */
-final class NumberSpreadsheetFormatterDecimalPointSymbolComponent extends NumberSpreadsheetFormatterComponent {
+final class NumberSpreadsheetFormatterComponentExponentSymbol extends NumberSpreadsheetFormatterComponent {
 
     /**
      * Singleton
      */
-    static final NumberSpreadsheetFormatterDecimalPointSymbolComponent INSTANCE = new NumberSpreadsheetFormatterDecimalPointSymbolComponent();
+    static final NumberSpreadsheetFormatterComponentExponentSymbol INSTANCE = new NumberSpreadsheetFormatterComponentExponentSymbol();
 
     /**
      * Private ctor use singleton
      */
-    private NumberSpreadsheetFormatterDecimalPointSymbolComponent() {
+    private NumberSpreadsheetFormatterComponentExponentSymbol() {
         super();
     }
 
     @Override
     void append(final NumberSpreadsheetFormatterComponentContext context) {
-        context.appendDecimalSeparator(context.fraction);
+        context.appendExponent();
     }
 
     @Override
     public String toString() {
-        return ".";
+        return "E";
     }
 }
