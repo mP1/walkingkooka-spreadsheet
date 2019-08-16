@@ -21,17 +21,17 @@ package walkingkooka.spreadsheet.format;
 /**
  * Unconditionally inserts the currency symbol from the {@link SpreadsheetFormatterContext}.
  */
-final class NumberSpreadsheetFormatterCurrencySymbolComponent extends NumberSpreadsheetFormatterComponent {
+final class NumberSpreadsheetFormatterComponentCurrencySymbol extends NumberSpreadsheetFormatterComponent {
 
     /**
      * Singleton
      */
-    final static NumberSpreadsheetFormatterCurrencySymbolComponent INSTANCE = new NumberSpreadsheetFormatterCurrencySymbolComponent();
+    final static NumberSpreadsheetFormatterComponentCurrencySymbol INSTANCE = new NumberSpreadsheetFormatterComponentCurrencySymbol();
 
     /**
      * Private ctor use singleton
      */
-    private NumberSpreadsheetFormatterCurrencySymbolComponent() {
+    private NumberSpreadsheetFormatterComponentCurrencySymbol() {
         super();
     }
 
