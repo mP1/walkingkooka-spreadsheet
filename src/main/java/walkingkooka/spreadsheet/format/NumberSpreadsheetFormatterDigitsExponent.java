@@ -22,20 +22,20 @@ import walkingkooka.ToStringBuilder;
 /**
  * Handles inserting the exponent digits into the formatted text output.
  */
-final class NumberSpreadsheetFormatterExponentDigits extends NumberSpreadsheetFormatterExponentOrIntegerDigits {
+final class NumberSpreadsheetFormatterDigitsExponent extends NumberSpreadsheetFormatterDigitsExponentOrInteger {
 
     /**
-     * Factory creates a new {@link NumberSpreadsheetFormatterExponentDigits}
+     * Factory creates a new {@link NumberSpreadsheetFormatterDigitsExponent}
      */
-    static NumberSpreadsheetFormatterExponentDigits with(final NumberSpreadsheetFormatterMinusSign minusSign,
+    static NumberSpreadsheetFormatterDigitsExponent with(final NumberSpreadsheetFormatterMinusSign minusSign,
                                                          final String text) {
-        return new NumberSpreadsheetFormatterExponentDigits(minusSign, text);
+        return new NumberSpreadsheetFormatterDigitsExponent(minusSign, text);
     }
 
     /**
      * Private ctor use factory
      */
-    private NumberSpreadsheetFormatterExponentDigits(final NumberSpreadsheetFormatterMinusSign minusSign,
+    private NumberSpreadsheetFormatterDigitsExponent(final NumberSpreadsheetFormatterMinusSign minusSign,
                                                      final String text) {
         super(minusSign, text);
     }
