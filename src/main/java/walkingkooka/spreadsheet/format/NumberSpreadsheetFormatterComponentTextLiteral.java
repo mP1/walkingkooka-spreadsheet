@@ -18,29 +18,34 @@
 package walkingkooka.spreadsheet.format;
 
 /**
- * Inserts the percentage symbol.
+ * Appends a text literal into the formatted text.
  */
-final class NumberSpreadsheetFormatterPercentageSymbolComponent extends NumberSpreadsheetFormatterComponent {
+final class NumberSpreadsheetFormatterComponentTextLiteral extends NumberSpreadsheetFormatterComponent {
 
     /**
-     * Singleton
+     * Creates a new text literal.
      */
-    static final NumberSpreadsheetFormatterPercentageSymbolComponent INSTANCE = new NumberSpreadsheetFormatterPercentageSymbolComponent();
+    static NumberSpreadsheetFormatterComponentTextLiteral with(final String text) {
+        return new NumberSpreadsheetFormatterComponentTextLiteral(text);
+    }
 
     /**
-     * Private ctor use singleton
+     * Private ctor use factory
      */
-    private NumberSpreadsheetFormatterPercentageSymbolComponent() {
+    private NumberSpreadsheetFormatterComponentTextLiteral(final String text) {
         super();
+        this.text = text;
     }
 
     @Override
     void append(final NumberSpreadsheetFormatterComponentContext context) {
-        context.appendPercentage();
+        context.appendText(this.text);
     }
+
+    private final String text;
 
     @Override
     public String toString() {
-        return "%";
+        return this.text;
     }
 }

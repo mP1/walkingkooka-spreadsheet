@@ -20,20 +20,20 @@ package walkingkooka.spreadsheet.format;
 /**
  * Represents a placeholder for a digit.
  */
-final class NumberSpreadsheetFormatterDigitComponent extends NumberSpreadsheetFormatterComponent {
+final class NumberSpreadsheetFormatterComponentDigit extends NumberSpreadsheetFormatterComponent {
 
     /**
-     * Factory that creates a {@link NumberSpreadsheetFormatterDigitComponent}.
+     * Factory that creates a {@link NumberSpreadsheetFormatterComponentDigit}.
      */
-    static NumberSpreadsheetFormatterDigitComponent with(final int position,
+    static NumberSpreadsheetFormatterComponentDigit with(final int position,
                                                          final NumberSpreadsheetFormatterZero zero) {
-        return new NumberSpreadsheetFormatterDigitComponent(position, zero);
+        return new NumberSpreadsheetFormatterComponentDigit(position, zero);
     }
 
     /**
      * Private ctor use factory
      */
-    private NumberSpreadsheetFormatterDigitComponent(final int position,
+    private NumberSpreadsheetFormatterComponentDigit(final int position,
                                                      final NumberSpreadsheetFormatterZero zero) {
         super();
 
