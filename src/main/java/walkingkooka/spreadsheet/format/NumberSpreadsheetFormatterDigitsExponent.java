@@ -43,7 +43,7 @@ final class NumberSpreadsheetFormatterDigitsExponent extends NumberSpreadsheetFo
     @Override
     void append(final int digitSymbolPosition,
                 final NumberSpreadsheetFormatterZero zero,
-                final NumberSpreadsheetFormatterComponentContext context) {
+                final NumberSpreadsheetFormatterContext context) {
         final int digitSymbolLength = context.formatter.exponentDigitSymbolCount;
 
         final String textDigits = context.exponent.text;
@@ -63,7 +63,7 @@ final class NumberSpreadsheetFormatterDigitsExponent extends NumberSpreadsheetFo
     }
 
     @Override
-    void thousandsSeparator(int numberDigitPosition, NumberSpreadsheetFormatterComponentContext context) {
+    void thousandsSeparator(int numberDigitPosition, NumberSpreadsheetFormatterContext context) {
         // exponents never have thousands separator
     }
 

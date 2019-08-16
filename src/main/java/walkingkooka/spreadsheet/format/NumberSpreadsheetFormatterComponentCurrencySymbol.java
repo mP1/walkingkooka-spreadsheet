@@ -36,7 +36,7 @@ final class NumberSpreadsheetFormatterComponentCurrencySymbol extends NumberSpre
     }
 
     @Override
-    void append(final NumberSpreadsheetFormatterComponentContext context) {
+    void append(final NumberSpreadsheetFormatterContext context) {
         context.appendCurrencySymbol();
     }
 

@@ -51,7 +51,7 @@ final class NumberSpreadsheetFormatterDigitsFraction extends NumberSpreadsheetFo
     @Override
     void append(final int numberDigitPosition,
                 final NumberSpreadsheetFormatterZero zero,
-                final NumberSpreadsheetFormatterComponentContext context) {
+                final NumberSpreadsheetFormatterContext context) {
         final String textDigits = context.fraction.text;
 
         if (numberDigitPosition < textDigits.length()) {
@@ -62,11 +62,11 @@ final class NumberSpreadsheetFormatterDigitsFraction extends NumberSpreadsheetFo
     }
 
     @Override
-    void sign(final NumberSpreadsheetFormatterComponentContext context) {
+    void sign(final NumberSpreadsheetFormatterContext context) {
         // never append sign inside a fraction
     }
 
-    final void thousandsSeparator(final int numberDigitPosition, final NumberSpreadsheetFormatterComponentContext context) {
+    final void thousandsSeparator(final int numberDigitPosition, final NumberSpreadsheetFormatterContext context) {
         // nop
     }
 

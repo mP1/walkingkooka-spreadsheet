@@ -30,9 +30,9 @@ enum NumberSpreadsheetFormatterNormalOrScientific {
      */
     NORMAL {
         @Override
-        NumberSpreadsheetFormatterComponentContext context(final BigDecimal value,
-                                                           final NumberSpreadsheetFormatter formatter,
-                                                           final SpreadsheetFormatterContext context) {
+        NumberSpreadsheetFormatterContext context(final BigDecimal value,
+                                                  final NumberSpreadsheetFormatter formatter,
+                                                  final SpreadsheetFormatterContext context) {
             final BigDecimal rounded = value.scaleByPowerOfTen(formatter.decimalPlacesShift)
                     .setScale(formatter.fractionDigitSymbolCount, RoundingMode.HALF_UP);
 
@@ -50,7 +50,7 @@ enum NumberSpreadsheetFormatterNormalOrScientific {
                 fractionDigits = digits.substring(integerDigitCount);
             }
 
-            return NumberSpreadsheetFormatterComponentContext.with(
+            return NumberSpreadsheetFormatterContext.with(
                     NumberSpreadsheetFormatterDigits.integer(NumberSpreadsheetFormatterMinusSign.fromSignum(valueSign), integerDigits, formatter.thousandsSeparator),
                     NumberSpreadsheetFormatterDigits.fraction(fractionDigits),
                     NO_EXPONENT,
@@ -63,9 +63,9 @@ enum NumberSpreadsheetFormatterNormalOrScientific {
      */
     SCENTIFIC {
         @Override
-        NumberSpreadsheetFormatterComponentContext context(final BigDecimal value,
-                                                           final NumberSpreadsheetFormatter formatter,
-                                                           final SpreadsheetFormatterContext context) {
+        NumberSpreadsheetFormatterContext context(final BigDecimal value,
+                                                  final NumberSpreadsheetFormatter formatter,
+                                                  final SpreadsheetFormatterContext context) {
 
             final int integerDigitSymbolCount = formatter.integerDigitSymbolCount;
             final int fractionDigitSymbolCount = formatter.fractionDigitSymbolCount;
@@ -84,7 +84,7 @@ enum NumberSpreadsheetFormatterNormalOrScientific {
 
             final int exponent = rounded.precision() - rounded.scale() - integerDigitCount;
 
-            return NumberSpreadsheetFormatterComponentContext.with(
+            return NumberSpreadsheetFormatterContext.with(
                     NumberSpreadsheetFormatterDigits.integer(NumberSpreadsheetFormatterMinusSign.fromSignum(value.signum()), digits.substring(0, integerDigitCount), formatter.thousandsSeparator),
                     NumberSpreadsheetFormatterDigits.fraction(digits.substring(integerDigitCount, Math.min(integerDigitCount + fractionDigitCount, digitCount))),
                     NumberSpreadsheetFormatterDigits.exponent(NumberSpreadsheetFormatterMinusSign.fromSignum(exponent), String.valueOf(Math.abs(exponent))),
@@ -94,10 +94,10 @@ enum NumberSpreadsheetFormatterNormalOrScientific {
     };
 
     /**
-     * Creates a new {@link NumberSpreadsheetFormatterComponentContext} which will accompany the current
+     * Creates a new {@link NumberSpreadsheetFormatterContext} which will accompany the current
      * format request. Note context cannot be recycled as they contain state.
      */
-    abstract NumberSpreadsheetFormatterComponentContext context(
+    abstract NumberSpreadsheetFormatterContext context(
             final BigDecimal value,
             final NumberSpreadsheetFormatter formatter,
             final SpreadsheetFormatterContext context);
