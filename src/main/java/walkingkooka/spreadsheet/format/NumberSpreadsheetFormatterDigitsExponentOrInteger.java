@@ -32,7 +32,7 @@ abstract class NumberSpreadsheetFormatterDigitsExponentOrInteger extends NumberS
     final void addDigits(final int start,
                          final int end,
                          final String textDigits,
-                         final NumberSpreadsheetFormatterComponentContext context) {
+                         final NumberSpreadsheetFormatterContext context) {
         int numberDigitPosition = textDigits.length() - start - 1;
         for (int i = start; i <= end; i++) {
             context.appendDigit(textDigits.charAt(i), numberDigitPosition--);
@@ -40,7 +40,7 @@ abstract class NumberSpreadsheetFormatterDigitsExponentOrInteger extends NumberS
     }
 
     @Override
-    final void sign(final NumberSpreadsheetFormatterComponentContext context) {
+    final void sign(final NumberSpreadsheetFormatterContext context) {
         if (this.minusSign.shouldAppendSymbol()) {
             context.appendNegativeSign();
             this.minusSign = NumberSpreadsheetFormatterMinusSign.NOT_REQUIRED;

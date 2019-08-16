@@ -96,7 +96,7 @@ final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsheet
     /**
      * Executes each of the format components eventually resulting in a {@link String}.
      */
-    private String format1(final NumberSpreadsheetFormatterComponentContext context) {
+    private String format1(final NumberSpreadsheetFormatterContext context) {
         this.components.forEach(c -> c.append(context));
         return context.formattedText();
     }

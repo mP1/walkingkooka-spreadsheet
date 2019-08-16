@@ -21,11 +21,11 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 
-public final class NumberSpreadsheetFormatterComponentContextTest extends NumberSpreadsheetFormatterTestCase<NumberSpreadsheetFormatterComponentContext> {
+public final class NumberSpreadsheetFormatterContextTest extends NumberSpreadsheetFormatterTestCase<NumberSpreadsheetFormatterContext> {
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(NumberSpreadsheetFormatterComponentContext.with(
+        this.toStringAndCheck(NumberSpreadsheetFormatterContext.with(
                 NumberSpreadsheetFormatterDigits.integer(NumberSpreadsheetFormatterMinusSign.NOT_REQUIRED, "123", NumberSpreadsheetFormatterThousandsSeparator.INCLUDE),
                 NumberSpreadsheetFormatterDigits.integer(NumberSpreadsheetFormatterMinusSign.REQUIRED, "456", NumberSpreadsheetFormatterThousandsSeparator.INCLUDE),
                 NumberSpreadsheetFormatterDigits.integer(NumberSpreadsheetFormatterMinusSign.NOT_REQUIRED, "789", NumberSpreadsheetFormatterThousandsSeparator.NONE),
@@ -35,7 +35,7 @@ public final class NumberSpreadsheetFormatterComponentContextTest extends Number
     }
 
     @Override
-    public Class<NumberSpreadsheetFormatterComponentContext> type() {
-        return NumberSpreadsheetFormatterComponentContext.class;
+    public Class<NumberSpreadsheetFormatterContext> type() {
+        return NumberSpreadsheetFormatterContext.class;
     }
 }

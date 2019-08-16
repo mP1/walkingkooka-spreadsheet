@@ -72,5 +72,5 @@ abstract class NumberSpreadsheetFormatterComponent {
     /**
      * Invoked for each component which may then add zero or more characters or perform some action on the formatted text.
      */
-    abstract void append(final NumberSpreadsheetFormatterComponentContext context);
+    abstract void append(final NumberSpreadsheetFormatterContext context);
 }
