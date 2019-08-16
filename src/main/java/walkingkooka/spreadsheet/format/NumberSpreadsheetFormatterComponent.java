@@ -18,51 +18,51 @@
 package walkingkooka.spreadsheet.format;
 
 /**
- * A substitute for tokens in the original pattern.
+ * Individual components or tokens with an entire pattern.
  */
 abstract class NumberSpreadsheetFormatterComponent {
 
     /**
-     * {@see NumberSpreadsheetFormatterCurrencySymbolComponent}
+     * {@see NumberSpreadsheetFormatterComponentCurrencySymbol}
      */
     static NumberSpreadsheetFormatterComponent currencySymbol() {
-        return NumberSpreadsheetFormatterCurrencySymbolComponent.INSTANCE;
+        return NumberSpreadsheetFormatterComponentCurrencySymbol.INSTANCE;
     }
 
     /**
-     * {@see NumberSpreadsheetFormatterDecimalPointSymbolComponent}
+     * {@see NumberSpreadsheetFormatterComponentDecimalSeparator}
      */
-    static NumberSpreadsheetFormatterComponent decimalPointSymbol() {
-        return NumberSpreadsheetFormatterDecimalPointSymbolComponent.INSTANCE;
+    static NumberSpreadsheetFormatterComponent decimalSeparator() {
+        return NumberSpreadsheetFormatterComponentDecimalSeparator.INSTANCE;
     }
 
     /**
-     * {@see NumberSpreadsheetFormatterDigitComponent}
+     * {@see NumberSpreadsheetFormatterComponentDigit}
      */
     static NumberSpreadsheetFormatterComponent digit(final int position,
                                                      final NumberSpreadsheetFormatterZero zero) {
-        return NumberSpreadsheetFormatterDigitComponent.with(position, zero);
+        return NumberSpreadsheetFormatterComponentDigit.with(position, zero);
     }
 
     /**
-     * {@see NumberSpreadsheetFormatterExponentSymbolComponent}
+     * {@see NumberSpreadsheetFormatterComponentExponentSymbol}
      */
     static NumberSpreadsheetFormatterComponent exponentSymbol() {
-        return NumberSpreadsheetFormatterExponentSymbolComponent.INSTANCE;
+        return NumberSpreadsheetFormatterComponentExponentSymbol.INSTANCE;
     }
 
     /**
-     * {@see NumberSpreadsheetFormatterPercentageSymbolComponent}
+     * {@see NumberSpreadsheetFormatterComponentPercentageSymbol}
      */
     static NumberSpreadsheetFormatterComponent percentageSymbol() {
-        return NumberSpreadsheetFormatterPercentageSymbolComponent.INSTANCE;
+        return NumberSpreadsheetFormatterComponentPercentageSymbol.INSTANCE;
     }
 
     /**
-     * {@see NumberSpreadsheetFormatterLiteralComponent}
+     * {@see NumberSpreadsheetFormatterComponentTextLiteral}
      */
     static NumberSpreadsheetFormatterComponent textLiteral(final String text) {
-        return NumberSpreadsheetFormatterLiteralComponent.with(text);
+        return NumberSpreadsheetFormatterComponentTextLiteral.with(text);
     }
 
     NumberSpreadsheetFormatterComponent() {
