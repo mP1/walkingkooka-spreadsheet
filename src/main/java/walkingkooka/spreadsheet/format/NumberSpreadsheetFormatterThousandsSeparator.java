@@ -27,7 +27,7 @@ enum NumberSpreadsheetFormatterThousandsSeparator {
      */
     INCLUDE {
         @Override
-        void append(final int numberDigitPosition, final NumberSpreadsheetFormatterComponentContext context) {
+        void append(final int numberDigitPosition, final NumberSpreadsheetFormatterContext context) {
             if (numberDigitPosition > 0 && 0 == numberDigitPosition % 3) {
                 context.appendGroupingSeparator();
             }
@@ -38,10 +38,10 @@ enum NumberSpreadsheetFormatterThousandsSeparator {
      */
     NONE {
         @Override
-        void append(final int numberDigitPosition, final NumberSpreadsheetFormatterComponentContext context) {
+        void append(final int numberDigitPosition, final NumberSpreadsheetFormatterContext context) {
             // nop
         }
     };
 
-    abstract void append(final int numberDigitPosition, final NumberSpreadsheetFormatterComponentContext context);
+    abstract void append(final int numberDigitPosition, final NumberSpreadsheetFormatterContext context);
 }

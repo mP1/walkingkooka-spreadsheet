@@ -42,7 +42,7 @@ final class NumberSpreadsheetFormatterComponentDigit extends NumberSpreadsheetFo
     }
 
     @Override
-    void append(final NumberSpreadsheetFormatterComponentContext context) {
+    void append(final NumberSpreadsheetFormatterContext context) {
         context.appendDigit(this.position, this.zero);
     }
 

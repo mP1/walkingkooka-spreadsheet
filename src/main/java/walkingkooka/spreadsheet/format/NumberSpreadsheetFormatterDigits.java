@@ -64,17 +64,17 @@ abstract class NumberSpreadsheetFormatterDigits implements UsesToStringBuilder {
      */
     abstract void append(final int position,
                          final NumberSpreadsheetFormatterZero zero,
-                         final NumberSpreadsheetFormatterComponentContext context);
+                         final NumberSpreadsheetFormatterContext context);
 
     /**
      * Conditionally appends the sign if necessary, during INTEGER and EXPONENT digit formatting.
      */
-    abstract void sign(final NumberSpreadsheetFormatterComponentContext context);
+    abstract void sign(final NumberSpreadsheetFormatterContext context);
 
     /**
      * Conditionally appends the thousands separator. This may only happen during formatting of INTEGER digits.
      */
-    abstract void thousandsSeparator(final int numberDigitPosition, final NumberSpreadsheetFormatterComponentContext context);
+    abstract void thousandsSeparator(final int numberDigitPosition, final NumberSpreadsheetFormatterContext context);
 
     /**
      * Text that holds the individual digit characters.

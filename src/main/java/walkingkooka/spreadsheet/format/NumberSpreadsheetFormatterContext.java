@@ -24,27 +24,27 @@ import walkingkooka.ToStringBuilderOption;
 /**
  * The context that accompanies each {@link NumberSpreadsheetFormatterComponent}.
  */
-final class NumberSpreadsheetFormatterComponentContext implements Context {
+final class NumberSpreadsheetFormatterContext implements Context {
 
     /**
      * Factory that creates a new context.
      */
-    static NumberSpreadsheetFormatterComponentContext with(final NumberSpreadsheetFormatterDigits integer,
-                                                           final NumberSpreadsheetFormatterDigits fraction,
-                                                           final NumberSpreadsheetFormatterDigits exponent,
-                                                           final NumberSpreadsheetFormatter formatter,
-                                                           final SpreadsheetFormatterContext context) {
-        return new NumberSpreadsheetFormatterComponentContext(integer, fraction, exponent, formatter, context);
+    static NumberSpreadsheetFormatterContext with(final NumberSpreadsheetFormatterDigits integer,
+                                                  final NumberSpreadsheetFormatterDigits fraction,
+                                                  final NumberSpreadsheetFormatterDigits exponent,
+                                                  final NumberSpreadsheetFormatter formatter,
+                                                  final SpreadsheetFormatterContext context) {
+        return new NumberSpreadsheetFormatterContext(integer, fraction, exponent, formatter, context);
     }
 
     /**
      * Private ctor use factory.
      */
-    private NumberSpreadsheetFormatterComponentContext(final NumberSpreadsheetFormatterDigits integer,
-                                                       final NumberSpreadsheetFormatterDigits fraction,
-                                                       final NumberSpreadsheetFormatterDigits exponent,
-                                                       final NumberSpreadsheetFormatter formatter,
-                                                       final SpreadsheetFormatterContext context) {
+    private NumberSpreadsheetFormatterContext(final NumberSpreadsheetFormatterDigits integer,
+                                              final NumberSpreadsheetFormatterDigits fraction,
+                                              final NumberSpreadsheetFormatterDigits exponent,
+                                              final NumberSpreadsheetFormatter formatter,
+                                              final SpreadsheetFormatterContext context) {
         super();
 
         this.integer = integer;
