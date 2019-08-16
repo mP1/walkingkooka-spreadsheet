@@ -22,21 +22,21 @@ import walkingkooka.ToStringBuilder;
 /**
  * Handles inserting the integer digits into the formatted text.
  */
-final class NumberSpreadsheetFormatterIntegerDigits extends NumberSpreadsheetFormatterExponentOrIntegerDigits {
+final class NumberSpreadsheetFormatterDigitsInteger extends NumberSpreadsheetFormatterDigitsExponentOrInteger {
 
     /**
-     * Creates a new {@link NumberSpreadsheetFormatterIntegerDigits}
+     * Creates a new {@link NumberSpreadsheetFormatterDigitsInteger}
      */
-    static NumberSpreadsheetFormatterIntegerDigits with(final NumberSpreadsheetFormatterMinusSign minusSign,
+    static NumberSpreadsheetFormatterDigitsInteger with(final NumberSpreadsheetFormatterMinusSign minusSign,
                                                         final String text,
                                                         final NumberSpreadsheetFormatterThousandsSeparator thousandsSeparator) {
-        return new NumberSpreadsheetFormatterIntegerDigits(minusSign, text, thousandsSeparator);
+        return new NumberSpreadsheetFormatterDigitsInteger(minusSign, text, thousandsSeparator);
     }
 
     /**
      * Private ctor use factory
      */
-    private NumberSpreadsheetFormatterIntegerDigits(final NumberSpreadsheetFormatterMinusSign minusSign,
+    private NumberSpreadsheetFormatterDigitsInteger(final NumberSpreadsheetFormatterMinusSign minusSign,
                                                     final String text,
                                                     final NumberSpreadsheetFormatterThousandsSeparator thousandsSeparator) {
         super(minusSign, text);
