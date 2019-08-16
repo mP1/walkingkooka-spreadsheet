@@ -38,7 +38,7 @@ final class NumberSpreadsheetFormatterComponentTextLiteral extends NumberSpreads
     }
 
     @Override
-    void append(final NumberSpreadsheetFormatterComponentContext context) {
+    void append(final NumberSpreadsheetFormatterContext context) {
         context.appendText(this.text);
     }
 
