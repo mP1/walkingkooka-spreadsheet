@@ -26,27 +26,27 @@ import walkingkooka.UsesToStringBuilder;
 abstract class NumberSpreadsheetFormatterDigits implements UsesToStringBuilder {
 
     /**
-     * {@see NumberSpreadsheetFormatterIntegerDigits}
+     * {@see NumberSpreadsheetFormatterDigitsInteger}
      */
     static NumberSpreadsheetFormatterDigits integer(final NumberSpreadsheetFormatterMinusSign minusSign,
                                                     final String text,
                                                     final NumberSpreadsheetFormatterThousandsSeparator thousandsSeparator) {
-        return NumberSpreadsheetFormatterIntegerDigits.with(minusSign, text, thousandsSeparator);
+        return NumberSpreadsheetFormatterDigitsInteger.with(minusSign, text, thousandsSeparator);
     }
 
     /**
-     * {@link NumberSpreadsheetFormatterFractionDigits}
+     * {@link NumberSpreadsheetFormatterDigitsFraction}
      */
     static NumberSpreadsheetFormatterDigits fraction(final String text) {
-        return NumberSpreadsheetFormatterFractionDigits.with(text);
+        return NumberSpreadsheetFormatterDigitsFraction.with(text);
     }
 
     /**
-     * {@see NumberSpreadsheetFormatterExponentDigits}
+     * {@see NumberSpreadsheetFormatterDigitsExponent}
      */
     static NumberSpreadsheetFormatterDigits exponent(final NumberSpreadsheetFormatterMinusSign minusSign,
                                                      final String text) {
-        return NumberSpreadsheetFormatterExponentDigits.with(minusSign, text);
+        return NumberSpreadsheetFormatterDigitsExponent.with(minusSign, text);
     }
 
     /**

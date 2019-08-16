@@ -17,10 +17,10 @@
 
 package walkingkooka.spreadsheet.format;
 
-public final class NumberSpreadsheetFormatterExponentDigitsTest extends NumberSpreadsheetFormatterDigitsTestCase<NumberSpreadsheetFormatterExponentDigits> {
+public final class NumberSpreadsheetFormatterDigitsFractionTest extends NumberSpreadsheetFormatterDigitsTestCase<NumberSpreadsheetFormatterDigitsFraction> {
 
     @Override
-    public Class<NumberSpreadsheetFormatterExponentDigits> type() {
-        return NumberSpreadsheetFormatterExponentDigits.class;
+    public Class<NumberSpreadsheetFormatterDigitsFraction> type() {
+        return NumberSpreadsheetFormatterDigitsFraction.class;
     }
 }
