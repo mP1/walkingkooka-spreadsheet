@@ -27,7 +27,7 @@ enum NumberSpreadsheetFormatterZero {
      */
     HASH {
         @Override
-        void append(final int textDigitPosition, final NumberSpreadsheetFormatterComponentContext context) {
+        void append(final int textDigitPosition, final NumberSpreadsheetFormatterContext context) {
             // nop
         }
 
@@ -41,7 +41,7 @@ enum NumberSpreadsheetFormatterZero {
      */
     QUESTION_MARK {
         @Override
-        void append(final int textDigitPosition, final NumberSpreadsheetFormatterComponentContext context) {
+        void append(final int textDigitPosition, final NumberSpreadsheetFormatterContext context) {
             context.appendDigit(' ', textDigitPosition);
         }
 
@@ -55,7 +55,7 @@ enum NumberSpreadsheetFormatterZero {
      */
     ZERO {
         @Override
-        void append(final int textDigitPosition, final NumberSpreadsheetFormatterComponentContext context) {
+        void append(final int textDigitPosition, final NumberSpreadsheetFormatterContext context) {
             context.appendDigit('0', textDigitPosition);
         }
 
@@ -65,7 +65,7 @@ enum NumberSpreadsheetFormatterZero {
         }
     };
 
-    abstract void append(final int textDigitPosition, final NumberSpreadsheetFormatterComponentContext context);
+    abstract void append(final int textDigitPosition, final NumberSpreadsheetFormatterContext context);
 
     /**
      * Returns the pattern representation. This is used in building {@link #toString()} responses.

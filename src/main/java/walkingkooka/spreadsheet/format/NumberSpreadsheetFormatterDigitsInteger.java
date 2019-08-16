@@ -46,7 +46,7 @@ final class NumberSpreadsheetFormatterDigitsInteger extends NumberSpreadsheetFor
     @Override
     void append(final int digitSymbolPosition,
                 final NumberSpreadsheetFormatterZero zero,
-                final NumberSpreadsheetFormatterComponentContext context) {
+                final NumberSpreadsheetFormatterContext context) {
         final int digitSymbolLength = context.formatter.integerDigitSymbolCount;
 
         final String textDigits = context.integer.text;
@@ -66,7 +66,7 @@ final class NumberSpreadsheetFormatterDigitsInteger extends NumberSpreadsheetFor
     }
 
     @Override
-    void thousandsSeparator(final int numberDigitPosition, final NumberSpreadsheetFormatterComponentContext context) {
+    void thousandsSeparator(final int numberDigitPosition, final NumberSpreadsheetFormatterContext context) {
         this.thousandsSeparator.append(numberDigitPosition, context);
     }
 

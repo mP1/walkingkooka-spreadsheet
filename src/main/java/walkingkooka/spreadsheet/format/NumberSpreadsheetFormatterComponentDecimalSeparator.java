@@ -35,7 +35,7 @@ final class NumberSpreadsheetFormatterComponentDecimalSeparator extends NumberSp
     }
 
     @Override
-    void append(final NumberSpreadsheetFormatterComponentContext context) {
+    void append(final NumberSpreadsheetFormatterContext context) {
         context.appendDecimalSeparator(context.fraction);
     }
 
