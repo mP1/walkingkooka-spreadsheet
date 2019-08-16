@@ -19,15 +19,15 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 
-public final class NumberSpreadsheetFormatterCurrencySymbolComponentTest extends NumberSpreadsheetFormatterComponentTestCase<NumberSpreadsheetFormatterCurrencySymbolComponent> {
+public final class NumberSpreadsheetFormatterComponentDecimalSeparatorTest extends NumberSpreadsheetFormatterComponentTestCase<NumberSpreadsheetFormatterComponentDecimalSeparator> {
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(NumberSpreadsheetFormatterCurrencySymbolComponent.INSTANCE, "$");
+        this.toStringAndCheck(NumberSpreadsheetFormatterComponentDecimalSeparator.INSTANCE, ".");
     }
 
     @Override
-    public Class<NumberSpreadsheetFormatterCurrencySymbolComponent> type() {
-        return NumberSpreadsheetFormatterCurrencySymbolComponent.class;
+    public Class<NumberSpreadsheetFormatterComponentDecimalSeparator> type() {
+        return NumberSpreadsheetFormatterComponentDecimalSeparator.class;
     }
 }

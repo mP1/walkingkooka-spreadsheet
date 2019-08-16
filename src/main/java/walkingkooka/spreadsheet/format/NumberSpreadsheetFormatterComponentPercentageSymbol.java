@@ -17,17 +17,30 @@
 
 package walkingkooka.spreadsheet.format;
 
-import org.junit.jupiter.api.Test;
+/**
+ * Inserts the percentage symbol.
+ */
+final class NumberSpreadsheetFormatterComponentPercentageSymbol extends NumberSpreadsheetFormatterComponent {
 
-public final class NumberSpreadsheetFormatterExponentSymbolComponentTest extends NumberSpreadsheetFormatterComponentTestCase<NumberSpreadsheetFormatterExponentSymbolComponent> {
+    /**
+     * Singleton
+     */
+    static final NumberSpreadsheetFormatterComponentPercentageSymbol INSTANCE = new NumberSpreadsheetFormatterComponentPercentageSymbol();
 
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(NumberSpreadsheetFormatterExponentSymbolComponent.INSTANCE, "E");
+    /**
+     * Private ctor use singleton
+     */
+    private NumberSpreadsheetFormatterComponentPercentageSymbol() {
+        super();
     }
 
     @Override
-    public Class<NumberSpreadsheetFormatterExponentSymbolComponent> type() {
-        return NumberSpreadsheetFormatterExponentSymbolComponent.class;
+    void append(final NumberSpreadsheetFormatterComponentContext context) {
+        context.appendPercentage();
+    }
+
+    @Override
+    public String toString() {
+        return "%";
     }
 }
