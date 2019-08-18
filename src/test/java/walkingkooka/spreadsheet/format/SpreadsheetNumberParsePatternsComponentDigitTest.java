@@ -33,8 +33,6 @@ public final class SpreadsheetNumberParsePatternsComponentDigitTest extends Spre
         return SpreadsheetNumberParsePatternsComponent.class.getSimpleName();
     }
 
-    // TypeNameTesting..................................................................................................
-
     @Override
     public String typeNameSuffix() {
         return "Digit";
