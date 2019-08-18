@@ -55,7 +55,8 @@ final class SpreadsheetNumberParsePatternsConverter implements Converter {
                         Float.class == type ||
                         Double.class == type ||
                         BigDecimal.class == type ||
-                        BigInteger.class == type);
+                        BigInteger.class == type ||
+                        Number.class == type);
     }
 
     /**
