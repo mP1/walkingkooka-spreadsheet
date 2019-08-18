@@ -18,8 +18,6 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
-import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
@@ -95,8 +93,8 @@ public final class SpreadsheetNumberParsePatterns extends SpreadsheetParsePatter
     // HasParser........................................................................................................
 
     @Override
-    Parser<ParserContext> createParser() {
-        throw new UnsupportedOperationException();
+    SpreadsheetNumberParsePatternsParser createParser() {
+        return SpreadsheetNumberParsePatternsParser.with(this);
     }
 
     /**

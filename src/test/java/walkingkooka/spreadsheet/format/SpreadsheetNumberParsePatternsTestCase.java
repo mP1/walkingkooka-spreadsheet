@@ -35,7 +35,7 @@ public abstract class SpreadsheetNumberParsePatternsTestCase<T> implements Class
 
     final static String CURRENCY = "aud";
 
-    final DecimalNumberContext decimalNumberContext() {
+    public final DecimalNumberContext decimalNumberContext() {
         return new FakeDecimalNumberContext() {
             @Override
             public String currencySymbol() {
