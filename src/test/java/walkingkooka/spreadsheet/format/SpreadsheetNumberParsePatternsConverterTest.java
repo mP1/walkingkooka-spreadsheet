@@ -444,6 +444,83 @@ public final class SpreadsheetNumberParsePatternsConverterTest extends Spreadshe
                 BigDecimal.valueOf(2));
     }
 
+    // other Number types...............................................................................................
+
+    @Test
+    public void testByte() {
+        this.convertAndCheck2(Byte.MAX_VALUE);
+    }
+
+    @Test
+    public void testByteRangeFail() {
+        this.convertAndFail2("#",
+                String.valueOf(Short.MAX_VALUE),
+                Byte.class);
+    }
+
+    @Test
+    public void testShort() {
+        this.convertAndCheck2(Short.MAX_VALUE);
+    }
+
+    @Test
+    public void testShortRangeFail() {
+        this.convertAndFail2("#",
+                String.valueOf(Integer.MAX_VALUE),
+                Short.class);
+    }
+
+    @Test
+    public void testInteger() {
+        this.convertAndCheck2(Integer.MAX_VALUE);
+    }
+
+    @Test
+    public void testIntegerRangeFail() {
+        this.convertAndFail2("#",
+                String.valueOf(Long.MAX_VALUE),
+                Integer.class);
+    }
+
+    @Test
+    public void testLong() {
+        this.convertAndCheck2(Long.MAX_VALUE);
+    }
+
+    @Test
+    public void testFloat() {
+        this.convertAndCheck2(123.45f);
+    }
+
+    @Test
+    public void testDouble() {
+        this.convertAndCheck2(67.89);
+    }
+
+    @Test
+    public void testBigDecimal() {
+        this.convertAndCheck2(1234567.890);
+    }
+
+    @Test
+    public void testBigInteger() {
+        this.convertAndCheck2(1234567890);
+    }
+
+    @Test
+    public void testNumber() {
+        this.convertAndCheck2("#",
+                "1234567890",
+                Number.class,
+                BigDecimal.valueOf(1234567890));
+    }
+
+    private void convertAndCheck2(final Number number) {
+        this.convertAndCheck2("#;#.#",
+                number.toString().replace('.', 'D'),
+                number);
+    }
+
     // helpers..........................................................................................................
 
     private void convertAndFail2(final String pattern,
