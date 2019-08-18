@@ -136,4 +136,9 @@ final class SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor 
     protected void visit(final SpreadsheetFormatYearParserToken token) {
         this.advancePosition(token);
     }
+
+    @Override
+    void text(final String text) {
+        // nop
+    }
 }
