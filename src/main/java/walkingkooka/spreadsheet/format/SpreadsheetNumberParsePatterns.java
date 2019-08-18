@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
@@ -36,7 +35,7 @@ public final class SpreadsheetNumberParsePatterns extends SpreadsheetParsePatter
     static SpreadsheetNumberParsePatterns withToken(final ParserToken token) {
         final SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor.with();
         visitor.startAccept(token);
-        return new SpreadsheetNumberParsePatterns(visitor.tokens());
+        return new SpreadsheetNumberParsePatterns(visitor.tokens(), visitor.patterns);
     }
 
     /**
@@ -47,14 +46,16 @@ public final class SpreadsheetNumberParsePatterns extends SpreadsheetParsePatter
 
         final SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor.with();
         tokens.forEach(visitor::startAccept);
-        return new SpreadsheetNumberParsePatterns(visitor.tokens());
+        return new SpreadsheetNumberParsePatterns(visitor.tokens(), visitor.patterns);
     }
 
     /**
      * Private ctor use factory
      */
-    private SpreadsheetNumberParsePatterns(final List<SpreadsheetFormatNumberParserToken> tokens) {
+    private SpreadsheetNumberParsePatterns(final List<SpreadsheetFormatNumberParserToken> tokens,
+                                           final List<List<SpreadsheetNumberParsePatternsComponent>> patterns) {
         super(tokens);
+        this.patterns = patterns;
     }
 
     @Override
@@ -87,8 +88,8 @@ public final class SpreadsheetNumberParsePatterns extends SpreadsheetParsePatter
     // HasConverter.....................................................................................................
 
     @Override
-    Converter createConverter() {
-        throw new UnsupportedOperationException();
+    SpreadsheetNumberParsePatternsConverter createConverter() {
+        return SpreadsheetNumberParsePatternsConverter.with(this);
     }
 
     // HasParser........................................................................................................
@@ -97,4 +98,9 @@ public final class SpreadsheetNumberParsePatterns extends SpreadsheetParsePatter
     Parser<ParserContext> createParser() {
         throw new UnsupportedOperationException();
     }
+
+    /**
+     * The outer {@link List} contains an element for each pattern, with the inner {@link List} containing the components.
+     */
+    final List<List<SpreadsheetNumberParsePatternsComponent>> patterns;
 }

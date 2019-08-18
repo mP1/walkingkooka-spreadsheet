@@ -30,10 +30,9 @@ public final class SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVis
         final SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor();
 
         final SpreadsheetFormatNumberParserToken token = SpreadsheetFormatParserToken.number(Lists.of(
-                SpreadsheetFormatParserToken.digitSpace("?", "?"),
-                SpreadsheetFormatParserToken.digit("0", "0"),
+                SpreadsheetFormatParserToken.digitZero("0", "0"),
                 SpreadsheetFormatParserToken.decimalPoint(".", "."),
-                SpreadsheetFormatParserToken.digit("0", "0")
+                SpreadsheetFormatParserToken.digitZero("0", "0")
         ), "?0.0");
 
         visitor.accept(token);

@@ -103,6 +103,7 @@ abstract class SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<P ext
     @Override
     protected final void visit(final SpreadsheetFormatEscapeParserToken token) {
         this.advancePosition(token);
+        this.text(String.valueOf(token.value()));
     }
 
     @Override
@@ -143,11 +144,13 @@ abstract class SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<P ext
     @Override
     protected final void visit(final SpreadsheetFormatQuotedTextParserToken token) {
         this.advancePosition(token);
+        this.text(token.value());
     }
 
     @Override
     protected final void visit(final SpreadsheetFormatSeparatorSymbolParserToken token) {
         this.advancePosition(token);
+        this.text(token.text());
     }
 
     @Override
@@ -158,6 +161,7 @@ abstract class SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<P ext
     @Override
     protected final void visit(final SpreadsheetFormatTextLiteralParserToken token) {
         this.advancePosition(token);
+        this.text(token.text());
     }
     
     @Override
@@ -176,12 +180,18 @@ abstract class SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<P ext
     }
 
     final void advancePosition(final SpreadsheetFormatParserToken token) {
-        this.position += token.textLength();
+        this.advancePosition(token.text());
+    }
+
+    final void advancePosition(final String text) {
+        this.position += text.length();
     }
 
     final Visiting failInvalid(final SpreadsheetFormatParserToken token) {
         throw new InvalidCharacterException(this.token.text(), this.position);
     }
+
+    abstract void text(final String text);
 
     final void addToken(final P token) {
         this.tokens.add(token);
@@ -194,7 +204,6 @@ abstract class SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<P ext
         return Lists.immutable(this.tokens);
     }
 
-    // package private so sub classes can add.
     private final List<P> tokens = Lists.array();
 
     private int position;
