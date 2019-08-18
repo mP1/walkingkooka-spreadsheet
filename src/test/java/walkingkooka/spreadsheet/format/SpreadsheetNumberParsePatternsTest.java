@@ -120,6 +120,34 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
                 BigDecimal.valueOf(1.23));
     }
 
+    // parser........................................................................................................
+
+    @Test
+    public void testParseFails() {
+        this.parseFails2("#.00",
+                "abc123");
+    }
+
+    @Test
+    public void testParseFails2() {
+        this.parseFails2("$ #.00",
+                "1.23");
+    }
+
+    @Test
+    public void testParseNumber() {
+        this.parseAndCheck2("#.00",
+                "1.23",
+                BigDecimal.valueOf(1.23));
+    }
+
+    @Test
+    public void testParseNumberWithCurrency() {
+        this.parseAndCheck2("$ #.00",
+                "$ 1.23",
+                BigDecimal.valueOf(1.23));
+    }
+    
     // helpers.........................................................................................................
 
     @Override
