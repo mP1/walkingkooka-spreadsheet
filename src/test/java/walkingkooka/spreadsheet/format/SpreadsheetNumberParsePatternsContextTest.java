@@ -30,7 +30,7 @@ import java.math.MathContext;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public final class SpreadsheetNumberParsePatternsContextTest extends SpreadsheetNumberParsePatternsTestCase<SpreadsheetNumberParsePatternsContext>
+public final class SpreadsheetNumberParsePatternsContextTest extends SpreadsheetNumberParsePatternsTestCase2<SpreadsheetNumberParsePatternsContext>
         implements ContextTesting<SpreadsheetNumberParsePatternsContext>, ToStringTesting<SpreadsheetNumberParsePatternsContext> {
 
     @Test
@@ -142,11 +142,6 @@ public final class SpreadsheetNumberParsePatternsContextTest extends Spreadsheet
     }
 
     // TypeNameTesting..................................................................................................
-
-    @Override
-    public String typeNamePrefix() {
-        return SpreadsheetNumberParsePatterns.class.getSimpleName();
-    }
 
     @Override
     public String typeNameSuffix() {
