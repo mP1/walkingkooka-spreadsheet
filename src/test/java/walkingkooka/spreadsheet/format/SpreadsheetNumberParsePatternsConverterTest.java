@@ -25,7 +25,7 @@ import walkingkooka.datetime.DateTimeContexts;
 
 import java.math.BigDecimal;
 
-public final class SpreadsheetNumberParsePatternsConverterTest extends SpreadsheetNumberParsePatternsTestCase<SpreadsheetNumberParsePatternsConverter>
+public final class SpreadsheetNumberParsePatternsConverterTest extends SpreadsheetNumberParsePatternsTestCase2<SpreadsheetNumberParsePatternsConverter>
         implements ConverterTesting2<SpreadsheetNumberParsePatternsConverter> {
 
     @Test
