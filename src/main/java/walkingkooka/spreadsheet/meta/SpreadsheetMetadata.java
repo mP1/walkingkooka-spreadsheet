@@ -21,6 +21,8 @@ import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
+import walkingkooka.convert.Converter;
+import walkingkooka.convert.HasConverter;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.HasDateTimeContext;
@@ -30,6 +32,15 @@ import walkingkooka.math.HasMathContext;
 import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeFormatPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberFormatPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
@@ -45,7 +56,8 @@ import java.util.function.Function;
 /**
  * A {@link SpreadsheetMetadata} holds a {@link Map} of {@link SpreadsheetMetadataPropertyName} and values.
  */
-public abstract class SpreadsheetMetadata implements HasDateTimeContext,
+public abstract class SpreadsheetMetadata implements HasConverter,
+        HasDateTimeContext,
         HasDecimalNumberContext,
         HashCodeEqualsDefined,
         HasJsonNode,
@@ -168,6 +180,51 @@ public abstract class SpreadsheetMetadata implements HasDateTimeContext,
     // SpreadsheetMetadataStyleVisitor..................................................................................
 
     abstract void accept(final SpreadsheetMetadataVisitor visitor);
+
+    /**
+     * Returns a {@link DecimalNumberContext} if the required properties are present.
+     * <ul>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATETIME_OFFSET}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATE_FORMAT_PATTERN}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATE_PARSE_PATTERNS}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATETIME_FORMAT_PATTERN}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#DATETIME_PARSE_PATTERNS}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#NUMBER_FORMAT_PATTERN}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#NUMBER_PARSE_PATTERNS}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#TIME_FORMAT_PATTERN}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#TIME_PARSE_PATTERNS}</li>
+     * </ul>
+     */
+    @Override
+    public final Converter converter() {
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        final SpreadsheetDateFormatPattern dateFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN);
+        final SpreadsheetDateParsePatterns dateParser = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS);
+
+        final SpreadsheetDateTimeFormatPattern dateTimeFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN);
+        final SpreadsheetDateTimeParsePatterns dateTimeParser = components.getOrNull(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS);
+
+        final SpreadsheetNumberFormatPattern numberFormat = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN);
+        final SpreadsheetNumberParsePatterns numberParser = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERNS);
+
+        final SpreadsheetTimeFormatPattern timeFormat = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN);
+        final SpreadsheetTimeParsePatterns timeParser = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS);
+
+        final Long dateOffset = components.getOrNull(SpreadsheetMetadataPropertyName.DATETIME_OFFSET);
+
+        components.reportIfMissing();
+
+        return SpreadsheetConverters.converter(dateFormat.formatter(),
+                dateParser,
+                dateTimeFormat.formatter(),
+                dateTimeParser,
+                numberFormat.formatter(),
+                numberParser,
+                timeFormat.formatter(),
+                timeParser,
+                dateOffset);
+    }
 
     // HasDateTimeContext...............................................................................................
 
