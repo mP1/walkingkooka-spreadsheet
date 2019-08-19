@@ -51,6 +51,21 @@ public class FakeSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor
     }
 
     @Override
+    protected void visitDouble() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitFloat() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitInteger() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitLocalDate() {
         throw new UnsupportedOperationException();
     }
@@ -72,6 +87,11 @@ public class FakeSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor
 
     @Override
     protected void visitNumber() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitShort() {
         throw new UnsupportedOperationException();
     }
 
