@@ -17,9 +17,11 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
+import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
-import walkingkooka.convert.FailedConversionException;
+import walkingkooka.convert.Converters;
 
 import java.math.MathContext;
 import java.util.List;
@@ -60,11 +62,17 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
 
     @Override
     public <T> T convert(final Object value, final Class<T> target) {
-        if (false == target.isInstance(value)) {
-            throw new FailedConversionException(value, target);
-        }
-        return target.cast(value);
+        return CONVERTER.convert(value, target, this.context);
     }
+
+    /**
+     * Supports number -> number, date -> datetime, time -> datetime.
+     */
+    private final static Converter CONVERTER = Converters.collection(Lists.of(
+            Converters.simple(),
+            Converters.numberNumber(),
+            Converters.localDateLocalDateTime(),
+            Converters.localTimeLocalDateTime()));
 
     @Override
     public Optional<SpreadsheetText> defaultFormatText(final Object value) {
