@@ -57,6 +57,11 @@ public class FakeSpreadsheetValueVisitor extends SpreadsheetValueVisitor {
     }
 
     @Override
+    protected void visit(final Byte value) {
+        super.visit(value);
+    }
+
+    @Override
     protected void visit(final Double value) {
         super.visit(value);
     }

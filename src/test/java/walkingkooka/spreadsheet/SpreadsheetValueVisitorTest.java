@@ -164,6 +164,41 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     }
 
     @Test
+    public void testAcceptByte() {
+        final StringBuilder b = new StringBuilder();
+        final Byte value = Byte.MAX_VALUE;
+
+        new FakeSpreadsheetValueVisitor() {
+            @Override
+            protected Visiting startVisit(final Object v) {
+                assertSame(value, v);
+                b.append("1");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Object v) {
+                assertSame(value, v);
+                b.append("2");
+            }
+
+            @Override
+            protected void visit(final Byte v) {
+                assertSame(value, v);
+                b.append("3");
+            }
+        }.accept(value);
+
+        assertEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptByte2() {
+        new SpreadsheetValueVisitor() {
+        }.accept(Byte.MAX_VALUE);
+    }
+    
+    @Test
     public void testAcceptDouble() {
         final StringBuilder b = new StringBuilder();
         final Double value = 123.5;
@@ -196,6 +231,76 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     public void testAcceptDouble2() {
         new SpreadsheetValueVisitor() {
         }.accept(2.0);
+    }
+
+    @Test
+    public void testAcceptFloat() {
+        final StringBuilder b = new StringBuilder();
+        final Float value = Float.MAX_VALUE;
+
+        new FakeSpreadsheetValueVisitor() {
+            @Override
+            protected Visiting startVisit(final Object v) {
+                assertSame(value, v);
+                b.append("1");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Object v) {
+                assertSame(value, v);
+                b.append("2");
+            }
+
+            @Override
+            protected void visit(final Float v) {
+                assertSame(value, v);
+                b.append("3");
+            }
+        }.accept(value);
+
+        assertEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptFloat2() {
+        new SpreadsheetValueVisitor() {
+        }.accept(Float.MAX_VALUE);
+    }
+
+    @Test
+    public void testAcceptInteger() {
+        final StringBuilder b = new StringBuilder();
+        final Integer value = Integer.MAX_VALUE;
+
+        new FakeSpreadsheetValueVisitor() {
+            @Override
+            protected Visiting startVisit(final Object v) {
+                assertSame(value, v);
+                b.append("1");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Object v) {
+                assertSame(value, v);
+                b.append("2");
+            }
+
+            @Override
+            protected void visit(final Integer v) {
+                assertSame(value, v);
+                b.append("3");
+            }
+        }.accept(value);
+
+        assertEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptInteger2() {
+        new SpreadsheetValueVisitor() {
+        }.accept(Integer.MAX_VALUE);
     }
 
     @Test
@@ -338,6 +443,41 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
         }.accept(Long.MAX_VALUE);
     }
 
+    @Test
+    public void testAcceptShort() {
+        final StringBuilder b = new StringBuilder();
+        final Short value = Short.MAX_VALUE;
+
+        new FakeSpreadsheetValueVisitor() {
+            @Override
+            protected Visiting startVisit(final Object v) {
+                assertSame(value, v);
+                b.append("1");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Object v) {
+                assertSame(value, v);
+                b.append("2");
+            }
+
+            @Override
+            protected void visit(final Short v) {
+                assertSame(value, v);
+                b.append("3");
+            }
+        }.accept(value);
+
+        assertEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptShort2() {
+        new SpreadsheetValueVisitor() {
+        }.accept(Short.MAX_VALUE);
+    }
+    
     @Test
     public void testAcceptString() {
         final StringBuilder b = new StringBuilder();
