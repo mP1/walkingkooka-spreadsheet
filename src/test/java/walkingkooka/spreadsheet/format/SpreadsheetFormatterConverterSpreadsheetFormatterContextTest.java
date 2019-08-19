@@ -25,11 +25,23 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 
+import java.math.BigDecimal;
 import java.math.MathContext;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
 public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting<SpreadsheetFormatterConverterSpreadsheetFormatterContext> {
+
+    @Test
+    public void testConvertSameType() {
+        this.convertAndCheck(this.createContext(), "value123", String.class, "value123");
+    }
+
+    @Test
+    public void testConvertSubClass() {
+        final BigDecimal value = BigDecimal.ONE;
+        this.convertAndCheck(this.createContext(), value, Number.class, value);
+    }
 
     @Test
     public void testToString() {
