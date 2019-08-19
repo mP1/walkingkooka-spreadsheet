@@ -159,6 +159,40 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     }
 
     @Test
+    public void testAcceptByte() {
+        final StringBuilder b = new StringBuilder();
+        final Class<Byte> type = Byte.class;
+
+        new FakeSpreadsheetValueTypeVisitor() {
+            @Override
+            protected Visiting startVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("1");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("2");
+            }
+
+            @Override
+            protected void visitByte() {
+                b.append("3");
+            }
+        }.accept(type);
+
+        assertEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptByte2() {
+        new SpreadsheetValueTypeVisitor() {
+        }.accept(Byte.class);
+    }
+
+    @Test
     public void testAcceptDouble() {
         final StringBuilder b = new StringBuilder();
         final Class<Double> type = Double.class;
@@ -192,6 +226,74 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
         }.accept(Double.class);
     }
 
+    @Test
+    public void testAcceptFloat() {
+        final StringBuilder b = new StringBuilder();
+        final Class<Float> type = Float.class;
+
+        new FakeSpreadsheetValueTypeVisitor() {
+            @Override
+            protected Visiting startVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("1");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("2");
+            }
+
+            @Override
+            protected void visitFloat() {
+                b.append("3");
+            }
+        }.accept(type);
+
+        assertEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptFloat2() {
+        new SpreadsheetValueTypeVisitor() {
+        }.accept(Float.class);
+    }
+
+    @Test
+    public void testAcceptInteger() {
+        final StringBuilder b = new StringBuilder();
+        final Class<Integer> type = Integer.class;
+
+        new FakeSpreadsheetValueTypeVisitor() {
+            @Override
+            protected Visiting startVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("1");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("2");
+            }
+
+            @Override
+            protected void visitInteger() {
+                b.append("3");
+            }
+        }.accept(type);
+
+        assertEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptInteger2() {
+        new SpreadsheetValueTypeVisitor() {
+        }.accept(Integer.class);
+    }
+    
     @Test
     public void testAcceptLocalDate() {
         final StringBuilder b = new StringBuilder();
@@ -360,6 +462,40 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
     public void testAcceptNumber2() {
         new SpreadsheetValueTypeVisitor() {
         }.accept(Number.class);
+    }
+
+    @Test
+    public void testAcceptShort() {
+        final StringBuilder b = new StringBuilder();
+        final Class<Short> type = Short.class;
+
+        new FakeSpreadsheetValueTypeVisitor() {
+            @Override
+            protected Visiting startVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("1");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Class<?> t) {
+                assertSame(type, t);
+                b.append("2");
+            }
+
+            @Override
+            protected void visitShort() {
+                b.append("3");
+            }
+        }.accept(type);
+
+        assertEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptShort2() {
+        new SpreadsheetValueTypeVisitor() {
+        }.accept(Short.class);
     }
 
     @Test

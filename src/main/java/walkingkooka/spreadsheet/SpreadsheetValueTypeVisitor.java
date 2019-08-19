@@ -48,8 +48,17 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
                 case "java.lang.Boolean":
                     this.visitBoolean();
                     break;
+                case "java.lang.Byte":
+                    this.visitByte();
+                    break;
                 case "java.lang.Double":
                     this.visitDouble();
+                    break;
+                case "java.lang.Float":
+                    this.visitFloat();
+                    break;
+                case "java.lang.Integer":
+                    this.visitInteger();
                     break;
                 case "java.time.LocalDate":
                     this.visitLocalDate();
@@ -65,6 +74,9 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
                     break;
                 case "java.lang.Number":
                     this.visitNumber();
+                    break;
+                case "java.lang.Short":
+                    this.visitShort();
                     break;
                 case "java.lang.String":
                     this.visitString();
@@ -97,7 +109,19 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
 
     }
 
+    protected void visitByte() {
+
+    }
+
     protected void visitDouble() {
+
+    }
+
+    protected void visitFloat() {
+
+    }
+
+    protected void visitInteger() {
 
     }
 
@@ -118,6 +142,10 @@ public abstract class SpreadsheetValueTypeVisitor extends Visitor<Class<?>> {
     }
 
     protected void visitNumber() {
+
+    }
+
+    protected void visitShort() {
 
     }
 
