@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
+import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContext;
@@ -28,6 +29,9 @@ import walkingkooka.math.DecimalNumberContexts;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.text.DecimalFormatSymbols;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Locale;
 
 public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting<SpreadsheetFormatterConverterSpreadsheetFormatterContext> {
@@ -40,7 +44,33 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
     @Test
     public void testConvertSubClass() {
         final BigDecimal value = BigDecimal.ONE;
-        this.convertAndCheck(this.createContext(), value, Number.class, value);
+        this.convertAndCheck(value, Number.class, value);
+    }
+
+    @Test
+    public void testConvertByteToBigDecimal() {
+        this.convertAndCheck(Byte.MAX_VALUE, BigDecimal.class, BigDecimal.valueOf(Byte.MAX_VALUE));
+    }
+
+    @Test
+    public void testConvertBigDecimalToByte() {
+        this.convertAndCheck(BigDecimal.valueOf(Byte.MAX_VALUE), Byte.class, Byte.MAX_VALUE);
+    }
+
+    @Test
+    public void testConvertDate() {
+        final LocalDate date = LocalDate.of(2000, 1, 31);
+        this.convertAndCheck(date,
+                LocalDateTime.class,
+                Converters.localDateLocalDateTime().convert(date, LocalDateTime.class, this.converterContext()));
+    }
+
+    @Test
+    public void testConvertTime() {
+        final LocalTime time = LocalTime.of(12, 58, 59);
+        this.convertAndCheck(time,
+                LocalDateTime.class,
+                Converters.localTimeLocalDateTime().convert(time, LocalDateTime.class, this.converterContext()));
     }
 
     @Test
