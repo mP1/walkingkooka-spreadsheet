@@ -70,20 +70,18 @@ final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsheet
     }
 
     /**
-     * Only accepts any of the four {@link Number} types.
-     * <ul>
-     * <li>{@link BigDecimal}</li>
-     * <li>{@link java.math.BigInteger}</li>
-     * <li>{@link Double}</li>
-     * <li>{@link Long}</li>
-     * </ul>
+     * Only accepts any of the JDK {@link Number} types.
      */
     @Override
     public boolean canFormat(final Object value) {
         return value instanceof BigDecimal ||
                 value instanceof BigInteger ||
+                value instanceof Byte ||
                 value instanceof Double ||
-                value instanceof Long;
+                value instanceof Float ||
+                value instanceof Integer ||
+                value instanceof Long ||
+                value instanceof Short;
     }
 
     @Override
