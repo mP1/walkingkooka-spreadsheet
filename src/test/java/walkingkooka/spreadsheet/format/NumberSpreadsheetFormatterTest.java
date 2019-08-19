@@ -119,6 +119,11 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     }
 
     @Test
+    public void testExtraHash0_025() {
+        this.parseFormatAndCheck("###", 0.025, "");
+    }
+
+    @Test
     public void testQuestion0() {
         this.parseFormatAndCheck("?", 0, " ");
     }
@@ -146,6 +151,11 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     @Test
     public void testQuestion0_025() {
         this.parseFormatAndCheck("?", 0.025, " ");
+    }
+
+    @Test
+    public void testExtraQuestion() {
+        this.parseFormatAndCheck("???", 12, " 12");
     }
 
     @Test
@@ -181,6 +191,11 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     @Test
     public void testZero0_025() {
         this.parseFormatAndCheck("0", 0.025, "0");
+    }
+
+    @Test
+    public void testExtraZero() {
+        this.parseFormatAndCheck("0000", 12, "0012");
     }
 
     // pattern longer than digits
