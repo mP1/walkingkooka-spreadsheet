@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterContext;
+import walkingkooka.convert.FailedConversionException;
 
 import java.math.MathContext;
 import java.util.List;
@@ -59,7 +60,10 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
 
     @Override
     public <T> T convert(final Object value, final Class<T> target) {
-        throw new UnsupportedOperationException();
+        if (false == target.isInstance(value)) {
+            throw new FailedConversionException(value, target);
+        }
+        return target.cast(value);
     }
 
     @Override
