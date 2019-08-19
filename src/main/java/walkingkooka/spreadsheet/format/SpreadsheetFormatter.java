@@ -17,12 +17,15 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.convert.Converter;
+import walkingkooka.convert.HasConverter;
+
 import java.util.Optional;
 
 /**
  * Formats a value
  */
-public interface SpreadsheetFormatter {
+public interface SpreadsheetFormatter extends HasConverter {
 
     /**
      * Constant holding a failed format.
@@ -43,4 +46,11 @@ public interface SpreadsheetFormatter {
      * Accepts a value and returns a {@link SpreadsheetText}.
      */
     Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context);
+
+    /**
+     * {@see SpreadsheetFormatterConverter}
+     */
+    default Converter converter() {
+        return SpreadsheetFormatterConverter.with(this);
+    }
 }
