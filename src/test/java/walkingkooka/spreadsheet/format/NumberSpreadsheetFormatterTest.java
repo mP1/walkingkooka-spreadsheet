@@ -1206,6 +1206,60 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
         });
     }
 
+    //Number............................................................................................................
+
+    @Test
+    public void testBigInteger() {
+        this.formatIntegerAndCheck(BigInteger.valueOf(123));
+    }
+
+    @Test
+    public void testByte() {
+        this.formatIntegerAndCheck((byte) 123);
+    }
+
+    @Test
+    public void testShort() {
+        this.formatIntegerAndCheck((short) 123);
+    }
+
+    @Test
+    public void testInteger() {
+        this.formatIntegerAndCheck(123);
+    }
+
+    @Test
+    public void testLong() {
+        this.formatIntegerAndCheck(123L);
+    }
+
+    private void formatIntegerAndCheck(final Number number) {
+        this.formatAndCheck(this.createFormatter("\"before\" 0000 \"after\""),
+                number,
+                "before 0123 after");
+    }
+
+    @Test
+    public void testBigDecimal() {
+        this.formatDecimalAndCheck(BigDecimal.valueOf(123.5));
+    }
+
+    @Test
+    public void testDouble() {
+        this.formatDecimalAndCheck(123.5);
+    }
+
+    @Test
+    public void testFloat() {
+        this.formatDecimalAndCheck(123.5);
+    }
+
+    private void formatDecimalAndCheck(final Number number) {
+        this.formatAndCheck(this.createFormatter("\"before\" #.0000 \"after\""),
+                number,
+                "before 123!5000 after");
+    }
+
     //toString .........................................................................................................
 
     @Test
