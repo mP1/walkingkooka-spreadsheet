@@ -44,12 +44,32 @@ final class SpreadsheetValueVisitorNumberVisitor extends NumberVisitor {
     }
 
     @Override
+    protected void visit(final Byte number) {
+        this.visitor.visit(number);
+    }
+
+    @Override
+    protected void visit(final Float number) {
+        this.visitor.visit(number);
+    }
+
+    @Override
     protected void visit(final Double number) {
         this.visitor.visit(number);
     }
 
     @Override
+    protected void visit(final Integer number) {
+        this.visitor.visit(number);
+    }
+
+    @Override
     protected void visit(final Long number) {
+        this.visitor.visit(number);
+    }
+
+    @Override
+    protected void visit(final Short number) {
         this.visitor.visit(number);
     }
 

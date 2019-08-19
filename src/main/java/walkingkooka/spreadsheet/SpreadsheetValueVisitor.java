@@ -92,7 +92,19 @@ public abstract class SpreadsheetValueVisitor extends Visitor<Object> {
         // nop
     }
 
+    protected void visit(final Byte value) {
+        // nop
+    }
+
+    protected void visit(final Float value) {
+        // nop
+    }
+
     protected void visit(final Double value) {
+        // nop
+    }
+
+    protected void visit(final Integer value) {
         // nop
     }
 
@@ -109,6 +121,10 @@ public abstract class SpreadsheetValueVisitor extends Visitor<Object> {
     }
 
     protected void visit(final Long value) {
+        // nop
+    }
+
+    protected void visit(final Short value) {
         // nop
     }
 
