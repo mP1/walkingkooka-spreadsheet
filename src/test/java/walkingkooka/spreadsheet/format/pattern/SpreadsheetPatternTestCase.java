@@ -33,7 +33,7 @@ import walkingkooka.type.JavaVisibility;
 
 import java.util.function.Predicate;
 
-public abstract class SpreadsheetPatternsTestCase<P extends SpreadsheetPatterns<V>,
+public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern<V>,
         V>
         implements ClassTesting2<P>,
         HashCodeEqualsDefinedTesting<P>,
@@ -43,7 +43,7 @@ public abstract class SpreadsheetPatternsTestCase<P extends SpreadsheetPatterns<
         ParseStringTesting<P>,
         ToStringTesting<P> {
 
-    SpreadsheetPatternsTestCase() {
+    SpreadsheetPatternTestCase() {
         super();
     }
 

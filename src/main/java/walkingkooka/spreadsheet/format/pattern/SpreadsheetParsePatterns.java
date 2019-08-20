@@ -42,7 +42,7 @@ import java.util.Objects;
 /**
  * Holds a a {@link List} of {@link SpreadsheetFormatDateTimeParserToken date/time} or {@link SpreadsheetFormatNumberParserToken} number tokens and some common functionality.
  */
-public abstract class SpreadsheetParsePatterns<T extends SpreadsheetFormatParserToken> extends SpreadsheetPatterns<List<T>>
+public abstract class SpreadsheetParsePatterns<T extends SpreadsheetFormatParserToken> extends SpreadsheetPattern<List<T>>
     implements HasConverter,
         HasParser<ParserContext> {
 
