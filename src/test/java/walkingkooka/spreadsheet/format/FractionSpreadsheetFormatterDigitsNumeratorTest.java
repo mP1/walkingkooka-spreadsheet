@@ -17,7 +17,14 @@
 
 package walkingkooka.spreadsheet.format;
 
+import org.junit.jupiter.api.Test;
+
 public final class FractionSpreadsheetFormatterDigitsNumeratorTest extends FractionSpreadsheetFormatterDigitsTestCase<FractionSpreadsheetFormatterDigitsNumerator> {
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(FractionSpreadsheetFormatterDigitsNumerator.with("1"), "\"1\"");
+    }
 
     @Override
     public Class<FractionSpreadsheetFormatterDigitsNumerator> type() {
