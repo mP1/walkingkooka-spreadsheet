@@ -21,18 +21,11 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatAmPmParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatCurrencyParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDayParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDecimalPointParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitSpaceParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitZeroParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExponentSymbolParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatHourParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMonthOrMinuteParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatPercentParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSecondParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatThousandsParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatYearParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
@@ -63,7 +56,6 @@ final class SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor 
 
     @Override
     protected void visit(final SpreadsheetFormatAmPmParserToken token) {
-        this.advancePosition(token);
         this.ampm = true;
     }
 
@@ -78,16 +70,6 @@ final class SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor 
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDayParserToken token) {
-        this.advancePosition(token);
-    }
-
-    @Override
-    protected void visit(final SpreadsheetFormatDecimalPointParserToken token) {
-        this.advancePosition(token);
-    }
-
-    @Override
     protected void visit(final SpreadsheetFormatDigitParserToken token) {
         this.failInvalid(token);
     }
@@ -98,23 +80,8 @@ final class SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor 
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatDigitZeroParserToken token) {
-        this.advancePosition(token);
-    }
-
-    @Override
     protected void visit(final SpreadsheetFormatExponentSymbolParserToken token) {
         this.failInvalid(token);
-    }
-
-    @Override
-    protected void visit(final SpreadsheetFormatHourParserToken token) {
-        this.advancePosition(token);
-    }
-
-    @Override
-    protected void visit(final SpreadsheetFormatMonthOrMinuteParserToken token) {
-        this.advancePosition(token);
     }
 
     @Override
@@ -123,18 +90,8 @@ final class SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor 
     }
 
     @Override
-    protected void visit(final SpreadsheetFormatSecondParserToken token) {
-        this.advancePosition(token);
-    }
-
-    @Override
     protected void visit(final SpreadsheetFormatThousandsParserToken token) {
         this.failInvalid(token);
-    }
-
-    @Override
-    protected void visit(final SpreadsheetFormatYearParserToken token) {
-        this.advancePosition(token);
     }
 
     @Override

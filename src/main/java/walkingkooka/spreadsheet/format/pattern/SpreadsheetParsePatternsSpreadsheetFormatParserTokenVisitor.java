@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.InvalidCharacterException;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatBracketCloseSymbolParserToken;
@@ -28,7 +27,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorNumberParser
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEqualsSymbolParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEscapeParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatFractionSymbolParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGeneralSymbolParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGreaterThanEqualsSymbolParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGreaterThanSymbolParserToken;
@@ -43,9 +41,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatStarParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextLiteralParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextPlaceholderParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatUnderscoreParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatWhitespaceParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.visit.Visiting;
 
 import java.util.List;
 
@@ -53,16 +49,10 @@ import java.util.List;
  * A base {@link SpreadsheetFormatParserTokenVisitor} where most (almost all overrides fail when an unexpected or invalid
  * {@link SpreadsheetFormatParserToken} is found.
  */
-abstract class SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<P extends SpreadsheetFormatParserToken> extends SpreadsheetFormatParserTokenVisitor {
+abstract class SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<P extends SpreadsheetFormatParserToken> extends SpreadsheetPatternsSpreadsheetFormatParserTokenVisitor {
 
     SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor() {
         super();
-    }
-
-    final void startAccept(final ParserToken token) {
-        this.token = token;
-        this.position = 0;
-        this.accept(token);
     }
 
     @Override
@@ -102,13 +92,7 @@ abstract class SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<P ext
 
     @Override
     protected final void visit(final SpreadsheetFormatEscapeParserToken token) {
-        this.advancePosition(token);
         this.text(String.valueOf(token.value()));
-    }
-
-    @Override
-    protected final void visit(final SpreadsheetFormatFractionSymbolParserToken token) {
-        this.advancePosition(token);
     }
 
     @Override
@@ -143,13 +127,11 @@ abstract class SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<P ext
 
     @Override
     protected final void visit(final SpreadsheetFormatQuotedTextParserToken token) {
-        this.advancePosition(token);
         this.text(token.value());
     }
 
     @Override
     protected final void visit(final SpreadsheetFormatSeparatorSymbolParserToken token) {
-        this.advancePosition(token);
         this.text(token.text());
     }
 
@@ -160,7 +142,6 @@ abstract class SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<P ext
 
     @Override
     protected final void visit(final SpreadsheetFormatTextLiteralParserToken token) {
-        this.advancePosition(token);
         this.text(token.text());
     }
     
@@ -172,23 +153,6 @@ abstract class SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<P ext
     @Override
     protected final void visit(final SpreadsheetFormatUnderscoreParserToken token) {
         this.failInvalid(token);
-    }
-
-    @Override
-    protected final void visit(final SpreadsheetFormatWhitespaceParserToken token) {
-        this.advancePosition(token);
-    }
-
-    final void advancePosition(final SpreadsheetFormatParserToken token) {
-        this.advancePosition(token.text());
-    }
-
-    final void advancePosition(final String text) {
-        this.position += text.length();
-    }
-
-    final Visiting failInvalid(final SpreadsheetFormatParserToken token) {
-        throw new InvalidCharacterException(this.token.text(), this.position);
     }
 
     abstract void text(final String text);
@@ -206,14 +170,10 @@ abstract class SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<P ext
 
     private final List<P> tokens = Lists.array();
 
-    private int position;
-
     @Override
     public final String toString() {
         return ToStringBuilder.empty()
                 .value(this.tokens)
                 .build();
     }
-
-    private ParserToken token;
 }
