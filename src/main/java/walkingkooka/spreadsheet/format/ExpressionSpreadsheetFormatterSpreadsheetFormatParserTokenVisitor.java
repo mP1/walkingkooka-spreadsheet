@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.math.Fraction;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
@@ -33,6 +32,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGreaterThanParser
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatLessThanEqualsParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatLessThanParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNotEqualsParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSeparatorSymbolParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
