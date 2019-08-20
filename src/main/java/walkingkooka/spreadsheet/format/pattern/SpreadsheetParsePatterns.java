@@ -51,29 +51,29 @@ public abstract class SpreadsheetParsePatterns<T extends SpreadsheetFormatParser
     /**
      * Factory that creates a {@link SpreadsheetDateParsePatterns} from the given tokens.
      */
-    public static SpreadsheetDateParsePatterns withDate(final List<SpreadsheetFormatDateParserToken> value) {
-        return SpreadsheetDateParsePatterns.withTokens(value);
+    public static SpreadsheetDateParsePatterns withDate(final List<SpreadsheetFormatDateParserToken> token) {
+        return SpreadsheetDateParsePatterns.withTokens(token);
     }
 
     /**
      * Factory that creates a {@link SpreadsheetDateTimeParsePatterns} from the given tokens.
      */
-    public static SpreadsheetDateTimeParsePatterns withDateTime(final List<SpreadsheetFormatDateTimeParserToken> value) {
-        return SpreadsheetDateTimeParsePatterns.withTokens(value);
+    public static SpreadsheetDateTimeParsePatterns withDateTime(final List<SpreadsheetFormatDateTimeParserToken> token) {
+        return SpreadsheetDateTimeParsePatterns.withTokens(token);
     }
 
     /**
      * Factory that creates a {@link SpreadsheetNumberParsePatterns} from the given tokens.
      */
-    public static SpreadsheetNumberParsePatterns withNumber(final List<SpreadsheetFormatNumberParserToken> value) {
-        return SpreadsheetNumberParsePatterns.withTokens(value);
+    public static SpreadsheetNumberParsePatterns withNumber(final List<SpreadsheetFormatNumberParserToken> token) {
+        return SpreadsheetNumberParsePatterns.withTokens(token);
     }
 
     /**
      * Factory that creates a {@link SpreadsheetTimeParsePatterns} from the given tokens.
      */
-    public static SpreadsheetTimeParsePatterns withTime(final List<SpreadsheetFormatTimeParserToken> value) {
-        return SpreadsheetTimeParsePatterns.withTokens(value);
+    public static SpreadsheetTimeParsePatterns withTime(final List<SpreadsheetFormatTimeParserToken> token) {
+        return SpreadsheetTimeParsePatterns.withTokens(token);
     }
 
     // parseDate........................................................................................................
