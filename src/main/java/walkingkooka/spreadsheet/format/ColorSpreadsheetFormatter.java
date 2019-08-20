@@ -60,7 +60,7 @@ final class ColorSpreadsheetFormatter extends SpreadsheetFormatter3<SpreadsheetF
 
         final ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor = ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor.colorNameOrNumberOrFail(token);
         this.source = visitor.source;
-        this.sourceValue = visitor.numberOfName;
+        this.sourceValue = visitor.nameOrNumber;
         this.formatter = formatter;
     }
 
