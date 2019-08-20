@@ -43,25 +43,25 @@ public final class SpreadsheetParsePatternsTest implements ClassTesting2<Spreads
     @Test
     public void testWithDate() {
         final List<SpreadsheetFormatDateParserToken> tokens = Lists.of(this.dmyy(), this.ddmmyyyy());
-        assertEquals(tokens, SpreadsheetParsePatterns.withDate(tokens).value());
+        assertEquals(tokens, SpreadsheetParsePatterns.withDateParse(tokens).value());
     }
 
     @Test
     public void testWithDateTime() {
         final List<SpreadsheetFormatDateTimeParserToken> tokens = Lists.of(this.hhmmyyyy(), this.yyyymmhh());
-        assertEquals(tokens, SpreadsheetParsePatterns.withDateTime(tokens).value());
+        assertEquals(tokens, SpreadsheetParsePatterns.withDateTimeParse(tokens).value());
     }
 
     @Test
     public void testWithNumber() {
         final List<SpreadsheetFormatNumberParserToken> tokens = Lists.of(this.number(), this.money());
-        assertEquals(tokens, SpreadsheetParsePatterns.withNumber(tokens).value());
+        assertEquals(tokens, SpreadsheetParsePatterns.withNumberParse(tokens).value());
     }
 
     @Test
     public void testWithTime() {
         final List<SpreadsheetFormatTimeParserToken> tokens = Lists.of(this.hhmm(), this.hhmmss());
-        assertEquals(tokens, SpreadsheetParsePatterns.withTime(tokens).value());
+        assertEquals(tokens, SpreadsheetParsePatterns.withTimeParse(tokens).value());
     }
 
     @Test
