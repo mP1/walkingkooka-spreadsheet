@@ -17,7 +17,75 @@
 
 package walkingkooka.spreadsheet.format;
 
-public final class ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFormatParserTokenVisitorTestCase<ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor> {
+import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
+import walkingkooka.test.ToStringTesting;
+import walkingkooka.text.cursor.parser.ParserToken;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public final class ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFormatParserTokenVisitorTestCase<ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor>
+        implements ToStringTesting<ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor> {
+
+    @Test
+    public void testColorName() {
+        final List<ParserToken> tokens = Lists.of(
+                SpreadsheetFormatParserToken.bracketOpenSymbol("[", "["),
+                SpreadsheetFormatParserToken.colorName("RED", "RED"),
+                SpreadsheetFormatParserToken.bracketCloseSymbol("]", "]")
+        );
+        colorNameOrNumberOrFailAndCheck(SpreadsheetFormatParserToken.color(tokens, ParserToken.text(tokens)),
+                ColorSpreadsheetFormatterColorSource.NAME,
+                "RED");
+    }
+
+    @Test
+    public void testColorNumber() {
+        final List<ParserToken> tokens = Lists.of(
+                SpreadsheetFormatParserToken.bracketOpenSymbol("[", "["),
+                SpreadsheetFormatParserToken.colorLiteralSymbol("COLOR", "COLOR"),
+                SpreadsheetFormatParserToken.whitespace(" ", " "),
+                SpreadsheetFormatParserToken.colorNumber(13, "13"),
+                SpreadsheetFormatParserToken.bracketCloseSymbol("]", "]")
+        );
+
+        colorNameOrNumberOrFailAndCheck(SpreadsheetFormatParserToken.color(tokens, ParserToken.text(tokens)),
+                ColorSpreadsheetFormatterColorSource.NUMBER,
+                13);
+    }
+
+    private void colorNameOrNumberOrFailAndCheck(final SpreadsheetFormatColorParserToken color,
+                                                 final ColorSpreadsheetFormatterColorSource source,
+                                                 final Object nameOrNumber)  {
+        final ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor = ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor.colorNameOrNumberOrFail(color);
+        assertEquals(source, visitor.source, "source");
+        assertEquals(nameOrNumber, visitor.nameOrNumber, "nameOrNumber");
+    }
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(this.createVisitor(), "");
+    }
+
+    @Test
+    public void testToString2() {
+        final ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor = new ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor();
+
+        final List<ParserToken> tokens = Lists.of(
+                SpreadsheetFormatParserToken.bracketOpenSymbol("[", "["),
+                SpreadsheetFormatParserToken.colorName("RED", "RED"),
+                SpreadsheetFormatParserToken.bracketCloseSymbol("]", "]")
+        );
+
+        final SpreadsheetFormatColorParserToken color = SpreadsheetFormatParserToken.color(tokens, ParserToken.text(tokens));
+        visitor.accept(color);
+
+        this.toStringAndCheck(visitor, "NAME \"RED\"");
+    }
 
     @Override
     public ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor createVisitor() {
