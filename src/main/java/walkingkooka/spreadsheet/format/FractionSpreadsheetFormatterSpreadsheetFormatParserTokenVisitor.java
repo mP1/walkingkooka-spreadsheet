@@ -36,13 +36,13 @@ import java.util.List;
 /**
  * Counts the number of pattern tokens for digits and percentage symbols and other components.
  */
-final class BigDecimalFractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor {
+final class FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor {
 
     /**
      * Analyzes the given {@link SpreadsheetFormatParserToken}.
      */
-    static BigDecimalFractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor analyze(final SpreadsheetFormatParserToken token) {
-        final BigDecimalFractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor = new BigDecimalFractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor();
+    static FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor analyze(final SpreadsheetFormatParserToken token) {
+        final FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor = new FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor();
         visitor.accept(token);
         return visitor;
     }
@@ -51,7 +51,7 @@ final class BigDecimalFractionSpreadsheetFormatterSpreadsheetFormatParserTokenVi
      * Private ctor use static method.
      */
     // @VisibleForTesting
-    BigDecimalFractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor() {
+    FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor() {
         super();
     }
 
@@ -59,33 +59,33 @@ final class BigDecimalFractionSpreadsheetFormatterSpreadsheetFormatParserTokenVi
 
     @Override
     protected void visit(final SpreadsheetFormatCurrencyParserToken token) {
-        this.add(BigDecimalFractionSpreadsheetFormatterComponent.currencySymbol());
+        this.add(FractionSpreadsheetFormatterComponent.currencySymbol());
     }
 
     @Override
     protected void visit(final SpreadsheetFormatDigitParserToken token) {
-        this.addDigit(BigDecimalFractionSpreadsheetFormatterZero.HASH);
+        this.addDigit(FractionSpreadsheetFormatterZero.HASH);
     }
 
     @Override
     protected void visit(final SpreadsheetFormatDigitSpaceParserToken token) {
-        this.addDigit(BigDecimalFractionSpreadsheetFormatterZero.QUESTION_MARK);
+        this.addDigit(FractionSpreadsheetFormatterZero.QUESTION_MARK);
     }
 
     @Override
     protected void visit(final SpreadsheetFormatDigitZeroParserToken token) {
-        this.addDigit(BigDecimalFractionSpreadsheetFormatterZero.ZERO);
+        this.addDigit(FractionSpreadsheetFormatterZero.ZERO);
     }
 
     @Override
     protected void visit(final SpreadsheetFormatEscapeParserToken token) {
-        this.add(BigDecimalFractionSpreadsheetFormatterComponent.textLiteral(token.value().toString()));
+        this.add(FractionSpreadsheetFormatterComponent.textLiteral(token.value().toString()));
     }
 
     @Override
     protected void visit(final SpreadsheetFormatFractionSymbolParserToken token) {
         this.mode.slash(this);
-        this.add(BigDecimalFractionSpreadsheetFormatterComponent.slashSymbol());
+        this.add(FractionSpreadsheetFormatterComponent.slashSymbol());
     }
 
     @Override
@@ -94,7 +94,7 @@ final class BigDecimalFractionSpreadsheetFormatterSpreadsheetFormatParserTokenVi
             this.percentage = true;
             this.multiplier = this.multiplier.scaleByPowerOfTen(2);// x100
         }
-        this.add(BigDecimalFractionSpreadsheetFormatterComponent.percentageSymbol());
+        this.add(FractionSpreadsheetFormatterComponent.percentageSymbol());
     }
 
     /**
@@ -104,12 +104,12 @@ final class BigDecimalFractionSpreadsheetFormatterSpreadsheetFormatParserTokenVi
 
     @Override
     protected void visit(final SpreadsheetFormatQuotedTextParserToken token) {
-        this.add(BigDecimalFractionSpreadsheetFormatterComponent.textLiteral(token.value()));
+        this.add(FractionSpreadsheetFormatterComponent.textLiteral(token.value()));
     }
 
     @Override
     protected void visit(final SpreadsheetFormatTextLiteralParserToken token) {
-        this.add(BigDecimalFractionSpreadsheetFormatterComponent.textLiteral(token.value()));
+        this.add(FractionSpreadsheetFormatterComponent.textLiteral(token.value()));
     }
 
     @Override
@@ -122,7 +122,7 @@ final class BigDecimalFractionSpreadsheetFormatterSpreadsheetFormatParserTokenVi
     /**
      * Tracks which number of the fraction is being processed.
      */
-    BigDecimalFractionSpreadsheetFormatterMode mode = BigDecimalFractionSpreadsheetFormatterMode.NUMERATOR;
+    FractionSpreadsheetFormatterMode mode = FractionSpreadsheetFormatterMode.NUMERATOR;
 
     /**
      * Counts the number of numerator digit symbols.
@@ -143,21 +143,21 @@ final class BigDecimalFractionSpreadsheetFormatterSpreadsheetFormatParserTokenVi
     /**
      * Adds another digit component
      */
-    private void addDigit(final BigDecimalFractionSpreadsheetFormatterZero zero) {
-        this.add(BigDecimalFractionSpreadsheetFormatterComponent.digit(this.mode.digitCounterAndIncrement(this), zero));
+    private void addDigit(final FractionSpreadsheetFormatterZero zero) {
+        this.add(FractionSpreadsheetFormatterComponent.digit(this.mode.digitCounterAndIncrement(this), zero));
     }
 
     /**
      * Adds another component
      */
-    private void add(final BigDecimalFractionSpreadsheetFormatterComponent component) {
+    private void add(final FractionSpreadsheetFormatterComponent component) {
         this.components.add(component);
     }
 
     /**
      * Components represent each of the components of the original pattern.
      */
-    final List<BigDecimalFractionSpreadsheetFormatterComponent> components = Lists.array();
+    final List<FractionSpreadsheetFormatterComponent> components = Lists.array();
 
     @Override
     public String toString() {

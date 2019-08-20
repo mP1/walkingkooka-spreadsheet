@@ -20,21 +20,21 @@ package walkingkooka.spreadsheet.format;
 /**
  * Represents a placeholder for a digit.
  */
-final class BigDecimalFractionSpreadsheetFormatterDigitComponent extends BigDecimalFractionSpreadsheetFormatterComponent {
+final class FractionSpreadsheetFormatterComponentDigit extends FractionSpreadsheetFormatterComponent {
 
     /**
-     * Factory that creates a {@link BigDecimalFractionSpreadsheetFormatterDigitComponent}.
+     * Factory that creates a {@link FractionSpreadsheetFormatterComponentDigit}.
      */
-    static BigDecimalFractionSpreadsheetFormatterDigitComponent with(final int position,
-                                                                     final BigDecimalFractionSpreadsheetFormatterZero zero) {
-        return new BigDecimalFractionSpreadsheetFormatterDigitComponent(position, zero);
+    static FractionSpreadsheetFormatterComponentDigit with(final int position,
+                                                           final FractionSpreadsheetFormatterZero zero) {
+        return new FractionSpreadsheetFormatterComponentDigit(position, zero);
     }
 
     /**
      * Private ctor use factory
      */
-    private BigDecimalFractionSpreadsheetFormatterDigitComponent(final int position,
-                                                                 final BigDecimalFractionSpreadsheetFormatterZero zero) {
+    private FractionSpreadsheetFormatterComponentDigit(final int position,
+                                                       final FractionSpreadsheetFormatterZero zero) {
         super();
 
         this.position = position;
@@ -42,13 +42,13 @@ final class BigDecimalFractionSpreadsheetFormatterDigitComponent extends BigDeci
     }
 
     @Override
-    void append(final BigDecimalFractionSpreadsheetFormatterComponentContext context) {
+    void append(final FractionSpreadsheetFormatterContext context) {
         context.appendDigit(this.position, this.zero);
     }
 
     private final int position;
 
-    private final BigDecimalFractionSpreadsheetFormatterZero zero;
+    private final FractionSpreadsheetFormatterZero zero;
 
     @Override
     public final String toString() {

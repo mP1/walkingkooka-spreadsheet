@@ -17,31 +17,18 @@
 
 package walkingkooka.spreadsheet.format;
 
-/**
- * Inserts the percentage symbol.
- */
-final class BigDecimalFractionSpreadsheetFormatterSlashSymbolComponent extends BigDecimalFractionSpreadsheetFormatterComponent {
+import org.junit.jupiter.api.Test;
 
-    /**
-     * Singleton
-     */
-    static final BigDecimalFractionSpreadsheetFormatterSlashSymbolComponent INSTANCE = new BigDecimalFractionSpreadsheetFormatterSlashSymbolComponent();
+public final class FractionSpreadsheetFormatterComponentTextLiteralTest extends FractionSpreadsheetFormatterComponentTestCase<FractionSpreadsheetFormatterComponentTextLiteral> {
 
-    /**
-     * Private ctor use singleton
-     */
-    private BigDecimalFractionSpreadsheetFormatterSlashSymbolComponent() {
-        super();
+    @Test
+    public void testToString() {
+        final String text = "abc123";
+        this.toStringAndCheck(FractionSpreadsheetFormatterComponentTextLiteral.with(text), text);
     }
 
     @Override
-    void append(final BigDecimalFractionSpreadsheetFormatterComponentContext context) {
-        context.appendSlash();
-    }
-
-    @Override
-    public String toString() {
-        return "/";
+    public Class<FractionSpreadsheetFormatterComponentTextLiteral> type() {
+        return FractionSpreadsheetFormatterComponentTextLiteral.class;
     }
 }
-

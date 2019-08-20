@@ -20,19 +20,19 @@ package walkingkooka.spreadsheet.format;
 /**
  * Keeps track of the two number modes, the numerator and denominator.
  */
-enum BigDecimalFractionSpreadsheetFormatterMode {
+enum FractionSpreadsheetFormatterMode {
 
     /**
      * Any digit symbols belong to the numerator portion of a fraction.
      */
     NUMERATOR {
         @Override
-        int digitCounterAndIncrement(final BigDecimalFractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor) {
+        int digitCounterAndIncrement(final FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor) {
             return visitor.numeratorDigitSymbolCount++;
         }
 
         @Override
-        void slash(final BigDecimalFractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor) {
+        void slash(final FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor) {
             visitor.mode = DENOMINATOR;
         }
     },
@@ -42,17 +42,17 @@ enum BigDecimalFractionSpreadsheetFormatterMode {
      */
     DENOMINATOR {
         @Override
-        int digitCounterAndIncrement(final BigDecimalFractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor) {
+        int digitCounterAndIncrement(final FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor) {
             return visitor.denominatorDigitSymbolCount++;
         }
 
         @Override
-        void slash(final BigDecimalFractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor) {
+        void slash(final FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor) {
             // nop
         }
     };
 
-    abstract int digitCounterAndIncrement(final BigDecimalFractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor);
+    abstract int digitCounterAndIncrement(final FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor);
 
-    abstract void slash(final BigDecimalFractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor);
+    abstract void slash(final FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor);
 }

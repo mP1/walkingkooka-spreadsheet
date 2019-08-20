@@ -36,14 +36,6 @@ import java.util.function.Function;
 public final class SpreadsheetFormatters implements PublicStaticHelper {
 
     /**
-     * {@see BigDecimalFractionSpreadsheetFormatter}
-     */
-    public static SpreadsheetFormatter bigDecimalFraction(final SpreadsheetFormatFractionParserToken token,
-                                                          final Function<BigDecimal, Fraction> fractioner) {
-        return BigDecimalFractionSpreadsheetFormatter.with(token, fractioner);
-    }
-
-    /**
      * {@see ColorSpreadsheetFormatter}
      */
     public static SpreadsheetFormatter color(final SpreadsheetFormatColorParserToken token,
@@ -72,6 +64,14 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
      */
     public static <V> SpreadsheetFormatter fake() {
         return new FakeSpreadsheetFormatter();
+    }
+
+    /**
+     * {@see FractionSpreadsheetFormatter}
+     */
+    public static SpreadsheetFormatter fraction(final SpreadsheetFormatFractionParserToken token,
+                                                final Function<BigDecimal, Fraction> fractioner) {
+        return FractionSpreadsheetFormatter.with(token, fractioner);
     }
 
     /**

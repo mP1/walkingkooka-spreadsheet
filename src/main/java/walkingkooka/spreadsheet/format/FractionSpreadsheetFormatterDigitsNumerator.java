@@ -22,24 +22,24 @@ import walkingkooka.ToStringBuilder;
 /**
  * Handles formatting of both the numerator.
  */
-final class BigDecimalFractionSpreadsheetFormatterNumeratorDigits extends BigDecimalFractionSpreadsheetFormatterDigits {
+final class FractionSpreadsheetFormatterDigitsNumerator extends FractionSpreadsheetFormatterDigits {
 
     /**
-     * {@see BigDecimalFractionSpreadsheetFormatterDigits}
+     * {@see FractionSpreadsheetFormatterDigits}
      */
-    static BigDecimalFractionSpreadsheetFormatterNumeratorDigits with(final String text) {
-        return new BigDecimalFractionSpreadsheetFormatterNumeratorDigits(text);
+    static FractionSpreadsheetFormatterDigitsNumerator with(final String text) {
+        return new FractionSpreadsheetFormatterDigitsNumerator(text);
     }
 
     /**
      * Private to use factory.
      */
-    private BigDecimalFractionSpreadsheetFormatterNumeratorDigits(final String text) {
+    private FractionSpreadsheetFormatterDigitsNumerator(final String text) {
         super(text);
     }
 
     @Override
-    final void sign(final BigDecimalFractionSpreadsheetFormatterComponentContext context) {
+    final void sign(final FractionSpreadsheetFormatterContext context) {
         context.appendMinusSign();
     }
 
