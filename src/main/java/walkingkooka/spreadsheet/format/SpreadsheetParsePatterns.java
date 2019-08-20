@@ -44,7 +44,6 @@ import java.util.Objects;
  */
 public abstract class SpreadsheetParsePatterns<T extends SpreadsheetFormatParserToken> extends SpreadsheetPatterns<List<T>>
     implements HasConverter,
-        HasJsonNode,
         HasParser<ParserContext> {
 
     // with.............................................................................................................
