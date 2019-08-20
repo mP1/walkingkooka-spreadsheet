@@ -26,6 +26,7 @@ import walkingkooka.convert.ConverterTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.text.cursor.parser.ParentParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.math.BigDecimal;
@@ -35,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetParsePatterns<T>,
-        T extends SpreadsheetFormatParserToken,
+        T extends SpreadsheetFormatParserToken & ParentParserToken<T>,
         V> extends SpreadsheetPatternTestCase<P, List<T>>
         implements ConverterTesting {
 
@@ -161,17 +162,20 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
     }
 
     final void withInvalidCharacterFails(final ParserToken token) {
+        final String patternText = this.patternText();
+
         final List<ParserToken> tokens = Lists.array();
-        tokens.addAll(this.parseFormatParserTokens());
+        tokens.addAll(this.parseFormatParserToken(patternText).value());
 
-        final int position = ParserToken.text(tokens).length();
-
+        final String patternText2 = patternText + token.text();
         tokens.add(token);
 
+        final T parent = this.createFormatParserToken(tokens, patternText2);
+
         final InvalidCharacterException thrown = assertThrows(InvalidCharacterException.class, () -> {
-            this.createPattern(Lists.of(this.createFormatParserToken(tokens)));
+            this.createPattern(Lists.of(parent));
         });
-        assertEquals(position, thrown.position(), () -> "position pattern=" + ParserToken.text(tokens));
+        assertEquals(patternText.length(), thrown.position(), () -> "position pattern=" + patternText2);
     }
 
     // helpers..........................................................................................................
@@ -181,10 +185,6 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
     }
 
     abstract P createPattern(final List<T> tokens);
-
-    final List<T> parseFormatParserTokens() {
-        return Lists.of(this.parseFormatParserToken(this.patternText()));
-    }
 
     abstract T parseFormatParserToken(final String text);
 

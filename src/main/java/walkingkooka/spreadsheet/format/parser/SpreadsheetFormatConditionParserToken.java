@@ -26,7 +26,7 @@ import java.util.Optional;
 /**
  * Base class for any condition token, which includes a condition symbol and number.
  */
-abstract public class SpreadsheetFormatConditionParserToken<T extends SpreadsheetFormatConditionParserToken> extends SpreadsheetFormatParentParserToken<T> {
+abstract public class SpreadsheetFormatConditionParserToken<T extends SpreadsheetFormatConditionParserToken<T>> extends SpreadsheetFormatParentParserToken<T> {
 
     /**
      * Package private to limit sub classing.
