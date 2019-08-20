@@ -256,19 +256,19 @@ public abstract class SpreadsheetParsePatterns<T extends SpreadsheetFormatParser
     }
 
     static {
-        HasJsonNode.register("spreadsheet-text-formatter-date-pattern",
+        HasJsonNode.register("spreadsheet-date-parse-pattern",
                 SpreadsheetParsePatterns::fromJsonNodeDate,
                 SpreadsheetDateParsePatterns.class);
 
-        HasJsonNode.register("spreadsheet-text-formatter-datetime-pattern",
+        HasJsonNode.register("spreadsheet-datetime-parse-pattern",
                 SpreadsheetParsePatterns::fromJsonNodeDateTime,
                 SpreadsheetDateTimeParsePatterns.class);
 
-        HasJsonNode.register("spreadsheet-text-formatter-number-pattern",
+        HasJsonNode.register("spreadsheet-number-parse-pattern",
                 SpreadsheetParsePatterns::fromJsonNodeNumber,
                 SpreadsheetNumberParsePatterns.class);
 
-        HasJsonNode.register("spreadsheet-text-formatter-time-pattern",
+        HasJsonNode.register("spreadsheet-time-parse-pattern",
                 SpreadsheetParsePatterns::fromJsonNodeTime,
                 SpreadsheetTimeParsePatterns.class);
     }
