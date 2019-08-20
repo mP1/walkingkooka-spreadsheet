@@ -32,7 +32,7 @@ import walkingkooka.tree.json.JsonNode;
 import java.util.Objects;
 
 /**
- * Holds a valid {@link SpreadsheetFormatPattern}.
+ * Base class for all format patterns.
  */
 public final class SpreadsheetFormatPattern implements HashCodeEqualsDefined,
         HasJsonNode,
