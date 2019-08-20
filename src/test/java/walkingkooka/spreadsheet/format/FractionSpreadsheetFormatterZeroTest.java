@@ -21,29 +21,29 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public final class BigDecimalFractionSpreadsheetFormatterZeroTest extends BigDecimalFractionTextFormatterTestCase<BigDecimalFractionSpreadsheetFormatterZero> {
+public final class FractionSpreadsheetFormatterZeroTest extends BigDecimalFractionTextFormatterTestCase<FractionSpreadsheetFormatterZero> {
 
     @Test
     public void testHashPattern() {
-        checkPattern(BigDecimalFractionSpreadsheetFormatterZero.HASH, "#");
+        checkPattern(FractionSpreadsheetFormatterZero.HASH, "#");
     }
 
     @Test
     public void testQuestionPattern() {
-        checkPattern(BigDecimalFractionSpreadsheetFormatterZero.QUESTION_MARK, "?");
+        checkPattern(FractionSpreadsheetFormatterZero.QUESTION_MARK, "?");
     }
 
     @Test
     public void testZeroPattern() {
-        checkPattern(BigDecimalFractionSpreadsheetFormatterZero.ZERO, "0");
+        checkPattern(FractionSpreadsheetFormatterZero.ZERO, "0");
     }
 
-    private void checkPattern(final BigDecimalFractionSpreadsheetFormatterZero zero, final String pattern) {
+    private void checkPattern(final FractionSpreadsheetFormatterZero zero, final String pattern) {
         assertEquals(pattern, zero.pattern(), zero.toString());
     }
 
     @Override
-    public Class<BigDecimalFractionSpreadsheetFormatterZero> type() {
-        return BigDecimalFractionSpreadsheetFormatterZero.class;
+    public Class<FractionSpreadsheetFormatterZero> type() {
+        return FractionSpreadsheetFormatterZero.class;
     }
 }

@@ -23,26 +23,26 @@ import walkingkooka.UsesToStringBuilder;
 /**
  * Handles formatting of both the denominator and numerator.
  */
-abstract class BigDecimalFractionSpreadsheetFormatterDigits implements UsesToStringBuilder {
+abstract class FractionSpreadsheetFormatterDigits implements UsesToStringBuilder {
 
     /**
-     * {@see BigDecimalFractionSpreadsheetFormatterDigits}
+     * {@see FractionSpreadsheetFormatterDigits}
      */
-    static BigDecimalFractionSpreadsheetFormatterDenominatorDigits denominator(final String text) {
-        return BigDecimalFractionSpreadsheetFormatterDenominatorDigits.with(text);
+    static FractionSpreadsheetFormatterDigitsDenominator denominator(final String text) {
+        return FractionSpreadsheetFormatterDigitsDenominator.with(text);
     }
 
     /**
-     * {@see BigDecimalFractionSpreadsheetFormatterNumeratorDigits}
+     * {@see FractionSpreadsheetFormatterDigitsNumerator}
      */
-    static BigDecimalFractionSpreadsheetFormatterNumeratorDigits numerator(final String text) {
-        return BigDecimalFractionSpreadsheetFormatterNumeratorDigits.with(text);
+    static FractionSpreadsheetFormatterDigitsNumerator numerator(final String text) {
+        return FractionSpreadsheetFormatterDigitsNumerator.with(text);
     }
 
     /**
      * Package private to limit sub classing.
      */
-    BigDecimalFractionSpreadsheetFormatterDigits(final String text) {
+    FractionSpreadsheetFormatterDigits(final String text) {
         super();
         this.text = "0".equals(text) ?
                 "" :
@@ -53,8 +53,8 @@ abstract class BigDecimalFractionSpreadsheetFormatterDigits implements UsesToStr
      * Appends a digit, and possibly sign if necessary.
      */
     final void append(final int digitSymbolPosition,
-                      final BigDecimalFractionSpreadsheetFormatterZero zero,
-                      final BigDecimalFractionSpreadsheetFormatterComponentContext context) {
+                      final FractionSpreadsheetFormatterZero zero,
+                      final FractionSpreadsheetFormatterContext context) {
         final int digitSymbolLength = context.digitSymbolCount;
         final String textDigits = context.digits.text;
         final int textDigitLength = textDigits.length();
@@ -75,14 +75,14 @@ abstract class BigDecimalFractionSpreadsheetFormatterDigits implements UsesToStr
     private void addDigits(final int start,
                            final int end,
                            final String textDigits,
-                           final BigDecimalFractionSpreadsheetFormatterComponentContext context) {
+                           final FractionSpreadsheetFormatterContext context) {
         int numberDigitPosition = textDigits.length() - start - 1;
         for (int i = start; i <= end; i++) {
             context.appendDigit(textDigits.charAt(i), numberDigitPosition--);
         }
     }
 
-    abstract void sign(final BigDecimalFractionSpreadsheetFormatterComponentContext context);
+    abstract void sign(final FractionSpreadsheetFormatterContext context);
 
     /**
      * Text that holds the individual digit characters.

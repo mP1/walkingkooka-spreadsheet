@@ -76,7 +76,7 @@ final class ExpressionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor ex
 
     @Override
     protected void endVisit(final SpreadsheetFormatFractionParserToken token) {
-        this.setSpreadsheetFormatter(SpreadsheetFormatters.bigDecimalFraction(token, this.fractioner), token);
+        this.setSpreadsheetFormatter(SpreadsheetFormatters.fraction(token, this.fractioner), token);
     }
 
     private final Function<BigDecimal, Fraction> fractioner;

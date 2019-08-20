@@ -17,17 +17,13 @@
 
 package walkingkooka.spreadsheet.format;
 
-import org.junit.jupiter.api.Test;
+import walkingkooka.test.ToStringTesting;
 
-public final class BigDecimalFractionSpreadsheetFormatterCurrencySymbolComponentTest extends BigDecimalFractionSpreadsheetFormatterComponentTestCase<BigDecimalFractionSpreadsheetFormatterCurrencySymbolComponent> {
+public abstract class FractionSpreadsheetFormatterComponentTestCase<C extends FractionSpreadsheetFormatterComponent>
+        extends BigDecimalFractionTextFormatterTestCase<C>
+        implements ToStringTesting<C> {
 
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(BigDecimalFractionSpreadsheetFormatterCurrencySymbolComponent.INSTANCE, "$");
-    }
-
-    @Override
-    public Class<BigDecimalFractionSpreadsheetFormatterCurrencySymbolComponent> type() {
-        return BigDecimalFractionSpreadsheetFormatterCurrencySymbolComponent.class;
+    FractionSpreadsheetFormatterComponentTestCase() {
+        super();
     }
 }
