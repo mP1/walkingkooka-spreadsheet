@@ -18,9 +18,9 @@
 package walkingkooka.spreadsheet.format;
 
 /**
- * Handles inserting the mins sign when required.
+ * Handles inserting the negative sign when required.
  */
-enum BigDecimalFractionSpreadsheetFormatterMinusSign {
+enum FractionSpreadsheetFormatterNegativeSign {
     /**
      * unconditionally adds a minus sign.
      */
@@ -55,7 +55,7 @@ enum BigDecimalFractionSpreadsheetFormatterMinusSign {
 
     abstract String symbol();
 
-    static BigDecimalFractionSpreadsheetFormatterMinusSign fromSignum(final int value) {
+    static FractionSpreadsheetFormatterNegativeSign fromSignum(final int value) {
         return value < 0 ?
                 REQUIRED :
                 NOT_REQUIRED;
