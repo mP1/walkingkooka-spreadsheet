@@ -263,7 +263,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
 
     @Override
     public SpreadsheetDateTimeParsePatterns fromJsonNode(final JsonNode jsonNode) {
-        return SpreadsheetDateTimeParsePatterns.fromJsonNodeDateTime(jsonNode);
+        return SpreadsheetDateTimeParsePatterns.fromJsonNodeDateTimeParsePatterns(jsonNode);
     }
 
     // ParseStringTesting...............................................................................................
