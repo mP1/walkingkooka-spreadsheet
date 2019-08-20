@@ -22,29 +22,29 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 
 /**
- * The context that accompanies each {@link BigDecimalFractionSpreadsheetFormatterComponent}.
+ * The context that accompanies each {@link FractionSpreadsheetFormatterComponent}.
  */
-final class BigDecimalFractionSpreadsheetFormatterComponentContext implements Context {
+final class FractionSpreadsheetFormatterContext implements Context {
 
     /**
      * Factory that creates a new context.
      */
-    static BigDecimalFractionSpreadsheetFormatterComponentContext with(final BigDecimalFractionSpreadsheetFormatterMinusSign numeratorSign,
-                                                                       final BigDecimalFractionSpreadsheetFormatterNumeratorDigits numerator,
-                                                                       final BigDecimalFractionSpreadsheetFormatterDenominatorDigits demonimator,
-                                                                       final BigDecimalFractionSpreadsheetFormatter formatter,
-                                                                       final SpreadsheetFormatterContext context) {
-        return new BigDecimalFractionSpreadsheetFormatterComponentContext(numeratorSign, numerator, demonimator, formatter, context);
+    static FractionSpreadsheetFormatterContext with(final FractionSpreadsheetFormatterNegativeSign numeratorSign,
+                                                    final FractionSpreadsheetFormatterDigitsNumerator numerator,
+                                                    final FractionSpreadsheetFormatterDigitsDenominator demonimator,
+                                                    final FractionSpreadsheetFormatter formatter,
+                                                    final SpreadsheetFormatterContext context) {
+        return new FractionSpreadsheetFormatterContext(numeratorSign, numerator, demonimator, formatter, context);
     }
 
     /**
      * Private ctor use factory.
      */
-    private BigDecimalFractionSpreadsheetFormatterComponentContext(final BigDecimalFractionSpreadsheetFormatterMinusSign numeratorSign,
-                                                                   final BigDecimalFractionSpreadsheetFormatterNumeratorDigits numerator,
-                                                                   final BigDecimalFractionSpreadsheetFormatterDenominatorDigits demonimator,
-                                                                   final BigDecimalFractionSpreadsheetFormatter formatter,
-                                                                   final SpreadsheetFormatterContext context) {
+    private FractionSpreadsheetFormatterContext(final FractionSpreadsheetFormatterNegativeSign numeratorSign,
+                                                final FractionSpreadsheetFormatterDigitsNumerator numerator,
+                                                final FractionSpreadsheetFormatterDigitsDenominator demonimator,
+                                                final FractionSpreadsheetFormatter formatter,
+                                                final SpreadsheetFormatterContext context) {
         super();
 
         this.sign = numeratorSign;
@@ -62,7 +62,7 @@ final class BigDecimalFractionSpreadsheetFormatterComponentContext implements Co
         this.text.append(this.context.currencySymbol());
     }
 
-    void appendDigit(final int symbolDigitPosition, final BigDecimalFractionSpreadsheetFormatterZero zero) {
+    void appendDigit(final int symbolDigitPosition, final FractionSpreadsheetFormatterZero zero) {
         this.digits.append(symbolDigitPosition, zero, this);
     }
 
@@ -72,14 +72,14 @@ final class BigDecimalFractionSpreadsheetFormatterComponentContext implements Co
     }
 
     void appendMinusSign() {
-        final BigDecimalFractionSpreadsheetFormatterMinusSign sign = this.sign;
+        final FractionSpreadsheetFormatterNegativeSign sign = this.sign;
         if (sign.shouldAppendSymbol()) {
             this.text.append(this.context.negativeSign());
-            this.sign = BigDecimalFractionSpreadsheetFormatterMinusSign.NOT_REQUIRED;
+            this.sign = FractionSpreadsheetFormatterNegativeSign.NOT_REQUIRED;
         }
     }
 
-    private BigDecimalFractionSpreadsheetFormatterMinusSign sign;
+    private FractionSpreadsheetFormatterNegativeSign sign;
 
     void appendPercentage() {
         this.text.append(this.context.percentageSymbol());
@@ -98,13 +98,13 @@ final class BigDecimalFractionSpreadsheetFormatterComponentContext implements Co
 
     private final SpreadsheetFormatterContext context;
 
-    BigDecimalFractionSpreadsheetFormatterDigits digits;
+    FractionSpreadsheetFormatterDigits digits;
     int digitSymbolCount;
 
-    private final BigDecimalFractionSpreadsheetFormatterDigits numerator;
-    private final BigDecimalFractionSpreadsheetFormatterDigits demonimator;
+    private final FractionSpreadsheetFormatterDigits numerator;
+    private final FractionSpreadsheetFormatterDigits demonimator;
 
-    final BigDecimalFractionSpreadsheetFormatter formatter;
+    final FractionSpreadsheetFormatter formatter;
 
     /**
      * Getter that returns the formatted text.

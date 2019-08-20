@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.convert.ConverterContexts;
+import walkingkooka.convert.Converters;
 import walkingkooka.math.Fraction;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatFractionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
@@ -37,7 +39,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 /**
  * In expectations all symbols are doubled, as a means to verify the context is supplying the values.
  */
-public final class BigDecimalFractionSpreadsheetFormatterTest extends SpreadsheetFormatter3TestCase<BigDecimalFractionSpreadsheetFormatter,
+public final class FractionSpreadsheetFormatterTest extends SpreadsheetFormatter3TestCase<FractionSpreadsheetFormatter,
         SpreadsheetFormatFractionParserToken> {
 
     //creation ..............................................................................................
@@ -45,14 +47,14 @@ public final class BigDecimalFractionSpreadsheetFormatterTest extends Spreadshee
     @Test
     public void testWithNullTokenFails() {
         assertThrows(NullPointerException.class, () -> {
-            BigDecimalFractionSpreadsheetFormatter.with(null, fractioner());
+            FractionSpreadsheetFormatter.with(null, fractioner());
         });
     }
 
     @Test
     public void testWithNullFractionerFails() {
         assertThrows(NullPointerException.class, () -> {
-            BigDecimalFractionSpreadsheetFormatter.with(this.token(), null);
+            FractionSpreadsheetFormatter.with(this.token(), null);
         });
     }
 
@@ -399,8 +401,8 @@ public final class BigDecimalFractionSpreadsheetFormatterTest extends Spreadshee
     }
 
     @Override
-    BigDecimalFractionSpreadsheetFormatter createFormatter0(final SpreadsheetFormatFractionParserToken token) {
-        return BigDecimalFractionSpreadsheetFormatter.with(token, this.fractioner());
+    FractionSpreadsheetFormatter createFormatter0(final SpreadsheetFormatFractionParserToken token) {
+        return FractionSpreadsheetFormatter.with(token, this.fractioner());
     }
 
     private Function<BigDecimal, Fraction> fractioner() {
@@ -434,6 +436,12 @@ public final class BigDecimalFractionSpreadsheetFormatterTest extends Spreadshee
             }
 
             @Override
+            public <T> T convert(final Object value,
+                                 final Class<T> target) {
+                return Converters.numberNumber().convert(value, target, ConverterContexts.fake());
+            }
+
+            @Override
             public MathContext mathContext() {
                 return MATH_CONTEXT;
             }
@@ -453,7 +461,7 @@ public final class BigDecimalFractionSpreadsheetFormatterTest extends Spreadshee
     private final static MathContext MATH_CONTEXT = MathContext.UNLIMITED;
 
     @Override
-    public Class<BigDecimalFractionSpreadsheetFormatter> type() {
-        return BigDecimalFractionSpreadsheetFormatter.class;
+    public Class<FractionSpreadsheetFormatter> type() {
+        return FractionSpreadsheetFormatter.class;
     }
 }

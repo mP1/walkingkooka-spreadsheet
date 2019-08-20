@@ -17,9 +17,31 @@
 
 package walkingkooka.spreadsheet.format;
 
-public final class BigDecimalFractionSpreadsheetFormatterMinusSignTest extends BigDecimalFractionTextFormatterTestCase<BigDecimalFractionSpreadsheetFormatterMinusSign> {
+/**
+ * Inserts the percentage symbol.
+ */
+final class FractionSpreadsheetFormatterComponentSlashSymbol extends FractionSpreadsheetFormatterComponent {
+
+    /**
+     * Singleton
+     */
+    static final FractionSpreadsheetFormatterComponentSlashSymbol INSTANCE = new FractionSpreadsheetFormatterComponentSlashSymbol();
+
+    /**
+     * Private ctor use singleton
+     */
+    private FractionSpreadsheetFormatterComponentSlashSymbol() {
+        super();
+    }
+
     @Override
-    public Class<BigDecimalFractionSpreadsheetFormatterMinusSign> type() {
-        return BigDecimalFractionSpreadsheetFormatterMinusSign.class;
+    void append(final FractionSpreadsheetFormatterContext context) {
+        context.appendSlash();
+    }
+
+    @Override
+    public String toString() {
+        return "/";
     }
 }
+

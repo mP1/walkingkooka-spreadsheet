@@ -17,10 +17,30 @@
 
 package walkingkooka.spreadsheet.format;
 
-public abstract class BigDecimalFractionSpreadsheetFormatterDigitsTestCase<D extends BigDecimalFractionSpreadsheetFormatterDigits>
-        extends BigDecimalFractionTextFormatterTestCase<D> {
+/**
+ * Inserts the percentage symbol.
+ */
+final class FractionSpreadsheetFormatterComponentPercentageSymbol extends FractionSpreadsheetFormatterComponent {
 
-    BigDecimalFractionSpreadsheetFormatterDigitsTestCase() {
+    /**
+     * Singleton
+     */
+    static final FractionSpreadsheetFormatterComponentPercentageSymbol INSTANCE = new FractionSpreadsheetFormatterComponentPercentageSymbol();
+
+    /**
+     * Private ctor use singleton
+     */
+    private FractionSpreadsheetFormatterComponentPercentageSymbol() {
         super();
+    }
+
+    @Override
+    void append(final FractionSpreadsheetFormatterContext context) {
+        context.appendPercentage();
+    }
+
+    @Override
+    public String toString() {
+        return "%";
     }
 }
