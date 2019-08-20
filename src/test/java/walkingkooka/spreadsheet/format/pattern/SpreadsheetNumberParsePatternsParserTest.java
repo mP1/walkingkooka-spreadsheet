@@ -504,7 +504,7 @@ public final class SpreadsheetNumberParsePatternsParserTest extends SpreadsheetN
     }
 
     private SpreadsheetNumberParsePatternsParser createParser(final String pattern) {
-        return SpreadsheetNumberParsePatterns.parseNumber(pattern).createParser();
+        return SpreadsheetNumberParsePatterns.parseNumberParsePatterns(pattern).createParser();
     }
 
     @Override

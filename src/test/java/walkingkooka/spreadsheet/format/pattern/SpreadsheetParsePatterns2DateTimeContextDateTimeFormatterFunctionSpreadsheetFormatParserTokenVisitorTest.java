@@ -50,7 +50,7 @@ public final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunc
     }
 
     private SpreadsheetFormatParserToken parserToken(final String pattern) {
-        return SpreadsheetParsePatterns.parseDate(pattern).value().get(0);
+        return SpreadsheetParsePatterns.parseDateParsePatterns(pattern).value().get(0);
     }
 
     @Override

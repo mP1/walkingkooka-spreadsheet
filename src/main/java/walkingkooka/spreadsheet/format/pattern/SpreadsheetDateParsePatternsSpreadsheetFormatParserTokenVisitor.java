@@ -20,15 +20,19 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatAmPmParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatCurrencyParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDecimalPointParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitSpaceParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitZeroParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExponentSymbolParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatHourParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatPercentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSecondParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatThousandsParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.visit.Visiting;
 
 final class SpreadsheetDateParsePatternsSpreadsheetFormatParserTokenVisitor extends SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<SpreadsheetFormatDateParserToken> {
@@ -45,6 +49,26 @@ final class SpreadsheetDateParsePatternsSpreadsheetFormatParserTokenVisitor exte
     protected Visiting startVisit(final SpreadsheetFormatDateParserToken token) {
         this.addToken(token);
         return Visiting.CONTINUE;
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetFormatDateTimeParserToken token) {
+        return this.failInvalid(token);
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetFormatNumberParserToken token) {
+        return this.failInvalid(token);
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetFormatTextParserToken token) {
+        return this.failInvalid(token);
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetFormatTimeParserToken token) {
+        return this.failInvalid(token);
     }
 
     @Override

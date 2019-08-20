@@ -430,7 +430,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     }
 
     private SpreadsheetDateParsePatterns dateParser() {
-        return SpreadsheetParsePatterns.parseDate("\\D yyyy-mm-dd");
+        return SpreadsheetParsePatterns.parseDateParsePatterns("\\D yyyy-mm-dd");
     }
 
     private SpreadsheetFormatter dateTimeFormatter() {
@@ -438,7 +438,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     }
 
     private SpreadsheetDateTimeParsePatterns dateTimeParser() {
-        return SpreadsheetParsePatterns.parseDateTime("\"DT\" dd mm yyyy hh mm ss");
+        return SpreadsheetParsePatterns.parseDateTimeParsePatterns("\"DT\" dd mm yyyy hh mm ss");
     }
 
     private SpreadsheetFormatter numberFormatter() {
@@ -449,7 +449,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     }
 
     private SpreadsheetNumberParsePatterns numberParser() {
-        return SpreadsheetParsePatterns.parseNumber("\"N\" #;\"N\" #.#");
+        return SpreadsheetParsePatterns.parseNumberParsePatterns("\"N\" #;\"N\" #.#");
     }
 
     private SpreadsheetFormatter timeFormatter() {
@@ -457,7 +457,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     }
 
     private SpreadsheetTimeParsePatterns timeParser() {
-        return SpreadsheetParsePatterns.parseTime("\\T hh mm ss");
+        return SpreadsheetParsePatterns.parseTimeParsePatterns("\\T hh mm ss");
     }
 
     private SpreadsheetFormatter dateTimeFormatter(final String pattern) {

@@ -25,13 +25,12 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.text.cursor.parser.ParserTokens;
 import walkingkooka.tree.json.JsonNode;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatternsTestCase<SpreadsheetDateParsePatterns,
+public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetDateFormatPattern,
         SpreadsheetFormatDateParserToken,
         LocalDate> {
 
@@ -117,139 +116,11 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
         this.parseStringFails("0#00", IllegalArgumentException.class);
     }
 
-    // parser...........................................................................................................
-
-    @Test
-    public void testParseDateFails() {
-        this.parseFails2("dd/mm/yyyy;yyyy/mm/dd",
-                "123456");
-    }
-
-    @Test
-    public void testParseDateOnlyPattern() {
-        this.parseAndCheck2("dd/mm/yyyy",
-                "31/12/2000",
-                LocalDate.of(2000, 12, 31));
-    }
-
-    @Test
-    public void testParseDateOnlyPatternTwoDigitYear() {
-        this.parseAndCheck2("dd/mm/yy",
-                "31/12/20",
-                LocalDate.of(2020, 12, 31));
-    }
-
-    @Test
-    public void testParseDateOnlyPatternDefaultsYear() {
-        this.parseAndCheck2("dd/mm",
-                "31/12",
-                LocalDate.of(1900, 12, 31));
-    }
-
-    @Test
-    public void testParseDateOnlyPatternDefaultsMonth() {
-        this.parseAndCheck2("dd yyyy",
-                "31 2000",
-                LocalDate.of(2000, 1, 31));
-    }
-
-    @Test
-    public void testParseDateOnlyPatternDefaultsDay() {
-        this.parseAndCheck2("mm yyyy",
-                "12 2000",
-                LocalDate.of(2000, 12, 1));
-    }
-
-    @Test
-    public void testParseDateFirstPattern() {
-        this.parseAndCheck2("dd/mm/yyyy;yyyy/mm/dd",
-                "31/12/2000",
-                LocalDate.of(2000, 12, 31));
-    }
-
-    @Test
-    public void testParseDateSecondPattern() {
-        this.parseAndCheck2("dd/mm/yyyy;yyyy/mm/dd",
-                "2000/12/31",
-                LocalDate.of(2000, 12, 31));
-    }
-
-    @Test
-    public void testParseDateShortMonth() {
-        this.parseAndCheck2("dd/mmm/yyy;yyyy/mm/dd",
-                "31/Dec/2000",
-                LocalDate.of(2000, 12, 31));
-    }
-
-    // converter........................................................................................................
-
-    @Test
-    public void testConvertDateFails() {
-        this.convertFails2("dd/mm/yyyy;yyyy/mm/dd",
-                "123456");
-    }
-
-    @Test
-    public void testConvertDateOnlyPattern() {
-        this.convertAndCheck2("dd/mm/yyyy",
-                "31/12/2000",
-                LocalDate.of(2000, 12, 31));
-    }
-
-    @Test
-    public void testConvertDateOnlyPatternTwoDigitYear() {
-        this.convertAndCheck2("dd/mm/yy",
-                "31/12/20",
-                LocalDate.of(2020, 12, 31));
-    }
-
-    @Test
-    public void testConvertDateOnlyPatternDefaultsYear() {
-        this.convertAndCheck2("dd/mm",
-                "31/12",
-                LocalDate.of(1900, 12, 31));
-    }
-
-    @Test
-    public void testConvertDateOnlyPatternDefaultsMonth() {
-        this.convertAndCheck2("dd yyyy",
-                "31 2000",
-                LocalDate.of(2000, 1, 31));
-    }
-
-    @Test
-    public void testConvertDateOnlyPatternDefaultsDay() {
-        this.convertAndCheck2("mm yyyy",
-                "12 2000",
-                LocalDate.of(2000, 12, 1));
-    }
-
-    @Test
-    public void testConvertDateFirstPattern() {
-        this.convertAndCheck2("dd/mm/yyyy;yyyy/mm/dd",
-                "31/12/2000",
-                LocalDate.of(2000, 12, 31));
-    }
-
-    @Test
-    public void testConvertDateSecondPattern() {
-        this.convertAndCheck2("dd/mm/yyyy;yyyy/mm/dd",
-                "2000/12/31",
-                LocalDate.of(2000, 12, 31));
-    }
-
-    @Test
-    public void testConvertDateShortMonth() {
-        this.convertAndCheck2("dd/mmm/yyy;yyyy/mm/dd",
-                "31/Dec/2000",
-                LocalDate.of(2000, 12, 31));
-    }
-
     // helpers..........................................................................................................
 
     @Override
-    SpreadsheetDateParsePatterns createPattern(final List<SpreadsheetFormatDateParserToken> tokens) {
-        return SpreadsheetDateParsePatterns.withTokens(tokens);
+    SpreadsheetDateFormatPattern createPattern(final SpreadsheetFormatDateParserToken token) {
+        return SpreadsheetDateFormatPattern.with(token);
     }
 
     @Override
@@ -272,35 +143,25 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
         return SpreadsheetFormatParserToken.date(tokens, text);
     }
 
-    @Override
-    ParserToken parserParserToken(final LocalDate value, final String text) {
-        return ParserTokens.localDate(value, text);
-    }
-
-    @Override
-    Class<LocalDate> targetType() {
-        return LocalDate.class;
-    }
-
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetDateParsePatterns> type() {
-        return SpreadsheetDateParsePatterns.class;
+    public Class<SpreadsheetDateFormatPattern> type() {
+        return SpreadsheetDateFormatPattern.class;
     }
 
     // HasJsonNodeTesting................................................................................................
 
     @Override
-    public SpreadsheetDateParsePatterns fromJsonNode(final JsonNode jsonNode) {
-        return SpreadsheetDateParsePatterns.fromJsonNodeDateParsePatterns(jsonNode);
+    public SpreadsheetDateFormatPattern fromJsonNode(final JsonNode jsonNode) {
+        return SpreadsheetDateFormatPattern.fromJsonNodeDateFormatPattern(jsonNode);
     }
 
     // ParseStringTesting...............................................................................................
 
     @Override
-    public SpreadsheetDateParsePatterns parseString(final String text) {
-        return SpreadsheetDateParsePatterns.parseDateParsePatterns(text);
+    public SpreadsheetDateFormatPattern parseString(final String text) {
+        return SpreadsheetDateFormatPattern.parseDateFormatPattern(text);
     }
 }
 

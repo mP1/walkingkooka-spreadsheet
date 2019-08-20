@@ -18,123 +18,85 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting;
-import walkingkooka.test.ParseStringTesting;
-import walkingkooka.test.ToStringTesting;
-import walkingkooka.tree.json.HasJsonNodeTesting;
-import walkingkooka.tree.json.JsonNode;
+import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetFormatPatternTest implements ClassTesting2<SpreadsheetFormatPattern>,
-        HashCodeEqualsDefinedTesting<SpreadsheetFormatPattern>,
-        HasJsonNodeTesting<SpreadsheetFormatPattern>,
-        ParseStringTesting<SpreadsheetFormatPattern>,
-        ToStringTesting<SpreadsheetFormatPattern> {
-
-    private final static String PATTERN = "dd/mmm/yyyy hh:mm:ss";
+public final class SpreadsheetFormatPatternTest implements ClassTesting2<SpreadsheetFormatPattern<?>> {
 
     @Test
-    public void testWithNullParserTokenFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetFormatPattern.with(null);
-        });
+    public void testWithDate() {
+        final SpreadsheetFormatDateParserToken token = this.dmyy();
+        assertEquals(token, SpreadsheetFormatPattern.dateFormatPattern(token).value());
     }
 
     @Test
-    public void testWith() {
-        final SpreadsheetFormatPattern pattern = SpreadsheetFormatPattern.parse(PATTERN);
-
-        final SpreadsheetFormatPattern with = SpreadsheetFormatPattern.with(pattern.value());
-        assertEquals(with.value(), pattern.value(), "value");
-    }
-
-    // ParseString.......................................................................................................
-
-    @Test
-    public void testParseStringIllegalPatternFails() {
-        this.parseStringFails("\"unclosed quoted text inside patterns", IllegalArgumentException.class);
+    public void testWithDateTime() {
+        final SpreadsheetFormatDateTimeParserToken token = this.hhmmyyyy();
+        assertEquals(token, SpreadsheetFormatPattern.dateTimeFormatPattern(token).value());
     }
 
     @Test
-    public void testParse() {
-        final SpreadsheetFormatPattern pattern = SpreadsheetFormatPattern.parse(PATTERN);
-        assertEquals(PATTERN, pattern.value().text(), "value.text()");
+    public void testWithNumber() {
+        final SpreadsheetFormatNumberParserToken token = this.number();
+        assertEquals(token, SpreadsheetFormatPattern.numberFormatPattern(token).value());
     }
-
-    // HashCodeEqualsDefined............................................................................................
 
     @Test
-    public void testDifferentPattern() {
-        this.checkNotEquals(SpreadsheetFormatPattern.parse("#.00"));
+    public void testWithTime() {
+        final SpreadsheetFormatTimeParserToken token = this.hhmm();
+        assertEquals(token, SpreadsheetFormatPattern.timeFormatPattern(token).value());
     }
 
-    // JsonNodeTesting.................................................................................................
-
-    @Test
-    public void testFromJsonNodeInvalidPattern() {
-        this.fromJsonNodeFails(JsonNode.string("\"unclosed quoted text inside patterns"), IllegalArgumentException.class);
+    private SpreadsheetFormatDateParserToken dmyy() {
+        return SpreadsheetFormatParsers.date()
+                .orFailIfCursorNotEmpty(ParserReporters.basic())
+                .parse(TextCursors.charSequence("dmyy"), SpreadsheetFormatParserContexts.basic())
+                .map(SpreadsheetFormatDateParserToken.class::cast)
+                .get();
     }
 
-    // ToString.........................................................................................................
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(this.createPattern(), PATTERN);
+    private SpreadsheetFormatDateTimeParserToken hhmmyyyy() {
+        return SpreadsheetFormatParsers.dateTime()
+                .orFailIfCursorNotEmpty(ParserReporters.basic())
+                .parse(TextCursors.charSequence("hhmmyyyy"), SpreadsheetFormatParserContexts.basic())
+                .map(SpreadsheetFormatDateTimeParserToken.class::cast)
+                .get();
     }
 
-    private SpreadsheetFormatPattern createPattern() {
-        return SpreadsheetFormatPattern.parse(PATTERN);
+    private SpreadsheetFormatNumberParserToken number() {
+        return SpreadsheetFormatParsers.number()
+                .orFailIfCursorNotEmpty(ParserReporters.basic())
+                .parse(TextCursors.charSequence("#0.0"), SpreadsheetFormatParserContexts.basic())
+                .map(SpreadsheetFormatNumberParserToken.class::cast)
+                .get();
     }
 
-    // ClassTesting.....................................................................................................
+    private SpreadsheetFormatTimeParserToken hhmm() {
+        return SpreadsheetFormatParsers.time()
+                .orFailIfCursorNotEmpty(ParserReporters.basic())
+                .parse(TextCursors.charSequence("hhmm"), SpreadsheetFormatParserContexts.basic())
+                .map(SpreadsheetFormatTimeParserToken.class::cast)
+                .get();
+    }
 
     @Override
-    public Class<SpreadsheetFormatPattern> type() {
-        return SpreadsheetFormatPattern.class;
+    public Class<SpreadsheetFormatPattern<?>> type() {
+        return Cast.to(SpreadsheetFormatPattern.class);
     }
 
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
-    }
-
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public SpreadsheetFormatPattern createObject() {
-        return this.createPattern();
-    }
-
-    // HasJsonNodeTesting................................................................................................
-
-    @Override
-    public SpreadsheetFormatPattern createHasJsonNode() {
-        return this.createPattern();
-    }
-
-    @Override
-    public SpreadsheetFormatPattern fromJsonNode(final JsonNode jsonNode) {
-        return SpreadsheetFormatPattern.fromJsonNode(jsonNode);
-    }
-
-    // ParseStringTesting...............................................................................................
-
-    @Override
-    public SpreadsheetFormatPattern parseString(final String text) {
-        return SpreadsheetFormatPattern.parse(text);
-    }
-
-    @Override
-    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> expected) {
-        return expected;
-    }
-
-    @Override
-    public RuntimeException parseStringFailedExpected(final RuntimeException expected) {
-        return expected;
     }
 }
