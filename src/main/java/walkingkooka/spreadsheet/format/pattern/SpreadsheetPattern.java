@@ -38,7 +38,7 @@ import java.util.function.Function;
 /**
  * Holds a tokens that may be used to parse or format values along with helpers.
  */
-abstract public class SpreadsheetPatterns<V> implements HashCodeEqualsDefined,
+abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
         HasConverter,
         HasJsonNode,
         HasParser<ParserContext>,
@@ -47,9 +47,9 @@ abstract public class SpreadsheetPatterns<V> implements HashCodeEqualsDefined,
     /**
      * Parses text using the given parser and transformer.
      */
-    static <P extends SpreadsheetPatterns> P parsePattern(final String text,
-                                                          final Parser<SpreadsheetFormatParserContext> parser,
-                                                          final Function<ParserToken, P> transformer) {
+    static <P extends SpreadsheetPattern> P parsePattern(final String text,
+                                                         final Parser<SpreadsheetFormatParserContext> parser,
+                                                         final Function<ParserToken, P> transformer) {
         Objects.requireNonNull(text, "text");
 
         try {
@@ -66,7 +66,7 @@ abstract public class SpreadsheetPatterns<V> implements HashCodeEqualsDefined,
     /**
      * Package private ctor use factory
      */
-    SpreadsheetPatterns(final V value) {
+    SpreadsheetPattern(final V value) {
         super();
         this.value = value;
     }
@@ -118,7 +118,7 @@ abstract public class SpreadsheetPatterns<V> implements HashCodeEqualsDefined,
 
     abstract boolean canBeEquals(final Object other);
 
-    private boolean equals0(final SpreadsheetPatterns other) {
+    private boolean equals0(final SpreadsheetPattern other) {
         return this.value.equals(other.value);
     }
 }
