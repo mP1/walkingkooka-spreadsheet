@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 /**
  * A {@link SpreadsheetMetadataPropertyValueHandler} for valid {@link SpreadsheetParsePatterns patterns}.
  */
-final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimeParsePatterns extends SpreadsheetMetadataPropertyValueHandlerSpreadsheetParsePatterns<SpreadsheetTimeParsePatterns> {
+final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimeParsePatterns extends SpreadsheetMetadataPropertyValueHandlerSpreadsheetPattern<SpreadsheetTimeParsePatterns> {
 
     /**
      * Singleton

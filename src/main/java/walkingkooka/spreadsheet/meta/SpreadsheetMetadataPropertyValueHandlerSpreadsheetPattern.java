@@ -17,16 +17,16 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.tree.json.JsonNode;
 
 /**
  * A base {@link SpreadsheetMetadataPropertyValueHandler} for all sub classes of {@link SpreadsheetParsePatterns patterns}.
  */
-abstract class SpreadsheetMetadataPropertyValueHandlerSpreadsheetParsePatterns<P extends SpreadsheetParsePatterns<? extends SpreadsheetFormatParserToken>> extends SpreadsheetMetadataPropertyValueHandler<P> {
+abstract class SpreadsheetMetadataPropertyValueHandlerSpreadsheetPattern<P extends SpreadsheetPattern<?>> extends SpreadsheetMetadataPropertyValueHandler<P> {
 
-    SpreadsheetMetadataPropertyValueHandlerSpreadsheetParsePatterns() {
+    SpreadsheetMetadataPropertyValueHandlerSpreadsheetPattern() {
         super();
     }
 

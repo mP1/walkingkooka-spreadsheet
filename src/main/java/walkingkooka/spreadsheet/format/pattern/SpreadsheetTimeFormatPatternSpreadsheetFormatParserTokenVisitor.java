@@ -17,11 +17,10 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatAmPmParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatCurrencyParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDayParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitSpaceParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExponentSymbolParserToken;
@@ -29,18 +28,16 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatPercentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatThousandsParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatYearParserToken;
 import walkingkooka.visit.Visiting;
 
-import java.util.List;
+final class SpreadsheetTimeFormatPatternSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitor {
 
-final class SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor extends SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<SpreadsheetFormatDateTimeParserToken> {
-
-    static SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor with() {
-        return new SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor();
+    static SpreadsheetTimeFormatPatternSpreadsheetFormatParserTokenVisitor with() {
+        return new SpreadsheetTimeFormatPatternSpreadsheetFormatParserTokenVisitor();
     }
 
-    SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor() {
+    SpreadsheetTimeFormatPatternSpreadsheetFormatParserTokenVisitor() {
         super();
     }
 
@@ -51,17 +48,8 @@ final class SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor 
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatDateTimeParserToken token) {
-        this.ampm = false;
-        return Visiting.CONTINUE;
+        return this.failInvalid(token);
     }
-
-    @Override
-    protected void endVisit(final SpreadsheetFormatDateTimeParserToken token) {
-        this.addToken(token);
-        this.ampms.add(this.ampm);
-    }
-
-    final List<Boolean> ampms = Lists.array();
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatNumberParserToken token) {
@@ -74,22 +62,12 @@ final class SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor 
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatTimeParserToken token) {
-        return this.failInvalid(token);
-    }
-
-    @Override
-    protected void visit(final SpreadsheetFormatAmPmParserToken token) {
-        this.ampm = true;
-    }
-
-    /**
-     * When true 12 hour patterns must be used.
-     */
-    boolean ampm = false;
-
-    @Override
     protected void visit(final SpreadsheetFormatCurrencyParserToken token) {
+        this.failInvalid(token);
+    }
+
+    @Override
+    protected void visit(final SpreadsheetFormatDayParserToken token) {
         this.failInvalid(token);
     }
 
@@ -119,7 +97,7 @@ final class SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor 
     }
 
     @Override
-    void text(final String text) {
-        // nop
+    protected void visit(final SpreadsheetFormatYearParserToken token) {
+        this.failInvalid(token);
     }
 }

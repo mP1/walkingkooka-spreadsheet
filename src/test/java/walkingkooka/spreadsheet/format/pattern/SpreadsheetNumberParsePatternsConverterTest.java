@@ -563,7 +563,7 @@ public final class SpreadsheetNumberParsePatternsConverterTest extends Spreadshe
     }
 
     private SpreadsheetNumberParsePatternsConverter createConverter(final String pattern) {
-        return SpreadsheetNumberParsePatterns.parseNumber(pattern).createConverter();
+        return SpreadsheetNumberParsePatterns.parseNumberParsePatterns(pattern).createConverter();
     }
 
     @Override
