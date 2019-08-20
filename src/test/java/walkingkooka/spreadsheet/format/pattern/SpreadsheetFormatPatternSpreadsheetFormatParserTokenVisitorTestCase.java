@@ -17,19 +17,18 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.Cast;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.type.JavaVisibility;
+import org.junit.jupiter.api.Test;
 
-public final class SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitorTest implements ClassTesting2<SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<?>> {
+public abstract class SpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitorTestCase<V extends SpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitor>
+        extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitorTestCase<V> {
 
-    @Override
-    public Class<SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<?>> type() {
-        return Cast.to(SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor.class);
+    SpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitorTestCase() {
+        super();
     }
 
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
+    @Test
+    public void testToString() {
+        final V visitor = this.createVisitor();
+        this.toStringAndCheck(visitor, this.type().getSimpleName());
     }
 }

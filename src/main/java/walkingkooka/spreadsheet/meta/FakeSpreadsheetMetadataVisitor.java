@@ -20,10 +20,13 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.color.Color;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.visit.Visiting;
 
@@ -73,7 +76,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitDateFormatPattern(final SpreadsheetFormatPattern pattern) {
+    protected void visitDateFormatPattern(final SpreadsheetDateFormatPattern pattern) {
         throw new UnsupportedOperationException();
     }
 
@@ -83,7 +86,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitDateTimeFormatPattern(final SpreadsheetFormatPattern pattern) {
+    protected void visitDateTimeFormatPattern(final SpreadsheetDateTimeFormatPattern pattern) {
         throw new UnsupportedOperationException();
     }
 
@@ -138,7 +141,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitNumberFormatPattern(final SpreadsheetFormatPattern pattern) {
+    protected void visitNumberFormatPattern(final SpreadsheetNumberFormatPattern pattern) {
         throw new UnsupportedOperationException();
     }
 
@@ -173,7 +176,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitTimeFormatPattern(final SpreadsheetFormatPattern pattern) {
+    protected void visitTimeFormatPattern(final SpreadsheetTimeFormatPattern pattern) {
         throw new UnsupportedOperationException();
     }
 

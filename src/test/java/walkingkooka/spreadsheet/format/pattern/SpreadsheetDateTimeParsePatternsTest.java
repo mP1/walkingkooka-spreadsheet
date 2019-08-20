@@ -270,7 +270,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
 
     @Override
     public SpreadsheetDateTimeParsePatterns parseString(final String text) {
-        return SpreadsheetDateTimeParsePatterns.parseDateTime(text);
+        return SpreadsheetDateTimeParsePatterns.parseDateTimeParsePatterns(text);
     }
 }
 

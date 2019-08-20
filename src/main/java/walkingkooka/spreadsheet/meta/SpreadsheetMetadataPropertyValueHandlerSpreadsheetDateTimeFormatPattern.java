@@ -17,27 +17,27 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeFormatPattern;
 
 /**
- * A {@link SpreadsheetMetadataPropertyValueHandler} for valid {@link SpreadsheetDateParsePatterns patterns}.
+ * A {@link SpreadsheetMetadataPropertyValueHandler} for valid {@link SpreadsheetDateTimeFormatPattern patterns}.
  */
-final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateParsePatterns extends SpreadsheetMetadataPropertyValueHandlerSpreadsheetPattern<SpreadsheetDateParsePatterns> {
+final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimeFormatPattern extends SpreadsheetMetadataPropertyValueHandlerSpreadsheetPattern<SpreadsheetDateTimeFormatPattern> {
 
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateParsePatterns INSTANCE = new SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateParsePatterns();
+    final static SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimeFormatPattern INSTANCE = new SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimeFormatPattern();
 
     /**
      * Private ctor
      */
-    private SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateParsePatterns() {
+    private SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimeFormatPattern() {
         super();
     }
 
     @Override
-    Class<SpreadsheetDateParsePatterns> valueType() {
-        return SpreadsheetDateParsePatterns.class;
+    Class<SpreadsheetDateTimeFormatPattern> valueType() {
+        return SpreadsheetDateTimeFormatPattern.class;
     }
 }

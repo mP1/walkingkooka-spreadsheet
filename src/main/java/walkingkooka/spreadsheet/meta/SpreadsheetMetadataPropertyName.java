@@ -22,10 +22,14 @@ import walkingkooka.color.Color;
 import walkingkooka.naming.Name;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
@@ -117,15 +121,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     }
 
     /**
-     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with {@link SpreadsheetFormatPattern}.
-     */
-    private static SpreadsheetMetadataPropertyName<SpreadsheetFormatPattern> registerFormatPatternConstant(final String name,
-                                                                                                           final BiConsumer<SpreadsheetFormatPattern, SpreadsheetMetadataVisitor> visitor) {
-        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.formatPattern(),
-                visitor);
-    }
-
-    /**
      * Registers a new {@link SpreadsheetMetadataPropertyName}.
      */
     private static <T> SpreadsheetMetadataPropertyName<T> registerConstant(final String name,
@@ -159,7 +154,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-format-pattern {@link String}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetFormatPattern> DATE_FORMAT_PATTERN = registerFormatPatternConstant("date-format-pattern",
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetDateFormatPattern> DATE_FORMAT_PATTERN = registerConstant("date-format-pattern",
+            SpreadsheetMetadataPropertyValueHandler.dateFormatPattern(),
             (p, v) -> v.visitDateFormatPattern(p));
 
     /**
@@ -178,7 +174,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-format-pattern {@link String}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetFormatPattern> DATETIME_FORMAT_PATTERN = registerFormatPatternConstant("date-time-format-pattern",
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetDateTimeFormatPattern> DATETIME_FORMAT_PATTERN = registerConstant("date-time-format-pattern",
+            SpreadsheetMetadataPropertyValueHandler.dateTimeFormatPattern(),
             (p, v) -> v.visitDateTimeFormatPattern(p));
 
     /**
@@ -234,7 +231,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>number-format-pattern</code>
      */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetFormatPattern> NUMBER_FORMAT_PATTERN = registerFormatPatternConstant("number-format-pattern",
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetNumberFormatPattern> NUMBER_FORMAT_PATTERN = registerConstant("number-format-pattern",
+            SpreadsheetMetadataPropertyValueHandler.numberFormatPattern(),
             (p, v) -> v.visitNumberFormatPattern(p));
 
     /**
@@ -279,7 +277,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>time-format-pattern {@link SpreadsheetFormatPattern}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetFormatPattern> TIME_FORMAT_PATTERN = registerFormatPatternConstant("time-format-pattern",
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetTimeFormatPattern> TIME_FORMAT_PATTERN = registerConstant("time-format-pattern",
+            SpreadsheetMetadataPropertyValueHandler.timeFormatPattern(),
             (p, v) -> v.visitTimeFormatPattern(p));
 
     /**

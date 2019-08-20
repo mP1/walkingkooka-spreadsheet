@@ -23,25 +23,24 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisito
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
+import java.util.Objects;
+
 /**
  * A base {@link SpreadsheetFormatParserTokenVisitor} for all {@link SpreadsheetPattern} visitors.
  */
-abstract class SpreadsheetPatternSpreadsheetFormatParserTokenVisitor<P extends SpreadsheetFormatParserToken> extends SpreadsheetFormatParserTokenVisitor {
+abstract class SpreadsheetPatternSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
     SpreadsheetPatternSpreadsheetFormatParserTokenVisitor() {
         super();
     }
 
     final void startAccept(final ParserToken token) {
+        Objects.requireNonNull(token, "token");
+
         this.token = token;
         this.position = 0;
 
         this.accept(token);
-    }
-
-    @Override
-    protected Visiting startVisit(final ParserToken token) {
-        return super.startVisit(token);
     }
 
     @Override
