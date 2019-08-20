@@ -34,30 +34,30 @@ import java.util.function.Function;
  * A {@link SpreadsheetFormatter} that unconditionally formats a {@link BigDecimal}, without a {@link Color} using a pattern
  * parsed into a {@link SpreadsheetFormatFractionParserToken}.
  */
-final class BigDecimalFractionSpreadsheetFormatter extends SpreadsheetFormatter3<SpreadsheetFormatFractionParserToken> {
+final class FractionSpreadsheetFormatter extends SpreadsheetFormatter3<SpreadsheetFormatFractionParserToken> {
 
     /**
-     * Creates a {@link BigDecimalFractionSpreadsheetFormatter} from a {@link SpreadsheetFormatNumberParserToken}.
+     * Creates a {@link FractionSpreadsheetFormatter} from a {@link SpreadsheetFormatNumberParserToken}.
      */
-    static BigDecimalFractionSpreadsheetFormatter with(final SpreadsheetFormatFractionParserToken token,
-                                                       final Function<BigDecimal, Fraction> fractioner) {
+    static FractionSpreadsheetFormatter with(final SpreadsheetFormatFractionParserToken token,
+                                             final Function<BigDecimal, Fraction> fractioner) {
         check(token);
         Objects.requireNonNull(fractioner, "fractioner");
 
-        return new BigDecimalFractionSpreadsheetFormatter(token, fractioner);
+        return new FractionSpreadsheetFormatter(token, fractioner);
     }
 
     /**
      * Private ctor use static parse.
      */
-    private BigDecimalFractionSpreadsheetFormatter(final SpreadsheetFormatFractionParserToken token,
-                                                   final Function<BigDecimal, Fraction> fractioner) {
+    private FractionSpreadsheetFormatter(final SpreadsheetFormatFractionParserToken token,
+                                         final Function<BigDecimal, Fraction> fractioner) {
         super(token);
 
         this.fractioner = fractioner;
 
-        final BigDecimalFractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor =
-                BigDecimalFractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor.analyze(token);
+        final FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor =
+                FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor.analyze(token);
 
         this.components = visitor.components;
 
@@ -75,7 +75,7 @@ final class BigDecimalFractionSpreadsheetFormatter extends SpreadsheetFormatter3
     Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
         return Optional.of(SpreadsheetText.with(
                 SpreadsheetText.WITHOUT_COLOR,
-                this.format1(BigDecimal.class.cast(value), context)));
+                this.format1(context.convert(value, BigDecimal.class), context)));
     }
 
     /**
@@ -102,9 +102,9 @@ final class BigDecimalFractionSpreadsheetFormatter extends SpreadsheetFormatter3
             denominator = denominator.add(FIVE).divide(BigInteger.TEN);
         }
 
-        return this.format2(BigDecimalFractionSpreadsheetFormatterComponentContext.with(BigDecimalFractionSpreadsheetFormatterMinusSign.fromSignum(sign),
-                BigDecimalFractionSpreadsheetFormatterDigits.numerator(numerator.toString()),
-                BigDecimalFractionSpreadsheetFormatterDigits.denominator(denominator.toString()),
+        return this.format2(FractionSpreadsheetFormatterContext.with(FractionSpreadsheetFormatterNegativeSign.fromSignum(sign),
+                FractionSpreadsheetFormatterDigits.numerator(numerator.toString()),
+                FractionSpreadsheetFormatterDigits.denominator(denominator.toString()),
                 this,
                 context));
     }
@@ -131,7 +131,7 @@ final class BigDecimalFractionSpreadsheetFormatter extends SpreadsheetFormatter3
     /**
      * Applies the pattern and value into text.
      */
-    private String format2(final BigDecimalFractionSpreadsheetFormatterComponentContext context) {
+    private String format2(final FractionSpreadsheetFormatterContext context) {
         this.components.forEach(c -> c.append(context));
         return context.formattedText();
     }
@@ -139,7 +139,7 @@ final class BigDecimalFractionSpreadsheetFormatter extends SpreadsheetFormatter3
     /**
      * Components for each symbol in the original pattern.
      */
-    private final List<BigDecimalFractionSpreadsheetFormatterComponent> components;
+    private final List<FractionSpreadsheetFormatterComponent> components;
 
     final int numeratorDigitSymbolCount;
     final int denominatorDigitSymbolCount;

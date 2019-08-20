@@ -17,13 +17,9 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.test.ToStringTesting;
-
-public abstract class BigDecimalFractionSpreadsheetFormatterComponentTestCase<C extends BigDecimalFractionSpreadsheetFormatterComponent>
-        extends BigDecimalFractionTextFormatterTestCase<C>
-        implements ToStringTesting<C> {
-
-    BigDecimalFractionSpreadsheetFormatterComponentTestCase() {
-        super();
+public final class FractionSpreadsheetFormatterDigitsTest extends BigDecimalFractionTextFormatterTestCase<FractionSpreadsheetFormatterDigits> {
+    @Override
+    public Class<FractionSpreadsheetFormatterDigits> type() {
+        return FractionSpreadsheetFormatterDigits.class;
     }
 }

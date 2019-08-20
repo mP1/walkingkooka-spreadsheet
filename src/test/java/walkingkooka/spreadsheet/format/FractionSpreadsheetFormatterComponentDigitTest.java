@@ -17,9 +17,18 @@
 
 package walkingkooka.spreadsheet.format;
 
-public final class BigDecimalFractionSpreadsheetFormatterComponentTest extends BigDecimalFractionTextFormatterTestCase<BigDecimalFractionSpreadsheetFormatterComponent> {
+import org.junit.jupiter.api.Test;
+
+public final class FractionSpreadsheetFormatterComponentDigitTest extends FractionSpreadsheetFormatterComponentTestCase<FractionSpreadsheetFormatterComponentDigit> {
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(FractionSpreadsheetFormatterComponentDigit.with(1, FractionSpreadsheetFormatterZero.ZERO),
+                "0");
+    }
+
     @Override
-    public Class<BigDecimalFractionSpreadsheetFormatterComponent> type() {
-        return BigDecimalFractionSpreadsheetFormatterComponent.class;
+    public Class<FractionSpreadsheetFormatterComponentDigit> type() {
+        return FractionSpreadsheetFormatterComponentDigit.class;
     }
 }
