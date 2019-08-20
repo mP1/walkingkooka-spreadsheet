@@ -21,10 +21,16 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitorTesting;
 import walkingkooka.type.JavaVisibility;
 
-public abstract class SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitorTestCase<V extends SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<T>,
-        T extends SpreadsheetFormatParserToken> extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitorTestCase<V, T> {
+public abstract class SpreadsheetPatternSpreadsheetFormatParserTokenVisitorTestCase<V extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitor<T>,
+        T extends SpreadsheetFormatParserToken>
+        implements SpreadsheetFormatParserTokenVisitorTesting<V> {
 
-    SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitorTestCase() {
+    SpreadsheetPatternSpreadsheetFormatParserTokenVisitorTestCase() {
         super();
+    }
+
+    @Override
+    public final JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
