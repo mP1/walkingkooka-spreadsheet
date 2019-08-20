@@ -17,17 +17,9 @@
 
 package walkingkooka.spreadsheet.format;
 
-import org.junit.jupiter.api.Test;
-
-public final class BigDecimalFractionSpreadsheetFormatterPercentageSymbolComponentTest extends BigDecimalFractionSpreadsheetFormatterComponentTestCase<BigDecimalFractionSpreadsheetFormatterPercentageSymbolComponent> {
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(BigDecimalFractionSpreadsheetFormatterPercentageSymbolComponent.INSTANCE, "%");
-    }
-
+public final class FractionSpreadsheetFormatterNegativeSignTest extends BigDecimalFractionTextFormatterTestCase<FractionSpreadsheetFormatterNegativeSign> {
     @Override
-    public Class<BigDecimalFractionSpreadsheetFormatterPercentageSymbolComponent> type() {
-        return BigDecimalFractionSpreadsheetFormatterPercentageSymbolComponent.class;
+    public Class<FractionSpreadsheetFormatterNegativeSign> type() {
+        return FractionSpreadsheetFormatterNegativeSign.class;
     }
 }

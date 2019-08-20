@@ -19,16 +19,15 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 
-public final class BigDecimalFractionSpreadsheetFormatterLiteralComponentTest extends BigDecimalFractionSpreadsheetFormatterComponentTestCase<BigDecimalFractionSpreadsheetFormatterLiteralComponent> {
+public final class FractionSpreadsheetFormatterComponentPercentageSymbolTest extends FractionSpreadsheetFormatterComponentTestCase<FractionSpreadsheetFormatterComponentPercentageSymbol> {
 
     @Test
     public void testToString() {
-        final String text = "abc123";
-        this.toStringAndCheck(BigDecimalFractionSpreadsheetFormatterLiteralComponent.with(text), text);
+        this.toStringAndCheck(FractionSpreadsheetFormatterComponentPercentageSymbol.INSTANCE, "%");
     }
 
     @Override
-    public Class<BigDecimalFractionSpreadsheetFormatterLiteralComponent> type() {
-        return BigDecimalFractionSpreadsheetFormatterLiteralComponent.class;
+    public Class<FractionSpreadsheetFormatterComponentPercentageSymbol> type() {
+        return FractionSpreadsheetFormatterComponentPercentageSymbol.class;
     }
 }
