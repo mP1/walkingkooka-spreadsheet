@@ -21,11 +21,11 @@ import walkingkooka.Cast;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.type.JavaVisibility;
 
-public final class SpreadsheetPatternsTest implements ClassTesting2<SpreadsheetPatterns<?>> {
+public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPattern<?>> {
 
     @Override
-    public Class<SpreadsheetPatterns<?>> type() {
-        return Cast.to(SpreadsheetPatterns.class);
+    public Class<SpreadsheetPattern<?>> type() {
+        return Cast.to(SpreadsheetPattern.class);
     }
 
     @Override
