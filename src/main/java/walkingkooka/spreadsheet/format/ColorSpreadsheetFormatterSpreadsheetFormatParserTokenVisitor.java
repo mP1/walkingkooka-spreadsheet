@@ -31,9 +31,6 @@ final class ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends
     static ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor colorNameOrNumberOrFail(final SpreadsheetFormatColorParserToken token) {
         final ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor = new ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor();
         token.accept(visitor);
-        if (null == visitor.source) {
-            throw new IllegalArgumentException("Color name or number missing from " + token);
-        }
         return visitor;
     }
 
@@ -52,20 +49,21 @@ final class ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends
         this.set(ColorSpreadsheetFormatterColorSource.NUMBER, token.value());
     }
 
-    private void set(final ColorSpreadsheetFormatterColorSource source, final Object numberOfName) {
+    private void set(final ColorSpreadsheetFormatterColorSource source,
+                     final Object nameOrNumber) {
         this.source = source;
-        this.numberOfName = numberOfName;
+        this.nameOrNumber = nameOrNumber;
     }
 
     ColorSpreadsheetFormatterColorSource source;
-    Object numberOfName;
+    Object nameOrNumber;
 
     @Override
     public String toString() {
         return ToStringBuilder.empty()
                 .valueSeparator(" ")
                 .value(this.source)
-                .value(this.numberOfName)
+                .value(this.nameOrNumber)
                 .build();
     }
 }
