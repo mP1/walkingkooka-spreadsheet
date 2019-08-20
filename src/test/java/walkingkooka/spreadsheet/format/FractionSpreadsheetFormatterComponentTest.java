@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
-public final class FractionSpreadsheetFormatterComponentTest extends BigDecimalFractionTextFormatterTestCase<FractionSpreadsheetFormatterComponent> {
+public final class FractionSpreadsheetFormatterComponentTest extends FractionSpreadsheetFormatterTestCase<FractionSpreadsheetFormatterComponent> {
     @Override
     public Class<FractionSpreadsheetFormatterComponent> type() {
         return FractionSpreadsheetFormatterComponent.class;

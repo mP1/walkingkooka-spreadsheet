@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
-public final class FractionSpreadsheetFormatterNegativeSignTest extends BigDecimalFractionTextFormatterTestCase<FractionSpreadsheetFormatterNegativeSign> {
+public final class FractionSpreadsheetFormatterNegativeSignTest extends FractionSpreadsheetFormatterTestCase<FractionSpreadsheetFormatterNegativeSign> {
     @Override
     public Class<FractionSpreadsheetFormatterNegativeSign> type() {
         return FractionSpreadsheetFormatterNegativeSign.class;
