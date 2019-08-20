@@ -20,9 +20,9 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.type.JavaVisibility;
 
-public abstract class BigDecimalFractionTextFormatterTestCase<T> implements ClassTesting2<T> {
+public abstract class FractionSpreadsheetFormatterTestCase<T> implements ClassTesting2<T> {
 
-    BigDecimalFractionTextFormatterTestCase() {
+    FractionSpreadsheetFormatterTestCase() {
         super();
     }
 
