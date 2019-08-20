@@ -17,10 +17,10 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.spreadsheet.format.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatGeneralParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.text.CharSequences;
 import walkingkooka.visit.Visiting;
 
