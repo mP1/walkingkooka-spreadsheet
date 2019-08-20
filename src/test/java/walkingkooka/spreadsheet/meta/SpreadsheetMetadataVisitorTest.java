@@ -23,12 +23,12 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.spreadsheet.format.SpreadsheetDateParsePatterns;
-import walkingkooka.spreadsheet.format.SpreadsheetDateTimeParsePatterns;
-import walkingkooka.spreadsheet.format.SpreadsheetNumberParsePatterns;
-import walkingkooka.spreadsheet.format.SpreadsheetParsePatterns;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatPattern;
-import walkingkooka.spreadsheet.format.SpreadsheetTimeParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.type.JavaVisibility;
 import walkingkooka.visit.Visiting;
 
