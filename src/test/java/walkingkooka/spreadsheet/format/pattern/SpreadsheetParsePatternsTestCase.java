@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetParsePatterns<T>,
         T extends SpreadsheetFormatParserToken,
-        V> extends SpreadsheetPatternsTestCase<P, List<T>>
+        V> extends SpreadsheetPatternTestCase<P, List<T>>
         implements ConverterTesting {
 
     SpreadsheetParsePatternsTestCase() {
