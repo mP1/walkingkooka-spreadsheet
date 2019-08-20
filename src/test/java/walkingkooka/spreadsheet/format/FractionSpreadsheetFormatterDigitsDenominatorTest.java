@@ -17,7 +17,14 @@
 
 package walkingkooka.spreadsheet.format;
 
+import org.junit.jupiter.api.Test;
+
 public final class FractionSpreadsheetFormatterDigitsDenominatorTest extends FractionSpreadsheetFormatterDigitsTestCase<FractionSpreadsheetFormatterDigitsDenominator> {
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(FractionSpreadsheetFormatterDigitsDenominator.with("999"), "\"999\"");
+    }
 
     @Override
     public Class<FractionSpreadsheetFormatterDigitsDenominator> type() {

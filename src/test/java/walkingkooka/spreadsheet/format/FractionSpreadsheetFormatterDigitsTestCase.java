@@ -17,8 +17,11 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.test.ToStringTesting;
+
 public abstract class FractionSpreadsheetFormatterDigitsTestCase<D extends FractionSpreadsheetFormatterDigits>
-        extends FractionSpreadsheetFormatterTestCase<D> {
+        extends FractionSpreadsheetFormatterTestCase<D>
+        implements ToStringTesting<D> {
 
     FractionSpreadsheetFormatterDigitsTestCase() {
         super();
