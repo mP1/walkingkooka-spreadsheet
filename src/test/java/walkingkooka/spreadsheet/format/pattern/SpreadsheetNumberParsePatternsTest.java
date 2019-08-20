@@ -196,7 +196,7 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
 
     @Override
     public SpreadsheetNumberParsePatterns fromJsonNode(final JsonNode jsonNode) {
-        return SpreadsheetNumberParsePatterns.fromJsonNodeNumber(jsonNode);
+        return SpreadsheetNumberParsePatterns.fromJsonNodeNumberParsePatterns(jsonNode);
     }
 
     // ParseStringTesting...............................................................................................
