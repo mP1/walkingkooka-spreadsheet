@@ -23,39 +23,21 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
-import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting;
-import walkingkooka.test.IsMethodTesting;
-import walkingkooka.test.ParseStringTesting;
-import walkingkooka.test.ToStringTesting;
-import walkingkooka.text.cursor.parser.ParserTesting;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.tree.json.HasJsonNodeTesting;
-import walkingkooka.tree.json.JsonNode;
-import walkingkooka.type.JavaVisibility;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetParsePatterns<T>,
         T extends SpreadsheetFormatParserToken,
-        V>
-        implements ClassTesting2<P>,
-        ConverterTesting,
-        HashCodeEqualsDefinedTesting<P>,
-        HasJsonNodeTesting<P>,
-        IsMethodTesting<P>,
-        ParserTesting,
-        ParseStringTesting<P>,
-        ToStringTesting<P> {
+        V> extends SpreadsheetPatternsTestCase<P, List<T>>
+        implements ConverterTesting {
 
     SpreadsheetParsePatternsTestCase() {
         super();
@@ -64,7 +46,7 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
     @Test
     public final void testWithNullParserTokenFails() {
         assertThrows(NullPointerException.class, () -> {
-            createPattern(null);
+            createPattern((List<T>)null);
         });
     }
 
@@ -192,105 +174,27 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
         assertEquals(position, thrown.position(), () -> "position pattern=" + ParserToken.text(tokens));
     }
 
-    final SpreadsheetFormatParserToken ampm() {
-        return SpreadsheetFormatParserToken.amPm("A/P", "A/P");
+    // helpers..........................................................................................................
+
+    final P createPattern(final String pattern) {
+        return this.createPattern(Lists.of(this.parseFormatParserToken(pattern)));
     }
 
-    final SpreadsheetFormatParserToken color() {
-        return SpreadsheetFormatParserToken.color(Lists.of(colorName()), "[RED]");
+    abstract P createPattern(final List<T> tokens);
+
+    final List<T> parseFormatParserTokens() {
+        return Lists.of(this.parseFormatParserToken(this.patternText()));
     }
 
-    final SpreadsheetFormatParserToken colorName() {
-        return SpreadsheetFormatParserToken.colorName("RED", "RED");
+    abstract T parseFormatParserToken(final String text);
+
+    private T createFormatParserToken(final List<ParserToken> tokens) {
+        return this.createFormatParserToken(tokens, ParserToken.text(tokens));
     }
 
-    final SpreadsheetFormatParserToken currency() {
-        return SpreadsheetFormatParserToken.currency("%", "%");
-    }
-
-    final SpreadsheetFormatParserToken date() {
-        return SpreadsheetFormatParserToken.date(Lists.of(color()), "[RED]");
-    }
-
-    final SpreadsheetFormatParserToken dateTime() {
-        return SpreadsheetFormatParserToken.dateTime(Lists.of(color()), "[RED]");
-    }
-
-    final SpreadsheetFormatParserToken day() {
-        return SpreadsheetFormatParserToken.day("d", "d");
-    }
-
-    final SpreadsheetFormatParserToken decimalPoint() {
-        return SpreadsheetFormatParserToken.decimalPoint(".", ".");
-    }
-
-    final SpreadsheetFormatParserToken digit() {
-        return SpreadsheetFormatParserToken.digit("#", "#");
-    }
-
-    final SpreadsheetFormatParserToken digitSpace() {
-        return SpreadsheetFormatParserToken.digitSpace("?", "?");
-    }
-
-    final SpreadsheetFormatParserToken digitZero() {
-        return SpreadsheetFormatParserToken.digitZero("0", "0");
-    }
-
-    final SpreadsheetFormatParserToken exponentSymbol() {
-        return SpreadsheetFormatParserToken.exponentSymbol("^", "^");
-    }
-
-    final SpreadsheetFormatParserToken hour() {
-        return SpreadsheetFormatParserToken.hour("h", "h");
-    }
-
-    final SpreadsheetFormatParserToken monthOrMinute() {
-        return SpreadsheetFormatParserToken.monthOrMinute("m", "m");
-    }
-
-    final SpreadsheetFormatParserToken number() {
-        return SpreadsheetFormatParserToken.number(Lists.of(color()), "[RED]");
-    }
-
-    final SpreadsheetFormatParserToken percentSymbol() {
-        return SpreadsheetFormatParserToken.percent("%", "%");
-    }
-
-    final SpreadsheetFormatParserToken second() {
-        return SpreadsheetFormatParserToken.second("s", "s");
-    }
-
-    final SpreadsheetFormatParserToken thousands() {
-        return SpreadsheetFormatParserToken.thousands(",", ",");
-    }
-
-    final SpreadsheetFormatParserToken time() {
-        return SpreadsheetFormatParserToken.time(Lists.of(color()), "[RED]");
-    }
-
-    final SpreadsheetFormatParserToken underscore() {
-        return SpreadsheetFormatParserToken.underscore('_', "_");
-    }
-
-    final SpreadsheetFormatParserToken whitespace() {
-        return SpreadsheetFormatParserToken.whitespace(" ", " ");
-    }
-
-    final SpreadsheetFormatParserToken year() {
-        return SpreadsheetFormatParserToken.year("y", "y");
-    }
+    abstract T createFormatParserToken(final List<ParserToken> tokens, final String text);
 
     // Parse............................................................................................................
-
-    @Test
-    public final void testParseStringIllegalPatternFails() {
-        this.parseStringFails("\"unclosed quoted text inside patterns", IllegalArgumentException.class);
-    }
-
-    @Test
-    public final void testParseStringHangingSeparatorFails() {
-        this.parseStringFails(this.patternText() + ";", IllegalArgumentException.class);
-    }
 
     @Test
     public final void testParseStringGeneralFails() {
@@ -314,75 +218,6 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
                 this.createPattern(Lists.of(parseFormatParserToken(patternText), parseFormatParserToken(patternText2))));
     }
 
-    // HashCodeEqualsDefined............................................................................................
-
-    @Test
-    public final void testDifferentPattern() {
-        this.checkNotEquals(this.createPattern(Lists.of(this.parseFormatParserToken("\"different-text-literal\""))));
-    }
-
-    // JsonNodeTesting.................................................................................................
-
-    @Test
-    public final void testFromJsonNodeInvalidPattern() {
-        this.fromJsonNodeFails(JsonNode.string("\"unclosed quoted text inside patterns"), IllegalArgumentException.class);
-    }
-
-    // ToString.........................................................................................................
-
-    @Test
-    public final void testToString() {
-        this.toStringAndCheck(this.createPattern(this.parseFormatParserTokens()), this.patternText());
-    }
-
-    // helpers..........................................................................................................
-
-    final P createPattern() {
-        return this.createPattern(Lists.of(this.parseFormatParserToken(this.patternText())));
-    }
-
-    abstract P createPattern(final List<T> tokens);
-
-    abstract String patternText();
-
-    final List<T> parseFormatParserTokens() {
-        return Lists.of(this.parseFormatParserToken(this.patternText()));
-    }
-
-    abstract T parseFormatParserToken(final String text);
-
-    private T createFormatParserToken(final List<ParserToken> tokens) {
-        return this.createFormatParserToken(tokens, ParserToken.text(tokens));
-    }
-
-    abstract T createFormatParserToken(final List<ParserToken> tokens, final String text);
-
-    // ConverterTesting.................................................................................................
-
-    final void convertAndCheck2(final String pattern,
-                              final String text,
-                              final V value) {
-        this.convertAndCheck(this.parseString(pattern).converter(),
-                text,
-                this.targetType(),
-                this.converterContext(),
-                value);
-    }
-
-    final void convertFails2(final String pattern,
-                             final String text) {
-        this.convertFails(this.parseString(pattern).converter(),
-                text,
-                this.targetType(),
-                this.converterContext());
-    }
-
-    abstract Class<V> targetType();
-
-    private ConverterContext converterContext() {
-        return ConverterContexts.basic(this.dateTimeContext(), this.decimalNumberContext());
-    }
-    
     // ParserTesting....................................................................................................
 
     final void parseAndCheck2(final String pattern,
@@ -419,58 +254,36 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
         return SpreadsheetParserContexts.basic(this.dateTimeContext(), this.decimalNumberContext());
     }
 
-    // ClassTesting.....................................................................................................
+    // ConverterTesting.................................................................................................
 
-    @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
+    final void convertAndCheck2(final String pattern,
+                              final String text,
+                              final V value) {
+        this.convertAndCheck(this.parseString(pattern).converter(),
+                text,
+                this.targetType(),
+                this.converterContext(),
+                value);
     }
 
-    // HashCodeEqualityDefinedTesting...................................................................................
-
-    @Override
-    public final P createObject() {
-        return this.createPattern();
+    final void convertFails2(final String pattern,
+                             final String text) {
+        this.convertFails(this.parseString(pattern).converter(),
+                text,
+                this.targetType(),
+                this.converterContext());
     }
 
-    // HasJsonNodeTesting................................................................................................
+    abstract Class<V> targetType();
 
-    @Override
-    public final P createHasJsonNode() {
-        return this.createPattern();
+    private ConverterContext converterContext() {
+        return ConverterContexts.basic(this.dateTimeContext(), this.decimalNumberContext());
     }
 
     // IsMethodTesting..................................................................................................
 
     @Override
-    public final P createIsMethodObject() {
-        return this.createPattern();
-    }
-
-    @Override
-    public final String isMethodTypeNamePrefix() {
-        return "Spreadsheet";
-    }
-
-    @Override
     public final String isMethodTypeNameSuffix() {
         return "ParsePatterns";
-    }
-
-    @Override
-    public final Predicate<String> isMethodIgnoreMethodFilter() {
-        return Predicates.never();
-    }
-
-    // ParseStringTesting...............................................................................................
-
-    @Override
-    public final Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> expected) {
-        return expected;
-    }
-
-    @Override
-    public final RuntimeException parseStringFailedExpected(final RuntimeException expected) {
-        return expected;
     }
 }
