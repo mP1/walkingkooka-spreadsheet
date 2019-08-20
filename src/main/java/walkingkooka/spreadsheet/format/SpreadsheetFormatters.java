@@ -18,12 +18,12 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.math.Fraction;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExpressionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatFractionParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.type.PublicStaticHelper;
 

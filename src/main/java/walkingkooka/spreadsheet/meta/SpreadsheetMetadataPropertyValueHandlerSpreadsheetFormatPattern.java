@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.spreadsheet.format.SpreadsheetFormatPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.tree.json.JsonNode;
 
 /**
