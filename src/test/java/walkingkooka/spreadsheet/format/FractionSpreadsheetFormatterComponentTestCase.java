@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.test.ToStringTesting;
 
 public abstract class FractionSpreadsheetFormatterComponentTestCase<C extends FractionSpreadsheetFormatterComponent>
-        extends BigDecimalFractionTextFormatterTestCase<C>
+        extends FractionSpreadsheetFormatterTestCase<C>
         implements ToStringTesting<C> {
 
     FractionSpreadsheetFormatterComponentTestCase() {
