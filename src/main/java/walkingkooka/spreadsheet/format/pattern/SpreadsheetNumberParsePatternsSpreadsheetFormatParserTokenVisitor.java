@@ -32,7 +32,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatPercentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSecondParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatThousandsParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatYearParserToken;
 import walkingkooka.visit.Visiting;
 
@@ -87,7 +86,6 @@ final class SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor ex
 
     @Override
     protected void visit(final SpreadsheetFormatCurrencyParserToken token) {
-        this.advancePosition(token);
         this.addComponent(SpreadsheetNumberParsePatternsComponent.currency());
     }
 
@@ -98,7 +96,6 @@ final class SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor ex
 
     @Override
     protected void visit(final SpreadsheetFormatDecimalPointParserToken token) {
-        this.advancePosition(token);
         this.addComponent(SpreadsheetNumberParsePatternsComponent.decimalSeparator());
 
         this.decimal = true;
@@ -110,28 +107,24 @@ final class SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor ex
      */
     @Override
     protected void visit(final SpreadsheetFormatDigitParserToken token) {
-        this.advancePosition(token);
         this.addComponent(SpreadsheetNumberParsePatternsComponent.digit(this.digitMaxCount()));
         this.maybeUpdateLastDecimal();
     }
 
     @Override
     protected void visit(final SpreadsheetFormatDigitSpaceParserToken token) {
-        this.advancePosition(token);
         this.addComponent(SpreadsheetNumberParsePatternsComponent.digitSpace(this.digitMaxCount()));
         this.maybeUpdateLastDecimal();
     }
 
     @Override
     protected void visit(final SpreadsheetFormatDigitZeroParserToken token) {
-        this.advancePosition(token);
         this.addComponent(SpreadsheetNumberParsePatternsComponent.digitZero(this.digitMaxCount()));
         this.maybeUpdateLastDecimal();
     }
 
     @Override
     protected void visit(final SpreadsheetFormatExponentSymbolParserToken token) {
-        this.advancePosition(token);
         this.addComponent(SpreadsheetNumberParsePatternsComponent.exponent());
 
         this.firstDigit = true;
@@ -149,18 +142,12 @@ final class SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor ex
 
     @Override
     protected void visit(final SpreadsheetFormatPercentParserToken token) {
-        this.advancePosition(token);
         this.addComponent(SpreadsheetNumberParsePatternsComponent.percentage());
     }
 
     @Override
     protected void visit(final SpreadsheetFormatSecondParserToken token) {
         this.failInvalid(token);
-    }
-
-    @Override
-    protected void visit(final SpreadsheetFormatThousandsParserToken token) {
-        this.advancePosition(token);
     }
 
     @Override
