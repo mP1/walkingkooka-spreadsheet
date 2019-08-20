@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.Cast;
-import walkingkooka.Value;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.HasConverter;
@@ -26,17 +24,12 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
-import walkingkooka.test.HashCodeEqualsDefined;
-import walkingkooka.text.CharSequences;
-import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.HasParser;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
-import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
@@ -45,16 +38,14 @@ import walkingkooka.tree.json.JsonNode;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
 
 /**
  * Holds a a {@link List} of {@link SpreadsheetFormatDateTimeParserToken date/time} or {@link SpreadsheetFormatNumberParserToken} number tokens and some common functionality.
  */
-public abstract class SpreadsheetParsePatterns<T extends SpreadsheetFormatParserToken> implements HashCodeEqualsDefined,
-        HasConverter,
+public abstract class SpreadsheetParsePatterns<T extends SpreadsheetFormatParserToken> extends SpreadsheetPatterns<List<T>>
+    implements HasConverter,
         HasJsonNode,
-        HasParser<ParserContext>,
-        Value<List<T>> {
+        HasParser<ParserContext> {
 
     // with.............................................................................................................
 
@@ -169,23 +160,6 @@ public abstract class SpreadsheetParsePatterns<T extends SpreadsheetFormatParser
     // helper...........................................................................................................
 
     /**
-     * Parses text using the given parser and transformer.
-     */
-    static <P extends SpreadsheetParsePatterns> P parsePattern(final String text,
-                                                               final Parser<SpreadsheetFormatParserContext> parser,
-                                                               final Function<ParserToken, P> transformer) {
-        Objects.requireNonNull(text, "text");
-
-        try {
-            return parser.parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
-                    .map(transformer)
-                    .orElseThrow(() -> new IllegalArgumentException("Invalid pattern " + CharSequences.quoteAndEscape(text)));
-        } catch (final ParserException cause) {
-            throw new IllegalArgumentException(cause.getMessage(), cause);
-        }
-    }
-
-    /**
      * Parsers input that requires a single {@link SpreadsheetFormatParserToken token} followed by an optional separator and more tokens.
      */
     static Parser<SpreadsheetFormatParserContext> patternParser(final Parser<ParserContext> parser) {
@@ -222,66 +196,14 @@ public abstract class SpreadsheetParsePatterns<T extends SpreadsheetFormatParser
      * Package private ctor use factory
      */
     SpreadsheetParsePatterns(final List<T> tokens) {
-        super();
-        this.tokens = Lists.immutable(tokens);
-    }
-
-    // Value............................................................................................................
-
-    @Override
-    public final List<T> value() {
-        return this.tokens;
-    }
-
-    private final List<T> tokens;
-
-    // isXXX............................................................................................................
-
-    /**
-     * Returns true if this is a {@link SpreadsheetDateParsePatterns}
-     */
-    public abstract boolean isDate();
-
-    /**
-     * Returns true if this is a {@link SpreadsheetDateTimeParsePatterns}
-     */
-    public abstract boolean isDateTime();
-
-    /**
-     * Returns true if this is a {@link SpreadsheetNumberParsePatterns}
-     */
-    public abstract boolean isNumber();
-
-    /**
-     * Returns true if this is a {@link SpreadsheetTimeParsePatterns}
-     */
-    public abstract boolean isTime();
-
-    // HashCodeEqualsDefined............................................................................................
-
-    @Override
-    public final int hashCode() {
-        return this.tokens.hashCode();
-    }
-
-    @Override
-    public final boolean equals(final Object other) {
-        return this == other ||
-                this.canBeEquals(other) &&
-                        this.equals0(Cast.to(other));
-    }
-
-    abstract boolean canBeEquals(final Object other);
-
-    private boolean equals0(final SpreadsheetParsePatterns other) {
-        return this.tokens.equals(other.tokens);
+        super(Lists.immutable(tokens));
     }
 
     // Object...........................................................................................................
 
     @Override
     public final String toString() {
-        return ParserToken.text(this.tokens);
+        return ParserToken.text(this.value);
     }
 
     // HasJsonNode......................................................................................................
