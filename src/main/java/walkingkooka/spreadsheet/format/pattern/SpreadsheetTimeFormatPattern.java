@@ -17,6 +17,9 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 
 /**
@@ -58,6 +61,15 @@ public final class SpreadsheetTimeFormatPattern extends SpreadsheetFormatPattern
     @Override
     public boolean isTime() {
         return true;
+    }
+
+    // HasSpreadsheetFormatter..........................................................................................
+
+    @Override
+    SpreadsheetFormatter createFormatter() {
+        final SpreadsheetFormatTimeParserToken time = this.value;
+
+        return SpreadsheetFormatters.localDateTime(SpreadsheetFormatParserToken.dateTime(time.value(), time.text()));
     }
 
     // HashCodeEqualsDefined............................................................................................
