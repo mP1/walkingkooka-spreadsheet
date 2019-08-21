@@ -48,7 +48,7 @@ import java.util.List;
  * A base {@link SpreadsheetFormatParserTokenVisitor} where most (almost all overrides fail when an unexpected or invalid
  * {@link SpreadsheetFormatParserToken} is found.
  */
-abstract class SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<T extends SpreadsheetFormatParserToken> extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitor<T> {
+abstract class SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<T extends SpreadsheetFormatParserToken> extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitor {
 
     SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor() {
         super();
