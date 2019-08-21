@@ -18,6 +18,9 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.convert.ConverterContexts;
+import walkingkooka.convert.Converters;
+import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -28,6 +31,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.JsonNode;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.List;
 
 public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetNumberFormatPattern,
@@ -99,6 +103,34 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
                 .parse(TextCursors.charSequence(text), SpreadsheetFormatParserContexts.basic())
                 .map(SpreadsheetFormatNumberParserToken.class::cast)
                 .get();
+    }
+
+    // HasFormatter.....................................................................................................
+
+    @Test
+    public void testFormatterFormat() {
+        this.formatAndCheck(this.createPattern("#.000 \"abc\"").formatter(),
+                123.5,
+                new FakeSpreadsheetFormatterContext() {
+
+                    @Override
+                    public <T> T convert(final Object value,
+                                         final Class<T> target) {
+                        return Converters.numberNumber()
+                                .convert(value, target, ConverterContexts.fake());
+                    }
+
+                    @Override
+                    public char decimalSeparator() {
+                        return '.';
+                    }
+
+                    @Override
+                    public MathContext mathContext() {
+                        return MathContext.UNLIMITED;
+                    }
+                },
+                "123.500 abc");
     }
 
     // ClassTesting.....................................................................................................
