@@ -21,7 +21,7 @@ import walkingkooka.test.ClassTesting2;
 import walkingkooka.type.JavaVisibility;
 
 public abstract class SpreadsheetFormatterTestCase<F extends SpreadsheetFormatter> implements ClassTesting2<F>,
-        SpreadsheetFormatterTesting<F> {
+        SpreadsheetFormatterTesting2<F> {
 
     SpreadsheetFormatterTestCase() {
         super();
