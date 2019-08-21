@@ -18,11 +18,10 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitorTesting;
-import walkingkooka.type.JavaVisibility;
 
 public abstract class SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitorTestCase<V extends SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<T>,
-        T extends SpreadsheetFormatParserToken> extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitorTestCase<V, T> {
+        T extends SpreadsheetFormatParserToken>
+    extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitorTestCase<V> {
 
     SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitorTestCase() {
         super();

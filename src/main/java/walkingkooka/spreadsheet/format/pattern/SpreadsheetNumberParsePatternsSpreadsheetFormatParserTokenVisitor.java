@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatAmPmParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatCurrencyParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDayParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDecimalPointParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitParserToken;
@@ -32,6 +34,8 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatPercentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSecondParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatYearParserToken;
 import walkingkooka.visit.Visiting;
 
@@ -63,6 +67,17 @@ final class SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor ex
         return Visiting.CONTINUE;
     }
 
+    @Override
+    protected Visiting startVisit(final SpreadsheetFormatDateParserToken token) {
+        return this.failInvalid(token);
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetFormatDateTimeParserToken token) {
+        return this.failInvalid(token);
+    }
+
+    @Override
     protected void endVisit(final SpreadsheetFormatNumberParserToken token) {
         final List<SpreadsheetNumberParsePatternsComponent> components = this.components;
 
@@ -74,6 +89,14 @@ final class SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor ex
         this.patterns.add(components);
     }
 
+    protected Visiting startVisit(final SpreadsheetFormatTextParserToken token) {
+        return this.failInvalid(token);
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetFormatTimeParserToken token) {
+        return this.failInvalid(token);
+    }
     /**
      * Accumulates all the components for each and every pattern.
      */

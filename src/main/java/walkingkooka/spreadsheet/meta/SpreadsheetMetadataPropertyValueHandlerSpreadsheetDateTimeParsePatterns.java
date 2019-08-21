@@ -18,12 +18,11 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 
 /**
- * A {@link SpreadsheetMetadataPropertyValueHandler} for valid {@link SpreadsheetParsePatterns patterns}.
+ * A {@link SpreadsheetMetadataPropertyValueHandler} for valid {@link SpreadsheetDateTimeParsePatterns patterns}.
  */
-final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimeParsePatterns extends SpreadsheetMetadataPropertyValueHandlerSpreadsheetParsePatterns<SpreadsheetDateTimeParsePatterns> {
+final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimeParsePatterns extends SpreadsheetMetadataPropertyValueHandlerSpreadsheetPattern<SpreadsheetDateTimeParsePatterns> {
 
     /**
      * Singleton
