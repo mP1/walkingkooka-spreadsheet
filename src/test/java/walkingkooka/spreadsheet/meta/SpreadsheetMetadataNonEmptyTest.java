@@ -23,22 +23,29 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextTesting;
+import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextTesting;
+import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.CharSequences;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
@@ -381,6 +388,146 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         assertThrows(IllegalStateException.class, () -> {
             this.createSpreadsheetMetadata().hateosLinkId();
         });
+    }
+
+    // HasConverter.....................................................................................................
+
+    @Test
+    public void testConverterBigDecimalToString() {
+        this.convertAndCheck2(BigDecimal.valueOf(123.5),
+                "Number 123.500");
+    }
+
+    @Test
+    public void testConverterBigIntegerToString() {
+        this.convertAndCheck2(BigInteger.valueOf(123),
+                "Number 123.000");
+    }
+
+    @Test
+    public void testConverterByteToString() {
+        this.convertAndCheck2((byte) 123,
+                "Number 123.000");
+    }
+
+    @Test
+    public void testConverterShortToString() {
+        this.convertAndCheck2((short) 123,
+                "Number 123.000");
+    }
+
+    @Test
+    public void testConverterIntegerToString() {
+        this.convertAndCheck2(123,
+                "Number 123.000");
+    }
+
+    @Test
+    public void testConverterLongToString() {
+        this.convertAndCheck2(123L,
+                "Number 123.000");
+    }
+
+    @Test
+    public void testConverterFloatToString() {
+        this.convertAndCheck2(123.5f,
+                "Number 123.500");
+    }
+
+    @Test
+    public void testConverterDoubleToString() {
+        this.convertAndCheck2(123.5,
+                "Number 123.500");
+    }
+
+    @Test
+    public void testConverterStringToBigDecimal() {
+        this.convertAndCheck2("Number 123.500", BigDecimal.valueOf(123.5));
+    }
+
+    @Test
+    public void testConverterStringToBigInteger() {
+        this.convertAndCheck2("Number 123.000", BigInteger.valueOf(123));
+    }
+
+    @Test
+    public void testConverterStringToByte() {
+        this.convertAndCheck2("Number 123.000", (byte) 123);
+    }
+
+    @Test
+    public void testConverterStringToShort() {
+        this.convertAndCheck2("Number 123.000", (short) 123);
+    }
+
+    @Test
+    public void testConverterStringToInteger() {
+        this.convertAndCheck2("Number 123.000", 123);
+    }
+
+    @Test
+    public void testConverterStringToLong() {
+        this.convertAndCheck2("Number 123.000", 123L);
+    }
+
+    @Test
+    public void testConverterStringToFloat() {
+        this.convertAndCheck2("Number 123.500", 123.5f);
+    }
+
+    @Test
+    public void testConverterStringToDouble() {
+        this.convertAndCheck2("Number 123.500", 123.5);
+    }
+
+    @Test
+    public void testConverterDateToString() {
+        this.convertAndCheck2("Date 2000 12 31", LocalDate.of(2000, 12, 31));
+    }
+
+    @Test
+    public void testConverterStringToDate() {
+        this.convertAndCheck2(LocalDate.of(2000, 12, 31), "Date 2000 12 31");
+    }
+
+    @Test
+    public void testConverterDateTimeToString() {
+        this.convertAndCheck2("DateTime 2000 12", LocalDateTime.of(2000, 1, 1, 12, 0, 0));
+    }
+
+    @Test
+    public void testConverterStringToDateTime() {
+        this.convertAndCheck2(LocalDateTime.of(2000, 1, 1, 12, 0, 0), "DateTime 2000 12");
+    }
+
+    @Test
+    public void testConverterTimeToString() {
+        this.convertAndCheck2("Time 59 12", LocalTime.of(12, 0, 59));
+    }
+
+    @Test
+    public void testConverterStringToTime() {
+        this.convertAndCheck2(LocalTime.of(12, 58, 59), "Time 59 12");
+    }
+
+    private void convertAndCheck2(final Object value,
+                                  final Object expected) {
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetPattern.parseDateFormatPattern("\"Date\" yyyy mm dd"))
+                .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS, SpreadsheetPattern.parseDateParsePatterns("\"Date\" yyyy mm dd"))
+                .set(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetPattern.parseDateTimeFormatPattern("\"DateTime\" yyyy hh"))
+                .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetPattern.parseDateTimeParsePatterns("\"DateTime\" yyyy hh"))
+                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("\"Number\" 00.000"))
+                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERNS, SpreadsheetPattern.parseNumberParsePatterns("\"Number\" 00.000"))
+                .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetPattern.parseTimeFormatPattern("\"Time\" ss hh"))
+                .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetPattern.parseTimeParsePatterns("\"Time\" ss hh"));
+
+        this.convertAndCheck(metadata.converter(),
+                value,
+                expected.getClass(),
+                ConverterContexts.basic(DateTimeContexts.locale(Locale.ENGLISH, 20), DecimalNumberContexts.american(MathContext.DECIMAL32)),
+                expected);
     }
 
     // HasDateTimeContext...............................................................................................
