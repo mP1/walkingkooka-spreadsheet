@@ -26,9 +26,9 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.text.cursor.parser.HasParser;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
-import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Holds a a {@link List} of {@link SpreadsheetFormatDateTimeParserToken date/time} or {@link SpreadsheetFormatNumberParserToken} number tokens and some common functionality.
@@ -48,9 +48,17 @@ public abstract class SpreadsheetParsePatterns<T extends SpreadsheetFormatParser
 
     // Object...........................................................................................................
 
+    private final static String SEPARATOR = ";";
+
+    /**
+     * Attempts to reconstruct an equivalent but not exact pattern representation of the given tokens. The actual
+     * optional whitespace and separator tokens are not present only the individual patterns.
+     */
     @Override
     public final String toString() {
-        return ParserToken.text(this.value);
+        return this.value.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(SEPARATOR));
     }
 
     // HasConverter........................................................................................................
