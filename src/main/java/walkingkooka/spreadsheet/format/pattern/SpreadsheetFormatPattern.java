@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.spreadsheet.format.HasSpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -24,7 +26,8 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 /**
  * Holds a single {@link SpreadsheetFormatDateTimeParserToken date/time} or {@link SpreadsheetFormatNumberParserToken} number tokens and some common functionality.
  */
-public abstract class SpreadsheetFormatPattern<T extends SpreadsheetFormatParserToken> extends SpreadsheetPattern<T> {
+public abstract class SpreadsheetFormatPattern<T extends SpreadsheetFormatParserToken> extends SpreadsheetPattern<T>
+        implements HasSpreadsheetFormatter {
 
     // ctor.............................................................................................................
 
@@ -34,6 +37,25 @@ public abstract class SpreadsheetFormatPattern<T extends SpreadsheetFormatParser
     SpreadsheetFormatPattern(final T token) {
         super(token);
     }
+
+    // HasSpreadsheetFormatter..........................................................................................
+
+    /**
+     * Returns a {@link SpreadsheetFormatter} built from this pattern.
+     */
+    public final SpreadsheetFormatter formatter() {
+        if (null == this.formatter) {
+            this.formatter = this.createFormatter();
+        }
+        return this.formatter;
+    }
+
+    private SpreadsheetFormatter formatter;
+
+    /**
+     * Factory that lazily creates a {@link SpreadsheetFormatter}
+     */
+    abstract SpreadsheetFormatter createFormatter();
 
     // Object...........................................................................................................
 

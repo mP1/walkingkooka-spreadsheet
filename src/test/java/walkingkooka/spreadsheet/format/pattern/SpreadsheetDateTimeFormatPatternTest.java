@@ -18,6 +18,9 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.convert.ConverterContexts;
+import walkingkooka.convert.Converters;
+import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -113,6 +116,22 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
                 .get();
     }
 
+    // HasFormatter.....................................................................................................
+
+    @Test
+    public void testFormatterFormat() {
+        this.formatAndCheck(this.createPattern("yyyy mm dd hh mm ss \"abc\"").formatter(),
+                LocalDateTime.of(2000, 12, 31, 12, 58, 59),
+                new FakeSpreadsheetFormatterContext() {
+                    @Override
+                    public <T> T convert(final Object value,
+                                         final Class<T> target) {
+                        return Converters.simple()
+                                .convert(value, target, ConverterContexts.fake());
+                    }
+                },
+                "2000 12 31 12 58 59 abc");
+    }
 
     // ClassTesting.....................................................................................................
 
