@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.color.Color;
+import walkingkooka.convert.ConverterTesting;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
@@ -38,6 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata> implements ClassTesting2<SpreadsheetMetadata>,
+        ConverterTesting,
         HashCodeEqualsDefinedTesting<SpreadsheetMetadata>,
         HasJsonNodeTesting<SpreadsheetMetadata>,
         HateosResourceTesting<SpreadsheetMetadata>,
@@ -171,6 +173,17 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         assertEquals(Optional.ofNullable(color),
                 numberToColor.apply(number),
                 () -> number + " to color " + metadata.toString());
+    }
+
+    // HasConverter.....................................................................................................
+
+    @Test
+    public final void testConverterRequiredPropertiesAbsentFails() {
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
+            this.createObject().converter();
+        });
+        checkMessage(thrown,
+                "Required properties \"date-format-pattern\", \"date-parse-pattern\", \"date-time-format-pattern\", \"date-time-offset\", \"date-time-parse-patterns\", \"number-format-pattern\", \"number-parse-patterns\", \"time-format-pattern\", \"time-parse-patterns\" missing.");
     }
 
     // HasDateTimeContext...............................................................................................
