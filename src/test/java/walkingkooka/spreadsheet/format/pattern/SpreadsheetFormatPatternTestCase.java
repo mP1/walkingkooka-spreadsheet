@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.format.pattern;
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.text.cursor.parser.ParentParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -31,7 +33,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetFormatPattern<T>,
         T extends SpreadsheetFormatParserToken & ParentParserToken<T>,
-        V> extends SpreadsheetPatternTestCase<P, T> {
+        V> extends SpreadsheetPatternTestCase<P, T>
+        implements SpreadsheetFormatterTesting {
 
     SpreadsheetFormatPatternTestCase() {
         super();
