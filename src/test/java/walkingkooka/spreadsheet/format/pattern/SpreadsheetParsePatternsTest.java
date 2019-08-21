@@ -43,52 +43,52 @@ public final class SpreadsheetParsePatternsTest implements ClassTesting2<Spreads
     @Test
     public void testWithDate() {
         final List<SpreadsheetFormatDateParserToken> tokens = Lists.of(this.dmyy(), this.ddmmyyyy());
-        assertEquals(tokens, SpreadsheetParsePatterns.withDateParse(tokens).value());
+        assertEquals(tokens, SpreadsheetParsePatterns.dateParse(tokens).value());
     }
 
     @Test
     public void testWithDateTime() {
         final List<SpreadsheetFormatDateTimeParserToken> tokens = Lists.of(this.hhmmyyyy(), this.yyyymmhh());
-        assertEquals(tokens, SpreadsheetParsePatterns.withDateTimeParse(tokens).value());
+        assertEquals(tokens, SpreadsheetParsePatterns.dateTimeParsePatterns(tokens).value());
     }
 
     @Test
     public void testWithNumber() {
         final List<SpreadsheetFormatNumberParserToken> tokens = Lists.of(this.number(), this.money());
-        assertEquals(tokens, SpreadsheetParsePatterns.withNumberParse(tokens).value());
+        assertEquals(tokens, SpreadsheetParsePatterns.numberParsePatterns(tokens).value());
     }
 
     @Test
     public void testWithTime() {
         final List<SpreadsheetFormatTimeParserToken> tokens = Lists.of(this.hhmm(), this.hhmmss());
-        assertEquals(tokens, SpreadsheetParsePatterns.withTimeParse(tokens).value());
+        assertEquals(tokens, SpreadsheetParsePatterns.timeParsePatterns(tokens).value());
     }
 
     @Test
     public void testParseDate() {
         this.parseAndCheck("dmyy;ddmmyyyy",
-                SpreadsheetParsePatterns::parseDate,
+                SpreadsheetParsePatterns::parseDateParsePatterns,
                 this.dmyy(), this.ddmmyyyy());
     }
 
     @Test
     public void testParseDateTime() {
         this.parseAndCheck("hhmmyyyy;yyyymmhh",
-                SpreadsheetParsePatterns::parseDateTime,
+                SpreadsheetParsePatterns::parseDateTimeParsePatterns,
                 this.hhmmyyyy(), this.yyyymmhh());
     }
 
     @Test
     public void testParseNumber() {
         this.parseAndCheck("#0.0;$ #0.00",
-                SpreadsheetParsePatterns::parseNumber,
+                SpreadsheetParsePatterns::parseNumberParsePatterns,
                 this.number(), this.money());
     }
 
     @Test
     public void testParseTime() {
         this.parseAndCheck("hhmm;hhmmss",
-                SpreadsheetParsePatterns::parseTime,
+                SpreadsheetParsePatterns::parseTimeParsePatterns,
                 this.hhmm(), this.hhmmss());
     }
     

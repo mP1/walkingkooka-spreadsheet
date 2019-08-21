@@ -17,113 +17,28 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.Cast;
-import walkingkooka.Value;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExpressionParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
-import walkingkooka.test.HashCodeEqualsDefined;
-import walkingkooka.text.cursor.TextCursors;
-import walkingkooka.text.cursor.parser.ParserException;
-import walkingkooka.text.cursor.parser.ParserReporters;
-import walkingkooka.tree.json.HasJsonNode;
-import walkingkooka.tree.json.JsonNode;
-
-import java.util.Objects;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 
 /**
- * Base class for all format patterns.
+ * Holds a single {@link SpreadsheetFormatDateTimeParserToken date/time} or {@link SpreadsheetFormatNumberParserToken} number tokens and some common functionality.
  */
-public final class SpreadsheetFormatPattern implements HashCodeEqualsDefined,
-        HasJsonNode,
-        Value<SpreadsheetFormatExpressionParserToken> {
-    /**
-     * Creates a new {@link SpreadsheetFormatPattern} after checking the value is valid.
-     */
-    public static SpreadsheetFormatPattern parse(final String value) {
-        Objects.requireNonNull(value, "value");
+public abstract class SpreadsheetFormatPattern<T extends SpreadsheetFormatParserToken> extends SpreadsheetPattern<T> {
 
-        try {
-            return new SpreadsheetFormatPattern(SpreadsheetFormatParsers.expression()
-                            .orFailIfCursorNotEmpty(ParserReporters.basic())
-                            .parse(TextCursors.charSequence(value), SpreadsheetFormatParserContexts.basic())
-                            .map(SpreadsheetFormatExpressionParserToken.class::cast)
-                            .orElseThrow(() -> new IllegalArgumentException("Invalid pattern")));
-        } catch (final ParserException cause) {
-            throw new IllegalArgumentException(cause.getMessage(), cause);
-        }
-    }
-
-    public static SpreadsheetFormatPattern with(final SpreadsheetFormatExpressionParserToken value) {
-        Objects.requireNonNull(value, "value");
-
-        return new SpreadsheetFormatPattern(value);
-    }
+    // ctor.............................................................................................................
 
     /**
-     * Private ctor use factory
+     * Package private ctor use factory
      */
-    private SpreadsheetFormatPattern(final SpreadsheetFormatExpressionParserToken value) {
-        super();
-        this.value = value;
-    }
-
-    // Value............................................................................................................
-
-    @Override
-    public SpreadsheetFormatExpressionParserToken value() {
-        return this.value;
-    }
-
-    private final SpreadsheetFormatExpressionParserToken value;
-
-    // HashCodeEqualsDefined............................................................................................
-
-    @Override
-    public int hashCode() {
-        return this.value.hashCode();
-    }
-
-    @Override
-    public boolean equals(final Object other) {
-        return this == other ||
-                other instanceof SpreadsheetFormatPattern &&
-                        this.equals0(Cast.to(other));
-    }
-
-    private boolean equals0(final SpreadsheetFormatPattern other) {
-        return this.value.equals(other.value);
+    SpreadsheetFormatPattern(final T token) {
+        super(token);
     }
 
     // Object...........................................................................................................
 
     @Override
-    public String toString() {
-        return this.value.text();
-    }
-
-    // HasJsonNode......................................................................................................
-
-    /**
-     * Factory that creates a {@link SpreadsheetFormatPattern} from a {@link JsonNode}.
-     */
-    static SpreadsheetFormatPattern fromJsonNode(final JsonNode node) {
-        Objects.requireNonNull(node, "node");
-
-        return SpreadsheetFormatPattern.parse(node.stringValueOrFail());
-    }
-
-    /**
-     * Creates a {@link walkingkooka.tree.json.JsonStringNode}.
-     */
-    @Override
-    public JsonNode toJsonNode() {
-        return JsonNode.string(this.value.text());
-    }
-
-    static {
-        HasJsonNode.register("spreadsheet-text-formatter-pattern",
-                SpreadsheetFormatPattern::fromJsonNode,
-                SpreadsheetFormatPattern.class);
+    public final String toString() {
+        return this.value.toString();
     }
 }
