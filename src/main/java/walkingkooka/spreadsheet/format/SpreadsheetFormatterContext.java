@@ -31,12 +31,12 @@ public interface SpreadsheetFormatterContext extends DecimalNumberContext, DateT
     /**
      * Returns the {@link Color} with the given number.
      */
-    Optional<Color> colorNumber(int number);
+    Optional<Color> colorNumber(final int number);
 
     /**
      * Returns the {@link Color} with the given name.
      */
-    Optional<Color> colorName(String name);
+    Optional<Color> colorName(final SpreadsheetColorName name);
 
     /**
      * The width of the "cell" in characters.

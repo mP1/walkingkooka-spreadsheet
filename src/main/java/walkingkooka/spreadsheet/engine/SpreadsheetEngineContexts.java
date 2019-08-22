@@ -21,6 +21,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.math.Fraction;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.tree.expression.ExpressionNodeName;
@@ -43,7 +44,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final Converter converter,
                                                  final ConverterContext converterContext,
                                                  final Function<Integer, Optional<Color>> numberToColor,
-                                                 final Function<String, Optional<Color>> nameToColor,
+                                                 final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                                  final int width,
                                                  final Function<BigDecimal, Fraction> fractioner,
                                                  final SpreadsheetFormatter defaultSpreadsheetFormatter) {

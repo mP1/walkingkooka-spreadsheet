@@ -23,6 +23,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.math.Fraction;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
@@ -64,7 +65,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                               final Converter converter,
                                               final ConverterContext converterContext,
                                               final Function<Integer, Optional<Color>> numberToColor,
-                                              final Function<String, Optional<Color>> nameToColor,
+                                              final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                               final int width,
                                               final Function<BigDecimal, Fraction> fractioner,
                                               final SpreadsheetFormatter defaultSpreadsheetFormatter) {
@@ -102,7 +103,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final Converter converter,
                                           final ConverterContext converterContext,
                                           final Function<Integer, Optional<Color>> numberToColor,
-                                          final Function<String, Optional<Color>> nameToColor,
+                                          final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                           final int width,
                                           final Function<BigDecimal, Fraction> fractioner,
                                           final SpreadsheetFormatter defaultSpreadsheetFormatter) {
