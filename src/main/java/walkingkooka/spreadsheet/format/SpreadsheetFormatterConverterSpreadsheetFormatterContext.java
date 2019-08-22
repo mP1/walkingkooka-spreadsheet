@@ -56,7 +56,7 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     }
 
     @Override
-    public Optional<Color> colorName(final String name) {
+    public Optional<Color> colorName(final SpreadsheetColorName name) {
         throw new UnsupportedOperationException();
     }
 

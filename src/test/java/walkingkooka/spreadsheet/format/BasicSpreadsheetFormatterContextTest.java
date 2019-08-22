@@ -117,7 +117,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     }
 
     private void withFails(final Function<Integer, Optional<Color>> numberToColor,
-                           final Function<String, Optional<Color>> nameToColor,
+                           final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                            final int width,
                            final Converter converter,
                            final SpreadsheetFormatter defaultSpreadsheetFormatter,
@@ -139,7 +139,9 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
 
     @Test
     public void testColorName() {
-        this.colorNameAndCheck(this.createContext(), "bingo", Optional.of(this.color()));
+        this.colorNameAndCheck(this.createContext(),
+                SpreadsheetColorName.with("bingo"),
+                Optional.of(this.color()));
     }
 
     @Test
@@ -197,12 +199,12 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         };
     }
 
-    private Function<String, Optional<Color>> nameToColor() {
+    private Function<SpreadsheetColorName, Optional<Color>> nameToColor() {
         return new Function<>() {
 
             @Override
-            public Optional<Color> apply(final String name) {
-                assertEquals(name, "bingo", "color name");
+            public Optional<Color> apply(final SpreadsheetColorName name) {
+                assertEquals(name, SpreadsheetColorName.with("bingo"), "color name");
                 return Optional.of(BasicSpreadsheetFormatterContextTest.this.color());
             }
 

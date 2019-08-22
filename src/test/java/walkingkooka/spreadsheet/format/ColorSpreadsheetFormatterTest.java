@@ -72,8 +72,8 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
                 text,
                 new FakeSpreadsheetFormatterContext() {
                     @Override
-                    public Optional<Color> colorName(final String name) {
-                        assertEquals("RED", name, "color name");
+                    public Optional<Color> colorName(final SpreadsheetColorName name) {
+                        assertEquals(SpreadsheetColorName.with("RED"), name, "color name");
                         return color;
                     }
                 },
@@ -89,8 +89,8 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
                 text,
                 new FakeSpreadsheetFormatterContext() {
                     @Override
-                    public Optional<Color> colorName(final String name) {
-                        assertEquals("RED", name, "color name");
+                    public Optional<Color> colorName(final SpreadsheetColorName name) {
+                        assertEquals(SpreadsheetColorName.with("RED"), name, "color name");
                         return color;
                     }
                 },

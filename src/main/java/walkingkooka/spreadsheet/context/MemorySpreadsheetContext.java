@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngineContexts;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngines;
 import walkingkooka.spreadsheet.engine.hateos.SpreadsheetEngineHateosHandlers;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
@@ -88,7 +89,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                                                                       final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext,
                                                                       final Function<SpreadsheetId, SpreadsheetFormatter> spreadsheetIdDefaultSpreadsheetFormatter,
                                                                       final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
-                                                                      final Function<SpreadsheetId, Function<String, Optional<Color>>> spreadsheetIdNameToColor,
+                                                                      final Function<SpreadsheetId, Function<SpreadsheetColorName, Optional<Color>>> spreadsheetIdNameToColor,
                                                                       final Function<SpreadsheetId, Function<Integer, Optional<Color>>> spreadsheetIdNumberToColor,
                                                                       final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
         Objects.requireNonNull(base, "base");
@@ -127,7 +128,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                                      final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext,
                                      final Function<SpreadsheetId, SpreadsheetFormatter> spreadsheetIdDefaultSpreadsheetFormatter,
                                      final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
-                                     final Function<SpreadsheetId, Function<String, Optional<Color>>> spreadsheetIdNameToColor,
+                                     final Function<SpreadsheetId, Function<SpreadsheetColorName, Optional<Color>>> spreadsheetIdNameToColor,
                                      final Function<SpreadsheetId, Function<Integer, Optional<Color>>> spreadsheetIdNumberToColor,
                                      final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
         super();
@@ -226,7 +227,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
         final Converter converter = this.spreadsheetIdConverter.apply(id);
         final BiFunction<ExpressionNodeName, List<Object>, Object> functions = this.spreadsheetIdFunctions.apply(id);
         final Function<Integer, Optional<Color>> numberToColor = this.spreadsheetIdNumberToColor.apply(id);
-        final Function<String, Optional<Color>> nameToColor = this.spreadsheetIdNameToColor.apply(id);
+        final Function<SpreadsheetColorName, Optional<Color>> nameToColor = this.spreadsheetIdNameToColor.apply(id);
         final int width = this.spreadsheetIdWidth.apply(id);
         final Function<BigDecimal, Fraction> fractioner = this.fractioner;
         final SpreadsheetFormatter defaultSpreadsheetFormatter = this.defaultSpreadsheetFormatter(id);
@@ -279,11 +280,11 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
     private final Function<Optional<Locale>, SpreadsheetMetadata> metadata;
 
     @Override
-    public Function<String, Optional<Color>> nameToColor(final SpreadsheetId id) {
+    public Function<SpreadsheetColorName, Optional<Color>> nameToColor(final SpreadsheetId id) {
         return this.spreadsheetIdNameToColor.apply(id);
     }
 
-    private final Function<SpreadsheetId, Function<String, Optional<Color>>> spreadsheetIdNameToColor;
+    private final Function<SpreadsheetId, Function<SpreadsheetColorName, Optional<Color>>> spreadsheetIdNameToColor;
 
     @Override
     public Function<Integer, Optional<Color>> numberToColor(final SpreadsheetId id) {
