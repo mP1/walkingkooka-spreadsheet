@@ -52,6 +52,7 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -286,7 +287,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                            final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext,
                            final Function<SpreadsheetId, SpreadsheetFormatter> spreadsheetIdDefaultSpreadsheetFormatter,
                            final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
-                           final Function<SpreadsheetId, Function<String, Optional<Color>>> spreadsheetIdNameToColor,
+                           final Function<SpreadsheetId, Function<SpreadsheetColorName, Optional<Color>>> spreadsheetIdNameToColor,
                            final Function<SpreadsheetId, Function<Integer, Optional<Color>>> spreadsheetIdNumberToColor,
                            final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
         assertThrows(NullPointerException.class, () -> {
@@ -899,13 +900,13 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         return metadata;
     }
 
-    private Function<String, Optional<Color>> spreadsheetIdNameToColor(final SpreadsheetId spreadsheetId) {
+    private Function<SpreadsheetColorName, Optional<Color>> spreadsheetIdNameToColor(final SpreadsheetId spreadsheetId) {
         this.checkSpreadsheetId(spreadsheetId);
 
         return this::spreadsheetIdNameToColor0;
     }
 
-    private Optional<Color> spreadsheetIdNameToColor0(final String colorName) {
+    private Optional<Color> spreadsheetIdNameToColor0(final SpreadsheetColorName colorName) {
         throw new UnsupportedOperationException("name to color " + colorName);
     }
 

@@ -27,6 +27,7 @@ import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.HttpResponse;
 import walkingkooka.routing.Router;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
@@ -86,8 +87,9 @@ public interface SpreadsheetContext extends Context {
 
     /**
      * Returns a {@link Function} which maps {@link String color name} to {@link Color} for the given {@link SpreadsheetId}.
+     * @return
      */
-    Function<String, Optional<Color>> nameToColor(final SpreadsheetId id);
+    Function<SpreadsheetColorName, Optional<Color>> nameToColor(final SpreadsheetId id);
 
     /**
      * Returns a {@link Function} which maps color number to {@link Color} for the given {@link SpreadsheetId}.

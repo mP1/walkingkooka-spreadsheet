@@ -40,7 +40,7 @@ public final class ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorT
         );
         colorNameOrNumberOrFailAndCheck(SpreadsheetFormatParserToken.color(tokens, ParserToken.text(tokens)),
                 ColorSpreadsheetFormatterColorSource.NAME,
-                "RED");
+                SpreadsheetColorName.with("RED"));
     }
 
     @Test
@@ -84,7 +84,7 @@ public final class ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorT
         final SpreadsheetFormatColorParserToken color = SpreadsheetFormatParserToken.color(tokens, ParserToken.text(tokens));
         visitor.accept(color);
 
-        this.toStringAndCheck(visitor, "NAME \"RED\"");
+        this.toStringAndCheck(visitor, "NAME RED");
     }
 
     @Override

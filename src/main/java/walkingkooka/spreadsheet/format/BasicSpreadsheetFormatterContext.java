@@ -35,7 +35,7 @@ import java.util.function.Function;
 final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterContext {
 
     static BasicSpreadsheetFormatterContext with(final Function<Integer, Optional<Color>> numberToColor,
-                                                 final Function<String, Optional<Color>> nameToColor,
+                                                 final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                                  final int width,
                                                  final Converter converter,
                                                  final SpreadsheetFormatter defaultSpreadsheetFormatter,
@@ -59,7 +59,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     }
 
     private BasicSpreadsheetFormatterContext(final Function<Integer, Optional<Color>> numberToColor,
-                                             final Function<String, Optional<Color>> nameToColor,
+                                             final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                              final int width,
                                              final Converter converter,
                                              final SpreadsheetFormatter defaultSpreadsheetFormatter,
@@ -86,11 +86,11 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     private final Function<Integer, Optional<Color>> numberToColor;
 
     @Override
-    public Optional<Color> colorName(final String name) {
+    public Optional<Color> colorName(final SpreadsheetColorName name) {
         return this.nameToColor.apply(name);
     }
 
-    private final Function<String, Optional<Color>> nameToColor;
+    private final Function<SpreadsheetColorName, Optional<Color>> nameToColor;
 
     @Override
     public int width() {
