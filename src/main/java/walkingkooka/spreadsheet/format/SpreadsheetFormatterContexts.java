@@ -31,7 +31,7 @@ public final class SpreadsheetFormatterContexts implements PublicStaticHelper {
      * {@see BasicSpreadsheetFormatterContext}
      */
     public static SpreadsheetFormatterContext basic(final Function<Integer, Optional<Color>> numberToColor,
-                                                    final Function<String, Optional<Color>> nameToColor,
+                                                    final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                                     final int width,
                                                     final Converter converter,
                                                     final SpreadsheetFormatter defaultSpreadsheetFormatter,

@@ -31,6 +31,7 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.Fraction;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -409,12 +410,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
 
-    private Function<String, Optional<Color>> nameToColor() {
+    private Function<SpreadsheetColorName, Optional<Color>> nameToColor() {
         return this::nameToColor0;
     }
 
-    private Optional<Color> nameToColor0(final String colorName) {
-        assertEquals("bingo", colorName, "colorName");
+    private Optional<Color> nameToColor0(final SpreadsheetColorName colorName) {
+        assertEquals(SpreadsheetColorName.with("bingo"), colorName, "colorName");
         return this.color();
     }
 

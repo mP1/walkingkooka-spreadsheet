@@ -273,8 +273,8 @@ public final class ExpressionSpreadsheetFormatterTest extends SpreadsheetFormatt
         return new FakeSpreadsheetFormatterContext() {
 
             @Override
-            public Optional<Color> colorName(final String name) {
-                assertEquals("RED", name);
+            public Optional<Color> colorName(final SpreadsheetColorName name) {
+                assertEquals(SpreadsheetColorName.with("RED"), name, "color name");
                 return Optional.of(RED);
             }
 

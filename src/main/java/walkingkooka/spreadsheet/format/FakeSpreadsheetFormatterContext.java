@@ -36,12 +36,12 @@ public class FakeSpreadsheetFormatterContext extends FakeDecimalNumberContext im
     }
 
     @Override
-    public Optional<Color> colorNumber(int number) {
+    public Optional<Color> colorNumber(final int number) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Optional<Color> colorName(String name) {
+    public Optional<Color> colorName(final SpreadsheetColorName name) {
         throw new UnsupportedOperationException();
     }
 
