@@ -16,6 +16,8 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+
 /**
  * Represents a color name token.
  */
@@ -29,6 +31,10 @@ public final class SpreadsheetFormatColorNameParserToken extends SpreadsheetForm
 
     private SpreadsheetFormatColorNameParserToken(final String value, final String text) {
         super(value, text);
+    }
+
+    public SpreadsheetColorName colorName() {
+        return SpreadsheetColorName.with(this.value);
     }
 
     @Override

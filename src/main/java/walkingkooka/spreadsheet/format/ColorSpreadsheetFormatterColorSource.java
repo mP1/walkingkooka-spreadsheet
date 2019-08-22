@@ -29,7 +29,7 @@ enum ColorSpreadsheetFormatterColorSource {
     NAME {
         @Override
         Optional<Color> resolve(final Object value, final SpreadsheetFormatterContext context) {
-            return context.colorName((String) value);
+            return context.colorName((SpreadsheetColorName) value);
         }
     },
 
