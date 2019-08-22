@@ -41,7 +41,7 @@ final class ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends
 
     @Override
     protected void visit(final SpreadsheetFormatColorNameParserToken token) {
-        this.set(ColorSpreadsheetFormatterColorSource.NAME, token.value());
+        this.set(ColorSpreadsheetFormatterColorSource.NAME, token.colorName());
     }
 
     @Override

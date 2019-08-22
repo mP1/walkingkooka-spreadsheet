@@ -38,7 +38,7 @@ public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatt
     }
 
     default void colorNameAndCheck(final SpreadsheetFormatterContext context,
-                                   final String name,
+                                   final SpreadsheetColorName name,
                                    final Optional<Color> color) {
         assertEquals(color,
                 context.colorName(name),

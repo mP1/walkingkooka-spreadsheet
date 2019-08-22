@@ -68,7 +68,7 @@ public final class SpreadsheetFormatColorNameParserTokenTest extends Spreadsheet
 
     @Override
     public String text() {
-        return "..";
+        return "BLUE";
     }
 
     @Override

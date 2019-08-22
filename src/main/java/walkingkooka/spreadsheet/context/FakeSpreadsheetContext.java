@@ -26,6 +26,7 @@ import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.HttpResponse;
 import walkingkooka.routing.Router;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
@@ -76,7 +77,7 @@ public class FakeSpreadsheetContext implements SpreadsheetContext {
     }
 
     @Override
-    public Function<String, Optional<Color>> nameToColor(final SpreadsheetId id) {
+    public Function<SpreadsheetColorName, Optional<Color>> nameToColor(final SpreadsheetId id) {
         throw new UnsupportedOperationException();
     }
 
