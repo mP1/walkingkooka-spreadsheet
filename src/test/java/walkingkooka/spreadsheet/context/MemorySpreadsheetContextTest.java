@@ -65,6 +65,8 @@ import walkingkooka.store.Store;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNodeName;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -617,7 +619,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
                 @Override
                 public Map<HttpHeaderName<?>, Object> headers() {
-                    return Maps.of(HttpHeaderName.CONTENT_TYPE, HateosContentType.json().contentType(),
+                    return Maps.of(HttpHeaderName.CONTENT_TYPE, contentType().contentType(),
                             HttpHeaderName.ACCEPT_CHARSET, AcceptCharset.parse("UTF-8"));
                 }
 
@@ -627,8 +629,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
                 @Override
                 public byte[] body() {
-                    return SpreadsheetDelta.withId(Optional.of(cellReference), Sets.of(cell))
-                            .toJsonNode()
+                    return toJsonNodeContext().toJsonNode(SpreadsheetDelta.withId(Optional.of(cellReference), Sets.of(cell)))
                             .toString()
                             .getBytes(utf8);
                 }
@@ -662,7 +663,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
                 @Override
                 public Map<HttpHeaderName<?>, Object> headers() {
-                    return Maps.of(HttpHeaderName.CONTENT_TYPE, HateosContentType.json().contentType(),
+                    return Maps.of(HttpHeaderName.CONTENT_TYPE, contentType().contentType(),
                             HttpHeaderName.ACCEPT_CHARSET, AcceptCharset.parse("UTF-8"));
                 }
 
@@ -688,7 +689,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
             expected.addEntity(HttpEntity.with(Maps.of(
                     HttpHeaderName.CONTENT_LENGTH, 0L + expectedBody.getBytes(utf8).length,
-                    HttpHeaderName.CONTENT_TYPE, HateosContentType.json().contentType().setCharset(CharsetName.UTF_8)),
+                    HttpHeaderName.CONTENT_TYPE, contentType().contentType().setCharset(CharsetName.UTF_8)),
                     Binary.with(expectedBody.getBytes(utf8))));
 
             assertEquals(expected, response, () -> "consumer: " + consumer + ", request: " + request);
@@ -831,7 +832,11 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     }
 
     private HateosContentType<JsonNode> contentType() {
-        return HateosContentType.json();
+        return HateosContentType.json(this.fromJsonNodeContext(), this.toJsonNodeContext());
+    }
+
+    private FromJsonNodeContext fromJsonNodeContext() {
+        return FromJsonNodeContext.basic();
     }
 
     final Fraction fractioner(final BigDecimal value) {
@@ -934,6 +939,10 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
     private SpreadsheetId spreadsheetId() {
         return SpreadsheetId.with(0x123def);
+    }
+
+    private ToJsonNodeContext toJsonNodeContext() {
+        return ToJsonNodeContext.basic();
     }
 
     @Override

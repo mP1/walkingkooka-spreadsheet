@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.tree.json.HasJsonNode;
 
 import java.time.LocalDateTime;
 
@@ -27,13 +26,13 @@ public final class SpreadsheetMetadataPropertyValueHandlerLocalDateTimeTest exte
     @Test
     public void testFromJsonNode() {
         final LocalDateTime dateTime = this.propertyValue();
-        this.fromJsonNodeAndCheck(HasJsonNode.toJsonNodeObject(dateTime), dateTime);
+        this.fromJsonNodeAndCheck(this.toJsonNode(dateTime), dateTime);
     }
 
     @Test
     public void testToJsonNode() {
         final LocalDateTime dateTime = this.propertyValue();
-        this.toJsonNodeAndCheck(dateTime, HasJsonNode.toJsonNodeObject(dateTime));
+        this.toJsonNodeAndCheck(dateTime, this.toJsonNode(dateTime));
     }
 
     @Override

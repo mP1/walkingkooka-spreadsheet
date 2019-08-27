@@ -43,6 +43,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 import walkingkooka.type.JavaVisibility;
 
 import java.util.Optional;
@@ -459,7 +461,7 @@ public final class SpreadsheetEngineHateosHandlersRouterTest implements ClassTes
     }
 
     private HateosContentType<JsonNode> contentType() {
-        return HateosContentType.json();
+        return HateosContentType.json(FromJsonNodeContext.basic(), ToJsonNodeContext.basic());
     }
 
     private HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta<Optional<SpreadsheetColumnReference>>, SpreadsheetDelta<Range<SpreadsheetColumnReference>>> deleteColumns() {

@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeName;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 import java.util.List;
 import java.util.Optional;
@@ -66,8 +67,8 @@ abstract class SpreadsheetDeltaRange<I extends Comparable<I> & HasHateosLinkId> 
     }
 
     @Override
-    final JsonNode idOrRangeToJson() {
-        return this.id.toJsonNode();
+    final JsonNode idOrRangeToJsonNode(final ToJsonNodeContext context) {
+        return context.toJsonNode(this.id);
     }
 
     @Override

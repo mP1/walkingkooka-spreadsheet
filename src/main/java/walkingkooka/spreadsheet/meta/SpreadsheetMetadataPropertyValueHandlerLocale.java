@@ -17,8 +17,9 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 import java.util.Locale;
 
@@ -51,15 +52,18 @@ final class SpreadsheetMetadataPropertyValueHandlerLocale extends SpreadsheetMet
         return Locale.class.getSimpleName();
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeContext..................................................................................................
 
     @Override
-    Locale fromJsonNode(final JsonNode node, final SpreadsheetMetadataPropertyName<?> name) {
-        return node.fromJsonNode(Locale.class);
+    Locale fromJsonNode(final JsonNode node,
+                        final SpreadsheetMetadataPropertyName<?> name,
+                        final FromJsonNodeContext context) {
+        return context.fromJsonNode(node, Locale.class);
     }
 
     @Override
-    JsonNode toJsonNode(final Locale value) {
-        return HasJsonNode.toJsonNodeObject(value);
+    JsonNode toJsonNode(final Locale value,
+                        final ToJsonNodeContext context) {
+        return context.toJsonNode(value);
     }
 }

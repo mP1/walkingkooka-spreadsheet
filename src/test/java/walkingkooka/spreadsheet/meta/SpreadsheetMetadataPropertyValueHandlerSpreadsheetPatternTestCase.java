@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
-import walkingkooka.tree.json.HasJsonNode;
 
 public abstract class SpreadsheetMetadataPropertyValueHandlerSpreadsheetPatternTestCase<H extends SpreadsheetMetadataPropertyValueHandlerSpreadsheetPattern<P>, P extends SpreadsheetPattern<?>>
         extends SpreadsheetMetadataPropertyValueHandlerTestCase2<H, P> {
@@ -31,13 +30,13 @@ public abstract class SpreadsheetMetadataPropertyValueHandlerSpreadsheetPatternT
     @Test
     public void testFromJsonNode() {
         final P propertyValue = this.propertyValue();
-        this.fromJsonNodeAndCheck(HasJsonNode.toJsonNodeObject(propertyValue), propertyValue);
+        this.fromJsonNodeAndCheck(this.toJsonNode(propertyValue), propertyValue);
     }
 
     @Test
     public void testToJsonNode() {
         final P propertyValue = this.propertyValue();
-        this.toJsonNodeAndCheck(propertyValue, HasJsonNode.toJsonNodeObject(propertyValue));
+        this.toJsonNodeAndCheck(propertyValue, this.toJsonNode(propertyValue));
     }
 
     @Override

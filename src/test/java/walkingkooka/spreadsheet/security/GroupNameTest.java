@@ -21,14 +21,17 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.naming.NameTesting;
 import walkingkooka.naming.PropertiesPath;
 import walkingkooka.text.CaseSensitivity;
-import walkingkooka.tree.json.HasJsonNodeStringTesting;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeMappingTesting;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+;
+
 final public class GroupNameTest implements NameTesting<GroupName, GroupName>,
-        HasJsonNodeStringTesting<GroupName> {
+        JsonNodeMappingTesting<GroupName> {
 
     @Test
     public void testCreateEmptyStringFails() {
@@ -164,15 +167,16 @@ final public class GroupNameTest implements NameTesting<GroupName, GroupName>,
         return JavaVisibility.PUBLIC;
     }
 
-    // HasJsonNodeTesting......................................................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Override
-    public final GroupName createHasJsonNode() {
+    public final GroupName createJsonNodeMappingValue() {
         return this.createObject();
     }
 
     @Override
-    public final GroupName fromJsonNode(final JsonNode from) {
-        return GroupName.fromJsonNode(from);
+    public final GroupName fromJsonNode(final JsonNode from,
+                                        final FromJsonNodeContext context) {
+        return GroupName.fromJsonNode(from, context);
     }
 }

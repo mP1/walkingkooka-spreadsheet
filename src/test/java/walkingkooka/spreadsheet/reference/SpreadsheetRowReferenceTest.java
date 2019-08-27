@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.Range;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -182,11 +183,12 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         return SpreadsheetRowReference.class;
     }
 
-    // HasJsonNodeTesting..................................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Override
-    public SpreadsheetRowReference fromJsonNode(final JsonNode from) {
-        return SpreadsheetRowReference.fromJsonNode(from);
+    public SpreadsheetRowReference fromJsonNode(final JsonNode from,
+                                                final FromJsonNodeContext context) {
+        return SpreadsheetRowReference.fromJsonNodeRow(from, context);
     }
 
     // ParseStringTesting............................................................................................

@@ -22,9 +22,9 @@ import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeName;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 import java.util.List;
 import java.util.Optional;
@@ -67,8 +67,9 @@ abstract class SpreadsheetDeltaId<I extends Comparable<I> & HasHateosLinkId> ext
     }
 
     @Override
-    final JsonNode idOrRangeToJson() {
-        return this.id.map((i) -> HasJsonNode.toJsonNodeWithType(i)).orElse(null);
+    final JsonNode idOrRangeToJsonNode(final ToJsonNodeContext context) {
+        return this.id.map((i) -> context.toJsonNodeWithType(i))
+                .orElse(null);
     }
 
     @Override

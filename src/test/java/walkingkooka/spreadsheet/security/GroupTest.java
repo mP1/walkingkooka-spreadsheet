@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.security;
 import org.junit.jupiter.api.Test;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 import java.util.Optional;
 
@@ -72,7 +74,7 @@ public final class GroupTest extends IdentityTestCase<Group, GroupId> {
         this.checkNotEquals(User.with(Optional.of(UserId.with(ID_VALUE)), EmailAddress.parse("user@example.com")));
     }
 
-    // HasJsonNodeTesting.................................................................................................
+    // JsonNodeMappingTesting.................................................................................................
 
     @Test
     public void testFromJsonNodeWithoutId() {
@@ -98,13 +100,15 @@ public final class GroupTest extends IdentityTestCase<Group, GroupId> {
 
     private JsonNode jsonNodeWithoutId() {
         return JsonNode.object()
-                .set(Group.NAME_PROPERTY, this.name().toJsonNode());
+                .set(Group.NAME_PROPERTY, this.toJsonNodeContext().toJsonNode(this.name()));
     }
 
     private JsonNode jsonNodeWithId() {
+        final ToJsonNodeContext context = this.toJsonNodeContext();
+        
         return JsonNode.object()
-                .set(Group.ID_PROPERTY, createId().get().toJsonNode())
-                .set(Group.NAME_PROPERTY, this.name().toJsonNode());
+                .set(Group.ID_PROPERTY, context.toJsonNode(createId().get()))
+                .set(Group.NAME_PROPERTY, context.toJsonNode(this.name()));
     }
 
     @Test
@@ -136,10 +140,11 @@ public final class GroupTest extends IdentityTestCase<Group, GroupId> {
         return Group.class;
     }
 
-    // HasJsonNodeTesting...............................................................................................
+    // JsonNodeMappingTesting............................................................................................
 
     @Override
-    public final Group fromJsonNode(final JsonNode from) {
-        return Group.fromJsonNode(from);
+    public final Group fromJsonNode(final JsonNode from,
+                                    final FromJsonNodeContext context) {
+        return Group.fromJsonNode(from, context);
     }
 }

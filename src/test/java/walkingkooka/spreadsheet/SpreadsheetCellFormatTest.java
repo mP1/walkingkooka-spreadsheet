@@ -24,8 +24,9 @@ import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.json.HasJsonNodeStringTesting;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeMappingTesting;
 import walkingkooka.type.JavaVisibility;
 
 import java.util.Optional;
@@ -37,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellFormatTest implements ClassTesting2<SpreadsheetCellFormat>,
         HashCodeEqualsDefinedTesting<SpreadsheetCellFormat>,
-        HasJsonNodeStringTesting<SpreadsheetCellFormat>,
+        JsonNodeMappingTesting<SpreadsheetCellFormat>,
         ToStringTesting<SpreadsheetCellFormat> {
 
     private final static String PATTERN = "abc123";
@@ -148,7 +149,7 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
         this.checkNotEquals(this.withoutFormatter());
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeMappingTesting.......................................................................................
 
     @Test
     public void testFromJsonNodeString() {
@@ -199,15 +200,16 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
         return JavaVisibility.PUBLIC;
     }
 
-    // HasJsonNodeTesting............................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Override
-    public SpreadsheetCellFormat createHasJsonNode() {
+    public SpreadsheetCellFormat createJsonNodeMappingValue() {
         return SpreadsheetCellFormat.with(PATTERN);
     }
 
     @Override
-    public SpreadsheetCellFormat fromJsonNode(final JsonNode jsonNode) {
-        return SpreadsheetCellFormat.fromJsonNode(jsonNode);
+    public SpreadsheetCellFormat fromJsonNode(final JsonNode jsonNode,
+                                              final FromJsonNodeContext context) {
+        return SpreadsheetCellFormat.fromJsonNode(jsonNode, context);
     }
 }

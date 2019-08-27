@@ -21,17 +21,16 @@ import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.Whitespace;
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
-
-import java.util.Objects;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 /**
  * An error for an individual cell or formula which may be a parsing or execution error.
  */
 public final class SpreadsheetError implements HashCodeEqualsDefined,
-        Value<String>,
-        HasJsonNode {
+        Value<String> {
 
     public static SpreadsheetError with(final String message) {
         Whitespace.failIfNullOrEmptyOrWhitespace(message, "Message");
@@ -74,25 +73,21 @@ public final class SpreadsheetError implements HashCodeEqualsDefined,
         return this.message;
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeContext..................................................................................................
 
-    /**
-     * Factory that creates a {@link SpreadsheetError} from a {@link JsonNode}.
-     */
-    static SpreadsheetError fromJsonNode(final JsonNode node) {
-        Objects.requireNonNull(node, "node");
-
+    static SpreadsheetError fromJsonNode(final JsonNode node,
+                                         final FromJsonNodeContext context) {
         return with(node.stringValueOrFail());
     }
 
-    @Override
-    public JsonNode toJsonNode() {
+    JsonNode toJsonNode(final ToJsonNodeContext context) {
         return JsonNode.string(this.message);
     }
 
     static {
-        HasJsonNode.register("spreadsheet-error",
+        JsonNodeContext.register("spreadsheet-error",
                 SpreadsheetError::fromJsonNode,
+                SpreadsheetError::toJsonNode,
                 SpreadsheetError.class);
     }
 }

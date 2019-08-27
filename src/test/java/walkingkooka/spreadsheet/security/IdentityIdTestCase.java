@@ -21,15 +21,14 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ToStringTesting;
-import walkingkooka.tree.json.HasJsonNode;
-import walkingkooka.tree.json.HasJsonNodeTesting;
+import walkingkooka.tree.json.map.JsonNodeMappingTesting;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public abstract class IdentityIdTestCase<I extends IdentityId & Comparable<I>> implements ClassTesting2<I>,
         ComparableTesting<I>,
-        HasJsonNodeTesting<I>,
+        JsonNodeMappingTesting<I>,
         ToStringTesting<I> {
 
     IdentityIdTestCase() {
@@ -55,7 +54,7 @@ public abstract class IdentityIdTestCase<I extends IdentityId & Comparable<I>> i
 
     @Test
     public final void testToJson() {
-        this.toJsonNodeAndCheck(this.createId(123L), HasJsonNode.toJsonNodeObject(123L));
+        this.toJsonNodeAndCheck(this.createId(123L), this.toJsonNodeContext().toJsonNode(123L));
     }
 
     @Test
@@ -71,7 +70,7 @@ public abstract class IdentityIdTestCase<I extends IdentityId & Comparable<I>> i
     abstract I createId(long value);
 
     @Override
-    public I createHasJsonNode() {
+    public I createJsonNodeMappingValue() {
         return this.createId(1L);
     }
 }

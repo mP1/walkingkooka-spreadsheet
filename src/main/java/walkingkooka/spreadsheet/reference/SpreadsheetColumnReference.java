@@ -24,11 +24,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserReporters;
-import walkingkooka.tree.json.HasJsonNode;
-import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonStringNode;
-
-import java.util.Objects;
 
 /**
  * Represents a column reference
@@ -40,21 +35,6 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
      */
     public static Range<SpreadsheetColumnReference> parseRange(final String text) {
         return Range.parse(text, SpreadsheetParsers.RANGE_SEPARATOR.character(), SpreadsheetColumnReference::parse);
-    }
-
-    /**
-     * Expects a {@link JsonStringNode} and returns a {@link SpreadsheetColumnReference}.
-     */
-    static SpreadsheetColumnReference fromJsonNode(final JsonNode from) {
-        Objects.requireNonNull(from, "from");
-
-        return parse(from.stringValueOrFail());
-    }
-
-    static {
-        HasJsonNode.register("spreadsheet-column-reference",
-                SpreadsheetColumnReference::fromJsonNode,
-                SpreadsheetColumnReference.class);
     }
 
     /**

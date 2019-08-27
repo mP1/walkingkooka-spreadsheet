@@ -22,7 +22,6 @@ import walkingkooka.Value;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.test.HashCodeEqualsDefined;
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNodeName;
 
 import java.util.Objects;
@@ -33,7 +32,6 @@ import java.util.Optional;
  */
 public abstract class Identity<I extends IdentityId> implements Value<Optional<I>>,
         HashCodeEqualsDefined,
-        HasJsonNode,
         HateosResource<Optional<I>> {
 
     /**
@@ -77,7 +75,7 @@ public abstract class Identity<I extends IdentityId> implements Value<Optional<I
 
     final Optional<I> id;
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeContext..................................................................................................
 
     final static String ID_PROPERTY_STRING = "id";
     final static JsonNodeName ID_PROPERTY = JsonNodeName.with(ID_PROPERTY_STRING);

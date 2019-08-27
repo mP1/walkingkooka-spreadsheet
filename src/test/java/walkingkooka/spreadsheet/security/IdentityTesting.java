@@ -21,17 +21,16 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
-import walkingkooka.tree.json.HasJsonNode;
-import walkingkooka.tree.json.HasJsonNodeTesting;
+import walkingkooka.tree.json.map.JsonNodeMappingTesting;
 import walkingkooka.type.JavaVisibility;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface IdentityTesting<I extends Identity<ID> & HasJsonNode, ID extends IdentityId>
+public interface IdentityTesting<I extends Identity<ID>, ID extends IdentityId>
         extends ClassTesting2<I>,
-        HasJsonNodeTesting<I>,
+        JsonNodeMappingTesting<I>,
         HashCodeEqualsDefinedTesting<I>,
         ToStringTesting<I> {
 
@@ -52,7 +51,7 @@ public interface IdentityTesting<I extends Identity<ID> & HasJsonNode, ID extend
     }
 
     @Override
-    default I createHasJsonNode() {
+    default I createJsonNodeMappingValue() {
         return this.createObject();
     }
 

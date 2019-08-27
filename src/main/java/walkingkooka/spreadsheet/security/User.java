@@ -20,9 +20,11 @@ package walkingkooka.spreadsheet.security;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeName;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 import java.util.List;
 import java.util.Objects;
@@ -75,14 +77,13 @@ public final class User extends Identity<UserId> {
         return this.email.value().replace("-", "\\-");
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeContext..................................................................................................
 
     /**
      * Factory that creates a {@link User} from a {@link JsonNode}.
      */
-    static User fromJsonNode(final JsonNode node) {
-        Objects.requireNonNull(node, "node");
-
+    static User fromJsonNode(final JsonNode node,
+                             final FromJsonNodeContext context) {
         UserId id = null;
         EmailAddress email = null;
 
@@ -90,29 +91,28 @@ public final class User extends Identity<UserId> {
             final JsonNodeName name = child.name();
             switch (name.value()) {
                 case ID_PROPERTY_STRING:
-                    id = UserId.fromJsonNode(child);
+                    id = context.fromJsonNode(child, UserId.class);
                     break;
                 case EMAIL_PROPERTY_STRING:
-                    email = child.fromJsonNode(EmailAddress.class);
+                    email = context.fromJsonNode(child, EmailAddress.class);
                     break;
                 default:
-                    HasJsonNode.unknownPropertyPresent(name, node);
+                    FromJsonNodeContext.unknownPropertyPresent(name, node);
             }
         }
 
         if (null == email) {
-            HasJsonNode.requiredPropertyMissing(EMAIL_PROPERTY, node);
+            FromJsonNodeContext.requiredPropertyMissing(EMAIL_PROPERTY, node);
         }
 
         return new User(Optional.ofNullable(id), email);
     }
 
-    @Override
-    public JsonNode toJsonNode() {
+    JsonNode toJsonNode(final ToJsonNodeContext context) {
         final List<JsonNode> properties = Lists.array();
 
-        this.id.ifPresent(id -> properties.add(id.toJsonNode().setName(ID_PROPERTY)));
-        properties.add(this.email.toJsonNode().setName(EMAIL_PROPERTY));
+        this.id.ifPresent(id -> properties.add(context.toJsonNode(id).setName(ID_PROPERTY)));
+        properties.add(context.toJsonNode(this.email).setName(EMAIL_PROPERTY));
 
         return JsonNode.object()
                 .setChildren(properties);
@@ -122,8 +122,9 @@ public final class User extends Identity<UserId> {
     final static JsonNodeName EMAIL_PROPERTY = JsonNodeName.with(EMAIL_PROPERTY_STRING);
 
     static {
-        HasJsonNode.register("user",
+        JsonNodeContext.register("user",
                 User::fromJsonNode,
+                User::toJsonNode,
                 User.class);
     }
 

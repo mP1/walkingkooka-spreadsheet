@@ -29,6 +29,7 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -140,11 +141,12 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
         return SpreadsheetNumberFormatPattern.class;
     }
 
-    // HasJsonNodeTesting................................................................................................
+    // JsonNodeMappingTesting............................................................................................
 
     @Override
-    public SpreadsheetNumberFormatPattern fromJsonNode(final JsonNode jsonNode) {
-        return SpreadsheetNumberFormatPattern.fromJsonNodeNumberFormatPattern(jsonNode);
+    public SpreadsheetNumberFormatPattern fromJsonNode(final JsonNode jsonNode,
+                                                       final FromJsonNodeContext context) {
+        return SpreadsheetNumberFormatPattern.fromJsonNodeNumberFormatPattern(jsonNode, context);
     }
 
     // ParseStringTesting...............................................................................................

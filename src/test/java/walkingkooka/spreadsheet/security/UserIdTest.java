@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.security;
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
 
 public final class UserIdTest extends IdentityIdTestCase<UserId> implements ComparableTesting<UserId> {
 
@@ -50,10 +51,11 @@ public final class UserIdTest extends IdentityIdTestCase<UserId> implements Comp
         return UserId.with(99);
     }
 
-    // HasJsonNodeTesting..................................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Override
-    public final UserId fromJsonNode(final JsonNode from) {
-        return UserId.fromJsonNode(from);
+    public final UserId fromJsonNode(final JsonNode from,
+                                     final FromJsonNodeContext context) {
+        return UserId.fromJsonNode(from, context);
     }
 }

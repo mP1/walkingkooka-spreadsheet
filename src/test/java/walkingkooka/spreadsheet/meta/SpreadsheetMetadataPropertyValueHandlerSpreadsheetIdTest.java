@@ -25,13 +25,13 @@ public final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetIdTest exte
     @Test
     public void testFromJsonNode() {
         final SpreadsheetId spreadsheetId = this.propertyValue();
-        this.fromJsonNodeAndCheck(spreadsheetId.toJsonNode(), spreadsheetId);
+        this.fromJsonNodeAndCheck(this.toJsonNode(spreadsheetId), spreadsheetId);
     }
 
     @Test
     public void testToJsonNode() {
         final SpreadsheetId spreadsheetId = this.propertyValue();
-        this.toJsonNodeAndCheck(spreadsheetId, spreadsheetId.toJsonNode());
+        this.toJsonNodeAndCheck(spreadsheetId, this.toJsonNode(spreadsheetId));
     }
 
     @Override

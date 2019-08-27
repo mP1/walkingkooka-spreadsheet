@@ -23,15 +23,16 @@ import walkingkooka.Value;
 import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 /**
  * Identifies a single spreadsheet.
  */
 public final class SpreadsheetId implements Comparable<SpreadsheetId>,
         HashCodeEqualsDefined,
-        HasJsonNode,
         HasId<Long>,
         HasHateosLinkId,
         Value<Long> {
@@ -83,23 +84,21 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
 
     private Long value;
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeContext..................................................................................................
 
-    /**
-     * Factory that creates a {@link SpreadsheetId} from a {@link JsonNode}
-     */
-    static SpreadsheetId fromJsonNode(final JsonNode node) {
+    static SpreadsheetId fromJsonNode(final JsonNode node,
+                                      final FromJsonNodeContext context) {
         return parse(node.stringValueOrFail());
     }
 
-    @Override
-    public JsonNode toJsonNode() {
+    JsonNode toJsonNode(final ToJsonNodeContext context) {
         return JsonNode.string(this.toString());
     }
 
     static {
-        HasJsonNode.register("spreadsheet-id",
+        JsonNodeContext.register("spreadsheet-id",
                 SpreadsheetId::fromJsonNode,
+                SpreadsheetId::toJsonNode,
                 SpreadsheetId.class);
     }
 

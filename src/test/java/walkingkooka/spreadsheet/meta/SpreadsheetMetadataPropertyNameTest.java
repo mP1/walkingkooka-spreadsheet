@@ -127,7 +127,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
                 creator, modifiedBy, modifiedDateTime, spreadsheetId);
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeMappingTesting.......................................................................................
 
     @Test
     public void testJsonNodeNameCached() {

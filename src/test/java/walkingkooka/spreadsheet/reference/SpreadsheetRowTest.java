@@ -21,8 +21,9 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ToStringTesting;
-import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeMappingTesting;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetRowTest implements ClassTesting2<SpreadsheetRow>,
         ComparableTesting<SpreadsheetRow>,
-        HasJsonNodeTesting<SpreadsheetRow>,
+        JsonNodeMappingTesting<SpreadsheetRow>,
         ToStringTesting<SpreadsheetRow> {
 
 
@@ -100,23 +101,20 @@ public final class SpreadsheetRowTest implements ClassTesting2<SpreadsheetRow>,
                 row1, row2, row3, row4);
     }
 
-    // HasJsonNode......................................................................................................
-
-    // HasJsonNode.fromJsonNode.......................................................................................
+    // JsonNodeMappingTesting............................................................................................
 
     @Test
     public void testFromJsonNodeStringFails() {
         this.fromJsonNodeFails(JsonNode.string("fails"), IllegalArgumentException.class);
     }
 
-    // HasJsonNode .toJsonNode.........................................................................
     @Test
     public void testJsonNode() {
         final SpreadsheetRowReference reference = reference(ROW);
-        this.toJsonNodeAndCheck(reference, reference.toJsonNode());
+        this.toJsonNodeAndCheck(reference, reference.toJsonNode(this.toJsonNodeContext()));
     }
 
-    // toString...............................................................................................
+    // toString.........................................................................................................
 
     @Test
     public void testToString() {
@@ -168,15 +166,16 @@ public final class SpreadsheetRowTest implements ClassTesting2<SpreadsheetRow>,
         return true;
     }
 
-    // HasJsonNodeTesting............................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Override
-    public SpreadsheetRow createHasJsonNode() {
+    public SpreadsheetRow createJsonNodeMappingValue() {
         return this.createObject();
     }
 
     @Override
-    public SpreadsheetRow fromJsonNode(final JsonNode jsonNode) {
-        return SpreadsheetRow.fromJsonNode(jsonNode);
+    public SpreadsheetRow fromJsonNode(final JsonNode jsonNode,
+                                       final FromJsonNodeContext context) {
+        return SpreadsheetRow.fromJsonNode(jsonNode, context);
     }
 }

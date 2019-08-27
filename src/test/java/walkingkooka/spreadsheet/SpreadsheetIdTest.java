@@ -24,8 +24,9 @@ import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.test.ToStringTesting;
-import walkingkooka.tree.json.HasJsonNodeStringTesting;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeMappingTesting;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,7 +36,7 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
         ComparableTesting<SpreadsheetId>,
         HashCodeEqualsDefinedTesting<SpreadsheetId>,
         HasHateosLinkIdTesting<SpreadsheetId>,
-        HasJsonNodeStringTesting<SpreadsheetId>,
+        JsonNodeMappingTesting<SpreadsheetId>,
         ParseStringTesting<SpreadsheetId>,
         ToStringTesting<SpreadsheetId> {
 
@@ -89,7 +90,7 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
                 id1, id2, id3);
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeMappingTesting.......................................................................................
 
     @Test
     public void testFromJsonNodeInvalidStringFails() {
@@ -151,16 +152,17 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
         return this.createObject();
     }
 
-    // HasJsonNodeTesting...............................................................................................
+    // JsonNodeMappingTesting...............................................................................................
 
     @Override
-    public SpreadsheetId createHasJsonNode() {
+    public SpreadsheetId createJsonNodeMappingValue() {
         return this.createObject();
     }
 
     @Override
-    public SpreadsheetId fromJsonNode(final JsonNode node) {
-        return SpreadsheetId.fromJsonNode(node);
+    public SpreadsheetId fromJsonNode(final JsonNode node,
+                                      final FromJsonNodeContext context) {
+        return SpreadsheetId.fromJsonNode(node, context);
     }
 
     // ParseStringStringTesting...............................................................................................

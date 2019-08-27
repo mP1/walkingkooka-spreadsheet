@@ -30,8 +30,11 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserException;
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonStringNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 import java.math.MathContext;
 import java.util.Objects;
@@ -43,8 +46,7 @@ import java.util.function.IntFunction;
 abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColumnOrRowReference<R>> implements Value<Integer>,
         Comparable<R>,
         HashCodeEqualsDefined,
-        HasHateosLinkId,
-        HasJsonNode {
+        HasHateosLinkId {
 
     /**
      * Parsers the text expecting a valid {@link SpreadsheetRowReference} or fails.
@@ -168,10 +170,37 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
         Objects.requireNonNull(other, "other");
     }
 
-    // HasJsonNode............................................................................................
+    // JsonNodeContext..................................................................................................
 
-    @Override
-    public final JsonNode toJsonNode() {
+    /**
+     * Expects a {@link JsonStringNode} and returns a {@link SpreadsheetColumnReference}.
+     */
+    static SpreadsheetColumnReference fromJsonNodeColumn(final JsonNode from,
+                                                         final FromJsonNodeContext context) {
+        return SpreadsheetColumnReference.parse(from.stringValueOrFail());
+    }
+
+    /**
+     * Expects a {@link JsonStringNode} and returns a {@link SpreadsheetRowReference}.
+     */
+    static SpreadsheetRowReference fromJsonNodeRow(final JsonNode from,
+                                                   final FromJsonNodeContext context) {
+        return SpreadsheetRowReference.parse(from.stringValueOrFail());
+    }
+
+    final JsonNode toJsonNode(final ToJsonNodeContext context) {
         return JsonNode.string(this.toString());
+    }
+
+    static {
+        JsonNodeContext.register("spreadsheet-column-reference",
+                SpreadsheetColumnReference::fromJsonNodeColumn,
+                SpreadsheetColumnReference::toJsonNode,
+                SpreadsheetColumnReference.class);
+
+        JsonNodeContext.register("spreadsheet-row-reference",
+                SpreadsheetRowReference::fromJsonNodeRow,
+                SpreadsheetRowReference::toJsonNode,
+                SpreadsheetRowReference.class);
     }
 }

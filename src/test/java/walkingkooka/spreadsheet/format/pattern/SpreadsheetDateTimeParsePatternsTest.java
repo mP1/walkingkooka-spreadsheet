@@ -27,6 +27,7 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokens;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -259,11 +260,12 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
         return SpreadsheetDateTimeParsePatterns.class;
     }
 
-    // HasJsonNodeTesting................................................................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Override
-    public SpreadsheetDateTimeParsePatterns fromJsonNode(final JsonNode jsonNode) {
-        return SpreadsheetDateTimeParsePatterns.fromJsonNodeDateTimeParsePatterns(jsonNode);
+    public SpreadsheetDateTimeParsePatterns fromJsonNode(final JsonNode jsonNode,
+                                                         final FromJsonNodeContext context) {
+        return SpreadsheetDateTimeParsePatterns.fromJsonNodeDateTimeParsePatterns(jsonNode, context);
     }
 
     // ParseStringTesting...............................................................................................

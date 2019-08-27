@@ -22,6 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 import java.util.List;
 import java.util.Map;
@@ -178,10 +179,10 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
         return this.value.toString();
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeContext..................................................................................................
 
     @Override
-    public JsonNode toJsonNode() {
-        return this.value.toJson();
+    JsonNode toJsonNode(final ToJsonNodeContext context) {
+        return this.value.toJsonNode(context);
     }
 }

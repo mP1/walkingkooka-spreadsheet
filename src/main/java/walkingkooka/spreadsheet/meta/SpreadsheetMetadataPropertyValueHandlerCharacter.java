@@ -17,8 +17,9 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 /**
  * A {@link SpreadsheetMetadataPropertyValueHandler} for {@link Character} entries.
@@ -49,15 +50,18 @@ final class SpreadsheetMetadataPropertyValueHandlerCharacter extends Spreadsheet
         return Character.class.getSimpleName();
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeContext..................................................................................................
 
     @Override
-    Character fromJsonNode(final JsonNode node, final SpreadsheetMetadataPropertyName<?> name) {
-        return node.fromJsonNode(Character.class);
+    Character fromJsonNode(final JsonNode node,
+                           final SpreadsheetMetadataPropertyName<?> name,
+                           final FromJsonNodeContext context) {
+        return context.fromJsonNode(node, Character.class);
     }
 
     @Override
-    JsonNode toJsonNode(final Character value) {
-        return HasJsonNode.toJsonNodeObject(value);
+    JsonNode toJsonNode(final Character value,
+                        final ToJsonNodeContext context) {
+        return context.toJsonNode(value);
     }
 }
