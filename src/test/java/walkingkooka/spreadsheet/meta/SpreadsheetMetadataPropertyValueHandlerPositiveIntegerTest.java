@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.tree.json.HasJsonNode;
 
 public final class SpreadsheetMetadataPropertyValueHandlerPositiveIntegerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase2<SpreadsheetMetadataPropertyValueHandlerPositiveInteger, Integer> {
 
@@ -45,13 +44,13 @@ public final class SpreadsheetMetadataPropertyValueHandlerPositiveIntegerTest ex
     @Test
     public void testFromJsonNode() {
         final Integer positiveInteger = this.propertyValue();
-        this.fromJsonNodeAndCheck(HasJsonNode.toJsonNodeObject(positiveInteger), positiveInteger);
+        this.fromJsonNodeAndCheck(this.toJsonNode(positiveInteger), positiveInteger);
     }
 
     @Test
     public void testToJsonNode() {
         final Integer positiveInteger = this.propertyValue();
-        this.toJsonNodeAndCheck(positiveInteger, HasJsonNode.toJsonNodeObject(positiveInteger));
+        this.toJsonNodeAndCheck(positiveInteger, this.toJsonNode(positiveInteger));
     }
 
     @Override

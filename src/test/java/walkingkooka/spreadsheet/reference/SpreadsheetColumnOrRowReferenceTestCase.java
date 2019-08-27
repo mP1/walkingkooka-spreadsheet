@@ -22,8 +22,8 @@ import walkingkooka.compare.ComparableTesting;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.test.ToStringTesting;
-import walkingkooka.tree.json.HasJsonNodeStringTesting;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.JsonNodeMappingTesting;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends SpreadsheetColumnOrRowReference<R>> implements ClassTesting2<R>,
         ComparableTesting<R>,
-        HasJsonNodeStringTesting<R>,
+        JsonNodeMappingTesting<R>,
         ParseStringTesting<R>,
         ToStringTesting<R> {
 
@@ -197,7 +197,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         this.checkType(different);
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeMappingTesting.......................................................................................
 
     @Test
     public final void testToJsonNode() {
@@ -334,10 +334,10 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         return false;
     }
 
-    // HasJsonNode.......................................................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Override
-    public final R createHasJsonNode() {
+    public final R createJsonNodeMappingValue() {
         return this.createReference();
     }
 }

@@ -24,8 +24,10 @@ import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -34,8 +36,7 @@ import java.util.function.Predicate;
  * The name of a group.
  */
 final public class GroupName implements Name,
-        Comparable<GroupName>,
-        HasJsonNode {
+        Comparable<GroupName> {
 
     private final static CharPredicate LETTER = CharPredicates.range('A', 'Z').or(CharPredicates.range('a', 'z'));
 
@@ -85,29 +86,28 @@ final public class GroupName implements Name,
 
     private final String name;
 
-    // HasJsonNode...............................................................................
+    // JsonNodeContext..................................................................................................
 
     /**
      * Accepts a json string holding the name string
      */
-    static GroupName fromJsonNode(final JsonNode node) {
-        Objects.requireNonNull(node, "node");
-
+    static GroupName fromJsonNode(final JsonNode node,
+                                  final FromJsonNodeContext context) {
         return with(node.stringValueOrFail());
     }
 
-    @Override
-    public JsonNode toJsonNode() {
+    JsonNode toJsonNode(final ToJsonNodeContext context) {
         return JsonNode.string(this.toString());
     }
 
     static {
-        HasJsonNode.register("group-name",
+        JsonNodeContext.register("group-name",
                 GroupName::fromJsonNode,
+                GroupName::toJsonNode,
                 GroupName.class);
     }
 
-    // Object..................................................................................................
+    // Object...........................................................................................................
 
     public final int hashCode() {
         return CASE_SENSITIVITY.hash(this.name);

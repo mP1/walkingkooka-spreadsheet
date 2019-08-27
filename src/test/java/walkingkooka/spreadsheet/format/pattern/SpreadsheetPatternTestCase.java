@@ -27,8 +27,8 @@ import walkingkooka.test.IsMethodTesting;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.cursor.parser.ParserTesting;
-import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.JsonNodeMappingTesting;
 import walkingkooka.type.JavaVisibility;
 
 import java.util.function.Predicate;
@@ -37,7 +37,7 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern<V>
         V>
         implements ClassTesting2<P>,
         HashCodeEqualsDefinedTesting<P>,
-        HasJsonNodeTesting<P>,
+        JsonNodeMappingTesting<P>,
         IsMethodTesting<P>,
         ParserTesting,
         ParseStringTesting<P>,
@@ -192,10 +192,10 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern<V>
         return this.createPattern();
     }
 
-    // HasJsonNodeTesting................................................................................................
+    // JsonNodeMappingTesting................................................................................................
 
     @Override
-    public final P createHasJsonNode() {
+    public final P createJsonNodeMappingValue() {
         return this.createPattern();
     }
 

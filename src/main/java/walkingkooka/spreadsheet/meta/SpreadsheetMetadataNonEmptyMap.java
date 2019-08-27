@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.collect.map.Maps;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 import java.util.AbstractMap;
 import java.util.Map;
@@ -82,13 +84,14 @@ final class SpreadsheetMetadataNonEmptyMap extends AbstractMap<SpreadsheetMetada
         this.entries.accept(visitor);
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeContext..................................................................................................
 
-    static SpreadsheetMetadataNonEmptyMap fromJson(final JsonNode json) {
-        return SpreadsheetMetadataNonEmptyMap.with1(SpreadsheetMetadataNonEmptyMapEntrySet.fromJson(json));
+    static SpreadsheetMetadataNonEmptyMap fromJsonNode(final JsonNode json,
+                                                       final FromJsonNodeContext context) {
+        return SpreadsheetMetadataNonEmptyMap.with1(SpreadsheetMetadataNonEmptyMapEntrySet.fromJson(json, context));
     }
 
-    JsonNode toJson() {
-        return this.entries.toJson();
+    JsonNode toJsonNode(final ToJsonNodeContext context) {
+        return this.entries.toJson(context);
     }
 }

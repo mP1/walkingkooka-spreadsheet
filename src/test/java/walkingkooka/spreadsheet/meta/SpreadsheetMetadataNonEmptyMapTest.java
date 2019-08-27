@@ -23,6 +23,7 @@ import walkingkooka.collect.map.MapTesting2;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -88,7 +89,8 @@ public final class SpreadsheetMetadataNonEmptyMapTest implements MapTesting2<Spr
 
     @Test
     public void testFromEmptyJsonObject() {
-        assertSame(SpreadsheetMetadataNonEmptyMap.EMPTY, SpreadsheetMetadataNonEmptyMap.fromJson(JsonNode.object()));
+        assertSame(SpreadsheetMetadataNonEmptyMap.EMPTY,
+                SpreadsheetMetadataNonEmptyMap.fromJsonNode(JsonNode.object(), FromJsonNodeContext.basic()));
     }
 
     @Test

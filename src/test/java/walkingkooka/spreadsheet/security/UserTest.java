@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.security;
 import org.junit.jupiter.api.Test;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 import java.util.Optional;
 
@@ -62,7 +64,7 @@ public final class UserTest extends IdentityTestCase<User, UserId> {
         assertEquals(EMAIL, different.email(), "email");
     }
 
-    // HasJsonNodeTesting.................................................................................................
+    // JsonNodeMappingTesting.................................................................................................
 
     @Test
     public void testFromJsonNodeWithoutId() {
@@ -88,13 +90,15 @@ public final class UserTest extends IdentityTestCase<User, UserId> {
 
     private JsonNode jsonNodeWithoutId() {
         return JsonNode.object()
-                .set(User.EMAIL_PROPERTY, EMAIL.toJsonNode());
+                .set(User.EMAIL_PROPERTY, this.toJsonNodeContext().toJsonNode(EMAIL));
     }
 
     private JsonNode jsonNodeWithId() {
+        final ToJsonNodeContext context = this.toJsonNodeContext();
+
         return JsonNode.object()
-                .set(User.ID_PROPERTY, createId().get().toJsonNode())
-                .set(User.EMAIL_PROPERTY, EMAIL.toJsonNode());
+                .set(User.ID_PROPERTY, context.toJsonNode(createId().get()))
+                .set(User.EMAIL_PROPERTY, context.toJsonNode(EMAIL));
     }
 
     @Test
@@ -124,10 +128,11 @@ public final class UserTest extends IdentityTestCase<User, UserId> {
         return User.class;
     }
 
-    // HasJsonNodeTesting...............................................................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Override
-    public final User fromJsonNode(final JsonNode from) {
-        return User.fromJsonNode(from);
+    public final User fromJsonNode(final JsonNode from,
+                                   final FromJsonNodeContext context) {
+        return User.fromJsonNode(from, context);
     }
 }

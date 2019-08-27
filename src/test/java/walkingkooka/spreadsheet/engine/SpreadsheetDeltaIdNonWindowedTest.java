@@ -21,8 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 import java.util.Optional;
 import java.util.Set;
@@ -42,7 +42,7 @@ public final class SpreadsheetDeltaIdNonWindowedTest extends SpreadsheetDeltaNon
         this.checkNotEquals(SpreadsheetDeltaIdWindowed.with(this.id(), this.cells(), this.window0("A1:Z99")));
     }
 
-    // HasJson..........................................................................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Test
     public void testFromJsonNode() {
@@ -55,22 +55,24 @@ public final class SpreadsheetDeltaIdNonWindowedTest extends SpreadsheetDeltaNon
         final Set<SpreadsheetCell> cells = SpreadsheetDelta.NO_CELLS;
 
         this.fromJsonNodeAndCheck(JsonNode.object()
-                        .set(SpreadsheetDelta.ID_PROPERTY, this.id().get().toJsonNodeWithType()),
+                        .set(SpreadsheetDelta.ID_PROPERTY, this.toJsonNodeContext().toJsonNodeWithType(this.id().get())),
                 this.createSpreadsheetDelta(this.id(), cells));
     }
 
     @Test
     public void testFromJsonIdCells() {
+        final ToJsonNodeContext context = this.toJsonNodeContext();
+
         this.fromJsonNodeAndCheck(JsonNode.object()
-                        .set(SpreadsheetDelta.ID_PROPERTY, this.id().get().toJsonNodeWithType())
-                        .set(SpreadsheetDelta.CELLS_PROPERTY, HasJsonNode.toJsonNodeSet(this.cells())),
-                this.createHasJsonNode());
+                        .set(SpreadsheetDelta.ID_PROPERTY, context.toJsonNodeWithType(this.id().get()))
+                        .set(SpreadsheetDelta.CELLS_PROPERTY, context.toJsonNodeSet(this.cells())),
+                this.createJsonNodeMappingValue());
     }
 
     @Test
     public void testFromJsonCells() {
         this.fromJsonNodeAndCheck(JsonNode.object()
-                        .set(SpreadsheetDelta.CELLS_PROPERTY, HasJsonNode.toJsonNodeSet(this.cells())),
+                        .set(SpreadsheetDelta.CELLS_PROPERTY, this.toJsonNodeContext().toJsonNodeSet(this.cells())),
                 SpreadsheetDeltaIdNonWindowed.with(EMPTY_ID, this.cells()));
     }
 
@@ -86,22 +88,24 @@ public final class SpreadsheetDeltaIdNonWindowedTest extends SpreadsheetDeltaNon
 
         this.toJsonNodeAndCheck(SpreadsheetDeltaIdNonWindowed.with(this.id(), cells),
                 JsonNode.object()
-                        .set(SpreadsheetDelta.ID_PROPERTY, this.id().get().toJsonNodeWithType()));
+                        .set(SpreadsheetDelta.ID_PROPERTY, this.toJsonNodeContext().toJsonNodeWithType(this.id().get())));
     }
 
     @Test
     public void testToJsonNodeIdCells() {
-        this.toJsonNodeAndCheck(this.createHasJsonNode(),
+        final ToJsonNodeContext context = this.toJsonNodeContext();
+
+        this.toJsonNodeAndCheck(this.createJsonNodeMappingValue(),
                 JsonNode.object()
-                        .set(SpreadsheetDelta.ID_PROPERTY, this.id().get().toJsonNodeWithType())
-                        .set(SpreadsheetDelta.CELLS_PROPERTY, HasJsonNode.toJsonNodeSet(this.cells())));
+                        .set(SpreadsheetDelta.ID_PROPERTY, context.toJsonNodeWithType(this.id().get()))
+                        .set(SpreadsheetDelta.CELLS_PROPERTY, context.toJsonNodeSet(this.cells())));
     }
 
     @Test
     public void testToJsonNodeCells() {
         this.toJsonNodeAndCheck(SpreadsheetDeltaIdNonWindowed.with(EMPTY_ID, this.cells()),
                 JsonNode.object()
-                        .set(SpreadsheetDelta.CELLS_PROPERTY, HasJsonNode.toJsonNodeSet(this.cells())));
+                        .set(SpreadsheetDelta.CELLS_PROPERTY, this.toJsonNodeContext().toJsonNodeSet(this.cells())));
     }
 
     // HasHateosLink....................................................................................................

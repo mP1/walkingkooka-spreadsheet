@@ -26,9 +26,11 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ToStringTesting;
-import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeMappingTesting;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 import walkingkooka.tree.text.FontStyle;
 import walkingkooka.tree.text.FontWeight;
 import walkingkooka.tree.text.TextNode;
@@ -46,7 +48,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>,
         ComparableTesting<SpreadsheetCell>,
-        HasJsonNodeTesting<SpreadsheetCell>,
+        JsonNodeMappingTesting<SpreadsheetCell>,
         HateosResourceTesting<SpreadsheetCell>,
         ToStringTesting<SpreadsheetCell> {
 
@@ -296,7 +298,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.compareToAndCheckEquals(this.createComparable().setFormatted(Optional.of(TextNode.text("different-formatted"))));
     }
 
-    // HasJsonNode...............................................................................................
+    // JsonNodeMappingTesting................................................................................
 
     // HasJsonNode.fromJsonNodeLabelName.......................................................................................
 
@@ -328,22 +330,24 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testFromJsonNodeObjectReferenceMissingFails() {
         this.fromJsonNodeFails(JsonNode.object()
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode()),
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, this.toJsonNodeContext().toJsonNode(formula())),
                 JsonNodeException.class);
     }
 
     @Test
     public void testFromJsonNodeObjectReferenceMissingFails2() {
+        final ToJsonNodeContext context = this.toJsonNodeContext();
+
         this.fromJsonNodeFails(JsonNode.object()
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode())
-                        .set(SpreadsheetCell.STYLE_PROPERTY, this.boldAndItalics().toJsonNode()),
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.toJsonNode(formula()))
+                        .set(SpreadsheetCell.STYLE_PROPERTY, context.toJsonNode(this.boldAndItalics())),
                 JsonNodeException.class);
     }
 
     @Test
     public void testFromJsonNodeObjectFormulaMissingFails() {
         this.fromJsonNodeFails(JsonNode.object()
-                        .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode()),
+                        .set(SpreadsheetCell.REFERENCE_PROPERTY, this.toJsonNodeContext().toJsonNode(reference())),
                 JsonNodeException.class);
     }
 
@@ -351,10 +355,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testFromJsonNodeObjectReferenceAndFormulaAndTextStyle() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
+        final ToJsonNodeContext context = this.toJsonNodeContext();
+
         this.fromJsonNodeAndCheck(JsonNode.object()
-                        .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode())
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode())
-                        .set(SpreadsheetCell.STYLE_PROPERTY, boldAndItalics.toJsonNode()),
+                        .set(SpreadsheetCell.REFERENCE_PROPERTY, context.toJsonNode(reference()))
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.toJsonNode(formula()))
+                        .set(SpreadsheetCell.STYLE_PROPERTY, context.toJsonNode(boldAndItalics)),
                 SpreadsheetCell.with(reference(), formula()).setStyle(boldAndItalics));
     }
 
@@ -362,11 +368,13 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testFromJsonNodeObjectReferenceAndFormulaAndTextStyleAndFormat() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
+        final ToJsonNodeContext context = this.toJsonNodeContext();
+
         this.fromJsonNodeAndCheck(JsonNode.object()
-                        .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode())
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode())
-                        .set(SpreadsheetCell.STYLE_PROPERTY, boldAndItalics.toJsonNode())
-                        .set(SpreadsheetCell.FORMAT_PROPERTY, format().get().toJsonNode()),
+                        .set(SpreadsheetCell.REFERENCE_PROPERTY, context.toJsonNode(reference()))
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.toJsonNode(formula()))
+                        .set(SpreadsheetCell.STYLE_PROPERTY, context.toJsonNode(boldAndItalics))
+                        .set(SpreadsheetCell.FORMAT_PROPERTY, context.toJsonNode(format().get())),
                 SpreadsheetCell.with(reference(), formula())
                         .setStyle(boldAndItalics)
                         .setFormat(format()));
@@ -376,11 +384,13 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testFromJsonNodeObjectReferenceAndFormulaAndTextStyleAndFormattedCell() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
+        final ToJsonNodeContext context = this.toJsonNodeContext();
+
         this.fromJsonNodeAndCheck(JsonNode.object()
-                        .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode())
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode())
-                        .set(SpreadsheetCell.STYLE_PROPERTY, boldAndItalics.toJsonNode())
-                        .set(SpreadsheetCell.FORMATTED_PROPERTY, formatted().get().toJsonNodeWithType()),
+                        .set(SpreadsheetCell.REFERENCE_PROPERTY, context.toJsonNode(reference()))
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.toJsonNode(formula()))
+                        .set(SpreadsheetCell.STYLE_PROPERTY, context.toJsonNode(boldAndItalics))
+                        .set(SpreadsheetCell.FORMATTED_PROPERTY, context.toJsonNodeWithType(formatted().get())),
                 SpreadsheetCell.with(reference(), formula())
                         .setStyle(boldAndItalics)
                         .setFormatted(formatted()));
@@ -388,11 +398,13 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @Test
     public void testFromJsonNodeObjectReferenceAndFormulaAndFormatAndFormattedCell() {
+        final ToJsonNodeContext context = this.toJsonNodeContext();
+
         this.fromJsonNodeAndCheck(JsonNode.object()
-                        .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode())
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode())
-                        .set(SpreadsheetCell.FORMAT_PROPERTY, format().get().toJsonNode())
-                        .set(SpreadsheetCell.FORMATTED_PROPERTY, formatted().get().toJsonNodeWithType()),
+                        .set(SpreadsheetCell.REFERENCE_PROPERTY, context.toJsonNode(reference()))
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.toJsonNode(formula()))
+                        .set(SpreadsheetCell.FORMAT_PROPERTY, context.toJsonNode(format().get()))
+                        .set(SpreadsheetCell.FORMATTED_PROPERTY, context.toJsonNodeWithType(formatted().get())),
                 SpreadsheetCell.with(reference(), formula())
                         .setFormat(format())
                         .setFormatted(formatted()));
@@ -402,19 +414,21 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testFromJsonNodeObjectReferenceAndFormulaAndTextStyleAndFormatAndFormattedCell() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
+        final ToJsonNodeContext context = this.toJsonNodeContext();
+
         this.fromJsonNodeAndCheck(JsonNode.object()
-                        .set(SpreadsheetCell.REFERENCE_PROPERTY, reference().toJsonNode())
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, formula().toJsonNode())
-                        .set(SpreadsheetCell.STYLE_PROPERTY, boldAndItalics.toJsonNode())
-                        .set(SpreadsheetCell.FORMAT_PROPERTY, format().get().toJsonNode())
-                        .set(SpreadsheetCell.FORMATTED_PROPERTY, formatted().get().toJsonNodeWithType()),
+                        .set(SpreadsheetCell.REFERENCE_PROPERTY, context.toJsonNode(reference()))
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.toJsonNode(formula()))
+                        .set(SpreadsheetCell.STYLE_PROPERTY, context.toJsonNode(boldAndItalics))
+                        .set(SpreadsheetCell.FORMAT_PROPERTY, context.toJsonNode(format().get()))
+                        .set(SpreadsheetCell.FORMATTED_PROPERTY, context.toJsonNodeWithType(formatted().get())),
                 SpreadsheetCell.with(reference(), formula())
                         .setStyle(boldAndItalics)
                         .setFormat(format())
                         .setFormatted(formatted()));
     }
 
-    // HasJsonNode .toJsonNode.........................................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Test
     public void testJsonNode() {
@@ -428,15 +442,19 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
         this.toJsonNodeAndCheck(SpreadsheetCell.with(reference(COLUMN, ROW), SpreadsheetFormula.with(FORMULA))
                         .setStyle(boldAndItalics),
-                "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}, \"style\": " + boldAndItalics.toJsonNodeWithType() + "}");
+                "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}, \"style\": " +
+                        this.toJsonNodeContext()
+                                .toJsonNodeWithType(boldAndItalics) + "}");
     }
 
     @Test
     public void testJsonNodeWithFormatted() {
+        final ToJsonNodeContext context = this.toJsonNodeContext();
+
         this.toJsonNodeAndCheck(this.createCell(),
                 "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}" +
-                        ", \"format\": " + this.format().get().toJsonNode() +
-                        ", \"formatted\": " + this.formatted().get().toJsonNodeWithType() +
+                        ", \"format\": " + context.toJsonNode(this.format().get()) +
+                        ", \"formatted\": " + context.toJsonNodeWithType(this.formatted().get()) +
                         "}");
     }
 
@@ -444,12 +462,14 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testJsonNodeWithTextStyleAndFormatted() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
+        final ToJsonNodeContext context = this.toJsonNodeContext();
+
         this.toJsonNodeAndCheck(this.createCell()
                         .setStyle(boldAndItalics)
                         .setFormatted(this.formatted()),
-                "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}, \"style\": " + boldAndItalics.toJsonNodeWithType() +
-                        ", \"format\": " + this.format().get().toJsonNode() +
-                        ", \"formatted\": " + this.formatted().get().toJsonNodeWithType() +
+                "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}, \"style\": " + context.toJsonNodeWithType(boldAndItalics) +
+                        ", \"format\": " + context.toJsonNode(this.format().get()) +
+                        ", \"formatted\": " + context.toJsonNodeWithType(this.formatted().get()) +
                         "}");
     }
 
@@ -617,16 +637,17 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         return false; // comparing does not include all properties, so compareTo == 0 <> equals
     }
 
-    // HasJsonNodeTesting............................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Override
-    public SpreadsheetCell createHasJsonNode() {
+    public SpreadsheetCell createJsonNodeMappingValue() {
         return this.createObject();
     }
 
     @Override
-    public SpreadsheetCell fromJsonNode(final JsonNode jsonNode) {
-        return SpreadsheetCell.fromJsonNode(jsonNode);
+    public SpreadsheetCell fromJsonNode(final JsonNode jsonNode,
+                                        final FromJsonNodeContext context) {
+        return SpreadsheetCell.fromJsonNode(jsonNode, context);
     }
 
     // HateosResourceTesting............................................................................................

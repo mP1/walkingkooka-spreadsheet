@@ -27,8 +27,9 @@ import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ThrowableTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeMappingTesting;
 import walkingkooka.type.JavaVisibility;
 
 import java.util.Optional;
@@ -41,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata> implements ClassTesting2<SpreadsheetMetadata>,
         ConverterTesting,
         HashCodeEqualsDefinedTesting<SpreadsheetMetadata>,
-        HasJsonNodeTesting<SpreadsheetMetadata>,
+        JsonNodeMappingTesting<SpreadsheetMetadata>,
         HateosResourceTesting<SpreadsheetMetadata>,
         ThrowableTesting,
         ToStringTesting<SpreadsheetMetadata> {
@@ -233,15 +234,16 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         return JavaVisibility.PACKAGE_PRIVATE;
     }
 
-    // HasJsonNodeTesting................................................................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Override
-    public final SpreadsheetMetadata fromJsonNode(final JsonNode from) {
-        return SpreadsheetMetadata.fromJsonNode(from);
+    public final SpreadsheetMetadata fromJsonNode(final JsonNode from,
+                                                  final FromJsonNodeContext context) {
+        return SpreadsheetMetadata.fromJsonNode(from, context);
     }
 
     @Override
-    public final SpreadsheetMetadata createHasJsonNode() {
+    public final SpreadsheetMetadata createJsonNodeMappingValue() {
         return this.createObject();
     }
 

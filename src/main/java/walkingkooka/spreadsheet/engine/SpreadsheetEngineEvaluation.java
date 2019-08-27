@@ -20,13 +20,14 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.Cast;
 import walkingkooka.net.header.LinkRelation;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 import java.util.Arrays;
-import java.util.Objects;
 
-public enum SpreadsheetEngineEvaluation implements HasJsonNode {
+public enum SpreadsheetEngineEvaluation {
 
     /**
      * Clears any value and error and formatting.
@@ -93,20 +94,14 @@ public enum SpreadsheetEngineEvaluation implements HasJsonNode {
 
     private final LinkRelation linkRelation;
 
+    // JsonNodeContext..................................................................................................
 
-    // HasJsonNode......................................................................................................
-
-    /**
-     * Factory that creates a {@link SpreadsheetEngineEvaluation} from a {@link JsonNode}
-     */
-    static SpreadsheetEngineEvaluation fromJsonNode(final JsonNode node) {
-        Objects.requireNonNull(node, "node");
-
+    static SpreadsheetEngineEvaluation fromJsonNode(final JsonNode node,
+                                                    final FromJsonNodeContext context) {
         return valueOf(node.stringValueOrFail());
     }
 
-    @Override
-    public JsonNode toJsonNode() {
+    JsonNode toJsonNode(final ToJsonNodeContext context) {
         return JsonNode.string(this.name());
     }
 
@@ -115,9 +110,9 @@ public enum SpreadsheetEngineEvaluation implements HasJsonNode {
                 .map(SpreadsheetEngineEvaluation::getClass)
                 .toArray(Class[]::new));
 
-
-        HasJsonNode.register("spreadsheet-engine-evaluation",
+        JsonNodeContext.register("spreadsheet-engine-evaluation",
                 SpreadsheetEngineEvaluation::fromJsonNode,
+                SpreadsheetEngineEvaluation::toJsonNode,
                 SpreadsheetEngineEvaluation.class,
                 types);
     }

@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.tree.json.HasJsonNode;
 
 public final class SpreadsheetMetadataPropertyValueHandlerTwoDigitYearTest extends SpreadsheetMetadataPropertyValueHandlerTestCase2<SpreadsheetMetadataPropertyValueHandlerTwoDigitYear, Integer> {
 
@@ -45,13 +44,13 @@ public final class SpreadsheetMetadataPropertyValueHandlerTwoDigitYearTest exten
     @Test
     public void testFromJsonNode() {
         final Integer yy = this.propertyValue();
-        this.fromJsonNodeAndCheck(HasJsonNode.toJsonNodeObject(yy), yy);
+        this.fromJsonNodeAndCheck(this.toJsonNode(yy), yy);
     }
 
     @Test
     public void testToJsonNode() {
         final Integer yy = this.propertyValue();
-        this.toJsonNodeAndCheck(yy, HasJsonNode.toJsonNodeObject(yy));
+        this.toJsonNodeAndCheck(yy, this.toJsonNode(yy));
     }
 
     @Override

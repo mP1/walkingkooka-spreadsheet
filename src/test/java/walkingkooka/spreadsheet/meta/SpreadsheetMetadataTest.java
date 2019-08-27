@@ -23,8 +23,9 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
-import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeMappingTesting;
 import walkingkooka.type.JavaVisibility;
 
 import java.time.LocalDateTime;
@@ -36,7 +37,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetMetadata>,
         HashCodeEqualsDefinedTesting<SpreadsheetMetadata>,
-        HasJsonNodeTesting<SpreadsheetMetadata>,
+        JsonNodeMappingTesting<SpreadsheetMetadata>,
         ToStringTesting<SpreadsheetMetadata> {
 
     @Test
@@ -104,7 +105,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
     @Test
     public void testFromEmptyJsonObject() {
-        assertSame(SpreadsheetMetadata.EMPTY, SpreadsheetMetadata.fromJsonNode(JsonNode.object()));
+        assertSame(SpreadsheetMetadata.EMPTY,
+                SpreadsheetMetadata.fromJsonNode(JsonNode.object(), this.fromJsonNodeContext()));
     }
 
     @Override
@@ -146,15 +148,16 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         return JavaVisibility.PUBLIC;
     }
 
-    // HasJsonNodeTesting................................................................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Override
-    public SpreadsheetMetadata fromJsonNode(final JsonNode from) {
-        return SpreadsheetMetadata.fromJsonNode(from);
+    public SpreadsheetMetadata fromJsonNode(final JsonNode from,
+                                            final FromJsonNodeContext context) {
+        return SpreadsheetMetadata.fromJsonNode(from, context);
     }
 
     @Override
-    public SpreadsheetMetadata createHasJsonNode() {
+    public SpreadsheetMetadata createJsonNodeMappingValue() {
         return this.createObject();
     }
 }

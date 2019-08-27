@@ -20,16 +20,17 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.net.header.LinkRelation;
 import walkingkooka.test.ClassTesting2;
-import walkingkooka.tree.json.HasJsonNodeStringTesting;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeMappingTesting;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class SpreadsheetEngineEvaluationTest implements ClassTesting2<SpreadsheetEngineEvaluation>,
-        HasJsonNodeStringTesting<SpreadsheetEngineEvaluation> {
+        JsonNodeMappingTesting<SpreadsheetEngineEvaluation> {
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeMappingTesting.......................................................................................
 
     @Test
     public void testFromJsonNodeStringUnknownFails() {
@@ -82,15 +83,16 @@ public final class SpreadsheetEngineEvaluationTest implements ClassTesting2<Spre
         return JavaVisibility.PUBLIC;
     }
 
-    // HasJsonNodeTesting..................................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Override
-    public SpreadsheetEngineEvaluation createHasJsonNode() {
+    public SpreadsheetEngineEvaluation createJsonNodeMappingValue() {
         return SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY;
     }
 
     @Override
-    public SpreadsheetEngineEvaluation fromJsonNode(final JsonNode node) {
-        return SpreadsheetEngineEvaluation.fromJsonNode(node);
+    public SpreadsheetEngineEvaluation fromJsonNode(final JsonNode node,
+                                                    final FromJsonNodeContext context) {
+        return SpreadsheetEngineEvaluation.fromJsonNode(node, context);
     }
 }

@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.Converters;
-import walkingkooka.tree.json.HasJsonNode;
 
 public final class SpreadsheetMetadataPropertyValueHandlerDateTimeOffsetTest extends SpreadsheetMetadataPropertyValueHandlerTestCase2<SpreadsheetMetadataPropertyValueHandlerDateTimeOffset, Long> {
 
@@ -41,13 +40,13 @@ public final class SpreadsheetMetadataPropertyValueHandlerDateTimeOffsetTest ext
     @Test
     public void testFromJsonNode() {
         final Long value = Converters.EXCEL_OFFSET;
-        this.fromJsonNodeAndCheck(HasJsonNode.toJsonNodeObject(value), value);
+        this.fromJsonNodeAndCheck(this.toJsonNode(value), value);
     }
 
     @Test
     public void testToJsonNode() {
         final Long value = Converters.EXCEL_OFFSET;
-        this.toJsonNodeAndCheck(value, HasJsonNode.toJsonNodeObject(value));
+        this.toJsonNodeAndCheck(value, this.toJsonNode(value));
     }
 
     @Override
