@@ -24,14 +24,14 @@ import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.IsMethodTesting;
 import walkingkooka.test.ToStringTesting;
-import walkingkooka.tree.json.HasJsonNodeStringTesting;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.JsonNodeMappingTesting;
 
 import java.util.function.Predicate;
 
 public abstract class SpreadsheetExpressionReferenceTestCase<R extends SpreadsheetExpressionReference> implements ClassTesting2<R>,
         HashCodeEqualsDefinedTesting<R>,
-        HasJsonNodeStringTesting<R>,
+        JsonNodeMappingTesting<R>,
         HasHateosLinkIdTesting<R>,
         IsMethodTesting<R>,
         ToStringTesting<R> {
@@ -62,13 +62,6 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
         return this.createReference();
     }
 
-    // HasJsonNode......................................................................................................
-
-    @Override
-    public final R createHasJsonNode() {
-        return this.createReference();
-    }
-
     // IsMethodTesting...................................................................................................
 
     @Override
@@ -89,5 +82,12 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
     @Override
     public final Predicate<String> isMethodIgnoreMethodFilter() {
         return Predicates.never();
+    }
+
+    // JsonNodeTesting..................................................................................................
+
+    @Override
+    public final R createJsonNodeMappingValue() {
+        return this.createReference();
     }
 }

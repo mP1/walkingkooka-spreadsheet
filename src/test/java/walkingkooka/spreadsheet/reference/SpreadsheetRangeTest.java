@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.type.JavaVisibility;
 import walkingkooka.visit.Visiting;
@@ -808,7 +809,7 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
         this.parseStringAndCheck("A1:A2", SpreadsheetRange.with(SpreadsheetExpressionReference.parseCellReference("A1").range(SpreadsheetExpressionReference.parseCellReference("A2"))));
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeMappingTesting.......................................................................................
 
     @Test
     public void testHateosLinkIdSingle() {
@@ -835,7 +836,7 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
         this.hateosLinkIdAndCheck(SpreadsheetRange.parseRange("B2:C9"), "B2-C9");
     }
 
-    // HasJsonNodeTesting...............................................................................................
+    // JsonNodeMappingTesting...............................................................................................
 
     @Test
     public void testFromJsonNode() {
@@ -968,11 +969,12 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
         return JavaVisibility.PUBLIC;
     }
 
-    // HasJsonNodeTesting...............................................................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Override
-    public SpreadsheetRange fromJsonNode(final JsonNode node) {
-        return SpreadsheetRange.fromJsonNodeRange(node);
+    public SpreadsheetRange fromJsonNode(final JsonNode node,
+                                         final FromJsonNodeContext context) {
+        return SpreadsheetRange.fromJsonNodeRange(node, context);
     }
 
     // ParseStringTesting..................................................................................................

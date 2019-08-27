@@ -75,11 +75,11 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
         this.toStringAndCheck(SpreadsheetMetadata.EMPTY, "");
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Test
     public void testFromEmptyJsonObject() {
-        assertSame(SpreadsheetMetadata.EMPTY, SpreadsheetMetadata.fromJsonNode(JsonNode.object()));
+        assertSame(SpreadsheetMetadata.EMPTY, SpreadsheetMetadata.fromJsonNode(JsonNode.object(), this.fromJsonNodeContext()));
     }
 
     // helper...........................................................................................................

@@ -21,8 +21,9 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
-import walkingkooka.tree.json.HasJsonNodeStringTesting;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeMappingTesting;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetError>,
         HashCodeEqualsDefinedTesting<SpreadsheetError>,
-        HasJsonNodeStringTesting<SpreadsheetError>,
+        JsonNodeMappingTesting<SpreadsheetError>,
         ToStringTesting<SpreadsheetError> {
 
     private final static String MESSAGE = "message #1";
@@ -75,7 +76,7 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
         this.checkNotEquals(SpreadsheetError.with(MESSAGE.toUpperCase()));
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeMappingTesting.......................................................................................
 
     @Test
     public void testFromJsonNodeStringInvalidFails() {
@@ -124,15 +125,16 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
         return JavaVisibility.PUBLIC;
     }
 
-    // HasJsonNodeTesting............................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Override
-    public SpreadsheetError createHasJsonNode() {
+    public SpreadsheetError createJsonNodeMappingValue() {
         return this.createObject();
     }
 
     @Override
-    public SpreadsheetError fromJsonNode(final JsonNode jsonNode) {
-        return SpreadsheetError.fromJsonNode(jsonNode);
+    public SpreadsheetError fromJsonNode(final JsonNode jsonNode,
+                                         final FromJsonNodeContext context) {
+        return SpreadsheetError.fromJsonNode(jsonNode, context);
     }
 }

@@ -178,7 +178,7 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
         assertEquals(patternText.length(), thrown.position(), () -> "position pattern=" + patternText2);
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeMappingTesting.......................................................................................
 
     @Test
     public final void testJsonRoundtripMultiplePatterns() {

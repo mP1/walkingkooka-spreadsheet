@@ -18,20 +18,19 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.tree.json.HasJsonNode;
 
 public final class SpreadsheetMetadataPropertyValueHandlerCharacterTest extends SpreadsheetMetadataPropertyValueHandlerTestCase3<SpreadsheetMetadataPropertyValueHandlerCharacter, Character> {
 
     @Test
     public void testFromJsonNode() {
         final Character character = this.propertyValue();
-        this.fromJsonNodeAndCheck(HasJsonNode.toJsonNodeObject(character), character);
+        this.fromJsonNodeAndCheck(this.toJsonNode(character), character);
     }
 
     @Test
     public void testToJsonNode() {
         final Character character = this.propertyValue();
-        this.toJsonNodeAndCheck(character, HasJsonNode.toJsonNodeObject(character));
+        this.toJsonNodeAndCheck(character, this.toJsonNode(character));
     }
 
     @Override

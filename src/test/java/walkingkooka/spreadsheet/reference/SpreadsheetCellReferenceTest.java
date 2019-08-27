@@ -23,6 +23,7 @@ import walkingkooka.compare.Range;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
 import walkingkooka.type.JavaVisibility;
 import walkingkooka.visit.Visiting;
 
@@ -379,7 +380,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
                 SpreadsheetCellReference.parseCellReferenceRange("$B2:D$4"));
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeMappingTesting.......................................................................................
 
     @Test
     public void testHateosLinkIdAbsoluteReference() {
@@ -391,7 +392,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
         this.hateosLinkIdAndCheck(SpreadsheetExpressionReference.parseCellReference("B5"), "B5");
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeMappingTesting.......................................................................................
 
     @Test
     public void testFromJsonNodeString() {
@@ -589,10 +590,11 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
         return expected;
     }
 
-    // HasJsonNodeTesting..................................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Override
-    public SpreadsheetCellReference fromJsonNode(final JsonNode from) {
-        return SpreadsheetCellReference.fromJsonNodeCellReference(from);
+    public SpreadsheetCellReference fromJsonNode(final JsonNode from,
+                                                 final FromJsonNodeContext context) {
+        return SpreadsheetCellReference.fromJsonNodeCellReference(from, context);
     }
 }

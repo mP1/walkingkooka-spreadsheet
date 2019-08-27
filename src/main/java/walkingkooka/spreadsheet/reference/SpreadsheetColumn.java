@@ -20,8 +20,10 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.Cast;
 import walkingkooka.HasId;
 import walkingkooka.test.HashCodeEqualsDefined;
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 import java.util.Objects;
 
@@ -30,8 +32,7 @@ import java.util.Objects;
  */
 public final class SpreadsheetColumn implements HasId<SpreadsheetColumnReference>,
         Comparable<SpreadsheetColumn>,
-        HashCodeEqualsDefined,
-        HasJsonNode {
+        HashCodeEqualsDefined {
 
     /**
      * Factory that creates a new {@link SpreadsheetColumn}
@@ -82,20 +83,21 @@ public final class SpreadsheetColumn implements HasId<SpreadsheetColumnReference
         return new SpreadsheetColumn(reference);
     }
 
-    // HasJsonNode.......................................................................................
+    // JsonNodeContext..................................................................................................
 
-    static SpreadsheetColumn fromJsonNode(final JsonNode node) {
-        return with(SpreadsheetColumnReference.fromJsonNode(node));
+    static SpreadsheetColumn fromJsonNode(final JsonNode node,
+                                          final FromJsonNodeContext context) {
+        return with(context.fromJsonNode(node, SpreadsheetColumnReference.class));
     }
 
-    @Override
-    public JsonNode toJsonNode() {
-        return this.reference.toJsonNode();
+    JsonNode toJsonNode(final ToJsonNodeContext context) {
+        return context.toJsonNode(this.reference);
     }
 
     static {
-        HasJsonNode.register("spreadsheet-column",
+        JsonNodeContext.register("spreadsheet-column",
                 SpreadsheetColumn::fromJsonNode,
+                SpreadsheetColumn::toJsonNode,
                 SpreadsheetColumn.class);
     }
 

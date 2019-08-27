@@ -19,9 +19,11 @@ package walkingkooka.spreadsheet.security;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeName;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 import java.util.List;
 import java.util.Objects;
@@ -74,14 +76,10 @@ public final class Group extends Identity<GroupId> {
         return this.name.value().replace("-", "\\-");
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeContext..................................................................................................
 
-    /**
-     * Factory that creates a {@link Group} from a {@link JsonNode}.
-     */
-    static Group fromJsonNode(final JsonNode node) {
-        Objects.requireNonNull(node, "node");
-
+    static Group fromJsonNode(final JsonNode node,
+                              final FromJsonNodeContext context) {
         GroupId id = null;
         GroupName groupName = null;
 
@@ -89,29 +87,28 @@ public final class Group extends Identity<GroupId> {
             final JsonNodeName name = child.name();
             switch (name.value()) {
                 case ID_PROPERTY_STRING:
-                    id = GroupId.fromJsonNode(child);
+                    id = context.fromJsonNode(child, GroupId.class);
                     break;
                 case NAME_PROPERTY_STRING:
-                    groupName = GroupName.fromJsonNode(child);
+                    groupName = context.fromJsonNode(child, GroupName.class);
                     break;
                 default:
-                    HasJsonNode.unknownPropertyPresent(name, node);
+                    FromJsonNodeContext.unknownPropertyPresent(name, node);
             }
         }
 
         if (null == groupName) {
-            HasJsonNode.requiredPropertyMissing(NAME_PROPERTY, node);
+            FromJsonNodeContext.requiredPropertyMissing(NAME_PROPERTY, node);
         }
 
         return new Group(Optional.ofNullable(id), groupName);
     }
 
-    @Override
-    public JsonNode toJsonNode() {
+    JsonNode toJsonNode(final ToJsonNodeContext context) {
         final List<JsonNode> properties = Lists.array();
 
-        this.id.ifPresent(id -> properties.add(id.toJsonNode().setName(ID_PROPERTY)));
-        properties.add(this.name.toJsonNode().setName(NAME_PROPERTY));
+        this.id.ifPresent(id -> properties.add(context.toJsonNode(id).setName(ID_PROPERTY)));
+        properties.add(context.toJsonNode(this.name).setName(NAME_PROPERTY));
 
         return JsonNode.object()
                 .setChildren(properties);
@@ -121,8 +118,9 @@ public final class Group extends Identity<GroupId> {
     final static JsonNodeName NAME_PROPERTY = JsonNodeName.with(NAME_PROPERTY_STRING);
 
     static {
-        HasJsonNode.register("group",
+        JsonNodeContext.register("group",
                 Group::fromJsonNode,
+                Group::toJsonNode,
                 Group.class);
     }
 

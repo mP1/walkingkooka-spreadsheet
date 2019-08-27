@@ -23,8 +23,10 @@ import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.test.HashCodeEqualsDefined;
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -33,8 +35,7 @@ import java.util.Optional;
  * Holds the pattern and compiled formatter for a cell.
  */
 public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
-        UsesToStringBuilder,
-        HasJsonNode {
+        UsesToStringBuilder {
 
     /**
      * A constant holding no formatter.
@@ -112,29 +113,28 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
         return new SpreadsheetCellFormat(pattern, formatter);
     }
 
-    // HasJsonNode ...................................................................................................
+    // JsonNodeContext .................................................................................................
 
     /**
      * Factory that creates a {@link SpreadsheetCellFormat} from a {@link JsonNode}.
      */
-    static SpreadsheetCellFormat fromJsonNode(final JsonNode node) {
-        Objects.requireNonNull(node, "node");
-
+    static SpreadsheetCellFormat fromJsonNode(final JsonNode node,
+                                              final FromJsonNodeContext context) {
         return with(node.stringValueOrFail());
     }
 
-    @Override
-    public JsonNode toJsonNode() {
+    JsonNode toJsonNode(final ToJsonNodeContext context) {
         return JsonNode.string(this.pattern); // formatter not serialized.
     }
 
     static {
-        HasJsonNode.register("spreadsheet-cell-format",
+        JsonNodeContext.register("spreadsheet-cell-format",
                 SpreadsheetCellFormat::fromJsonNode,
+                SpreadsheetCellFormat::toJsonNode,
                 SpreadsheetCellFormat.class);
     }
 
-    // Object ............................................................................
+    // Object ..........................................................................................................
 
     @Override
     public int hashCode() {

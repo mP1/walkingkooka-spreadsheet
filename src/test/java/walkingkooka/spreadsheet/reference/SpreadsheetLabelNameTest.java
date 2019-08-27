@@ -24,6 +24,7 @@ import walkingkooka.naming.PropertiesPath;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
 import walkingkooka.type.JavaVisibility;
 import walkingkooka.visit.Visiting;
 
@@ -142,7 +143,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
                 a1, b2, c3, d4);
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeMappingTesting.......................................................................................
 
     @Test
     public void testHateosLinkIdAbsoluteReference() {
@@ -192,7 +193,7 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         assertEquals("13542", b.toString());
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeMappingTesting.......................................................................................
 
     @Test
     public void testFromJsonNodeString() {
@@ -267,10 +268,11 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         return JavaVisibility.PUBLIC;
     }
 
-    // HasJsonNodeTesting...............................................................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Override
-    public SpreadsheetLabelName fromJsonNode(final JsonNode from) {
-        return SpreadsheetLabelName.fromJsonNodeLabelName(from);
+    public SpreadsheetLabelName fromJsonNode(final JsonNode from,
+                                             final FromJsonNodeContext context) {
+        return SpreadsheetLabelName.fromJsonNodeLabelName(from, context);
     }
 }

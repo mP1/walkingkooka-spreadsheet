@@ -19,8 +19,9 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Cast;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 /**
  * Base converter that provides support for handling property values.
@@ -205,7 +206,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
         final Class<?> type = value.getClass();
 
         String typeName = type.getName();
-        if (textStylePropertyType(typeName) || hasJsonType(type)) {
+        if (textStylePropertyType(typeName)) {
             typeName = typeName.substring(1 + typeName.lastIndexOf('.'));
         }
 
@@ -220,10 +221,6 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
         return type.startsWith(PACKAGE) && type.indexOf('.', 1 + PACKAGE.length()) == -1;
     }
 
-    final boolean hasJsonType(final Class<?> type) {
-        return HasJsonNode.typeName(type).isPresent();
-    }
-
     private final static String PACKAGE = "walkingkooka.spreadsheet.meta";
 
     // fromJsonNode ....................................................................................................
@@ -231,12 +228,15 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     /**
      * Transforms a {@link JsonNode} into a value.
      */
-    abstract T fromJsonNode(final JsonNode node, final SpreadsheetMetadataPropertyName<?> name);
+    abstract T fromJsonNode(final JsonNode node,
+                            final SpreadsheetMetadataPropertyName<?> name,
+                            final FromJsonNodeContext context);
 
     /**
-     * Transforms a value into json, performing the inverse of {@link #fromJsonNode(JsonNode, SpreadsheetMetadataPropertyName)}
+     * Transforms a value into json, performing the inverse of {@link #fromJsonNode(JsonNode, SpreadsheetMetadataPropertyName, FromJsonNodeContext)}
      */
-    abstract JsonNode toJsonNode(final T value);
+    abstract JsonNode toJsonNode(final T value,
+                                 final ToJsonNodeContext context);
 
     // Object .........................................................................................................
 

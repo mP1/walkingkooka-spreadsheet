@@ -720,7 +720,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.toStringAndCheck(SpreadsheetMetadataNonEmpty.with(map), map.toString());
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeMappingTesting.......................................................................................
 
     @Test
     public void testHasJsonNodeRoundtrip() {

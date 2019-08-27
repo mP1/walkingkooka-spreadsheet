@@ -23,9 +23,11 @@ import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObjectNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 import java.util.Comparator;
 import java.util.Objects;
@@ -36,8 +38,7 @@ import java.util.function.Function;
  */
 abstract public class SpreadsheetExpressionReference implements ExpressionReference,
         HashCodeEqualsDefined,
-        HasHateosLinkId,
-        HasJsonNode {
+        HasHateosLinkId {
 
     /**
      * A comparator that orders {@link SpreadsheetLabelName} before {@link SpreadsheetCellReference}.
@@ -207,19 +208,21 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
      */
     final static int LABEL_COMPARED_WITH_CELL_RESULT = Comparators.LESS;
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeContext..................................................................................................
 
     /**
      * Attempts to convert a {@link JsonNode} into a {@link SpreadsheetExpressionReference}.
      */
-    static SpreadsheetExpressionReference fromJsonNode(final JsonNode node) {
+    static SpreadsheetExpressionReference fromJsonNode(final JsonNode node,
+                                                       final FromJsonNodeContext context) {
         return fromJsonNode0(node, SpreadsheetExpressionReference::parse);
     }
 
     /**
      * Accepts a json string and returns a {@link SpreadsheetCellReference} or fails.
      */
-    static SpreadsheetCellReference fromJsonNodeCellReference(final JsonNode node) {
+    static SpreadsheetCellReference fromJsonNodeCellReference(final JsonNode node,
+                                                              final FromJsonNodeContext context) {
         return fromJsonNode0(node,
                 SpreadsheetExpressionReference::parseCellReference);
     }
@@ -227,14 +230,16 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     /**
      * Accepts a json string and returns a {@link SpreadsheetLabelName} or fails.
      */
-    static SpreadsheetLabelName fromJsonNodeLabelName(final JsonNode node) {
+    static SpreadsheetLabelName fromJsonNodeLabelName(final JsonNode node,
+                                                      final FromJsonNodeContext context) {
         return fromJsonNode0(node, SpreadsheetExpressionReference::labelName);
     }
 
     /**
      * Accepts a json string and returns a {@link SpreadsheetRange} or fails.
      */
-    static SpreadsheetRange fromJsonNodeRange(final JsonNode node) {
+    static SpreadsheetRange fromJsonNodeRange(final JsonNode node,
+                                              final FromJsonNodeContext context) {
         return fromJsonNode0(node, SpreadsheetExpressionReference::parseRange);
     }
 
@@ -251,20 +256,22 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     /**
      * The json form of this object is also {@link #toString()}
      */
-    @Override
-    public final JsonNode toJsonNode() {
+    final JsonNode toJsonNode(final ToJsonNodeContext context) {
         return JsonObjectNode.string(this.toString());
     }
 
     static {
-        HasJsonNode.register("spreadsheet-cell-reference",
+        JsonNodeContext.register("spreadsheet-cell-reference",
                 SpreadsheetCellReference::fromJsonNodeCellReference,
+                SpreadsheetCellReference::toJsonNode,
                 SpreadsheetCellReference.class);
-        HasJsonNode.register("spreadsheet-label-name",
+        JsonNodeContext.register("spreadsheet-label-name",
                 SpreadsheetLabelName::fromJsonNodeLabelName,
+                SpreadsheetLabelName::toJsonNode,
                 SpreadsheetLabelName.class);
-        HasJsonNode.register("spreadsheet-range",
+        JsonNodeContext.register("spreadsheet-range",
                 SpreadsheetRange::fromJsonNodeRange,
+                SpreadsheetRange::toJsonNode,
                 SpreadsheetRange.class);
     }
 }

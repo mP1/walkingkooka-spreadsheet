@@ -22,6 +22,7 @@ import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -76,14 +77,18 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     public void testFromJsonNodeWithCellReference() {
         final String reference = "A1";
         assertEquals(SpreadsheetExpressionReference.parseCellReference(reference),
-                SpreadsheetExpressionReference.fromJsonNode(JsonNode.string(reference)));
+                SpreadsheetExpressionReference.fromJsonNode(JsonNode.string(reference), this.fromJsonNodeContext()));
     }
 
     @Test
     public void testFromJsonNodeWithLabel() {
         final String label = "label123";
         assertEquals(SpreadsheetExpressionReference.labelName(label),
-                SpreadsheetExpressionReference.fromJsonNode(JsonNode.string(label)));
+                SpreadsheetExpressionReference.fromJsonNode(JsonNode.string(label), this.fromJsonNodeContext()));
+    }
+
+    private FromJsonNodeContext fromJsonNodeContext() {
+        return FromJsonNodeContext.basic();
     }
 
     // parse............................................................................................................

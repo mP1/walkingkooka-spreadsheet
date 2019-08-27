@@ -29,8 +29,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
-import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeMappingTesting;
 import walkingkooka.type.JavaVisibility;
 
 import java.util.Arrays;
@@ -46,7 +47,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta<I>, I> extends SpreadsheetDeltaTestCase<D, I>
         implements HashCodeEqualsDefinedTesting<D>,
-        HasJsonNodeTesting<D>,
+        JsonNodeMappingTesting<D>,
         HateosResourceTesting<D>,
         ToStringTesting<D> {
 
@@ -233,11 +234,17 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta<I>, I
         return this.createSpreadsheetDelta();
     }
 
-    // HasJsonTesting...................................................................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Override
-    public final D createHasJsonNode() {
+    public final D createJsonNodeMappingValue() {
         return this.createSpreadsheetDelta();
+    }
+
+    @Override
+    public final D fromJsonNode(final JsonNode jsonNode,
+                                final FromJsonNodeContext context) {
+        return Cast.to(SpreadsheetDelta.fromJsonNode(jsonNode, context));
     }
 
     // HateosResource...................................................................................................
@@ -245,12 +252,5 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta<I>, I
     @Override
     public final D createHateosResource() {
         return this.createSpreadsheetDelta();
-    }
-
-    // helpers..........................................................................................................
-
-    @Override
-    public final D fromJsonNode(final JsonNode jsonNode) {
-        return Cast.to(SpreadsheetDelta.fromJsonNode(jsonNode));
     }
 }

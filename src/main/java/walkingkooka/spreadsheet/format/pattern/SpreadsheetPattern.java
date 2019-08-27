@@ -36,8 +36,10 @@ import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 import java.util.List;
 import java.util.Objects;
@@ -47,7 +49,6 @@ import java.util.function.Function;
  * Holds a tokens that may be used to parse or format values along with helpers.
  */
 abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
-        HasJsonNode,
         Value<V> {
 
     /**
@@ -347,21 +348,23 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
         return this.value.equals(other.value);
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeContext..................................................................................................
 
     /**
      * Factory that creates a {@link SpreadsheetDateFormatPattern} from a {@link JsonNode}.
      */
-    static SpreadsheetDateFormatPattern fromJsonNodeDateFormatPattern(final JsonNode node) {
+    static SpreadsheetDateFormatPattern fromJsonNodeDateFormatPattern(final JsonNode node,
+                                                                      final FromJsonNodeContext context) {
         checkNode(node);
 
         return parseDateFormatPattern(node.stringValueOrFail());
     }
-    
+
     /**
      * Factory that creates a {@link SpreadsheetDateParsePatterns} from a {@link JsonNode}.
      */
-    static SpreadsheetDateParsePatterns fromJsonNodeDateParsePatterns(final JsonNode node) {
+    static SpreadsheetDateParsePatterns fromJsonNodeDateParsePatterns(final JsonNode node,
+                                                                      final FromJsonNodeContext context) {
         checkNode(node);
 
         return parseDateParsePatterns(node.stringValueOrFail());
@@ -370,7 +373,8 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
     /**
      * Factory that creates a {@link SpreadsheetDateTimeFormatPattern} from a {@link JsonNode}.
      */
-    static SpreadsheetDateTimeFormatPattern fromJsonNodeDateTimeFormatPattern(final JsonNode node) {
+    static SpreadsheetDateTimeFormatPattern fromJsonNodeDateTimeFormatPattern(final JsonNode node,
+                                                                              final FromJsonNodeContext context) {
         checkNode(node);
 
         return parseDateTimeFormatPattern(node.stringValueOrFail());
@@ -379,7 +383,8 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
     /**
      * Factory that creates a {@link SpreadsheetDateTimeParsePatterns} from a {@link JsonNode}.
      */
-    static SpreadsheetDateTimeParsePatterns fromJsonNodeDateTimeParsePatterns(final JsonNode node) {
+    static SpreadsheetDateTimeParsePatterns fromJsonNodeDateTimeParsePatterns(final JsonNode node,
+                                                                              final FromJsonNodeContext context) {
         checkNode(node);
 
         return parseDateTimeParsePatterns(node.stringValueOrFail());
@@ -388,16 +393,18 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
     /**
      * Factory that creates a {@link SpreadsheetNumberFormatPattern} from a {@link JsonNode}.
      */
-    static SpreadsheetNumberFormatPattern fromJsonNodeNumberFormatPattern(final JsonNode node) {
+    static SpreadsheetNumberFormatPattern fromJsonNodeNumberFormatPattern(final JsonNode node,
+                                                                          final FromJsonNodeContext context) {
         checkNode(node);
 
         return parseNumberFormatPattern(node.stringValueOrFail());
     }
-    
+
     /**
      * Factory that creates a {@link SpreadsheetNumberParsePatterns} from a {@link JsonNode}.
      */
-    static SpreadsheetNumberParsePatterns fromJsonNodeNumberParsePatterns(final JsonNode node) {
+    static SpreadsheetNumberParsePatterns fromJsonNodeNumberParsePatterns(final JsonNode node,
+                                                                          final FromJsonNodeContext context) {
         checkNode(node);
 
         return parseNumberParsePatterns(node.stringValueOrFail());
@@ -406,7 +413,8 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
     /**
      * Factory that creates a {@link SpreadsheetTimeFormatPattern} from a {@link JsonNode}.
      */
-    static SpreadsheetTimeFormatPattern fromJsonNodeTimeFormatPattern(final JsonNode node) {
+    static SpreadsheetTimeFormatPattern fromJsonNodeTimeFormatPattern(final JsonNode node,
+                                                                      final FromJsonNodeContext context) {
         checkNode(node);
 
         return parseTimeFormatPattern(node.stringValueOrFail());
@@ -415,7 +423,8 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
     /**
      * Factory that creates a {@link SpreadsheetTimeParsePatterns} from a {@link JsonNode}.
      */
-    static SpreadsheetTimeParsePatterns fromJsonNodeTimeParsePatterns(final JsonNode node) {
+    static SpreadsheetTimeParsePatterns fromJsonNodeTimeParsePatterns(final JsonNode node,
+                                                                      final FromJsonNodeContext context) {
         checkNode(node);
 
         return parseTimeParsePatterns(node.stringValueOrFail());
@@ -425,46 +434,50 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
         Objects.requireNonNull(node, "node");
     }
 
-    /**
-     * Creates a {@link walkingkooka.tree.json.JsonStringNode}.
-     */
-    @Override
-    public final JsonNode toJsonNode() {
+    final JsonNode toJsonNode(final ToJsonNodeContext context) {
         return JsonNode.string(this.toString());
     }
 
     static {
 
-        HasJsonNode.register("spreadsheet-date-format-pattern",
+        JsonNodeContext.register("spreadsheet-date-format-pattern",
                 SpreadsheetPattern::fromJsonNodeDateFormatPattern,
+                SpreadsheetPattern::toJsonNode,
                 SpreadsheetDateFormatPattern.class);
-        
-        HasJsonNode.register("spreadsheet-date-parse-pattern",
+
+        JsonNodeContext.register("spreadsheet-date-parse-pattern",
                 SpreadsheetPattern::fromJsonNodeDateParsePatterns,
+                SpreadsheetPattern::toJsonNode,
                 SpreadsheetDateParsePatterns.class);
 
-        HasJsonNode.register("spreadsheet-datetime-format-pattern",
+        JsonNodeContext.register("spreadsheet-datetime-format-pattern",
                 SpreadsheetPattern::fromJsonNodeDateTimeFormatPattern,
+                SpreadsheetPattern::toJsonNode,
                 SpreadsheetDateTimeFormatPattern.class);
 
-        HasJsonNode.register("spreadsheet-datetime-parse-pattern",
+        JsonNodeContext.register("spreadsheet-datetime-parse-pattern",
                 SpreadsheetPattern::fromJsonNodeDateTimeParsePatterns,
+                SpreadsheetPattern::toJsonNode,
                 SpreadsheetDateTimeParsePatterns.class);
 
-        HasJsonNode.register("spreadsheet-number-format-pattern",
+        JsonNodeContext.register("spreadsheet-number-format-pattern",
                 SpreadsheetPattern::fromJsonNodeNumberFormatPattern,
+                SpreadsheetPattern::toJsonNode,
                 SpreadsheetNumberFormatPattern.class);
 
-        HasJsonNode.register("spreadsheet-number-parse-pattern",
+        JsonNodeContext.register("spreadsheet-number-parse-pattern",
                 SpreadsheetPattern::fromJsonNodeNumberParsePatterns,
+                SpreadsheetPattern::toJsonNode,
                 SpreadsheetNumberParsePatterns.class);
 
-        HasJsonNode.register("spreadsheet-time-format-pattern",
+        JsonNodeContext.register("spreadsheet-time-format-pattern",
                 SpreadsheetPattern::fromJsonNodeTimeFormatPattern,
+                SpreadsheetPattern::toJsonNode,
                 SpreadsheetTimeFormatPattern.class);
 
-        HasJsonNode.register("spreadsheet-time-parse-pattern",
+        JsonNodeContext.register("spreadsheet-time-parse-pattern",
                 SpreadsheetPattern::fromJsonNodeTimeParsePatterns,
+                SpreadsheetPattern::toJsonNode,
                 SpreadsheetTimeParsePatterns.class);
     }
 }

@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.tree.json.HasJsonNode;
 
 import java.util.Locale;
 
@@ -27,13 +26,13 @@ public final class SpreadsheetMetadataPropertyValueHandlerLocaleTest extends Spr
     @Test
     public void testFromJsonNode() {
         final Locale locale = this.propertyValue();
-        this.fromJsonNodeAndCheck(HasJsonNode.toJsonNodeObject(locale), locale);
+        this.fromJsonNodeAndCheck(this.toJsonNode(locale), locale);
     }
 
     @Test
     public void testToJsonNode() {
         final Locale locale = this.propertyValue();
-        this.toJsonNodeAndCheck(locale, HasJsonNode.toJsonNodeObject(locale));
+        this.toJsonNodeAndCheck(locale, this.toJsonNode(locale));
     }
 
     @Override
