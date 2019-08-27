@@ -22,8 +22,8 @@ import walkingkooka.Cast;
 import walkingkooka.compare.Range;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 import java.util.Set;
 
@@ -42,20 +42,22 @@ public final class SpreadsheetDeltaRangeNonWindowedTest extends SpreadsheetDelta
         this.checkNotEquals(SpreadsheetDeltaRangeWindowed.with(this.id(), this.cells(), this.window0("A1:Z99")));
     }
 
-    // HasJson..........................................................................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Test
     public void testFromJsonRange() {
         this.fromJsonNodeAndCheck(JsonNode.object()
-                        .set(SpreadsheetDelta.RANGE_PROPERTY, this.id().toJsonNode()),
+                        .set(SpreadsheetDelta.RANGE_PROPERTY, this.toJsonNodeContext().toJsonNode(this.id())),
                 this.createSpreadsheetDelta(this.id(), SpreadsheetDelta.NO_CELLS));
     }
 
     @Test
     public void testFromJsonRangeCells() {
+        final ToJsonNodeContext context = this.toJsonNodeContext();
+
         this.fromJsonNodeAndCheck(JsonNode.object()
-                        .set(SpreadsheetDelta.RANGE_PROPERTY, this.id().toJsonNode())
-                        .set(SpreadsheetDelta.CELLS_PROPERTY, HasJsonNode.toJsonNodeSet(this.cells())),
+                        .set(SpreadsheetDelta.RANGE_PROPERTY, context.toJsonNode(this.id()))
+                        .set(SpreadsheetDelta.CELLS_PROPERTY, context.toJsonNodeSet(this.cells())),
                 this.createSpreadsheetDelta(this.id(), this.cells()));
     }
 
@@ -63,15 +65,17 @@ public final class SpreadsheetDeltaRangeNonWindowedTest extends SpreadsheetDelta
     public void testToJsonNodeRange() {
         this.toJsonNodeAndCheck(this.createSpreadsheetDelta(this.id(), SpreadsheetDelta.NO_CELLS),
                 JsonNode.object()
-                        .set(SpreadsheetDelta.RANGE_PROPERTY, this.id().toJsonNode()));
+                        .set(SpreadsheetDelta.RANGE_PROPERTY, this.toJsonNodeContext().toJsonNode(this.id())));
     }
 
     @Test
     public void testToJsonNodeRangeCells() {
+        final ToJsonNodeContext context = this.toJsonNodeContext();
+
         this.toJsonNodeAndCheck(this.createSpreadsheetDelta(this.id(), this.cells()),
                 JsonNode.object()
-                        .set(SpreadsheetDelta.RANGE_PROPERTY, this.id().toJsonNode())
-                        .set(SpreadsheetDelta.CELLS_PROPERTY, HasJsonNode.toJsonNodeSet(this.cells())));
+                        .set(SpreadsheetDelta.RANGE_PROPERTY, context.toJsonNode(this.id()))
+                        .set(SpreadsheetDelta.CELLS_PROPERTY, context.toJsonNodeSet(this.cells())));
     }
 
     // HasHateosLink....................................................................................................

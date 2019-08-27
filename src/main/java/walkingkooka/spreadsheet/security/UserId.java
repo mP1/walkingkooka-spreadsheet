@@ -17,18 +17,15 @@
 
 package walkingkooka.spreadsheet.security;
 
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeContext;
 
 /**
  * The primary key for a {@link User}.
  */
 public final class UserId extends IdentityId
         implements Comparable<UserId> {
-
-    static UserId fromJsonNode(final JsonNode node) {
-        return with(node.fromJsonNode(Long.class));
-    }
 
     public static UserId with(final long value) {
         return new UserId(value);
@@ -43,11 +40,17 @@ public final class UserId extends IdentityId
         return other instanceof UserId;
     }
 
-    // HasJsonNode.......................................................................................
+    // JsonNodeContext..................................................................................................
+
+    static UserId fromJsonNode(final JsonNode node,
+                               final FromJsonNodeContext context) {
+        return with(context.fromJsonNode(node, Long.class));
+    }
 
     static {
-        HasJsonNode.register("user-id",
+        JsonNodeContext.register("user-id",
                 UserId::fromJsonNode,
+                UserId::toJsonNode,
                 UserId.class);
     }
 

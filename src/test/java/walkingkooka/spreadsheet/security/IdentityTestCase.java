@@ -18,18 +18,18 @@
 package walkingkooka.spreadsheet.security;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
+import walkingkooka.tree.json.map.JsonNodeMappingTesting;
 
 public abstract class IdentityTestCase<V extends Identity<I>, I extends IdentityId> implements IdentityTesting<V, I>,
-        HasJsonNodeTesting<V> {
+        JsonNodeMappingTesting<V> {
 
     IdentityTestCase() {
         super();
     }
 
-    // HasJsonNodeTesting...............................................................................................
+    // JsonNodeMappingTesting...............................................................................................
 
     @Test
     public void testFromJsonNodeBooleanFails() {

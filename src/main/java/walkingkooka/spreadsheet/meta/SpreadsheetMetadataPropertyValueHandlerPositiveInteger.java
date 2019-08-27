@@ -17,8 +17,9 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 /**
  * A {@link SpreadsheetMetadataPropertyValueHandler} for positive {@link Integer} entries.
@@ -52,15 +53,18 @@ final class SpreadsheetMetadataPropertyValueHandlerPositiveInteger extends Sprea
         return "+Integer";
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeContext...................................................................................................
 
     @Override
-    Integer fromJsonNode(final JsonNode node, final SpreadsheetMetadataPropertyName<?> name) {
-        return node.fromJsonNode(Integer.class);
+    Integer fromJsonNode(final JsonNode node,
+                         final SpreadsheetMetadataPropertyName<?> name,
+                         final FromJsonNodeContext context) {
+        return context.fromJsonNode(node, Integer.class);
     }
 
     @Override
-    JsonNode toJsonNode(final Integer value) {
-        return HasJsonNode.toJsonNodeObject(value);
+    JsonNode toJsonNode(final Integer value,
+                        final ToJsonNodeContext context) {
+        return context.toJsonNode(value);
     }
 }

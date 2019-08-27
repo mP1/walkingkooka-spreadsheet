@@ -28,9 +28,11 @@ import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.test.HashCodeEqualsDefined;
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeName;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 import java.util.Arrays;
 import java.util.List;
@@ -218,14 +220,10 @@ public abstract class SpreadsheetDelta<I> implements Comparable<SpreadsheetDelta
                         .collect(Collectors.toCollection(Sets::ordered));
     }
 
-    // HasJsonNode.......................................................................................................
+    // JsonNodeContext..................................................................................................
 
-    /**
-     * Factory that creates a {@link SpreadsheetDelta} from a {@link JsonNode}.
-     */
-    static SpreadsheetDelta<?> fromJsonNode(final JsonNode node) {
-        Objects.requireNonNull(node, "node");
-
+    static SpreadsheetDelta<?> fromJsonNode(final JsonNode node,
+                                            final FromJsonNodeContext context) {
         HasHateosLinkId id = null;
         Range<?> range = null;
         Set<SpreadsheetCell> cells = Sets.empty();
@@ -236,19 +234,19 @@ public abstract class SpreadsheetDelta<I> implements Comparable<SpreadsheetDelta
 
             switch (name.value()) {
                 case ID_PROPERTY_STRING:
-                    id = child.fromJsonNodeWithType();
+                    id = context.fromJsonNodeWithType(child);
                     break;
                 case RANGE_PROPERTY_STRING:
-                    range = child.fromJsonNode(Range.class);
+                    range = context.fromJsonNode(child, Range.class);
                     break;
                 case CELLS_PROPERTY_STRING:
-                    cells = child.fromJsonNodeSet(SpreadsheetCell.class);
+                    cells = context.fromJsonNodeSet(child, SpreadsheetCell.class);
                     break;
                 case WINDOW_PROPERTY_STRING:
                     window = rangeFromJsonNode(child.stringValueOrFail());
                     break;
                 default:
-                    HasJsonNode.unknownPropertyPresent(name, node);
+                    FromJsonNodeContext.unknownPropertyPresent(name, node);
             }
         }
 
@@ -271,18 +269,17 @@ public abstract class SpreadsheetDelta<I> implements Comparable<SpreadsheetDelta
         return SpreadsheetDeltaIdNonWindowed.with(Optional.ofNullable(id), cells);
     }
 
-    @Override
-    public final JsonNode toJsonNode() {
+    final JsonNode toJsonNode(final ToJsonNodeContext context) {
         final List<JsonNode> children = Lists.array();
 
-        final JsonNode idOrRange = this.idOrRangeToJson();
+        final JsonNode idOrRange = this.idOrRangeToJsonNode(context);
         if (null != idOrRange) {
             children.add(idOrRange.setName(this.idOrRangeJsonPropertyName()));
         }
 
         final Set<SpreadsheetCell> cells = this.cells;
         if (!cells.isEmpty()) {
-            children.add(HasJsonNode.toJsonNodeSet(cells).setName(CELLS_PROPERTY));
+            children.add(context.toJsonNodeSet(cells).setName(CELLS_PROPERTY));
         }
 
         final List<SpreadsheetRange> window = this.window();
@@ -296,7 +293,7 @@ public abstract class SpreadsheetDelta<I> implements Comparable<SpreadsheetDelta
         return JsonNode.object().setChildren(children);
     }
 
-    abstract JsonNode idOrRangeToJson();
+    abstract JsonNode idOrRangeToJsonNode(final ToJsonNodeContext context);
 
     abstract JsonNodeName idOrRangeJsonPropertyName();
 
@@ -316,8 +313,9 @@ public abstract class SpreadsheetDelta<I> implements Comparable<SpreadsheetDelta
     final static JsonNodeName WINDOW_PROPERTY = JsonNodeName.with(WINDOW_PROPERTY_STRING);
 
     static {
-        HasJsonNode.register("spreadsheet-delta",
+        JsonNodeContext.register("spreadsheet-delta",
                 SpreadsheetDelta::fromJsonNode,
+                SpreadsheetDelta::toJsonNode,
                 SpreadsheetDelta.class,
                 SpreadsheetDeltaIdNonWindowed.class,
                 SpreadsheetDeltaIdWindowed.class,

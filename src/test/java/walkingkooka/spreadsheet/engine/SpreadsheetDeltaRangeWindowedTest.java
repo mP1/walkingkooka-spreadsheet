@@ -24,8 +24,8 @@ import walkingkooka.compare.Range;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 import java.util.List;
 import java.util.Set;
@@ -56,21 +56,23 @@ public final class SpreadsheetDeltaRangeWindowedTest extends SpreadsheetDeltaWin
         this.checkWindow(delta);
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Test
     public void testFromJsonNodeRangeWindow() {
         this.fromJsonNodeAndCheck(JsonNode.object()
-                        .set(SpreadsheetDelta.RANGE_PROPERTY, this.id().toJsonNode())
+                        .set(SpreadsheetDelta.RANGE_PROPERTY, this.toJsonNodeContext().toJsonNode(this.id()))
                         .set(SpreadsheetDelta.WINDOW_PROPERTY, JsonNode.string("A1:E5,F6:Z99")),
                 this.createSpreadsheetDelta(this.id(), Sets.empty(), this.window()));
     }
 
     @Test
     public void testFromJsonNodeRangeCellsWindow() {
+        final ToJsonNodeContext context = this.toJsonNodeContext();
+
         this.fromJsonNodeAndCheck(JsonNode.object()
-                        .set(SpreadsheetDelta.RANGE_PROPERTY, this.id().toJsonNode())
-                        .set(SpreadsheetDelta.CELLS_PROPERTY, HasJsonNode.toJsonNodeSet(this.cells()))
+                        .set(SpreadsheetDelta.RANGE_PROPERTY, context.toJsonNode(this.id()))
+                        .set(SpreadsheetDelta.CELLS_PROPERTY, context.toJsonNodeSet(this.cells()))
                         .set(SpreadsheetDelta.WINDOW_PROPERTY, JsonNode.string("A1:E5,F6:Z99")),
                 this.createSpreadsheetDelta(this.id(), this.cells(), this.window()));
     }
@@ -81,7 +83,7 @@ public final class SpreadsheetDeltaRangeWindowedTest extends SpreadsheetDeltaWin
 
         this.toJsonNodeAndCheck(delta,
                 JsonNode.object()
-                        .set(SpreadsheetDelta.RANGE_PROPERTY, this.id().toJsonNode())
+                        .set(SpreadsheetDelta.RANGE_PROPERTY, this.toJsonNodeContext().toJsonNode(this.id()))
                         .set(SpreadsheetDelta.WINDOW_PROPERTY, JsonNode.string("A1:E5,F6:Z99")));
     }
 
@@ -89,10 +91,12 @@ public final class SpreadsheetDeltaRangeWindowedTest extends SpreadsheetDeltaWin
     public void testToJsonNodeRangeCellsWindow() {
         final SpreadsheetDeltaRangeWindowed<SpreadsheetId> delta = this.createSpreadsheetDelta(this.id(), this.cells(), this.window());
 
+        final ToJsonNodeContext context = this.toJsonNodeContext();
+
         this.toJsonNodeAndCheck(delta,
                 JsonNode.object()
-                        .set(SpreadsheetDelta.RANGE_PROPERTY, this.id().toJsonNode())
-                        .set(SpreadsheetDelta.CELLS_PROPERTY, HasJsonNode.toJsonNodeSet(this.cells()))
+                        .set(SpreadsheetDelta.RANGE_PROPERTY, context.toJsonNode(this.id()))
+                        .set(SpreadsheetDelta.CELLS_PROPERTY, context.toJsonNodeSet(this.cells()))
                         .set(SpreadsheetDelta.WINDOW_PROPERTY, JsonNode.string("A1:E5,F6:Z99")));
     }
 

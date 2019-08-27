@@ -42,8 +42,10 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.test.HashCodeEqualsDefined;
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -60,7 +62,6 @@ public abstract class SpreadsheetMetadata implements HasConverter,
         HasDateTimeContext,
         HasDecimalNumberContext,
         HashCodeEqualsDefined,
-        HasJsonNode,
         HasHateosLinkId,
         HasMathContext,
         HateosResource<Optional<SpreadsheetId>>,
@@ -311,27 +312,28 @@ public abstract class SpreadsheetMetadata implements HasConverter,
     @Override
     abstract public String toString();
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeContext..................................................................................................
 
-    /**
-     * Accepts a json object holding the metadata as a map.
-     */
-    static SpreadsheetMetadata fromJsonNode(final JsonNode node) {
-        Objects.requireNonNull(node, "node");
-
+    static SpreadsheetMetadata fromJsonNode(final JsonNode node,
+                                            final FromJsonNodeContext context) {
         final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = Maps.ordered();
 
         for (JsonNode child : node.objectOrFail().children()) {
             final SpreadsheetMetadataPropertyName<?> name = SpreadsheetMetadataPropertyName.fromJsonNodeName(child);
             properties.put(name,
-                    name.handler().fromJsonNode(child, name));
+                    name.handler().fromJsonNode(child, name, context));
         }
 
         return with(properties);
     }
 
+    abstract JsonNode toJsonNode(final ToJsonNodeContext context);
+
     static {
-        HasJsonNode.register("metadata", SpreadsheetMetadata::fromJsonNode, SpreadsheetMetadata.class,
+        JsonNodeContext.register("metadata",
+                SpreadsheetMetadata::fromJsonNode,
+                SpreadsheetMetadata::toJsonNode,
+                SpreadsheetMetadata.class,
                 SpreadsheetMetadataNonEmpty.class,
                 SpreadsheetMetadataEmpty.class);
     }

@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -61,10 +63,10 @@ public abstract class SpreadsheetMetadataPropertyValueHandlerTestCase2<P extends
         final T value = this.propertyValue();
         final P handler = this.handler();
 
-        final JsonNode json = handler.toJsonNode(value);
+        final JsonNode json = handler.toJsonNode(value, this.toJsonNodeContext());
 
         assertEquals(value,
-                handler.fromJsonNode(json, this.propertyName()),
+                handler.fromJsonNode(json, this.propertyName(), this.fromJsonNodeContext()),
                 () -> "value " + CharSequences.quoteIfChars(value) + " to json " + json);
     }
 
@@ -108,13 +110,13 @@ public abstract class SpreadsheetMetadataPropertyValueHandlerTestCase2<P extends
 
     final void fromJsonNodeAndCheck(final JsonNode node, final T value) {
         assertEquals(value,
-                this.handler().fromJsonNode(node, this.propertyName()),
+                this.handler().fromJsonNode(node, this.propertyName(), this.fromJsonNodeContext()),
                 () -> "from JsonNode " + node);
     }
 
     final void toJsonNodeAndCheck(final T value, final JsonNode node) {
         assertEquals(node,
-                this.handler().toJsonNode(value),
+                this.handler().toJsonNode(value, this.toJsonNodeContext()),
                 () -> "toJsonNode " + CharSequences.quoteIfChars(value));
     }
 
@@ -127,4 +129,16 @@ public abstract class SpreadsheetMetadataPropertyValueHandlerTestCase2<P extends
     abstract T propertyValue();
 
     abstract String propertyValueType();
+
+    final FromJsonNodeContext fromJsonNodeContext() {
+        return FromJsonNodeContext.basic();
+    }
+
+    final ToJsonNodeContext toJsonNodeContext() {
+        return ToJsonNodeContext.basic();
+    }
+
+    final JsonNode toJsonNode(final Object value) {
+        return this.toJsonNodeContext().toJsonNode(value);
+    }
 }

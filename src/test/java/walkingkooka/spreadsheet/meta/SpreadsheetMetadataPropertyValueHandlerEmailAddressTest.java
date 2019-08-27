@@ -24,19 +24,19 @@ public final class SpreadsheetMetadataPropertyValueHandlerEmailAddressTest exten
 
     @Test
     public void testInvalidEmailFails() {
-        this.checkFails("invalid email", "Expected EmailAddress but got \"invalid email\" (String)");
+        this.checkFails("invalid email", "Expected EmailAddress but got \"invalid email\" (java.lang.String)");
     }
 
     @Test
     public void testFromJsonNode() {
         final EmailAddress emailAddress = this.propertyValue();
-        this.fromJsonNodeAndCheck(emailAddress.toJsonNode(), emailAddress);
+        this.fromJsonNodeAndCheck(this.toJsonNode(emailAddress), emailAddress);
     }
 
     @Test
     public void testToJsonNode() {
         final EmailAddress emailAddress = this.propertyValue();
-        this.toJsonNodeAndCheck(emailAddress, emailAddress.toJsonNode());
+        this.toJsonNodeAndCheck(emailAddress, this.toJsonNode(emailAddress));
     }
 
     @Override

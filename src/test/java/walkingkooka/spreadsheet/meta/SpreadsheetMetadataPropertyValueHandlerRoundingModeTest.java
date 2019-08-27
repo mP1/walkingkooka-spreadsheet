@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.tree.json.HasJsonNode;
 
 import java.math.RoundingMode;
 import java.util.Arrays;
@@ -27,20 +26,20 @@ public final class SpreadsheetMetadataPropertyValueHandlerRoundingModeTest exten
 
     @Test
     public void testInvalidRoundingModeFails() {
-        this.checkFails("invalid", "Expected RoundingMode but got \"invalid\" (String)");
+        this.checkFails("invalid", "Expected RoundingMode but got \"invalid\" (java.lang.String)");
     }
 
     @Test
     public void testFromJsonNode() {
         Arrays.stream(RoundingMode.values()).forEach(
-                r -> fromJsonNodeAndCheck(HasJsonNode.toJsonNodeObject(r), r)
+                r -> fromJsonNodeAndCheck(this.toJsonNode(r), r)
         );
     }
 
     @Test
     public void testToJsonNode() {
         Arrays.stream(RoundingMode.values()).forEach(
-                r -> toJsonNodeAndCheck(r, HasJsonNode.toJsonNodeObject(r))
+                r -> toJsonNodeAndCheck(r, this.toJsonNode(r))
         );
     }
 

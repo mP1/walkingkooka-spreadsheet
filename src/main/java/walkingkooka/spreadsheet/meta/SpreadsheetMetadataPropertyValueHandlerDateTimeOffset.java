@@ -18,8 +18,9 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.convert.Converters;
-import walkingkooka.tree.json.HasJsonNode;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.ToJsonNodeContext;
 
 /**
  * A {@link SpreadsheetMetadataPropertyValueHandler} for date time offset entries.
@@ -59,15 +60,18 @@ final class SpreadsheetMetadataPropertyValueHandlerDateTimeOffset extends Spread
         return "DateTimeOffset";
     }
 
-    // HasJsonNode......................................................................................................
+    // JsonNodeContext..................................................................................................
 
     @Override
-    Long fromJsonNode(final JsonNode node, final SpreadsheetMetadataPropertyName<?> name) {
-        return node.fromJsonNode(Long.class);
+    Long fromJsonNode(final JsonNode node,
+                      final SpreadsheetMetadataPropertyName<?> name,
+                      final FromJsonNodeContext context) {
+        return context.fromJsonNode(node, Long.class);
     }
 
     @Override
-    JsonNode toJsonNode(final Long value) {
-        return HasJsonNode.toJsonNodeObject(value);
+    JsonNode toJsonNode(final Long value,
+                        final ToJsonNodeContext context) {
+        return context.toJsonNode(value);
     }
 }

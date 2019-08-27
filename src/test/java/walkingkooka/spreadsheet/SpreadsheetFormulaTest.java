@@ -22,11 +22,11 @@ import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.expression.ExpressionNode;
-import walkingkooka.tree.json.HasJsonNode;
-import walkingkooka.tree.json.HasJsonNodeTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonNodeName;
+import walkingkooka.tree.json.map.FromJsonNodeContext;
+import walkingkooka.tree.json.map.JsonNodeMappingTesting;
 import walkingkooka.type.JavaVisibility;
 
 import java.util.Optional;
@@ -39,7 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFormula>,
         HashCodeEqualsDefinedTesting<SpreadsheetFormula>,
-        HasJsonNodeTesting<SpreadsheetFormula>,
+        JsonNodeMappingTesting<SpreadsheetFormula>,
         ToStringTesting<SpreadsheetFormula> {
 
     private final static String TEXT = "a+2";
@@ -332,9 +332,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 .setError(error);
     }
 
-    // HasJsonNode......................................................................................................
-
-    // HasJsonNode.fromJsonNode..........................................................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Test
     public void testFromJsonNodeBooleanFails() {
@@ -374,7 +372,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
         this.fromJsonNodeAndCheck(JsonNode.object()
                         .set(SpreadsheetFormula.TEXT, JsonNode.string(TEXT))
-                        .set(SpreadsheetFormula.ERROR_PROPERTY, error.toJsonNode()),
+                        .set(SpreadsheetFormula.ERROR_PROPERTY, this.toJsonNodeContext().toJsonNode(error)),
                 SpreadsheetFormula.with(TEXT).setError(Optional.of(error)));
     }
 
@@ -391,11 +389,11 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.fromJsonNodeFails(JsonNode.object()
                         .set(SpreadsheetFormula.TEXT, JsonNode.string(TEXT))
                         .set(SpreadsheetFormula.VALUE_PROPERTY, JsonNode.string("1"))
-                        .set(SpreadsheetFormula.ERROR_PROPERTY, SpreadsheetError.with(ERROR).toJsonNode()),
+                        .set(SpreadsheetFormula.ERROR_PROPERTY, this.toJsonNodeContext().toJsonNode(SpreadsheetError.with(ERROR))),
                 JsonNodeException.class);
     }
 
-    // HasJsonNode.toJsonNode..............................................................................................
+    // toJsonNode.......................................................................................................
 
     @Test
     public void testToJsonNodeText() {
@@ -422,7 +420,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         .setValue(Optional.of(123L)),
                 JsonNode.object()
                         .set(JsonNodeName.with("text"), JsonNode.string("a+2"))
-                        .set(JsonNodeName.with("value"), HasJsonNode.toJsonNodeWithType(123L)));
+                        .set(JsonNodeName.with("value"), this.toJsonNodeContext().toJsonNodeWithType(123L)));
     }
 
     @Test
@@ -530,15 +528,16 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         return JavaVisibility.PUBLIC;
     }
 
-    // HasJsonNodeTesting............................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Override
-    public SpreadsheetFormula createHasJsonNode() {
+    public SpreadsheetFormula createJsonNodeMappingValue() {
         return this.createObject();
     }
 
     @Override
-    public SpreadsheetFormula fromJsonNode(final JsonNode jsonNode) {
-        return SpreadsheetFormula.fromJsonNode(jsonNode);
+    public SpreadsheetFormula fromJsonNode(final JsonNode jsonNode,
+                                           final FromJsonNodeContext context) {
+        return SpreadsheetFormula.fromJsonNode(jsonNode, context);
     }
 }
