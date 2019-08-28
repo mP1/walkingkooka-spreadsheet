@@ -23,6 +23,7 @@ import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.FromJsonNodeContext;
+import walkingkooka.tree.json.marshall.FromJsonNodeContexts;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -88,7 +89,7 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     }
 
     private FromJsonNodeContext fromJsonNodeContext() {
-        return FromJsonNodeContext.basic();
+        return FromJsonNodeContexts.basic();
     }
 
     // parse............................................................................................................

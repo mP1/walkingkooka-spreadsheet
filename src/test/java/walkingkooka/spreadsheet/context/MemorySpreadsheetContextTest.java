@@ -66,7 +66,9 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNodeName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.FromJsonNodeContext;
+import walkingkooka.tree.json.marshall.FromJsonNodeContexts;
 import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.ToJsonNodeContexts;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -836,7 +838,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     }
 
     private FromJsonNodeContext fromJsonNodeContext() {
-        return FromJsonNodeContext.basic();
+        return FromJsonNodeContexts.basic();
     }
 
     final Fraction fractioner(final BigDecimal value) {
@@ -942,7 +944,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     }
 
     private ToJsonNodeContext toJsonNodeContext() {
-        return ToJsonNodeContext.basic();
+        return ToJsonNodeContexts.basic();
     }
 
     @Override
