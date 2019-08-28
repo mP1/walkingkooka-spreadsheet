@@ -19,17 +19,22 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
 import walkingkooka.Value;
+import walkingkooka.compare.Range;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.http.server.hateos.HasHateosLinkId;
+import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
+import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserException;
+import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonStringNode;
 import walkingkooka.tree.json.marshall.FromJsonNodeContext;
@@ -47,6 +52,58 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
         Comparable<R>,
         HashCodeEqualsDefined,
         HasHateosLinkId {
+
+    /**
+     * Creates a new {@link SpreadsheetColumn}
+     */
+    public static SpreadsheetColumnReference column(final int value, final SpreadsheetReferenceKind referenceKind) {
+        return SpreadsheetColumnReference.with(value, referenceKind);
+    }
+
+    /**
+     * Creates a new {@link SpreadsheetRowReference}
+     */
+    public static SpreadsheetRowReference row(final int value, final SpreadsheetReferenceKind referenceKind) {
+        return SpreadsheetRowReference.with(value, referenceKind);
+    }
+
+    /**
+     * Parsers a range of columns.
+     */
+    public static Range<SpreadsheetColumnReference> parseColumnRange(final String text) {
+        return Range.parse(text, SpreadsheetParsers.RANGE_SEPARATOR.character(), SpreadsheetColumnReference::parseColumn);
+    }
+
+    /**
+     * Parsers the text expecting a valid {@link SpreadsheetColumnReference} or fails.
+     */
+    public static SpreadsheetColumnReference parseColumn(final String text) {
+        return parse0(text, COLUMN_PARSER, SpreadsheetColumnReferenceParserToken.class).value();
+    }
+
+    /**
+     * Leverages the {@link SpreadsheetParsers#column()} combined with an error reporter.
+     */
+    private static final Parser<ParserContext> COLUMN_PARSER = SpreadsheetParsers.column().orReport(ParserReporters.basic());
+
+    /**
+     * Parsers a range of rows.
+     */
+    public static Range<SpreadsheetRowReference> parseRowRange(final String text) {
+        return Range.parse(text, SpreadsheetParsers.RANGE_SEPARATOR.character(), SpreadsheetRowReference::parseRow);
+    }
+
+    /**
+     * Parsers the text expecting a valid {@link SpreadsheetRowReference} or fails.
+     */
+    public static SpreadsheetRowReference parseRow(final String text) {
+        return parse0(text, ROW_PARSER, SpreadsheetRowReferenceParserToken.class).value();
+    }
+
+    /**
+     * Leverages the {@link SpreadsheetParsers#row()} combined with an error reporter.
+     */
+    private static final Parser<ParserContext> ROW_PARSER = SpreadsheetParsers.row().orReport(ParserReporters.basic());
 
     /**
      * Parsers the text expecting a valid {@link SpreadsheetRowReference} or fails.
@@ -177,7 +234,7 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
      */
     static SpreadsheetColumnReference fromJsonNodeColumn(final JsonNode from,
                                                          final FromJsonNodeContext context) {
-        return SpreadsheetColumnReference.parse(from.stringValueOrFail());
+        return SpreadsheetColumnOrRowReference.parseColumn(from.stringValueOrFail());
     }
 
     /**
@@ -185,7 +242,7 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
      */
     static SpreadsheetRowReference fromJsonNodeRow(final JsonNode from,
                                                    final FromJsonNodeContext context) {
-        return SpreadsheetRowReference.parse(from.stringValueOrFail());
+        return SpreadsheetColumnOrRowReference.parseRow(from.stringValueOrFail());
     }
 
     final JsonNode toJsonNode(final ToJsonNodeContext context) {

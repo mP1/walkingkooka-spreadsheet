@@ -25,7 +25,7 @@ public enum SpreadsheetReferenceKind {
     ABSOLUTE {
         @Override
         public SpreadsheetColumnReference column(final int value) {
-            return SpreadsheetColumnReference.with(value, this);
+            return SpreadsheetColumnOrRowReference.column(value, this);
         }
 
         @Override
@@ -35,7 +35,7 @@ public enum SpreadsheetReferenceKind {
 
         @Override
         public SpreadsheetRowReference row(final int value) {
-            return SpreadsheetRowReference.with(value, this);
+            return SpreadsheetColumnOrRowReference.row(value, this);
         }
 
         @Override
@@ -51,7 +51,7 @@ public enum SpreadsheetReferenceKind {
     RELATIVE {
         @Override
         public SpreadsheetColumnReference column(final int value) {
-            return SpreadsheetColumnReference.with(value, this);
+            return SpreadsheetColumnOrRowReference.column(value, this);
         }
 
         @Override
@@ -61,7 +61,7 @@ public enum SpreadsheetReferenceKind {
 
         @Override
         public SpreadsheetRowReference row(final int value) {
-            return SpreadsheetRowReference.with(value, this);
+            return SpreadsheetColumnOrRowReference.row(value, this);
         }
 
         @Override

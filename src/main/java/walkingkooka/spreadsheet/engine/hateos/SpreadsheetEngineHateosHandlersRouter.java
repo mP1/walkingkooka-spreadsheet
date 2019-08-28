@@ -191,7 +191,7 @@ final class SpreadsheetEngineHateosHandlersRouter implements StaticHelper {
         {
             final HateosHandlerRouterMapper<SpreadsheetColumnReference,
                     SpreadsheetDelta<Optional<SpreadsheetColumnReference>>,
-                    SpreadsheetDelta<Range<SpreadsheetColumnReference>>> columns = HateosHandlerRouterMapper.with(SpreadsheetColumnReference::parse,
+                    SpreadsheetDelta<Range<SpreadsheetColumnReference>>> columns = HateosHandlerRouterMapper.with(SpreadsheetColumnReference::parseColumn,
                     OPTIONAL_COLUMN_REFERENCE,
                     RANGE_COLUMN_REFERENCE);
             columns.post(insertColumns);
@@ -205,7 +205,7 @@ final class SpreadsheetEngineHateosHandlersRouter implements StaticHelper {
         {
             final HateosHandlerRouterMapper<SpreadsheetRowReference,
                     SpreadsheetDelta<Optional<SpreadsheetRowReference>>,
-                    SpreadsheetDelta<Range<SpreadsheetRowReference>>> rows = HateosHandlerRouterMapper.with(SpreadsheetRowReference::parse,
+                    SpreadsheetDelta<Range<SpreadsheetRowReference>>> rows = HateosHandlerRouterMapper.with(SpreadsheetRowReference::parseRow,
                     OPTIONAL_ROW_REFERENCE,
                     RANGE_ROW_REFERENCE);
             rows.post(insertRows);

@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.compare.Range;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
+import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -30,25 +31,6 @@ import walkingkooka.text.cursor.parser.ParserReporters;
  */
 public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowReference<SpreadsheetColumnReference> {
 
-    /**
-     * Parsers a range of columns.
-     */
-    public static Range<SpreadsheetColumnReference> parseRange(final String text) {
-        return Range.parse(text, SpreadsheetParsers.RANGE_SEPARATOR.character(), SpreadsheetColumnReference::parse);
-    }
-
-    /**
-     * Parsers the text expecting a valid {@link SpreadsheetColumnReference} or fails.
-     */
-    public static SpreadsheetColumnReference parse(final String text) {
-        return parse0(text, PARSER, SpreadsheetColumnReferenceParserToken.class).value();
-    }
-
-    /**
-     * Leverages the {@link SpreadsheetParsers#column()} combined with an error reporter.
-     */
-    private static final Parser<ParserContext> PARSER = SpreadsheetParsers.column().orReport(ParserReporters.basic());
-
     // https://support.office.com/en-us/article/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3
     final static int MAX = 16384;
     final static int RADIX = 26;
@@ -56,9 +38,9 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
     final static String MAX_ROW_NAME = toString0(MAX, SpreadsheetReferenceKind.RELATIVE);
 
     /**
-     * Factory that creates a new row.
+     * Factory that creates a new column.
      */
-    public static SpreadsheetColumnReference with(final int value, final SpreadsheetReferenceKind referenceKind) {
+    static SpreadsheetColumnReference with(final int value, final SpreadsheetReferenceKind referenceKind) {
         checkValue(value);
         checkReferenceKind(referenceKind);
 
