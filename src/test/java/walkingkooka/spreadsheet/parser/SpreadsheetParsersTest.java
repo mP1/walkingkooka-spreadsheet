@@ -1078,8 +1078,8 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private SpreadsheetCellReferenceParserToken cell(final int column, final String columnText, final int row) {
-        final SpreadsheetParserToken columnToken = SpreadsheetParserToken.columnReference(SpreadsheetColumnReference.with(column, SpreadsheetReferenceKind.RELATIVE), columnText);
-        final SpreadsheetParserToken rowToken = SpreadsheetParserToken.rowReference(SpreadsheetRowReference.with(row, SpreadsheetReferenceKind.RELATIVE), String.valueOf(1 + row));
+        final SpreadsheetParserToken columnToken = SpreadsheetParserToken.columnReference(SpreadsheetColumnOrRowReference.column(column, SpreadsheetReferenceKind.RELATIVE), columnText);
+        final SpreadsheetParserToken rowToken = SpreadsheetParserToken.rowReference(SpreadsheetColumnOrRowReference.row(row, SpreadsheetReferenceKind.RELATIVE), String.valueOf(1 + row));
         return SpreadsheetParserToken.cellReference(Lists.of(columnToken, rowToken), columnToken.text() + rowToken.text());
     }
 

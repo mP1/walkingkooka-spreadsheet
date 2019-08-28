@@ -346,15 +346,15 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
     @Test
     public void testParseCellReferenceRelative() {
         this.parseStringAndCheck("A98",
-                SpreadsheetColumnReference.with(0, SpreadsheetReferenceKind.RELATIVE)
-                        .setRow(SpreadsheetRowReference.with(97, SpreadsheetReferenceKind.RELATIVE)));
+                SpreadsheetColumnOrRowReference.column(0, SpreadsheetReferenceKind.RELATIVE)
+                        .setRow(SpreadsheetColumnOrRowReference.row(97, SpreadsheetReferenceKind.RELATIVE)));
     }
 
     @Test
     public void testParseCellReferenceAbsolute() {
         this.parseStringAndCheck("$A$98",
-                SpreadsheetColumnReference.with(0, SpreadsheetReferenceKind.ABSOLUTE)
-                        .setRow(SpreadsheetRowReference.with(97, SpreadsheetReferenceKind.ABSOLUTE)));
+                SpreadsheetColumnOrRowReference.column(0, SpreadsheetReferenceKind.ABSOLUTE)
+                        .setRow(SpreadsheetColumnOrRowReference.row(97, SpreadsheetReferenceKind.ABSOLUTE)));
     }
 
     // parseCellReferenceRange..........................................................................................
@@ -534,7 +534,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
     }
 
     private SpreadsheetColumnReference column(final int value) {
-        return SpreadsheetColumnReference.with(value, SpreadsheetReferenceKind.ABSOLUTE);
+        return SpreadsheetColumnOrRowReference.column(value, SpreadsheetReferenceKind.ABSOLUTE);
     }
 
     private SpreadsheetRowReference row() {
@@ -542,7 +542,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
     }
 
     private SpreadsheetRowReference row(final int value) {
-        return SpreadsheetRowReference.with(value, SpreadsheetReferenceKind.ABSOLUTE);
+        return SpreadsheetColumnOrRowReference.row(value, SpreadsheetReferenceKind.ABSOLUTE);
     }
 
     private void checkColumn(final SpreadsheetCellReference cell, final SpreadsheetColumnReference column) {

@@ -148,7 +148,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
         checkEquals("row 1", store.row(a.reference().row()), a, b);
         checkEquals("row 2", store.row(c.reference().row()), c, d);
-        checkEquals("row 99", store.row(SpreadsheetRowReference.parse("99")));
+        checkEquals("row 99", store.row(SpreadsheetColumnOrRowReference.parseRow("99")));
     }
 
     @Test
@@ -174,7 +174,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
         checkEquals("column 1", store.column(a.reference().column()), a, b);
         checkEquals("column 2", store.column(c.reference().column()), c, d);
-        checkEquals("column 99", store.column(SpreadsheetColumnReference.parse("ZZ")));
+        checkEquals("column 99", store.column(SpreadsheetColumnOrRowReference.parseColumn("ZZ")));
     }
 
     @Test
