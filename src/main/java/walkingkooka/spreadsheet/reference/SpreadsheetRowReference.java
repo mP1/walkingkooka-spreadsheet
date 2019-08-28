@@ -30,25 +30,6 @@ import walkingkooka.text.cursor.parser.ParserReporters;
  */
 public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReference<SpreadsheetRowReference> {
 
-    /**
-     * Parsers a range of rows.
-     */
-    public static Range<SpreadsheetRowReference> parseRange(final String text) {
-        return Range.parse(text, SpreadsheetParsers.RANGE_SEPARATOR.character(), SpreadsheetRowReference::parse);
-    }
-
-    /**
-     * Parsers the text expecting a valid {@link SpreadsheetRowReference} or fails.
-     */
-    public static SpreadsheetRowReference parse(final String text) {
-        return parse0(text, PARSER, SpreadsheetRowReferenceParserToken.class).value();
-    }
-
-    /**
-     * Leverages the {@link SpreadsheetParsers#row()} combined with an error reporter.
-     */
-    private static final Parser<ParserContext> PARSER = SpreadsheetParsers.row().orReport(ParserReporters.basic());
-
     // https://support.office.com/en-us/article/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3
     public final static int MAX = 1_048_576;
     public final static int RADIX = 10;
@@ -56,7 +37,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     /**
      * Factory that creates a new row.
      */
-    public static SpreadsheetRowReference with(final int value, final SpreadsheetReferenceKind referenceKind) {
+    static SpreadsheetRowReference with(final int value, final SpreadsheetReferenceKind referenceKind) {
         checkValue(value);
         checkReferenceKind(referenceKind);
 

@@ -67,7 +67,7 @@ public final class SpreadsheetEngineDeleteColumnsHateosHandlerTest extends Sprea
     public void testDeleteSeveralColumns() {
         final Optional<SpreadsheetDelta<Range<SpreadsheetColumnReference>>> resource = this.collectionResource();
 
-        final Range<SpreadsheetColumnReference> range = SpreadsheetColumnReference.parseRange("C:E");
+        final Range<SpreadsheetColumnReference> range = SpreadsheetColumnOrRowReference.parseColumnRange("C:E");
         final Set<SpreadsheetCell> cells = this.cells();
 
         final SpreadsheetDelta<Range<SpreadsheetColumnReference>> delta = SpreadsheetDelta.withRange(range, cells);
@@ -78,7 +78,7 @@ public final class SpreadsheetEngineDeleteColumnsHateosHandlerTest extends Sprea
                     public SpreadsheetDelta<Range<SpreadsheetColumnReference>> deleteColumns(final SpreadsheetColumnReference c,
                                                                                              final int count,
                                                                                              final SpreadsheetEngineContext context) {
-                        assertEquals(SpreadsheetColumnReference.parse("C"), c, "column");
+                        assertEquals(SpreadsheetColumnOrRowReference.parseColumn("C"), c, "column");
                         assertEquals(3, count, "count"); // C, D & E
                         return delta;
                     }
@@ -120,12 +120,12 @@ public final class SpreadsheetEngineDeleteColumnsHateosHandlerTest extends Sprea
 
     @Test
     public void testDeleteOpenRangeBeginFails() {
-        this.handleCollectionFails2(Range.lessThanEquals(SpreadsheetColumnReference.parse("A")));
+        this.handleCollectionFails2(Range.lessThanEquals(SpreadsheetColumnOrRowReference.parseColumn("A")));
     }
 
     @Test
     public void testDeleteOpenRangeEndFails() {
-        this.handleCollectionFails2(Range.greaterThanEquals(SpreadsheetColumnReference.parse("A")));
+        this.handleCollectionFails2(Range.greaterThanEquals(SpreadsheetColumnOrRowReference.parseColumn("A")));
     }
 
     private void handleCollectionFails2(final Range<SpreadsheetColumnReference> columns) {
@@ -154,12 +154,12 @@ public final class SpreadsheetEngineDeleteColumnsHateosHandlerTest extends Sprea
 
     @Override
     public Optional<SpreadsheetColumnReference> id() {
-        return Optional.of(SpreadsheetColumnReference.parse("C"));
+        return Optional.of(SpreadsheetColumnOrRowReference.parseColumn("C"));
     }
 
     @Override
     public Range<SpreadsheetColumnReference> collection() {
-        return SpreadsheetColumnReference.parseRange("C:E");
+        return SpreadsheetColumnOrRowReference.parseColumnRange("C:E");
     }
 
     @Override
