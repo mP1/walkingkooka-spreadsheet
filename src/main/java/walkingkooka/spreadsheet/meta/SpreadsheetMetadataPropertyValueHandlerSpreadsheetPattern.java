@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.map.FromJsonNodeContext;
-import walkingkooka.tree.json.map.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.FromJsonNodeContext;
+import walkingkooka.tree.json.marshall.ToJsonNodeContext;
 
 /**
  * A base {@link SpreadsheetMetadataPropertyValueHandler} for all sub classes of {@link SpreadsheetParsePatterns patterns}.

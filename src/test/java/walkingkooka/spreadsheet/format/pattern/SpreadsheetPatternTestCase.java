@@ -28,7 +28,7 @@ import walkingkooka.test.ParseStringTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.cursor.parser.ParserTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.map.JsonNodeMappingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMappingTesting;
 import walkingkooka.type.JavaVisibility;
 
 import java.util.function.Predicate;
