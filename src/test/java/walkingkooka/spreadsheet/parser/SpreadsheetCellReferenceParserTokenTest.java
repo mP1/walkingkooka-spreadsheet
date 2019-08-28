@@ -19,10 +19,9 @@ package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
-import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNode;
 
@@ -83,7 +82,7 @@ public final class SpreadsheetCellReferenceParserTokenTest extends SpreadsheetPa
     }
 
     private SpreadsheetColumnReferenceParserToken column(final int value) {
-        return SpreadsheetParserToken.columnReference(SpreadsheetColumnReference.with(value, SpreadsheetReferenceKind.RELATIVE), String.valueOf(value));
+        return SpreadsheetParserToken.columnReference(SpreadsheetColumnOrRowReference.column(value, SpreadsheetReferenceKind.RELATIVE), String.valueOf(value));
     }
 
     private SpreadsheetRowReferenceParserToken row() {
@@ -91,7 +90,7 @@ public final class SpreadsheetCellReferenceParserTokenTest extends SpreadsheetPa
     }
 
     private SpreadsheetRowReferenceParserToken row(final int value, final String text) {
-        return SpreadsheetParserToken.rowReference(SpreadsheetRowReference.with(value, SpreadsheetReferenceKind.RELATIVE), text);
+        return SpreadsheetParserToken.rowReference(SpreadsheetColumnOrRowReference.row(value, SpreadsheetReferenceKind.RELATIVE), text);
     }
 
     private void checkCell(final SpreadsheetCellReferenceParserToken cell,

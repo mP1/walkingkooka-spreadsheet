@@ -67,7 +67,7 @@ public final class SpreadsheetEngineInsertRowsHateosHandlerTest extends Spreadsh
     public void testInsertSeveralRows() {
         final Optional<SpreadsheetDelta<Range<SpreadsheetRowReference>>> resource = this.collectionResource();
 
-        final Range<SpreadsheetRowReference> range = SpreadsheetRowReference.parseRange("2:4");
+        final Range<SpreadsheetRowReference> range = SpreadsheetColumnOrRowReference.parseRowRange("2:4");
         final Set<SpreadsheetCell> cells = this.cells();
 
         final SpreadsheetDelta<Range<SpreadsheetRowReference>> delta = SpreadsheetDelta.withRange(range, cells);
@@ -78,7 +78,7 @@ public final class SpreadsheetEngineInsertRowsHateosHandlerTest extends Spreadsh
                     public SpreadsheetDelta<Range<SpreadsheetRowReference>> insertRows(final SpreadsheetRowReference r,
                                                                                        final int count,
                                                                                        final SpreadsheetEngineContext context) {
-                        assertEquals(SpreadsheetRowReference.parse("2"), r, "row");
+                        assertEquals(SpreadsheetColumnOrRowReference.parseRow("2"), r, "row");
                         assertEquals(3, count, "count"); // 2, 3 & 4
                         return delta;
                     }
@@ -120,12 +120,12 @@ public final class SpreadsheetEngineInsertRowsHateosHandlerTest extends Spreadsh
 
     @Test
     public void testInsertOpenRangeBeginFails() {
-        this.handleCollectionFails2(Range.lessThanEquals(SpreadsheetRowReference.parse("2")));
+        this.handleCollectionFails2(Range.lessThanEquals(SpreadsheetColumnOrRowReference.parseRow("2")));
     }
 
     @Test
     public void testInsertOpenRangeEndFails() {
-        this.handleCollectionFails2(Range.greaterThanEquals(SpreadsheetRowReference.parse("3")));
+        this.handleCollectionFails2(Range.greaterThanEquals(SpreadsheetColumnOrRowReference.parseRow("3")));
     }
 
     private void handleCollectionFails2(final Range<SpreadsheetRowReference> rows) {
@@ -154,12 +154,12 @@ public final class SpreadsheetEngineInsertRowsHateosHandlerTest extends Spreadsh
 
     @Override
     public Optional<SpreadsheetRowReference> id() {
-        return Optional.of(SpreadsheetRowReference.parse("2"));
+        return Optional.of(SpreadsheetColumnOrRowReference.parseRow("2"));
     }
 
     @Override
     public Range<SpreadsheetRowReference> collection() {
-        return SpreadsheetRowReference.parseRange("2:4");
+        return SpreadsheetColumnOrRowReference.parseRowRange("2:4");
     }
 
     @Override

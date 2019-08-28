@@ -67,8 +67,8 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     @Test
     public void testCellReference() {
         assertEquals(SpreadsheetExpressionReference.parseCellReference("A1"),
-                SpreadsheetExpressionReference.cellReference(SpreadsheetColumnReference.parse("A"),
-                        SpreadsheetRowReference.parse("1")));
+                SpreadsheetExpressionReference.cellReference(SpreadsheetColumnOrRowReference.parseColumn("A"),
+                        SpreadsheetColumnOrRowReference.parseRow("1")));
     }
 
     // fromJsonNode.....................................................................................................
