@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.map.FromJsonNodeContext;
-import walkingkooka.tree.json.map.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.FromJsonNodeContext;
+import walkingkooka.tree.json.marshall.ToJsonNodeContext;
 
 /**
  * A {@link SpreadsheetMetadataPropertyValueHandler} for {@link EmailAddress} entries.

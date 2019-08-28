@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ToStringTesting;
-import walkingkooka.tree.json.map.JsonNodeMappingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMappingTesting;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
