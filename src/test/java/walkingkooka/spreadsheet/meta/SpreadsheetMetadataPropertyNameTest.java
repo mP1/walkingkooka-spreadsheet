@@ -30,6 +30,7 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -66,43 +67,44 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
-    public void testWithInvalidColorName() {
+    public void testWithColorPropertyFails() {
         assertThrows(IllegalArgumentException.class, () -> {
-            SpreadsheetMetadataPropertyName.with("color-X");
+            SpreadsheetMetadataPropertyName.with("color-");
         });
     }
 
     @Test
-    public void testColorConstants() {
+    public void testWithColorPropertyFails2() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            SpreadsheetMetadataPropertyName.with("color-!");
+        });
+    }
+
+    @Test
+    public void testWithColorName() {
         final Color color = Color.fromRgb(0);
 
-        IntStream.range(0, SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER)
+        Stream.of("big", "medium", "small")
                 .forEach(i -> {
-                    final SpreadsheetMetadataPropertyName<Color> propertyName = SpreadsheetMetadataPropertyName.color(i);
-                    final String value = "color-" + i;
-                    assertSame(propertyName, SpreadsheetMetadataPropertyName.with(value));
+                            final String value = "color-" + i;
+                            final SpreadsheetMetadataPropertyName<?> propertyName = SpreadsheetMetadataPropertyName.with(value);
+                            assertEquals(SpreadsheetMetadataPropertyNameNamedColor.class, propertyName.getClass(), "class name");
+                            assertEquals(value, propertyName.value(), "value");
 
-                    assertEquals(value, propertyName.value(), "value");
-
-                    propertyName.checkValue(color);
-                });
+                            propertyName.checkValue(color);
+                        }
+                );
     }
 
     @Test
-    public void testWithColorInvalidNumberFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            SpreadsheetMetadataPropertyName.color(-1);
-        });
-    }
-
-    @Test
-    public void testWithColor() {
+    public void testWithColorNumber() {
         final Color color = Color.fromRgb(0);
 
         IntStream.range(SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER, SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER + 10)
                 .forEach(i -> {
                             final String value = "color-" + i;
                             final SpreadsheetMetadataPropertyName<?> propertyName = SpreadsheetMetadataPropertyName.with(value);
+                            assertEquals(SpreadsheetMetadataPropertyNameNumberedColor.class, propertyName.getClass(), "class name");
                             assertEquals(value, propertyName.value(), "value");
 
                             propertyName.checkValue(color);

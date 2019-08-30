@@ -34,6 +34,7 @@ import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.CharSequences;
 
@@ -51,7 +52,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -341,8 +342,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
-                .set(SpreadsheetMetadataPropertyName.color(number1), color1)
-                .set(SpreadsheetMetadataPropertyName.color(number7), color7)
+                .set(SpreadsheetMetadataPropertyName.numberedColor(number1), color1)
+                .set(SpreadsheetMetadataPropertyName.numberedColor(number7), color7)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("#0.0"));
 
@@ -700,7 +701,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.toStringAndCheck(SpreadsheetMetadataNonEmpty.with(map), map.toString());
     }
 
-    // JsonNodeMappingTesting.......................................................................................
+    // JsonNodeMappingTesting...........................................................................................
 
     @Test
     public void testHasJsonNodeRoundtrip() {
@@ -733,8 +734,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR_INTERPRETATION, 31);
 
         for (int i = 0; i < SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER + 2; i++) {
-            properties.put(SpreadsheetMetadataPropertyName.color(i), Color.fromRgb(i));
+            properties.put(SpreadsheetMetadataPropertyName.numberedColor(i), Color.fromRgb(i));
         }
+
+        Stream.of("big", "small", "medium")
+                .forEach(n -> properties.put(SpreadsheetMetadataPropertyName.namedColor(SpreadsheetColorName.with(n)), Color.fromArgb(n.hashCode())));
 
         final Set<SpreadsheetMetadataPropertyName<?>> missing = Sets.ordered();
         missing.addAll(SpreadsheetMetadataPropertyName.CONSTANTS.values());
