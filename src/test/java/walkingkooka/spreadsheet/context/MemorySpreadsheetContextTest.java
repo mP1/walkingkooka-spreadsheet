@@ -363,37 +363,6 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                         "        }]\n" +
                         "      }\n" +
                         "    }\n" +
-                        "  }],\n" +
-                        "  \"_links\": [{\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/clear-value-error-skip-evaluate\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"clear-value-error-skip-evaluate\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
-                        "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/compute-if-necessary\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"compute-if-necessary\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
-                        "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/fill\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"fill\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
-                        "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/force-recompute\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"force-recompute\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
-                        "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"self\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
-                        "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/skip-evaluate\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"skip-evaluate\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
                         "  }]\n" +
                         "}");
     }
@@ -429,37 +398,6 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                         "      \"type\": \"text\",\n" +
                         "      \"value\": \"003.000\"\n" +
                         "    }\n" +
-                        "  }],\n" +
-                        "  \"_links\": [{\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/clear-value-error-skip-evaluate\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"clear-value-error-skip-evaluate\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
-                        "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/compute-if-necessary\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"compute-if-necessary\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
-                        "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/fill\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"fill\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
-                        "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/force-recompute\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"force-recompute\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
-                        "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"self\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
-                        "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/skip-evaluate\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"skip-evaluate\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
                         "  }]\n" +
                         "}");
     }
@@ -495,37 +433,6 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                         "      \"type\": \"text\",\n" +
                         "      \"value\": \"003.000\"\n" +
                         "    }\n" +
-                        "  }],\n" +
-                        "  \"_links\": [{\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/clear-value-error-skip-evaluate\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"clear-value-error-skip-evaluate\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
-                        "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/compute-if-necessary\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"compute-if-necessary\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
-                        "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/fill\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"fill\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
-                        "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/force-recompute\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"force-recompute\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
-                        "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"self\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
-                        "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/skip-evaluate\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"skip-evaluate\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
                         "  }]\n" +
                         "}");
     }
@@ -561,37 +468,6 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                         "      \"type\": \"text\",\n" +
                         "      \"value\": \"003.000\"\n" +
                         "    }\n" +
-                        "  }],\n" +
-                        "  \"_links\": [{\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/clear-value-error-skip-evaluate\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"clear-value-error-skip-evaluate\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
-                        "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/compute-if-necessary\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"compute-if-necessary\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
-                        "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/fill\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"fill\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
-                        "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/force-recompute\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"force-recompute\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
-                        "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"self\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
-                        "  }, {\n" +
-                        "    \"href\": \"http://example.com/api987/123def/cell/B2/skip-evaluate\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"skip-evaluate\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
                         "  }]\n" +
                         "}");
     }

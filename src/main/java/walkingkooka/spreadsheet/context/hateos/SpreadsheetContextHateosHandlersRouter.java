@@ -17,16 +17,17 @@
 package walkingkooka.spreadsheet.context.hateos;
 
 import walkingkooka.Cast;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Range;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.header.LinkRelation;
+import walkingkooka.net.http.HttpMethod;
 import walkingkooka.net.http.server.HttpRequest;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.HttpResponse;
 import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.net.http.server.hateos.HateosHandler;
-import walkingkooka.net.http.server.hateos.HateosHandlerRouterBuilder;
-import walkingkooka.net.http.server.hateos.HateosHandlerRouterMapper;
+import walkingkooka.net.http.server.hateos.HateosHandlerResourceMapping;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.routing.Router;
@@ -66,7 +67,8 @@ final class SpreadsheetContextHateosHandlersRouter implements StaticHelper {
                                                                                                                     final HateosContentType<N> contentType,
                                                                                                                     final HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> createAndSaveMetadata,
                                                                                                                     final HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> loadMetadata) {
-        final HateosHandlerRouterBuilder<N> builder = HateosHandlerRouterBuilder.with(baseUrl, contentType);
+        Objects.requireNonNull(baseUrl, "baseUrl");
+        Objects.requireNonNull(contentType, "contentType");
         Objects.requireNonNull(createAndSaveMetadata, "createAndSaveMetadata");
         Objects.requireNonNull(loadMetadata, "loadMetadata");
 
@@ -74,19 +76,21 @@ final class SpreadsheetContextHateosHandlersRouter implements StaticHelper {
 
         final Function<String, SpreadsheetId> stringToSpreadsheetId = SpreadsheetId::parse;
 
-        {
-            final HateosHandlerRouterMapper<SpreadsheetId,
-                    SpreadsheetMetadata,
-                    HateosResource<Range<SpreadsheetId>>> mapper = HateosHandlerRouterMapper.with(stringToSpreadsheetId,
-                    SpreadsheetMetadata.class,
-                    RANGE_SPREADSHEET_ID);
-            mapper.get(loadMetadata);
-            mapper.post(createAndSaveMetadata);
+        final HateosHandlerResourceMapping<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> mapping = HateosHandlerResourceMapping.with(SPREADSHEET,
+                stringToSpreadsheetId,
+                SpreadsheetMetadata.class,
+                RANGE_SPREADSHEET_ID)
+                .set(METADATA_LINK_RELATION, HttpMethod.GET, loadMetadata)
+                .set(METADATA_LINK_RELATION, HttpMethod.POST, createAndSaveMetadata);
 
-            builder.add(SPREADSHEET, METADATA_LINK_RELATION, mapper);
-        }
-
-        return builder.build();
+        return HateosHandlerResourceMapping.router(baseUrl,
+                contentType,
+                Sets.of(HateosHandlerResourceMapping.with(SPREADSHEET,
+                        stringToSpreadsheetId,
+                        SpreadsheetMetadata.class,
+                        RANGE_SPREADSHEET_ID)
+                        .set(METADATA_LINK_RELATION, HttpMethod.GET, loadMetadata)
+                        .set(METADATA_LINK_RELATION, HttpMethod.POST, createAndSaveMetadata)));
     }
 
     /**
