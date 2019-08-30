@@ -330,6 +330,32 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 this.createSpreadsheetMetadata(property1, value1, property2, value2));
     }
 
+    // NameToColor......................................................................................................
+
+    @Test
+    public final void testNameToColor2() {
+        final Color color1 = Color.fromRgb(0x111);
+        final SpreadsheetColorName name1 = SpreadsheetColorName.with("title");
+
+        final Color color2 = Color.fromRgb(0x222);
+        final SpreadsheetColorName name2 = SpreadsheetColorName.with("that");
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                .set(SpreadsheetMetadataPropertyName.namedColor(name1), color1)
+                .set(SpreadsheetMetadataPropertyName.namedColor(name2), color2)
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
+
+        Stream.of(name1, name2, SpreadsheetColorName.with("unknown"))
+                .forEach(n -> {
+                    this.nameToColorAndCheck(metadata,
+                            n,
+                            name1 == n ? color1 :
+                                    name2 == n ? color2 :
+                                            null);
+                });
+    }
+    
     // NumberToColor....................................................................................................
 
     @Test
