@@ -114,13 +114,7 @@ public final class SpreadsheetContextHateosHandlersRouterTest extends Spreadshee
                 HttpStatusCode.OK,
                 "{\n" +
                         "  \"creator\": \"load@example.com\",\n" +
-                        "  \"spreadsheet-id\": \"12ef\",\n" +
-                        "  \"_links\": [{\n" +
-                        "    \"href\": \"http://example.com/api/spreadsheet/12ef/metadata\",\n" +
-                        "    \"method\": \"GET\",\n" +
-                        "    \"rel\": \"metadata\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
-                        "  }]\n" +
+                        "  \"spreadsheet-id\": \"12ef\"\n" +
                         "}");
     }
 
@@ -131,13 +125,7 @@ public final class SpreadsheetContextHateosHandlersRouterTest extends Spreadshee
                 HttpStatusCode.OK,
                 "{\n" +
                         "  \"creator\": \"save@example.com\",\n" +
-                        "  \"spreadsheet-id\": \"12ef\",\n" +
-                        "  \"_links\": [{\n" +
-                        "    \"href\": \"http://example.com/api/spreadsheet/12ef/metadata\",\n" +
-                        "    \"method\": \"POST\",\n" +
-                        "    \"rel\": \"metadata\",\n" +
-                        "    \"type\": \"application/hal+json\"\n" +
-                        "  }]\n" +
+                        "  \"spreadsheet-id\": \"12ef\"\n" +
                         "}");
     }
 
