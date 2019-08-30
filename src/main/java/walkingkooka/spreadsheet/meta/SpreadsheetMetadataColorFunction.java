@@ -19,22 +19,34 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.color.Color;
 
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
-abstract class SpreadsheetMetadataNumberToColorFunction implements Function<Integer, Optional<Color>> {
+/**
+ * A {@link Function} view of a {@link Map} of {@link Color}
+ */
+final class SpreadsheetMetadataColorFunction<K> implements Function<K, Optional<Color>> {
 
-    SpreadsheetMetadataNumberToColorFunction() {
+    static  <K> SpreadsheetMetadataColorFunction<K> with(final Map<K, Color> colors) {
+        return new SpreadsheetMetadataColorFunction<>(colors);
+    }
+
+    private SpreadsheetMetadataColorFunction(final Map<K, Color> colors) {
         super();
+        this.colors = colors;
     }
 
     @Override
-    public Optional<Color> apply(final Integer number) {
-        SpreadsheetMetadata.checkColorNumber(number);
-        return this.apply0(number);
+    public Optional<Color> apply(final K key) {
+        return Optional.ofNullable(this.colors.get(key));
     }
 
-    abstract Optional<Color> apply0(final Integer number);
+    private final Map<K, Color> colors;
 
-    abstract public String toString();
+    @Override
+    public String toString() {
+        return this.colors.toString();
+    }
 }

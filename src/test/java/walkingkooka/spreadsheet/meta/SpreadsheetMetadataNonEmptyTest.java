@@ -51,6 +51,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -329,27 +330,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     // NumberToColor....................................................................................................
-
-    @Test
-    public final void testNumberToColorFunction() {
-        final Color color1 = Color.fromRgb(0x111);
-        final int number1 = 1;
-
-        final Color color7 = Color.fromRgb(0x777);
-        final int number7 = 7;
-
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
-                .set(SpreadsheetMetadataPropertyName.color(number1), color1)
-                .set(SpreadsheetMetadataPropertyName.color(number7), color7)
-                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
-                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("#0.0"));
-        final SpreadsheetMetadataNonEmptyNumberToColorFunction function = Cast.to(metadata.numberToColor());
-
-        assertEquals(Maps.of(number1, color1, number7, color7),
-                function.numberToColor,
-                () -> metadata.toString());
-    }
 
     @Test
     public final void testNumberToColor2() {
