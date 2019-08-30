@@ -23,6 +23,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeFormatPattern;
@@ -260,6 +261,19 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitNamedColor() {
+        final SpreadsheetColorName name = SpreadsheetColorName.with("shiny");
+
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitNamedColor(final SpreadsheetColorName n, final Color c) {
+                assertEquals(name, n, "name");
+                this.visited = c;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.namedColor(name), this.color());
+    }
+
+    @Test
     public void testVisitNumberedColor() {
         final int number = 7;
 
@@ -269,7 +283,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 assertEquals(number, n, "number");
                 this.visited = c;
             }
-        }.accept(SpreadsheetMetadataPropertyName.color(number), this.color());
+        }.accept(SpreadsheetMetadataPropertyName.numberedColor(number), this.color());
     }
 
     @Test

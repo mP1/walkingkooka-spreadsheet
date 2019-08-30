@@ -17,7 +17,45 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.color.Color;
+
+import java.util.stream.IntStream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends SpreadsheetMetadataPropertyNameTestCase4<SpreadsheetMetadataPropertyNameNumberedColor> {
+
+    @Test
+    public void testWithNumberFails() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            SpreadsheetMetadataPropertyName.numberedColor(-1);
+        });
+    }
+
+    @Test
+    public void testConstants() {
+        final Color color = Color.fromRgb(0);
+
+        IntStream.range(0, SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER)
+                .forEach(i -> {
+                    final SpreadsheetMetadataPropertyNameNumberedColor propertyName = SpreadsheetMetadataPropertyNameNumberedColor.withNumber(i);
+                    final String value = "color-" + i;
+                    assertSame(propertyName, SpreadsheetMetadataPropertyName.with(value));
+
+                    assertEquals(value, propertyName.value(), "value");
+
+                    propertyName.checkValue(color);
+                });
+    }
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameNumberedColor.withNumber(123), "color-123");
+    }
 
     // ClassTesting.....................................................................................................
 

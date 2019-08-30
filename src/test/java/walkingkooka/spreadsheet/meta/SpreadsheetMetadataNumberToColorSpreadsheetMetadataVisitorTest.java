@@ -39,8 +39,8 @@ public final class SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitorTes
         final SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitor visitor = new SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitor();
 
         visitor.accept(SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com"),
-                SpreadsheetMetadataPropertyName.color(12), Color.fromRgb(0x112233),
-                SpreadsheetMetadataPropertyName.color(13), Color.fromRgb(0xffeedd))));
+                SpreadsheetMetadataPropertyName.numberedColor(12), Color.fromRgb(0x112233),
+                SpreadsheetMetadataPropertyName.numberedColor(13), Color.fromRgb(0xffeedd))));
         this.toStringAndCheck(visitor, "{12=#112233, 13=#ffeedd}");
     }
 
