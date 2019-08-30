@@ -33,6 +33,7 @@ import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeFormatPattern;
@@ -163,6 +164,15 @@ public abstract class SpreadsheetMetadata implements HasConverter,
 
     private static void checkPropertyName(final SpreadsheetMetadataPropertyName<?> propertyName) {
         Objects.requireNonNull(propertyName, "propertyName");
+    }
+
+    // Function<SpreadsheetColorName, Optional<Color>>..................................................................
+
+    /**
+     * Returns a {@link Function} that returns a {@link Color} given its {@link SpreadsheetColorName}
+     */
+    public Function<SpreadsheetColorName, Optional<Color>> nameToColor() {
+        return SpreadsheetMetadataColorFunction.with(SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor.nameToColorMap(this));
     }
 
     // Function<Integer, Optional<Color>>................................................................................
