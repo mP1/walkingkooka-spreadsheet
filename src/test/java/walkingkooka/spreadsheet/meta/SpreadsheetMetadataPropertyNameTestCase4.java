@@ -17,9 +17,11 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.test.ToStringTesting;
 import walkingkooka.type.JavaVisibility;
 
-public abstract class SpreadsheetMetadataPropertyNameTestCase4<N extends SpreadsheetMetadataPropertyName<?>> extends SpreadsheetMetadataTestCase2<N> {
+public abstract class SpreadsheetMetadataPropertyNameTestCase4<N extends SpreadsheetMetadataPropertyName<?>> extends SpreadsheetMetadataTestCase2<N>
+        implements ToStringTesting<N> {
 
     SpreadsheetMetadataPropertyNameTestCase4() {
         super();

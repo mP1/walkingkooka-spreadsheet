@@ -18,32 +18,30 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Cast;
-import walkingkooka.color.Color;
 import walkingkooka.naming.Name;
 
-import java.util.Map;
 import java.util.function.BiConsumer;
 
 /**
  * The {@link Name} of metadata property, with a custom handler and visitor to handle dispatching to a {@link SpreadsheetMetadataVisitor} method.
  */
-final class SpreadsheetMetadataPropertyNameNonColor<T> extends SpreadsheetMetadataPropertyName<T> {
+final class SpreadsheetMetadataPropertyNameBasic<T> extends SpreadsheetMetadataPropertyName<T> {
 
     /**
-     * Factory used to create a new {@link SpreadsheetMetadataPropertyNameNonColor} constant.
+     * Factory used to create a new {@link SpreadsheetMetadataPropertyNameBasic} constant.
      */
-    static <T> SpreadsheetMetadataPropertyNameNonColor<T> with(final String name,
-                                                               final SpreadsheetMetadataPropertyValueHandler<T> handler,
-                                                               final BiConsumer<T, SpreadsheetMetadataVisitor> visitor) {
-        return new SpreadsheetMetadataPropertyNameNonColor<>(name, handler, visitor);
+    static <T> SpreadsheetMetadataPropertyNameBasic<T> with(final String name,
+                                                            final SpreadsheetMetadataPropertyValueHandler<T> handler,
+                                                            final BiConsumer<T, SpreadsheetMetadataVisitor> visitor) {
+        return new SpreadsheetMetadataPropertyNameBasic<>(name, handler, visitor);
     }
 
     /**
      * Private constructor use factory.
      */
-    private SpreadsheetMetadataPropertyNameNonColor(final String name,
-                                                    final SpreadsheetMetadataPropertyValueHandler<T> handler,
-                                                    final BiConsumer<T, SpreadsheetMetadataVisitor> visitor) {
+    private SpreadsheetMetadataPropertyNameBasic(final String name,
+                                                 final SpreadsheetMetadataPropertyValueHandler<T> handler,
+                                                 final BiConsumer<T, SpreadsheetMetadataVisitor> visitor) {
         super(name);
 
         this.handler = handler;
@@ -56,13 +54,6 @@ final class SpreadsheetMetadataPropertyNameNonColor<T> extends SpreadsheetMetada
     }
 
     final SpreadsheetMetadataPropertyValueHandler<T> handler;
-
-    // SpreadsheetMetadataNonEmpty......................................................................................
-
-    @Override
-    void addNumberedColor(final Object value, final Map<Integer, Color> numberToColor) {
-        // nop
-    }
 
     // StyleMetadataVisitor.............................................................................................
 
@@ -83,6 +74,6 @@ final class SpreadsheetMetadataPropertyNameNonColor<T> extends SpreadsheetMetada
 
     @Override
     boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetMetadataPropertyNameNonColor;
+        return other instanceof SpreadsheetMetadataPropertyNameBasic;
     }
 }

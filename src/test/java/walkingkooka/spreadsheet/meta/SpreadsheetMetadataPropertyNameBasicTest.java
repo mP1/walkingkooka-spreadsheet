@@ -19,12 +19,12 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Cast;
 
-public final class SpreadsheetMetadataPropertyNameNonColorTest extends SpreadsheetMetadataPropertyNameTestCase4<SpreadsheetMetadataPropertyNameNonColor<?>> {
+public final class SpreadsheetMetadataPropertyNameBasicTest extends SpreadsheetMetadataPropertyNameTestCase4<SpreadsheetMetadataPropertyNameBasic<?>> {
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameNonColor<?>> type() {
-        return Cast.to(SpreadsheetMetadataPropertyNameNonColor.class);
+    public Class<SpreadsheetMetadataPropertyNameBasic<?>> type() {
+        return Cast.to(SpreadsheetMetadataPropertyNameBasic.class);
     }
 }
