@@ -170,12 +170,8 @@ public abstract class SpreadsheetMetadata implements HasConverter,
     /**
      * Returns a {@link Function} that returns a {@link Color} given its number.
      */
-    abstract public Function<Integer, Optional<Color>> numberToColor();
-
-    static void checkColorNumber(final int number) {
-        if (number < 0) {
-            throw new IllegalArgumentException("Number " + number + " < 0");
-        }
+    public Function<Integer, Optional<Color>> numberToColor() {
+        return SpreadsheetMetadataColorFunction.with(SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitor.numberToColorMap(this));
     }
 
     // SpreadsheetMetadataStyleVisitor..................................................................................

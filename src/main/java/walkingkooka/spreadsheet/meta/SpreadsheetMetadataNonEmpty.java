@@ -137,19 +137,6 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
                 new SpreadsheetMetadataNonEmpty(SpreadsheetMetadataNonEmptyMap.withSpreadsheetMetadataMapEntrySet(SpreadsheetMetadataNonEmptyMapEntrySet.withList(list))); // no need to sort after a delete
     }
 
-    // numberToColor....................................................................................................
-
-    @Override
-    public Function<Integer, Optional<Color>> numberToColor() {
-        final Map<Integer, Color> numberToColor = Maps.sorted();
-
-        for (Entry<SpreadsheetMetadataPropertyName<?>, Object> entries : this.value.entries.entries) {
-            entries.getKey().addNumberedColor(entries.getValue(), numberToColor);
-        }
-
-        return SpreadsheetMetadataNonEmptyNumberToColorFunction.with(numberToColor);
-    }
-
     // SpreadsheetMetadataVisitor.......................................................................................
 
     @Override
