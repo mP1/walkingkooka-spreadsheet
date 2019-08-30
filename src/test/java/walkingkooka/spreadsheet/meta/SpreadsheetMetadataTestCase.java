@@ -22,6 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ThrowableTesting;
@@ -160,6 +161,22 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         return removed;
     }
 
+    // NameToColor......................................................................................................
+
+    @Test
+    public final void testNameToColor() {
+        this.nameToColorAndCheck(this.createObject(), SpreadsheetColorName.with("unknown"), null);
+    }
+
+    final void nameToColorAndCheck(final SpreadsheetMetadata metadata,
+                                   final SpreadsheetColorName name,
+                                   final Color color) {
+        final Function<SpreadsheetColorName, Optional<Color>> nameToColor = metadata.nameToColor();
+        assertEquals(Optional.ofNullable(color),
+                nameToColor.apply(name),
+                () -> name + " to color " + metadata.toString());
+    }
+    
     // NumberToColor....................................................................................................
 
     @Test
