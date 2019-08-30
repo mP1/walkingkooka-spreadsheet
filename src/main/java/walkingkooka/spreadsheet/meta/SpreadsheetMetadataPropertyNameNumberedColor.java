@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.color.Color;
 import walkingkooka.naming.Name;
 
-import java.util.Map;
 import java.util.stream.IntStream;
 
 /**
@@ -31,7 +30,7 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
     /**
      * Retrieves a {@link SpreadsheetMetadataPropertyNameNumberedColor} for a numbered {@link Color}.
      */
-    static SpreadsheetMetadataPropertyNameNumberedColor color0(final int number) {
+    static SpreadsheetMetadataPropertyNameNumberedColor withNumber(final int number) {
         if (number < 0) {
             throw new IllegalArgumentException("Number " + number + " < 0");
         }
@@ -78,11 +77,6 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
     }
 
     // SpreadsheetMetadataNonEmpty......................................................................................
-
-    @Override
-    void addNumberedColor(final Object value, final Map<Integer, Color> numberToColor) {
-        numberToColor.put(this.number, Color.class.cast(value));
-    }
 
     // SpreadsheetMetadataVisitor.......................................................................................
 

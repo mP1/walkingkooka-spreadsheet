@@ -22,6 +22,7 @@ import walkingkooka.color.Color;
 import walkingkooka.naming.Name;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeFormatPattern;
@@ -126,7 +127,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     private static <T> SpreadsheetMetadataPropertyName<T> registerConstant(final String name,
                                                                            final SpreadsheetMetadataPropertyValueHandler<T> handler,
                                                                            final BiConsumer<T, SpreadsheetMetadataVisitor> visitor) {
-        final SpreadsheetMetadataPropertyName<T> spreadsheetMetadataName = SpreadsheetMetadataPropertyNameNonColor.with(name,
+        final SpreadsheetMetadataPropertyName<T> spreadsheetMetadataName = SpreadsheetMetadataPropertyNameBasic.with(name,
                 handler,
                 visitor);
         SpreadsheetMetadataPropertyName.CONSTANTS.put(name, spreadsheetMetadataName);
@@ -303,13 +304,21 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
 
         SpreadsheetMetadataPropertyName propertyName = CONSTANTS.get(name);
         if (null == propertyName) {
-            if (!name.startsWith(COLOR_PREFIX)) {
+            if (false == name.startsWith(COLOR_PREFIX) || name.length() == COLOR_PREFIX.length()) {
                 throw new IllegalArgumentException("Unknown metadata property name " + CharSequences.quoteAndEscape(name));
             }
+
+            final String after = name.substring(COLOR_PREFIX.length());
+
+            // name dash color is a numbered color, named dash letter is a named color
             try {
-                propertyName = color(Integer.parseInt(name.substring(COLOR_PREFIX.length())));
-            } catch (final NumberFormatException cause) {
-                throw new IllegalArgumentException("Unknown metadata property name " + CharSequences.quoteAndEscape(name));
+                if (Character.isLetter(after.charAt(0))) {
+                    propertyName = namedColor(SpreadsheetColorName.with(after));
+                } else {
+                    propertyName = numberedColor(Integer.parseInt(after));
+                }
+            } catch (final RuntimeException cause) {
+                throw new IllegalArgumentException("Invalid metadata property name " + CharSequences.quoteAndEscape(name), cause);
             }
         }
         return propertyName;
@@ -318,10 +327,17 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     final static String COLOR_PREFIX = "color-";
 
     /**
+     * Retrieves a {@link SpreadsheetMetadataPropertyName} for a {@link SpreadsheetColorName named} {@link Color}.
+     */
+    public static SpreadsheetMetadataPropertyName<Color> namedColor(final SpreadsheetColorName name) {
+        return SpreadsheetMetadataPropertyNameNamedColor.withColorName(name);
+    }
+
+    /**
      * Retrieves a {@link SpreadsheetMetadataPropertyName} for a numbered {@link Color}.
      */
-    public static SpreadsheetMetadataPropertyName<Color> color(final int number) {
-        return SpreadsheetMetadataPropertyNameNumberedColor.color0(number);
+    public static SpreadsheetMetadataPropertyName<Color> numberedColor(final int number) {
+        return SpreadsheetMetadataPropertyNameNumberedColor.withNumber(number);
     }
 
     /**
@@ -350,13 +366,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     }
 
     abstract SpreadsheetMetadataPropertyValueHandler<T> handler();
-
-    // SpreadsheetMetadataNonEmpty......................................................................................
-
-    /**
-     * Used by {@link SpreadsheetMetadataNonEmpty#numberToColor()}
-     */
-    abstract void addNumberedColor(final Object value, final Map<Integer, Color> numberToColor);
 
     // SpreadsheetMetadataVisitor.......................................................................................
 

@@ -27,22 +27,22 @@ public final class SpreadsheetMetadataPropertyValueHandlerColorTest extends Spre
 
     @Test
     public void testWith() {
-        final SpreadsheetMetadataPropertyName<Color> name = SpreadsheetMetadataPropertyName.color(12);
+        final SpreadsheetMetadataPropertyName<Color> name = SpreadsheetMetadataPropertyName.numberedColor(12);
         assertEquals("color-12", name.value(), "value");
     }
 
     @Test
     public void testCached() {
         for (int i = 0; i < SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER; i++) {
-            assertSame(SpreadsheetMetadataPropertyName.color(i),
-                    SpreadsheetMetadataPropertyName.color(i));
+            assertSame(SpreadsheetMetadataPropertyName.numberedColor(i),
+                    SpreadsheetMetadataPropertyName.numberedColor(i));
         }
     }
 
     @Test
     public void testWithUncached() {
         final int number = SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER + 1;
-        final SpreadsheetMetadataPropertyName<Color> name = SpreadsheetMetadataPropertyName.color(number);
+        final SpreadsheetMetadataPropertyName<Color> name = SpreadsheetMetadataPropertyName.numberedColor(number);
         assertEquals("color-" + number, name.value(), "value");
     }
 
@@ -65,7 +65,7 @@ public final class SpreadsheetMetadataPropertyValueHandlerColorTest extends Spre
 
     @Override
     SpreadsheetMetadataPropertyName<Color> propertyName() {
-        return SpreadsheetMetadataPropertyName.color(12);
+        return SpreadsheetMetadataPropertyName.numberedColor(12);
     }
 
     @Override
