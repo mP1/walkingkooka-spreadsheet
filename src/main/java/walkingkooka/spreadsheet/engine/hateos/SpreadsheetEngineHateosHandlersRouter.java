@@ -18,16 +18,17 @@ package walkingkooka.spreadsheet.engine.hateos;
 
 import walkingkooka.Cast;
 import walkingkooka.NeverError;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Range;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.header.LinkRelation;
+import walkingkooka.net.http.HttpMethod;
 import walkingkooka.net.http.server.HttpRequest;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.HttpResponse;
 import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.net.http.server.hateos.HateosHandler;
-import walkingkooka.net.http.server.hateos.HateosHandlerRouterBuilder;
-import walkingkooka.net.http.server.hateos.HateosHandlerRouterMapper;
+import walkingkooka.net.http.server.hateos.HateosHandlerResourceMapping;
 import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.routing.Router;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
@@ -35,6 +36,7 @@ import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -44,7 +46,6 @@ import walkingkooka.type.StaticHelper;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 /**
  * A collection of factory methods to create various {@link HateosHandler}.
@@ -81,7 +82,7 @@ final class SpreadsheetEngineHateosHandlersRouter implements StaticHelper {
     /**
      * Builds a {@link Router} that handles all operations, using the given {@link SpreadsheetEngine} and {@link SpreadsheetEngineContext}.
      */
-    static <N extends Node<N, ?, ?, ?>> Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> router(final AbsoluteUrl base,
+    static <N extends Node<N, ?, ?, ?>> Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> router(final AbsoluteUrl baseUrl,
                                                                                                                       final HateosContentType<N> contentType,
                                                                                                                       final HateosHandler<SpreadsheetColumnReference,
                                                                                                                               SpreadsheetDelta<Optional<SpreadsheetColumnReference>>,
@@ -113,7 +114,8 @@ final class SpreadsheetEngineHateosHandlersRouter implements StaticHelper {
                                                                                                                       final HateosHandler<SpreadsheetCellReference,
                                                                                                                               SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
                                                                                                                               SpreadsheetDelta<Range<SpreadsheetCellReference>>> saveCell) {
-        final HateosHandlerRouterBuilder<N> builder = HateosHandlerRouterBuilder.with(base, contentType);
+        Objects.requireNonNull(baseUrl, "baseUrl");
+        Objects.requireNonNull(contentType, "contentType");
         Objects.requireNonNull(fillCells, "fillCells");
         Objects.requireNonNull(deleteColumns, "deleteColumns");
         Objects.requireNonNull(deleteRows, "deleteRows");
@@ -127,31 +129,21 @@ final class SpreadsheetEngineHateosHandlersRouter implements StaticHelper {
 
         // cell GET, POST...............................................................................................
 
-        final Function<String, SpreadsheetCellReference> stringToCellReference = SpreadsheetExpressionReference::parseCellReference;
+        HateosHandlerResourceMapping<SpreadsheetCellReference,
+                SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
+                SpreadsheetDelta<Range<SpreadsheetCellReference>>> cell = HateosHandlerResourceMapping.with(CELL,
+                SpreadsheetExpressionReference::parseCellReference,
+                OPTIONAL_CELL_REFERENCE,
+                RANGE_CELL_REFERENCE)
+                .set(LinkRelation.SELF, HttpMethod.GET, loadCellComputeIfNecessary)
+                .set(LinkRelation.SELF, HttpMethod.POST, saveCell);
 
-        {
-            final HateosHandlerRouterMapper<SpreadsheetCellReference,
-                    SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-                    SpreadsheetDelta<Range<SpreadsheetCellReference>>> cell = HateosHandlerRouterMapper.with(stringToCellReference,
-                    OPTIONAL_CELL_REFERENCE,
-                    RANGE_CELL_REFERENCE);
-            cell.get(loadCellComputeIfNecessary);
-            cell.post(saveCell);
-
-            builder.add(CELL, LinkRelation.SELF, cell);
-        }
         // cell/SpreadsheetEngineEvaluation GET.........................................................................
 
         for (SpreadsheetEngineEvaluation evaluation : SpreadsheetEngineEvaluation.values()) {
-            final HateosHandlerRouterMapper<SpreadsheetCellReference,
+            final HateosHandler<SpreadsheetCellReference,
                     SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-                    SpreadsheetDelta<Range<SpreadsheetCellReference>>> cell = HateosHandlerRouterMapper.with(stringToCellReference,
-                    OPTIONAL_CELL_REFERENCE,
-                    RANGE_CELL_REFERENCE);
-
-            HateosHandler<SpreadsheetCellReference,
-                    SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-                    SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCell = null;
+                    SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCell;
             switch (evaluation) {
                 case CLEAR_VALUE_ERROR_SKIP_EVALUATE:
                     loadCell = loadCellClearValueErrorSkipEvaluate;
@@ -167,53 +159,45 @@ final class SpreadsheetEngineHateosHandlersRouter implements StaticHelper {
                     break;
                 default:
                     NeverError.unhandledEnum(evaluation, SpreadsheetEngineEvaluation.values());
+                    loadCell = null;
             }
 
-            cell.get(loadCell);
-
-            builder.add(CELL, evaluation.toLinkRelation(), cell);
+            cell = cell.set(evaluation.toLinkRelation(),
+                    HttpMethod.GET,
+                    loadCell);
         }
 
-        // cell/copy POST................................................................................................
+        // cell/copy POST...............................................................................................
 
-        {
-            final HateosHandlerRouterMapper<SpreadsheetCellReference,
-                    SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-                    SpreadsheetDelta<Range<SpreadsheetCellReference>>> copy = HateosHandlerRouterMapper.with(stringToCellReference,
-                    OPTIONAL_CELL_REFERENCE,
-                    RANGE_CELL_REFERENCE);
-            copy.post(fillCells);
-            builder.add(CELL, FILL, copy);
-        }
+        cell = cell.set(FILL,
+                HttpMethod.POST,
+                fillCells);
 
         // columns POST DELETE..........................................................................................
 
-        {
-            final HateosHandlerRouterMapper<SpreadsheetColumnReference,
-                    SpreadsheetDelta<Optional<SpreadsheetColumnReference>>,
-                    SpreadsheetDelta<Range<SpreadsheetColumnReference>>> columns = HateosHandlerRouterMapper.with(SpreadsheetColumnReference::parseColumn,
-                    OPTIONAL_COLUMN_REFERENCE,
-                    RANGE_COLUMN_REFERENCE);
-            columns.post(insertColumns);
-            columns.delete(deleteColumns);
-
-            builder.add(COLUMN, LinkRelation.SELF, columns);
-        }
+        HateosHandlerResourceMapping<SpreadsheetColumnReference,
+                SpreadsheetDelta<Optional<SpreadsheetColumnReference>>,
+                SpreadsheetDelta<Range<SpreadsheetColumnReference>>> column = HateosHandlerResourceMapping.with(COLUMN,
+                SpreadsheetColumnOrRowReference::parseColumn,
+                OPTIONAL_COLUMN_REFERENCE,
+                RANGE_COLUMN_REFERENCE)
+                .set(LinkRelation.SELF, HttpMethod.POST, insertColumns)
+                .set(LinkRelation.SELF, HttpMethod.DELETE, deleteColumns);
 
         // rows POST DELETE.............................................................................................
 
-        {
-            final HateosHandlerRouterMapper<SpreadsheetRowReference,
-                    SpreadsheetDelta<Optional<SpreadsheetRowReference>>,
-                    SpreadsheetDelta<Range<SpreadsheetRowReference>>> rows = HateosHandlerRouterMapper.with(SpreadsheetRowReference::parseRow,
-                    OPTIONAL_ROW_REFERENCE,
-                    RANGE_ROW_REFERENCE);
-            rows.post(insertRows);
-            rows.delete(deleteRows);
-            builder.add(ROW, LinkRelation.SELF, rows);
-        }
+        HateosHandlerResourceMapping<SpreadsheetRowReference,
+                SpreadsheetDelta<Optional<SpreadsheetRowReference>>,
+                SpreadsheetDelta<Range<SpreadsheetRowReference>>> row = HateosHandlerResourceMapping.with(ROW,
+                SpreadsheetColumnOrRowReference::parseRow,
+                OPTIONAL_ROW_REFERENCE,
+                RANGE_ROW_REFERENCE)
+                .set(LinkRelation.SELF, HttpMethod.POST, insertRows)
+                .set(LinkRelation.SELF, HttpMethod.DELETE, deleteRows);
 
-        return builder.build();
+        return HateosHandlerResourceMapping.router(baseUrl,
+                contentType,
+                Sets.of(cell, column, row));
     }
 
     /**
