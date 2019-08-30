@@ -32,7 +32,9 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
      * Retrieves a {@link SpreadsheetMetadataPropertyNameNumberedColor} for a numbered {@link Color}.
      */
     static SpreadsheetMetadataPropertyNameNumberedColor color0(final int number) {
-        SpreadsheetMetadata.checkColorNumber(number);
+        if (number < 0) {
+            throw new IllegalArgumentException("Number " + number + " < 0");
+        }
 
         return number < MAX_NUMBER ?
                 NUMBER_TO_COLOR[number] :

@@ -83,13 +83,6 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
         return this;
     }
 
-    // numberToColor....................................................................................................
-
-    @Override
-    public Function<Integer, Optional<Color>> numberToColor() {
-        return SpreadsheetMetadataEmptyNumberToColorFunction.INSTANCE;
-    }
-
     // SpreadsheetMetadataVisitor........................................................................................
 
     @Override
