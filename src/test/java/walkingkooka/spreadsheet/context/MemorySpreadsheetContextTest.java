@@ -65,6 +65,7 @@ import walkingkooka.store.Store;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNodeName;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonObjectNode;
 import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.FromJsonNodeContexts;
 import walkingkooka.tree.json.marshall.ToJsonNodeContext;
@@ -820,7 +821,11 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     }
 
     private ToJsonNodeContext toJsonNodeContext() {
-        return ToJsonNodeContexts.basic();
+        return ToJsonNodeContexts.basic(this::objectPostProcessor);
+    }
+
+    private JsonObjectNode objectPostProcessor(final Object value, JsonObjectNode object) {
+        return object;
     }
 
     @Override

@@ -43,9 +43,8 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
+import walkingkooka.tree.json.JsonObjectNode;
 import walkingkooka.tree.json.marshall.FromJsonNodeContexts;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
 import walkingkooka.tree.json.marshall.ToJsonNodeContexts;
 
 import java.nio.charset.Charset;
@@ -232,7 +231,12 @@ public final class SpreadsheetContextHateosHandlersRouterTest extends Spreadshee
     }
 
     private HateosContentType<JsonNode> contentType() {
-        return HateosContentType.json(FromJsonNodeContexts.basic(), ToJsonNodeContexts.basic());
+        return HateosContentType.json(FromJsonNodeContexts.basic(),
+                ToJsonNodeContexts.basic(this::objectPostProcessor));
+    }
+
+    private JsonObjectNode objectPostProcessor(final Object value, JsonObjectNode object) {
+        return object;
     }
 
     private HateosHandler<SpreadsheetId,
