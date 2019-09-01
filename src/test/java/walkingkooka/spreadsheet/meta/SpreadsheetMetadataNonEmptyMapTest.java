@@ -23,6 +23,7 @@ import walkingkooka.collect.map.MapTesting2;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonObjectNode;
 import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.FromJsonNodeContexts;
 
@@ -91,7 +92,12 @@ public final class SpreadsheetMetadataNonEmptyMapTest implements MapTesting2<Spr
     @Test
     public void testFromEmptyJsonObject() {
         assertSame(SpreadsheetMetadataNonEmptyMap.EMPTY,
-                SpreadsheetMetadataNonEmptyMap.fromJsonNode(JsonNode.object(), FromJsonNodeContexts.basic()));
+                SpreadsheetMetadataNonEmptyMap.fromJsonNode(JsonNode.object(),
+                        FromJsonNodeContexts.basic(this::objectPreProcessor)));
+    }
+
+    private JsonObjectNode objectPreProcessor(final JsonObjectNode object, final Class<?> type) {
+        return object;
     }
 
     @Test
