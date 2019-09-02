@@ -60,13 +60,11 @@ final class SpreadsheetNumberParsePatternsComponentExponent extends SpreadsheetN
                 if (context.context.positiveSign() == sign) {
                     cursor.next();
                     negativeExponent = false;
-                    context.nextComponent(cursor);
                 } else {
                     // E-
                     if (context.context.negativeSign() == sign) {
                         cursor.next();
                         negativeExponent = true;
-                        context.nextComponent(cursor);
                     }
                 }
             }
