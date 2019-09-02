@@ -198,10 +198,17 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
     }
 
     @Test
-    public void testConvertDateOnlyPatternTwoDigitYear() {
+    public void testConvertDateOnlyPatternTwoDigitYear2020() {
         this.convertAndCheck2("dd/mm/yy",
-                "31/12/20",
-                LocalDate.of(2020, 12, 31));
+                "31/12/19",
+                LocalDate.of(2019, 12, 31));
+    }
+
+    @Test
+    public void testConvertDateOnlyPatternTwoDigitYear1980() {
+        this.convertAndCheck2("dd/mm/yy",
+                "31/12/80",
+                LocalDate.of(1980, 12, 31));
     }
 
     @Test

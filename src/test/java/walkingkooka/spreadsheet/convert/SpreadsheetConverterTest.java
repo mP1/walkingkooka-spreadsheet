@@ -195,7 +195,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     private final static LocalDateTime DATE_TIME_FALSE = LocalDateTime.of(DATE_FALSE, LocalTime.MIDNIGHT);
 
     private final static String STRING_FALSE = "";
-    private final static String STRING_TRUE = "true1";
+    private final static String STRING_TRUE = "true";
 
     // boolean..........................................................................................................
 
@@ -370,7 +370,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
 
     @Test
     public void testNumberTrueString() {
-        this.convertAndCheck2(12.5, STRING_TRUE);
+        this.convertAndCheck2(12.5, "N 12D5");
     }
 
     @Test

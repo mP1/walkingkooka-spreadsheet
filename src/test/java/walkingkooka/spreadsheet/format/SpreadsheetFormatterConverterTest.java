@@ -76,22 +76,22 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
     }
 
     private void formatDecimalAndCheck(final Number number) {
-        this.convertAndCheck(number, String.class, "prefix 1.2500 suffix");
+        this.convertAndCheck(number, String.class, "prefix1 1.2500 suffix2");
     }
 
     private void formatIntegerAndCheck(final Number number) {
-        this.convertAndCheck(number, String.class, "prefix 125 suffix");
+        this.convertAndCheck(number, String.class, "prefix1 125.0000 suffix2");
     }
 
     @Test
     public void testToString() {
-        final SpreadsheetFormatter formatter = this.formatter("\"prefix\" #.0000 \"suffix\"");
+        final SpreadsheetFormatter formatter = this.formatter("\"prefix1\" #.0000 \"suffix2\"");
         this.toStringAndCheck(formatter.converter(), formatter.toString());
     }
 
     @Override
     public SpreadsheetFormatterConverter createConverter() {
-        return this.createConverter("\"text\" #.##");
+        return this.createConverter("\"prefix1\" #.0000 \"suffix2\"");
     }
 
     private SpreadsheetFormatterConverter createConverter(final String pattern) {

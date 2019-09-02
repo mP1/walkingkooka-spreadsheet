@@ -60,11 +60,6 @@ final class SpreadsheetNumberParsePatternsContext implements Context {
     BigDecimal mantissa = BigDecimal.ZERO;
 
     /**
-     * The decimal value of the next digit. Initially just after the decimal point this will be 1/10th.
-     */
-    BigDecimal decimal = BigDecimal.TEN;
-
-    /**
      * When true the final value will be divided by 100.
      */
     boolean percentage = false;

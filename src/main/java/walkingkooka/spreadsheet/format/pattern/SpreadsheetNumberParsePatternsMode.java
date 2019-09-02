@@ -52,12 +52,10 @@ enum SpreadsheetNumberParsePatternsMode {
         void onDigit(final int digit,
                      final SpreadsheetNumberParsePatternsContext context) {
             final MathContext mathContext = context.context.mathContext();
-            final BigDecimal fraction = context.decimal;
 
-            context.mantissa = context.mantissa.add(BigDecimal.valueOf(digit).multiply(fraction, mathContext),
-                    mathContext);
-
-            context.decimal = context.decimal.divide(BigDecimal.TEN);
+            context.mantissa = context.mantissa.multiply(BigDecimal.TEN, mathContext)
+                    .add(BigDecimal.valueOf(digit), mathContext);
+            context.exponent--;
         }
 
         @Override
@@ -73,7 +71,7 @@ enum SpreadsheetNumberParsePatternsMode {
         @Override
         void onDigit(final int digit,
                      final SpreadsheetNumberParsePatternsContext context) {
-            context.exponent = context.exponent * digit;
+            context.exponent = context.exponent * 10 + digit;
         }
 
         @Override
