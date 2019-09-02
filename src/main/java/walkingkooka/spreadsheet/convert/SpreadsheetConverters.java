@@ -36,6 +36,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                                       final SpreadsheetDateTimeParsePatterns dateTimeParser,
                                       final SpreadsheetFormatter numberFormatter,
                                       final SpreadsheetNumberParsePatterns numberParser,
+                                      final SpreadsheetFormatter textFormatter,
                                       final SpreadsheetFormatter timeFormatter,
                                       final SpreadsheetTimeParsePatterns timeParser,
                                       final long dateOffset) {
@@ -45,6 +46,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                 dateTimeParser,
                 numberFormatter,
                 numberParser,
+                textFormatter,
                 timeFormatter,
                 timeParser,
                 dateOffset);

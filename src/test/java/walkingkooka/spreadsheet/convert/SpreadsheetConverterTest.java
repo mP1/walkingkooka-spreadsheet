@@ -33,6 +33,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
@@ -68,6 +69,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 dateTimeParser(),
                 numberFormatter(),
                 numberParser(),
+                textFormatter(),
                 timeFormatter(),
                 timeParser());
     }
@@ -80,6 +82,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 dateTimeParser(),
                 numberFormatter(),
                 numberParser(),
+                textFormatter(),
                 timeFormatter(),
                 timeParser());
     }
@@ -92,6 +95,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 dateTimeParser(),
                 numberFormatter(),
                 numberParser(),
+                textFormatter(),
                 timeFormatter(),
                 timeParser());
     }
@@ -104,6 +108,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 null,
                 numberFormatter(),
                 numberParser(),
+                textFormatter(),
                 timeFormatter(),
                 timeParser());
     }
@@ -116,6 +121,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 dateTimeParser(),
                 null,
                 numberParser(),
+                textFormatter(),
                 timeFormatter(),
                 timeParser());
     }
@@ -127,6 +133,20 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 dateTimeFormatter(),
                 dateTimeParser(),
                 numberFormatter(),
+                null,
+                textFormatter(),
+                timeFormatter(),
+                timeParser());
+    }
+
+    @Test
+    public void testWithNullTextFormatterFails() {
+        withFails(dateFormatter(),
+                dateParser(),
+                dateTimeFormatter(),
+                dateTimeParser(),
+                numberFormatter(),
+                numberParser(),
                 null,
                 timeFormatter(),
                 timeParser());
@@ -140,6 +160,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 dateTimeParser(),
                 numberFormatter(),
                 numberParser(),
+                textFormatter(),
                 null,
                 timeParser());
     }
@@ -152,6 +173,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 dateTimeParser(),
                 numberFormatter(),
                 numberParser(),
+                textFormatter(),
                 timeFormatter(),
                 null);
     }
@@ -162,6 +184,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                            final SpreadsheetDateTimeParsePatterns dateTimeParser,
                            final SpreadsheetFormatter numberFormatter,
                            final SpreadsheetNumberParsePatterns numberParser,
+                           final SpreadsheetFormatter textFormatter,
                            final SpreadsheetFormatter timeFormatter,
                            final SpreadsheetTimeParsePatterns timeParser) {
         assertThrows(NullPointerException.class, () -> {
@@ -171,6 +194,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                     dateTimeParser,
                     numberFormatter,
                     numberParser,
+                    textFormatter,
                     timeFormatter,
                     timeParser,
                     DATE_OFFSET);
@@ -241,12 +265,12 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
 
     @Test
     public void testBooleanTrueString() {
-        this.convertAndCheck2(true, STRING_TRUE);
+        this.convertAndCheck2(true, STRING_TRUE + TEXT_SUFFIX);
     }
 
     @Test
     public void testBooleanFalseString() {
-        this.convertAndCheck2(false, TIME_FALSE);
+        this.convertAndCheck2(false, false + TEXT_SUFFIX);
     }
 
     @Test
@@ -403,6 +427,14 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
         this.convertAndBackCheck(numberNumber.convert(value, Short.class, context), expected);
     }
 
+    // String.............................................................................................................
+
+    @Test
+    public void testStringString() {
+        final String text = "abc123";
+        this.convertAndCheck2(text, text + TEXT_SUFFIX);
+    }
+
     // toString.........................................................................................................
 
     @Test
@@ -420,6 +452,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 dateTimeParser(),
                 numberFormatter(),
                 numberParser(),
+                textFormatter(),
                 timeFormatter(),
                 timeParser(),
                 DATE_OFFSET);
@@ -451,6 +484,15 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     private SpreadsheetNumberParsePatterns numberParser() {
         return SpreadsheetParsePatterns.parseNumberParsePatterns("\"N\" #;\"N\" #.#");
     }
+
+    private SpreadsheetFormatter textFormatter() {
+        return formatter("@\"" + TEXT_SUFFIX + "\"",
+                SpreadsheetFormatParsers.text(),
+                SpreadsheetFormatTextParserToken.class,
+                SpreadsheetFormatters::text);
+    }
+
+    private final static String TEXT_SUFFIX = "text-literal-123";
 
     private SpreadsheetFormatter timeFormatter() {
         return dateTimeFormatter("\\T hh-mm");
