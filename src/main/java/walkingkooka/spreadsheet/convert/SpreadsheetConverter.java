@@ -50,6 +50,7 @@ final class SpreadsheetConverter implements Converter {
                                            final SpreadsheetDateTimeParsePatterns dateTimeParser,
                                            final SpreadsheetFormatter numberFormatter,
                                            final SpreadsheetNumberParsePatterns numberParser,
+                                           final SpreadsheetFormatter textFormatter,
                                            final SpreadsheetFormatter timeFormatter,
                                            final SpreadsheetTimeParsePatterns timeParser,
                                            final long dateOffset) {
@@ -62,6 +63,8 @@ final class SpreadsheetConverter implements Converter {
         Objects.requireNonNull(numberFormatter, "numberFormatter");
         Objects.requireNonNull(numberParser, "numberParser");
 
+        Objects.requireNonNull(textFormatter, "textFormatter");
+
         Objects.requireNonNull(timeFormatter, "timeFormatter");
         Objects.requireNonNull(timeParser, "timeParser");
 
@@ -71,6 +74,7 @@ final class SpreadsheetConverter implements Converter {
                 dateTimeParser,
                 numberFormatter,
                 numberParser,
+                textFormatter,
                 timeFormatter,
                 timeParser,
                 dateOffset);
@@ -82,6 +86,7 @@ final class SpreadsheetConverter implements Converter {
                                  final SpreadsheetDateTimeParsePatterns dateTimeParser,
                                  final SpreadsheetFormatter numberFormatter,
                                  final SpreadsheetNumberParsePatterns numberParser,
+                                 final SpreadsheetFormatter textFormatter,
                                  final SpreadsheetFormatter timeFormatter,
                                  final SpreadsheetTimeParsePatterns timeParser,
                                  final long dateOffset) {
@@ -99,11 +104,11 @@ final class SpreadsheetConverter implements Converter {
         final LocalTime timeTrue = LocalTime.ofSecondOfDay(1);
         final LocalTime timeFalse = LocalTime.MIDNIGHT;
 
-        final SpreadsheetConverterMapping<Converter> booleanConverter = SpreadsheetConverterMapping.with(null, // boolean -> boolean
+        final SpreadsheetConverterMapping<Converter> booleanConverter = SpreadsheetConverterMapping.with(Converters.simple(), // boolean -> boolean
                 fromBoolean(LocalDate.class, dateTrue, dateFalse),
                 fromBoolean(LocalDateTime.class, dateTimeTrue, dateTimeFalse),
                 Converters.booleanNumber(),
-                fromBoolean(String.class, stringTrue, stringFalse), // boolean -> String
+                fromBoolean(String.class, stringTrue, stringFalse).then(String.class, textFormatter.converter()), // boolean -> String
                 fromBoolean(LocalTime.class, timeTrue, timeFalse)); // Time
 
         final SpreadsheetConverterMapping<Converter> date = SpreadsheetConverterMapping.with(toBoolean(LocalDate.class, dateFalse),
@@ -131,7 +136,7 @@ final class SpreadsheetConverter implements Converter {
                 dateParser.converter(),
                 dateTimeParser.converter(),
                 numberParser.converter(),
-                null, // String -> String
+                textFormatter.converter(), // String -> String
                 timeParser.converter()
         );
 
@@ -211,10 +216,8 @@ final class SpreadsheetConverter implements Converter {
     public <T> T convert(final Object value,
                          final Class<T> targetType,
                          final ConverterContext context) {
-        return targetType.isInstance(value) ?
-                targetType.cast(value) :
-                SpreadsheetConverterSpreadsheetValueVisitor.converter(value, targetType, this.mapping)
-                        .convert(value, targetType, context);
+        return SpreadsheetConverterSpreadsheetValueVisitor.converter(value, targetType, this.mapping)
+                .convert(value, targetType, context);
     }
 
     private final SpreadsheetConverterMapping<SpreadsheetConverterMapping<Converter>> mapping;

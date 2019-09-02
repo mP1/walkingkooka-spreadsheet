@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.test.HashCodeEqualsDefined;
@@ -198,6 +199,7 @@ public abstract class SpreadsheetMetadata implements HasConverter,
      * <li>{@link SpreadsheetMetadataPropertyName#DATETIME_PARSE_PATTERNS}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#NUMBER_FORMAT_PATTERN}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#NUMBER_PARSE_PATTERNS}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#TEXT_FORMAT_PATTERN}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#TIME_FORMAT_PATTERN}</li>
      * <li>{@link SpreadsheetMetadataPropertyName#TIME_PARSE_PATTERNS}</li>
      * </ul>
@@ -215,6 +217,8 @@ public abstract class SpreadsheetMetadata implements HasConverter,
         final SpreadsheetNumberFormatPattern numberFormat = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN);
         final SpreadsheetNumberParsePatterns numberParser = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERNS);
 
+        final SpreadsheetTextFormatPattern textFormat = components.getOrNull(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN);
+
         final SpreadsheetTimeFormatPattern timeFormat = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN);
         final SpreadsheetTimeParsePatterns timeParser = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS);
 
@@ -228,6 +232,7 @@ public abstract class SpreadsheetMetadata implements HasConverter,
                 dateTimeParser,
                 numberFormat.formatter(),
                 numberParser,
+                textFormat.formatter(),
                 timeFormat.formatter(),
                 timeParser,
                 dateOffset);
