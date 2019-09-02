@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.visit.Visiting;
@@ -178,6 +179,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitSpreadsheetId(final SpreadsheetId id) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitTextFormatPattern(final SpreadsheetTextFormatPattern pattern) {
         throw new UnsupportedOperationException();
     }
 
