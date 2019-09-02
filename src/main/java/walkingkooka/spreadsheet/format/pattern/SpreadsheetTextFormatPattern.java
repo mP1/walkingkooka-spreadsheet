@@ -20,26 +20,27 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 
 /**
- * Holds a valid {@link SpreadsheetNumberFormatPattern}.
+ * Holds a valid {@link SpreadsheetPattern} to format {@link String text}.
  */
-public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPattern<SpreadsheetFormatNumberParserToken> {
+public final class SpreadsheetTextFormatPattern extends SpreadsheetFormatPattern<SpreadsheetFormatTextParserToken> {
 
     /**
-     * Factory that creates a {@link SpreadsheetNumberFormatPattern} from the given token.
+     * Factory that creates a {@link SpreadsheetTextFormatPattern} from the given token.
      */
-    static SpreadsheetNumberFormatPattern with(final SpreadsheetFormatNumberParserToken token) {
-        SpreadsheetNumberFormatPatternSpreadsheetFormatParserTokenVisitor.with()
+    static SpreadsheetTextFormatPattern with(final SpreadsheetFormatTextParserToken token) {
+        SpreadsheetTextFormatPatternSpreadsheetFormatParserTokenVisitor.with()
                 .startAccept(token);
 
-        return new SpreadsheetNumberFormatPattern(token);
+        return new SpreadsheetTextFormatPattern(token);
     }
 
     /**
      * Private ctor use factory
      */
-    private SpreadsheetNumberFormatPattern(final SpreadsheetFormatNumberParserToken token) {
+    private SpreadsheetTextFormatPattern(final SpreadsheetFormatTextParserToken token) {
         super(token);
     }
 
@@ -55,12 +56,12 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
 
     @Override
     public boolean isNumber() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isText() {
-        return false;
+        return true;
     }
 
     @Override
@@ -75,13 +76,13 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
      */
     @Override
     SpreadsheetFormatter createFormatter() {
-        return SpreadsheetFormatters.number(this.value);
+        return SpreadsheetFormatters.text(this.value);
     }
 
     // HashCodeEqualsDefined............................................................................................
 
     @Override
     boolean canBeEquals(final Object other) {
-        return other instanceof SpreadsheetNumberFormatPattern;
+        return other instanceof SpreadsheetTextFormatPattern;
     }
 }

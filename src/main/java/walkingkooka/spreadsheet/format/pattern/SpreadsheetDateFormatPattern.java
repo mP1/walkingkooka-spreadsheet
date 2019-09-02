@@ -60,6 +60,11 @@ public final class SpreadsheetDateFormatPattern extends SpreadsheetFormatPattern
     }
 
     @Override
+    public boolean isText() {
+        return false;
+    }
+
+    @Override
     public boolean isTime() {
         return false;
     }

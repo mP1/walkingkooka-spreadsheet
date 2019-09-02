@@ -46,6 +46,13 @@ public abstract class SpreadsheetParsePatterns<T extends SpreadsheetFormatParser
         super(Lists.immutable(tokens));
     }
 
+    // isXXX............................................................................................................
+
+    @Override
+    public final boolean isText() {
+        return false;
+    }
+
     // Object...........................................................................................................
 
     private final static String SEPARATOR = ";";
