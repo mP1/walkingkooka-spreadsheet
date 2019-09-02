@@ -201,7 +201,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
             this.createObject().converter();
         });
         checkMessage(thrown,
-                "Required properties \"date-format-pattern\", \"date-parse-pattern\", \"date-time-format-pattern\", \"date-time-offset\", \"date-time-parse-patterns\", \"number-format-pattern\", \"number-parse-patterns\", \"time-format-pattern\", \"time-parse-patterns\" missing.");
+                "Required properties \"date-format-pattern\", \"date-parse-pattern\", \"date-time-format-pattern\", \"date-time-offset\", \"date-time-parse-patterns\", \"number-format-pattern\", \"number-parse-patterns\", \"text-format-pattern\", \"time-format-pattern\", \"time-parse-patterns\" missing.");
     }
 
     // HasDateTimeContext...............................................................................................
