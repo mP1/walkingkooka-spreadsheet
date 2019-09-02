@@ -51,6 +51,14 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern<V>
         return SpreadsheetFormatParserToken.amPm("A/P", "A/P");
     }
 
+    final SpreadsheetFormatParserToken bracketClose() {
+        return SpreadsheetFormatParserToken.bracketCloseSymbol("]", "]");
+    }
+
+    final SpreadsheetFormatParserToken bracketOpen() {
+        return SpreadsheetFormatParserToken.bracketOpenSymbol("[", "[");
+    }
+
     final SpreadsheetFormatParserToken color() {
         return SpreadsheetFormatParserToken.color(Lists.of(colorName()), "[RED]");
     }
@@ -91,16 +99,44 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern<V>
         return SpreadsheetFormatParserToken.digitZero("0", "0");
     }
 
+    final SpreadsheetFormatParserToken equalsSymbol() {
+        return SpreadsheetFormatParserToken.equalsSymbol("=", "=");
+    }
+
     final SpreadsheetFormatParserToken exponentSymbol() {
         return SpreadsheetFormatParserToken.exponentSymbol("^", "^");
     }
 
+    final SpreadsheetFormatParserToken fractionSymbol() {
+        return SpreadsheetFormatParserToken.fractionSymbol("/", "/");
+    }
+
+    final SpreadsheetFormatParserToken greaterThanSymbol() {
+        return SpreadsheetFormatParserToken.greaterThanSymbol("<", "<");
+    }
+
+    final SpreadsheetFormatParserToken greaterThanEqualsSymbol() {
+        return SpreadsheetFormatParserToken.greaterThanEqualsSymbol("<=", "<=");
+    }
+    
     final SpreadsheetFormatParserToken hour() {
         return SpreadsheetFormatParserToken.hour("h", "h");
     }
 
+    final SpreadsheetFormatParserToken lessThanSymbol() {
+        return SpreadsheetFormatParserToken.lessThanSymbol("<", "<");
+    }
+
+    final SpreadsheetFormatParserToken lessThanEqualsSymbol() {
+        return SpreadsheetFormatParserToken.lessThanEqualsSymbol("<=", "<=");
+    }
+
     final SpreadsheetFormatParserToken monthOrMinute() {
         return SpreadsheetFormatParserToken.monthOrMinute("m", "m");
+    }
+
+    final SpreadsheetFormatParserToken notEqualsSymbol() {
+        return SpreadsheetFormatParserToken.notEqualsSymbol("<=", "<=");
     }
 
     final SpreadsheetFormatParserToken number() {

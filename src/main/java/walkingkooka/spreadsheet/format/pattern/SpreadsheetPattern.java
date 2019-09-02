@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.CharSequences;
@@ -206,6 +207,26 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
 
     private final static Parser<SpreadsheetFormatParserContext> NUMBER_PARSE_PARSER = parseParser(SpreadsheetFormatParsers.number().cast());
 
+    // parseTextFormatPatterns..........................................................................................
+
+    /**
+     * Creates a new {@link SpreadsheetTextFormatPattern} after checking the value is valid.
+     */
+    public static SpreadsheetTextFormatPattern parseTextFormatPattern(final String text) {
+        return parsePattern(text,
+                TEXT_FORMAT_PARSER,
+                SpreadsheetPattern::transformText);
+    }
+
+    private final static Parser<SpreadsheetFormatParserContext> TEXT_FORMAT_PARSER = formatParser(SpreadsheetFormatParsers.text().cast());
+
+    /**
+     * Transforms the tokens into a {@link SpreadsheetTextFormatPattern}
+     */
+    private static SpreadsheetTextFormatPattern transformText(final ParserToken token) {
+        return SpreadsheetTextFormatPattern.with(SpreadsheetFormatTextParserToken.class.cast(token));
+    }
+    
     // parseTimeFormatPatterns..........................................................................................
 
     /**
@@ -324,6 +345,11 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
     public abstract boolean isNumber();
 
     /**
+     * Returns true if holding text pattern(s)
+     */
+    public abstract boolean isText();
+
+    /**
      * Returns true if holding time pattern(s)
      */
     public abstract boolean isTime();
@@ -411,6 +437,16 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
     }
 
     /**
+     * Factory that creates a {@link SpreadsheetTextFormatPattern} from a {@link JsonNode}.
+     */
+    static SpreadsheetTextFormatPattern fromJsonNodeTextFormatPattern(final JsonNode node,
+                                                                      final FromJsonNodeContext context) {
+        checkNode(node);
+
+        return parseTextFormatPattern(node.stringValueOrFail());
+    }
+    
+    /**
      * Factory that creates a {@link SpreadsheetTimeFormatPattern} from a {@link JsonNode}.
      */
     static SpreadsheetTimeFormatPattern fromJsonNodeTimeFormatPattern(final JsonNode node,
@@ -469,6 +505,11 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
                 SpreadsheetPattern::fromJsonNodeNumberParsePatterns,
                 SpreadsheetPattern::toJsonNode,
                 SpreadsheetNumberParsePatterns.class);
+
+        JsonNodeContext.register("spreadsheet-text-format-pattern",
+                SpreadsheetPattern::fromJsonNodeTextFormatPattern,
+                SpreadsheetPattern::toJsonNode,
+                SpreadsheetTextFormatPattern.class);
 
         JsonNodeContext.register("spreadsheet-time-format-pattern",
                 SpreadsheetPattern::fromJsonNodeTimeFormatPattern,
