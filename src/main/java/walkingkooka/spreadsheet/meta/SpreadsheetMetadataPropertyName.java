@@ -297,6 +297,12 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
             (two, v) -> v.visitTwoDigitYearInterpretation(two));
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link Integer}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<Integer> WIDTH = registerPositiveIntegerConstant("width",
+            (c, v) -> v.visitWidth(c));
+
+    /**
      * Factory that assumes a valid {@link SpreadsheetMetadataPropertyName} or fails.
      */
     public static SpreadsheetMetadataPropertyName with(final String name) {
