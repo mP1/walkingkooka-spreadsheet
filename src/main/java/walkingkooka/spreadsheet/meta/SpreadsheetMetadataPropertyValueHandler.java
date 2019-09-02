@@ -148,6 +148,13 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     }
 
     /**
+     * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetTextFormatPattern}
+     */
+    static SpreadsheetMetadataPropertyValueHandlerSpreadsheetTextFormatPattern textFormatPattern() {
+        return SpreadsheetMetadataPropertyValueHandlerSpreadsheetTextFormatPattern.INSTANCE;
+    }
+    
+    /**
      * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimeFormatPattern}
      */
     static SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimeFormatPattern timeFormatPattern() {
