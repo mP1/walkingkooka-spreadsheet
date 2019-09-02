@@ -386,6 +386,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
         }.accept(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR_INTERPRETATION, 32);
     }
 
+    @Test
+    public void testVisitWidth() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitWidth(final Integer i) {
+                this.visited = i;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.WIDTH, 0);
+    }
+
     private static <T> SpreadsheetMetadata metadata(final SpreadsheetMetadataPropertyName<T> propertyName, final T value) {
         return SpreadsheetMetadata.with(Maps.of(propertyName, value));
     }
