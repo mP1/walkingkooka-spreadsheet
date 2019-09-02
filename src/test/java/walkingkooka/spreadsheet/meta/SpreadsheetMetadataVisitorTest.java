@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.type.JavaVisibility;
@@ -354,6 +355,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = i;
             }
         }.accept(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123));
+    }
+
+    @Test
+    public void testVisitTextFormatPattern() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitTextFormatPattern(final SpreadsheetTextFormatPattern p) {
+                this.visited = p;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetPattern.parseTextFormatPattern("@"));
     }
 
     @Test
