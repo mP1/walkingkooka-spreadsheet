@@ -489,17 +489,17 @@ public final class SpreadsheetNumberParsePatternsConverterTest extends Spreadshe
 
     @Test
     public void testFloat() {
-        this.convertAndCheck2(123.45f);
+        this.convertAndCheck2(123.5f);
     }
 
     @Test
     public void testDouble() {
-        this.convertAndCheck2(67.89);
+        this.convertAndCheck2(67.5);
     }
 
     @Test
     public void testBigDecimal() {
-        this.convertAndCheck2(1234567.890);
+        this.convertAndCheck2(1234567.5);
     }
 
     @Test
