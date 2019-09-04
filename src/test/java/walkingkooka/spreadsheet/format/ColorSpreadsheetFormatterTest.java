@@ -123,12 +123,14 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
                 ColorSpreadsheetFormatter.with(this.parsePatternOrFail("[COLOR 2]"),
                         ColorSpreadsheetFormatter.with(this.parsePatternOrFail("[COLOR 1]"), new SpreadsheetFormatter() {
                             @Override
-                            public boolean canFormat(final Object value) throws SpreadsheetFormatException {
+                            public boolean canFormat(final Object value,
+                                                     final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
                                 return true;
                             }
 
                             @Override
-                            public Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+                            public Optional<SpreadsheetText> format(final Object value,
+                                                                    final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
                                 assertEquals(text, value, "value");
                                 return Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text + text));
                             }
@@ -211,6 +213,13 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
     @Override
     public SpreadsheetFormatterContext createContext() {
         return new FakeSpreadsheetFormatterContext() {
+
+            @Override
+            public boolean canConvert(final Object value,
+                                      final Class<?> target) {
+                return value instanceof String && String.class == target;
+            }
+
             @Override
             public Optional<Color> colorNumber(final int number) {
                 assertEquals(COLOR_NUMBER, number, "color number");

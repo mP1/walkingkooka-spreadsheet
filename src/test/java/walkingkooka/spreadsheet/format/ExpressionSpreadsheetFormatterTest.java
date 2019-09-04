@@ -325,6 +325,19 @@ public final class ExpressionSpreadsheetFormatterTest extends SpreadsheetFormatt
             }
 
             @Override
+            public boolean canConvert(final Object value,
+                                      final Class<?> target) {
+                boolean can;
+                try {
+                    this.convert(value, target);
+                    can = true;
+                } catch (final Exception cant) {
+                    can = false;
+                }
+                return can;
+            }
+
+            @Override
             public <T> T convert(final Object value, final Class<T> target) {
                 if (target.isInstance(value)) {
                     return target.cast(value);

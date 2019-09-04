@@ -750,7 +750,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
         return new SpreadsheetFormatter() {
             @Override
-            public boolean canFormat(final Object value) throws SpreadsheetFormatException {
+            public boolean canFormat(final Object value,
+                                     final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
                 return value instanceof String || value instanceof BigDecimal;
             }
 

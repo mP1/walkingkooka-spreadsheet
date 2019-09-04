@@ -67,7 +67,8 @@ final class FractionSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadshe
     }
 
     @Override
-    public boolean canFormat(final Object value) throws SpreadsheetFormatException {
+    public boolean canFormat(final Object value,
+                             final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
         return value instanceof BigDecimal;
     }
 

@@ -127,6 +127,13 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck(this.createPattern("yyyy mm dd \"abc\"").formatter(),
                 LocalDate.of(2000, 12, 31),
                 new FakeSpreadsheetFormatterContext() {
+
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> target) {
+                        return Converters.localDateLocalDateTime().canConvert(value, target, ConverterContexts.fake());
+                    }
+
                     @Override
                     public <T> T convert(final Object value,
                                          final Class<T> target) {

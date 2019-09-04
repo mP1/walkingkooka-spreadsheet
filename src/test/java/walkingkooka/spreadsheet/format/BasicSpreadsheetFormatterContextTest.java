@@ -225,7 +225,8 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     private SpreadsheetFormatter defaultSpreadsheetFormatter() {
         return new SpreadsheetFormatter() {
             @Override
-            public boolean canFormat(final Object value) throws SpreadsheetFormatException {
+            public boolean canFormat(final Object value,
+                                     final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
                 return value instanceof BigDecimal;
             }
 
