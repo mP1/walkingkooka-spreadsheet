@@ -102,6 +102,11 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     // Converter........................................................................................................
 
     @Override
+    public boolean canConvert(final Object value, final Class<?> target) {
+        return this.converter.canConvert(value, target, this.converterContext);
+    }
+
+    @Override
     public <T> T convert(final Object value, final Class<T> target) {
         return this.converter.convert(value, target, this.converterContext);
     }
