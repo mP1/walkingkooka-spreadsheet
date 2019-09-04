@@ -43,20 +43,13 @@ import walkingkooka.spreadsheet.engine.hateos.SpreadsheetEngineHateosHandlers;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStore;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStores;
-import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
-import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
-import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
-import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.Node;
 import walkingkooka.tree.expression.ExpressionNodeName;
@@ -83,98 +76,59 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
     static <N extends Node<N, ?, ?, ?>> MemorySpreadsheetContext with(final AbsoluteUrl base,
                                                                       final HateosContentType<N> contentType,
                                                                       final Function<BigDecimal, Fraction> fractioner,
-                                                                      final Function<Optional<Locale>, SpreadsheetMetadata> metadata,
-                                                                      final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
-                                                                      final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
-                                                                      final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext,
-                                                                      final Function<SpreadsheetId, SpreadsheetFormatter> spreadsheetIdDefaultSpreadsheetFormatter,
                                                                       final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
-                                                                      final Function<SpreadsheetId, Function<SpreadsheetColorName, Optional<Color>>> spreadsheetIdNameToColor,
-                                                                      final Function<SpreadsheetId, Function<Integer, Optional<Color>>> spreadsheetIdNumberToColor,
-                                                                      final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
+                                                                      final Function<Optional<Locale>, SpreadsheetMetadata> metadata,
+                                                                      final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToRepository) {
         Objects.requireNonNull(base, "base");
         Objects.requireNonNull(contentType, "contentType");
         Objects.requireNonNull(fractioner, "fractioner");
-        Objects.requireNonNull(metadata, "metadata");
-        Objects.requireNonNull(spreadsheetIdConverter, "spreadsheetIdConverter");
-        Objects.requireNonNull(spreadsheetIdDateTimeContext, "spreadsheetIdDateTimeContext");
-        Objects.requireNonNull(spreadsheetIdDecimalNumberContext, "spreadsheetIdDecimalNumberContext");
-        Objects.requireNonNull(spreadsheetIdDefaultSpreadsheetFormatter, "spreadsheetIdDefaultSpreadsheetFormatter");
         Objects.requireNonNull(spreadsheetIdFunctions, "spreadsheetIdFunctions");
-        Objects.requireNonNull(spreadsheetIdNameToColor, "spreadsheetIdNameToColor");
-        Objects.requireNonNull(spreadsheetIdNumberToColor, "spreadsheetIdNumberToColor");
-        Objects.requireNonNull(spreadsheetIdWidth, "spreadsheetIdWidth");
+        Objects.requireNonNull(metadata, "metadata");
+        Objects.requireNonNull(spreadsheetIdToRepository, "spreadsheetIdToRepository");
 
         return new MemorySpreadsheetContext<>(base,
                 contentType,
                 fractioner,
-                metadata,
-                spreadsheetIdConverter,
-                spreadsheetIdDateTimeContext,
-                spreadsheetIdDecimalNumberContext,
-                spreadsheetIdDefaultSpreadsheetFormatter,
                 spreadsheetIdFunctions,
-                spreadsheetIdNameToColor,
-                spreadsheetIdNumberToColor,
-                spreadsheetIdWidth);
+                metadata,
+                spreadsheetIdToRepository);
     }
 
     private MemorySpreadsheetContext(final AbsoluteUrl base,
                                      final HateosContentType<N> contentType,
                                      final Function<BigDecimal, Fraction> fractioner,
-                                     final Function<Optional<Locale>, SpreadsheetMetadata> metadata,
-                                     final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
-                                     final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
-                                     final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext,
-                                     final Function<SpreadsheetId, SpreadsheetFormatter> spreadsheetIdDefaultSpreadsheetFormatter,
                                      final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
-                                     final Function<SpreadsheetId, Function<SpreadsheetColorName, Optional<Color>>> spreadsheetIdNameToColor,
-                                     final Function<SpreadsheetId, Function<Integer, Optional<Color>>> spreadsheetIdNumberToColor,
-                                     final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
+                                     final Function<Optional<Locale>, SpreadsheetMetadata> metadata,
+                                     final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToRepository) {
         super();
 
         this.base = base;
         this.contentType = contentType;
         this.fractioner = fractioner;
         this.metadata = metadata;
-
-        this.spreadsheetIdConverter = spreadsheetIdConverter;
-        this.spreadsheetIdDateTimeContext = spreadsheetIdDateTimeContext;
-        this.spreadsheetIdDecimalNumberContext = spreadsheetIdDecimalNumberContext;
-        this.spreadsheetIdDefaultSpreadsheetFormatter = spreadsheetIdDefaultSpreadsheetFormatter;
         this.spreadsheetIdFunctions = spreadsheetIdFunctions;
-        this.spreadsheetIdNameToColor = spreadsheetIdNameToColor;
-        this.spreadsheetIdNumberToColor = spreadsheetIdNumberToColor;
-        this.spreadsheetIdWidth = spreadsheetIdWidth;
+        this.spreadsheetIdToRepository = spreadsheetIdToRepository;
     }
 
     @Override
     public Converter converter(final SpreadsheetId id) {
-        return this.spreadsheetIdConverter.apply(id);
+        return this.loadAndGet(id, SpreadsheetMetadata::converter);
     }
-
-    private final Function<SpreadsheetId, Converter> spreadsheetIdConverter;
 
     @Override
     public DateTimeContext dateTimeContext(final SpreadsheetId id) {
-        return this.spreadsheetIdDateTimeContext.apply(id);
+        return this.loadAndGet(id, SpreadsheetMetadata::dateTimeContext);
     }
-
-    private final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext;
 
     @Override
     public DecimalNumberContext decimalNumberContext(final SpreadsheetId id) {
-        return this.spreadsheetIdDecimalNumberContext.apply(id);
+        return this.loadAndGet(id, SpreadsheetMetadata::decimalNumberContext);
     }
-
-    private final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext;
 
     @Override
     public SpreadsheetFormatter defaultSpreadsheetFormatter(final SpreadsheetId id) {
-        return this.spreadsheetIdDefaultSpreadsheetFormatter.apply(id);
+        return this.loadAndGet(id, SpreadsheetMetadata::formatter);
     }
-
-    private final Function<SpreadsheetId, SpreadsheetFormatter> spreadsheetIdDefaultSpreadsheetFormatter;
 
     @Override
     public BiFunction<ExpressionNodeName, List<Object>, Object> functions(final SpreadsheetId id) {
@@ -182,6 +136,16 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
     }
 
     private final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions;
+
+    /**
+     * Loads the {@link SpreadsheetMetadata} and then executes the given getter to return a particular property.
+     */
+    private <T> T loadAndGet(final SpreadsheetId id,
+                             final Function<SpreadsheetMetadata, T> getter) {
+        Objects.requireNonNull(id, "id");
+
+        return getter.apply(this.spreadsheetIdToRepository.apply(id).metadatas().loadOrFail(id));
+    }
 
     // hateosRouter.....................................................................................................
 
@@ -224,11 +188,11 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
                 rangeToCellStore,
                 rangeToConditionalFormattingRules);
 
-        final Converter converter = this.spreadsheetIdConverter.apply(id);
+        final Converter converter = this.converter(id);
         final BiFunction<ExpressionNodeName, List<Object>, Object> functions = this.spreadsheetIdFunctions.apply(id);
-        final Function<Integer, Optional<Color>> numberToColor = this.spreadsheetIdNumberToColor.apply(id);
-        final Function<SpreadsheetColorName, Optional<Color>> nameToColor = this.spreadsheetIdNameToColor.apply(id);
-        final int width = this.spreadsheetIdWidth.apply(id);
+        final Function<Integer, Optional<Color>> numberToColor = this.numberToColor(id);
+        final Function<SpreadsheetColorName, Optional<Color>> nameToColor = this.nameToColor(id);
+        final int width = this.width(id);
         final Function<BigDecimal, Fraction> fractioner = this.fractioner;
         final SpreadsheetFormatter defaultSpreadsheetFormatter = this.defaultSpreadsheetFormatter(id);
 
@@ -281,50 +245,31 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
 
     @Override
     public Function<SpreadsheetColorName, Optional<Color>> nameToColor(final SpreadsheetId id) {
-        return this.spreadsheetIdNameToColor.apply(id);
+        return this.loadAndGet(id, SpreadsheetMetadata::nameToColor);
     }
-
-    private final Function<SpreadsheetId, Function<SpreadsheetColorName, Optional<Color>>> spreadsheetIdNameToColor;
 
     @Override
     public Function<Integer, Optional<Color>> numberToColor(final SpreadsheetId id) {
-        return this.spreadsheetIdNumberToColor.apply(id);
+        return this.loadAndGet(id, SpreadsheetMetadata::numberToColor);
     }
-
-    private final Function<SpreadsheetId, Function<Integer, Optional<Color>>> spreadsheetIdNumberToColor;
 
     @Override
     public SpreadsheetStoreRepository storeRepository(final SpreadsheetId id) {
-        Objects.requireNonNull(id, "id");
-
-        SpreadsheetStoreRepository storeRepository = this.idToStoreRepository.get(id);
-        if (null == storeRepository) {
-            storeRepository = this.createStoreRepository();
-            this.idToStoreRepository.put(id, storeRepository);
-        }
-        return storeRepository;
+        return this.spreadsheetIdToRepository.apply(id);
     }
 
-    private SpreadsheetStoreRepository createStoreRepository() {
-        return SpreadsheetStoreRepositories.basic(SpreadsheetCellStores.treeMap(),
-                SpreadsheetReferenceStores.treeMap(),
-                SpreadsheetGroupStores.treeMap(),
-                SpreadsheetLabelStores.treeMap(),
-                SpreadsheetReferenceStores.treeMap(),
-                SpreadsheetMetadataStores.treeMap(),
-                SpreadsheetRangeStores.treeMap(),
-                SpreadsheetRangeStores.treeMap(),
-                SpreadsheetUserStores.treeMap());
-    }
-
-    private final Map<SpreadsheetId, SpreadsheetStoreRepository> idToStoreRepository = Maps.sorted();
+    private final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToRepository;
 
     @Override
     public int width(final SpreadsheetId id) {
-        return this.spreadsheetIdWidth.apply(id);
+        return this.loadAndGet(id, this::width0);
     }
 
-    private final Function<SpreadsheetId, Integer> spreadsheetIdWidth;
+    private int width0(final SpreadsheetMetadata metadata) {
+        return metadata.getOrFail(SpreadsheetMetadataPropertyName.WIDTH);
+    }
+
+    // Object...........................................................................................................
 
     @Override
     public String toString() {

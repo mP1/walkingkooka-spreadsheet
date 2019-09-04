@@ -17,17 +17,12 @@
 
 package walkingkooka.spreadsheet.context;
 
-import walkingkooka.color.Color;
-import walkingkooka.convert.Converter;
-import walkingkooka.datetime.DateTimeContext;
-import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.Node;
 import walkingkooka.tree.expression.ExpressionNodeName;
 import walkingkooka.type.PublicStaticHelper;
@@ -54,27 +49,15 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     public static <N extends Node<N, ?, ?, ?>> SpreadsheetContext memory(final AbsoluteUrl base,
                                                                          final HateosContentType<N> contentType,
                                                                          final Function<BigDecimal, Fraction> fractioner,
-                                                                         final Function<Optional<Locale>, SpreadsheetMetadata> metadataWithDefaults,
-                                                                         final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
-                                                                         final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
-                                                                         final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext,
-                                                                         final Function<SpreadsheetId, SpreadsheetFormatter> spreadsheetIdDefaultSpreadsheetFormatter,
                                                                          final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
-                                                                         final Function<SpreadsheetId, Function<SpreadsheetColorName, Optional<Color>>> spreadsheetIdNameToColor,
-                                                                         final Function<SpreadsheetId, Function<Integer, Optional<Color>>> spreadsheetIdNumberToColor,
-                                                                         final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
+                                                                         final Function<Optional<Locale>, SpreadsheetMetadata> metadata,
+                                                                         final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToRepository) {
         return MemorySpreadsheetContext.with(base,
                 contentType,
                 fractioner,
-                metadataWithDefaults,
-                spreadsheetIdConverter,
-                spreadsheetIdDateTimeContext,
-                spreadsheetIdDecimalNumberContext,
-                spreadsheetIdDefaultSpreadsheetFormatter,
                 spreadsheetIdFunctions,
-                spreadsheetIdNameToColor,
-                spreadsheetIdNumberToColor,
-                spreadsheetIdWidth);
+                metadata,
+                spreadsheetIdToRepository);
     }
 
     /**
