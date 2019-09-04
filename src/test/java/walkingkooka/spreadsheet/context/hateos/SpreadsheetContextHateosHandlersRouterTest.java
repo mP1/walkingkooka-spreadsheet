@@ -189,7 +189,7 @@ public final class SpreadsheetContextHateosHandlersRouterTest extends Spreadshee
     }
 
     private Optional<BiConsumer<HttpRequest, HttpResponse>> route(final HttpRequest request) {
-        return this.router().route(request.routingParameters());
+        return this.router().route(request.routerParameters());
     }
 
     private HttpRequest request(final HttpMethod method,
