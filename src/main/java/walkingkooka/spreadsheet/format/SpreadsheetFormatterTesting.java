@@ -31,9 +31,10 @@ public interface SpreadsheetFormatterTesting extends Testing {
 
     default void canFormatAndCheck(final SpreadsheetFormatter formatter,
                                    final Object value,
+                                   final SpreadsheetFormatterContext context,
                                    final boolean expected) {
         assertEquals(expected,
-                formatter.canFormat(value),
+                formatter.canFormat(value, context),
                 () -> formatter + " canFormat " + CharSequences.quoteIfChars(value));
     }
 
@@ -52,7 +53,7 @@ public interface SpreadsheetFormatterTesting extends Testing {
                                 final Object value,
                                 final SpreadsheetFormatterContext context,
                                 final SpreadsheetText text) {
-        this.canFormatAndCheck(formatter, value, true);
+        this.canFormatAndCheck(formatter, value, context,true);
         this.formatAndCheck(formatter,
                 value,
                 context,

@@ -31,6 +31,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -139,6 +140,13 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck(this.createPattern("hh mm ss \"abc\"").formatter(),
                 LocalTime.of(12, 58, 59),
                 new FakeSpreadsheetFormatterContext() {
+
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> target) {
+                        return Converters.localTimeLocalDateTime().canConvert(value, target, ConverterContexts.fake());
+                    }
+
                     @Override
                     public <T> T convert(final Object value,
                                          final Class<T> target) {

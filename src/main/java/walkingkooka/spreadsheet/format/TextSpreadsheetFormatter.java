@@ -42,8 +42,9 @@ final class TextSpreadsheetFormatter extends SpreadsheetFormatter3<SpreadsheetFo
     }
 
     @Override
-    public boolean canFormat(final Object value) throws SpreadsheetFormatException {
-        return value instanceof String;
+    public boolean canFormat(final Object value,
+                             final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+        return context.canConvert(value, String.class);
     }
 
     @Override

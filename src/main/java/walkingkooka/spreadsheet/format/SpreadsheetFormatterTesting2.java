@@ -78,7 +78,7 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
 
         assertEquals(Lists.empty(),
                 values.stream()
-                        .filter(formatter::canFormat)
+                        .filter(value -> formatter.canFormat(value, context))
                         .filter((v) -> {
                             boolean failed = false;
 
@@ -119,8 +119,18 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
     default void canFormatAndCheck(final SpreadsheetFormatter formatter,
                                    final Object value,
                                    final boolean expected) {
+        this.canFormatAndCheck(formatter,
+                value,
+                this.createContext(),
+                expected);
+    }
+
+    default void canFormatAndCheck(final SpreadsheetFormatter formatter,
+                                   final Object value,
+                                   final SpreadsheetFormatterContext context,
+                                   final boolean expected) {
         assertEquals(expected,
-                formatter.canFormat(value),
+                formatter.canFormat(value, context),
                 () -> formatter + " canFormat " + CharSequences.quoteIfChars(value));
     }
 

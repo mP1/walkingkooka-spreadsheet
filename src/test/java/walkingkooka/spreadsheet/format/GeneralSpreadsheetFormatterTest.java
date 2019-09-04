@@ -104,6 +104,12 @@ public final class GeneralSpreadsheetFormatterTest extends SpreadsheetFormatterT
             }
 
             @Override
+            public boolean canConvert(final Object value, final Class<?> target) {
+                return (value instanceof BigDecimal && BigDecimal.class == target) ||
+                        (value instanceof LocalDateTime && LocalDateTime.class == target);
+            }
+
+            @Override
             public <T> T convert(final Object value, final Class<T> target) {
                 if (BigDecimal.class == target) {
                     if (value instanceof BigDecimal) {

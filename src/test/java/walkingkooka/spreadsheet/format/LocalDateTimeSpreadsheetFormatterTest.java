@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.convert.ConverterContexts;
+import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -543,10 +545,17 @@ public final class LocalDateTimeSpreadsheetFormatterTest extends SpreadsheetForm
         this.formatAndCheck(this.createFormatter("yyyy/mm/dd"),
                 LocalDate.of(2000, 12, 31),
                 new TestSpreadsheetFormatterContext() {
+
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> target) {
+                        return Converters.localDateLocalDateTime().canConvert(value, target, ConverterContexts.fake());
+                    }
+
                     @Override
                     public <T> T convert(final Object value, final Class<T> target) {
                         assertEquals(LocalDateTime.class, target, "target");
-                        return target.cast(LocalDateTime.of(LocalDate.class.cast(value), LocalTime.MIDNIGHT));
+                        return Converters.localDateLocalDateTime().convert(value, target, ConverterContexts.fake());
                     }
                 },
                 "2000/12/31");
@@ -559,6 +568,13 @@ public final class LocalDateTimeSpreadsheetFormatterTest extends SpreadsheetForm
         this.formatAndCheck(this.createFormatter("hh/mm/ss"),
                 LocalTime.of(12, 58, 59),
                 new TestSpreadsheetFormatterContext() {
+
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> target) {
+                        return value instanceof LocalTime && target == LocalDateTime.class;
+                    }
+
                     @Override
                     public <T> T convert(final Object value, final Class<T> target) {
                         assertEquals(LocalDateTime.class, target, "target");
@@ -644,6 +660,12 @@ public final class LocalDateTimeSpreadsheetFormatterTest extends SpreadsheetForm
         @Override
         public char decimalSeparator() {
             return 'D';
+        }
+
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> target) {
+            return value instanceof LocalDateTime && LocalDateTime.class == target;
         }
 
         @Override

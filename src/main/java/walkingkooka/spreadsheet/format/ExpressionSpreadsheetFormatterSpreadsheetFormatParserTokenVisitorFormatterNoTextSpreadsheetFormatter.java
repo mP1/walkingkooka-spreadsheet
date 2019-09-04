@@ -34,7 +34,7 @@ final class ExpressionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorFor
     }
 
     @Override
-    public boolean canFormat(final Object value) throws SpreadsheetFormatException {
+    public boolean canFormat(final Object value, final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
         return this.isSpreadsheetValue(value);
     }
 
