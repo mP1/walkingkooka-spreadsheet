@@ -29,9 +29,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
@@ -102,6 +104,40 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
     @Test
     default void testCanFormatFalse() {
         this.canFormatAndCheck(this, false);
+    }
+
+    @Test
+    default void testThenNullFails() {
+        assertThrows(NullPointerException.class, () -> {
+            this.createFormatter().then(null);
+        });
+    }
+
+    @Test
+    default void testThenSelf() {
+        final F formatter = this.createFormatter();
+        assertSame(formatter, formatter.then(formatter));
+    }
+
+    @Test
+    default void testThenFormat() {
+        final String text = this.getClass().getName();
+        final SpreadsheetText spreadsheetText = SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text);
+
+        final SpreadsheetFormatter last = new SpreadsheetFormatter() {
+            @Override
+            public boolean canFormat(final Object value,
+                                     final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+                return SpreadsheetFormatterTesting2.this == value;
+            }
+
+            @Override
+            public Optional<SpreadsheetText> format(final Object value,
+                                                    final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+                return Optional.of(spreadsheetText);
+            }
+        };
+        this.formatAndCheck(this.createFormatter().then(last), this, text);
     }
 
     F createFormatter();
