@@ -37,7 +37,7 @@ final class GeneralSpreadsheetFormatter extends SpreadsheetFormatter2 {
     }
 
     @Override
-    public boolean canFormat(final Object value) {
+    public boolean canFormat(final Object value) throws SpreadsheetFormatException {
         return this.isSpreadsheetValue(value);
     }
 

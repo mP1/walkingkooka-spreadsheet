@@ -73,7 +73,7 @@ final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsheet
      * Only accepts any of the JDK {@link Number} types.
      */
     @Override
-    public boolean canFormat(final Object value) {
+    public boolean canFormat(final Object value) throws SpreadsheetFormatException {
         return value instanceof BigDecimal ||
                 value instanceof BigInteger ||
                 value instanceof Byte ||

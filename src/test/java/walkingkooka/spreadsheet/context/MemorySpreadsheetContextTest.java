@@ -53,6 +53,7 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatException;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -749,12 +750,12 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
         return new SpreadsheetFormatter() {
             @Override
-            public boolean canFormat(final Object value) {
+            public boolean canFormat(final Object value) throws SpreadsheetFormatException {
                 return value instanceof String || value instanceof BigDecimal;
             }
 
             @Override
-            public Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) {
+            public Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
                 if (value instanceof String) {
                     return this.formattedText(value.toString());
                 }
