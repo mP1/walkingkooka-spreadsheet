@@ -33,6 +33,7 @@ import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatException;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
@@ -4831,12 +4832,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 if (PATTERN_FORMAT_FAIL.equals(pattern)) {
                     return new SpreadsheetFormatter() {
                         @Override
-                        public boolean canFormat(final Object value) {
+                        public boolean canFormat(final Object value) throws SpreadsheetFormatException {
                             return true;
                         }
 
                         @Override
-                        public Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) {
+                        public Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
                             return Optional.empty();
                         }
                     };
@@ -4873,13 +4874,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return new SpreadsheetFormatter() {
 
             @Override
-            public boolean canFormat(final Object value) {
+            public boolean canFormat(final Object value) throws SpreadsheetFormatException {
                 return value instanceof BigDecimal;
             }
 
             @Override
             public Optional<SpreadsheetText> format(final Object value,
-                                                    final SpreadsheetFormatterContext context) {
+                                                    final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
                 assertNotNull(value, "value");
                 assertSame(SPREADSHEET_TEXT_FORMAT_CONTEXT, context, "Wrong SpreadsheetFormatterContext passed");
 

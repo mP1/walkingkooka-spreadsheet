@@ -42,7 +42,7 @@ final class TextSpreadsheetFormatter extends SpreadsheetFormatter3<SpreadsheetFo
     }
 
     @Override
-    public boolean canFormat(final Object value) {
+    public boolean canFormat(final Object value) throws SpreadsheetFormatException {
         return value instanceof String;
     }
 

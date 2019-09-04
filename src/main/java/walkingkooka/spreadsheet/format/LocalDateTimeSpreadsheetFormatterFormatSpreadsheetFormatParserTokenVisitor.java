@@ -33,7 +33,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
- * This visitor is used exclusively by {@link TextSpreadsheetFormatter#format(Object, SpreadsheetFormatterContext)}.
+ * This visitor is used exclusively by {@link SpreadsheetFormatter#format(Object, SpreadsheetFormatterContext)}.
  * Only some methods in {@link SpreadsheetFormatParserTokenVisitor} are overridden, all other tokens will be ignored.
  */
 final class LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor {

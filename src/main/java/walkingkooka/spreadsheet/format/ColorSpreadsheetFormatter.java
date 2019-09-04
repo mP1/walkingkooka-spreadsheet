@@ -65,7 +65,7 @@ final class ColorSpreadsheetFormatter extends SpreadsheetFormatter3<SpreadsheetF
     }
 
     @Override
-    public boolean canFormat(final Object value) {
+    public boolean canFormat(final Object value) throws SpreadsheetFormatException {
         return this.formatter.canFormat(value);
     }
 

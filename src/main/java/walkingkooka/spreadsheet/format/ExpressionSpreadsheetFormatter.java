@@ -58,7 +58,7 @@ final class ExpressionSpreadsheetFormatter extends SpreadsheetFormatter3<Spreads
     }
 
     @Override
-    public boolean canFormat(final Object value) {
+    public boolean canFormat(final Object value) throws SpreadsheetFormatException {
         return this.formatters.stream()
                 .filter(f -> f.canFormat(value))
                 .limit(1)

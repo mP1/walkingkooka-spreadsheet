@@ -225,12 +225,12 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     private SpreadsheetFormatter defaultSpreadsheetFormatter() {
         return new SpreadsheetFormatter() {
             @Override
-            public boolean canFormat(final Object value) {
+            public boolean canFormat(final Object value) throws SpreadsheetFormatException {
                 return value instanceof BigDecimal;
             }
 
             @Override
-            public Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) {
+            public Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
                 return Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, new DecimalFormat("000.000").format(value)));
             }
         };
