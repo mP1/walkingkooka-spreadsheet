@@ -93,10 +93,6 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
 
     abstract P createPattern(final T token);
 
-    final List<T> parseFormatParserTokens() {
-        return Lists.of(this.parseFormatParserToken(this.patternText()));
-    }
-
     abstract T parseFormatParserToken(final String text);
 
     private T createFormatParserToken(final List<ParserToken> tokens) {
