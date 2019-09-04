@@ -45,6 +45,24 @@ public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatt
                 () -> "colorName " + name + " " + context);
     }
 
+    default <T> void canConvertAndCheck(final Object value,
+                                        final Class<?> target,
+                                        final boolean expected) {
+        this.canConvertAndCheck(this.createContext(),
+                value,
+                target,
+                expected);
+    }
+
+    default <T> void canConvertAndCheck(final SpreadsheetFormatterContext context,
+                                        final Object value,
+                                        final Class<?> target,
+                                        final boolean expected) {
+        assertEquals(expected,
+                context.canConvert(value, target),
+                () -> context + " canConvert " + CharSequences.quoteIfChars(value) + " target: " + target.getName());
+    }
+
     default <T> void convertAndCheck(final Object value,
                                      final Class<T> target,
                                      final T expected) {
@@ -58,6 +76,7 @@ public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatt
                                      final Object value,
                                      final Class<T> target,
                                      final T expected) {
+        this.canConvertAndCheck(context, value, target, true);
         assertEquals(expected,
                 context.convert(value, target),
                 () -> "convert " + CharSequences.quoteIfChars(value) + " target: " + target.getName());

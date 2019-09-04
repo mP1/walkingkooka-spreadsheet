@@ -50,6 +50,11 @@ public interface SpreadsheetFormatterContext extends DecimalNumberContext, DateT
     Optional<SpreadsheetText> defaultFormatText(final Object value);
 
     /**
+     * Tests if the given value can be converted the requested target {@link Class type}.
+     */
+    boolean canConvert(final Object value, final Class<?> target);
+
+    /**
      * Handles converting the given value to the target.
      */
     <T> T convert(final Object value, final Class<T> target);

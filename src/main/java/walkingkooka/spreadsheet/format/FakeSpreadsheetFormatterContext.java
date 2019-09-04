@@ -36,6 +36,11 @@ public class FakeSpreadsheetFormatterContext extends FakeDecimalNumberContext im
     }
 
     @Override
+    public boolean canConvert(final Object value, final Class<?> target) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Optional<Color> colorNumber(final int number) {
         throw new UnsupportedOperationException();
     }
