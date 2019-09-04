@@ -21,13 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Binary;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.color.Color;
-import walkingkooka.convert.Converter;
 import walkingkooka.convert.Converters;
-import walkingkooka.datetime.DateTimeContext;
-import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.RelativeUrl;
@@ -50,20 +44,33 @@ import walkingkooka.routing.Router;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatException;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetText;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
+import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStores;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStore;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStores;
+import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
+import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
+import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
+import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
+import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
+import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
+import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.store.Store;
-import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNodeName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObjectNode;
@@ -73,9 +80,8 @@ import walkingkooka.tree.json.marshall.ToJsonNodeContext;
 import walkingkooka.tree.json.marshall.ToJsonNodeContexts;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
+import java.math.RoundingMode;
 import java.nio.charset.Charset;
-import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -97,15 +103,9 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         this.withFails(null,
                 this.contentType(),
                 this::fractioner,
-                this::metadataWithDefaults,
-                this::spreadsheetIdConverter,
-                this::spreadsheetIdDateTimeContext,
-                this::spreadsheetIdDecimalNumberContext,
-                this::spreadsheetIdDefaultSpreadsheetFormatter,
                 this::spreadsheetIdFunctions,
-                this::spreadsheetIdNameToColor,
-                this::spreadsheetIdNumberToColor,
-                this::spreadsheetIdWidth);
+                this::metadataWithDefaults,
+                this::spreadsheetIdToRepository);
     }
 
     @Test
@@ -113,15 +113,10 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         this.withFails(this.base(),
                 null,
                 this::fractioner,
-                this::metadataWithDefaults,
-                this::spreadsheetIdConverter,
-                this::spreadsheetIdDateTimeContext,
-                this::spreadsheetIdDecimalNumberContext,
-                this::spreadsheetIdDefaultSpreadsheetFormatter,
                 this::spreadsheetIdFunctions,
-                this::spreadsheetIdNameToColor,
-                this::spreadsheetIdNumberToColor,
-                this::spreadsheetIdWidth);
+                this::metadataWithDefaults,
+                this::spreadsheetIdToRepository);
+        ;
     }
 
     @Test
@@ -129,95 +124,9 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         this.withFails(this.base(),
                 this.contentType(),
                 null,
+                this::spreadsheetIdFunctions,
                 this::metadataWithDefaults,
-                this::spreadsheetIdConverter,
-                this::spreadsheetIdDateTimeContext,
-                this::spreadsheetIdDecimalNumberContext,
-                this::spreadsheetIdDefaultSpreadsheetFormatter,
-                this::spreadsheetIdFunctions,
-                this::spreadsheetIdNameToColor,
-                this::spreadsheetIdNumberToColor,
-                this::spreadsheetIdWidth);
-    }
-
-    @Test
-    public void testWithNullMetadataWithDefaultsFails() {
-        this.withFails(this.base(),
-                this.contentType(),
-                this::fractioner,
-                null,
-                this::spreadsheetIdConverter,
-                this::spreadsheetIdDateTimeContext,
-                this::spreadsheetIdDecimalNumberContext,
-                this::spreadsheetIdDefaultSpreadsheetFormatter,
-                this::spreadsheetIdFunctions,
-                this::spreadsheetIdNameToColor,
-                this::spreadsheetIdNumberToColor,
-                this::spreadsheetIdWidth);
-    }
-
-    @Test
-    public void testWithNullSpreadsheetIdConverterFails() {
-        this.withFails(this.base(),
-                this.contentType(),
-                this::fractioner,
-                this::metadataWithDefaults,
-                null,
-                this::spreadsheetIdDateTimeContext,
-                this::spreadsheetIdDecimalNumberContext,
-                this::spreadsheetIdDefaultSpreadsheetFormatter,
-                this::spreadsheetIdFunctions,
-                this::spreadsheetIdNameToColor,
-                this::spreadsheetIdNumberToColor,
-                this::spreadsheetIdWidth);
-    }
-
-    @Test
-    public void testWithNullSpreadsheetIdDateTimeContextFails() {
-        this.withFails(this.base(),
-                this.contentType(),
-                this::fractioner,
-                this::metadataWithDefaults,
-                this::spreadsheetIdConverter,
-                null,
-                this::spreadsheetIdDecimalNumberContext,
-                this::spreadsheetIdDefaultSpreadsheetFormatter,
-                this::spreadsheetIdFunctions,
-                this::spreadsheetIdNameToColor,
-                this::spreadsheetIdNumberToColor,
-                this::spreadsheetIdWidth);
-    }
-
-    @Test
-    public void testWithNullSpreadsheetIdDecimalNumberContextFails() {
-        this.withFails(this.base(),
-                this.contentType(),
-                this::fractioner,
-                this::metadataWithDefaults,
-                this::spreadsheetIdConverter,
-                this::spreadsheetIdDateTimeContext,
-                null,
-                this::spreadsheetIdDefaultSpreadsheetFormatter,
-                this::spreadsheetIdFunctions,
-                this::spreadsheetIdNameToColor,
-                this::spreadsheetIdNumberToColor,
-                this::spreadsheetIdWidth);
-    }
-
-    @Test
-    public void testWithNullSpreadsheetIdDefaultSpreadsheetFormatterFails() {
-        this.withFails(this.base(),
-                this.contentType(),
-                this::fractioner,
-                this::metadataWithDefaults,
-                this::spreadsheetIdConverter,
-                this::spreadsheetIdDateTimeContext,
-                this::spreadsheetIdDecimalNumberContext,
-                null,
-                this::spreadsheetIdFunctions,
-                this::spreadsheetIdNameToColor,
-                this::spreadsheetIdNumberToColor,
-                this::spreadsheetIdWidth);
+                this::spreadsheetIdToRepository);
     }
 
     @Test
@@ -225,90 +134,44 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         this.withFails(this.base(),
                 this.contentType(),
                 this::fractioner,
-                this::metadataWithDefaults,
-                this::spreadsheetIdConverter,
-                this::spreadsheetIdDateTimeContext,
-                this::spreadsheetIdDecimalNumberContext,
                 null,
-                this::spreadsheetIdFunctions,
-                this::spreadsheetIdNameToColor,
-                this::spreadsheetIdNumberToColor,
-                this::spreadsheetIdWidth);
+                this::metadataWithDefaults,
+                this::spreadsheetIdToRepository);
     }
 
     @Test
-    public void testWithNullSpreadsheetIdNameToColorFails() {
+    public void testWithNullMetadataWithDefaultsFails() {
         this.withFails(this.base(),
                 this.contentType(),
                 this::fractioner,
-                this::metadataWithDefaults,
-                this::spreadsheetIdConverter,
-                this::spreadsheetIdDateTimeContext,
-                this::spreadsheetIdDecimalNumberContext,
-                this::spreadsheetIdDefaultSpreadsheetFormatter,
                 this::spreadsheetIdFunctions,
                 null,
-                this::spreadsheetIdNumberToColor,
-                this::spreadsheetIdWidth);
+                this::spreadsheetIdToRepository);
     }
 
     @Test
-    public void testWithNullSpreadsheetIdNumberToColorFails() {
+    public void testWithNullSpreadsheetIdRepositoryFails() {
         this.withFails(this.base(),
                 this.contentType(),
                 this::fractioner,
-                this::metadataWithDefaults,
-                this::spreadsheetIdConverter,
-                this::spreadsheetIdDateTimeContext,
-                this::spreadsheetIdDecimalNumberContext,
-                this::spreadsheetIdDefaultSpreadsheetFormatter,
                 this::spreadsheetIdFunctions,
-                this::spreadsheetIdNameToColor,
-                null,
-                this::spreadsheetIdWidth);
-    }
-
-    @Test
-    public void testWithNullSpreadsheetIdWidthFails() {
-        this.withFails(this.base(),
-                this.contentType(),
-                this::fractioner,
                 this::metadataWithDefaults,
-                this::spreadsheetIdConverter,
-                this::spreadsheetIdDateTimeContext,
-                this::spreadsheetIdDecimalNumberContext,
-                this::spreadsheetIdDefaultSpreadsheetFormatter,
-                this::spreadsheetIdFunctions,
-                this::spreadsheetIdNameToColor,
-                this::spreadsheetIdNumberToColor,
                 null);
     }
 
     private void withFails(final AbsoluteUrl base,
                            final HateosContentType<JsonNode> contentType,
                            final Function<BigDecimal, Fraction> fractioner,
-                           final Function<Optional<Locale>, SpreadsheetMetadata> metadata,
-                           final Function<SpreadsheetId, Converter> spreadsheetIdConverter,
-                           final Function<SpreadsheetId, DateTimeContext> spreadsheetIdDateTimeContext,
-                           final Function<SpreadsheetId, DecimalNumberContext> spreadsheetIdDecimalNumberContext,
-                           final Function<SpreadsheetId, SpreadsheetFormatter> spreadsheetIdDefaultSpreadsheetFormatter,
                            final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
-                           final Function<SpreadsheetId, Function<SpreadsheetColorName, Optional<Color>>> spreadsheetIdNameToColor,
-                           final Function<SpreadsheetId, Function<Integer, Optional<Color>>> spreadsheetIdNumberToColor,
-                           final Function<SpreadsheetId, Integer> spreadsheetIdWidth) {
+                           final Function<Optional<Locale>, SpreadsheetMetadata> metadata,
+                           final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToRepository) {
         assertThrows(NullPointerException.class, () -> {
             MemorySpreadsheetContext.with(base,
                     contentType,
                     fractioner,
-                    metadata,
-                    spreadsheetIdConverter,
-                    spreadsheetIdDateTimeContext,
-                    spreadsheetIdDecimalNumberContext,
-                    spreadsheetIdDefaultSpreadsheetFormatter,
                     spreadsheetIdFunctions,
-                    spreadsheetIdNameToColor,
-                    spreadsheetIdNumberToColor,
-                    spreadsheetIdWidth);
+                    metadata,
+                    spreadsheetIdToRepository);
         });
     }
 
@@ -398,7 +261,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                         "    },\n" +
                         "    \"formatted\": {\n" +
                         "      \"type\": \"text\",\n" +
-                        "      \"value\": \"003.000\"\n" +
+                        "      \"value\": \"Number 003.000\"\n" +
                         "    }\n" +
                         "  }]\n" +
                         "}");
@@ -433,7 +296,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                         "    },\n" +
                         "    \"formatted\": {\n" +
                         "      \"type\": \"text\",\n" +
-                        "      \"value\": \"003.000\"\n" +
+                        "      \"value\": \"Number 003.000\"\n" +
                         "    }\n" +
                         "  }]\n" +
                         "}");
@@ -468,7 +331,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                         "    },\n" +
                         "    \"formatted\": {\n" +
                         "      \"type\": \"text\",\n" +
-                        "      \"value\": \"003.000\"\n" +
+                        "      \"value\": \"Number 003.000\"\n" +
                         "    }\n" +
                         "  }]\n" +
                         "}");
@@ -691,20 +554,16 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         this.toStringAndCheck(context, "base=http://example.com/api987 contentType=JSON");
     }
 
+    // SpreadsheetContext...............................................................................................
+
     @Override
     public MemorySpreadsheetContext createContext() {
         return MemorySpreadsheetContext.with(this.base(),
                 this.contentType(),
                 this::fractioner,
-                this::metadataWithDefaults,
-                this::spreadsheetIdConverter,
-                this::spreadsheetIdDateTimeContext,
-                this::spreadsheetIdDecimalNumberContext,
-                this::spreadsheetIdDefaultSpreadsheetFormatter,
                 this::spreadsheetIdFunctions,
-                this::spreadsheetIdNameToColor,
-                this::spreadsheetIdNumberToColor,
-                this::spreadsheetIdWidth);
+                this::metadataWithDefaults,
+                this::spreadsheetIdToRepository);
     }
 
     private AbsoluteUrl base() {
@@ -727,51 +586,6 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         throw new UnsupportedOperationException();
     }
 
-    private Converter spreadsheetIdConverter(final SpreadsheetId spreadsheetId) {
-        this.checkSpreadsheetId(spreadsheetId);
-
-        return Converters.simple();
-    }
-
-    private DateTimeContext spreadsheetIdDateTimeContext(final SpreadsheetId spreadsheetId) {
-        this.checkSpreadsheetId(spreadsheetId);
-
-        return DateTimeContexts.fake();
-    }
-
-    private DecimalNumberContext spreadsheetIdDecimalNumberContext(final SpreadsheetId spreadsheetId) {
-        this.checkSpreadsheetId(spreadsheetId);
-
-        return DecimalNumberContexts.american(MathContext.DECIMAL32);
-    }
-
-    private SpreadsheetFormatter spreadsheetIdDefaultSpreadsheetFormatter(final SpreadsheetId spreadsheetId) {
-        this.checkSpreadsheetId(spreadsheetId);
-
-        return new SpreadsheetFormatter() {
-            @Override
-            public boolean canFormat(final Object value,
-                                     final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
-                return value instanceof String || value instanceof BigDecimal;
-            }
-
-            @Override
-            public Optional<SpreadsheetText> format(final Object value, final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
-                if (value instanceof String) {
-                    return this.formattedText(value.toString());
-                }
-                if (value instanceof BigDecimal) {
-                    return this.formattedText(new DecimalFormat("000.000").format(value));
-                }
-                throw new AssertionError("Format unexpected value " + CharSequences.quoteIfChars(value));
-            }
-
-            private Optional<SpreadsheetText> formattedText(final String text) {
-                return Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text));
-            }
-        };
-    }
-
     private BiFunction<ExpressionNodeName, List<Object>, Object> spreadsheetIdFunctions(final SpreadsheetId spreadsheetId) {
         this.checkSpreadsheetId(spreadsheetId);
 
@@ -784,42 +598,59 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
     private SpreadsheetMetadata metadataWithDefaults(final Optional<Locale> locale) {
         SpreadsheetMetadata metadata = SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(999)));
-        if(locale.isPresent()) {
+        if (locale.isPresent()) {
             metadata = metadata.set(SpreadsheetMetadataPropertyName.LOCALE, locale.get());
         }
         return metadata;
     }
 
-    private Function<SpreadsheetColorName, Optional<Color>> spreadsheetIdNameToColor(final SpreadsheetId spreadsheetId) {
-        this.checkSpreadsheetId(spreadsheetId);
+    private SpreadsheetStoreRepository spreadsheetIdToRepository(final SpreadsheetId id) {
+        Objects.requireNonNull(id, "id");
 
-        return this::spreadsheetIdNameToColor0;
+        SpreadsheetStoreRepository repository = this.idToRepositories.get(id);
+
+        if(null==repository) {
+            final SpreadsheetMetadataStore metadataStore = SpreadsheetMetadataStores.treeMap();
+            metadataStore.save(SpreadsheetMetadata.EMPTY
+                    .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, id)
+                    .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
+                    .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, 'E')
+                    .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
+                    .set(SpreadsheetMetadataPropertyName.PRECISION, 10)
+                    .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.HALF_UP)
+                    .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR_INTERPRETATION, 1920)
+                    .set(SpreadsheetMetadataPropertyName.WIDTH, 1)
+                    .set(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetPattern.parseDateFormatPattern("\"Date\" yyyy mm dd"))
+                    .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS, SpreadsheetPattern.parseDateParsePatterns("\"Date\" yyyy mm dd"))
+                    .set(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetPattern.parseDateTimeFormatPattern("\"DateTime\" yyyy hh"))
+                    .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetPattern.parseDateTimeParsePatterns("\"DateTime\" yyyy hh"))
+                    .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("\"Number\" 000.000"))
+                    .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERNS, SpreadsheetPattern.parseNumberParsePatterns("\"Number\" 000.000"))
+                    .set(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetPattern.parseTextFormatPattern("\"Text\" @"))
+                    .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetPattern.parseTimeFormatPattern("\"Time\" ss hh"))
+                    .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetPattern.parseTimeParsePatterns("\"Time\" ss hh")));
+            repository = SpreadsheetStoreRepositories.basic(
+                    SpreadsheetCellStores.treeMap(),
+                    SpreadsheetReferenceStores.treeMap(),
+                    SpreadsheetGroupStores.treeMap(),
+                    SpreadsheetLabelStores.treeMap(),
+                    SpreadsheetReferenceStores.treeMap(),
+                    metadataStore,
+                    SpreadsheetRangeStores.treeMap(),
+                    SpreadsheetRangeStores.treeMap(),
+                    SpreadsheetUserStores.treeMap()
+            );
+            this.idToRepositories.put(id, repository);
+        }
+
+        return repository;
     }
 
-    private Optional<Color> spreadsheetIdNameToColor0(final SpreadsheetColorName colorName) {
-        throw new UnsupportedOperationException("name to color " + colorName);
-    }
+    private Map<SpreadsheetId, SpreadsheetStoreRepository> idToRepositories = Maps.sorted();
 
-    private Function<Integer, Optional<Color>> spreadsheetIdNumberToColor(final SpreadsheetId spreadsheetId) {
-        this.checkSpreadsheetId(spreadsheetId);
-
-        return this::spreadsheetIdNumberToColor0;
-    }
-
-    private Optional<Color> spreadsheetIdNumberToColor0(final Integer colorNumber) {
-        throw new UnsupportedOperationException("number to color " + colorNumber);
-    }
-
-    private Integer spreadsheetIdWidth(final SpreadsheetId spreadsheetId) {
-        this.checkSpreadsheetId(spreadsheetId);
-
-        return 15;
-    }
-
-    private void checkSpreadsheetId(final SpreadsheetId spreadsheetId) {
-        Objects.requireNonNull(spreadsheetId, "spreadsheetId");
-
-        assertEquals(this.spreadsheetId(), spreadsheetId, "spreadsheetId");
+    private void checkSpreadsheetId(final SpreadsheetId id) {
+        Objects.requireNonNull(id, "spreadsheetId");
+        assertEquals(this.spreadsheetId(), id, "spreadsheetId");
     }
 
     private SpreadsheetId spreadsheetId() {
