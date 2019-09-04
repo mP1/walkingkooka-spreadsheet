@@ -54,7 +54,7 @@ public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatt
                 expected);
     }
 
-    default <T> void convertAndCheck(final C context,
+    default <T> void convertAndCheck(final SpreadsheetFormatterContext context,
                                      final Object value,
                                      final Class<T> target,
                                      final T expected) {
@@ -70,7 +70,7 @@ public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatt
                 formattedText);
     }
 
-    default void defaultFormatTextAndCheck(final C context,
+    default void defaultFormatTextAndCheck(final SpreadsheetFormatterContext context,
                                            final Object value,
                                            final Optional<SpreadsheetText> formattedText) {
         assertEquals(formattedText,
