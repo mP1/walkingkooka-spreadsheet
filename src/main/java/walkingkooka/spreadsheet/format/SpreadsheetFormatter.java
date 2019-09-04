@@ -40,7 +40,8 @@ public interface SpreadsheetFormatter extends HasConverter {
     /**
      * Tests if the given value can be formatted by this formatter.
      */
-    boolean canFormat(final Object value) throws SpreadsheetFormatException;
+    boolean canFormat(final Object value,
+                      final SpreadsheetFormatterContext context) throws SpreadsheetFormatException;
 
     /**
      * Accepts a value and returns a {@link SpreadsheetText}.

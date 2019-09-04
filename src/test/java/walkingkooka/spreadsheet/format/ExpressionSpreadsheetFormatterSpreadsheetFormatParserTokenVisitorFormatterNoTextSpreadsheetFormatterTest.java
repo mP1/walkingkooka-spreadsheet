@@ -93,7 +93,12 @@ public final class ExpressionSpreadsheetFormatterSpreadsheetFormatParserTokenVis
 
     @Override
     public SpreadsheetFormatterContext createContext() {
-        return SpreadsheetFormatterContexts.fake();
+        return new FakeSpreadsheetFormatterContext() {
+            @Override
+            public boolean canConvert(final Object value, final Class<?> target) {
+                return value().getClass() == target && target.isInstance(value);
+            }
+        };
     }
 
     @Override

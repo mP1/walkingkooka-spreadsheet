@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.convert.ConverterContexts;
+import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -216,6 +218,12 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck(this.createPattern("* \"text-literal\" @").formatter(),
                 "ABC123",
                 new FakeSpreadsheetFormatterContext() {
+
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> target) {
+                        return value instanceof String && target == String.class;
+                    }
 
                     @Override
                     public int width() {

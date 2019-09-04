@@ -4832,7 +4832,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 if (PATTERN_FORMAT_FAIL.equals(pattern)) {
                     return new SpreadsheetFormatter() {
                         @Override
-                        public boolean canFormat(final Object value) throws SpreadsheetFormatException {
+                        public boolean canFormat(final Object value,
+                                                 final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
                             return true;
                         }
 
@@ -4874,7 +4875,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return new SpreadsheetFormatter() {
 
             @Override
-            public boolean canFormat(final Object value) throws SpreadsheetFormatException {
+            public boolean canFormat(final Object value,
+                                     final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
                 return value instanceof BigDecimal;
             }
 

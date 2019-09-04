@@ -50,6 +50,13 @@ public final class TextSpreadsheetFormatterTest extends SpreadsheetFormatter3Tes
         this.parseFormatAndCheck("@*A",
                 TEXT,
                 new FakeSpreadsheetFormatterContext() {
+
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> target) {
+                        return value instanceof String && String.class == target;
+                    }
+
                     @Override
                     public int width() {
                         return TEXT.length() + 3;
@@ -121,7 +128,13 @@ public final class TextSpreadsheetFormatterTest extends SpreadsheetFormatter3Tes
 
     @Override
     public SpreadsheetFormatterContext createContext() {
-        return SpreadsheetFormatterContexts.fake();
+        return new FakeSpreadsheetFormatterContext() {
+            @Override
+            public boolean canConvert(final Object value,
+                                      final Class<?> target) {
+                return value instanceof String && String.class == target;
+            }
+        };
     }
 
     @Override

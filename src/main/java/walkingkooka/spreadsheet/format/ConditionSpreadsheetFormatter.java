@@ -53,8 +53,9 @@ final class ConditionSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsh
     }
 
     @Override
-    public boolean canFormat(final Object value) throws SpreadsheetFormatException {
-        return this.formatter.canFormat(value);
+    public boolean canFormat(final Object value,
+                             final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+        return this.formatter.canFormat(value, context);
     }
 
     @Override

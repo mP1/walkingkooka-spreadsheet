@@ -39,7 +39,7 @@ final class SpreadsheetFormatterConverter implements Converter {
     public boolean canConvert(final Object value,
                               final Class<?> targetType,
                               final ConverterContext context) {
-        return String.class == targetType && this.formatter.canFormat(value);
+        return String.class == targetType && this.formatter.canFormat(value, SpreadsheetFormatterConverterSpreadsheetFormatterContext.with(context));
     }
 
     @Override
