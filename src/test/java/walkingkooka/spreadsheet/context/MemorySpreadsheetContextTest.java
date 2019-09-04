@@ -519,7 +519,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 }
             };
 
-            final Optional<BiConsumer<HttpRequest, HttpResponse>> mapped = router.route(request.routingParameters());
+            final Optional<BiConsumer<HttpRequest, HttpResponse>> mapped = router.route(request.routerParameters());
             assertNotEquals(Optional.empty(), mapped, "request " + request.parameters());
 
             final RecordingHttpResponse response = HttpResponses.recording();
@@ -556,7 +556,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 }
             };
 
-            final Optional<BiConsumer<HttpRequest, HttpResponse>> mapped = router.route(request.routingParameters());
+            final Optional<BiConsumer<HttpRequest, HttpResponse>> mapped = router.route(request.routerParameters());
             assertNotEquals(Optional.empty(), mapped, "request " + request.parameters());
 
             final RecordingHttpResponse response = HttpResponses.recording();
@@ -607,7 +607,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
             }
         };
 
-        final Optional<BiConsumer<HttpRequest, HttpResponse>> mapped = router.route(request.routingParameters());
+        final Optional<BiConsumer<HttpRequest, HttpResponse>> mapped = router.route(request.routerParameters());
         assertEquals(Optional.empty(), mapped, "request " + request.parameters());
     }
 
