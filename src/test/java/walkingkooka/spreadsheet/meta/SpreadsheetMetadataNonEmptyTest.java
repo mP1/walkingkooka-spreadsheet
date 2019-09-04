@@ -34,7 +34,12 @@ import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
+import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.CharSequences;
 
@@ -62,7 +67,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTestCase<SpreadsheetMetadataNonEmpty>
         implements ConverterTesting,
         DateTimeContextTesting,
-        DecimalNumberContextTesting {
+        DecimalNumberContextTesting,
+        SpreadsheetFormatterTesting {
 
     @Test
     public void testWithSpreadsheetMetadataMap() {
@@ -697,6 +703,93 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         this.hasLocaleAndCheck(context, locale);
         this.hasMathContextAndCheck(context, new MathContext(precision, roundingMode));
+    }
+
+    // HasFormatter.....................................................................................................
+
+    @Test
+    public void testFormatterFormatDate() {
+        this.formatAndCheck2(LocalDate.of(2000, 12, 31), "Date 31122000");
+    }
+
+    @Test
+    public void testFormatterFormatDateTime() {
+        this.formatAndCheck2(LocalDateTime.of(2000, 12, 31, 12, 58, 59), "DateTime 31122000 125859");
+    }
+
+    @Test
+    public void testFormatterFormatNumber() {
+        this.formatAndCheck2(125.5, "Number 125.500");
+    }
+
+    @Test
+    public void testFormatterFormatText() {
+        this.formatAndCheck2("abc123", "Text abc123");
+    }
+
+    @Test
+    public void testFormatterFormatTime() {
+        this.formatAndCheck2(LocalTime.of(12, 58, 59), "Time 125859");
+    }
+
+    private void formatAndCheck2(final Object value,
+                                 final String text) {
+        this.formatAndCheck(SpreadsheetMetadata.EMPTY
+                        .set(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetPattern.parseDateFormatPattern("\"Date\" ddmmyyyy"))
+                        .set(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetPattern.parseDateTimeFormatPattern("\"DateTime\" ddmmyyyy hhmmss"))
+                        .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("\"Number\" #.000"))
+                        .set(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetPattern.parseTextFormatPattern("\"Text\" @"))
+                        .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetPattern.parseTimeFormatPattern("\"Time\" hhmmss"))
+                        .formatter(),
+                value,
+                new FakeSpreadsheetFormatterContext() {
+                    @Override
+                    public boolean canConvert(final Object value, final Class<?> target) {
+                        try{
+                            this.convert(value, target);
+                            return true;
+                        } catch (final Exception cause) {
+                            return false;
+                        }
+                    }
+
+                    @Override
+                    public <T> T convert(final Object value, final Class<T> target) {
+                        return Converters.collection(Lists.of(Converters.simple(),
+                                Converters.numberNumber(),
+                                Converters.localDateLocalDateTime(),
+                                Converters.localTimeLocalDateTime()))
+                                .convert(value, target, ConverterContexts.fake());
+                    }
+
+                    @Override
+                    public char decimalSeparator() {
+                        return this.decimalNumberContext.decimalSeparator();
+                    }
+
+                    @Override
+                    public char groupingSeparator() {
+                        return this.decimalNumberContext.groupingSeparator();
+                    }
+
+                    @Override
+                    public char negativeSign() {
+                        return this.decimalNumberContext.negativeSign();
+                    }
+
+                    @Override
+                    public char positiveSign() {
+                        return this.decimalNumberContext.positiveSign();
+                    }
+
+                    @Override
+                    public MathContext mathContext() {
+                        return this.decimalNumberContext.mathContext();
+                    }
+
+                    private final DecimalNumberContext decimalNumberContext = DecimalNumberContexts.american(MathContext.UNLIMITED);
+                },
+                SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text));
     }
 
     // HasMathContext...................................................................................................
