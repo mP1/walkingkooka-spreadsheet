@@ -423,7 +423,7 @@ public final class SpreadsheetEngineHateosHandlersRouterTest implements ClassTes
                 this.loadCellForceRecompute(),
                 this.loadCellSkipEvaluate(),
                 this.saveCell());
-        return router.route(request.routingParameters());
+        return router.route(request.routerParameters());
     }
 
     private HttpRequest request(final HttpMethod method,
