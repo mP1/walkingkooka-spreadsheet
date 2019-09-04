@@ -48,17 +48,20 @@ final class LocalDateTimeSpreadsheetFormatter extends SpreadsheetFormatter3<Spre
     }
 
     @Override
-    public boolean canFormat(final Object value) throws SpreadsheetFormatException {
-        return true; // assumption can convert any value
+    public boolean canFormat(final Object value,
+                             final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+        return context.canConvert(value, LocalDateTime.class);
     }
 
     @Override
     Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
-        return LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor.format(this.token,
-                context.convert(value, LocalDateTime.class),
-                context,
-                this.twelveHour,
-                this.millisecondDecimals);
+        return context.canConvert(value, LocalDateTime.class) ?
+                LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor.format(this.token,
+                        context.convert(value, LocalDateTime.class),
+                        context,
+                        this.twelveHour,
+                        this.millisecondDecimals) :
+                Optional.empty();
     }
 
     private final boolean twelveHour;

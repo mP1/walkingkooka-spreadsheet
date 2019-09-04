@@ -65,12 +65,14 @@ final class ColorSpreadsheetFormatter extends SpreadsheetFormatter3<SpreadsheetF
     }
 
     @Override
-    public boolean canFormat(final Object value) throws SpreadsheetFormatException {
-        return this.formatter.canFormat(value);
+    public boolean canFormat(final Object value,
+                             final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
+        return this.formatter.canFormat(value, context);
     }
 
     @Override
-    Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
+    Optional<SpreadsheetText> format0(final Object value,
+                                      final SpreadsheetFormatterContext context) {
         return this.formatter.format(value, context)
                 .map(t -> t.setColor(this.color(context)));
     }

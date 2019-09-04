@@ -58,9 +58,10 @@ final class ExpressionSpreadsheetFormatter extends SpreadsheetFormatter3<Spreads
     }
 
     @Override
-    public boolean canFormat(final Object value) throws SpreadsheetFormatException {
+    public boolean canFormat(final Object value,
+                             final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
         return this.formatters.stream()
-                .filter(f -> f.canFormat(value))
+                .filter(f -> f.canFormat(value, context))
                 .limit(1)
                 .count() == 1;
     }
@@ -72,7 +73,7 @@ final class ExpressionSpreadsheetFormatter extends SpreadsheetFormatter3<Spreads
     Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
         return this.formatters.stream()
                 .skip(this.skip(value))
-                .filter(f -> f.canFormat(value))
+                .filter(f -> f.canFormat(value, context))
                 .flatMap(f -> f.format(value, context).stream())
                 .findFirst()
                 .or(() -> context.defaultFormatText(value));

@@ -124,6 +124,13 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         this.formatAndCheck(this.createPattern("yyyy mm dd hh mm ss \"abc\"").formatter(),
                 LocalDateTime.of(2000, 12, 31, 12, 58, 59),
                 new FakeSpreadsheetFormatterContext() {
+
+                    @Override
+                    public boolean canConvert(final Object value,
+                                              final Class<?> target) {
+                        return value instanceof LocalDateTime && LocalDateTime.class == target;
+                    }
+
                     @Override
                     public <T> T convert(final Object value,
                                          final Class<T> target) {
