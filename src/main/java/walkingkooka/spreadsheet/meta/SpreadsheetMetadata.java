@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Cast;
 import walkingkooka.Value;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
@@ -33,7 +34,10 @@ import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
+import walkingkooka.spreadsheet.format.HasSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeFormatPattern;
@@ -66,6 +70,7 @@ public abstract class SpreadsheetMetadata implements HasConverter,
         HashCodeEqualsDefined,
         HasHateosLinkId,
         HasMathContext,
+        HasSpreadsheetFormatter,
         HateosResource<Optional<SpreadsheetId>>,
         Value<Map<SpreadsheetMetadataPropertyName<?>, Object>> {
 
@@ -302,6 +307,31 @@ public abstract class SpreadsheetMetadata implements HasConverter,
         components.reportIfMissing();
 
         return new MathContext(precision, roundingMode);
+    }
+
+    // HasSpreadsheetFormatter..........................................................................................
+
+    /**
+     * Creates a {@link SpreadsheetFormatter} that combines the formatting of all patterns.
+     */
+    @Override
+    public SpreadsheetFormatter formatter() {
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        final SpreadsheetDateFormatPattern dateFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN);
+        final SpreadsheetDateTimeFormatPattern dateTimeFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN);
+        final SpreadsheetNumberFormatPattern numberFormat = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN);
+        final SpreadsheetTextFormatPattern textFormat = components.getOrNull(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN);
+        final SpreadsheetTimeFormatPattern timeFormat = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN);
+
+        components.reportIfMissing();
+
+        return SpreadsheetFormatters.chain(Lists.of(
+                dateTimeFormat.formatter(),
+                dateFormat.formatter(),
+                timeFormat.formatter(),
+                numberFormat.formatter(),
+                textFormat.formatter()));
     }
 
     // Object...........................................................................................................
