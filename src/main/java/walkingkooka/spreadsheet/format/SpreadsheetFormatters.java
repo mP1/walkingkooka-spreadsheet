@@ -28,12 +28,20 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.type.PublicStaticHelper;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.function.Function;
 
 /**
  * Collection of static factory methods for numerous {@link SpreadsheetFormatter}.
  */
 public final class SpreadsheetFormatters implements PublicStaticHelper {
+
+    /**
+     * {@see ChainSpreadsheetFormatter}
+     */
+    public static SpreadsheetFormatter with(final List<SpreadsheetFormatter> formatters) {
+        return ChainSpreadsheetFormatter.with(formatters);
+    }
 
     /**
      * {@see ColorSpreadsheetFormatter}
