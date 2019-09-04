@@ -48,7 +48,7 @@ final class LocalDateTimeSpreadsheetFormatter extends SpreadsheetFormatter3<Spre
     }
 
     @Override
-    public boolean canFormat(final Object value) {
+    public boolean canFormat(final Object value) throws SpreadsheetFormatException {
         return true; // assumption can convert any value
     }
 

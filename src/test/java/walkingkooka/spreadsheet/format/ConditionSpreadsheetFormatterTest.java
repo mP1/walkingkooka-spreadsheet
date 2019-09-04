@@ -167,13 +167,13 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatte
         return new SpreadsheetFormatter() {
 
             @Override
-            public boolean canFormat(final Object value) {
+            public boolean canFormat(final Object value) throws SpreadsheetFormatException {
                 return value instanceof String;
             }
 
             @Override
             public Optional<SpreadsheetText> format(final Object value,
-                                                    final SpreadsheetFormatterContext context) {
+                                                    final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
                 return Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, String.class.cast(value)));
             }
 
