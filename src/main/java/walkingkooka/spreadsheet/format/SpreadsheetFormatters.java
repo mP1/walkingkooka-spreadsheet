@@ -39,7 +39,7 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     /**
      * {@see ChainSpreadsheetFormatter}
      */
-    public static SpreadsheetFormatter with(final List<SpreadsheetFormatter> formatters) {
+    public static SpreadsheetFormatter chain(final List<SpreadsheetFormatter> formatters) {
         return ChainSpreadsheetFormatter.with(formatters);
     }
 
