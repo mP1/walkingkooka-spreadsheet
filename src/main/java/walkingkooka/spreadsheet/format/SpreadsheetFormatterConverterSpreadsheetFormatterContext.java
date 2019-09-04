@@ -51,6 +51,11 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     }
 
     @Override
+    public boolean canConvert(final Object value, final Class<?> target) {
+        return CONVERTER.canConvert(value, target, this.context);
+    }
+
+    @Override
     public Optional<Color> colorNumber(final int number) {
         throw new UnsupportedOperationException();
     }
@@ -143,7 +148,6 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     public char positiveSign() {
         return context.positiveSign();
     }
-
 
     @Override
     public int twoDigitYear() {
