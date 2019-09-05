@@ -43,6 +43,7 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.IntPredicate;
 
 /**
  * The {@link Name} of metadata property, used to fetch a value given a name.
@@ -52,6 +53,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     // constants
 
     final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.SENSITIVE;
+
+    /**
+     * An {@link IntPredicate} that tests true for unsigned integers.
+     */
+    private final static IntPredicate POSITIVE_INTEGER = (v) -> v >= 0;
 
     /**
      * A read only cache of already prepared {@link SpreadsheetMetadataPropertyName names}..
@@ -106,9 +112,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a positive {@link Integer value}.
      */
-    private static SpreadsheetMetadataPropertyName<Integer> registerPositiveIntegerConstant(final String name,
-                                                                                            final BiConsumer<Integer, SpreadsheetMetadataVisitor> visitor) {
-        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.positiveInteger(),
+    private static SpreadsheetMetadataPropertyName<Integer> registerIntegerConstant(final String name,
+                                                                                    final IntPredicate predicate,
+                                                                                    final BiConsumer<Integer, SpreadsheetMetadataVisitor> visitor) {
+        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.integer(predicate),
                 visitor);
     }
 
@@ -266,7 +273,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>precision {@link Integer}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<Integer> PRECISION = registerPositiveIntegerConstant("precision",
+    public final static SpreadsheetMetadataPropertyName<Integer> PRECISION = registerIntegerConstant("precision",
+            POSITIVE_INTEGER,
             (c, v) -> v.visitPrecision(c));
 
     /**
@@ -300,14 +308,15 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>two-digit-year-interpretation {@link SpreadsheetFormatPattern}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<Integer> TWO_DIGIT_YEAR_INTERPRETATION = registerConstant("two-digit-year-interpretation",
-            SpreadsheetMetadataPropertyValueHandler.integer(),
+    public final static SpreadsheetMetadataPropertyName<Integer> TWO_DIGIT_YEAR_INTERPRETATION = registerIntegerConstant("two-digit-year-interpretation",
+            POSITIVE_INTEGER,
             (two, v) -> v.visitTwoDigitYearInterpretation(two));
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link Integer}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<Integer> WIDTH = registerPositiveIntegerConstant("width",
+    public final static SpreadsheetMetadataPropertyName<Integer> WIDTH = registerIntegerConstant("width",
+            POSITIVE_INTEGER,
             (c, v) -> v.visitWidth(c));
 
     /**
