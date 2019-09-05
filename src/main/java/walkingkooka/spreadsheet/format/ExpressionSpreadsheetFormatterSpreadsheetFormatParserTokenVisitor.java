@@ -38,7 +38,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSeparatorSymbolPa
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.temporal.Temporal;
 import java.util.List;
 import java.util.function.Function;
@@ -130,7 +129,7 @@ final class ExpressionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor ex
 
     @Override
     protected void endVisit(final SpreadsheetFormatDateTimeParserToken token) {
-        this.setSpreadsheetFormatter(SpreadsheetFormatters.localDateTime(token, Temporal.class), token);
+        this.setSpreadsheetFormatter(SpreadsheetFormatters.dateTime(token, Temporal.class), token);
     }
 
     // General................................................................................................
