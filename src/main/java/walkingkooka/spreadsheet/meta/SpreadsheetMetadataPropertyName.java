@@ -301,7 +301,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>two-digit-year-interpretation {@link SpreadsheetFormatPattern}</code>
      */
     public final static SpreadsheetMetadataPropertyName<Integer> TWO_DIGIT_YEAR_INTERPRETATION = registerConstant("two-digit-year-interpretation",
-            SpreadsheetMetadataPropertyValueHandler.twoDigitYear(),
+            SpreadsheetMetadataPropertyValueHandler.integer(),
             (two, v) -> v.visitTwoDigitYearInterpretation(two));
 
     /**
