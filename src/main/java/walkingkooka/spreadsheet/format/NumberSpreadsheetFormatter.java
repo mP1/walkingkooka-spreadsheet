@@ -18,9 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
-import walkingkooka.math.Maths;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
-import walkingkooka.text.CharSequences;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -75,21 +73,23 @@ final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsheet
     @Override
     public boolean canFormat(final Object value,
                              final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
-        return value instanceof BigDecimal ||
+        return (value instanceof BigDecimal ||
                 value instanceof BigInteger ||
                 value instanceof Byte ||
                 value instanceof Double ||
                 value instanceof Float ||
                 value instanceof Integer ||
                 value instanceof Long ||
-                value instanceof Short;
+                value instanceof Short) &&
+                context.canConvert(value, BigDecimal.class);
+
     }
 
     @Override
     Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
         return Optional.of(SpreadsheetText.with(
                 SpreadsheetText.WITHOUT_COLOR,
-                this.format1(this.normalOrScientific.context(Maths.toBigDecimal(Number.class.cast(value)).orElseThrow(() -> new IllegalArgumentException("Non number value " + CharSequences.quoteIfChars(value))), this, context))));
+                this.format1(this.normalOrScientific.context(context.convert(value, BigDecimal.class), this, context))));
     }
 
     /**

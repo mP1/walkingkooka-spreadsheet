@@ -115,6 +115,16 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
                 new FakeSpreadsheetFormatterContext() {
 
                     @Override
+                    public boolean canConvert(final Object value, final Class<?> target) {
+                        try {
+                            this.convert(value, target);
+                            return true;
+                        } catch (final Exception failed) {
+                            return false;
+                        }
+                    }
+
+                    @Override
                     public <T> T convert(final Object value,
                                          final Class<T> target) {
                         return Converters.numberNumber()
