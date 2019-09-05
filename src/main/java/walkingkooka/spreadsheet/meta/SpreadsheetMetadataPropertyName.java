@@ -44,6 +44,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.IntPredicate;
+import java.util.function.LongPredicate;
 import java.util.function.Predicate;
 
 /**
@@ -84,15 +85,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     }
 
     /**
-     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link Long date time offset}.
-     */
-    private static SpreadsheetMetadataPropertyName<Long> registerDateTimeOffsetConstant(final String name,
-                                                                                        final BiConsumer<Long, SpreadsheetMetadataVisitor> visitor) {
-        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.dateTimeOffset(),
-                visitor);
-    }
-
-    /**
      * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link EmailAddress value}.
      */
     private static SpreadsheetMetadataPropertyName<EmailAddress> registerEmailAddressConstant(final String name,
@@ -108,6 +100,17 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
                                                                                     final IntPredicate predicate,
                                                                                     final BiConsumer<Integer, SpreadsheetMetadataVisitor> visitor) {
         return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.integer(predicate),
+                visitor);
+    }
+
+    /**
+     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a positive {@link Long value}.
+     */
+    private static SpreadsheetMetadataPropertyName<Long> registerLongConstant(final String name,
+                                                                              final LongPredicate predicate,
+                                                                              final BiConsumer<Long, SpreadsheetMetadataVisitor> visitor) {
+        return registerConstant(name,
+                SpreadsheetMetadataPropertyValueHandler.longHandler(predicate),
                 visitor);
     }
 
@@ -171,7 +174,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-offset {@link Long}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<Long> DATETIME_OFFSET = registerDateTimeOffsetConstant("date-time-offset",
+    public final static SpreadsheetMetadataPropertyName<Long> DATETIME_OFFSET = registerLongConstant("date-time-offset",
+            (v) -> true,
             (c, v) -> v.visitDateTimeOffset(c));
 
     /**
