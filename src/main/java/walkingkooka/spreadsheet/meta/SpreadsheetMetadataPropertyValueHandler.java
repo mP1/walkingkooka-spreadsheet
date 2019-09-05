@@ -24,6 +24,7 @@ import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.ToJsonNodeContext;
 
 import java.util.function.IntPredicate;
+import java.util.function.LongPredicate;
 import java.util.function.Predicate;
 
 /**
@@ -57,13 +58,6 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
      */
     static SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateParsePatterns dateParsePatterns() {
         return SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateParsePatterns.INSTANCE;
-    }
-
-    /**
-     * {@see SpreadsheetMetadataPropertyValueHandlerDateTimeOffset}
-     */
-    static SpreadsheetMetadataPropertyValueHandlerDateTimeOffset dateTimeOffset() {
-        return SpreadsheetMetadataPropertyValueHandlerDateTimeOffset.INSTANCE;
     }
 
     /**
@@ -106,6 +100,13 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
      */
     static SpreadsheetMetadataPropertyValueHandlerLocale locale() {
         return SpreadsheetMetadataPropertyValueHandlerLocale.INSTANCE;
+    }
+
+    /**
+     * {@see SpreadsheetMetadataPropertyValueHandlerLong}
+     */
+    static SpreadsheetMetadataPropertyValueHandlerLong longHandler(final LongPredicate predicate) {
+        return SpreadsheetMetadataPropertyValueHandlerLong.with(predicate);
     }
 
     /**

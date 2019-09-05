@@ -22,33 +22,41 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.ToJsonNodeContext;
 
+import java.util.Objects;
+import java.util.function.IntPredicate;
+import java.util.function.LongPredicate;
+
 /**
  * A {@link SpreadsheetMetadataPropertyValueHandler} for date time offset entries.
  */
-final class SpreadsheetMetadataPropertyValueHandlerDateTimeOffset extends SpreadsheetMetadataPropertyValueHandler<Long> {
+final class SpreadsheetMetadataPropertyValueHandlerLong extends SpreadsheetMetadataPropertyValueHandler<Long> {
 
     /**
-     * A singleton
+     * Creates a new {@link SpreadsheetMetadataPropertyValueHandlerLong}
      */
-    static final SpreadsheetMetadataPropertyValueHandlerDateTimeOffset INSTANCE = new SpreadsheetMetadataPropertyValueHandlerDateTimeOffset();
+    static final SpreadsheetMetadataPropertyValueHandlerLong with(final LongPredicate predicate) {
+        Objects.requireNonNull(predicate, "predicate");
 
-    private SpreadsheetMetadataPropertyValueHandlerDateTimeOffset() {
+        return new SpreadsheetMetadataPropertyValueHandlerLong(predicate);
+    }
+
+    /**
+     * Private ctor use singleton
+     */
+    private SpreadsheetMetadataPropertyValueHandlerLong(final LongPredicate predicate) {
         super();
+        this.predicate = predicate;
     }
 
     @Override
     void check0(final Object value, final SpreadsheetMetadataPropertyName<?> name) {
         final Long longValue = this.checkType(value, Long.class, name);
-        for (; ; ) {
-            if (Converters.JAVA_EPOCH_OFFSET == longValue) {
-                break;
-            }
-            if (Converters.EXCEL_OFFSET == longValue) {
-                break;
-            }
-            throw new SpreadsheetMetadataPropertyValueException("Invalid date time offset " + value, name, value);
+        if (false == this.predicate.test(longValue)) {
+            throw new SpreadsheetMetadataPropertyValueException("Invalid value", name, longValue);
         }
     }
+
+    private final LongPredicate predicate;
 
     @Override
     String expectedTypeName(final Class<?> type) {
@@ -57,7 +65,7 @@ final class SpreadsheetMetadataPropertyValueHandlerDateTimeOffset extends Spread
 
     @Override
     public String toString() {
-        return "DateTimeOffset";
+        return Long.class.getSimpleName();
     }
 
     // JsonNodeContext..................................................................................................
