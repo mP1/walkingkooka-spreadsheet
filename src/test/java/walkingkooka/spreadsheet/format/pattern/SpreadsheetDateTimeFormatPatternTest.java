@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -31,7 +32,10 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.Temporal;
 import java.util.List;
 
 public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetDateTimeFormatPattern,
@@ -81,6 +85,25 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     @Test
     public void testWithTimeFails() {
         this.withInvalidCharacterFails(this.time());
+    }
+
+    // canFormat........................................................................................................
+
+    @Test
+    public void testCanFormatOtherTemporalType() {
+        this.canFormatAndCheck2(LocalDate.of(2000, 12, 31));
+    }
+
+    @Test
+    public void testCanFormatOtherTemporalType2() {
+        this.canFormatAndCheck2(LocalTime.of(12, 58, 59));
+    }
+
+    private void canFormatAndCheck2(final Temporal temporal) {
+        this.canFormatAndCheck(this.createPattern().createFormatter(),
+                temporal,
+                SpreadsheetFormatterContexts.fake(),
+                false);
     }
 
     // ParseString.......................................................................................................
