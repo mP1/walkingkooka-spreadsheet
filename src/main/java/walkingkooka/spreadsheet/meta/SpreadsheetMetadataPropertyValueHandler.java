@@ -85,6 +85,13 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     }
 
     /**
+     * {@see SpreadsheetMetadataPropertyValueHandlerInteger}
+     */
+    static SpreadsheetMetadataPropertyValueHandlerInteger integer() {
+        return SpreadsheetMetadataPropertyValueHandlerInteger.INSTANCE;
+    }
+
+    /**
      * {@see SpreadsheetMetadataPropertyValueHandlerLocalDateTime}
      */
     static SpreadsheetMetadataPropertyValueHandlerLocalDateTime localDateTime() {
@@ -166,13 +173,6 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
      */
     static SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimeParsePatterns timeParsePatterns() {
         return SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimeParsePatterns.INSTANCE;
-    }
-    
-    /**
-     * {@see SpreadsheetMetadataPropertyValueHandlerTwoDigitYear}
-     */
-    static SpreadsheetMetadataPropertyValueHandlerTwoDigitYear twoDigitYear() {
-        return SpreadsheetMetadataPropertyValueHandlerTwoDigitYear.INSTANCE;
     }
 
     /**

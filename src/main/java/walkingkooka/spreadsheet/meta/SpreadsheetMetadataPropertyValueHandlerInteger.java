@@ -22,28 +22,25 @@ import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.ToJsonNodeContext;
 
 /**
- * A {@link SpreadsheetMetadataPropertyValueHandler} that only allows values between 0 and 99.
+ * A {@link SpreadsheetMetadataPropertyValueHandler} that only allows any integer value.
  */
-final class SpreadsheetMetadataPropertyValueHandlerTwoDigitYear extends SpreadsheetMetadataPropertyValueHandler<Integer> {
+final class SpreadsheetMetadataPropertyValueHandlerInteger extends SpreadsheetMetadataPropertyValueHandler<Integer> {
 
     /**
      * A singleton
      */
-    static final SpreadsheetMetadataPropertyValueHandlerTwoDigitYear INSTANCE = new SpreadsheetMetadataPropertyValueHandlerTwoDigitYear();
+    static final SpreadsheetMetadataPropertyValueHandlerInteger INSTANCE = new SpreadsheetMetadataPropertyValueHandlerInteger();
 
     /**
      * Private ctor use singleton
      */
-    private SpreadsheetMetadataPropertyValueHandlerTwoDigitYear() {
+    private SpreadsheetMetadataPropertyValueHandlerInteger() {
         super();
     }
 
     @Override
     void check0(final Object value, final SpreadsheetMetadataPropertyName<?> name) {
-        final int integer = this.checkType(value, Integer.class, name);
-        if (integer < 0 || integer > 99) {
-            throw new SpreadsheetMetadataPropertyValueException("Expected value between 0 and 99 but got " + integer, name, value);
-        }
+        this.checkType(value, Integer.class, name);
     }
 
     @Override
@@ -53,7 +50,7 @@ final class SpreadsheetMetadataPropertyValueHandlerTwoDigitYear extends Spreadsh
 
     @Override
     public String toString() {
-        return "TwoDigitYear";
+        return "Integer";
     }
 
     // JsonNodeContext..................................................................................................
