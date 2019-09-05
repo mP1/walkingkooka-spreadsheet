@@ -29,13 +29,26 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.Temporal;
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class LocalDateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter3TestCase<
         LocalDateTimeSpreadsheetFormatter,
         SpreadsheetFormatDateTimeParserToken> {
+
+    // with.............................................................................................................
+
+    @Test
+    public void testWithNullTypeFails() {
+        assertThrows(NullPointerException.class, () -> {
+            LocalDateTimeSpreadsheetFormatter.with(this.parsePatternOrFail(this.pattern()), null);
+        });
+    }
+
+    // tests.............................................................................................................
 
     @Override
     public void testCanFormatFalse() {
@@ -638,7 +651,7 @@ public final class LocalDateTimeSpreadsheetFormatterTest extends SpreadsheetForm
 
     @Override
     LocalDateTimeSpreadsheetFormatter createFormatter0(final SpreadsheetFormatDateTimeParserToken token) {
-        return LocalDateTimeSpreadsheetFormatter.with(token);
+        return LocalDateTimeSpreadsheetFormatter.with(token, Temporal.class);
     }
 
     @Override
