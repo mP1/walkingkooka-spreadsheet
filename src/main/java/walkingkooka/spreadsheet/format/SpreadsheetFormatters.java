@@ -61,6 +61,14 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     }
 
     /**
+     * {@see DateTimeSpreadsheetFormatter}
+     */
+    public static SpreadsheetFormatter dateTime(final SpreadsheetFormatDateTimeParserToken token,
+                                                final Class<? extends Temporal> type) {
+        return DateTimeSpreadsheetFormatter.with(token, type);
+    }
+
+    /**
      * {@see ExpressionSpreadsheetFormatter}
      */
     public static SpreadsheetFormatter expression(final SpreadsheetFormatExpressionParserToken token,
@@ -88,14 +96,6 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
      */
     public static SpreadsheetFormatter general() {
         return GeneralSpreadsheetFormatter.INSTANCE;
-    }
-
-    /**
-     * {@see LocalDateTimeSpreadsheetFormatter}
-     */
-    public static SpreadsheetFormatter localDateTime(final SpreadsheetFormatDateTimeParserToken token,
-                                                     final Class<? extends Temporal> type) {
-        return LocalDateTimeSpreadsheetFormatter.with(token, type);
     }
 
     /**
