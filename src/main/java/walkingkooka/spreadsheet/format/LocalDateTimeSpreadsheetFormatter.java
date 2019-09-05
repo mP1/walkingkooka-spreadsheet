@@ -31,7 +31,8 @@ final class LocalDateTimeSpreadsheetFormatter extends SpreadsheetFormatter3<Spre
      * Creates a {@link LocalDateTimeSpreadsheetFormatter} from a {@link SpreadsheetFormatDateTimeParserToken}
      */
     static LocalDateTimeSpreadsheetFormatter with(final SpreadsheetFormatDateTimeParserToken token) {
-        check(token);
+        checkParserToken(token);
+
         return new LocalDateTimeSpreadsheetFormatter(token);
     }
 
