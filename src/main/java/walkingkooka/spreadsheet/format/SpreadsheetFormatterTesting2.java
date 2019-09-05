@@ -44,6 +44,20 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
         ToStringTesting<F>,
         TypeNameTesting<F> {
 
+    // canFormat.........................................................................................................
+
+    @Test
+    default void testCanFormatTrue() {
+        this.canFormatAndCheck(this.value(), true);
+    }
+
+    @Test
+    default void testCanFormatFalse() {
+        this.canFormatAndCheck(this, false);
+    }
+
+    // format...........................................................................................................
+
     @Test
     default void testFormatNullValueFails() {
         assertThrows(NullPointerException.class, () -> {
@@ -96,15 +110,7 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
                 () -> "canFormat return false and format didnt fail");
     }
 
-    @Test
-    default void testCanFormatTrue() {
-        this.canFormatAndCheck(this.value(), true);
-    }
-
-    @Test
-    default void testCanFormatFalse() {
-        this.canFormatAndCheck(this, false);
-    }
+    // then..............................................................................................................
 
     @Test
     default void testThenNullFails() {
@@ -140,11 +146,15 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
         this.formatAndCheck(this.createFormatter().then(last), this, text);
     }
 
+    // helper...........................................................................................................
+
     F createFormatter();
 
     Object value();
 
     SpreadsheetFormatterContext createContext();
+
+    // canFormat........................................................................................................
 
     default void canFormatAndCheck(final Object value, final boolean expected) {
         this.canFormatAndCheck(this.createFormatter(),
@@ -167,8 +177,10 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
                                    final boolean expected) {
         assertEquals(expected,
                 formatter.canFormat(value, context),
-                () -> formatter + " canFormat " + CharSequences.quoteIfChars(value));
+                () -> formatter + " canFormat " + CharSequences.quoteIfChars(value) + " (" + value.getClass() + ")");
     }
+
+    // format...........................................................................................................
 
     default void formatAndCheck(final Object value,
                                 final String text) {
@@ -222,7 +234,7 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
                 this.createContext());
     }
 
-    // TypeNameTesting .........................................................................................
+    // TypeNameTesting .................................................................................................
 
     @Override
     default String typeNamePrefix() {
