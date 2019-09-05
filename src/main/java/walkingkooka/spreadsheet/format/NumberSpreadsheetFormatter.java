@@ -41,7 +41,7 @@ final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsheet
      * Creates a {@link NumberSpreadsheetFormatter} from a {@link SpreadsheetFormatNumberParserToken}.
      */
     static NumberSpreadsheetFormatter with(final SpreadsheetFormatNumberParserToken token) {
-        check(token);
+        checkParserToken(token);
 
         return new NumberSpreadsheetFormatter(token);
     }

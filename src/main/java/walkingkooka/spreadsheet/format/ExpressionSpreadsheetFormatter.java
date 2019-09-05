@@ -38,7 +38,7 @@ final class ExpressionSpreadsheetFormatter extends SpreadsheetFormatter3<Spreads
      */
     static ExpressionSpreadsheetFormatter with(final SpreadsheetFormatExpressionParserToken token,
                                                final Function<BigDecimal, Fraction> fractioner) {
-        check(token);
+        checkParserToken(token);
         Objects.requireNonNull(fractioner, "fractioner");
 
         return new ExpressionSpreadsheetFormatter(token,

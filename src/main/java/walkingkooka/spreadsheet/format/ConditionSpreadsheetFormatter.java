@@ -35,8 +35,8 @@ final class ConditionSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsh
      */
     static ConditionSpreadsheetFormatter with(final SpreadsheetFormatConditionParserToken token,
                                               final SpreadsheetFormatter formatter) {
-        check(token);
-        Objects.requireNonNull(formatter, "formatter");
+        checkParserToken(token);
+        checkFormatter(formatter);
 
         return new ConditionSpreadsheetFormatter(token, formatter);
     }
