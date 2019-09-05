@@ -21,25 +21,38 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.ToJsonNodeContext;
 
+import java.util.Objects;
+import java.util.function.Predicate;
+
 /**
- * A {@link SpreadsheetMetadataPropertyValueHandler} for {@link String} entries, with no restrictions on the string content itself,
- * including empty.
+ * A {@link SpreadsheetMetadataPropertyValueHandler} for {@link String} entries, using the {@link Predicate} to
+ * test valid {@link String values}.
  */
 final class SpreadsheetMetadataPropertyValueHandlerString extends SpreadsheetMetadataPropertyValueHandler<String> {
 
     /**
-     * A singleton
+     * Creates a new {@link SpreadsheetMetadataPropertyValueHandlerString}
      */
-    static final SpreadsheetMetadataPropertyValueHandlerString INSTANCE = new SpreadsheetMetadataPropertyValueHandlerString();
+    static final SpreadsheetMetadataPropertyValueHandlerString with(final Predicate<String> predicate) {
+        Objects.requireNonNull(predicate, "predicate");
 
-    private SpreadsheetMetadataPropertyValueHandlerString() {
+        return new SpreadsheetMetadataPropertyValueHandlerString(predicate);
+    }
+
+    private SpreadsheetMetadataPropertyValueHandlerString(final Predicate<String> predicate) {
         super();
+        this.predicate = predicate;
     }
 
     @Override
     void check0(final Object value, final SpreadsheetMetadataPropertyName<?> name) {
-        this.checkType(value, String.class, name);
+        final String string = this.checkType(value, String.class, name);
+        if (false == this.predicate.test(string)) {
+            throw new SpreadsheetMetadataPropertyValueException("Invalid value", name, string);
+        }
     }
+
+    private final Predicate<String> predicate;
 
     @Override
     String expectedTypeName(final Class<?> type) {
