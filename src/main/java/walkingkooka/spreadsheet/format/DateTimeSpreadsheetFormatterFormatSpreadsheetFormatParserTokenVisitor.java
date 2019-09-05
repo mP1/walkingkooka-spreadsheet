@@ -36,7 +36,7 @@ import java.util.Optional;
  * This visitor is used exclusively by {@link SpreadsheetFormatter#format(Object, SpreadsheetFormatterContext)}.
  * Only some methods in {@link SpreadsheetFormatParserTokenVisitor} are overridden, all other tokens will be ignored.
  */
-final class LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor {
+final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor {
 
     /**
      * Visits all the individual tokens in the given token which was compiled from the given pattern.
@@ -46,7 +46,7 @@ final class LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenV
                                             final SpreadsheetFormatterContext context,
                                             final boolean twelveHourTime,
                                             final int millisecondDecimals) {
-        final LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor visitor = new LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor(value,
+        final DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor visitor = new DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor(value,
                 context,
                 twelveHourTime,
                 millisecondDecimals);
@@ -58,10 +58,10 @@ final class LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenV
      * Private ctor use static method.
      */
     // @VisibleForTesting
-    LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor(final LocalDateTime value,
-                                                                               final SpreadsheetFormatterContext context,
-                                                                               final boolean twelveHourTime,
-                                                                               final int millisecondDecimals) {
+    DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor(final LocalDateTime value,
+                                                                          final SpreadsheetFormatterContext context,
+                                                                          final boolean twelveHourTime,
+                                                                          final int millisecondDecimals) {
         super();
         this.context = context;
         this.value = value;

@@ -26,20 +26,20 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitZeroParserTo
  * A {@link SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor} which sets some properties recording whether the time is
  * an AMPM formatted time and the number of millisecond decimals.
  */
-final class LocalDateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor {
+final class DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor {
 
     /**
-     * Creates a {@link LocalDateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor}.
+     * Creates a {@link DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor}.
      */
-    static LocalDateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor with() {
-        return new LocalDateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor();
+    static DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor with() {
+        return new DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor();
     }
 
     /**
      * Private ctor use static method.
      */
     // @VisibleForTesting
-    LocalDateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor() {
+    DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor() {
         super();
         this.twelveHour = false;
     }

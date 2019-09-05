@@ -19,11 +19,11 @@ package walkingkooka.spreadsheet.format;
 
 import java.time.LocalDateTime;
 
-public final class LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitorTest extends
-        SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitorTestCase<LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor> {
+public final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitorTest extends
+        SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitorTestCase<DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor> {
     @Override
-    public LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor createVisitor() {
-        return new LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor(LocalDateTime.of(2000, 12, 31, 12, 58, 59),
+    public DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor createVisitor() {
+        return new DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor(LocalDateTime.of(2000, 12, 31, 12, 58, 59),
                 null,
                 false,
                 0);
@@ -31,11 +31,11 @@ public final class LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParse
 
     @Override
     public String typeNamePrefix() {
-        return "LocalDateTimeSpreadsheetFormatter";
+        return "DateTimeSpreadsheetFormatter";
     }
 
     @Override
-    public Class<LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor> type() {
-        return LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor.class;
+    public Class<DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor> type() {
+        return DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor.class;
     }
 }
