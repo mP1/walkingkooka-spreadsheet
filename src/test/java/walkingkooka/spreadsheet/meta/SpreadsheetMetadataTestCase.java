@@ -226,6 +226,17 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 "Required properties \"currency-symbol\", \"decimal-separator\", \"exponent-symbol\", \"grouping-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\" missing.");
     }
 
+    // HasFormatter.....................................................................................................
+
+    @Test
+    public final void testHasFormatterRequiredPropertiesAbsentFails() {
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
+            this.createObject().formatter();
+        });
+        checkMessage(thrown,
+                "Required properties \"date-format-pattern\", \"date-time-format-pattern\", \"number-format-pattern\", \"text-format-pattern\", \"time-format-pattern\" missing.");
+    }
+
     // HasMathContext...................................................................................................
 
     @Test
