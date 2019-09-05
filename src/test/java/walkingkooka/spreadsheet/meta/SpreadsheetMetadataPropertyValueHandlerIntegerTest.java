@@ -19,11 +19,11 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 
-public final class SpreadsheetMetadataPropertyValueHandlerTwoDigitYearTest extends SpreadsheetMetadataPropertyValueHandlerTestCase2<SpreadsheetMetadataPropertyValueHandlerTwoDigitYear, Integer> {
+public final class SpreadsheetMetadataPropertyValueHandlerIntegerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase2<SpreadsheetMetadataPropertyValueHandlerInteger, Integer> {
 
     @Test
-    public void testCheckNegativeFails() {
-        this.checkFails(-1, "Expected value between 0 and 99 but got -1");
+    public void testCheckNegative() {
+        this.check(-1);
     }
 
     @Test
@@ -34,11 +34,6 @@ public final class SpreadsheetMetadataPropertyValueHandlerTwoDigitYearTest exten
     @Test
     public void testCheckOne() {
         this.check(1);
-    }
-
-    @Test
-    public void testCheckThreeDigits() {
-        this.checkFails(100, "Expected value between 0 and 99 but got 100");
     }
 
     @Test
@@ -58,8 +53,8 @@ public final class SpreadsheetMetadataPropertyValueHandlerTwoDigitYearTest exten
     }
 
     @Override
-    SpreadsheetMetadataPropertyValueHandlerTwoDigitYear handler() {
-        return SpreadsheetMetadataPropertyValueHandlerTwoDigitYear.INSTANCE;
+    SpreadsheetMetadataPropertyValueHandlerInteger handler() {
+        return SpreadsheetMetadataPropertyValueHandlerInteger.INSTANCE;
     }
 
     @Override
@@ -83,12 +78,12 @@ public final class SpreadsheetMetadataPropertyValueHandlerTwoDigitYearTest exten
     }
 
     @Override
-    public Class<SpreadsheetMetadataPropertyValueHandlerTwoDigitYear> type() {
-        return SpreadsheetMetadataPropertyValueHandlerTwoDigitYear.class;
+    public Class<SpreadsheetMetadataPropertyValueHandlerInteger> type() {
+        return SpreadsheetMetadataPropertyValueHandlerInteger.class;
     }
 
     @Override
     public String typeNameSuffix() {
-        return "TwoDigitYear";
+        return Integer.class.getSimpleName();
     }
 }
