@@ -35,8 +35,8 @@ final class ColorSpreadsheetFormatter extends SpreadsheetFormatter3<SpreadsheetF
      */
     static ColorSpreadsheetFormatter with(final SpreadsheetFormatColorParserToken token,
                                           final SpreadsheetFormatter formatter) {
-        check(token);
-        Objects.requireNonNull(formatter, "formatter");
+        checkParserToken(token);
+        checkFormatter(formatter);
 
         return new ColorSpreadsheetFormatter(token,
                 formatter instanceof ColorSpreadsheetFormatter ?

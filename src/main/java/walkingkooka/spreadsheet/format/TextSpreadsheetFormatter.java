@@ -30,7 +30,8 @@ final class TextSpreadsheetFormatter extends SpreadsheetFormatter3<SpreadsheetFo
      * Creates a {@link TextSpreadsheetFormatter} from a {@link SpreadsheetFormatTextParserToken}.
      */
     static TextSpreadsheetFormatter with(final SpreadsheetFormatTextParserToken token) {
-        check(token);
+        checkParserToken(token);
+
         return new TextSpreadsheetFormatter(token);
     }
 
