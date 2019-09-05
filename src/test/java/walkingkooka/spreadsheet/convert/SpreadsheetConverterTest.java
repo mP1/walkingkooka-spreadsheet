@@ -506,7 +506,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
         return formatter(pattern,
                 SpreadsheetFormatParsers.dateTime(),
                 SpreadsheetFormatDateTimeParserToken.class,
-                (t) -> SpreadsheetFormatters.localDateTime(t, LocalDateTime.class));
+                (t) -> SpreadsheetFormatters.dateTime(t, LocalDateTime.class));
     }
 
     private <T extends SpreadsheetFormatParserToken> SpreadsheetFormatter formatter(final String pattern,

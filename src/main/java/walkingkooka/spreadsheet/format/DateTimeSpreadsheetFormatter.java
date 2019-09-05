@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.Temporal;
 import java.util.Objects;
@@ -28,28 +27,28 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetFormatter} that formats any value after converting it to a {@link LocalDateTime}.
  */
-final class LocalDateTimeSpreadsheetFormatter extends SpreadsheetFormatter3<SpreadsheetFormatDateTimeParserToken> {
+final class DateTimeSpreadsheetFormatter extends SpreadsheetFormatter3<SpreadsheetFormatDateTimeParserToken> {
 
     /**
-     * Creates a {@link LocalDateTimeSpreadsheetFormatter} from a {@link SpreadsheetFormatDateTimeParserToken}
+     * Creates a {@link DateTimeSpreadsheetFormatter} from a {@link SpreadsheetFormatDateTimeParserToken}
      */
-    static LocalDateTimeSpreadsheetFormatter with(final SpreadsheetFormatDateTimeParserToken token,
-                                                  final Class<? extends Temporal> type) {
+    static DateTimeSpreadsheetFormatter with(final SpreadsheetFormatDateTimeParserToken token,
+                                             final Class<? extends Temporal> type) {
         checkParserToken(token);
         Objects.requireNonNull(type, "type");
 
-        return new LocalDateTimeSpreadsheetFormatter(token, type);
+        return new DateTimeSpreadsheetFormatter(token, type);
     }
 
     /**
      * Private ctor use static parse.
      */
-    private LocalDateTimeSpreadsheetFormatter(final SpreadsheetFormatDateTimeParserToken token,
-                                              final Class<? extends Temporal> type) {
+    private DateTimeSpreadsheetFormatter(final SpreadsheetFormatDateTimeParserToken token,
+                                         final Class<? extends Temporal> type) {
         super(token);
         this.type = type;
 
-        final LocalDateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor analysis = LocalDateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor.with();
+        final DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor analysis = DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor.with();
         analysis.accept(token);
         this.twelveHour = analysis.twelveHour;
         this.millisecondDecimals = analysis.millisecondDecimals;
@@ -69,7 +68,7 @@ final class LocalDateTimeSpreadsheetFormatter extends SpreadsheetFormatter3<Spre
     @Override
     Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
         return context.canConvert(value, LocalDateTime.class) ?
-                LocalDateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor.format(this.token,
+                DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor.format(this.token,
                         context.convert(value, LocalDateTime.class),
                         context,
                         this.twelveHour,

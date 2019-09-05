@@ -35,8 +35,8 @@ import java.util.Locale;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class LocalDateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter3TestCase<
-        LocalDateTimeSpreadsheetFormatter,
+public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter3TestCase<
+        DateTimeSpreadsheetFormatter,
         SpreadsheetFormatDateTimeParserToken> {
 
     // with.............................................................................................................
@@ -44,7 +44,7 @@ public final class LocalDateTimeSpreadsheetFormatterTest extends SpreadsheetForm
     @Test
     public void testWithNullTypeFails() {
         assertThrows(NullPointerException.class, () -> {
-            LocalDateTimeSpreadsheetFormatter.with(this.parsePatternOrFail(this.pattern()), null);
+            DateTimeSpreadsheetFormatter.with(this.parsePatternOrFail(this.pattern()), null);
         });
     }
 
@@ -52,7 +52,7 @@ public final class LocalDateTimeSpreadsheetFormatterTest extends SpreadsheetForm
 
     @Override
     public void testCanFormatFalse() {
-        // LocalDateTimeSpreadsheetFormatter says it can format anything. It converts all values to LocalDateTime before formatting.
+        // DateTimeSpreadsheetFormatter says it can format anything. It converts all values to LocalDateTime before formatting.
     }
 
     @Override
@@ -650,8 +650,8 @@ public final class LocalDateTimeSpreadsheetFormatterTest extends SpreadsheetForm
     }
 
     @Override
-    LocalDateTimeSpreadsheetFormatter createFormatter0(final SpreadsheetFormatDateTimeParserToken token) {
-        return LocalDateTimeSpreadsheetFormatter.with(token, Temporal.class);
+    DateTimeSpreadsheetFormatter createFormatter0(final SpreadsheetFormatDateTimeParserToken token) {
+        return DateTimeSpreadsheetFormatter.with(token, Temporal.class);
     }
 
     @Override
@@ -693,7 +693,7 @@ public final class LocalDateTimeSpreadsheetFormatterTest extends SpreadsheetForm
     }
 
     @Override
-    public Class<LocalDateTimeSpreadsheetFormatter> type() {
-        return LocalDateTimeSpreadsheetFormatter.class;
+    public Class<DateTimeSpreadsheetFormatter> type() {
+        return DateTimeSpreadsheetFormatter.class;
     }
 }
