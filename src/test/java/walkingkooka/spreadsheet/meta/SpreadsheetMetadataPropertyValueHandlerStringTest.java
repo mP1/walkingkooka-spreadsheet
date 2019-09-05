@@ -20,7 +20,21 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.tree.json.JsonNode;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class SpreadsheetMetadataPropertyValueHandlerStringTest extends SpreadsheetMetadataPropertyValueHandlerTestCase3<SpreadsheetMetadataPropertyValueHandlerString, String> {
+
+    @Test
+    public void testWithNullPredicateFails() {
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetMetadataPropertyValueHandlerString.with(null);
+        });
+    }
+
+    @Test
+    public void testPredicateFails() {
+        this.checkFails("", "Invalid value");
+    }
 
     @Test
     public void testFromJsonNode() {
@@ -36,7 +50,7 @@ public final class SpreadsheetMetadataPropertyValueHandlerStringTest extends Spr
 
     @Override
     SpreadsheetMetadataPropertyValueHandlerString handler() {
-        return SpreadsheetMetadataPropertyValueHandlerString.INSTANCE;
+        return SpreadsheetMetadataPropertyValueHandlerString.with((s)-> s.length() > 0);
     }
 
     @Override
