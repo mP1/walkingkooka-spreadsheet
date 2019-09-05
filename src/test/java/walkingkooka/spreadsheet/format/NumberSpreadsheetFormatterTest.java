@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.convert.ConverterContexts;
+import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -1349,6 +1351,24 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     @Override
     public SpreadsheetFormatterContext createContext() {
         return new FakeSpreadsheetFormatterContext() {
+
+            @Override
+            public boolean canConvert(final Object value,
+                                      final Class<?> target) {
+                try {
+                    this.convert(value, target);
+                    return true;
+                } catch (final Exception failed) {
+                    return false;
+                }
+            }
+
+            @Override
+            public <T> T convert(final Object value,
+                                 final Class<T> target) {
+                return Converters.numberNumber().convert(value, target, ConverterContexts.fake());
+            }
+
             @Override
             public String currencySymbol() {
                 return "C";

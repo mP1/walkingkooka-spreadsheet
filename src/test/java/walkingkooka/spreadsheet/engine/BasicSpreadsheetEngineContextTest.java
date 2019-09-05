@@ -268,6 +268,24 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         final DecimalNumberContext decimalNumberContext = this.decimalNumberContext();
 
         return new FakeSpreadsheetFormatterContext() {
+
+            @Override
+            public boolean canConvert(final Object value,
+                                      final Class<?> target) {
+                try {
+                    this.convert(value, target);
+                    return true;
+                } catch (final Exception failed) {
+                    return false;
+                }
+            }
+
+            @Override
+            public <T> T convert(final Object value,
+                                 final Class<T> target) {
+                return Converters.numberNumber().convert(value, target, ConverterContexts.fake());
+            }
+
             @Override
             public String currencySymbol() {
                 return decimalNumberContext.currencySymbol();
