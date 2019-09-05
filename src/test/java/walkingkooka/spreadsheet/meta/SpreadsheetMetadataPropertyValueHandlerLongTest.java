@@ -20,15 +20,19 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.Converters;
 
-public final class SpreadsheetMetadataPropertyValueHandlerDateTimeOffsetTest extends SpreadsheetMetadataPropertyValueHandlerTestCase2<SpreadsheetMetadataPropertyValueHandlerDateTimeOffset, Long> {
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+public final class SpreadsheetMetadataPropertyValueHandlerLongTest extends SpreadsheetMetadataPropertyValueHandlerTestCase2<SpreadsheetMetadataPropertyValueHandlerLong, Long> {
 
     @Test
-    public void testInvalidOffsetFails() {
-        this.checkFails(123L, "Invalid date time offset 123");
+    public void testWithNullIntPredicateFails() {
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetMetadataPropertyValueHandlerLong.with(null);
+        });
     }
-
+    
     @Test
-    public void testCheckExcelffset() {
+    public void testCheckExcelOffset() {
         this.check(Converters.EXCEL_OFFSET);
     }
 
@@ -50,8 +54,8 @@ public final class SpreadsheetMetadataPropertyValueHandlerDateTimeOffsetTest ext
     }
 
     @Override
-    SpreadsheetMetadataPropertyValueHandlerDateTimeOffset handler() {
-        return SpreadsheetMetadataPropertyValueHandlerDateTimeOffset.INSTANCE;
+    SpreadsheetMetadataPropertyValueHandlerLong handler() {
+        return SpreadsheetMetadataPropertyValueHandlerLong.with((i) -> true);
     }
 
     @Override
@@ -71,12 +75,12 @@ public final class SpreadsheetMetadataPropertyValueHandlerDateTimeOffsetTest ext
 
     @Override
     String expectedToString() {
-        return "DateTimeOffset";
+        return "Long";
     }
 
     @Override
-    public Class<SpreadsheetMetadataPropertyValueHandlerDateTimeOffset> type() {
-        return SpreadsheetMetadataPropertyValueHandlerDateTimeOffset.class;
+    public Class<SpreadsheetMetadataPropertyValueHandlerLong> type() {
+        return SpreadsheetMetadataPropertyValueHandlerLong.class;
     }
 
     @Override
