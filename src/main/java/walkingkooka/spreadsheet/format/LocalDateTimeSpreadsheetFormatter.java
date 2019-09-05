@@ -19,7 +19,10 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.Temporal;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -30,17 +33,21 @@ final class LocalDateTimeSpreadsheetFormatter extends SpreadsheetFormatter3<Spre
     /**
      * Creates a {@link LocalDateTimeSpreadsheetFormatter} from a {@link SpreadsheetFormatDateTimeParserToken}
      */
-    static LocalDateTimeSpreadsheetFormatter with(final SpreadsheetFormatDateTimeParserToken token) {
+    static LocalDateTimeSpreadsheetFormatter with(final SpreadsheetFormatDateTimeParserToken token,
+                                                  final Class<? extends Temporal> type) {
         checkParserToken(token);
+        Objects.requireNonNull(type, "type");
 
-        return new LocalDateTimeSpreadsheetFormatter(token);
+        return new LocalDateTimeSpreadsheetFormatter(token, type);
     }
 
     /**
      * Private ctor use static parse.
      */
-    private LocalDateTimeSpreadsheetFormatter(final SpreadsheetFormatDateTimeParserToken token) {
+    private LocalDateTimeSpreadsheetFormatter(final SpreadsheetFormatDateTimeParserToken token,
+                                              final Class<? extends Temporal> type) {
         super(token);
+        this.type = type;
 
         final LocalDateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor analysis = LocalDateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor.with();
         analysis.accept(token);
@@ -51,8 +58,13 @@ final class LocalDateTimeSpreadsheetFormatter extends SpreadsheetFormatter3<Spre
     @Override
     public boolean canFormat(final Object value,
                              final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
-        return context.canConvert(value, LocalDateTime.class);
+        return this.type.isInstance(value) && context.canConvert(value, LocalDateTime.class);
     }
+
+    /**
+     * Used to filter allowing different formatters for different {@link Temporal} types.
+     */
+    private final Class<? extends Temporal> type;
 
     @Override
     Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {

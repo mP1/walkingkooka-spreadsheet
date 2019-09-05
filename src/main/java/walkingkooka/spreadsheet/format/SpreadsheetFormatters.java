@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.type.PublicStaticHelper;
 
 import java.math.BigDecimal;
+import java.time.temporal.Temporal;
 import java.util.List;
 import java.util.function.Function;
 
@@ -92,8 +93,9 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     /**
      * {@see LocalDateTimeSpreadsheetFormatter}
      */
-    public static SpreadsheetFormatter localDateTime(final SpreadsheetFormatDateTimeParserToken token) {
-        return LocalDateTimeSpreadsheetFormatter.with(token);
+    public static SpreadsheetFormatter localDateTime(final SpreadsheetFormatDateTimeParserToken token,
+                                                     final Class<? extends Temporal> type) {
+        return LocalDateTimeSpreadsheetFormatter.with(token, type);
     }
 
     /**

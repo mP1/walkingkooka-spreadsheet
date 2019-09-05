@@ -21,6 +21,9 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 /**
  * Holds a valid {@link SpreadsheetDateTimeFormatPattern}.
  */
@@ -75,7 +78,7 @@ public final class SpreadsheetDateTimeFormatPattern extends SpreadsheetFormatPat
      */
     @Override
     SpreadsheetFormatter createFormatter() {
-        return SpreadsheetFormatters.localDateTime(this.value);
+        return SpreadsheetFormatters.localDateTime(this.value, LocalDateTime.class);
     }
 
     // HashCodeEqualsDefined............................................................................................
