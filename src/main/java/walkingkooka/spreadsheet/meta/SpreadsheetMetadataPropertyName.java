@@ -44,6 +44,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.IntPredicate;
+import java.util.function.Predicate;
 
 /**
  * The {@link Name} of metadata property, used to fetch a value given a name.
@@ -101,15 +102,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     }
 
     /**
-     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a non {@link String value}.
-     */
-    private static SpreadsheetMetadataPropertyName<String> registerNonEmptyStringConstant(final String name,
-                                                                                          final BiConsumer<String, SpreadsheetMetadataVisitor> visitor) {
-        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.nonEmpty(),
-                visitor);
-    }
-
-    /**
      * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a positive {@link Integer value}.
      */
     private static SpreadsheetMetadataPropertyName<Integer> registerIntegerConstant(final String name,
@@ -123,9 +115,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link String value}.
      */
     private static SpreadsheetMetadataPropertyName<String> registerStringConstant(final String name,
+                                                                                  final Predicate<String> predicate,
                                                                                   final BiConsumer<String, SpreadsheetMetadataVisitor> visitor) {
         return registerConstant(name,
-                SpreadsheetMetadataPropertyValueHandler.string(),
+                SpreadsheetMetadataPropertyValueHandler.string(predicate),
                 visitor);
     }
 
@@ -157,7 +150,8 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>currency {@link String}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<String> CURRENCY_SYMBOL = registerNonEmptyStringConstant("currency-symbol",
+    public final static SpreadsheetMetadataPropertyName<String> CURRENCY_SYMBOL = registerStringConstant("currency-symbol",
+            (s) -> s.length() > 0,
             (c, v) -> v.visitCurrencySymbol(c));
 
     /**

@@ -24,6 +24,7 @@ import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.ToJsonNodeContext;
 
 import java.util.function.IntPredicate;
+import java.util.function.Predicate;
 
 /**
  * Base converter that provides support for handling property values.
@@ -108,13 +109,6 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     }
 
     /**
-     * {@see SpreadsheetMetadataPropertyValueHandlerNonEmptyString}
-     */
-    static SpreadsheetMetadataPropertyValueHandlerNonEmptyString nonEmpty() {
-        return SpreadsheetMetadataPropertyValueHandlerNonEmptyString.INSTANCE;
-    }
-
-    /**
      * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetNumberFormatPattern}
      */
     static SpreadsheetMetadataPropertyValueHandlerSpreadsheetNumberFormatPattern numberFormatPattern() {
@@ -145,8 +139,8 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerString}
      */
-    static SpreadsheetMetadataPropertyValueHandlerString string() {
-        return SpreadsheetMetadataPropertyValueHandlerString.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerString string(final Predicate<String> predicate) {
+        return SpreadsheetMetadataPropertyValueHandlerString.with(predicate);
     }
 
     /**
