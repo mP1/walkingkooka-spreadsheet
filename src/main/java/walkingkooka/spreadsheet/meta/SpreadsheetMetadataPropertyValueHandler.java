@@ -23,6 +23,8 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.ToJsonNodeContext;
 
+import java.util.function.IntPredicate;
+
 /**
  * Base converter that provides support for handling property values.
  */
@@ -87,8 +89,8 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerInteger}
      */
-    static SpreadsheetMetadataPropertyValueHandlerInteger integer() {
-        return SpreadsheetMetadataPropertyValueHandlerInteger.INSTANCE;
+    static SpreadsheetMetadataPropertyValueHandlerInteger integer(final IntPredicate predicate) {
+        return SpreadsheetMetadataPropertyValueHandlerInteger.with(predicate);
     }
 
     /**
@@ -124,13 +126,6 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
      */
     static SpreadsheetMetadataPropertyValueHandlerSpreadsheetNumberParsePatterns numberParsePatterns() {
         return SpreadsheetMetadataPropertyValueHandlerSpreadsheetNumberParsePatterns.INSTANCE;
-    }
-    
-    /**
-     * {@see SpreadsheetMetadataPropertyValueHandlerPositiveInteger}
-     */
-    static SpreadsheetMetadataPropertyValueHandlerPositiveInteger positiveInteger() {
-        return SpreadsheetMetadataPropertyValueHandlerPositiveInteger.INSTANCE;
     }
 
     /**

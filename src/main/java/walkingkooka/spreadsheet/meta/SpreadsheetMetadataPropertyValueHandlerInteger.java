@@ -21,27 +21,40 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.ToJsonNodeContext;
 
+import java.util.Objects;
+import java.util.function.IntPredicate;
+
 /**
  * A {@link SpreadsheetMetadataPropertyValueHandler} that only allows any integer value.
  */
 final class SpreadsheetMetadataPropertyValueHandlerInteger extends SpreadsheetMetadataPropertyValueHandler<Integer> {
 
     /**
-     * A singleton
+     * Creates a new {@link SpreadsheetMetadataPropertyValueHandlerInteger}
      */
-    static final SpreadsheetMetadataPropertyValueHandlerInteger INSTANCE = new SpreadsheetMetadataPropertyValueHandlerInteger();
+    static final SpreadsheetMetadataPropertyValueHandlerInteger with(final IntPredicate predicate) {
+        Objects.requireNonNull(predicate, "predicate");
+
+        return new SpreadsheetMetadataPropertyValueHandlerInteger(predicate);
+    }
 
     /**
      * Private ctor use singleton
      */
-    private SpreadsheetMetadataPropertyValueHandlerInteger() {
+    private SpreadsheetMetadataPropertyValueHandlerInteger(final IntPredicate predicate) {
         super();
+        this.predicate = predicate;
     }
 
     @Override
     void check0(final Object value, final SpreadsheetMetadataPropertyName<?> name) {
-        this.checkType(value, Integer.class, name);
+        final Integer integer = this.checkType(value, Integer.class, name);
+        if (false == this.predicate.test(integer)) {
+            throw new SpreadsheetMetadataPropertyValueException("Invalid value", name, integer);
+        }
     }
+
+    private final IntPredicate predicate;
 
     @Override
     String expectedTypeName(final Class<?> type) {

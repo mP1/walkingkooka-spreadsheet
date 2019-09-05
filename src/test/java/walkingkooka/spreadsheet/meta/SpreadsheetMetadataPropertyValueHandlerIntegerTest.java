@@ -19,21 +19,25 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class SpreadsheetMetadataPropertyValueHandlerIntegerTest extends SpreadsheetMetadataPropertyValueHandlerTestCase2<SpreadsheetMetadataPropertyValueHandlerInteger, Integer> {
 
     @Test
-    public void testCheckNegative() {
-        this.check(-1);
+    public void testWithNullIntPredicateFails() {
+        assertThrows(NullPointerException.class, () -> {
+            SpreadsheetMetadataPropertyValueHandlerInteger.with(null);
+        });
     }
 
     @Test
-    public void testCheckZero() {
-        this.check(0);
+    public void testPredicateFails() {
+        this.checkFails(-1, "Invalid value");
     }
 
     @Test
-    public void testCheckOne() {
-        this.check(1);
+    public void testPredicatePass() {
+        this.check(10);
     }
 
     @Test
@@ -54,12 +58,12 @@ public final class SpreadsheetMetadataPropertyValueHandlerIntegerTest extends Sp
 
     @Override
     SpreadsheetMetadataPropertyValueHandlerInteger handler() {
-        return SpreadsheetMetadataPropertyValueHandlerInteger.INSTANCE;
+        return SpreadsheetMetadataPropertyValueHandlerInteger.with((i) -> i >= 0);
     }
 
     @Override
     SpreadsheetMetadataPropertyName<Integer> propertyName() {
-        return SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR_INTERPRETATION;
+        return SpreadsheetMetadataPropertyName.WIDTH;
     }
 
     @Override
