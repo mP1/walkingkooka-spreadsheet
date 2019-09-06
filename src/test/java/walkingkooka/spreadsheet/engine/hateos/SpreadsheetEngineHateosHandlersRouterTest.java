@@ -462,16 +462,8 @@ public final class SpreadsheetEngineHateosHandlersRouterTest implements ClassTes
     }
 
     private HateosContentType<JsonNode> contentType() {
-        return HateosContentType.json(FromJsonNodeContexts.basic(this::objectPreProcessor),
+        return HateosContentType.json(FromJsonNodeContexts.basic(),
                 ToJsonNodeContexts.basic());
-    }
-
-    private JsonObjectNode objectPreProcessor(final JsonObjectNode object, final Class<?> type) {
-        return object;
-    }
-
-    private JsonObjectNode objectPostProcessor(final Object value, JsonObjectNode object) {
-        return object;
     }
 
     private HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta<Optional<SpreadsheetColumnReference>>, SpreadsheetDelta<Range<SpreadsheetColumnReference>>> deleteColumns() {

@@ -231,12 +231,8 @@ public final class SpreadsheetContextHateosHandlersRouterTest extends Spreadshee
     }
 
     private HateosContentType<JsonNode> contentType() {
-        return HateosContentType.json(FromJsonNodeContexts.basic(this::objectPreProcessor),
+        return HateosContentType.json(FromJsonNodeContexts.basic(),
                 ToJsonNodeContexts.basic());
-    }
-
-    private JsonObjectNode objectPreProcessor(final JsonObjectNode object, final Class<?> type) {
-        return object;
     }
 
     private HateosHandler<SpreadsheetId,
