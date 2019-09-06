@@ -42,8 +42,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.test.ClassTesting2;
-import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonObjectNode;
 import walkingkooka.tree.json.marshall.FromJsonNodeContexts;
 import walkingkooka.tree.json.marshall.ToJsonNodeContexts;
 import walkingkooka.type.JavaVisibility;
@@ -252,7 +250,7 @@ public final class SpreadsheetEngineHateosHandlersRouterTest implements ClassTes
     }
 
     private void routerFails(final AbsoluteUrl base,
-                             final HateosContentType<JsonNode> contentType,
+                             final HateosContentType contentType,
                              final HateosHandler<SpreadsheetColumnReference,
                                      SpreadsheetDelta<Optional<SpreadsheetColumnReference>>,
                                      SpreadsheetDelta<Range<SpreadsheetColumnReference>>> deleteColumns,
@@ -461,7 +459,7 @@ public final class SpreadsheetEngineHateosHandlersRouterTest implements ClassTes
         return Url.parseAbsolute(URL);
     }
 
-    private HateosContentType<JsonNode> contentType() {
+    private HateosContentType contentType() {
         return HateosContentType.json(FromJsonNodeContexts.basic(),
                 ToJsonNodeContexts.basic());
     }

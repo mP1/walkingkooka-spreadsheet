@@ -51,7 +51,6 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.tree.Node;
 import walkingkooka.tree.expression.ExpressionNodeName;
 
 import java.math.BigDecimal;
@@ -68,17 +67,17 @@ import java.util.function.Function;
  * A {@link SpreadsheetContext} that creates a new {@link SpreadsheetStoreRepository} for unknown {@link SpreadsheetId}.
  * There is no way to delete existing spreadsheets.
  */
-final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements SpreadsheetContext {
+final class MemorySpreadsheetContext implements SpreadsheetContext {
 
     /**
      * Creates a new empty {@link MemorySpreadsheetContext}
      */
-    static <N extends Node<N, ?, ?, ?>> MemorySpreadsheetContext with(final AbsoluteUrl base,
-                                                                      final HateosContentType<N> contentType,
-                                                                      final Function<BigDecimal, Fraction> fractioner,
-                                                                      final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
-                                                                      final Function<Optional<Locale>, SpreadsheetMetadata> metadata,
-                                                                      final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToRepository) {
+    static MemorySpreadsheetContext with(final AbsoluteUrl base,
+                                         final HateosContentType contentType,
+                                         final Function<BigDecimal, Fraction> fractioner,
+                                         final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
+                                         final Function<Optional<Locale>, SpreadsheetMetadata> metadata,
+                                         final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToRepository) {
         Objects.requireNonNull(base, "base");
         Objects.requireNonNull(contentType, "contentType");
         Objects.requireNonNull(fractioner, "fractioner");
@@ -86,7 +85,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
         Objects.requireNonNull(metadata, "metadata");
         Objects.requireNonNull(spreadsheetIdToRepository, "spreadsheetIdToRepository");
 
-        return new MemorySpreadsheetContext<>(base,
+        return new MemorySpreadsheetContext(base,
                 contentType,
                 fractioner,
                 spreadsheetIdFunctions,
@@ -95,7 +94,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
     }
 
     private MemorySpreadsheetContext(final AbsoluteUrl base,
-                                     final HateosContentType<N> contentType,
+                                     final HateosContentType contentType,
                                      final Function<BigDecimal, Fraction> fractioner,
                                      final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                                      final Function<Optional<Locale>, SpreadsheetMetadata> metadata,
@@ -231,7 +230,7 @@ final class MemorySpreadsheetContext<N extends Node<N, ?, ?, ?>> implements Spre
     }
 
     private final AbsoluteUrl base;
-    private final HateosContentType<N> contentType;
+    private final HateosContentType contentType;
     private final Function<BigDecimal, Fraction> fractioner;
 
     // metadata.........................................................................................................
