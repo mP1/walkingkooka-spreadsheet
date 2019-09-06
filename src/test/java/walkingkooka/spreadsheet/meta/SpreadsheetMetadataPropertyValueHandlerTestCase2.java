@@ -134,11 +134,7 @@ public abstract class SpreadsheetMetadataPropertyValueHandlerTestCase2<P extends
     abstract String propertyValueType();
 
     final FromJsonNodeContext fromJsonNodeContext() {
-        return FromJsonNodeContexts.basic(this::objectPreProcessor);
-    }
-
-    private JsonObjectNode objectPreProcessor(final JsonObjectNode object, final Class<?> type) {
-        return object;
+        return FromJsonNodeContexts.basic();
     }
 
     final ToJsonNodeContext toJsonNodeContext() {
