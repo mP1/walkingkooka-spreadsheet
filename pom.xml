@@ -51,7 +51,7 @@
 
     <dependency>
       <groupId>com.github.mP1</groupId>
-      <artifactId>walkingkooka-net</artifactId>
+      <artifactId>walkingkooka-net-http-server-hateos</artifactId>
       <version>master-SNAPSHOT</version>
     </dependency>
 
