@@ -658,7 +658,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     }
 
     private ToJsonNodeContext toJsonNodeContext() {
-        return ToJsonNodeContexts.basic(this::objectPostProcessor);
+        return ToJsonNodeContexts.basic();
     }
 
     private JsonObjectNode objectPostProcessor(final Object value, JsonObjectNode object) {
