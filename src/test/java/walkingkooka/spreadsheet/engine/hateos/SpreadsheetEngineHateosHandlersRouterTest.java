@@ -463,7 +463,7 @@ public final class SpreadsheetEngineHateosHandlersRouterTest implements ClassTes
 
     private HateosContentType<JsonNode> contentType() {
         return HateosContentType.json(FromJsonNodeContexts.basic(this::objectPreProcessor),
-                ToJsonNodeContexts.basic(this::objectPostProcessor));
+                ToJsonNodeContexts.basic());
     }
 
     private JsonObjectNode objectPreProcessor(final JsonObjectNode object, final Class<?> type) {
