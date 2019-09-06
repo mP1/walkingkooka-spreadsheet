@@ -59,7 +59,7 @@ public final class SpreadsheetContextHateosHandlers implements PublicStaticHelpe
      * {@see SpreadsheetContextHateosHandlersRouter}
      */
     public static <N extends Node<N, ?, ?, ?>> Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> router(final AbsoluteUrl baseUrl,
-                                                                                                                             final HateosContentType<N> contentType,
+                                                                                                                             final HateosContentType contentType,
                                                                                                                              final HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> createAndSaveMetadata,
                                                                                                                              final HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> loadMetadata) {
         return SpreadsheetContextHateosHandlersRouter.with(baseUrl,
