@@ -575,11 +575,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     }
 
     private FromJsonNodeContext fromJsonNodeContext() {
-        return FromJsonNodeContexts.basic(this::objectPreProcessor);
-    }
-
-    private JsonObjectNode objectPreProcessor(final JsonObjectNode object, final Class<?> type) {
-        return object;
+        return FromJsonNodeContexts.basic();
     }
 
     final Fraction fractioner(final BigDecimal value) {
@@ -659,10 +655,6 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
     private ToJsonNodeContext toJsonNodeContext() {
         return ToJsonNodeContexts.basic();
-    }
-
-    private JsonObjectNode objectPostProcessor(final Object value, JsonObjectNode object) {
-        return object;
     }
 
     @Override

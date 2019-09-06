@@ -92,12 +92,7 @@ public final class SpreadsheetMetadataNonEmptyMapTest implements MapTesting2<Spr
     @Test
     public void testFromEmptyJsonObject() {
         assertSame(SpreadsheetMetadataNonEmptyMap.EMPTY,
-                SpreadsheetMetadataNonEmptyMap.fromJsonNode(JsonNode.object(),
-                        FromJsonNodeContexts.basic(this::objectPreProcessor)));
-    }
-
-    private JsonObjectNode objectPreProcessor(final JsonObjectNode object, final Class<?> type) {
-        return object;
+                SpreadsheetMetadataNonEmptyMap.fromJsonNode(JsonNode.object(), FromJsonNodeContexts.basic()));
     }
 
     @Test
