@@ -44,7 +44,6 @@ import walkingkooka.routing.Router;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
@@ -54,26 +53,16 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStores;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStores;
-import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
-import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
-import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
-import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.store.Store;
 import walkingkooka.tree.expression.ExpressionNodeName;
-import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonObjectNode;
 import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.FromJsonNodeContexts;
 import walkingkooka.tree.json.marshall.ToJsonNodeContext;
@@ -160,7 +149,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     }
 
     private void withFails(final AbsoluteUrl base,
-                           final HateosContentType<JsonNode> contentType,
+                           final HateosContentType contentType,
                            final Function<BigDecimal, Fraction> fractioner,
                            final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                            final Function<Optional<Locale>, SpreadsheetMetadata> metadata,
@@ -570,7 +559,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         return Url.parseAbsolute("http://example.com/api987");
     }
 
-    private HateosContentType<JsonNode> contentType() {
+    private HateosContentType contentType() {
         return HateosContentType.json(this.fromJsonNodeContext(), this.toJsonNodeContext());
     }
 
