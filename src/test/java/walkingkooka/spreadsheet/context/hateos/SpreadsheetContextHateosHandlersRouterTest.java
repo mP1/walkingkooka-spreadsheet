@@ -42,8 +42,6 @@ import walkingkooka.routing.Router;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonObjectNode;
 import walkingkooka.tree.json.marshall.FromJsonNodeContexts;
 import walkingkooka.tree.json.marshall.ToJsonNodeContexts;
 
@@ -91,7 +89,7 @@ public final class SpreadsheetContextHateosHandlersRouterTest extends Spreadshee
     }
 
     private void withFails(final AbsoluteUrl base,
-                           final HateosContentType<JsonNode> contentType,
+                           final HateosContentType contentType,
                            final HateosHandler<SpreadsheetId,
                                    SpreadsheetMetadata,
                                    HateosResource<Range<SpreadsheetId>>> createAndSaveMetadata,
@@ -230,7 +228,7 @@ public final class SpreadsheetContextHateosHandlersRouterTest extends Spreadshee
         return AbsoluteUrl.parseAbsolute(URL);
     }
 
-    private HateosContentType<JsonNode> contentType() {
+    private HateosContentType contentType() {
         return HateosContentType.json(FromJsonNodeContexts.basic(),
                 ToJsonNodeContexts.basic());
     }

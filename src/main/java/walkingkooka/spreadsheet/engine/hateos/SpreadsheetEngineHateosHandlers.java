@@ -119,7 +119,7 @@ public final class SpreadsheetEngineHateosHandlers implements PublicStaticHelper
      * Returns a {@link Router} that handles all operations, using the given {@link SpreadsheetEngine} and {@link SpreadsheetEngineContext}.
      */
     public static <N extends Node<N, ?, ?, ?>> Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> engineRouter(final AbsoluteUrl base,
-                                                                                                                                   final HateosContentType<N> contentType,
+                                                                                                                                   final HateosContentType contentType,
                                                                                                                                    final HateosHandler<SpreadsheetColumnReference,
                                                                                                                                            SpreadsheetDelta<Optional<SpreadsheetColumnReference>>,
                                                                                                                                            SpreadsheetDelta<Range<SpreadsheetColumnReference>>> deleteColumns,

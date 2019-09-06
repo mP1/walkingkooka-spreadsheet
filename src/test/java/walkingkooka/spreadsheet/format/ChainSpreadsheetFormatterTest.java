@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.Optional;
 

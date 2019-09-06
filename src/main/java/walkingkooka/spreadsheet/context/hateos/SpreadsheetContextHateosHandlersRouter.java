@@ -64,7 +64,7 @@ final class SpreadsheetContextHateosHandlersRouter implements StaticHelper {
      * Builds a {@link Router} that handles all operations, using the given {@link HateosHandler handlers}.
      */
     static <N extends Node<N, ?, ?, ?>> Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> with(final AbsoluteUrl baseUrl,
-                                                                                                                    final HateosContentType<N> contentType,
+                                                                                                                    final HateosContentType contentType,
                                                                                                                     final HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> createAndSaveMetadata,
                                                                                                                     final HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> loadMetadata) {
         Objects.requireNonNull(baseUrl, "baseUrl");

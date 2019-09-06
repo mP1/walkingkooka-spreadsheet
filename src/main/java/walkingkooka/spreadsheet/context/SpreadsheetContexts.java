@@ -23,7 +23,6 @@ import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.tree.Node;
 import walkingkooka.tree.expression.ExpressionNodeName;
 import walkingkooka.type.PublicStaticHelper;
 
@@ -46,12 +45,12 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     /**
      * {@see MemorySpreadsheetContext}
      */
-    public static <N extends Node<N, ?, ?, ?>> SpreadsheetContext memory(final AbsoluteUrl base,
-                                                                         final HateosContentType<N> contentType,
-                                                                         final Function<BigDecimal, Fraction> fractioner,
-                                                                         final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
-                                                                         final Function<Optional<Locale>, SpreadsheetMetadata> metadata,
-                                                                         final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToRepository) {
+    public static SpreadsheetContext memory(final AbsoluteUrl base,
+                                            final HateosContentType contentType,
+                                            final Function<BigDecimal, Fraction> fractioner,
+                                            final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
+                                            final Function<Optional<Locale>, SpreadsheetMetadata> metadata,
+                                            final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToRepository) {
         return MemorySpreadsheetContext.with(base,
                 contentType,
                 fractioner,
