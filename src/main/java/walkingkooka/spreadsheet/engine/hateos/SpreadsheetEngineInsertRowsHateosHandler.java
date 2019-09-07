@@ -46,7 +46,7 @@ final class SpreadsheetEngineInsertRowsHateosHandler extends SpreadsheetEngineDe
     }
 
     @Override
-    SpreadsheetDelta<Range<SpreadsheetRowReference>> execute(final SpreadsheetRowReference row, final int count) {
+    SpreadsheetDelta execute(final SpreadsheetRowReference row, final int count) {
         return this.engine.insertRows(row, count, this.context);
     }
 

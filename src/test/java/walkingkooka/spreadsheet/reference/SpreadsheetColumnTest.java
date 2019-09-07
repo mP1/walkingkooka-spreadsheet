@@ -26,6 +26,8 @@ import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMappingTesting;
 import walkingkooka.type.JavaVisibility;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -35,7 +37,6 @@ public final class SpreadsheetColumnTest implements ClassTesting2<SpreadsheetCol
         ComparableTesting<SpreadsheetColumn>,
         JsonNodeMappingTesting<SpreadsheetColumn>,
         ToStringTesting<SpreadsheetColumn> {
-
 
     private final static int COLUMN = 20;
     private final static SpreadsheetColumnReference REFERENCE = reference(COLUMN);
@@ -146,7 +147,7 @@ public final class SpreadsheetColumnTest implements ClassTesting2<SpreadsheetCol
 
     private void checkReference(final SpreadsheetColumn column, final SpreadsheetColumnReference reference) {
         assertEquals(reference, column.reference(), "reference");
-        assertEquals(reference, column.id(), "id");
+        assertEquals(Optional.of(reference), column.id(), "id");
     }
 
     @Override

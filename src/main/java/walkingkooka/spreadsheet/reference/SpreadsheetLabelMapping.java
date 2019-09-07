@@ -28,6 +28,7 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.ToJsonNodeContext;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Holds a {@link SpreadsheetLabelName label} to {@link ExpressionReference} mapping.
@@ -92,8 +93,8 @@ public final class SpreadsheetLabelMapping implements HashCodeEqualsDefined, Hat
     // HateosResource............................................................................................
 
     @Override
-    public SpreadsheetLabelName id() {
-        return this.label();
+    public Optional<SpreadsheetLabelName> id() {
+        return Optional.of(this.label());
     }
 
     @Override

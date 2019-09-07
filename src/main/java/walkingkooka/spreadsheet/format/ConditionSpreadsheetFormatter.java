@@ -21,7 +21,6 @@ import walkingkooka.convert.ConversionException;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 

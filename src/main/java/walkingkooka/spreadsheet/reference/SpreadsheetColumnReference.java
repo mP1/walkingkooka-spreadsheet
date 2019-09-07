@@ -103,9 +103,6 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
         return SpreadsheetExpressionReference.cellReference(this, row);
     }
 
-    // HasHateosLink....................................................................................................
-
-    @Override
     public String hateosLinkId() {
         final StringBuilder b = new StringBuilder();
         toString1(this.value, b);

@@ -38,8 +38,8 @@ abstract class SpreadsheetEngineDeleteOrInsertColumnsOrRowsHateosHandler<R exten
     }
 
     @Override
-    public final Optional<SpreadsheetDelta<Optional<R>>> handle(final Optional<R> id,
-                                                                final Optional<SpreadsheetDelta<Optional<R>>> resource,
+    public final Optional<SpreadsheetDelta> handle(final Optional<R> id,
+                                                                final Optional<SpreadsheetDelta> resource,
                                                                 final Map<HttpRequestAttribute<?>, Object> parameters) {
         final R columnOrRow = this.checkIdRequired(id);
         this.checkResource(resource);
@@ -47,14 +47,13 @@ abstract class SpreadsheetEngineDeleteOrInsertColumnsOrRowsHateosHandler<R exten
 
         return Optional.of(this.executeAndWindowFilter(columnOrRow,
                 1,
-                resource)
-                .setId(id)); //setId necessary as $resource may be empty and we dont want the id=range of the result.
+                resource));
     }
 
 
     @Override
-    public final Optional<SpreadsheetDelta<Range<R>>> handleCollection(final Range<R> columnOrRow,
-                                                                       final Optional<SpreadsheetDelta<Range<R>>> resource,
+    public final Optional<SpreadsheetDelta> handleCollection(final Range<R> columnOrRow,
+                                                                       final Optional<SpreadsheetDelta> resource,
                                                                        final Map<HttpRequestAttribute<?>, Object> parameters) {
         this.checkRangeBounded(columnOrRow, this.rangeLabel());
         this.checkResource(resource);
@@ -70,9 +69,9 @@ abstract class SpreadsheetEngineDeleteOrInsertColumnsOrRowsHateosHandler<R exten
 
     abstract String rangeLabel();
 
-    private <I> SpreadsheetDelta<I> executeAndWindowFilter(final R lower,
+    private SpreadsheetDelta executeAndWindowFilter(final R lower,
                                                            final int count,
-                                                           final Optional<SpreadsheetDelta<I>> in) {
+                                                           final Optional<SpreadsheetDelta> in) {
         checkWithoutCells(in);
 
         return applyWindow(this.execute(lower, count), in);
@@ -81,5 +80,5 @@ abstract class SpreadsheetEngineDeleteOrInsertColumnsOrRowsHateosHandler<R exten
     /**
      * Sub classes must perform the delete or insert option.
      */
-    abstract <I> SpreadsheetDelta<I> execute(final R lower, final int count);
+    abstract SpreadsheetDelta execute(final R lower, final int count);
 }

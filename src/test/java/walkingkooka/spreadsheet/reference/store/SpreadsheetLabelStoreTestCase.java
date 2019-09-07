@@ -84,7 +84,7 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
         store.save(b);
         store.save(c);
 
-        this.idsAndCheck(store, 0, 3, a.id(), b.id(), c.id());
+        this.idsAndCheck(store, 0, 3, a.label(), b.label(), c.label());
     }
 
     @Test
@@ -101,7 +101,7 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
         store.save(c);
         store.save(d);
 
-        this.idsAndCheck(store, 1, 2, b.id(), c.id());
+        this.idsAndCheck(store, 1, 2, b.label(), c.label());
     }
 
     @Test
@@ -116,7 +116,7 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
         store.save(b);
         store.save(c);
 
-        this.valuesAndCheck(store, a.id(), 3, a, b, c);
+        this.valuesAndCheck(store, a.label(), 3, a, b, c);
     }
 
     @Test
@@ -133,7 +133,7 @@ public abstract class SpreadsheetLabelStoreTestCase<S extends SpreadsheetLabelSt
         store.save(c);
         store.save(d);
 
-        this.valuesAndCheck(store, b.id(), 2, b, c);
+        this.valuesAndCheck(store, b.label(), 2, b, c);
     }
 
     final SpreadsheetCellReference cell(final int column, final int row) {

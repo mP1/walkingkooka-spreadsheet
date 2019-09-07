@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.context.hateos;
 
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
-import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.context.SpreadsheetContext;
@@ -31,10 +30,8 @@ import java.util.Optional;
 /**
  * An abstract {@link HateosHandler} that includes uses a {@link SpreadsheetContext} to do things.
  */
-abstract class SpreadsheetContextHateosHandler<I extends Comparable<I> & HasHateosLinkId,
-        R extends HateosResource<Optional<I>>,
-        S extends HateosResource<Range<I>>>
-        implements HateosHandler<I, R, S> {
+abstract class SpreadsheetContextHateosHandler<I extends Comparable<I>, V, C>
+        implements HateosHandler<I, V, C> {
 
     /**
      * Checks required factory method parameters are not null.
