@@ -25,7 +25,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import java.util.List;
 import java.util.Set;
 
-public abstract class SpreadsheetDeltaNonWindowedTestCase<D extends SpreadsheetDelta<I>, I> extends SpreadsheetDeltaTestCase2<D, I> {
+public abstract class SpreadsheetDeltaNonWindowedTestCase<D extends SpreadsheetDelta> extends SpreadsheetDeltaTestCase2<D> {
 
     SpreadsheetDeltaNonWindowedTestCase() {
         super();
@@ -36,10 +36,8 @@ public abstract class SpreadsheetDeltaNonWindowedTestCase<D extends SpreadsheetD
         final D delta = this.createSpreadsheetDelta();
         final Set<SpreadsheetCell> cells = this.cells0("B2", "C3");
         final SpreadsheetDelta different = delta.setCells(cells);
-        this.checkId(different);
         this.checkCells(different, cells);
 
-        this.checkId(delta);
         this.checkCells(delta);
     }
 

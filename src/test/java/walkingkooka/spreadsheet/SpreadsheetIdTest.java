@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting;
-import walkingkooka.net.http.server.hateos.HasHateosLinkIdTesting;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ParseStringTesting;
@@ -35,7 +34,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
         ComparableTesting<SpreadsheetId>,
         HashCodeEqualsDefinedTesting<SpreadsheetId>,
-        HasHateosLinkIdTesting<SpreadsheetId>,
         JsonNodeMappingTesting<SpreadsheetId>,
         ParseStringTesting<SpreadsheetId>,
         ToStringTesting<SpreadsheetId> {
@@ -47,13 +45,6 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
         final SpreadsheetId id = SpreadsheetId.with(VALUE);
         assertEquals(VALUE, id.value(), "value");
         assertEquals(VALUE, id.id(), "id");
-    }
-
-    // HasHateosLink....................................................................................................
-
-    @Test
-    public void testHateosLinkId() {
-        this.hateosLinkIdAndCheck(SpreadsheetId.with(0x1f), "1f");
     }
 
     // ParseString............................................................................................................
@@ -143,13 +134,6 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     @Override
     public Class<SpreadsheetId> type() {
         return SpreadsheetId.class;
-    }
-
-    // HasHateosLinkTesting.............................................................................................
-
-    @Override
-    public SpreadsheetId createHasHateosLinkId() {
-        return this.createObject();
     }
 
     // JsonNodeMappingTesting...............................................................................................

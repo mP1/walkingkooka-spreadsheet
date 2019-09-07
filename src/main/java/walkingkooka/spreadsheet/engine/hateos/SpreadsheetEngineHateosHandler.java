@@ -19,9 +19,7 @@ package walkingkooka.spreadsheet.engine.hateos;
 
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
-import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.net.http.server.hateos.HateosHandler;
-import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
@@ -33,8 +31,8 @@ import java.util.Optional;
 /**
  * An abstract {@link HateosHandler} that includes uses a {@link SpreadsheetEngine} and {@link SpreadsheetEngineContext} to do things.
  */
-abstract class SpreadsheetEngineHateosHandler<I extends Comparable<I> & HasHateosLinkId>
-        implements HateosHandler<I, SpreadsheetDelta<Optional<I>>, SpreadsheetDelta<Range<I>>> {
+abstract class SpreadsheetEngineHateosHandler<I extends Comparable<I>>
+        implements HateosHandler<I, SpreadsheetDelta, SpreadsheetDelta> {
 
     /**
      * Checks required factory method parameters are not null.
@@ -101,14 +99,14 @@ abstract class SpreadsheetEngineHateosHandler<I extends Comparable<I> & HasHateo
     /**
      * Complains if the resource is null.
      */
-    final void checkResource(final Optional<? extends HateosResource<?>> resource) {
+    final void checkResource(final Optional<?> resource) {
         Objects.requireNonNull(resource, "resource");
     }
 
     /**
      * Complains if the resource is null or present.
      */
-    final void checkResourceEmpty(final Optional<? extends HateosResource<?>> resource) {
+    final void checkResourceEmpty(final Optional<?> resource) {
         checkResource(resource);
         resource.ifPresent((r) -> {
             throw new IllegalArgumentException("Resource not allowed=" + r);
@@ -118,23 +116,23 @@ abstract class SpreadsheetEngineHateosHandler<I extends Comparable<I> & HasHateo
     /**
      * Complains if the resource is absent.
      */
-    final <T extends HateosResource<?>> T checkResourceNotEmpty(final Optional<T> resource) {
+    final <T> T checkResourceNotEmpty(final Optional<T> resource) {
         checkResource(resource);
         return resource.orElseThrow(() -> new IllegalArgumentException("Required resource missing"));
     }
 
-    static <I> void checkWithoutCells(final Optional<SpreadsheetDelta<I>> delta) {
+    static void checkWithoutCells(final Optional<SpreadsheetDelta> delta) {
         delta.ifPresent(SpreadsheetEngineHateosHandler::checkWithoutCells0);
     }
 
-    private static <I> void checkWithoutCells0(final SpreadsheetDelta<I> delta) {
+    private static void checkWithoutCells0(final SpreadsheetDelta delta) {
         if (!delta.cells().isEmpty()) {
             throw new IllegalArgumentException("Expected delta without cells: " + delta);
         }
     }
 
-    static <I> SpreadsheetDelta<I> applyWindow(final SpreadsheetDelta<I> out,
-                                               final Optional<SpreadsheetDelta<I>> in) {
+    static SpreadsheetDelta applyWindow(final SpreadsheetDelta out,
+                                               final Optional<SpreadsheetDelta> in) {
         return in.map(d -> d.setCells(out.cells()))
                 .orElse(out);
     }

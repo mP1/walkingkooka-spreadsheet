@@ -22,7 +22,6 @@ import walkingkooka.Value;
 import walkingkooka.compare.Range;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
@@ -50,8 +49,7 @@ import java.util.function.IntFunction;
  */
 abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColumnOrRowReference<R>> implements Value<Integer>,
         Comparable<R>,
-        HashCodeEqualsDefined,
-        HasHateosLinkId {
+        HashCodeEqualsDefined {
 
     /**
      * Creates a new {@link SpreadsheetColumn}

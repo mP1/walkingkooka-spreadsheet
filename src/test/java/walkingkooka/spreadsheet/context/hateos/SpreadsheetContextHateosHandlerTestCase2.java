@@ -18,23 +18,18 @@
 package walkingkooka.spreadsheet.context.hateos;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.compare.Range;
-import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.net.http.server.hateos.HateosHandlerTesting;
-import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.context.SpreadsheetContext;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetContextHateosHandlerTestCase2<H extends SpreadsheetContextHateosHandler<I, R, S>,
-        I extends Comparable<I> & HasHateosLinkId,
-        R extends HateosResource<Optional<I>>,
-        S extends HateosResource<Range<I>>>
+public abstract class SpreadsheetContextHateosHandlerTestCase2<H extends SpreadsheetContextHateosHandler<I, V, C>,
+        I extends Comparable<I>,
+        V,
+        C>
         extends SpreadsheetContextHateosHandlerTestCase<H>
-        implements HateosHandlerTesting<H, I, R, S> {
+        implements HateosHandlerTesting<H, I, V, C> {
 
     SpreadsheetContextHateosHandlerTestCase2() {
         super();

@@ -40,7 +40,7 @@ import java.util.Optional;
  */
 public final class SpreadsheetCell implements HashCodeEqualsDefined,
         Comparable<SpreadsheetCell>,
-        HateosResource<Optional<SpreadsheetCellReference>>,
+        HateosResource<SpreadsheetCellReference>,
         UsesToStringBuilder {
 
     /**

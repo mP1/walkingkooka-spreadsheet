@@ -17,13 +17,11 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.convert.Converters;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.ToJsonNodeContext;
 
 import java.util.Objects;
-import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 
 /**

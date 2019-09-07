@@ -21,7 +21,6 @@ import walkingkooka.Cast;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
 
-import java.util.Objects;
 import java.util.Optional;
 
 /**

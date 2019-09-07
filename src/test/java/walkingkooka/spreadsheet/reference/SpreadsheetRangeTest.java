@@ -809,33 +809,6 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
         this.parseStringAndCheck("A1:A2", SpreadsheetRange.with(SpreadsheetExpressionReference.parseCellReference("A1").range(SpreadsheetExpressionReference.parseCellReference("A2"))));
     }
 
-    // JsonNodeMappingTesting.......................................................................................
-
-    @Test
-    public void testHateosLinkIdSingle() {
-        this.hateosLinkIdAndCheck(SpreadsheetRange.parseRange("A1"), "A1");
-    }
-
-    @Test
-    public void testHateosLinkIdSingleAbsolute() {
-        this.hateosLinkIdAndCheck(SpreadsheetRange.parseRange("$A$1"), "A1");
-    }
-
-    @Test
-    public void testHateosLinkIdRangeAbsolute() {
-        this.hateosLinkIdAndCheck(SpreadsheetRange.parseRange("$C$3:$D$7"), "C3-D7");
-    }
-
-    @Test
-    public void testHateosLinkIdRangeMixedAbsoluteAndRelative() {
-        this.hateosLinkIdAndCheck(SpreadsheetRange.parseRange("$D4:E$5"), "D4-E5");
-    }
-
-    @Test
-    public void testHateosLinkIdRangeRelative() {
-        this.hateosLinkIdAndCheck(SpreadsheetRange.parseRange("B2:C9"), "B2-C9");
-    }
-
     // JsonNodeMappingTesting...............................................................................................
 
     @Test

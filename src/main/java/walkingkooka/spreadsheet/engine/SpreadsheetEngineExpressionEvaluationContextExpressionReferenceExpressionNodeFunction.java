@@ -34,7 +34,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
- * A {@link Function} which may be passed to {@link walkingkooka.tree.expression.ExpressionEvaluationContexts#basic(BiFunction, Function, MathContext, Converter, walkingkooka.math.DecimalNumberContext)}
+ * A {@link Function} which may be passed to {@link walkingkooka.tree.expression.ExpressionEvaluationContexts#basic}
  * and acts as a bridge resolving {@link ExpressionReference} to a {@link ExpressionNode}.
  */
 final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction implements Function<ExpressionReference, Optional<ExpressionNode>> {
@@ -69,7 +69,7 @@ final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpre
 
         final SpreadsheetCellReference cellReference = SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunctionSpreadsheetExpressionReferenceVisitor.reference(reference, this.labelStore);
 
-        final SpreadsheetDelta<Optional<SpreadsheetCellReference>> delta = this.engine.loadCell(cellReference,
+        final SpreadsheetDelta delta = this.engine.loadCell(cellReference,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 this.context);
 

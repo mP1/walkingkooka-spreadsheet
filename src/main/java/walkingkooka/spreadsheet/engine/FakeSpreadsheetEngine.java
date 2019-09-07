@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.compare.Range;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -38,69 +37,69 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public SpreadsheetDelta<Optional<SpreadsheetCellReference>> loadCell(final SpreadsheetCellReference cell,
-                                                                         final SpreadsheetEngineEvaluation evaluation,
-                                                                         final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta loadCell(final SpreadsheetCellReference cell,
+                                     final SpreadsheetEngineEvaluation evaluation,
+                                     final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public SpreadsheetDelta<Optional<SpreadsheetCellReference>> saveCell(final SpreadsheetCell cell,
-                                                                         final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta saveCell(final SpreadsheetCell cell,
+                                     final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public SpreadsheetDelta<Optional<SpreadsheetCellReference>> deleteCell(final SpreadsheetCellReference cell,
-                                                                           final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta deleteCell(final SpreadsheetCellReference cell,
+                                       final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public SpreadsheetDelta<Range<SpreadsheetColumnReference>> deleteColumns(final SpreadsheetColumnReference column,
-                                                                             final int count,
-                                                                             final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta deleteColumns(final SpreadsheetColumnReference column,
+                                          final int count,
+                                          final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public SpreadsheetDelta<Range<SpreadsheetRowReference>> deleteRows(final SpreadsheetRowReference row,
-                                                                       final int count,
-                                                                       final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta deleteRows(final SpreadsheetRowReference row,
+                                       final int count,
+                                       final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public SpreadsheetDelta<Range<SpreadsheetColumnReference>> insertColumns(final SpreadsheetColumnReference column,
-                                                                             final int count,
-                                                                             final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta insertColumns(final SpreadsheetColumnReference column,
+                                          final int count,
+                                          final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public SpreadsheetDelta<Range<SpreadsheetRowReference>> insertRows(final SpreadsheetRowReference row,
-                                                                       final int count,
-                                                                       final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta insertRows(final SpreadsheetRowReference row,
+                                       final int count,
+                                       final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public SpreadsheetDelta<Range<SpreadsheetCellReference>> fillCells(final Collection<SpreadsheetCell> cells,
-                                                                       final SpreadsheetRange from,
-                                                                       final SpreadsheetRange to,
-                                                                       final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta fillCells(final Collection<SpreadsheetCell> cells,
+                                      final SpreadsheetRange from,
+                                      final SpreadsheetRange to,
+                                      final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public SpreadsheetDelta<Optional<SpreadsheetLabelName>> saveLabel(final SpreadsheetLabelMapping mapping,
-                                                                      final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta saveLabel(final SpreadsheetLabelMapping mapping,
+                                      final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public SpreadsheetDelta<Optional<SpreadsheetLabelName>> removeLabel(final SpreadsheetLabelName label,
-                                                                        final SpreadsheetEngineContext context) {
+    public SpreadsheetDelta removeLabel(final SpreadsheetLabelName label,
+                                        final SpreadsheetEngineContext context) {
         throw new UnsupportedOperationException();
     }
 
