@@ -78,20 +78,20 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
         this.handleAndCheck(SpreadsheetEngineLoadCellHateosHandler.with(EVALUATION,
                 new FakeSpreadsheetEngine() {
                     @Override
-                    public SpreadsheetDelta<Optional<SpreadsheetCellReference>> loadCell(final SpreadsheetCellReference cell,
+                    public SpreadsheetDelta loadCell(final SpreadsheetCellReference cell,
                                                                                          final SpreadsheetEngineEvaluation evaluation,
                                                                                          final SpreadsheetEngineContext context) {
                         assertSame(EVALUATION, evaluation, "evaluation");
                         assertNotNull(context, "context");
 
-                        return SpreadsheetDelta.withId(Optional.of(cell), cells());
+                        return SpreadsheetDelta.with(cells());
                     }
                 },
                 this.engineContext()),
                 id,
-                Optional.of(SpreadsheetDelta.withId(id, SpreadsheetDelta.NO_CELLS).setWindow(window)),
+                Optional.of(SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS).setWindow(window)),
                 this.parameters(),
-                Optional.of(SpreadsheetDelta.withId(this.id(), this.cellsWithinWindow()).setWindow(window)));
+                Optional.of(SpreadsheetDelta.with(this.cellsWithinWindow()).setWindow(window)));
     }
 
     // handleCollection.................................................................................................
@@ -109,7 +109,7 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
         final SpreadsheetCell c2 = this.c2();
         final SpreadsheetCell c3 = this.c3();
 
-        final Map<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>> cellToDelta = Maps.sorted(SpreadsheetCellReference.COMPARATOR);
+        final Map<SpreadsheetCellReference, SpreadsheetDelta> cellToDelta = Maps.sorted(SpreadsheetCellReference.COMPARATOR);
         cellToDelta.put(b1.reference(), this.delta(b1));
         cellToDelta.put(b2.reference(), this.delta(b2));
         cellToDelta.put(b3.reference(), this.delta(b3));
@@ -134,7 +134,7 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
         final SpreadsheetCell c2 = this.c2();
         final SpreadsheetCell c3 = this.c3();
 
-        final Map<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>> cellToDelta = Maps.sorted(SpreadsheetCellReference.COMPARATOR);
+        final Map<SpreadsheetCellReference, SpreadsheetDelta> cellToDelta = Maps.sorted(SpreadsheetCellReference.COMPARATOR);
         cellToDelta.put(b1.reference(), this.delta(b1));
         cellToDelta.put(b2.reference(), this.delta(b2));
         cellToDelta.put(b3.reference(), this.delta(b3));
@@ -156,11 +156,11 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
         final SpreadsheetCellReference c2 = this.c2().reference();
         final SpreadsheetCellReference c3 = this.c3().reference();
 
-        final Map<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>> cellToDelta = Maps.sorted(SpreadsheetCellReference.COMPARATOR);
+        final Map<SpreadsheetCellReference, SpreadsheetDelta> cellToDelta = Maps.sorted(SpreadsheetCellReference.COMPARATOR);
         cellToDelta.put(b1.reference(), this.delta(b1, b2, b3));
-        cellToDelta.put(c1, this.delta(c1));
-        cellToDelta.put(c2, this.delta(c2));
-        cellToDelta.put(c3, this.delta(c3));
+        cellToDelta.put(c1, this.delta());
+        cellToDelta.put(c2, this.delta());
+        cellToDelta.put(c3, this.delta());
 
         this.handleCollectionAndCheck2(cellToDelta, this.result(b1, b2, b3));
     }
@@ -175,7 +175,7 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
         final SpreadsheetCell c2 = this.c2();
         final SpreadsheetCell c3 = this.c3();
 
-        final Map<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>> cellToDelta = Maps.sorted(SpreadsheetCellReference.COMPARATOR);
+        final Map<SpreadsheetCellReference, SpreadsheetDelta> cellToDelta = Maps.sorted(SpreadsheetCellReference.COMPARATOR);
         cellToDelta.put(b1.reference(), this.delta(b1, b2, c3));
         cellToDelta.put(b3.reference(), this.delta(b3));
         cellToDelta.put(c1.reference(), this.delta(c1, c2));
@@ -195,7 +195,7 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
         final SpreadsheetCell c2 = this.c2();
         final SpreadsheetCell c3 = this.c3();
 
-        final Map<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>> cellToDelta = Maps.sorted(SpreadsheetCellReference.COMPARATOR);
+        final Map<SpreadsheetCellReference, SpreadsheetDelta> cellToDelta = Maps.sorted(SpreadsheetCellReference.COMPARATOR);
         cellToDelta.put(b1.reference(), this.delta(b1, b2, b3, z99));
         cellToDelta.put(c1.reference(), this.delta(c1, c2, c3));
 
@@ -214,27 +214,27 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
         final SpreadsheetCellReference c2 = this.c2().reference();
         final SpreadsheetCellReference c3 = this.c3().reference();
 
-        final Map<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>> cellToDelta = Maps.sorted(SpreadsheetCellReference.COMPARATOR);
+        final Map<SpreadsheetCellReference, SpreadsheetDelta> cellToDelta = Maps.sorted(SpreadsheetCellReference.COMPARATOR);
         cellToDelta.put(b1.reference(), this.delta(b1, b2, b3, z99));
-        cellToDelta.put(c1, this.delta(c1));
-        cellToDelta.put(c2, this.delta(c2));
-        cellToDelta.put(c3, this.delta(c3));
+        cellToDelta.put(c1, this.delta());
+        cellToDelta.put(c2, this.delta());
+        cellToDelta.put(c3, this.delta());
 
         this.handleCollectionAndCheck2(cellToDelta, this.result(b1, b2, b3, z99));
     }
 
-    private void handleCollectionAndCheck2(final Map<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>> cellToDelta,
-                                           final Optional<SpreadsheetDelta<Range<SpreadsheetCellReference>>> result) {
+    private void handleCollectionAndCheck2(final Map<SpreadsheetCellReference, SpreadsheetDelta> cellToDelta,
+                                           final Optional<SpreadsheetDelta> result) {
         final SpreadsheetEngineLoadCellHateosHandler handler = SpreadsheetEngineLoadCellHateosHandler.with(EVALUATION,
                 new FakeSpreadsheetEngine() {
                     @Override
-                    public SpreadsheetDelta<Optional<SpreadsheetCellReference>> loadCell(final SpreadsheetCellReference cell,
+                    public SpreadsheetDelta loadCell(final SpreadsheetCellReference cell,
                                                                                          final SpreadsheetEngineEvaluation evaluation,
                                                                                          final SpreadsheetEngineContext context) {
                         assertSame(EVALUATION, evaluation, "evaluation");
                         assertNotNull(context, "context");
 
-                        final SpreadsheetDelta<Optional<SpreadsheetCellReference>> delta = cellToDelta.remove(cell);
+                        final SpreadsheetDelta delta = cellToDelta.remove(cell);
                         assertNotEquals(null, delta, () -> "unexpected cell load " + cell + " outstanding cells: " + cellToDelta.keySet());
                         return delta;
                     }
@@ -273,7 +273,7 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
         this.handleCollectionAndCheck(SpreadsheetEngineLoadCellHateosHandler.with(EVALUATION,
                 new FakeSpreadsheetEngine() {
                     @Override
-                    public SpreadsheetDelta<Optional<SpreadsheetCellReference>> loadCell(final SpreadsheetCellReference cell,
+                    public SpreadsheetDelta loadCell(final SpreadsheetCellReference cell,
                                                                                          final SpreadsheetEngineEvaluation evaluation,
                                                                                          final SpreadsheetEngineContext context) {
                         assertSame(EVALUATION, evaluation, "evaluation");
@@ -284,14 +284,14 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
                                 .findFirst()
                                 .orElseThrow(() -> new AssertionError("Unable to find cell " + cell));
 
-                        return SpreadsheetDelta.withId(Optional.of(cell), Sets.of(loaded, cellOutsideWindow()));
+                        return SpreadsheetDelta.with(Sets.of(loaded, cellOutsideWindow()));
                     }
                 },
                 this.engineContext()),
                 range,
-                Optional.of(SpreadsheetDelta.withRange(range, SpreadsheetDelta.NO_CELLS).setWindow(window)),
+                Optional.of(SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS).setWindow(window)),
                 this.parameters(),
-                Optional.of(SpreadsheetDelta.withRange(range, Sets.of(b1, b2, b3, c1, c2, c3)).setWindow(window)));
+                Optional.of(SpreadsheetDelta.with(Sets.of(b1, b2, b3, c1, c2, c3)).setWindow(window)));
     }
 
     private SpreadsheetCell b1() {
@@ -322,22 +322,12 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
         return this.cell("z99", "99");
     }
 
-    private SpreadsheetDelta<Optional<SpreadsheetCellReference>> delta(final SpreadsheetCellReference cellReference) {
-        return SpreadsheetDelta.withId(Optional.of(cellReference),
-                SpreadsheetDelta.NO_CELLS);
+    private SpreadsheetDelta delta(final SpreadsheetCell... cells) {
+        return SpreadsheetDelta.with(Sets.of(cells));
     }
 
-    private SpreadsheetDelta<Optional<SpreadsheetCellReference>> delta(final SpreadsheetCell load,
-                                                                       final SpreadsheetCell... additional) {
-        final Set<SpreadsheetCell> cells = Sets.ordered();
-        cells.add(load);
-        cells.addAll(Lists.of(additional));
-
-        return SpreadsheetDelta.withId(load.id(), cells);
-    }
-
-    private Optional<SpreadsheetDelta<Range<SpreadsheetCellReference>>> result(final SpreadsheetCell... cells) {
-        return Optional.of(SpreadsheetDelta.withRange(this.collection(), Sets.of(cells)));
+    private Optional<SpreadsheetDelta> result(final SpreadsheetCell... cells) {
+        return Optional.of(SpreadsheetDelta.with(Sets.of(cells)));
     }
 
     // toString.........................................................................................................
@@ -370,12 +360,12 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
     }
 
     @Override
-    public Optional<SpreadsheetDelta<Optional<SpreadsheetCellReference>>> resource() {
+    public Optional<SpreadsheetDelta> resource() {
         return Optional.empty();
     }
 
     @Override
-    public Optional<SpreadsheetDelta<Range<SpreadsheetCellReference>>> collectionResource() {
+    public Optional<SpreadsheetDelta> collectionResource() {
         return Optional.empty();
     }
 
@@ -388,7 +378,7 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
     SpreadsheetEngine engine() {
         return new FakeSpreadsheetEngine() {
             @Override
-            public SpreadsheetDelta<Optional<SpreadsheetCellReference>> loadCell(final SpreadsheetCellReference id,
+            public SpreadsheetDelta loadCell(final SpreadsheetCellReference id,
                                                                                  final SpreadsheetEngineEvaluation evaluation,
                                                                                  final SpreadsheetEngineContext context) {
                 Objects.requireNonNull(id, "id");
@@ -404,12 +394,12 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
         };
     }
 
-    private SpreadsheetDelta<Optional<SpreadsheetCellReference>> spreadsheetDelta() {
-        return SpreadsheetDelta.withId(this.id(), Sets.of(this.cell()));
+    private SpreadsheetDelta spreadsheetDelta() {
+        return SpreadsheetDelta.with(Sets.of(this.cell()));
     }
 
     @Override
     public Class<SpreadsheetEngineLoadCellHateosHandler> type() {
-        return Cast.to(SpreadsheetEngineLoadCellHateosHandler.class);
+        return SpreadsheetEngineLoadCellHateosHandler.class;
     }
 }

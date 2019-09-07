@@ -92,7 +92,7 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
         store.save(b);
         store.save(c);
 
-        this.idsAndCheck(ReadOnlySpreadsheetLabelStore.with(store), 0, 3, a.id(), b.id(), c.id());
+        this.idsAndCheck(ReadOnlySpreadsheetLabelStore.with(store), 0, 3, a.label(), b.label(), c.label());
     }
 
     @Override
@@ -111,7 +111,7 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
         store.save(b);
         store.save(c);
 
-        this.valuesAndCheck(ReadOnlySpreadsheetLabelStore.with(store), a.id(), 3, a, b, c);
+        this.valuesAndCheck(ReadOnlySpreadsheetLabelStore.with(store), a.label(), 3, a, b, c);
     }
 
     @Override

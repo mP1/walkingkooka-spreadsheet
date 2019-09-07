@@ -217,9 +217,6 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
         return false;
     }
 
-    // HasHateosLink....................................................................................................
-
-    @Override
     public String hateosLinkId() {
         return this.column.hateosLinkId() + this.row.hateosLinkId();
     }

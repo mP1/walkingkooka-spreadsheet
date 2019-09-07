@@ -30,7 +30,6 @@ import walkingkooka.datetime.HasDateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.HasDecimalNumberContext;
 import walkingkooka.math.HasMathContext;
-import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
@@ -68,10 +67,9 @@ public abstract class SpreadsheetMetadata implements HasConverter,
         HasDateTimeContext,
         HasDecimalNumberContext,
         HashCodeEqualsDefined,
-        HasHateosLinkId,
         HasMathContext,
         HasSpreadsheetFormatter,
-        HateosResource<Optional<SpreadsheetId>>,
+        HateosResource<SpreadsheetId>,
         Value<Map<SpreadsheetMetadataPropertyName<?>, Object>> {
 
     /**

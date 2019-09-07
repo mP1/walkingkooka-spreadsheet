@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.context.hateos;
 import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosHandler;
-import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.context.SpreadsheetContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -34,7 +33,7 @@ import java.util.Optional;
  */
 abstract class SpreadsheetContextSpreadsheetMetadataStoreHateosHandler extends SpreadsheetContextHateosHandler<SpreadsheetId,
         SpreadsheetMetadata,
-        HateosResource<Range<SpreadsheetId>>> {
+        SpreadsheetMetadata> {
 
     SpreadsheetContextSpreadsheetMetadataStoreHateosHandler(final SpreadsheetContext context,
                                                             final Store<SpreadsheetId, SpreadsheetMetadata> store) {
@@ -45,8 +44,8 @@ abstract class SpreadsheetContextSpreadsheetMetadataStoreHateosHandler extends S
     final Store<SpreadsheetId, SpreadsheetMetadata> store;
 
     @Override
-    public final Optional<HateosResource<Range<SpreadsheetId>>> handleCollection(final Range<SpreadsheetId> ids,
-                                                                                 final Optional<HateosResource<Range<SpreadsheetId>>> value,
+    public final Optional<SpreadsheetMetadata> handleCollection(final Range<SpreadsheetId> ids,
+                                                                                 final Optional<SpreadsheetMetadata> value,
                                                                                  final Map<HttpRequestAttribute<?>, Object> parameters) {
         checkRangeNotNull(ids);
         checkResource(value);

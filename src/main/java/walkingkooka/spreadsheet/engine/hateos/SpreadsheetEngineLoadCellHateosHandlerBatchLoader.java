@@ -41,17 +41,19 @@ final class SpreadsheetEngineLoadCellHateosHandlerBatchLoader {
         this.handler = handler;
     }
 
-    SpreadsheetDelta<Range<SpreadsheetCellReference>> batchLoad(final Range<SpreadsheetCellReference> cells) {
+    SpreadsheetDelta batchLoad(final Range<SpreadsheetCellReference> cells) {
         SpreadsheetRange.with(cells).cellStream()
                 .forEach(this::maybeLoadCell);
         return this.referenceToCell.isEmpty() ?
                 null :
-                this.createDelta(cells);
+                SpreadsheetDelta.with(this.referenceToCell.values()
+                        .stream()
+                        .collect(Collectors.toSet()));
     }
 
     private void maybeLoadCell(final SpreadsheetCellReference reference) {
         if (false == this.referenceToCell.containsKey(reference)) {
-            final SpreadsheetDelta<Optional<SpreadsheetCellReference>> loaded = this.handler.loadCell(reference);
+            final SpreadsheetDelta loaded = this.handler.loadCell(reference);
             loaded.cells()
                     .stream()
                     .forEach(this::add);
@@ -60,13 +62,6 @@ final class SpreadsheetEngineLoadCellHateosHandlerBatchLoader {
 
     private void add(final SpreadsheetCell cell) {
         this.referenceToCell.put(cell.reference(), cell);
-    }
-
-    private SpreadsheetDelta<Range<SpreadsheetCellReference>> createDelta(final Range<SpreadsheetCellReference> cells) {
-        return SpreadsheetDelta.withRange(cells,
-                this.referenceToCell.values()
-                        .stream()
-                        .collect(Collectors.toSet()));
     }
 
     /**

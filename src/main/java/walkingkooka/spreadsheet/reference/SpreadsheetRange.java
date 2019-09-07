@@ -21,7 +21,6 @@ import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.compare.Comparators;
 import walkingkooka.compare.Range;
-import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.text.CharSequences;
 
@@ -279,16 +278,6 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference imple
     @Override
     public boolean isRange() {
         return true;
-    }
-
-    // HasHateosLinkId..................................................................................................
-
-    @Override
-    public String hateosLinkId() {
-        final String begin = this.begin().hateosLinkId();
-        return this.isSingleCell() ?
-                begin :
-                begin + HasHateosLinkId.HATEOS_LINK_RANGE_SEPARATOR + this.end().hateosLinkId();
     }
 
     // SpreadsheetExpressionReferenceVisitor............................................................................

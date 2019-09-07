@@ -198,10 +198,6 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     public void testHateosRouterThenSaveThenLoadClearValueErrorSkipEvaluate() {
         this.hateosRouterThenSaveThenLoadAndCheck(SpreadsheetEngineEvaluation.CLEAR_VALUE_ERROR_SKIP_EVALUATE,
                 "{\n" +
-                        "  \"id\": {\n" +
-                        "    \"type\": \"spreadsheet-cell-reference\",\n" +
-                        "    \"value\": \"B2\"\n" +
-                        "  },\n" +
                         "  \"cells\": [{\n" +
                         "    \"reference\": \"B2\",\n" +
                         "    \"formula\": {\n" +
@@ -225,10 +221,6 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     public void testHateosRouterThenSaveThenLoadComputeIfNecessary() {
         this.hateosRouterThenSaveThenLoadAndCheck(SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 "{\n" +
-                        "  \"id\": {\n" +
-                        "    \"type\": \"spreadsheet-cell-reference\",\n" +
-                        "    \"value\": \"B2\"\n" +
-                        "  },\n" +
                         "  \"cells\": [{\n" +
                         "    \"reference\": \"B2\",\n" +
                         "    \"formula\": {\n" +
@@ -260,10 +252,6 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     public void testHateosRouterThenSaveThenLoadForceRecompute() {
         this.hateosRouterThenSaveThenLoadAndCheck(SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
                 "{\n" +
-                        "  \"id\": {\n" +
-                        "    \"type\": \"spreadsheet-cell-reference\",\n" +
-                        "    \"value\": \"B2\"\n" +
-                        "  },\n" +
                         "  \"cells\": [{\n" +
                         "    \"reference\": \"B2\",\n" +
                         "    \"formula\": {\n" +
@@ -295,10 +283,6 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     public void testHateosRouterThenSaveThenLoadSkipEvaluate() {
         this.hateosRouterThenSaveThenLoadAndCheck(SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 "{\n" +
-                        "  \"id\": {\n" +
-                        "    \"type\": \"spreadsheet-cell-reference\",\n" +
-                        "    \"value\": \"B2\"\n" +
-                        "  },\n" +
                         "  \"cells\": [{\n" +
                         "    \"reference\": \"B2\",\n" +
                         "    \"formula\": {\n" +
@@ -361,7 +345,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
                 @Override
                 public byte[] body() {
-                    return toJsonNodeContext().toJsonNode(SpreadsheetDelta.withId(Optional.of(cellReference), Sets.of(cell)))
+                    return toJsonNodeContext().toJsonNode(SpreadsheetDelta.with(Sets.of(cell)))
                             .toString()
                             .getBytes(utf8);
                 }
