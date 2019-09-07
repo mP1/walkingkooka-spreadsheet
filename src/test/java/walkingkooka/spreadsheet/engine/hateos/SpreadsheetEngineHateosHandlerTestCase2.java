@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Range;
-import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.net.http.server.hateos.HateosHandlerTesting;
 import walkingkooka.predicate.PredicateTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -40,9 +39,9 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetEngineHateosHandlerTestCase2<H extends SpreadsheetEngineHateosHandler<I>,
-        I extends Comparable<I> & HasHateosLinkId>
+        I extends Comparable<I>>
         extends SpreadsheetEngineHateosHandlerTestCase<H>
-        implements HateosHandlerTesting<H, I, SpreadsheetDelta<Optional<I>>, SpreadsheetDelta<Range<I>>>,
+        implements HateosHandlerTesting<H, I, SpreadsheetDelta, SpreadsheetDelta>,
         PredicateTesting {
 
     SpreadsheetEngineHateosHandlerTestCase2() {

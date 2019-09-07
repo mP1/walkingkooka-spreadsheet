@@ -48,12 +48,12 @@ final class SpreadsheetEngineSaveCellHateosHandler extends SpreadsheetEngineHate
     }
 
     @Override
-    public Optional<SpreadsheetDelta<Optional<SpreadsheetCellReference>>> handle(final Optional<SpreadsheetCellReference> id,
-                                                                                 final Optional<SpreadsheetDelta<Optional<SpreadsheetCellReference>>> resource,
+    public Optional<SpreadsheetDelta> handle(final Optional<SpreadsheetCellReference> id,
+                                                                                 final Optional<SpreadsheetDelta> resource,
                                                                                  final Map<HttpRequestAttribute<?>, Object> parameters) {
         this.checkIdNotNull(id);
 
-        final SpreadsheetDelta<Optional<SpreadsheetCellReference>> delta = this.checkResourceNotEmpty(resource);
+        final SpreadsheetDelta delta = this.checkResourceNotEmpty(resource);
         final Set<SpreadsheetCell> cells = delta.cells();
         if (cells.size() != 1) {
             throw new IllegalArgumentException("Expected 1 cell got " + cells.size());
@@ -65,11 +65,11 @@ final class SpreadsheetEngineSaveCellHateosHandler extends SpreadsheetEngineHate
     }
 
     @Override
-    public Optional<SpreadsheetDelta<Range<SpreadsheetCellReference>>> handleCollection(final Range<SpreadsheetCellReference> ids,
-                                                                                        final Optional<SpreadsheetDelta<Range<SpreadsheetCellReference>>> resource,
+    public Optional<SpreadsheetDelta> handleCollection(final Range<SpreadsheetCellReference> ids,
+                                                                                        final Optional<SpreadsheetDelta> resource,
                                                                                         final Map<HttpRequestAttribute<?>, Object> parameters) {
         final SpreadsheetRange range = SpreadsheetRange.with(ids);
-        final SpreadsheetDelta<Range<SpreadsheetCellReference>> delta = this.checkResourceNotEmpty(resource);
+        final SpreadsheetDelta delta = this.checkResourceNotEmpty(resource);
         this.checkParameters(parameters);
 
         return Optional.of(this.engine.fillCells(delta.cells(),

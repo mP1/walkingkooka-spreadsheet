@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta<I>, I> implements ClassTesting2<D> {
+public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> implements ClassTesting2<D> {
 
     SpreadsheetDeltaTestCase() {
         super();
@@ -71,19 +71,15 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta<I>, I>
         return SpreadsheetCell.with(SpreadsheetExpressionReference.parseCellReference(cellReference), SpreadsheetFormula.with(formulaText));
     }
 
-    final <II> void checkId(final SpreadsheetDelta<II> delta, final II id) {
-        assertEquals(id, delta.id(), "id");
-    }
-
-    final void checkCells(final SpreadsheetDelta<?> delta) {
+    final void checkCells(final SpreadsheetDelta delta) {
         this.checkCells(delta, this.cells());
     }
 
-    final void checkCells(final SpreadsheetDelta<?> delta, final Set<SpreadsheetCell> cells) {
+    final void checkCells(final SpreadsheetDelta delta, final Set<SpreadsheetCell> cells) {
         assertEquals(cells, delta.cells(), "cells");
     }
 
-    final void checkWindow(final SpreadsheetDelta<?> delta, final List<SpreadsheetRange> window) {
+    final void checkWindow(final SpreadsheetDelta delta, final List<SpreadsheetRange> window) {
         assertEquals(window, delta.window(), "window");
     }
 

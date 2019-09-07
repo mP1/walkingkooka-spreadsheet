@@ -69,13 +69,6 @@ public final class Group extends Identity<GroupId> {
 
     private final GroupName name;
 
-    // HateosResource...................................................................................................
-
-    @Override
-    public String hateosLinkId() {
-        return this.name.value().replace("-", "\\-");
-    }
-
     // JsonNodeContext..................................................................................................
 
     static Group fromJsonNode(final JsonNode node,

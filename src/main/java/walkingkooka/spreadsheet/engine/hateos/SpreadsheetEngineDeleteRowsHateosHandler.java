@@ -46,7 +46,7 @@ final class SpreadsheetEngineDeleteRowsHateosHandler extends SpreadsheetEngineDe
     }
 
     @Override
-    SpreadsheetDelta<Range<SpreadsheetRowReference>> execute(final SpreadsheetRowReference row, final int count) {
+    SpreadsheetDelta execute(final SpreadsheetRowReference row, final int count) {
         return this.engine.deleteRows(row, count, this.context);
     }
 

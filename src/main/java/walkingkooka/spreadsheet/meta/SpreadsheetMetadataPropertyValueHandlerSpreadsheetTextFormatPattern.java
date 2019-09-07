@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 
 /**
  * A {@link SpreadsheetMetadataPropertyValueHandler} for valid {@link SpreadsheetTextFormatPattern pattern}.

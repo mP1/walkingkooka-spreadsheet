@@ -29,7 +29,6 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.context.SpreadsheetContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.store.Store;
-import walkingkooka.tree.Node;
 import walkingkooka.type.PublicStaticHelper;
 
 import java.util.function.BiConsumer;
@@ -42,26 +41,26 @@ public final class SpreadsheetContextHateosHandlers implements PublicStaticHelpe
     /**
      * {@see SpreadsheetContextCreateAndSaveMetadataHateosHandler}
      */
-    public static HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> createAndSaveMetadata(final SpreadsheetContext context,
-                                                                                                                                final Store<SpreadsheetId, SpreadsheetMetadata> store) {
+    public static HateosHandler<SpreadsheetId, SpreadsheetMetadata, SpreadsheetMetadata> createAndSaveMetadata(final SpreadsheetContext context,
+                                                                                                               final Store<SpreadsheetId, SpreadsheetMetadata> store) {
         return SpreadsheetContextCreateAndSaveMetadataHateosHandler.with(context, store);
     }
 
     /**
      * {@see SpreadsheetContextLoadMetadataHateosHandler}
      */
-    public static HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> loadMetadata(final SpreadsheetContext context,
-                                                                                                                       final Store<SpreadsheetId, SpreadsheetMetadata> store) {
+    public static HateosHandler<SpreadsheetId, SpreadsheetMetadata, SpreadsheetMetadata> loadMetadata(final SpreadsheetContext context,
+                                                                                                      final Store<SpreadsheetId, SpreadsheetMetadata> store) {
         return SpreadsheetContextLoadMetadataHateosHandler.with(context, store);
     }
 
     /**
      * {@see SpreadsheetContextHateosHandlersRouter}
      */
-    public static <N extends Node<N, ?, ?, ?>> Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> router(final AbsoluteUrl baseUrl,
-                                                                                                                             final HateosContentType contentType,
-                                                                                                                             final HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> createAndSaveMetadata,
-                                                                                                                             final HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> loadMetadata) {
+    public static Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> router(final AbsoluteUrl baseUrl,
+                                                                                                final HateosContentType contentType,
+                                                                                                final HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> createAndSaveMetadata,
+                                                                                                final HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> loadMetadata) {
         return SpreadsheetContextHateosHandlersRouter.with(baseUrl,
                 contentType,
                 createAndSaveMetadata,

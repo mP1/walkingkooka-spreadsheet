@@ -18,9 +18,9 @@
 package walkingkooka.spreadsheet.security;
 
 import walkingkooka.Cast;
+import walkingkooka.HasId;
 import walkingkooka.Value;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.JsonNodeName;
 
@@ -31,8 +31,8 @@ import java.util.Optional;
  * Base class for all security related identifies
  */
 public abstract class Identity<I extends IdentityId> implements Value<Optional<I>>,
-        HashCodeEqualsDefined,
-        HateosResource<Optional<I>> {
+        HasId<Optional<I>>,
+        HashCodeEqualsDefined {
 
     /**
      * Factory that creates a new {@link Group}.

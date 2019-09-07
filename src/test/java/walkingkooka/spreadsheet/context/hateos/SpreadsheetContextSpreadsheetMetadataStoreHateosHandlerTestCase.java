@@ -23,7 +23,6 @@ import walkingkooka.compare.Range;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosHandler;
-import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.context.SpreadsheetContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
@@ -42,7 +41,7 @@ public abstract class SpreadsheetContextSpreadsheetMetadataStoreHateosHandlerTes
         extends SpreadsheetContextHateosHandlerTestCase2<H,
         SpreadsheetId,
         SpreadsheetMetadata,
-        HateosResource<Range<SpreadsheetId>>> {
+        SpreadsheetMetadata> {
 
     @Test
     public final void testWithNullStoreFails() {
@@ -115,7 +114,7 @@ public abstract class SpreadsheetContextSpreadsheetMetadataStoreHateosHandlerTes
     }
 
     @Override
-    public final Optional<HateosResource<Range<SpreadsheetId>>> collectionResource() {
+    public final Optional<SpreadsheetMetadata> collectionResource() {
         return Optional.empty();
     }
 

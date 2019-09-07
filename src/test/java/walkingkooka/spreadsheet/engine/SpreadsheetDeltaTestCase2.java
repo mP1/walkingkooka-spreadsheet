@@ -20,12 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.compare.Range;
-import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ToStringTesting;
@@ -36,31 +31,25 @@ import walkingkooka.type.JavaVisibility;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta<I>, I> extends SpreadsheetDeltaTestCase<D, I>
+public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> extends SpreadsheetDeltaTestCase<D>
         implements HashCodeEqualsDefinedTesting<D>,
         JsonNodeMappingTesting<D>,
-        HateosResourceTesting<D>,
         ToStringTesting<D> {
-
-    final static Optional<SpreadsheetId> EMPTY_ID = Optional.empty();
 
     SpreadsheetDeltaTestCase2() {
         super();
-        assertNotEquals(this.id(), this.differentId(), "id() vs differentId() must NOT be equal");
     }
 
     @Test
     public final void testWindowReadOnly() {
-        final SpreadsheetDelta<I> delta = this.createSpreadsheetDelta()
+        final SpreadsheetDelta delta = this.createSpreadsheetDelta()
                 .setWindow(this.differentWindow());
         final List<SpreadsheetRange> window = delta.window();
 
@@ -84,40 +73,6 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta<I>, I
     }
 
     @Test
-    public final void testSetIdDifferent() {
-        final D delta = this.createSpreadsheetDelta();
-
-        final Optional<SpreadsheetCellReference> reference = Optional.of(SpreadsheetExpressionReference.parseCellReference("M99"));
-
-        final SpreadsheetDelta<Optional<SpreadsheetCellReference>> different = delta.setId(reference);
-        assertNotSame(delta, different);
-        this.checkId(different, reference);
-        this.checkCells(different, this.cells());
-        this.checkWindow(different, this.window());
-
-        this.checkId(delta);
-        this.checkCells(delta);
-        this.checkWindow(delta);
-    }
-
-    @Test
-    public final void testSetRangeDifferent() {
-        final D delta = this.createSpreadsheetDelta();
-
-        final Range<SpreadsheetCellReference> range = SpreadsheetExpressionReference.parseRange("M98:M99").range();
-
-        final SpreadsheetDelta<Range<SpreadsheetCellReference>> different = delta.setRange(range);
-        assertNotSame(delta, different);
-        this.checkId(different, range);
-        this.checkCells(different, this.cells());
-        this.checkWindow(different, this.window());
-
-        this.checkId(delta);
-        this.checkCells(delta);
-        this.checkWindow(delta);
-    }
-
-    @Test
     public final void testSetCellsSame() {
         final D delta = this.createSpreadsheetDelta();
         assertSame(delta, delta.setCells(this.cells()));
@@ -136,13 +91,11 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta<I>, I
         final List<SpreadsheetRange> window = this.window0("A1:Z9999");
         assertNotEquals(window, this.window());
 
-        final SpreadsheetDelta<I> different = delta.setWindow(window);
+        final SpreadsheetDelta different = delta.setWindow(window);
 
-        this.checkId(different);
         this.checkCells(different);
         this.checkWindow(different, window);
 
-        this.checkId(delta);
         this.checkCells(delta);
         this.checkWindow(delta);
     }
@@ -161,13 +114,11 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta<I>, I
         final D delta = this.createSpreadsheetDelta();
 
         final List<SpreadsheetRange> window = this.window0(range1, range2);
-        final SpreadsheetDelta<I> different = delta.setWindow(window);
+        final SpreadsheetDelta different = delta.setWindow(window);
 
-        this.checkId(different);
         this.checkCells(different, Sets.of(this.b2(), this.c3()));
         this.checkWindow(different, window);
 
-        this.checkId(delta);
         this.checkCells(delta, Sets.of(this.a1(), this.b2(), this.c3()));
         this.checkWindow(delta);
     }
@@ -175,34 +126,18 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta<I>, I
     // equals...........................................................................................................
 
     @Test
-    public final void testDifferentId() {
-        final I id = this.differentId();
-        assertNotEquals(id, this.id(), "different and id must be un equal");
-
-        this.checkNotEquals(this.createSpreadsheetDelta(id, this.cells()));
-    }
-
-    @Test
     public final void testDifferentCells() {
         final Set<SpreadsheetCell> cells = this.differentCells();
         assertNotEquals(this.cells(), cells, "cells and differentCells must be un equal");
 
-        this.checkNotEquals(this.createSpreadsheetDelta(this.id(), cells));
+        this.checkNotEquals(this.createSpreadsheetDelta(cells));
     }
 
     final D createSpreadsheetDelta() {
-        return this.createSpreadsheetDelta(this.id(), this.cells());
+        return this.createSpreadsheetDelta(this.cells());
     }
 
-    abstract D createSpreadsheetDelta(final I id, final Set<SpreadsheetCell> cells);
-
-    abstract I id();
-
-    abstract I differentId();
-
-    final void checkId(final SpreadsheetDelta<I> delta) {
-        this.checkId(delta, this.id());
-    }
+    abstract D createSpreadsheetDelta(final Set<SpreadsheetCell> cells);
 
     abstract List<SpreadsheetRange> window();
 
@@ -216,7 +151,7 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta<I>, I
                 .collect(Collectors.toList());
     }
 
-    final void checkWindow(final SpreadsheetDelta<I> delta) {
+    final void checkWindow(final SpreadsheetDelta delta) {
         this.checkWindow(delta, this.window());
     }
 
@@ -245,12 +180,5 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta<I>, I
     public final D fromJsonNode(final JsonNode jsonNode,
                                 final FromJsonNodeContext context) {
         return Cast.to(SpreadsheetDelta.fromJsonNode(jsonNode, context));
-    }
-
-    // HateosResource...................................................................................................
-
-    @Override
-    public final D createHateosResource() {
-        return this.createSpreadsheetDelta();
     }
 }

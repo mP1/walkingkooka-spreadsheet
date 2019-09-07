@@ -46,7 +46,7 @@ final class SpreadsheetEngineInsertColumnsHateosHandler extends SpreadsheetEngin
     }
 
     @Override
-    SpreadsheetDelta<Range<SpreadsheetColumnReference>> execute(final SpreadsheetColumnReference column, final int count) {
+    SpreadsheetDelta execute(final SpreadsheetColumnReference column, final int count) {
         return this.engine.insertColumns(column, count, this.context);
     }
 

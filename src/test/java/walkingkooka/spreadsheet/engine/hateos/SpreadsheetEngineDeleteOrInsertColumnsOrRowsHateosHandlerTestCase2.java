@@ -20,14 +20,13 @@ package walkingkooka.spreadsheet.engine.hateos;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.Range;
-import walkingkooka.net.http.server.hateos.HasHateosLinkId;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 
 import java.util.Optional;
 
 public abstract class SpreadsheetEngineDeleteOrInsertColumnsOrRowsHateosHandlerTestCase2<H extends SpreadsheetEngineDeleteOrInsertColumnsOrRowsHateosHandler<I>,
-        I extends SpreadsheetColumnOrRowReference<I> & HasHateosLinkId>
+        I extends SpreadsheetColumnOrRowReference<I>>
         extends SpreadsheetEngineHateosHandlerTestCase2<H, I> {
 
     SpreadsheetEngineDeleteOrInsertColumnsOrRowsHateosHandlerTestCase2() {
@@ -37,7 +36,7 @@ public abstract class SpreadsheetEngineDeleteOrInsertColumnsOrRowsHateosHandlerT
     @Test
     public final void testDeleteResourceWithCellsFails() {
         final Optional<I> id = this.id();
-        final Optional<SpreadsheetDelta<Optional<I>>> resource = Optional.of(SpreadsheetDelta.withId(id, Sets.of(this.cell())));
+        final Optional<SpreadsheetDelta> resource = Optional.of(SpreadsheetDelta.with(Sets.of(this.cell())));
         this.handleFails(id,
                 resource,
                 this.parameters(),
@@ -47,7 +46,7 @@ public abstract class SpreadsheetEngineDeleteOrInsertColumnsOrRowsHateosHandlerT
     @Test
     public final void testDeleteResourceCollectionWithCellsFails() {
         final Range<I> id = this.collection();
-        final Optional<SpreadsheetDelta<Range<I>>> resource = Optional.of(SpreadsheetDelta.withRange(id, Sets.of(this.cell())));
+        final Optional<SpreadsheetDelta> resource = Optional.of(SpreadsheetDelta.with(Sets.of(this.cell())));
         this.handleCollectionFails(id,
                 resource,
                 this.parameters(),

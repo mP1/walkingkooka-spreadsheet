@@ -252,35 +252,35 @@ public final class SpreadsheetEngineHateosHandlersRouterTest implements ClassTes
     private void routerFails(final AbsoluteUrl base,
                              final HateosContentType contentType,
                              final HateosHandler<SpreadsheetColumnReference,
-                                     SpreadsheetDelta<Optional<SpreadsheetColumnReference>>,
-                                     SpreadsheetDelta<Range<SpreadsheetColumnReference>>> deleteColumns,
+                                     SpreadsheetDelta,
+                                     SpreadsheetDelta> deleteColumns,
                              final HateosHandler<SpreadsheetRowReference,
-                                     SpreadsheetDelta<Optional<SpreadsheetRowReference>>,
-                                     SpreadsheetDelta<Range<SpreadsheetRowReference>>> deleteRows,
+                                     SpreadsheetDelta,
+                                     SpreadsheetDelta> deleteRows,
                              final HateosHandler<SpreadsheetCellReference,
-                                     SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-                                     SpreadsheetDelta<Range<SpreadsheetCellReference>>> fillCells,
+                                     SpreadsheetDelta,
+                                     SpreadsheetDelta> fillCells,
                              final HateosHandler<SpreadsheetColumnReference,
-                                     SpreadsheetDelta<Optional<SpreadsheetColumnReference>>,
-                                     SpreadsheetDelta<Range<SpreadsheetColumnReference>>> insertColumns,
+                                     SpreadsheetDelta,
+                                     SpreadsheetDelta> insertColumns,
                              final HateosHandler<SpreadsheetRowReference,
-                                     SpreadsheetDelta<Optional<SpreadsheetRowReference>>,
-                                     SpreadsheetDelta<Range<SpreadsheetRowReference>>> insertRows,
+                                     SpreadsheetDelta,
+                                     SpreadsheetDelta> insertRows,
                              final HateosHandler<SpreadsheetCellReference,
-                                     SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-                                     SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellClearValueErrorSkipEvaluate,
+                                     SpreadsheetDelta,
+                                     SpreadsheetDelta> loadCellClearValueErrorSkipEvaluate,
                              final HateosHandler<SpreadsheetCellReference,
-                                     SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-                                     SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellSkipEvaluate,
+                                     SpreadsheetDelta,
+                                     SpreadsheetDelta> loadCellSkipEvaluate,
                              final HateosHandler<SpreadsheetCellReference,
-                                     SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-                                     SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellForceRecompute,
+                                     SpreadsheetDelta,
+                                     SpreadsheetDelta> loadCellForceRecompute,
                              final HateosHandler<SpreadsheetCellReference,
-                                     SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-                                     SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellComputeIfNecessary,
+                                     SpreadsheetDelta,
+                                     SpreadsheetDelta> loadCellComputeIfNecessary,
                              final HateosHandler<SpreadsheetCellReference,
-                                     SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-                                     SpreadsheetDelta<Range<SpreadsheetCellReference>>> saveCell) {
+                                     SpreadsheetDelta,
+                                     SpreadsheetDelta> saveCell) {
         assertThrows(NullPointerException.class, () -> {
             SpreadsheetEngineHateosHandlersRouter.router(base,
                     contentType,
@@ -464,47 +464,47 @@ public final class SpreadsheetEngineHateosHandlersRouterTest implements ClassTes
                 ToJsonNodeContexts.basic());
     }
 
-    private HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta<Optional<SpreadsheetColumnReference>>, SpreadsheetDelta<Range<SpreadsheetColumnReference>>> deleteColumns() {
+    private HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta, SpreadsheetDelta> deleteColumns() {
         return SpreadsheetEngineHateosHandlers.deleteColumns(this.engine(), this.engineContext());
     }
 
-    private HateosHandler<SpreadsheetRowReference, SpreadsheetDelta<Optional<SpreadsheetRowReference>>, SpreadsheetDelta<Range<SpreadsheetRowReference>>> deleteRows() {
+    private HateosHandler<SpreadsheetRowReference, SpreadsheetDelta, SpreadsheetDelta> deleteRows() {
         return SpreadsheetEngineHateosHandlers.deleteRows(this.engine(), this.engineContext());
     }
 
-    private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>, SpreadsheetDelta<Range<SpreadsheetCellReference>>> fillCells() {
+    private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta, SpreadsheetDelta> fillCells() {
         return SpreadsheetEngineHateosHandlers.fillCells(this.engine(), this.engineContext());
     }
 
-    private HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta<Optional<SpreadsheetColumnReference>>, SpreadsheetDelta<Range<SpreadsheetColumnReference>>> insertColumns() {
+    private HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta, SpreadsheetDelta> insertColumns() {
         return SpreadsheetEngineHateosHandlers.insertColumns(this.engine(), this.engineContext());
     }
 
-    private HateosHandler<SpreadsheetRowReference, SpreadsheetDelta<Optional<SpreadsheetRowReference>>, SpreadsheetDelta<Range<SpreadsheetRowReference>>> insertRows() {
+    private HateosHandler<SpreadsheetRowReference, SpreadsheetDelta, SpreadsheetDelta> insertRows() {
         return SpreadsheetEngineHateosHandlers.insertRows(this.engine(), this.engineContext());
     }
 
-    private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>, SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellClearValueErrorSkipEvaluate() {
+    private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta, SpreadsheetDelta> loadCellClearValueErrorSkipEvaluate() {
         return this.loadCell(SpreadsheetEngineEvaluation.CLEAR_VALUE_ERROR_SKIP_EVALUATE);
     }
 
-    private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>, SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellComputeIfNecessary() {
+    private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta, SpreadsheetDelta> loadCellComputeIfNecessary() {
         return this.loadCell(SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY);
     }
 
-    private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>, SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellForceRecompute() {
+    private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta, SpreadsheetDelta> loadCellForceRecompute() {
         return this.loadCell(SpreadsheetEngineEvaluation.FORCE_RECOMPUTE);
     }
 
-    private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>, SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellSkipEvaluate() {
+    private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta, SpreadsheetDelta> loadCellSkipEvaluate() {
         return this.loadCell(SpreadsheetEngineEvaluation.SKIP_EVALUATE);
     }
 
-    private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>, SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCell(final SpreadsheetEngineEvaluation evaluation) {
+    private HateosHandler<SpreadsheetCellReference, SpreadsheetDelta, SpreadsheetDelta> loadCell(final SpreadsheetEngineEvaluation evaluation) {
         return SpreadsheetEngineHateosHandlers.loadCell(evaluation, this.engine(), this.engineContext());
     }
 
-    final HateosHandler<SpreadsheetCellReference, SpreadsheetDelta<Optional<SpreadsheetCellReference>>, SpreadsheetDelta<Range<SpreadsheetCellReference>>> saveCell() {
+    final HateosHandler<SpreadsheetCellReference, SpreadsheetDelta, SpreadsheetDelta> saveCell() {
         return SpreadsheetEngineHateosHandlers.saveCell(this.engine(), this.engineContext());
     }
 

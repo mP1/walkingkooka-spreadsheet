@@ -55,8 +55,8 @@ final class SpreadsheetEngineLoadCellHateosHandler extends SpreadsheetEngineHate
     }
 
     @Override
-    public Optional<SpreadsheetDelta<Optional<SpreadsheetCellReference>>> handle(final Optional<SpreadsheetCellReference> id,
-                                                                                 final Optional<SpreadsheetDelta<Optional<SpreadsheetCellReference>>> resource,
+    public Optional<SpreadsheetDelta> handle(final Optional<SpreadsheetCellReference> id,
+                                                                                 final Optional<SpreadsheetDelta> resource,
                                                                                  final Map<HttpRequestAttribute<?>, Object> parameters) {
         final SpreadsheetCellReference reference = this.checkIdRequired(id);
         this.checkResource(resource);
@@ -67,7 +67,7 @@ final class SpreadsheetEngineLoadCellHateosHandler extends SpreadsheetEngineHate
         return Optional.of(applyWindow(this.loadCell(reference), resource));
     }
 
-    SpreadsheetDelta<Optional<SpreadsheetCellReference>> loadCell(final SpreadsheetCellReference reference) {
+    SpreadsheetDelta loadCell(final SpreadsheetCellReference reference) {
         return this.engine.loadCell(reference,
                 this.evaluation,
                 this.context);
@@ -76,8 +76,8 @@ final class SpreadsheetEngineLoadCellHateosHandler extends SpreadsheetEngineHate
     private final SpreadsheetEngineEvaluation evaluation;
 
     @Override
-    public Optional<SpreadsheetDelta<Range<SpreadsheetCellReference>>> handleCollection(final Range<SpreadsheetCellReference> cells,
-                                                                                        final Optional<SpreadsheetDelta<Range<SpreadsheetCellReference>>> resource,
+    public Optional<SpreadsheetDelta> handleCollection(final Range<SpreadsheetCellReference> cells,
+                                                                                        final Optional<SpreadsheetDelta> resource,
                                                                                         final Map<HttpRequestAttribute<?>, Object> parameters) {
         this.checkRangeNotNull(cells);
         this.checkResource(resource);

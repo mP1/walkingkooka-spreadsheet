@@ -43,40 +43,40 @@ public final class SpreadsheetEngineInsertRowsHateosHandlerTest extends Spreadsh
     @Test
     public void testInsertRow() {
         final Optional<SpreadsheetRowReference> row = this.id();
-        final Optional<SpreadsheetDelta<Optional<SpreadsheetRowReference>>> resource = this.resource();
+        final Optional<SpreadsheetDelta> resource = this.resource();
 
         final Set<SpreadsheetCell> cells = this.cells();
 
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
-                    public SpreadsheetDelta<Range<SpreadsheetRowReference>> insertRows(final SpreadsheetRowReference r,
+                    public SpreadsheetDelta insertRows(final SpreadsheetRowReference r,
                                                                                        final int count,
                                                                                        final SpreadsheetEngineContext context) {
                         assertEquals(row.get(), r, "row");
                         assertEquals(1, count, "count");
-                        return SpreadsheetDelta.withRange(Range.singleton(row.get()), cells);
+                        return SpreadsheetDelta.with(cells);
                     }
                 }),
                 row,
                 resource,
                 HateosHandler.NO_PARAMETERS,
-                Optional.of(SpreadsheetDelta.withId(row, cells)));
+                Optional.of(SpreadsheetDelta.with(cells)));
     }
 
     @Test
     public void testInsertSeveralRows() {
-        final Optional<SpreadsheetDelta<Range<SpreadsheetRowReference>>> resource = this.collectionResource();
+        final Optional<SpreadsheetDelta> resource = this.collectionResource();
 
         final Range<SpreadsheetRowReference> range = SpreadsheetColumnOrRowReference.parseRowRange("2:4");
         final Set<SpreadsheetCell> cells = this.cells();
 
-        final SpreadsheetDelta<Range<SpreadsheetRowReference>> delta = SpreadsheetDelta.withRange(range, cells);
+        final SpreadsheetDelta delta = SpreadsheetDelta.with(cells);
 
         this.handleCollectionAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
-                    public SpreadsheetDelta<Range<SpreadsheetRowReference>> insertRows(final SpreadsheetRowReference r,
+                    public SpreadsheetDelta insertRows(final SpreadsheetRowReference r,
                                                                                        final int count,
                                                                                        final SpreadsheetEngineContext context) {
                         assertEquals(SpreadsheetColumnOrRowReference.parseRow("2"), r, "row");
@@ -100,18 +100,18 @@ public final class SpreadsheetEngineInsertRowsHateosHandlerTest extends Spreadsh
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
-                    public SpreadsheetDelta<Range<SpreadsheetRowReference>> insertRows(final SpreadsheetRowReference r,
+                    public SpreadsheetDelta insertRows(final SpreadsheetRowReference r,
                                                                                        final int count,
                                                                                        final SpreadsheetEngineContext context) {
                         assertEquals(row.get(), r, "row");
                         assertEquals(1, count, "count");
-                        return SpreadsheetDelta.withRange(Range.singleton(row.get()), cells);
+                        return SpreadsheetDelta.with(cells);
                     }
                 }),
                 row,
-                Optional.of(SpreadsheetDelta.withId(row, SpreadsheetDelta.NO_CELLS).setWindow(window)),
+                Optional.of(SpreadsheetDelta.with(SpreadsheetDelta.NO_CELLS).setWindow(window)),
                 HateosHandler.NO_PARAMETERS,
-                Optional.of(SpreadsheetDelta.withId(row, this.cellsWithinWindow()).setWindow(window)));
+                Optional.of(SpreadsheetDelta.with(this.cellsWithinWindow()).setWindow(window)));
     }
 
     @Test
@@ -164,12 +164,12 @@ public final class SpreadsheetEngineInsertRowsHateosHandlerTest extends Spreadsh
     }
 
     @Override
-    public Optional<SpreadsheetDelta<Optional<SpreadsheetRowReference>>> resource() {
+    public Optional<SpreadsheetDelta> resource() {
         return Optional.empty();
     }
 
     @Override
-    public Optional<SpreadsheetDelta<Range<SpreadsheetRowReference>>> collectionResource() {
+    public Optional<SpreadsheetDelta> collectionResource() {
         return Optional.empty();
     }
 
@@ -181,10 +181,6 @@ public final class SpreadsheetEngineInsertRowsHateosHandlerTest extends Spreadsh
     @Override
     SpreadsheetEngine engine() {
         return new FakeSpreadsheetEngine();
-    }
-
-    private SpreadsheetDelta<Range<SpreadsheetRowReference>> delta(final Range<SpreadsheetRowReference> range) {
-        return SpreadsheetDelta.withRange(range, SpreadsheetDelta.NO_CELLS);
     }
 
     @Override

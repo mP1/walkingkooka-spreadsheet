@@ -26,7 +26,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-public abstract class SpreadsheetDeltaWindowedTestCase<D extends SpreadsheetDelta<I>, I> extends SpreadsheetDeltaTestCase2<D, I> {
+public abstract class SpreadsheetDeltaWindowedTestCase<D extends SpreadsheetDelta> extends SpreadsheetDeltaTestCase2<D> {
 
     SpreadsheetDeltaWindowedTestCase() {
         super();
@@ -35,7 +35,7 @@ public abstract class SpreadsheetDeltaWindowedTestCase<D extends SpreadsheetDelt
 
     @Test
     public final void testEqualsDifferentWindow() {
-        this.checkNotEquals(this.createSpreadsheetDelta(this.id(), this.cells(), this.differentWindow()));
+        this.checkNotEquals(this.createSpreadsheetDelta(this.cells(), this.differentWindow()));
     }
 
     @Override
@@ -44,9 +44,9 @@ public abstract class SpreadsheetDeltaWindowedTestCase<D extends SpreadsheetDelt
     }
 
     @Override
-    final D createSpreadsheetDelta(final I id, final Set<SpreadsheetCell> cells) {
-        return this.createSpreadsheetDelta(id, cells, this.window());
+    final D createSpreadsheetDelta(final Set<SpreadsheetCell> cells) {
+        return this.createSpreadsheetDelta(cells, this.window());
     }
 
-    abstract D createSpreadsheetDelta(final I id, final Set<SpreadsheetCell> cells, final List<SpreadsheetRange> window);
+    abstract D createSpreadsheetDelta(final Set<SpreadsheetCell> cells, final List<SpreadsheetRange> window);
 }

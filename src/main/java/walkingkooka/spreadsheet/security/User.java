@@ -70,13 +70,6 @@ public final class User extends Identity<UserId> {
 
     private final EmailAddress email;
 
-    // HateosResource...................................................................................................
-
-    @Override
-    public String hateosLinkId() {
-        return this.email.value().replace("-", "\\-");
-    }
-
     // JsonNodeContext..................................................................................................
 
     /**

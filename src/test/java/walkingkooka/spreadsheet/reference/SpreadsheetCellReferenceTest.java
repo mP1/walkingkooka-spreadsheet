@@ -383,18 +383,6 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
     // JsonNodeMappingTesting.......................................................................................
 
     @Test
-    public void testHateosLinkIdAbsoluteReference() {
-        this.hateosLinkIdAndCheck(SpreadsheetExpressionReference.parseCellReference("$F$9"), "F9");
-    }
-
-    @Test
-    public void testHateosLinkIdRelativeReference() {
-        this.hateosLinkIdAndCheck(SpreadsheetExpressionReference.parseCellReference("B5"), "B5");
-    }
-
-    // JsonNodeMappingTesting.......................................................................................
-
-    @Test
     public void testFromJsonNodeString() {
         this.fromJsonNodeAndCheck(JsonNode.string("$A$1"),
                 SpreadsheetExpressionReference.parseCellReference("$A$1"));

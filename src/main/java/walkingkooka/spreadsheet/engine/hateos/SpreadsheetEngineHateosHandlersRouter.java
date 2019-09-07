@@ -28,17 +28,20 @@ import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.HttpResponse;
 import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.net.http.server.hateos.HateosHandler;
-import walkingkooka.net.http.server.hateos.HateosHandlerResourceMapping;
+import walkingkooka.net.http.server.hateos.HateosResourceMapping;
 import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.routing.Router;
+import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineContext;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngineEvaluation;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumn;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.tree.Node;
 import walkingkooka.type.StaticHelper;
@@ -72,12 +75,12 @@ final class SpreadsheetEngineHateosHandlersRouter implements StaticHelper {
      */
     static HateosResourceName ROW = HateosResourceName.with("row");
 
-    private static final Class<SpreadsheetDelta<Optional<SpreadsheetCellReference>>> OPTIONAL_CELL_REFERENCE = Cast.to(SpreadsheetDelta.class);
-    private static final Class<SpreadsheetDelta<Range<SpreadsheetCellReference>>> RANGE_CELL_REFERENCE = Cast.to(SpreadsheetDelta.class);
-    private static final Class<SpreadsheetDelta<Optional<SpreadsheetColumnReference>>> OPTIONAL_COLUMN_REFERENCE = Cast.to(SpreadsheetDelta.class);
-    private static final Class<SpreadsheetDelta<Range<SpreadsheetColumnReference>>> RANGE_COLUMN_REFERENCE = Cast.to(SpreadsheetDelta.class);
-    private static final Class<SpreadsheetDelta<Optional<SpreadsheetRowReference>>> OPTIONAL_ROW_REFERENCE = Cast.to(SpreadsheetDelta.class);
-    private static final Class<SpreadsheetDelta<Range<SpreadsheetRowReference>>> RANGE_ROW_REFERENCE = Cast.to(SpreadsheetDelta.class);
+    private static final Class<SpreadsheetDelta> OPTIONAL_CELL_REFERENCE = Cast.to(SpreadsheetDelta.class);
+    private static final Class<SpreadsheetDelta> RANGE_CELL_REFERENCE = Cast.to(SpreadsheetDelta.class);
+    private static final Class<SpreadsheetDelta> OPTIONAL_COLUMN_REFERENCE = Cast.to(SpreadsheetDelta.class);
+    private static final Class<SpreadsheetDelta> RANGE_COLUMN_REFERENCE = Cast.to(SpreadsheetDelta.class);
+    private static final Class<SpreadsheetDelta> OPTIONAL_ROW_REFERENCE = Cast.to(SpreadsheetDelta.class);
+    private static final Class<SpreadsheetDelta> RANGE_ROW_REFERENCE = Cast.to(SpreadsheetDelta.class);
 
     /**
      * Builds a {@link Router} that handles all operations, using the given {@link SpreadsheetEngine} and {@link SpreadsheetEngineContext}.
@@ -85,35 +88,35 @@ final class SpreadsheetEngineHateosHandlersRouter implements StaticHelper {
     static <N extends Node<N, ?, ?, ?>> Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> router(final AbsoluteUrl baseUrl,
                                                                                                                       final HateosContentType contentType,
                                                                                                                       final HateosHandler<SpreadsheetColumnReference,
-                                                                                                                              SpreadsheetDelta<Optional<SpreadsheetColumnReference>>,
-                                                                                                                              SpreadsheetDelta<Range<SpreadsheetColumnReference>>> deleteColumns,
+                                                                                                                              SpreadsheetDelta,
+                                                                                                                              SpreadsheetDelta> deleteColumns,
                                                                                                                       final HateosHandler<SpreadsheetRowReference,
-                                                                                                                              SpreadsheetDelta<Optional<SpreadsheetRowReference>>,
-                                                                                                                              SpreadsheetDelta<Range<SpreadsheetRowReference>>> deleteRows,
+                                                                                                                              SpreadsheetDelta,
+                                                                                                                              SpreadsheetDelta> deleteRows,
                                                                                                                       final HateosHandler<SpreadsheetCellReference,
-                                                                                                                              SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-                                                                                                                              SpreadsheetDelta<Range<SpreadsheetCellReference>>> fillCells,
+                                                                                                                              SpreadsheetDelta,
+                                                                                                                              SpreadsheetDelta> fillCells,
                                                                                                                       final HateosHandler<SpreadsheetColumnReference,
-                                                                                                                              SpreadsheetDelta<Optional<SpreadsheetColumnReference>>,
-                                                                                                                              SpreadsheetDelta<Range<SpreadsheetColumnReference>>> insertColumns,
+                                                                                                                              SpreadsheetDelta,
+                                                                                                                              SpreadsheetDelta> insertColumns,
                                                                                                                       final HateosHandler<SpreadsheetRowReference,
-                                                                                                                              SpreadsheetDelta<Optional<SpreadsheetRowReference>>,
-                                                                                                                              SpreadsheetDelta<Range<SpreadsheetRowReference>>> insertRows,
+                                                                                                                              SpreadsheetDelta,
+                                                                                                                              SpreadsheetDelta> insertRows,
                                                                                                                       final HateosHandler<SpreadsheetCellReference,
-                                                                                                                              SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-                                                                                                                              SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellClearValueErrorSkipEvaluate,
+                                                                                                                              SpreadsheetDelta,
+                                                                                                                              SpreadsheetDelta> loadCellClearValueErrorSkipEvaluate,
                                                                                                                       final HateosHandler<SpreadsheetCellReference,
-                                                                                                                              SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-                                                                                                                              SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellSkipEvaluate,
+                                                                                                                              SpreadsheetDelta,
+                                                                                                                              SpreadsheetDelta> loadCellSkipEvaluate,
                                                                                                                       final HateosHandler<SpreadsheetCellReference,
-                                                                                                                              SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-                                                                                                                              SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellForceRecompute,
+                                                                                                                              SpreadsheetDelta,
+                                                                                                                              SpreadsheetDelta> loadCellForceRecompute,
                                                                                                                       final HateosHandler<SpreadsheetCellReference,
-                                                                                                                              SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-                                                                                                                              SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCellComputeIfNecessary,
+                                                                                                                              SpreadsheetDelta,
+                                                                                                                              SpreadsheetDelta> loadCellComputeIfNecessary,
                                                                                                                       final HateosHandler<SpreadsheetCellReference,
-                                                                                                                              SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-                                                                                                                              SpreadsheetDelta<Range<SpreadsheetCellReference>>> saveCell) {
+                                                                                                                              SpreadsheetDelta,
+                                                                                                                              SpreadsheetDelta> saveCell) {
         Objects.requireNonNull(baseUrl, "baseUrl");
         Objects.requireNonNull(contentType, "contentType");
         Objects.requireNonNull(fillCells, "fillCells");
@@ -129,12 +132,14 @@ final class SpreadsheetEngineHateosHandlersRouter implements StaticHelper {
 
         // cell GET, POST...............................................................................................
 
-        HateosHandlerResourceMapping<SpreadsheetCellReference,
-                SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-                SpreadsheetDelta<Range<SpreadsheetCellReference>>> cell = HateosHandlerResourceMapping.with(CELL,
+        HateosResourceMapping<SpreadsheetCellReference,
+                SpreadsheetDelta,
+                SpreadsheetDelta,
+                SpreadsheetCell> cell = HateosResourceMapping.with(CELL,
                 SpreadsheetExpressionReference::parseCellReference,
                 OPTIONAL_CELL_REFERENCE,
-                RANGE_CELL_REFERENCE)
+                RANGE_CELL_REFERENCE,
+                SpreadsheetCell.class)
                 .set(LinkRelation.SELF, HttpMethod.GET, loadCellComputeIfNecessary)
                 .set(LinkRelation.SELF, HttpMethod.POST, saveCell);
 
@@ -142,8 +147,8 @@ final class SpreadsheetEngineHateosHandlersRouter implements StaticHelper {
 
         for (SpreadsheetEngineEvaluation evaluation : SpreadsheetEngineEvaluation.values()) {
             final HateosHandler<SpreadsheetCellReference,
-                    SpreadsheetDelta<Optional<SpreadsheetCellReference>>,
-                    SpreadsheetDelta<Range<SpreadsheetCellReference>>> loadCell;
+                    SpreadsheetDelta,
+                    SpreadsheetDelta> loadCell;
             switch (evaluation) {
                 case CLEAR_VALUE_ERROR_SKIP_EVALUATE:
                     loadCell = loadCellClearValueErrorSkipEvaluate;
@@ -175,27 +180,31 @@ final class SpreadsheetEngineHateosHandlersRouter implements StaticHelper {
 
         // columns POST DELETE..........................................................................................
 
-        HateosHandlerResourceMapping<SpreadsheetColumnReference,
-                SpreadsheetDelta<Optional<SpreadsheetColumnReference>>,
-                SpreadsheetDelta<Range<SpreadsheetColumnReference>>> column = HateosHandlerResourceMapping.with(COLUMN,
+        HateosResourceMapping<SpreadsheetColumnReference,
+                SpreadsheetDelta,
+                SpreadsheetDelta,
+                SpreadsheetColumn> column = HateosResourceMapping.with(COLUMN,
                 SpreadsheetColumnOrRowReference::parseColumn,
                 OPTIONAL_COLUMN_REFERENCE,
-                RANGE_COLUMN_REFERENCE)
+                RANGE_COLUMN_REFERENCE,
+                SpreadsheetColumn.class)
                 .set(LinkRelation.SELF, HttpMethod.POST, insertColumns)
                 .set(LinkRelation.SELF, HttpMethod.DELETE, deleteColumns);
 
         // rows POST DELETE.............................................................................................
 
-        HateosHandlerResourceMapping<SpreadsheetRowReference,
-                SpreadsheetDelta<Optional<SpreadsheetRowReference>>,
-                SpreadsheetDelta<Range<SpreadsheetRowReference>>> row = HateosHandlerResourceMapping.with(ROW,
+        HateosResourceMapping<SpreadsheetRowReference,
+                SpreadsheetDelta,
+                SpreadsheetDelta,
+                SpreadsheetRow> row = HateosResourceMapping.with(ROW,
                 SpreadsheetColumnOrRowReference::parseRow,
                 OPTIONAL_ROW_REFERENCE,
-                RANGE_ROW_REFERENCE)
+                RANGE_ROW_REFERENCE,
+                SpreadsheetRow.class)
                 .set(LinkRelation.SELF, HttpMethod.POST, insertRows)
                 .set(LinkRelation.SELF, HttpMethod.DELETE, deleteRows);
 
-        return HateosHandlerResourceMapping.router(baseUrl,
+        return HateosResourceMapping.router(baseUrl,
                 contentType,
                 Sets.of(cell, column, row));
     }

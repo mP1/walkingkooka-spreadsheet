@@ -86,21 +86,21 @@ public final class SpreadsheetEngineFillCellsHateosHandlerTest extends walkingko
                 SpreadsheetEngineFillCellsHateosHandler.with(new FakeSpreadsheetEngine() {
 
                                                                  @Override
-                                                                 public SpreadsheetDelta<Range<SpreadsheetCellReference>> fillCells(final Collection<SpreadsheetCell> cells,
+                                                                 public SpreadsheetDelta fillCells(final Collection<SpreadsheetCell> cells,
                                                                                                                                     final SpreadsheetRange f,
                                                                                                                                     final SpreadsheetRange t,
                                                                                                                                     final SpreadsheetEngineContext context) {
                                                                      assertEquals(collectionResource().get().cells(), cells, "cells");
                                                                      assertEquals(from, f, "from");
                                                                      assertEquals(toSpreadsheetRange(), t, "to");
-                                                                     return filled();
+                                                                     return deltaWithCell();
                                                                  }
                                                              },
                         this.engineContext()),
                 this.collection(),
                 this.collectionResource(),
                 parameters,
-                Optional.of(this.filled()));
+                Optional.of(this.deltaWithCell()));
     }
 
     @Test
@@ -111,7 +111,7 @@ public final class SpreadsheetEngineFillCellsHateosHandlerTest extends walkingko
         final Range<SpreadsheetCellReference> range = this.collection();
         final SpreadsheetRange spreadsheetRange = SpreadsheetRange.with(range);
 
-        final SpreadsheetDelta<Range<SpreadsheetCellReference>> resource = SpreadsheetDelta.withRange(range, Sets.of(unsaved1));
+        final SpreadsheetDelta resource = SpreadsheetDelta.with(Sets.of(unsaved1));
 
         final List<SpreadsheetRange> window = this.window();
 
@@ -119,23 +119,21 @@ public final class SpreadsheetEngineFillCellsHateosHandlerTest extends walkingko
                 SpreadsheetEngineFillCellsHateosHandler.with(new FakeSpreadsheetEngine() {
 
                                                                  @Override
-                                                                 public SpreadsheetDelta<Range<SpreadsheetCellReference>> fillCells(final Collection<SpreadsheetCell> cells,
+                                                                 public SpreadsheetDelta fillCells(final Collection<SpreadsheetCell> cells,
                                                                                                                                     final SpreadsheetRange from,
                                                                                                                                     final SpreadsheetRange to,
                                                                                                                                     final SpreadsheetEngineContext context) {
                                                                      assertEquals(resource.cells(), cells, "cells");
                                                                      assertEquals(spreadsheetRange, from, "from");
                                                                      assertEquals(spreadsheetRange, to, "to");
-                                                                     return SpreadsheetDelta.withRange(to.range(),
-                                                                             Sets.of(saved1,
-                                                                                     cellOutsideWindow().setFormatted(Optional.of(TextNode.text("FORMATTED 2")))));
+                                                                     return SpreadsheetDelta.with(Sets.of(saved1, cellOutsideWindow().setFormatted(Optional.of(TextNode.text("FORMATTED 2")))));
                                                                  }
                                                              },
                         this.engineContext()),
                 range,
                 Optional.of(resource.setWindow(window)),
                 this.parameters(),
-                Optional.of(SpreadsheetDelta.withRange(range, Sets.of(saved1)).setWindow(window)));
+                Optional.of(SpreadsheetDelta.with(Sets.of(saved1)).setWindow(window)));
     }
 
     // toString.........................................................................................................
@@ -180,18 +178,17 @@ public final class SpreadsheetEngineFillCellsHateosHandlerTest extends walkingko
     private final static String FROM = "E1:F2";
 
     @Override
-    public Optional<SpreadsheetDelta<Optional<SpreadsheetCellReference>>> resource() {
+    public Optional<SpreadsheetDelta> resource() {
         return Optional.empty();
     }
 
     @Override
-    public Optional<SpreadsheetDelta<Range<SpreadsheetCellReference>>> collectionResource() {
-        final SpreadsheetCell cell = this.cell();
-        return Optional.of(SpreadsheetDelta.withRange(collection(), Sets.of(cell)));
+    public Optional<SpreadsheetDelta> collectionResource() {
+        return Optional.of(this.deltaWithCell());
     }
 
-    private SpreadsheetDelta<Range<SpreadsheetCellReference>> filled() {
-        return SpreadsheetDelta.withRange(this.collection(), Sets.of(this.cell()));
+    private SpreadsheetDelta deltaWithCell() {
+        return SpreadsheetDelta.with(Sets.of(this.cell()));
     }
 
     @Override
