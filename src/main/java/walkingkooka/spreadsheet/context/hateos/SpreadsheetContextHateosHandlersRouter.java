@@ -49,8 +49,6 @@ final class SpreadsheetContextHateosHandlersRouter implements StaticHelper {
      */
     private final static HateosResourceName SPREADSHEET = HateosResourceName.with("spreadsheet");
 
-    private final static Class<HateosResource<Range<SpreadsheetId>>> RANGE_SPREADSHEET_ID = Cast.to(HateosResource.class);
-
     /**
      * Used to form the metadata load and save services
      * <pre>
@@ -64,8 +62,8 @@ final class SpreadsheetContextHateosHandlersRouter implements StaticHelper {
      */
     static Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> with(final AbsoluteUrl baseUrl,
                                                                                        final HateosContentType contentType,
-                                                                                       final HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> createAndSaveMetadata,
-                                                                                       final HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> loadMetadata) {
+                                                                                       final HateosHandler<SpreadsheetId, SpreadsheetMetadata, SpreadsheetMetadata> createAndSaveMetadata,
+                                                                                       final HateosHandler<SpreadsheetId, SpreadsheetMetadata, SpreadsheetMetadata> loadMetadata) {
         Objects.requireNonNull(baseUrl, "baseUrl");
         Objects.requireNonNull(contentType, "contentType");
         Objects.requireNonNull(createAndSaveMetadata, "createAndSaveMetadata");
@@ -80,7 +78,7 @@ final class SpreadsheetContextHateosHandlersRouter implements StaticHelper {
                 Sets.of(HateosResourceMapping.with(SPREADSHEET,
                         stringToSpreadsheetId,
                         SpreadsheetMetadata.class,
-                        RANGE_SPREADSHEET_ID,
+                        SpreadsheetMetadata.class,
                         SpreadsheetMetadata.class)
                         .set(METADATA_LINK_RELATION, HttpMethod.GET, loadMetadata)
                         .set(METADATA_LINK_RELATION, HttpMethod.POST, createAndSaveMetadata)));
