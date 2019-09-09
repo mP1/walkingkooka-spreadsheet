@@ -556,7 +556,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .forEach(l -> {
                             final int twoDigitYear = 49;
                             final SpreadsheetMetadata metadata = SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.LOCALE, l,
-                                    SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR_INTERPRETATION, twoDigitYear));
+                                    SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, twoDigitYear));
 
                             final DateFormatSymbols symbols = DateFormatSymbols.getInstance(l);
                             final DateTimeContext context = metadata.dateTimeContext();
@@ -856,7 +856,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetPattern.parseTextFormatPattern("@@"));
         properties.put(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetPattern.parseTimeFormatPattern("hh:mm"));
         properties.put(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetPattern.parseTimeParsePatterns("hh:mm;hh:mm:ss.000"));
-        properties.put(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR_INTERPRETATION, 31);
+        properties.put(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 31);
         properties.put(SpreadsheetMetadataPropertyName.WIDTH, 0);
 
         for (int i = 0; i < SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER + 2; i++) {

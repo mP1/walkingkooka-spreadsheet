@@ -198,7 +198,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitTwoDigitYearInterpretation(final Integer value) {
+    protected void visitTwoDigitYear(final Integer value) {
         // nop
     }
 
