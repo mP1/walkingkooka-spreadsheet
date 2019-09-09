@@ -35,13 +35,9 @@ abstract class SpreadsheetContextSpreadsheetMetadataStoreHateosHandler extends S
         SpreadsheetMetadata,
         SpreadsheetMetadata> {
 
-    SpreadsheetContextSpreadsheetMetadataStoreHateosHandler(final SpreadsheetContext context,
-                                                            final Store<SpreadsheetId, SpreadsheetMetadata> store) {
+    SpreadsheetContextSpreadsheetMetadataStoreHateosHandler(final SpreadsheetContext context) {
         super(context);
-        this.store = store;
     }
-
-    final Store<SpreadsheetId, SpreadsheetMetadata> store;
 
     @Override
     public final Optional<SpreadsheetMetadata> handleCollection(final Range<SpreadsheetId> ids,

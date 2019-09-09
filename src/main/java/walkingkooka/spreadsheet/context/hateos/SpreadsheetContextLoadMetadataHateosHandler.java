@@ -33,17 +33,14 @@ import java.util.Optional;
  */
 final class SpreadsheetContextLoadMetadataHateosHandler extends SpreadsheetContextSpreadsheetMetadataStoreHateosHandler {
 
-    static SpreadsheetContextLoadMetadataHateosHandler with(final SpreadsheetContext context,
-                                                            final Store<SpreadsheetId, SpreadsheetMetadata> store) {
+    static SpreadsheetContextLoadMetadataHateosHandler with(final SpreadsheetContext context) {
         checkContext(context);
-        Objects.requireNonNull(store, "store");
 
-        return new SpreadsheetContextLoadMetadataHateosHandler(context, store);
+        return new SpreadsheetContextLoadMetadataHateosHandler(context);
     }
 
-    private SpreadsheetContextLoadMetadataHateosHandler(final SpreadsheetContext context,
-                                                        final Store<SpreadsheetId, SpreadsheetMetadata> store) {
-        super(context, store);
+    private SpreadsheetContextLoadMetadataHateosHandler(final SpreadsheetContext context) {
+        super(context);
     }
 
     @Override
@@ -54,7 +51,7 @@ final class SpreadsheetContextLoadMetadataHateosHandler extends SpreadsheetConte
         checkResourceEmpty(resource);
         checkParameters(parameters);
 
-        return this.store.load(spreadsheetId);
+        return this.context.storeRepository(spreadsheetId).metadatas().load(spreadsheetId);
     }
 
     @Override

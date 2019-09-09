@@ -41,17 +41,15 @@ public final class SpreadsheetContextHateosHandlers implements PublicStaticHelpe
     /**
      * {@see SpreadsheetContextCreateAndSaveMetadataHateosHandler}
      */
-    public static HateosHandler<SpreadsheetId, SpreadsheetMetadata, SpreadsheetMetadata> createAndSaveMetadata(final SpreadsheetContext context,
-                                                                                                               final Store<SpreadsheetId, SpreadsheetMetadata> store) {
-        return SpreadsheetContextCreateAndSaveMetadataHateosHandler.with(context, store);
+    public static HateosHandler<SpreadsheetId, SpreadsheetMetadata, SpreadsheetMetadata> createAndSaveMetadata(final SpreadsheetContext context) {
+        return SpreadsheetContextCreateAndSaveMetadataHateosHandler.with(context);
     }
 
     /**
      * {@see SpreadsheetContextLoadMetadataHateosHandler}
      */
-    public static HateosHandler<SpreadsheetId, SpreadsheetMetadata, SpreadsheetMetadata> loadMetadata(final SpreadsheetContext context,
-                                                                                                      final Store<SpreadsheetId, SpreadsheetMetadata> store) {
-        return SpreadsheetContextLoadMetadataHateosHandler.with(context, store);
+    public static HateosHandler<SpreadsheetId, SpreadsheetMetadata, SpreadsheetMetadata> loadMetadata(final SpreadsheetContext context) {
+        return SpreadsheetContextLoadMetadataHateosHandler.with(context);
     }
 
     /**
