@@ -90,10 +90,8 @@ public final class SpreadsheetContextHateosHandlersRouterTest extends Spreadshee
 
     private void withFails(final AbsoluteUrl base,
                            final HateosContentType contentType,
-                           final HateosHandler<SpreadsheetId,
-                                   SpreadsheetMetadata,
-                                   HateosResource<Range<SpreadsheetId>>> createAndSaveMetadata,
-                           HateosHandler<SpreadsheetId, SpreadsheetMetadata, HateosResource<Range<SpreadsheetId>>> loadMetadata) {
+                           final HateosHandler<SpreadsheetId, SpreadsheetMetadata, SpreadsheetMetadata> createAndSaveMetadata,
+                           final HateosHandler<SpreadsheetId, SpreadsheetMetadata, SpreadsheetMetadata> loadMetadata) {
         assertThrows(NullPointerException.class, () -> {
             SpreadsheetContextHateosHandlersRouter.with(base,
                     contentType,
@@ -233,9 +231,7 @@ public final class SpreadsheetContextHateosHandlersRouterTest extends Spreadshee
                 ToJsonNodeContexts.basic());
     }
 
-    private HateosHandler<SpreadsheetId,
-            SpreadsheetMetadata,
-            HateosResource<Range<SpreadsheetId>>> createAndSaveMetadata() {
+    private HateosHandler<SpreadsheetId, SpreadsheetMetadata, SpreadsheetMetadata> createAndSaveMetadata() {
         return new FakeHateosHandler<>() {
             @Override
             public Optional<SpreadsheetMetadata> handle(final Optional<SpreadsheetId> id,
@@ -252,9 +248,7 @@ public final class SpreadsheetContextHateosHandlersRouterTest extends Spreadshee
         };
     }
 
-    private HateosHandler<SpreadsheetId,
-            SpreadsheetMetadata,
-            HateosResource<Range<SpreadsheetId>>> loadMetadata() {
+    private HateosHandler<SpreadsheetId, SpreadsheetMetadata, SpreadsheetMetadata> loadMetadata() {
         return new FakeHateosHandler<>() {
             @Override
             public Optional<SpreadsheetMetadata> handle(final Optional<SpreadsheetId> id,
