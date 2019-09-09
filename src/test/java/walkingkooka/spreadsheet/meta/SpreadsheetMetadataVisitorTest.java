@@ -388,13 +388,13 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitTwoDigitYearInterpretation() {
+    public void testVisitTwoDigitYear() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitTwoDigitYearInterpretation(final Integer i) {
+            protected void visitTwoDigitYear(final Integer i) {
                 this.visited = i;
             }
-        }.accept(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR_INTERPRETATION, 32);
+        }.accept(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 32);
     }
 
     @Test

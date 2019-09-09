@@ -199,7 +199,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitTwoDigitYearInterpretation(final Integer value) {
+    protected void visitTwoDigitYear(final Integer value) {
         // nop
     }
 

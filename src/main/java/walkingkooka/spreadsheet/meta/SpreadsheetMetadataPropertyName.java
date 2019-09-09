@@ -304,11 +304,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
             (p, v) -> v.visitTimeParsePatterns(p));
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>two-digit-year-interpretation {@link SpreadsheetFormatPattern}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>two-digit-year {@link SpreadsheetFormatPattern}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<Integer> TWO_DIGIT_YEAR_INTERPRETATION = registerIntegerConstant("two-digit-year-interpretation",
+    public final static SpreadsheetMetadataPropertyName<Integer> TWO_DIGIT_YEAR = registerIntegerConstant("two-digit-year",
             POSITIVE_INTEGER,
-            (two, v) -> v.visitTwoDigitYearInterpretation(two));
+            (two, v) -> v.visitTwoDigitYear(two));
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link Integer}</code>
