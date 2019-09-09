@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.json.JsonNode;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -58,6 +59,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -826,6 +828,82 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     // JsonNodeMappingTesting...........................................................................................
+
+    /**
+     * This test verifies that all {@link SpreadsheetMetadataPropertyName} value types are also
+     * {@link walkingkooka.tree.json.marshall.JsonNodeContext} registered.
+     */
+    @Test
+    public void testFromJson() {
+        final JsonNode json = JsonNode.parse("{\n" +
+                "  \"color-0\": \"#000000\",\n" +
+                "  \"color-1\": \"#000001\",\n" +
+                "  \"color-10\": \"#00000a\",\n" +
+                "  \"color-11\": \"#00000b\",\n" +
+                "  \"color-12\": \"#00000c\",\n" +
+                "  \"color-13\": \"#00000d\",\n" +
+                "  \"color-14\": \"#00000e\",\n" +
+                "  \"color-15\": \"#00000f\",\n" +
+                "  \"color-16\": \"#000010\",\n" +
+                "  \"color-17\": \"#000011\",\n" +
+                "  \"color-18\": \"#000012\",\n" +
+                "  \"color-19\": \"#000013\",\n" +
+                "  \"color-2\": \"#000002\",\n" +
+                "  \"color-20\": \"#000014\",\n" +
+                "  \"color-21\": \"#000015\",\n" +
+                "  \"color-22\": \"#000016\",\n" +
+                "  \"color-23\": \"#000017\",\n" +
+                "  \"color-24\": \"#000018\",\n" +
+                "  \"color-25\": \"#000019\",\n" +
+                "  \"color-26\": \"#00001a\",\n" +
+                "  \"color-27\": \"#00001b\",\n" +
+                "  \"color-28\": \"#00001c\",\n" +
+                "  \"color-29\": \"#00001d\",\n" +
+                "  \"color-3\": \"#000003\",\n" +
+                "  \"color-30\": \"#00001e\",\n" +
+                "  \"color-31\": \"#00001f\",\n" +
+                "  \"color-32\": \"#000020\",\n" +
+                "  \"color-33\": \"#000021\",\n" +
+                "  \"color-4\": \"#000004\",\n" +
+                "  \"color-5\": \"#000005\",\n" +
+                "  \"color-6\": \"#000006\",\n" +
+                "  \"color-7\": \"#000007\",\n" +
+                "  \"color-8\": \"#000008\",\n" +
+                "  \"color-9\": \"#000009\",\n" +
+                "  \"color-big\": \"#017d0000\",\n" +
+                "  \"color-medium\": \"#be8f75bf\",\n" +
+                "  \"color-small\": \"#87950706\",\n" +
+                "  \"create-date-time\": \"2000-12-31T12:58:59\",\n" +
+                "  \"creator\": \"creator@example.com\",\n" +
+                "  \"currency-symbol\": \"$AUD\",\n" +
+                "  \"date-format-pattern\": \"DD/MM/YYYY\",\n" +
+                "  \"date-parse-pattern\": \"DD/MM/YYYY;DDMMYYYY\",\n" +
+                "  \"date-time-format-pattern\": \"DD/MM/YYYY hh:mm\",\n" +
+                "  \"date-time-offset\": \"0\",\n" +
+                "  \"date-time-parse-patterns\": \"DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM\",\n" +
+                "  \"decimal-separator\": \"D\",\n" +
+                "  \"exponent-symbol\": \"E\",\n" +
+                "  \"grouping-separator\": \"G\",\n" +
+                "  \"locale\": \"en\",\n" +
+                "  \"modified-by\": \"modified@example.com\",\n" +
+                "  \"modified-date-time\": \"1999-12-31T12:58:59\",\n" +
+                "  \"negative-sign\": \"N\",\n" +
+                "  \"number-format-pattern\": \"#0.0\",\n" +
+                "  \"number-parse-patterns\": \"#0.0;$#0.00\",\n" +
+                "  \"percentage-symbol\": \"P\",\n" +
+                "  \"positive-sign\": \"O\",\n" +
+                "  \"precision\": 123,\n" +
+                "  \"rounding-mode\": \"FLOOR\",\n" +
+                "  \"spreadsheet-id\": \"7b\",\n" +
+                "  \"text-format-pattern\": \"@@\",\n" +
+                "  \"time-format-pattern\": \"hh:mm\",\n" +
+                "  \"time-parse-patterns\": \"hh:mm;hh:mm:ss.000\",\n" +
+                "  \"two-digit-year\": 31,\n" +
+                "  \"width\": 0\n" +
+                "}");
+        final SpreadsheetMetadata metadata = this.fromJsonNode(json);
+        assertNotEquals(metadata, SpreadsheetMetadata.EMPTY);
+    }
 
     @Test
     public void testJsonNodeMarshallRoundtrip() {
