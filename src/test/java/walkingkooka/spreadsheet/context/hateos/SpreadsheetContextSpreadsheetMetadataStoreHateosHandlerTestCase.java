@@ -43,13 +43,6 @@ public abstract class SpreadsheetContextSpreadsheetMetadataStoreHateosHandlerTes
         SpreadsheetMetadata,
         SpreadsheetMetadata> {
 
-    @Test
-    public final void testWithNullStoreFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createHandler(this.context(), null);
-        });
-    }
-
     // handle...........................................................................................................
 
     @Test
@@ -73,21 +66,7 @@ public abstract class SpreadsheetContextSpreadsheetMetadataStoreHateosHandlerTes
     // helpers..........................................................................................................
 
     @Override
-    final H createHandler(final SpreadsheetContext context) {
-        return this.createHandler(context, this.store());
-    }
-
-    abstract H createHandler(final SpreadsheetContext context,
-                             final Store<SpreadsheetId, SpreadsheetMetadata> store);
-
-    private SpreadsheetMetadata metadataWithDefaults() {
-        return SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
-                LocalDateTime.of(2000, 12, 31, 12, 58, 59)));
-    }
-
-    private SpreadsheetMetadataStore store() {
-        return SpreadsheetMetadataStores.treeMap();
-    }
+    abstract H createHandler(final SpreadsheetContext context);
 
     @Override
     public final Optional<SpreadsheetId> id() {
