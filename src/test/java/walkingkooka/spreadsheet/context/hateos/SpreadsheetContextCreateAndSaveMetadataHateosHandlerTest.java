@@ -30,7 +30,8 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
-import walkingkooka.store.Store;
+import walkingkooka.spreadsheet.store.repo.FakeSpreadsheetStoreRepository;
+import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -96,13 +97,23 @@ public final class SpreadsheetContextCreateAndSaveMetadataHateosHandlerTest exte
 
     @Test
     public void testHandleIdWithMetadataSaves() {
-        final Optional<SpreadsheetId> id = this.id();
-
         final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
-        final SpreadsheetContextCreateAndSaveMetadataHateosHandler handler = SpreadsheetContextCreateAndSaveMetadataHateosHandler.with(this.context(), store);
+        final SpreadsheetContextCreateAndSaveMetadataHateosHandler handler = SpreadsheetContextCreateAndSaveMetadataHateosHandler.with((new FakeSpreadsheetContext() {
+            @Override
+            public SpreadsheetStoreRepository storeRepository(final SpreadsheetId i) {
+                assertEquals(spreadsheetId(), i, "spreadsheetId");
+                return new FakeSpreadsheetStoreRepository() {
+                    @Override
+                    public SpreadsheetMetadataStore metadatas() {
+                        return store;
+                    }
+                };
+            }
+        }));
 
         final SpreadsheetMetadata metadata = this.metadata();
 
+        final Optional<SpreadsheetId> id = this.id();
         this.handleAndCheck(handler,
                 id,
                 Optional.of(metadata),
@@ -123,9 +134,8 @@ public final class SpreadsheetContextCreateAndSaveMetadataHateosHandlerTest exte
     // helpers..........................................................................................................
 
     @Override
-    SpreadsheetContextCreateAndSaveMetadataHateosHandler createHandler(final SpreadsheetContext context,
-                                                                       final Store<SpreadsheetId, SpreadsheetMetadata> store) {
-        return SpreadsheetContextCreateAndSaveMetadataHateosHandler.with(context, store);
+    SpreadsheetContextCreateAndSaveMetadataHateosHandler createHandler(final SpreadsheetContext context) {
+        return SpreadsheetContextCreateAndSaveMetadataHateosHandler.with(context);
     }
 
     @Override

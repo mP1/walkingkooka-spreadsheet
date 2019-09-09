@@ -36,17 +36,14 @@ import java.util.Optional;
  */
 final class SpreadsheetContextCreateAndSaveMetadataHateosHandler extends SpreadsheetContextSpreadsheetMetadataStoreHateosHandler {
 
-    static SpreadsheetContextCreateAndSaveMetadataHateosHandler with(final SpreadsheetContext context,
-                                                                     final Store<SpreadsheetId, SpreadsheetMetadata> store) {
+    static SpreadsheetContextCreateAndSaveMetadataHateosHandler with(final SpreadsheetContext context) {
         checkContext(context);
-        Objects.requireNonNull(store, "store");
 
-        return new SpreadsheetContextCreateAndSaveMetadataHateosHandler(context, store);
+        return new SpreadsheetContextCreateAndSaveMetadataHateosHandler(context);
     }
 
-    private SpreadsheetContextCreateAndSaveMetadataHateosHandler(final SpreadsheetContext context,
-                                                                 final Store<SpreadsheetId, SpreadsheetMetadata> store) {
-        super(context, store);
+    private SpreadsheetContextCreateAndSaveMetadataHateosHandler(final SpreadsheetContext context) {
+        super(context);
     }
 
     @Override
@@ -63,7 +60,7 @@ final class SpreadsheetContextCreateAndSaveMetadataHateosHandler extends Spreads
 
     private SpreadsheetMetadata saveMetadata(final SpreadsheetId id,
                                              final SpreadsheetMetadata metadata) {
-        return this.store.save(metadata);
+        return this.context.storeRepository(id).metadatas().save(metadata);
     }
 
     private Optional<SpreadsheetMetadata> createMetadata(final Optional<SpreadsheetMetadata> metadata,
