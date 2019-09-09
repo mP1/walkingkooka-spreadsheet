@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
@@ -43,6 +44,7 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
 import java.util.function.Predicate;
@@ -444,5 +446,15 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      */
     static SpreadsheetMetadataPropertyName<?> fromJsonNodeName(final JsonNode node) {
         return with(node.name().value());
+    }
+
+    /**
+     * Force class initialization of the following types which will ensure they also {@link walkingkooka.tree.json.marshall.JsonNodeContext#register(String, BiFunction, BiFunction, Class, Class[])}
+     */
+    static {
+        Color.BLACK.alpha();
+        EmailAddress.tryParse("user@example.com");
+        SpreadsheetPattern.parseNumberFormatPattern(" ");
+        SpreadsheetId.with(0);
     }
 }
