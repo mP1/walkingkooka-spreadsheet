@@ -254,7 +254,7 @@ public abstract class SpreadsheetMetadata implements HasConverter,
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
         final Locale locale = components.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
-        final Integer twoYearDigit = components.getOrNull(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR_INTERPRETATION);
+        final Integer twoYearDigit = components.getOrNull(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR);
 
         components.reportIfMissing();
 
