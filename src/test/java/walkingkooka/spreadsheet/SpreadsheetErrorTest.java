@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.HashCodeEqualsDefinedTesting2;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.FromJsonNodeContext;
@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetError>,
-        HashCodeEqualsDefinedTesting<SpreadsheetError>,
+        HashCodeEqualsDefinedTesting2<SpreadsheetError>,
         JsonNodeMappingTesting<SpreadsheetError>,
         ToStringTesting<SpreadsheetError> {
 

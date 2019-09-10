@@ -22,13 +22,13 @@ import walkingkooka.Cast;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.HashCodeEqualsDefinedTesting2;
 import walkingkooka.test.ToStringTesting;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqualsDefinedTesting<TargetAndSpreadsheetCellReference<SpreadsheetLabelName>>,
+public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqualsDefinedTesting2<TargetAndSpreadsheetCellReference<SpreadsheetLabelName>>,
         ToStringTesting<TargetAndSpreadsheetCellReference<SpreadsheetLabelName>> {
 
     @Test

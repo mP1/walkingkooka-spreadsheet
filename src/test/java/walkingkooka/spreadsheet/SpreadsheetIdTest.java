@@ -18,9 +18,8 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.compare.ComparableTesting;
+import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.JsonNode;
@@ -32,8 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
-        ComparableTesting<SpreadsheetId>,
-        HashCodeEqualsDefinedTesting<SpreadsheetId>,
+        ComparableTesting2<SpreadsheetId>,
         JsonNodeMappingTesting<SpreadsheetId>,
         ParseStringTesting<SpreadsheetId>,
         ToStringTesting<SpreadsheetId> {

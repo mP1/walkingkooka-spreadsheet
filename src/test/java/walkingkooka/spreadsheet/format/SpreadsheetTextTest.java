@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.HashCodeEqualsDefinedTesting2;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.text.HasTextNodeTesting;
@@ -37,7 +37,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>,
-        HashCodeEqualsDefinedTesting<SpreadsheetText>,
+        HashCodeEqualsDefinedTesting2<SpreadsheetText>,
         HasTextNodeTesting,
         ToStringTesting<SpreadsheetText> {
 

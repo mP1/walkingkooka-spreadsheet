@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.compare.ComparableTesting;
+import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.JsonNode;
@@ -34,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetColumnTest implements ClassTesting2<SpreadsheetColumn>,
-        ComparableTesting<SpreadsheetColumn>,
+        ComparableTesting2<SpreadsheetColumn>,
         JsonNodeMappingTesting<SpreadsheetColumn>,
         ToStringTesting<SpreadsheetColumn> {
 
