@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.HashCodeEqualsDefinedTesting2;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public final class SpreadsheetLabelMappingTest implements ClassTesting2<SpreadsheetLabelMapping>,
-        HashCodeEqualsDefinedTesting<SpreadsheetLabelMapping>,
+        HashCodeEqualsDefinedTesting2<SpreadsheetLabelMapping>,
         JsonNodeMappingTesting<SpreadsheetLabelMapping>,
         HateosResourceTesting<SpreadsheetLabelMapping>,
         ToStringTesting<SpreadsheetLabelMapping> {

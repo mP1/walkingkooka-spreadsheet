@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.compare.ComparableTesting;
+import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.compare.Range;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionReferenceTestCase<SpreadsheetCellReference>
-        implements ComparableTesting<SpreadsheetCellReference>,
+        implements ComparableTesting2<SpreadsheetCellReference>,
         ParseStringTesting<SpreadsheetCellReference> {
 
     private final static int COLUMN = 123;

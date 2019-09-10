@@ -22,7 +22,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.HashCodeEqualsDefinedTesting2;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.text.TextStyle;
@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetConditionalFormattingRuleTest implements ClassTesting2<SpreadsheetConditionalFormattingRule>,
-        HashCodeEqualsDefinedTesting<SpreadsheetConditionalFormattingRule>,
+        HashCodeEqualsDefinedTesting2<SpreadsheetConditionalFormattingRule>,
         ToStringTesting<SpreadsheetConditionalFormattingRule> {
 
     @Test

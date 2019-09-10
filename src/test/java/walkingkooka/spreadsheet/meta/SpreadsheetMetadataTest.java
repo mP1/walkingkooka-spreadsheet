@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.HashCodeEqualsDefinedTesting2;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.FromJsonNodeContext;
@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetMetadata>,
-        HashCodeEqualsDefinedTesting<SpreadsheetMetadata>,
+        HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
         JsonNodeMappingTesting<SpreadsheetMetadata>,
         ToStringTesting<SpreadsheetMetadata> {
 

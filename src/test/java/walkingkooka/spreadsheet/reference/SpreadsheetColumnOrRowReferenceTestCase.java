@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.compare.ComparableTesting;
+import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.test.ToStringTesting;
@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends SpreadsheetColumnOrRowReference<R>> implements ClassTesting2<R>,
-        ComparableTesting<R>,
+        ComparableTesting2<R>,
         JsonNodeMappingTesting<R>,
         ParseStringTesting<R>,
         ToStringTesting<R> {
