@@ -17,10 +17,13 @@
 package walkingkooka.spreadsheet.engine.hateos;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.compare.Range;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.RelativeUrl;
 import walkingkooka.net.Url;
+import walkingkooka.net.header.CharsetName;
+import walkingkooka.net.header.HttpHeaderName;
 import walkingkooka.net.http.HttpMethod;
 import walkingkooka.net.http.HttpStatusCode;
 import walkingkooka.net.http.server.FakeHttpRequest;
@@ -31,6 +34,7 @@ import walkingkooka.net.http.server.HttpResponses;
 import walkingkooka.net.http.server.RecordingHttpResponse;
 import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.net.http.server.hateos.HateosHandler;
+import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.routing.Router;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
@@ -46,6 +50,7 @@ import walkingkooka.tree.json.marshall.FromJsonNodeContexts;
 import walkingkooka.tree.json.marshall.ToJsonNodeContexts;
 import walkingkooka.type.JavaVisibility;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
@@ -436,6 +441,11 @@ public final class SpreadsheetEngineHateosHandlersRouterTest implements ClassTes
             @Override
             public HttpMethod method() {
                 return method;
+            }
+
+            @Override
+            public Map<HttpHeaderName<?>, Object> headers() {
+                return Maps.of(HttpHeaderName.CONTENT_TYPE, HateosContentType.JSON_CONTENT_TYPE.setCharset(CharsetName.UTF_8));
             }
         };
     }
