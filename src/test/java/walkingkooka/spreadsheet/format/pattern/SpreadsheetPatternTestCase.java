@@ -22,7 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.HashCodeEqualsDefinedTesting2;
 import walkingkooka.test.IsMethodTesting;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.test.ToStringTesting;
@@ -33,10 +33,9 @@ import walkingkooka.type.JavaVisibility;
 
 import java.util.function.Predicate;
 
-public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern<V>,
-        V>
+public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern<V>, V>
         implements ClassTesting2<P>,
-        HashCodeEqualsDefinedTesting<P>,
+        HashCodeEqualsDefinedTesting2<P>,
         JsonNodeMappingTesting<P>,
         IsMethodTesting<P>,
         ParserTesting,

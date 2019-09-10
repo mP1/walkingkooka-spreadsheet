@@ -24,7 +24,7 @@ import walkingkooka.convert.ConverterTesting;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.HashCodeEqualsDefinedTesting2;
 import walkingkooka.test.ThrowableTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.CharSequences;
@@ -42,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata> implements ClassTesting2<SpreadsheetMetadata>,
         ConverterTesting,
-        HashCodeEqualsDefinedTesting<SpreadsheetMetadata>,
+        HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
         JsonNodeMappingTesting<SpreadsheetMetadata>,
         HateosResourceTesting<SpreadsheetMetadata>,
         ThrowableTesting,

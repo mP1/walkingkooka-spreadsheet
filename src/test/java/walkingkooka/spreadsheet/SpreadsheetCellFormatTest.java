@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.HashCodeEqualsDefinedTesting2;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
@@ -37,7 +37,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellFormatTest implements ClassTesting2<SpreadsheetCellFormat>,
-        HashCodeEqualsDefinedTesting<SpreadsheetCellFormat>,
+        HashCodeEqualsDefinedTesting2<SpreadsheetCellFormat>,
         JsonNodeMappingTesting<SpreadsheetCellFormat>,
         ToStringTesting<SpreadsheetCellFormat> {
 

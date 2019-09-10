@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.Maps;
-import walkingkooka.compare.ComparableTesting;
+import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -47,7 +47,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>,
-        ComparableTesting<SpreadsheetCell>,
+        ComparableTesting2<SpreadsheetCell>,
         JsonNodeMappingTesting<SpreadsheetCell>,
         HateosResourceTesting<SpreadsheetCell>,
         ToStringTesting<SpreadsheetCell> {
