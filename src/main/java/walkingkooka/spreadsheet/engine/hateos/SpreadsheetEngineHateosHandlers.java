@@ -16,7 +16,6 @@
  */
 package walkingkooka.spreadsheet.engine.hateos;
 
-import walkingkooka.compare.Range;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.http.server.HttpRequest;
 import walkingkooka.net.http.server.HttpRequestAttribute;
@@ -34,7 +33,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.tree.Node;
 import walkingkooka.type.PublicStaticHelper;
 
-import java.util.Optional;
 import java.util.function.BiConsumer;
 
 /**
