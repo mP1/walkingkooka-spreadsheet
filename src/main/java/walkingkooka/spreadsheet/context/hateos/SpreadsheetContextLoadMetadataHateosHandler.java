@@ -22,10 +22,8 @@ import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.context.SpreadsheetContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.store.Store;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 /**

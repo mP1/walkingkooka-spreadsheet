@@ -26,7 +26,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 final class SpreadsheetEngineLoadCellHateosHandlerBatchLoader {
