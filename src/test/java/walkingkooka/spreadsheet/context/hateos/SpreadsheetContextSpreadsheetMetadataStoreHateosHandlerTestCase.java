@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.context.hateos;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.collect.map.Maps;
 import walkingkooka.compare.Range;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.http.server.HttpRequestAttribute;
@@ -27,15 +26,9 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.context.SpreadsheetContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
-import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
-import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
-import walkingkooka.store.Store;
 
-import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetContextSpreadsheetMetadataStoreHateosHandlerTestCase<H extends SpreadsheetContextSpreadsheetMetadataStoreHateosHandler>
         extends SpreadsheetContextHateosHandlerTestCase2<H,

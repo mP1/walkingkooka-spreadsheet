@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.context.hateos;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.Maps;
-import walkingkooka.compare.Range;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.RelativeUrl;
 import walkingkooka.net.Url;
@@ -37,7 +36,6 @@ import walkingkooka.net.http.server.RecordingHttpResponse;
 import walkingkooka.net.http.server.hateos.FakeHateosHandler;
 import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.net.http.server.hateos.HateosHandler;
-import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.routing.Router;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;

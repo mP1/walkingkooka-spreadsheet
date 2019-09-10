@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.engine.hateos;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.compare.Range;
 import walkingkooka.net.http.server.hateos.HateosHandlerTesting;
 import walkingkooka.predicate.PredicateTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -33,7 +32,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;

@@ -16,9 +16,7 @@
  */
 package walkingkooka.spreadsheet.context.hateos;
 
-import walkingkooka.Cast;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.compare.Range;
 import walkingkooka.net.AbsoluteUrl;
 import walkingkooka.net.header.LinkRelation;
 import walkingkooka.net.http.HttpMethod;
@@ -27,7 +25,6 @@ import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.HttpResponse;
 import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.net.http.server.hateos.HateosHandler;
-import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.net.http.server.hateos.HateosResourceMapping;
 import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.routing.Router;
