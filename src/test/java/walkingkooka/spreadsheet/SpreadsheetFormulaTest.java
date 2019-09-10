@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.HashCodeEqualsDefinedTesting2;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.json.JsonNode;
@@ -38,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFormula>,
-        HashCodeEqualsDefinedTesting<SpreadsheetFormula>,
+        HashCodeEqualsDefinedTesting2<SpreadsheetFormula>,
         JsonNodeMappingTesting<SpreadsheetFormula>,
         ToStringTesting<SpreadsheetFormula> {
 

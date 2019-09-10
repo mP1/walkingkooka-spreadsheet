@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.HashCodeEqualsDefinedTesting2;
 import walkingkooka.test.IsMethodTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.JsonNode;
@@ -29,7 +29,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMappingTesting;
 import java.util.function.Predicate;
 
 public abstract class SpreadsheetExpressionReferenceTestCase<R extends SpreadsheetExpressionReference> implements ClassTesting2<R>,
-        HashCodeEqualsDefinedTesting<R>,
+        HashCodeEqualsDefinedTesting2<R>,
         JsonNodeMappingTesting<R>,
         IsMethodTesting<R>,
         ToStringTesting<R> {

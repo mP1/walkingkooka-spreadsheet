@@ -18,11 +18,11 @@
 package walkingkooka.spreadsheet.security;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.compare.ComparableTesting;
+import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 
-public final class GroupIdTest extends IdentityIdTestCase<GroupId> implements ComparableTesting<GroupId> {
+public final class GroupIdTest extends IdentityIdTestCase<GroupId> implements ComparableTesting2<GroupId> {
 
     @Test
     public void testCompareLess() {

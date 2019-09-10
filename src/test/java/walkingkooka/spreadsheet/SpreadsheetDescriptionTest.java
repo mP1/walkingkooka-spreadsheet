@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting;
+import walkingkooka.test.HashCodeEqualsDefinedTesting2;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.type.JavaVisibility;
@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public final class SpreadsheetDescriptionTest implements ClassTesting2<SpreadsheetDescription>,
-        HashCodeEqualsDefinedTesting<SpreadsheetDescription>,
+        HashCodeEqualsDefinedTesting2<SpreadsheetDescription>,
         ToStringTesting<SpreadsheetDescription> {
 
     private final static String TEXT = "description #1";
