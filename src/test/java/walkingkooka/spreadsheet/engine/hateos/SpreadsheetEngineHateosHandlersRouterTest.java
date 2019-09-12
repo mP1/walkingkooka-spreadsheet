@@ -401,7 +401,9 @@ public final class SpreadsheetEngineHateosHandlersRouterTest implements ClassTes
                                final String url) {
         final HttpRequest request = this.request(method, url);
         final Optional<BiConsumer<HttpRequest, HttpResponse>> possible = this.route(request);
-        assertNotEquals(Optional.empty(), possible);
+        assertNotEquals(Optional.empty(),
+                possible,
+                () -> method + " " + url);
         if (possible.isPresent()) {
             final RecordingHttpResponse response = HttpResponses.recording();
             possible.get().accept(request, response);
@@ -461,7 +463,7 @@ public final class SpreadsheetEngineHateosHandlersRouterTest implements ClassTes
         }
     }
 
-    private final static String URL = "http://example.com/api/";
+    private final static String URL = "http://example.com/api";
 
     private AbsoluteUrl base() {
         return Url.parseAbsolute(URL);
