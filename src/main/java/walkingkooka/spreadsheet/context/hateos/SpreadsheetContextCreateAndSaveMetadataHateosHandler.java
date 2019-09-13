@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * A {@link HateosHandler} that invokes {@link SpreadsheetContext#metadataWithDefaults(Optional<Locale>)}
+ * A {@link HateosHandler} that invokes {@link SpreadsheetContext#createMetadata(Optional<Locale>)}
  */
 final class SpreadsheetContextCreateAndSaveMetadataHateosHandler extends SpreadsheetContextSpreadsheetMetadataStoreHateosHandler {
 
@@ -65,16 +65,20 @@ final class SpreadsheetContextCreateAndSaveMetadataHateosHandler extends Spreads
                                                          final Map<HttpRequestAttribute<?>, Object> parameters) {
         checkResourceEmpty(metadata);
 
-        return Optional.of(this.context.metadataWithDefaults( HttpHeaderName.ACCEPT_LANGUAGE.parameterValue(parameters)
-                .flatMap(this::preferredLocal)));
+        final SpreadsheetMetadata saved = this.context.createMetadata(HttpHeaderName.ACCEPT_LANGUAGE.parameterValue(parameters)
+                .flatMap(this::preferredLocale));
+        saved.id()
+                .orElseThrow(() -> new IllegalStateException(SpreadsheetMetadata.class.getSimpleName() + " missing id=" + saved));
+
+        return Optional.of(saved);
     }
 
-    private Optional<Locale> preferredLocal(final AcceptLanguage language) {
+    private Optional<Locale> preferredLocale(final AcceptLanguage language) {
         return language.value().get(0).value().locale();
     }
 
     @Override
     String operation() {
-        return "saveMetadata";
+        return "create/saveMetadata";
     }
 }

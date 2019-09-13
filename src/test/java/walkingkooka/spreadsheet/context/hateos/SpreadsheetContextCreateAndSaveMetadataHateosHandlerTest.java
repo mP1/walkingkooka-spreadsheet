@@ -58,6 +58,23 @@ public final class SpreadsheetContextCreateAndSaveMetadataHateosHandlerTest exte
     }
 
     @Test
+    public void testHandleWithoutIdCreatesMetadataWithLocaleWithoutIdFails() {
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com")));
+
+        this.handleFails(this.createHandler(new FakeSpreadsheetContext() {
+
+                    @Override
+                    public SpreadsheetMetadata createMetadata(final Optional<Locale> locale) {
+                        return metadata.set(SpreadsheetMetadataPropertyName.LOCALE, locale.get());
+                    }
+                }),
+                Optional.empty(),
+                Optional.empty(),
+                Maps.of(HttpHeaderName.ACCEPT_LANGUAGE, AcceptLanguage.parse("en;q=0.8, fr-CA;q=0.9")),
+                IllegalStateException.class);
+    }
+
+    @Test
     public void testHandleWithoutIdCreatesMetadataWithLocale() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, this.spreadsheetId(),
                 SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("user@example.com")));
@@ -67,7 +84,7 @@ public final class SpreadsheetContextCreateAndSaveMetadataHateosHandlerTest exte
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetContext() {
 
                     @Override
-                    public SpreadsheetMetadata metadataWithDefaults(final Optional<Locale> locale) {
+                    public SpreadsheetMetadata createMetadata(final Optional<Locale> locale) {
                         return metadata.set(SpreadsheetMetadataPropertyName.LOCALE, locale.get());
                     }
                 }),
@@ -85,7 +102,7 @@ public final class SpreadsheetContextCreateAndSaveMetadataHateosHandlerTest exte
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetContext() {
 
                     @Override
-                    public SpreadsheetMetadata metadataWithDefaults(final Optional<Locale> locale) {
+                    public SpreadsheetMetadata createMetadata(final Optional<Locale> locale) {
                         return metadata;
                     }
                 }),
@@ -128,7 +145,7 @@ public final class SpreadsheetContextCreateAndSaveMetadataHateosHandlerTest exte
     @Test
     public final void testToString() {
         final SpreadsheetContext context = this.context();
-        this.toStringAndCheck(this.createHandler(context), context + " saveMetadata");
+        this.toStringAndCheck(this.createHandler(context), context + " create/saveMetadata");
     }
 
     // helpers..........................................................................................................
@@ -142,13 +159,13 @@ public final class SpreadsheetContextCreateAndSaveMetadataHateosHandlerTest exte
     SpreadsheetContext context() {
         return new FakeSpreadsheetContext() {
             @Override
-            public SpreadsheetMetadata metadataWithDefaults(final Optional<Locale> locale) {
-                return SpreadsheetContextCreateAndSaveMetadataHateosHandlerTest.this.metadataWithDefaults();
+            public SpreadsheetMetadata createMetadata(final Optional<Locale> locale) {
+                return SpreadsheetContextCreateAndSaveMetadataHateosHandlerTest.this.createMetadata();
             }
         };
     }
 
-    private SpreadsheetMetadata metadataWithDefaults() {
+    private SpreadsheetMetadata createMetadata() {
         return SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
                 LocalDateTime.of(2000, 12, 31, 12, 58, 59)));
     }

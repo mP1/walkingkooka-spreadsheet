@@ -56,6 +56,11 @@ public interface SpreadsheetContext extends Context {
     Converter converter(final SpreadsheetId id);
 
     /**
+     * Returns a {@link SpreadsheetMetadata} with necessary defaults allocating a new {@link SpreadsheetId}.
+     */
+    SpreadsheetMetadata createMetadata(final Optional<Locale> locale);
+
+    /**
      * The {@link DateTimeContext} for the given {@link SpreadsheetId}
      */
     DateTimeContext dateTimeContext(final SpreadsheetId id);
@@ -79,11 +84,6 @@ public interface SpreadsheetContext extends Context {
      * A {@link Router} that can handle hateos requests for the given identified spreadsheet.
      */
     Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> hateosRouter(final SpreadsheetId id);
-
-    /**
-     * Returns a {@link SpreadsheetMetadata} allocating a new {@link SpreadsheetId}.
-     */
-    SpreadsheetMetadata metadataWithDefaults(final Optional<Locale> locale);
 
     /**
      * Returns a {@link Function} which maps {@link String color name} to {@link Color} for the given {@link SpreadsheetId}.

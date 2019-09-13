@@ -47,6 +47,11 @@ public class FakeSpreadsheetContext implements SpreadsheetContext {
     }
 
     @Override
+    public SpreadsheetMetadata createMetadata(final Optional<Locale> locale) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public DateTimeContext dateTimeContext(final SpreadsheetId id) {
         throw new UnsupportedOperationException();
     }
@@ -68,11 +73,6 @@ public class FakeSpreadsheetContext implements SpreadsheetContext {
 
     @Override
     public Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> hateosRouter(final SpreadsheetId id) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public SpreadsheetMetadata metadataWithDefaults(final Optional<Locale> locale) {
         throw new UnsupportedOperationException();
     }
 
