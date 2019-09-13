@@ -43,61 +43,49 @@ public final class SpreadsheetEngineHateosHandlers implements PublicStaticHelper
     /**
      * {@see SpreadsheetEngineDeleteColumnsHateosHandler}
      */
-    public static HateosHandler<SpreadsheetColumnReference,
-            SpreadsheetDelta,
-            SpreadsheetDelta> deleteColumns(final SpreadsheetEngine engine,
-                                                                               final SpreadsheetEngineContext context) {
+    public static HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta, SpreadsheetDelta> deleteColumns(final SpreadsheetEngine engine,
+                                                                                                              final SpreadsheetEngineContext context) {
         return SpreadsheetEngineDeleteColumnsHateosHandler.with(engine, context);
     }
 
     /**
      * {@see SpreadsheetEngineDeleteRowsHateosHandler}
      */
-    public static HateosHandler<SpreadsheetRowReference,
-            SpreadsheetDelta,
-            SpreadsheetDelta> deleteRows(final SpreadsheetEngine engine,
-                                                                         final SpreadsheetEngineContext context) {
+    public static HateosHandler<SpreadsheetRowReference, SpreadsheetDelta, SpreadsheetDelta> deleteRows(final SpreadsheetEngine engine,
+                                                                                                        final SpreadsheetEngineContext context) {
         return SpreadsheetEngineDeleteRowsHateosHandler.with(engine, context);
     }
 
     /**
      * {@see SpreadsheetEngineFillCellsHateosHandler}
      */
-    public static HateosHandler<SpreadsheetCellReference,
-            SpreadsheetDelta,
-            SpreadsheetDelta> fillCells(final SpreadsheetEngine engine,
-                                                                         final SpreadsheetEngineContext context) {
+    public static HateosHandler<SpreadsheetCellReference, SpreadsheetDelta, SpreadsheetDelta> fillCells(final SpreadsheetEngine engine,
+                                                                                                        final SpreadsheetEngineContext context) {
         return SpreadsheetEngineFillCellsHateosHandler.with(engine, context);
     }
 
     /**
      * {@see SpreadsheetEngineInsertColumnsHateosHandler}
      */
-    public static HateosHandler<SpreadsheetColumnReference,
-            SpreadsheetDelta,
-            SpreadsheetDelta> insertColumns(final SpreadsheetEngine engine,
-                                                                               final SpreadsheetEngineContext context) {
+    public static HateosHandler<SpreadsheetColumnReference, SpreadsheetDelta, SpreadsheetDelta> insertColumns(final SpreadsheetEngine engine,
+                                                                                                              final SpreadsheetEngineContext context) {
         return SpreadsheetEngineInsertColumnsHateosHandler.with(engine, context);
     }
 
     /**
      * {@see SpreadsheetEngineInsertRowsHateosHandler}
      */
-    public static HateosHandler<SpreadsheetRowReference,
-            SpreadsheetDelta,
-            SpreadsheetDelta> insertRows(final SpreadsheetEngine engine,
-                                                                         final SpreadsheetEngineContext context) {
+    public static HateosHandler<SpreadsheetRowReference, SpreadsheetDelta, SpreadsheetDelta> insertRows(final SpreadsheetEngine engine,
+                                                                                                        final SpreadsheetEngineContext context) {
         return SpreadsheetEngineInsertRowsHateosHandler.with(engine, context);
     }
 
     /**
      * {@see SpreadsheetEngineLoadCellHateosHandler}
      */
-    public static HateosHandler<SpreadsheetCellReference,
-            SpreadsheetDelta,
-            SpreadsheetDelta> loadCell(final SpreadsheetEngineEvaluation evaluation,
-                                                                        final SpreadsheetEngine engine,
-                                                                        final SpreadsheetEngineContext context) {
+    public static HateosHandler<SpreadsheetCellReference, SpreadsheetDelta, SpreadsheetDelta> loadCell(final SpreadsheetEngineEvaluation evaluation,
+                                                                                                       final SpreadsheetEngine engine,
+                                                                                                       final SpreadsheetEngineContext context) {
         return SpreadsheetEngineLoadCellHateosHandler.with(evaluation,
                 engine,
                 context);
@@ -106,10 +94,8 @@ public final class SpreadsheetEngineHateosHandlers implements PublicStaticHelper
     /**
      * {@see SpreadsheetEngineSaveCellHateosHandler}
      */
-    public static HateosHandler<SpreadsheetCellReference,
-            SpreadsheetDelta,
-            SpreadsheetDelta> saveCell(final SpreadsheetEngine engine,
-                                                                        final SpreadsheetEngineContext context) {
+    public static HateosHandler<SpreadsheetCellReference, SpreadsheetDelta, SpreadsheetDelta> saveCell(final SpreadsheetEngine engine,
+                                                                                                       final SpreadsheetEngineContext context) {
         return SpreadsheetEngineSaveCellHateosHandler.with(engine, context);
     }
 
