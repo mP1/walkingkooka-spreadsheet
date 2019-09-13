@@ -69,7 +69,7 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
         this.millisecondDecimals = millisecondDecimals;
 
         float secondRounding;
-        switch(millisecondDecimals) {
+        switch (millisecondDecimals) {
             case 0:
                 secondRounding = 0.5f;
                 break;

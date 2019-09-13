@@ -97,6 +97,7 @@ final class SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor ex
     protected Visiting startVisit(final SpreadsheetFormatTimeParserToken token) {
         return this.failInvalid(token);
     }
+
     /**
      * Accumulates all the components for each and every pattern.
      */

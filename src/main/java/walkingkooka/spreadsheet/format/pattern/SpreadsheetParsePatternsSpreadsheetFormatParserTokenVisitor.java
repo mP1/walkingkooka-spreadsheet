@@ -143,7 +143,7 @@ abstract class SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<T ext
     protected final void visit(final SpreadsheetFormatTextLiteralParserToken token) {
         this.text(token.text());
     }
-    
+
     @Override
     protected final void visit(final SpreadsheetFormatTextPlaceholderParserToken token) {
         this.failInvalid(token);
@@ -161,7 +161,7 @@ abstract class SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<T ext
     }
 
     final List<T> tokens() {
-        if(this.tokens.isEmpty()) {
+        if (this.tokens.isEmpty()) {
             throw new IllegalArgumentException("Empty tokens");
         }
         return Lists.immutable(this.tokens);

@@ -47,7 +47,7 @@ final class SpreadsheetConverterSpreadsheetValueVisitor extends SpreadsheetValue
                 mapping);
         visitor.accept(value); // value = from
         final Converter converter = visitor.converter;
-        if(null == converter) {
+        if (null == converter) {
             throw new FailedConversionException(value, targetType);
         }
         return converter;

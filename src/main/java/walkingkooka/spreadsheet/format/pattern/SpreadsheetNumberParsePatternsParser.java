@@ -55,7 +55,7 @@ final class SpreadsheetNumberParsePatternsParser implements Parser<ParserContext
             patternsContext.nextComponent(cursor);
             if (false == patternsContext.isRequired()) {
                 final CharSequence text = save.textBetween();
-                if(text.length() > 0) {
+                if (text.length() > 0) {
                     token = ParserTokens.bigDecimal(patternsContext.computeValue(), text.toString());
                     break;
                 }

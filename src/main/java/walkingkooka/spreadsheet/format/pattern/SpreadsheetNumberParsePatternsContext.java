@@ -108,7 +108,7 @@ final class SpreadsheetNumberParsePatternsContext implements Context {
         boolean required = false;
 
         final Iterator<SpreadsheetNumberParsePatternsComponent> next = this.next;
-        while(false == required && next.hasNext()) {
+        while (false == required && next.hasNext()) {
             required = next.next().isRequired();
         }
 

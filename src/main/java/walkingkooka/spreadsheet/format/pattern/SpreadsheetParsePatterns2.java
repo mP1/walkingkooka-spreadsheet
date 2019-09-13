@@ -61,7 +61,7 @@ abstract class SpreadsheetParsePatterns2<T extends SpreadsheetFormatParserToken>
      * Sub classes should create a {@link Converter} using the given nth {@link SpreadsheetFormatParserToken}.
      */
     abstract Converter createDateTimeFormatterConverter(final int i);
-    
+
     // HasParser........................................................................................................
 
     @Override

@@ -31,8 +31,8 @@ import java.util.List;
  * Holds a valid {@link SpreadsheetDateParsePatterns}.
  */
 public final class SpreadsheetDateParsePatterns extends SpreadsheetParsePatterns2<SpreadsheetFormatDateParserToken> {
-    
-     /**
+
+    /**
      * Factory that creates a {@link SpreadsheetDateParsePatterns} from the given tokens.
      */
     static SpreadsheetDateParsePatterns withToken(final ParserToken token) {
