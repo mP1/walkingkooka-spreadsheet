@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
  * Holds a a {@link List} of {@link SpreadsheetFormatDateTimeParserToken date/time} or {@link SpreadsheetFormatNumberParserToken} number tokens and some common functionality.
  */
 public abstract class SpreadsheetParsePatterns<T extends SpreadsheetFormatParserToken> extends SpreadsheetPattern<List<T>>
-    implements HasConverter,
+        implements HasConverter,
         HasParser<ParserContext> {
 
     // ctor.............................................................................................................
@@ -86,7 +86,7 @@ public abstract class SpreadsheetParsePatterns<T extends SpreadsheetFormatParser
      * Factory that lazily creates a {@link Converter}
      */
     abstract Converter createConverter();
-    
+
     // HasParser........................................................................................................
 
     /**

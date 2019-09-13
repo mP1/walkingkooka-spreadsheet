@@ -52,7 +52,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     static SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateFormatPattern dateFormatPattern() {
         return SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateFormatPattern.INSTANCE;
     }
-    
+
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateParsePatterns}
      */
@@ -66,7 +66,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     static SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimeFormatPattern dateTimeFormatPattern() {
         return SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimeFormatPattern.INSTANCE;
     }
-    
+
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimeParsePatterns}
      */
@@ -115,7 +115,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     static SpreadsheetMetadataPropertyValueHandlerSpreadsheetNumberFormatPattern numberFormatPattern() {
         return SpreadsheetMetadataPropertyValueHandlerSpreadsheetNumberFormatPattern.INSTANCE;
     }
-    
+
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetNumberParsePatterns}
      */
@@ -150,14 +150,14 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     static SpreadsheetMetadataPropertyValueHandlerSpreadsheetTextFormatPattern textFormatPattern() {
         return SpreadsheetMetadataPropertyValueHandlerSpreadsheetTextFormatPattern.INSTANCE;
     }
-    
+
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimeFormatPattern}
      */
     static SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimeFormatPattern timeFormatPattern() {
         return SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimeFormatPattern.INSTANCE;
     }
-    
+
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimeParsePatterns}
      */

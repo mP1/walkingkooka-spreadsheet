@@ -41,8 +41,8 @@ abstract class SpreadsheetContextSpreadsheetMetadataStoreHateosHandler extends S
 
     @Override
     public final Optional<SpreadsheetMetadata> handleCollection(final Range<SpreadsheetId> ids,
-                                                                                 final Optional<SpreadsheetMetadata> value,
-                                                                                 final Map<HttpRequestAttribute<?>, Object> parameters) {
+                                                                final Optional<SpreadsheetMetadata> value,
+                                                                final Map<HttpRequestAttribute<?>, Object> parameters) {
         checkRangeNotNull(ids);
         checkResource(value);
         checkParameters(parameters);

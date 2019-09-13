@@ -30,7 +30,7 @@ import java.util.Optional;
 
 final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements SpreadsheetFormatterContext {
 
-    static SpreadsheetFormatterConverterSpreadsheetFormatterContext with(final ConverterContext context){
+    static SpreadsheetFormatterConverterSpreadsheetFormatterContext with(final ConverterContext context) {
         return new SpreadsheetFormatterConverterSpreadsheetFormatterContext(context);
     }
 

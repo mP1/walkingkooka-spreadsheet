@@ -51,8 +51,8 @@ final class SpreadsheetEngineFillCellsHateosHandler extends SpreadsheetEngineHat
 
     @Override
     public Optional<SpreadsheetDelta> handle(final Optional<SpreadsheetCellReference> id,
-                                                                                 final Optional<SpreadsheetDelta> resource,
-                                                                                 final Map<HttpRequestAttribute<?>, Object> parameters) {
+                                             final Optional<SpreadsheetDelta> resource,
+                                             final Map<HttpRequestAttribute<?>, Object> parameters) {
         this.checkIdNotNull(id);
         this.checkResource(resource);
         this.checkParameters(parameters);
@@ -62,8 +62,8 @@ final class SpreadsheetEngineFillCellsHateosHandler extends SpreadsheetEngineHat
 
     @Override
     public Optional<SpreadsheetDelta> handleCollection(final Range<SpreadsheetCellReference> to,
-                                                                                        final Optional<SpreadsheetDelta> resource,
-                                                                                        final Map<HttpRequestAttribute<?>, Object> parameters) {
+                                                       final Optional<SpreadsheetDelta> resource,
+                                                       final Map<HttpRequestAttribute<?>, Object> parameters) {
         final SpreadsheetRange toSpreadsheetRange = SpreadsheetRange.with(to);
         final SpreadsheetDelta delta = this.checkResourceNotEmpty(resource);
         this.checkParameters(parameters);

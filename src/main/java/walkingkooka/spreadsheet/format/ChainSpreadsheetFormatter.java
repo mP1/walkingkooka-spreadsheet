@@ -39,7 +39,7 @@ final class ChainSpreadsheetFormatter implements SpreadsheetFormatter {
         final SpreadsheetFormatter result;
 
         final List<SpreadsheetFormatter> copy = Lists.immutable(formatters);
-        switch(copy.size()) {
+        switch (copy.size()) {
             case 0:
                 throw new IllegalArgumentException("Formatters empty");
             case 1:

@@ -132,7 +132,7 @@ abstract class SpreadsheetEngineHateosHandler<I extends Comparable<I>>
     }
 
     static SpreadsheetDelta applyWindow(final SpreadsheetDelta out,
-                                               final Optional<SpreadsheetDelta> in) {
+                                        final Optional<SpreadsheetDelta> in) {
         return in.map(d -> d.setCells(out.cells()))
                 .orElse(out);
     }
