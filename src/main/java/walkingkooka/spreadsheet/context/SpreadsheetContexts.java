@@ -48,14 +48,14 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
     public static SpreadsheetContext memory(final AbsoluteUrl base,
                                             final HateosContentType contentType,
                                             final Function<BigDecimal, Fraction> fractioner,
+                                            final Function<Optional<Locale>, SpreadsheetMetadata> createMetadata,
                                             final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
-                                            final Function<Optional<Locale>, SpreadsheetMetadata> metadata,
                                             final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToRepository) {
         return MemorySpreadsheetContext.with(base,
                 contentType,
                 fractioner,
+                createMetadata,
                 spreadsheetIdFunctions,
-                metadata,
                 spreadsheetIdToRepository);
     }
 

@@ -75,36 +75,36 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
     static MemorySpreadsheetContext with(final AbsoluteUrl base,
                                          final HateosContentType contentType,
                                          final Function<BigDecimal, Fraction> fractioner,
+                                         final Function<Optional<Locale>, SpreadsheetMetadata> createMetadata,
                                          final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
-                                         final Function<Optional<Locale>, SpreadsheetMetadata> metadata,
                                          final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToRepository) {
         Objects.requireNonNull(base, "base");
         Objects.requireNonNull(contentType, "contentType");
         Objects.requireNonNull(fractioner, "fractioner");
+        Objects.requireNonNull(createMetadata, "createMetadata");
         Objects.requireNonNull(spreadsheetIdFunctions, "spreadsheetIdFunctions");
-        Objects.requireNonNull(metadata, "metadata");
         Objects.requireNonNull(spreadsheetIdToRepository, "spreadsheetIdToRepository");
 
         return new MemorySpreadsheetContext(base,
                 contentType,
                 fractioner,
+                createMetadata,
                 spreadsheetIdFunctions,
-                metadata,
                 spreadsheetIdToRepository);
     }
 
     private MemorySpreadsheetContext(final AbsoluteUrl base,
                                      final HateosContentType contentType,
                                      final Function<BigDecimal, Fraction> fractioner,
+                                     final Function<Optional<Locale>, SpreadsheetMetadata> createMetadata,
                                      final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
-                                     final Function<Optional<Locale>, SpreadsheetMetadata> metadata,
                                      final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToRepository) {
         super();
 
         this.base = base;
         this.contentType = contentType;
         this.fractioner = fractioner;
-        this.metadata = metadata;
+        this.createMetadata = createMetadata;
         this.spreadsheetIdFunctions = spreadsheetIdFunctions;
         this.spreadsheetIdToRepository = spreadsheetIdToRepository;
     }
@@ -113,6 +113,13 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
     public Converter converter(final SpreadsheetId id) {
         return this.loadAndGet(id, SpreadsheetMetadata::converter);
     }
+
+    @Override
+    public SpreadsheetMetadata createMetadata(final Optional<Locale> locale) {
+        return this.createMetadata.apply(locale);
+    }
+
+    private final Function<Optional<Locale>, SpreadsheetMetadata> createMetadata;
 
     @Override
     public DateTimeContext dateTimeContext(final SpreadsheetId id) {
@@ -232,15 +239,6 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
     private final AbsoluteUrl base;
     private final HateosContentType contentType;
     private final Function<BigDecimal, Fraction> fractioner;
-
-    // metadata.........................................................................................................
-
-    @Override
-    public SpreadsheetMetadata metadataWithDefaults(final Optional<Locale> locale) {
-        return this.metadata.apply(locale);
-    }
-
-    private final Function<Optional<Locale>, SpreadsheetMetadata> metadata;
 
     @Override
     public Function<SpreadsheetColorName, Optional<Color>> nameToColor(final SpreadsheetId id) {

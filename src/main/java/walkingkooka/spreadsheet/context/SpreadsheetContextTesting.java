@@ -34,6 +34,13 @@ public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends
     }
 
     @Test
+    default void testCreateMetadataNullLocaleFails() {
+        assertThrows(NullPointerException.class, () -> {
+            this.createContext().createMetadata(null);
+        });
+    }
+
+    @Test
     default void testDateTimeContextNullSpreadsheetIdFails() {
         assertThrows(NullPointerException.class, () -> {
             this.createContext().dateTimeContext(null);
@@ -58,13 +65,6 @@ public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends
     default void testHateosRouterNullSpreadsheetIdFails() {
         assertThrows(NullPointerException.class, () -> {
             this.createContext().hateosRouter(null);
-        });
-    }
-
-    @Test
-    default void testMetadataWithDefaultsNullLocaleFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createContext().metadataWithDefaults(null);
         });
     }
 
