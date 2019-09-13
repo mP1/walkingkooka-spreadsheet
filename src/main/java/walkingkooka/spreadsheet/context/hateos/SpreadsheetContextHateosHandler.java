@@ -72,17 +72,6 @@ abstract class SpreadsheetContextHateosHandler<I extends Comparable<I>, V, C>
 
     // Range<I>.........................................................................................................
 
-    /**
-     * Checks that the range bounds are not null and both are inclusive.
-     */
-    final void checkRangeBounded(final Range<?> range, final String label) {
-        Objects.requireNonNull(range, label);
-
-        if (!range.lowerBound().isInclusive() || !range.upperBound().isInclusive()) {
-            throw new IllegalArgumentException("Range with both " + label + " required=" + range);
-        }
-    }
-
     final Range<I> checkRangeNotNull(final Range<I> ids) {
         Objects.requireNonNull(ids, "ids");
         return ids;
