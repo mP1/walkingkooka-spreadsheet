@@ -190,7 +190,7 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
         }
 
         return Range.greaterThanEquals(left.setRow(top))
-                    .and(Range.lessThanEquals(right.setRow(bottom)));
+                .and(Range.lessThanEquals(right.setRow(bottom)));
     }
 
     /**

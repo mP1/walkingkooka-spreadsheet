@@ -87,7 +87,6 @@ public interface SpreadsheetContext extends Context {
 
     /**
      * Returns a {@link Function} which maps {@link String color name} to {@link Color} for the given {@link SpreadsheetId}.
-     * @return
      */
     Function<SpreadsheetColorName, Optional<Color>> nameToColor(final SpreadsheetId id);
 
