@@ -42,8 +42,8 @@ final class SpreadsheetRangeCellsConsumer implements Consumer<SpreadsheetCellRef
     }
 
     private SpreadsheetRangeCellsConsumer(final Collection<SpreadsheetCell> cells,
-                                  final Consumer<? super SpreadsheetCell> present,
-                                  final Consumer<? super SpreadsheetCellReference> absent) {
+                                          final Consumer<? super SpreadsheetCell> present,
+                                          final Consumer<? super SpreadsheetCellReference> absent) {
         Objects.requireNonNull(cells, "cells");
         Objects.requireNonNull(present, "present");
         Objects.requireNonNull(absent, "absent");

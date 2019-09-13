@@ -104,7 +104,7 @@ public class FakeSpreadsheetFormatterContext extends FakeDecimalNumberContext im
     public List<String> weekDayNameAbbreviations() {
         throw new UnsupportedOperationException();
     }
-    
+
     @Override
     public String weekDayNameAbbreviation(final int day) {
         throw new UnsupportedOperationException();

@@ -75,7 +75,7 @@ final class SpreadsheetValueVisitorNumberVisitor extends NumberVisitor {
 
     @Override
     protected void visitUnknown(final Number number) {
-        this.visitor.visit((Object)number);
+        this.visitor.visit(number);
     }
 
     private final SpreadsheetValueVisitor visitor;

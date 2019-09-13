@@ -28,7 +28,7 @@ import java.util.function.Function;
  */
 final class SpreadsheetMetadataColorFunction<K> implements Function<K, Optional<Color>> {
 
-    static  <K> SpreadsheetMetadataColorFunction<K> with(final Map<K, Color> colors) {
+    static <K> SpreadsheetMetadataColorFunction<K> with(final Map<K, Color> colors) {
         return new SpreadsheetMetadataColorFunction<>(colors);
     }
 

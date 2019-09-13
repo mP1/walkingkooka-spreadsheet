@@ -39,8 +39,8 @@ abstract class SpreadsheetEngineDeleteOrInsertColumnsOrRowsHateosHandler<R exten
 
     @Override
     public final Optional<SpreadsheetDelta> handle(final Optional<R> id,
-                                                                final Optional<SpreadsheetDelta> resource,
-                                                                final Map<HttpRequestAttribute<?>, Object> parameters) {
+                                                   final Optional<SpreadsheetDelta> resource,
+                                                   final Map<HttpRequestAttribute<?>, Object> parameters) {
         final R columnOrRow = this.checkIdRequired(id);
         this.checkResource(resource);
         this.checkParameters(parameters);
@@ -53,8 +53,8 @@ abstract class SpreadsheetEngineDeleteOrInsertColumnsOrRowsHateosHandler<R exten
 
     @Override
     public final Optional<SpreadsheetDelta> handleCollection(final Range<R> columnOrRow,
-                                                                       final Optional<SpreadsheetDelta> resource,
-                                                                       final Map<HttpRequestAttribute<?>, Object> parameters) {
+                                                             final Optional<SpreadsheetDelta> resource,
+                                                             final Map<HttpRequestAttribute<?>, Object> parameters) {
         this.checkRangeBounded(columnOrRow, this.rangeLabel());
         this.checkResource(resource);
         this.checkParameters(parameters);
@@ -70,8 +70,8 @@ abstract class SpreadsheetEngineDeleteOrInsertColumnsOrRowsHateosHandler<R exten
     abstract String rangeLabel();
 
     private SpreadsheetDelta executeAndWindowFilter(final R lower,
-                                                           final int count,
-                                                           final Optional<SpreadsheetDelta> in) {
+                                                    final int count,
+                                                    final Optional<SpreadsheetDelta> in) {
         checkWithoutCells(in);
 
         return applyWindow(this.execute(lower, count), in);

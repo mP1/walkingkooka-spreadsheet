@@ -107,7 +107,7 @@ final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpr
 
     @Override
     protected void visit(final SpreadsheetFormatAmPmParserToken token) {
-        switch(token.value().length()) {
+        switch (token.value().length()) {
             case 1:
                 this.text(AMPM, TextStyle.SHORT);
                 break;
@@ -120,7 +120,7 @@ final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpr
 
     @Override
     protected void visit(final SpreadsheetFormatDayParserToken token) {
-        switch(token.value().length()) {
+        switch (token.value().length()) {
             case 1:
                 this.value(DAY, 1, 2);
                 break;
@@ -134,7 +134,7 @@ final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpr
 
     @Override
     protected void visit(final SpreadsheetFormatHourParserToken token) {
-        switch(token.value().length()) {
+        switch (token.value().length()) {
             case 1:
                 this.value(this.hour, 1, 2);
                 break;
@@ -149,8 +149,8 @@ final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpr
 
     @Override
     protected void visit(final SpreadsheetFormatMonthOrMinuteParserToken token) {
-        if(this.month) {
-            switch(token.value().length()) {
+        if (this.month) {
+            switch (token.value().length()) {
                 case 1:
                     this.value(MONTH, 1, 2);
                     break;
@@ -165,7 +165,7 @@ final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpr
                     break;
             }
         } else {
-            switch(token.value().length()) {
+            switch (token.value().length()) {
                 case 1:
                     this.value(MINUTES, 1, 2);
                     break;
@@ -185,7 +185,7 @@ final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpr
 
     @Override
     protected void visit(final SpreadsheetFormatSecondParserToken token) {
-        switch(token.value().length()) {
+        switch (token.value().length()) {
             case 1:
                 this.value(SECONDS, 1, 2);
                 break;
@@ -229,7 +229,7 @@ final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpr
 
     @Override
     protected void visit(final SpreadsheetFormatYearParserToken token) {
-        switch(token.value().length()) {
+        switch (token.value().length()) {
             case 1:
                 this.twoDigitYear(1);
                 break;

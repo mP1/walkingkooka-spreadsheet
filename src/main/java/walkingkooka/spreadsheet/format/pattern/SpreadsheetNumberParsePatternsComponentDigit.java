@@ -46,7 +46,7 @@ abstract class SpreadsheetNumberParsePatternsComponentDigit extends SpreadsheetN
 
             // grouping separators are skipped when digits are expected.
             final char c = cursor.at();
-            if(groupingSeparator == c) {
+            if (groupingSeparator == c) {
                 cursor.next();
                 continue;
             }
@@ -68,7 +68,7 @@ abstract class SpreadsheetNumberParsePatternsComponentDigit extends SpreadsheetN
 
             // $c might be a digit or space
             if (false == this.handle(c, context)) {
-               break;
+                break;
             }
             cursor.next();
             count++;

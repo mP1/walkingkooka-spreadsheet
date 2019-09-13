@@ -49,7 +49,7 @@ final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunction im
     final boolean ampm;
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.token.toString();
     }
 }
