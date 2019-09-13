@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * A {@link HateosHandler} that invokes {@link SpreadsheetContext#metadataWithDefaults(Optional)}}
+ * A {@link HateosHandler} that invokes {@link SpreadsheetContext#createMetadata(Optional)}.
  */
 final class SpreadsheetContextLoadMetadataHateosHandler extends SpreadsheetContextSpreadsheetMetadataStoreHateosHandler {
 
