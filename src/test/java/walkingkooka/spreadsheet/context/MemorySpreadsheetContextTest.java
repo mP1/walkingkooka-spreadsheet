@@ -92,8 +92,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         this.withFails(null,
                 this.contentType(),
                 this::fractioner,
+                this::createMetadata,
                 this::spreadsheetIdFunctions,
-                this::metadataWithDefaults,
                 this::spreadsheetIdToRepository);
     }
 
@@ -102,8 +102,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         this.withFails(this.base(),
                 null,
                 this::fractioner,
+                this::createMetadata,
                 this::spreadsheetIdFunctions,
-                this::metadataWithDefaults,
                 this::spreadsheetIdToRepository);
         ;
     }
@@ -113,8 +113,18 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         this.withFails(this.base(),
                 this.contentType(),
                 null,
+                this::createMetadata,
                 this::spreadsheetIdFunctions,
-                this::metadataWithDefaults,
+                this::spreadsheetIdToRepository);
+    }
+    
+    @Test
+    public void testWithNullCreateMetadataFails() {
+        this.withFails(this.base(),
+                this.contentType(),
+                this::fractioner,
+                null,
+                this::spreadsheetIdFunctions,
                 this::spreadsheetIdToRepository);
     }
 
@@ -123,17 +133,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         this.withFails(this.base(),
                 this.contentType(),
                 this::fractioner,
-                null,
-                this::metadataWithDefaults,
-                this::spreadsheetIdToRepository);
-    }
-
-    @Test
-    public void testWithNullMetadataWithDefaultsFails() {
-        this.withFails(this.base(),
-                this.contentType(),
-                this::fractioner,
-                this::spreadsheetIdFunctions,
+                this::createMetadata,
                 null,
                 this::spreadsheetIdToRepository);
     }
@@ -143,23 +143,23 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         this.withFails(this.base(),
                 this.contentType(),
                 this::fractioner,
+                this::createMetadata,
                 this::spreadsheetIdFunctions,
-                this::metadataWithDefaults,
                 null);
     }
 
     private void withFails(final AbsoluteUrl base,
                            final HateosContentType contentType,
                            final Function<BigDecimal, Fraction> fractioner,
+                           final Function<Optional<Locale>, SpreadsheetMetadata> createMetadata,
                            final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
-                           final Function<Optional<Locale>, SpreadsheetMetadata> metadata,
                            final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToRepository) {
         assertThrows(NullPointerException.class, () -> {
             MemorySpreadsheetContext.with(base,
                     contentType,
                     fractioner,
+                    createMetadata,
                     spreadsheetIdFunctions,
-                    metadata,
                     spreadsheetIdToRepository);
         });
     }
@@ -451,15 +451,15 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     @Test
     public void testMetadataWithDefaultsWithLocale() {
         final Optional<Locale> locale = Optional.of(Locale.ENGLISH);
-        assertEquals(this.metadataWithDefaults(locale),
-                this.createContext().metadataWithDefaults(locale));
+        assertEquals(this.createMetadata(locale),
+                this.createContext().createMetadata(locale));
     }
 
     @Test
     public void testMetadataWithDefaultsWithoutLocale() {
         final Optional<Locale> locale = Optional.empty();
-        assertEquals(this.metadataWithDefaults(locale),
-                this.createContext().metadataWithDefaults(locale));
+        assertEquals(this.createMetadata(locale),
+                this.createContext().createMetadata(locale));
     }
 
     @Test
@@ -534,8 +534,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         return MemorySpreadsheetContext.with(this.base(),
                 this.contentType(),
                 this::fractioner,
+                this::createMetadata,
                 this::spreadsheetIdFunctions,
-                this::metadataWithDefaults,
                 this::spreadsheetIdToRepository);
     }
 
@@ -555,6 +555,14 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         throw new UnsupportedOperationException();
     }
 
+    private SpreadsheetMetadata createMetadata(final Optional<Locale> locale) {
+        SpreadsheetMetadata metadata = SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(999)));
+        if (locale.isPresent()) {
+            metadata = metadata.set(SpreadsheetMetadataPropertyName.LOCALE, locale.get());
+        }
+        return metadata;
+    }
+
     private BiFunction<ExpressionNodeName, List<Object>, Object> spreadsheetIdFunctions(final SpreadsheetId spreadsheetId) {
         this.checkSpreadsheetId(spreadsheetId);
 
@@ -563,14 +571,6 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
     private Object spreadsheetIdFunctions(final ExpressionNodeName functionName, final List<Object> parameters) {
         throw new UnsupportedOperationException(functionName + "(" + parameters + ")");
-    }
-
-    private SpreadsheetMetadata metadataWithDefaults(final Optional<Locale> locale) {
-        SpreadsheetMetadata metadata = SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(999)));
-        if (locale.isPresent()) {
-            metadata = metadata.set(SpreadsheetMetadataPropertyName.LOCALE, locale.get());
-        }
-        return metadata;
     }
 
     private SpreadsheetStoreRepository spreadsheetIdToRepository(final SpreadsheetId id) {
