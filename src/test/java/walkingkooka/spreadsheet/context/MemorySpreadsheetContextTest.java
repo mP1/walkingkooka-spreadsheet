@@ -335,8 +335,9 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
                 @Override
                 public Map<HttpHeaderName<?>, Object> headers() {
-                    return Maps.of(HttpHeaderName.CONTENT_TYPE, contentType().contentType(),
-                            HttpHeaderName.ACCEPT_CHARSET, AcceptCharset.parse("UTF-8"));
+                    return Maps.of(HttpHeaderName.ACCEPT_CHARSET, AcceptCharset.parse("UTF-8"),
+                            HttpHeaderName.CONTENT_LENGTH, Long.valueOf(this.body().length),
+                            HttpHeaderName.CONTENT_TYPE, contentType().contentType());
                 }
 
                 public Map<HttpRequestParameterName, List<String>> parameters() {
@@ -379,8 +380,9 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
                 @Override
                 public Map<HttpHeaderName<?>, Object> headers() {
-                    return Maps.of(HttpHeaderName.CONTENT_TYPE, contentType().contentType(),
-                            HttpHeaderName.ACCEPT_CHARSET, AcceptCharset.parse("UTF-8"));
+                    return Maps.of(HttpHeaderName.ACCEPT_CHARSET, AcceptCharset.parse("UTF-8"),
+                            HttpHeaderName.CONTENT_LENGTH, Long.valueOf(this.body().length),
+                            HttpHeaderName.CONTENT_TYPE, contentType().contentType());
                 }
 
                 public Map<HttpRequestParameterName, List<String>> parameters() {
