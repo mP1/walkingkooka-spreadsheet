@@ -1,0 +1,19 @@
+{
+  "date-format-pattern": "\"Date\" yyyy mm dd",
+  "date-parse-pattern": "\"Date\" yyyy mm dd",
+  "date-time-format-pattern": "\"DateTime\" yyyy hh",
+  "date-time-offset": "0",
+  "date-time-parse-patterns": "\"DateTime\" yyyy hh",
+  "exponent-symbol": "E",
+  "locale": "en",
+  "number-format-pattern": "\"Number\" 000.000",
+  "number-parse-patterns": "\"Number\" 000.000",
+  "precision": 10,
+  "rounding-mode": "HALF_UP",
+  "spreadsheet-id": "1",
+  "text-format-pattern": "\"Text\" @",
+  "time-format-pattern": "\"Time\" ss hh",
+  "time-parse-patterns": "\"Time\" ss hh",
+  "two-digit-year": 1920,
+  "width": 1
+}

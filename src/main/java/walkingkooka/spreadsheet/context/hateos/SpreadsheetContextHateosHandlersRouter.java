@@ -49,10 +49,10 @@ final class SpreadsheetContextHateosHandlersRouter implements StaticHelper {
     /**
      * Used to form the metadata load and save services
      * <pre>
-     * /api/spreadsheet/$spreadsheet-id/metadata
+     * /api/spreadsheet/$spreadsheet-id
      * </pre>
      */
-    private final static LinkRelation METADATA_LINK_RELATION = LinkRelation.with("metadata");
+    private final static LinkRelation METADATA_LINK_RELATION = LinkRelation.SELF;
 
     /**
      * Builds a {@link Router} that handles all operations, using the given {@link HateosHandler handlers}.
