@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.iterator.IteratorTesting;
 import walkingkooka.collect.map.Maps;
-import walkingkooka.collect.set.SetTesting;
+import walkingkooka.collect.set.SetTesting2;
 import walkingkooka.net.email.EmailAddress;
 
 import java.time.LocalDateTime;
@@ -31,7 +31,7 @@ import java.util.Map.Entry;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetMetadataNonEmptyMapEntrySetTest implements SetTesting<SpreadsheetMetadataNonEmptyMapEntrySet, Entry<SpreadsheetMetadataPropertyName<?>, Object>>,
+public final class SpreadsheetMetadataNonEmptyMapEntrySetTest implements SetTesting2<SpreadsheetMetadataNonEmptyMapEntrySet, Entry<SpreadsheetMetadataPropertyName<?>, Object>>,
         IteratorTesting {
 
     @Test
