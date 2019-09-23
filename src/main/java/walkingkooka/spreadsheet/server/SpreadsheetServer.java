@@ -129,6 +129,8 @@ public final class SpreadsheetServer implements HttpServer {
      * Loads a default {@link SpreadsheetMetadata} from the given {@link String path}.
      */
     static SpreadsheetMetadata loadDefaultMetadata(final String path) throws IOException {
+        SpreadsheetMetadata.EMPTY.id(); // force SpreadsheetMetadata static initializers to register w/ Json marshal
+
         return FromJsonNodeContexts.basic()
                 .fromJsonNode(JsonNode.parse(new String(Files.readAllBytes(Paths.get(path)), Charset.defaultCharset())),
                         SpreadsheetMetadata.class);
