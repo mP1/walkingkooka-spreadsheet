@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.server;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Binary;
+import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
@@ -28,9 +29,11 @@ import walkingkooka.net.HostAddress;
 import walkingkooka.net.IpPort;
 import walkingkooka.net.RelativeUrl;
 import walkingkooka.net.Url;
+import walkingkooka.net.UrlPath;
 import walkingkooka.net.UrlScheme;
 import walkingkooka.net.header.AcceptCharset;
 import walkingkooka.net.header.CharsetName;
+import walkingkooka.net.header.ETag;
 import walkingkooka.net.header.HttpHeaderName;
 import walkingkooka.net.header.MediaType;
 import walkingkooka.net.header.MediaTypeParameterName;
@@ -46,6 +49,7 @@ import walkingkooka.net.http.server.HttpResponse;
 import walkingkooka.net.http.server.HttpResponses;
 import walkingkooka.net.http.server.HttpServer;
 import walkingkooka.net.http.server.RecordingHttpResponse;
+import walkingkooka.net.http.server.WebFile;
 import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
@@ -61,8 +65,10 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.json.marshall.ToJsonNodeContexts;
 import walkingkooka.type.JavaVisibility;
 
+import java.io.InputStream;
 import java.math.RoundingMode;
 import java.nio.charset.Charset;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -78,6 +84,11 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
 
     private final static CharsetName CHARSET = CharsetName.UTF_8;
     private final static MediaType CONTENT_TYPE_UTF8 = HateosContentType.JSON_CONTENT_TYPE.setCharset(CHARSET);
+    private final static UrlPath FILE = UrlPath.parse("/file.txt");
+    private final static MediaType FILE_CONTENT_TYPE = MediaType.parse("text/custom-file;charset=" + CHARSET.value());
+    private final static LocalDateTime FILE_LAST_MODIFIED = LocalDateTime.of(2000, 12, 31, 12, 28, 29);
+    private final static Binary FILE_BINARY = Binary.with(bytes("abc123", FILE_CONTENT_TYPE));
+    private final static HttpStatus FILE_NOT_FOUND = HttpStatusCode.NOT_FOUND.setMessage("File not found custom message");
 
     @Test
     public void testStartServer() {
@@ -391,6 +402,35 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
                                 "}"));
     }
 
+    // file server......................................................................................................
+
+    @Test
+    public void testFileFound() {
+        final TestHttpServer server = this.startServer();
+
+        server.handleAndCheck(HttpMethod.POST,
+                FILE.value(),
+                HttpRequest.NO_HEADERS,
+                "",
+                this.response(HttpStatusCode.OK.status(),
+                        HttpEntity.EMPTY
+                                .addHeader(HttpHeaderName.CONTENT_TYPE, FILE_CONTENT_TYPE)
+                                .addHeader(HttpHeaderName.CONTENT_LENGTH, 6L)
+                                .addHeader(HttpHeaderName.LAST_MODIFIED, FILE_LAST_MODIFIED)
+                                .setBody(FILE_BINARY)));
+    }
+
+    @Test
+    public void testFileNotFound() {
+        final TestHttpServer server = this.startServer();
+
+        server.handleAndCheck(HttpMethod.POST,
+                "/file/not/found.txt",
+                HttpRequest.NO_HEADERS,
+                "",
+                this.response(FILE_NOT_FOUND, HttpEntity.EMPTY));
+    }
+
     // helpers..........................................................................................................
 
     private TestHttpServer startServer() {
@@ -401,6 +441,7 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
                 SpreadsheetServer.fractioner(),
                 SpreadsheetServer.idToFunctions(),
                 this.idToRepository,
+                this::fileServer,
                 this::server);
         this.httpServer.start();
         return this.httpServer;
@@ -429,6 +470,42 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
                 .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetPattern.parseTimeParsePatterns("\"Time\" ss hh"));
     }
 
+    private Either<WebFile, HttpStatus> fileServer(final UrlPath path) {
+        return path.equals(FILE) ?
+                Either.left(new WebFile() {
+                    @Override
+                    public LocalDateTime lastModified()  {
+                        return FILE_LAST_MODIFIED;
+                    }
+
+                    @Override
+                    public MediaType contentType() {
+                        return FILE_CONTENT_TYPE;
+                    }
+
+                    @Override
+                    public long contentSize() {
+                        return FILE_BINARY.size();
+                    }
+
+                    @Override
+                    public InputStream content() {
+                        return FILE_BINARY.inputStream();
+                    }
+
+                    @Override
+                    public Optional<ETag> etag() {
+                        return Optional.empty();
+                    }
+
+                    @Override
+                    public String toString() {
+                        return path.toString();
+                    }
+                }) :
+                Either.right(FILE_NOT_FOUND);
+    }
+    
     /**
      * Initializes the test {@link HttpServer}.
      */
@@ -602,11 +679,17 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
 
     private RecordingHttpResponse response(final HttpStatus status,
                                            final Binary body) {
+        return this.response(status,
+                HttpEntity.EMPTY
+                        .addHeader(HttpHeaderName.CONTENT_TYPE, CONTENT_TYPE_UTF8)
+                        .addHeader(HttpHeaderName.CONTENT_LENGTH, Long.valueOf(body.value().length))
+                        .setBody(body));
+    }
+
+    private RecordingHttpResponse response(final HttpStatus status,
+                                           final HttpEntity body) {
         final RecordingHttpResponse response = this.response(status);
-        response.addEntity(HttpEntity.EMPTY
-                .addHeader(HttpHeaderName.CONTENT_TYPE, CONTENT_TYPE_UTF8)
-                .addHeader(HttpHeaderName.CONTENT_LENGTH, Long.valueOf(body.value().length))
-                .setBody(body));
+        response.addEntity(body);
         return response;
     }
 

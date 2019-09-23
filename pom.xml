@@ -51,6 +51,12 @@
 
     <dependency>
       <groupId>com.github.mP1</groupId>
+      <artifactId>walkingkooka-net-header-apache-tika</artifactId>
+      <version>master-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.mP1</groupId>
       <artifactId>walkingkooka-net-http-server-hateos</artifactId>
       <version>master-SNAPSHOT</version>
     </dependency>

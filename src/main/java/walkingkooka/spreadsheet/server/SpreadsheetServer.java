@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.server;
 
+import walkingkooka.Either;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.math.Fraction;
 import walkingkooka.net.AbsoluteUrl;
@@ -28,13 +29,18 @@ import walkingkooka.net.UrlPath;
 import walkingkooka.net.UrlPathName;
 import walkingkooka.net.UrlQueryString;
 import walkingkooka.net.UrlScheme;
+import walkingkooka.net.header.apache.tika.ApacheTikas;
 import walkingkooka.net.http.HttpEntity;
+import walkingkooka.net.http.HttpStatus;
 import walkingkooka.net.http.HttpStatusCode;
 import walkingkooka.net.http.server.HttpRequest;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.HttpRequestAttributeRouting;
+import walkingkooka.net.http.server.HttpRequestHttpResponseBiConsumers;
 import walkingkooka.net.http.server.HttpResponse;
 import walkingkooka.net.http.server.HttpServer;
+import walkingkooka.net.http.server.WebFile;
+import walkingkooka.net.http.server.WebFiles;
 import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.net.http.server.jetty.JettyHttpServer;
 import walkingkooka.route.RouteMappings;
@@ -61,6 +67,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Locale;
@@ -78,7 +85,7 @@ import java.util.stream.Collectors;
 public final class SpreadsheetServer implements HttpServer {
 
     /**
-     * Starts a server listening on http://localhost:8080
+     * Starts a server listening on http://localhost:8080 serving files from the current directory.
      */
     public static void main(final String[] args) throws Exception {
         final UrlScheme scheme = UrlScheme.HTTP;
@@ -94,6 +101,7 @@ public final class SpreadsheetServer implements HttpServer {
                 fractioner(),
                 idToFunctions(),
                 idToRepository(storeRepositorySupplier(metadataStore)),
+                fileServer(Paths.get(".")),
                 jettyHttpServer(host, port));
         server.start();
     }
@@ -177,6 +185,24 @@ public final class SpreadsheetServer implements HttpServer {
     }
 
     /**
+     * Creates a file server which serves files from the given {@link Path path}.
+     */
+    static Function<UrlPath, Either<WebFile, HttpStatus>> fileServer(final Path path) {
+        return (p) -> {
+            final Path file = Paths.get(path.toString(), p.value());
+            return Files.isRegularFile(file) ?
+                    Either.left(webFile(file)) :
+                    Either.right(HttpStatusCode.NOT_FOUND.status());
+        };
+    }
+
+    private static WebFile webFile(final Path file) {
+        return WebFiles.file(file,
+                ApacheTikas.fileContentTypeDetector(),
+                (b) -> Optional.empty());
+    }
+
+    /**
      * Creates a {@link JettyHttpServer} given the given host and port.
      */
     private static Function<BiConsumer<HttpRequest, HttpResponse>, HttpServer> jettyHttpServer(final HostAddress host,
@@ -196,6 +222,7 @@ public final class SpreadsheetServer implements HttpServer {
                                   final Function<BigDecimal, Fraction> fractioner,
                                   final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> idToFunctions,
                                   final Function<SpreadsheetId, SpreadsheetStoreRepository> idToStoreRepository,
+                                  final Function<UrlPath, Either<WebFile, HttpStatus>> fileServer,
                                   final Function<BiConsumer<HttpRequest, HttpResponse>, HttpServer> server) {
         return new SpreadsheetServer(scheme,
                 host,
@@ -204,6 +231,7 @@ public final class SpreadsheetServer implements HttpServer {
                 fractioner,
                 idToFunctions,
                 idToStoreRepository,
+                fileServer,
                 server);
     }
 
@@ -225,6 +253,7 @@ public final class SpreadsheetServer implements HttpServer {
                               final Function<BigDecimal, Fraction> fractioner,
                               final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> idToFunctions,
                               final Function<SpreadsheetId, SpreadsheetStoreRepository> idToStoreRepository,
+                              final Function<UrlPath, Either<WebFile, HttpStatus>> fileServer,
                               final Function<BiConsumer<HttpRequest, HttpResponse>, HttpServer> server) {
         super();
 
@@ -248,6 +277,7 @@ public final class SpreadsheetServer implements HttpServer {
         this.router = RouteMappings.<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>>empty()
                 .add(this.spreadsheetRouting(api).build(), this.spreadsheetHandler(base.setPath(api)))
                 .add(this.spreadsheetEngineRouting(spreadsheet).build(), this.spreadsheetEngineHandler(base.setPath(spreadsheet)))
+                .add(this.fileServerRouting().build(), this.fileServerHandler(UrlPath.ROOT, fileServer))
                 .router();
     }
 
@@ -310,6 +340,22 @@ public final class SpreadsheetServer implements HttpServer {
     private final Function<SpreadsheetId, SpreadsheetStoreRepository> idToStoreRepository;
 
     private final Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> router;
+
+    // files............................................................................................................
+
+    /**
+     * This routing must be last as it matches everything and tries to find a file.
+     */
+    private HttpRequestAttributeRouting fileServerRouting() {
+        return HttpRequestAttributeRouting.empty()
+                .path(UrlPath.parse("/*"));
+    }
+
+    private BiConsumer<HttpRequest, HttpResponse> fileServerHandler(final UrlPath baseUrlPath,
+                                                                    final Function<UrlPath, Either<WebFile, HttpStatus>> fileServer) {
+        return HttpRequestHttpResponseBiConsumers.webFile(baseUrlPath.normalize(),
+                fileServer);
+    }
 
     // HttpServer.......................................................................................................
 
