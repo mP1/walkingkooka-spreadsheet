@@ -25,6 +25,11 @@ nbactions.xml
 target/
 dependency-reduced-pom.xml
 
+#react
+src/main/react-web-client/build
+src/main/react-web-client/node
+src/main/react-web-client/node_modules
+
 # testing stuff
 **/.local*
 /logs/
