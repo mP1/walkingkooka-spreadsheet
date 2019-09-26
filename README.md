@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/mP1/walkingkooka-spreadsheet.svg?branch=master)](https://travis-ci.com/mP1/walkingkooka-spreadsheet.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/mP1/walkingkooka-spreadsheet/badge.svg?branch=master)](https://coveralls.io/repos/github/mP1/walkingkooka-spreadsheet?branch=master)
 
 A web based spreadsheet application.
