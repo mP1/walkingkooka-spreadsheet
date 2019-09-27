@@ -20,34 +20,34 @@ package walkingkooka.spreadsheet.security;
 import org.junit.jupiter.api.Test;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
-import walkingkooka.tree.json.marshall.JsonNodeMappingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
 public abstract class IdentityTestCase<V extends Identity<I>, I extends IdentityId> implements IdentityTesting<V, I>,
-        JsonNodeMappingTesting<V> {
+        JsonNodeMarshallingTesting<V> {
 
     IdentityTestCase() {
         super();
     }
 
-    // JsonNodeMappingTesting...............................................................................................
+    // JsonNodeMarshallingTesting...............................................................................................
 
     @Test
-    public void testFromJsonNodeBooleanFails() {
-        this.fromJsonNodeFails(JsonNode.booleanNode(true), JsonNodeException.class);
+    public void testJsonNodeUnmarshallBooleanFails() {
+        this.unmarshallFails(JsonNode.booleanNode(true), JsonNodeException.class);
     }
 
     @Test
-    public void testFromJsonNodeNumberFails() {
-        this.fromJsonNodeFails(JsonNode.number(12), JsonNodeException.class);
+    public void testJsonNodeUnmarshallNumberFails() {
+        this.unmarshallFails(JsonNode.number(12), JsonNodeException.class);
     }
 
     @Test
-    public void testFromJsonNodeArrayFails() {
-        this.fromJsonNodeFails(JsonNode.array(), JsonNodeException.class);
+    public void testJsonNodeUnmarshallArrayFails() {
+        this.unmarshallFails(JsonNode.array(), JsonNodeException.class);
     }
 
     @Test
-    public void testFromJsonNodeObjectFails() {
-        this.fromJsonNodeFails(JsonNode.object(), JsonNodeException.class);
+    public void testJsonNodeUnmarshallObjectFails() {
+        this.unmarshallFails(JsonNode.object(), JsonNodeException.class);
     }
 }

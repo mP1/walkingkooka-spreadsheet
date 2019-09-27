@@ -23,15 +23,15 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 public final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetIdTest extends SpreadsheetMetadataPropertyValueHandlerTestCase3<SpreadsheetMetadataPropertyValueHandlerSpreadsheetId, SpreadsheetId> {
 
     @Test
-    public void testFromJsonNode() {
+    public void testJsonNodeUnmarshall() {
         final SpreadsheetId spreadsheetId = this.propertyValue();
-        this.fromJsonNodeAndCheck(this.toJsonNode(spreadsheetId), spreadsheetId);
+        this.unmarshallAndCheck(this.marshall(spreadsheetId), spreadsheetId);
     }
 
     @Test
-    public void testToJsonNode() {
+    public void testJsonNodeMarshall() {
         final SpreadsheetId spreadsheetId = this.propertyValue();
-        this.toJsonNodeAndCheck(spreadsheetId, this.toJsonNode(spreadsheetId));
+        this.marshallAndCheck(spreadsheetId, this.marshall(spreadsheetId));
     }
 
     @Override

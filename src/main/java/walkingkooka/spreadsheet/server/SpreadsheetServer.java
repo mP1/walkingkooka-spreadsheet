@@ -60,8 +60,8 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.ExpressionNodeName;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContexts;
-import walkingkooka.tree.json.marshall.ToJsonNodeContexts;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -131,8 +131,8 @@ public final class SpreadsheetServer implements HttpServer {
     static SpreadsheetMetadata loadDefaultMetadata(final String path) throws IOException {
         SpreadsheetMetadata.EMPTY.id(); // force SpreadsheetMetadata static initializers to register w/ Json marshal
 
-        return FromJsonNodeContexts.basic()
-                .fromJsonNode(JsonNode.parse(new String(Files.readAllBytes(Paths.get(path)), Charset.defaultCharset())),
+        return JsonNodeUnmarshallContexts.basic()
+                .unmarshall(JsonNode.parse(new String(Files.readAllBytes(Paths.get(path)), Charset.defaultCharset())),
                         SpreadsheetMetadata.class);
     }
 
@@ -259,7 +259,7 @@ public final class SpreadsheetServer implements HttpServer {
                               final Function<BiConsumer<HttpRequest, HttpResponse>, HttpServer> server) {
         super();
 
-        this.contentTypeJson = HateosContentType.json(FromJsonNodeContexts.basic(), ToJsonNodeContexts.basic());
+        this.contentTypeJson = HateosContentType.json(JsonNodeUnmarshallContexts.basic(), JsonNodeMarshallContexts.basic());
         this.createMetadata = createMetadata;
         this.fractioner = fractioner;
         this.idToFunctions = idToFunctions;

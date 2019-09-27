@@ -23,9 +23,9 @@ import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeName;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -107,8 +107,8 @@ public final class SpreadsheetLabelMapping implements HashCodeEqualsDefined, Hat
     /**
      * Factory that creates a {@link SpreadsheetLabelMapping} from a {@link JsonNode}.
      */
-    static SpreadsheetLabelMapping fromJsonNode(final JsonNode node,
-                                                final FromJsonNodeContext context) {
+    static SpreadsheetLabelMapping unmarshall(final JsonNode node,
+                                              final JsonNodeUnmarshallContext context) {
         Objects.requireNonNull(node, "node");
 
         SpreadsheetLabelName labelName = null;
@@ -118,30 +118,30 @@ public final class SpreadsheetLabelMapping implements HashCodeEqualsDefined, Hat
             final JsonNodeName name = child.name();
             switch (name.value()) {
                 case LABEL_NAME_PROPERTY_STRING:
-                    labelName = context.fromJsonNode(child, SpreadsheetLabelName.class);
+                    labelName = context.unmarshall(child, SpreadsheetLabelName.class);
                     break;
                 case REFERENCE_PROPERTY_STRING:
-                    reference = context.fromJsonNode(child, SpreadsheetCellReference.class);
+                    reference = context.unmarshall(child, SpreadsheetCellReference.class);
                     break;
                 default:
-                    FromJsonNodeContext.unknownPropertyPresent(name, node);
+                    JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
             }
         }
 
         if (null == labelName) {
-            FromJsonNodeContext.requiredPropertyMissing(LABEL_NAME_PROPERTY, node);
+            JsonNodeUnmarshallContext.requiredPropertyMissing(LABEL_NAME_PROPERTY, node);
         }
         if (null == reference) {
-            FromJsonNodeContext.requiredPropertyMissing(REFERENCE_PROPERTY, node);
+            JsonNodeUnmarshallContext.requiredPropertyMissing(REFERENCE_PROPERTY, node);
         }
 
         return new SpreadsheetLabelMapping(labelName, reference);
     }
 
-    JsonNode toJsonNode(final ToJsonNodeContext context) {
+    JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.object()
-                .set(LABEL_NAME_PROPERTY, context.toJsonNode(this.label))
-                .set(REFERENCE_PROPERTY, context.toJsonNode(this.reference));
+                .set(LABEL_NAME_PROPERTY, context.marshall(this.label))
+                .set(REFERENCE_PROPERTY, context.marshall(this.reference));
     }
 
     private final static String LABEL_NAME_PROPERTY_STRING = "label-name";
@@ -152,8 +152,8 @@ public final class SpreadsheetLabelMapping implements HashCodeEqualsDefined, Hat
 
     static {
         JsonNodeContext.register("spreadsheet-label-mapping",
-                SpreadsheetLabelMapping::fromJsonNode,
-                SpreadsheetLabelMapping::toJsonNode,
+                SpreadsheetLabelMapping::unmarshall,
+                SpreadsheetLabelMapping::marshall,
                 SpreadsheetLabelMapping.class);
     }
 

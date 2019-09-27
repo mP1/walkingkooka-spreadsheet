@@ -23,8 +23,8 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.AbstractSet;
 import java.util.Comparator;
@@ -117,13 +117,13 @@ final class SpreadsheetMetadataNonEmptyMapEntrySet extends AbstractSet<Entry<Spr
      * Recreates this {@link SpreadsheetMetadataNonEmptyMapEntrySet} from the json object.
      */
     static SpreadsheetMetadataNonEmptyMapEntrySet fromJson(final JsonNode json,
-                                                           final FromJsonNodeContext context) {
+                                                           final JsonNodeUnmarshallContext context) {
         final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = Maps.ordered();
 
         for (JsonNode child : json.children()) {
-            final SpreadsheetMetadataPropertyName<?> name = SpreadsheetMetadataPropertyName.fromJsonNodeName(child);
+            final SpreadsheetMetadataPropertyName<?> name = SpreadsheetMetadataPropertyName.unmarshallName(child);
             properties.put(name,
-                    name.handler().fromJsonNode(child, name, context));
+                    name.handler().unmarshall(child, name, context));
         }
 
         return with(properties);
@@ -132,13 +132,13 @@ final class SpreadsheetMetadataNonEmptyMapEntrySet extends AbstractSet<Entry<Spr
     /**
      * Creates a json object using the keys and values from the entries in this {@link Set}.
      */
-    JsonNode toJson(final ToJsonNodeContext context) {
+    JsonNode toJson(final JsonNodeMarshallContext context) {
         final List<JsonNode> json = Lists.array();
 
         for (Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : this.entries) {
             final SpreadsheetMetadataPropertyName<?> propertyName = propertyAndValue.getKey();
             final JsonNode value = propertyName.handler()
-                    .toJsonNode(Cast.to(propertyAndValue.getValue()), context);
+                    .marshall(Cast.to(propertyAndValue.getValue()), context);
 
             json.add(value.setName(propertyName.jsonNodeName));
         }

@@ -22,8 +22,8 @@ import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting2;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.JsonNodeMappingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetError>,
         HashCodeEqualsDefinedTesting2<SpreadsheetError>,
-        JsonNodeMappingTesting<SpreadsheetError>,
+        JsonNodeMarshallingTesting<SpreadsheetError>,
         ToStringTesting<SpreadsheetError> {
 
     private final static String MESSAGE = "message #1";
@@ -76,27 +76,27 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
         this.checkNotEquals(SpreadsheetError.with(MESSAGE.toUpperCase()));
     }
 
-    // JsonNodeMappingTesting.......................................................................................
+    // JsonNodeMarshallingTesting.......................................................................................
 
     @Test
-    public void testFromJsonNodeStringInvalidFails() {
-        this.fromJsonNodeFails(JsonNode.string(""), IllegalArgumentException.class);
+    public void testJsonNodeUnmarshallStringInvalidFails() {
+        this.unmarshallFails(JsonNode.string(""), IllegalArgumentException.class);
     }
 
     @Test
-    public void testFromJsonNodeString() {
-        this.fromJsonNodeAndCheck(JsonNode.string(MESSAGE),
+    public void testJsonNodeUnmarshallString() {
+        this.unmarshallAndCheck(JsonNode.string(MESSAGE),
                 SpreadsheetError.with(MESSAGE));
     }
 
     @Test
-    public void testToJsonNode() {
-        this.toJsonNodeAndCheck(this.createObject(), JsonNode.string(MESSAGE));
+    public void testJsonNodeMarshall() {
+        this.marshallAndCheck(this.createObject(), JsonNode.string(MESSAGE));
     }
 
     @Test
-    public void testToJsonNodeRoundtripTwice() {
-        this.toJsonNodeRoundTripTwiceAndCheck(this.createObject());
+    public void testJsonNodeMarshallRoundtripTwice() {
+        this.marshallRoundTripTwiceAndCheck(this.createObject());
     }
 
     // toString...............................................................................................
@@ -125,7 +125,7 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
         return JavaVisibility.PUBLIC;
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
     public SpreadsheetError createJsonNodeMappingValue() {
@@ -133,8 +133,8 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
     }
 
     @Override
-    public SpreadsheetError fromJsonNode(final JsonNode jsonNode,
-                                         final FromJsonNodeContext context) {
-        return SpreadsheetError.fromJsonNode(jsonNode, context);
+    public SpreadsheetError unmarshall(final JsonNode jsonNode,
+                                       final JsonNodeUnmarshallContext context) {
+        return SpreadsheetError.unmarshall(jsonNode, context);
     }
 }

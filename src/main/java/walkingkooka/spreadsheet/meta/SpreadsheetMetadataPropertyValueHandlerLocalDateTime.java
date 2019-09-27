@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.time.LocalDateTime;
 
@@ -55,15 +55,15 @@ final class SpreadsheetMetadataPropertyValueHandlerLocalDateTime extends Spreads
     // JsonNodeContext..................................................................................................
 
     @Override
-    LocalDateTime fromJsonNode(final JsonNode node,
-                               final SpreadsheetMetadataPropertyName<?> name,
-                               final FromJsonNodeContext context) {
-        return context.fromJsonNode(node, LocalDateTime.class);
+    LocalDateTime unmarshall(final JsonNode node,
+                             final SpreadsheetMetadataPropertyName<?> name,
+                             final JsonNodeUnmarshallContext context) {
+        return context.unmarshall(node, LocalDateTime.class);
     }
 
     @Override
-    JsonNode toJsonNode(final LocalDateTime value,
-                        final ToJsonNodeContext context) {
-        return context.toJsonNode(value);
+    JsonNode marshall(final LocalDateTime value,
+                      final JsonNodeMarshallContext context) {
+        return context.marshall(value);
     }
 }

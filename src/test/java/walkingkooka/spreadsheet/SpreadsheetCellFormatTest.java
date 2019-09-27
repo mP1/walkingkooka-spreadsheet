@@ -25,8 +25,8 @@ import walkingkooka.test.HashCodeEqualsDefinedTesting2;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.JsonNodeMappingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.type.JavaVisibility;
 
 import java.util.Optional;
@@ -38,7 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellFormatTest implements ClassTesting2<SpreadsheetCellFormat>,
         HashCodeEqualsDefinedTesting2<SpreadsheetCellFormat>,
-        JsonNodeMappingTesting<SpreadsheetCellFormat>,
+        JsonNodeMarshallingTesting<SpreadsheetCellFormat>,
         ToStringTesting<SpreadsheetCellFormat> {
 
     private final static String PATTERN = "abc123";
@@ -149,22 +149,22 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
         this.checkNotEquals(this.withoutFormatter());
     }
 
-    // JsonNodeMappingTesting.......................................................................................
+    // JsonNodeMarshallingTesting.......................................................................................
 
     @Test
-    public void testFromJsonNodeString() {
-        this.fromJsonNodeAndCheck(JsonNode.string(PATTERN),
+    public void testJsonNodeUnmarshallString() {
+        this.unmarshallAndCheck(JsonNode.string(PATTERN),
                 SpreadsheetCellFormat.with(PATTERN));
     }
 
     @Test
-    public void testToJsonNode() {
-        this.toJsonNodeAndCheck(this.createObject(), JsonNode.string(PATTERN));
+    public void testJsonNodeMarshall() {
+        this.marshallAndCheck(this.createObject(), JsonNode.string(PATTERN));
     }
 
     @Test
-    public void testToJsonNodeRoundtripTwice() {
-        this.toJsonNodeRoundTripTwiceAndCheck(this.createObject());
+    public void testJsonNodeMarshallRoundtripTwice() {
+        this.marshallRoundTripTwiceAndCheck(this.createObject());
     }
 
     // toString................................................................................................
@@ -200,7 +200,7 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
         return JavaVisibility.PUBLIC;
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
     public SpreadsheetCellFormat createJsonNodeMappingValue() {
@@ -208,8 +208,8 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
     }
 
     @Override
-    public SpreadsheetCellFormat fromJsonNode(final JsonNode jsonNode,
-                                              final FromJsonNodeContext context) {
-        return SpreadsheetCellFormat.fromJsonNode(jsonNode, context);
+    public SpreadsheetCellFormat unmarshall(final JsonNode jsonNode,
+                                            final JsonNodeUnmarshallContext context) {
+        return SpreadsheetCellFormat.unmarshall(jsonNode, context);
     }
 }

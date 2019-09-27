@@ -23,8 +23,8 @@ import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.JsonNodeMappingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
         ComparableTesting2<SpreadsheetId>,
-        JsonNodeMappingTesting<SpreadsheetId>,
+        JsonNodeMarshallingTesting<SpreadsheetId>,
         ParseStringTesting<SpreadsheetId>,
         ToStringTesting<SpreadsheetId> {
 
@@ -79,31 +79,31 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
                 id1, id2, id3);
     }
 
-    // JsonNodeMappingTesting.......................................................................................
+    // JsonNodeMarshallingTesting.......................................................................................
 
     @Test
-    public void testFromJsonNodeInvalidStringFails() {
-        this.fromJsonNodeFails(JsonNode.string("123xyz"), IllegalArgumentException.class);
+    public void testJsonNodeUnmarshallInvalidStringFails() {
+        this.unmarshallFails(JsonNode.string("123xyz"), IllegalArgumentException.class);
     }
 
     @Test
-    public void testFromJsonNode() {
-        this.fromJsonNodeAndCheck(JsonNode.string("1f"), SpreadsheetId.with(0x1f));
+    public void testJsonNodeUnmarshall() {
+        this.unmarshallAndCheck(JsonNode.string("1f"), SpreadsheetId.with(0x1f));
     }
 
     @Test
-    public void testToJsonNode() {
-        this.toJsonNodeAndCheck(SpreadsheetId.with(0x1f), JsonNode.string("1f"));
+    public void testJsonNodeMarshall() {
+        this.marshallAndCheck(SpreadsheetId.with(0x1f), JsonNode.string("1f"));
     }
 
     @Test
-    public void testToJsonNodeFromJsonNodeRoundtrip() {
-        this.toJsonNodeRoundTripTwiceAndCheck(SpreadsheetId.with(VALUE));
+    public void testJsonNodeMarshallJsonNodeUnmarshallRoundtrip() {
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetId.with(VALUE));
     }
 
     @Test
-    public void testToJsonNodeFromJsonNodeRoundtrip2() {
-        this.toJsonNodeRoundTripTwiceAndCheck(SpreadsheetId.with(0xabcd));
+    public void testJsonNodeMarshallJsonNodeUnmarshallRoundtrip2() {
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetId.with(0xabcd));
     }
 
     // ToString..........................................................................................................
@@ -134,7 +134,7 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
         return SpreadsheetId.class;
     }
 
-    // JsonNodeMappingTesting...............................................................................................
+    // JsonNodeMarshallingTesting...............................................................................................
 
     @Override
     public SpreadsheetId createJsonNodeMappingValue() {
@@ -142,9 +142,9 @@ public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,
     }
 
     @Override
-    public SpreadsheetId fromJsonNode(final JsonNode node,
-                                      final FromJsonNodeContext context) {
-        return SpreadsheetId.fromJsonNode(node, context);
+    public SpreadsheetId unmarshall(final JsonNode node,
+                                    final JsonNodeUnmarshallContext context) {
+        return SpreadsheetId.unmarshall(node, context);
     }
 
     // ParseStringStringTesting...............................................................................................

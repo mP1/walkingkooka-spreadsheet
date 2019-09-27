@@ -63,10 +63,10 @@ import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.store.Store;
 import walkingkooka.tree.expression.ExpressionNodeName;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.FromJsonNodeContexts;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContexts;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -203,7 +203,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                         "    \"formula\": {\n" +
                         "      \"text\": \"1+2\",\n" +
                         "      \"expression\": {\n" +
-                        "        \"type\": \"expression+\",\n" +
+                        "        \"type\": \"expression-addition\",\n" +
                         "        \"value\": [{\n" +
                         "          \"type\": \"expression-big-decimal\",\n" +
                         "          \"value\": \"1\"\n" +
@@ -226,7 +226,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                         "    \"formula\": {\n" +
                         "      \"text\": \"1+2\",\n" +
                         "      \"expression\": {\n" +
-                        "        \"type\": \"expression+\",\n" +
+                        "        \"type\": \"expression-addition\",\n" +
                         "        \"value\": [{\n" +
                         "          \"type\": \"expression-big-decimal\",\n" +
                         "          \"value\": \"1\"\n" +
@@ -257,7 +257,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                         "    \"formula\": {\n" +
                         "      \"text\": \"1+2\",\n" +
                         "      \"expression\": {\n" +
-                        "        \"type\": \"expression+\",\n" +
+                        "        \"type\": \"expression-addition\",\n" +
                         "        \"value\": [{\n" +
                         "          \"type\": \"expression-big-decimal\",\n" +
                         "          \"value\": \"1\"\n" +
@@ -288,7 +288,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                         "    \"formula\": {\n" +
                         "      \"text\": \"1+2\",\n" +
                         "      \"expression\": {\n" +
-                        "        \"type\": \"expression+\",\n" +
+                        "        \"type\": \"expression-addition\",\n" +
                         "        \"value\": [{\n" +
                         "          \"type\": \"expression-big-decimal\",\n" +
                         "          \"value\": \"1\"\n" +
@@ -346,7 +346,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
                 @Override
                 public byte[] body() {
-                    return toJsonNodeContext().toJsonNode(SpreadsheetDelta.with(Sets.of(cell)))
+                    return marshallContext().marshall(SpreadsheetDelta.with(Sets.of(cell)))
                             .toString()
                             .getBytes(utf8);
                 }
@@ -546,11 +546,11 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
     }
 
     private HateosContentType contentType() {
-        return HateosContentType.json(this.fromJsonNodeContext(), this.toJsonNodeContext());
+        return HateosContentType.json(this.unmarshallContext(), this.marshallContext());
     }
 
-    private FromJsonNodeContext fromJsonNodeContext() {
-        return FromJsonNodeContexts.basic();
+    private JsonNodeUnmarshallContext unmarshallContext() {
+        return JsonNodeUnmarshallContexts.basic();
     }
 
     final Fraction fractioner(final BigDecimal value) {
@@ -628,8 +628,8 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         return SpreadsheetId.with(0x123def);
     }
 
-    private ToJsonNodeContext toJsonNodeContext() {
-        return ToJsonNodeContexts.basic();
+    private JsonNodeMarshallContext marshallContext() {
+        return JsonNodeMarshallContexts.basic();
     }
 
     @Override

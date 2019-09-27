@@ -25,8 +25,8 @@ import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.JsonNodeMappingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -37,7 +37,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetLabelMappingTest implements ClassTesting2<SpreadsheetLabelMapping>,
         HashCodeEqualsDefinedTesting2<SpreadsheetLabelMapping>,
-        JsonNodeMappingTesting<SpreadsheetLabelMapping>,
+        JsonNodeMarshallingTesting<SpreadsheetLabelMapping>,
         HateosResourceTesting<SpreadsheetLabelMapping>,
         ToStringTesting<SpreadsheetLabelMapping> {
 
@@ -117,11 +117,11 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         this.checkReference(different, differentReference);
     }
 
-    // JsonNodeMappingTesting.......................................................................................
+    // JsonNodeMarshallingTesting.......................................................................................
 
     @Test
-    public void testFromJsonNodeEmptyObjectFails() {
-        this.fromJsonNodeFails(JsonNode.object(), JsonNodeException.class);
+    public void testJsonNodeUnmarshallEmptyObjectFails() {
+        this.unmarshallFails(JsonNode.object(), JsonNodeException.class);
     }
 
     // HateosResource....................................................................................................
@@ -184,12 +184,12 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
         return JavaVisibility.PUBLIC;
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public SpreadsheetLabelMapping fromJsonNode(final JsonNode node,
-                                                final FromJsonNodeContext context) {
-        return SpreadsheetLabelMapping.fromJsonNode(node, context);
+    public SpreadsheetLabelMapping unmarshall(final JsonNode node,
+                                              final JsonNodeUnmarshallContext context) {
+        return SpreadsheetLabelMapping.unmarshall(node, context);
     }
 
     @Override

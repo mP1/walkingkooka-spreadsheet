@@ -41,7 +41,6 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
@@ -49,9 +48,9 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -354,25 +353,25 @@ public abstract class SpreadsheetMetadata implements HasConverter,
 
     // JsonNodeContext..................................................................................................
 
-    static SpreadsheetMetadata fromJsonNode(final JsonNode node,
-                                            final FromJsonNodeContext context) {
+    static SpreadsheetMetadata unmarshall(final JsonNode node,
+                                          final JsonNodeUnmarshallContext context) {
         final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = Maps.ordered();
 
         for (JsonNode child : node.objectOrFail().children()) {
-            final SpreadsheetMetadataPropertyName<?> name = SpreadsheetMetadataPropertyName.fromJsonNodeName(child);
+            final SpreadsheetMetadataPropertyName<?> name = SpreadsheetMetadataPropertyName.unmarshallName(child);
             properties.put(name,
-                    name.handler().fromJsonNode(child, name, context));
+                    name.handler().unmarshall(child, name, context));
         }
 
         return with(properties);
     }
 
-    abstract JsonNode toJsonNode(final ToJsonNodeContext context);
+    abstract JsonNode marshall(final JsonNodeMarshallContext context);
 
     static {
         JsonNodeContext.register("metadata",
-                SpreadsheetMetadata::fromJsonNode,
-                SpreadsheetMetadata::toJsonNode,
+                SpreadsheetMetadata::unmarshall,
+                SpreadsheetMetadata::marshall,
                 SpreadsheetMetadata.class,
                 SpreadsheetMetadataNonEmpty.class,
                 SpreadsheetMetadataEmpty.class);

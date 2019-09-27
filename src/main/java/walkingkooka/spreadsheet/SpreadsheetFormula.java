@@ -30,10 +30,10 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonNodeName;
 import walkingkooka.tree.json.JsonObjectNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.FromJsonNodeException;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallException;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -211,8 +211,8 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
     /**
      * Factory that creates a {@link SpreadsheetFormula} from a {@link JsonNode}.
      */
-    static SpreadsheetFormula fromJsonNode(final JsonNode node,
-                                           final FromJsonNodeContext context) {
+    static SpreadsheetFormula unmarshall(final JsonNode node,
+                                           final JsonNodeUnmarshallContext context) {
         String text = null;
         ExpressionNode expression = null;
         Object value = null;
@@ -225,29 +225,29 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
                     try {
                         text = child.stringValueOrFail();
                     } catch (final JsonNodeException cause) {
-                        throw new FromJsonNodeException("Node " + TEXT + " is not a string=" + child, node);
+                        throw new JsonNodeUnmarshallException("Node " + TEXT + " is not a string=" + child, node);
                     }
                     checkText(text);
                     break;
                 case EXPRESSION_PROPERTY_STRING:
-                    value = context.fromJsonNodeWithType(child);
+                    value = context.unmarshallWithType(child);
                     break;
                 case VALUE_PROPERTY_STRING:
                     value = child.value();
                     break;
                 case ERROR_PROPERTY_STRING:
-                    error = context.fromJsonNode(child, SpreadsheetError.class);
+                    error = context.unmarshall(child, SpreadsheetError.class);
                     break;
                 default:
-                    FromJsonNodeContext.unknownPropertyPresent(name, node);
+                    JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
             }
         }
 
         if (null == text) {
-            FromJsonNodeContext.requiredPropertyMissing(TEXT, node);
+            JsonNodeUnmarshallContext.requiredPropertyMissing(TEXT, node);
         }
         if (null != value && null != error) {
-            throw new FromJsonNodeException("Node contains both " + VALUE_PROPERTY + " and " + ERROR_PROPERTY + " set=" + node, node);
+            throw new JsonNodeUnmarshallException("Node contains both " + VALUE_PROPERTY + " and " + ERROR_PROPERTY + " set=" + node, node);
         }
 
         return new SpreadsheetFormula(text,
@@ -259,24 +259,24 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
     /**
      * Creates an object with potentially text, value and error but not the expression.
      */
-    JsonNode toJsonNode(final ToJsonNodeContext context) {
+    JsonNode marshall(final JsonNodeMarshallContext context) {
         JsonObjectNode object = JsonNode.object();
 
         object = object.set(TEXT, JsonNode.string(this.text));
 
         final Optional<ExpressionNode> expression = this.expression;
         if (expression.isPresent()) {
-            object = object.set(EXPRESSION_STRING, context.toJsonNodeWithType(expression.get()));
+            object = object.set(EXPRESSION_STRING, context.marshallWithType(expression.get()));
         }
 
         final Optional<Object> value = this.value;
         if (value.isPresent()) {
-            object = object.set(VALUE_PROPERTY, context.toJsonNodeWithType(value.get()));
+            object = object.set(VALUE_PROPERTY, context.marshallWithType(value.get()));
         }
 
         final Optional<SpreadsheetError> error = this.error;
         if (error.isPresent()) {
-            object = object.set(ERROR_PROPERTY, context.toJsonNode(error.get()));
+            object = object.set(ERROR_PROPERTY, context.marshall(error.get()));
         }
 
         return object;
@@ -296,8 +296,8 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
 
     static {
         JsonNodeContext.register("spreadsheet-formula",
-                SpreadsheetFormula::fromJsonNode,
-                SpreadsheetFormula::toJsonNode,
+                SpreadsheetFormula::unmarshall,
+                SpreadsheetFormula::marshall,
                 SpreadsheetFormula.class);
     }
 

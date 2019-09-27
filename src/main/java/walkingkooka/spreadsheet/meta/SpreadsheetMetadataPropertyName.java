@@ -444,7 +444,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * Factory that retrieves a {@link SpreadsheetMetadataPropertyName} from a {@link JsonNode#name()}.
      */
-    static SpreadsheetMetadataPropertyName<?> fromJsonNodeName(final JsonNode node) {
+    static SpreadsheetMetadataPropertyName<?> unmarshallName(final JsonNode node) {
         return with(node.name().value());
     }
 

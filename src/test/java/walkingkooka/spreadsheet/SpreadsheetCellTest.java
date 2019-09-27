@@ -28,9 +28,9 @@ import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.JsonNodeMappingTesting;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.FontStyle;
 import walkingkooka.tree.text.FontWeight;
 import walkingkooka.tree.text.TextNode;
@@ -48,7 +48,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>,
         ComparableTesting2<SpreadsheetCell>,
-        JsonNodeMappingTesting<SpreadsheetCell>,
+        JsonNodeMarshallingTesting<SpreadsheetCell>,
         HateosResourceTesting<SpreadsheetCell>,
         ToStringTesting<SpreadsheetCell> {
 
@@ -298,141 +298,141 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.compareToAndCheckEquals(this.createComparable().setFormatted(Optional.of(TextNode.text("different-formatted"))));
     }
 
-    // JsonNodeMappingTesting................................................................................
+    // JsonNodeMarshallingTesting................................................................................
 
-    // HasJsonNode.fromJsonNodeLabelName.......................................................................................
+    // HasJsonNode.unmarshallLabelName.......................................................................................
 
     @Test
-    public void testFromJsonNodeBooleanFails() {
-        this.fromJsonNodeFails(JsonNode.booleanNode(true), JsonNodeException.class);
+    public void testJsonNodeUnmarshallBooleanFails() {
+        this.unmarshallFails(JsonNode.booleanNode(true), JsonNodeException.class);
     }
 
     @Test
-    public void testFromJsonNodeNumberFails() {
-        this.fromJsonNodeFails(JsonNode.number(12), JsonNodeException.class);
+    public void testJsonNodeUnmarshallNumberFails() {
+        this.unmarshallFails(JsonNode.number(12), JsonNodeException.class);
     }
 
     @Test
-    public void testFromJsonNodeArrayFails() {
-        this.fromJsonNodeFails(JsonNode.array(), JsonNodeException.class);
+    public void testJsonNodeUnmarshallArrayFails() {
+        this.unmarshallFails(JsonNode.array(), JsonNodeException.class);
     }
 
     @Test
-    public void testFromJsonNodeStringFails() {
-        this.fromJsonNodeFails(JsonNode.string("fails"), JsonNodeException.class);
+    public void testJsonNodeUnmarshallStringFails() {
+        this.unmarshallFails(JsonNode.string("fails"), JsonNodeException.class);
     }
 
     @Test
-    public void testFromJsonNodeObjectEmptyFails() {
-        this.fromJsonNodeFails(JsonNode.object(), JsonNodeException.class);
+    public void testJsonNodeUnmarshallObjectEmptyFails() {
+        this.unmarshallFails(JsonNode.object(), JsonNodeException.class);
     }
 
     @Test
-    public void testFromJsonNodeObjectReferenceMissingFails() {
-        this.fromJsonNodeFails(JsonNode.object()
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, this.toJsonNodeContext().toJsonNode(formula())),
+    public void testJsonNodeUnmarshallObjectReferenceMissingFails() {
+        this.unmarshallFails(JsonNode.object()
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, this.marshallContext().marshall(formula())),
                 JsonNodeException.class);
     }
 
     @Test
-    public void testFromJsonNodeObjectReferenceMissingFails2() {
-        final ToJsonNodeContext context = this.toJsonNodeContext();
+    public void testJsonNodeUnmarshallObjectReferenceMissingFails2() {
+        final JsonNodeMarshallContext context = this.marshallContext();
 
-        this.fromJsonNodeFails(JsonNode.object()
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.toJsonNode(formula()))
-                        .set(SpreadsheetCell.STYLE_PROPERTY, context.toJsonNode(this.boldAndItalics())),
+        this.unmarshallFails(JsonNode.object()
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
+                        .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(this.boldAndItalics())),
                 JsonNodeException.class);
     }
 
     @Test
-    public void testFromJsonNodeObjectFormulaMissingFails() {
-        this.fromJsonNodeFails(JsonNode.object()
-                        .set(SpreadsheetCell.REFERENCE_PROPERTY, this.toJsonNodeContext().toJsonNode(reference())),
+    public void testJsonNodeUnmarshallObjectFormulaMissingFails() {
+        this.unmarshallFails(JsonNode.object()
+                        .set(SpreadsheetCell.REFERENCE_PROPERTY, this.marshallContext().marshall(reference())),
                 JsonNodeException.class);
     }
 
     @Test
-    public void testFromJsonNodeObjectReferenceAndFormulaAndTextStyle() {
+    public void testJsonNodeUnmarshallObjectReferenceAndFormulaAndTextStyle() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
-        final ToJsonNodeContext context = this.toJsonNodeContext();
+        final JsonNodeMarshallContext context = this.marshallContext();
 
-        this.fromJsonNodeAndCheck(JsonNode.object()
-                        .set(SpreadsheetCell.REFERENCE_PROPERTY, context.toJsonNode(reference()))
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.toJsonNode(formula()))
-                        .set(SpreadsheetCell.STYLE_PROPERTY, context.toJsonNode(boldAndItalics)),
+        this.unmarshallAndCheck(JsonNode.object()
+                        .set(SpreadsheetCell.REFERENCE_PROPERTY, context.marshall(reference()))
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
+                        .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics)),
                 SpreadsheetCell.with(reference(), formula()).setStyle(boldAndItalics));
     }
 
     @Test
-    public void testFromJsonNodeObjectReferenceAndFormulaAndTextStyleAndFormat() {
+    public void testJsonNodeUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormat() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
-        final ToJsonNodeContext context = this.toJsonNodeContext();
+        final JsonNodeMarshallContext context = this.marshallContext();
 
-        this.fromJsonNodeAndCheck(JsonNode.object()
-                        .set(SpreadsheetCell.REFERENCE_PROPERTY, context.toJsonNode(reference()))
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.toJsonNode(formula()))
-                        .set(SpreadsheetCell.STYLE_PROPERTY, context.toJsonNode(boldAndItalics))
-                        .set(SpreadsheetCell.FORMAT_PROPERTY, context.toJsonNode(format().get())),
+        this.unmarshallAndCheck(JsonNode.object()
+                        .set(SpreadsheetCell.REFERENCE_PROPERTY, context.marshall(reference()))
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
+                        .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
+                        .set(SpreadsheetCell.FORMAT_PROPERTY, context.marshall(format().get())),
                 SpreadsheetCell.with(reference(), formula())
                         .setStyle(boldAndItalics)
                         .setFormat(format()));
     }
 
     @Test
-    public void testFromJsonNodeObjectReferenceAndFormulaAndTextStyleAndFormattedCell() {
+    public void testJsonNodeUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormattedCell() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
-        final ToJsonNodeContext context = this.toJsonNodeContext();
+        final JsonNodeMarshallContext context = this.marshallContext();
 
-        this.fromJsonNodeAndCheck(JsonNode.object()
-                        .set(SpreadsheetCell.REFERENCE_PROPERTY, context.toJsonNode(reference()))
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.toJsonNode(formula()))
-                        .set(SpreadsheetCell.STYLE_PROPERTY, context.toJsonNode(boldAndItalics))
-                        .set(SpreadsheetCell.FORMATTED_PROPERTY, context.toJsonNodeWithType(formatted().get())),
+        this.unmarshallAndCheck(JsonNode.object()
+                        .set(SpreadsheetCell.REFERENCE_PROPERTY, context.marshall(reference()))
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
+                        .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
+                        .set(SpreadsheetCell.FORMATTED_PROPERTY, context.marshallWithType(formatted().get())),
                 SpreadsheetCell.with(reference(), formula())
                         .setStyle(boldAndItalics)
                         .setFormatted(formatted()));
     }
 
     @Test
-    public void testFromJsonNodeObjectReferenceAndFormulaAndFormatAndFormattedCell() {
-        final ToJsonNodeContext context = this.toJsonNodeContext();
+    public void testJsonNodeUnmarshallObjectReferenceAndFormulaAndFormatAndFormattedCell() {
+        final JsonNodeMarshallContext context = this.marshallContext();
 
-        this.fromJsonNodeAndCheck(JsonNode.object()
-                        .set(SpreadsheetCell.REFERENCE_PROPERTY, context.toJsonNode(reference()))
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.toJsonNode(formula()))
-                        .set(SpreadsheetCell.FORMAT_PROPERTY, context.toJsonNode(format().get()))
-                        .set(SpreadsheetCell.FORMATTED_PROPERTY, context.toJsonNodeWithType(formatted().get())),
+        this.unmarshallAndCheck(JsonNode.object()
+                        .set(SpreadsheetCell.REFERENCE_PROPERTY, context.marshall(reference()))
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
+                        .set(SpreadsheetCell.FORMAT_PROPERTY, context.marshall(format().get()))
+                        .set(SpreadsheetCell.FORMATTED_PROPERTY, context.marshallWithType(formatted().get())),
                 SpreadsheetCell.with(reference(), formula())
                         .setFormat(format())
                         .setFormatted(formatted()));
     }
 
     @Test
-    public void testFromJsonNodeObjectReferenceAndFormulaAndTextStyleAndFormatAndFormattedCell() {
+    public void testJsonNodeUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormatAndFormattedCell() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
-        final ToJsonNodeContext context = this.toJsonNodeContext();
+        final JsonNodeMarshallContext context = this.marshallContext();
 
-        this.fromJsonNodeAndCheck(JsonNode.object()
-                        .set(SpreadsheetCell.REFERENCE_PROPERTY, context.toJsonNode(reference()))
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.toJsonNode(formula()))
-                        .set(SpreadsheetCell.STYLE_PROPERTY, context.toJsonNode(boldAndItalics))
-                        .set(SpreadsheetCell.FORMAT_PROPERTY, context.toJsonNode(format().get()))
-                        .set(SpreadsheetCell.FORMATTED_PROPERTY, context.toJsonNodeWithType(formatted().get())),
+        this.unmarshallAndCheck(JsonNode.object()
+                        .set(SpreadsheetCell.REFERENCE_PROPERTY, context.marshall(reference()))
+                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
+                        .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
+                        .set(SpreadsheetCell.FORMAT_PROPERTY, context.marshall(format().get()))
+                        .set(SpreadsheetCell.FORMATTED_PROPERTY, context.marshallWithType(formatted().get())),
                 SpreadsheetCell.with(reference(), formula())
                         .setStyle(boldAndItalics)
                         .setFormat(format())
                         .setFormatted(formatted()));
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     @Test
     public void testJsonNode() {
-        this.toJsonNodeAndCheck(SpreadsheetCell.with(reference(COLUMN, ROW), SpreadsheetFormula.with(FORMULA)),
+        this.marshallAndCheck(SpreadsheetCell.with(reference(COLUMN, ROW), SpreadsheetFormula.with(FORMULA)),
                 "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}}");
     }
 
@@ -440,21 +440,21 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testJsonNodeWithTextStyle() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
-        this.toJsonNodeAndCheck(SpreadsheetCell.with(reference(COLUMN, ROW), SpreadsheetFormula.with(FORMULA))
+        this.marshallAndCheck(SpreadsheetCell.with(reference(COLUMN, ROW), SpreadsheetFormula.with(FORMULA))
                         .setStyle(boldAndItalics),
                 "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}, \"style\": " +
-                        this.toJsonNodeContext()
-                                .toJsonNodeWithType(boldAndItalics) + "}");
+                        this.marshallContext()
+                                .marshallWithType(boldAndItalics) + "}");
     }
 
     @Test
     public void testJsonNodeWithFormatted() {
-        final ToJsonNodeContext context = this.toJsonNodeContext();
+        final JsonNodeMarshallContext context = this.marshallContext();
 
-        this.toJsonNodeAndCheck(this.createCell(),
+        this.marshallAndCheck(this.createCell(),
                 "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}" +
-                        ", \"format\": " + context.toJsonNode(this.format().get()) +
-                        ", \"formatted\": " + context.toJsonNodeWithType(this.formatted().get()) +
+                        ", \"format\": " + context.marshall(this.format().get()) +
+                        ", \"formatted\": " + context.marshallWithType(this.formatted().get()) +
                         "}");
     }
 
@@ -462,20 +462,20 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     public void testJsonNodeWithTextStyleAndFormatted() {
         final TextStyle boldAndItalics = this.boldAndItalics();
 
-        final ToJsonNodeContext context = this.toJsonNodeContext();
+        final JsonNodeMarshallContext context = this.marshallContext();
 
-        this.toJsonNodeAndCheck(this.createCell()
+        this.marshallAndCheck(this.createCell()
                         .setStyle(boldAndItalics)
                         .setFormatted(this.formatted()),
-                "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}, \"style\": " + context.toJsonNodeWithType(boldAndItalics) +
-                        ", \"format\": " + context.toJsonNode(this.format().get()) +
-                        ", \"formatted\": " + context.toJsonNodeWithType(this.formatted().get()) +
+                "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}, \"style\": " + context.marshallWithType(boldAndItalics) +
+                        ", \"format\": " + context.marshall(this.format().get()) +
+                        ", \"formatted\": " + context.marshallWithType(this.formatted().get()) +
                         "}");
     }
 
     @Test
-    public void testToJsonNodeRoundtripTwice() {
-        this.toJsonNodeRoundTripTwiceAndCheck(this.createObject());
+    public void testJsonNodeMarshallRoundtripTwice() {
+        this.marshallRoundTripTwiceAndCheck(this.createObject());
     }
 
     // HateosResourceTesting............................................................................................
@@ -637,7 +637,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         return false; // comparing does not include all properties, so compareTo == 0 <> equals
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
     public SpreadsheetCell createJsonNodeMappingValue() {
@@ -645,9 +645,9 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     @Override
-    public SpreadsheetCell fromJsonNode(final JsonNode jsonNode,
-                                        final FromJsonNodeContext context) {
-        return SpreadsheetCell.fromJsonNode(jsonNode, context);
+    public SpreadsheetCell unmarshall(final JsonNode jsonNode,
+                                      final JsonNodeUnmarshallContext context) {
+        return SpreadsheetCell.unmarshall(jsonNode, context);
     }
 
     // HateosResourceTesting............................................................................................

@@ -22,15 +22,15 @@ import org.junit.jupiter.api.Test;
 public final class SpreadsheetMetadataPropertyValueHandlerCharacterTest extends SpreadsheetMetadataPropertyValueHandlerTestCase3<SpreadsheetMetadataPropertyValueHandlerCharacter, Character> {
 
     @Test
-    public void testFromJsonNode() {
+    public void testJsonNodeUnmarshall() {
         final Character character = this.propertyValue();
-        this.fromJsonNodeAndCheck(this.toJsonNode(character), character);
+        this.unmarshallAndCheck(this.marshall(character), character);
     }
 
     @Test
-    public void testToJsonNode() {
+    public void testJsonNodeMarshall() {
         final Character character = this.propertyValue();
-        this.toJsonNodeAndCheck(character, this.toJsonNode(character));
+        this.marshallAndCheck(character, this.marshall(character));
     }
 
     @Override

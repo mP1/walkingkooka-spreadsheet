@@ -29,8 +29,8 @@ import walkingkooka.test.ThrowableTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.JsonNodeMappingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.type.JavaVisibility;
 
 import java.util.Optional;
@@ -43,7 +43,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata> implements ClassTesting2<SpreadsheetMetadata>,
         ConverterTesting,
         HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
-        JsonNodeMappingTesting<SpreadsheetMetadata>,
+        JsonNodeMarshallingTesting<SpreadsheetMetadata>,
         HateosResourceTesting<SpreadsheetMetadata>,
         ThrowableTesting,
         ToStringTesting<SpreadsheetMetadata> {
@@ -176,7 +176,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
                 nameToColor.apply(name),
                 () -> name + " to color " + metadata.toString());
     }
-    
+
     // NumberToColor....................................................................................................
 
     @Test
@@ -262,12 +262,12 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         return JavaVisibility.PACKAGE_PRIVATE;
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public final SpreadsheetMetadata fromJsonNode(final JsonNode from,
-                                                  final FromJsonNodeContext context) {
-        return SpreadsheetMetadata.fromJsonNode(from, context);
+    public final SpreadsheetMetadata unmarshall(final JsonNode from,
+                                                final JsonNodeUnmarshallContext context) {
+        return SpreadsheetMetadata.unmarshall(from, context);
     }
 
     @Override
