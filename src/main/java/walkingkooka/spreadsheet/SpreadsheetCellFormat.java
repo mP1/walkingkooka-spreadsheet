@@ -24,9 +24,9 @@ import walkingkooka.UsesToStringBuilder;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -118,19 +118,19 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
     /**
      * Factory that creates a {@link SpreadsheetCellFormat} from a {@link JsonNode}.
      */
-    static SpreadsheetCellFormat fromJsonNode(final JsonNode node,
-                                              final FromJsonNodeContext context) {
+    static SpreadsheetCellFormat unmarshall(final JsonNode node,
+                                              final JsonNodeUnmarshallContext context) {
         return with(node.stringValueOrFail());
     }
 
-    JsonNode toJsonNode(final ToJsonNodeContext context) {
+    JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(this.pattern); // formatter not serialized.
     }
 
     static {
         JsonNodeContext.register("spreadsheet-cell-format",
-                SpreadsheetCellFormat::fromJsonNode,
-                SpreadsheetCellFormat::toJsonNode,
+                SpreadsheetCellFormat::unmarshall,
+                SpreadsheetCellFormat::marshall,
                 SpreadsheetCellFormat.class);
     }
 

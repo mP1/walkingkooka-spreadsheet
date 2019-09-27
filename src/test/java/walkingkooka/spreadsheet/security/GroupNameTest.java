@@ -22,16 +22,14 @@ import walkingkooka.naming.NameTesting;
 import walkingkooka.naming.PropertiesPath;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.JsonNodeMappingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-;
-
 final public class GroupNameTest implements NameTesting<GroupName, GroupName>,
-        JsonNodeMappingTesting<GroupName> {
+        JsonNodeMarshallingTesting<GroupName> {
 
     @Test
     public void testCreateEmptyStringFails() {
@@ -114,22 +112,22 @@ final public class GroupNameTest implements NameTesting<GroupName, GroupName>,
                 b2, c3, a1, d4);
     }
 
-    // toJsonNode ......................................................................................................
+    // marshall ......................................................................................................
 
     @Test
-    public void testFromJsonNodeInvalidEmailFails() {
-        this.fromJsonNodeFails(JsonNode.string("!"), IllegalArgumentException.class);
+    public void testJsonNodeUnmarshallInvalidEmailFails() {
+        this.unmarshallFails(JsonNode.string("!"), IllegalArgumentException.class);
     }
 
     @Test
-    public void testFromJsonNode() {
+    public void testJsonNodeUnmarshall() {
         final String value = "group123";
-        this.fromJsonNodeAndCheck(JsonNode.string(value), GroupName.with(value));
+        this.unmarshallAndCheck(JsonNode.string(value), GroupName.with(value));
     }
 
     @Test
-    public void testToJsonNodeRoundtrip() {
-        this.toJsonNodeRoundTripTwiceAndCheck(GroupName.with("group123"));
+    public void testJsonNodeMarshallRoundtrip() {
+        this.marshallRoundTripTwiceAndCheck(GroupName.with("group123"));
     }
 
     @Override
@@ -167,7 +165,7 @@ final public class GroupNameTest implements NameTesting<GroupName, GroupName>,
         return JavaVisibility.PUBLIC;
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
     public final GroupName createJsonNodeMappingValue() {
@@ -175,8 +173,8 @@ final public class GroupNameTest implements NameTesting<GroupName, GroupName>,
     }
 
     @Override
-    public final GroupName fromJsonNode(final JsonNode from,
-                                        final FromJsonNodeContext context) {
-        return GroupName.fromJsonNode(from, context);
+    public final GroupName unmarshall(final JsonNode from,
+                                      final JsonNodeUnmarshallContext context) {
+        return GroupName.unmarshall(from, context);
     }
 }

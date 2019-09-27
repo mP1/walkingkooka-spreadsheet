@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.color.Color;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 /**
  * A {@link SpreadsheetMetadataPropertyValueHandler} for {@link Color} entries.
@@ -54,15 +54,15 @@ final class SpreadsheetMetadataPropertyValueHandlerColor extends SpreadsheetMeta
     // JsonNodeContext..................................................................................................
 
     @Override
-    Color fromJsonNode(final JsonNode node,
-                       final SpreadsheetMetadataPropertyName<?> name,
-                       final FromJsonNodeContext context) {
-        return context.fromJsonNode(node, Color.class);
+    Color unmarshall(final JsonNode node,
+                     final SpreadsheetMetadataPropertyName<?> name,
+                     final JsonNodeUnmarshallContext context) {
+        return context.unmarshall(node, Color.class);
     }
 
     @Override
-    JsonNode toJsonNode(final Color value,
-                        final ToJsonNodeContext context) {
-        return context.toJsonNode(value);
+    JsonNode marshall(final Color value,
+                      final JsonNodeMarshallContext context) {
+        return context.marshall(value);
     }
 }

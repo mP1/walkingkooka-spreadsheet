@@ -21,10 +21,10 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.FromJsonNodeContexts;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContexts;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -65,10 +65,10 @@ public abstract class SpreadsheetMetadataPropertyValueHandlerTestCase2<P extends
         final T value = this.propertyValue();
         final P handler = this.handler();
 
-        final JsonNode json = handler.toJsonNode(value, this.toJsonNodeContext());
+        final JsonNode json = handler.marshall(value, this.marshallContext());
 
         assertEquals(value,
-                handler.fromJsonNode(json, this.propertyName(), this.fromJsonNodeContext()),
+                handler.unmarshall(json, this.propertyName(), this.unmarshallContext()),
                 () -> "value " + CharSequences.quoteIfChars(value) + " to json " + json);
     }
 
@@ -110,16 +110,16 @@ public abstract class SpreadsheetMetadataPropertyValueHandlerTestCase2<P extends
         assertEquals(value, thrown.value(), "value");
     }
 
-    final void fromJsonNodeAndCheck(final JsonNode node, final T value) {
+    final void unmarshallAndCheck(final JsonNode node, final T value) {
         assertEquals(value,
-                this.handler().fromJsonNode(node, this.propertyName(), this.fromJsonNodeContext()),
+                this.handler().unmarshall(node, this.propertyName(), this.unmarshallContext()),
                 () -> "from JsonNode " + node);
     }
 
-    final void toJsonNodeAndCheck(final T value, final JsonNode node) {
+    final void marshallAndCheck(final T value, final JsonNode node) {
         assertEquals(node,
-                this.handler().toJsonNode(value, this.toJsonNodeContext()),
-                () -> "toJsonNode " + CharSequences.quoteIfChars(value));
+                this.handler().marshall(value, this.marshallContext()),
+                () -> "marshall " + CharSequences.quoteIfChars(value));
     }
 
     // helper...........................................................................................................
@@ -132,15 +132,15 @@ public abstract class SpreadsheetMetadataPropertyValueHandlerTestCase2<P extends
 
     abstract String propertyValueType();
 
-    final FromJsonNodeContext fromJsonNodeContext() {
-        return FromJsonNodeContexts.basic();
+    final JsonNodeUnmarshallContext unmarshallContext() {
+        return JsonNodeUnmarshallContexts.basic();
     }
 
-    final ToJsonNodeContext toJsonNodeContext() {
-        return ToJsonNodeContexts.basic();
+    final JsonNodeMarshallContext marshallContext() {
+        return JsonNodeMarshallContexts.basic();
     }
 
-    final JsonNode toJsonNode(final Object value) {
-        return this.toJsonNodeContext().toJsonNode(value);
+    final JsonNode marshall(final Object value) {
+        return this.marshallContext().marshall(value);
     }
 }

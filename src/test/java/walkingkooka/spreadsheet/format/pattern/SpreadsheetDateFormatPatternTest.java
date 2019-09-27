@@ -29,7 +29,7 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -178,12 +178,12 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
         return SpreadsheetDateFormatPattern.class;
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public SpreadsheetDateFormatPattern fromJsonNode(final JsonNode jsonNode,
-                                                     final FromJsonNodeContext context) {
-        return SpreadsheetDateFormatPattern.fromJsonNodeDateFormatPattern(jsonNode, context);
+    public SpreadsheetDateFormatPattern unmarshall(final JsonNode jsonNode,
+                                                   final JsonNodeUnmarshallContext context) {
+        return SpreadsheetDateFormatPattern.unmarshallDateFormatPattern(jsonNode, context);
     }
 
     // ParseStringTesting...............................................................................................

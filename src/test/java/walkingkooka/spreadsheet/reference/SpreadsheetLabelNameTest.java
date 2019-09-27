@@ -24,7 +24,7 @@ import walkingkooka.naming.PropertiesPath;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.type.JavaVisibility;
 import walkingkooka.visit.Visiting;
 
@@ -186,12 +186,12 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         assertEquals("13542", b.toString());
     }
 
-    // JsonNodeMappingTesting.......................................................................................
+    // JsonNodeMarshallingTesting.......................................................................................
 
     @Test
-    public void testFromJsonNodeString() {
+    public void testJsonNodeUnmarshallString() {
         final String value = "LABEL123";
-        this.fromJsonNodeAndCheck(JsonNode.string(value),
+        this.unmarshallAndCheck(JsonNode.string(value),
                 SpreadsheetLabelName.with(value));
     }
 
@@ -261,11 +261,11 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         return JavaVisibility.PUBLIC;
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public SpreadsheetLabelName fromJsonNode(final JsonNode from,
-                                             final FromJsonNodeContext context) {
-        return SpreadsheetLabelName.fromJsonNodeLabelName(from, context);
+    public SpreadsheetLabelName unmarshall(final JsonNode from,
+                                           final JsonNodeUnmarshallContext context) {
+        return SpreadsheetLabelName.unmarshallLabelName(from, context);
     }
 }

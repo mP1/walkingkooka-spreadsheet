@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
 import java.util.function.LongPredicate;
@@ -69,15 +69,15 @@ final class SpreadsheetMetadataPropertyValueHandlerLong extends SpreadsheetMetad
     // JsonNodeContext..................................................................................................
 
     @Override
-    Long fromJsonNode(final JsonNode node,
-                      final SpreadsheetMetadataPropertyName<?> name,
-                      final FromJsonNodeContext context) {
-        return context.fromJsonNode(node, Long.class);
+    Long unmarshall(final JsonNode node,
+                    final SpreadsheetMetadataPropertyName<?> name,
+                    final JsonNodeUnmarshallContext context) {
+        return context.unmarshall(node, Long.class);
     }
 
     @Override
-    JsonNode toJsonNode(final Long value,
-                        final ToJsonNodeContext context) {
-        return context.toJsonNode(value);
+    JsonNode marshall(final Long value,
+                      final JsonNodeMarshallContext context) {
+        return context.marshall(value);
     }
 }

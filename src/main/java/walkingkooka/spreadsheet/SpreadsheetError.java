@@ -22,9 +22,9 @@ import walkingkooka.Value;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.Whitespace;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 /**
  * An error for an individual cell or formula which may be a parsing or execution error.
@@ -75,19 +75,19 @@ public final class SpreadsheetError implements HashCodeEqualsDefined,
 
     // JsonNodeContext..................................................................................................
 
-    static SpreadsheetError fromJsonNode(final JsonNode node,
-                                         final FromJsonNodeContext context) {
+    static SpreadsheetError unmarshall(final JsonNode node,
+                                         final JsonNodeUnmarshallContext context) {
         return with(node.stringValueOrFail());
     }
 
-    JsonNode toJsonNode(final ToJsonNodeContext context) {
+    JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(this.message);
     }
 
     static {
         JsonNodeContext.register("spreadsheet-error",
-                SpreadsheetError::fromJsonNode,
-                SpreadsheetError::toJsonNode,
+                SpreadsheetError::unmarshall,
+                SpreadsheetError::marshall,
                 SpreadsheetError.class);
     }
 }

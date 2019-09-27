@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 /**
  * A {@link SpreadsheetMetadataPropertyValueHandler} for {@link SpreadsheetId} entries.
@@ -54,15 +54,15 @@ final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetId extends Spreads
     // JsonNodeContext..................................................................................................
 
     @Override
-    SpreadsheetId fromJsonNode(final JsonNode node,
-                               final SpreadsheetMetadataPropertyName<?> name,
-                               final FromJsonNodeContext context) {
-        return context.fromJsonNode(node, SpreadsheetId.class);
+    SpreadsheetId unmarshall(final JsonNode node,
+                             final SpreadsheetMetadataPropertyName<?> name,
+                             final JsonNodeUnmarshallContext context) {
+        return context.unmarshall(node, SpreadsheetId.class);
     }
 
     @Override
-    JsonNode toJsonNode(final SpreadsheetId value,
-                        final ToJsonNodeContext context) {
-        return context.toJsonNode(value);
+    JsonNode marshall(final SpreadsheetId value,
+                      final JsonNodeMarshallContext context) {
+        return context.marshall(value);
     }
 }

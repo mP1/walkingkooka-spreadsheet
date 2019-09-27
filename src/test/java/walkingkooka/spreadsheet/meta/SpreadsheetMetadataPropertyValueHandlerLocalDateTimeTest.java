@@ -24,15 +24,15 @@ import java.time.LocalDateTime;
 public final class SpreadsheetMetadataPropertyValueHandlerLocalDateTimeTest extends SpreadsheetMetadataPropertyValueHandlerTestCase2<SpreadsheetMetadataPropertyValueHandlerLocalDateTime, LocalDateTime> {
 
     @Test
-    public void testFromJsonNode() {
+    public void testJsonNodeUnmarshall() {
         final LocalDateTime dateTime = this.propertyValue();
-        this.fromJsonNodeAndCheck(this.toJsonNode(dateTime), dateTime);
+        this.unmarshallAndCheck(this.marshall(dateTime), dateTime);
     }
 
     @Test
-    public void testToJsonNode() {
+    public void testJsonNodeMarshall() {
         final LocalDateTime dateTime = this.propertyValue();
-        this.toJsonNodeAndCheck(dateTime, this.toJsonNode(dateTime));
+        this.marshallAndCheck(dateTime, this.marshall(dateTime));
     }
 
     @Override

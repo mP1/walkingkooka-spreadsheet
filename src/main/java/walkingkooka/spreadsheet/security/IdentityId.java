@@ -21,7 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
 /**
  * Base class for all ids.
@@ -49,8 +49,8 @@ public abstract class IdentityId implements Value<Long>,
     /**
      * Stores the id.
      */
-    final JsonNode toJsonNode(final ToJsonNodeContext context) {
-        return context.toJsonNode(this.value);
+    final JsonNode marshall(final JsonNodeMarshallContext context) {
+        return context.marshall(this.value);
     }
 
     // Object...........................................................................................................

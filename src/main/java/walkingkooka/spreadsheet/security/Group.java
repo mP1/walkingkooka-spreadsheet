@@ -21,9 +21,9 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeName;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 import java.util.Objects;
@@ -71,8 +71,8 @@ public final class Group extends Identity<GroupId> {
 
     // JsonNodeContext..................................................................................................
 
-    static Group fromJsonNode(final JsonNode node,
-                              final FromJsonNodeContext context) {
+    static Group unmarshall(final JsonNode node,
+                            final JsonNodeUnmarshallContext context) {
         GroupId id = null;
         GroupName groupName = null;
 
@@ -80,28 +80,28 @@ public final class Group extends Identity<GroupId> {
             final JsonNodeName name = child.name();
             switch (name.value()) {
                 case ID_PROPERTY_STRING:
-                    id = context.fromJsonNode(child, GroupId.class);
+                    id = context.unmarshall(child, GroupId.class);
                     break;
                 case NAME_PROPERTY_STRING:
-                    groupName = context.fromJsonNode(child, GroupName.class);
+                    groupName = context.unmarshall(child, GroupName.class);
                     break;
                 default:
-                    FromJsonNodeContext.unknownPropertyPresent(name, node);
+                    JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
             }
         }
 
         if (null == groupName) {
-            FromJsonNodeContext.requiredPropertyMissing(NAME_PROPERTY, node);
+            JsonNodeUnmarshallContext.requiredPropertyMissing(NAME_PROPERTY, node);
         }
 
         return new Group(Optional.ofNullable(id), groupName);
     }
 
-    JsonNode toJsonNode(final ToJsonNodeContext context) {
+    JsonNode marshall(final JsonNodeMarshallContext context) {
         final List<JsonNode> properties = Lists.array();
 
-        this.id.ifPresent(id -> properties.add(context.toJsonNode(id).setName(ID_PROPERTY)));
-        properties.add(context.toJsonNode(this.name).setName(NAME_PROPERTY));
+        this.id.ifPresent(id -> properties.add(context.marshall(id).setName(ID_PROPERTY)));
+        properties.add(context.marshall(this.name).setName(NAME_PROPERTY));
 
         return JsonNode.object()
                 .setChildren(properties);
@@ -112,8 +112,8 @@ public final class Group extends Identity<GroupId> {
 
     static {
         JsonNodeContext.register("group",
-                Group::fromJsonNode,
-                Group::toJsonNode,
+                Group::unmarshall,
+                Group::marshall,
                 Group.class);
     }
 
@@ -126,7 +126,7 @@ public final class Group extends Identity<GroupId> {
 
     @Override
     boolean equals1(final Identity<?> other) {
-        return this.name.equals(Group.class.cast(other).name);
+        return this.name.equals(((Group) other).name);
     }
 
     @Override

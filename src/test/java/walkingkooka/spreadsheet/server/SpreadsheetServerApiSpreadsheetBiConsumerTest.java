@@ -26,8 +26,8 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.ExpressionNodeName;
-import walkingkooka.tree.json.marshall.FromJsonNodeContexts;
-import walkingkooka.tree.json.marshall.ToJsonNodeContexts;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -49,7 +49,7 @@ public final class SpreadsheetServerApiSpreadsheetBiConsumerTest extends Spreads
 
     private SpreadsheetServerApiSpreadsheetBiConsumer handler() {
         return SpreadsheetServerApiSpreadsheetBiConsumer.with(this.baseUrl(),
-                HateosContentType.json(FromJsonNodeContexts.fake(), ToJsonNodeContexts.fake()),
+                HateosContentType.json(JsonNodeUnmarshallContexts.fake(), JsonNodeMarshallContexts.fake()),
                 this::defaultMetadata,
                 this::fractioner,
                 this::idToFunctions,

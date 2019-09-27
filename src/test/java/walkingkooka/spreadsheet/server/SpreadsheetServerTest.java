@@ -62,7 +62,7 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.tree.json.marshall.ToJsonNodeContexts;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.type.JavaVisibility;
 
 import java.io.InputStream;
@@ -180,7 +180,7 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
                                 "    \"formula\": {\n" +
                                 "      \"text\": \"1+2\",\n" +
                                 "      \"expression\": {\n" +
-                                "        \"type\": \"expression+\",\n" +
+                                "        \"type\": \"expression-addition\",\n" +
                                 "        \"value\": [{\n" +
                                 "          \"type\": \"expression-big-decimal\",\n" +
                                 "          \"value\": \"1\"\n" +
@@ -224,7 +224,7 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
                                 "    \"formula\": {\n" +
                                 "      \"text\": \"1+2\",\n" +
                                 "      \"expression\": {\n" +
-                                "        \"type\": \"expression+\",\n" +
+                                "        \"type\": \"expression-addition\",\n" +
                                 "        \"value\": [{\n" +
                                 "          \"type\": \"expression-big-decimal\",\n" +
                                 "          \"value\": \"1\"\n" +
@@ -256,7 +256,7 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
                                 "    \"formula\": {\n" +
                                 "      \"text\": \"4+A1\",\n" +
                                 "      \"expression\": {\n" +
-                                "        \"type\": \"expression+\",\n" +
+                                "        \"type\": \"expression-addition\",\n" +
                                 "        \"value\": [{\n" +
                                 "          \"type\": \"expression-big-decimal\",\n" +
                                 "          \"value\": \"4\"\n" +
@@ -303,7 +303,7 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
                                 "    \"formula\": {\n" +
                                 "      \"text\": \"1+2\",\n" +
                                 "      \"expression\": {\n" +
-                                "        \"type\": \"expression+\",\n" +
+                                "        \"type\": \"expression-addition\",\n" +
                                 "        \"value\": [{\n" +
                                 "          \"type\": \"expression-big-decimal\",\n" +
                                 "          \"value\": \"1\"\n" +
@@ -344,7 +344,7 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
                                 "    \"formula\": {\n" +
                                 "      \"text\": \"3+4\",\n" +
                                 "      \"expression\": {\n" +
-                                "        \"type\": \"expression+\",\n" +
+                                "        \"type\": \"expression-addition\",\n" +
                                 "        \"value\": [{\n" +
                                 "          \"type\": \"expression-big-decimal\",\n" +
                                 "          \"value\": \"3\"\n" +
@@ -377,7 +377,7 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
                                 "    \"formula\": {\n" +
                                 "      \"text\": \"4+A1\",\n" +
                                 "      \"expression\": {\n" +
-                                "        \"type\": \"expression+\",\n" +
+                                "        \"type\": \"expression-addition\",\n" +
                                 "        \"value\": [{\n" +
                                 "          \"type\": \"expression-big-decimal\",\n" +
                                 "          \"value\": \"4\"\n" +
@@ -694,7 +694,7 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
     }
 
     private String toJson(final Object body) {
-        return ToJsonNodeContexts.basic().toJsonNode(body).toString();
+        return JsonNodeMarshallContexts.basic().marshall(body).toString();
     }
 
     // ClassTesting.....................................................................................................

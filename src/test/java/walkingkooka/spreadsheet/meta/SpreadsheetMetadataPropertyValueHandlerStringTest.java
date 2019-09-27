@@ -37,15 +37,15 @@ public final class SpreadsheetMetadataPropertyValueHandlerStringTest extends Spr
     }
 
     @Test
-    public void testFromJsonNode() {
+    public void testJsonNodeUnmarshall() {
         final String string = this.propertyValue();
-        this.fromJsonNodeAndCheck(JsonNode.string(string), string);
+        this.unmarshallAndCheck(JsonNode.string(string), string);
     }
 
     @Test
-    public void testToJsonNode() {
+    public void testJsonNodeMarshall() {
         final String string = this.propertyValue();
-        this.toJsonNodeAndCheck(string, JsonNode.string(string));
+        this.marshallAndCheck(string, JsonNode.string(string));
     }
 
     @Override

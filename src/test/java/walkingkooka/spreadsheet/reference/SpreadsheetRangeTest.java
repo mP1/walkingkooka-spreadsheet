@@ -27,7 +27,7 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.type.JavaVisibility;
 import walkingkooka.visit.Visiting;
@@ -809,21 +809,21 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
         this.parseStringAndCheck("A1:A2", SpreadsheetRange.with(SpreadsheetExpressionReference.parseCellReference("A1").range(SpreadsheetExpressionReference.parseCellReference("A2"))));
     }
 
-    // JsonNodeMappingTesting...............................................................................................
+    // JsonNodeMarshallingTesting...............................................................................................
 
     @Test
-    public void testFromJsonNode() {
-        this.fromJsonNodeAndCheck(JsonNode.string("A1:A2"), SpreadsheetRange.parseRange0("A1:A2"));
+    public void testJsonNodeUnmarshall() {
+        this.unmarshallAndCheck(JsonNode.string("A1:A2"), SpreadsheetRange.parseRange0("A1:A2"));
     }
 
     @Test
-    public void testToJsonNode2() {
-        this.toJsonNodeAndCheck(SpreadsheetRange.parseRange0("A1:A2"), JsonNode.string("A1:A2"));
+    public void testJsonNodeMarshall2() {
+        this.marshallAndCheck(SpreadsheetRange.parseRange0("A1:A2"), JsonNode.string("A1:A2"));
     }
 
     @Test
-    public void testToJsonNodeRoundtrip() {
-        this.toJsonNodeRoundTripTwiceAndCheck(SpreadsheetRange.parseRange0("A1:A2"));
+    public void testJsonNodeMarshallRoundtrip() {
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetRange.parseRange0("A1:A2"));
     }
 
     //compare...........................................................................................................
@@ -942,12 +942,12 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
         return JavaVisibility.PUBLIC;
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public SpreadsheetRange fromJsonNode(final JsonNode node,
-                                         final FromJsonNodeContext context) {
-        return SpreadsheetRange.fromJsonNodeRange(node, context);
+    public SpreadsheetRange unmarshall(final JsonNode node,
+                                       final JsonNodeUnmarshallContext context) {
+        return SpreadsheetRange.unmarshallRange(node, context);
     }
 
     // ParseStringTesting..................................................................................................
