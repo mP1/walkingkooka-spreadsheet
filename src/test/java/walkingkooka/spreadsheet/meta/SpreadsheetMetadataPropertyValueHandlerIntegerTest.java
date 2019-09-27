@@ -41,15 +41,15 @@ public final class SpreadsheetMetadataPropertyValueHandlerIntegerTest extends Sp
     }
 
     @Test
-    public void testFromJsonNode() {
+    public void testJsonNodeUnmarshall() {
         final Integer yy = this.propertyValue();
-        this.fromJsonNodeAndCheck(this.toJsonNode(yy), yy);
+        this.unmarshallAndCheck(this.marshall(yy), yy);
     }
 
     @Test
-    public void testToJsonNode() {
+    public void testJsonNodeMarshall() {
         final Integer yy = this.propertyValue();
-        this.toJsonNodeAndCheck(yy, this.toJsonNode(yy));
+        this.marshallAndCheck(yy, this.marshall(yy));
     }
 
     @Override

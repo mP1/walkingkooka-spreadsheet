@@ -21,30 +21,30 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.net.header.LinkRelation;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.JsonNodeMappingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class SpreadsheetEngineEvaluationTest implements ClassTesting2<SpreadsheetEngineEvaluation>,
-        JsonNodeMappingTesting<SpreadsheetEngineEvaluation> {
+        JsonNodeMarshallingTesting<SpreadsheetEngineEvaluation> {
 
-    // JsonNodeMappingTesting.......................................................................................
+    // JsonNodeMarshallingTesting.......................................................................................
 
     @Test
-    public void testFromJsonNodeStringUnknownFails() {
-        this.fromJsonNodeFails(JsonNode.string("123"), IllegalArgumentException.class);
+    public void testJsonNodeUnmarshallStringUnknownFails() {
+        this.unmarshallFails(JsonNode.string("123"), IllegalArgumentException.class);
     }
 
     @Test
     public void testToJsonRoundtrip() {
-        this.toJsonNodeRoundTripTwiceAndCheck(SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY);
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY);
     }
 
     @Test
     public void testToJsonRoundtrip2() {
-        this.toJsonNodeRoundTripTwiceAndCheck(SpreadsheetEngineEvaluation.SKIP_EVALUATE);
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetEngineEvaluation.SKIP_EVALUATE);
     }
 
     // HasLinkRelation..................................................................................................
@@ -83,7 +83,7 @@ public final class SpreadsheetEngineEvaluationTest implements ClassTesting2<Spre
         return JavaVisibility.PUBLIC;
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
     public SpreadsheetEngineEvaluation createJsonNodeMappingValue() {
@@ -91,8 +91,8 @@ public final class SpreadsheetEngineEvaluationTest implements ClassTesting2<Spre
     }
 
     @Override
-    public SpreadsheetEngineEvaluation fromJsonNode(final JsonNode node,
-                                                    final FromJsonNodeContext context) {
-        return SpreadsheetEngineEvaluation.fromJsonNode(node, context);
+    public SpreadsheetEngineEvaluation unmarshall(final JsonNode node,
+                                                  final JsonNodeUnmarshallContext context) {
+        return SpreadsheetEngineEvaluation.unmarshall(node, context);
     }
 }

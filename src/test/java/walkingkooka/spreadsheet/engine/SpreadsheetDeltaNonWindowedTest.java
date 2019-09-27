@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
 import java.util.Set;
 
@@ -31,40 +31,40 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaNonWi
         this.checkNotEquals(SpreadsheetDeltaWindowed.withWindowed(this.cells(), this.window0("A1:Z99")));
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     @Test
-    public void testFromJsonNode() {
-        this.fromJsonNodeAndCheck(JsonNode.object(), this.createSpreadsheetDelta(SpreadsheetDelta.NO_CELLS));
+    public void testJsonNodeUnmarshall() {
+        this.unmarshallAndCheck(JsonNode.object(), this.createSpreadsheetDelta(SpreadsheetDelta.NO_CELLS));
     }
 
     @Test
     public void testFromJsonCells() {
-        this.fromJsonNodeAndCheck(JsonNode.object()
-                        .set(SpreadsheetDelta.CELLS_PROPERTY, this.toJsonNodeContext().toJsonNodeSet(this.cells())),
+        this.unmarshallAndCheck(JsonNode.object()
+                        .set(SpreadsheetDelta.CELLS_PROPERTY, this.marshallContext().marshallSet(this.cells())),
                 SpreadsheetDeltaNonWindowed.withNonWindowed(this.cells()));
     }
 
     @Test
-    public void testToJsonNode() {
-        this.toJsonNodeAndCheck(SpreadsheetDeltaNonWindowed.withNonWindowed(SpreadsheetDelta.NO_CELLS),
+    public void testJsonNodeMarshall() {
+        this.marshallAndCheck(SpreadsheetDeltaNonWindowed.withNonWindowed(SpreadsheetDelta.NO_CELLS),
                 JsonNode.object());
     }
 
     @Test
-    public void testToJsonNodeIdCells() {
-        final ToJsonNodeContext context = this.toJsonNodeContext();
+    public void testJsonNodeMarshallIdCells() {
+        final JsonNodeMarshallContext context = this.marshallContext();
 
-        this.toJsonNodeAndCheck(this.createJsonNodeMappingValue(),
+        this.marshallAndCheck(this.createJsonNodeMappingValue(),
                 JsonNode.object()
-                        .set(SpreadsheetDelta.CELLS_PROPERTY, context.toJsonNodeSet(this.cells())));
+                        .set(SpreadsheetDelta.CELLS_PROPERTY, context.marshallSet(this.cells())));
     }
 
     @Test
-    public void testToJsonNodeCells() {
-        this.toJsonNodeAndCheck(SpreadsheetDeltaNonWindowed.withNonWindowed(this.cells()),
+    public void testJsonNodeMarshallCells() {
+        this.marshallAndCheck(SpreadsheetDeltaNonWindowed.withNonWindowed(this.cells()),
                 JsonNode.object()
-                        .set(SpreadsheetDelta.CELLS_PROPERTY, this.toJsonNodeContext().toJsonNodeSet(this.cells())));
+                        .set(SpreadsheetDelta.CELLS_PROPERTY, this.marshallContext().marshallSet(this.cells())));
     }
 
     // toString..........................................................................................................

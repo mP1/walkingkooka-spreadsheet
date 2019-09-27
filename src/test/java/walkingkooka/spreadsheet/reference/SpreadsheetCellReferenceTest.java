@@ -23,7 +23,7 @@ import walkingkooka.compare.Range;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.type.JavaVisibility;
 import walkingkooka.visit.Visiting;
 
@@ -380,11 +380,11 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
                 SpreadsheetCellReference.parseCellReferenceRange("$B2:D$4"));
     }
 
-    // JsonNodeMappingTesting.......................................................................................
+    // JsonNodeMarshallingTesting.......................................................................................
 
     @Test
-    public void testFromJsonNodeString() {
-        this.fromJsonNodeAndCheck(JsonNode.string("$A$1"),
+    public void testJsonNodeUnmarshallString() {
+        this.unmarshallAndCheck(JsonNode.string("$A$1"),
                 SpreadsheetExpressionReference.parseCellReference("$A$1"));
     }
 
@@ -578,11 +578,11 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
         return expected;
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public SpreadsheetCellReference fromJsonNode(final JsonNode from,
-                                                 final FromJsonNodeContext context) {
-        return SpreadsheetCellReference.fromJsonNodeCellReference(from, context);
+    public SpreadsheetCellReference unmarshall(final JsonNode from,
+                                               final JsonNodeUnmarshallContext context) {
+        return SpreadsheetCellReference.unmarshallCellReference(from, context);
     }
 }

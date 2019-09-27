@@ -22,8 +22,8 @@ import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.JsonNodeMappingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.type.JavaVisibility;
 
 import java.util.Optional;
@@ -35,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetRowTest implements ClassTesting2<SpreadsheetRow>,
         ComparableTesting2<SpreadsheetRow>,
-        JsonNodeMappingTesting<SpreadsheetRow>,
+        JsonNodeMarshallingTesting<SpreadsheetRow>,
         ToStringTesting<SpreadsheetRow> {
 
     private final static int ROW = 20;
@@ -102,17 +102,17 @@ public final class SpreadsheetRowTest implements ClassTesting2<SpreadsheetRow>,
                 row1, row2, row3, row4);
     }
 
-    // JsonNodeMappingTesting............................................................................................
+    // JsonNodeMarshallingTesting............................................................................................
 
     @Test
-    public void testFromJsonNodeStringFails() {
-        this.fromJsonNodeFails(JsonNode.string("fails"), IllegalArgumentException.class);
+    public void testJsonNodeUnmarshallStringFails() {
+        this.unmarshallFails(JsonNode.string("fails"), IllegalArgumentException.class);
     }
 
     @Test
     public void testJsonNode() {
         final SpreadsheetRowReference reference = reference(ROW);
-        this.toJsonNodeAndCheck(reference, reference.toJsonNode(this.toJsonNodeContext()));
+        this.marshallAndCheck(reference, reference.marshall(this.marshallContext()));
     }
 
     // toString.........................................................................................................
@@ -167,7 +167,7 @@ public final class SpreadsheetRowTest implements ClassTesting2<SpreadsheetRow>,
         return true;
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
     public SpreadsheetRow createJsonNodeMappingValue() {
@@ -175,8 +175,8 @@ public final class SpreadsheetRowTest implements ClassTesting2<SpreadsheetRow>,
     }
 
     @Override
-    public SpreadsheetRow fromJsonNode(final JsonNode jsonNode,
-                                       final FromJsonNodeContext context) {
-        return SpreadsheetRow.fromJsonNode(jsonNode, context);
+    public SpreadsheetRow unmarshall(final JsonNode jsonNode,
+                                     final JsonNodeUnmarshallContext context) {
+        return SpreadsheetRow.unmarshall(jsonNode, context);
     }
 }

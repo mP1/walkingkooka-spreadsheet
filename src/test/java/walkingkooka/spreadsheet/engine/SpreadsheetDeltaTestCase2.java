@@ -25,8 +25,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.test.HashCodeEqualsDefinedTesting2;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.JsonNodeMappingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.type.JavaVisibility;
 
 import java.util.Arrays;
@@ -40,7 +40,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> extends SpreadsheetDeltaTestCase<D>
         implements HashCodeEqualsDefinedTesting2<D>,
-        JsonNodeMappingTesting<D>,
+        JsonNodeMarshallingTesting<D>,
         ToStringTesting<D> {
 
     SpreadsheetDeltaTestCase2() {
@@ -169,7 +169,7 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
         return this.createSpreadsheetDelta();
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
     public final D createJsonNodeMappingValue() {
@@ -177,8 +177,8 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
     }
 
     @Override
-    public final D fromJsonNode(final JsonNode jsonNode,
-                                final FromJsonNodeContext context) {
-        return Cast.to(SpreadsheetDelta.fromJsonNode(jsonNode, context));
+    public final D unmarshall(final JsonNode jsonNode,
+                              final JsonNodeUnmarshallContext context) {
+        return Cast.to(SpreadsheetDelta.unmarshall(jsonNode, context));
     }
 }

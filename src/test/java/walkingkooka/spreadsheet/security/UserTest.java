@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.security;
 import org.junit.jupiter.api.Test;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Optional;
 
@@ -64,46 +64,46 @@ public final class UserTest extends IdentityTestCase<User, UserId> {
         assertEquals(EMAIL, different.email(), "email");
     }
 
-    // JsonNodeMappingTesting.................................................................................................
+    // JsonNodeMarshallingTesting.................................................................................................
 
     @Test
-    public void testFromJsonNodeWithoutId() {
-        this.fromJsonNodeAndCheck(this.jsonNodeWithoutId(),
+    public void testJsonNodeUnmarshallWithoutId() {
+        this.unmarshallAndCheck(this.jsonNodeWithoutId(),
                 User.with(Optional.empty(), EMAIL));
     }
 
     @Test
-    public void testFromJsonNodeWithId() {
-        this.fromJsonNodeAndCheck(this.jsonNodeWithId(),
+    public void testJsonNodeUnmarshallWithId() {
+        this.unmarshallAndCheck(this.jsonNodeWithId(),
                 User.with(this.createId(), EMAIL));
     }
 
     @Test
-    public void testToJsonNodeWithoutId() {
-        this.toJsonNodeAndCheck(this.createIdentity().setId(Optional.empty()), this.jsonNodeWithoutId());
+    public void testJsonNodeMarshallWithoutId() {
+        this.marshallAndCheck(this.createIdentity().setId(Optional.empty()), this.jsonNodeWithoutId());
     }
 
     @Test
-    public void testToJsonNodeWithId() {
-        this.toJsonNodeAndCheck(this.createObject(), this.jsonNodeWithId());
+    public void testJsonNodeMarshallWithId() {
+        this.marshallAndCheck(this.createObject(), this.jsonNodeWithId());
     }
 
     private JsonNode jsonNodeWithoutId() {
         return JsonNode.object()
-                .set(User.EMAIL_PROPERTY, this.toJsonNodeContext().toJsonNode(EMAIL));
+                .set(User.EMAIL_PROPERTY, this.marshallContext().marshall(EMAIL));
     }
 
     private JsonNode jsonNodeWithId() {
-        final ToJsonNodeContext context = this.toJsonNodeContext();
+        final JsonNodeMarshallContext context = this.marshallContext();
 
         return JsonNode.object()
-                .set(User.ID_PROPERTY, context.toJsonNode(createId().get()))
-                .set(User.EMAIL_PROPERTY, context.toJsonNode(EMAIL));
+                .set(User.ID_PROPERTY, context.marshall(createId().get()))
+                .set(User.EMAIL_PROPERTY, context.marshall(EMAIL));
     }
 
     @Test
-    public void testToJsonNodeRoundtripTwice() {
-        this.toJsonNodeRoundTripTwiceAndCheck(this.createObject());
+    public void testJsonNodeMarshallRoundtripTwice() {
+        this.marshallRoundTripTwiceAndCheck(this.createObject());
     }
 
     // ToStringTesting.................................................................................................
@@ -128,11 +128,11 @@ public final class UserTest extends IdentityTestCase<User, UserId> {
         return User.class;
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public final User fromJsonNode(final JsonNode from,
-                                   final FromJsonNodeContext context) {
-        return User.fromJsonNode(from, context);
+    public final User unmarshall(final JsonNode from,
+                                 final JsonNodeUnmarshallContext context) {
+        return User.unmarshall(from, context);
     }
 }

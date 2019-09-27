@@ -21,9 +21,9 @@ import walkingkooka.Cast;
 import walkingkooka.net.header.LinkRelation;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Arrays;
 
@@ -96,12 +96,12 @@ public enum SpreadsheetEngineEvaluation {
 
     // JsonNodeContext..................................................................................................
 
-    static SpreadsheetEngineEvaluation fromJsonNode(final JsonNode node,
-                                                    final FromJsonNodeContext context) {
+    static SpreadsheetEngineEvaluation unmarshall(final JsonNode node,
+                                                  final JsonNodeUnmarshallContext context) {
         return valueOf(node.stringValueOrFail());
     }
 
-    JsonNode toJsonNode(final ToJsonNodeContext context) {
+    JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(this.name());
     }
 
@@ -111,8 +111,8 @@ public enum SpreadsheetEngineEvaluation {
                 .toArray(Class[]::new));
 
         JsonNodeContext.register("spreadsheet-engine-evaluation",
-                SpreadsheetEngineEvaluation::fromJsonNode,
-                SpreadsheetEngineEvaluation::toJsonNode,
+                SpreadsheetEngineEvaluation::unmarshall,
+                SpreadsheetEngineEvaluation::marshall,
                 SpreadsheetEngineEvaluation.class,
                 types);
     }

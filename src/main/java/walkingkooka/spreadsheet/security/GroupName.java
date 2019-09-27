@@ -25,9 +25,9 @@ import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -91,19 +91,19 @@ final public class GroupName implements Name,
     /**
      * Accepts a json string holding the name string
      */
-    static GroupName fromJsonNode(final JsonNode node,
-                                  final FromJsonNodeContext context) {
+    static GroupName unmarshall(final JsonNode node,
+                                final JsonNodeUnmarshallContext context) {
         return with(node.stringValueOrFail());
     }
 
-    JsonNode toJsonNode(final ToJsonNodeContext context) {
+    JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(this.toString());
     }
 
     static {
         JsonNodeContext.register("group-name",
-                GroupName::fromJsonNode,
-                GroupName::toJsonNode,
+                GroupName::unmarshall,
+                GroupName::marshall,
                 GroupName.class);
     }
 

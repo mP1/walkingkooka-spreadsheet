@@ -24,13 +24,13 @@ import walkingkooka.test.HashCodeEqualsDefinedTesting2;
 import walkingkooka.test.IsMethodTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMappingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
 import java.util.function.Predicate;
 
 public abstract class SpreadsheetExpressionReferenceTestCase<R extends SpreadsheetExpressionReference> implements ClassTesting2<R>,
         HashCodeEqualsDefinedTesting2<R>,
-        JsonNodeMappingTesting<R>,
+        JsonNodeMarshallingTesting<R>,
         IsMethodTesting<R>,
         ToStringTesting<R> {
 
@@ -39,9 +39,9 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
     }
 
     @Test
-    public final void testToJsonNode() {
+    public final void testJsonNodeMarshall() {
         final R reference = this.createReference();
-        this.toJsonNodeAndCheck(reference, JsonNode.string(reference.toString()));
+        this.marshallAndCheck(reference, JsonNode.string(reference.toString()));
     }
 
     abstract R createReference();

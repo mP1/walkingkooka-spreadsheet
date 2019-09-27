@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 /**
  * A {@link SpreadsheetMetadataPropertyValueHandler} for {@link EmailAddress} entries.
@@ -54,15 +54,15 @@ final class SpreadsheetMetadataPropertyValueHandlerEmailAddress extends Spreadsh
     // JsonNodeContext..................................................................................................
 
     @Override
-    EmailAddress fromJsonNode(final JsonNode node,
-                              final SpreadsheetMetadataPropertyName<?> name,
-                              final FromJsonNodeContext context) {
-        return context.fromJsonNode(node, EmailAddress.class);
+    EmailAddress unmarshall(final JsonNode node,
+                            final SpreadsheetMetadataPropertyName<?> name,
+                            final JsonNodeUnmarshallContext context) {
+        return context.unmarshall(node, EmailAddress.class);
     }
 
     @Override
-    JsonNode toJsonNode(final EmailAddress value,
-                        final ToJsonNodeContext context) {
-        return context.toJsonNode(value);
+    JsonNode marshall(final EmailAddress value,
+                      final JsonNodeMarshallContext context) {
+        return context.marshall(value);
     }
 }

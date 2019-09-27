@@ -28,7 +28,7 @@ import walkingkooka.test.ParseStringTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.cursor.parser.ParserTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMappingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.type.JavaVisibility;
 
 import java.util.function.Predicate;
@@ -36,7 +36,7 @@ import java.util.function.Predicate;
 public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern<V>, V>
         implements ClassTesting2<P>,
         HashCodeEqualsDefinedTesting2<P>,
-        JsonNodeMappingTesting<P>,
+        JsonNodeMarshallingTesting<P>,
         IsMethodTesting<P>,
         ParserTesting,
         ParseStringTesting<P>,
@@ -192,8 +192,8 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern<V>
     // JsonNodeTesting.................................................................................................
 
     @Test
-    public final void testFromJsonNodeInvalidPattern() {
-        this.fromJsonNodeFails(JsonNode.string("\"unclosed quoted text inside patterns"), IllegalArgumentException.class);
+    public final void testJsonNodeUnmarshallInvalidPattern() {
+        this.unmarshallFails(JsonNode.string("\"unclosed quoted text inside patterns"), IllegalArgumentException.class);
     }
 
     // ToString.........................................................................................................
@@ -227,7 +227,7 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern<V>
         return this.createPattern();
     }
 
-    // JsonNodeMappingTesting................................................................................................
+    // JsonNodeMarshallingTesting................................................................................................
 
     @Override
     public final P createJsonNodeMappingValue() {

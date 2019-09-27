@@ -30,16 +30,16 @@ public final class SpreadsheetMetadataPropertyValueHandlerRoundingModeTest exten
     }
 
     @Test
-    public void testFromJsonNode() {
+    public void testJsonNodeUnmarshall() {
         Arrays.stream(RoundingMode.values()).forEach(
-                r -> fromJsonNodeAndCheck(this.toJsonNode(r), r)
+                r -> unmarshallAndCheck(this.marshall(r), r)
         );
     }
 
     @Test
-    public void testToJsonNode() {
+    public void testJsonNodeMarshall() {
         Arrays.stream(RoundingMode.values()).forEach(
-                r -> toJsonNodeAndCheck(r, this.toJsonNode(r))
+                r -> marshallAndCheck(r, this.marshall(r))
         );
     }
 

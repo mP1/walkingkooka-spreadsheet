@@ -24,9 +24,9 @@ import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObjectNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Comparator;
 import java.util.Objects;
@@ -211,41 +211,41 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     /**
      * Attempts to convert a {@link JsonNode} into a {@link SpreadsheetExpressionReference}.
      */
-    static SpreadsheetExpressionReference fromJsonNode(final JsonNode node,
-                                                       final FromJsonNodeContext context) {
-        return fromJsonNode0(node, SpreadsheetExpressionReference::parse);
+    static SpreadsheetExpressionReference unmarshall(final JsonNode node,
+                                                     final JsonNodeUnmarshallContext context) {
+        return unmarshall0(node, SpreadsheetExpressionReference::parse);
     }
 
     /**
      * Accepts a json string and returns a {@link SpreadsheetCellReference} or fails.
      */
-    static SpreadsheetCellReference fromJsonNodeCellReference(final JsonNode node,
-                                                              final FromJsonNodeContext context) {
-        return fromJsonNode0(node,
+    static SpreadsheetCellReference unmarshallCellReference(final JsonNode node,
+                                                            final JsonNodeUnmarshallContext context) {
+        return unmarshall0(node,
                 SpreadsheetExpressionReference::parseCellReference);
     }
 
     /**
      * Accepts a json string and returns a {@link SpreadsheetLabelName} or fails.
      */
-    static SpreadsheetLabelName fromJsonNodeLabelName(final JsonNode node,
-                                                      final FromJsonNodeContext context) {
-        return fromJsonNode0(node, SpreadsheetExpressionReference::labelName);
+    static SpreadsheetLabelName unmarshallLabelName(final JsonNode node,
+                                                    final JsonNodeUnmarshallContext context) {
+        return unmarshall0(node, SpreadsheetExpressionReference::labelName);
     }
 
     /**
      * Accepts a json string and returns a {@link SpreadsheetRange} or fails.
      */
-    static SpreadsheetRange fromJsonNodeRange(final JsonNode node,
-                                              final FromJsonNodeContext context) {
-        return fromJsonNode0(node, SpreadsheetExpressionReference::parseRange);
+    static SpreadsheetRange unmarshallRange(final JsonNode node,
+                                            final JsonNodeUnmarshallContext context) {
+        return unmarshall0(node, SpreadsheetExpressionReference::parseRange);
     }
 
     /**
      * Generic helper that tries to convert the node into a string and call a parse method.
      */
-    private static <R extends SpreadsheetExpressionReference> R fromJsonNode0(final JsonNode node,
-                                                                              final Function<String, R> parse) {
+    private static <R extends SpreadsheetExpressionReference> R unmarshall0(final JsonNode node,
+                                                                            final Function<String, R> parse) {
         Objects.requireNonNull(node, "node");
 
         return parse.apply(node.stringValueOrFail());
@@ -254,22 +254,22 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     /**
      * The json form of this object is also {@link #toString()}
      */
-    final JsonNode toJsonNode(final ToJsonNodeContext context) {
+    final JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonObjectNode.string(this.toString());
     }
 
     static {
         JsonNodeContext.register("spreadsheet-cell-reference",
-                SpreadsheetCellReference::fromJsonNodeCellReference,
-                SpreadsheetCellReference::toJsonNode,
+                SpreadsheetCellReference::unmarshallCellReference,
+                SpreadsheetCellReference::marshall,
                 SpreadsheetCellReference.class);
         JsonNodeContext.register("spreadsheet-label-name",
-                SpreadsheetLabelName::fromJsonNodeLabelName,
-                SpreadsheetLabelName::toJsonNode,
+                SpreadsheetLabelName::unmarshallLabelName,
+                SpreadsheetLabelName::marshall,
                 SpreadsheetLabelName.class);
         JsonNodeContext.register("spreadsheet-range",
-                SpreadsheetRange::fromJsonNodeRange,
-                SpreadsheetRange::toJsonNode,
+                SpreadsheetRange::unmarshallRange,
+                SpreadsheetRange::marshall,
                 SpreadsheetRange.class);
     }
 }

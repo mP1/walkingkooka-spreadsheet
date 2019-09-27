@@ -42,15 +42,15 @@ public final class SpreadsheetMetadataPropertyValueHandlerLongTest extends Sprea
     }
 
     @Test
-    public void testFromJsonNode() {
+    public void testJsonNodeUnmarshall() {
         final Long value = Converters.EXCEL_OFFSET;
-        this.fromJsonNodeAndCheck(this.toJsonNode(value), value);
+        this.unmarshallAndCheck(this.marshall(value), value);
     }
 
     @Test
-    public void testToJsonNode() {
+    public void testJsonNodeMarshall() {
         final Long value = Converters.EXCEL_OFFSET;
-        this.toJsonNodeAndCheck(value, this.toJsonNode(value));
+        this.marshallAndCheck(value, this.marshall(value));
     }
 
     @Override

@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.math.RoundingMode;
 
@@ -55,15 +55,15 @@ final class SpreadsheetMetadataPropertyValueHandlerRoundingMode extends Spreadsh
     // JsonNodeContext...................................................................................................
 
     @Override
-    RoundingMode fromJsonNode(final JsonNode node,
-                              final SpreadsheetMetadataPropertyName<?> name,
-                              final FromJsonNodeContext context) {
-        return context.fromJsonNode(node, RoundingMode.class);
+    RoundingMode unmarshall(final JsonNode node,
+                            final SpreadsheetMetadataPropertyName<?> name,
+                            final JsonNodeUnmarshallContext context) {
+        return context.unmarshall(node, RoundingMode.class);
     }
 
     @Override
-    JsonNode toJsonNode(final RoundingMode value,
-                        final ToJsonNodeContext context) {
-        return context.toJsonNode(value);
+    JsonNode marshall(final RoundingMode value,
+                      final JsonNodeMarshallContext context) {
+        return context.marshall(value);
     }
 }

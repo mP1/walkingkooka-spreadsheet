@@ -827,7 +827,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.toStringAndCheck(SpreadsheetMetadataNonEmpty.with(map), map.toString());
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     /**
      * This test verifies that all {@link SpreadsheetMetadataPropertyName} value types are also
@@ -901,7 +901,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  \"two-digit-year\": 31,\n" +
                 "  \"width\": 0\n" +
                 "}");
-        final SpreadsheetMetadata metadata = this.fromJsonNode(json);
+        final SpreadsheetMetadata metadata = this.unmarshall(json);
         assertNotEquals(metadata, SpreadsheetMetadata.EMPTY);
     }
 
@@ -952,7 +952,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 missing,
                 () -> "Several properties are missing values in " + properties);
 
-        this.toJsonNodeRoundTripTwiceAndCheck(SpreadsheetMetadata.with(properties));
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetMetadata.with(properties));
     }
 
     // helpers...........................................................................................................

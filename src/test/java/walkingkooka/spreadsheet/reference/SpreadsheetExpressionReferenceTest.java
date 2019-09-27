@@ -22,8 +22,8 @@ import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.FromJsonNodeContexts;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -72,24 +72,24 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
                         SpreadsheetColumnOrRowReference.parseRow("1")));
     }
 
-    // fromJsonNode.....................................................................................................
+    // unmarshall.....................................................................................................
 
     @Test
-    public void testFromJsonNodeWithCellReference() {
+    public void testJsonNodeUnmarshallWithCellReference() {
         final String reference = "A1";
         assertEquals(SpreadsheetExpressionReference.parseCellReference(reference),
-                SpreadsheetExpressionReference.fromJsonNode(JsonNode.string(reference), this.fromJsonNodeContext()));
+                SpreadsheetExpressionReference.unmarshall(JsonNode.string(reference), this.unmarshallContext()));
     }
 
     @Test
-    public void testFromJsonNodeWithLabel() {
+    public void testJsonNodeUnmarshallWithLabel() {
         final String label = "label123";
         assertEquals(SpreadsheetExpressionReference.labelName(label),
-                SpreadsheetExpressionReference.fromJsonNode(JsonNode.string(label), this.fromJsonNodeContext()));
+                SpreadsheetExpressionReference.unmarshall(JsonNode.string(label), this.unmarshallContext()));
     }
 
-    private FromJsonNodeContext fromJsonNodeContext() {
-        return FromJsonNodeContexts.basic();
+    private JsonNodeUnmarshallContext unmarshallContext() {
+        return JsonNodeUnmarshallContexts.basic();
     }
 
     // parse............................................................................................................

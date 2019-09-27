@@ -27,9 +27,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeName;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Arrays;
 import java.util.List;
@@ -133,8 +133,8 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined {
 
     // JsonNodeContext..................................................................................................
 
-    static SpreadsheetDelta fromJsonNode(final JsonNode node,
-                                         final FromJsonNodeContext context) {
+    static SpreadsheetDelta unmarshall(final JsonNode node,
+                                       final JsonNodeUnmarshallContext context) {
         Set<SpreadsheetCell> cells = Sets.empty();
         List<SpreadsheetRange> window = null;
 
@@ -143,13 +143,13 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined {
 
             switch (name.value()) {
                 case CELLS_PROPERTY_STRING:
-                    cells = context.fromJsonNodeSet(child, SpreadsheetCell.class);
+                    cells = context.unmarshallSet(child, SpreadsheetCell.class);
                     break;
                 case WINDOW_PROPERTY_STRING:
-                    window = rangeFromJsonNode(child.stringValueOrFail());
+                    window = rangeJsonNodeUnmarshall(child.stringValueOrFail());
                     break;
                 default:
-                    FromJsonNodeContext.unknownPropertyPresent(name, node);
+                    JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
             }
         }
 
@@ -158,18 +158,18 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined {
                 SpreadsheetDeltaWindowed.withWindowed(cells, window);
     }
 
-    private static List<SpreadsheetRange> rangeFromJsonNode(final String range) {
+    private static List<SpreadsheetRange> rangeJsonNodeUnmarshall(final String range) {
         return Arrays.stream(range.split(WINDOW_SEPARATOR))
                 .map(SpreadsheetRange::parseRange)
                 .collect(Collectors.toList());
     }
 
-    final JsonNode toJsonNode(final ToJsonNodeContext context) {
+    final JsonNode marshall(final JsonNodeMarshallContext context) {
         final List<JsonNode> children = Lists.array();
 
         final Set<SpreadsheetCell> cells = this.cells;
         if (!cells.isEmpty()) {
-            children.add(context.toJsonNodeSet(cells).setName(CELLS_PROPERTY));
+            children.add(context.marshallSet(cells).setName(CELLS_PROPERTY));
         }
 
         final List<SpreadsheetRange> window = this.window();
@@ -196,8 +196,8 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined {
 
     static {
         JsonNodeContext.register("spreadsheet-delta",
-                SpreadsheetDelta::fromJsonNode,
-                SpreadsheetDelta::toJsonNode,
+                SpreadsheetDelta::unmarshall,
+                SpreadsheetDelta::marshall,
                 SpreadsheetDelta.class,
                 SpreadsheetDeltaNonWindowed.class,
                 SpreadsheetDeltaWindowed.class);

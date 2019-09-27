@@ -47,15 +47,15 @@ public final class SpreadsheetMetadataPropertyValueHandlerColorTest extends Spre
     }
 
     @Test
-    public void testFromJsonNode() {
+    public void testJsonNodeUnmarshall() {
         final Color color = this.propertyValue();
-        this.fromJsonNodeAndCheck(this.toJsonNode(color), color);
+        this.unmarshallAndCheck(this.marshall(color), color);
     }
 
     @Test
-    public void testToJsonNode() {
+    public void testJsonNodeMarshall() {
         final Color color = this.propertyValue();
-        this.toJsonNodeAndCheck(color, this.toJsonNode(color));
+        this.marshallAndCheck(color, this.marshall(color));
     }
 
     @Override

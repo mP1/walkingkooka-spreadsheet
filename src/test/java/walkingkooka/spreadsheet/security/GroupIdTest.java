@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.security;
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 public final class GroupIdTest extends IdentityIdTestCase<GroupId> implements ComparableTesting2<GroupId> {
 
@@ -51,11 +51,11 @@ public final class GroupIdTest extends IdentityIdTestCase<GroupId> implements Co
         return GroupId.with(99);
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public final GroupId fromJsonNode(final JsonNode from,
-                                      final FromJsonNodeContext context) {
-        return GroupId.fromJsonNode(from, context);
+    public final GroupId unmarshall(final JsonNode from,
+                                    final JsonNodeUnmarshallContext context) {
+        return GroupId.unmarshall(from, context);
     }
 }

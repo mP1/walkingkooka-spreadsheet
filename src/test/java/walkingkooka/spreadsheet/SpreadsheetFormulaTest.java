@@ -25,8 +25,8 @@ import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonNodeName;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.JsonNodeMappingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.type.JavaVisibility;
 
 import java.util.Optional;
@@ -39,7 +39,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFormula>,
         HashCodeEqualsDefinedTesting2<SpreadsheetFormula>,
-        JsonNodeMappingTesting<SpreadsheetFormula>,
+        JsonNodeMarshallingTesting<SpreadsheetFormula>,
         ToStringTesting<SpreadsheetFormula> {
 
     private final static String TEXT = "a+2";
@@ -332,78 +332,78 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 .setError(error);
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     @Test
-    public void testFromJsonNodeBooleanFails() {
-        this.fromJsonNodeFails(JsonNode.booleanNode(true), JsonNodeException.class);
+    public void testJsonNodeUnmarshallBooleanFails() {
+        this.unmarshallFails(JsonNode.booleanNode(true), JsonNodeException.class);
     }
 
     @Test
-    public void testFromJsonNodeNumberFails() {
-        this.fromJsonNodeFails(JsonNode.number(12), JsonNodeException.class);
+    public void testJsonNodeUnmarshallNumberFails() {
+        this.unmarshallFails(JsonNode.number(12), JsonNodeException.class);
     }
 
     @Test
-    public void testFromJsonNodeArrayFails() {
-        this.fromJsonNodeFails(JsonNode.array(), JsonNodeException.class);
+    public void testJsonNodeUnmarshallArrayFails() {
+        this.unmarshallFails(JsonNode.array(), JsonNodeException.class);
     }
 
     @Test
-    public void testFromJsonNodeStringFails() {
-        this.fromJsonNodeFails(JsonNode.string("fails"), JsonNodeException.class);
+    public void testJsonNodeUnmarshallStringFails() {
+        this.unmarshallFails(JsonNode.string("fails"), JsonNodeException.class);
     }
 
     @Test
-    public void testFromJsonNodeObjectEmptyFails() {
-        this.fromJsonNodeFails(JsonNode.object(), JsonNodeException.class);
+    public void testJsonNodeUnmarshallObjectEmptyFails() {
+        this.unmarshallFails(JsonNode.object(), JsonNodeException.class);
     }
 
     @Test
-    public void testFromJsonNodeText() {
-        this.fromJsonNodeAndCheck(JsonNode.object()
+    public void testJsonNodeUnmarshallText() {
+        this.unmarshallAndCheck(JsonNode.object()
                         .set(SpreadsheetFormula.TEXT, JsonNode.string(TEXT)),
                 SpreadsheetFormula.with(TEXT));
     }
 
     @Test
-    public void testFromJsonNodeTextAndError() {
+    public void testJsonNodeUnmarshallTextAndError() {
         final SpreadsheetError error = SpreadsheetError.with(ERROR);
 
-        this.fromJsonNodeAndCheck(JsonNode.object()
+        this.unmarshallAndCheck(JsonNode.object()
                         .set(SpreadsheetFormula.TEXT, JsonNode.string(TEXT))
-                        .set(SpreadsheetFormula.ERROR_PROPERTY, this.toJsonNodeContext().toJsonNode(error)),
+                        .set(SpreadsheetFormula.ERROR_PROPERTY, this.marshallContext().marshall(error)),
                 SpreadsheetFormula.with(TEXT).setError(Optional.of(error)));
     }
 
     @Test
-    public void testFromJsonNodeTextAndValue() {
-        this.fromJsonNodeAndCheck(JsonNode.object()
+    public void testJsonNodeUnmarshallTextAndValue() {
+        this.unmarshallAndCheck(JsonNode.object()
                         .set(SpreadsheetFormula.TEXT, JsonNode.string(TEXT))
                         .set(SpreadsheetFormula.VALUE_PROPERTY, JsonNode.number(VALUE)),
                 SpreadsheetFormula.with(TEXT).setValue(Optional.of(VALUE)));
     }
 
     @Test
-    public void testFromJsonNodeTextAndErrorAndValueFails() {
-        this.fromJsonNodeFails(JsonNode.object()
+    public void testJsonNodeUnmarshallTextAndErrorAndValueFails() {
+        this.unmarshallFails(JsonNode.object()
                         .set(SpreadsheetFormula.TEXT, JsonNode.string(TEXT))
                         .set(SpreadsheetFormula.VALUE_PROPERTY, JsonNode.string("1"))
-                        .set(SpreadsheetFormula.ERROR_PROPERTY, this.toJsonNodeContext().toJsonNode(SpreadsheetError.with(ERROR))),
+                        .set(SpreadsheetFormula.ERROR_PROPERTY, this.marshallContext().marshall(SpreadsheetError.with(ERROR))),
                 JsonNodeException.class);
     }
 
-    // toJsonNode.......................................................................................................
+    // marshall.......................................................................................................
 
     @Test
-    public void testToJsonNodeText() {
-        this.toJsonNodeAndCheck(SpreadsheetFormula.with(TEXT),
+    public void testJsonNodeMarshallText() {
+        this.marshallAndCheck(SpreadsheetFormula.with(TEXT),
                 "{ \"text\": \"a+2\"}");
     }
 
     @Test
-    public void testToJsonNodeTextAndExpression() {
-        this.toJsonNodeAndCheck(SpreadsheetFormula.with(TEXT)
+    public void testJsonNodeMarshallTextAndExpression() {
+        this.marshallAndCheck(SpreadsheetFormula.with(TEXT)
                         .setExpression(this.expression()),
                 "{\n" +
                         "  \"text\": \"a+2\",\n" +
@@ -415,31 +415,31 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testToJsonNodeTextAndValue() {
-        this.toJsonNodeAndCheck(SpreadsheetFormula.with(TEXT)
+    public void testJsonNodeMarshallTextAndValue() {
+        this.marshallAndCheck(SpreadsheetFormula.with(TEXT)
                         .setValue(Optional.of(123L)),
                 JsonNode.object()
                         .set(JsonNodeName.with("text"), JsonNode.string("a+2"))
-                        .set(JsonNodeName.with("value"), this.toJsonNodeContext().toJsonNodeWithType(123L)));
+                        .set(JsonNodeName.with("value"), this.marshallContext().marshallWithType(123L)));
     }
 
     @Test
-    public void testToJsonNodeTextAndValue2() {
-        this.toJsonNodeAndCheck(SpreadsheetFormula.with(TEXT)
+    public void testJsonNodeMarshallTextAndValue2() {
+        this.marshallAndCheck(SpreadsheetFormula.with(TEXT)
                         .setValue(Optional.of("abc123")),
                 "{ \"text\": \"a+2\", \"value\": \"abc123\"}");
     }
 
     @Test
-    public void testToJsonNodeTextAndError() {
-        this.toJsonNodeAndCheck(SpreadsheetFormula.with(TEXT)
+    public void testJsonNodeMarshallTextAndError() {
+        this.marshallAndCheck(SpreadsheetFormula.with(TEXT)
                         .setError(Optional.of(SpreadsheetError.with("error123"))),
                 "{ \"text\": \"a+2\", \"error\": \"error123\"}");
     }
 
     @Test
-    public void testToJsonNodeRoundtripTwice() {
-        this.toJsonNodeRoundTripTwiceAndCheck(this.createObject());
+    public void testJsonNodeMarshallRoundtripTwice() {
+        this.marshallRoundTripTwiceAndCheck(this.createObject());
     }
 
     // toString...............................................................................................
@@ -528,7 +528,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         return JavaVisibility.PUBLIC;
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
     public SpreadsheetFormula createJsonNodeMappingValue() {
@@ -536,8 +536,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Override
-    public SpreadsheetFormula fromJsonNode(final JsonNode jsonNode,
-                                           final FromJsonNodeContext context) {
-        return SpreadsheetFormula.fromJsonNode(jsonNode, context);
+    public SpreadsheetFormula unmarshall(final JsonNode jsonNode,
+                                         final JsonNodeUnmarshallContext context) {
+        return SpreadsheetFormula.unmarshall(jsonNode, context);
     }
 }
