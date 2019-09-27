@@ -29,7 +29,7 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -162,12 +162,12 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         return SpreadsheetTimeFormatPattern.class;
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public SpreadsheetTimeFormatPattern fromJsonNode(final JsonNode jsonNode,
-                                                     final FromJsonNodeContext context) {
-        return SpreadsheetTimeFormatPattern.fromJsonNodeTimeFormatPattern(jsonNode, context);
+    public SpreadsheetTimeFormatPattern unmarshall(final JsonNode jsonNode,
+                                                     final JsonNodeUnmarshallContext context) {
+        return SpreadsheetTimeFormatPattern.unmarshallTimeFormatPattern(jsonNode, context);
     }
 
     // ParseStringTesting...............................................................................................

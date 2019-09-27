@@ -36,9 +36,9 @@ import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonStringNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.math.MathContext;
 import java.util.Objects;
@@ -230,32 +230,32 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
     /**
      * Expects a {@link JsonStringNode} and returns a {@link SpreadsheetColumnReference}.
      */
-    static SpreadsheetColumnReference fromJsonNodeColumn(final JsonNode from,
-                                                         final FromJsonNodeContext context) {
+    static SpreadsheetColumnReference unmarshallColumn(final JsonNode from,
+                                                       final JsonNodeUnmarshallContext context) {
         return SpreadsheetColumnOrRowReference.parseColumn(from.stringValueOrFail());
     }
 
     /**
      * Expects a {@link JsonStringNode} and returns a {@link SpreadsheetRowReference}.
      */
-    static SpreadsheetRowReference fromJsonNodeRow(final JsonNode from,
-                                                   final FromJsonNodeContext context) {
+    static SpreadsheetRowReference unmarshallRow(final JsonNode from,
+                                                 final JsonNodeUnmarshallContext context) {
         return SpreadsheetColumnOrRowReference.parseRow(from.stringValueOrFail());
     }
 
-    final JsonNode toJsonNode(final ToJsonNodeContext context) {
+    final JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(this.toString());
     }
 
     static {
         JsonNodeContext.register("spreadsheet-column-reference",
-                SpreadsheetColumnReference::fromJsonNodeColumn,
-                SpreadsheetColumnReference::toJsonNode,
+                SpreadsheetColumnReference::unmarshallColumn,
+                SpreadsheetColumnReference::marshall,
                 SpreadsheetColumnReference.class);
 
         JsonNodeContext.register("spreadsheet-row-reference",
-                SpreadsheetRowReference::fromJsonNodeRow,
-                SpreadsheetRowReference::toJsonNode,
+                SpreadsheetRowReference::unmarshallRow,
+                SpreadsheetRowReference::marshall,
                 SpreadsheetRowReference.class);
     }
 }

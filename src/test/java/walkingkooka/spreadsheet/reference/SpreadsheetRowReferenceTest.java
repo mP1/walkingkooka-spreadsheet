@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.Range;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -127,28 +127,28 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
     // JsonNodeTesting..................................................................................................
 
     @Test
-    public void testFromJsonNodeStringInvalidFails() {
-        this.fromJsonNodeFails(JsonNode.string("!9"), IllegalArgumentException.class);
+    public void testJsonNodeUnmarshallStringInvalidFails() {
+        this.unmarshallFails(JsonNode.string("!9"), IllegalArgumentException.class);
     }
 
     @Test
-    public void testFromJsonNodeStringAbsolute() {
-        this.fromJsonNodeAndCheck(JsonNode.string("$1"), SpreadsheetReferenceKind.ABSOLUTE.row(0));
+    public void testJsonNodeUnmarshallStringAbsolute() {
+        this.unmarshallAndCheck(JsonNode.string("$1"), SpreadsheetReferenceKind.ABSOLUTE.row(0));
     }
 
     @Test
-    public void testFromJsonNodeStringAbsolute2() {
-        this.fromJsonNodeAndCheck(JsonNode.string("$2"), SpreadsheetReferenceKind.ABSOLUTE.row(1));
+    public void testJsonNodeUnmarshallStringAbsolute2() {
+        this.unmarshallAndCheck(JsonNode.string("$2"), SpreadsheetReferenceKind.ABSOLUTE.row(1));
     }
 
     @Test
-    public void testFromJsonNodeStringRelative() {
-        this.fromJsonNodeAndCheck(JsonNode.string("1"), SpreadsheetReferenceKind.RELATIVE.row(0));
+    public void testJsonNodeUnmarshallStringRelative() {
+        this.unmarshallAndCheck(JsonNode.string("1"), SpreadsheetReferenceKind.RELATIVE.row(0));
     }
 
     @Test
-    public void testFromJsonNodeStringRelative2() {
-        this.fromJsonNodeAndCheck(JsonNode.string("2"), SpreadsheetReferenceKind.RELATIVE.row(1));
+    public void testJsonNodeUnmarshallStringRelative2() {
+        this.unmarshallAndCheck(JsonNode.string("2"), SpreadsheetReferenceKind.RELATIVE.row(1));
     }
 
     // toString........................................................................
@@ -183,12 +183,12 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
         return SpreadsheetRowReference.class;
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public SpreadsheetRowReference fromJsonNode(final JsonNode from,
-                                                final FromJsonNodeContext context) {
-        return SpreadsheetRowReference.fromJsonNodeRow(from, context);
+    public SpreadsheetRowReference unmarshall(final JsonNode from,
+                                              final JsonNodeUnmarshallContext context) {
+        return SpreadsheetRowReference.unmarshallRow(from, context);
     }
 
     // ParseStringTesting............................................................................................

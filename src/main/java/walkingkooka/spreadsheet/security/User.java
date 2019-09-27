@@ -22,9 +22,9 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeName;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 import java.util.Objects;
@@ -75,8 +75,8 @@ public final class User extends Identity<UserId> {
     /**
      * Factory that creates a {@link User} from a {@link JsonNode}.
      */
-    static User fromJsonNode(final JsonNode node,
-                             final FromJsonNodeContext context) {
+    static User unmarshall(final JsonNode node,
+                           final JsonNodeUnmarshallContext context) {
         UserId id = null;
         EmailAddress email = null;
 
@@ -84,28 +84,28 @@ public final class User extends Identity<UserId> {
             final JsonNodeName name = child.name();
             switch (name.value()) {
                 case ID_PROPERTY_STRING:
-                    id = context.fromJsonNode(child, UserId.class);
+                    id = context.unmarshall(child, UserId.class);
                     break;
                 case EMAIL_PROPERTY_STRING:
-                    email = context.fromJsonNode(child, EmailAddress.class);
+                    email = context.unmarshall(child, EmailAddress.class);
                     break;
                 default:
-                    FromJsonNodeContext.unknownPropertyPresent(name, node);
+                    JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
             }
         }
 
         if (null == email) {
-            FromJsonNodeContext.requiredPropertyMissing(EMAIL_PROPERTY, node);
+            JsonNodeUnmarshallContext.requiredPropertyMissing(EMAIL_PROPERTY, node);
         }
 
         return new User(Optional.ofNullable(id), email);
     }
 
-    JsonNode toJsonNode(final ToJsonNodeContext context) {
+    JsonNode marshall(final JsonNodeMarshallContext context) {
         final List<JsonNode> properties = Lists.array();
 
-        this.id.ifPresent(id -> properties.add(context.toJsonNode(id).setName(ID_PROPERTY)));
-        properties.add(context.toJsonNode(this.email).setName(EMAIL_PROPERTY));
+        this.id.ifPresent(id -> properties.add(context.marshall(id).setName(ID_PROPERTY)));
+        properties.add(context.marshall(this.email).setName(EMAIL_PROPERTY));
 
         return JsonNode.object()
                 .setChildren(properties);
@@ -116,8 +116,8 @@ public final class User extends Identity<UserId> {
 
     static {
         JsonNodeContext.register("user",
-                User::fromJsonNode,
-                User::toJsonNode,
+                User::unmarshall,
+                User::marshall,
                 User.class);
     }
 
@@ -130,7 +130,7 @@ public final class User extends Identity<UserId> {
 
     @Override
     boolean equals1(final Identity<?> other) {
-        return this.email.equals(User.class.cast(other).email);
+        return this.email.equals(((User) other).email);
     }
 
     @Override

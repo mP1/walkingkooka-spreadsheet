@@ -23,9 +23,9 @@ import walkingkooka.Value;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 /**
  * Identifies a single spreadsheet.
@@ -84,19 +84,19 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
 
     // JsonNodeContext..................................................................................................
 
-    static SpreadsheetId fromJsonNode(final JsonNode node,
-                                      final FromJsonNodeContext context) {
+    static SpreadsheetId unmarshall(final JsonNode node,
+                                      final JsonNodeUnmarshallContext context) {
         return parse(node.stringValueOrFail());
     }
 
-    JsonNode toJsonNode(final ToJsonNodeContext context) {
+    JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(this.toString());
     }
 
     static {
         JsonNodeContext.register("spreadsheet-id",
-                SpreadsheetId::fromJsonNode,
-                SpreadsheetId::toJsonNode,
+                SpreadsheetId::unmarshall,
+                SpreadsheetId::marshall,
                 SpreadsheetId.class);
     }
 

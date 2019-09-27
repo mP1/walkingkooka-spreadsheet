@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.security;
 
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 /**
  * The primary key for a {@link User}.
@@ -42,15 +42,15 @@ public final class UserId extends IdentityId
 
     // JsonNodeContext..................................................................................................
 
-    static UserId fromJsonNode(final JsonNode node,
-                               final FromJsonNodeContext context) {
-        return with(context.fromJsonNode(node, Long.class));
+    static UserId unmarshall(final JsonNode node,
+                             final JsonNodeUnmarshallContext context) {
+        return with(context.unmarshall(node, Long.class));
     }
 
     static {
         JsonNodeContext.register("user-id",
-                UserId::fromJsonNode,
-                UserId::toJsonNode,
+                UserId::unmarshall,
+                UserId::marshall,
                 UserId.class);
     }
 

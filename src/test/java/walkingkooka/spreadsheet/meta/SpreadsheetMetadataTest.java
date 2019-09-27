@@ -24,8 +24,8 @@ import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.HashCodeEqualsDefinedTesting2;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.JsonNodeMappingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.type.JavaVisibility;
 
 import java.time.LocalDateTime;
@@ -37,7 +37,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetMetadata>,
         HashCodeEqualsDefinedTesting2<SpreadsheetMetadata>,
-        JsonNodeMappingTesting<SpreadsheetMetadata>,
+        JsonNodeMarshallingTesting<SpreadsheetMetadata>,
         ToStringTesting<SpreadsheetMetadata> {
 
     @Test
@@ -106,7 +106,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     @Test
     public void testFromEmptyJsonObject() {
         assertSame(SpreadsheetMetadata.EMPTY,
-                SpreadsheetMetadata.fromJsonNode(JsonNode.object(), this.fromJsonNodeContext()));
+                SpreadsheetMetadata.unmarshall(JsonNode.object(), this.unmarshallContext()));
     }
 
     @Override
@@ -148,12 +148,12 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         return JavaVisibility.PUBLIC;
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
-    public SpreadsheetMetadata fromJsonNode(final JsonNode from,
-                                            final FromJsonNodeContext context) {
-        return SpreadsheetMetadata.fromJsonNode(from, context);
+    public SpreadsheetMetadata unmarshall(final JsonNode from,
+                                          final JsonNodeUnmarshallContext context) {
+        return SpreadsheetMetadata.unmarshall(from, context);
     }
 
     @Override

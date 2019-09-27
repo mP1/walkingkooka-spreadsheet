@@ -28,15 +28,15 @@ public final class SpreadsheetMetadataPropertyValueHandlerEmailAddressTest exten
     }
 
     @Test
-    public void testFromJsonNode() {
+    public void testJsonNodeUnmarshall() {
         final EmailAddress emailAddress = this.propertyValue();
-        this.fromJsonNodeAndCheck(this.toJsonNode(emailAddress), emailAddress);
+        this.unmarshallAndCheck(this.marshall(emailAddress), emailAddress);
     }
 
     @Test
-    public void testToJsonNode() {
+    public void testJsonNodeMarshall() {
         final EmailAddress emailAddress = this.propertyValue();
-        this.toJsonNodeAndCheck(emailAddress, this.toJsonNode(emailAddress));
+        this.marshallAndCheck(emailAddress, this.marshall(emailAddress));
     }
 
     @Override

@@ -21,9 +21,9 @@ import walkingkooka.Cast;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -91,19 +91,19 @@ public final class SpreadsheetColumn implements Comparable<SpreadsheetColumn>,
 
     // JsonNodeContext..................................................................................................
 
-    static SpreadsheetColumn fromJsonNode(final JsonNode node,
-                                          final FromJsonNodeContext context) {
-        return with(context.fromJsonNode(node, SpreadsheetColumnReference.class));
+    static SpreadsheetColumn unmarshall(final JsonNode node,
+                                        final JsonNodeUnmarshallContext context) {
+        return with(context.unmarshall(node, SpreadsheetColumnReference.class));
     }
 
-    JsonNode toJsonNode(final ToJsonNodeContext context) {
-        return context.toJsonNode(this.reference);
+    JsonNode marshall(final JsonNodeMarshallContext context) {
+        return context.marshall(this.reference);
     }
 
     static {
         JsonNodeContext.register("spreadsheet-column",
-                SpreadsheetColumn::fromJsonNode,
-                SpreadsheetColumn::toJsonNode,
+                SpreadsheetColumn::unmarshall,
+                SpreadsheetColumn::marshall,
                 SpreadsheetColumn.class);
     }
 

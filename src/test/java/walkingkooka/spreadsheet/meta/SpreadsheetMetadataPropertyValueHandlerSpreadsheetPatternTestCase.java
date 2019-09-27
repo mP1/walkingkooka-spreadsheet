@@ -28,15 +28,15 @@ public abstract class SpreadsheetMetadataPropertyValueHandlerSpreadsheetPatternT
     }
 
     @Test
-    public void testFromJsonNode() {
+    public void testJsonNodeUnmarshall() {
         final P propertyValue = this.propertyValue();
-        this.fromJsonNodeAndCheck(this.toJsonNode(propertyValue), propertyValue);
+        this.unmarshallAndCheck(this.marshall(propertyValue), propertyValue);
     }
 
     @Test
-    public void testToJsonNode() {
+    public void testJsonNodeMarshall() {
         final P propertyValue = this.propertyValue();
-        this.toJsonNodeAndCheck(propertyValue, this.toJsonNode(propertyValue));
+        this.marshallAndCheck(propertyValue, this.marshall(propertyValue));
     }
 
     @Override

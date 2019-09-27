@@ -21,14 +21,14 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ToStringTesting;
-import walkingkooka.tree.json.marshall.JsonNodeMappingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public abstract class IdentityIdTestCase<I extends IdentityId & Comparable<I>> implements ClassTesting2<I>,
         ComparableTesting2<I>,
-        JsonNodeMappingTesting<I>,
+        JsonNodeMarshallingTesting<I>,
         ToStringTesting<I> {
 
     IdentityIdTestCase() {
@@ -54,12 +54,12 @@ public abstract class IdentityIdTestCase<I extends IdentityId & Comparable<I>> i
 
     @Test
     public final void testToJson() {
-        this.toJsonNodeAndCheck(this.createId(123L), this.toJsonNodeContext().toJsonNode(123L));
+        this.marshallAndCheck(this.createId(123L), this.marshallContext().marshall(123L));
     }
 
     @Test
     public final void testToJsonRoundtrip() {
-        this.toJsonNodeRoundTripTwiceAndCheck(this.createId(123L));
+        this.marshallRoundTripTwiceAndCheck(this.createId(123L));
     }
 
     @Override

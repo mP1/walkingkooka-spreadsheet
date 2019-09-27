@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.security;
 
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 /**
  * The primary key for a {@link Group}.
@@ -42,15 +42,15 @@ public final class GroupId extends IdentityId
 
     // JsonNodeContext..................................................................................................
 
-    static GroupId fromJsonNode(final JsonNode node,
-                                final FromJsonNodeContext context) {
-        return with(context.fromJsonNode(node, Long.class));
+    static GroupId unmarshall(final JsonNode node,
+                              final JsonNodeUnmarshallContext context) {
+        return with(context.unmarshall(node, Long.class));
     }
 
     static {
         JsonNodeContext.register("group-id",
-                GroupId::fromJsonNode,
-                GroupId::toJsonNode,
+                GroupId::unmarshall,
+                GroupId::marshall,
                 GroupId.class);
     }
 

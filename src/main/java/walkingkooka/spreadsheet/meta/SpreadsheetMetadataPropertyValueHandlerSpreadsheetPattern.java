@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 /**
  * A base {@link SpreadsheetMetadataPropertyValueHandler} for all sub classes of {@link SpreadsheetParsePatterns patterns}.
@@ -51,16 +51,16 @@ abstract class SpreadsheetMetadataPropertyValueHandlerSpreadsheetPattern<P exten
     // JsonNodeContext..................................................................................................
 
     @Override
-    final P fromJsonNode(final JsonNode node,
-                         final SpreadsheetMetadataPropertyName<?> name,
-                         final FromJsonNodeContext context) {
-        return context.fromJsonNode(node, this.valueType());
+    final P unmarshall(final JsonNode node,
+                       final SpreadsheetMetadataPropertyName<?> name,
+                       final JsonNodeUnmarshallContext context) {
+        return context.unmarshall(node, this.valueType());
     }
 
     @Override
-    final JsonNode toJsonNode(final P value,
-                              final ToJsonNodeContext context) {
-        return context.toJsonNode(value);
+    final JsonNode marshall(final P value,
+                            final JsonNodeMarshallContext context) {
+        return context.marshall(value);
     }
 
     abstract Class<P> valueType();

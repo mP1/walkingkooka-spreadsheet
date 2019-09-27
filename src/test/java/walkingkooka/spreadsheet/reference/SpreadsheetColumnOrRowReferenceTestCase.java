@@ -23,7 +23,7 @@ import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.JsonNodeMappingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends SpreadsheetColumnOrRowReference<R>> implements ClassTesting2<R>,
         ComparableTesting2<R>,
-        JsonNodeMappingTesting<R>,
+        JsonNodeMarshallingTesting<R>,
         ParseStringTesting<R>,
         ToStringTesting<R> {
 
@@ -197,12 +197,12 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         this.checkType(different);
     }
 
-    // JsonNodeMappingTesting.......................................................................................
+    // JsonNodeMarshallingTesting.......................................................................................
 
     @Test
-    public final void testToJsonNode() {
+    public final void testJsonNodeMarshall() {
         final R reference = this.createReference();
-        this.toJsonNodeAndCheck(reference, JsonNode.string(reference.toString()));
+        this.marshallAndCheck(reference, JsonNode.string(reference.toString()));
     }
 
     // equalsIgnoreReferenceKind........................................................................................
@@ -334,7 +334,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
         return false;
     }
 
-    // JsonNodeMappingTesting...........................................................................................
+    // JsonNodeMarshallingTesting...........................................................................................
 
     @Override
     public final R createJsonNodeMappingValue() {

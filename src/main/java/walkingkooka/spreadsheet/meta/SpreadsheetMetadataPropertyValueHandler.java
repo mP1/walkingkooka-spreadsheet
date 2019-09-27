@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.Cast;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.function.IntPredicate;
 import java.util.function.LongPredicate;
@@ -220,20 +220,20 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
 
     private final static String PACKAGE = "walkingkooka.spreadsheet.meta";
 
-    // fromJsonNode ....................................................................................................
+    // unmarshall ....................................................................................................
 
     /**
      * Transforms a {@link JsonNode} into a value.
      */
-    abstract T fromJsonNode(final JsonNode node,
-                            final SpreadsheetMetadataPropertyName<?> name,
-                            final FromJsonNodeContext context);
+    abstract T unmarshall(final JsonNode node,
+                          final SpreadsheetMetadataPropertyName<?> name,
+                          final JsonNodeUnmarshallContext context);
 
     /**
-     * Transforms a value into json, performing the inverse of {@link #fromJsonNode(JsonNode, SpreadsheetMetadataPropertyName, FromJsonNodeContext)}
+     * Transforms a value into json, performing the inverse of {@link #unmarshall(JsonNode, SpreadsheetMetadataPropertyName, JsonNodeUnmarshallContext)}
      */
-    abstract JsonNode toJsonNode(final T value,
-                                 final ToJsonNodeContext context);
+    abstract JsonNode marshall(final T value,
+                               final JsonNodeMarshallContext context);
 
     // Object .........................................................................................................
 

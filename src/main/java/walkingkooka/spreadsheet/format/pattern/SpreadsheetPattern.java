@@ -38,9 +38,9 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.marshall.FromJsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
-import walkingkooka.tree.json.marshall.ToJsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 import java.util.Objects;
@@ -379,8 +379,8 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
     /**
      * Factory that creates a {@link SpreadsheetDateFormatPattern} from a {@link JsonNode}.
      */
-    static SpreadsheetDateFormatPattern fromJsonNodeDateFormatPattern(final JsonNode node,
-                                                                      final FromJsonNodeContext context) {
+    static SpreadsheetDateFormatPattern unmarshallDateFormatPattern(final JsonNode node,
+                                                                      final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
         return parseDateFormatPattern(node.stringValueOrFail());
@@ -389,8 +389,8 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
     /**
      * Factory that creates a {@link SpreadsheetDateParsePatterns} from a {@link JsonNode}.
      */
-    static SpreadsheetDateParsePatterns fromJsonNodeDateParsePatterns(final JsonNode node,
-                                                                      final FromJsonNodeContext context) {
+    static SpreadsheetDateParsePatterns unmarshallDateParsePatterns(final JsonNode node,
+                                                                      final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
         return parseDateParsePatterns(node.stringValueOrFail());
@@ -399,8 +399,8 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
     /**
      * Factory that creates a {@link SpreadsheetDateTimeFormatPattern} from a {@link JsonNode}.
      */
-    static SpreadsheetDateTimeFormatPattern fromJsonNodeDateTimeFormatPattern(final JsonNode node,
-                                                                              final FromJsonNodeContext context) {
+    static SpreadsheetDateTimeFormatPattern unmarshallDateTimeFormatPattern(final JsonNode node,
+                                                                              final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
         return parseDateTimeFormatPattern(node.stringValueOrFail());
@@ -409,8 +409,8 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
     /**
      * Factory that creates a {@link SpreadsheetDateTimeParsePatterns} from a {@link JsonNode}.
      */
-    static SpreadsheetDateTimeParsePatterns fromJsonNodeDateTimeParsePatterns(final JsonNode node,
-                                                                              final FromJsonNodeContext context) {
+    static SpreadsheetDateTimeParsePatterns unmarshallDateTimeParsePatterns(final JsonNode node,
+                                                                              final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
         return parseDateTimeParsePatterns(node.stringValueOrFail());
@@ -419,8 +419,8 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
     /**
      * Factory that creates a {@link SpreadsheetNumberFormatPattern} from a {@link JsonNode}.
      */
-    static SpreadsheetNumberFormatPattern fromJsonNodeNumberFormatPattern(final JsonNode node,
-                                                                          final FromJsonNodeContext context) {
+    static SpreadsheetNumberFormatPattern unmarshallNumberFormatPattern(final JsonNode node,
+                                                                          final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
         return parseNumberFormatPattern(node.stringValueOrFail());
@@ -429,8 +429,8 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
     /**
      * Factory that creates a {@link SpreadsheetNumberParsePatterns} from a {@link JsonNode}.
      */
-    static SpreadsheetNumberParsePatterns fromJsonNodeNumberParsePatterns(final JsonNode node,
-                                                                          final FromJsonNodeContext context) {
+    static SpreadsheetNumberParsePatterns unmarshallNumberParsePatterns(final JsonNode node,
+                                                                          final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
         return parseNumberParsePatterns(node.stringValueOrFail());
@@ -439,8 +439,8 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
     /**
      * Factory that creates a {@link SpreadsheetTextFormatPattern} from a {@link JsonNode}.
      */
-    static SpreadsheetTextFormatPattern fromJsonNodeTextFormatPattern(final JsonNode node,
-                                                                      final FromJsonNodeContext context) {
+    static SpreadsheetTextFormatPattern unmarshallTextFormatPattern(final JsonNode node,
+                                                                      final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
         return parseTextFormatPattern(node.stringValueOrFail());
@@ -449,8 +449,8 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
     /**
      * Factory that creates a {@link SpreadsheetTimeFormatPattern} from a {@link JsonNode}.
      */
-    static SpreadsheetTimeFormatPattern fromJsonNodeTimeFormatPattern(final JsonNode node,
-                                                                      final FromJsonNodeContext context) {
+    static SpreadsheetTimeFormatPattern unmarshallTimeFormatPattern(final JsonNode node,
+                                                                      final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
         return parseTimeFormatPattern(node.stringValueOrFail());
@@ -459,8 +459,8 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
     /**
      * Factory that creates a {@link SpreadsheetTimeParsePatterns} from a {@link JsonNode}.
      */
-    static SpreadsheetTimeParsePatterns fromJsonNodeTimeParsePatterns(final JsonNode node,
-                                                                      final FromJsonNodeContext context) {
+    static SpreadsheetTimeParsePatterns unmarshallTimeParsePatterns(final JsonNode node,
+                                                                      final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
         return parseTimeParsePatterns(node.stringValueOrFail());
@@ -470,55 +470,55 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
         Objects.requireNonNull(node, "node");
     }
 
-    final JsonNode toJsonNode(final ToJsonNodeContext context) {
+    final JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(this.toString());
     }
 
     static {
 
         JsonNodeContext.register("spreadsheet-date-format-pattern",
-                SpreadsheetPattern::fromJsonNodeDateFormatPattern,
-                SpreadsheetPattern::toJsonNode,
+                SpreadsheetPattern::unmarshallDateFormatPattern,
+                SpreadsheetPattern::marshall,
                 SpreadsheetDateFormatPattern.class);
 
         JsonNodeContext.register("spreadsheet-date-parse-pattern",
-                SpreadsheetPattern::fromJsonNodeDateParsePatterns,
-                SpreadsheetPattern::toJsonNode,
+                SpreadsheetPattern::unmarshallDateParsePatterns,
+                SpreadsheetPattern::marshall,
                 SpreadsheetDateParsePatterns.class);
 
         JsonNodeContext.register("spreadsheet-datetime-format-pattern",
-                SpreadsheetPattern::fromJsonNodeDateTimeFormatPattern,
-                SpreadsheetPattern::toJsonNode,
+                SpreadsheetPattern::unmarshallDateTimeFormatPattern,
+                SpreadsheetPattern::marshall,
                 SpreadsheetDateTimeFormatPattern.class);
 
         JsonNodeContext.register("spreadsheet-datetime-parse-pattern",
-                SpreadsheetPattern::fromJsonNodeDateTimeParsePatterns,
-                SpreadsheetPattern::toJsonNode,
+                SpreadsheetPattern::unmarshallDateTimeParsePatterns,
+                SpreadsheetPattern::marshall,
                 SpreadsheetDateTimeParsePatterns.class);
 
         JsonNodeContext.register("spreadsheet-number-format-pattern",
-                SpreadsheetPattern::fromJsonNodeNumberFormatPattern,
-                SpreadsheetPattern::toJsonNode,
+                SpreadsheetPattern::unmarshallNumberFormatPattern,
+                SpreadsheetPattern::marshall,
                 SpreadsheetNumberFormatPattern.class);
 
         JsonNodeContext.register("spreadsheet-number-parse-pattern",
-                SpreadsheetPattern::fromJsonNodeNumberParsePatterns,
-                SpreadsheetPattern::toJsonNode,
+                SpreadsheetPattern::unmarshallNumberParsePatterns,
+                SpreadsheetPattern::marshall,
                 SpreadsheetNumberParsePatterns.class);
 
         JsonNodeContext.register("spreadsheet-text-format-pattern",
-                SpreadsheetPattern::fromJsonNodeTextFormatPattern,
-                SpreadsheetPattern::toJsonNode,
+                SpreadsheetPattern::unmarshallTextFormatPattern,
+                SpreadsheetPattern::marshall,
                 SpreadsheetTextFormatPattern.class);
 
         JsonNodeContext.register("spreadsheet-time-format-pattern",
-                SpreadsheetPattern::fromJsonNodeTimeFormatPattern,
-                SpreadsheetPattern::toJsonNode,
+                SpreadsheetPattern::unmarshallTimeFormatPattern,
+                SpreadsheetPattern::marshall,
                 SpreadsheetTimeFormatPattern.class);
 
         JsonNodeContext.register("spreadsheet-time-parse-pattern",
-                SpreadsheetPattern::fromJsonNodeTimeParsePatterns,
-                SpreadsheetPattern::toJsonNode,
+                SpreadsheetPattern::unmarshallTimeParsePatterns,
+                SpreadsheetPattern::marshall,
                 SpreadsheetTimeParsePatterns.class);
     }
 }

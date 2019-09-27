@@ -24,15 +24,15 @@ import java.util.Locale;
 public final class SpreadsheetMetadataPropertyValueHandlerLocaleTest extends SpreadsheetMetadataPropertyValueHandlerTestCase3<SpreadsheetMetadataPropertyValueHandlerLocale, Locale> {
 
     @Test
-    public void testFromJsonNode() {
+    public void testJsonNodeUnmarshall() {
         final Locale locale = this.propertyValue();
-        this.fromJsonNodeAndCheck(this.toJsonNode(locale), locale);
+        this.unmarshallAndCheck(this.marshall(locale), locale);
     }
 
     @Test
-    public void testToJsonNode() {
+    public void testJsonNodeMarshall() {
         final Locale locale = this.propertyValue();
-        this.toJsonNodeAndCheck(locale, this.toJsonNode(locale));
+        this.marshallAndCheck(locale, this.marshall(locale));
     }
 
     @Override
