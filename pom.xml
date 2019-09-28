@@ -51,6 +51,24 @@
 
     <dependency>
       <groupId>com.github.mP1</groupId>
+      <artifactId>walkingkooka</artifactId>
+      <version>master-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.mP1</groupId>
+      <artifactId>walkingkooka-color</artifactId>
+      <version>master-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.mP1</groupId>
+      <artifactId>walkingkooka-net</artifactId>
+      <version>master-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.mP1</groupId>
       <artifactId>walkingkooka-net-header-apache-tika</artifactId>
       <version>master-SNAPSHOT</version>
     </dependency>
@@ -63,7 +81,19 @@
 
     <dependency>
       <groupId>com.github.mP1</groupId>
+      <artifactId>walkingkooka-route</artifactId>
+      <version>master-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.mP1</groupId>
       <artifactId>walkingkooka-store</artifactId>
+      <version>master-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.mP1</groupId>
+      <artifactId>walkingkooka-tree-json</artifactId>
       <version>master-SNAPSHOT</version>
     </dependency>
 
