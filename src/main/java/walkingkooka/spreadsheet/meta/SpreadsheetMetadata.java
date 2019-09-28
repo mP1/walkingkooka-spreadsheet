@@ -100,7 +100,9 @@ public abstract class SpreadsheetMetadata implements HasConverter,
     /**
      * Returns true if the {@link SpreadsheetMetadata} is empty.
      */
-    public abstract boolean isEmpty();
+    public final boolean isEmpty() {
+        return this instanceof SpreadsheetMetadataEmpty;
+    }
 
     /**
      * Returns the {@link SpreadsheetId} or throws a {@link IllegalStateException} if missing.

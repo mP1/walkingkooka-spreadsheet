@@ -55,31 +55,4 @@ abstract class SpreadsheetBinaryParserToken<T extends SpreadsheetBinaryParserTok
     }
 
     final SpreadsheetParserToken right;
-
-    // isXXX............................................................................................................
-
-    @Override
-    public final boolean isCellReference() {
-        return false;
-    }
-
-    @Override
-    public final boolean isFunction() {
-        return false;
-    }
-
-    @Override
-    public final boolean isGroup() {
-        return false;
-    }
-
-    @Override
-    public final boolean isNegative() {
-        return false;
-    }
-
-    @Override
-    public final boolean isPercentage() {
-        return false;
-    }
 }

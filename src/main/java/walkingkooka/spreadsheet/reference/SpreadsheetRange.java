@@ -263,23 +263,6 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference imple
                 .forEach(SpreadsheetRangeCellsConsumer.with(cells, present, absent));
     }
 
-    // is...............................................................................................................
-
-    @Override
-    public boolean isCellReference() {
-        return false;
-    }
-
-    @Override
-    public boolean isLabelName() {
-        return false;
-    }
-
-    @Override
-    public boolean isRange() {
-        return true;
-    }
-
     // SpreadsheetExpressionReferenceVisitor............................................................................
 
     @Override

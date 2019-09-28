@@ -16,10 +16,14 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.text.cursor.parser.ParserToken;
+
+import java.util.List;
+
 /**
  * Represents a plus symbol token.
  */
-public final class SpreadsheetPercentSymbolParserToken extends SpreadsheetNonBinaryOperandSymbolParserToken {
+public final class SpreadsheetPercentSymbolParserToken extends SpreadsheetSymbolParserToken {
 
     static SpreadsheetPercentSymbolParserToken with(final String value, final String text) {
         checkValueAndText(value, text);
@@ -32,30 +36,13 @@ public final class SpreadsheetPercentSymbolParserToken extends SpreadsheetNonBin
     }
 
     @Override
-    public boolean isFunctionParameterSeparatorSymbol() {
-        return false;
-    }
-
-    // isXXX............................................................................................................
-
-    @Override
-    public boolean isParenthesisCloseSymbol() {
-        return false;
+    final int operatorPriority() {
+        return IGNORED;
     }
 
     @Override
-    public boolean isParenthesisOpenSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isPercentSymbol() {
-        return true;
-    }
-
-    @Override
-    public boolean isWhitespace() {
-        return false;
+    final SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
+        throw new UnsupportedOperationException();
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

@@ -59,21 +59,6 @@ public final class SpreadsheetDateParsePatterns extends SpreadsheetParsePatterns
         super(tokens);
     }
 
-    @Override
-    public boolean isDate() {
-        return true;
-    }
-
-    @Override
-    public boolean isDateTime() {
-        return false;
-    }
-
-    @Override
-    public boolean isTime() {
-        return false;
-    }
-
     // HashCodeEqualsDefined............................................................................................
 
     @Override

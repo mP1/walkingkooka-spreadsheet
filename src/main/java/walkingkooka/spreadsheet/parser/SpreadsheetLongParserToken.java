@@ -21,7 +21,7 @@ import walkingkooka.tree.search.SearchNode;
 /**
  * Holds a single long number.
  */
-public final class SpreadsheetLongParserToken extends SpreadsheetNumericParserToken<Long> {
+public final class SpreadsheetLongParserToken extends SpreadsheetNonSymbolParserToken<Long> {
 
     static SpreadsheetLongParserToken with(final long value, final String text) {
         checkText(text);
@@ -31,36 +31,6 @@ public final class SpreadsheetLongParserToken extends SpreadsheetNumericParserTo
 
     private SpreadsheetLongParserToken(final Long value, final String text) {
         super(value, text);
-    }
-
-    @Override
-    public boolean isBigDecimal() {
-        return false;
-    }
-
-    @Override
-    public boolean isBigInteger() {
-        return false;
-    }
-
-    @Override
-    public boolean isDouble() {
-        return false;
-    }
-
-    @Override
-    public boolean isLong() {
-        return true;
-    }
-
-    @Override
-    public boolean isSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isText() {
-        return false;
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

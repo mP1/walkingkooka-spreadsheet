@@ -61,21 +61,6 @@ public final class SpreadsheetTimeParsePatterns extends SpreadsheetParsePatterns
         this.ampms = ampms;
     }
 
-    @Override
-    public boolean isDate() {
-        return false;
-    }
-
-    @Override
-    public boolean isDateTime() {
-        return false;
-    }
-
-    @Override
-    public boolean isTime() {
-        return true;
-    }
-
     // HashCodeEqualsDefined............................................................................................
 
     @Override
