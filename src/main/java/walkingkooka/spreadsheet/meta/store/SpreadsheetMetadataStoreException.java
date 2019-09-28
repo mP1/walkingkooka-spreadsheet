@@ -24,8 +24,6 @@ import walkingkooka.spreadsheet.SpreadsheetException;
  */
 public class SpreadsheetMetadataStoreException extends SpreadsheetException {
 
-    private static final long serialVersionUID = 1L;
-
     protected SpreadsheetMetadataStoreException() {
         super();
     }

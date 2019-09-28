@@ -24,8 +24,6 @@ import walkingkooka.spreadsheet.SpreadsheetException;
  */
 public class SpreadsheetConditionalFormattingException extends SpreadsheetException {
 
-    private static final long serialVersionUID = 1L;
-
     protected SpreadsheetConditionalFormattingException() {
         super();
     }

@@ -23,8 +23,6 @@ import java.util.Objects;
 
 public class SpreadsheetMetadataPropertyValueException extends SpreadsheetException {
 
-    private static final long serialVersionUID = 1L;
-
     public SpreadsheetMetadataPropertyValueException(final String message,
                                                      final SpreadsheetMetadataPropertyName<?> name,
                                                      final Object value) {
