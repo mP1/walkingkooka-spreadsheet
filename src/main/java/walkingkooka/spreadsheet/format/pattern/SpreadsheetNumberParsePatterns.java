@@ -56,26 +56,6 @@ public final class SpreadsheetNumberParsePatterns extends SpreadsheetParsePatter
         this.patterns = patterns;
     }
 
-    @Override
-    public boolean isDate() {
-        return false;
-    }
-
-    @Override
-    public boolean isDateTime() {
-        return false;
-    }
-
-    @Override
-    public boolean isNumber() {
-        return true;
-    }
-
-    @Override
-    public boolean isTime() {
-        return false;
-    }
-
     // HashCodeEqualsDefined............................................................................................
 
     @Override

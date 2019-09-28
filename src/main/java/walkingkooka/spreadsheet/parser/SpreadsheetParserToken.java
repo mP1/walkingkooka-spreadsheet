@@ -405,232 +405,338 @@ public abstract class SpreadsheetParserToken implements ParserToken, HasExpressi
     /**
      * Only {@link SpreadsheetAdditionParserToken} return true
      */
-    public abstract boolean isAddition();
+    public final boolean isAddition() {
+        return this instanceof SpreadsheetAdditionParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetBetweenSymbolParserToken} returns true
      */
-    public abstract boolean isBetweenSymbol();
+    public final boolean isBetweenSymbol(){
+        return this instanceof SpreadsheetBetweenSymbolParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetBigDecimalParserToken} return true
      */
-    public abstract boolean isBigDecimal();
+    public final boolean isBigDecimal(){
+        return this instanceof SpreadsheetBigDecimalParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetBigIntegerParserToken} return true
      */
-    public abstract boolean isBigInteger();
+    public final boolean isBigInteger(){
+        return this instanceof SpreadsheetBigIntegerParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetCellReferenceParserToken} return true
      */
-    public abstract boolean isCellReference();
+    public final boolean isCellReference(){
+        return this instanceof SpreadsheetCellReferenceParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetColumnReferenceParserToken} return true
      */
-    public abstract boolean isColumnReference();
+    public final boolean isColumnReference(){
+        return this instanceof SpreadsheetColumnReferenceParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetDivideSymbolParserToken} returns true
      */
-    public abstract boolean isDivideSymbol();
+    public final boolean isDivideSymbol(){
+        return this instanceof SpreadsheetDivideSymbolParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetDoubleParserToken} return true
      */
-    public abstract boolean isDouble();
+    public final boolean isDouble(){
+        return this instanceof SpreadsheetDoubleParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetDivisionParserToken} return true
      */
-    public abstract boolean isDivision();
+    public final boolean isDivision(){
+        return this instanceof SpreadsheetDivisionParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetEqualsParserToken} returns true
      */
-    public abstract boolean isEquals();
+    public final boolean isEquals(){
+        return this instanceof SpreadsheetEqualsParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetEqualsSymbolParserToken} returns true
      */
-    public abstract boolean isEqualsSymbol();
+    public final boolean isEqualsSymbol(){
+        return this instanceof SpreadsheetEqualsSymbolParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetFunctionParserToken} return true
      */
-    public abstract boolean isFunction();
+    public final boolean isFunction(){
+        return this instanceof SpreadsheetFunctionParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetFunctionNameParserToken} return true
      */
-    public abstract boolean isFunctionName();
+    public final boolean isFunctionName(){
+        return this instanceof SpreadsheetFunctionNameParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetFunctionParameterSeparatorSymbolParserToken} returns true
      */
-    public abstract boolean isFunctionParameterSeparatorSymbol();
+    public final boolean isFunctionParameterSeparatorSymbol(){
+        return this instanceof SpreadsheetFunctionParameterSeparatorSymbolParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetGreaterThanParserToken} returns true
      */
-    public abstract boolean isGreaterThan();
+    public final boolean isGreaterThan(){
+        return this instanceof SpreadsheetGreaterThanParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetGreaterThanSymbolParserToken} returns true
      */
-    public abstract boolean isGreaterThanSymbol();
+    public final boolean isGreaterThanSymbol(){
+        return this instanceof SpreadsheetGreaterThanSymbolParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetGreaterThanEqualsParserToken} returns true
      */
-    public abstract boolean isGreaterThanEquals();
+    public final boolean isGreaterThanEquals(){
+        return this instanceof SpreadsheetGreaterThanEqualsParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetGreaterThanEqualsSymbolParserToken} returns true
      */
-    public abstract boolean isGreaterThanEqualsSymbol();
+    public final boolean isGreaterThanEqualsSymbol(){
+        return this instanceof SpreadsheetGreaterThanEqualsSymbolParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetGroupParserToken} return true
      */
-    public abstract boolean isGroup();
+    public final boolean isGroup(){
+        return this instanceof SpreadsheetGroupParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetLabelNameParserToken} return true
      */
-    public abstract boolean isLabelName();
+    public final boolean isLabelName(){
+        return this instanceof SpreadsheetLabelNameParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetLessThanParserToken} returns true
      */
-    public abstract boolean isLessThan();
+    public final boolean isLessThan(){
+        return this instanceof SpreadsheetLessThanParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetLessThanSymbolParserToken} returns true
      */
-    public abstract boolean isLessThanSymbol();
+    public final boolean isLessThanSymbol(){
+        return this instanceof SpreadsheetLessThanSymbolParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetLessThanEqualsParserToken} returns true
      */
-    public abstract boolean isLessThanEquals();
+    public final boolean isLessThanEquals(){
+        return this instanceof SpreadsheetLessThanEqualsParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetLessThanEqualsSymbolParserToken} returns true
      */
-    public abstract boolean isLessThanEqualsSymbol();
+    public final boolean isLessThanEqualsSymbol(){
+        return this instanceof SpreadsheetLessThanEqualsSymbolParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetLocalDateParserToken} return true
      */
-    public abstract boolean isLocalDate();
+    public final boolean isLocalDate(){
+        return this instanceof SpreadsheetLocalDateParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetLocalDateTimeParserToken} return true
      */
-    public abstract boolean isLocalDateTime();
+    public final boolean isLocalDateTime(){
+        return this instanceof SpreadsheetLocalDateTimeParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetLocalTimeParserToken} return true
      */
-    public abstract boolean isLocalTime();
+    public final boolean isLocalTime(){
+        return this instanceof SpreadsheetLocalTimeParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetLongParserToken} return true
      */
-    public abstract boolean isLong();
+    public final boolean isLong(){
+        return this instanceof SpreadsheetLongParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetMinusSymbolParserToken} returns true
      */
-    public abstract boolean isMinusSymbol();
+    public final boolean isMinusSymbol(){
+        return this instanceof SpreadsheetMinusSymbolParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetMultiplicationParserToken} return true
      */
-    public abstract boolean isMultiplication();
+    public final boolean isMultiplication(){
+        return this instanceof SpreadsheetMultiplicationParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetMultiplySymbolParserToken} returns true
      */
-    public abstract boolean isMultiplySymbol();
+    public final boolean isMultiplySymbol(){
+        return this instanceof SpreadsheetMultiplySymbolParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetNegativeParserToken} return true
      */
-    public abstract boolean isNegative();
-
-    /**
-     * Only {@link SpreadsheetNotEqualsParserToken} returns true
-     */
-    public abstract boolean isNotEquals();
-
-    /**
-     * Only {@link SpreadsheetNotEqualsSymbolParserToken} returns true
-     */
-    public abstract boolean isNotEqualsSymbol();
-
-    /**
-     * Only {@link SpreadsheetParenthesisCloseSymbolParserToken} return true
-     */
-    public abstract boolean isParenthesisCloseSymbol();
-
-    /**
-     * Only {@link SpreadsheetParenthesisOpenSymbolParserToken} return true
-     */
-    public abstract boolean isParenthesisOpenSymbol();
-
-    /**
-     * Only {@link SpreadsheetPercentageParserToken} return true
-     */
-    public abstract boolean isPercentage();
-
-    /**
-     * Only {@link SpreadsheetPercentSymbolParserToken} return true
-     */
-    public abstract boolean isPercentSymbol();
-
-    /**
-     * Only {@link SpreadsheetPlusSymbolParserToken} returns true
-     */
-    public abstract boolean isPlusSymbol();
-
-    /**
-     * Only {@link SpreadsheetPowerParserToken} return true
-     */
-    public abstract boolean isPower();
-
-    /**
-     * Only {@link SpreadsheetPowerSymbolParserToken} return true
-     */
-    public abstract boolean isPowerSymbol();
-
-    /**
-     * Only {@link SpreadsheetRangeParserToken} return true
-     */
-    public abstract boolean isRange();
-
-    /**
-     * Only {@link SpreadsheetRowReferenceParserToken} return true
-     */
-    public abstract boolean isRowReference();
-
-    /**
-     * Only {@link SpreadsheetSubtractionParserToken} return true
-     */
-    public abstract boolean isSubtraction();
+    public final boolean isNegative(){
+        return this instanceof SpreadsheetNegativeParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetSymbolParserToken} return true
      */
-    public abstract boolean isSymbol();
+    public final boolean isNoise(){
+        return this instanceof SpreadsheetSymbolParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetNotEqualsParserToken} returns true
+     */
+    public final boolean isNotEquals(){
+        return this instanceof SpreadsheetNotEqualsParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetNotEqualsSymbolParserToken} returns true
+     */
+    public final boolean isNotEqualsSymbol(){
+        return this instanceof SpreadsheetNotEqualsSymbolParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetParenthesisCloseSymbolParserToken} return true
+     */
+    public final boolean isParenthesisCloseSymbol(){
+        return this instanceof SpreadsheetParenthesisCloseSymbolParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetParenthesisOpenSymbolParserToken} return true
+     */
+    public final boolean isParenthesisOpenSymbol(){
+        return this instanceof SpreadsheetParenthesisOpenSymbolParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetPercentageParserToken} return true
+     */
+    public final boolean isPercentage(){
+        return this instanceof SpreadsheetPercentageParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetPercentSymbolParserToken} return true
+     */
+    public final boolean isPercentSymbol(){
+        return this instanceof SpreadsheetPercentSymbolParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetPlusSymbolParserToken} returns true
+     */
+    public final boolean isPlusSymbol(){
+        return this instanceof SpreadsheetPlusSymbolParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetPowerParserToken} return true
+     */
+    public final boolean isPower(){
+        return this instanceof SpreadsheetPowerParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetPowerSymbolParserToken} return true
+     */
+    public final boolean isPowerSymbol(){
+        return this instanceof SpreadsheetPowerSymbolParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetRangeParserToken} return true
+     */
+    public final boolean isRange(){
+        return this instanceof SpreadsheetRangeParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetRowReferenceParserToken} return true
+     */
+    public final boolean isRowReference(){
+        return this instanceof SpreadsheetRowReferenceParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetSubtractionParserToken} return true
+     */
+    public final boolean isSubtraction(){
+        return this instanceof SpreadsheetSubtractionParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetSymbolParserToken} return true
+     */
+    public final boolean isSymbol(){
+        return this instanceof SpreadsheetSymbolParserToken;
+    }
 
     /**
      * Only {@link SpreadsheetTextParserToken} return true
      */
-    public abstract boolean isText();
+    public final boolean isText(){
+        return this instanceof SpreadsheetTextParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetWhitespaceParserToken} return true
+     */
+    public final boolean isWhitespace(){
+        return this instanceof SpreadsheetWhitespaceParserToken;
+    }
 
     /**
      * The priority of this token, tokens with a value of zero are left in their original position.

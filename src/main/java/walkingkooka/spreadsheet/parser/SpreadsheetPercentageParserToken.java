@@ -36,18 +36,6 @@ public final class SpreadsheetPercentageParserToken extends SpreadsheetUnaryPars
         super(value, text);
     }
 
-    // isXXX............................................................................................................
-
-    @Override
-    public boolean isNegative() {
-        return false;
-    }
-
-    @Override
-    public boolean isPercentage() {
-        return true;
-    }
-
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override

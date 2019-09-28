@@ -26,7 +26,7 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetBigDecimalParserTokenTest extends SpreadsheetNumericParserTokenTestCase<SpreadsheetBigDecimalParserToken, BigDecimal> {
+public final class SpreadsheetBigDecimalParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetBigDecimalParserToken, BigDecimal> {
 
     @Test
     public void testAccept() {

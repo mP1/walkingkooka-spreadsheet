@@ -45,14 +45,6 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
         this.value = value;
     }
 
-    /**
-     * Always returns false
-     */
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
     // Value..........................................................................................................
 
     @Override

@@ -17,11 +17,14 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.cursor.parser.ParserToken;
+
+import java.util.List;
 
 /**
  * Holds the combination of whitespace or comments.
  */
-public final class SpreadsheetWhitespaceParserToken extends SpreadsheetNonBinaryOperandSymbolParserToken {
+public final class SpreadsheetWhitespaceParserToken extends SpreadsheetSymbolParserToken {
 
     static SpreadsheetWhitespaceParserToken with(final String value, final String text) {
         checkValue(value);
@@ -34,31 +37,14 @@ public final class SpreadsheetWhitespaceParserToken extends SpreadsheetNonBinary
         super(value, text);
     }
 
-    // isXXX............................................................................................................
-
     @Override
-    public boolean isFunctionParameterSeparatorSymbol() {
-        return false;
+    final int operatorPriority() {
+        return IGNORED;
     }
 
     @Override
-    public boolean isParenthesisCloseSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isParenthesisOpenSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isPercentSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isWhitespace() {
-        return true;
+    final SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
+        throw new UnsupportedOperationException();
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

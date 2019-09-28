@@ -332,27 +332,37 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
     /**
      * Returns true if holding date pattern(s)
      */
-    public abstract boolean isDate();
+    public final boolean isDate() {
+        return this instanceof SpreadsheetDateFormatPattern || this instanceof SpreadsheetDateParsePatterns;
+    }
 
     /**
      * Returns true if holding date/time pattern(s)
      */
-    public abstract boolean isDateTime();
+    public final boolean isDateTime() {
+        return this instanceof SpreadsheetDateTimeFormatPattern || this instanceof SpreadsheetDateTimeParsePatterns;
+    }
 
     /**
      * Returns true if holding number pattern(s)
      */
-    public abstract boolean isNumber();
+    public final boolean isNumber() {
+        return this instanceof SpreadsheetNumberFormatPattern || this instanceof SpreadsheetNumberParsePatterns;
+    }
 
     /**
      * Returns true if holding text pattern(s)
      */
-    public abstract boolean isText();
+    public final boolean isText() {
+        return this instanceof SpreadsheetTextFormatPattern;
+    }
 
     /**
      * Returns true if holding time pattern(s)
      */
-    public abstract boolean isTime();
+    public final boolean isTime() {
+        return this instanceof SpreadsheetTimeFormatPattern || this instanceof SpreadsheetTimeParsePatterns;
+    }
 
     // HashCodeEqualsDefined............................................................................................
 
