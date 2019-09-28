@@ -159,17 +159,23 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     /**
      * Only {@link SpreadsheetCellReference} returns true.
      */
-    public abstract boolean isCellReference();
+    public final boolean isCellReference() {
+        return this instanceof SpreadsheetCellReference;
+    }
 
     /**
      * Only {@link SpreadsheetLabelName} returns true.
      */
-    public abstract boolean isLabelName();
+    public final boolean isLabelName() {
+        return this instanceof SpreadsheetLabelName;
+    }
 
     /**
      * Only {@link SpreadsheetRange} returns true.
      */
-    public abstract boolean isRange();
+    public final boolean isRange() {
+        return this instanceof SpreadsheetRange;
+    }
 
     // SpreadsheetExpressionReferenceVisitor............................................................................
 

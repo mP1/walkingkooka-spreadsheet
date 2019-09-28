@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * Represents a greater than symbol token.
  */
-public final class SpreadsheetGreaterThanSymbolParserToken extends SpreadsheetComparisonSymbolParserToken {
+public final class SpreadsheetGreaterThanSymbolParserToken extends SpreadsheetSymbolParserToken {
 
     static SpreadsheetGreaterThanSymbolParserToken with(final String value, final String text) {
         checkValueAndText(value, text);
@@ -36,33 +36,8 @@ public final class SpreadsheetGreaterThanSymbolParserToken extends SpreadsheetCo
     }
 
     @Override
-    public boolean isEqualsSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isGreaterThanSymbol() {
-        return true;
-    }
-
-    @Override
-    public boolean isGreaterThanEqualsSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isLessThanSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isLessThanEqualsSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isNotEqualsSymbol() {
-        return false;
+    final int operatorPriority() {
+        return GREATER_THAN_LESS_THAN_PRIORITY;
     }
 
     @Override

@@ -41,38 +41,6 @@ public final class SpreadsheetFormatGreaterThanParserToken extends SpreadsheetFo
         return ComparisonRelation.GT;
     }
 
-    // isXXX..............................................................................................................
-
-    @Override
-    public boolean isEquals() {
-        return false;
-    }
-
-    @Override
-    public boolean isGreaterThan() {
-        return true;
-    }
-
-    @Override
-    public boolean isGreaterThanEquals() {
-        return false;
-    }
-
-    @Override
-    public boolean isLessThan() {
-        return false;
-    }
-
-    @Override
-    public boolean isLessThanEquals() {
-        return false;
-    }
-
-    @Override
-    public boolean isNotEquals() {
-        return false;
-    }
-
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

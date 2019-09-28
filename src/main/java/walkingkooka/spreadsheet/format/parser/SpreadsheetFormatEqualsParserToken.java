@@ -41,38 +41,6 @@ public final class SpreadsheetFormatEqualsParserToken extends SpreadsheetFormatC
         return ComparisonRelation.EQ;
     }
 
-    // isXXX..............................................................................................................
-
-    @Override
-    public boolean isEquals() {
-        return true;
-    }
-
-    @Override
-    public boolean isGreaterThan() {
-        return false;
-    }
-
-    @Override
-    public boolean isGreaterThanEquals() {
-        return false;
-    }
-
-    @Override
-    public boolean isLessThan() {
-        return false;
-    }
-
-    @Override
-    public boolean isLessThanEquals() {
-        return false;
-    }
-
-    @Override
-    public boolean isNotEquals() {
-        return false;
-    }
-
     // SpreadsheetFormatParserTokenVisitor..............................................................................
 
     @Override

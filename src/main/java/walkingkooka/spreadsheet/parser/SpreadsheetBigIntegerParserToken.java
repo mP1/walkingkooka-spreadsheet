@@ -23,7 +23,7 @@ import java.math.BigInteger;
 /**
  * Holds a single {@link BigInteger} number.
  */
-public final class SpreadsheetBigIntegerParserToken extends SpreadsheetNumericParserToken<BigInteger> {
+public final class SpreadsheetBigIntegerParserToken extends SpreadsheetNonSymbolParserToken<BigInteger> {
 
     static SpreadsheetBigIntegerParserToken with(final BigInteger value, final String text) {
         checkValueAndText(value, text);
@@ -33,36 +33,6 @@ public final class SpreadsheetBigIntegerParserToken extends SpreadsheetNumericPa
 
     private SpreadsheetBigIntegerParserToken(final BigInteger value, final String text) {
         super(value, text);
-    }
-
-    @Override
-    public boolean isBigDecimal() {
-        return false;
-    }
-
-    @Override
-    public boolean isBigInteger() {
-        return true;
-    }
-
-    @Override
-    public boolean isDouble() {
-        return false;
-    }
-
-    @Override
-    public boolean isLong() {
-        return false;
-    }
-
-    @Override
-    public boolean isSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isText() {
-        return false;
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

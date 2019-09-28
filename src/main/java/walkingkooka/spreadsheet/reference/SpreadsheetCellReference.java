@@ -200,23 +200,6 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
         return SpreadsheetRange.with(this.range(other));
     }
 
-    // is...............................................................................................................
-
-    @Override
-    public boolean isCellReference() {
-        return true;
-    }
-
-    @Override
-    public boolean isLabelName() {
-        return false;
-    }
-
-    @Override
-    public boolean isRange() {
-        return false;
-    }
-
     public String hateosLinkId() {
         return this.column.hateosLinkId() + this.row.hateosLinkId();
     }

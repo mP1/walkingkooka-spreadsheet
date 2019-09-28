@@ -49,14 +49,6 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
         super();
     }
 
-    /**
-     * Always returns true
-     */
-    @Override
-    public boolean isEmpty() {
-        return true;
-    }
-
     // Value............................................................................................................
 
     @Override

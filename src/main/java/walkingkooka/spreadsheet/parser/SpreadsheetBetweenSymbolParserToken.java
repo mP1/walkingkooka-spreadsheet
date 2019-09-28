@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * Represents a between symbol token.
  */
-public final class SpreadsheetBetweenSymbolParserToken extends SpreadsheetBinaryOperandSymbolParserToken {
+public final class SpreadsheetBetweenSymbolParserToken extends SpreadsheetSymbolParserToken {
 
     static SpreadsheetBetweenSymbolParserToken with(final String value, final String text) {
         checkValueAndText(value, text);
@@ -33,66 +33,6 @@ public final class SpreadsheetBetweenSymbolParserToken extends SpreadsheetBinary
 
     private SpreadsheetBetweenSymbolParserToken(final String value, final String text) {
         super(value, text);
-    }
-
-    @Override
-    public boolean isBetweenSymbol() {
-        return true;
-    }
-
-    @Override
-    public boolean isDivideSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isEqualsSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isGreaterThanSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isGreaterThanEqualsSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isLessThanSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isLessThanEqualsSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isMinusSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isMultiplySymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isNotEqualsSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isPowerSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isPlusSymbol() {
-        return false;
     }
 
     @Override
