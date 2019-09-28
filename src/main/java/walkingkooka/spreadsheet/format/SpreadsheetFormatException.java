@@ -17,9 +17,9 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.SystemException;
+import walkingkooka.spreadsheet.SpreadsheetException;
 
-public class SpreadsheetFormatException extends SystemException {
+public class SpreadsheetFormatException extends SpreadsheetException {
 
     protected SpreadsheetFormatException() {
         super();
