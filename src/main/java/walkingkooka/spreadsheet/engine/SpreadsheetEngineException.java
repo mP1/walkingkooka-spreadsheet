@@ -17,9 +17,9 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.SystemException;
+import walkingkooka.spreadsheet.SpreadsheetException;
 
-public class SpreadsheetEngineException extends SystemException {
+public class SpreadsheetEngineException extends SpreadsheetException {
 
     protected SpreadsheetEngineException() {
         super();
