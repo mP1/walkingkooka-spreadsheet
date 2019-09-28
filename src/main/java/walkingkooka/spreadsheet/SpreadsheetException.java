@@ -24,8 +24,6 @@ import walkingkooka.SystemException;
  */
 public class SpreadsheetException extends SystemException {
 
-    private static final long serialVersionUID = 1L;
-
     protected SpreadsheetException() {
         super();
     }

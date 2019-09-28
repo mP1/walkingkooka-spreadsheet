@@ -32,6 +32,4 @@ public class SpreadsheetParserException extends ParserException {
     public SpreadsheetParserException(final String message, final Throwable cause) {
         super(message, cause);
     }
-
-    private final static long serialVersionUID = 1L;
 }
