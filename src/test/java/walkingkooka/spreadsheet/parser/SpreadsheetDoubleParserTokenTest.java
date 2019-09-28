@@ -24,7 +24,7 @@ import walkingkooka.visit.Visiting;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetDoubleParserTokenTest extends SpreadsheetNumericParserTokenTestCase<SpreadsheetDoubleParserToken, Double> {
+public final class SpreadsheetDoubleParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetDoubleParserToken, Double> {
 
     @Test
     public void testAccept() {

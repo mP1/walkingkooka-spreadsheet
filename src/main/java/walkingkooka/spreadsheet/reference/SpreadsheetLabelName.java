@@ -88,23 +88,6 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference i
         return SpreadsheetLabelMapping.with(this, reference);
     }
 
-    // is...............................................................................................................
-
-    @Override
-    public boolean isCellReference() {
-        return false;
-    }
-
-    @Override
-    public boolean isLabelName() {
-        return true;
-    }
-
-    @Override
-    public boolean isRange() {
-        return false;
-    }
-
     public String hateosLinkId() {
         return this.name;
     }

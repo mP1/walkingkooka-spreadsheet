@@ -16,10 +16,14 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.text.cursor.parser.ParserToken;
+
+import java.util.List;
+
 /**
  * Represents a close / right parens symbol token.
  */
-public final class SpreadsheetParenthesisCloseSymbolParserToken extends SpreadsheetNonBinaryOperandSymbolParserToken {
+public final class SpreadsheetParenthesisCloseSymbolParserToken extends SpreadsheetSymbolParserToken {
 
     static SpreadsheetParenthesisCloseSymbolParserToken with(final String value, final String text) {
         checkValueAndText(value, text);
@@ -31,31 +35,14 @@ public final class SpreadsheetParenthesisCloseSymbolParserToken extends Spreadsh
         super(value, text);
     }
 
-    // isXXX............................................................................................................
-
     @Override
-    public boolean isFunctionParameterSeparatorSymbol() {
-        return false;
+    final int operatorPriority() {
+        return IGNORED;
     }
 
     @Override
-    public boolean isParenthesisCloseSymbol() {
-        return true;
-    }
-
-    @Override
-    public boolean isParenthesisOpenSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isPercentSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isWhitespace() {
-        return false;
+    final SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
+        throw new UnsupportedOperationException();
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

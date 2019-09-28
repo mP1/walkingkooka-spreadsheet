@@ -43,11 +43,6 @@ abstract class SpreadsheetParsePatterns2<T extends SpreadsheetFormatParserToken>
         super(tokens);
     }
 
-    @Override
-    public final boolean isNumber() {
-        return false;
-    }
-
     // HasConverter.....................................................................................................
 
     @Override

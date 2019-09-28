@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * Represents a power symbol token.
  */
-public final class SpreadsheetPowerSymbolParserToken extends SpreadsheetArithmeticSymbolParserToken {
+public final class SpreadsheetPowerSymbolParserToken extends SpreadsheetSymbolParserToken {
 
     static SpreadsheetPowerSymbolParserToken with(final String value, final String text) {
         checkValueAndText(value, text);
@@ -33,31 +33,6 @@ public final class SpreadsheetPowerSymbolParserToken extends SpreadsheetArithmet
 
     private SpreadsheetPowerSymbolParserToken(final String value, final String text) {
         super(value, text);
-    }
-
-    @Override
-    public boolean isDivideSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isMinusSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isMultiplySymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isPlusSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isPowerSymbol() {
-        return true;
     }
 
     @Override

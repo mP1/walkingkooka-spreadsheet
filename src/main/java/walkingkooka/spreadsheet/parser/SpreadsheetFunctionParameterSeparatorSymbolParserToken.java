@@ -16,10 +16,14 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.text.cursor.parser.ParserToken;
+
+import java.util.List;
+
 /**
  * Represents a comma symbol token which is used to separate parameters to a function.
  */
-public final class SpreadsheetFunctionParameterSeparatorSymbolParserToken extends SpreadsheetNonBinaryOperandSymbolParserToken {
+public final class SpreadsheetFunctionParameterSeparatorSymbolParserToken extends SpreadsheetSymbolParserToken {
 
     static SpreadsheetFunctionParameterSeparatorSymbolParserToken with(final String value, final String text) {
         checkValueAndText(value, text);
@@ -31,31 +35,14 @@ public final class SpreadsheetFunctionParameterSeparatorSymbolParserToken extend
         super(value, text);
     }
 
-    // isXXX............................................................................................................
-
     @Override
-    public boolean isFunctionParameterSeparatorSymbol() {
-        return true;
+    final int operatorPriority() {
+        return IGNORED;
     }
 
     @Override
-    public boolean isParenthesisCloseSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isParenthesisOpenSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isPercentSymbol() {
-        return false;
-    }
-
-    @Override
-    public boolean isWhitespace() {
-        return false;
+    final SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
+        throw new UnsupportedOperationException();
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

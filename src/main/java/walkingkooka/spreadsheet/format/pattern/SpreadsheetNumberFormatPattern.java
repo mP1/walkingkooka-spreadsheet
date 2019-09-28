@@ -43,31 +43,6 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
         super(token);
     }
 
-    @Override
-    public boolean isDate() {
-        return false;
-    }
-
-    @Override
-    public boolean isDateTime() {
-        return false;
-    }
-
-    @Override
-    public boolean isNumber() {
-        return true;
-    }
-
-    @Override
-    public boolean isText() {
-        return false;
-    }
-
-    @Override
-    public boolean isTime() {
-        return false;
-    }
-
     // HasSpreadsheetFormatter..........................................................................................
 
     /**
