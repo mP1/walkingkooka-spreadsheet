@@ -162,7 +162,7 @@ final class SpreadsheetConverter implements Converter {
     private static <T> Converter fromBoolean(final Class<T> type,
                                              final T trueValue,
                                              final T falseValue) {
-        return Converters.booleanConverter(Boolean.class,
+        return Converters.booleanTrueFalse(Boolean.class,
                 Boolean.FALSE,
                 type,
                 trueValue,
@@ -171,7 +171,7 @@ final class SpreadsheetConverter implements Converter {
 
     private static <T> Converter toBoolean(final Class<T> from,
                                            final T falseValue) {
-        return Converters.booleanConverter(from,
+        return Converters.booleanTrueFalse(from,
                 falseValue,
                 Boolean.class,
                 Boolean.TRUE,
