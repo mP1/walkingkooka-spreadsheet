@@ -1015,7 +1015,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 stringLocalTime,
                 stringLong,
                 stringNumber,
-                Converters.string()
+                Converters.objectString()
         ));
 
         return new FakeExpressionEvaluationContext() {
