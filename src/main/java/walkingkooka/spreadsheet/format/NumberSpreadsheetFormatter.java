@@ -89,7 +89,7 @@ final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsheet
     Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
         return Optional.of(SpreadsheetText.with(
                 SpreadsheetText.WITHOUT_COLOR,
-                this.format1(this.normalOrScientific.context(context.convert(value, BigDecimal.class), this, context))));
+                this.format1(this.normalOrScientific.context(context.convertOrFail(value, BigDecimal.class), this, context))));
     }
 
     /**

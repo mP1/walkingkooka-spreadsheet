@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.Either;
 import walkingkooka.convert.ConversionException;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
 
@@ -59,21 +60,11 @@ final class ConditionSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsh
 
     @Override
     Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
-
-        // predicate test result inverted because $value is on the wrong side of compare
-        return this.test(value, context) ?
+        return context.convert(value, BigDecimal.class)
+                .mapLeft(this.predicate::test)
+                .orElseLeft(false) ?
                 this.formatter.format(value, context) :
                 Optional.empty();
-    }
-
-    private boolean test(final Object value, final SpreadsheetFormatterContext context) {
-        boolean result;
-        try {
-            result = this.predicate.test(context.convert(value, BigDecimal.class));
-        } catch (final ConversionException fail) {
-            result = false;
-        }
-        return result;
     }
 
     /**

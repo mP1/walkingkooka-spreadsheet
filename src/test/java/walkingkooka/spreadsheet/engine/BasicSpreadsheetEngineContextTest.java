@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
@@ -281,9 +282,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
             }
 
             @Override
-            public <T> T convert(final Object value,
-                                 final Class<T> target) {
-                return Converters.numberNumber().convert(value, target, ConverterContexts.fake());
+            public <T> Either<T, String> convert(final Object value,
+                                                 final Class<T> target) {
+                return Converters.numberNumber()
+                        .convert(value,
+                                target,
+                                ConverterContexts.fake());
             }
 
             @Override
@@ -362,7 +366,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private Object functions(final ExpressionNodeName name, final List<Object> parameters) {
         assertEquals(functionName(), name, "function name");
         return parameters.stream()
-                .mapToLong(p -> this.converter().convert(p, Long.class, ConverterContexts.fake()))
+                .mapToLong(p -> this.converter().convertOrFail(p, Long.class, ConverterContexts.fake()))
                 .sum();
     }
 

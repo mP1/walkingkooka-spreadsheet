@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.datavalidation;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
@@ -673,7 +674,8 @@ public final class SpreadsheetDataValidatorsTest implements ClassTesting2<Spread
 
         return new FakeExpressionEvaluationContext() {
             @Override
-            public <T> T convert(final Object value, final Class<T> target) {
+            public <T> Either<T, String> convert(final Object value,
+                                                 final Class<T> target) {
                 return all.convert(value, target, ConverterContexts.basic(DateTimeContexts.fake(), this));
             }
         };

@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
@@ -229,8 +230,11 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatte
             }
 
             @Override
-            public <T> T convert(final Object value, final Class<T> target) {
-                return this.converter.convert(value, target, ConverterContexts.basic(DateTimeContexts.fake(), this));
+            public <T> Either<T, String> convert(final Object value,
+                                                 final Class<T> target) {
+                return this.converter.convert(value,
+                        target,
+                        ConverterContexts.basic(DateTimeContexts.fake(), this));
             }
 
             private final Converter converter = Converters.parser(BigDecimal.class,

@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.datavalidation;
 
+import walkingkooka.Either;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.expression.ExpressionNodeName;
@@ -126,7 +127,7 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     }
 
     @Override
-    public <T> T convert(final Object value, final Class<T> targetType) {
+    public <T> Either<T, String> convert(final Object value, final Class<T> targetType) {
         return this.context.convert(value, targetType);
     }
 

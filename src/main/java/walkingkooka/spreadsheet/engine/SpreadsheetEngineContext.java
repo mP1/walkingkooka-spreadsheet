@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Context;
+import walkingkooka.Either;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -43,7 +44,20 @@ public interface SpreadsheetEngineContext extends Context {
     /**
      * Converts the value into the target type.
      */
-    <T> T convert(Object value, Class<T> target);
+    <T> Either<T, String> convert(Object value, Class<T> target);
+
+    /**
+     * Converts the given value to the {@link Class target type} or throws a {@link SpreadsheetEngineException}
+     */
+    default <T> T convertOrFail(final Object value,
+                                final Class<T> target) {
+        final Either<T, String> converted = this.convert(value, target);
+        if (converted.isRight()) {
+            throw new SpreadsheetEngineException(converted.rightValue());
+        }
+
+        return converted.leftValue();
+    }
 
     /**
      * Accepts a pattern and returns the equivalent {@link SpreadsheetFormatter}.
