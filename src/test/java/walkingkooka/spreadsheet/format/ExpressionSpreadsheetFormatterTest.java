@@ -99,11 +99,96 @@ public final class ExpressionSpreadsheetFormatterTest extends SpreadsheetFormatt
         this.parseFormatAndCheck(";;;@", TEXT, TEXT);
     }
 
-    // conditional................................................................................................
+    // conditional......................................................................................................
 
     @Test
-    public void testConditionalNumberFormatPositiveNumber() {
-        this.parseFormatAndCheck("[>100]\"positive\"0", 123L, "positive123");
+    public void testConditionalEqualsNumberFormatPositiveNumberLess() {
+        this.parseFormatAndCheck("[=100]\"positive\"0", 99L, "DEFAULT: 99");
+    }
+
+    @Test
+    public void testConditionalEqualsNumberFormatPositiveNumberEqual() {
+        this.parseFormatAndCheck("[=100]\"positive\"0", 100L, "positive100");
+    }
+
+    @Test
+    public void testConditionalEqualsNumberFormatPositiveNumberGreater() {
+        this.parseFormatAndCheck("[=100]\"positive\"0", 101L, "DEFAULT: 101");
+    }
+
+    @Test
+    public void testConditionalLessThanNumberFormatPositiveNumberLess() {
+        this.parseFormatAndCheck("[<100]\"positive\"0", 99L, "positive99");
+    }
+
+    @Test
+    public void testConditionalLessThanNumberFormatPositiveNumberEqual() {
+        this.parseFormatAndCheck("[<100]\"positive\"0", 100L, "DEFAULT: 100");
+    }
+
+    @Test
+    public void testConditionalLessThanNumberFormatPositiveNumberGreater() {
+        this.parseFormatAndCheck("[<100]\"positive\"0", 101L, "DEFAULT: 101");
+    }
+
+    @Test
+    public void testConditionalLessThanEqualsNumberFormatPositiveNumberLess() {
+        this.parseFormatAndCheck("[<=100]\"positive\"0", 99L, "positive99");
+    }
+
+    @Test
+    public void testConditionalLessThanEqualsNumberFormatPositiveNumberEqual() {
+        this.parseFormatAndCheck("[<=100]\"positive\"0", 100L, "positive100");
+    }
+
+    @Test
+    public void testConditionalLessThanEqualsNumberFormatPositiveNumberGreater() {
+        this.parseFormatAndCheck("[<=100]\"positive\"0", 101L, "DEFAULT: 101");
+    }
+
+    @Test
+    public void testConditionalGreaterThanNumberFormatPositiveNumberLess() {
+        this.parseFormatAndCheck("[>100]\"positive\"0", 99L, "DEFAULT: 99");
+    }
+
+    @Test
+    public void testConditionalGreaterThanNumberFormatPositiveNumberEqual() {
+        this.parseFormatAndCheck("[>100]\"positive\"0", 100L, "DEFAULT: 100");
+    }
+
+    @Test
+    public void testConditionalGreaterThanNumberFormatPositiveNumberGreater() {
+        this.parseFormatAndCheck("[>100]\"positive\"0", 101L, "positive101");
+    }
+
+    @Test
+    public void testConditionalGreaterThanEqualsNumberFormatPositiveNumberLess() {
+        this.parseFormatAndCheck("[>=100]\"positive\"0", 99L, "DEFAULT: 99");
+    }
+
+    @Test
+    public void testConditionalGreaterThanEqualsNumberFormatPositiveNumberEqual() {
+        this.parseFormatAndCheck("[>=100]\"positive\"0", 100L, "positive100");
+    }
+
+    @Test
+    public void testConditionalGreaterThanEqualsNumberFormatPositiveNumberGreater() {
+        this.parseFormatAndCheck("[>=100]\"positive\"0", 101L, "positive101");
+    }
+
+    @Test
+    public void testConditionalNotEqualsNumberFormatPositiveNumberLess() {
+        this.parseFormatAndCheck("[!=100]\"positive\"0", 99L, "positive99");
+    }
+
+    @Test
+    public void testConditionalNotEqualsNumberFormatPositiveNumberEqual() {
+        this.parseFormatAndCheck("[!=100]\"positive\"0", 100L, "DEFAULT: 100");
+    }
+
+    @Test
+    public void testConditionalNotEqualsNumberFormatPositiveNumberGreater() {
+        this.parseFormatAndCheck("[!=100]\"positive\"0", 101L, "positive101");
     }
 
     @Test
