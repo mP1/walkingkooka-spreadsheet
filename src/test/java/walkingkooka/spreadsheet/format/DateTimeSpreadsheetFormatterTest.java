@@ -396,7 +396,61 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
         this.parseFormatAndCheck("sss", "2000-06-30T12:58:59.000", "59");
     }
 
-    // hour minute second.................................................................................
+    // milli............................................................................................................
+
+    @Test
+    public void testSecondMillis1() {
+        this.parseFormatAndCheck2("s.0", "59D1");
+    }
+
+    @Test
+    public void testSecondMillis2() {
+        this.parseFormatAndCheck2("s.00", "59D12");
+    }
+
+    @Test
+    public void testSecondMillis3() {
+        this.parseFormatAndCheck2("s.000", "59D123");
+    }
+
+    @Test
+    public void testSecondMillis4() {
+        this.parseFormatAndCheck2("s.0000", "59D1235");
+    }
+
+    @Test
+    public void testSecondMillis5() {
+        this.parseFormatAndCheck2("s.00000", "59D12346");
+    }
+
+    @Test
+    public void testSecondMillis6() {
+        this.parseFormatAndCheck2("s.000000", "59D123457");
+    }
+
+    @Test
+    public void testSecondMillis7() {
+        this.parseFormatAndCheck2("s.0000000", "59D1234568");
+    }
+
+    @Test
+    public void testSecondMillis8() {
+        this.parseFormatAndCheck2("s.00000000", "59D12345679");
+    }
+
+    @Test
+    public void testSecondMillis9() {
+        this.parseFormatAndCheck2("s.000000000", "59D123456789");
+    }
+
+    private void parseFormatAndCheck2(final String pattern,
+                                     final String text) {
+        this.parseFormatAndCheck(pattern,
+                LocalDateTime.of(2000, 12, 31, 12, 58, 59, 123456789),
+                text);
+    }
+
+    // hour minute second...............................................................................................
 
     @Test
     public void testHourHourMinuteMinuteSecondSecond125801() {
@@ -552,6 +606,34 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
                 "31/12/2000T15:58:04D17");
     }
 
+    @Test
+    public void testDaySlashMonthSayYearLiteralTHourColonMinuteColonSecondMillisRounding3() {
+        this.parseFormatAndCheck("d/m/yyyy\\Th:m:ss.000",
+                "2000-12-31T15:58:04.167",
+                "31/12/2000T15:58:04D167");
+    }
+
+    @Test
+    public void testDaySlashMonthSayYearLiteralTHourColonMinuteColonSecondMillisRounding4() {
+        this.parseFormatAndCheck("d/m/yyyy\\Th:m:ss.0000",
+                "2000-12-31T15:58:04.167",
+                "31/12/2000T15:58:04D1670");
+    }
+
+    @Test
+    public void testDaySlashMonthSayYearLiteralTHourColonMinuteColonSecondMillisRounding5() {
+        this.parseFormatAndCheck("d/m/yyyy\\Th:m:ss.00000",
+                "2000-12-31T15:58:04.167",
+                "31/12/2000T15:58:04D16700");
+    }
+
+    @Test
+    public void testDaySlashMonthSayYearLiteralTHourColonMinuteColonSecondMillisRounding6() {
+        this.parseFormatAndCheck("d/m/yyyy\\Th:m:ss.000000",
+                "2000-12-31T15:58:04.167",
+                "31/12/2000T15:58:04D167000");
+    }
+
     // Date.............................................................................................................
 
     @Test
@@ -607,23 +689,25 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
     }
 
     private void parseFormatAndCheck(final String pattern,
-                                     final String value,
-                                     final SpreadsheetFormatterContext context,
+                                     final LocalDateTime value,
                                      final String text) {
-        this.parseFormatAndCheck0(pattern, value, context, SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text));
+        this.formatAndCheck(this.createFormatter(pattern),
+                value,
+                this.createContext(),
+                SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text));
     }
 
     private void parseFormatAndCheck(final String pattern,
-                                      final String value,
-                                      final SpreadsheetFormatterContext context,
-                                      final SpreadsheetText text) {
-        this.formatAndCheck(this.createFormatter(pattern),
-                this.parseLocalDateTime(value),
+                                     final String value,
+                                     final SpreadsheetFormatterContext context,
+                                     final String text) {
+        this.parseFormatAndCheck(pattern,
+                value,
                 context,
-                text);
+                SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text));
     }
 
-    private void parseFormatAndCheck0(final String pattern,
+    private void parseFormatAndCheck(final String pattern,
                                       final String value,
                                       final SpreadsheetFormatterContext context,
                                       final SpreadsheetText text) {
