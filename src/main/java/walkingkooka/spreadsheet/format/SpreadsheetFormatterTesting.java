@@ -53,7 +53,6 @@ public interface SpreadsheetFormatterTesting extends Testing {
                                 final Object value,
                                 final SpreadsheetFormatterContext context,
                                 final SpreadsheetText text) {
-        this.canFormatAndCheck(formatter, value, context, true);
         this.formatAndCheck(formatter,
                 value,
                 context,
