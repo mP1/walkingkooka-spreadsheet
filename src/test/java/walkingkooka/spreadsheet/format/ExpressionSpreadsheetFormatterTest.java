@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
 import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
@@ -327,26 +328,19 @@ public final class ExpressionSpreadsheetFormatterTest extends SpreadsheetFormatt
             @Override
             public boolean canConvert(final Object value,
                                       final Class<?> target) {
-                boolean can;
-                try {
-                    this.convert(value, target);
-                    can = true;
-                } catch (final Exception cant) {
-                    can = false;
-                }
-                return can;
+                return this.convert(value, target).isLeft();
             }
 
             @Override
-            public <T> T convert(final Object value, final Class<T> target) {
+            public <T> Either<T, String> convert(final Object value, final Class<T> target) {
                 if (target.isInstance(value)) {
-                    return target.cast(value);
+                    return Either.left(target.cast(value));
                 }
                 if (value instanceof Long && Number.class.isAssignableFrom(target)) {
                     return Converters.numberNumber().convert(value, target, this.converterContext());
                 }
                 if (value instanceof BigDecimal && String.class == target) {
-                    return target.cast(new DecimalFormat("000.000").format(value));
+                    return Either.left(target.cast(new DecimalFormat("000.000").format(value)));
                 }
                 return Converters.localDateTimeNumber(Converters.EXCEL_OFFSET)
                         .convert(value,

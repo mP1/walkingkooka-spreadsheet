@@ -30,7 +30,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextLiteralParser
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatYearParserToken;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 /**
  * This visitor is used exclusively by {@link SpreadsheetFormatter#format(Object, SpreadsheetFormatterContext)}.
@@ -41,17 +40,17 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
     /**
      * Visits all the individual tokens in the given token which was compiled from the given pattern.
      */
-    static Optional<SpreadsheetText> format(final SpreadsheetFormatParserToken token,
-                                            final LocalDateTime value,
-                                            final SpreadsheetFormatterContext context,
-                                            final boolean twelveHourTime,
-                                            final int millisecondDecimals) {
+    static SpreadsheetText format(final SpreadsheetFormatParserToken token,
+                                  final LocalDateTime value,
+                                  final SpreadsheetFormatterContext context,
+                                  final boolean twelveHourTime,
+                                  final int millisecondDecimals) {
         final DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor visitor = new DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor(value,
                 context,
                 twelveHourTime,
                 millisecondDecimals);
         visitor.accept(token);
-        return Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, visitor.text.toString()));
+        return SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, visitor.text.toString());
     }
 
     /**

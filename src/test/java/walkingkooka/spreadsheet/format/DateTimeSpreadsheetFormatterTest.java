@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
@@ -566,7 +567,7 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
                     }
 
                     @Override
-                    public <T> T convert(final Object value, final Class<T> target) {
+                    public <T> Either<T, String> convert(final Object value, final Class<T> target) {
                         assertEquals(LocalDateTime.class, target, "target");
                         return Converters.localDateLocalDateTime().convert(value, target, ConverterContexts.fake());
                     }
@@ -589,9 +590,9 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
                     }
 
                     @Override
-                    public <T> T convert(final Object value, final Class<T> target) {
+                    public <T> Either<T, String> convert(final Object value, final Class<T> target) {
                         assertEquals(LocalDateTime.class, target, "target");
-                        return target.cast(LocalDateTime.of(LocalDate.of(2000, 10, 31), LocalTime.class.cast(value)));
+                        return Either.left(target.cast(LocalDateTime.of(LocalDate.of(2000, 10, 31), LocalTime.class.cast(value))));
                     }
                 },
                 "12/58/59");
@@ -682,9 +683,9 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
         }
 
         @Override
-        public <T> T convert(final Object value, final Class<T> target) {
+        public <T> Either<T, String> convert(final Object value, final Class<T> target) {
             assertEquals(LocalDateTime.class, target, "target");
-            return target.cast(value);
+            return Either.left(target.cast(value));
         }
     }
 

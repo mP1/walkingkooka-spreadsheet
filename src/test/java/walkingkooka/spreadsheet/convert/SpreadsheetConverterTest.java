@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
@@ -404,7 +405,8 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
 
     @Test
     public void testNumberTime() {
-        this.convertAndBackCheck(Converters.localTimeNumber().convert(TIME, BigDecimal.class, this.createContext()),
+        this.convertAndBackCheck(Converters.localTimeNumber()
+                        .convertOrFail(TIME, BigDecimal.class, this.createContext()),
                 TIME);
     }
 
@@ -417,14 +419,14 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
         final Converter numberNumber = Converters.numberNumber();
         final ConverterContext context = this.createContext();
 
-        this.convertAndBackCheck(numberNumber.convert(value, BigDecimal.class, context), expected);
-        this.convertAndBackCheck(numberNumber.convert(value, BigInteger.class, context), expected);
-        this.convertAndBackCheck(numberNumber.convert(value, Byte.class, context), expected);
-        this.convertAndBackCheck(numberNumber.convert(value, Double.class, context), expected);
-        this.convertAndBackCheck(numberNumber.convert(value, Float.class, context), expected);
-        this.convertAndBackCheck(numberNumber.convert(value, Integer.class, context), expected);
-        this.convertAndBackCheck(numberNumber.convert(value, Long.class, context), expected);
-        this.convertAndBackCheck(numberNumber.convert(value, Short.class, context), expected);
+        this.convertAndBackCheck(numberNumber.convertOrFail(value, BigDecimal.class, context), expected);
+        this.convertAndBackCheck(numberNumber.convertOrFail(value, BigInteger.class, context), expected);
+        this.convertAndBackCheck(numberNumber.convertOrFail(value, Byte.class, context), expected);
+        this.convertAndBackCheck(numberNumber.convertOrFail(value, Double.class, context), expected);
+        this.convertAndBackCheck(numberNumber.convertOrFail(value, Float.class, context), expected);
+        this.convertAndBackCheck(numberNumber.convertOrFail(value, Integer.class, context), expected);
+        this.convertAndBackCheck(numberNumber.convertOrFail(value, Long.class, context), expected);
+        this.convertAndBackCheck(numberNumber.convertOrFail(value, Short.class, context), expected);
     }
 
     // String.............................................................................................................
@@ -537,7 +539,9 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
 
     private void convertAndCheck2(final Object value,
                                   final Object expected) {
-        this.convertAndCheck(value, expected.getClass(), expected);
+        this.convertAndCheck(value,
+                Cast.to(expected.getClass()),
+                expected);
     }
 
     private void convertAndBackCheck(final Object value,
@@ -551,14 +555,14 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
         final Converter numberNumber = Converters.numberNumber();
         final ConverterContext context = this.createContext();
 
-        this.convertAndBackCheck(value, numberNumber.convert(expected, BigDecimal.class, context));
-        this.convertAndBackCheck(value, numberNumber.convert(expected, BigInteger.class, context));
-        this.convertAndBackCheck(value, numberNumber.convert(expected, Byte.class, context));
-        this.convertAndBackCheck(value, numberNumber.convert(expected, Double.class, context));
-        this.convertAndBackCheck(value, numberNumber.convert(expected, Float.class, context));
-        this.convertAndBackCheck(value, numberNumber.convert(expected, Integer.class, context));
-        this.convertAndBackCheck(value, numberNumber.convert(expected, Long.class, context));
-        this.convertAndBackCheck(value, numberNumber.convert(expected, Short.class, context));
+        this.convertAndBackCheck(value, numberNumber.convertOrFail(expected, BigDecimal.class, context));
+        this.convertAndBackCheck(value, numberNumber.convertOrFail(expected, BigInteger.class, context));
+        this.convertAndBackCheck(value, numberNumber.convertOrFail(expected, Byte.class, context));
+        this.convertAndBackCheck(value, numberNumber.convertOrFail(expected, Double.class, context));
+        this.convertAndBackCheck(value, numberNumber.convertOrFail(expected, Float.class, context));
+        this.convertAndBackCheck(value, numberNumber.convertOrFail(expected, Integer.class, context));
+        this.convertAndBackCheck(value, numberNumber.convertOrFail(expected, Long.class, context));
+        this.convertAndBackCheck(value, numberNumber.convertOrFail(expected, Short.class, context));
     }
 
     // ClassTesting.....................................................................................................

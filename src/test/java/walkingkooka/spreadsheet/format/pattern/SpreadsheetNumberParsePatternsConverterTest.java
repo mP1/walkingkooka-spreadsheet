@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting2;
@@ -541,14 +542,14 @@ public final class SpreadsheetNumberParsePatternsConverterTest extends Spreadshe
                                   final Number expected) {
         this.convertAndCheck2(pattern,
                 text,
-                expected.getClass(),
+                Cast.to(expected.getClass()),
                 expected);
     }
 
-    private void convertAndCheck2(final String pattern,
-                                  final String text,
-                                  final Class<?> number,
-                                  final Number expected) {
+    private <N extends Number> void convertAndCheck2(final String pattern,
+                                                     final String text,
+                                                     final Class<N> number,
+                                                     final N expected) {
         this.convertAndCheck(this.createConverter(pattern),
                 text,
                 number,

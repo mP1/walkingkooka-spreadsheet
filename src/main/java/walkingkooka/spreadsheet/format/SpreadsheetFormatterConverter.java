@@ -17,8 +17,13 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.Cast;
+import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
+import walkingkooka.text.CharSequences;
+
+import java.util.Optional;
 
 /**
  * A {@link Converter} which formats a value to {@link String text} using the given {@link SpreadsheetFormatter}.
@@ -43,15 +48,12 @@ final class SpreadsheetFormatterConverter implements Converter {
     }
 
     @Override
-    public <T> T convert(final Object value,
-                         final Class<T> targetType,
-                         final ConverterContext context) {
-        return targetType.cast(this.formatter.format(value, SpreadsheetFormatterConverterSpreadsheetFormatterContext.with(context))
-                .map(SpreadsheetText::text)
-                .orElseThrow(() -> {
-                    this.failConversion(value, targetType);
-                    return null;
-                }));
+    public <T> Either<T, String> convert(final Object value,
+                                         final Class<T> targetType,
+                                         final ConverterContext context) {
+        return this.formatter.format(value, SpreadsheetFormatterConverterSpreadsheetFormatterContext.with(context))
+                .map(t -> Either.<T, String>left(Cast.to(t.text())))
+                .orElse(Either.<T, String>right("Unable to convert " + CharSequences.quoteIfChars(value) + " to " + targetType.getName()));
     }
 
     private final SpreadsheetFormatter formatter;

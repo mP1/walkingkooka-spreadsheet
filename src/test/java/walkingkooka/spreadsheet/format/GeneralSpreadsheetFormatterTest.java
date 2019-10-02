@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
 import walkingkooka.convert.ConversionException;
 import walkingkooka.text.CharSequences;
 
@@ -110,16 +111,16 @@ public final class GeneralSpreadsheetFormatterTest extends SpreadsheetFormatterT
             }
 
             @Override
-            public <T> T convert(final Object value, final Class<T> target) {
+            public <T> Either<T, String> convert(final Object value, final Class<T> target) {
                 if (BigDecimal.class == target) {
                     if (value instanceof BigDecimal) {
-                        return target.cast(value);
+                        return Either.left(target.cast(value));
                     }
                     if (value instanceof LocalDateTime) {
-                        return target.cast(LOCAL_DATE_TIME_BIGDECIMAL);
+                        return Either.left(target.cast(LOCAL_DATE_TIME_BIGDECIMAL));
                     }
                 }
-                throw new ConversionException("Failed to convert " + CharSequences.quoteIfChars(value) + " to " + target.getName());
+                return Either.right("Failed to convert " + CharSequences.quoteIfChars(value) + " to " + target.getName());
             }
 
             @Override

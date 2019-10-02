@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.datavalidation;
 
+import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
@@ -49,8 +50,11 @@ public abstract class SpreadsheetDataValidatorTemplateTestCase<V extends Spreads
 
         return new FakeExpressionEvaluationContext() {
             @Override
-            public <TT> TT convert(final Object value, final Class<TT> target) {
-                return all.convert(value, target, ConverterContexts.basic(DateTimeContexts.fake(), this));
+            public <TT> Either<TT, String> convert(final Object value,
+                                                   final Class<TT> target) {
+                return all.convert(value,
+                        target,
+                        ConverterContexts.basic(DateTimeContexts.fake(), this));
             }
         };
     }
