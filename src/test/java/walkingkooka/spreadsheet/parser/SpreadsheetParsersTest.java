@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
@@ -1038,7 +1039,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 if (parameters.size() != 1) {
                     throw new IllegalArgumentException("Expected 1 parameter=" + parameters);
                 }
-                return this.convert(parameters.get(0), targetType);
+                return this.convertOrFail(parameters.get(0), targetType);
             }
 
             @Override
@@ -1053,7 +1054,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
             }
 
             @Override
-            public <T> T convert(final Object value, final Class<T> target) {
+            public <T> Either<T, String> convert(final Object value, final Class<T> target) {
                 return converter.convert(value,
                         target,
                         ConverterContexts.basic(dateTimeContext(), decimalNumberContext()));

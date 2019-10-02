@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.Either;
 import walkingkooka.color.Color;
 import walkingkooka.datetime.DateTimeContextTesting2;
 import walkingkooka.math.DecimalNumberContextTesting2;
@@ -77,7 +78,7 @@ public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatt
                                      final Class<T> target,
                                      final T expected) {
         this.canConvertAndCheck(context, value, target, true);
-        assertEquals(expected,
+        assertEquals(Either.left(expected),
                 context.convert(value, target),
                 () -> "convert " + CharSequences.quoteIfChars(value) + " target: " + target.getName());
     }

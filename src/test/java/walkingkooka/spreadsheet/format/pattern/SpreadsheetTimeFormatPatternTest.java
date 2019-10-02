@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
@@ -147,8 +148,8 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
                     }
 
                     @Override
-                    public <T> T convert(final Object value,
-                                         final Class<T> target) {
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
                         return Converters.localTimeLocalDateTime().convert(value, target, ConverterContexts.fake());
                     }
                 },

@@ -62,7 +62,7 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
         final LocalDate date = LocalDate.of(2000, 1, 31);
         this.convertAndCheck(date,
                 LocalDateTime.class,
-                Converters.localDateLocalDateTime().convert(date, LocalDateTime.class, this.converterContext()));
+                Converters.localDateLocalDateTime().convertOrFail(date, LocalDateTime.class, this.converterContext()));
     }
 
     @Test
@@ -70,7 +70,7 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
         final LocalTime time = LocalTime.of(12, 58, 59);
         this.convertAndCheck(time,
                 LocalDateTime.class,
-                Converters.localTimeLocalDateTime().convert(time, LocalDateTime.class, this.converterContext()));
+                Converters.localTimeLocalDateTime().convertOrFail(time, LocalDateTime.class, this.converterContext()));
     }
 
     @Test

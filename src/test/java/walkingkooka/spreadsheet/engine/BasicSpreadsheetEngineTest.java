@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
@@ -4816,9 +4817,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public <T> T convert(final Object value, final Class<T> target) {
+            public <T> Either<T, String> convert(final Object value, final Class<T> target) {
                 assertEquals(Boolean.class, target, "Only support converting to Boolean=" + value);
-                return target.cast(Boolean.parseBoolean(String.valueOf(value)));
+                return Either.left(target.cast(Boolean.parseBoolean(String.valueOf(value))));
             }
 
             @Override

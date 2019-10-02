@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
@@ -107,7 +108,8 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     }
 
     @Override
-    public <T> T convert(final Object value, final Class<T> target) {
+    public <T> Either<T, String> convert(final Object value,
+                                         final Class<T> target) {
         return this.converter.convert(value, target, this.converterContext);
     }
 

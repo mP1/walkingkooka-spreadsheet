@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.Either;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -41,7 +42,7 @@ public class FakeSpreadsheetEngineContext implements SpreadsheetEngineContext, F
     }
 
     @Override
-    public <T> T convert(Object value, Class<T> target) {
+    public <T> Either<T, String> convert(Object value, Class<T> target) {
         Objects.requireNonNull(value, "value");
         Objects.requireNonNull(target, "target");
         throw new UnsupportedOperationException();
