@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.Either;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
@@ -213,11 +214,13 @@ final class SpreadsheetConverter implements Converter {
             String.class);
 
     @Override
-    public <T> T convert(final Object value,
-                         final Class<T> targetType,
-                         final ConverterContext context) {
-        return SpreadsheetConverterSpreadsheetValueVisitor.converter(value, targetType, this.mapping)
-                .convert(value, targetType, context);
+    public <T> Either<T, String> convert(final Object value,
+                                         final Class<T> targetType,
+                                         final ConverterContext context) {
+        final Converter converter = SpreadsheetConverterSpreadsheetValueVisitor.converter(value, targetType, this.mapping);
+        return null != converter ?
+                converter.convert(value, targetType, context) :
+                this.failConversion(value, targetType);
     }
 
     private final SpreadsheetConverterMapping<SpreadsheetConverterMapping<Converter>> mapping;

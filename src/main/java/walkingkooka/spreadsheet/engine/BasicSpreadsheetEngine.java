@@ -457,7 +457,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         rules.addAll(this.rangeToConditionalFormattingRuleStore.loadCellReferenceValues(cell.reference()));
         for (SpreadsheetConditionalFormattingRule rule : rules) {
             final Object test = context.evaluate(rule.formula().expression().get());
-            final Boolean booleanResult = context.convert(test, Boolean.class);
+            final Boolean booleanResult = context.convertOrFail(test, Boolean.class);
             if (Boolean.TRUE.equals(booleanResult)) {
                 final TextNode formatted = cell.formatted()
                         .orElseThrow(() -> new BasicSpreadsheetEngineException("Missing formatted cell=" + cell));

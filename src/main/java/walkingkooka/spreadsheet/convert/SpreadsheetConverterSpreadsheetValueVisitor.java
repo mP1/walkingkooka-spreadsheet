@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.convert.ConversionException;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.FailedConversionException;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitor;
 import walkingkooka.text.CharSequences;
 
@@ -46,11 +45,7 @@ final class SpreadsheetConverterSpreadsheetValueVisitor extends SpreadsheetValue
         final SpreadsheetConverterSpreadsheetValueVisitor visitor = new SpreadsheetConverterSpreadsheetValueVisitor(targetType,
                 mapping);
         visitor.accept(value); // value = from
-        final Converter converter = visitor.converter;
-        if (null == converter) {
-            throw new FailedConversionException(value, targetType);
-        }
-        return converter;
+        return visitor.converter;
     }
 
     SpreadsheetConverterSpreadsheetValueVisitor(final Class<?> targetType,

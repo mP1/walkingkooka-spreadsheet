@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
@@ -545,7 +546,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         this.convertAndCheck(metadata.converter(),
                 value,
-                expected.getClass(),
+                Cast.to(expected.getClass()),
                 ConverterContexts.basic(DateTimeContexts.locale(Locale.ENGLISH, 20), DecimalNumberContexts.american(MathContext.DECIMAL32)),
                 expected);
     }
@@ -744,17 +745,14 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 value,
                 new FakeSpreadsheetFormatterContext() {
                     @Override
-                    public boolean canConvert(final Object value, final Class<?> target) {
-                        try{
-                            this.convert(value, target);
-                            return true;
-                        } catch (final Exception cause) {
-                            return false;
-                        }
+                    public boolean canConvert(final Object value,
+                                              final Class<?> target) {
+                        return this.convert(value, target).isLeft();
                     }
 
                     @Override
-                    public <T> T convert(final Object value, final Class<T> target) {
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> target) {
                         return Converters.collection(Lists.of(Converters.simple(),
                                 Converters.numberNumber(),
                                 Converters.localDateLocalDateTime(),

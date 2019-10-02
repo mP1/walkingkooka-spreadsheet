@@ -17,10 +17,10 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
-import walkingkooka.convert.FailedConversionException;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.TextCursors;
@@ -63,10 +63,10 @@ final class SpreadsheetNumberParsePatternsConverter implements Converter {
      * Tries all the components until all the text and components are consumed. The {@link Number} is then converted to the target type.
      */
     @Override
-    public <T> T convert(final Object value,
-                         final Class<T> type,
-                         final ConverterContext context) {
-        T converted = null;
+    public <T> Either<T, String> convert(final Object value,
+                                         final Class<T> type,
+                                         final ConverterContext context) {
+        Either<T, String> result = null;
 
         final TextCursor cursor = TextCursors.charSequence(String.class.cast(value));
         final TextCursorSavePoint save = cursor.save();
@@ -75,21 +75,17 @@ final class SpreadsheetNumberParsePatternsConverter implements Converter {
             final SpreadsheetNumberParsePatternsContext patternsContext = SpreadsheetNumberParsePatternsContext.with(pattern.iterator(), context);
             patternsContext.nextComponent(cursor);
             if (cursor.isEmpty() && false == patternsContext.isRequired()) {
-                try {
-                    converted = NUMBER.convert(patternsContext.computeValue(), type, context);
-                    break; // conversion successful.
-                } catch (final RuntimeException cause) {
-                    throw new FailedConversionException(value, type, cause);
-                }
+                result = NUMBER.convert(patternsContext.computeValue(), type, context);
+                break; // conversion successful.
             }
             save.restore();
         }
 
-        if (null == converted) {
-            throw new FailedConversionException(value, type);
+        if (null == result) {
+            result = this.failConversion(value, type);
         }
 
-        return converted;
+        return result;
     }
 
     /**

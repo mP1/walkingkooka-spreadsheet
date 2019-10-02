@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.Either;
 import walkingkooka.color.Color;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
@@ -57,5 +58,18 @@ public interface SpreadsheetFormatterContext extends DecimalNumberContext, DateT
     /**
      * Handles converting the given value to the target.
      */
-    <T> T convert(final Object value, final Class<T> target);
+    <T> Either<T, String> convert(final Object value, final Class<T> target);
+
+    /**
+     * Converts the given value to the {@link Class target type} or throws a {@link SpreadsheetFormatException}
+     */
+    default <T> T convertOrFail(final Object value,
+                                final Class<T> target) {
+        final Either<T, String> converted = this.convert(value, target);
+        if (converted.isRight()) {
+            throw new SpreadsheetFormatException(converted.rightValue());
+        }
+
+        return converted.leftValue();
+    }
 }

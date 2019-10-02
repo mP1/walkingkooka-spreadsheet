@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.ContextTesting;
+import walkingkooka.Either;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -155,7 +156,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
                                      final Object value,
                                      final Class<T> target,
                                      final T expected) {
-        assertEquals(expected,
+        assertEquals(Either.left(expected),
                 context.convert(value, target),
                 () -> "convert " + CharSequences.quoteIfChars(value) + " target: " + target.getName());
     }

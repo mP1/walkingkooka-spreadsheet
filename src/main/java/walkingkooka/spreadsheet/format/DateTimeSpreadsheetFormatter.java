@@ -67,13 +67,18 @@ final class DateTimeSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadshe
 
     @Override
     Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
-        return context.canConvert(value, LocalDateTime.class) ?
-                DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor.format(this.token,
-                        context.convert(value, LocalDateTime.class),
-                        context,
-                        this.twelveHour,
-                        this.millisecondDecimals) :
-                Optional.empty();
+        return Optional.ofNullable(context.convert(value, LocalDateTime.class)
+                .mapLeft(v -> this.formatLocalDateTime(v, context))
+                .orElseLeft(null));
+    }
+
+    private SpreadsheetText formatLocalDateTime(final LocalDateTime dateTime,
+                                                final SpreadsheetFormatterContext context) {
+        return DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisitor.format(this.token,
+                dateTime,
+                context,
+                this.twelveHour,
+                this.millisecondDecimals);
     }
 
     private final boolean twelveHour;
