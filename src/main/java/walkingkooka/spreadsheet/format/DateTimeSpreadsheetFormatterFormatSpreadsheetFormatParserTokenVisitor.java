@@ -70,34 +70,34 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
         float secondRounding;
         switch (millisecondDecimals) {
             case 0:
-                secondRounding = 0.5f;
+                secondRounding = 5E-1f;
                 break;
             case 1:
-                secondRounding = 0.05f;
+                secondRounding = 5E-2f;
                 break;
             case 2:
-                secondRounding = 0.005f;
+                secondRounding = 5E-3f;
                 break;
             case 3:
-                secondRounding = 0.0005f;
+                secondRounding = 5E-4f;
                 break;
             case 4:
-                secondRounding = 0.00005f;
+                secondRounding = 5E-5f;
                 break;
             case 5:
-                secondRounding = 0.000005f;
+                secondRounding = 5E-6f;
                 break;
             case 6:
-                secondRounding = 0.0000005f;
+                secondRounding = 5E-7f;
                 break;
             case 7:
-                secondRounding = 0.00000005f;
+                secondRounding = 5E-8f;
                 break;
             case 8:
-                secondRounding = 0.000000005f;
+                secondRounding = 5E-9f;
                 break;
             case 9:
-                secondRounding = 0.0000000005f;
+                secondRounding = 5E-10f;
                 break;
             default:
                 secondRounding = 0;
@@ -211,7 +211,7 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
     @Override
     protected void visit(final SpreadsheetFormatSecondParserToken token) {
         final LocalDateTime value = this.value;
-        final float secondsAndMills = value.getSecond() + 1f * value.getNano() / NANOS_IN_SECOND + this.secondRounding;
+        final double secondsAndMills = value.getSecond() + 1.0 * value.getNano() / NANOS_IN_SECOND + this.secondRounding;
         final int seconds = (int) secondsAndMills;
         this.append(seconds,
                 token.text(),
@@ -222,7 +222,7 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
         if (millisecondDecimals > 0) {
             this.append(this.context.decimalSeparator());
 
-            float millis = secondsAndMills - seconds;
+            double millis = secondsAndMills - seconds;
 
             for (int i = 0; i < millisecondDecimals; i++) {
                 millis = millis * 10;
