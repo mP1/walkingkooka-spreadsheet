@@ -35,9 +35,9 @@ public final class SpreadsheetFormatFractionParserTokenTest extends SpreadsheetF
         final List<ParserToken> visited = Lists.array();
 
         final SpreadsheetFormatFractionParserToken token = this.createToken();
-        final SpreadsheetFormatParserToken digit1 = token.value().get(0).cast();
-        final SpreadsheetFormatParserToken symbol = token.value().get(1).cast();
-        final SpreadsheetFormatParserToken digit2 = token.value().get(2).cast();
+        final SpreadsheetFormatParserToken digit1 = token.value().get(0).cast(SpreadsheetFormatParserToken.class);
+        final SpreadsheetFormatParserToken symbol = token.value().get(1).cast(SpreadsheetFormatParserToken.class);
+        final SpreadsheetFormatParserToken digit2 = token.value().get(2).cast(SpreadsheetFormatParserToken.class);
 
         new FakeSpreadsheetFormatParserTokenVisitor() {
             @Override

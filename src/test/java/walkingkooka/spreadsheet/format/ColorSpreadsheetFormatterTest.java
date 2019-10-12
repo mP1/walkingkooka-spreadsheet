@@ -22,6 +22,7 @@ import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 
 import java.util.Optional;
@@ -188,7 +189,8 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
     }
 
     private SpreadsheetFormatter textFormatter() {
-        return SpreadsheetFormatters.text(this.parsePatternOrFail(SpreadsheetFormatParsers.text(), TEXT_PATTERN).cast());
+        return SpreadsheetFormatters.text(this.parsePatternOrFail(SpreadsheetFormatParsers.text(), TEXT_PATTERN)
+                .cast(SpreadsheetFormatTextParserToken.class));
     }
 
     @Override

@@ -34,7 +34,8 @@ abstract class SpreadsheetUnaryParserToken<T extends SpreadsheetUnaryParserToken
         if (1 != count) {
             throw new IllegalArgumentException("Expected 1 tokens but got " + count + "=" + without);
         }
-        this.parameter = without.get(0).cast();
+        this.parameter = without.get(0)
+                .cast(SpreadsheetParserToken.class);
     }
 
     public final SpreadsheetParserToken parameter() {

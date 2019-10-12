@@ -37,19 +37,19 @@ public final class SpreadsheetFormatGeneralParserTokenTest extends SpreadsheetFo
         final List<ParserToken> visited = Lists.array();
 
         final SpreadsheetFormatGeneralParserToken token = this.createToken();
-        final SpreadsheetFormatParserToken general = token.value().get(0).cast();
-        final SpreadsheetFormatParserToken whitespace = token.value().get(1).cast();
+        final cast(SpreadsheetFormatParserToken.class) general = token.value().get(0).cast();
+        final cast(SpreadsheetFormatParserToken.class) whitespace = token.value().get(1).cast();
 
-        new FakeSpreadsheetFormatParserTokenVisitor() {
+        new Fakecast(SpreadsheetFormatParserToken.class)Visitor() {
             @Override
-            protected Visiting startVisit(final SpreadsheetFormatParserToken n) {
+            protected Visiting startVisit(final cast(SpreadsheetFormatParserToken.class) n) {
                 b.append("1");
                 visited.add(n);
                 return Visiting.CONTINUE;
             }
 
             @Override
-            protected void endVisit(final SpreadsheetFormatParserToken n) {
+            protected void endVisit(final cast(SpreadsheetFormatParserToken.class) n) {
                 b.append("2");
                 visited.add(n);
             }
@@ -127,7 +127,7 @@ public final class SpreadsheetFormatGeneralParserTokenTest extends SpreadsheetFo
     }
 
     private ParserToken generalSymbol() {
-        return SpreadsheetFormatParserToken.generalSymbol(GENERAL, GENERAL);
+        return cast(SpreadsheetFormatParserToken.class).generalSymbol(GENERAL, GENERAL);
     }
 
     @Override

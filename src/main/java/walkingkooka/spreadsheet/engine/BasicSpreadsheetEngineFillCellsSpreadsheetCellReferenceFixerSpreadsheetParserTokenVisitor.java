@@ -109,7 +109,8 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
             throw new IllegalStateException("Expected only 1 child but got " + count + "=" + tokens);
         }
 
-        return tokens.get(0).cast();
+        return tokens.get(0)
+                .cast(SpreadsheetParserToken.class);
     }
 
     /**
