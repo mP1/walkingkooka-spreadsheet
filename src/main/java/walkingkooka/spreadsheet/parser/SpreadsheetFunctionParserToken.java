@@ -44,7 +44,8 @@ public final class SpreadsheetFunctionParserToken extends SpreadsheetParentParse
         if (count < 1) {
             throw new IllegalArgumentException("Expected at least 1 tokens but got " + count + "=" + without);
         }
-        final SpreadsheetParserToken name = without.get(0).cast();
+        final SpreadsheetParserToken name = without.get(0)
+                .cast(SpreadsheetParserToken.class);
         if (!name.isFunctionName()) {
             throw new IllegalArgumentException("Function name missing from " + value);
         }

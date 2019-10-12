@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -50,11 +51,11 @@ public abstract class SpreadsheetFormatter3TestCase<F extends SpreadsheetFormatt
     abstract String pattern();
 
     final F createFormatter(final String pattern) {
-        return this.createFormatter0(this.parsePatternOrFail(this.parser(), pattern).cast());
+        return this.createFormatter0((T)this.parsePatternOrFail(this.parser(), pattern));
     }
 
     final T parsePatternOrFail(final String pattern) {
-        return this.parsePatternOrFail(this.parser(), pattern).cast();
+        return Cast.to(this.parsePatternOrFail(this.parser(), pattern));
     }
 
     final SpreadsheetFormatParserToken parsePatternOrFail(final Parser<SpreadsheetFormatParserContext> parser, final String pattern) {
@@ -62,10 +63,10 @@ public abstract class SpreadsheetFormatter3TestCase<F extends SpreadsheetFormatt
                 .parse(TextCursors.charSequence(pattern),
                         SpreadsheetFormatParserContexts.basic())
                 .get()
-                .cast();
+                .cast(SpreadsheetFormatParserToken.class);
     }
 
     abstract Parser<SpreadsheetFormatParserContext> parser();
 
-    abstract F createFormatter0(T token);
+    abstract F createFormatter0(final T token);
 }

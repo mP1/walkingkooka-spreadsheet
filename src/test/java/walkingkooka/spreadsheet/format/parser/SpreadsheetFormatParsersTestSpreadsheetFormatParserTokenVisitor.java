@@ -34,7 +34,8 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
     static SpreadsheetFormatParserToken toLower(final SpreadsheetFormatParserToken token) {
         final SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor();
         visitor.accept(token);
-        return visitor.children.get(0).cast();
+        return visitor.children.get(0)
+                .cast(SpreadsheetFormatParserToken.class);
     }
 
     private SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor() {

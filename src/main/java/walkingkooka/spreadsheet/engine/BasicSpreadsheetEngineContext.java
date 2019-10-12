@@ -135,7 +135,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(formula), this.parserContext)
                 .get()
-                .cast();
+                .cast(SpreadsheetParserToken.class);
     }
 
     private SpreadsheetParserContext parserContext;

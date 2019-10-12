@@ -23,6 +23,7 @@ import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.RepeatedOrSequenceParserToken;
+import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.text.cursor.parser.StringParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfAlternativeParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfConcatenationParserToken;
@@ -49,7 +50,7 @@ final class SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer implement
 
     private static ParserToken transformColor(final ParserToken token,
                                               final ParserContext context) {
-        return SpreadsheetFormatParserToken.color(clean0(token.cast()), token.text());
+        return SpreadsheetFormatParserToken.color(clean0(token), token.text());
     }
 
     private static ParserToken transformConditionEqual(final ParserToken token,
@@ -129,7 +130,7 @@ final class SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer implement
 
     private static ParserToken transformGeneral(final ParserToken token,
                                                 final ParserContext context) {
-        return SpreadsheetFormatParserToken.general(clean0(token.cast()), token.text());
+        return SpreadsheetFormatParserToken.general(clean0(token), token.text());
     }
 
     private static ParserToken transformText(final ParserToken token,
@@ -163,11 +164,12 @@ final class SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer implement
 
     private static ParserToken clean(final ParserToken token,
                                      final BiFunction<List<ParserToken>, String, ParserToken> factory) {
-        return factory.apply(clean0(token.cast()), token.text());
+        return factory.apply(clean0(token), token.text());
     }
 
-    private static List<ParserToken> clean0(final RepeatedOrSequenceParserToken<?> token) {
-        return token.flat()
+    private static List<ParserToken> clean0(final ParserToken token) {
+        return token.cast(SequenceParserToken.class)
+                .flat()
                 .value();
     }
 

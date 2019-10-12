@@ -39,7 +39,7 @@ public final class SpreadsheetFormatExpressionParserTokenTest extends Spreadshee
         final List<ParserToken> visited = Lists.array();
 
         final SpreadsheetFormatExpressionParserToken token = this.createToken();
-        final SpreadsheetFormatParserToken text = token.value().get(0).cast();
+        final SpreadsheetFormatParserToken text = token.value().get(0).cast(SpreadsheetFormatParserToken.class);
 
         new FakeSpreadsheetFormatParserTokenVisitor() {
             @Override

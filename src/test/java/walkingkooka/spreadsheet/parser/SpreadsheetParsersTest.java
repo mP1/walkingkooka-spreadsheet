@@ -975,7 +975,8 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         if (!leftOver.isEmpty()) {
             fail("Parser left " + CharSequences.quoteAndEscape(leftOver) + " from " + CharSequences.quoteAndEscape(parse));
         }
-        return spreadsheetFormula.get().cast();
+        return spreadsheetFormula.get()
+                .cast(SpreadsheetParserToken.class);
     }
 
     private ExpressionEvaluationContext expressionEvaluationContext() {
