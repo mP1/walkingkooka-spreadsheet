@@ -115,7 +115,7 @@ public final class SpreadsheetFormatDateParserTokenTest extends SpreadsheetForma
     @Override
     List<ParserToken> tokens() {
         return Lists.of(this.text1(),
-                SpreadsheetFormatParserToken.day("d", "d").cast());
+                SpreadsheetFormatParserToken.day("d", "d"));
     }
 
     @Override
