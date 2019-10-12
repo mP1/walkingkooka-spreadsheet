@@ -31,8 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetFormatPattern<T>,
-        T extends SpreadsheetFormatParserToken & ParentParserToken<T>,
-        V> extends SpreadsheetPatternTestCase<P, T>
+        T extends SpreadsheetFormatParserToken & ParentParserToken> extends SpreadsheetPatternTestCase<P, T>
         implements SpreadsheetFormatterTesting {
 
     SpreadsheetFormatPatternTestCase() {

@@ -27,7 +27,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetFormatConditionParserTokenTestCase<T extends SpreadsheetFormatConditionParserToken<T>> extends SpreadsheetFormatParentParserTokenTestCase<T> {
+public abstract class SpreadsheetFormatConditionParserTokenTestCase<T extends SpreadsheetFormatConditionParserToken> extends SpreadsheetFormatParentParserTokenTestCase<T> {
+
+    SpreadsheetFormatConditionParserTokenTestCase() {
+        super();
+    }
 
     @Test
     public final void testWithMissingNumberTokenFails() {

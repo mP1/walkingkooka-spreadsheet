@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Represents a equals test with its right.
  */
-public final class SpreadsheetFormatEqualsParserToken extends SpreadsheetFormatConditionParserToken<SpreadsheetFormatEqualsParserToken> {
+public final class SpreadsheetFormatEqualsParserToken extends SpreadsheetFormatConditionParserToken {
 
     static SpreadsheetFormatEqualsParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetFormatEqualsParserToken(copyAndCheckTokensFailIfEmpty(value),

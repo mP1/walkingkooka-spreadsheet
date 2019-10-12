@@ -49,7 +49,7 @@ final class ExpressionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorFor
 
     SpreadsheetFormatColorParserToken color;
     SpreadsheetFormatter formatter;
-    SpreadsheetFormatConditionParserToken<?> condition;
+    SpreadsheetFormatConditionParserToken condition;
 
     /**
      * Factory that returns a {@link SpreadsheetFormatter} combining color and defaulting the condition if necessary.
@@ -65,7 +65,7 @@ final class ExpressionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorFor
             formatter = SpreadsheetFormatters.color(color, formatter);
         }
 
-        SpreadsheetFormatConditionParserToken<?> condition = this.condition;
+        SpreadsheetFormatConditionParserToken condition = this.condition;
         if (null == condition) {
             switch (numberFormatters) {
                 case 1:

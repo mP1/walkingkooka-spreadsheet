@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * A token that contains number formatting tokens.
  */
-public final class SpreadsheetFormatNumberParserToken extends SpreadsheetFormatParentParserToken<SpreadsheetFormatNumberParserToken> {
+public final class SpreadsheetFormatNumberParserToken extends SpreadsheetFormatParentParserToken {
 
     /**
      * Factory that creates a new {@link SpreadsheetFormatNumberParserToken}.
