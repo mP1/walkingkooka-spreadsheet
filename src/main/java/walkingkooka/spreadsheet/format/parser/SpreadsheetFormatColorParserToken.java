@@ -27,7 +27,7 @@ import java.util.Optional;
 /**
  * A token that contains a color declaration which may be a name or color number.
  */
-public final class SpreadsheetFormatColorParserToken extends SpreadsheetFormatParentParserToken<SpreadsheetFormatColorParserToken> {
+public final class SpreadsheetFormatColorParserToken extends SpreadsheetFormatParentParserToken {
 
     /**
      * Factory that creates a new {@link SpreadsheetFormatColorParserToken}.

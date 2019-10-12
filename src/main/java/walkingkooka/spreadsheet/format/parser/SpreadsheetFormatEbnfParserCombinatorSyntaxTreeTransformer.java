@@ -17,15 +17,12 @@
 
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.RepeatedOrSequenceParserToken;
-import walkingkooka.text.cursor.parser.RepeatedParserToken;
-import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.text.cursor.parser.StringParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfAlternativeParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfConcatenationParserToken;
@@ -170,9 +167,9 @@ final class SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer implement
     }
 
     private static List<ParserToken> clean0(final ParserToken token) {
-        return Cast.to(token.cast(RepeatedOrSequenceParserToken.class)
+        return token.cast(RepeatedOrSequenceParserToken.class)
                 .flat()
-                .value());
+                .value();
     }
 
     /**

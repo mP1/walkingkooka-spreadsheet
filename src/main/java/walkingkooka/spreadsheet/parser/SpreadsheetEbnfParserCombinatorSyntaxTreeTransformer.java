@@ -22,6 +22,7 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.text.cursor.parser.RepeatedOrSequenceParserToken;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfAlternativeParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfConcatenationParserToken;
@@ -84,7 +85,7 @@ final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer implements Ebnf
     private static final EbnfIdentifierName PERCENTAGE_IDENTIFIER = EbnfIdentifierName.with("PERCENTAGE");
 
     private static List<ParserToken> clean(final ParserToken token) {
-        return token.cast(SequenceParserToken.class)
+        return token.cast(RepeatedOrSequenceParserToken.class)
                 .flat()
                 .value();
     }

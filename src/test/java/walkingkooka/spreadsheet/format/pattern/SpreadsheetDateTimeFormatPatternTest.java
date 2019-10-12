@@ -40,8 +40,7 @@ import java.time.temporal.Temporal;
 import java.util.List;
 
 public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetDateTimeFormatPattern,
-        SpreadsheetFormatDateTimeParserToken,
-        LocalDateTime> {
+        SpreadsheetFormatDateTimeParserToken> {
 
     @Test
     public void testWithCurrencyFails() {

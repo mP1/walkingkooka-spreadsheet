@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Represents a greater than equals test with its parameters.
  */
-public final class SpreadsheetFormatGreaterThanEqualsParserToken extends SpreadsheetFormatConditionParserToken<SpreadsheetFormatGreaterThanEqualsParserToken> {
+public final class SpreadsheetFormatGreaterThanEqualsParserToken extends SpreadsheetFormatConditionParserToken {
 
     static SpreadsheetFormatGreaterThanEqualsParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetFormatGreaterThanEqualsParserToken(copyAndCheckTokensFailIfEmpty(value),

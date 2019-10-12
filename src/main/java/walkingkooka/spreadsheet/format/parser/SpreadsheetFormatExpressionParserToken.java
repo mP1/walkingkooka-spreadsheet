@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * A token that contains up to 4 sub expressions.
  */
-public final class SpreadsheetFormatExpressionParserToken extends SpreadsheetFormatParentParserToken<SpreadsheetFormatExpressionParserToken> {
+public final class SpreadsheetFormatExpressionParserToken extends SpreadsheetFormatParentParserToken {
 
     /**
      * Factory that creates a new {@link SpreadsheetFormatExpressionParserToken}.
