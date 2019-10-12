@@ -32,8 +32,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.List;
 
 public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetTextFormatPattern,
-        SpreadsheetFormatTextParserToken,
-        String> {
+        SpreadsheetFormatTextParserToken> {
 
     @Test
     public void testWithAmpmFails() {

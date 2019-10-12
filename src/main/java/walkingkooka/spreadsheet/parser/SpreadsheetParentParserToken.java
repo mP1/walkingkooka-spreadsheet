@@ -25,7 +25,7 @@ import java.util.List;
  * Base class for a token that contain another child token, with the class knowing the cardinality.
  */
 abstract class SpreadsheetParentParserToken<T extends SpreadsheetParentParserToken> extends SpreadsheetParserToken
-        implements ParentParserToken<T> {
+        implements ParentParserToken {
 
     SpreadsheetParentParserToken(final List<ParserToken> value, final String text) {
         super(text);

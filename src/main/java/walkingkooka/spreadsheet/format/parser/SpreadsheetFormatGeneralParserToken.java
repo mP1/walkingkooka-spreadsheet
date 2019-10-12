@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * A token that includes a general literal and possibly other tokens such as whitespace.
  */
-public final class SpreadsheetFormatGeneralParserToken extends SpreadsheetFormatParentParserToken<SpreadsheetFormatGeneralParserToken> {
+public final class SpreadsheetFormatGeneralParserToken extends SpreadsheetFormatParentParserToken {
 
     /**
      * Factory that creates a new {@link SpreadsheetFormatGeneralParserToken}.

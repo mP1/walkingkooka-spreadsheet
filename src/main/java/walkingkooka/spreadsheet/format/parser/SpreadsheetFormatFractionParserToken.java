@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * A token that contains an fraction.
  */
-public final class SpreadsheetFormatFractionParserToken extends SpreadsheetFormatParentParserToken<SpreadsheetFormatFractionParserToken> {
+public final class SpreadsheetFormatFractionParserToken extends SpreadsheetFormatParentParserToken {
 
     /**
      * Factory that creates a new {@link SpreadsheetFormatFractionParserToken}.

@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Represents a not equals test operation with its parameters.
  */
-public final class SpreadsheetFormatNotEqualsParserToken extends SpreadsheetFormatConditionParserToken<SpreadsheetFormatNotEqualsParserToken> {
+public final class SpreadsheetFormatNotEqualsParserToken extends SpreadsheetFormatConditionParserToken {
 
     static SpreadsheetFormatNotEqualsParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetFormatNotEqualsParserToken(copyAndCheckTokensFailIfEmpty(value),

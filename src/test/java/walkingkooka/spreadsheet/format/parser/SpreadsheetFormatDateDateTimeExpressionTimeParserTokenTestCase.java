@@ -16,7 +16,11 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
-public abstract class SpreadsheetFormatDateDateTimeExpressionTimeParserTokenTestCase<T extends SpreadsheetFormatParentParserToken<T>> extends SpreadsheetFormatParentParserTokenTestCase<T> {
+public abstract class SpreadsheetFormatDateDateTimeExpressionTimeParserTokenTestCase<T extends SpreadsheetFormatParentParserToken> extends SpreadsheetFormatParentParserTokenTestCase<T> {
+
+    SpreadsheetFormatDateDateTimeExpressionTimeParserTokenTestCase() {
+        super();
+    }
 
     @Override
     public void testWithEmptyTextFails() {

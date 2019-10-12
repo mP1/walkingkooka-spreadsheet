@@ -26,7 +26,7 @@ import java.util.Objects;
 /**
  * A token that contains a text formatting tokens.
  */
-public final class SpreadsheetFormatTextParserToken extends SpreadsheetFormatParentParserToken<SpreadsheetFormatTextParserToken> {
+public final class SpreadsheetFormatTextParserToken extends SpreadsheetFormatParentParserToken {
 
     /**
      * Factory that creates a new {@link SpreadsheetFormatTextParserToken}.
