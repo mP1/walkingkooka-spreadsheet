@@ -39,8 +39,8 @@ public final class SpreadsheetFormatNumberParserTokenTest extends SpreadsheetFor
         final List<ParserToken> visited = Lists.array();
 
         final SpreadsheetFormatNumberParserToken token = this.createToken();
-        final SpreadsheetFormatParserToken text = token.value().get(0).cast();
-        final SpreadsheetFormatParserToken digit = token.value().get(1).cast();
+        final SpreadsheetFormatParserToken text = token.value().get(0).cast(SpreadsheetFormatParserToken.class);
+        final SpreadsheetFormatParserToken digit = token.value().get(1).cast(SpreadsheetFormatParserToken.class);
 
         new FakeSpreadsheetFormatParserTokenVisitor() {
             @Override
@@ -114,7 +114,7 @@ public final class SpreadsheetFormatNumberParserTokenTest extends SpreadsheetFor
 
     @Override
     List<ParserToken> tokens() {
-        return Lists.of(this.text1(), this.digit().cast());
+        return Lists.of(this.text1(), this.digit());
     }
 
     @Override

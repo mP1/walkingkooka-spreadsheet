@@ -4784,7 +4784,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 return SpreadsheetParsers.expression()
                         .orFailIfCursorNotEmpty(ParserReporters.basic())
                         .parse(TextCursors.charSequence(formula), SpreadsheetParserContexts.basic(DateTimeContexts.fake(), converterContext()))
-                        .get().cast();
+                        .get()
+                        .cast(SpreadsheetParserToken.class);
             }
 
             @Override
@@ -4977,12 +4978,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
      */
     private Optional<ExpressionNode> parseFormula(final SpreadsheetFormula formula) {
         final String formulaText = formula.text();
-        final SpreadsheetParserToken token = SpreadsheetParsers.expression()
+        return SpreadsheetParsers.expression()
                 .parse(TextCursors.charSequence(formulaText),
                         SpreadsheetParserContexts.basic(this.dateTimeContext(), this.decimalNumberContext()))
                 .orElseThrow(() -> new AssertionError("Failed to parse " + CharSequences.quote(formulaText)))
-                .cast();
-        return token.expressionNode();
+                .cast(SpreadsheetParserToken.class)
+                .expressionNode();
     }
 
     private void loadCellStoreAndCheck(final SpreadsheetCellStore store,
