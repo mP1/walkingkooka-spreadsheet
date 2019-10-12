@@ -28,7 +28,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetFormatParentParserTokenTestCase<T extends SpreadsheetFormatParentParserToken<T>> extends SpreadsheetFormatParserTokenTestCase<T> {
+public abstract class SpreadsheetFormatParentParserTokenTestCase<T extends SpreadsheetFormatParentParserToken> extends SpreadsheetFormatParserTokenTestCase<T> {
 
     final static String NUMBER1 = "1";
     final static String NUMBER2 = "22";
@@ -79,7 +79,7 @@ public abstract class SpreadsheetFormatParentParserTokenTestCase<T extends Sprea
 
     abstract List<ParserToken> tokens();
 
-    final void checkValue(final SpreadsheetFormatParentParserToken<?> token, final List<ParserToken> value) {
+    final void checkValue(final SpreadsheetFormatParentParserToken token, final List<ParserToken> value) {
         assertEquals(value, token.value(), "value");
     }
 

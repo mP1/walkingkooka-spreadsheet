@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * A token that contains an exponent.
  */
-public final class SpreadsheetFormatExponentParserToken extends SpreadsheetFormatParentParserToken<SpreadsheetFormatExponentParserToken> {
+public final class SpreadsheetFormatExponentParserToken extends SpreadsheetFormatParentParserToken {
 
     /**
      * Factory that creates a new {@link SpreadsheetFormatExponentParserToken}.

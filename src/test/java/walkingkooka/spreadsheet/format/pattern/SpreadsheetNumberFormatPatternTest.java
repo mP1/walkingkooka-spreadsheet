@@ -37,8 +37,7 @@ import java.math.MathContext;
 import java.util.List;
 
 public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetNumberFormatPattern,
-        SpreadsheetFormatNumberParserToken,
-        BigDecimal> {
+        SpreadsheetFormatNumberParserToken> {
 
     @Test
     public void testWithAmpmFails() {

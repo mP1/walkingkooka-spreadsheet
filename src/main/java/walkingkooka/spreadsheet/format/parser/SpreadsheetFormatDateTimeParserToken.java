@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * A token that contains date/time formatting tokens.
  */
-public final class SpreadsheetFormatDateTimeParserToken extends SpreadsheetFormatParentParserToken<SpreadsheetFormatDateTimeParserToken> {
+public final class SpreadsheetFormatDateTimeParserToken extends SpreadsheetFormatParentParserToken {
 
     /**
      * Factory that creates a new {@link SpreadsheetFormatDateTimeParserToken}.

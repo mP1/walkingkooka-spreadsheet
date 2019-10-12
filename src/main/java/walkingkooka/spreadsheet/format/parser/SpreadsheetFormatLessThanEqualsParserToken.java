@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Represents a less than equals test operation with its parameters.
  */
-public final class SpreadsheetFormatLessThanEqualsParserToken extends SpreadsheetFormatConditionParserToken<SpreadsheetFormatLessThanEqualsParserToken> {
+public final class SpreadsheetFormatLessThanEqualsParserToken extends SpreadsheetFormatConditionParserToken {
 
     static SpreadsheetFormatLessThanEqualsParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetFormatLessThanEqualsParserToken(copyAndCheckTokensFailIfEmpty(value),
