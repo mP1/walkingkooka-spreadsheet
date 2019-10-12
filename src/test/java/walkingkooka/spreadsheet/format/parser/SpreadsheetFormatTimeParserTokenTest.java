@@ -39,8 +39,8 @@ public final class SpreadsheetFormatTimeParserTokenTest extends SpreadsheetForma
         final List<ParserToken> visited = Lists.array();
 
         final SpreadsheetFormatTimeParserToken token = this.createToken();
-        final SpreadsheetFormatParserToken text = token.value().get(0).cast();
-        final SpreadsheetFormatParserToken hour = token.value().get(1).cast();
+        final SpreadsheetFormatParserToken text = token.value().get(0).cast(SpreadsheetFormatParserToken.class);
+        final SpreadsheetFormatParserToken hour = token.value().get(1).cast(SpreadsheetFormatParserToken.class);
 
         new FakeSpreadsheetFormatParserTokenVisitor() {
             @Override
@@ -115,7 +115,7 @@ public final class SpreadsheetFormatTimeParserTokenTest extends SpreadsheetForma
     @Override
     List<ParserToken> tokens() {
         return Lists.of(this.text1(),
-                SpreadsheetFormatParserToken.hour("h", "h").cast());
+                SpreadsheetFormatParserToken.hour("h", "h"));
     }
 
     @Override

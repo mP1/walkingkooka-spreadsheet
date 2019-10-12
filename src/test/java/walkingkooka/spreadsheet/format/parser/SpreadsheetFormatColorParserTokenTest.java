@@ -47,10 +47,10 @@ public final class SpreadsheetFormatColorParserTokenTest extends SpreadsheetForm
         final List<ParserToken> visited = Lists.array();
 
         final SpreadsheetFormatColorParserToken token = this.createToken();
-        final SpreadsheetFormatParserToken open = token.value().get(0).cast();
-        final SpreadsheetFormatParserToken name = token.value().get(1).cast();
-        final SpreadsheetFormatParserToken whitespace = token.value().get(2).cast();
-        final SpreadsheetFormatParserToken close = token.value().get(3).cast();
+        final SpreadsheetFormatParserToken open = token.value().get(0).cast(SpreadsheetFormatParserToken.class);
+        final SpreadsheetFormatParserToken name = token.value().get(1).cast(SpreadsheetFormatParserToken.class);
+        final SpreadsheetFormatParserToken whitespace = token.value().get(2).cast(SpreadsheetFormatParserToken.class);
+        final SpreadsheetFormatParserToken close = token.value().get(3).cast(SpreadsheetFormatParserToken.class);
 
         new FakeSpreadsheetFormatParserTokenVisitor() {
             @Override

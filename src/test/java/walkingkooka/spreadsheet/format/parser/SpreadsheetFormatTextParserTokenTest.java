@@ -64,8 +64,8 @@ public final class SpreadsheetFormatTextParserTokenTest extends SpreadsheetForma
         final List<ParserToken> visited = Lists.array();
 
         final SpreadsheetFormatTextParserToken token = this.createToken();
-        final SpreadsheetFormatParserToken text = token.value().get(0).cast();
-        final SpreadsheetFormatParserToken placeholder = token.value().get(1).cast();
+        final SpreadsheetFormatParserToken text = token.value().get(0).cast(SpreadsheetFormatParserToken.class);
+        final SpreadsheetFormatParserToken placeholder = token.value().get(1).cast(SpreadsheetFormatParserToken.class);
 
         new FakeSpreadsheetFormatParserTokenVisitor() {
             @Override
@@ -140,7 +140,7 @@ public final class SpreadsheetFormatTextParserTokenTest extends SpreadsheetForma
     @Override
     List<ParserToken> tokens() {
         return Lists.of(this.text1(),
-                SpreadsheetFormatParserToken.textPlaceholder("@", "@").cast());
+                SpreadsheetFormatParserToken.textPlaceholder("@", "@"));
     }
 
     @Override

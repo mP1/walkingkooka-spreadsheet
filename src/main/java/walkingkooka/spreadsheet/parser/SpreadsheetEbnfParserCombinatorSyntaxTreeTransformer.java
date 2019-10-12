@@ -59,32 +59,33 @@ final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer implements Ebnf
 
     private static ParserToken function(final ParserToken token,
                                         final ParserContext context) {
-        return SpreadsheetParserToken.function(clean(token.cast()), token.text());
+        return SpreadsheetParserToken.function(clean(token), token.text());
     }
 
     private static ParserToken group(final ParserToken token,
                                      final ParserContext context) {
-        return SpreadsheetParserToken.group(clean(token.cast()), token.text());
+        return SpreadsheetParserToken.group(clean(token), token.text());
     }
 
     private static final EbnfIdentifierName GROUP_IDENTIFIER = EbnfIdentifierName.with("GROUP");
 
     private static ParserToken negative(final ParserToken token,
                                         final ParserContext context) {
-        return SpreadsheetParserToken.negative(clean(token.cast()), token.text());
+        return SpreadsheetParserToken.negative(clean(token), token.text());
     }
 
     private static final EbnfIdentifierName NEGATIVE_IDENTIFIER = EbnfIdentifierName.with("NEGATIVE");
 
     private static ParserToken percentage(final ParserToken token,
                                           final ParserContext context) {
-        return SpreadsheetParserToken.percentage(clean(token.cast()), token.text());
+        return SpreadsheetParserToken.percentage(clean(token), token.text());
     }
 
     private static final EbnfIdentifierName PERCENTAGE_IDENTIFIER = EbnfIdentifierName.with("PERCENTAGE");
 
-    private static List<ParserToken> clean(final SequenceParserToken token) {
-        return token.flat()
+    private static List<ParserToken> clean(final ParserToken token) {
+        return token.cast(SequenceParserToken.class)
+                .flat()
                 .value();
     }
 

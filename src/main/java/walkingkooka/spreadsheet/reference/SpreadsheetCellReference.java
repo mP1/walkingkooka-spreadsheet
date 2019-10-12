@@ -54,10 +54,11 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
      */
     static SpreadsheetCellReference parseCellReference0(final String text) {
         try {
-            final SpreadsheetCellReferenceParserToken token = PARSER.parse(TextCursors.charSequence(text),
+            return PARSER.parse(TextCursors.charSequence(text),
                     CONTEXT)
-                    .get().cast();
-            return token.cell();
+                    .get()
+                    .cast(SpreadsheetCellReferenceParserToken.class)
+                    .cell();
         } catch (final ParserException cause) {
             throw new IllegalArgumentException(cause.getMessage(), cause);
         }

@@ -39,8 +39,8 @@ public final class SpreadsheetFormatDateParserTokenTest extends SpreadsheetForma
         final List<ParserToken> visited = Lists.array();
 
         final SpreadsheetFormatDateParserToken token = this.createToken();
-        final SpreadsheetFormatParserToken text = token.value().get(0).cast();
-        final SpreadsheetFormatParserToken day = token.value().get(1).cast();
+        final SpreadsheetFormatParserToken text = token.value().get(0).cast(SpreadsheetFormatParserToken.class);
+        final SpreadsheetFormatParserToken day = token.value().get(1).cast(SpreadsheetFormatParserToken.class);
 
         new FakeSpreadsheetFormatParserTokenVisitor() {
             @Override
