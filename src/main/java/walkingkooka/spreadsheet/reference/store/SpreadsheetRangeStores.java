@@ -28,7 +28,7 @@ public final class SpreadsheetRangeStores implements PublicStaticHelper {
      * {@see FakeSpreadsheetRangeStore}
      */
     public static <V> SpreadsheetRangeStore<V> fake() {
-        return new FakeSpreadsheetRangeStore<V>();
+        return new FakeSpreadsheetRangeStore<>();
     }
 
     /**

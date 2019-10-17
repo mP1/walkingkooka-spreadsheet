@@ -25,7 +25,7 @@ import java.util.Comparator;
 final class TreeMapSpreadsheetRangeStoreBottomRightEntry<V> extends TreeMapSpreadsheetRangeStoreEntry<V> {
 
     static <V> TreeMapSpreadsheetRangeStoreBottomRightEntry<V> with(final SpreadsheetRange range, final V value) {
-        return new TreeMapSpreadsheetRangeStoreBottomRightEntry<V>(range, value);
+        return new TreeMapSpreadsheetRangeStoreBottomRightEntry<>(range, value);
     }
 
     private TreeMapSpreadsheetRangeStoreBottomRightEntry(final SpreadsheetRange range, final V value) {

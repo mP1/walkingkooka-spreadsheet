@@ -242,7 +242,7 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
         return FUNCTION;
     }
 
-    private final Function<SpreadsheetCell, TextStyle> FUNCTION = new Function<SpreadsheetCell, TextStyle>() {
+    private final Function<SpreadsheetCell, TextStyle> FUNCTION = new Function<>() {
 
         @Override
         public TextStyle apply(final SpreadsheetCell spreadsheetCell) {
