@@ -27,7 +27,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
- * A {@link Consumer} used by {@link SpreadsheetRange#cells(List, Consumer, Consumer)}.
+ * A {@link Consumer} used by {@link SpreadsheetRange#cells(Collection, Consumer, Consumer)}.
  */
 final class SpreadsheetRangeCellsConsumer implements Consumer<SpreadsheetCellReference> {
 
