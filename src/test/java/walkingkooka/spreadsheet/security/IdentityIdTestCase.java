@@ -37,7 +37,7 @@ public abstract class IdentityIdTestCase<I extends IdentityId & Comparable<I>> i
 
     @Test
     public final void testCreate() {
-        final Long value = 123L;
+        final long value = 123L;
         final I id = this.createId(value);
         assertEquals(value, id.value(), "value");
     }
