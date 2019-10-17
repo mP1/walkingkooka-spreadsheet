@@ -27,7 +27,7 @@ import java.util.Set;
 final class TreeMapSpreadsheetRangeStoreTopLeftEntry<V> extends TreeMapSpreadsheetRangeStoreEntry<V> {
 
     static <V> TreeMapSpreadsheetRangeStoreTopLeftEntry<V> with(final SpreadsheetRange range, final V value) {
-        return new TreeMapSpreadsheetRangeStoreTopLeftEntry<V>(range, value);
+        return new TreeMapSpreadsheetRangeStoreTopLeftEntry<>(range, value);
     }
 
     private TreeMapSpreadsheetRangeStoreTopLeftEntry(final SpreadsheetRange range, final V value) {

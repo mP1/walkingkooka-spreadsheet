@@ -35,7 +35,7 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerSpreads
     public void testToString() {
         final ExpressionReferenceSpreadsheetCellReferencesBiConsumer f = ExpressionReferenceSpreadsheetCellReferencesBiConsumer.with(SpreadsheetLabelStores.fake(),
                 SpreadsheetRangeStores.fake());
-        final Consumer<SpreadsheetCellReference> references = new Consumer<SpreadsheetCellReference>() {
+        final Consumer<SpreadsheetCellReference> references = new Consumer<>() {
             @Override
             public void accept(final SpreadsheetCellReference reference) {
                 throw new UnsupportedOperationException();
