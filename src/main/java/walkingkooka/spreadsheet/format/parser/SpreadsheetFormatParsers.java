@@ -461,7 +461,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
     // helpers..............................................................................................................
 
-    /**
+    /*
      * Parsers the grammar and returns the selected parser.
      */
     static {

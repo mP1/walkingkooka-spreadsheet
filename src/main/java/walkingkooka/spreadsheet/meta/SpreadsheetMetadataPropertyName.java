@@ -448,7 +448,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
         return with(node.name().value());
     }
 
-    /**
+    /*
      * Force class initialization of the following types which will ensure they also {@link walkingkooka.tree.json.marshall.JsonNodeContext#register(String, BiFunction, BiFunction, Class, Class[])}
      */
     static {
