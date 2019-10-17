@@ -154,14 +154,12 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                            final Function<Optional<Locale>, SpreadsheetMetadata> createMetadata,
                            final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
                            final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToRepository) {
-        assertThrows(NullPointerException.class, () -> {
-            MemorySpreadsheetContext.with(base,
-                    contentType,
-                    fractioner,
-                    createMetadata,
-                    spreadsheetIdFunctions,
-                    spreadsheetIdToRepository);
-        });
+        assertThrows(NullPointerException.class, () -> MemorySpreadsheetContext.with(base,
+                contentType,
+                fractioner,
+                createMetadata,
+                spreadsheetIdFunctions,
+                spreadsheetIdToRepository));
     }
 
     @Test

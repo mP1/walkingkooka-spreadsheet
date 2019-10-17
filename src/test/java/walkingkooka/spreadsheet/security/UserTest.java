@@ -35,9 +35,7 @@ public final class UserTest extends IdentityTestCase<User, UserId> {
 
     @Test
     public void testWithNullEmailFails() {
-        assertThrows(NullPointerException.class, () -> {
-            User.with(this.createId(), null);
-        });
+        assertThrows(NullPointerException.class, () -> User.with(this.createId(), null));
     }
 
     @Test

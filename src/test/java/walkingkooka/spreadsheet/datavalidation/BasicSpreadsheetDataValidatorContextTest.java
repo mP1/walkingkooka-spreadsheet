@@ -34,23 +34,17 @@ public final class BasicSpreadsheetDataValidatorContextTest implements Spreadshe
 
     @Test
     public void testWithNullCellReferenceFails() {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetDataValidatorContext.with(null, this.value(), this.expressionEvaluationContext());
-        });
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetDataValidatorContext.with(null, this.value(), this.expressionEvaluationContext()));
     }
 
     @Test
     public void testWithNullValueFails() {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetDataValidatorContext.with(this.cellReference(), null, this.expressionEvaluationContext());
-        });
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetDataValidatorContext.with(this.cellReference(), null, this.expressionEvaluationContext()));
     }
 
     @Test
     public void testWithNullExpressionEvaluationContextFails() {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetDataValidatorContext.with(this.cellReference(), this.value(), null);
-        });
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetDataValidatorContext.with(this.cellReference(), this.value(), null));
     }
 
     @Test

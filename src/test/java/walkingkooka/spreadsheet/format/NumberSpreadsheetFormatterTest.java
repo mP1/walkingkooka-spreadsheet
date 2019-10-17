@@ -1212,16 +1212,12 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
 
     @Test
     public void testExponentDecimalFails() {
-        assertThrows(ParserReporterException.class, () -> {
-            this.createFormatter("#E#.");
-        });
+        assertThrows(ParserReporterException.class, () -> this.createFormatter("#E#."));
     }
 
     @Test
     public void testExponentExponentFails() {
-        assertThrows(ParserReporterException.class, () -> {
-            this.createFormatter("#E0E0");
-        });
+        assertThrows(ParserReporterException.class, () -> this.createFormatter("#E0E0"));
     }
 
     //Number............................................................................................................

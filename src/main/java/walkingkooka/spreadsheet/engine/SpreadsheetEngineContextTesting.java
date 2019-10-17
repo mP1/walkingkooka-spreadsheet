@@ -39,9 +39,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
 
     @Test
     default void testParseFormulaNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createContext().parseFormula(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createContext().parseFormula(null));
     }
 
     default void parseFormulaAndCheck(final String expression,
@@ -63,9 +61,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
 
     @Test
     default void testEvaluateNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createContext().evaluate(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createContext().evaluate(null));
     }
 
     default void evaluateAndCheck(final ExpressionNode expression,
@@ -87,9 +83,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
 
     @Test
     default void testParsePatternNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createContext().parsePattern(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createContext().parsePattern(null));
     }
 
     default void parsePatternAndCheck(final String pattern,
@@ -118,9 +112,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
 
     @Test
     default void testFormatNullFormatterFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createContext().format("1", null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createContext().format("1", null));
     }
 
     default void formatAndCheck(final Object value,

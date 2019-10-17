@@ -53,9 +53,7 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
                 .setWindow(this.differentWindow());
         final List<SpreadsheetRange> window = delta.window();
 
-        assertThrows(UnsupportedOperationException.class, () -> {
-            window.add(SpreadsheetRange.parseRange("A1:A2"));
-        });
+        assertThrows(UnsupportedOperationException.class, () -> window.add(SpreadsheetRange.parseRange("A1:A2")));
 
         this.checkWindow(delta, this.differentWindow());
     }
@@ -65,9 +63,7 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
         final D delta = this.createSpreadsheetDelta();
         final Set<SpreadsheetCell> cells = delta.cells();
 
-        assertThrows(UnsupportedOperationException.class, () -> {
-            cells.add(this.a1());
-        });
+        assertThrows(UnsupportedOperationException.class, () -> cells.add(this.a1()));
 
         this.checkCells(delta, this.cells());
     }

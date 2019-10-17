@@ -37,9 +37,7 @@ public abstract class SpreadsheetContextHateosHandlerTestCase2<H extends Spreads
 
     @Test
     public final void testWithNullSpreadsheetContextFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createHandler(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createHandler(null));
     }
 
     @Override

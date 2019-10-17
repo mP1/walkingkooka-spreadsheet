@@ -32,9 +32,7 @@ public final class SpreadsheetFormatColorParserTokenTest extends SpreadsheetForm
 
     @Test
     public void testWithMissingColorNameOrColorNumberFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            SpreadsheetFormatColorParserToken.with(this.missingColorNameOrColorNumber(), "[RED]");
-        });
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetFormatColorParserToken.with(this.missingColorNameOrColorNumber(), "[RED]"));
     }
 
     private List<ParserToken> missingColorNameOrColorNumber() {

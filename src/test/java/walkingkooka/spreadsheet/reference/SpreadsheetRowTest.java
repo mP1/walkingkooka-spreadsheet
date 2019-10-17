@@ -43,9 +43,7 @@ public final class SpreadsheetRowTest implements ClassTesting2<SpreadsheetRow>,
 
     @Test
     public void testWithNullReferenceFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetRow.with(null);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetRow.with(null));
     }
 
     @Test
@@ -59,9 +57,7 @@ public final class SpreadsheetRowTest implements ClassTesting2<SpreadsheetRow>,
 
     @Test
     public void testSetReferenceNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createRow().setReference(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createRow().setReference(null));
     }
 
     @Test

@@ -51,9 +51,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     @Test
     public void testWithNullExpressionFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetFormula.with(null);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetFormula.with(null));
     }
 
     @Test
@@ -74,9 +72,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     @Test
     public void testSetTextNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createObject().setText(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createObject().setText(null));
     }
 
     @Test
@@ -106,9 +102,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     @Test
     public void testSetFormulaNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createObject().setText(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createObject().setText(null));
     }
 
     @Test
@@ -161,9 +155,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     @Test
     public void testSetExpressionNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createObject().setExpression(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createObject().setExpression(null));
     }
 
     @Test
@@ -219,9 +211,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     @Test
     public void testSetErrorNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createObject().setError(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createObject().setError(null));
     }
 
     @Test

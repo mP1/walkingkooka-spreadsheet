@@ -38,9 +38,7 @@ public abstract class SpreadsheetFormatter3TestCase<F extends SpreadsheetFormatt
 
     @Test
     public final void testWithNullParserTokenFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createFormatter0(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createFormatter0(null));
     }
 
     @Override

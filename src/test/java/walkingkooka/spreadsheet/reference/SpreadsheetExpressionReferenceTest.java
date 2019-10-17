@@ -34,9 +34,7 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
 
     @Test
     public void testIsTextCellReferenceNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetExpressionReference.isTextCellReference(null);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetExpressionReference.isTextCellReference(null));
     }
 
     @Test

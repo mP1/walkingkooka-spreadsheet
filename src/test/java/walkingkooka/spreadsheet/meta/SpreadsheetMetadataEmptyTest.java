@@ -55,9 +55,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
 
     @Test
     public void testHateosLinkIdMissingIdFails() {
-        assertThrows(IllegalStateException.class, () -> {
-            SpreadsheetMetadataEmpty.instance().hateosLinkId();
-        });
+        assertThrows(IllegalStateException.class, () -> SpreadsheetMetadataEmpty.instance().hateosLinkId());
     }
 
     // SpreadsheetMetadataVisitor.......................................................................................

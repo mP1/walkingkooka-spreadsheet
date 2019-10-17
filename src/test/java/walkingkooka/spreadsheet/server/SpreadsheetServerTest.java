@@ -641,9 +641,7 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
                         .query()
                         .parameters()
                         .entrySet()
-                        .forEach(e -> {
-                            parameters.put(HttpRequestParameterName.with(e.getKey().value()), e.getValue());
-                        });
+                        .forEach(e -> parameters.put(HttpRequestParameterName.with(e.getKey().value()), e.getValue()));
 
                 return Maps.immutable(parameters);
             }

@@ -37,37 +37,27 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
 
     @Test
     public void testCreateContainsSeparatorFails() {
-        assertThrows(InvalidCharacterException.class, () -> {
-            SpreadsheetLabelName.with("xyz" + PropertiesPath.SEPARATOR.string());
-        });
+        assertThrows(InvalidCharacterException.class, () -> SpreadsheetLabelName.with("xyz" + PropertiesPath.SEPARATOR.string()));
     }
 
     @Test
     public void testWithInvalidInitialFails() {
-        assertThrows(InvalidCharacterException.class, () -> {
-            SpreadsheetLabelName.with("1abc");
-        });
+        assertThrows(InvalidCharacterException.class, () -> SpreadsheetLabelName.with("1abc"));
     }
 
     @Test
     public void testWithInvalidPartFails() {
-        assertThrows(InvalidCharacterException.class, () -> {
-            SpreadsheetLabelName.with("abc$def");
-        });
+        assertThrows(InvalidCharacterException.class, () -> SpreadsheetLabelName.with("abc$def"));
     }
 
     @Test
     public void testCellReferenceFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            SpreadsheetLabelName.with("A1");
-        });
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetLabelName.with("A1"));
     }
 
     @Test
     public void testCellReferenceFails2() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            SpreadsheetLabelName.with("AB12");
-        });
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetLabelName.with("AB12"));
     }
 
     @Test//(expected = IllegalArgumentException.class)

@@ -114,9 +114,7 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
 
     @Test
     public void testSaveReferenceFails() {
-        assertThrows(UnsupportedOperationException.class, () -> {
-            this.createStore().saveReferences(this.id(), Sets.of(this.a1()));
-        });
+        assertThrows(UnsupportedOperationException.class, () -> this.createStore().saveReferences(this.id(), Sets.of(this.a1())));
     }
 
     @Override
@@ -145,9 +143,7 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
 
     @Test
     public void testAddReferenceFails() {
-        assertThrows(UnsupportedOperationException.class, () -> {
-            this.createStore().addReference(TargetAndSpreadsheetCellReference.with(this.id(), this.b1()));
-        });
+        assertThrows(UnsupportedOperationException.class, () -> this.createStore().addReference(TargetAndSpreadsheetCellReference.with(this.id(), this.b1())));
     }
 
     @Override
@@ -156,9 +152,7 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
 
     @Test
     public void testRemoveReferenceFails() {
-        assertThrows(UnsupportedOperationException.class, () -> {
-            this.createStore().removeReference(TargetAndSpreadsheetCellReference.with(this.id(), this.b1()));
-        });
+        assertThrows(UnsupportedOperationException.class, () -> this.createStore().removeReference(TargetAndSpreadsheetCellReference.with(this.id(), this.b1())));
     }
 
     @Override

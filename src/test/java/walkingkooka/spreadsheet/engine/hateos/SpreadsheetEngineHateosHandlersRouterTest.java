@@ -285,20 +285,18 @@ public final class SpreadsheetEngineHateosHandlersRouterTest implements ClassTes
                              final HateosHandler<SpreadsheetCellReference,
                                      SpreadsheetDelta,
                                      SpreadsheetDelta> saveCell) {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetEngineHateosHandlersRouter.router(base,
-                    contentType,
-                    deleteColumns,
-                    deleteRows,
-                    fillCells,
-                    insertColumns,
-                    insertRows,
-                    loadCellClearValueErrorSkipEvaluate,
-                    loadCellSkipEvaluate,
-                    loadCellForceRecompute,
-                    loadCellComputeIfNecessary,
-                    saveCell);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetEngineHateosHandlersRouter.router(base,
+                contentType,
+                deleteColumns,
+                deleteRows,
+                fillCells,
+                insertColumns,
+                insertRows,
+                loadCellClearValueErrorSkipEvaluate,
+                loadCellSkipEvaluate,
+                loadCellForceRecompute,
+                loadCellComputeIfNecessary,
+                saveCell));
     }
 
     // cell.............................................................................................................

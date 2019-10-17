@@ -37,9 +37,7 @@ public final class SpreadsheetMetadataNonEmptyMapTest implements MapTesting2<Spr
 
     @Test
     public void testWithInvalidPropertyFails() {
-        assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> {
-            SpreadsheetMetadataNonEmptyMap.with(Maps.of(SpreadsheetMetadataPropertyName.CREATOR, null));
-        });
+        assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> SpreadsheetMetadataNonEmptyMap.with(Maps.of(SpreadsheetMetadataPropertyName.CREATOR, null)));
     }
 
     @Test
@@ -71,9 +69,7 @@ public final class SpreadsheetMetadataNonEmptyMapTest implements MapTesting2<Spr
 
     @Test
     public void testPutFails() {
-        assertThrows(UnsupportedOperationException.class, () -> {
-            this.createMap().put(this.property1(), this.value1());
-        });
+        assertThrows(UnsupportedOperationException.class, () -> this.createMap().put(this.property1(), this.value1()));
     }
 
     @Test

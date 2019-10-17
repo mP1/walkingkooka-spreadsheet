@@ -36,9 +36,7 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
 
     @Test
     public void testWithNullStoreFails() {
-        assertThrows(NullPointerException.class, () -> {
-            ReadOnlySpreadsheetLabelStore.with(null);
-        });
+        assertThrows(NullPointerException.class, () -> ReadOnlySpreadsheetLabelStore.with(null));
     }
 
     @Test
