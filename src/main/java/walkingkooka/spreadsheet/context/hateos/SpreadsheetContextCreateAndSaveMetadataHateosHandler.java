@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * A {@link HateosHandler} that invokes {@link SpreadsheetContext#createMetadata(Optional<Locale>)}
+ * A {@link HateosHandler} that invokes {@link SpreadsheetContext#createMetadata(Optional)}
  */
 final class SpreadsheetContextCreateAndSaveMetadataHateosHandler extends SpreadsheetContextSpreadsheetMetadataStoreHateosHandler {
 
