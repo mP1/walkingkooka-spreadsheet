@@ -50,7 +50,7 @@ public final class SpreadsheetFunctionParserToken extends SpreadsheetParentParse
             throw new IllegalArgumentException("Function name missing from " + value);
         }
 
-        this.name = SpreadsheetFunctionNameParserToken.class.cast(name).value();
+        this.name = name.cast(SpreadsheetFunctionNameParserToken.class).value();
         this.parameters = without.subList(1, without.size());
     }
 

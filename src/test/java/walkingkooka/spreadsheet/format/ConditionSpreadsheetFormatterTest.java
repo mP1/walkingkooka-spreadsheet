@@ -176,7 +176,7 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatte
             @Override
             public Optional<SpreadsheetText> format(final Object value,
                                                     final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
-                return Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, String.class.cast(value)));
+                return Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, (String) value));
             }
 
             @Override
