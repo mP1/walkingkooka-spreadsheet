@@ -82,7 +82,7 @@ import java.util.stream.Collectors;
 /**
  * A spreadsheet server that uses the given {@link HttpServer} and some other dependencies.
  */
-public final class SpreadsheetServer implements HttpServer {
+final class SpreadsheetServer implements HttpServer {
 
     /**
      * Starts a server listening on http://localhost:8080 serving files from the current directory.
@@ -109,8 +109,8 @@ public final class SpreadsheetServer implements HttpServer {
     /**
      * Loads a default {@link SpreadsheetMetadata} and returns a factory {@link Function}.
      */
-    static Function<Optional<Locale>, SpreadsheetMetadata> createMetadata(final String path,
-                                                                          final SpreadsheetMetadataStore store) throws IOException {
+    private static Function<Optional<Locale>, SpreadsheetMetadata> createMetadata(final String path,
+                                                                                  final SpreadsheetMetadataStore store) throws IOException {
         return createMetadata(loadDefaultMetadata(path), store);
     }
 
@@ -128,7 +128,7 @@ public final class SpreadsheetServer implements HttpServer {
     /**
      * Loads a default {@link SpreadsheetMetadata} from the given {@link String path}.
      */
-    static SpreadsheetMetadata loadDefaultMetadata(final String path) throws IOException {
+    private static SpreadsheetMetadata loadDefaultMetadata(final String path) throws IOException {
         SpreadsheetMetadata.EMPTY.id(); // force SpreadsheetMetadata static initializers to register w/ Json marshal
 
         return JsonNodeUnmarshallContexts.basic()
@@ -189,7 +189,7 @@ public final class SpreadsheetServer implements HttpServer {
     /**
      * Creates a file server which serves files from the given {@link Path path}.
      */
-    static Function<UrlPath, Either<WebFile, HttpStatus>> fileServer(final Path path) {
+    private static Function<UrlPath, Either<WebFile, HttpStatus>> fileServer(final Path path) {
         return (p) -> {
             final Path file = Paths.get(path.toString(), p.value());
             return Files.isRegularFile(file) ?

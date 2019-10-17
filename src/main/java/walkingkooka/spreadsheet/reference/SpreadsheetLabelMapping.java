@@ -138,7 +138,7 @@ public final class SpreadsheetLabelMapping implements HashCodeEqualsDefined, Hat
         return new SpreadsheetLabelMapping(labelName, reference);
     }
 
-    JsonNode marshall(final JsonNodeMarshallContext context) {
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.object()
                 .set(LABEL_NAME_PROPERTY, context.marshall(this.label))
                 .set(REFERENCE_PROPERTY, context.marshall(this.reference));
@@ -147,8 +147,8 @@ public final class SpreadsheetLabelMapping implements HashCodeEqualsDefined, Hat
     private final static String LABEL_NAME_PROPERTY_STRING = "label-name";
     private final static String REFERENCE_PROPERTY_STRING = "reference";
 
-    final static JsonNodeName LABEL_NAME_PROPERTY = JsonNodeName.with(LABEL_NAME_PROPERTY_STRING);
-    final static JsonNodeName REFERENCE_PROPERTY = JsonNodeName.with(REFERENCE_PROPERTY_STRING);
+    private final static JsonNodeName LABEL_NAME_PROPERTY = JsonNodeName.with(LABEL_NAME_PROPERTY_STRING);
+    private final static JsonNodeName REFERENCE_PROPERTY = JsonNodeName.with(REFERENCE_PROPERTY_STRING);
 
     static {
         JsonNodeContext.register("spreadsheet-label-mapping",

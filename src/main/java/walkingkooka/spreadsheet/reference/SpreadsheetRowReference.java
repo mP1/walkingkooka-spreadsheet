@@ -45,7 +45,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
     static final SpreadsheetRowReference[] RELATIVE = fillCache(i -> new SpreadsheetRowReference(i, SpreadsheetReferenceKind.RELATIVE),
             new SpreadsheetRowReference[CACHE_SIZE]);
 
-    static String invalidRowValue(final int value) {
+    private static String invalidRowValue(final int value) {
         return "Invalid column value " + value + " expected between 0 and " + MAX;
     }
 

@@ -28,9 +28,9 @@ import walkingkooka.text.CaseSensitivity;
  */
 final public class SpreadsheetFunctionName implements Name, Comparable<SpreadsheetFunctionName> {
 
-    final static CharPredicate INITIAL = CharPredicates.range('A', 'Z').or(CharPredicates.range('a', 'z'));
+    private final static CharPredicate INITIAL = CharPredicates.range('A', 'Z').or(CharPredicates.range('a', 'z'));
 
-    final static CharPredicate PART = INITIAL.or(CharPredicates.range('0', '9').or(CharPredicates.is('.')));
+    private final static CharPredicate PART = INITIAL.or(CharPredicates.range('0', '9').or(CharPredicates.is('.')));
 
     /**
      * The maximum valid length of a function name.
@@ -64,7 +64,7 @@ final public class SpreadsheetFunctionName implements Name, Comparable<Spreadshe
         return this.name;
     }
 
-    final String name;
+    private final String name;
 
     // Object..................................................................................................
 

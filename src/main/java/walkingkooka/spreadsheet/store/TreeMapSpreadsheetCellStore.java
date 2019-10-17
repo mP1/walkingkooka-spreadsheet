@@ -142,7 +142,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     }
 
     // VisibleForTesting
-    final Store<SpreadsheetCellReference, SpreadsheetCell> store;
+    private final Store<SpreadsheetCellReference, SpreadsheetCell> store;
 
     @Override
     public String toString() {

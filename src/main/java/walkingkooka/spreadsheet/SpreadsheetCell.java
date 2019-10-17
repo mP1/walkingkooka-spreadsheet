@@ -273,7 +273,7 @@ public final class SpreadsheetCell implements HashCodeEqualsDefined,
         return new SpreadsheetCell(reference, formula, style, Optional.ofNullable(format), Optional.ofNullable(formatted));
     }
 
-    JsonNode marshall(final JsonNodeMarshallContext context) {
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
         JsonObjectNode object = JsonNode.object()
                 .set(REFERENCE_PROPERTY, context.marshall(this.reference))
                 .set(FORMULA_PROPERTY, context.marshall(this.formula));

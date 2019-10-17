@@ -99,7 +99,7 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
         return this.store.values(from, count);
     }
 
-    final Store<SpreadsheetId, SpreadsheetMetadata> store;
+    private final Store<SpreadsheetId, SpreadsheetMetadata> store;
 
     @Override
     public String toString() {

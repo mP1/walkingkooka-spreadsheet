@@ -28,12 +28,12 @@ import walkingkooka.text.CaseSensitivity;
  */
 final public class SpreadsheetColorName implements Name, Comparable<SpreadsheetColorName> {
 
-    final static CharPredicate LETTER = CharPredicates.range('A', 'Z').or(CharPredicates.range('a', 'z'));
+    private final static CharPredicate LETTER = CharPredicates.range('A', 'Z').or(CharPredicates.range('a', 'z'));
 
     /**
      * The maximum valid length of a function name.
      */
-    public final static int MAX_LENGTH = 255;
+    private final static int MAX_LENGTH = 255;
 
     /**
      * Factory that creates a {@link SpreadsheetColorName}
@@ -64,7 +64,7 @@ final public class SpreadsheetColorName implements Name, Comparable<SpreadsheetC
         return this.name;
     }
 
-    final String name;
+    private final String name;
 
     // Object..................................................................................................
 

@@ -84,7 +84,7 @@ public abstract class SpreadsheetMetadata implements HasConverter,
         return withSpreadsheetMetadataMap(SpreadsheetMetadataNonEmptyMap.with(value));
     }
 
-    static SpreadsheetMetadata withSpreadsheetMetadataMap(final SpreadsheetMetadataNonEmptyMap map) {
+    private static SpreadsheetMetadata withSpreadsheetMetadataMap(final SpreadsheetMetadataNonEmptyMap map) {
         return map.isEmpty() ?
                 EMPTY :
                 SpreadsheetMetadataNonEmpty.with(map);

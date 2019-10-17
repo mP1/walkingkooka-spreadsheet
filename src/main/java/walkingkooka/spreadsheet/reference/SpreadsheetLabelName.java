@@ -38,11 +38,11 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference i
 
     private final static CharPredicate LETTER = CharPredicates.range('A', 'Z').or(CharPredicates.range('a', 'z'));
 
-    final static CharPredicate INITIAL = LETTER;
+    private final static CharPredicate INITIAL = LETTER;
 
     private final static CharPredicate DIGIT = CharPredicates.range('0', '9');
 
-    final static CharPredicate PART = INITIAL.or(DIGIT.or(CharPredicates.is('_')));
+    private final static CharPredicate PART = INITIAL.or(DIGIT.or(CharPredicates.is('_')));
 
     /**
      * The maximum valid length for a label name.

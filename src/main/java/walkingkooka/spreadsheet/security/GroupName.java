@@ -96,7 +96,7 @@ final public class GroupName implements Name,
         return with(node.stringValueOrFail());
     }
 
-    JsonNode marshall(final JsonNodeMarshallContext context) {
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(this.toString());
     }
 

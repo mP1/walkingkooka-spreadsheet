@@ -53,7 +53,7 @@ final class SpreadsheetMetadataPropertyNameBasic<T> extends SpreadsheetMetadataP
         return this.handler;
     }
 
-    final SpreadsheetMetadataPropertyValueHandler<T> handler;
+    private final SpreadsheetMetadataPropertyValueHandler<T> handler;
 
     // StyleMetadataVisitor.............................................................................................
 

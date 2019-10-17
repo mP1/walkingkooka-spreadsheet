@@ -123,7 +123,7 @@ public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
         return with(node.stringValueOrFail());
     }
 
-    JsonNode marshall(final JsonNodeMarshallContext context) {
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(this.pattern); // formatter not serialized.
     }
 

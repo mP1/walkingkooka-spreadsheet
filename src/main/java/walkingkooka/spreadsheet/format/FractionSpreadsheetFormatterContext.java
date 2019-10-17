@@ -104,7 +104,7 @@ final class FractionSpreadsheetFormatterContext implements Context {
     private final FractionSpreadsheetFormatterDigits numerator;
     private final FractionSpreadsheetFormatterDigits demonimator;
 
-    final FractionSpreadsheetFormatter formatter;
+    private final FractionSpreadsheetFormatter formatter;
 
     /**
      * Getter that returns the formatted text.

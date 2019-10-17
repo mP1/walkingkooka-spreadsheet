@@ -56,7 +56,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
 
     // constants
 
-    final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.SENSITIVE;
+    private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.SENSITIVE;
 
     /**
      * An {@link IntPredicate} that tests true for unsigned integers.
@@ -428,7 +428,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      * Used during hashing and equality checks.
      */
     @Override
-    public final CaseSensitivity caseSensitivity() {
+    final CaseSensitivity caseSensitivity() {
         return CASE_SENSITIVITY;
     }
 

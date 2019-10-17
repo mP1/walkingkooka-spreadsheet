@@ -100,7 +100,7 @@ final class NumberSpreadsheetFormatterContext implements Context {
 
     private final SpreadsheetFormatterContext context;
 
-    NumberSpreadsheetFormatterDigits digits;
+    private NumberSpreadsheetFormatterDigits digits;
 
     final NumberSpreadsheetFormatterDigits integer;
     final NumberSpreadsheetFormatterDigits fraction;

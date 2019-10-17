@@ -100,7 +100,7 @@ final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsheet
         return context.formattedText();
     }
 
-    final NumberSpreadsheetFormatterNormalOrScientific normalOrScientific;
+    private final NumberSpreadsheetFormatterNormalOrScientific normalOrScientific;
 
     /**
      * Used to move the decimal places because of formatting options such as percentage(multiply by 100) etc.
@@ -111,7 +111,7 @@ final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsheet
     /**
      * Components for each symbol in the original pattern.
      */
-    final List<NumberSpreadsheetFormatterComponent> components;
+    private final List<NumberSpreadsheetFormatterComponent> components;
 
     final int integerDigitSymbolCount;
     final int fractionDigitSymbolCount;
