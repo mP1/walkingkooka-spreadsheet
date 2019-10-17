@@ -65,12 +65,12 @@ public interface SpreadsheetStoreRepository {
     SpreadsheetMetadataStore metadatas();
 
     /**
-     * A {@lin SpreadsheetRangeStore} that maps ranges to cells
+     * A {@link SpreadsheetRangeStore} that maps ranges to cells
      */
     SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells();
 
     /**
-     * A {@lin SpreadsheetRangeStore} that maps ranges to {@link SpreadsheetConditionalFormattingRule}
+     * A {@link SpreadsheetRangeStore} that maps ranges to {@link SpreadsheetConditionalFormattingRule}
      */
     SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules();
 
