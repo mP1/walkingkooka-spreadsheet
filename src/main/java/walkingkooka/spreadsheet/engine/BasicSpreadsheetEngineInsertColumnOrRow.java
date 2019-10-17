@@ -45,9 +45,8 @@ final class BasicSpreadsheetEngineInsertColumnOrRow extends BasicSpreadsheetEngi
     }
 
     private void move() {
-        final int value = this.columnOrRow.value;
-        final int moveCount = this.columnOrRow.max() - value;
-        final int offset = value;
+        final int offset = this.columnOrRow.value;
+        final int moveCount = this.columnOrRow.max() - offset;
 
         for (int i = 0; i <= moveCount; i++) {
             this.columnOrRow.move(offset + moveCount - i);
