@@ -600,7 +600,7 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
 
         final byte[] bodyBytes = bytes(body, CONTENT_TYPE_UTF8);
         if (null != bodyBytes) {
-            headers2.put(HttpHeaderName.CONTENT_LENGTH, Long.valueOf(bodyBytes.length));
+            headers2.put(HttpHeaderName.CONTENT_LENGTH, (long)bodyBytes.length);
         }
         return new HttpRequest() {
             @Override
@@ -682,7 +682,7 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
         return this.response(status,
                 HttpEntity.EMPTY
                         .addHeader(HttpHeaderName.CONTENT_TYPE, CONTENT_TYPE_UTF8)
-                        .addHeader(HttpHeaderName.CONTENT_LENGTH, Long.valueOf(body.value().length))
+                        .addHeader(HttpHeaderName.CONTENT_LENGTH, (long)body.value().length)
                         .setBody(body));
     }
 

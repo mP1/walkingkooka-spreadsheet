@@ -89,7 +89,7 @@ public final class SpreadsheetLongParserTokenTest extends SpreadsheetNonSymbolPa
 
     @Override
     public SpreadsheetLongParserToken createDifferentToken() {
-        return SpreadsheetLongParserToken.with(Long.valueOf(-1), "'different'");
+        return SpreadsheetLongParserToken.with(-1L, "'different'");
     }
 
     @Override
