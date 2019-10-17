@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
-import walkingkooka.convert.ConversionException;
 import walkingkooka.text.CharSequences;
 
 import java.math.BigDecimal;
