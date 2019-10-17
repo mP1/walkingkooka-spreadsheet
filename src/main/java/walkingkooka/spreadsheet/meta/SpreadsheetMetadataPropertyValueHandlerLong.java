@@ -32,7 +32,7 @@ final class SpreadsheetMetadataPropertyValueHandlerLong extends SpreadsheetMetad
     /**
      * Creates a new {@link SpreadsheetMetadataPropertyValueHandlerLong}
      */
-    static final SpreadsheetMetadataPropertyValueHandlerLong with(final LongPredicate predicate) {
+    static SpreadsheetMetadataPropertyValueHandlerLong with(final LongPredicate predicate) {
         Objects.requireNonNull(predicate, "predicate");
 
         return new SpreadsheetMetadataPropertyValueHandlerLong(predicate);
