@@ -589,7 +589,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                                     final SpreadsheetLabelName label) {
         assertEquals(Optional.empty(),
                 labelStore.load(label),
-                () -> "label loaded failed");
+                "label loaded failed");
     }
 
     default void saveCellAndCheck(final SpreadsheetEngine engine,
