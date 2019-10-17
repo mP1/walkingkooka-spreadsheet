@@ -48,7 +48,7 @@ final class SpreadsheetRangeCellsConsumer implements Consumer<SpreadsheetCellRef
         Objects.requireNonNull(present, "present");
         Objects.requireNonNull(absent, "absent");
 
-        cells.stream()
+        cells
                 .forEach(this::addCell);
 
         this.present = present;
