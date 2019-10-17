@@ -125,10 +125,10 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         });
     }
 
-    final <T> SpreadsheetMetadata setAndCheck(final SpreadsheetMetadata metadata,
-                                              final SpreadsheetMetadataPropertyName<T> propertyName,
-                                              final T value,
-                                              final SpreadsheetMetadata expected) {
+    final <TT> SpreadsheetMetadata setAndCheck(final SpreadsheetMetadata metadata,
+                                               final SpreadsheetMetadataPropertyName<TT> propertyName,
+                                               final TT value,
+                                               final SpreadsheetMetadata expected) {
         final SpreadsheetMetadata set = metadata.set(propertyName, value);
         assertEquals(expected,
                 set,
@@ -151,9 +151,9 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         assertSame(metadata, metadata.remove(SpreadsheetMetadataPropertyName.MODIFIED_BY));
     }
 
-    final <T> SpreadsheetMetadata removeAndCheck(final SpreadsheetMetadata metadata,
-                                                 final SpreadsheetMetadataPropertyName<T> propertyName,
-                                                 final SpreadsheetMetadata expected) {
+    final SpreadsheetMetadata removeAndCheck(final SpreadsheetMetadata metadata,
+                                             final SpreadsheetMetadataPropertyName<?> propertyName,
+                                             final SpreadsheetMetadata expected) {
         final SpreadsheetMetadata removed = metadata.remove(propertyName);
         assertEquals(expected,
                 removed,
