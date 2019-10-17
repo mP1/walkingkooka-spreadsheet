@@ -618,7 +618,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final Locale locale = Locale.CANADA_FRENCH;
 
         Lists.of(MathContext.DECIMAL32, MathContext.DECIMAL64, MathContext.DECIMAL128, MathContext.UNLIMITED)
-                .stream()
                 .forEach(mc -> {
                     final int precision = mc.getPrecision();
                     final RoundingMode roundingMode = mc.getRoundingMode();
@@ -655,7 +654,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         Arrays.stream(Locale.getAvailableLocales())
                 .forEach(locale -> {
                     Lists.of(MathContext.DECIMAL32, MathContext.DECIMAL64, MathContext.DECIMAL128, MathContext.UNLIMITED)
-                            .stream()
                             .forEach(mc -> {
                                 final int precision = mc.getPrecision();
                                 final RoundingMode roundingMode = mc.getRoundingMode();

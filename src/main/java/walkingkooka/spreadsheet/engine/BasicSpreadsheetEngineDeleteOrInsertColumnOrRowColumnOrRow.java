@@ -87,7 +87,7 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      * Moves all the cells in the selected row/column.
      */
     final void move(final int source) {
-        this.cells(source).stream()
+        this.cells(source)
                 .forEach(this::moveCell);
     }
 
@@ -189,7 +189,6 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
      */
     final void fixAllLabelMappings() {
         this.labelStore().all()
-                .stream()
                 .forEach(this.deleteOrInsert::fixLabelMapping);
     }
 
