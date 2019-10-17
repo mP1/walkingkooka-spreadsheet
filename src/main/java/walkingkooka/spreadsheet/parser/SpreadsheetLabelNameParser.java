@@ -70,6 +70,7 @@ final class SpreadsheetLabelNameParser implements Parser<SpreadsheetParserContex
     // @see SpreadsheetLabelName
     static {
         final CharPredicate LETTER = CharPredicates.range('A', 'Z').or(CharPredicates.range('a', 'z'));
+        @SuppressWarnings("UnnecessaryLocalVariable")
         final CharPredicate INITIAL = LETTER;
 
         final CharPredicate DIGIT = CharPredicates.range('0', '9');
