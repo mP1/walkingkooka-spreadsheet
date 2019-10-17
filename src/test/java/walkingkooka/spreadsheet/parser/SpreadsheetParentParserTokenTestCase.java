@@ -83,7 +83,7 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
     }
 
     final void checkValue(final SpreadsheetParserToken token, final List<ParserToken> value) {
-        this.checkValue(SpreadsheetParentParserToken.class.cast(token), value);
+        this.checkValue(token.cast(SpreadsheetParentParserToken.class), value);
     }
 
     final void checkValue(final SpreadsheetParentParserToken<?> token, final ParserToken... value) {

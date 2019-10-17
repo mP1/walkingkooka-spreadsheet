@@ -68,7 +68,7 @@ final class SpreadsheetNumberParsePatternsConverter implements Converter {
                                          final ConverterContext context) {
         Either<T, String> result = null;
 
-        final TextCursor cursor = TextCursors.charSequence(String.class.cast(value));
+        final TextCursor cursor = TextCursors.charSequence((String) value);
         final TextCursorSavePoint save = cursor.save();
 
         for (List<SpreadsheetNumberParsePatternsComponent> pattern : this.pattern.patterns) {

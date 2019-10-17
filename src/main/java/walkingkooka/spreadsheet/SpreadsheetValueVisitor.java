@@ -43,27 +43,27 @@ public abstract class SpreadsheetValueVisitor extends Visitor<Object> {
         if (Visiting.CONTINUE == this.startVisit(value)) {
             do {
                 if (value instanceof String) {
-                    this.visit(String.class.cast(value));
+                    this.visit((String) value);
                     break;
                 }
                 if (value instanceof Number) {
-                    SpreadsheetValueVisitorNumberVisitor.with(this).accept(Number.class.cast(value));
+                    SpreadsheetValueVisitorNumberVisitor.with(this).accept((Number) value);
                     break;
                 }
                 if (value instanceof Boolean) {
-                    this.visit(Boolean.class.cast(value));
+                    this.visit((Boolean) value);
                     break;
                 }
                 if (value instanceof LocalDate) {
-                    this.visit(LocalDate.class.cast(value));
+                    this.visit((LocalDate) value);
                     break;
                 }
                 if (value instanceof LocalDateTime) {
-                    this.visit(LocalDateTime.class.cast(value));
+                    this.visit((LocalDateTime) value);
                     break;
                 }
                 if (value instanceof LocalTime) {
-                    this.visit(LocalTime.class.cast(value));
+                    this.visit((LocalTime) value);
                     break;
                 }
                 this.visit(value);
