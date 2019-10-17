@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.Either;
-import walkingkooka.convert.ConversionException;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
 
 import java.math.BigDecimal;
