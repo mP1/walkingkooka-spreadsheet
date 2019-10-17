@@ -33,30 +33,22 @@ final public class GroupNameTest implements NameTesting<GroupName, GroupName>,
 
     @Test
     public void testCreateEmptyStringFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            GroupName.with("");
-        });
+        assertThrows(IllegalArgumentException.class, () -> GroupName.with(""));
     }
 
     @Test
     public void testCreateContainsSeparatorFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            GroupName.with("xyz" + PropertiesPath.SEPARATOR.string());
-        });
+        assertThrows(IllegalArgumentException.class, () -> GroupName.with("xyz" + PropertiesPath.SEPARATOR.string()));
     }
 
     @Test
     public void testWithInvalidInitialFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            GroupName.with("1abc");
-        });
+        assertThrows(IllegalArgumentException.class, () -> GroupName.with("1abc"));
     }
 
     @Test
     public void testWithInvalidPartFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            GroupName.with("abc$def");
-        });
+        assertThrows(IllegalArgumentException.class, () -> GroupName.with("abc$def"));
     }
 
     @Test

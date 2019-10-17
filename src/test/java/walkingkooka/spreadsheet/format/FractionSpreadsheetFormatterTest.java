@@ -47,16 +47,12 @@ public final class FractionSpreadsheetFormatterTest extends SpreadsheetFormatter
 
     @Test
     public void testWithNullTokenFails() {
-        assertThrows(NullPointerException.class, () -> {
-            FractionSpreadsheetFormatter.with(null, fractioner());
-        });
+        assertThrows(NullPointerException.class, () -> FractionSpreadsheetFormatter.with(null, fractioner()));
     }
 
     @Test
     public void testWithNullFractionerFails() {
-        assertThrows(NullPointerException.class, () -> {
-            FractionSpreadsheetFormatter.with(this.token(), null);
-        });
+        assertThrows(NullPointerException.class, () -> FractionSpreadsheetFormatter.with(this.token(), null));
     }
 
     private SpreadsheetFormatFractionParserToken token() {

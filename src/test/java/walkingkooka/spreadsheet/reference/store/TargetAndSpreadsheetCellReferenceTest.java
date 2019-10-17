@@ -33,25 +33,19 @@ public final class TargetAndSpreadsheetCellReferenceTest implements HashCodeEqua
 
     @Test
     public void testWithNullTarget() {
-        assertThrows(NullPointerException.class, () -> {
-            TargetAndSpreadsheetCellReference.with(null, this.reference());
-        });
+        assertThrows(NullPointerException.class, () -> TargetAndSpreadsheetCellReference.with(null, this.reference()));
     }
 
     @Test
     public void testWithNullCellReference() {
-        assertThrows(NullPointerException.class, () -> {
-            TargetAndSpreadsheetCellReference.with(this.label(), null);
-        });
+        assertThrows(NullPointerException.class, () -> TargetAndSpreadsheetCellReference.with(this.label(), null));
     }
 
     @Test
     public void testWithRefererEqualCellReference() {
         final SpreadsheetCellReference cell = this.reference();
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            TargetAndSpreadsheetCellReference.with(cell, cell);
-        });
+        assertThrows(IllegalArgumentException.class, () -> TargetAndSpreadsheetCellReference.with(cell, cell));
     }
 
     @Test

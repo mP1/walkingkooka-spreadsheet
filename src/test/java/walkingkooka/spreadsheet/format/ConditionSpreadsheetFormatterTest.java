@@ -43,9 +43,7 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatte
 
     @Test
     public void testWithNullWrappedFormatterFails() {
-        assertThrows(NullPointerException.class, () -> {
-            ConditionSpreadsheetFormatter.with(this.parsePatternOrFail(this.pattern()), null);
-        });
+        assertThrows(NullPointerException.class, () -> ConditionSpreadsheetFormatter.with(this.parsePatternOrFail(this.pattern()), null));
     }
 
     // EQ.....................................................................................

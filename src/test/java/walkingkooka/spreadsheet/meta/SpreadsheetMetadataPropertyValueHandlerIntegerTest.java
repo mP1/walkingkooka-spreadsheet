@@ -25,9 +25,7 @@ public final class SpreadsheetMetadataPropertyValueHandlerIntegerTest extends Sp
 
     @Test
     public void testWithNullIntPredicateFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetMetadataPropertyValueHandlerInteger.with(null);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetMetadataPropertyValueHandlerInteger.with(null));
     }
 
     @Test

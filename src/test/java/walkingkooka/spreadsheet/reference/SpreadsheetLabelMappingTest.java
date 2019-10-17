@@ -46,16 +46,12 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
 
     @Test
     public void testWithNullLabelFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetLabelMapping.with(null, REFERENCE);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetLabelMapping.with(null, REFERENCE));
     }
 
     @Test
     public void testWithNullReferenceFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetLabelMapping.with(LABEL, null);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetLabelMapping.with(LABEL, null));
     }
 
     @Test
@@ -69,9 +65,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
 
     @Test
     public void testSetLabelNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createObject().setLabel(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createObject().setLabel(null));
     }
 
     @Test
@@ -95,9 +89,7 @@ public final class SpreadsheetLabelMappingTest implements ClassTesting2<Spreadsh
 
     @Test
     public void testSetReferenceNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createObject().setReference(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createObject().setReference(null));
     }
 
     @Test

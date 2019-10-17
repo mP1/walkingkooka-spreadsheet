@@ -26,9 +26,7 @@ public final class SpreadsheetMetadataPropertyValueHandlerLongTest extends Sprea
 
     @Test
     public void testWithNullIntPredicateFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetMetadataPropertyValueHandlerLong.with(null);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetMetadataPropertyValueHandlerLong.with(null));
     }
     
     @Test

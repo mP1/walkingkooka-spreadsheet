@@ -37,16 +37,12 @@ public final class ChainSpreadsheetFormatterTest extends SpreadsheetFormatterTes
 
     @Test
     public void testWithNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            ChainSpreadsheetFormatter.with(null);
-        });
+        assertThrows(NullPointerException.class, () -> ChainSpreadsheetFormatter.with(null));
     }
 
     @Test
     public void testWithEmptyFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            ChainSpreadsheetFormatter.with(Lists.empty());
-        });
+        assertThrows(IllegalArgumentException.class, () -> ChainSpreadsheetFormatter.with(Lists.empty()));
     }
 
     @Test

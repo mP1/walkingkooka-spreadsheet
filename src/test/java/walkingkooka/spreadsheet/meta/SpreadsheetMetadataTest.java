@@ -42,16 +42,12 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
     @Test
     public void testWithNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetMetadata.with(null);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetMetadata.with(null));
     }
 
     @Test
     public void testWithInvalidPropertyFails() {
-        assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> {
-            SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.CREATOR, null));
-        });
+        assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.CREATOR, null)));
     }
 
     @Test

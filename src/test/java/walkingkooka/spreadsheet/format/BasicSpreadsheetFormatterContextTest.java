@@ -64,26 +64,22 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
 
     @Test
     public void testWithInvalidWidthFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            BasicSpreadsheetFormatterContext.with(this.numberToColor(),
-                    this.nameToColor(),
-                    -1,
-                    CONVERTER,
-                    this.defaultSpreadsheetFormatter(),
-                    this.converterContext());
-        });
+        assertThrows(IllegalArgumentException.class, () -> BasicSpreadsheetFormatterContext.with(this.numberToColor(),
+                this.nameToColor(),
+                -1,
+                CONVERTER,
+                this.defaultSpreadsheetFormatter(),
+                this.converterContext()));
     }
 
     @Test
     public void testWithInvalidWidthFails2() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            BasicSpreadsheetFormatterContext.with(this.numberToColor(),
-                    this.nameToColor(),
-                    0,
-                    CONVERTER,
-                    this.defaultSpreadsheetFormatter(),
-                    this.converterContext());
-        });
+        assertThrows(IllegalArgumentException.class, () -> BasicSpreadsheetFormatterContext.with(this.numberToColor(),
+                this.nameToColor(),
+                0,
+                CONVERTER,
+                this.defaultSpreadsheetFormatter(),
+                this.converterContext()));
     }
 
     @Test
@@ -122,14 +118,12 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                            final Converter converter,
                            final SpreadsheetFormatter defaultSpreadsheetFormatter,
                            final ConverterContext converterContext) {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetFormatterContext.with(numberToColor,
-                    nameToColor,
-                    width,
-                    converter,
-                    defaultSpreadsheetFormatter,
-                    converterContext);
-        });
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetFormatterContext.with(numberToColor,
+                nameToColor,
+                width,
+                converter,
+                defaultSpreadsheetFormatter,
+                converterContext));
     }
 
     @Test

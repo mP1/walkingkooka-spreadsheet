@@ -36,9 +36,7 @@ public interface IdentityTesting<I extends Identity<ID>, ID extends IdentityId>
 
     @Test
     default void testWithNullIdFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createIdentity(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createIdentity(null));
     }
 
     @Override

@@ -60,16 +60,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @Test
     public void testWithNullReferenceFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetCell.with(null, this.formula());
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetCell.with(null, this.formula()));
     }
 
     @Test
     public void testWithNullFormulaFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetCell.with(REFERENCE, null);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetCell.with(REFERENCE, null));
     }
 
     @Test
@@ -97,9 +93,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @Test
     public void testSetReferenceNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createCell().setReference(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createCell().setReference(null));
     }
 
     @Test
@@ -126,9 +120,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @Test
     public void testSetFormulaNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createCell().setFormula(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createCell().setFormula(null));
     }
 
     @Test
@@ -155,9 +147,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @Test
     public void testSetStyleNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createCell().setStyle(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createCell().setStyle(null));
     }
 
     @Test
@@ -184,9 +174,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @Test
     public void testSetFormatNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createCell().setFormat(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createCell().setFormat(null));
     }
 
     @Test
@@ -226,9 +214,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     @Test
     public void testSetFormattedNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createCell().setFormatted(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createCell().setFormatted(null));
     }
 
     @Test

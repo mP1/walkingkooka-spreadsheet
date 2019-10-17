@@ -36,9 +36,7 @@ public final class SpreadsheetMetadataNonEmptyMapEntrySetTest implements SetTest
 
     @Test
     public void testWithInvalidPropertyFails() {
-        assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> {
-            SpreadsheetMetadataNonEmptyMapEntrySet.with(Maps.of(SpreadsheetMetadataPropertyName.CREATOR, null));
-        });
+        assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> SpreadsheetMetadataNonEmptyMapEntrySet.with(Maps.of(SpreadsheetMetadataPropertyName.CREATOR, null)));
     }
 
     @Test

@@ -42,17 +42,13 @@ public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReference
 
     @Test
     default void testSaveNullFails() {
-        assertThrows(UnsupportedOperationException.class, () -> {
-            this.createStore().save(Sets.of(SpreadsheetExpressionReference.parseCellReference("A1")));
-        });
+        assertThrows(UnsupportedOperationException.class, () -> this.createStore().save(Sets.of(SpreadsheetExpressionReference.parseCellReference("A1"))));
     }
 
     @Test
     default void testAddSaveWatcherFails() {
-        assertThrows(UnsupportedOperationException.class, () -> {
-            this.createStore().addSaveWatcher((a) -> {
-            });
-        });
+        assertThrows(UnsupportedOperationException.class, () -> this.createStore().addSaveWatcher((a) -> {
+        }));
     }
 
     @Override
@@ -81,9 +77,7 @@ public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReference
 
     @Test
     default void testAddReferenceNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createStore().addReference(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createStore().addReference(null));
     }
 
     @Test
@@ -106,9 +100,7 @@ public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReference
 
     @Test
     default void testRemoveReferenceNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createStore().removeReference(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createStore().removeReference(null));
     }
 
     @Test
@@ -168,16 +160,12 @@ public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReference
 
     @Test
     default void testSaveReferencesNullIdFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createStore().saveReferences(null, Sets.of(SpreadsheetExpressionReference.parseCellReference("A1")));
-        });
+        assertThrows(NullPointerException.class, () -> this.createStore().saveReferences(null, Sets.of(SpreadsheetExpressionReference.parseCellReference("A1"))));
     }
 
     @Test
     default void testSaveReferencesNullTargetFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createStore().saveReferences(this.id(), null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createStore().saveReferences(this.id(), null));
     }
 
     @Test
@@ -288,9 +276,7 @@ public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReference
 
     @Test
     default void testLoadReferredNullReferenceFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createStore().loadReferred(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createStore().loadReferred(null));
     }
 
     /**

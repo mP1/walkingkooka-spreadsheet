@@ -32,10 +32,8 @@ public final class SpreadsheetExpressionReferenceVisitorTest implements VisitorT
 
     @Test
     public void testExpressionReferenceNotSpreadsheetExpressionReferenceFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createVisitor().accept(new ExpressionReference() {
-            });
-        });
+        assertThrows(IllegalArgumentException.class, () -> this.createVisitor().accept(new ExpressionReference() {
+        }));
     }
 
     @Test

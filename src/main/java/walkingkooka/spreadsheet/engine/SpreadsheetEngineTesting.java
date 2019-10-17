@@ -67,143 +67,105 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testLoadCellNullCellFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().loadCell(null, SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, this.createContext());
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().loadCell(null, SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, this.createContext()));
     }
 
     @Test
     default void testLoadCellNullEvaluationFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().loadCell(REFERENCE,
-                    null,
-                    this.createContext());
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().loadCell(REFERENCE,
+                null,
+                this.createContext()));
     }
 
     @Test
     default void testLoadCellNullContextFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().loadCell(REFERENCE,
-                    SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
-                    null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().loadCell(REFERENCE,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                null));
     }
 
     @Test
     default void testSaveCellNullCellFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().saveCell(null,
-                    this.createContext());
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().saveCell(null,
+                this.createContext()));
     }
 
     @Test
     default void testSaveCellNullContextFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().saveCell(SpreadsheetCell.with(REFERENCE, SpreadsheetFormula.with("1")),
-                    null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().saveCell(SpreadsheetCell.with(REFERENCE, SpreadsheetFormula.with("1")),
+                null));
     }
 
     @Test
     default void testDeleteCellNullCellFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().deleteCell(null,
-                    this.createContext());
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().deleteCell(null,
+                this.createContext()));
     }
 
     @Test
     default void testDeleteCellNullContextFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().deleteCell(REFERENCE,
-                    null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().deleteCell(REFERENCE,
+                null));
     }
 
     @Test
     default void testDeleteColumnsNullColumnFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().deleteColumns(null, 1, this.createContext());
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().deleteColumns(null, 1, this.createContext()));
     }
 
     @Test
     default void testDeleteColumnsNegativeCountFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createSpreadsheetEngine().deleteColumns(COLUMN, -1, this.createContext());
-        });
+        assertThrows(IllegalArgumentException.class, () -> this.createSpreadsheetEngine().deleteColumns(COLUMN, -1, this.createContext()));
     }
 
     @Test
     default void testDeleteColumnsNullContextFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().deleteColumns(COLUMN, 1, null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().deleteColumns(COLUMN, 1, null));
     }
 
     @Test
     default void testDeleteRowsNullRowFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().deleteRows(null, 1, this.createContext());
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().deleteRows(null, 1, this.createContext()));
     }
 
     @Test
     default void testDeleteRowsNegativeCountFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createSpreadsheetEngine().deleteRows(ROW, -1, this.createContext());
-        });
+        assertThrows(IllegalArgumentException.class, () -> this.createSpreadsheetEngine().deleteRows(ROW, -1, this.createContext()));
     }
 
     @Test
     default void testDeleteRowsNullContextFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().deleteRows(ROW, 1, null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().deleteRows(ROW, 1, null));
     }
 
     @Test
     default void testInsertColumnsNullColumnFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().insertColumns(null, 1, this.createContext());
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().insertColumns(null, 1, this.createContext()));
     }
 
     @Test
     default void testInsertColumnsNegativeCountFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createSpreadsheetEngine().insertColumns(COLUMN, -1, this.createContext());
-        });
+        assertThrows(IllegalArgumentException.class, () -> this.createSpreadsheetEngine().insertColumns(COLUMN, -1, this.createContext()));
     }
 
     @Test
     default void testInsertColumnsNullContextFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().insertColumns(COLUMN, 1, null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().insertColumns(COLUMN, 1, null));
     }
 
     @Test
     default void testInsertRowsNullRowFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().insertRows(null, 1, this.createContext());
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().insertRows(null, 1, this.createContext()));
     }
 
     @Test
     default void testInsertRowsNegativeCountFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createSpreadsheetEngine().insertRows(ROW, -1, this.createContext());
-        });
+        assertThrows(IllegalArgumentException.class, () -> this.createSpreadsheetEngine().insertRows(ROW, -1, this.createContext()));
     }
 
     @Test
     default void testInsertRowsNullContextFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().insertRows(ROW, 1, null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().insertRows(ROW, 1, null));
     }
 
     @Test
@@ -211,12 +173,10 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("A1");
         final SpreadsheetRange range = reference.spreadsheetRange(reference);
 
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().fillCells(null,
-                    range,
-                    range,
-                    this.createContext());
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(null,
+                range,
+                range,
+                this.createContext()));
     }
 
     @Test
@@ -225,12 +185,10 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         final SpreadsheetCell cell = SpreadsheetCell.with(reference, SpreadsheetFormula.with("1"));
         final SpreadsheetRange range = reference.spreadsheetRange(reference);
 
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().fillCells(Lists.of(cell),
-                    null,
-                    range,
-                    this.createContext());
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
+                null,
+                range,
+                this.createContext()));
     }
 
     @Test
@@ -239,12 +197,10 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         final SpreadsheetCell cell = SpreadsheetCell.with(reference, SpreadsheetFormula.with("1"));
         final SpreadsheetRange range = reference.spreadsheetRange(reference);
 
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().fillCells(Lists.of(cell),
-                    range,
-                    null,
-                    this.createContext());
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
+                range,
+                null,
+                this.createContext()));
     }
 
     @Test
@@ -253,12 +209,10 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         final SpreadsheetCell cell = SpreadsheetCell.with(reference, SpreadsheetFormula.with("1"));
         final SpreadsheetRange range = reference.spreadsheetRange(reference);
 
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().fillCells(Lists.of(cell),
-                    range,
-                    range,
-                    null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
+                range,
+                range,
+                null));
     }
 
     @Test
@@ -268,12 +222,10 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
         final SpreadsheetRange range = SpreadsheetRange.fromCells(Lists.of(SpreadsheetCellReference.parseCellReference("C3")));
 
-        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
-            this.createSpreadsheetEngine().fillCells(Lists.of(cell),
-                    range,
-                    range,
-                    this.createContext());
-        });
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
+                range,
+                range,
+                this.createContext()));
         checkMessage(thrown, "Several cells [B2=1] are outside the range C3");
     }
 
@@ -284,12 +236,10 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
         final SpreadsheetRange range = SpreadsheetRange.parseRange("C3:D4");
 
-        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
-            this.createSpreadsheetEngine().fillCells(Lists.of(cell),
-                    range,
-                    range,
-                    this.createContext());
-        });
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(cell),
+                range,
+                range,
+                this.createContext()));
 
         checkMessage(thrown, "Several cells [B2=1] are outside the range C3:D4");
     }
@@ -302,12 +252,10 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
         final SpreadsheetRange range = SpreadsheetRange.parseRange("C3:D4");
 
-        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
-            this.createSpreadsheetEngine().fillCells(Lists.of(b2, c3, d4),
-                    range,
-                    range,
-                    this.createContext());
-        });
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(b2, c3, d4),
+                range,
+                range,
+                this.createContext()));
 
         checkMessage(thrown, "Several cells [B2=1] are outside the range C3:D4");
     }
@@ -321,29 +269,23 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
         final SpreadsheetRange range = SpreadsheetRange.parseRange("C3:D4");
 
-        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
-            this.createSpreadsheetEngine().fillCells(Lists.of(b2, c3, d4, e5),
-                    range,
-                    range,
-                    this.createContext());
-        });
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> this.createSpreadsheetEngine().fillCells(Lists.of(b2, c3, d4, e5),
+                range,
+                range,
+                this.createContext()));
 
         checkMessage(thrown, "Several cells [B2=1, E5=4] are outside the range C3:D4");
     }
 
     @Test
     default void testSaveLabelNullMappingFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().saveLabel(null, this.createContext());
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().saveLabel(null, this.createContext()));
     }
 
     @Test
     default void testSaveLabelNullContextFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().saveLabel(SpreadsheetLabelMapping.with(SpreadsheetExpressionReference.labelName("LABEL123"),
-                    SpreadsheetExpressionReference.parseCellReference("A1")), null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().saveLabel(SpreadsheetLabelMapping.with(SpreadsheetExpressionReference.labelName("LABEL123"),
+                SpreadsheetExpressionReference.parseCellReference("A1")), null));
     }
 
     default void saveLabelAndCheck(final SpreadsheetEngine engine,
@@ -374,16 +316,12 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testRemoveLabelNullMappingFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().removeLabel(null, this.createContext());
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().removeLabel(null, this.createContext()));
     }
 
     @Test
     default void testRemoveLabelNullContextFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().removeLabel(SpreadsheetExpressionReference.labelName("label"), null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().removeLabel(SpreadsheetExpressionReference.labelName("label"), null));
     }
 
     default void removeLabelAndCheck(final SpreadsheetEngine engine,
@@ -414,9 +352,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
 
     @Test
     default void testLoadLabelNullMappingFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetEngine().loadLabel(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().loadLabel(null));
     }
 
     default void loadLabelAndCheck(final SpreadsheetEngine engine,

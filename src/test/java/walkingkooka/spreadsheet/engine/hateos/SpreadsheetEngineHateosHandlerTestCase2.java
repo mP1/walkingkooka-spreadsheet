@@ -48,16 +48,12 @@ public abstract class SpreadsheetEngineHateosHandlerTestCase2<H extends Spreadsh
 
     @Test
     public final void testWithNullEngineFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createHandler(null, this.engineContext());
-        });
+        assertThrows(NullPointerException.class, () -> this.createHandler(null, this.engineContext()));
     }
 
     @Test
     public final void testWithNullEngineContextSupplierFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createHandler(this.engine(), null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createHandler(this.engine(), null));
     }
 
     @Override

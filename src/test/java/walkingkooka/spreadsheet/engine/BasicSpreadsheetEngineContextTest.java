@@ -59,162 +59,142 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testWithNullFunctionsFails() {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetEngineContext.with(null,
-                    this.engine(),
-                    this.labelStore(),
-                    this.converter(),
-                    this.converterContext(),
-                    this.numberToColor(),
-                    this.nameToColor(),
-                    WIDTH,
-                    FRACTIONER,
-                    this.defaultSpreadsheetFormatter());
-        });
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(null,
+                this.engine(),
+                this.labelStore(),
+                this.converter(),
+                this.converterContext(),
+                this.numberToColor(),
+                this.nameToColor(),
+                WIDTH,
+                FRACTIONER,
+                this.defaultSpreadsheetFormatter()));
     }
 
     @Test
     public void testWithNullEngineFails() {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetEngineContext.with(this.functions(),
-                    null,
-                    this.labelStore(),
-                    this.converter(),
-                    this.converterContext(),
-                    this.numberToColor(),
-                    this.nameToColor(),
-                    WIDTH,
-                    FRACTIONER,
-                    this.defaultSpreadsheetFormatter());
-        });
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(this.functions(),
+                null,
+                this.labelStore(),
+                this.converter(),
+                this.converterContext(),
+                this.numberToColor(),
+                this.nameToColor(),
+                WIDTH,
+                FRACTIONER,
+                this.defaultSpreadsheetFormatter()));
     }
 
     @Test
     public void testWithNullLabelStoreFails() {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetEngineContext.with(this.functions(),
-                    this.engine(),
-                    null,
-                    this.converter(),
-                    this.converterContext(),
-                    this.numberToColor(),
-                    this.nameToColor(),
-                    WIDTH,
-                    FRACTIONER,
-                    this.defaultSpreadsheetFormatter());
-        });
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(this.functions(),
+                this.engine(),
+                null,
+                this.converter(),
+                this.converterContext(),
+                this.numberToColor(),
+                this.nameToColor(),
+                WIDTH,
+                FRACTIONER,
+                this.defaultSpreadsheetFormatter()));
     }
 
     @Test
     public void testWithNullConverterFails() {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetEngineContext.with(this.functions(),
-                    this.engine(),
-                    this.labelStore(),
-                    null,
-                    this.converterContext(),
-                    this.numberToColor(),
-                    this.nameToColor(),
-                    WIDTH,
-                    FRACTIONER,
-                    this.defaultSpreadsheetFormatter());
-        });
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(this.functions(),
+                this.engine(),
+                this.labelStore(),
+                null,
+                this.converterContext(),
+                this.numberToColor(),
+                this.nameToColor(),
+                WIDTH,
+                FRACTIONER,
+                this.defaultSpreadsheetFormatter()));
     }
 
     @Test
     public void testWithNullConverterContextFails() {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetEngineContext.with(this.functions(),
-                    this.engine(),
-                    this.labelStore(),
-                    this.converter(),
-                    null,
-                    this.numberToColor(),
-                    this.nameToColor(),
-                    WIDTH,
-                    FRACTIONER,
-                    this.defaultSpreadsheetFormatter());
-        });
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(this.functions(),
+                this.engine(),
+                this.labelStore(),
+                this.converter(),
+                null,
+                this.numberToColor(),
+                this.nameToColor(),
+                WIDTH,
+                FRACTIONER,
+                this.defaultSpreadsheetFormatter()));
     }
 
     @Test
     public void testWithNullNumberToColorFails() {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetEngineContext.with(this.functions(),
-                    this.engine(),
-                    this.labelStore(),
-                    this.converter(),
-                    this.converterContext(),
-                    null,
-                    this.nameToColor(),
-                    WIDTH,
-                    FRACTIONER,
-                    this.defaultSpreadsheetFormatter());
-        });
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(this.functions(),
+                this.engine(),
+                this.labelStore(),
+                this.converter(),
+                this.converterContext(),
+                null,
+                this.nameToColor(),
+                WIDTH,
+                FRACTIONER,
+                this.defaultSpreadsheetFormatter()));
     }
 
     @Test
     public void testWithNullNameToColorFails() {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetEngineContext.with(this.functions(),
-                    this.engine(),
-                    this.labelStore(),
-                    this.converter(),
-                    this.converterContext(),
-                    this.numberToColor(),
-                    null,
-                    WIDTH,
-                    FRACTIONER,
-                    this.defaultSpreadsheetFormatter());
-        });
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(this.functions(),
+                this.engine(),
+                this.labelStore(),
+                this.converter(),
+                this.converterContext(),
+                this.numberToColor(),
+                null,
+                WIDTH,
+                FRACTIONER,
+                this.defaultSpreadsheetFormatter()));
     }
 
     @Test
     public void testWithInvalidWidthFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            BasicSpreadsheetEngineContext.with(this.functions(),
-                    this.engine(),
-                    this.labelStore(),
-                    this.converter(),
-                    this.converterContext(),
-                    this.numberToColor(),
-                    this.nameToColor(),
-                    0,
-                    FRACTIONER,
-                    this.defaultSpreadsheetFormatter());
-        });
+        assertThrows(IllegalArgumentException.class, () -> BasicSpreadsheetEngineContext.with(this.functions(),
+                this.engine(),
+                this.labelStore(),
+                this.converter(),
+                this.converterContext(),
+                this.numberToColor(),
+                this.nameToColor(),
+                0,
+                FRACTIONER,
+                this.defaultSpreadsheetFormatter()));
     }
 
     @Test
     public void testWithNullFractionFails() {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetEngineContext.with(this.functions(),
-                    this.engine(),
-                    this.labelStore(),
-                    this.converter(),
-                    this.converterContext(),
-                    this.numberToColor(),
-                    this.nameToColor(),
-                    WIDTH,
-                    null,
-                    this.defaultSpreadsheetFormatter());
-        });
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(this.functions(),
+                this.engine(),
+                this.labelStore(),
+                this.converter(),
+                this.converterContext(),
+                this.numberToColor(),
+                this.nameToColor(),
+                WIDTH,
+                null,
+                this.defaultSpreadsheetFormatter()));
     }
 
     @Test
     public void testWithNullDefaultSpreadsheetFormatterFails() {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetEngineContext.with(this.functions(),
-                    this.engine(),
-                    this.labelStore(),
-                    this.converter(),
-                    this.converterContext(),
-                    this.numberToColor(),
-                    this.nameToColor(),
-                    WIDTH,
-                    FRACTIONER,
-                    null);
-        });
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(this.functions(),
+                this.engine(),
+                this.labelStore(),
+                this.converter(),
+                this.converterContext(),
+                this.numberToColor(),
+                this.nameToColor(),
+                WIDTH,
+                FRACTIONER,
+                null));
     }
 
     @Test

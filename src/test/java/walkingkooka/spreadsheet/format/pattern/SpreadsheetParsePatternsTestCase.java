@@ -46,16 +46,12 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
 
     @Test
     public final void testWithNullParserTokenFails() {
-        assertThrows(NullPointerException.class, () -> {
-            createPattern((List<T>)null);
-        });
+        assertThrows(NullPointerException.class, () -> createPattern((List<T>)null));
     }
 
     @Test
     public final void testWithNullEmptyParserTokenFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            createPattern(Lists.empty());
-        });
+        assertThrows(IllegalArgumentException.class, () -> createPattern(Lists.empty()));
     }
 
     @Test
@@ -172,9 +168,7 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
 
         final T parent = this.createFormatParserToken(tokens, patternText2);
 
-        final InvalidCharacterException thrown = assertThrows(InvalidCharacterException.class, () -> {
-            this.createPattern(Lists.of(parent));
-        });
+        final InvalidCharacterException thrown = assertThrows(InvalidCharacterException.class, () -> this.createPattern(Lists.of(parent)));
         assertEquals(patternText.length(), thrown.position(), () -> "position pattern=" + patternText2);
     }
 

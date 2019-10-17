@@ -43,31 +43,23 @@ public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerTest im
 
     @Test
     public void testWithNullLabelStoreFails() {
-        assertThrows(NullPointerException.class, () -> {
-            ExpressionReferenceSpreadsheetCellReferencesBiConsumer.with(null, SpreadsheetRangeStores.fake());
-        });
+        assertThrows(NullPointerException.class, () -> ExpressionReferenceSpreadsheetCellReferencesBiConsumer.with(null, SpreadsheetRangeStores.fake()));
     }
 
     @Test
     public void testWithNullSpreadsheetRangeStoreFails() {
-        assertThrows(NullPointerException.class, () -> {
-            ExpressionReferenceSpreadsheetCellReferencesBiConsumer.with(SpreadsheetLabelStores.fake(), null);
-        });
+        assertThrows(NullPointerException.class, () -> ExpressionReferenceSpreadsheetCellReferencesBiConsumer.with(SpreadsheetLabelStores.fake(), null));
     }
 
     @Test
     public void testAcceptNullExpressionReferenceFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createBiConsumer().accept(null, (c) -> {
-            });
-        });
+        assertThrows(NullPointerException.class, () -> this.createBiConsumer().accept(null, (c) -> {
+        }));
     }
 
     @Test
     public void testAcceptNullBiConsumerFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createBiConsumer().accept(this.cellB1(), null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createBiConsumer().accept(this.cellB1(), null));
     }
 
     @Test

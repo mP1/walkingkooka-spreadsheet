@@ -46,9 +46,7 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
 
     @Test
     public void testWithNullPatternFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetCellFormat.with(null);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetCellFormat.with(null));
     }
 
     @Test
@@ -68,9 +66,7 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
 
     @Test
     public void testSetPatternNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createObject().setPattern(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createObject().setPattern(null));
     }
 
     @Test
@@ -92,9 +88,7 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
 
     @Test
     public void testSetFormatterNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createObject().setFormatter(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createObject().setFormatter(null));
     }
 
     @Test

@@ -32,29 +32,23 @@ public final class PredicateSpreadsheetDataValidatorTest extends SpreadsheetData
 
     @Test
     public void testWithNullClassFails() {
-        assertThrows(NullPointerException.class, () -> {
-            PredicateSpreadsheetDataValidator.with(null,
-                    this.predicate(),
-                    TO_STRING);
-        });
+        assertThrows(NullPointerException.class, () -> PredicateSpreadsheetDataValidator.with(null,
+                this.predicate(),
+                TO_STRING));
     }
 
     @Test
     public void testWithNullPredicateFails() {
-        assertThrows(NullPointerException.class, () -> {
-            PredicateSpreadsheetDataValidator.with(String.class,
-                    null,
-                    TO_STRING);
-        });
+        assertThrows(NullPointerException.class, () -> PredicateSpreadsheetDataValidator.with(String.class,
+                null,
+                TO_STRING));
     }
 
     @Test
     public void testWithNullToStringFails() {
-        assertThrows(NullPointerException.class, () -> {
-            PredicateSpreadsheetDataValidator.with(String.class,
-                    this.predicate(),
-                    null);
-        });
+        assertThrows(NullPointerException.class, () -> PredicateSpreadsheetDataValidator.with(String.class,
+                this.predicate(),
+                null));
     }
 
     @Test

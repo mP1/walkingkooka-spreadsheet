@@ -46,16 +46,12 @@ public abstract class SpreadsheetFormatParserTokenTestCase<T extends Spreadsheet
 
     @Test
     public void testWithEmptyTextFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createToken("");
-        });
+        assertThrows(IllegalArgumentException.class, () -> this.createToken(""));
     }
 
     @Test
     public void testWithWhitespaceTextFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createToken(" \t");
-        });
+        assertThrows(IllegalArgumentException.class, () -> this.createToken(" \t"));
     }
 
     // IsMethodTesting.................................................................................................

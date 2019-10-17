@@ -44,16 +44,12 @@ public abstract class SpreadsheetFormatParentParserTokenTestCase<T extends Sprea
 
     @Test
     public final void testWithNullTokensFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createToken(this.text(), Cast.<List<ParserToken>>to(null));
-        });
+        assertThrows(NullPointerException.class, () -> this.createToken(this.text(), Cast.<List<ParserToken>>to(null)));
     }
 
     @Test
     public void testWithEmptyTokensFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createToken(this.text(), Lists.empty());
-        });
+        assertThrows(IllegalArgumentException.class, () -> this.createToken(this.text(), Lists.empty()));
     }
 
     @Test

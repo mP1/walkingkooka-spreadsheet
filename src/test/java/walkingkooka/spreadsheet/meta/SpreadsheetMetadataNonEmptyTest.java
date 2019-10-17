@@ -354,13 +354,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
 
         Stream.of(name1, name2, SpreadsheetColorName.with("unknown"))
-                .forEach(n -> {
-                    this.nameToColorAndCheck(metadata,
-                            n,
-                            name1 == n ? color1 :
-                                    name2 == n ? color2 :
-                                            null);
-                });
+                .forEach(n -> this.nameToColorAndCheck(metadata,
+                        n,
+                        name1 == n ? color1 :
+                                name2 == n ? color2 :
+                                        null));
     }
     
     // NumberToColor....................................................................................................
@@ -399,9 +397,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testHateosLinkIdMissingIdFails() {
-        assertThrows(IllegalStateException.class, () -> {
-            this.createSpreadsheetMetadata().hateosLinkId();
-        });
+        assertThrows(IllegalStateException.class, () -> this.createSpreadsheetMetadata().hateosLinkId());
     }
 
     // HasConverter.....................................................................................................
@@ -578,15 +574,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testDecimalNumberContextSomeRequiredPropertiesAbsentFails() {
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
-            SpreadsheetMetadata.EMPTY
-                    .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "CS")
-                    .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, 'D')
-                    .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, 'E')
-                    .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, 'G')
-                    .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, 'M')
-                    .decimalNumberContext();
-        });
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "CS")
+                .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, 'D')
+                .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, 'E')
+                .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, 'G')
+                .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, 'M')
+                .decimalNumberContext());
         assertEquals("Required properties \"locale\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\" missing.",
                 thrown.getMessage(),
                 "message");
@@ -594,13 +588,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testDecimalNumberContextSomeRequiredPropertiesAbsentFails2() {
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
-            SpreadsheetMetadata.EMPTY
-                    .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "CS")
-                    .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, 'D')
-                    .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, 'E')
-                    .decimalNumberContext();
-        });
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "CS")
+                .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, 'D')
+                .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, 'E')
+                .decimalNumberContext());
         assertEquals("Required properties \"grouping-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\" missing.",
                 thrown.getMessage(),
                 "message");
@@ -652,32 +644,30 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         final Character positiveSign = '+';
 
         Arrays.stream(Locale.getAvailableLocales())
-                .forEach(locale -> {
-                    Lists.of(MathContext.DECIMAL32, MathContext.DECIMAL64, MathContext.DECIMAL128, MathContext.UNLIMITED)
-                            .forEach(mc -> {
-                                final int precision = mc.getPrecision();
-                                final RoundingMode roundingMode = mc.getRoundingMode();
+                .forEach(locale -> Lists.of(MathContext.DECIMAL32, MathContext.DECIMAL64, MathContext.DECIMAL128, MathContext.UNLIMITED)
+                        .forEach(mc -> {
+                            final int precision = mc.getPrecision();
+                            final RoundingMode roundingMode = mc.getRoundingMode();
 
-                                final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
+                            final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
 
-                                this.decimalNumberContextAndCheck(SpreadsheetMetadata.EMPTY
-                                                .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, exponentSymbol)
-                                                .set(SpreadsheetMetadataPropertyName.LOCALE, locale)
-                                                .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, positiveSign)
-                                                .set(SpreadsheetMetadataPropertyName.PRECISION, precision)
-                                                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, roundingMode),
-                                        symbols.getCurrencySymbol(),
-                                        symbols.getDecimalSeparator(),
-                                        exponentSymbol,
-                                        symbols.getGroupingSeparator(),
-                                        locale,
-                                        symbols.getMinusSign(),
-                                        symbols.getPercent(),
-                                        positiveSign,
-                                        precision,
-                                        roundingMode);
-                            });
-                });
+                            this.decimalNumberContextAndCheck(SpreadsheetMetadata.EMPTY
+                                            .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, exponentSymbol)
+                                            .set(SpreadsheetMetadataPropertyName.LOCALE, locale)
+                                            .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, positiveSign)
+                                            .set(SpreadsheetMetadataPropertyName.PRECISION, precision)
+                                            .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, roundingMode),
+                                    symbols.getCurrencySymbol(),
+                                    symbols.getDecimalSeparator(),
+                                    exponentSymbol,
+                                    symbols.getGroupingSeparator(),
+                                    locale,
+                                    symbols.getMinusSign(),
+                                    symbols.getPercent(),
+                                    positiveSign,
+                                    precision,
+                                    roundingMode);
+                        }));
     }
 
     private void decimalNumberContextAndCheck(final SpreadsheetMetadata metadata,
@@ -792,10 +782,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testHasMathContextRequiredPropertiesAbsentFails2() {
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
-            SpreadsheetMetadataNonEmpty.with(Maps.of(SpreadsheetMetadataPropertyName.PRECISION, 1))
-                    .mathContext();
-        });
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadataNonEmpty.with(Maps.of(SpreadsheetMetadataPropertyName.PRECISION, 1))
+                .mathContext());
         this.checkMessage(thrown, "Required properties \"rounding-mode\" missing.");
     }
 
