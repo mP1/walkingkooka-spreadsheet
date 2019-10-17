@@ -47,7 +47,7 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
      */
     private final static SpreadsheetMetadataPropertyNameNumberedColor[] NUMBER_TO_COLOR = new SpreadsheetMetadataPropertyNameNumberedColor[MAX_NUMBER];
 
-    /**
+    /*
      * Fills the cache of {@link SpreadsheetMetadataPropertyNameNumberedColor} for color numbers 0 to {@link #MAX_NUMBER}.
      */
     static {
