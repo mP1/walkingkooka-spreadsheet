@@ -41,30 +41,22 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
 
     @Test
     public void testWithNullDescriptionFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetConditionalFormattingRule.with(null, priority(), formula(), style());
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetConditionalFormattingRule.with(null, priority(), formula(), style()));
     }
 
     @Test
     public void testWithNullFormulaFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetConditionalFormattingRule.with(description(), priority(), null, style());
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetConditionalFormattingRule.with(description(), priority(), null, style()));
     }
 
     @Test
     public void testWithNullFormulaWithoutExpressionFails() {
-        assertThrows(SpreadsheetConditionalFormattingException.class, () -> {
-            SpreadsheetConditionalFormattingRule.with(description(), priority(), this.formulaUncompiled(), style());
-        });
+        assertThrows(SpreadsheetConditionalFormattingException.class, () -> SpreadsheetConditionalFormattingRule.with(description(), priority(), this.formulaUncompiled(), style()));
     }
 
     @Test
     public void testWithNullTextStyleFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetConditionalFormattingRule.with(description(), priority(), formula(), null);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetConditionalFormattingRule.with(description(), priority(), formula(), null));
     }
 
     @Test
@@ -77,9 +69,7 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
 
     @Test
     public void testSetDescriptionNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createObject().setDescription(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createObject().setDescription(null));
     }
 
     @Test
@@ -121,16 +111,12 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
 
     @Test
     public void testSetFormulaNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createObject().setFormula(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createObject().setFormula(null));
     }
 
     @Test
     public void testSetFormulaUncompiledFails() {
-        assertThrows(SpreadsheetConditionalFormattingException.class, () -> {
-            this.createObject().setFormula(this.formulaUncompiled());
-        });
+        assertThrows(SpreadsheetConditionalFormattingException.class, () -> this.createObject().setFormula(this.formulaUncompiled()));
     }
 
     @Test
@@ -154,9 +140,7 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
 
     @Test
     public void testSetStyleNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createObject().setStyle(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createObject().setStyle(null));
     }
 
     @Test

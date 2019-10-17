@@ -45,23 +45,17 @@ public final class ExpressionReferenceSpreadsheetCellReferenceFunctionTest imple
 
     @Test
     public void testWithNullLabelStoreFails() {
-        assertThrows(NullPointerException.class, () -> {
-            ExpressionReferenceSpreadsheetCellReferenceFunction.with(null, SpreadsheetRangeStores.fake());
-        });
+        assertThrows(NullPointerException.class, () -> ExpressionReferenceSpreadsheetCellReferenceFunction.with(null, SpreadsheetRangeStores.fake()));
     }
 
     @Test
     public void testWithNullSpreadsheetRangeStoreFails() {
-        assertThrows(NullPointerException.class, () -> {
-            ExpressionReferenceSpreadsheetCellReferenceFunction.with(SpreadsheetLabelStores.fake(), null);
-        });
+        assertThrows(NullPointerException.class, () -> ExpressionReferenceSpreadsheetCellReferenceFunction.with(SpreadsheetLabelStores.fake(), null));
     }
 
     @Test
     public void testApplyNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createFunction().apply(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createFunction().apply(null));
     }
 
     @Test

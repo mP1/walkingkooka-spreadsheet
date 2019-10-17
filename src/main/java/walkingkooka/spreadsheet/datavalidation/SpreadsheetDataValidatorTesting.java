@@ -36,16 +36,12 @@ public interface SpreadsheetDataValidatorTesting<V extends SpreadsheetDataValida
 
     @Test
     default void testValidateNullValueFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetDataValidator().validate(null, this.createContext());
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetDataValidator().validate(null, this.createContext()));
     }
 
     @Test
     default void testValidateNullContextFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createSpreadsheetDataValidator().validate(this.value(), null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetDataValidator().validate(this.value(), null));
     }
 
     V createSpreadsheetDataValidator();

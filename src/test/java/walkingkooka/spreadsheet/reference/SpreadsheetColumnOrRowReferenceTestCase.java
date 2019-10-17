@@ -47,23 +47,17 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     @Test
     public final void testWithNegativeValueFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createReference(-1, SpreadsheetReferenceKind.RELATIVE);
-        });
+        assertThrows(IllegalArgumentException.class, () -> this.createReference(-1, SpreadsheetReferenceKind.RELATIVE));
     }
 
     @Test
     public final void testWithInvalidValueFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createReference(this.maxValue(), SpreadsheetReferenceKind.RELATIVE);
-        });
+        assertThrows(IllegalArgumentException.class, () -> this.createReference(this.maxValue(), SpreadsheetReferenceKind.RELATIVE));
     }
 
     @Test
     public final void testWithNullKindFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createReference(0, null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createReference(0, null));
     }
 
     @Test
@@ -108,9 +102,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     @Test
     public final void testSetReferenceKindNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createReference().setReferenceKind(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createReference().setReferenceKind(null));
     }
 
     @Test
@@ -139,9 +131,7 @@ public abstract class SpreadsheetColumnOrRowReferenceTestCase<R extends Spreadsh
 
     @Test
     public final void testSetValueInvalidFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createReference().setValue(-1);
-        });
+        assertThrows(IllegalArgumentException.class, () -> this.createReference().setValue(-1));
     }
 
     @Test

@@ -44,16 +44,12 @@ public final class SpreadsheetCellReferenceParserTokenTest extends SpreadsheetPa
 
     @Test
     public void testWithoutColumnFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createToken(ROW_TEXT, this.row());
-        });
+        assertThrows(IllegalArgumentException.class, () -> this.createToken(ROW_TEXT, this.row()));
     }
 
     @Test
     public void testWithoutRowFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createToken(COLUMN_TEXT, this.column());
-        });
+        assertThrows(IllegalArgumentException.class, () -> this.createToken(COLUMN_TEXT, this.column()));
     }
 
     @Test

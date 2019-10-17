@@ -44,9 +44,7 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
 
     @Test
     public void testWithNullTypeFails() {
-        assertThrows(NullPointerException.class, () -> {
-            DateTimeSpreadsheetFormatter.with(this.parsePatternOrFail(this.pattern()), null);
-        });
+        assertThrows(NullPointerException.class, () -> DateTimeSpreadsheetFormatter.with(this.parsePatternOrFail(this.pattern()), null));
     }
 
     // tests.............................................................................................................

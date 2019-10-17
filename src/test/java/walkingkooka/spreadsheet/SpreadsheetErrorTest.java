@@ -39,23 +39,17 @@ public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetErro
 
     @Test
     public void testWithNullValueFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetError.with(null);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetError.with(null));
     }
 
     @Test
     public void testWithEmptyValueFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            SpreadsheetError.with("");
-        });
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetError.with(""));
     }
 
     @Test
     public void testWithWhitespaceValueFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            SpreadsheetError.with(" \t");
-        });
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetError.with(" \t"));
     }
 
     @Test

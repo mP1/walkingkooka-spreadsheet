@@ -35,9 +35,7 @@ public final class GroupTest extends IdentityTestCase<Group, GroupId> {
 
     @Test
     public void testWithNullNameFails() {
-        assertThrows(NullPointerException.class, () -> {
-            Group.with(this.createId(), null);
-        });
+        assertThrows(NullPointerException.class, () -> Group.with(this.createId(), null));
     }
 
     @Test

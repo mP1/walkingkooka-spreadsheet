@@ -126,9 +126,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
     @Test
     public final void testRowNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createStore().row(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createStore().row(null));
     }
 
     @Test
@@ -152,9 +150,7 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
 
     @Test
     public final void testColumnNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createStore().column(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createStore().column(null));
     }
 
     @Test

@@ -28,72 +28,52 @@ public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends
 
     @Test
     default void testConverterNullSpreadsheetIdFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createContext().converter(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createContext().converter(null));
     }
 
     @Test
     default void testCreateMetadataNullLocaleFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createContext().createMetadata(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createContext().createMetadata(null));
     }
 
     @Test
     default void testDateTimeContextNullSpreadsheetIdFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createContext().dateTimeContext(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createContext().dateTimeContext(null));
     }
 
     @Test
     default void testDecimalNumberContextNullSpreadsheetIdFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createContext().decimalNumberContext(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createContext().decimalNumberContext(null));
     }
 
     @Test
     default void testFunctionsNullSpreadsheetIdFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createContext().functions(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createContext().functions(null));
     }
 
     @Test
     default void testHateosRouterNullSpreadsheetIdFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createContext().hateosRouter(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createContext().hateosRouter(null));
     }
 
     @Test
     default void testNameToColorNullSpreadsheetIdFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createContext().nameToColor(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createContext().nameToColor(null));
     }
 
     @Test
     default void testNumberToColorNullSpreadsheetIdFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createContext().numberToColor(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createContext().numberToColor(null));
     }
 
     @Test
     default void testStoreRepositoryNullSpreadsheetIdFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createContext().storeRepository(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createContext().storeRepository(null));
     }
 
     @Test
     default void testWidthNullSpreadsheetIdFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createContext().width(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createContext().width(null));
     }
 
     // TypeNameTesting..................................................................................................

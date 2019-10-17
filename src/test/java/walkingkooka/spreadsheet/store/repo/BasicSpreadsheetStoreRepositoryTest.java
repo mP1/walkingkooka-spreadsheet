@@ -166,17 +166,15 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
                            final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells,
                            final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
                            final SpreadsheetUserStore users) {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetStoreRepository.with(cells,
-                    cellReferences,
-                    groups,
-                    labels,
-                    labelReferences,
-                    metadatas,
-                    rangeToCells,
-                    rangeToConditionalFormattingRules,
-                    users);
-        });
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetStoreRepository.with(cells,
+                cellReferences,
+                groups,
+                labels,
+                labelReferences,
+                metadatas,
+                rangeToCells,
+                rangeToConditionalFormattingRules,
+                users));
     }
 
     @Test

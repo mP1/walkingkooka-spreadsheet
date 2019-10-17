@@ -53,9 +53,7 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
 
     @Test
     public void testWithNullRangeFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetRange.with(null);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetRange.with(null));
     }
 
     @Test
@@ -86,9 +84,7 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
     }
 
     private void withFails(final Range<SpreadsheetCellReference> range) {
-        assertThrows(IllegalArgumentException.class, () -> {
-            SpreadsheetRange.with(range);
-        });
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetRange.with(range));
     }
 
     @Test
@@ -169,9 +165,7 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
 
     @Test
     public void testSetRangeWithNullRangeFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.range().setRange(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.range().setRange(null));
     }
 
     @Test
@@ -460,9 +454,7 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
     private void cellsFails(final List<SpreadsheetCell> cells,
                             final Consumer<SpreadsheetCell> present,
                             final Consumer<SpreadsheetCellReference> absent) {
-        assertThrows(NullPointerException.class, () -> {
-            this.createReference().cells(cells, present, absent);
-        });
+        assertThrows(NullPointerException.class, () -> this.createReference().cells(cells, present, absent));
     }
 
     @Test
@@ -721,16 +713,12 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
 
     @Test
     public void testFromCellsWithNullCellsFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetRange.fromCells(null);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetRange.fromCells(null));
     }
 
     @Test
     public void testFromCellsEmptyCellsFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            SpreadsheetRange.fromCells(Lists.empty());
-        });
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetRange.fromCells(Lists.empty()));
     }
 
     @Test
@@ -830,16 +818,12 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
 
     @Test
     public void testCompareCellFails() {
-        assertThrows(UnsupportedOperationException.class, () -> {
-            this.range().compare(this.begin());
-        });
+        assertThrows(UnsupportedOperationException.class, () -> this.range().compare(this.begin()));
     }
 
     @Test
     public void testCompareRangeFails() {
-        assertThrows(UnsupportedOperationException.class, () -> {
-            this.range().compare(this.range());
-        });
+        assertThrows(UnsupportedOperationException.class, () -> this.range().compare(this.range()));
     }
 
     //helper.................................................................................................

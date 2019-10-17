@@ -41,9 +41,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
 
     @Test
     public void testUnknownConstantFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            SpreadsheetMetadataPropertyName.with("unknown1234567");
-        });
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetMetadataPropertyName.with("unknown1234567"));
     }
 
     @Test
@@ -68,16 +66,12 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
 
     @Test
     public void testWithColorPropertyFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            SpreadsheetMetadataPropertyName.with("color-");
-        });
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetMetadataPropertyName.with("color-"));
     }
 
     @Test
     public void testWithColorPropertyFails2() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            SpreadsheetMetadataPropertyName.with("color-!");
-        });
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetMetadataPropertyName.with("color-!"));
     }
 
     @Test

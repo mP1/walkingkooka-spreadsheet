@@ -56,9 +56,7 @@ public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>
 
     @Test
     default void testLoadCellReferenceNullCellReferenceFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createStore().loadCellReferenceValues(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createStore().loadCellReferenceValues(null));
     }
 
     @Test
@@ -76,10 +74,8 @@ public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>
 
     @Test
     default void testAddSaveWatcherFails() {
-        assertThrows(UnsupportedOperationException.class, () -> {
-            this.createStore().addSaveWatcher((a) -> {
-            });
-        });
+        assertThrows(UnsupportedOperationException.class, () -> this.createStore().addSaveWatcher((a) -> {
+        }));
     }
 
     @Test
@@ -101,58 +97,42 @@ public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>
 
     @Test
     default void testAddValueNullRangeFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createStore().addValue(null, this.valueValue());
-        });
+        assertThrows(NullPointerException.class, () -> this.createStore().addValue(null, this.valueValue()));
     }
 
     @Test
     default void testAddValueNullValueFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createStore().addValue(RANGE, null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createStore().addValue(RANGE, null));
     }
 
     @Test
     default void testReplaceNullRangeFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createStore().replaceValue(null, this.valueValue(), this.valueValue());
-        });
+        assertThrows(NullPointerException.class, () -> this.createStore().replaceValue(null, this.valueValue(), this.valueValue()));
     }
 
     @Test
     default void testReplaceNullNewValueFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createStore().replaceValue(RANGE, null, this.valueValue());
-        });
+        assertThrows(NullPointerException.class, () -> this.createStore().replaceValue(RANGE, null, this.valueValue()));
     }
 
     @Test
     default void testReplaceNullOldValueFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createStore().replaceValue(RANGE, this.valueValue(), null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createStore().replaceValue(RANGE, this.valueValue(), null));
     }
 
     @Test
     default void testRemoveValueNullRangeFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createStore().removeValue(null, this.valueValue());
-        });
+        assertThrows(NullPointerException.class, () -> this.createStore().removeValue(null, this.valueValue()));
     }
 
     @Test
     default void testRemoveValueNullValueFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createStore().removeValue(RANGE, null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createStore().removeValue(RANGE, null));
     }
 
     @Test
     default void testRangesNullValueFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createStore().rangesWithValue(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createStore().rangesWithValue(null));
     }
 
     @Test

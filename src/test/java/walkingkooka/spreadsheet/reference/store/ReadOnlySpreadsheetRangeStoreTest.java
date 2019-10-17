@@ -66,23 +66,17 @@ public final class ReadOnlySpreadsheetRangeStoreTest implements SpreadsheetRange
 
     @Test
     public void testAddValueFails() {
-        assertThrows(UnsupportedOperationException.class, () -> {
-            this.createStore().addValue(RANGE, VALUE);
-        });
+        assertThrows(UnsupportedOperationException.class, () -> this.createStore().addValue(RANGE, VALUE));
     }
 
     @Test
     public void testReplacealueFails() {
-        assertThrows(UnsupportedOperationException.class, () -> {
-            this.createStore().replaceValue(RANGE, "old", "new");
-        });
+        assertThrows(UnsupportedOperationException.class, () -> this.createStore().replaceValue(RANGE, "old", "new"));
     }
 
     @Test
     public void testRemoveValueFails() {
-        assertThrows(UnsupportedOperationException.class, () -> {
-            this.createStore().removeValue(RANGE, VALUE);
-        });
+        assertThrows(UnsupportedOperationException.class, () -> this.createStore().removeValue(RANGE, VALUE));
     }
 
     @Test

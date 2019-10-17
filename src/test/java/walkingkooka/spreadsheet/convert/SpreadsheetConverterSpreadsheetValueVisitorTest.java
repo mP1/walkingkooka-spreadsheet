@@ -33,9 +33,7 @@ public final class SpreadsheetConverterSpreadsheetValueVisitorTest extends Sprea
 
     @Test
     public void testAcceptUnknownValue() {
-        final ConversionException thrown = assertThrows(ConversionException.class, () -> {
-            this.createVisitor().accept('X');
-        });
+        final ConversionException thrown = assertThrows(ConversionException.class, () -> this.createVisitor().accept('X'));
         assertEquals("Unable to convert 'X' to java.lang.String", thrown.getMessage(), "message");
     }
 

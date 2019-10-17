@@ -30,9 +30,7 @@ public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends Spre
 
     @Test
     public void testWithNumberFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            SpreadsheetMetadataPropertyName.numberedColor(-1);
-        });
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetMetadataPropertyName.numberedColor(-1));
     }
 
     @Test

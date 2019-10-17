@@ -60,16 +60,12 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
 
     @Test
     default void testFormatNullValueFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createFormatter().format(null, this.createContext());
-        });
+        assertThrows(NullPointerException.class, () -> this.createFormatter().format(null, this.createContext()));
     }
 
     @Test
     default void testFormatNullContextFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createFormatter().format(this.value(), null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createFormatter().format(this.value(), null));
     }
 
     @Test
@@ -114,9 +110,7 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
 
     @Test
     default void testThenNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createFormatter().then(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createFormatter().then(null));
     }
 
     @Test
