@@ -35,6 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
+@SuppressWarnings("unchecked")
 public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReferenceStore<T>, T extends ExpressionReference & Comparable<T>>
         extends StoreTesting<S, T, Set<SpreadsheetCellReference>>,
         TypeNameTesting<S> {
@@ -317,7 +318,10 @@ public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReference
         }
     }
 
-    default void loadReferredAndCheck(final S store, final SpreadsheetCellReference reference, final T... ids) {
+    @SuppressWarnings("unchecked")
+    default void loadReferredAndCheck(final S store,
+                                      final SpreadsheetCellReference reference,
+                                      final T... ids) {
         this.loadReferredAndCheck(store, reference, Sets.of(ids));
     }
 
