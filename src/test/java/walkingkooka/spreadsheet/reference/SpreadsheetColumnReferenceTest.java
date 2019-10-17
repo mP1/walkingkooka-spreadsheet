@@ -158,16 +158,19 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.checkToString(25, SpreadsheetReferenceKind.RELATIVE, "Z");
     }
 
+    @SuppressWarnings("PointlessArithmeticExpression")
     @Test
     public void testToStringRelative3() {
         this.checkToString((1 * 26) + 0, SpreadsheetReferenceKind.RELATIVE, "AA");
     }
 
+    @SuppressWarnings("PointlessArithmeticExpression")
     @Test
     public void testToStringRelative4() {
         this.checkToString((1 * 26) + 3, SpreadsheetReferenceKind.RELATIVE, "AD");
     }
 
+    @SuppressWarnings("PointlessArithmeticExpression")
     @Test
     public void testToStringRelative5() {
         this.checkToString((1 * 26 * 26) + (25 * 26) + 12, SpreadsheetReferenceKind.RELATIVE, "AYM");

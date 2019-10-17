@@ -25,7 +25,7 @@ public final class SpreadsheetColumnReferenceParserTest extends SpreadsheetParse
     private final static int A_VALUE = 0;
     private final static String A_TEXT = "A";
 
-    private final static int AD_VALUE = 1 * 26 + 3;
+    private final static int AD_VALUE = 26 + 3;
     private final static String AD_TEXT = "AD";
 
     private final static String TEXT_AFTER = "...";

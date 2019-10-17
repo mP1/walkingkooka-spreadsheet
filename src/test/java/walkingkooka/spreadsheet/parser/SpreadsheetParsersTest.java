@@ -907,6 +907,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         this.parseEvaluateAndCheck("-(1+2*(3+4*(5+6)*-7))", -(1 + 2 * (3 + 4 * (5 + 6) * -7)));
     }
 
+    @SuppressWarnings("PointlessArithmeticExpression")
     @Test
     public void testParenthesis8() {
         this.parseEvaluateAndCheck("-(1+2*(3+4*(5+6)*-(7*8+(9+0))))", -(1 + 2 * (3 + 4 * (5 + 6) * -(7 * 8 + (9 + 0)))));
@@ -922,6 +923,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         this.parseEvaluateAndCheck("-(-(-(-(1+2))))", -(-(-(-(1 + 2)))));
     }
 
+    @SuppressWarnings("PointlessArithmeticExpression")
     @Test
     public void testLongFormulaWithoutParens() {
         this.parseEvaluateAndCheck("1+2-3+4-5*6+7-8*9", 1 + 2 - 3 + 4 - 5 * 6 + 7 - 8 * 9);
