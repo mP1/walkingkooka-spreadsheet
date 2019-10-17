@@ -90,7 +90,7 @@ public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>
         final S store = this.createStore();
 
         final List<SpreadsheetRange> fired = Lists.array();
-        store.addDeleteWatcher((d) -> fired.add(d));
+        store.addDeleteWatcher(fired::add);
 
         store.addValue(range, value);
 

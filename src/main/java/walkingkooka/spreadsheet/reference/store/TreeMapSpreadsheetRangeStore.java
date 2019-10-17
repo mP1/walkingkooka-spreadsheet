@@ -286,7 +286,7 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
     public int count() {
         return this.topLeft.values()
                 .stream()
-                .mapToInt(e -> e.count())
+                .mapToInt(TreeMapSpreadsheetRangeStoreEntry::count)
                 .sum();
     }
 

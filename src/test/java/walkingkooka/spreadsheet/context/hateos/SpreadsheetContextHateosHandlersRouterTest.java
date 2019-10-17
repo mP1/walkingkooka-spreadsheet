@@ -26,6 +26,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.header.AcceptCharset;
 import walkingkooka.net.header.HttpHeaderName;
 import walkingkooka.net.http.HttpMethod;
+import walkingkooka.net.http.HttpStatus;
 import walkingkooka.net.http.HttpStatusCode;
 import walkingkooka.net.http.server.FakeHttpRequest;
 import walkingkooka.net.http.server.HttpRequest;
@@ -161,7 +162,7 @@ public final class SpreadsheetContextHateosHandlersRouterTest extends Spreadshee
             final RecordingHttpResponse response = HttpResponses.recording();
             possible.get().accept(request, response);
             assertEquals(statusCode,
-                    response.status().map(s -> s.value()).orElse(null),
+                    response.status().map(HttpStatus::value).orElse(null),
                     () -> "status " + request + " " + response + "\n" + possible);
             assertEquals(responseBody,
                     new String(response.entities().get(0).body().value(), Charset.defaultCharset()));
@@ -177,7 +178,7 @@ public final class SpreadsheetContextHateosHandlersRouterTest extends Spreadshee
             final RecordingHttpResponse response = HttpResponses.recording();
             possible.get().accept(request, response);
             assertEquals(statusCode,
-                    response.status().map(s -> s.value()).orElse(null),
+                    response.status().map(HttpStatus::value).orElse(null),
                     () -> "status " + request + " " + response + "\n" + possible);
         }
     }

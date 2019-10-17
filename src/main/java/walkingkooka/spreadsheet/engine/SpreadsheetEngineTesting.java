@@ -441,7 +441,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     default void spreadsheetIdAndCheck(final SpreadsheetEngine engine, final SpreadsheetId id) {
         assertEquals(id,
                 engine.id(),
-                () -> engine.toString());
+                engine::toString);
     }
 
     default SpreadsheetCell loadCellOrFail(final SpreadsheetEngine engine,

@@ -50,7 +50,7 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
     @Override
     public Optional<Set<SpreadsheetCellReference>> load(final T id) {
         checkId(id);
-        return Optional.ofNullable(this.targetToReferences.get(id)).map(v -> Sets.readOnly(v));
+        return Optional.ofNullable(this.targetToReferences.get(id)).map(Sets::readOnly);
     }
 
     @Override
@@ -130,7 +130,7 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
         return this.targetToReferences.entrySet()
                 .stream()
                 .filter(e -> e.getKey().compareTo(from) >= 0)
-                .map(e -> e.getValue())
+                .map(Map.Entry::getValue)
                 .limit(count)
                 .collect(Collectors.toCollection(Lists::array));
     }
