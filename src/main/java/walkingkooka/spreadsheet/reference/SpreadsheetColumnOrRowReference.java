@@ -133,7 +133,7 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
         return array;
     }
 
-    final static void checkReferenceKind(final SpreadsheetReferenceKind referenceKind) {
+    static void checkReferenceKind(final SpreadsheetReferenceKind referenceKind) {
         Objects.requireNonNull(referenceKind, "referenceKind");
     }
 
