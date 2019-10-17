@@ -428,7 +428,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      * Used during hashing and equality checks.
      */
     @Override
-    final CaseSensitivity caseSensitivity() {
+    public CaseSensitivity caseSensitivity() {
         return CASE_SENSITIVITY;
     }
 
