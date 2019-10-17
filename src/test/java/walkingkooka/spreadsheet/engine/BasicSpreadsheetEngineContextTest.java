@@ -421,7 +421,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         return this.color();
     }
 
-    private final Optional<Color> color() {
+    private Optional<Color> color() {
         return Optional.of(Color.fromRgb(0x123456));
     }
 
