@@ -3927,7 +3927,7 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
                 text);
 
         final List<ParserToken> lower = Arrays.stream(tokens)
-                .map(t -> SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor.toLower(t))
+                .map(SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor::toLower)
                 .collect(Collectors.toList());
         final String textLower = text.toLowerCase();
 

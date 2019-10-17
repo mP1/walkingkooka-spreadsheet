@@ -383,7 +383,7 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
         final SpreadsheetRange range = this.range(5, 10, 8, 10);
         this.checkStream(range,
                 range.columnStream()
-                        .map(c -> c.value())
+                        .map(SpreadsheetColumnOrRowReference::value)
                         .filter(c -> c >= 6),
                 6, 7);
     }
@@ -402,7 +402,7 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
         final SpreadsheetRange range = this.range(5, 10, 8, 20);
         this.checkStream(range,
                 range.rowStream()
-                        .map(r -> r.value())
+                        .map(SpreadsheetColumnOrRowReference::value)
                         .filter(r -> r < 13),
                 10, 11, 12);
     }
@@ -431,7 +431,7 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
 
     private <T> void checkStream(final SpreadsheetRange range, final Stream<?> stream, final Object... expected) {
         final List<Object> actual = stream.collect(Collectors.toList());
-        assertEquals(Lists.of(expected), actual, () -> range.toString());
+        assertEquals(Lists.of(expected), actual, range::toString);
     }
 
     // cells............................................................................................................
