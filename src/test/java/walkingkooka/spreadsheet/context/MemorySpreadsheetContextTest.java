@@ -617,7 +617,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         return repository;
     }
 
-    private Map<SpreadsheetId, SpreadsheetStoreRepository> idToRepositories = Maps.sorted();
+    private final Map<SpreadsheetId, SpreadsheetStoreRepository> idToRepositories = Maps.sorted();
 
     private void checkSpreadsheetId(final SpreadsheetId id) {
         Objects.requireNonNull(id, "spreadsheetId");
