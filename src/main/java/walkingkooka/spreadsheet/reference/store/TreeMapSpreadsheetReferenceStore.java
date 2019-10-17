@@ -83,8 +83,7 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
 
         final boolean needsFire = null != referrers;
         if (needsFire) {
-            for (Iterator<SpreadsheetCellReference> i = referrers.iterator(); i.hasNext(); ) {
-                final SpreadsheetCellReference referrer = i.next();
+            for (final SpreadsheetCellReference referrer : referrers) {
                 final Set<T> targets = this.referenceToTargets.get(referrer);
                 if (null != targets) {
                     if (targets.remove(id)) {
