@@ -51,7 +51,7 @@ final class TextSpreadsheetFormatter extends SpreadsheetFormatter3<SpreadsheetFo
     @Override
     Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
         return Optional.of(TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor.format(this.token,
-                String.class.cast(value),
+                (String) value,
                 context));
     }
 
