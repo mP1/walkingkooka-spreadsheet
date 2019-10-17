@@ -107,7 +107,7 @@ final class SpreadsheetMetadataNonEmptyMapEntrySet extends AbstractSet<Entry<Spr
     // SpreadsheetMetadataVisitor.......................................................................................
 
     void accept(final SpreadsheetMetadataVisitor visitor) {
-        this.entries.stream()
+        this.entries
                 .forEach(visitor::acceptPropertyAndValue);
     }
 

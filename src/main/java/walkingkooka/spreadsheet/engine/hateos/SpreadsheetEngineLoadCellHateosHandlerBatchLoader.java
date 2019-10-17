@@ -43,6 +43,7 @@ final class SpreadsheetEngineLoadCellHateosHandlerBatchLoader {
     SpreadsheetDelta batchLoad(final Range<SpreadsheetCellReference> cells) {
         SpreadsheetRange.with(cells).cellStream()
                 .forEach(this::maybeLoadCell);
+        //noinspection SimplifyStreamApiCallChains
         return this.referenceToCell.isEmpty() ?
                 null :
                 SpreadsheetDelta.with(this.referenceToCell.values()
@@ -54,7 +55,6 @@ final class SpreadsheetEngineLoadCellHateosHandlerBatchLoader {
         if (false == this.referenceToCell.containsKey(reference)) {
             final SpreadsheetDelta loaded = this.handler.loadCell(reference);
             loaded.cells()
-                    .stream()
                     .forEach(this::add);
         }
     }
