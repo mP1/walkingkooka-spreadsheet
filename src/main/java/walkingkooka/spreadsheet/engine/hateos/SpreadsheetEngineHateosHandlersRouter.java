@@ -56,22 +56,22 @@ final class SpreadsheetEngineHateosHandlersRouter implements StaticHelper {
     /**
      * A {@link HateosResourceName} with <code>cell</code>.
      */
-    static HateosResourceName CELL = HateosResourceName.with("cell");
+    static final HateosResourceName CELL = HateosResourceName.with("cell");
 
     /**
      * A {@link LinkRelation} with <code>fill</code>.
      */
-    static LinkRelation FILL = LinkRelation.with("fill");
+    static final LinkRelation FILL = LinkRelation.with("fill");
 
     /**
      * A {@link HateosResourceName} with <code>column</code>.
      */
-    static HateosResourceName COLUMN = HateosResourceName.with("column");
+    static final HateosResourceName COLUMN = HateosResourceName.with("column");
 
     /**
      * A {@link HateosResourceName} with <code>row</code>.
      */
-    static HateosResourceName ROW = HateosResourceName.with("row");
+    static final HateosResourceName ROW = HateosResourceName.with("row");
 
     private static final Class<SpreadsheetDelta> OPTIONAL_CELL_REFERENCE = Cast.to(SpreadsheetDelta.class);
     private static final Class<SpreadsheetDelta> RANGE_CELL_REFERENCE = Cast.to(SpreadsheetDelta.class);
