@@ -92,7 +92,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
         }
     }
 
-    static String invalidColumnValue(final int value) {
+    private static String invalidColumnValue(final int value) {
         return "Invalid column value " + value + " expected between 0 and " + MAX;
     }
 

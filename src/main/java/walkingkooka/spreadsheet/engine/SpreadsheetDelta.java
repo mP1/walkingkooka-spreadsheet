@@ -88,9 +88,9 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined {
      */
     abstract Set<SpreadsheetCell> copyCells(final Set<SpreadsheetCell> cells);
 
-    final Set<SpreadsheetCell> cells;
+    private final Set<SpreadsheetCell> cells;
 
-    static void checkCells(final Set<SpreadsheetCell> cells) {
+    private static void checkCells(final Set<SpreadsheetCell> cells) {
         Objects.requireNonNull(cells, "cells");
     }
 
@@ -164,7 +164,7 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined {
                 .collect(Collectors.toList());
     }
 
-    final JsonNode marshall(final JsonNodeMarshallContext context) {
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
         final List<JsonNode> children = Lists.array();
 
         final Set<SpreadsheetCell> cells = this.cells;
@@ -186,13 +186,13 @@ public abstract class SpreadsheetDelta implements HashCodeEqualsDefined {
     /**
      * Constant used to separate individual ranges in the window list.
      */
-    final static String WINDOW_SEPARATOR = ",";
+    private final static String WINDOW_SEPARATOR = ",";
 
     private final static String CELLS_PROPERTY_STRING = "cells";
     private final static String WINDOW_PROPERTY_STRING = "window";
 
     final static JsonNodeName CELLS_PROPERTY = JsonNodeName.with(CELLS_PROPERTY_STRING);
-    final static JsonNodeName WINDOW_PROPERTY = JsonNodeName.with(WINDOW_PROPERTY_STRING);
+    private final static JsonNodeName WINDOW_PROPERTY = JsonNodeName.with(WINDOW_PROPERTY_STRING);
 
     static {
         JsonNodeContext.register("spreadsheet-delta",

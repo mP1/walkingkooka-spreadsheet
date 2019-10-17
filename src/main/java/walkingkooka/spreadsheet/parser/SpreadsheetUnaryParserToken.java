@@ -42,5 +42,5 @@ abstract class SpreadsheetUnaryParserToken<T extends SpreadsheetUnaryParserToken
         return this.parameter;
     }
 
-    final SpreadsheetParserToken parameter;
+    private final SpreadsheetParserToken parameter;
 }

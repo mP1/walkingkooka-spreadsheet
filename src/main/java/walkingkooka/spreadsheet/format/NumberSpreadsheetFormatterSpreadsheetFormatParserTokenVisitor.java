@@ -205,14 +205,14 @@ final class NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extend
     /**
      * Adds another component
      */
-    void addDigit(final NumberSpreadsheetFormatterZero zero) {
+    private void addDigit(final NumberSpreadsheetFormatterZero zero) {
         this.add(NumberSpreadsheetFormatterComponent.digit(this.digitMode.digitCounterAndIncrement(this), zero));
     }
 
     /**
      * Adds another component
      */
-    void add(final NumberSpreadsheetFormatterComponent component) {
+    private void add(final NumberSpreadsheetFormatterComponent component) {
         this.components.add(component);
     }
 

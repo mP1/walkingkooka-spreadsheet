@@ -96,7 +96,7 @@ public final class SpreadsheetRow implements Comparable<SpreadsheetRow>,
         return with(context.unmarshall(node, SpreadsheetRowReference.class));
     }
 
-    JsonNode marshall(final JsonNodeMarshallContext context) {
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
         return context.marshall(this.reference);
     }
 

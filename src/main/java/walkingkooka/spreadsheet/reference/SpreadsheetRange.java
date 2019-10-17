@@ -83,7 +83,7 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference imple
     /**
      * Separator between two cell references.
      */
-    public final static String SEPARATOR = ":";
+    private final static String SEPARATOR = ":";
 
     /**
      * Computes the range of the given cells.

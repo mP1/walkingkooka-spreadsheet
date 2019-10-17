@@ -259,7 +259,7 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
     /**
      * Creates an object with potentially text, value and error but not the expression.
      */
-    JsonNode marshall(final JsonNodeMarshallContext context) {
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
         JsonObjectNode object = JsonNode.object();
 
         object = object.set(TEXT, JsonNode.string(this.text));
@@ -290,7 +290,7 @@ public final class SpreadsheetFormula implements HashCodeEqualsDefined,
     // @VisibleForTesting
 
     final static JsonNodeName TEXT = JsonNodeName.with(TEXT_STRING);
-    final static JsonNodeName EXPRESSION_STRING = JsonNodeName.with(EXPRESSION_PROPERTY_STRING);
+    private final static JsonNodeName EXPRESSION_STRING = JsonNodeName.with(EXPRESSION_PROPERTY_STRING);
     final static JsonNodeName VALUE_PROPERTY = JsonNodeName.with(VALUE_PROPERTY_STRING);
     final static JsonNodeName ERROR_PROPERTY = JsonNodeName.with(ERROR_PROPERTY_STRING);
 

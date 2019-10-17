@@ -45,7 +45,7 @@ abstract class SpreadsheetBinaryParserToken<T extends SpreadsheetBinaryParserTok
         return this.left;
     }
 
-    final SpreadsheetParserToken left;
+    private final SpreadsheetParserToken left;
 
     /**
      * Returns the right parameter.
@@ -54,5 +54,5 @@ abstract class SpreadsheetBinaryParserToken<T extends SpreadsheetBinaryParserTok
         return this.right;
     }
 
-    final SpreadsheetParserToken right;
+    private final SpreadsheetParserToken right;
 }

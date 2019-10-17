@@ -393,7 +393,7 @@ public abstract class SpreadsheetParserToken implements ParserToken, HasExpressi
         return this.text;
     }
 
-    final String text;
+    private final String text;
 
     /**
      * Value getter which may be a scalar or list of child tokens.
@@ -489,7 +489,7 @@ public abstract class SpreadsheetParserToken implements ParserToken, HasExpressi
     /**
      * Only {@link SpreadsheetFunctionNameParserToken} return true
      */
-    public final boolean isFunctionName(){
+    final boolean isFunctionName(){
         return this instanceof SpreadsheetFunctionNameParserToken;
     }
 
