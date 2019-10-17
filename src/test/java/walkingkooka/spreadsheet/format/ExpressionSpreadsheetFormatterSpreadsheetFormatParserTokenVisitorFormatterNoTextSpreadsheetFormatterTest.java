@@ -40,7 +40,7 @@ public final class ExpressionSpreadsheetFormatterSpreadsheetFormatParserTokenVis
 
     @Test
     public void testDouble() {
-        this.formatAndCheck2(Double.valueOf(123.5));
+        this.formatAndCheck2(123.5);
     }
 
     @Test
@@ -60,7 +60,7 @@ public final class ExpressionSpreadsheetFormatterSpreadsheetFormatParserTokenVis
 
     @Test
     public void testLong() {
-        this.formatAndCheck2(Long.valueOf(123));
+        this.formatAndCheck2(123L);
     }
 
     @Test
