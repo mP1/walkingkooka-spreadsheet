@@ -465,6 +465,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
      * Parsers the grammar and returns the selected parser.
      */
     static {
+        //noinspection CaughtExceptionImmediatelyRethrown
         try {
             final Optional<EbnfGrammarParserToken> grammar = EbnfGrammarLoader.with("format.grammar", SpreadsheetFormatParsers.class)
                     .grammar();
