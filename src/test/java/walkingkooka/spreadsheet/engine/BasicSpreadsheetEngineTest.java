@@ -4804,7 +4804,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     if (name.value().equals("BasicSpreadsheetEngineTestCounter")) {
                         return BasicSpreadsheetEngineTest.this.counter;
                     }
-                    throw new UnsupportedOperationException(name + "(" + params.stream().map(p -> p.toString()).collect(Collectors.joining(",")) + ")");
+                    throw new UnsupportedOperationException(name + "(" + params.stream().map(Object::toString).collect(Collectors.joining(",")) + ")");
                 };
 
                 return node.toValue(ExpressionEvaluationContexts.basic(functions,

@@ -66,7 +66,7 @@ public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReference
         final S store = this.createStore();
 
         final List<T> fired = Lists.array();
-        store.addDeleteWatcher((d) -> fired.add(d));
+        store.addDeleteWatcher(fired::add);
 
         final T id = this.id();
 
@@ -94,7 +94,7 @@ public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReference
         final SpreadsheetCellReference reference = SpreadsheetExpressionReference.parseCellReference("Z99");
 
         final List<TargetAndSpreadsheetCellReference<T>> fired = Lists.array();
-        store.addAddReferenceWatcher((e) -> fired.add(e));
+        store.addAddReferenceWatcher(fired::add);
 
         final TargetAndSpreadsheetCellReference<T> targeted = TargetAndSpreadsheetCellReference.with(target, reference);
         store.addReference(targeted);
@@ -118,7 +118,7 @@ public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReference
         final S store = this.createStore();
 
         final List<T> fired = Lists.array();
-        store.addDeleteWatcher((d) -> fired.add(d));
+        store.addDeleteWatcher(fired::add);
 
         final T id = this.id();
 
@@ -136,7 +136,7 @@ public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReference
         final SpreadsheetCellReference reference = SpreadsheetExpressionReference.parseCellReference("Z99");
 
         final List<TargetAndSpreadsheetCellReference<T>> fired = Lists.array();
-        store.addAddReferenceWatcher((e) -> fired.add(e));
+        store.addAddReferenceWatcher(fired::add);
 
         final TargetAndSpreadsheetCellReference<T> targeted = TargetAndSpreadsheetCellReference.with(target, reference);
         store.addReference(targeted);
@@ -155,7 +155,7 @@ public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReference
         store.saveReferences(target, Sets.of(reference));
 
         final List<TargetAndSpreadsheetCellReference<T>> fired = Lists.array();
-        store.addRemoveReferenceWatcher((e) -> fired.add(e));
+        store.addRemoveReferenceWatcher(fired::add);
 
         store.delete(target);
 

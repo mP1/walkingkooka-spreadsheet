@@ -222,7 +222,7 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference imple
      */
     public Stream<SpreadsheetColumnReference> columnStream() {
         return IntStream.range(this.begin().column().value(), this.end().column().value())
-                .mapToObj(i -> SpreadsheetReferenceKind.ABSOLUTE.column(i));
+                .mapToObj(SpreadsheetReferenceKind.ABSOLUTE::column);
     }
 
     /**
@@ -230,7 +230,7 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference imple
      */
     public Stream<SpreadsheetRowReference> rowStream() {
         return IntStream.range(this.begin().row().value(), this.end().row().value())
-                .mapToObj(i -> SpreadsheetReferenceKind.ABSOLUTE.row(i));
+                .mapToObj(SpreadsheetReferenceKind.ABSOLUTE::row);
     }
 
     /**

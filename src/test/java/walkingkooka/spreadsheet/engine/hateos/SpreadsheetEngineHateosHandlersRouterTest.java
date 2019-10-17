@@ -24,6 +24,7 @@ import walkingkooka.net.Url;
 import walkingkooka.net.header.CharsetName;
 import walkingkooka.net.header.HttpHeaderName;
 import walkingkooka.net.http.HttpMethod;
+import walkingkooka.net.http.HttpStatus;
 import walkingkooka.net.http.HttpStatusCode;
 import walkingkooka.net.http.server.FakeHttpRequest;
 import walkingkooka.net.http.server.HttpRequest;
@@ -408,7 +409,7 @@ public final class SpreadsheetEngineHateosHandlersRouterTest implements ClassTes
             final RecordingHttpResponse response = HttpResponses.recording();
             possible.get().accept(request, response);
             assertEquals(HttpStatusCode.NOT_IMPLEMENTED,
-                    response.status().map(s -> s.value()).orElse(null),
+                    response.status().map(HttpStatus::value).orElse(null),
                     () -> "status " + request + " " + response + "\n" + possible);
         }
     }
@@ -458,7 +459,7 @@ public final class SpreadsheetEngineHateosHandlersRouterTest implements ClassTes
             final RecordingHttpResponse response = HttpResponses.recording();
             possible.get().accept(request, response);
             assertEquals(HttpStatusCode.METHOD_NOT_ALLOWED,
-                    response.status().map(s -> s.value()).orElse(null),
+                    response.status().map(HttpStatus::value).orElse(null),
                     () -> "status " + request + " " + response + "\n" + possible);
         }
     }
