@@ -106,10 +106,10 @@ final class BasicSpreadsheetEngineFillCells {
             for (int w = 0; w < widthMultiple; w++) {
                 for (Object referenceOrCell : referencesAndCells) {
                     if(referenceOrCell instanceof SpreadsheetCellReference) {
-                        this.deleteCell(SpreadsheetCellReference.class.cast(referenceOrCell));
+                        this.deleteCell((SpreadsheetCellReference) referenceOrCell);
                     } else {
                         final int x = xOffset + w * fromWidth;
-                        this.saveCell(SpreadsheetCell.class.cast(referenceOrCell), x, y);
+                        this.saveCell((SpreadsheetCell) referenceOrCell, x, y);
                     }
                 }
             }
