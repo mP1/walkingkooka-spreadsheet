@@ -32,7 +32,7 @@ final class SpreadsheetMetadataPropertyValueHandlerInteger extends SpreadsheetMe
     /**
      * Creates a new {@link SpreadsheetMetadataPropertyValueHandlerInteger}
      */
-    static final SpreadsheetMetadataPropertyValueHandlerInteger with(final IntPredicate predicate) {
+    static SpreadsheetMetadataPropertyValueHandlerInteger with(final IntPredicate predicate) {
         Objects.requireNonNull(predicate, "predicate");
 
         return new SpreadsheetMetadataPropertyValueHandlerInteger(predicate);

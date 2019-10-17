@@ -33,7 +33,7 @@ final class SpreadsheetMetadataPropertyValueHandlerString extends SpreadsheetMet
     /**
      * Creates a new {@link SpreadsheetMetadataPropertyValueHandlerString}
      */
-    static final SpreadsheetMetadataPropertyValueHandlerString with(final Predicate<String> predicate) {
+    static SpreadsheetMetadataPropertyValueHandlerString with(final Predicate<String> predicate) {
         Objects.requireNonNull(predicate, "predicate");
 
         return new SpreadsheetMetadataPropertyValueHandlerString(predicate);

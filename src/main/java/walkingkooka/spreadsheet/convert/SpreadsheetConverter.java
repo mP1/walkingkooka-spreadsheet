@@ -45,7 +45,7 @@ final class SpreadsheetConverter implements Converter {
     /**
      * Factory that creates a new {@link SpreadsheetConverter}.
      */
-    final static SpreadsheetConverter with(final SpreadsheetFormatter dateFormatter,
+    static SpreadsheetConverter with(final SpreadsheetFormatter dateFormatter,
                                            final SpreadsheetDateParsePatterns dateParser,
                                            final SpreadsheetFormatter dateTimeFormatter,
                                            final SpreadsheetDateTimeParsePatterns dateTimeParser,
