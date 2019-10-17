@@ -125,7 +125,7 @@ final class ReadOnlySpreadsheetReferenceStore<T extends ExpressionReference & Co
         return store.loadReferred(reference);
     }
 
-    private SpreadsheetReferenceStore<T> store;
+    private final SpreadsheetReferenceStore<T> store;
 
     @Override
     public String toString() {

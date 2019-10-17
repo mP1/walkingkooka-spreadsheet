@@ -114,7 +114,7 @@ final class SpreadsheetConverterSpreadsheetValueTypeVisitor extends SpreadsheetV
         this.converter = this.mapping.number; // handles other Number types.
     }
 
-    private SpreadsheetConverterMapping<Converter> mapping;
+    private final SpreadsheetConverterMapping<Converter> mapping;
 
     /**
      * The {@link Converter} selected using the target type.

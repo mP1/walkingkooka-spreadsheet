@@ -138,7 +138,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 .cast(SpreadsheetParserToken.class);
     }
 
-    private SpreadsheetParserContext parserContext;
+    private final SpreadsheetParserContext parserContext;
 
     @Override
     public Object evaluate(final ExpressionNode node) {
