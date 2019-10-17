@@ -42,7 +42,7 @@ abstract public class SpreadsheetFormatConditionParserToken extends SpreadsheetF
 
         final Optional<SpreadsheetFormatParserToken> bigDecimal = without.stream()
                 .map(SpreadsheetFormatParserToken.class::cast)
-                .filter(t -> t.isConditionNumber())
+                .filter(SpreadsheetFormatParserToken::isConditionNumber)
                 .findFirst();
         if (!bigDecimal.isPresent()) {
             throw new IllegalArgumentException("Missing number token got " + value);

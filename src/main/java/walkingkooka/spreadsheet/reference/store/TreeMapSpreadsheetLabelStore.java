@@ -123,7 +123,7 @@ final class TreeMapSpreadsheetLabelStore implements SpreadsheetLabelStore {
         return this.mappings.entrySet()
                 .stream()
                 .filter(e -> e.getKey().compareTo(from) >= 0)
-                .map(e -> e.getValue())
+                .map(Map.Entry::getValue)
                 .limit(count)
                 .collect(Collectors.toCollection(Lists::array));
     }

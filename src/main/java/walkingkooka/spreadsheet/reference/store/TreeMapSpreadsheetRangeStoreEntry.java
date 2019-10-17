@@ -169,7 +169,7 @@ abstract class TreeMapSpreadsheetRangeStoreEntry<V> implements Comparable<TreeMa
     final int count() {
         return this.secondaryCellReferenceToValues.values()
                 .stream()
-                .mapToInt(v -> v.size())
+                .mapToInt(Set::size)
                 .sum();
     }
 

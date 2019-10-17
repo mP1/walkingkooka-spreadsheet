@@ -518,7 +518,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
         return parser.orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic())
                 .map(token::cast)
-                .map(t -> formatterFactory.apply(t))
+                .map(formatterFactory::apply)
                 .orElse(SpreadsheetFormatters.fake()); // orElse wont happen.
     }
 
