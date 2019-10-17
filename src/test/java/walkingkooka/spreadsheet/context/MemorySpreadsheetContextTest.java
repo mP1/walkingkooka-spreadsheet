@@ -105,7 +105,6 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::createMetadata,
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdToRepository);
-        ;
     }
 
     @Test
