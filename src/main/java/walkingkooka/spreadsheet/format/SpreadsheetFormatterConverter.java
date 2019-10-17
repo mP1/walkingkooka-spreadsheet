@@ -23,8 +23,6 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.text.CharSequences;
 
-import java.util.Optional;
-
 /**
  * A {@link Converter} which formats a value to {@link String text} using the given {@link SpreadsheetFormatter}.
  */
