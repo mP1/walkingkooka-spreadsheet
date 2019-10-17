@@ -29,7 +29,7 @@ import java.util.Locale;
  */
 final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatParserContext {
 
-    static BasicSpreadsheetFormatParserContext INSTANCE = new BasicSpreadsheetFormatParserContext();
+    static final BasicSpreadsheetFormatParserContext INSTANCE = new BasicSpreadsheetFormatParserContext();
 
     private BasicSpreadsheetFormatParserContext() {
         super();
