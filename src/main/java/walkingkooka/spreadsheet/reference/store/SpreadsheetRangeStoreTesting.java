@@ -180,7 +180,10 @@ public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>
                 () -> "load range " + range + " should have returned no values");
     }
 
-    default void loadRangeAndCheck(final SpreadsheetRangeStore<V> store, final SpreadsheetRange range, final V... expected) {
+    @SuppressWarnings("unchecked")
+    default void loadRangeAndCheck(final SpreadsheetRangeStore<V> store,
+                                   final SpreadsheetRange range,
+                                   final V... expected) {
         final Optional<List<V>> values = store.load(range);
         assertNotEquals(Optional.empty(), values, () -> "load of " + range + " failed");
         assertEquals(Lists.of(expected), values.get(), () -> "load range " + range);
@@ -227,6 +230,7 @@ public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>
                 () -> "load cell " + cell + " should have returned no values");
     }
 
+    @SuppressWarnings("unchecked")
     default void loadCellReferenceValuesAndCheck(final SpreadsheetRangeStore<V> store,
                                                  final SpreadsheetCellReference cell,
                                                  final V... values) {
