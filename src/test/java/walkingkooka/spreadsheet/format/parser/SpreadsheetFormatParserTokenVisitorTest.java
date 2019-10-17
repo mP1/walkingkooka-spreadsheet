@@ -2058,7 +2058,7 @@ public final class SpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFo
         }.accept(whitespace());
     }
 
-    abstract class TestSpreadsheetFormatParserTokenVisitor extends FakeSpreadsheetFormatParserTokenVisitor {
+    abstract static class TestSpreadsheetFormatParserTokenVisitor extends FakeSpreadsheetFormatParserTokenVisitor {
 
         TestSpreadsheetFormatParserTokenVisitor(final StringBuilder b,
                                                 final List<ParserToken> visited) {
