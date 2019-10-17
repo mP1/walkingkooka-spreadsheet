@@ -82,7 +82,7 @@ import java.util.stream.Collectors;
 /**
  * A spreadsheet server that uses the given {@link HttpServer} and some other dependencies.
  */
-final class SpreadsheetServer implements HttpServer {
+public final class SpreadsheetServer implements HttpServer {
 
     /**
      * Starts a server listening on http://localhost:8080 serving files from the current directory.
