@@ -29,9 +29,7 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testSetColumnNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetReferenceKind.ABSOLUTE.row(23).setColumn(null);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetReferenceKind.ABSOLUTE.row(23).setColumn(null));
     }
 
     @Test

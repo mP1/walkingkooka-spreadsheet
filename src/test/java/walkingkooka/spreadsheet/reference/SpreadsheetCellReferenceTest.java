@@ -40,16 +40,12 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
 
     @Test
     public void testWithNullColumnFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetCellReference.with(null, row());
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetCellReference.with(null, row()));
     }
 
     @Test
     public void testWithNullRowFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetCellReference.with(column(), null);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetCellReference.with(column(), null));
     }
 
     @Test
@@ -65,9 +61,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
 
     @Test
     public void testSetColumnNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createReference().setColumn(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createReference().setColumn(null));
     }
 
     @Test
@@ -89,9 +83,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
 
     @Test
     public void testSetRowNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createReference().setRow(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createReference().setRow(null));
     }
 
     @Test
@@ -265,9 +257,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
 
     @Test
     public void testRangeNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.cell(1, 1).spreadsheetRange(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.cell(1, 1).spreadsheetRange(null));
     }
 
     @Test

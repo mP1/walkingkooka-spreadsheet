@@ -27,9 +27,7 @@ public final class SpreadsheetMetadataPropertyNameNamedColorTest extends Spreads
 
     @Test
     public void testWithNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetMetadataPropertyNameNamedColor.withColorName(null);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetMetadataPropertyNameNamedColor.withColorName(null));
     }
 
     @Test

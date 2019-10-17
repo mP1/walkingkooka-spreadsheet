@@ -33,29 +33,23 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
 
     @Test
     public void testWithNullEngineFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(null,
-                    this.labelStore(),
-                    this.spreadsheetEngineContext());
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(null,
+                this.labelStore(),
+                this.spreadsheetEngineContext()));
     }
 
     @Test
     public void testWithNullLabelStoreFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(this.engine(),
-                    null,
-                    this.spreadsheetEngineContext());
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(this.engine(),
+                null,
+                this.spreadsheetEngineContext()));
     }
 
     @Test
     public void testWithNullLabelSpreadsheetEngineContextFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(this.engine(),
-                    this.labelStore(),
-                    null);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(this.engine(),
+                this.labelStore(),
+                null));
     }
 
     @Override

@@ -53,9 +53,7 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
 
     @Test
     public void testWithNullEvaluationFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetEngineLoadCellHateosHandler.with(null, this.engine(), this.engineContext());
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetEngineLoadCellHateosHandler.with(null, this.engine(), this.engineContext()));
     }
 
     // handle...........................................................................................................

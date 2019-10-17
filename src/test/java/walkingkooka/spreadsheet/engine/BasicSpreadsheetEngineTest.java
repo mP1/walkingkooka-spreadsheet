@@ -105,93 +105,79 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testWithNullIdFails() {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetEngine.with(null,
-                    this.cellStore(),
-                    this.cellReferencesStore(),
-                    this.labelStore(),
-                    this.labelReferencesStore(),
-                    this.rangeToCellStore(),
-                    this.rangeToConditionalFormattingRuleStore());
-        });
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(null,
+                this.cellStore(),
+                this.cellReferencesStore(),
+                this.labelStore(),
+                this.labelReferencesStore(),
+                this.rangeToCellStore(),
+                this.rangeToConditionalFormattingRuleStore()));
     }
 
     @Test
     public void testWithNullCellStoreFails() {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetEngine.with(this.id(),
-                    null,
-                    this.cellReferencesStore(),
-                    this.labelStore(),
-                    this.labelReferencesStore(),
-                    this.rangeToCellStore(),
-                    this.rangeToConditionalFormattingRuleStore());
-        });
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(this.id(),
+                null,
+                this.cellReferencesStore(),
+                this.labelStore(),
+                this.labelReferencesStore(),
+                this.rangeToCellStore(),
+                this.rangeToConditionalFormattingRuleStore()));
     }
 
     @Test
     public void testWithNullCellReferencesStoreFails() {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetEngine.with(this.id(),
-                    this.cellStore(),
-                    null,
-                    this.labelStore(),
-                    this.labelReferencesStore(),
-                    this.rangeToCellStore(),
-                    this.rangeToConditionalFormattingRuleStore());
-        });
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(this.id(),
+                this.cellStore(),
+                null,
+                this.labelStore(),
+                this.labelReferencesStore(),
+                this.rangeToCellStore(),
+                this.rangeToConditionalFormattingRuleStore()));
     }
 
     @Test
     public void testWithNullLabelStoreFails() {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetEngine.with(this.id(),
-                    this.cellStore(),
-                    this.cellReferencesStore(),
-                    null,
-                    this.labelReferencesStore(),
-                    this.rangeToCellStore(),
-                    this.rangeToConditionalFormattingRuleStore());
-        });
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(this.id(),
+                this.cellStore(),
+                this.cellReferencesStore(),
+                null,
+                this.labelReferencesStore(),
+                this.rangeToCellStore(),
+                this.rangeToConditionalFormattingRuleStore()));
     }
 
     @Test
     public void testWithNullLabelReferencesStoreFails() {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetEngine.with(this.id(),
-                    this.cellStore(),
-                    this.cellReferencesStore(),
-                    this.labelStore(),
-                    null,
-                    this.rangeToCellStore(),
-                    this.rangeToConditionalFormattingRuleStore());
-        });
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(this.id(),
+                this.cellStore(),
+                this.cellReferencesStore(),
+                this.labelStore(),
+                null,
+                this.rangeToCellStore(),
+                this.rangeToConditionalFormattingRuleStore()));
     }
 
     @Test
     public void testWithNullRangeToCellStoreFails() {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetEngine.with(this.id(),
-                    this.cellStore(),
-                    this.cellReferencesStore(),
-                    this.labelStore(),
-                    this.labelReferencesStore(),
-                    null,
-                    this.rangeToConditionalFormattingRuleStore());
-        });
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(this.id(),
+                this.cellStore(),
+                this.cellReferencesStore(),
+                this.labelStore(),
+                this.labelReferencesStore(),
+                null,
+                this.rangeToConditionalFormattingRuleStore()));
     }
 
     @Test
     public void testWithNullRangeToConditionalFormattingRuleStoreFails() {
-        assertThrows(NullPointerException.class, () -> {
-            BasicSpreadsheetEngine.with(this.id(),
-                    this.cellStore(),
-                    this.cellReferencesStore(),
-                    this.labelStore(),
-                    this.labelReferencesStore(),
-                    this.rangeToCellStore(),
-                    null);
-        });
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(this.id(),
+                this.cellStore(),
+                this.cellReferencesStore(),
+                this.labelStore(),
+                this.labelReferencesStore(),
+                this.rangeToCellStore(),
+                null));
     }
 
     // spreadsheetId....................................................................................................

@@ -188,18 +188,16 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                            final SpreadsheetFormatter textFormatter,
                            final SpreadsheetFormatter timeFormatter,
                            final SpreadsheetTimeParsePatterns timeParser) {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetConverter.with(dateFormatter,
-                    dateParser,
-                    dateTimeFormatter,
-                    dateTimeParser,
-                    numberFormatter,
-                    numberParser,
-                    textFormatter,
-                    timeFormatter,
-                    timeParser,
-                    DATE_OFFSET);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetConverter.with(dateFormatter,
+                dateParser,
+                dateTimeFormatter,
+                dateTimeParser,
+                numberFormatter,
+                numberParser,
+                textFormatter,
+                timeFormatter,
+                timeParser,
+                DATE_OFFSET));
     }
 
     // convert..........................................................................................................

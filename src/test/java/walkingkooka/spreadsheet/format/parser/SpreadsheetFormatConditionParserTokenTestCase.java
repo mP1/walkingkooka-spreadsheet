@@ -35,16 +35,12 @@ public abstract class SpreadsheetFormatConditionParserTokenTestCase<T extends Sp
 
     @Test
     public final void testWithMissingNumberTokenFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createToken("", this.whitespace());
-        });
+        assertThrows(IllegalArgumentException.class, () -> this.createToken("", this.whitespace()));
     }
 
     @Test
     public final void testWithMissingNumberTokenFails2() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createToken("", this.whitespace(), this.whitespace());
-        });
+        assertThrows(IllegalArgumentException.class, () -> this.createToken("", this.whitespace(), this.whitespace()));
     }
 
     @Test

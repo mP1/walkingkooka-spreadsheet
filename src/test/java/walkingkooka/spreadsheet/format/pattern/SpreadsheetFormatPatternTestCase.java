@@ -40,9 +40,7 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
 
     @Test
     public final void testWithNullParserTokenFails() {
-        assertThrows(NullPointerException.class, () -> {
-            createPattern((T)null);
-        });
+        assertThrows(NullPointerException.class, () -> createPattern((T)null));
     }
 
     @Test
@@ -71,9 +69,7 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
 
         final T parent = this.createFormatParserToken(tokens, patternText2);
 
-        final InvalidCharacterException thrown = assertThrows(InvalidCharacterException.class, () -> {
-            this.createPattern(parent);
-        });
+        final InvalidCharacterException thrown = assertThrows(InvalidCharacterException.class, () -> this.createPattern(parent));
         assertEquals(patternText.length(), thrown.position(), () -> "position pattern=" + patternText2);
     }
 

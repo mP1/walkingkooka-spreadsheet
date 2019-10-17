@@ -36,23 +36,17 @@ public final class SpreadsheetDescriptionTest implements ClassTesting2<Spreadshe
 
     @Test
     public void testWithNullValueFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetDescription.with(null);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetDescription.with(null));
     }
 
     @Test
     public void testWithEmptyValueFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            SpreadsheetDescription.with("");
-        });
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetDescription.with(""));
     }
 
     @Test
     public void testWithWhitespaceValueFails() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            SpreadsheetDescription.with("   ");
-        });
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetDescription.with("   "));
     }
 
     @Test

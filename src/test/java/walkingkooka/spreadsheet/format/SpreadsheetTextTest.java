@@ -46,16 +46,12 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
 
     @Test
     public void testWithNullColorFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetText.with(null, TEXT);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetText.with(null, TEXT));
     }
 
     @Test
     public void testWithNullTextFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetText.with(COLOR, null);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetText.with(COLOR, null));
     }
 
     @Test
@@ -83,9 +79,7 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
 
     @Test
     public void testSetColorNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createFormattedText().setColor(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createFormattedText().setColor(null));
     }
 
     @Test

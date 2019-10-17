@@ -37,16 +37,12 @@ public interface SpreadsheetLabelStoreTesting<S extends SpreadsheetLabelStore> e
 
     @Test
     default void testLoadCellReferencesOrRangesNullLabelFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createStore().loadCellReferencesOrRanges(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createStore().loadCellReferencesOrRanges(null));
     }
 
     @Test
     default void testLabelsNullSpreadsheetCellReferenceFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createStore().labels(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createStore().labels(null));
     }
 
     @Test

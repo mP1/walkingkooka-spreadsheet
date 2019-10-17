@@ -25,15 +25,11 @@ public abstract class SpreadsheetUnaryParserTokenTestCase<T extends SpreadsheetU
 
     @Test
     public void testWithMissingNonNoisyToken() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createToken("", this.whitespace());
-        });
+        assertThrows(IllegalArgumentException.class, () -> this.createToken("", this.whitespace()));
     }
 
     @Test
     public void testWithMissingNonNoisyToken2() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createToken("", this.whitespace(), this.whitespace());
-        });
+        assertThrows(IllegalArgumentException.class, () -> this.createToken("", this.whitespace(), this.whitespace()));
     }
 }

@@ -91,12 +91,10 @@ public final class SpreadsheetContextHateosHandlersRouterTest extends Spreadshee
                            final HateosContentType contentType,
                            final HateosHandler<SpreadsheetId, SpreadsheetMetadata, SpreadsheetMetadata> createAndSaveMetadata,
                            final HateosHandler<SpreadsheetId, SpreadsheetMetadata, SpreadsheetMetadata> loadMetadata) {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetContextHateosHandlersRouter.with(base,
-                    contentType,
-                    createAndSaveMetadata,
-                    loadMetadata);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetContextHateosHandlersRouter.with(base,
+                contentType,
+                createAndSaveMetadata,
+                loadMetadata));
     }
 
     // handle...........................................................................................................

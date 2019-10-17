@@ -66,9 +66,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testGetNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createObject().get(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createObject().get(null));
     }
 
     @Test
@@ -92,9 +90,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     public final void testGetOrFailFails() {
         final SpreadsheetMetadataPropertyName<String> propertyName = SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL;
 
-        final SpreadsheetMetadataPropertyValueException thrown = assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> {
-            this.createObject().getOrFail(propertyName);
-        });
+        final SpreadsheetMetadataPropertyValueException thrown = assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> this.createObject().getOrFail(propertyName));
 
         this.checkMessage(thrown, "Required property missing");
         assertEquals(propertyName, thrown.name(), "property name");
@@ -105,16 +101,12 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testSetNullPropertyNameFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createObject().set(null, "value");
-        });
+        assertThrows(NullPointerException.class, () -> this.createObject().set(null, "value"));
     }
 
     @Test
     public final void testSetNullPropertyValueFails() {
-        assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> {
-            this.createObject().set(SpreadsheetMetadataPropertyName.CREATOR, null);
-        });
+        assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> this.createObject().set(SpreadsheetMetadataPropertyName.CREATOR, null));
     }
 
     @Test
@@ -140,9 +132,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testRemoveNullFails() {
-        assertThrows(NullPointerException.class, () -> {
-            this.createObject().remove(null);
-        });
+        assertThrows(NullPointerException.class, () -> this.createObject().remove(null));
     }
 
     @Test
@@ -197,9 +187,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testConverterRequiredPropertiesAbsentFails() {
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
-            this.createObject().converter();
-        });
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> this.createObject().converter());
         checkMessage(thrown,
                 "Required properties \"date-format-pattern\", \"date-parse-pattern\", \"date-time-format-pattern\", \"date-time-offset\", \"date-time-parse-patterns\", \"number-format-pattern\", \"number-parse-patterns\", \"text-format-pattern\", \"time-format-pattern\", \"time-parse-patterns\" missing.");
     }
@@ -208,9 +196,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testHasDateTimeContextRequiredPropertiesAbsentFails() {
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
-            this.createObject().dateTimeContext();
-        });
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> this.createObject().dateTimeContext());
         checkMessage(thrown,
                 "Required properties \"locale\", \"two-digit-year\" missing.");
     }
@@ -219,9 +205,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testHasDecimalNumberContextRequiredPropertiesAbsentFails() {
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
-            this.createObject().decimalNumberContext();
-        });
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> this.createObject().decimalNumberContext());
         checkMessage(thrown,
                 "Required properties \"currency-symbol\", \"decimal-separator\", \"exponent-symbol\", \"grouping-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\" missing.");
     }
@@ -230,9 +214,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testHasFormatterRequiredPropertiesAbsentFails() {
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
-            this.createObject().formatter();
-        });
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> this.createObject().formatter());
         checkMessage(thrown,
                 "Required properties \"date-format-pattern\", \"date-time-format-pattern\", \"number-format-pattern\", \"text-format-pattern\", \"time-format-pattern\" missing.");
     }
@@ -241,9 +223,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
 
     @Test
     public final void testHasMathContextRequiredPropertiesAbsentFails() {
-        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> {
-            this.createObject().mathContext();
-        });
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> this.createObject().mathContext());
         checkMessage(thrown,
                 "Required properties \"precision\", \"rounding-mode\" missing.");
     }

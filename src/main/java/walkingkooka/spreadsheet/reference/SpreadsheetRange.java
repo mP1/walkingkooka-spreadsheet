@@ -244,10 +244,8 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference imple
         final int columnOffset = begin.column().value();
 
         return IntStream.range(0, width * this.height())
-                .mapToObj(index -> {
-                            return SpreadsheetReferenceKind.ABSOLUTE.column(columnOffset + (index % width))
-                                    .setRow(SpreadsheetReferenceKind.ABSOLUTE.row(rowOffset + (index / width)));
-                        }
+                .mapToObj(index -> SpreadsheetReferenceKind.ABSOLUTE.column(columnOffset + (index % width))
+                        .setRow(SpreadsheetReferenceKind.ABSOLUTE.row(rowOffset + (index / width)))
                 );
     }
 

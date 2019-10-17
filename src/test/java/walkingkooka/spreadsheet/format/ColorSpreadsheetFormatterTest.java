@@ -38,9 +38,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
 
     @Test
     public void testWithNullWrappedFormatterFails() {
-        assertThrows(NullPointerException.class, () -> {
-            ColorSpreadsheetFormatter.with(this.parsePatternOrFail(this.pattern()), null);
-        });
+        assertThrows(NullPointerException.class, () -> ColorSpreadsheetFormatter.with(this.parsePatternOrFail(this.pattern()), null));
     }
 
     @Test

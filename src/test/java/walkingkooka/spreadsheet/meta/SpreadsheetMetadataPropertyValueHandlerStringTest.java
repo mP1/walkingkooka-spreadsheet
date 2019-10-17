@@ -26,9 +26,7 @@ public final class SpreadsheetMetadataPropertyValueHandlerStringTest extends Spr
 
     @Test
     public void testWithNullPredicateFails() {
-        assertThrows(NullPointerException.class, () -> {
-            SpreadsheetMetadataPropertyValueHandlerString.with(null);
-        });
+        assertThrows(NullPointerException.class, () -> SpreadsheetMetadataPropertyValueHandlerString.with(null));
     }
 
     @Test

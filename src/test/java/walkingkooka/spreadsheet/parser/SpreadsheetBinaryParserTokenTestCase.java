@@ -33,9 +33,7 @@ public abstract class SpreadsheetBinaryParserTokenTestCase<T extends Spreadsheet
         final SpreadsheetParserToken symbol = this.operatorSymbol();
         final SpreadsheetParserToken right = this.rightToken();
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createToken(whitespace.text() + symbol.text() + right.text(), whitespace, symbol, right);
-        });
+        assertThrows(IllegalArgumentException.class, () -> this.createToken(whitespace.text() + symbol.text() + right.text(), whitespace, symbol, right));
     }
 
     @Test
@@ -44,9 +42,7 @@ public abstract class SpreadsheetBinaryParserTokenTestCase<T extends Spreadsheet
         final SpreadsheetParserToken symbol = this.operatorSymbol();
         final SpreadsheetWhitespaceParserToken whitespace = this.whitespace();
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.createToken(left.text() + symbol.text() + whitespace.text(), left, symbol, whitespace);
-        });
+        assertThrows(IllegalArgumentException.class, () -> this.createToken(left.text() + symbol.text() + whitespace.text(), left, symbol, whitespace));
     }
 
     @Test
