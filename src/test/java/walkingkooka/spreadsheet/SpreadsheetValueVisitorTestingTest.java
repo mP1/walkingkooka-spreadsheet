@@ -88,7 +88,7 @@ public final class SpreadsheetValueVisitorTestingTest implements SpreadsheetValu
     @Test
     public void testVisitBoolean2() {
         new SpreadsheetValueVisitor() {
-        }.accept(Boolean.valueOf(Boolean.TRUE));
+        }.accept(Boolean.TRUE);
     }
 
     @Test
