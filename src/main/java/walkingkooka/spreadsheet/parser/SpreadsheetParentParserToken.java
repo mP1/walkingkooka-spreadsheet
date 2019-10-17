@@ -37,7 +37,7 @@ abstract class SpreadsheetParentParserToken<T extends SpreadsheetParentParserTok
         return this.value;
     }
 
-    final List<ParserToken> value;
+    private final List<ParserToken> value;
 
     @Override
     final int operatorPriority() {

@@ -265,14 +265,14 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
     /**
      * Parsers input that requires a single {@link SpreadsheetFormatParserToken token} followed by an optional separator and more tokens.
      */
-    static Parser<SpreadsheetFormatParserContext> formatParser(final Parser<ParserContext> parser) {
+    private static Parser<SpreadsheetFormatParserContext> formatParser(final Parser<ParserContext> parser) {
         return parser.orFailIfCursorNotEmpty(ParserReporters.basic()).cast();
     }
 
     /**
      * Parsers input that requires a single {@link SpreadsheetFormatParserToken token} followed by an optional separator and more tokens.
      */
-    static Parser<SpreadsheetFormatParserContext> parseParser(final Parser<ParserContext> parser) {
+    private static Parser<SpreadsheetFormatParserContext> parseParser(final Parser<ParserContext> parser) {
         final Parser<ParserContext> optional = Parsers.sequenceParserBuilder()
                 .required(SpreadsheetFormatParsers.expressionSeparator().cast())
                 .required(parser)
@@ -294,9 +294,9 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
     /**
      * Parses text using the given parser and transformer.
      */
-    static <P extends SpreadsheetPattern> P parsePattern(final String text,
-                                                         final Parser<SpreadsheetFormatParserContext> parser,
-                                                         final Function<ParserToken, P> transformer) {
+    private static <P extends SpreadsheetPattern> P parsePattern(final String text,
+                                                                 final Parser<SpreadsheetFormatParserContext> parser,
+                                                                 final Function<ParserToken, P> transformer) {
         Objects.requireNonNull(text, "text");
 
         try {
@@ -480,7 +480,7 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
         Objects.requireNonNull(node, "node");
     }
 
-    final JsonNode marshall(final JsonNodeMarshallContext context) {
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(this.toString());
     }
 

@@ -80,7 +80,7 @@ public final class SpreadsheetError implements HashCodeEqualsDefined,
         return with(node.stringValueOrFail());
     }
 
-    JsonNode marshall(final JsonNodeMarshallContext context) {
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(this.message);
     }
 

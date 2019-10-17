@@ -89,7 +89,7 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
         return parse(node.stringValueOrFail());
     }
 
-    JsonNode marshall(final JsonNodeMarshallContext context) {
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(this.toString());
     }
 
