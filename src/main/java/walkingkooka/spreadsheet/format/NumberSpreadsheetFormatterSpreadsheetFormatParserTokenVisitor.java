@@ -190,14 +190,6 @@ final class NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extend
     NumberSpreadsheetFormatterThousandsSeparator thousandsSeparator;
 
     /**
-     * A multiplier that is applied to the number before formatting.
-     * This is increased when the thousands appear after the decimal point and percentage symbol.
-     */
-    //int multiplier = 0;
-
-    //int divider = 0;
-
-    /**
      * The number of decimal places to adjust, positive values multiply by 10, negative values divide by 10.
      */
     int decimalPlacesShift = 0;

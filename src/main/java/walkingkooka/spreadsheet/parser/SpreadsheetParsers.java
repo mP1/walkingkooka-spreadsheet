@@ -320,9 +320,9 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         return SpreadsheetParserToken.whitespace(((StringParserToken) token).value(), token.text());
     }
 
-    // helpers ...................................................................................................
+    // helpers .........................................................................................................
 
-    /**
+    /*
      * Uses the grammar file to fetch one of the parsers.
      */
     static {
