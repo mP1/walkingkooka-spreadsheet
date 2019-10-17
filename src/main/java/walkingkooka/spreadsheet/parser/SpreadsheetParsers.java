@@ -326,26 +326,22 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
      * Uses the grammar file to fetch one of the parsers.
      */
     static {
-        try {
-            final Map<EbnfIdentifierName, Parser<ParserContext>> predefined = Maps.sorted();
+        final Map<EbnfIdentifierName, Parser<ParserContext>> predefined = Maps.sorted();
 
-            cellReferences(predefined);
-            conditions(predefined);
-            functions(predefined);
-            math(predefined);
-            misc(predefined);
+        cellReferences(predefined);
+        conditions(predefined);
+        functions(predefined);
+        math(predefined);
+        misc(predefined);
 
-            final Map<EbnfIdentifierName, Parser<ParserContext>> parsers = EbnfGrammarLoader.with("spreadsheet-parsers.grammar", SpreadsheetParsers.class)
-                    .grammar()
-                    .get()
-                    .combinator(predefined, SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer.INSTANCE);
-            CELL_REFERENCES_PARSER = parsers.get(EbnfIdentifierName.with("CELL")).cast();
-            EXPRESSION_PARSER = parsers.get(EXPRESSION_IDENTIFIER).cast();
-            FUNCTION_PARSER = parsers.get(FUNCTION_IDENTIFIER).cast();
-            RANGE_PARSER = parsers.get(EbnfIdentifierName.with("RANGE")).cast();
-        } catch (final SpreadsheetParserException rethrow) {
-            throw rethrow;
-        }
+        final Map<EbnfIdentifierName, Parser<ParserContext>> parsers = EbnfGrammarLoader.with("spreadsheet-parsers.grammar", SpreadsheetParsers.class)
+                .grammar()
+                .get()
+                .combinator(predefined, SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer.INSTANCE);
+        CELL_REFERENCES_PARSER = parsers.get(EbnfIdentifierName.with("CELL")).cast();
+        EXPRESSION_PARSER = parsers.get(EXPRESSION_IDENTIFIER).cast();
+        FUNCTION_PARSER = parsers.get(FUNCTION_IDENTIFIER).cast();
+        RANGE_PARSER = parsers.get(EbnfIdentifierName.with("RANGE")).cast();
     }
 
     private static Parser<ParserContext> symbol(final char c,

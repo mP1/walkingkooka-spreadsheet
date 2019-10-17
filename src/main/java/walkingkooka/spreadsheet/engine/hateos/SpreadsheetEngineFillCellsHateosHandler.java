@@ -87,11 +87,7 @@ final class SpreadsheetEngineFillCellsHateosHandler extends SpreadsheetEngineHat
     }
 
     private static SpreadsheetRange parseRange(final String value) {
-        try {
-            return SpreadsheetExpressionReference.parseRange(value);
-        } catch (final NullPointerException | IllegalArgumentException cause) {
-            throw cause;
-        }
+        return SpreadsheetExpressionReference.parseRange(value);
     }
 
     final static UrlParameterName FROM = UrlParameterName.with("from");
