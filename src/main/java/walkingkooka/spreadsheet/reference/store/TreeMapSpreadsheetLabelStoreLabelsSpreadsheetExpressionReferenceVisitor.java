@@ -82,8 +82,7 @@ final class TreeMapSpreadsheetLabelStoreLabelsSpreadsheetExpressionReferenceVisi
     @Override
     protected void visit(final SpreadsheetRange range) {
         this.add = this.add | range.cellStream()
-                .filter(r -> r.compareTo(reference) == 0)
-                .count() > 0;
+                .anyMatch(r -> r.compareTo(this.reference) == 0);
     }
 
     private final SpreadsheetCellReference reference;
