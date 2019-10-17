@@ -93,14 +93,16 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference imple
 
         final List<SpreadsheetCellReference> copy = Lists.immutable(cells);
 
-        SpreadsheetRange range = null;
+        SpreadsheetRange range;
         switch (copy.size()) {
             case 0:
                 throw new IllegalArgumentException("Cells empty");
             case 1:
                 range = with(Range.singleton(copy.get(0)));
+                break;
             default:
                 range = computeRangeFromManyCells(copy);
+                break;
         }
 
         return range;
