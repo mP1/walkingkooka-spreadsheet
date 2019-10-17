@@ -89,7 +89,7 @@ public final class SpreadsheetDoubleParserTokenTest extends SpreadsheetNonSymbol
 
     @Override
     public SpreadsheetDoubleParserToken createDifferentToken() {
-        return SpreadsheetDoubleParserToken.with(Double.valueOf(-1), "'different'");
+        return SpreadsheetDoubleParserToken.with(-1.0, "'different'");
     }
 
     @Override

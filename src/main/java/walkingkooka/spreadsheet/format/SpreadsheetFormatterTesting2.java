@@ -85,7 +85,7 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
                 LocalDateTime.of(2000, 12, 31, 12, 58, 59),
                 LocalTime.of(12, 58, 59),
                 123L,
-                Short.valueOf((short) 123),
+                (short) 123,
                 "abc123",
                 this);
 
