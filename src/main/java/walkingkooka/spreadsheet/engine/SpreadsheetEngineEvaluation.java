@@ -101,7 +101,7 @@ public enum SpreadsheetEngineEvaluation {
         return valueOf(node.stringValueOrFail());
     }
 
-    JsonNode marshall(final JsonNodeMarshallContext context) {
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.string(this.name());
     }
 

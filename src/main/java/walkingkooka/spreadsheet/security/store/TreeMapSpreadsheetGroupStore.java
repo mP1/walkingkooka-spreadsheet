@@ -142,7 +142,7 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
     // VisibleForTesting
     final Store<GroupId, Group> store;
 
-    final Map<GroupId, Set<UserId>> groupIdToUserIds = Maps.sorted();
+    private final Map<GroupId, Set<UserId>> groupIdToUserIds = Maps.sorted();
 
     @Override
     public String toString() {

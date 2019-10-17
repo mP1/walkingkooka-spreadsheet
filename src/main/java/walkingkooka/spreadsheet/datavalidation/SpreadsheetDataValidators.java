@@ -37,7 +37,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public final class SpreadsheetDataValidators implements PublicStaticHelper {
+final class SpreadsheetDataValidators implements PublicStaticHelper {
 
     // BIG DECIMAL...................................................................................................
 

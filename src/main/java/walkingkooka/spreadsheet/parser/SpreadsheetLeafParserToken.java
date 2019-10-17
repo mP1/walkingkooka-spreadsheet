@@ -45,7 +45,7 @@ abstract class SpreadsheetLeafParserToken<T> extends SpreadsheetParserToken
         return this.value;
     }
 
-    final T value;
+    private final T value;
 
     // SpreadsheetParserTokenVisitor....................................................................................
 

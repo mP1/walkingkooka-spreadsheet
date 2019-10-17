@@ -101,7 +101,7 @@ public final class User extends Identity<UserId> {
         return new User(Optional.ofNullable(id), email);
     }
 
-    JsonNode marshall(final JsonNodeMarshallContext context) {
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
         final List<JsonNode> properties = Lists.array();
 
         this.id.ifPresent(id -> properties.add(context.marshall(id).setName(ID_PROPERTY)));

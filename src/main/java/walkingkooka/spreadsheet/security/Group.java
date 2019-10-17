@@ -97,7 +97,7 @@ public final class Group extends Identity<GroupId> {
         return new Group(Optional.ofNullable(id), groupName);
     }
 
-    JsonNode marshall(final JsonNodeMarshallContext context) {
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
         final List<JsonNode> properties = Lists.array();
 
         this.id.ifPresent(id -> properties.add(context.marshall(id).setName(ID_PROPERTY)));
