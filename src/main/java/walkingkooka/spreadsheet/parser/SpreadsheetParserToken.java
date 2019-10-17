@@ -480,16 +480,16 @@ public abstract class SpreadsheetParserToken implements ParserToken, HasExpressi
     }
 
     /**
-     * Only {@link SpreadsheetFunctionParserToken} return true
+     * Only {@link SpreadsheetFunctionParserToken} returns true
      */
     public final boolean isFunction(){
         return this instanceof SpreadsheetFunctionParserToken;
     }
 
     /**
-     * Only {@link SpreadsheetFunctionNameParserToken} return true
+     * Only {@link SpreadsheetFunctionNameParserToken} returns true
      */
-    final boolean isFunctionName(){
+    public final boolean isFunctionName(){
         return this instanceof SpreadsheetFunctionNameParserToken;
     }
 
