@@ -753,7 +753,7 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
         return new TestSpreadsheetFormatterContext();
     }
 
-    class TestSpreadsheetFormatterContext extends FakeSpreadsheetFormatterContext {
+    static class TestSpreadsheetFormatterContext extends FakeSpreadsheetFormatterContext {
 
         @Override
         public char decimalSeparator() {
