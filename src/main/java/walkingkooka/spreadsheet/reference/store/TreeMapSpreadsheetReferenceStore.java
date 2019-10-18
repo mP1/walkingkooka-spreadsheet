@@ -169,6 +169,7 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
         final SpreadsheetCellReference reference = targetAndReference.reference();
 
         Set<SpreadsheetCellReference> referrers = this.targetToReferences.get(id);
+        //noinspection Java8MapApi
         if (null == referrers) {
             referrers = Sets.sorted();
             this.targetToReferences.put(id, referrers);
@@ -176,6 +177,7 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
         referrers.add(reference);
 
         Set<T> targets = this.referenceToTargets.get(reference);
+        //noinspection Java8MapApi
         if (null == targets) {
             targets = Sets.sorted();
             this.referenceToTargets.put(reference, targets);

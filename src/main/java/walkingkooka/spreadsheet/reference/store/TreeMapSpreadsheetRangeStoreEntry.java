@@ -110,6 +110,7 @@ abstract class TreeMapSpreadsheetRangeStoreEntry<V> implements Comparable<TreeMa
     final void save(final SpreadsheetRange range, final V value) {
         final SpreadsheetCellReference ref = this.secondaryCellReference(range);
         Set<V> values = this.secondaryCellReferenceToValues.get(ref);
+        //noinspection Java8MapApi
         if (null == values) {
             values = Sets.ordered();
             this.secondaryCellReferenceToValues.put(ref, values);
