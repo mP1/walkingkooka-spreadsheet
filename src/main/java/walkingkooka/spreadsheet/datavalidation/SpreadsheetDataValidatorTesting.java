@@ -34,11 +34,13 @@ public interface SpreadsheetDataValidatorTesting<V extends SpreadsheetDataValida
         assertEquals(this.valueType(), this.createSpreadsheetDataValidator().valueType());
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     default void testValidateNullValueFails() {
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetDataValidator().validate(null, this.createContext()));
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     default void testValidateNullContextFails() {
         assertThrows(NullPointerException.class, () -> this.createSpreadsheetDataValidator().validate(this.value(), null));

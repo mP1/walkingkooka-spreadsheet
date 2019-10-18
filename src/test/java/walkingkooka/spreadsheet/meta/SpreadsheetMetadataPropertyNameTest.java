@@ -119,6 +119,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
         final SpreadsheetMetadataPropertyName modifiedDateTime = SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME;
         final SpreadsheetMetadataPropertyName spreadsheetId = SpreadsheetMetadataPropertyName.SPREADSHEET_ID;
 
+        //noinspection unchecked
         this.compareToArraySortAndCheck(spreadsheetId, modifiedDateTime, creator, modifiedBy,
                 creator, modifiedBy, modifiedDateTime, spreadsheetId);
     }
