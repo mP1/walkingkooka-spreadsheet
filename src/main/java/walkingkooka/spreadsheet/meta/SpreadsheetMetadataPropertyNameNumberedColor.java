@@ -76,13 +76,11 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
         return SpreadsheetMetadataPropertyValueHandler.color();
     }
 
-    // SpreadsheetMetadataNonEmpty......................................................................................
-
     // SpreadsheetMetadataVisitor.......................................................................................
 
     @Override
     void accept(final Object value, final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitNumberedColor(this.number, Color.class.cast(value));
+        visitor.visitNumberedColor(this.number, (Color) value);
     }
 
     // Object...........................................................................................................
