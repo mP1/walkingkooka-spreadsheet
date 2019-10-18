@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class GroupTest extends IdentityTestCase<Group, GroupId> {
 
-    private final long ID_VALUE = 123;
+    private final static long ID_VALUE = 123;
 
     @Test
     public void testWithNullNameFails() {
