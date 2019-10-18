@@ -372,6 +372,7 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
     }
 
     @Override
+    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     public final boolean equals(final Object other) {
         return this == other ||
                 this.canBeEquals(other) &&

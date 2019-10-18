@@ -340,6 +340,7 @@ public abstract class SpreadsheetMetadata implements HasConverter,
     abstract public int hashCode();
 
     @Override
+    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     public final boolean equals(final Object other) {
         return this == other ||
                 this.canBeEquals(other) &&

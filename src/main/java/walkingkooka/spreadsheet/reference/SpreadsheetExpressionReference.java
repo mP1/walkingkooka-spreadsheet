@@ -184,6 +184,7 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     // Object...........................................................................................................
 
     @Override
+    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     public final boolean equals(final Object other) {
         return this == other ||
                 this.canBeEqual(other) &&
