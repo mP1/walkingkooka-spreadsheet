@@ -45,7 +45,7 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
      * Factory that creates a new {@link TreeMapSpreadsheetRangeStore}
      */
     static <V> TreeMapSpreadsheetRangeStore<V> create() {
-        return new TreeMapSpreadsheetRangeStore();
+        return new TreeMapSpreadsheetRangeStore<>();
     }
 
     /**

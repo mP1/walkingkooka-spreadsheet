@@ -48,6 +48,7 @@ public abstract class IdentityIdTestCase<I extends IdentityId & Comparable<I>> i
         final I id2 = this.createId(2);
         final I id3 = this.createId(3);
 
+        //noinspection unchecked
         this.compareToArraySortAndCheck(id2, id3, id1,
                 id1, id2, id3);
     }

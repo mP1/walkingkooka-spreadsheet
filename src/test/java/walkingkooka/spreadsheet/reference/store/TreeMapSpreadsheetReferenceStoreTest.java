@@ -273,6 +273,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
         store.saveReferences(b, g);
         store.saveReferences(c, hi);
 
+        //noinspection unchecked
         this.valuesAndCheck(store, a, 3, f, g, hi);
     }
 
@@ -295,6 +296,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
         store.saveReferences(c, h);
         store.saveReferences(d, i);
 
+        //noinspection unchecked
         this.valuesAndCheck(store, b, 2, g, h);
     }
 
@@ -313,6 +315,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
         this.loadAndCheck(store, b1); // b1 -> nothing
         this.loadReferredAndCheck(store, a1); // a1 --> nothing
 
+        //noinspection unchecked
         this.valuesAndCheck(store, a1, 2, Sets.of(b1));
     }
 

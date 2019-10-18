@@ -49,6 +49,7 @@ public abstract class SpreadsheetFormatter3TestCase<F extends SpreadsheetFormatt
     abstract String pattern();
 
     final F createFormatter(final String pattern) {
+        //noinspection unchecked
         return this.createFormatter0((T)this.parsePatternOrFail(this.parser(), pattern));
     }
 

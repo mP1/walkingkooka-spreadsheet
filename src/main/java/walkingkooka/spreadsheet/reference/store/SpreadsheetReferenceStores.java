@@ -28,8 +28,8 @@ public final class SpreadsheetReferenceStores implements PublicStaticHelper {
     /**
      * {@see FakeSpreadsheetReferenceStore}
      */
-    public static SpreadsheetReferenceStore fake() {
-        return new FakeSpreadsheetReferenceStore();
+    public static <T extends ExpressionReference & Comparable<T>> SpreadsheetReferenceStore<T> fake() {
+        return new FakeSpreadsheetReferenceStore<>();
     }
 
     /**

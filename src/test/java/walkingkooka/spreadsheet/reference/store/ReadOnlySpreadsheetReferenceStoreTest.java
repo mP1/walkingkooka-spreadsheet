@@ -40,7 +40,7 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
 
         store.saveReferences(a1, Sets.of(b1));
 
-        final ReadOnlySpreadsheetReferenceStore readOnly = ReadOnlySpreadsheetReferenceStore.with(store);
+        final ReadOnlySpreadsheetReferenceStore<SpreadsheetCellReference> readOnly = ReadOnlySpreadsheetReferenceStore.with(store);
 
         this.loadAndCheck(readOnly, a1, b1); // a1 --> b1
         this.loadReferredAndCheck(readOnly, b1, a1); // b1 --> a1
@@ -109,6 +109,7 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
         store.saveReferences(b, g);
         store.saveReferences(c, hi);
 
+        //noinspection unchecked
         this.valuesAndCheck(ReadOnlySpreadsheetReferenceStore.with(store), a, 3, f, g, hi);
     }
 
