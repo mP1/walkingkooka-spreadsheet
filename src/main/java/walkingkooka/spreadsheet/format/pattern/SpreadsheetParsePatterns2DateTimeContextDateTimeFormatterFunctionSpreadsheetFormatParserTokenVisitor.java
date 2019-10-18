@@ -107,41 +107,28 @@ final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpr
 
     @Override
     protected void visit(final SpreadsheetFormatAmPmParserToken token) {
-        switch (token.value().length()) {
-            case 1:
-                this.text(AMPM, TextStyle.SHORT);
-                break;
-            default:
-                this.text(AMPM, TextStyle.FULL);
-                break;
-        }
+        this.text(AMPM,
+                1 == token.value().length() ?
+                        TextStyle.SHORT :
+                        TextStyle.FULL);
         this.month = false;
     }
 
     @Override
     protected void visit(final SpreadsheetFormatDayParserToken token) {
-        switch (token.value().length()) {
-            case 1:
-                this.value(DAY, 1, 2);
-                break;
-            default:
-                this.value(DAY, 2, 2); // leading zeros
-                break;
-        }
+        this.value(DAY,
+                1 == token.value().length() ? 1 : 2,
+                2);
 
         this.month = true;
     }
 
     @Override
     protected void visit(final SpreadsheetFormatHourParserToken token) {
-        switch (token.value().length()) {
-            case 1:
-                this.value(this.hour, 1, 2);
-                break;
-            default:
-                this.value(this.hour, 2, 2); // leading zero
-                break;
-        }
+        this.value(this.hour,
+                1 == token.value().length() ? 1 : 2,
+                2);
+
         this.month = false;
     }
 
@@ -165,14 +152,9 @@ final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpr
                     break;
             }
         } else {
-            switch (token.value().length()) {
-                case 1:
-                    this.value(MINUTES, 1, 2);
-                    break;
-                default:
-                    this.value(MINUTES, 2, 2); // leading zero
-                    break;
-            }
+            this.value(MINUTES,
+                    1 == token.value().length() ? 1 : 2,
+                    2);
         }
     }
 
@@ -185,14 +167,9 @@ final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpr
 
     @Override
     protected void visit(final SpreadsheetFormatSecondParserToken token) {
-        switch (token.value().length()) {
-            case 1:
-                this.value(SECONDS, 1, 2);
-                break;
-            default:
-                this.value(SECONDS, 2, 2); // leading zero
-                break;
-        }
+        this.value(SECONDS,
+                1 == token.value().length() ? 1 : 2,
+                2);
 
         this.month = false;
     }
