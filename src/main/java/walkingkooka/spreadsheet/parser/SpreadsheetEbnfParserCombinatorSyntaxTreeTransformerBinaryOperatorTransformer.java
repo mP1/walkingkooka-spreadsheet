@@ -48,14 +48,16 @@ final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformerBinaryOperatorTr
 
     @Override
     public int priority(final ParserToken token) {
-        return SpreadsheetParserToken.class.cast(token).operatorPriority();
+        return token.cast(SpreadsheetParserToken.class)
+                .operatorPriority();
     }
 
     @Override
     public ParserToken binaryOperand(final List<ParserToken> tokens,
                                      final String text,
                                      final ParserToken parent) {
-        return SpreadsheetParserToken.class.cast(parent).binaryOperand(tokens, text);
+        return parent.cast(SpreadsheetParserToken.class)
+                .binaryOperand(tokens, text);
     }
 
     @Override

@@ -764,9 +764,9 @@ public abstract class SpreadsheetParserToken implements ParserToken, HasExpressi
     @Override
     public final void accept(final ParserTokenVisitor visitor) {
         if (visitor instanceof SpreadsheetParserTokenVisitor) {
-            final SpreadsheetParserTokenVisitor visitor2 = SpreadsheetParserTokenVisitor.class.cast(visitor);
+            final SpreadsheetParserTokenVisitor visitor2 = (SpreadsheetParserTokenVisitor) visitor;
             if (Visiting.CONTINUE == visitor2.startVisit(this)) {
-                this.accept(SpreadsheetParserTokenVisitor.class.cast(visitor));
+                this.accept((SpreadsheetParserTokenVisitor) visitor);
             }
             visitor2.endVisit(this);
         }
