@@ -138,11 +138,11 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
 
     // isSingleCell...........................................................
 
+    @SuppressWarnings("UnnecessaryLocalVariable")
     @Test
     public void testIsSingleCellTrue() {
         final int column1 = 88;
         final int row1 = 99;
-        //noinspection UnnecessaryLocalVariable
         final int column2 = column1;
         final int row2 = row1;
 
