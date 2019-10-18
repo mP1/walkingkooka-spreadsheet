@@ -103,7 +103,7 @@ public interface SpreadsheetFormatterTesting2<F extends SpreadsheetFormatter>
                         })
                         .map(v -> v.getClass().getName() + "=" + CharSequences.quoteIfChars(v))
                         .collect(Collectors.toList()),
-                () -> "canFormat return false and format didnt fail");
+                "canFormat return false and format didnt fail");
     }
 
     // then..............................................................................................................
