@@ -87,6 +87,7 @@ public abstract class Identity<I extends IdentityId> implements Value<Optional<I
         return this.id.hashCode();
     }
 
+    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     @Override
     public final boolean equals(final Object other) {
         return this == other ||

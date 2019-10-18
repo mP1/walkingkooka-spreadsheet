@@ -791,6 +791,7 @@ public abstract class SpreadsheetParserToken implements ParserToken, HasExpressi
     }
 
     @Override
+    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     public final boolean equals(final Object other) {
         return this == other ||
                 this.canBeEqual(other) &&
