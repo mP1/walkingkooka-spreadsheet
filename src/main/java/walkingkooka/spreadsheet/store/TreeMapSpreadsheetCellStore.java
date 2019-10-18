@@ -115,7 +115,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     private int max(final ToIntFunction<SpreadsheetCell> value) {
         return this.all()
                 .stream()
-                .mapToInt(value::applyAsInt)
+                .mapToInt(value)
                 .max()
                 .orElse(0);
     }
