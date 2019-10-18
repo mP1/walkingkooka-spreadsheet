@@ -44,6 +44,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public final class SpreadsheetEngineFillCellsHateosHandlerTest extends walkingkooka.spreadsheet.engine.hateos.SpreadsheetEngineHateosHandlerTestCase2<SpreadsheetEngineFillCellsHateosHandler,
         SpreadsheetCellReference> {
 
+    @SuppressWarnings("ThrowableNotThrown")
     @Test
     public void testHandleUnsupported() {
         this.handleUnsupported(this.createHandler());
