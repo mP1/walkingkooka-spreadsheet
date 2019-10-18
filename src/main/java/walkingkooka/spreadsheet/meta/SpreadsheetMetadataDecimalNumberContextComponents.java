@@ -104,6 +104,7 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
     /**
      * Lazy {@link Locale} getter.
      */
+    @SuppressWarnings("OptionalAssignedToNull")
     private DecimalNumberContext localDecimalNumberContext() {
         if (null == this.locale) {
             this.locale = this.components.metadata.get(SpreadsheetMetadataPropertyName.LOCALE);
