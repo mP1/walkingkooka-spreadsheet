@@ -36,9 +36,11 @@ public final class SpreadsheetRangeCellsConsumerTest implements ClassTesting2<Sp
         this.toStringAndCheck(SpreadsheetRangeCellsConsumer.with(Lists.empty(), present, absent), present + " " + absent);
     }
 
+    @SuppressWarnings("EmptyMethod")
     private void present(final SpreadsheetCell cells) {
     }
 
+    @SuppressWarnings("EmptyMethod")
     private void absent(final SpreadsheetCellReference reference) {
     }
 

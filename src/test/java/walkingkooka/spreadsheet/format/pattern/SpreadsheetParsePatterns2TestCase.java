@@ -28,6 +28,7 @@ public abstract class SpreadsheetParsePatterns2TestCase<T> implements ClassTesti
         super();
     }
 
+    @SuppressWarnings("EmptyMethod")
     @Test
     @Override
     public void testAllConstructorsVisibility() {
