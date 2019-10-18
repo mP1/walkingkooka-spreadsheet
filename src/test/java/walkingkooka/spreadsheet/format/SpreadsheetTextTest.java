@@ -140,8 +140,9 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
         this.checkNotEquals(SpreadsheetText.with(COLOR, "different"));
     }
 
-    // toString ..................................................................................................
+    // toString ........................................................................................................
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testToString() {
         this.toStringAndCheck(this.createFormattedText(), COLOR.get() + " " + CharSequences.quote(TEXT));

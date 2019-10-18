@@ -72,6 +72,7 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
         this.countAndCheck(this.createStore2(), 1);
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testIds() {
         final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
@@ -94,6 +95,7 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
     public void testIdsWindow() {
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testValues() {
         final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();

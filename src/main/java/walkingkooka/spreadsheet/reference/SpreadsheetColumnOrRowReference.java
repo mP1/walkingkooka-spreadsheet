@@ -106,6 +106,7 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
     /**
      * Parsers the text expecting a valid {@link SpreadsheetRowReference} or fails.
      */
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     static <T extends SpreadsheetParserToken> T parse0(final String text,
                                                        final Parser<ParserContext> parser,
                                                        final Class<T> type) {

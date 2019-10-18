@@ -50,6 +50,7 @@ public final class SpreadsheetEngineDeleteColumnsHateosHandlerTest extends Sprea
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
+                    @SuppressWarnings("OptionalGetWithoutIsPresent")
                     public SpreadsheetDelta deleteColumns(final SpreadsheetColumnReference c,
                                                                                              final int count,
                                                                                              final SpreadsheetEngineContext context) {
@@ -100,6 +101,7 @@ public final class SpreadsheetEngineDeleteColumnsHateosHandlerTest extends Sprea
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
+                    @SuppressWarnings("OptionalGetWithoutIsPresent")
                     public SpreadsheetDelta deleteColumns(final SpreadsheetColumnReference c,
                                                                                              final int count,
                                                                                              final SpreadsheetEngineContext context) {

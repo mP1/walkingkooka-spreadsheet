@@ -160,7 +160,7 @@ public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>
                 () -> "load range " + range + " should have returned no values");
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"OptionalGetWithoutIsPresent", "unchecked"})
     default void loadRangeAndCheck(final SpreadsheetRangeStore<V> store,
                                    final SpreadsheetRange range,
                                    final V... expected) {

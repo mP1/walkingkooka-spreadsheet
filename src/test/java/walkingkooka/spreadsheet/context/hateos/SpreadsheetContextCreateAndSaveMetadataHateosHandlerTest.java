@@ -65,7 +65,7 @@ public final class SpreadsheetContextCreateAndSaveMetadataHateosHandlerTest exte
 
                     @Override
                     public SpreadsheetMetadata createMetadata(final Optional<Locale> locale) {
-                        return metadata.set(SpreadsheetMetadataPropertyName.LOCALE, locale.get());
+                        return metadata.set(SpreadsheetMetadataPropertyName.LOCALE, locale.orElse(null));
                     }
                 }),
                 Optional.empty(),
@@ -85,7 +85,7 @@ public final class SpreadsheetContextCreateAndSaveMetadataHateosHandlerTest exte
 
                     @Override
                     public SpreadsheetMetadata createMetadata(final Optional<Locale> locale) {
-                        return metadata.set(SpreadsheetMetadataPropertyName.LOCALE, locale.get());
+                        return metadata.set(SpreadsheetMetadataPropertyName.LOCALE, locale.orElse(null));
                     }
                 }),
                 Optional.empty(),
@@ -112,6 +112,7 @@ public final class SpreadsheetContextCreateAndSaveMetadataHateosHandlerTest exte
                 Optional.of(metadata));
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testHandleIdWithMetadataSaves() {
         final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();

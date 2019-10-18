@@ -51,6 +51,7 @@ public final class SpreadsheetEngineDeleteRowsHateosHandlerTest extends Spreadsh
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
+                    @SuppressWarnings("OptionalGetWithoutIsPresent")
                     public SpreadsheetDelta deleteRows(final SpreadsheetRowReference r,
                                                                                        final int count,
                                                                                        final SpreadsheetEngineContext context) {
@@ -101,6 +102,7 @@ public final class SpreadsheetEngineDeleteRowsHateosHandlerTest extends Spreadsh
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
+                    @SuppressWarnings("OptionalGetWithoutIsPresent")
                     public SpreadsheetDelta deleteRows(final SpreadsheetRowReference c,
                                                                                        final int count,
                                                                                        final SpreadsheetEngineContext context) {
