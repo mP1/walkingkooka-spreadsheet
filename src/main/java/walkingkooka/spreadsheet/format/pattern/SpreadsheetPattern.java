@@ -125,7 +125,7 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
      * Transforms the tokens into a {@link SpreadsheetDateFormatPattern}
      */
     private static SpreadsheetDateFormatPattern transformDate(final ParserToken token) {
-        return SpreadsheetDateFormatPattern.with(SpreadsheetFormatDateParserToken.class.cast(token));
+        return SpreadsheetDateFormatPattern.with(token.cast(SpreadsheetFormatDateParserToken.class));
     }
 
     // parseDateParsePatterns...........................................................................................
@@ -158,7 +158,7 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
      * Transforms the tokens into a {@link SpreadsheetDateTimeFormatPattern}
      */
     private static SpreadsheetDateTimeFormatPattern transformDateTime(final ParserToken token) {
-        return SpreadsheetDateTimeFormatPattern.with(SpreadsheetFormatDateTimeParserToken.class.cast(token));
+        return SpreadsheetDateTimeFormatPattern.with(token.cast(SpreadsheetFormatDateTimeParserToken.class));
     }
 
     // parseDateTimeParsePatterns.......................................................................................
@@ -191,7 +191,7 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
      * Transforms the tokens into a {@link SpreadsheetNumberFormatPattern}
      */
     private static SpreadsheetNumberFormatPattern transformNumber(final ParserToken token) {
-        return SpreadsheetNumberFormatPattern.with((SpreadsheetFormatNumberParserToken.class.cast(token)));
+        return SpreadsheetNumberFormatPattern.with(token.cast(SpreadsheetFormatNumberParserToken.class));
     }
 
     // parseNumberParsePatterns.........................................................................................
@@ -224,7 +224,7 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
      * Transforms the tokens into a {@link SpreadsheetTextFormatPattern}
      */
     private static SpreadsheetTextFormatPattern transformText(final ParserToken token) {
-        return SpreadsheetTextFormatPattern.with(SpreadsheetFormatTextParserToken.class.cast(token));
+        return SpreadsheetTextFormatPattern.with(token.cast(SpreadsheetFormatTextParserToken.class));
     }
     
     // parseTimeFormatPatterns..........................................................................................
@@ -244,7 +244,7 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
      * Transforms the tokens into a {@link SpreadsheetTimeFormatPattern}
      */
     private static SpreadsheetTimeFormatPattern transformTime(final ParserToken token) {
-        return SpreadsheetTimeFormatPattern.with(SpreadsheetFormatTimeParserToken.class.cast(token));
+        return SpreadsheetTimeFormatPattern.with(token.cast(SpreadsheetFormatTimeParserToken.class));
     }
 
     // parseTimeParsePatterns....................................................................................................

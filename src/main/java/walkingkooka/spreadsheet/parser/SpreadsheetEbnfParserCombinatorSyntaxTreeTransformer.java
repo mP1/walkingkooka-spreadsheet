@@ -135,7 +135,8 @@ final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer implements Ebnf
      */
     private ParserToken concatenation(final ParserToken token,
                                       final ParserContext context) {
-        return SequenceParserToken.class.cast(token).transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformerBinaryOperatorTransformer.INSTANCE);
+        return token.cast(SequenceParserToken.class)
+                .transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformerBinaryOperatorTransformer.INSTANCE);
     }
 
     @Override

@@ -53,7 +53,7 @@ final class SpreadsheetMetadataPropertyNameNamedColor extends SpreadsheetMetadat
      */
     @Override
     void accept(final Object value, final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitNamedColor(this.name, Color.class.cast(value));
+        visitor.visitNamedColor(this.name, (Color) value);
     }
 
     final SpreadsheetColorName name;

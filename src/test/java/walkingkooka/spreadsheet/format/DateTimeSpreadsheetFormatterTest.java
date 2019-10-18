@@ -672,7 +672,7 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
                     @Override
                     public <T> Either<T, String> convert(final Object value, final Class<T> target) {
                         assertEquals(LocalDateTime.class, target, "target");
-                        return Either.left(target.cast(LocalDateTime.of(LocalDate.of(2000, 10, 31), LocalTime.class.cast(value))));
+                        return Either.left(target.cast(LocalDateTime.of(LocalDate.of(2000, 10, 31), (LocalTime) value)));
                     }
                 },
                 "12/58/59");
