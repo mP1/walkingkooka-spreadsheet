@@ -29,6 +29,7 @@ import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.net.http.server.hateos.HateosHandler;
 import walkingkooka.net.http.server.hateos.HateosResourceMapping;
 import walkingkooka.net.http.server.hateos.HateosResourceName;
+import walkingkooka.reflect.StaticHelper;
 import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
@@ -43,7 +44,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRow;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.tree.Node;
-import walkingkooka.type.StaticHelper;
 
 import java.util.Objects;
 import java.util.function.BiConsumer;

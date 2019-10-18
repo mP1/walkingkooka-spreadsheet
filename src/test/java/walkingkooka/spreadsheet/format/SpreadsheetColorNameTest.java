@@ -19,9 +19,9 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.naming.NameTesting2;
-import walkingkooka.test.ClassTesting2;
+import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
-import walkingkooka.type.JavaVisibility;
 
 final public class SpreadsheetColorNameTest implements ClassTesting2<SpreadsheetColorName>,
         NameTesting2<SpreadsheetColorName, SpreadsheetColorName> {

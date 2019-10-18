@@ -19,15 +19,13 @@ package walkingkooka.spreadsheet.security;
 
 import walkingkooka.Cast;
 import walkingkooka.Value;
-import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
 /**
  * Base class for all ids.
  */
-public abstract class IdentityId implements Value<Long>,
-        HashCodeEqualsDefined {
+public abstract class IdentityId implements Value<Long> {
 
     /**
      * Package private to limit sub classing.

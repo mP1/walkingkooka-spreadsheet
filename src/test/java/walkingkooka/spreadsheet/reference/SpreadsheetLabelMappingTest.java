@@ -18,22 +18,21 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
+import walkingkooka.ToStringTesting;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting2;
-import walkingkooka.test.ToStringTesting;
+import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 
 public final class SpreadsheetLabelMappingTest implements ClassTesting2<SpreadsheetLabelMapping>,
         HashCodeEqualsDefinedTesting2<SpreadsheetLabelMapping>,

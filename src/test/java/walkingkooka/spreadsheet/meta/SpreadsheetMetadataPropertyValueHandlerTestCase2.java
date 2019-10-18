@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.test.ToStringTesting;
+import walkingkooka.ToStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;

@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
 import walkingkooka.Value;
-import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.Whitespace;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -29,8 +28,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 /**
  * An error for an individual cell or formula which may be a parsing or execution error.
  */
-public final class SpreadsheetError implements HashCodeEqualsDefined,
-        Value<String> {
+public final class SpreadsheetError implements Value<String> {
 
     public static SpreadsheetError with(final String message) {
         Whitespace.failIfNullOrEmptyOrWhitespace(message, "Message");

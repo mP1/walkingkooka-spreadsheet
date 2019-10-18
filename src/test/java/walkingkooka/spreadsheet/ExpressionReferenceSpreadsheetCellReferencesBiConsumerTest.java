@@ -18,7 +18,10 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
@@ -28,10 +31,7 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStores;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.type.JavaVisibility;
 
 import java.util.List;
 

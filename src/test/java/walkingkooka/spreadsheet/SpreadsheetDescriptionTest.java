@@ -18,15 +18,14 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting2;
-import walkingkooka.test.ToStringTesting;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
+import walkingkooka.ToStringTesting;
+import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CharSequences;
-import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 
 public final class SpreadsheetDescriptionTest implements ClassTesting2<SpreadsheetDescription>,
         HashCodeEqualsDefinedTesting2<SpreadsheetDescription>,

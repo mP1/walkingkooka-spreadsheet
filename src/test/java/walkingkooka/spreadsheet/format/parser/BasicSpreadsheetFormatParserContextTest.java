@@ -20,8 +20,8 @@ package walkingkooka.spreadsheet.format.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.type.JavaVisibility;
+import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.JavaVisibility;
 
 import java.math.MathContext;
 

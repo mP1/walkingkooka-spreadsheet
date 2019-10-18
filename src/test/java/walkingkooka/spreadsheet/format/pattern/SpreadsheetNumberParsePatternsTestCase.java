@@ -20,9 +20,9 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.FakeDecimalNumberContext;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.TypeNameTesting;
-import walkingkooka.type.JavaVisibility;
+import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.TypeNameTesting;
 
 import java.math.MathContext;
 

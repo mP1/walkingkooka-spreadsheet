@@ -18,13 +18,11 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.set.Sets;
-import walkingkooka.compare.Range;
+import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
-import walkingkooka.test.ClassTesting2;
 
 import java.util.Arrays;
 import java.util.List;

@@ -17,9 +17,9 @@
 
 package walkingkooka.spreadsheet.datavalidation;
 
+import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.type.PublicStaticHelper;
 
 public final class SpreadsheetDataValidatorContexts implements PublicStaticHelper {
 

@@ -55,7 +55,7 @@ public final class SpreadsheetDateTimeFormatPattern extends SpreadsheetFormatPat
         return SpreadsheetFormatters.dateTime(this.value, LocalDateTime.class);
     }
 
-    // HashCodeEqualsDefined............................................................................................
+        // Object...........................................................................................................
 
     @Override
     boolean canBeEquals(final Object other) {

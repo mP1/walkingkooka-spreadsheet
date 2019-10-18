@@ -18,11 +18,11 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.PredicateTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
-import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.math.BigDecimal;

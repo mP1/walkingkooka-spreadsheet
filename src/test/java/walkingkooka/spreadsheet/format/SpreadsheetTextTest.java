@@ -18,16 +18,16 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
+import walkingkooka.ToStringTesting;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting2;
-import walkingkooka.test.ToStringTesting;
+import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.text.HasTextNodeTesting;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStylePropertyName;
-import walkingkooka.type.JavaVisibility;
 
 import java.util.Optional;
 

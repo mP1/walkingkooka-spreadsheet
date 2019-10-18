@@ -17,12 +17,12 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.IsMethodTesting;
-import walkingkooka.test.PublicStaticFactoryTesting;
+import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.IsMethodTesting;
+import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicStaticFactoryTesting;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokenTesting;
-import walkingkooka.type.JavaVisibility;
 
 import java.util.function.Predicate;
 

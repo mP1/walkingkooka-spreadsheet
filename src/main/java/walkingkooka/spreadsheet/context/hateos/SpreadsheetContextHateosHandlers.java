@@ -22,11 +22,11 @@ import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.HttpResponse;
 import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.net.http.server.hateos.HateosHandler;
+import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.context.SpreadsheetContext;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
-import walkingkooka.type.PublicStaticHelper;
 
 import java.util.function.BiConsumer;
 

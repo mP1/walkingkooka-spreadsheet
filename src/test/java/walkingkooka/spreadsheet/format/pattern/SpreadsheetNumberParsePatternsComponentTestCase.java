@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;

@@ -23,10 +23,10 @@ import walkingkooka.compare.Range;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.predicate.Predicates;
+import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNode;
-import walkingkooka.type.PublicStaticHelper;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

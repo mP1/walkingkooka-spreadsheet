@@ -23,7 +23,6 @@ import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
-import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.HasText;
 import walkingkooka.tree.text.HasTextNode;
 import walkingkooka.tree.text.TextNode;
@@ -38,7 +37,6 @@ import java.util.Optional;
  */
 public final class SpreadsheetText implements HasText,
         HasTextNode,
-        HashCodeEqualsDefined,
         UsesToStringBuilder {
 
     /**

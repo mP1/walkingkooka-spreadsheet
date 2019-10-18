@@ -21,9 +21,9 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Context;
 import walkingkooka.ContextTesting;
 import walkingkooka.ToStringBuilder;
+import walkingkooka.ToStringTesting;
 import walkingkooka.collect.iterator.Iterators;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.test.ToStringTesting;
 
 import java.math.BigDecimal;
 import java.math.MathContext;

@@ -19,14 +19,13 @@ package walkingkooka.spreadsheet;
 
 import walkingkooka.Cast;
 import walkingkooka.Value;
-import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.Whitespace;
 
 /**
- * Text that accompanies some artefact, that is intended to be read by users.
+ * Text that accompanies some artifact, that is intended to be read by users.
  */
-public final class SpreadsheetDescription implements HashCodeEqualsDefined, Value<String> {
+public final class SpreadsheetDescription implements Value<String> {
 
     public static SpreadsheetDescription with(final String message) {
         Whitespace.failIfNullOrEmptyOrWhitespace(message, "message");

@@ -18,10 +18,10 @@
 package walkingkooka.spreadsheet.datavalidation;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.test.ClassTesting;
-import walkingkooka.test.ToStringTesting;
+import walkingkooka.ToStringTesting;
+import walkingkooka.reflect.ClassTesting;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CharSequences;
-import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

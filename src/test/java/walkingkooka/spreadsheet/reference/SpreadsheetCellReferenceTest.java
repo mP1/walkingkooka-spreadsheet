@@ -20,11 +20,11 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.compare.Range;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.type.JavaVisibility;
 import walkingkooka.visit.Visiting;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

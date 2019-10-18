@@ -18,17 +18,16 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting2;
-import walkingkooka.test.ToStringTesting;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
+import walkingkooka.ToStringTesting;
+import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 
 public final class SpreadsheetErrorTest implements ClassTesting2<SpreadsheetError>,
         HashCodeEqualsDefinedTesting2<SpreadsheetError>,
