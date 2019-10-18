@@ -57,6 +57,7 @@ public abstract class SpreadsheetFormatter3TestCase<F extends SpreadsheetFormatt
         return Cast.to(this.parsePatternOrFail(this.parser(), pattern));
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     final SpreadsheetFormatParserToken parsePatternOrFail(final Parser<SpreadsheetFormatParserContext> parser, final String pattern) {
         return parser.orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(pattern),

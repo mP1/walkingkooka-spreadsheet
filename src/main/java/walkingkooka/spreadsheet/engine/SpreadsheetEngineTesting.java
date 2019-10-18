@@ -713,6 +713,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                         .orElse(bothAbsent));
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     default void checkFormattedText(final SpreadsheetCell cell, final String text) {
         assertNotEquals(Optional.empty(), cell.formatted(), "formatted text absent");
         assertEquals(text, cell.formatted().get().text(), "formattedText");

@@ -352,6 +352,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                 SpreadsheetCell.with(reference(), formula()).setStyle(boldAndItalics));
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testJsonNodeUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormat() {
         final TextStyle boldAndItalics = this.boldAndItalics();
@@ -368,6 +369,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         .setFormat(format()));
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testJsonNodeUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormattedCell() {
         final TextStyle boldAndItalics = this.boldAndItalics();
@@ -384,6 +386,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         .setFormatted(formatted()));
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testJsonNodeUnmarshallObjectReferenceAndFormulaAndFormatAndFormattedCell() {
         final JsonNodeMarshallContext context = this.marshallContext();
@@ -398,6 +401,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         .setFormatted(formatted()));
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testJsonNodeUnmarshallObjectReferenceAndFormulaAndTextStyleAndFormatAndFormattedCell() {
         final TextStyle boldAndItalics = this.boldAndItalics();
@@ -435,6 +439,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                                 .marshallWithType(boldAndItalics) + "}");
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testJsonNodeWithFormatted() {
         final JsonNodeMarshallContext context = this.marshallContext();
@@ -446,6 +451,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
                         "}");
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testJsonNodeWithTextStyleAndFormatted() {
         final TextStyle boldAndItalics = this.boldAndItalics();
