@@ -91,6 +91,7 @@ public final class UserTest extends IdentityTestCase<User, UserId> {
                 .set(User.EMAIL_PROPERTY, this.marshallContext().marshall(EMAIL));
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     private JsonNode jsonNodeWithId() {
         final JsonNodeMarshallContext context = this.marshallContext();
 

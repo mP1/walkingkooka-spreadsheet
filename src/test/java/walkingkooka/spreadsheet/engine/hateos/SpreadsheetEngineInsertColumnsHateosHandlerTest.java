@@ -51,6 +51,7 @@ public final class SpreadsheetEngineInsertColumnsHateosHandlerTest extends Sprea
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
+                    @SuppressWarnings("OptionalGetWithoutIsPresent")
                     public SpreadsheetDelta insertColumns(final SpreadsheetColumnReference c,
                                                                                              final int count,
                                                                                              final SpreadsheetEngineContext context) {
@@ -101,6 +102,7 @@ public final class SpreadsheetEngineInsertColumnsHateosHandlerTest extends Sprea
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
+                    @SuppressWarnings("OptionalGetWithoutIsPresent")
                     public SpreadsheetDelta insertColumns(final SpreadsheetColumnReference c,
                                                                                              final int count,
                                                                                              final SpreadsheetEngineContext context) {

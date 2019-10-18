@@ -162,8 +162,9 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
         this.marshallRoundTripTwiceAndCheck(this.createObject());
     }
 
-    // toString................................................................................................
+    // toString.........................................................................................................
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testToString() {
         this.toStringAndCheck(this.createObject(),

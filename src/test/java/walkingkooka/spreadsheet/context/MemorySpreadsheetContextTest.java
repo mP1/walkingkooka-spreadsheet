@@ -359,6 +359,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
             assertNotEquals(Optional.empty(), mapped, "request " + request.parameters());
 
             final RecordingHttpResponse response = HttpResponses.recording();
+            @SuppressWarnings("OptionalGetWithoutIsPresent")
             final BiConsumer<HttpRequest, HttpResponse> consumer = mapped.get();
             consumer.accept(request, response);
         }
@@ -397,6 +398,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
             assertNotEquals(Optional.empty(), mapped, "request " + request.parameters());
 
             final RecordingHttpResponse response = HttpResponses.recording();
+            //noinspection OptionalGetWithoutIsPresent
             final BiConsumer<HttpRequest, HttpResponse> consumer = mapped.get();
             consumer.accept(request, response);
 

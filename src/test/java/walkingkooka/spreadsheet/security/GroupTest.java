@@ -101,6 +101,7 @@ public final class GroupTest extends IdentityTestCase<Group, GroupId> {
                 .set(Group.NAME_PROPERTY, this.marshallContext().marshall(this.name()));
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     private JsonNode jsonNodeWithId() {
         final JsonNodeMarshallContext context = this.marshallContext();
 
