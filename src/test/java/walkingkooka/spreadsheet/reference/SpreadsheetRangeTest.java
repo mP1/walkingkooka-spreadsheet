@@ -702,10 +702,12 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
         return this.range(COLUMN1, ROW1, COLUMN2, ROW2);
     }
 
+    @SuppressWarnings("SameReturnValue")
     private Optional<SpreadsheetCellFormat> format() {
         return SpreadsheetCell.NO_FORMAT;
     }
 
+    @SuppressWarnings("SameReturnValue")
     private Optional<TextNode> formatted() {
         return SpreadsheetCell.NO_FORMATTED_CELL;
     }

@@ -71,6 +71,7 @@ public final class BasicSpreadsheetDataValidatorContextTest implements Spreadshe
         return SpreadsheetReferenceKind.RELATIVE.column(1).setRow(SpreadsheetReferenceKind.RELATIVE.row(2));
     }
 
+    @SuppressWarnings("SameReturnValue")
     private Object value() {
         return "abc123";
     }

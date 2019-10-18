@@ -35,6 +35,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerCharacter}
      */
+    @SuppressWarnings("SameReturnValue")
     static SpreadsheetMetadataPropertyValueHandlerCharacter character() {
         return SpreadsheetMetadataPropertyValueHandlerCharacter.INSTANCE;
     }
@@ -42,6 +43,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerColor}
      */
+    @SuppressWarnings("SameReturnValue")
     static SpreadsheetMetadataPropertyValueHandlerColor color() {
         return SpreadsheetMetadataPropertyValueHandlerColor.INSTANCE;
     }
@@ -49,6 +51,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateFormatPattern}
      */
+    @SuppressWarnings("SameReturnValue")
     static SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateFormatPattern dateFormatPattern() {
         return SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateFormatPattern.INSTANCE;
     }
@@ -56,6 +59,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateParsePatterns}
      */
+    @SuppressWarnings("SameReturnValue")
     static SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateParsePatterns dateParsePatterns() {
         return SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateParsePatterns.INSTANCE;
     }
@@ -63,6 +67,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimeFormatPattern}
      */
+    @SuppressWarnings("SameReturnValue")
     static SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimeFormatPattern dateTimeFormatPattern() {
         return SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimeFormatPattern.INSTANCE;
     }
@@ -70,6 +75,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimeParsePatterns}
      */
+    @SuppressWarnings("SameReturnValue")
     static SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimeParsePatterns dateTimeParsePatterns() {
         return SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimeParsePatterns.INSTANCE;
     }
@@ -77,6 +83,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerEmailAddress}
      */
+    @SuppressWarnings("SameReturnValue")
     static SpreadsheetMetadataPropertyValueHandlerEmailAddress emailAddress() {
         return SpreadsheetMetadataPropertyValueHandlerEmailAddress.INSTANCE;
     }
@@ -84,6 +91,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerInteger}
      */
+    @SuppressWarnings("SameReturnValue")
     static SpreadsheetMetadataPropertyValueHandlerInteger integer(final IntPredicate predicate) {
         return SpreadsheetMetadataPropertyValueHandlerInteger.with(predicate);
     }
@@ -91,6 +99,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerLocalDateTime}
      */
+    @SuppressWarnings("SameReturnValue")
     static SpreadsheetMetadataPropertyValueHandlerLocalDateTime localDateTime() {
         return SpreadsheetMetadataPropertyValueHandlerLocalDateTime.INSTANCE;
     }
@@ -98,6 +107,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerLocale}
      */
+    @SuppressWarnings("SameReturnValue")
     static SpreadsheetMetadataPropertyValueHandlerLocale locale() {
         return SpreadsheetMetadataPropertyValueHandlerLocale.INSTANCE;
     }
@@ -105,6 +115,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerLong}
      */
+    @SuppressWarnings("SameReturnValue")
     static SpreadsheetMetadataPropertyValueHandlerLong longHandler(final LongPredicate predicate) {
         return SpreadsheetMetadataPropertyValueHandlerLong.with(predicate);
     }
@@ -112,6 +123,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetNumberFormatPattern}
      */
+    @SuppressWarnings("SameReturnValue")
     static SpreadsheetMetadataPropertyValueHandlerSpreadsheetNumberFormatPattern numberFormatPattern() {
         return SpreadsheetMetadataPropertyValueHandlerSpreadsheetNumberFormatPattern.INSTANCE;
     }
@@ -119,6 +131,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetNumberParsePatterns}
      */
+    @SuppressWarnings("SameReturnValue")
     static SpreadsheetMetadataPropertyValueHandlerSpreadsheetNumberParsePatterns numberParsePatterns() {
         return SpreadsheetMetadataPropertyValueHandlerSpreadsheetNumberParsePatterns.INSTANCE;
     }
@@ -126,6 +139,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerRoundingMode}
      */
+    @SuppressWarnings("SameReturnValue")
     static SpreadsheetMetadataPropertyValueHandlerRoundingMode roundingMode() {
         return SpreadsheetMetadataPropertyValueHandlerRoundingMode.INSTANCE;
     }
@@ -133,6 +147,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetId}
      */
+    @SuppressWarnings("SameReturnValue")
     static SpreadsheetMetadataPropertyValueHandlerSpreadsheetId spreadsheetId() {
         return SpreadsheetMetadataPropertyValueHandlerSpreadsheetId.INSTANCE;
     }
@@ -147,6 +162,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetTextFormatPattern}
      */
+    @SuppressWarnings("SameReturnValue")
     static SpreadsheetMetadataPropertyValueHandlerSpreadsheetTextFormatPattern textFormatPattern() {
         return SpreadsheetMetadataPropertyValueHandlerSpreadsheetTextFormatPattern.INSTANCE;
     }
@@ -154,6 +170,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimeFormatPattern}
      */
+    @SuppressWarnings("SameReturnValue")
     static SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimeFormatPattern timeFormatPattern() {
         return SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimeFormatPattern.INSTANCE;
     }
@@ -161,6 +178,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     /**
      * {@see SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimeParsePatterns}
      */
+    @SuppressWarnings("SameReturnValue")
     static SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimeParsePatterns timeParsePatterns() {
         return SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimeParsePatterns.INSTANCE;
     }

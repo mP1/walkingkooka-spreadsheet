@@ -140,6 +140,7 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
                 MathContext.UNLIMITED);
     }
 
+    @SuppressWarnings("SameReturnValue")
     private Locale locale() {
         return Locale.FRANCE;
     }

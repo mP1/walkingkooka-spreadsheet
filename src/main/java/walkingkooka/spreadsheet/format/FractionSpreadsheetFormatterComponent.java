@@ -25,6 +25,7 @@ abstract class FractionSpreadsheetFormatterComponent {
     /**
      * {@see FractionSpreadsheetFormatterComponentCurrencySymbol}
      */
+    @SuppressWarnings("SameReturnValue")
     static FractionSpreadsheetFormatterComponent currencySymbol() {
         return FractionSpreadsheetFormatterComponentCurrencySymbol.INSTANCE;
     }
@@ -40,6 +41,7 @@ abstract class FractionSpreadsheetFormatterComponent {
     /**
      * {@see FractionSpreadsheetFormatterComponentSlashSymbol}
      */
+    @SuppressWarnings("SameReturnValue")
     static FractionSpreadsheetFormatterComponent slashSymbol() {
         return FractionSpreadsheetFormatterComponentSlashSymbol.INSTANCE;
     }
@@ -47,6 +49,7 @@ abstract class FractionSpreadsheetFormatterComponent {
     /**
      * {@see FractionSpreadsheetFormatterComponentPercentageSymbol}
      */
+    @SuppressWarnings("SameReturnValue")
     static FractionSpreadsheetFormatterComponent percentageSymbol() {
         return FractionSpreadsheetFormatterComponentPercentageSymbol.INSTANCE;
     }
