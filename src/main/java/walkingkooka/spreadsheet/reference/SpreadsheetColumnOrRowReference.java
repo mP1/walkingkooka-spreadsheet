@@ -254,6 +254,7 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
                 SpreadsheetColumnReference::marshall,
                 SpreadsheetColumnReference.class);
 
+        //noinspection StaticInitializerReferencesSubClass
         JsonNodeContext.register("spreadsheet-row-reference",
                 SpreadsheetRowReference::unmarshallRow,
                 SpreadsheetRowReference::marshall,
