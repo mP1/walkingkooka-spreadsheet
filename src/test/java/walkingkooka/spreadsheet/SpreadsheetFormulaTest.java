@@ -153,6 +153,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     // SetExpression.....................................................................................................
 
+    @SuppressWarnings("OptionalAssignedToNull")
     @Test
     public void testSetExpressionNullFails() {
         assertThrows(NullPointerException.class, () -> this.createObject().setExpression(null));
@@ -207,8 +208,9 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.checkErrorAbsent(different);
     }
 
-    // SetError.....................................................................................................
+    // SetError..........................................................................................................
 
+    @SuppressWarnings("OptionalAssignedToNull")
     @Test
     public void testSetErrorNullFails() {
         assertThrows(NullPointerException.class, () -> this.createObject().setError(null));

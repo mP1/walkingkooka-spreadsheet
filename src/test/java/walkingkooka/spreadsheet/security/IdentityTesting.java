@@ -34,6 +34,7 @@ public interface IdentityTesting<I extends Identity<ID>, ID extends IdentityId>
         HashCodeEqualsDefinedTesting2<I>,
         ToStringTesting<I> {
 
+    @SuppressWarnings("OptionalAssignedToNull")
     @Test
     default void testWithNullIdFails() {
         assertThrows(NullPointerException.class, () -> this.createIdentity(null));

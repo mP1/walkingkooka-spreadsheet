@@ -44,6 +44,7 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
     private final static Optional<Color> COLOR = Optional.of(Color.BLACK);
     private final static String TEXT = "1/1/2000";
 
+    @SuppressWarnings("OptionalAssignedToNull")
     @Test
     public void testWithNullColorFails() {
         assertThrows(NullPointerException.class, () -> SpreadsheetText.with(null, TEXT));
@@ -75,8 +76,9 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
         this.check(formatted, color, text);
     }
 
-    // setColor...........................................................
+    // setColor..........................................................................................................
 
+    @SuppressWarnings("OptionalAssignedToNull")
     @Test
     public void testSetColorNullFails() {
         assertThrows(NullPointerException.class, () -> this.createFormattedText().setColor(null));
