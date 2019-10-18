@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.type.PublicStaticHelper;
+import walkingkooka.reflect.PublicStaticHelper;
 
 public final class SpreadsheetFormatParserContexts implements PublicStaticHelper {
 

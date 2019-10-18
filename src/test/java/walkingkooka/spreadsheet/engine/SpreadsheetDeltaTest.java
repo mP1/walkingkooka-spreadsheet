@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.type.JavaVisibility;
+import walkingkooka.reflect.JavaVisibility;
 
 public final class SpreadsheetDeltaTest extends SpreadsheetDeltaTestCase<SpreadsheetDelta> {
 

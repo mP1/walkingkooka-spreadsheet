@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.math.NumberVisitorTesting;
-import walkingkooka.type.JavaVisibility;
+import walkingkooka.reflect.JavaVisibility;
 
 public final class SpreadsheetValueVisitorNumberVisitorTest implements NumberVisitorTesting<SpreadsheetValueVisitorNumberVisitor> {
 

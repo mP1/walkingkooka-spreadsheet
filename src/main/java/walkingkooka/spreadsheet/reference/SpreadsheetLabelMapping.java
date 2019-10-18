@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
 import walkingkooka.net.http.server.hateos.HateosResource;
-import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeName;
@@ -33,7 +32,7 @@ import java.util.Optional;
 /**
  * Holds a {@link SpreadsheetLabelName label} to {@link ExpressionReference} mapping.
  */
-public final class SpreadsheetLabelMapping implements HashCodeEqualsDefined, HateosResource<SpreadsheetLabelName> {
+public final class SpreadsheetLabelMapping implements HateosResource<SpreadsheetLabelName> {
 
     /**
      * Creates a new {@link SpreadsheetLabelMapping}

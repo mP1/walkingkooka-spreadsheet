@@ -19,10 +19,10 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.ToStringTesting;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
-import walkingkooka.test.ToStringTesting;
-import walkingkooka.type.JavaVisibility;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.util.FunctionTesting;
 
 import java.util.Map;

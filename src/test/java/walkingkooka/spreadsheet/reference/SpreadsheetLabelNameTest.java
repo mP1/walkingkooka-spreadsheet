@@ -24,7 +24,7 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.type.JavaVisibility;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.util.PropertiesPath;
 import walkingkooka.visit.Visiting;
 

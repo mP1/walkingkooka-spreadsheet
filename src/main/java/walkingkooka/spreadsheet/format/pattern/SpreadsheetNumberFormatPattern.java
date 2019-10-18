@@ -53,7 +53,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
         return SpreadsheetFormatters.number(this.value);
     }
 
-    // HashCodeEqualsDefined............................................................................................
+        // Object...........................................................................................................
 
     @Override
     boolean canBeEquals(final Object other) {

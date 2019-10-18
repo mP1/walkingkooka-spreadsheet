@@ -21,8 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.ComparatorTesting;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.type.JavaVisibility;
+import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.JavaVisibility;
 
 import java.util.List;
 import java.util.Set;

@@ -28,7 +28,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
-import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
@@ -48,8 +47,7 @@ import java.util.function.IntFunction;
  * Captures the common features shared by a row or column.
  */
 abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColumnOrRowReference<R>> implements Value<Integer>,
-        Comparable<R>,
-        HashCodeEqualsDefined {
+        Comparable<R> {
 
     /**
      * Creates a new {@link SpreadsheetColumn}
@@ -187,7 +185,7 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
      */
     abstract R replaceReferenceKind(final SpreadsheetReferenceKind referenceKind);
 
-    // HashCodeEqualsDefined............................................................................................
+        // Object...........................................................................................................
 
     @Override
     public final int hashCode() {

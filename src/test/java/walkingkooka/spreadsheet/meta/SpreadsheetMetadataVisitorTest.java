@@ -34,7 +34,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
-import walkingkooka.type.JavaVisibility;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.visit.Visiting;
 
 import java.math.RoundingMode;

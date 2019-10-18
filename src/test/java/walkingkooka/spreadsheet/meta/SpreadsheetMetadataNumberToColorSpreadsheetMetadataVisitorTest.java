@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.type.JavaVisibility;
+import walkingkooka.reflect.JavaVisibility;
 
 public final class SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitorTest extends SpreadsheetMetadataTestCase2<SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitor>
         implements SpreadsheetMetadataVisitorTesting<SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitor> {

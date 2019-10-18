@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.store.repo;
 
+import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
@@ -27,7 +28,6 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
-import walkingkooka.type.PublicStaticHelper;
 
 /**
  * Contains many factory methods for a variety of {@link SpreadsheetCellStore} implementations.

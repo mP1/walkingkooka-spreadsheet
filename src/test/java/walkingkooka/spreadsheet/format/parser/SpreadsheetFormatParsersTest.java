@@ -19,12 +19,12 @@ package walkingkooka.spreadsheet.format.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.test.PublicStaticHelperTesting;
+import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserTesting2;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.type.JavaVisibility;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;

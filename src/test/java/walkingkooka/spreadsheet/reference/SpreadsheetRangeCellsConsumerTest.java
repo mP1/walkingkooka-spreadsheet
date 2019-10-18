@@ -18,11 +18,11 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.ToStringTesting;
-import walkingkooka.type.JavaVisibility;
 
 import java.util.function.Consumer;
 

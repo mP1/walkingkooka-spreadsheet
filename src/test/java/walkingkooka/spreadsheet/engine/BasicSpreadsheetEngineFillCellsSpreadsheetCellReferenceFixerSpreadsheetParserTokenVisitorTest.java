@@ -25,7 +25,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTokenVisitorTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.text.cursor.TextCursors;
-import walkingkooka.type.JavaVisibility;
+import walkingkooka.reflect.JavaVisibility;
 
 import java.math.MathContext;
 

@@ -21,7 +21,6 @@ import walkingkooka.Cast;
 import walkingkooka.HasId;
 import walkingkooka.Value;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.JsonNodeName;
 
 import java.util.Objects;
@@ -31,8 +30,7 @@ import java.util.Optional;
  * Base class for all security related identifies
  */
 public abstract class Identity<I extends IdentityId> implements Value<Optional<I>>,
-        HasId<Optional<I>>,
-        HashCodeEqualsDefined {
+        HasId<Optional<I>> {
 
     /**
      * Factory that creates a new {@link Group}.

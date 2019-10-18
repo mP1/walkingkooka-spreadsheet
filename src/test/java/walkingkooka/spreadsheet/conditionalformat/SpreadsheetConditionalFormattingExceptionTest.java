@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.conditionalformat;
 
-import walkingkooka.test.StandardThrowableTesting;
-import walkingkooka.type.JavaVisibility;
+import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.StandardThrowableTesting;
 
 public final class SpreadsheetConditionalFormattingExceptionTest implements StandardThrowableTesting<SpreadsheetConditionalFormattingException> {
 

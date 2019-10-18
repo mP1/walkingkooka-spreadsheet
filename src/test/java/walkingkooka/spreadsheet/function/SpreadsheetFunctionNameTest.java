@@ -19,9 +19,9 @@ package walkingkooka.spreadsheet.function;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.naming.NameTesting2;
-import walkingkooka.test.ClassTesting2;
+import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
-import walkingkooka.type.JavaVisibility;
 
 final public class SpreadsheetFunctionNameTest implements ClassTesting2<SpreadsheetFunctionName>,
         NameTesting2<SpreadsheetFunctionName, SpreadsheetFunctionName> {

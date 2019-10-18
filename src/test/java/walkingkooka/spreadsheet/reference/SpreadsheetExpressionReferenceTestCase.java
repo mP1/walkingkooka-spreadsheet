@@ -18,11 +18,11 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
+import walkingkooka.ToStringTesting;
 import walkingkooka.predicate.Predicates;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting2;
-import walkingkooka.test.IsMethodTesting;
-import walkingkooka.test.ToStringTesting;
+import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.IsMethodTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 

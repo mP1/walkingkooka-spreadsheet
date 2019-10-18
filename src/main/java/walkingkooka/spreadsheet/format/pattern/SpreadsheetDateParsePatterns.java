@@ -59,7 +59,7 @@ public final class SpreadsheetDateParsePatterns extends SpreadsheetParsePatterns
         super(tokens);
     }
 
-    // HashCodeEqualsDefined............................................................................................
+        // Object...........................................................................................................
 
     @Override
     boolean canBeEquals(final Object other) {

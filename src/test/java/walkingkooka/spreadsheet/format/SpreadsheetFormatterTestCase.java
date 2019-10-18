@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.type.JavaVisibility;
+import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.JavaVisibility;
 
 public abstract class SpreadsheetFormatterTestCase<F extends SpreadsheetFormatter> implements ClassTesting2<F>,
         SpreadsheetFormatterTesting2<F> {
