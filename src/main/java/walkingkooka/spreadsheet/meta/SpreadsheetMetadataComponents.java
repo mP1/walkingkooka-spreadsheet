@@ -57,9 +57,8 @@ final class SpreadsheetMetadataComponents {
 
     final SpreadsheetMetadata metadata;
 
-    private <T> T addMissing(final SpreadsheetMetadataPropertyName<T> propertyName) {
+    private void addMissing(final SpreadsheetMetadataPropertyName<?> propertyName) {
         this.missing.add(propertyName);
-        return null;
     }
 
     void reportIfMissing() {

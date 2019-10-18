@@ -69,6 +69,7 @@ public abstract class SpreadsheetFormatParentParserTokenTestCase<T extends Sprea
         return this.createToken(text, this.tokens());
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     final T createToken(final String text, final ParserToken... tokens) {
         return this.createToken(text, Lists.of(tokens));
     }
