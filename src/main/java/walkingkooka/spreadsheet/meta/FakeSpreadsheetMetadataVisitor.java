@@ -199,11 +199,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitTwoDigitYear(final Integer value) {
-        // nop
+        throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visitWidth(final Integer value) {
-        // nop
+        throw new UnsupportedOperationException();
     }
 }
