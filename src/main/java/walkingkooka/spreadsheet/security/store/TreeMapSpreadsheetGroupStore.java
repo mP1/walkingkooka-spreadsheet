@@ -102,6 +102,7 @@ final class TreeMapSpreadsheetGroupStore implements SpreadsheetGroupStore {
 
         final Map<GroupId, Set<UserId>> groupIdToUserIds = this.groupIdToUserIds;
         Set<UserId> users = groupIdToUserIds.get(groupId);
+        //noinspection Java8MapApi
         if (null == users) {
             users = Sets.ordered();
             groupIdToUserIds.put(groupId, users);

@@ -199,6 +199,7 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
 
     private void addValueToValueToRanges(final SpreadsheetRange range, final V value) {
         Set<SpreadsheetRange> updated = this.valueToRanges.get(value);
+        //noinspection Java8MapApi
         if (null == updated) {
             updated = Sets.ordered();
             this.valueToRanges.put(value, updated);
