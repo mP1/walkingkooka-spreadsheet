@@ -203,7 +203,7 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
 
     @Test
     public final void testIds() {
-        final TreeMapSpreadsheetRangeStore store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.addValue(RANGE1A, VALUE1); // 0
         store.addValue(RANGE1B, VALUE2); // 1
@@ -216,7 +216,7 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
 
     @Test
     public final void testIdsWindow() {
-        final TreeMapSpreadsheetRangeStore store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.addValue(RANGE1A, VALUE1); // 0
         store.addValue(RANGE1B, VALUE2); // 1
@@ -233,19 +233,20 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
 
     @Test
     public final void testValues() {
-        final TreeMapSpreadsheetRangeStore store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.addValue(RANGE1A, VALUE1);
         store.addValue(RANGE1B, VALUE2);
         store.addValue(RANGE1B, VALUE2B);
         store.addValue(RANGE2A, VALUE3);
 
+        //noinspection unchecked
         this.valuesAndCheck(store, RANGE1A, 3, Lists.of(VALUE1), Lists.of(VALUE2, VALUE2B), Lists.of(VALUE3));
     }
 
     @Test
     public final void testValuesWindow() {
-        final TreeMapSpreadsheetRangeStore store = this.createStore();
+        final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         store.addValue(RANGE1A, VALUE1); // 0
         store.addValue(RANGE1B, VALUE2); // 1
@@ -253,6 +254,7 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
         store.addValue(RANGE2A, VALUE3); // 3
         store.addValue(RANGE2B, VALUE4); // 2
 
+        //noinspection unchecked
         this.valuesAndCheck(store, RANGE1B, 2, Lists.of(VALUE2, VALUE2B), Lists.of(VALUE4));
     }
 
