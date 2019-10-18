@@ -93,8 +93,9 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
             .build()
             .transform(SpreadsheetParsers::transformColumnAndRow);
 
-    private static ParserToken transformColumnAndRow(final ParserToken token, final ParserContext context) {
-        return SpreadsheetParserToken.cellReference(SequenceParserToken.class.cast(token).value(), token.text());
+    private static ParserToken transformColumnAndRow(final ParserToken token,
+                                                     final ParserContext context) {
+        return SpreadsheetParserToken.cellReference(token.cast(SequenceParserToken.class).value(), token.text());
     }
 
     /**

@@ -112,7 +112,7 @@ final class SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer implement
 
     private static ParserToken transformExponentSymbol(final ParserToken token,
                                                        final ParserContext context) {
-        return SpreadsheetFormatParserToken.exponentSymbol(StringParserToken.class.cast(token).value(), token.text());
+        return SpreadsheetFormatParserToken.exponentSymbol(token.cast(StringParserToken.class).value(), token.text());
     }
 
     private static ParserToken transformExpression(final ParserToken token,
