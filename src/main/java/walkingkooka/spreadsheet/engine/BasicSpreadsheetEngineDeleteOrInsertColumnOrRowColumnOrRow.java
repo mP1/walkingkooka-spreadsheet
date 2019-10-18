@@ -387,10 +387,6 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
         }
     }
 
-    final void saveLabel(final SpreadsheetLabelMapping mapping) {
-        this.labelStore().save(mapping);
-    }
-
     final void deleteLabel(final SpreadsheetLabelMapping mapping) {
         this.labelStore().delete(mapping.label());
     }

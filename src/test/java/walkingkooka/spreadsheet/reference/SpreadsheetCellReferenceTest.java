@@ -503,10 +503,6 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
         return SpreadsheetCellReference.with(column(), row());
     }
 
-    private SpreadsheetCellReference createReference(final int column, final int row) {
-        return this.column(column).setRow(this.row(row));
-    }
-
     private SpreadsheetColumnReference column() {
         return this.column(COLUMN);
     }

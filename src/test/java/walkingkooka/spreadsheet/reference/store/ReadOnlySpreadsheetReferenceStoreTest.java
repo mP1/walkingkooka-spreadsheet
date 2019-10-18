@@ -62,6 +62,7 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
     }
 
     @Override
+    @SuppressWarnings("unused")
     public void testAddDeleteWatcherAndDelete2() {
     }
 
@@ -70,6 +71,7 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
     }
 
     @Override
+    @SuppressWarnings("unused")
     public void testRemoveLastReferenceAddDeleteWatcher() {
     }
 
@@ -119,22 +121,27 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
     }
 
     @Override
+    @SuppressWarnings("unused")
     public void testSaveReferences() {
     }
 
     @Override
+    @SuppressWarnings("unused")
     public void testSaveReferencesDoesntFireDeleteWatchers() {
     }
 
     @Override
+    @SuppressWarnings("unused")
     public void testSaveReferencesAddReferenceWatcher() {
     }
 
     @Override
+    @SuppressWarnings("unused")
     public void testSaveReferencesReplaceAddReferenceWatcher() {
     }
 
     @Override
+    @SuppressWarnings("unused")
     public void testSaveReferencesReplaceNoneAddReferenceWatcher() {
     }
 
@@ -148,6 +155,7 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
     }
 
     @Override
+    @SuppressWarnings("unused")
     public void testAddReferenceWithWatcher() {
     }
 
@@ -157,10 +165,12 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
     }
 
     @Override
+    @SuppressWarnings("unused")
     public void testRemoveReferenceWithWatcher() {
     }
 
     @Override
+    @SuppressWarnings("unused")
     public void testDeleteWithRemoveReferenceWatcher() {
     }
 
@@ -215,14 +225,6 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
         return SpreadsheetExpressionReference.parseCellReference("c1");
     }
 
-    private SpreadsheetCellReference d1() {
-        return SpreadsheetExpressionReference.parseCellReference("d1");
-    }
-
-    private SpreadsheetCellReference e1() {
-        return SpreadsheetExpressionReference.parseCellReference("e1");
-    }
-
     private SpreadsheetCellReference f99() {
         return SpreadsheetExpressionReference.parseCellReference("f99");
     }
@@ -237,10 +239,6 @@ public class ReadOnlySpreadsheetReferenceStoreTest extends SpreadsheetReferenceS
 
     private SpreadsheetCellReference i99() {
         return SpreadsheetExpressionReference.parseCellReference("i99");
-    }
-
-    private SpreadsheetCellReference j99() {
-        return SpreadsheetExpressionReference.parseCellReference("j99");
     }
 
     @Override
