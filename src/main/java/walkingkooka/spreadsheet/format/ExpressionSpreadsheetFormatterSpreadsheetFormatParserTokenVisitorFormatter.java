@@ -68,8 +68,6 @@ final class ExpressionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorFor
         SpreadsheetFormatConditionParserToken condition = this.condition;
         if (null == condition) {
             switch (numberFormatters) {
-                case 1:
-                    break;
                 case 2:
                     if (0 == nth) {
                         condition = positiveAndZero();
