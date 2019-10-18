@@ -50,6 +50,7 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
     }
 
     @Override
+    @SuppressWarnings("unused")
     public void testSaveDeleteLoad() {
     }
 
@@ -93,6 +94,7 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
         this.idsAndCheck(ReadOnlySpreadsheetLabelStore.with(store), 0, 3, a.label(), b.label(), c.label());
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void testIdsWindow() {
     }
@@ -113,6 +115,7 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
     }
 
     @Override
+    @SuppressWarnings("unused")
     public void testValuesWindow() {
     }
 
@@ -133,10 +136,12 @@ public final class ReadOnlySpreadsheetLabelStoreTest extends SpreadsheetLabelSto
     }
 
     @Override
+    @SuppressWarnings("unused")
     public void testLabelsWithCellReference2() {
     }
 
     @Override
+    @SuppressWarnings("unused")
     public void testLabelsWithCellIndirectReference() {
     }
 

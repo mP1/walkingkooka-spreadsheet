@@ -425,7 +425,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         return Optional.of(Color.fromRgb(0x123456));
     }
 
-    private final static String GENERAL_DECIMAL_FORMAT_PATTERN = "##.#";
     private final static int WIDTH = 1;
     private final Function<BigDecimal, Fraction> FRACTIONER = new Function<>() {
         @Override

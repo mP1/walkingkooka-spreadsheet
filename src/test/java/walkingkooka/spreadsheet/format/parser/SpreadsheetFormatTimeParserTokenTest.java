@@ -30,6 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 public final class SpreadsheetFormatTimeParserTokenTest extends SpreadsheetFormatDateDateTimeExpressionTimeParserTokenTestCase<SpreadsheetFormatTimeParserToken> {
 
     @Override
+    @SuppressWarnings("unused")
     public void testWithWhitespaceTextFails() {
     }
 

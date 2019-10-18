@@ -572,6 +572,7 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
         final SpreadsheetCellReference c1 = this.cellReference("$C$1");
         final SpreadsheetCellReference c2 = this.cellReference("$C$2");
 
+        @SuppressWarnings("unused")
         final SpreadsheetCell z99 = this.cell("Z99", "99+0");
 
         final List<Object> consumed = Lists.array();
@@ -700,16 +701,6 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
     @Override
     SpreadsheetRange createReference() {
         return this.range(COLUMN1, ROW1, COLUMN2, ROW2);
-    }
-
-    @SuppressWarnings("SameReturnValue")
-    private Optional<SpreadsheetCellFormat> format() {
-        return SpreadsheetCell.NO_FORMAT;
-    }
-
-    @SuppressWarnings("SameReturnValue")
-    private Optional<TextNode> formatted() {
-        return SpreadsheetCell.NO_FORMATTED_CELL;
     }
 
     // fromCells.......................................................................................................

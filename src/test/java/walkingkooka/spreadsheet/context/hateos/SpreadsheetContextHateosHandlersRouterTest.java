@@ -279,10 +279,6 @@ public final class SpreadsheetContextHateosHandlersRouterTest extends Spreadshee
         return SpreadsheetId.parse("12ef");
     }
 
-    private Map<HttpRequestAttribute<?>, Object> parameters() {
-        return Maps.empty();
-    }
-
     // ToString.........................................................................................................
 
     @Override

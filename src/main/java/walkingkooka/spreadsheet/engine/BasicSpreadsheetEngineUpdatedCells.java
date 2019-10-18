@@ -149,6 +149,7 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
         this.batchCell(cell);
     }
 
+    @SuppressWarnings("unused")
     void onCellReferenceDeletedBatch(final TargetAndSpreadsheetCellReference<SpreadsheetCellReference> targetAndReference) {
         throw new UnsupportedOperationException();
     }

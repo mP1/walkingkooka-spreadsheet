@@ -94,8 +94,6 @@ public final class SpreadsheetEngineSaveCellHateosHandlerTest
 
     @Test
     public void testHandleSaveWithWindowFilter() {
-        final Optional<SpreadsheetCellReference> id = this.id();
-
         final SpreadsheetCell unsaved1 = this.cell();
 
         final SpreadsheetCell saved1 = unsaved1.setFormatted(Optional.of(TextNode.text("FORMATTED1")));

@@ -213,11 +213,9 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     private final static LocalTime TIME_TRUE = LocalTime.ofSecondOfDay(NUMBER_TRUE);
     private final static LocalTime TIME_FALSE = LocalTime.ofSecondOfDay(NUMBER_FALSE);
 
-    private final static LocalDateTime DATE_TIME = LocalDateTime.of(DATE, TIME);
     private final static LocalDateTime DATE_TIME_TRUE = LocalDateTime.of(DATE_TRUE, LocalTime.MIDNIGHT);
     private final static LocalDateTime DATE_TIME_FALSE = LocalDateTime.of(DATE_FALSE, LocalTime.MIDNIGHT);
 
-    private final static String STRING_FALSE = "";
     private final static String STRING_TRUE = "true";
 
     // boolean..........................................................................................................

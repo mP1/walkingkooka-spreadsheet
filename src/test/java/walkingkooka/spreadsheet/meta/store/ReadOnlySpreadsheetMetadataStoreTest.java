@@ -44,6 +44,7 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
     }
 
     @Override
+    @SuppressWarnings("unused")
     public void testSaveDeleteLoad() {
     }
 
@@ -92,6 +93,7 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
     }
 
     @Override
+    @SuppressWarnings("unused")
     public void testIdsWindow() {
     }
 
@@ -115,6 +117,7 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
     }
 
     @Override
+    @SuppressWarnings("unused")
     public void testValuesWindow() {
     }
 

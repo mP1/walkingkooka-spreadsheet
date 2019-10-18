@@ -17,10 +17,12 @@
 
 package walkingkooka.spreadsheet.convert;
 
+import walkingkooka.test.ClassTesting;
 import walkingkooka.test.TypeNameTesting;
 import walkingkooka.type.JavaVisibility;
 
-public abstract class SpreadsheetConverterTestCase<T> implements TypeNameTesting<T> {
+public abstract class SpreadsheetConverterTestCase<T> implements ClassTesting<T>,
+        TypeNameTesting<T> {
 
     SpreadsheetConverterTestCase() {
         super();
@@ -28,6 +30,7 @@ public abstract class SpreadsheetConverterTestCase<T> implements TypeNameTesting
 
     // ClassTesting.....................................................................................................
 
+    @Override
     public final JavaVisibility typeVisibility() {
         return JavaVisibility.PACKAGE_PRIVATE;
     }

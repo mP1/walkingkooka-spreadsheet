@@ -23,6 +23,7 @@ public abstract class SpreadsheetFormatDateDateTimeExpressionTimeParserTokenTest
     }
 
     @Override
+    @SuppressWarnings("unused")
     public void testWithEmptyTextFails() {
         throw new UnsupportedOperationException();
     }
