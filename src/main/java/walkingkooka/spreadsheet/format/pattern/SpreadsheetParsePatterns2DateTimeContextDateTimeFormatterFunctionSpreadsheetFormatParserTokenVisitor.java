@@ -272,7 +272,7 @@ final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpr
 
     private final DateTimeFormatterBuilder builder;
 
-    private <T> T failInvalid(final SpreadsheetFormatParserToken token) {
+    private <T> void failInvalid(final SpreadsheetFormatParserToken token) {
         throw new IllegalStateException("Invalid token " + token);
     }
 

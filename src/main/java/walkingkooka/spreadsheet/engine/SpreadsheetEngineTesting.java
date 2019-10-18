@@ -427,6 +427,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 "Expected reference " + reference + " to fail");
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     default SpreadsheetCell loadCellAndCheckWithoutValueOrError(final SpreadsheetEngine engine,
                                                                 final SpreadsheetCellReference reference,
                                                                 final SpreadsheetEngineEvaluation evaluation,
@@ -448,6 +449,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         return cell;
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     default SpreadsheetCell loadCellAndCheckFormulaAndValue(final SpreadsheetEngine engine,
                                                             final SpreadsheetCellReference reference,
                                                             final SpreadsheetEngineEvaluation evaluation,

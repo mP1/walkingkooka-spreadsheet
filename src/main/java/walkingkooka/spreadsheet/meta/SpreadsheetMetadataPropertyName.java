@@ -383,6 +383,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * Validates the value.
      */
+    @SuppressWarnings("UnusedReturnValue")
     public T checkValue(final Object value) {
         return this.handler().check(value, this);
     }

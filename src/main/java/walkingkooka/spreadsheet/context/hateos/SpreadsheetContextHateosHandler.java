@@ -65,16 +65,14 @@ abstract class SpreadsheetContextHateosHandler<I extends Comparable<I>, V, C>
         return id.orElseThrow(() -> new IllegalArgumentException("Id missing"));
     }
 
-    final Optional<I> checkIdNotNull(final Optional<I> id) {
+    final void checkIdNotNull(final Optional<I> id) {
         Objects.requireNonNull(id, "id");
-        return id;
     }
 
     // Range<I>.........................................................................................................
 
-    final Range<I> checkRangeNotNull(final Range<I> ids) {
+    final void checkRangeNotNull(final Range<I> ids) {
         Objects.requireNonNull(ids, "ids");
-        return ids;
     }
 
     // Optional<RESOURCE>...............................................................................................

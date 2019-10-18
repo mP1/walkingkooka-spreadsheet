@@ -64,6 +64,7 @@ public interface SpreadsheetRangeStore<V> extends Store<SpreadsheetRange, List<V
     /**
      * If the old value exists replace it with the new value. If old does not exist the replace fails.
      */
+    @SuppressWarnings("UnusedReturnValue")
     boolean replaceValue(final SpreadsheetRange range, final V newValue, final V oldValue);
 
     /**
