@@ -29,12 +29,11 @@ import java.util.Objects;
 final class SpreadsheetRangeRangeVisitor extends RangeVisitor<SpreadsheetCellReference> {
 
     // called by SpreadsheetRange
-    static SpreadsheetRangeRangeVisitor check(final Range<SpreadsheetCellReference> range) {
+    static void check(final Range<SpreadsheetCellReference> range) {
         Objects.requireNonNull(range, "range");
 
         final SpreadsheetRangeRangeVisitor visitor = new SpreadsheetRangeRangeVisitor();
         visitor.accept(range);
-        return visitor;
     }
 
     private SpreadsheetRangeRangeVisitor() {

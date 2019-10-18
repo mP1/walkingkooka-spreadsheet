@@ -50,6 +50,7 @@ public interface SpreadsheetReferenceStore<T extends ExpressionReference & Compa
     /**
      * Adds a {@link Consumer watcher} which receives all added reference events.
      */
+    @SuppressWarnings("UnusedReturnValue")
     Runnable addAddReferenceWatcher(final Consumer<TargetAndSpreadsheetCellReference<T>> watcher);
 
     /**
