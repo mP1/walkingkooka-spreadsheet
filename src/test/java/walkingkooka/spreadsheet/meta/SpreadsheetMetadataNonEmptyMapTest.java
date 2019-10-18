@@ -103,6 +103,7 @@ public final class SpreadsheetMetadataNonEmptyMapTest implements MapTesting2<Spr
         return SpreadsheetMetadataNonEmptyMap.with(map);
     }
 
+    @SuppressWarnings("SameReturnValue")
     private SpreadsheetMetadataPropertyName<?> property1() {
         return SpreadsheetMetadataPropertyName.CREATOR;
     }
@@ -111,6 +112,7 @@ public final class SpreadsheetMetadataNonEmptyMapTest implements MapTesting2<Spr
         return EmailAddress.parse("user@example.com");
     }
 
+    @SuppressWarnings("SameReturnValue")
     private SpreadsheetMetadataPropertyName<?> property2() {
         return SpreadsheetMetadataPropertyName.CREATE_DATE_TIME;
     }

@@ -210,6 +210,7 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
         return SpreadsheetDescription.with("description#");
     }
 
+    @SuppressWarnings("SameReturnValue")
     private int priority() {
         return 123;
     }

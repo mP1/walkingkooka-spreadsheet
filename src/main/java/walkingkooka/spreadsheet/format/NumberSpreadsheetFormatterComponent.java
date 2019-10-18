@@ -25,6 +25,7 @@ abstract class NumberSpreadsheetFormatterComponent {
     /**
      * {@see NumberSpreadsheetFormatterComponentCurrencySymbol}
      */
+    @SuppressWarnings("SameReturnValue")
     static NumberSpreadsheetFormatterComponent currencySymbol() {
         return NumberSpreadsheetFormatterComponentCurrencySymbol.INSTANCE;
     }
@@ -32,6 +33,7 @@ abstract class NumberSpreadsheetFormatterComponent {
     /**
      * {@see NumberSpreadsheetFormatterComponentDecimalSeparator}
      */
+    @SuppressWarnings("SameReturnValue")
     static NumberSpreadsheetFormatterComponent decimalSeparator() {
         return NumberSpreadsheetFormatterComponentDecimalSeparator.INSTANCE;
     }
@@ -47,6 +49,7 @@ abstract class NumberSpreadsheetFormatterComponent {
     /**
      * {@see NumberSpreadsheetFormatterComponentExponentSymbol}
      */
+    @SuppressWarnings("SameReturnValue")
     static NumberSpreadsheetFormatterComponent exponentSymbol() {
         return NumberSpreadsheetFormatterComponentExponentSymbol.INSTANCE;
     }
@@ -54,6 +57,7 @@ abstract class NumberSpreadsheetFormatterComponent {
     /**
      * {@see NumberSpreadsheetFormatterComponentPercentageSymbol}
      */
+    @SuppressWarnings("SameReturnValue")
     static NumberSpreadsheetFormatterComponent percentageSymbol() {
         return NumberSpreadsheetFormatterComponentPercentageSymbol.INSTANCE;
     }

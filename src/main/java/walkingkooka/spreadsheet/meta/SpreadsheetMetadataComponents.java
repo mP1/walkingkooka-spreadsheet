@@ -39,6 +39,7 @@ final class SpreadsheetMetadataComponents {
         return this.getOrElse(propertyName, this::defaultNull);
     }
 
+    @SuppressWarnings("SameReturnValue")
     private <T> T defaultNull() {
         return null;
     }
