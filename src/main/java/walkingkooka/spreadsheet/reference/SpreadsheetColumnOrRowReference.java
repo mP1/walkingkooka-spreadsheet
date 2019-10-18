@@ -194,6 +194,7 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
     }
 
     @Override
+    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     public final boolean equals(final Object other) {
         return this == other ||
                 this.canBeEqual(other) &&
