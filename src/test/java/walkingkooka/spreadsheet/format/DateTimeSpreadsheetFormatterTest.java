@@ -49,11 +49,13 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
 
     // tests.............................................................................................................
 
+    @SuppressWarnings("unused")
     @Override
     public void testCanFormatFalse() {
         // DateTimeSpreadsheetFormatter says it can format anything. It converts all values to LocalDateTime before formatting.
     }
 
+    @SuppressWarnings("unused")
     @Override
     public void testFormatUnsupportedValueFails() {
     }

@@ -32,6 +32,7 @@ public final class SpreadsheetFormatWhitespaceParserTokenTest extends Spreadshee
     }
 
     @Override
+    @SuppressWarnings("unused")
     public void testWithWhitespaceTextFails() {
     }
 

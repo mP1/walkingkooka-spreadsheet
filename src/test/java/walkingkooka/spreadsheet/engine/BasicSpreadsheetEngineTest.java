@@ -2164,6 +2164,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadLabelAndCheck(labelStore, LABEL, begin.spreadsheetRange(end));
     }
 
+    @SuppressWarnings("unused")
     @Test
     public void testDeleteRowsWithLabelsToRangeFixed2() {
         final SpreadsheetLabelStore labelStore = this.labelStore();
@@ -2214,6 +2215,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadLabelAndCheck(labelStore, LABEL, b.spreadsheetRange(end));
     }
 
+    @SuppressWarnings("unused")
     @Test
     public void testDeleteRowsWithLabelsToRangeFixed4() {
         final SpreadsheetLabelStore labelStore = this.labelStore();
@@ -2832,6 +2834,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadLabelAndCheck(labelStore, LABEL, begin.spreadsheetRange(end));
     }
 
+    @SuppressWarnings("unused")
     @Test
     public void testDeleteColumnsWithLabelsToRangeFixed2() {
         final SpreadsheetLabelStore labelStore = this.labelStore();
@@ -2882,6 +2885,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadLabelAndCheck(labelStore, LABEL, b.spreadsheetRange(end));
     }
 
+    @SuppressWarnings("unused")
     @Test
     public void testDeleteColumnsWithLabelsToRangeFixed4() {
         final SpreadsheetLabelStore labelStore = this.labelStore();

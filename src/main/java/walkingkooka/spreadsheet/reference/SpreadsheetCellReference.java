@@ -153,10 +153,6 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
         return new SpreadsheetCellReference(column, row);
     }
 
-    private static void checkOther(final SpreadsheetCellReference other) {
-        Objects.requireNonNull(other, "other");
-    }
-
     // range/spreadsheetRange...........................................................................................
 
     /**

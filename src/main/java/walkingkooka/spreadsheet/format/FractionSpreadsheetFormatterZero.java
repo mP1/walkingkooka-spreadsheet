@@ -42,7 +42,7 @@ enum FractionSpreadsheetFormatterZero {
     QUESTION_MARK {
         @Override
         void append(final int textDigitPosition, final FractionSpreadsheetFormatterContext context) {
-            context.appendDigit(' ', textDigitPosition);
+            context.appendDigit(' ');
         }
 
         @Override
@@ -56,7 +56,7 @@ enum FractionSpreadsheetFormatterZero {
     ZERO {
         @Override
         void append(final int textDigitPosition, final FractionSpreadsheetFormatterContext context) {
-            context.appendDigit('0', textDigitPosition);
+            context.appendDigit('0');
         }
 
         @Override

@@ -30,16 +30,18 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 public final class SpreadsheetFormatTextParserTokenTest extends SpreadsheetFormatParentParserTokenTestCase<SpreadsheetFormatTextParserToken> {
 
     @Override
+    @SuppressWarnings("unused")
     public void testWithEmptyTokensFails() {
-        throw new UnsupportedOperationException();
     }
 
     @Override
+    @SuppressWarnings("unused")
     public void testWithEmptyTextFails() {
         throw new UnsupportedOperationException();
     }
 
     @Override
+    @SuppressWarnings("unused")
     public void testWithWhitespaceTextFails() {
     }
 

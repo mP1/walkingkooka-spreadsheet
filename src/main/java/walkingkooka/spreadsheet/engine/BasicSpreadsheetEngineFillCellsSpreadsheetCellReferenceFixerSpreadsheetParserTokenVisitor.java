@@ -130,7 +130,7 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetAdditionParserToken token) {
-        this.exit(token, SpreadsheetParserToken::addition);
+        this.exit(SpreadsheetParserToken::addition);
     }
 
     @Override
@@ -140,7 +140,7 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetCellReferenceParserToken token) {
-        this.exit(token, SpreadsheetParserToken::cellReference);
+        this.exit(SpreadsheetParserToken::cellReference);
     }
 
     @Override
@@ -150,7 +150,7 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetDivisionParserToken token) {
-        this.exit(token, SpreadsheetParserToken::division);
+        this.exit(SpreadsheetParserToken::division);
     }
 
     @Override
@@ -160,7 +160,7 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetEqualsParserToken token) {
-        this.exit(token, SpreadsheetParserToken::equalsParserToken);
+        this.exit(SpreadsheetParserToken::equalsParserToken);
     }
 
     @Override
@@ -170,7 +170,7 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetFunctionParserToken token) {
-        this.exit(token, SpreadsheetParserToken::function);
+        this.exit(SpreadsheetParserToken::function);
     }
 
     @Override
@@ -180,7 +180,7 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetGreaterThanParserToken token) {
-        this.exit(token, SpreadsheetParserToken::greaterThan);
+        this.exit(SpreadsheetParserToken::greaterThan);
     }
 
     @Override
@@ -190,7 +190,7 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetGreaterThanEqualsParserToken token) {
-        this.exit(token, SpreadsheetParserToken::greaterThanEquals);
+        this.exit(SpreadsheetParserToken::greaterThanEquals);
     }
 
     @Override
@@ -200,7 +200,7 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetGroupParserToken token) {
-        this.exit(token, SpreadsheetParserToken::group);
+        this.exit(SpreadsheetParserToken::group);
     }
 
     @Override
@@ -210,7 +210,7 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetLessThanParserToken token) {
-        this.exit(token, SpreadsheetParserToken::lessThan);
+        this.exit(SpreadsheetParserToken::lessThan);
     }
 
     @Override
@@ -221,7 +221,7 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetLessThanEqualsParserToken token) {
-        this.exit(token, SpreadsheetParserToken::lessThanEquals);
+        this.exit(SpreadsheetParserToken::lessThanEquals);
     }
 
     @Override
@@ -231,7 +231,7 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetMultiplicationParserToken token) {
-        this.exit(token, SpreadsheetParserToken::multiplication);
+        this.exit(SpreadsheetParserToken::multiplication);
     }
 
     @Override
@@ -241,7 +241,7 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetNegativeParserToken token) {
-        this.exit(token, SpreadsheetParserToken::negative);
+        this.exit(SpreadsheetParserToken::negative);
     }
 
     @Override
@@ -251,7 +251,7 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetNotEqualsParserToken token) {
-        this.exit(token, SpreadsheetParserToken::notEquals);
+        this.exit(SpreadsheetParserToken::notEquals);
     }
 
     @Override
@@ -261,7 +261,7 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetPercentageParserToken token) {
-        this.exit(token, SpreadsheetParserToken::percentage);
+        this.exit(SpreadsheetParserToken::percentage);
     }
 
     @Override
@@ -271,7 +271,7 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetPowerParserToken token) {
-        this.exit(token, SpreadsheetParserToken::power);
+        this.exit(SpreadsheetParserToken::power);
     }
 
     @Override
@@ -281,7 +281,7 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetRangeParserToken token) {
-        this.exit(token, SpreadsheetParserToken::range);
+        this.exit(SpreadsheetParserToken::range);
     }
 
     @Override
@@ -291,7 +291,7 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void endVisit(final SpreadsheetSubtractionParserToken token) {
-        this.exit(token, SpreadsheetParserToken::subtraction);
+        this.exit(SpreadsheetParserToken::subtraction);
     }
 
     // leaf ......................................................................................................
@@ -496,8 +496,7 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
         return Visiting.CONTINUE;
     }
 
-    private <P extends SpreadsheetParserToken & ParentParserToken> void exit(final P parent,
-                                                                             final BiFunction<List<ParserToken>, String, SpreadsheetParserToken> factory) {
+    private void exit(final BiFunction<List<ParserToken>, String, SpreadsheetParserToken> factory) {
         final List<ParserToken> children = this.children;
         this.children = this.previousChildren.peek();
         this.previousChildren = this.previousChildren.pop();
