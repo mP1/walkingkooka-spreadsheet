@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.type.PublicStaticHelper;
+import walkingkooka.reflect.PublicStaticHelper;
 
 public final class SpreadsheetParserContexts implements PublicStaticHelper {
 

@@ -54,7 +54,7 @@ public final class SpreadsheetTimeFormatPattern extends SpreadsheetFormatPattern
         return SpreadsheetFormatters.dateTime(SpreadsheetFormatParserToken.dateTime(time.value(), time.text()), LocalTime.class);
     }
 
-    // HashCodeEqualsDefined............................................................................................
+        // Object...........................................................................................................
 
     @Override
     boolean canBeEquals(final Object other) {

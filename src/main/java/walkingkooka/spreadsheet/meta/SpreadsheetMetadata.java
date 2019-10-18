@@ -46,7 +46,6 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
-import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -66,7 +65,6 @@ import java.util.function.Function;
 public abstract class SpreadsheetMetadata implements HasConverter,
         HasDateTimeContext,
         HasDecimalNumberContext,
-        HashCodeEqualsDefined,
         HasMathContext,
         HasSpreadsheetFormatter,
         HateosResource<SpreadsheetId>,

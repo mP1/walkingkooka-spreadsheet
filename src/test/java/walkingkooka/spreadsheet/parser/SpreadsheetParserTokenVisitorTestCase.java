@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.type.JavaVisibility;
+import walkingkooka.reflect.JavaVisibility;
 
 public abstract class SpreadsheetParserTokenVisitorTestCase<V extends SpreadsheetParserTokenVisitor> implements SpreadsheetParserTokenVisitorTesting<V> {
 

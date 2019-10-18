@@ -56,7 +56,7 @@ public final class SpreadsheetDateFormatPattern extends SpreadsheetFormatPattern
                 LocalDate.class);
     }
 
-    // HashCodeEqualsDefined............................................................................................
+        // Object...........................................................................................................
 
     @Override
     boolean canBeEquals(final Object other) {

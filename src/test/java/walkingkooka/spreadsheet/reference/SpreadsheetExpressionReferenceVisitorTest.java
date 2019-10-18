@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.type.JavaVisibility;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.visit.Visiting;
 import walkingkooka.visit.Visitor;
 import walkingkooka.visit.VisitorTesting;

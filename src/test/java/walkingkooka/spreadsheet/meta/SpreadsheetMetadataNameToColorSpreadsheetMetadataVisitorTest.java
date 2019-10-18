@@ -22,7 +22,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.type.JavaVisibility;
+import walkingkooka.reflect.JavaVisibility;
 
 public final class SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitorTest extends SpreadsheetMetadataTestCase2<SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor>
         implements SpreadsheetMetadataVisitorTesting<SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor> {

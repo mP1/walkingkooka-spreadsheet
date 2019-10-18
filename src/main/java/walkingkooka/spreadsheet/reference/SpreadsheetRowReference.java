@@ -102,7 +102,7 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
         return String.valueOf(this.value + 1);
     }
 
-    // HashCodeEqualsDefined............................................................................................
+        // Object...........................................................................................................
 
     @Override
     boolean canBeEqual(final Object other) {

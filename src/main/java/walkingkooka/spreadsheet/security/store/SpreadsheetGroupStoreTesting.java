@@ -17,12 +17,12 @@
 
 package walkingkooka.spreadsheet.security.store;
 
+import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.security.Group;
 import walkingkooka.spreadsheet.security.GroupId;
 import walkingkooka.spreadsheet.security.GroupName;
 import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.store.StoreTesting;
-import walkingkooka.test.TypeNameTesting;
 
 import java.util.Optional;
 import java.util.Set;

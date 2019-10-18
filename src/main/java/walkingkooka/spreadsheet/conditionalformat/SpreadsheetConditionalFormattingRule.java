@@ -24,7 +24,6 @@ import walkingkooka.UsesToStringBuilder;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.text.TextStyle;
 
 import java.util.Comparator;
@@ -34,7 +33,7 @@ import java.util.function.Function;
 /**
  * Represents a single conditional rule.
  */
-public final class SpreadsheetConditionalFormattingRule implements HashCodeEqualsDefined, UsesToStringBuilder {
+public final class SpreadsheetConditionalFormattingRule implements UsesToStringBuilder {
 
     /**
      * {@see SpreadsheetConditionalFormattingRulePriorityDescendingComparator}
