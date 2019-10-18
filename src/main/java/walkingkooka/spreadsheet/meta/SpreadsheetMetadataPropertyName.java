@@ -454,6 +454,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
         Color.BLACK.alpha();
         EmailAddress.tryParse("user@example.com");
         SpreadsheetPattern.parseNumberFormatPattern(" ");
+        //noinspection ResultOfMethodCallIgnored
         SpreadsheetId.with(0);
     }
 }
