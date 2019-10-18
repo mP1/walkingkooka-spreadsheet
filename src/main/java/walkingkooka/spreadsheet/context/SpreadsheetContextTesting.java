@@ -31,6 +31,7 @@ public interface SpreadsheetContextTesting<C extends SpreadsheetContext> extends
         assertThrows(NullPointerException.class, () -> this.createContext().converter(null));
     }
 
+    @SuppressWarnings("OptionalAssignedToNull")
     @Test
     default void testCreateMetadataNullLocaleFails() {
         assertThrows(NullPointerException.class, () -> this.createContext().createMetadata(null));

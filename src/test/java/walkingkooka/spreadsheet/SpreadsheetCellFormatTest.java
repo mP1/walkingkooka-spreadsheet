@@ -86,6 +86,7 @@ public final class SpreadsheetCellFormatTest implements ClassTesting2<Spreadshee
 
     // setFormatter...........................................................
 
+    @SuppressWarnings("OptionalAssignedToNull")
     @Test
     public void testSetFormatterNullFails() {
         assertThrows(NullPointerException.class, () -> this.createObject().setFormatter(null));
