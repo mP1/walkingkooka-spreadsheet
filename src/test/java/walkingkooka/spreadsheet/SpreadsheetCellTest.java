@@ -172,6 +172,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     // SetFormat.....................................................................................................
 
+    @SuppressWarnings("OptionalAssignedToNull")
     @Test
     public void testSetFormatNullFails() {
         assertThrows(NullPointerException.class, () -> this.createCell().setFormat(null));
@@ -212,6 +213,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
     // SetFormatted.....................................................................................................
 
+    @SuppressWarnings("OptionalAssignedToNull")
     @Test
     public void testSetFormattedNullFails() {
         assertThrows(NullPointerException.class, () -> this.createCell().setFormatted(null));
