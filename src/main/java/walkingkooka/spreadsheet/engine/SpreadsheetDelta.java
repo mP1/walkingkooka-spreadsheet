@@ -17,14 +17,13 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import org.junit.platform.commons.util.ToStringBuilder;
 import walkingkooka.Cast;
-import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
-import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -40,7 +39,7 @@ import java.util.stream.Collectors;
 /**
  * Captures changes following an operation. A window when non empty is applied to any given cells as a filter.
  */
-public abstract class SpreadsheetDelta implements HashCodeEqualsDefined {
+public abstract class SpreadsheetDelta {
 
     public final static Set<SpreadsheetCell> NO_CELLS = Sets.empty();
 

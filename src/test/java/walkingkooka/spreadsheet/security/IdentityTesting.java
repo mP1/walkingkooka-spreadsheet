@@ -18,15 +18,16 @@
 package walkingkooka.spreadsheet.security;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting2;
-import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.type.JavaVisibility;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
 
 public interface IdentityTesting<I extends Identity<ID>, ID extends IdentityId>
         extends ClassTesting2<I>,

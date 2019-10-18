@@ -56,7 +56,7 @@ public final class SpreadsheetNumberParsePatterns extends SpreadsheetParsePatter
         this.patterns = patterns;
     }
 
-    // HashCodeEqualsDefined............................................................................................
+        // Object...........................................................................................................
 
     @Override
     boolean canBeEquals(final Object other) {

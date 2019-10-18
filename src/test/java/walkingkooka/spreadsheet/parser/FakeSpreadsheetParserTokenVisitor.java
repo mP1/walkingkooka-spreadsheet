@@ -21,6 +21,8 @@ import walkingkooka.test.Fake;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
+walkingkooka.reflect.*;
+
 public class FakeSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVisitor implements Fake {
 
     protected FakeSpreadsheetParserTokenVisitor() {

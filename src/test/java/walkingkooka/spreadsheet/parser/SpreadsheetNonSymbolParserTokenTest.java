@@ -17,8 +17,9 @@
 
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.test.ClassTesting2;
 import walkingkooka.type.JavaVisibility;
+
+walkingkooka.reflect.*;
 
 public final class SpreadsheetNonSymbolParserTokenTest implements ClassTesting2<SpreadsheetNonSymbolParserToken> {
     @Override

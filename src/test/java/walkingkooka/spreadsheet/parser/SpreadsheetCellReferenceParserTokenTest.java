@@ -27,7 +27,6 @@ import walkingkooka.tree.expression.ExpressionNode;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCellReferenceParserTokenTest extends SpreadsheetParentParserTokenTestCase<SpreadsheetCellReferenceParserToken> {

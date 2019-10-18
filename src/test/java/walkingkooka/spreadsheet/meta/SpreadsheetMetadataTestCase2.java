@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.TypeNameTesting;
+walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
 
 public abstract class SpreadsheetMetadataTestCase2<T> implements ClassTesting2<T>,
         TypeNameTesting<T> {

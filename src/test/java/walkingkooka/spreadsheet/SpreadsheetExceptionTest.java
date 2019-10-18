@@ -17,8 +17,9 @@
 
 package walkingkooka.spreadsheet;
 
-import walkingkooka.test.StandardThrowableTesting;
 import walkingkooka.type.JavaVisibility;
+
+walkingkooka.reflect.*;
 
 public final class SpreadsheetExceptionTest implements StandardThrowableTesting<SpreadsheetException> {
 

@@ -23,12 +23,13 @@ import walkingkooka.ContextTesting;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.iterator.Iterators;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.test.ToStringTesting;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+walkingkooka.reflect.*;
 
 public final class SpreadsheetNumberParsePatternsContextTest extends SpreadsheetNumberParsePatternsTestCase2<SpreadsheetNumberParsePatternsContext>
         implements ContextTesting<SpreadsheetNumberParsePatternsContext>, ToStringTesting<SpreadsheetNumberParsePatternsContext> {

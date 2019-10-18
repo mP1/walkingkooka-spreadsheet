@@ -18,12 +18,13 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.PublicStaticHelperTesting;
 import walkingkooka.type.JavaVisibility;
 
 import java.lang.reflect.Method;
 import java.math.MathContext;
+
+walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
 
 public class SpreadsheetFunctionsTest implements ClassTesting2<SpreadsheetFunctions>,
         PublicStaticHelperTesting<SpreadsheetFunctions> {

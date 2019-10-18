@@ -17,11 +17,12 @@
 
 package walkingkooka.spreadsheet.reference.store;
 
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.PublicStaticHelperTesting;
 import walkingkooka.type.JavaVisibility;
 
 import java.lang.reflect.Method;
+
+walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
 
 public final class SpreadsheetReferenceStoresTest implements ClassTesting2<SpreadsheetReferenceStores>,
         PublicStaticHelperTesting<SpreadsheetReferenceStores> {

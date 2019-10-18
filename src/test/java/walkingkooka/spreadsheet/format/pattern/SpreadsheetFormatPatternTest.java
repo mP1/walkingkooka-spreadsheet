@@ -25,12 +25,13 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
-import walkingkooka.test.ClassTesting2;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+walkingkooka.reflect.*;
 
 public final class SpreadsheetFormatPatternTest implements ClassTesting2<SpreadsheetFormatPattern<?>> {
 

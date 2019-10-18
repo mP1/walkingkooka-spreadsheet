@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.reference.store;
 
+import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.type.PublicStaticHelper;
 
 /**
  * Contains many factory methods for a variety of {@link SpreadsheetReferenceStore} implementations.

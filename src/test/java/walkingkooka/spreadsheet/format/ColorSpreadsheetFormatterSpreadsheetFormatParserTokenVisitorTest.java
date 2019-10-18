@@ -21,12 +21,13 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
-import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+walkingkooka.reflect.*;
 
 public final class ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFormatParserTokenVisitorTestCase<ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor>
         implements ToStringTesting<ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor> {

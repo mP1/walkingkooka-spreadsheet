@@ -17,9 +17,10 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.test.ClassTesting;
-import walkingkooka.test.TypeNameTesting;
 import walkingkooka.type.JavaVisibility;
+
+walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
 
 public abstract class BasicSpreadsheetEngineTestCase<T> implements TypeNameTesting<T>, ClassTesting<T> {
 

@@ -20,10 +20,11 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.math.DecimalNumberContext;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.ToStringTesting;
-import walkingkooka.test.TypeNameTesting;
 import walkingkooka.type.JavaVisibility;
+
+walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
 
 public final class SpreadsheetMetadataDecimalNumberContextComponentsTest implements ClassTesting2,
         ToStringTesting<SpreadsheetMetadataDecimalNumberContextComponents>,

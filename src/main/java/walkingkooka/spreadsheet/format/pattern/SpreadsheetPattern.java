@@ -28,7 +28,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
-import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
@@ -49,8 +48,7 @@ import java.util.function.Function;
 /**
  * Holds a tokens that may be used to parse or format values along with helpers.
  */
-abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
-        Value<V> {
+abstract public class SpreadsheetPattern<V> implements Value<V> {
 
     /**
      * Factory that creates a {@link SpreadsheetDateFormatPattern} from the given token.
@@ -364,7 +362,7 @@ abstract public class SpreadsheetPattern<V> implements HashCodeEqualsDefined,
         return this instanceof SpreadsheetTimeFormatPattern || this instanceof SpreadsheetTimeParsePatterns;
     }
 
-    // HashCodeEqualsDefined............................................................................................
+        // Object...........................................................................................................
 
     @Override
     public final int hashCode() {

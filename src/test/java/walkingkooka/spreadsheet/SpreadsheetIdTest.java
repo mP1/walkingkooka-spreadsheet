@@ -19,15 +19,17 @@ package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting2;
-import walkingkooka.test.ClassTesting2;
 import walkingkooka.test.ParseStringTesting;
-import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
 
 
 public final class SpreadsheetIdTest implements ClassTesting2<SpreadsheetId>,

@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.reference.store;
 
-import walkingkooka.test.TypeNameTesting;
+walkingkooka.reflect.*;
 
 public abstract class TreeMapSpreadsheetRangeStoreTestCase<T> implements TypeNameTesting<T> {
 

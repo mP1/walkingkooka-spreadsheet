@@ -31,6 +31,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+walkingkooka.reflect.*;
+
 public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionReferenceTestCase<SpreadsheetCellReference>
         implements ComparableTesting2<SpreadsheetCellReference>,
         ParseStringTesting<SpreadsheetCellReference> {

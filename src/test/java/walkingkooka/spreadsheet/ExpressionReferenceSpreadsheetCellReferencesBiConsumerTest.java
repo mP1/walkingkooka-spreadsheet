@@ -28,15 +28,15 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStores;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.type.JavaVisibility;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
 
 public final class ExpressionReferenceSpreadsheetCellReferencesBiConsumerTest implements ClassTesting2<ExpressionReferenceSpreadsheetCellReferencesBiConsumer>,
         ToStringTesting<ExpressionReferenceSpreadsheetCellReferencesBiConsumer> {

@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.server;
 
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.TypeNameTesting;
+walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
 
 public abstract class SpreadsheetServerTestCase<T> implements ClassTesting2<T>, TypeNameTesting<T> {
 

@@ -20,9 +20,6 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting2;
-import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
@@ -31,10 +28,13 @@ import walkingkooka.type.JavaVisibility;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
 
 public final class SpreadsheetCellFormatTest implements ClassTesting2<SpreadsheetCellFormat>,
         HashCodeEqualsDefinedTesting2<SpreadsheetCellFormat>,

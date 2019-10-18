@@ -17,9 +17,10 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.ToStringTesting;
 import walkingkooka.type.JavaVisibility;
+
+walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
 
 public final class SpreadsheetReferenceKindTest implements ClassTesting2<SpreadsheetReferenceKind>,
         ToStringTesting<SpreadsheetReferenceKind> {

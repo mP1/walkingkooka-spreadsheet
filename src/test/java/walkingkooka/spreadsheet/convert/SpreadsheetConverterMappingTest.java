@@ -20,9 +20,10 @@ package walkingkooka.spreadsheet.convert;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.convert.Converters;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.ToStringTesting;
-import walkingkooka.test.TypeNameTesting;
+
+walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
 
 public final class SpreadsheetConverterMappingTest extends SpreadsheetConverterTestCase<SpreadsheetConverterMapping<?>>
         implements ClassTesting2<SpreadsheetConverterMapping<?>>,

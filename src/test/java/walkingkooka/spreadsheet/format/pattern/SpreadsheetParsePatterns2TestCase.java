@@ -18,9 +18,10 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.TypeNameTesting;
 import walkingkooka.type.JavaVisibility;
+
+walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
 
 public abstract class SpreadsheetParsePatterns2TestCase<T> implements ClassTesting2<T>, TypeNameTesting<T> {
 

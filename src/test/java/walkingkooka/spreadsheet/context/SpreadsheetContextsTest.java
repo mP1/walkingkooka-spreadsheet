@@ -17,11 +17,12 @@
 
 package walkingkooka.spreadsheet.context;
 
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.PublicStaticHelperTesting;
 import walkingkooka.type.JavaVisibility;
 
 import java.lang.reflect.Method;
+
+walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
 
 public class SpreadsheetContextsTest implements ClassTesting2<SpreadsheetContexts>,
         PublicStaticHelperTesting<SpreadsheetContexts> {

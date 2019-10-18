@@ -17,8 +17,9 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.test.TypeNameTesting;
 import walkingkooka.type.JavaVisibility;
+
+walkingkooka.reflect.*;
 
 public abstract class SpreadsheetMetadataPropertyValueHandlerTestCase<P extends SpreadsheetMetadataPropertyValueHandler<?>> extends SpreadsheetMetadataTestCase2<P>
         implements TypeNameTesting<P> {

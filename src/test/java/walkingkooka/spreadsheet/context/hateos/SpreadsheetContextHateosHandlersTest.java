@@ -16,11 +16,12 @@
  */
 package walkingkooka.spreadsheet.context.hateos;
 
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.PublicStaticHelperTesting;
 import walkingkooka.type.JavaVisibility;
 
 import java.lang.reflect.Method;
+
+walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
 
 public final class SpreadsheetContextHateosHandlersTest implements ClassTesting2<SpreadsheetContextHateosHandlers>,
         PublicStaticHelperTesting<SpreadsheetContextHateosHandlers> {

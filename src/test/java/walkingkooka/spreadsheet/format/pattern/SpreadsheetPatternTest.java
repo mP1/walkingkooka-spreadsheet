@@ -18,8 +18,9 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.Cast;
-import walkingkooka.test.ClassTesting2;
 import walkingkooka.type.JavaVisibility;
+
+walkingkooka.reflect.*;
 
 public final class SpreadsheetPatternTest implements ClassTesting2<SpreadsheetPattern<?>> {
 

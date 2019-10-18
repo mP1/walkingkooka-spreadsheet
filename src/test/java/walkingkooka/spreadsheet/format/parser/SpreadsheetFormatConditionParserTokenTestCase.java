@@ -24,7 +24,6 @@ import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetFormatConditionParserTokenTestCase<T extends SpreadsheetFormatConditionParserToken> extends SpreadsheetFormatParentParserTokenTestCase<T> {

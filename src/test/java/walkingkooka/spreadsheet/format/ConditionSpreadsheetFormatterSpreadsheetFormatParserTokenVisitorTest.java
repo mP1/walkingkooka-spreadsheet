@@ -22,13 +22,14 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.PredicateTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
-import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Predicate;
+
+walkingkooka.reflect.*;
 
 public final class ConditionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorTest extends SpreadsheetFormatParserTokenVisitorTestCase<ConditionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor>
         implements PredicateTesting,

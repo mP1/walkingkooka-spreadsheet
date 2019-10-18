@@ -17,8 +17,9 @@
 
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.test.ClassTesting2;
 import walkingkooka.type.JavaVisibility;
+
+walkingkooka.reflect.*;
 
 public final class SpreadsheetFormatLeafParserTokenTest implements ClassTesting2<SpreadsheetFormatLeafParserToken> {
     @Override

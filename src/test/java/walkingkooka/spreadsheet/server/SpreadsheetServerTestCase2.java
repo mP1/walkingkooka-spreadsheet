@@ -17,8 +17,9 @@
 
 package walkingkooka.spreadsheet.server;
 
-import walkingkooka.test.ToStringTesting;
 import walkingkooka.type.JavaVisibility;
+
+walkingkooka.reflect.*;
 
 public abstract class SpreadsheetServerTestCase2<T> extends SpreadsheetServerTestCase<T> implements ToStringTesting<T> {
 

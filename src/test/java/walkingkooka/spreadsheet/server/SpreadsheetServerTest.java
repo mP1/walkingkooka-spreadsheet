@@ -77,7 +77,6 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<SpreadsheetServer> {

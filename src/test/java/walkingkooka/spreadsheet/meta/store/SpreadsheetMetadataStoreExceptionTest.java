@@ -17,8 +17,9 @@
 
 package walkingkooka.spreadsheet.meta.store;
 
-import walkingkooka.test.StandardThrowableTesting;
 import walkingkooka.type.JavaVisibility;
+
+walkingkooka.reflect.*;
 
 public final class SpreadsheetMetadataStoreExceptionTest implements StandardThrowableTesting<SpreadsheetMetadataStoreException> {
 

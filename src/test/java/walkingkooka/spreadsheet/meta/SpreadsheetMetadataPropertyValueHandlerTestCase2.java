@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -28,6 +27,8 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+walkingkooka.reflect.*;
 
 public abstract class SpreadsheetMetadataPropertyValueHandlerTestCase2<P extends SpreadsheetMetadataPropertyValueHandler<T>, T> extends SpreadsheetMetadataPropertyValueHandlerTestCase<P>
         implements ToStringTesting<P> {

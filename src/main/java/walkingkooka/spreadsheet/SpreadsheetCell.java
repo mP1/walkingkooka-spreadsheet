@@ -22,7 +22,6 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeName;
 import walkingkooka.tree.json.JsonObjectNode;
@@ -38,8 +37,7 @@ import java.util.Optional;
 /**
  * A spreadsheet cell including its formula, and other attributes such as format, text properties(styling) and more.
  */
-public final class SpreadsheetCell implements HashCodeEqualsDefined,
-        Comparable<SpreadsheetCell>,
+public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
         HateosResource<SpreadsheetCellReference>,
         UsesToStringBuilder {
 

@@ -17,9 +17,10 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.ToStringTesting;
 import walkingkooka.type.JavaVisibility;
+
+walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
 
 public abstract class NumberSpreadsheetFormatterTestCase<T> implements ClassTesting2<T>,
         ToStringTesting<T> {

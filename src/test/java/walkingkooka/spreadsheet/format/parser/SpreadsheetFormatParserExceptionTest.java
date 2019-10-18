@@ -17,8 +17,9 @@
 
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.test.StandardThrowableTesting;
 import walkingkooka.type.JavaVisibility;
+
+walkingkooka.reflect.*;
 
 public final class SpreadsheetFormatParserExceptionTest implements StandardThrowableTesting<SpreadsheetFormatParserException> {
 

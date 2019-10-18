@@ -17,11 +17,11 @@
 
 package walkingkooka.spreadsheet.meta.store;
 
+import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.store.StoreTesting;
-import walkingkooka.test.TypeNameTesting;
 
 public interface SpreadsheetMetadataStoreTesting<S extends SpreadsheetMetadataStore> extends StoreTesting<S, SpreadsheetId, SpreadsheetMetadata>,
         TypeNameTesting<S> {

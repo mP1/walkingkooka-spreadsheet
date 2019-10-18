@@ -18,10 +18,11 @@
 package walkingkooka.spreadsheet.engine.hateos;
 
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
-import walkingkooka.test.ClassTesting;
-import walkingkooka.test.ToStringTesting;
-import walkingkooka.test.TypeNameTesting;
 import walkingkooka.type.JavaVisibility;
+
+walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
 
 public abstract class SpreadsheetEngineHateosHandlerTestCase<T> implements ClassTesting<T>,
         ToStringTesting<T>,

@@ -20,11 +20,12 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.FakeDecimalNumberContext;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.TypeNameTesting;
 import walkingkooka.type.JavaVisibility;
 
 import java.math.MathContext;
+
+walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
 
 public abstract class SpreadsheetNumberParsePatternsTestCase<T> implements ClassTesting2<T>,
         TypeNameTesting<T> {

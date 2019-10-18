@@ -19,12 +19,13 @@ package walkingkooka.spreadsheet.security;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparableTesting2;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.type.JavaVisibility;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
 
 public abstract class IdentityIdTestCase<I extends IdentityId & Comparable<I>> implements ClassTesting2<I>,
         ComparableTesting2<I>,

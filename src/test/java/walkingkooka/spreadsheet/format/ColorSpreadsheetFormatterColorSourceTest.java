@@ -17,8 +17,9 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.test.ClassTesting2;
 import walkingkooka.type.JavaVisibility;
+
+walkingkooka.reflect.*;
 
 public final class ColorSpreadsheetFormatterColorSourceTest implements ClassTesting2<ColorSpreadsheetFormatterColorSource> {
 

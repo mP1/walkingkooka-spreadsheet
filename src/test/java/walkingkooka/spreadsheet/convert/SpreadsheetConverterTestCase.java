@@ -17,9 +17,10 @@
 
 package walkingkooka.spreadsheet.convert;
 
-import walkingkooka.test.ClassTesting;
-import walkingkooka.test.TypeNameTesting;
 import walkingkooka.type.JavaVisibility;
+
+walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
 
 public abstract class SpreadsheetConverterTestCase<T> implements ClassTesting<T>,
         TypeNameTesting<T> {

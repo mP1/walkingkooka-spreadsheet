@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.test.Fake;
 
+walkingkooka.reflect.*;
+
 public final class FakeSpreadsheetParserTokenVisitorTest extends SpreadsheetParserTokenVisitorTestCase<FakeSpreadsheetParserTokenVisitor> {
 
     @Override

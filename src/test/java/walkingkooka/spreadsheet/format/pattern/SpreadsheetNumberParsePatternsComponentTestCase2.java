@@ -18,7 +18,8 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.test.ToStringTesting;
+
+walkingkooka.reflect.*;
 
 public abstract class SpreadsheetNumberParsePatternsComponentTestCase2<C extends SpreadsheetNumberParsePatternsComponent> extends SpreadsheetNumberParsePatternsComponentTestCase<C>
         implements ToStringTesting<C> {

@@ -17,10 +17,11 @@
 
 package walkingkooka.spreadsheet.reference.store;
 
-import walkingkooka.test.ClassTesting2;
 import walkingkooka.type.JavaVisibility;
 
 import java.util.Map;
+
+walkingkooka.reflect.*;
 
 public final class TreeMapSpreadsheetRangeStoreBottomRightEntryTest extends TreeMapSpreadsheetRangeStoreTestCase<TreeMapSpreadsheetRangeStoreBottomRightEntry>
         implements ClassTesting2<TreeMapSpreadsheetRangeStoreBottomRightEntry> {

@@ -20,11 +20,12 @@ package walkingkooka.spreadsheet.reference;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.ToStringTesting;
 import walkingkooka.type.JavaVisibility;
 
 import java.util.function.Consumer;
+
+walkingkooka.reflect.*;
+        walkingkooka.reflect.*;
 
 public final class SpreadsheetRangeCellsConsumerTest implements ClassTesting2<SpreadsheetRangeCellsConsumer>, ToStringTesting<SpreadsheetRangeCellsConsumer> {
 

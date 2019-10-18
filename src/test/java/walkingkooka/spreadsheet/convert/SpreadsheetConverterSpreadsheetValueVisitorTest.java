@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConversionException;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitorTesting;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetConverterSpreadsheetValueVisitorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterSpreadsheetValueVisitor>

@@ -17,8 +17,9 @@
 
 package walkingkooka.spreadsheet.datavalidation;
 
-import walkingkooka.test.ClassTesting2;
 import walkingkooka.type.JavaVisibility;
+
+walkingkooka.reflect.*;
 
 public final class SpreadsheetDataValidatorTemplateTest implements ClassTesting2<SpreadsheetDataValidatorTemplate> {
     @Override

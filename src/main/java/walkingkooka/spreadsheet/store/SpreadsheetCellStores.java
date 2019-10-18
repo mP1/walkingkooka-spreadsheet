@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.store;
 
-import walkingkooka.type.PublicStaticHelper;
+import walkingkooka.reflect.PublicStaticHelper;
 
 /**
  * Contains many factory methods for a variety of {@link SpreadsheetCellStore} implementations.

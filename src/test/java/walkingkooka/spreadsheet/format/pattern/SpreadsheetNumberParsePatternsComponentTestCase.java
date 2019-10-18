@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.collect.list.Lists;
-import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
@@ -28,6 +27,8 @@ import java.math.BigDecimal;
 import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+walkingkooka.reflect.*;
 
 public abstract class SpreadsheetNumberParsePatternsComponentTestCase<C extends SpreadsheetNumberParsePatternsComponent> extends SpreadsheetNumberParsePatternsTestCase<C>
         implements ToStringTesting<C> {

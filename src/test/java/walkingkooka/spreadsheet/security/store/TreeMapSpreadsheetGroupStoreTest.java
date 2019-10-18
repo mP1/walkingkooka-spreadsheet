@@ -23,10 +23,11 @@ import walkingkooka.spreadsheet.security.Group;
 import walkingkooka.spreadsheet.security.GroupId;
 import walkingkooka.spreadsheet.security.GroupName;
 import walkingkooka.spreadsheet.security.UserId;
-import walkingkooka.test.ToStringTesting;
 
 import java.util.Optional;
 import java.util.TreeMap;
+
+walkingkooka.reflect.*;
 
 public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupStoreTesting<TreeMapSpreadsheetGroupStore>,
         ToStringTesting<TreeMapSpreadsheetGroupStore> {

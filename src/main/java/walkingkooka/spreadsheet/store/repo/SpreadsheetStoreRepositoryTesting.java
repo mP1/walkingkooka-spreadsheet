@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.store.repo;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.test.ToStringTesting;
-import walkingkooka.test.TypeNameTesting;
+import walkingkooka.ToStringTesting;
+import walkingkooka.reflect.TypeNameTesting;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 

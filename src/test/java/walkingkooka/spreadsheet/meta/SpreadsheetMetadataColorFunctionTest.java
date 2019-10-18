@@ -21,13 +21,14 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
-import walkingkooka.test.ToStringTesting;
 import walkingkooka.type.JavaVisibility;
 import walkingkooka.util.FunctionTesting;
 
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
+
+walkingkooka.reflect.*;
 
 public final class SpreadsheetMetadataColorFunctionTest extends SpreadsheetMetadataTestCase2<SpreadsheetMetadataColorFunction<Integer>>
         implements FunctionTesting<SpreadsheetMetadataColorFunction<Integer>, Integer, Optional<Color>>,

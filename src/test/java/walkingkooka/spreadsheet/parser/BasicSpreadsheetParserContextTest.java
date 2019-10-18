@@ -20,11 +20,12 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.test.ClassTesting2;
 import walkingkooka.type.JavaVisibility;
 
 import java.math.MathContext;
 import java.util.Locale;
+
+walkingkooka.reflect.*;
 
 public final class BasicSpreadsheetParserContextTest implements ClassTesting2<BasicSpreadsheetParserContext>,
         SpreadsheetParserContextTesting<BasicSpreadsheetParserContext> {

@@ -21,13 +21,12 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.ComparatorTesting;
-import walkingkooka.test.ClassTesting2;
 import walkingkooka.type.JavaVisibility;
 
 import java.util.List;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+walkingkooka.reflect.*;
 
 public final class SpreadsheetExpressionReferenceComparatorTest implements ClassTesting2<SpreadsheetExpressionReferenceComparator>,
         ComparatorTesting<SpreadsheetExpressionReferenceComparator, SpreadsheetExpressionReference> {
