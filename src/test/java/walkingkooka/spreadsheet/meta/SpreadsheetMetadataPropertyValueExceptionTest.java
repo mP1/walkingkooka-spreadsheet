@@ -60,10 +60,12 @@ public final class SpreadsheetMetadataPropertyValueExceptionTest implements Stan
         return new SpreadsheetMetadataPropertyValueException(message, this.name(), this.value(), cause);
     }
 
+    @SuppressWarnings("SameReturnValue")
     private SpreadsheetMetadataPropertyName<?> name() {
         return SpreadsheetMetadataPropertyName.CREATOR;
     }
 
+    @SuppressWarnings("SameReturnValue")
     private Object value() {
         return "abc123";
     }

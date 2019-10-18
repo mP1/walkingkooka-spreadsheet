@@ -27,6 +27,7 @@ abstract class SpreadsheetNumberParsePatternsComponent {
     /**
      * {@see SpreadsheetNumberParsePatternsComponentCurrency}
      */
+    @SuppressWarnings("SameReturnValue")
     static SpreadsheetNumberParsePatternsComponent currency() {
         return SpreadsheetNumberParsePatternsComponentCurrency.INSTANCE;
     }
@@ -34,6 +35,7 @@ abstract class SpreadsheetNumberParsePatternsComponent {
     /**
      * {@see SpreadsheetNumberParsePatternsComponentDecimalSeparator}
      */
+    @SuppressWarnings("SameReturnValue")
     static SpreadsheetNumberParsePatternsComponent decimalSeparator() {
         return SpreadsheetNumberParsePatternsComponentDecimalSeparator.INSTANCE;
     }
@@ -62,6 +64,7 @@ abstract class SpreadsheetNumberParsePatternsComponent {
     /**
      * {@see SpreadsheetNumberParsePatternsComponentExponent}
      */
+    @SuppressWarnings("SameReturnValue")
     static SpreadsheetNumberParsePatternsComponent exponent() {
         return SpreadsheetNumberParsePatternsComponentExponent.INSTANCE;
     }
@@ -69,6 +72,7 @@ abstract class SpreadsheetNumberParsePatternsComponent {
     /**
      * {@see SpreadsheetNumberParsePatternsComponentPercent}
      */
+    @SuppressWarnings("SameReturnValue")
     static SpreadsheetNumberParsePatternsComponent percentage() {
         return SpreadsheetNumberParsePatternsComponentPercent.INSTANCE;
     }
@@ -83,6 +87,7 @@ abstract class SpreadsheetNumberParsePatternsComponent {
     /**
      * {@see SpreadsheetNumberParsePatternsComponentWhitespace}
      */
+    @SuppressWarnings("SameReturnValue")
     static SpreadsheetNumberParsePatternsComponent whitespace() {
         return SpreadsheetNumberParsePatternsComponentCurrency.INSTANCE;
     }

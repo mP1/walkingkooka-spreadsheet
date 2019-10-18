@@ -982,6 +982,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         return Cast.to(SpreadsheetMetadata.with(map));
     }
 
+    @SuppressWarnings("SameReturnValue")
     private SpreadsheetMetadataPropertyName<LocalDateTime> property1() {
         return SpreadsheetMetadataPropertyName.CREATE_DATE_TIME;
     }
@@ -990,6 +991,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         return LocalDateTime.of(2000, 1, 2, 12, 58, 59);
     }
 
+    @SuppressWarnings("SameReturnValue")
     private SpreadsheetMetadataPropertyName<EmailAddress> property2() {
         return SpreadsheetMetadataPropertyName.CREATOR;
     }
@@ -998,6 +1000,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         return EmailAddress.parse("user@example.com");
     }
 
+    @SuppressWarnings("SameReturnValue")
     private SpreadsheetMetadataPropertyName<EmailAddress> property3() {
         return SpreadsheetMetadataPropertyName.MODIFIED_BY;
     }

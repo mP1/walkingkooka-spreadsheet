@@ -79,6 +79,7 @@ public final class SpreadsheetMetadataNonEmptyMapEntrySetTest implements SetTest
         return SpreadsheetMetadataNonEmptyMapEntrySet.with(map);
     }
 
+    @SuppressWarnings("SameReturnValue")
     private SpreadsheetMetadataPropertyName<?> property1() {
         return SpreadsheetMetadataPropertyName.CREATE_DATE_TIME;
     }
@@ -87,6 +88,7 @@ public final class SpreadsheetMetadataNonEmptyMapEntrySetTest implements SetTest
         return LocalDateTime.of(2000, 1, 2, 12, 58, 59);
     }
 
+    @SuppressWarnings("SameReturnValue")
     private SpreadsheetMetadataPropertyName<?> property2() {
         return SpreadsheetMetadataPropertyName.CREATOR;
     }
