@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.test.ToStringTesting;
+import walkingkooka.ToStringTesting;
 
 public abstract class FractionSpreadsheetFormatterComponentTestCase<C extends FractionSpreadsheetFormatterComponent>
         extends FractionSpreadsheetFormatterTestCase<C>

@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet;
 import walkingkooka.Cast;
 import walkingkooka.HasId;
 import walkingkooka.Value;
-import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -31,7 +30,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
  * Identifies a single spreadsheet.
  */
 public final class SpreadsheetId implements Comparable<SpreadsheetId>,
-        HashCodeEqualsDefined,
         HasId<Long>,
         Value<Long> {
 
@@ -100,7 +98,7 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
                 SpreadsheetId.class);
     }
 
-    // HashCodeEqualsDefined.............................................................................................
+        // Object............................................................................................................
 
     @Override
     public int hashCode() {

@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.reference.store;
 
 import walkingkooka.Cast;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Objects;
@@ -27,7 +26,7 @@ import java.util.Objects;
 /**
  * Holds a {@link ExpressionReference source} to a {@link SpreadsheetCellReference}.
  */
-public final class TargetAndSpreadsheetCellReference<T extends ExpressionReference & Comparable<T>> implements HashCodeEqualsDefined {
+public final class TargetAndSpreadsheetCellReference<T extends ExpressionReference & Comparable<T>> {
 
     public static <T extends ExpressionReference & Comparable<T>> TargetAndSpreadsheetCellReference<T> with(final T target,
                                                                                                             final SpreadsheetCellReference reference) {

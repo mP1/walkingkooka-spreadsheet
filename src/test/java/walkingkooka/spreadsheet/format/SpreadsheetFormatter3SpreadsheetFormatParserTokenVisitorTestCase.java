@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.test.ClassTesting;
-import walkingkooka.type.JavaVisibility;
+import walkingkooka.reflect.ClassTesting;
+import walkingkooka.reflect.JavaVisibility;
 
 public abstract class SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitorTestCase<V extends SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor>
         implements SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitorTesting<V>,

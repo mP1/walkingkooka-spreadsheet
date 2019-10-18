@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
 import walkingkooka.net.http.server.hateos.HateosResource;
-import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -32,7 +31,6 @@ import java.util.Optional;
  * Represents a single column within a spreadsheet.
  */
 public final class SpreadsheetColumn implements Comparable<SpreadsheetColumn>,
-        HashCodeEqualsDefined,
         HateosResource<SpreadsheetColumnReference> {
 
     /**

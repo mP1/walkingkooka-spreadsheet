@@ -17,11 +17,11 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.type.PublicStaticHelper;
 
 import java.util.Optional;
 import java.util.function.Function;

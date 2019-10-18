@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.test.ToStringTesting;
-import walkingkooka.type.JavaVisibility;
+import walkingkooka.ToStringTesting;
+import walkingkooka.reflect.JavaVisibility;
 
 public abstract class SpreadsheetMetadataPropertyNameTestCase4<N extends SpreadsheetMetadataPropertyName<?>> extends SpreadsheetMetadataTestCase2<N>
         implements ToStringTesting<N> {

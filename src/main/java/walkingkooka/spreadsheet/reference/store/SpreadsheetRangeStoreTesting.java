@@ -20,12 +20,12 @@ package walkingkooka.spreadsheet.reference.store;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.store.StoreTesting;
-import walkingkooka.test.TypeNameTesting;
 
 import java.util.List;
 import java.util.Optional;

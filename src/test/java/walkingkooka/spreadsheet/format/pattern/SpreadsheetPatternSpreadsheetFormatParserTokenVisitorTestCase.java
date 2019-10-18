@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitorTesting;
-import walkingkooka.type.JavaVisibility;
+import walkingkooka.reflect.JavaVisibility;
 
 public abstract class SpreadsheetPatternSpreadsheetFormatParserTokenVisitorTestCase<V extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitor>
         implements SpreadsheetFormatParserTokenVisitorTesting<V> {

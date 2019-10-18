@@ -17,11 +17,11 @@
 
 package walkingkooka.spreadsheet.context.hateos;
 
+import walkingkooka.ToStringTesting;
+import walkingkooka.reflect.ClassTesting;
+import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.context.SpreadsheetContext;
-import walkingkooka.test.ClassTesting;
-import walkingkooka.test.ToStringTesting;
-import walkingkooka.test.TypeNameTesting;
-import walkingkooka.type.JavaVisibility;
 
 public abstract class SpreadsheetContextHateosHandlerTestCase<T>
         implements ClassTesting<T>,

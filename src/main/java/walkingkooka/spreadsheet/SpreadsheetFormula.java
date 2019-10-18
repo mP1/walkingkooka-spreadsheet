@@ -23,7 +23,6 @@ import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.spreadsheet.function.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
-import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.text.HasText;
 import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.json.JsonNode;
@@ -41,8 +40,7 @@ import java.util.Optional;
 /**
  * A spreadsheet formula, including its compiled {@link ExpressionNode} and possibly its {@link Object value} or {@link SpreadsheetError}.
  */
-public final class SpreadsheetFormula implements HashCodeEqualsDefined,
-        HasText,
+public final class SpreadsheetFormula implements HasText,
         UsesToStringBuilder {
 
     /**

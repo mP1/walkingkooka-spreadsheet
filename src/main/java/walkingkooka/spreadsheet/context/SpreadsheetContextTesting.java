@@ -17,9 +17,10 @@
 
 package walkingkooka.spreadsheet.context;
 
+
 import org.junit.jupiter.api.Test;
 import walkingkooka.ContextTesting;
-import walkingkooka.test.TypeNameTesting;
+import walkingkooka.reflect.TypeNameTesting;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

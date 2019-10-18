@@ -18,15 +18,15 @@
 package walkingkooka.spreadsheet.conditionalformat;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
+import walkingkooka.ToStringTesting;
+import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting2;
-import walkingkooka.test.ToStringTesting;
 import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.text.TextStyle;
-import walkingkooka.type.JavaVisibility;
 
 import java.util.Optional;
 import java.util.function.Function;

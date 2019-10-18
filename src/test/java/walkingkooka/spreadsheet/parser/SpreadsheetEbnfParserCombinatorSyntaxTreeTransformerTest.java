@@ -17,9 +17,9 @@
 
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.test.ClassTesting2;
+import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.cursor.parser.ebnf.combinator.EbnfParserCombinatorSyntaxTreeTransformerTesting;
-import walkingkooka.type.JavaVisibility;
 
 public final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformerTest implements ClassTesting2<SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer>,
         EbnfParserCombinatorSyntaxTreeTransformerTesting<SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer> {

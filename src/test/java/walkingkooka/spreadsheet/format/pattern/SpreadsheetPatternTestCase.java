@@ -18,18 +18,18 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
+import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.Predicates;
+import walkingkooka.reflect.ClassTesting2;
+import walkingkooka.reflect.IsMethodTesting;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
-import walkingkooka.test.ClassTesting2;
-import walkingkooka.test.HashCodeEqualsDefinedTesting2;
-import walkingkooka.test.IsMethodTesting;
 import walkingkooka.test.ParseStringTesting;
-import walkingkooka.test.ToStringTesting;
 import walkingkooka.text.cursor.parser.ParserTesting;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
-import walkingkooka.type.JavaVisibility;
 
 import java.util.function.Predicate;
 

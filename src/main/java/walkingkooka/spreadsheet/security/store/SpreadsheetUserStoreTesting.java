@@ -18,10 +18,10 @@
 package walkingkooka.spreadsheet.security.store;
 
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.security.User;
 import walkingkooka.spreadsheet.security.UserId;
 import walkingkooka.store.StoreTesting;
-import walkingkooka.test.TypeNameTesting;
 
 import java.util.Optional;
 

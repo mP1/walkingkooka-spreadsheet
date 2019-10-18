@@ -22,7 +22,6 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
-import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -34,8 +33,7 @@ import java.util.Optional;
 /**
  * Holds the pattern and compiled formatter for a cell.
  */
-public final class SpreadsheetCellFormat implements HashCodeEqualsDefined,
-        UsesToStringBuilder {
+public final class SpreadsheetCellFormat implements UsesToStringBuilder {
 
     /**
      * A constant holding no formatter.

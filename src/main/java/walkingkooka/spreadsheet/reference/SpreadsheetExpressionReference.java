@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.compare.Comparators;
 import walkingkooka.compare.Range;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
-import walkingkooka.test.HashCodeEqualsDefined;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObjectNode;
@@ -35,8 +34,7 @@ import java.util.function.Function;
 /**
  * Base class for all Spreadsheet {@link ExpressionReference}
  */
-abstract public class SpreadsheetExpressionReference implements ExpressionReference,
-        HashCodeEqualsDefined {
+abstract public class SpreadsheetExpressionReference implements ExpressionReference {
 
     /**
      * A comparator that orders {@link SpreadsheetLabelName} before {@link SpreadsheetCellReference}.

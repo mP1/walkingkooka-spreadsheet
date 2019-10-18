@@ -19,12 +19,12 @@ package walkingkooka.spreadsheet.reference.store;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.store.StoreTesting;
-import walkingkooka.test.TypeNameTesting;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Set;
