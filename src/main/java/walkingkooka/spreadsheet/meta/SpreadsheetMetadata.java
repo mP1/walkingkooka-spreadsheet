@@ -75,6 +75,7 @@ public abstract class SpreadsheetMetadata implements HasConverter,
     /**
      * A {@link SpreadsheetMetadata} with no textStyle.
      */
+    @SuppressWarnings("StaticInitializerReferencesSubClass")
     public final static SpreadsheetMetadata EMPTY = SpreadsheetMetadataEmpty.instance();
 
     /**
