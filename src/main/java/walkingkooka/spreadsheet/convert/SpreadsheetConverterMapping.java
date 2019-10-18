@@ -32,7 +32,7 @@ final class SpreadsheetConverterMapping<T> {
                                                    final T number,
                                                    final T string,
                                                    final T time) {
-        return new SpreadsheetConverterMapping(booleanValue, date, dateTime, number, string, time);
+        return new SpreadsheetConverterMapping<>(booleanValue, date, dateTime, number, string, time);
     }
 
     /**

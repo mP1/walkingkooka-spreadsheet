@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Comparable<T>> implements SpreadsheetReferenceStore<T> {
 
     static <T extends ExpressionReference & Comparable<T>> TreeMapSpreadsheetReferenceStore<T> create() {
-        return new TreeMapSpreadsheetReferenceStore();
+        return new TreeMapSpreadsheetReferenceStore<>();
     }
 
     private TreeMapSpreadsheetReferenceStore() {
