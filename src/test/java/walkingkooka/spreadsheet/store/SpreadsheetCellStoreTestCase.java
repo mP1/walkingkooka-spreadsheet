@@ -304,10 +304,12 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         return TextStyle.with(Maps.of(TextStylePropertyName.FONT_WEIGHT, FontWeight.BOLD));
     }
 
+    @SuppressWarnings("SameReturnValue")
     private Optional<SpreadsheetCellFormat> format() {
         return SpreadsheetCell.NO_FORMAT;
     }
 
+    @SuppressWarnings("SameReturnValue")
     private Optional<TextNode> formatted() {
         return SpreadsheetCell.NO_FORMATTED_CELL;
     }

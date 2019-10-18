@@ -384,6 +384,7 @@ final class SpreadsheetFormatParsersTestSpreadsheetFormatParserTokenVisitor exte
 
     // GENERAL PURPOSE .................................................................................................
 
+    @SuppressWarnings("SameReturnValue")
     private Visiting enter() {
         this.previousChildren = this.previousChildren.push(this.children);
         this.children = Lists.array();

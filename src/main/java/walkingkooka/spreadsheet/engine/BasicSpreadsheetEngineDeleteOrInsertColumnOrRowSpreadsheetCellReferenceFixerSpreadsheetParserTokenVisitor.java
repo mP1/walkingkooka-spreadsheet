@@ -431,6 +431,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
         this.leaf(token);
     }
 
+    @SuppressWarnings("SameReturnValue")
     private Visiting enter() {
         this.previousChildren = this.previousChildren.push(this.children);
         this.children = Lists.array();

@@ -742,6 +742,7 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
         return this.parseLocalDateTime(this.text());
     }
 
+    @SuppressWarnings("SameReturnValue")
     private String text() {
         return "2000-12-31T15:58:59.000";
     }
