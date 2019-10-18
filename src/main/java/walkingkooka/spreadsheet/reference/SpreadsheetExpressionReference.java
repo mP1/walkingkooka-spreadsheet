@@ -274,6 +274,7 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
                 SpreadsheetLabelName::unmarshallLabelName,
                 SpreadsheetLabelName::marshall,
                 SpreadsheetLabelName.class);
+        //noinspection StaticInitializerReferencesSubClass
         JsonNodeContext.register("spreadsheet-range",
                 SpreadsheetRange::unmarshallRange,
                 SpreadsheetRange::marshall,
