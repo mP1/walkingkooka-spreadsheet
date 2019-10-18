@@ -75,10 +75,7 @@ public final class SpreadsheetMetadataNonEmptyMapTest implements MapTesting2<Spr
     @Test
     public void testKeySet() {
         final List<SpreadsheetMetadataPropertyName<?>> keys = Lists.array();
-
-        for (SpreadsheetMetadataPropertyName<?> key : this.createMap().keySet()) {
-            keys.add(key);
-        }
+        keys.addAll(this.createMap().keySet());
 
         assertEquals(Lists.of(this.property2(), this.property1()), keys);
     }
