@@ -42,7 +42,6 @@ import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 
 import java.util.Collection;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -365,11 +364,10 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                         final SpreadsheetEngineContext context) {
         SpreadsheetFormula result;
         try {
-            result = formula.setValue(Optional.of(context.evaluate(formula.expression().get())));
+            result = formula.setValue(Optional.of(context.evaluate(formula.expression()
+                    .orElseThrow(() -> new BasicSpreadsheetEngineException("Cell missing value and error and expression")))));
         } catch (final ExpressionEvaluationException cause) {
             result = this.setError(formula, cause.getMessage());
-        } catch (final NoSuchElementException cause) {
-            throw new BasicSpreadsheetEngineException("Cell missing value and error and expression: " + cause.getMessage(), cause);
         }
         return result;
     }

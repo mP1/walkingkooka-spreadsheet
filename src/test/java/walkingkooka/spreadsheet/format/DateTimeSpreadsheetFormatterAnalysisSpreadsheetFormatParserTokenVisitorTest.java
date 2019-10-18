@@ -69,6 +69,7 @@ public final class DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTo
         this.acceptAndCheck("hhmmss.00 AM/PM", 2, true);
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     private void acceptAndCheck(final String pattern,
                                 final int millisecondDecimals,
                                 final boolean ampm) {

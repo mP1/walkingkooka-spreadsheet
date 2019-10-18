@@ -52,6 +52,7 @@ abstract class SpreadsheetEngineDeleteOrInsertColumnsOrRowsHateosHandler<R exten
 
 
     @Override
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     public final Optional<SpreadsheetDelta> handleCollection(final Range<R> columnOrRow,
                                                              final Optional<SpreadsheetDelta> resource,
                                                              final Map<HttpRequestAttribute<?>, Object> parameters) {

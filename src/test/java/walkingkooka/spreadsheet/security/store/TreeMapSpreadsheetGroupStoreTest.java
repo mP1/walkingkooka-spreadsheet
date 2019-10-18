@@ -31,16 +31,19 @@ import java.util.TreeMap;
 public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupStoreTesting<TreeMapSpreadsheetGroupStore>,
         ToStringTesting<TreeMapSpreadsheetGroupStore> {
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testLoad1() {
         this.loadAndCheck(this.createNotEmptyStore(), this.groupId2().get(), this.group2());
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testLoad2() {
         this.loadAndCheck(this.createNotEmptyStore(), this.groupId3().get(), this.group3());
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testSave() {
         final TreeMapSpreadsheetGroupStore store = this.createNotEmptyStore();
@@ -51,6 +54,7 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
         this.loadAndCheck(store, saved.id().get(), saved);
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testSaveReplaces() {
         final TreeMapSpreadsheetGroupStore store = this.createNotEmptyStore();
@@ -62,6 +66,7 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
         this.loadAndCheck(store, id.get(), replace);
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testDelete() {
         final TreeMapSpreadsheetGroupStore store = this.createNotEmptyStore();
@@ -86,6 +91,7 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
         this.countAndCheck(store, 3 + 1);
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public final void testIds() {
         final TreeMapSpreadsheetGroupStore store = this.createStore();
@@ -104,6 +110,7 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
                 a.id().get(), b.id().get(), c.id().get());
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public final void testIdsWindow() {
         final TreeMapSpreadsheetGroupStore store = this.createStore();
@@ -124,6 +131,7 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
                 b.id().get(), c.id().get());
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public final void testValues() {
         final TreeMapSpreadsheetGroupStore store = this.createStore();
@@ -142,6 +150,7 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
                 a, b, c);
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public final void testValuesWindow() {
         final TreeMapSpreadsheetGroupStore store = this.createStore();
@@ -162,6 +171,7 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
                 b, c);
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testAddUserAndLoadUserGroups() {
         final TreeMapSpreadsheetGroupStore store = this.createNotEmptyStore();
@@ -183,6 +193,7 @@ public final class TreeMapSpreadsheetGroupStoreTest implements SpreadsheetGroupS
         this.loadUserGroupsAndCheck(store, user2, Sets.of(group1, group2));
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Test
     public void testAddUserRemoveUserAndLoadUserGroups() {
         final TreeMapSpreadsheetGroupStore store = this.createNotEmptyStore();

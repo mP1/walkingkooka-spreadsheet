@@ -87,6 +87,7 @@ public final class SpreadsheetEngineFillCellsHateosHandlerTest extends walkingko
                 SpreadsheetEngineFillCellsHateosHandler.with(new FakeSpreadsheetEngine() {
 
                                                                  @Override
+                                                                 @SuppressWarnings("OptionalGetWithoutIsPresent")
                                                                  public SpreadsheetDelta fillCells(final Collection<SpreadsheetCell> cells,
                                                                                                                                     final SpreadsheetRange f,
                                                                                                                                     final SpreadsheetRange t,

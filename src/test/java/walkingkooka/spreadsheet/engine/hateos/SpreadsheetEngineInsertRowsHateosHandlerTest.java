@@ -50,6 +50,7 @@ public final class SpreadsheetEngineInsertRowsHateosHandlerTest extends Spreadsh
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
+                    @SuppressWarnings("OptionalGetWithoutIsPresent")
                     public SpreadsheetDelta insertRows(final SpreadsheetRowReference r,
                                                                                        final int count,
                                                                                        final SpreadsheetEngineContext context) {
@@ -100,6 +101,7 @@ public final class SpreadsheetEngineInsertRowsHateosHandlerTest extends Spreadsh
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
 
                     @Override
+                    @SuppressWarnings("OptionalGetWithoutIsPresent")
                     public SpreadsheetDelta insertRows(final SpreadsheetRowReference r,
                                                                                        final int count,
                                                                                        final SpreadsheetEngineContext context) {

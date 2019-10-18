@@ -53,6 +53,7 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
 
         final SpreadsheetMetadata metadata = this.metadata(ID, "user1@example.com");
         store.save(metadata);
+        //noinspection OptionalGetWithoutIsPresent
         store.delete(metadata.get(SpreadsheetMetadataPropertyName.SPREADSHEET_ID).get());
 
         this.loadFailCheck(store, this.id());
@@ -85,6 +86,7 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
         store.save(b);
         store.save(c);
 
+        //noinspection OptionalGetWithoutIsPresent
         this.idsAndCheck(store,
                 0,
                 3,
@@ -105,6 +107,7 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
         store.save(c);
         store.save(d);
 
+        //noinspection OptionalGetWithoutIsPresent
         this.idsAndCheck(store,
                 ID,
                 2,
@@ -123,6 +126,7 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
         store.save(b);
         store.save(c);
 
+        //noinspection OptionalGetWithoutIsPresent
         this.valuesAndCheck(store,
                 a.id().get(),
                 3,
@@ -143,6 +147,7 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
         store.save(c);
         store.save(d);
 
+        //noinspection OptionalGetWithoutIsPresent
         this.valuesAndCheck(store,
                 b.id().get(),
                 2, b, c);
