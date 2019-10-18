@@ -82,8 +82,4 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
     final void checkWindow(final SpreadsheetDelta delta, final List<SpreadsheetRange> window) {
         assertEquals(window, delta.window(), "window");
     }
-
-    final Range<SpreadsheetId> range(final long lower, final long upper) {
-        return Range.greaterThanEquals(SpreadsheetId.with(lower)).and(Range.lessThanEquals(SpreadsheetId.with(upper)));
-    }
 }

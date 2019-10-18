@@ -847,6 +847,7 @@ public final class TreeMapSpreadsheetRangeStoreTest extends TreeMapSpreadsheetRa
         final TreeMapSpreadsheetRangeStore<String> store = this.createStore();
 
         final SpreadsheetRange range1 = SpreadsheetExpressionReference.parseRange("A1:A1");
+        @SuppressWarnings("unused")
         final SpreadsheetRange range2 = SpreadsheetExpressionReference.parseRange("A2:A2");
 
         final String value1 = "value1";

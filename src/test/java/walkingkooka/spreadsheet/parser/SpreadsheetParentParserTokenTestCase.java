@@ -33,9 +33,6 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
     final static String NUMBER1 = "1";
     final static String NUMBER2 = "22";
 
-    final static String TEXT1 = "text-1";
-    final static String TEXT2 = "text-2";
-
     final static String WHITESPACE = "   ";
 
     SpreadsheetParentParserTokenTestCase() {
@@ -74,33 +71,12 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
 
     abstract List<ParserToken> tokens();
 
-    final void checkValue(final SpreadsheetParserToken token, final ParserToken... value) {
-        this.checkValue(token, Lists.of(value));
-    }
-
-    final void checkValue(final SpreadsheetParserToken token, final List<ParserToken> value) {
-        this.checkValue(token.cast(SpreadsheetParentParserToken.class), value);
-    }
-
     final void checkValue(final SpreadsheetParentParserToken<?> token, final ParserToken... value) {
         this.checkValue(token, Lists.of(value));
     }
 
     final void checkValue(final SpreadsheetParentParserToken<?> token, final List<ParserToken> value) {
         assertEquals(value, token.value(), "value");
-    }
-
-
-    final SpreadsheetLabelNameParserToken label1() {
-        return this.label("label1");
-    }
-
-    final SpreadsheetLabelNameParserToken label2() {
-        return this.label("label2");
-    }
-
-    final SpreadsheetLabelNameParserToken label(final String text) {
-        return SpreadsheetParserToken.labelName(SpreadsheetExpressionReference.labelName(text), text);
     }
 
     final SpreadsheetMinusSymbolParserToken minusSymbol() {
@@ -125,22 +101,6 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
 
     final SpreadsheetWhitespaceParserToken whitespace() {
         return SpreadsheetParserToken.whitespace(WHITESPACE, WHITESPACE);
-    }
-
-    final SpreadsheetWhitespaceParserToken whitespace(final String text) {
-        return SpreadsheetParserToken.whitespace(text, text);
-    }
-
-    final SpreadsheetTextParserToken text1() {
-        return text(TEXT1);
-    }
-
-    final SpreadsheetTextParserToken text2() {
-        return text(TEXT2);
-    }
-
-    final SpreadsheetTextParserToken text(final String text) {
-        return SpreadsheetParserToken.text(text, '"' + text + '"');
     }
 
     final SpreadsheetParenthesisOpenSymbolParserToken openParenthesisSymbol() {

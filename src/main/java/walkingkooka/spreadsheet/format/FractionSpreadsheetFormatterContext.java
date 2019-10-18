@@ -66,7 +66,7 @@ final class FractionSpreadsheetFormatterContext implements Context {
         this.digits.append(symbolDigitPosition, zero, this);
     }
 
-    void appendDigit(final char c, final int numberDigitPosition) {
+    void appendDigit(final char c) {
         this.digits.sign(this);
         this.text.append(c);
     }
