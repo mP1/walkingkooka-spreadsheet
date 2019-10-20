@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.compare.Comparators;
-import walkingkooka.compare.Range;
+import walkingkooka.math.Range;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;

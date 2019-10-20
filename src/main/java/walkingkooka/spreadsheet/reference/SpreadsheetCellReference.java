@@ -18,9 +18,9 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
 import walkingkooka.compare.Comparators;
-import walkingkooka.compare.Range;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.Range;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;

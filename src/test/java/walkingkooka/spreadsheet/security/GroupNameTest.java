@@ -19,11 +19,11 @@ package walkingkooka.spreadsheet.security;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.naming.NameTesting;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.util.PropertiesPath;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
