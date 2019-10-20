@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.datavalidation;
 
 import walkingkooka.collect.set.Sets;
 import walkingkooka.compare.ComparisonRelation;
-import walkingkooka.compare.Range;
+import walkingkooka.math.Range;
 import walkingkooka.net.Url;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.predicate.Predicates;
