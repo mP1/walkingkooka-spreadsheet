@@ -51,6 +51,7 @@ import walkingkooka.net.http.server.HttpServer;
 import walkingkooka.net.http.server.RecordingHttpResponse;
 import walkingkooka.net.http.server.WebFile;
 import walkingkooka.net.http.server.hateos.HateosContentType;
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
@@ -63,7 +64,6 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
-import walkingkooka.reflect.JavaVisibility;
 
 import java.io.InputStream;
 import java.math.RoundingMode;

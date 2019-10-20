@@ -17,9 +17,9 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitorTesting;
-import walkingkooka.reflect.JavaVisibility;
 
 /**
  * Base class for all {@link SpreadsheetFormatParserTokenVisitor} in this package.

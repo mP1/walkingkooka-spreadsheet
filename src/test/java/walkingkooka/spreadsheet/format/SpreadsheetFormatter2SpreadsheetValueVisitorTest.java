@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.SpreadsheetValueVisitorTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetValueVisitorTesting;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
