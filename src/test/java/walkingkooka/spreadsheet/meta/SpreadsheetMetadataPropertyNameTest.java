@@ -23,8 +23,8 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.naming.NameTesting;
 import walkingkooka.reflect.FieldAttributes;
-import walkingkooka.text.CaseSensitivity;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.CaseSensitivity;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
