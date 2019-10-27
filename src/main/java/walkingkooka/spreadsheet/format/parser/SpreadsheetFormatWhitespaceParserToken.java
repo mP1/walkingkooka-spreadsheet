@@ -17,7 +17,6 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.search.SearchNode;
 
 /**
  * Holds whitespace
@@ -47,12 +46,5 @@ public final class SpreadsheetFormatWhitespaceParserToken extends SpreadsheetFor
     @Override
     boolean canBeEqual(final Object other) {
         return other instanceof SpreadsheetFormatWhitespaceParserToken;
-    }
-
-    // HasSearchNode ...............................................................................................
-
-    @Override
-    public SearchNode toSearchNode() {
-        return SearchNode.text(this.text(), this.value());
     }
 }

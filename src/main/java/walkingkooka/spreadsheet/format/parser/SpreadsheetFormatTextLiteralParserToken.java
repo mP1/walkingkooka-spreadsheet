@@ -17,7 +17,6 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.search.SearchNode;
 
 /**
  * Holds literal text.
@@ -43,12 +42,5 @@ public final class SpreadsheetFormatTextLiteralParserToken extends SpreadsheetFo
     @Override
     boolean canBeEqual(final Object other) {
         return other instanceof SpreadsheetFormatTextLiteralParserToken;
-    }
-
-    // HasSearchNode ...............................................................................................
-
-    @Override
-    public SearchNode toSearchNode() {
-        return SearchNode.text(this.text(), this.value());
     }
 }

@@ -16,8 +16,6 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.tree.search.SearchNode;
-
 /**
  * Holds a quoted text.
  */
@@ -41,12 +39,5 @@ public final class SpreadsheetFormatQuotedTextParserToken extends SpreadsheetFor
     @Override
     boolean canBeEqual(final Object other) {
         return other instanceof SpreadsheetFormatQuotedTextParserToken;
-    }
-
-    // HasSearchNode ...............................................................................................
-
-    @Override
-    public SearchNode toSearchNode() {
-        return SearchNode.text(this.text(), this.value());
     }
 }
