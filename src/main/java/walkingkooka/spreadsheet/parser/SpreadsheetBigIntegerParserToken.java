@@ -16,8 +16,6 @@
  */
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.tree.search.SearchNode;
-
 import java.math.BigInteger;
 
 /**
@@ -45,12 +43,5 @@ public final class SpreadsheetBigIntegerParserToken extends SpreadsheetNonSymbol
     @Override
     boolean canBeEqual(final Object other) {
         return other instanceof SpreadsheetBigIntegerParserToken;
-    }
-
-    // HasSearchNode ...............................................................................................
-
-    @Override
-    public SearchNode toSearchNode() {
-        return SearchNode.bigInteger(this.text(), this.value());
     }
 }

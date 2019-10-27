@@ -41,7 +41,8 @@ import java.util.Optional;
 /**
  * Represents a token within the grammar.
  */
-public abstract class SpreadsheetParserToken implements ParserToken, HasExpressionNode {
+public abstract class SpreadsheetParserToken implements ParserToken,
+        HasExpressionNode {
 
     /**
      * {@see SpreadsheetAdditionParserToken}

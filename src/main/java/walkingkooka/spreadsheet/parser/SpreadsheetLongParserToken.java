@@ -16,8 +16,6 @@
  */
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.tree.search.SearchNode;
-
 /**
  * Holds a single long number.
  */
@@ -43,12 +41,5 @@ public final class SpreadsheetLongParserToken extends SpreadsheetNonSymbolParser
     @Override
     boolean canBeEqual(final Object other) {
         return other instanceof SpreadsheetLongParserToken;
-    }
-
-    // HasSearchNode ...............................................................................................
-
-    @Override
-    public SearchNode toSearchNode() {
-        return SearchNode.longNode(this.text(), this.value());
     }
 }
