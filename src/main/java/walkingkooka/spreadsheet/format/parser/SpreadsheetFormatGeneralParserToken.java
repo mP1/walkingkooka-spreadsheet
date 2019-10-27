@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.tree.search.SearchNode;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
@@ -51,20 +50,6 @@ public final class SpreadsheetFormatGeneralParserToken extends SpreadsheetFormat
             this.acceptValues(visitor);
         }
         visitor.endVisit(this);
-    }
-
-    // toSearchNode.....................................................................................................
-
-    @Override
-    public SearchNode toSearchNode() {
-        return this.value.isEmpty() ?
-                this.toSearchNode0() :
-                super.toSearchNode();
-    }
-
-    private SearchNode toSearchNode0() {
-        final String text = this.text();
-        return SearchNode.text(text, text);
     }
 
     // Object...........................................................................................................

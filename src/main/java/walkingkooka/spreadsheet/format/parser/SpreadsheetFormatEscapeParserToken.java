@@ -16,8 +16,6 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.tree.search.SearchNode;
-
 /**
  * Represents an excel style escape sequence where the character following the backslash is included verbatim.
  */
@@ -41,12 +39,5 @@ public final class SpreadsheetFormatEscapeParserToken extends SpreadsheetFormatN
     @Override
     boolean canBeEqual(final Object other) {
         return other instanceof SpreadsheetFormatEscapeParserToken;
-    }
-
-    // HasSearchNode ...............................................................................................
-
-    @Override
-    public SearchNode toSearchNode() {
-        return SearchNode.text(this.text(), this.value().toString());
     }
 }

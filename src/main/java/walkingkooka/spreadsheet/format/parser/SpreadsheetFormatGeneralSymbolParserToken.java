@@ -16,8 +16,6 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.tree.search.SearchNode;
-
 /**
  * Holds the literal GENERAL.
  */
@@ -45,12 +43,5 @@ public final class SpreadsheetFormatGeneralSymbolParserToken extends Spreadsheet
     @Override
     boolean canBeEqual(final Object other) {
         return other instanceof SpreadsheetFormatGeneralSymbolParserToken;
-    }
-
-    // HasSearchNode ....................................................................................................
-
-    @Override
-    public SearchNode toSearchNode() {
-        return SearchNode.text(this.text(), this.value());
     }
 }

@@ -93,6 +93,12 @@
 
     <dependency>
       <groupId>com.github.mP1</groupId>
+      <artifactId>walkingkooka-tree</artifactId>
+      <version>master-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.mP1</groupId>
       <artifactId>walkingkooka-tree-json</artifactId>
       <version>master-SNAPSHOT</version>
     </dependency>

@@ -17,7 +17,6 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.search.SearchNode;
 
 /**
  * Holds a text which may be empty
@@ -45,12 +44,5 @@ public final class SpreadsheetTextParserToken extends SpreadsheetNonSymbolParser
     @Override
     boolean canBeEqual(final Object other) {
         return other instanceof SpreadsheetTextParserToken;
-    }
-
-    // HasSearchNode ...............................................................................................
-
-    @Override
-    public SearchNode toSearchNode() {
-        return SearchNode.text(this.text(), this.value());
     }
 }
