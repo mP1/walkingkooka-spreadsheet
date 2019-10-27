@@ -16,8 +16,6 @@
  */
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.tree.search.SearchNode;
-
 import java.math.BigDecimal;
 
 /**
@@ -45,12 +43,5 @@ public final class SpreadsheetBigDecimalParserToken extends SpreadsheetNonSymbol
     @Override
     boolean canBeEqual(final Object other) {
         return other instanceof SpreadsheetBigDecimalParserToken;
-    }
-
-    // HasSearchNode ...............................................................................................
-
-    @Override
-    public SearchNode toSearchNode() {
-        return SearchNode.bigDecimal(this.text(), this.value());
     }
 }

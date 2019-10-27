@@ -16,8 +16,6 @@
  */
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.tree.search.SearchNode;
-
 /**
  * Holds a single double precision number.
  */
@@ -42,12 +40,5 @@ public final class SpreadsheetDoubleParserToken extends SpreadsheetNonSymbolPars
     @Override
     boolean canBeEqual(final Object other) {
         return other instanceof SpreadsheetDoubleParserToken;
-    }
-
-    // HasSearchNode ...............................................................................................
-
-    @Override
-    public SearchNode toSearchNode() {
-        return SearchNode.doubleNode(this.text(), this.value());
     }
 }

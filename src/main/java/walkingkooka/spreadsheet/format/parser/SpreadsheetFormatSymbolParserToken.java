@@ -16,8 +16,6 @@
  */
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.tree.search.SearchNode;
-
 /**
  * Base class for all spreadsheet format symbol parser tokens.
  */
@@ -25,12 +23,5 @@ abstract class SpreadsheetFormatSymbolParserToken extends SpreadsheetFormatLeafP
 
     SpreadsheetFormatSymbolParserToken(final String value, final String text) {
         super(value, text);
-    }
-
-    // HasSearchNode ...............................................................................................
-
-    @Override
-    public SearchNode toSearchNode() {
-        return SearchNode.text(this.text(), this.value());
     }
 }
