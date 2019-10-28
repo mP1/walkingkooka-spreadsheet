@@ -97,7 +97,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
         return SpreadsheetFormatParserToken.colorNumber(((BigIntegerParserToken) token).value().intValueExact(), token.text());
     }
 
-    private static final Parser<ParserContext> COLOR_AND_NUMBER = CaseSensitivity.INSENSITIVE.parser("COLOR")
+    private static final Parser<ParserContext> COLOR_AND_NUMBER = Parsers.string("COLOR", CaseSensitivity.INSENSITIVE)
             .transform(SpreadsheetFormatParsers::transformColorLiteral)
             .builder()
             .required(WHITESPACE)
@@ -265,8 +265,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
     private static final EbnfIdentifierName GENERAL_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("GENERAL_SYMBOL");
 
-    private static final Parser<ParserContext> GENERAL_SYMBOL = CaseSensitivity.INSENSITIVE
-            .parser("GENERAL")
+    private static final Parser<ParserContext> GENERAL_SYMBOL = Parsers.string("GENERAL", CaseSensitivity.INSENSITIVE)
             .transform(SpreadsheetFormatParsers::transformGeneralSymbol)
             .setToString(GENERAL_SYMBOL_IDENTIFIER.toString());
 
@@ -536,7 +535,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     private static Parser<ParserContext> symbol(final String text,
                                                 final BiFunction<String, String, ParserToken> factory,
                                                 final Class<? extends SpreadsheetFormatLeafParserToken> tokenClass) {
-        return CaseSensitivity.INSENSITIVE.parser(text)
+        return Parsers.string(text, CaseSensitivity.INSENSITIVE)
                 .transform((stringParserToken, context) -> factory.apply(((StringParserToken) stringParserToken).value(), stringParserToken.text()))
                 .setToString(tokenClass.getSimpleName());
     }
