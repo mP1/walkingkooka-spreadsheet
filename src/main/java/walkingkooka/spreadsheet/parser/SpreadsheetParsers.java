@@ -357,7 +357,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     private static Parser<ParserContext> symbol(final String text,
                                                 final BiFunction<String, String, ParserToken> factory,
                                                 final Class<? extends SpreadsheetSymbolParserToken> tokenClass) {
-        return CaseSensitivity.INSENSITIVE.parser(text)
+        return Parsers.string(text, CaseSensitivity.INSENSITIVE)
                 .transform((stringParserToken, context) -> factory.apply(((StringParserToken) stringParserToken).value(), stringParserToken.text()))
                 .setToString(tokenClass.getSimpleName());
     }
