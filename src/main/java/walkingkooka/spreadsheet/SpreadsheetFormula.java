@@ -27,8 +27,8 @@ import walkingkooka.text.HasText;
 import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
-import walkingkooka.tree.json.JsonNodeName;
-import walkingkooka.tree.json.JsonObjectNode;
+import walkingkooka.tree.json.JsonObject;
+import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -217,7 +217,7 @@ public final class SpreadsheetFormula implements HasText,
         SpreadsheetError error = null;
 
         for (JsonNode child : node.objectOrFail().children()) {
-            final JsonNodeName name = child.name();
+            final JsonPropertyName name = child.name();
             switch (name.value()) {
                 case TEXT_STRING:
                     try {
@@ -258,7 +258,7 @@ public final class SpreadsheetFormula implements HasText,
      * Creates an object with potentially text, value and error but not the expression.
      */
     private JsonNode marshall(final JsonNodeMarshallContext context) {
-        JsonObjectNode object = JsonNode.object();
+        JsonObject object = JsonNode.object();
 
         object = object.set(TEXT, JsonNode.string(this.text));
 
@@ -287,10 +287,10 @@ public final class SpreadsheetFormula implements HasText,
 
     // @VisibleForTesting
 
-    final static JsonNodeName TEXT = JsonNodeName.with(TEXT_STRING);
-    private final static JsonNodeName EXPRESSION_STRING = JsonNodeName.with(EXPRESSION_PROPERTY_STRING);
-    final static JsonNodeName VALUE_PROPERTY = JsonNodeName.with(VALUE_PROPERTY_STRING);
-    final static JsonNodeName ERROR_PROPERTY = JsonNodeName.with(ERROR_PROPERTY_STRING);
+    final static JsonPropertyName TEXT = JsonPropertyName.with(TEXT_STRING);
+    private final static JsonPropertyName EXPRESSION_STRING = JsonPropertyName.with(EXPRESSION_PROPERTY_STRING);
+    final static JsonPropertyName VALUE_PROPERTY = JsonPropertyName.with(VALUE_PROPERTY_STRING);
+    final static JsonPropertyName ERROR_PROPERTY = JsonPropertyName.with(ERROR_PROPERTY_STRING);
 
     static {
         JsonNodeContext.register("spreadsheet-formula",

@@ -21,7 +21,7 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeName;
+import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -81,7 +81,7 @@ public final class User extends Identity<UserId> {
         EmailAddress email = null;
 
         for (JsonNode child : node.objectOrFail().children()) {
-            final JsonNodeName name = child.name();
+            final JsonPropertyName name = child.name();
             switch (name.value()) {
                 case ID_PROPERTY_STRING:
                     id = context.unmarshall(child, UserId.class);
@@ -112,7 +112,7 @@ public final class User extends Identity<UserId> {
     }
 
     private final static String EMAIL_PROPERTY_STRING = "email";
-    final static JsonNodeName EMAIL_PROPERTY = JsonNodeName.with(EMAIL_PROPERTY_STRING);
+    final static JsonPropertyName EMAIL_PROPERTY = JsonPropertyName.with(EMAIL_PROPERTY_STRING);
 
     static {
         JsonNodeContext.register("user",

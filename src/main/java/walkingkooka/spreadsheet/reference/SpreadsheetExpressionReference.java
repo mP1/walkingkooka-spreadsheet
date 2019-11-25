@@ -22,7 +22,7 @@ import walkingkooka.math.Range;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonObjectNode;
+import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -260,7 +260,7 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
      * The json form of this object is also {@link #toString()}
      */
     final JsonNode marshall(final JsonNodeMarshallContext context) {
-        return JsonObjectNode.string(this.toString());
+        return JsonObject.string(this.toString());
     }
 
     static {

@@ -34,7 +34,7 @@ import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonStringNode;
+import walkingkooka.tree.json.JsonString;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -228,7 +228,7 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
     // JsonNodeContext..................................................................................................
 
     /**
-     * Expects a {@link JsonStringNode} and returns a {@link SpreadsheetColumnReference}.
+     * Expects a {@link JsonString} and returns a {@link SpreadsheetColumnReference}.
      */
     static SpreadsheetColumnReference unmarshallColumn(final JsonNode from,
                                                        final JsonNodeUnmarshallContext context) {
@@ -236,7 +236,7 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
     }
 
     /**
-     * Expects a {@link JsonStringNode} and returns a {@link SpreadsheetRowReference}.
+     * Expects a {@link JsonString} and returns a {@link SpreadsheetRowReference}.
      */
     static SpreadsheetRowReference unmarshallRow(final JsonNode from,
                                                  final JsonNodeUnmarshallContext context) {
