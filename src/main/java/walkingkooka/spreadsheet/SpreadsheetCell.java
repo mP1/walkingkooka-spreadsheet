@@ -23,8 +23,8 @@ import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeName;
-import walkingkooka.tree.json.JsonObjectNode;
+import walkingkooka.tree.json.JsonObject;
+import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -239,7 +239,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
         TextNode formatted = null;
 
         for (JsonNode child : node.objectOrFail().children()) {
-            final JsonNodeName name = child.name();
+            final JsonPropertyName name = child.name();
             switch (name.value()) {
                 case REFERENCE_PROPERTY_STRING:
                     reference = context.unmarshall(child, SpreadsheetCellReference.class);
@@ -272,7 +272,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
-        JsonObjectNode object = JsonNode.object()
+        JsonObject object = JsonNode.object()
                 .set(REFERENCE_PROPERTY, context.marshall(this.reference))
                 .set(FORMULA_PROPERTY, context.marshall(this.formula));
 
@@ -295,11 +295,11 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
     private final static String FORMAT_PROPERTY_STRING = "format";
     private final static String FORMATTED_PROPERTY_STRING = "formatted";
 
-    final static JsonNodeName REFERENCE_PROPERTY = JsonNodeName.with(REFERENCE_PROPERTY_STRING);
-    final static JsonNodeName FORMULA_PROPERTY = JsonNodeName.with(FORMULA_PROPERTY_STRING);
-    final static JsonNodeName STYLE_PROPERTY = JsonNodeName.with(STYLE_PROPERTY_STRING);
-    final static JsonNodeName FORMAT_PROPERTY = JsonNodeName.with(FORMAT_PROPERTY_STRING);
-    final static JsonNodeName FORMATTED_PROPERTY = JsonNodeName.with(FORMATTED_PROPERTY_STRING);
+    final static JsonPropertyName REFERENCE_PROPERTY = JsonPropertyName.with(REFERENCE_PROPERTY_STRING);
+    final static JsonPropertyName FORMULA_PROPERTY = JsonPropertyName.with(FORMULA_PROPERTY_STRING);
+    final static JsonPropertyName STYLE_PROPERTY = JsonPropertyName.with(STYLE_PROPERTY_STRING);
+    final static JsonPropertyName FORMAT_PROPERTY = JsonPropertyName.with(FORMAT_PROPERTY_STRING);
+    final static JsonPropertyName FORMATTED_PROPERTY = JsonPropertyName.with(FORMATTED_PROPERTY_STRING);
 
     static {
         JsonNodeContext.register("spreadsheet-cell",

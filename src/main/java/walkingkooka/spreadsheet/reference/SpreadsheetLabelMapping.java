@@ -21,7 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeName;
+import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -114,7 +114,7 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
         ExpressionReference reference = null;
 
         for (JsonNode child : node.objectOrFail().children()) {
-            final JsonNodeName name = child.name();
+            final JsonPropertyName name = child.name();
             switch (name.value()) {
                 case LABEL_NAME_PROPERTY_STRING:
                     labelName = context.unmarshall(child, SpreadsheetLabelName.class);
@@ -146,8 +146,8 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
     private final static String LABEL_NAME_PROPERTY_STRING = "label-name";
     private final static String REFERENCE_PROPERTY_STRING = "reference";
 
-    private final static JsonNodeName LABEL_NAME_PROPERTY = JsonNodeName.with(LABEL_NAME_PROPERTY_STRING);
-    private final static JsonNodeName REFERENCE_PROPERTY = JsonNodeName.with(REFERENCE_PROPERTY_STRING);
+    private final static JsonPropertyName LABEL_NAME_PROPERTY = JsonPropertyName.with(LABEL_NAME_PROPERTY_STRING);
+    private final static JsonPropertyName REFERENCE_PROPERTY = JsonPropertyName.with(REFERENCE_PROPERTY_STRING);
 
     static {
         JsonNodeContext.register("spreadsheet-label-mapping",

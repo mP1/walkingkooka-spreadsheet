@@ -140,7 +140,7 @@ final class SpreadsheetMetadataNonEmptyMapEntrySet extends AbstractSet<Entry<Spr
             final JsonNode value = propertyName.handler()
                     .marshall(Cast.to(propertyAndValue.getValue()), context);
 
-            json.add(value.setName(propertyName.jsonNodeName));
+            json.add(value.setName(propertyName.jsonPropertyName));
         }
 
         return JsonNode.object()
