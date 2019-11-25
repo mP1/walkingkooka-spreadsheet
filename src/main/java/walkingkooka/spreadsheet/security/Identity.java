@@ -21,7 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.HasId;
 import walkingkooka.Value;
 import walkingkooka.net.email.EmailAddress;
-import walkingkooka.tree.json.JsonNodeName;
+import walkingkooka.tree.json.JsonPropertyName;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -76,7 +76,7 @@ public abstract class Identity<I extends IdentityId> implements Value<Optional<I
     // JsonNodeContext..................................................................................................
 
     final static String ID_PROPERTY_STRING = "id";
-    final static JsonNodeName ID_PROPERTY = JsonNodeName.with(ID_PROPERTY_STRING);
+    final static JsonPropertyName ID_PROPERTY = JsonPropertyName.with(ID_PROPERTY_STRING);
 
     // Object...........................................................................................................
 

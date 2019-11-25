@@ -129,7 +129,7 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     @Test
     public void testJsonNodeNameCached() {
         final SpreadsheetMetadataPropertyName<?> propertyName = this.createObject();
-        assertSame(propertyName.jsonNodeName, propertyName.jsonNodeName);
+        assertSame(propertyName.jsonPropertyName, propertyName.jsonPropertyName);
     }
 
     @Override

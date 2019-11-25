@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.security;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeName;
+import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -77,7 +77,7 @@ public final class Group extends Identity<GroupId> {
         GroupName groupName = null;
 
         for (JsonNode child : node.objectOrFail().children()) {
-            final JsonNodeName name = child.name();
+            final JsonPropertyName name = child.name();
             switch (name.value()) {
                 case ID_PROPERTY_STRING:
                     id = context.unmarshall(child, GroupId.class);
@@ -108,7 +108,7 @@ public final class Group extends Identity<GroupId> {
     }
 
     private final static String NAME_PROPERTY_STRING = "name";
-    final static JsonNodeName NAME_PROPERTY = JsonNodeName.with(NAME_PROPERTY_STRING);
+    final static JsonPropertyName NAME_PROPERTY = JsonPropertyName.with(NAME_PROPERTY_STRING);
 
     static {
         JsonNodeContext.register("group",

@@ -25,7 +25,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
-import walkingkooka.tree.json.JsonNodeName;
+import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
@@ -410,8 +410,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.marshallAndCheck(SpreadsheetFormula.with(TEXT)
                         .setValue(Optional.of(123L)),
                 JsonNode.object()
-                        .set(JsonNodeName.with("text"), JsonNode.string("a+2"))
-                        .set(JsonNodeName.with("value"), this.marshallContext().marshallWithType(123L)));
+                        .set(JsonPropertyName.with("text"), JsonNode.string("a+2"))
+                        .set(JsonPropertyName.with("value"), this.marshallContext().marshallWithType(123L)));
     }
 
     @Test
