@@ -41,9 +41,9 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
 
     @Test
     public final void testPublicStaticFactoryMethod() {
-        PublicStaticFactoryTesting.check(SpreadsheetParserToken.class,
+        PublicStaticFactoryTesting.checkFactoryMethods(SpreadsheetParserToken.class,
                 "Spreadsheet",
-                ParserToken.class,
+                ParserToken.class.getSimpleName(),
                 this.type());
     }
 

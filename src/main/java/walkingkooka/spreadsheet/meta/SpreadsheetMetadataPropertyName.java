@@ -37,7 +37,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.json.JsonNodeName;
+import walkingkooka.tree.json.JsonPropertyName;
 
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -368,7 +368,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     SpreadsheetMetadataPropertyName(final String name) {
         super();
         this.name = name;
-        this.jsonNodeName = JsonNodeName.with(name);
+        this.jsonPropertyName = JsonPropertyName.with(name);
     }
 
     @Override
@@ -378,7 +378,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
 
     final String name;
 
-    final JsonNodeName jsonNodeName;
+    final JsonPropertyName jsonPropertyName;
 
     /**
      * Validates the value.
