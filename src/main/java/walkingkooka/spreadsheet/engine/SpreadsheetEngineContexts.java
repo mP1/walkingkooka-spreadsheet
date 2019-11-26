@@ -25,7 +25,7 @@ import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
-import walkingkooka.tree.expression.ExpressionNodeName;
+import walkingkooka.tree.expression.FunctionExpressionName;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -38,7 +38,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetEngineContext}
      */
-    public static SpreadsheetEngineContext basic(final BiFunction<ExpressionNodeName, List<Object>, Object> functions,
+    public static SpreadsheetEngineContext basic(final BiFunction<FunctionExpressionName, List<Object>, Object> functions,
                                                  final SpreadsheetEngine engine,
                                                  final SpreadsheetLabelStore labelStore,
                                                  final Converter converter,

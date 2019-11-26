@@ -40,11 +40,11 @@ import walkingkooka.text.cursor.parser.ParserContexts;
 import walkingkooka.text.cursor.parser.ParserTesting2;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.ExpressionNode;
-import walkingkooka.tree.expression.ExpressionNodeName;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
+import walkingkooka.tree.expression.FunctionExpressionName;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -955,12 +955,12 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private void parseEvaluateAndCheck(final String formulaText, final String expectedText) {
         final SpreadsheetParserToken formula = this.parse(formulaText);
-        final Optional<ExpressionNode> maybeExpression = formula.expressionNode();
+        final Optional<Expression> maybeExpression = formula.expression();
         if (!maybeExpression.isPresent()) {
             fail("Failed to convert spreadsheet formula to expression " + CharSequences.quoteAndEscape(formulaText));
         }
-        final ExpressionNode expression = maybeExpression.get();
-        final String value = expression.toText(this.expressionEvaluationContext());
+        final Expression expression = maybeExpression.get();
+        final String value = expression.toString(this.expressionEvaluationContext());
         assertEquals(expectedText, value, "expression " + CharSequences.quoteAndEscape(formulaText) + " as text is");
     }
 
@@ -982,9 +982,9 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private ExpressionEvaluationContext expressionEvaluationContext() {
-        final ExpressionNodeName toDate = ExpressionNodeName.with("toDate");
-        final ExpressionNodeName toDateTime = ExpressionNodeName.with("toDateTime");
-        final ExpressionNodeName toTime = ExpressionNodeName.with("toTime");
+        final FunctionExpressionName toDate = FunctionExpressionName.with("toDate");
+        final FunctionExpressionName toDateTime = FunctionExpressionName.with("toDateTime");
+        final FunctionExpressionName toTime = FunctionExpressionName.with("toTime");
 
         final Function<ConverterContext, ParserContext> parserContext = (c) -> ParserContexts.basic(c, c);
 
@@ -1024,7 +1024,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
         return new FakeExpressionEvaluationContext() {
             @Override
-            public Object function(final ExpressionNodeName name, final List<Object> parameters) {
+            public Object function(final FunctionExpressionName name, final List<Object> parameters) {
                 if (toDate.equals(name)) {
                     return this.convertStringParameter(parameters, LocalDate.class);
                 }
@@ -1046,7 +1046,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
             }
 
             @Override
-            public Optional<ExpressionNode> reference(final ExpressionReference reference) {
+            public Optional<Expression> reference(final ExpressionReference reference) {
                 throw new UnsupportedOperationException();//return context.reference(reference);
             }
 

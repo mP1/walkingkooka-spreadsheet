@@ -99,7 +99,7 @@ public abstract class SpreadsheetMetadataPropertyValueHandlerTestCase2<P extends
                                                                 final String message,
                                                                 final SpreadsheetMetadataPropertyName<?> propertyName,
                                                                 final Object value) {
-        if(null!=message) {
+        if (null != message) {
             assertEquals(message, thrown.getMessage(), "message");
         }
         assertEquals(propertyName, thrown.name(), "propertyName");

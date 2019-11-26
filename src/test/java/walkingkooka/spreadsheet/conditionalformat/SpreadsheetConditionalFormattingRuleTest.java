@@ -25,7 +25,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.text.TextStyle;
 
 import java.util.Optional;
@@ -128,7 +128,7 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
     @Test
     public void testSetFormulaDifferent() {
         final SpreadsheetConditionalFormattingRule rule = this.createObject();
-        final SpreadsheetFormula formula = SpreadsheetFormula.with("99").setExpression(Optional.of(ExpressionNode.text("\"99\"")));
+        final SpreadsheetFormula formula = SpreadsheetFormula.with("99").setExpression(Optional.of(Expression.string("\"99\"")));
         final SpreadsheetConditionalFormattingRule different = rule.setFormula(formula);
         checkDescription(different);
         checkPriority(different);
@@ -182,7 +182,7 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
     public void testEqualsDifferentFormula() {
         this.checkNotEquals(SpreadsheetConditionalFormattingRule.with(description(),
                 priority(),
-                SpreadsheetFormula.with("999").setExpression(Optional.of(ExpressionNode.longNode(99))),
+                SpreadsheetFormula.with("999").setExpression(Optional.of(Expression.longExpression(99))),
                 style()));
     }
 
@@ -216,7 +216,7 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
     }
 
     private SpreadsheetFormula formula() {
-        return this.formulaUncompiled().setExpression(Optional.of(ExpressionNode.longNode(123)));
+        return this.formulaUncompiled().setExpression(Optional.of(Expression.longExpression(123)));
     }
 
     private SpreadsheetFormula formulaUncompiled() {

@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
@@ -115,8 +115,8 @@ public final class SpreadsheetEqualsParserTokenTest extends SpreadsheetBinaryPar
     }
 
     @Override
-    ExpressionNode expressionNode(final ExpressionNode left, final ExpressionNode right) {
-        return ExpressionNode.equalsNode(left, right);
+    Expression expressionNode(final Expression left, final Expression right) {
+        return Expression.equalsExpression(left, right);
     }
 
     @Override

@@ -289,7 +289,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
 
     @Test
     public void testDateFalseBoolean() {
-        this.convertAndCheck2(DATE_FALSE,false);
+        this.convertAndCheck2(DATE_FALSE, false);
     }
 
     @Test
@@ -321,7 +321,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
 
     @Test
     public void testNumberTrueBoolean() {
-        this.convertNumberAndCheck(1,true);
+        this.convertNumberAndCheck(1, true);
     }
 
     @Test
@@ -351,12 +351,12 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
 
     @Test
     public void testNumberByte() {
-        this.convertNumberAndCheck((byte)123);
+        this.convertNumberAndCheck((byte) 123);
     }
 
     @Test
     public void testNumberShort() {
-        this.convertNumberAndCheck((short)123);
+        this.convertNumberAndCheck((short) 123);
     }
 
     @Test

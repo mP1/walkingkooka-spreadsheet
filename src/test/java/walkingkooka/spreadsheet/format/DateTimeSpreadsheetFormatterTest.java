@@ -444,7 +444,7 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
     }
 
     private void parseFormatAndCheck2(final String pattern,
-                                     final String text) {
+                                      final String text) {
         this.parseFormatAndCheck(pattern,
                 LocalDateTime.of(2000, 12, 31, 12, 58, 59, 123456789),
                 text);
@@ -708,9 +708,9 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
     }
 
     private void parseFormatAndCheck(final String pattern,
-                                      final String value,
-                                      final SpreadsheetFormatterContext context,
-                                      final SpreadsheetText text) {
+                                     final String value,
+                                     final SpreadsheetFormatterContext context,
+                                     final SpreadsheetText text) {
         this.formatAndCheck(this.createFormatter(pattern),
                 this.parseLocalDateTime(value),
                 context,

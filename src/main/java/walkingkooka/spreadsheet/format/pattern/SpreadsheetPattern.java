@@ -224,7 +224,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
     private static SpreadsheetTextFormatPattern transformText(final ParserToken token) {
         return SpreadsheetTextFormatPattern.with(token.cast(SpreadsheetFormatTextParserToken.class));
     }
-    
+
     // parseTimeFormatPatterns..........................................................................................
 
     /**
@@ -362,7 +362,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
         return this instanceof SpreadsheetTimeFormatPattern || this instanceof SpreadsheetTimeParsePatterns;
     }
 
-        // Object...........................................................................................................
+    // Object...........................................................................................................
 
     @Override
     public final int hashCode() {
@@ -389,7 +389,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
      * Factory that creates a {@link SpreadsheetDateFormatPattern} from a {@link JsonNode}.
      */
     static SpreadsheetDateFormatPattern unmarshallDateFormatPattern(final JsonNode node,
-                                                                      final JsonNodeUnmarshallContext context) {
+                                                                    final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
         return parseDateFormatPattern(node.stringValueOrFail());
@@ -399,7 +399,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
      * Factory that creates a {@link SpreadsheetDateParsePatterns} from a {@link JsonNode}.
      */
     static SpreadsheetDateParsePatterns unmarshallDateParsePatterns(final JsonNode node,
-                                                                      final JsonNodeUnmarshallContext context) {
+                                                                    final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
         return parseDateParsePatterns(node.stringValueOrFail());
@@ -409,7 +409,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
      * Factory that creates a {@link SpreadsheetDateTimeFormatPattern} from a {@link JsonNode}.
      */
     static SpreadsheetDateTimeFormatPattern unmarshallDateTimeFormatPattern(final JsonNode node,
-                                                                              final JsonNodeUnmarshallContext context) {
+                                                                            final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
         return parseDateTimeFormatPattern(node.stringValueOrFail());
@@ -419,7 +419,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
      * Factory that creates a {@link SpreadsheetDateTimeParsePatterns} from a {@link JsonNode}.
      */
     static SpreadsheetDateTimeParsePatterns unmarshallDateTimeParsePatterns(final JsonNode node,
-                                                                              final JsonNodeUnmarshallContext context) {
+                                                                            final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
         return parseDateTimeParsePatterns(node.stringValueOrFail());
@@ -429,7 +429,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
      * Factory that creates a {@link SpreadsheetNumberFormatPattern} from a {@link JsonNode}.
      */
     static SpreadsheetNumberFormatPattern unmarshallNumberFormatPattern(final JsonNode node,
-                                                                          final JsonNodeUnmarshallContext context) {
+                                                                        final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
         return parseNumberFormatPattern(node.stringValueOrFail());
@@ -439,7 +439,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
      * Factory that creates a {@link SpreadsheetNumberParsePatterns} from a {@link JsonNode}.
      */
     static SpreadsheetNumberParsePatterns unmarshallNumberParsePatterns(final JsonNode node,
-                                                                          final JsonNodeUnmarshallContext context) {
+                                                                        final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
         return parseNumberParsePatterns(node.stringValueOrFail());
@@ -449,17 +449,17 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
      * Factory that creates a {@link SpreadsheetTextFormatPattern} from a {@link JsonNode}.
      */
     static SpreadsheetTextFormatPattern unmarshallTextFormatPattern(final JsonNode node,
-                                                                      final JsonNodeUnmarshallContext context) {
+                                                                    final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
         return parseTextFormatPattern(node.stringValueOrFail());
     }
-    
+
     /**
      * Factory that creates a {@link SpreadsheetTimeFormatPattern} from a {@link JsonNode}.
      */
     static SpreadsheetTimeFormatPattern unmarshallTimeFormatPattern(final JsonNode node,
-                                                                      final JsonNodeUnmarshallContext context) {
+                                                                    final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
         return parseTimeFormatPattern(node.stringValueOrFail());
@@ -469,7 +469,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
      * Factory that creates a {@link SpreadsheetTimeParsePatterns} from a {@link JsonNode}.
      */
     static SpreadsheetTimeParsePatterns unmarshallTimeParsePatterns(final JsonNode node,
-                                                                      final JsonNodeUnmarshallContext context) {
+                                                                    final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
         return parseTimeParsePatterns(node.stringValueOrFail());

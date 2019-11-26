@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.datavalidation;
 
-import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.expression.Expression;
 
 import java.util.Objects;
 
@@ -31,7 +31,7 @@ final class CustomFormulaSpreadsheetDataValidator extends SpreadsheetDataValidat
     /**
      * Creates a new {@link CustomFormulaSpreadsheetDataValidator}.
      */
-    static CustomFormulaSpreadsheetDataValidator with(final ExpressionNode customFormula) {
+    static CustomFormulaSpreadsheetDataValidator with(final Expression customFormula) {
         Objects.requireNonNull(customFormula, "customFormula");
 
         return new CustomFormulaSpreadsheetDataValidator(customFormula);
@@ -40,7 +40,7 @@ final class CustomFormulaSpreadsheetDataValidator extends SpreadsheetDataValidat
     /**
      * Private ctor use factory
      */
-    private CustomFormulaSpreadsheetDataValidator(final ExpressionNode customFormula) {
+    private CustomFormulaSpreadsheetDataValidator(final Expression customFormula) {
         super();
         this.customFormula = customFormula;
     }
@@ -68,5 +68,5 @@ final class CustomFormulaSpreadsheetDataValidator extends SpreadsheetDataValidat
         return this.customFormula.toString();
     }
 
-    private final ExpressionNode customFormula;
+    private final Expression customFormula;
 }

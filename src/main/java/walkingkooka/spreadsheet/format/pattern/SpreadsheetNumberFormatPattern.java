@@ -53,7 +53,7 @@ public final class SpreadsheetNumberFormatPattern extends SpreadsheetFormatPatte
         return SpreadsheetFormatters.number(this.value);
     }
 
-        // Object...........................................................................................................
+    // Object...........................................................................................................
 
     @Override
     boolean canBeEquals(final Object other) {

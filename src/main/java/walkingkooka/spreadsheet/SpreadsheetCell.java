@@ -229,7 +229,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
      * Factory that creates a {@link SpreadsheetCell} from a {@link JsonNode}.
      */
     static SpreadsheetCell unmarshall(final JsonNode node,
-                                        final JsonNodeUnmarshallContext context) {
+                                      final JsonNodeUnmarshallContext context) {
         Objects.requireNonNull(node, "node");
 
         SpreadsheetCellReference reference = null;
