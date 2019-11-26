@@ -28,7 +28,7 @@ public final class SpreadsheetMetadataPropertyValueHandlerLongTest extends Sprea
     public void testWithNullIntPredicateFails() {
         assertThrows(NullPointerException.class, () -> SpreadsheetMetadataPropertyValueHandlerLong.with(null));
     }
-    
+
     @Test
     public void testCheckExcelOffset() {
         this.check(Converters.EXCEL_OFFSET);

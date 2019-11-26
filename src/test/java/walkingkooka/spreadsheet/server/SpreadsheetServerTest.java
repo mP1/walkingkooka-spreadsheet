@@ -180,12 +180,12 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
                                 "    \"formula\": {\n" +
                                 "      \"text\": \"1+2\",\n" +
                                 "      \"expression\": {\n" +
-                                "        \"type\": \"expression-addition\",\n" +
+                                "        \"type\": \"add-expression\",\n" +
                                 "        \"value\": [{\n" +
-                                "          \"type\": \"expression-big-decimal\",\n" +
+                                "          \"type\": \"big-decimal-expression\",\n" +
                                 "          \"value\": \"1\"\n" +
                                 "        }, {\n" +
-                                "          \"type\": \"expression-big-decimal\",\n" +
+                                "          \"type\": \"big-decimal-expression\",\n" +
                                 "          \"value\": \"2\"\n" +
                                 "        }]\n" +
                                 "      },\n" +
@@ -224,12 +224,12 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
                                 "    \"formula\": {\n" +
                                 "      \"text\": \"1+2\",\n" +
                                 "      \"expression\": {\n" +
-                                "        \"type\": \"expression-addition\",\n" +
+                                "        \"type\": \"add-expression\",\n" +
                                 "        \"value\": [{\n" +
-                                "          \"type\": \"expression-big-decimal\",\n" +
+                                "          \"type\": \"big-decimal-expression\",\n" +
                                 "          \"value\": \"1\"\n" +
                                 "        }, {\n" +
-                                "          \"type\": \"expression-big-decimal\",\n" +
+                                "          \"type\": \"big-decimal-expression\",\n" +
                                 "          \"value\": \"2\"\n" +
                                 "        }]\n" +
                                 "      },\n" +
@@ -256,12 +256,12 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
                                 "    \"formula\": {\n" +
                                 "      \"text\": \"4+A1\",\n" +
                                 "      \"expression\": {\n" +
-                                "        \"type\": \"expression-addition\",\n" +
+                                "        \"type\": \"add-expression\",\n" +
                                 "        \"value\": [{\n" +
-                                "          \"type\": \"expression-big-decimal\",\n" +
+                                "          \"type\": \"big-decimal-expression\",\n" +
                                 "          \"value\": \"4\"\n" +
                                 "        }, {\n" +
-                                "          \"type\": \"expression-reference\",\n" +
+                                "          \"type\": \"reference-expression\",\n" +
                                 "          \"value\": {\n" +
                                 "            \"type\": \"spreadsheet-cell-reference\",\n" +
                                 "            \"value\": \"A1\"\n" +
@@ -303,12 +303,12 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
                                 "    \"formula\": {\n" +
                                 "      \"text\": \"1+2\",\n" +
                                 "      \"expression\": {\n" +
-                                "        \"type\": \"expression-addition\",\n" +
+                                "        \"type\": \"add-expression\",\n" +
                                 "        \"value\": [{\n" +
-                                "          \"type\": \"expression-big-decimal\",\n" +
+                                "          \"type\": \"big-decimal-expression\",\n" +
                                 "          \"value\": \"1\"\n" +
                                 "        }, {\n" +
-                                "          \"type\": \"expression-big-decimal\",\n" +
+                                "          \"type\": \"big-decimal-expression\",\n" +
                                 "          \"value\": \"2\"\n" +
                                 "        }]\n" +
                                 "      },\n" +
@@ -344,12 +344,12 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
                                 "    \"formula\": {\n" +
                                 "      \"text\": \"3+4\",\n" +
                                 "      \"expression\": {\n" +
-                                "        \"type\": \"expression-addition\",\n" +
+                                "        \"type\": \"add-expression\",\n" +
                                 "        \"value\": [{\n" +
-                                "          \"type\": \"expression-big-decimal\",\n" +
+                                "          \"type\": \"big-decimal-expression\",\n" +
                                 "          \"value\": \"3\"\n" +
                                 "        }, {\n" +
-                                "          \"type\": \"expression-big-decimal\",\n" +
+                                "          \"type\": \"big-decimal-expression\",\n" +
                                 "          \"value\": \"4\"\n" +
                                 "        }]\n" +
                                 "      },\n" +
@@ -377,12 +377,12 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
                                 "    \"formula\": {\n" +
                                 "      \"text\": \"4+A1\",\n" +
                                 "      \"expression\": {\n" +
-                                "        \"type\": \"expression-addition\",\n" +
+                                "        \"type\": \"add-expression\",\n" +
                                 "        \"value\": [{\n" +
-                                "          \"type\": \"expression-big-decimal\",\n" +
+                                "          \"type\": \"big-decimal-expression\",\n" +
                                 "          \"value\": \"4\"\n" +
                                 "        }, {\n" +
-                                "          \"type\": \"expression-reference\",\n" +
+                                "          \"type\": \"reference-expression\",\n" +
                                 "          \"value\": {\n" +
                                 "            \"type\": \"spreadsheet-cell-reference\",\n" +
                                 "            \"value\": \"A1\"\n" +
@@ -474,7 +474,7 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
         return path.equals(FILE) ?
                 Either.left(new WebFile() {
                     @Override
-                    public LocalDateTime lastModified()  {
+                    public LocalDateTime lastModified() {
                         return FILE_LAST_MODIFIED;
                     }
 
@@ -505,7 +505,7 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
                 }) :
                 Either.right(FILE_NOT_FOUND);
     }
-    
+
     /**
      * Initializes the test {@link HttpServer}.
      */
@@ -600,7 +600,7 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
 
         final byte[] bodyBytes = bytes(body, CONTENT_TYPE_UTF8);
         if (null != bodyBytes) {
-            headers2.put(HttpHeaderName.CONTENT_LENGTH, (long)bodyBytes.length);
+            headers2.put(HttpHeaderName.CONTENT_LENGTH, (long) bodyBytes.length);
         }
         return new HttpRequest() {
             @Override
@@ -680,7 +680,7 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
         return this.response(status,
                 HttpEntity.EMPTY
                         .addHeader(HttpHeaderName.CONTENT_TYPE, CONTENT_TYPE_UTF8)
-                        .addHeader(HttpHeaderName.CONTENT_LENGTH, (long)body.value().length)
+                        .addHeader(HttpHeaderName.CONTENT_LENGTH, (long) body.value().length)
                         .setBody(body));
     }
 

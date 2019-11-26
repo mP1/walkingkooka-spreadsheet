@@ -197,7 +197,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
         new SpreadsheetValueVisitor() {
         }.accept(Byte.MAX_VALUE);
     }
-    
+
     @Test
     public void testAcceptDouble() {
         final StringBuilder b = new StringBuilder();
@@ -477,7 +477,7 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
         new SpreadsheetValueVisitor() {
         }.accept(Short.MAX_VALUE);
     }
-    
+
     @Test
     public void testAcceptString() {
         final StringBuilder b = new StringBuilder();

@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
-import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.util.FunctionTesting;
 
@@ -28,33 +28,33 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunctionTest
-        implements FunctionTesting<SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction, ExpressionReference, Optional<ExpressionNode>> {
+public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionTest
+        implements FunctionTesting<SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction, ExpressionReference, Optional<Expression>> {
 
     @Test
     public void testWithNullEngineFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(null,
+        assertThrows(NullPointerException.class, () -> SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(null,
                 this.labelStore(),
                 this.spreadsheetEngineContext()));
     }
 
     @Test
     public void testWithNullLabelStoreFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(this.engine(),
+        assertThrows(NullPointerException.class, () -> SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(this.engine(),
                 null,
                 this.spreadsheetEngineContext()));
     }
 
     @Test
     public void testWithNullLabelSpreadsheetEngineContextFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(this.engine(),
+        assertThrows(NullPointerException.class, () -> SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(this.engine(),
                 this.labelStore(),
                 null));
     }
 
     @Override
-    public SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction createFunction() {
-        return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(this.engine(),
+    public SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction createFunction() {
+        return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(this.engine(),
                 this.labelStore(),
                 this.spreadsheetEngineContext());
     }
@@ -72,7 +72,7 @@ public final class SpreadsheetEngineExpressionEvaluationContextExpressionReferen
     }
 
     @Override
-    public Class<SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction> type() {
-        return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.class;
+    public Class<SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction> type() {
+        return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.class;
     }
 }

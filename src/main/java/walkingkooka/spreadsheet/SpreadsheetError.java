@@ -74,7 +74,7 @@ public final class SpreadsheetError implements Value<String> {
     // JsonNodeContext..................................................................................................
 
     static SpreadsheetError unmarshall(final JsonNode node,
-                                         final JsonNodeUnmarshallContext context) {
+                                       final JsonNodeUnmarshallContext context) {
         return with(node.stringValueOrFail());
     }
 

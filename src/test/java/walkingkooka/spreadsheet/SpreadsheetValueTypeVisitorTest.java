@@ -293,7 +293,7 @@ public class SpreadsheetValueTypeVisitorTest implements SpreadsheetValueTypeVisi
         new SpreadsheetValueTypeVisitor() {
         }.accept(Integer.class);
     }
-    
+
     @Test
     public void testAcceptLocalDate() {
         final StringBuilder b = new StringBuilder();

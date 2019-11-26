@@ -53,7 +53,7 @@ public final class SpreadsheetTextFormatPattern extends SpreadsheetFormatPattern
         return SpreadsheetFormatters.text(this.value);
     }
 
-        // Object...........................................................................................................
+    // Object...........................................................................................................
 
     @Override
     boolean canBeEquals(final Object other) {

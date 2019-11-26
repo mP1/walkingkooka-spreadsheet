@@ -89,9 +89,9 @@ public final class SpreadsheetEngineFillCellsHateosHandlerTest extends walkingko
                                                                  @Override
                                                                  @SuppressWarnings("OptionalGetWithoutIsPresent")
                                                                  public SpreadsheetDelta fillCells(final Collection<SpreadsheetCell> cells,
-                                                                                                                                    final SpreadsheetRange f,
-                                                                                                                                    final SpreadsheetRange t,
-                                                                                                                                    final SpreadsheetEngineContext context) {
+                                                                                                   final SpreadsheetRange f,
+                                                                                                   final SpreadsheetRange t,
+                                                                                                   final SpreadsheetEngineContext context) {
                                                                      assertEquals(collectionResource().get().cells(), cells, "cells");
                                                                      assertEquals(from, f, "from");
                                                                      assertEquals(toSpreadsheetRange(), t, "to");
@@ -122,9 +122,9 @@ public final class SpreadsheetEngineFillCellsHateosHandlerTest extends walkingko
 
                                                                  @Override
                                                                  public SpreadsheetDelta fillCells(final Collection<SpreadsheetCell> cells,
-                                                                                                                                    final SpreadsheetRange from,
-                                                                                                                                    final SpreadsheetRange to,
-                                                                                                                                    final SpreadsheetEngineContext context) {
+                                                                                                   final SpreadsheetRange from,
+                                                                                                   final SpreadsheetRange to,
+                                                                                                   final SpreadsheetEngineContext context) {
                                                                      assertEquals(resource.cells(), cells, "cells");
                                                                      assertEquals(spreadsheetRange, from, "from");
                                                                      assertEquals(spreadsheetRange, to, "to");

@@ -48,7 +48,7 @@ public final class SpreadsheetMetadataPropertyValueHandlerStringTest extends Spr
 
     @Override
     SpreadsheetMetadataPropertyValueHandlerString handler() {
-        return SpreadsheetMetadataPropertyValueHandlerString.with((s)-> s.length() > 0);
+        return SpreadsheetMetadataPropertyValueHandlerString.with((s) -> s.length() > 0);
     }
 
     @Override

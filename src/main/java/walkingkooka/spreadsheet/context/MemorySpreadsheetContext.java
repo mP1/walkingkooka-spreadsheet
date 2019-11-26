@@ -51,7 +51,7 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.tree.expression.ExpressionNodeName;
+import walkingkooka.tree.expression.FunctionExpressionName;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -76,7 +76,7 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
                                          final HateosContentType contentType,
                                          final Function<BigDecimal, Fraction> fractioner,
                                          final Function<Optional<Locale>, SpreadsheetMetadata> createMetadata,
-                                         final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
+                                         final Function<SpreadsheetId, BiFunction<FunctionExpressionName, List<Object>, Object>> spreadsheetIdFunctions,
                                          final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToRepository) {
         Objects.requireNonNull(base, "base");
         Objects.requireNonNull(contentType, "contentType");
@@ -97,7 +97,7 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
                                      final HateosContentType contentType,
                                      final Function<BigDecimal, Fraction> fractioner,
                                      final Function<Optional<Locale>, SpreadsheetMetadata> createMetadata,
-                                     final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
+                                     final Function<SpreadsheetId, BiFunction<FunctionExpressionName, List<Object>, Object>> spreadsheetIdFunctions,
                                      final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToRepository) {
         super();
 
@@ -137,11 +137,11 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
     }
 
     @Override
-    public BiFunction<ExpressionNodeName, List<Object>, Object> functions(final SpreadsheetId id) {
+    public BiFunction<FunctionExpressionName, List<Object>, Object> functions(final SpreadsheetId id) {
         return this.spreadsheetIdFunctions.apply(id);
     }
 
-    private final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions;
+    private final Function<SpreadsheetId, BiFunction<FunctionExpressionName, List<Object>, Object>> spreadsheetIdFunctions;
 
     /**
      * Loads the {@link SpreadsheetMetadata} and then executes the given getter to return a particular property.
@@ -195,7 +195,7 @@ final class MemorySpreadsheetContext implements SpreadsheetContext {
                 rangeToConditionalFormattingRules);
 
         final Converter converter = this.converter(id);
-        final BiFunction<ExpressionNodeName, List<Object>, Object> functions = this.spreadsheetIdFunctions.apply(id);
+        final BiFunction<FunctionExpressionName, List<Object>, Object> functions = this.spreadsheetIdFunctions.apply(id);
         final Function<Integer, Optional<Color>> numberToColor = this.numberToColor(id);
         final Function<SpreadsheetColorName, Optional<Color>> nameToColor = this.nameToColor(id);
         final int width = this.width(id);

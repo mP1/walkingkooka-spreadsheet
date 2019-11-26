@@ -26,16 +26,16 @@ import walkingkooka.spreadsheet.reference.store.TargetAndSpreadsheetCellReferenc
 /**
  * A {@link SpreadsheetExpressionReferenceVisitor} that adds references to each reference present within cell formula.
  */
-final class BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitorSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpressionReferenceVisitor {
+final class BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpressionReferenceVisitor {
 
-    static BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitorSpreadsheetExpressionReferenceVisitor with(final SpreadsheetCellReference target,
-                                                                                                                         final BasicSpreadsheetEngine engine) {
-        return new BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitorSpreadsheetExpressionReferenceVisitor(target, engine);
+    static BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor with(final SpreadsheetCellReference target,
+                                                                                                                     final BasicSpreadsheetEngine engine) {
+        return new BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor(target, engine);
     }
 
     // VisibleForTesting
-    BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitorSpreadsheetExpressionReferenceVisitor(final SpreadsheetCellReference target,
-                                                                                                             final BasicSpreadsheetEngine engine) {
+    BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor(final SpreadsheetCellReference target,
+                                                                                                         final BasicSpreadsheetEngine engine) {
         super();
         this.target = target;
         this.engine = engine;

@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.visit.Visiting;
 
 import java.math.BigInteger;
@@ -104,8 +104,8 @@ public final class SpreadsheetNegativeParserTokenTest extends SpreadsheetUnaryPa
     }
 
     @Test
-    public final void testToExpressionNode() {
-        this.toExpressionNodeAndCheck(ExpressionNode.negative(ExpressionNode.bigInteger(new BigInteger(NUMBER1, 10))));
+    public final void testToExpression() {
+        this.toExpressionAndCheck(Expression.negative(Expression.bigInteger(new BigInteger(NUMBER1, 10))));
     }
 
     @Override

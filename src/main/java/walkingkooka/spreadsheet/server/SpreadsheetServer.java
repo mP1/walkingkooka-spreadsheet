@@ -58,7 +58,7 @@ import walkingkooka.spreadsheet.security.store.SpreadsheetUserStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.tree.expression.ExpressionNodeName;
+import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
@@ -142,14 +142,14 @@ public final class SpreadsheetServer implements HttpServer {
         };
     }
 
-    static Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> idToFunctions() {
+    static Function<SpreadsheetId, BiFunction<FunctionExpressionName, List<Object>, Object>> idToFunctions() {
         return (id) -> SpreadsheetServer::functions;
     }
 
     /**
      * TODO Implement a real function lookup, that only exposes functions that are enabled for a single spreadsheet.
      */
-    private static Object functions(final ExpressionNodeName functionName, final List<Object> parameters) {
+    private static Object functions(final FunctionExpressionName functionName, final List<Object> parameters) {
         throw new UnsupportedOperationException("Unknown function: " + functionName + "(" + parameters.stream().map(Object::toString).collect(Collectors.joining(",")) + ")");
     }
 
@@ -222,7 +222,7 @@ public final class SpreadsheetServer implements HttpServer {
                                   final IpPort port,
                                   final Function<Optional<Locale>, SpreadsheetMetadata> createMetadata,
                                   final Function<BigDecimal, Fraction> fractioner,
-                                  final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> idToFunctions,
+                                  final Function<SpreadsheetId, BiFunction<FunctionExpressionName, List<Object>, Object>> idToFunctions,
                                   final Function<SpreadsheetId, SpreadsheetStoreRepository> idToStoreRepository,
                                   final Function<UrlPath, Either<WebFile, HttpStatus>> fileServer,
                                   final Function<BiConsumer<HttpRequest, HttpResponse>, HttpServer> server) {
@@ -253,7 +253,7 @@ public final class SpreadsheetServer implements HttpServer {
                               final IpPort port,
                               final Function<Optional<Locale>, SpreadsheetMetadata> createMetadata,
                               final Function<BigDecimal, Fraction> fractioner,
-                              final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> idToFunctions,
+                              final Function<SpreadsheetId, BiFunction<FunctionExpressionName, List<Object>, Object>> idToFunctions,
                               final Function<SpreadsheetId, SpreadsheetStoreRepository> idToStoreRepository,
                               final Function<UrlPath, Either<WebFile, HttpStatus>> fileServer,
                               final Function<BiConsumer<HttpRequest, HttpResponse>, HttpServer> server) {
@@ -338,7 +338,7 @@ public final class SpreadsheetServer implements HttpServer {
     private final HateosContentType contentTypeJson;
     private final Function<Optional<Locale>, SpreadsheetMetadata> createMetadata;
     private final Function<BigDecimal, Fraction> fractioner;
-    private final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> idToFunctions;
+    private final Function<SpreadsheetId, BiFunction<FunctionExpressionName, List<Object>, Object>> idToFunctions;
     private final Function<SpreadsheetId, SpreadsheetStoreRepository> idToStoreRepository;
 
     private final Router<HttpRequestAttribute<?>, BiConsumer<HttpRequest, HttpResponse>> router;

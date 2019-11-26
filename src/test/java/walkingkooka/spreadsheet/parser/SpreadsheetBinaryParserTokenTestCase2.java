@@ -18,20 +18,20 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.expression.Expression;
 
 import java.math.BigInteger;
 
 public abstract class SpreadsheetBinaryParserTokenTestCase2<T extends SpreadsheetBinaryParserToken<T>> extends SpreadsheetBinaryParserTokenTestCase<T> {
 
     @Test
-    public final void testToExpressionNode() {
-        this.toExpressionNodeAndCheck(this.expressionNode(
-                ExpressionNode.bigInteger(leftBigInteger()),
-                ExpressionNode.bigInteger(rightBigInteger())));
+    public final void testToExpression() {
+        this.toExpressionAndCheck(this.expressionNode(
+                Expression.bigInteger(leftBigInteger()),
+                Expression.bigInteger(rightBigInteger())));
     }
 
-    abstract ExpressionNode expressionNode(final ExpressionNode left, final ExpressionNode right);
+    abstract Expression expressionNode(final Expression left, final Expression right);
 
     @Override
     final SpreadsheetParserToken leftToken() {

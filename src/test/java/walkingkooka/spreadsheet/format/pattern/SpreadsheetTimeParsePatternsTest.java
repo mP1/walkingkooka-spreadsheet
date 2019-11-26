@@ -190,7 +190,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     }
 
     // helpers..........................................................................................................
-    
+
     @Override
     SpreadsheetTimeParsePatterns createPattern(final List<SpreadsheetFormatTimeParserToken> tokens) {
         return SpreadsheetTimeParsePatterns.withTokens(tokens);
@@ -237,7 +237,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Override
     public SpreadsheetTimeParsePatterns unmarshall(final JsonNode jsonNode,
-                                                     final JsonNodeUnmarshallContext context) {
+                                                   final JsonNodeUnmarshallContext context) {
         return SpreadsheetTimeParsePatterns.unmarshallTimeParsePatterns(jsonNode, context);
     }
 

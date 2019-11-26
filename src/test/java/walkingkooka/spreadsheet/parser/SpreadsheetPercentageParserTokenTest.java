@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.visit.Visiting;
 
 import java.math.BigInteger;
@@ -104,9 +104,9 @@ public final class SpreadsheetPercentageParserTokenTest extends SpreadsheetUnary
     }
 
     @Test
-    public final void testToExpressionNode() {
-        this.toExpressionNodeAndCheck(ExpressionNode.division(ExpressionNode.bigInteger(new BigInteger(NUMBER1)),
-                ExpressionNode.longNode(100L)));
+    public final void testToExpression() {
+        this.toExpressionAndCheck(Expression.divide(Expression.bigInteger(new BigInteger(NUMBER1)),
+                Expression.longExpression(100L)));
     }
 
     @Override

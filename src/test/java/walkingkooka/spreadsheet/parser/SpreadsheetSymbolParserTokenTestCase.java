@@ -26,7 +26,7 @@ public abstract class SpreadsheetSymbolParserTokenTestCase<T extends Spreadsheet
     }
 
     @Test
-    public final void testToExpressionNode() {
-        this.toExpressionNodeAndFail();
+    public final void testToExpression() {
+        this.toExpressionAndFail();
     }
 }

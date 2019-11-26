@@ -25,7 +25,7 @@ import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.tree.expression.ExpressionNodeName;
+import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
@@ -64,7 +64,7 @@ public final class SpreadsheetServerApiSpreadsheetBiConsumerTest extends Spreads
         throw new UnsupportedOperationException();
     }
 
-    private BiFunction<ExpressionNodeName, List<Object>, Object> idToFunctions(final SpreadsheetId id) {
+    private BiFunction<FunctionExpressionName, List<Object>, Object> idToFunctions(final SpreadsheetId id) {
         throw new UnsupportedOperationException();
     }
 

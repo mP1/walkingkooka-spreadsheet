@@ -335,8 +335,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         math(predefined);
         misc(predefined);
 
-        @SuppressWarnings("OptionalGetWithoutIsPresent")
-        final Map<EbnfIdentifierName, Parser<ParserContext>> parsers = EbnfGrammarLoader.with("spreadsheet-parsers.grammar", SpreadsheetParsers.class)
+        @SuppressWarnings("OptionalGetWithoutIsPresent") final Map<EbnfIdentifierName, Parser<ParserContext>> parsers = EbnfGrammarLoader.with("spreadsheet-parsers.grammar", SpreadsheetParsers.class)
                 .grammar()
                 .get()
                 .combinator(predefined, SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer.INSTANCE);

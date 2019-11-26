@@ -29,8 +29,8 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.ExpressionNode;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
@@ -312,10 +312,10 @@ public final class SpreadsheetDataValidatorsTest implements ClassTesting2<Spread
         return SpreadsheetDataValidators.customFormula(this.expression());
     }
 
-    private ExpressionNode expression() {
-        return ExpressionNode.greaterThan(
-                ExpressionNode.reference(this.cellReference()),
-                ExpressionNode.valueOrFail(BIGDECIMAL_BETWEEN));
+    private Expression expression() {
+        return Expression.greaterThan(
+                Expression.reference(this.cellReference()),
+                Expression.valueOrFail(BIGDECIMAL_BETWEEN));
     }
 
     // date ...........................................................................................................

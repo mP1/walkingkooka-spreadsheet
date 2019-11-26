@@ -109,7 +109,7 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
         return b.toString();
     }
 
-        // Object...........................................................................................................
+    // Object...........................................................................................................
 
     @Override
     boolean canBeEqual(final Object other) {

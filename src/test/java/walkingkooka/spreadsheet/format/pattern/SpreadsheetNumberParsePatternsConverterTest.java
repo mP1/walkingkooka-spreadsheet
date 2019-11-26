@@ -370,7 +370,7 @@ public final class SpreadsheetNumberParsePatternsConverterTest extends Spreadshe
                 "abc23",
                 BigDecimal.valueOf(23));
     }
-    
+
     @Test
     public void testHashTextBigDecimalTextDigit() {
         this.convertAndCheck2("#\"abc\"",

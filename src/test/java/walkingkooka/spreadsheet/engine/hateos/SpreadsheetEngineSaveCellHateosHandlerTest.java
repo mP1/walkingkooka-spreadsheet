@@ -66,7 +66,7 @@ public final class SpreadsheetEngineSaveCellHateosHandlerTest
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
                     @Override
                     public SpreadsheetDelta saveCell(final SpreadsheetCell cell,
-                                                                                         final SpreadsheetEngineContext context) {
+                                                     final SpreadsheetEngineContext context) {
                         Objects.requireNonNull(context, "context");
 
                         assertEquals(SpreadsheetEngineSaveCellHateosHandlerTest.this.cell(), cell, "cell");
@@ -104,7 +104,7 @@ public final class SpreadsheetEngineSaveCellHateosHandlerTest
         this.handleAndCheck(this.createHandler(new FakeSpreadsheetEngine() {
                     @Override
                     public SpreadsheetDelta saveCell(final SpreadsheetCell cell,
-                                                                                         final SpreadsheetEngineContext context) {
+                                                     final SpreadsheetEngineContext context) {
                         Objects.requireNonNull(context, "context");
 
                         assertEquals(SpreadsheetEngineSaveCellHateosHandlerTest.this.cell(), cell, "cell");
@@ -134,9 +134,9 @@ public final class SpreadsheetEngineSaveCellHateosHandlerTest
 
                     @Override
                     public SpreadsheetDelta fillCells(final Collection<SpreadsheetCell> cells,
-                                                                                       final SpreadsheetRange from,
-                                                                                       final SpreadsheetRange to,
-                                                                                       final SpreadsheetEngineContext context) {
+                                                      final SpreadsheetRange from,
+                                                      final SpreadsheetRange to,
+                                                      final SpreadsheetEngineContext context) {
                         assertEquals(Sets.of(b2, c3), new LinkedHashSet<>(cells), "cells");
                         assertEquals(range, from, "from");
                         assertEquals(range, to, "to");
@@ -167,9 +167,9 @@ public final class SpreadsheetEngineSaveCellHateosHandlerTest
 
                     @Override
                     public SpreadsheetDelta fillCells(final Collection<SpreadsheetCell> cells,
-                                                                                       final SpreadsheetRange from,
-                                                                                       final SpreadsheetRange to,
-                                                                                       final SpreadsheetEngineContext context) {
+                                                      final SpreadsheetRange from,
+                                                      final SpreadsheetRange to,
+                                                      final SpreadsheetEngineContext context) {
                         assertEquals(Sets.of(unsaved1, unsaved2), new LinkedHashSet<>(cells), "cells");
                         assertEquals(range, from, "from");
                         assertEquals(range, to, "to");

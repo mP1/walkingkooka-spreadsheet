@@ -52,8 +52,8 @@ public final class SpreadsheetEngineDeleteColumnsHateosHandlerTest extends Sprea
                     @Override
                     @SuppressWarnings("OptionalGetWithoutIsPresent")
                     public SpreadsheetDelta deleteColumns(final SpreadsheetColumnReference c,
-                                                                                             final int count,
-                                                                                             final SpreadsheetEngineContext context) {
+                                                          final int count,
+                                                          final SpreadsheetEngineContext context) {
                         assertEquals(column.get(), c, "column");
                         assertEquals(1, count, "count");
                         return SpreadsheetDelta.with(cells);
@@ -78,8 +78,8 @@ public final class SpreadsheetEngineDeleteColumnsHateosHandlerTest extends Sprea
 
                     @Override
                     public SpreadsheetDelta deleteColumns(final SpreadsheetColumnReference c,
-                                                                                             final int count,
-                                                                                             final SpreadsheetEngineContext context) {
+                                                          final int count,
+                                                          final SpreadsheetEngineContext context) {
                         assertEquals(SpreadsheetColumnOrRowReference.parseColumn("C"), c, "column");
                         assertEquals(3, count, "count"); // C, D & E
                         return delta;
@@ -103,8 +103,8 @@ public final class SpreadsheetEngineDeleteColumnsHateosHandlerTest extends Sprea
                     @Override
                     @SuppressWarnings("OptionalGetWithoutIsPresent")
                     public SpreadsheetDelta deleteColumns(final SpreadsheetColumnReference c,
-                                                                                             final int count,
-                                                                                             final SpreadsheetEngineContext context) {
+                                                          final int count,
+                                                          final SpreadsheetEngineContext context) {
                         assertEquals(column.get(), c, "column");
                         assertEquals(1, count, "count");
                         return SpreadsheetDelta.with(cells);

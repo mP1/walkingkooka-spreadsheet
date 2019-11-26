@@ -21,7 +21,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 
 public abstract class SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitorTestCase<V extends SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<T>,
         T extends SpreadsheetFormatParserToken>
-    extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitorTestCase<V> {
+        extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitorTestCase<V> {
 
     SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitorTestCase() {
         super();

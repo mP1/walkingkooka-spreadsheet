@@ -61,7 +61,7 @@ public final class SpreadsheetTimeParsePatterns extends SpreadsheetParsePatterns
         this.ampms = ampms;
     }
 
-        // Object...........................................................................................................
+    // Object...........................................................................................................
 
     @Override
     boolean canBeEquals(final Object other) {

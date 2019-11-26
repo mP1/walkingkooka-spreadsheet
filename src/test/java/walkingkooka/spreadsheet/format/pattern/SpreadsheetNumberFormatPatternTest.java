@@ -77,7 +77,7 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
     public void testWithYearFails() {
         this.withInvalidCharacterFails(this.year());
     }
-    
+
     // helpers.........................................................................................................
 
     @Override

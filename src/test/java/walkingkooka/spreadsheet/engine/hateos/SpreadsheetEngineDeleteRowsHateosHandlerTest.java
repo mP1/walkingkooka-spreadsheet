@@ -53,8 +53,8 @@ public final class SpreadsheetEngineDeleteRowsHateosHandlerTest extends Spreadsh
                     @Override
                     @SuppressWarnings("OptionalGetWithoutIsPresent")
                     public SpreadsheetDelta deleteRows(final SpreadsheetRowReference r,
-                                                                                       final int count,
-                                                                                       final SpreadsheetEngineContext context) {
+                                                       final int count,
+                                                       final SpreadsheetEngineContext context) {
                         assertEquals(row.get(), r, "row");
                         assertEquals(1, count, "count");
                         return SpreadsheetDelta.with(cells);
@@ -79,8 +79,8 @@ public final class SpreadsheetEngineDeleteRowsHateosHandlerTest extends Spreadsh
 
                     @Override
                     public SpreadsheetDelta deleteRows(final SpreadsheetRowReference r,
-                                                                                       final int count,
-                                                                                       final SpreadsheetEngineContext context) {
+                                                       final int count,
+                                                       final SpreadsheetEngineContext context) {
                         assertEquals(SpreadsheetColumnOrRowReference.parseRow("2"), r, "row");
                         assertEquals(3, count, "count"); // 2, 3 & 4
                         return delta;
@@ -104,8 +104,8 @@ public final class SpreadsheetEngineDeleteRowsHateosHandlerTest extends Spreadsh
                     @Override
                     @SuppressWarnings("OptionalGetWithoutIsPresent")
                     public SpreadsheetDelta deleteRows(final SpreadsheetRowReference c,
-                                                                                       final int count,
-                                                                                       final SpreadsheetEngineContext context) {
+                                                       final int count,
+                                                       final SpreadsheetEngineContext context) {
                         assertEquals(row.get(), c, "row");
                         assertEquals(1, count, "count");
                         return SpreadsheetDelta.with(cells);

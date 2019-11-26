@@ -143,7 +143,7 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
     public void testWithNumberFails() {
         this.withInvalidCharacterFails(this.number());
     }
-    
+
     @Test
     public void testWithPercentSymbolFails() {
         this.withInvalidCharacterFails(this.percentSymbol());
@@ -182,7 +182,7 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
     }
 
     // helpers..........................................................................................................
-    
+
     @Override
     SpreadsheetTextFormatPattern createPattern(final SpreadsheetFormatTextParserToken token) {
         return SpreadsheetTextFormatPattern.with(token);
