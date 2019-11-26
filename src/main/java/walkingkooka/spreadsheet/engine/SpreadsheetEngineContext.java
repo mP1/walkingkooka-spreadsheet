@@ -22,7 +22,7 @@ import walkingkooka.Either;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
-import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.expression.Expression;
 
 import java.util.Optional;
 
@@ -32,14 +32,14 @@ import java.util.Optional;
 public interface SpreadsheetEngineContext extends Context {
 
     /**
-     * Parses the formula into an {@link ExpressionNode}.
+     * Parses the formula into an {@link Expression}.
      */
     SpreadsheetParserToken parseFormula(final String formula);
 
     /**
      * Evaluates the expression into a value.
      */
-    Object evaluate(final ExpressionNode node);
+    Object evaluate(final Expression node);
 
     /**
      * Converts the value into the target type.

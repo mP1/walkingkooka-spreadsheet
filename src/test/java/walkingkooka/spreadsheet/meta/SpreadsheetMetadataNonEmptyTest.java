@@ -360,7 +360,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                 name2 == n ? color2 :
                                         null));
     }
-    
+
     // NumberToColor....................................................................................................
 
     @Test
@@ -378,12 +378,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("#0.0"));
 
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             this.numberToColorAndCheck(metadata,
                     i,
                     number1 == i ? color1 :
-                    number7 == i ? color7 :
-                    null);
+                            number7 == i ? color7 :
+                                    null);
         }
     }
 

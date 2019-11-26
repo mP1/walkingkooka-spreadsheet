@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.compare.ComparatorTesting;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
-import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.expression.Expression;
 
 import java.util.Optional;
 
@@ -41,7 +41,7 @@ public final class SpreadsheetConditionalFormattingRulePriorityDescendingCompara
     private SpreadsheetConditionalFormattingRule createRule(final int priority) {
         return SpreadsheetConditionalFormattingRule.with(SpreadsheetDescription.with("description"),
                 priority,
-                SpreadsheetFormula.with("1").setExpression(Optional.of(ExpressionNode.longNode(1))),
+                SpreadsheetFormula.with("1").setExpression(Optional.of(Expression.longExpression(1))),
                 (c) -> null);
     }
 

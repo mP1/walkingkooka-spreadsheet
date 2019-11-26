@@ -377,7 +377,7 @@ public final class SpreadsheetNumberParsePatternsParserTest extends SpreadsheetN
                 "abc23",
                 BigDecimal.valueOf(23));
     }
-    
+
     @Test
     public void testHashTextBigDecimalTextDigit() {
         this.parseAndCheck2("#\"abc\"",
@@ -481,14 +481,14 @@ public final class SpreadsheetNumberParsePatternsParserTest extends SpreadsheetN
     // helpers..........................................................................................................
 
     private void parseAndFail2(final String pattern,
-                                 final String text) {
+                               final String text) {
         this.parseFailAndCheck(this.createParser(pattern),
                 text);
     }
 
     private void parseAndCheck2(final String pattern,
-                                  final String text,
-                                  final BigDecimal expected) {
+                                final String text,
+                                final BigDecimal expected) {
         this.parseAndCheck(this.createParser(pattern),
                 text,
                 ParserTokens.bigDecimal(expected, text),

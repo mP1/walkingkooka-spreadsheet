@@ -29,18 +29,18 @@ import walkingkooka.tree.expression.ExpressionReference;
 /**
  * A visitor which resolves any {@link ExpressionReference} down to a {@link SpreadsheetCellReference}.
  */
-final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunctionSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpressionReferenceVisitor {
+final class SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpressionReferenceVisitor {
 
     static SpreadsheetCellReference reference(final ExpressionReference reference,
                                               final SpreadsheetLabelStore store) {
-        final SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunctionSpreadsheetExpressionReferenceVisitor visitor =
-                new SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunctionSpreadsheetExpressionReferenceVisitor(store);
+        final SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor visitor =
+                new SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor(store);
         visitor.accept(reference);
         return visitor.reference;
     }
 
     // @VisibleForTesting
-    SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunctionSpreadsheetExpressionReferenceVisitor(final SpreadsheetLabelStore store) {
+    SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunctionSpreadsheetExpressionReferenceVisitor(final SpreadsheetLabelStore store) {
         super();
         this.store = store;
     }

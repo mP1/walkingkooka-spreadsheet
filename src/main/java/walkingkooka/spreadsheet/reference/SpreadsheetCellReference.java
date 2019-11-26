@@ -208,7 +208,7 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
         visitor.visit(this);
     }
 
-        // Object...........................................................................................................
+    // Object...........................................................................................................
 
     @Override
     public int hashCode() {

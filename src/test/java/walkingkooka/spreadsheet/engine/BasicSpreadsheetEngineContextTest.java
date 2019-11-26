@@ -39,8 +39,8 @@ import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
-import walkingkooka.tree.expression.ExpressionNode;
-import walkingkooka.tree.expression.ExpressionNodeName;
+import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.FunctionExpressionName;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -224,14 +224,14 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testEvaluate() {
-        this.evaluateAndCheck(ExpressionNode.addition(ExpressionNode.longNode(1), ExpressionNode.longNode(2)),
+        this.evaluateAndCheck(Expression.add(Expression.longExpression(1), Expression.longExpression(2)),
                 1L + 2);
     }
 
     @Test
     public void testEvaluateWithFunction() {
-        this.evaluateAndCheck(ExpressionNode.function(ExpressionNodeName.with("xyz"),
-                Lists.of(ExpressionNode.longNode(1), ExpressionNode.longNode(2), ExpressionNode.longNode(3))),
+        this.evaluateAndCheck(Expression.function(FunctionExpressionName.with("xyz"),
+                Lists.of(Expression.longExpression(1), Expression.longExpression(2), Expression.longExpression(3))),
                 1L + 2 + 3);
     }
 
@@ -339,19 +339,19 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 defaultSpreadsheetFormatter);
     }
 
-    private BiFunction<ExpressionNodeName, List<Object>, Object> functions() {
+    private BiFunction<FunctionExpressionName, List<Object>, Object> functions() {
         return this::functions;
     }
 
-    private Object functions(final ExpressionNodeName name, final List<Object> parameters) {
+    private Object functions(final FunctionExpressionName name, final List<Object> parameters) {
         assertEquals(functionName(), name, "function name");
         return parameters.stream()
                 .mapToLong(p -> this.converter().convertOrFail(p, Long.class, ConverterContexts.fake()))
                 .sum();
     }
 
-    private ExpressionNodeName functionName() {
-        return ExpressionNodeName.with("xyz");
+    private FunctionExpressionName functionName() {
+        return FunctionExpressionName.with("xyz");
     }
 
     private SpreadsheetEngine engine() {

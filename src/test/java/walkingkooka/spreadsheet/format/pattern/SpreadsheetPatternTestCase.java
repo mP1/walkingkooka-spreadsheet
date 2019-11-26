@@ -117,7 +117,7 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern<V>
     final SpreadsheetFormatParserToken greaterThanEqualsSymbol() {
         return SpreadsheetFormatParserToken.greaterThanEqualsSymbol("<=", "<=");
     }
-    
+
     final SpreadsheetFormatParserToken hour() {
         return SpreadsheetFormatParserToken.hour("h", "h");
     }

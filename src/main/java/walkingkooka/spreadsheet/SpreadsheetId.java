@@ -83,7 +83,7 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
     // JsonNodeContext..................................................................................................
 
     static SpreadsheetId unmarshall(final JsonNode node,
-                                      final JsonNodeUnmarshallContext context) {
+                                    final JsonNodeUnmarshallContext context) {
         return parse(node.stringValueOrFail());
     }
 
@@ -98,7 +98,7 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
                 SpreadsheetId.class);
     }
 
-        // Object............................................................................................................
+    // Object............................................................................................................
 
     @Override
     public int hashCode() {

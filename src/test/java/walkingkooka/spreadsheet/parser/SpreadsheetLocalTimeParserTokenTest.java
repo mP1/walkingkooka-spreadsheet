@@ -18,7 +18,7 @@ package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.visit.Visiting;
 
 import java.time.LocalTime;
@@ -70,8 +70,8 @@ public final class SpreadsheetLocalTimeParserTokenTest extends SpreadsheetNonSym
     }
 
     @Test
-    public void testToExpressionNode() {
-        this.toExpressionNodeAndCheck(ExpressionNode.localTime(this.value()));
+    public void testToExpression() {
+        this.toExpressionAndCheck(Expression.localTime(this.value()));
     }
 
     @Override

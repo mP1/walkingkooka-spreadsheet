@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
@@ -115,8 +115,8 @@ public final class SpreadsheetPowerParserTokenTest extends SpreadsheetBinaryPars
     }
 
     @Override
-    ExpressionNode expressionNode(final ExpressionNode left, final ExpressionNode right) {
-        return ExpressionNode.power(left, right);
+    Expression expressionNode(final Expression left, final Expression right) {
+        return Expression.power(left, right);
     }
 
     @Override

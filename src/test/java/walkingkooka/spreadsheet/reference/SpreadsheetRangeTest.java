@@ -569,8 +569,7 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
         final SpreadsheetCellReference c1 = this.cellReference("$C$1");
         final SpreadsheetCellReference c2 = this.cellReference("$C$2");
 
-        @SuppressWarnings("unused")
-        final SpreadsheetCell z99 = this.cell("Z99", "99+0");
+        @SuppressWarnings("unused") final SpreadsheetCell z99 = this.cell("Z99", "99+0");
 
         final List<Object> consumed = Lists.array();
 

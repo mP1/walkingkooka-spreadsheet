@@ -75,8 +75,8 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
                 new FakeSpreadsheetEngine() {
                     @Override
                     public SpreadsheetDelta loadCell(final SpreadsheetCellReference cell,
-                                                                                         final SpreadsheetEngineEvaluation evaluation,
-                                                                                         final SpreadsheetEngineContext context) {
+                                                     final SpreadsheetEngineEvaluation evaluation,
+                                                     final SpreadsheetEngineContext context) {
                         assertSame(EVALUATION, evaluation, "evaluation");
                         assertNotNull(context, "context");
 
@@ -225,8 +225,8 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
                 new FakeSpreadsheetEngine() {
                     @Override
                     public SpreadsheetDelta loadCell(final SpreadsheetCellReference cell,
-                                                                                         final SpreadsheetEngineEvaluation evaluation,
-                                                                                         final SpreadsheetEngineContext context) {
+                                                     final SpreadsheetEngineEvaluation evaluation,
+                                                     final SpreadsheetEngineContext context) {
                         assertSame(EVALUATION, evaluation, "evaluation");
                         assertNotNull(context, "context");
 
@@ -270,8 +270,8 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
                 new FakeSpreadsheetEngine() {
                     @Override
                     public SpreadsheetDelta loadCell(final SpreadsheetCellReference cell,
-                                                                                         final SpreadsheetEngineEvaluation evaluation,
-                                                                                         final SpreadsheetEngineContext context) {
+                                                     final SpreadsheetEngineEvaluation evaluation,
+                                                     final SpreadsheetEngineContext context) {
                         assertSame(EVALUATION, evaluation, "evaluation");
                         assertNotNull(context, "context");
 
@@ -375,8 +375,8 @@ public final class SpreadsheetEngineLoadCellHateosHandlerTest
         return new FakeSpreadsheetEngine() {
             @Override
             public SpreadsheetDelta loadCell(final SpreadsheetCellReference id,
-                                                                                 final SpreadsheetEngineEvaluation evaluation,
-                                                                                 final SpreadsheetEngineContext context) {
+                                             final SpreadsheetEngineEvaluation evaluation,
+                                             final SpreadsheetEngineContext context) {
                 Objects.requireNonNull(id, "id");
                 Objects.requireNonNull(evaluation, "evaluation");
                 Objects.requireNonNull(context, "context");

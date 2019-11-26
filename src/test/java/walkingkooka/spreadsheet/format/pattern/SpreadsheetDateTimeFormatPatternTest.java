@@ -124,7 +124,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     String patternText() {
         return "dd/mm/yyyy hh:mm:ss.000 A/P \"text-literal\" \\!";
     }
-    
+
     @Override
     SpreadsheetFormatDateTimeParserToken createFormatParserToken(final List<ParserToken> tokens,
                                                                  final String text) {

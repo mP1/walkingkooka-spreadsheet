@@ -24,7 +24,7 @@ import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.tree.expression.ExpressionNodeName;
+import walkingkooka.tree.expression.FunctionExpressionName;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -49,7 +49,7 @@ public final class SpreadsheetContexts implements PublicStaticHelper {
                                             final HateosContentType contentType,
                                             final Function<BigDecimal, Fraction> fractioner,
                                             final Function<Optional<Locale>, SpreadsheetMetadata> createMetadata,
-                                            final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
+                                            final Function<SpreadsheetId, BiFunction<FunctionExpressionName, List<Object>, Object>> spreadsheetIdFunctions,
                                             final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToRepository) {
         return MemorySpreadsheetContext.with(base,
                 contentType,

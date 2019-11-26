@@ -18,7 +18,7 @@ package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.visit.Visiting;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -79,8 +79,8 @@ public final class SpreadsheetTextParserTokenTest extends SpreadsheetNonSymbolPa
     }
 
     @Test
-    public void testToExpressionNode() {
-        this.toExpressionNodeAndCheck(ExpressionNode.text(this.text()));
+    public void testToExpression() {
+        this.toExpressionAndCheck(Expression.string(this.text()));
     }
 
     @Override

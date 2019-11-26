@@ -339,7 +339,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         try {
             final SpreadsheetParserToken updated = parsed.apply(context.parseFormula(formula.text()));
             result = formula.setText(updated.text())
-                    .setExpression(updated.expressionNode());
+                    .setExpression(updated.expression());
         } catch (final ParserException failed) {
             // parsing failed set the error message
             result = this.setError(formula, failed.getMessage());

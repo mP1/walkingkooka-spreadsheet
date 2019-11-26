@@ -46,7 +46,7 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
 
     @Test
     public final void testWithNullParserTokenFails() {
-        assertThrows(NullPointerException.class, () -> createPattern((List<T>)null));
+        assertThrows(NullPointerException.class, () -> createPattern((List<T>) null));
     }
 
     @Test
@@ -261,8 +261,8 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
     // ConverterTesting.................................................................................................
 
     final void convertAndCheck2(final String pattern,
-                              final String text,
-                              final V value) {
+                                final String text,
+                                final V value) {
         this.convertAndCheck(this.parseString(pattern).converter(),
                 text,
                 this.targetType(),

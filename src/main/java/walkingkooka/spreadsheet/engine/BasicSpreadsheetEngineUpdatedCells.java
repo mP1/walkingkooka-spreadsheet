@@ -104,7 +104,7 @@ final class BasicSpreadsheetEngineUpdatedCells implements AutoCloseable {
     private void addNewExpressionReferences(final SpreadsheetCellReference cell,
                                             final SpreadsheetFormula formula) {
         formula.expression()
-                .ifPresent(e -> BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitor.processReferences(e,
+                .ifPresent(e -> BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor.processReferences(e,
                         cell,
                         this.engine));
     }

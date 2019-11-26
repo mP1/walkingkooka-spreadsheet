@@ -18,10 +18,10 @@
 package walkingkooka.spreadsheet.datavalidation;
 
 import walkingkooka.Either;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.ExpressionNode;
-import walkingkooka.tree.expression.ExpressionNodeName;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.expression.FunctionExpressionName;
 
 import java.math.MathContext;
 import java.util.List;
@@ -56,7 +56,7 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
                                                  final ExpressionEvaluationContext context) {
         super();
         this.cellReference = cellReference;
-        this.value = Optional.of(ExpressionNode.valueOrFail(value));
+        this.value = Optional.of(Expression.valueOrFail(value));
         this.context = context;
     }
 
@@ -103,18 +103,18 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     private final ExpressionReference cellReference;
 
     @Override
-    public Object function(final ExpressionNodeName functionName, final List<Object> list) {
+    public Object function(final FunctionExpressionName functionName, final List<Object> list) {
         return this.context.function(functionName, list);
     }
 
     @Override
-    public Optional<ExpressionNode> reference(final ExpressionReference reference) {
+    public Optional<Expression> reference(final ExpressionReference reference) {
         return this.cellReference().equals(reference) ?
                 this.value :
                 this.context.reference(reference);
     }
 
-    private final Optional<ExpressionNode> value;
+    private final Optional<Expression> value;
 
     @Override
     public Locale locale() {

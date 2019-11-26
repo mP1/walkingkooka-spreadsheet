@@ -461,378 +461,378 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
     /**
      * Only {@link SpreadsheetFormatNumberParserToken} return true
      */
-    public final boolean isNumber(){
+    public final boolean isNumber() {
         return this instanceof SpreadsheetFormatNumberParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatBracketCloseSymbolParserToken} return true
      */
-    public final boolean isBracketCloseSymbol(){
+    public final boolean isBracketCloseSymbol() {
         return this instanceof SpreadsheetFormatBracketCloseSymbolParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatBracketOpenSymbolParserToken} return true
      */
-    public final boolean isBracketOpenSymbol(){
+    public final boolean isBracketOpenSymbol() {
         return this instanceof SpreadsheetFormatBracketOpenSymbolParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatColorParserToken} return true
      */
-    public final boolean isColor(){
+    public final boolean isColor() {
         return this instanceof SpreadsheetFormatColorParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatColorLiteralSymbolParserToken} return true
      */
-    public final boolean isColorLiteralSymbol(){
+    public final boolean isColorLiteralSymbol() {
         return this instanceof SpreadsheetFormatColorLiteralSymbolParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatColorNameParserToken} return true
      */
-    public final boolean isColorName(){
+    public final boolean isColorName() {
         return this instanceof SpreadsheetFormatColorNameParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatColorNumberParserToken} return true
      */
-    public final boolean isColorNumber(){
+    public final boolean isColorNumber() {
         return this instanceof SpreadsheetFormatColorNumberParserToken;
     }
 
     /**
      * All sub classes of {@link SpreadsheetFormatConditionParserToken} return true
      */
-    public final boolean isCondition(){
+    public final boolean isCondition() {
         return this instanceof SpreadsheetFormatConditionParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatConditionNumberParserToken} return true
      */
-    public final boolean isConditionNumber(){
+    public final boolean isConditionNumber() {
         return this instanceof SpreadsheetFormatConditionNumberParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatCurrencyParserToken} return true
      */
-    public final boolean isCurrency(){
+    public final boolean isCurrency() {
         return this instanceof SpreadsheetFormatCurrencyParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatDateParserToken} return true
      */
-    public final boolean isDate(){
+    public final boolean isDate() {
         return this instanceof SpreadsheetFormatDateParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatDateTimeParserToken} return true
      */
-    public final boolean isDateTime(){
+    public final boolean isDateTime() {
         return this instanceof SpreadsheetFormatDateTimeParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatDayParserToken} return true
      */
-    public final boolean isDay(){
+    public final boolean isDay() {
         return this instanceof SpreadsheetFormatDayParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatDecimalPointParserToken} return true
      */
-    public final boolean isDecimalPoint(){
+    public final boolean isDecimalPoint() {
         return this instanceof SpreadsheetFormatDecimalPointParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatDigitParserToken} return true
      */
-    public final boolean isDigit(){
+    public final boolean isDigit() {
         return this instanceof SpreadsheetFormatDigitParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatDigitSpaceParserToken} return true
      */
-    public final boolean isDigitSpace(){
+    public final boolean isDigitSpace() {
         return this instanceof SpreadsheetFormatDigitSpaceParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatDigitZeroParserToken} return true
      */
-    public final boolean isDigitZero(){
+    public final boolean isDigitZero() {
         return this instanceof SpreadsheetFormatDigitZeroParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatEqualsParserToken} return true
      */
-    public final boolean isEquals(){
+    public final boolean isEquals() {
         return this instanceof SpreadsheetFormatEqualsParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatEqualsSymbolParserToken} return true
      */
-    public final boolean isEqualsSymbol(){
+    public final boolean isEqualsSymbol() {
         return this instanceof SpreadsheetFormatEqualsSymbolParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatEscapeParserToken} return true
      */
-    public final boolean isEscape(){
+    public final boolean isEscape() {
         return this instanceof SpreadsheetFormatEscapeParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatExponentParserToken} return true
      */
-    public final boolean isExponent(){
+    public final boolean isExponent() {
         return this instanceof SpreadsheetFormatExponentParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatExponentSymbolParserToken} return true
      */
-    public final boolean isExponentSymbol(){
+    public final boolean isExponentSymbol() {
         return this instanceof SpreadsheetFormatExponentSymbolParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatExpressionParserToken} return true
      */
-    public final boolean isExpression(){
+    public final boolean isExpression() {
         return this instanceof SpreadsheetFormatExpressionParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatFractionParserToken} return true
      */
-    public final boolean isFraction(){
+    public final boolean isFraction() {
         return this instanceof SpreadsheetFormatFractionParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatFractionSymbolParserToken} return true
      */
-    public final boolean isFractionSymbol(){
+    public final boolean isFractionSymbol() {
         return this instanceof SpreadsheetFormatFractionSymbolParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatGeneralParserToken} return true
      */
-    public final boolean isGeneral(){
+    public final boolean isGeneral() {
         return this instanceof SpreadsheetFormatGeneralParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatGeneralSymbolParserToken} return true
      */
-    public final boolean isGeneralSymbol(){
+    public final boolean isGeneralSymbol() {
         return this instanceof SpreadsheetFormatGeneralSymbolParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatGreaterThanParserToken} return true
      */
-    public final boolean isGreaterThan(){
+    public final boolean isGreaterThan() {
         return this instanceof SpreadsheetFormatGreaterThanParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatGreaterThanSymbolParserToken} return true
      */
-    public final boolean isGreaterThanSymbol(){
+    public final boolean isGreaterThanSymbol() {
         return this instanceof SpreadsheetFormatGreaterThanSymbolParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatGreaterThanEqualsParserToken} return true
      */
-    public final boolean isGreaterThanEquals(){
+    public final boolean isGreaterThanEquals() {
         return this instanceof SpreadsheetFormatGreaterThanEqualsParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatGreaterThanEqualsSymbolParserToken} return true
      */
-    public final boolean isGreaterThanEqualsSymbol(){
+    public final boolean isGreaterThanEqualsSymbol() {
         return this instanceof SpreadsheetFormatGreaterThanEqualsSymbolParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatHourParserToken} return true
      */
-    public final boolean isHour(){
+    public final boolean isHour() {
         return this instanceof SpreadsheetFormatHourParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatLessThanParserToken} return true
      */
-    public final boolean isLessThan(){
+    public final boolean isLessThan() {
         return this instanceof SpreadsheetFormatLessThanParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatLessThanSymbolParserToken} return true
      */
-    public final boolean isLessThanSymbol(){
+    public final boolean isLessThanSymbol() {
         return this instanceof SpreadsheetFormatLessThanSymbolParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatLessThanEqualsParserToken} return true
      */
-    public final boolean isLessThanEquals(){
+    public final boolean isLessThanEquals() {
         return this instanceof SpreadsheetFormatLessThanEqualsParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatLessThanEqualsSymbolParserToken} return true
      */
-    public final boolean isLessThanEqualsSymbol(){
+    public final boolean isLessThanEqualsSymbol() {
         return this instanceof SpreadsheetFormatLessThanEqualsSymbolParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatMonthOrMinuteParserToken} return true
      */
-    public final boolean isMonthOrMinute(){
+    public final boolean isMonthOrMinute() {
         return this instanceof SpreadsheetFormatMonthOrMinuteParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatSymbolParserToken} return true
      */
-    public final boolean isNoise(){
+    public final boolean isNoise() {
         return this instanceof SpreadsheetFormatSymbolParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatNotEqualsParserToken} return true
      */
-    public final boolean isNotEquals(){
+    public final boolean isNotEquals() {
         return this instanceof SpreadsheetFormatNotEqualsParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatNotEqualsSymbolParserToken} return true
      */
-    public final boolean isNotEqualsSymbol(){
+    public final boolean isNotEqualsSymbol() {
         return this instanceof SpreadsheetFormatNotEqualsSymbolParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatPercentParserToken} return true
      */
-    public final boolean isPercent(){
+    public final boolean isPercent() {
         return this instanceof SpreadsheetFormatPercentParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatQuotedTextParserToken} return true
      */
-    public final boolean isQuotedText(){
+    public final boolean isQuotedText() {
         return this instanceof SpreadsheetFormatQuotedTextParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatSecondParserToken} return true
      */
-    public final boolean isSecond(){
+    public final boolean isSecond() {
         return this instanceof SpreadsheetFormatSecondParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatSeparatorSymbolParserToken} return true
      */
-    public final boolean isSeparatorSymbol(){
+    public final boolean isSeparatorSymbol() {
         return this instanceof SpreadsheetFormatSeparatorSymbolParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatStarParserToken} return true
      */
-    public final boolean isStar(){
+    public final boolean isStar() {
         return this instanceof SpreadsheetFormatStarParserToken;
     }
 
     /**
      * Only sub classes of {@link SpreadsheetFormatSymbolParserToken} return true
      */
-    public final boolean isSymbol(){
+    public final boolean isSymbol() {
         return this instanceof SpreadsheetFormatSymbolParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatTextParserToken} return true
      */
-    public final boolean isText(){
+    public final boolean isText() {
         return this instanceof SpreadsheetFormatTextParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatTextLiteralParserToken} return true
      */
-    public final boolean isTextLiteral(){
+    public final boolean isTextLiteral() {
         return this instanceof SpreadsheetFormatTextLiteralParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatTextPlaceholderParserToken} return true
      */
-    public final boolean isTextPlaceholder(){
+    public final boolean isTextPlaceholder() {
         return this instanceof SpreadsheetFormatTextPlaceholderParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatThousandsParserToken} return true
      */
-    public final boolean isThousands(){
+    public final boolean isThousands() {
         return this instanceof SpreadsheetFormatThousandsParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatTimeParserToken} return true
      */
-    public final boolean isTime(){
+    public final boolean isTime() {
         return this instanceof SpreadsheetFormatTimeParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatUnderscoreParserToken} return true
      */
-    public final boolean isUnderscore(){
+    public final boolean isUnderscore() {
         return this instanceof SpreadsheetFormatUnderscoreParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatWhitespaceParserToken} return true
      */
-    public final boolean isWhitespace(){
+    public final boolean isWhitespace() {
         return this instanceof SpreadsheetFormatWhitespaceParserToken;
     }
 
     /**
      * Only {@link SpreadsheetFormatYearParserToken} return true
      */
-    public final boolean isYear(){
+    public final boolean isYear() {
         return this instanceof SpreadsheetFormatYearParserToken;
     }
 

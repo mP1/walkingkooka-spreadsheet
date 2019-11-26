@@ -62,7 +62,7 @@ import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepositories;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.store.Store;
-import walkingkooka.tree.expression.ExpressionNodeName;
+import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -117,7 +117,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 this::spreadsheetIdFunctions,
                 this::spreadsheetIdToRepository);
     }
-    
+
     @Test
     public void testWithNullCreateMetadataFails() {
         this.withFails(this.base(),
@@ -152,7 +152,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                            final HateosContentType contentType,
                            final Function<BigDecimal, Fraction> fractioner,
                            final Function<Optional<Locale>, SpreadsheetMetadata> createMetadata,
-                           final Function<SpreadsheetId, BiFunction<ExpressionNodeName, List<Object>, Object>> spreadsheetIdFunctions,
+                           final Function<SpreadsheetId, BiFunction<FunctionExpressionName, List<Object>, Object>> spreadsheetIdFunctions,
                            final Function<SpreadsheetId, SpreadsheetStoreRepository> spreadsheetIdToRepository) {
         assertThrows(NullPointerException.class, () -> MemorySpreadsheetContext.with(base,
                 contentType,
@@ -201,12 +201,12 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                         "    \"formula\": {\n" +
                         "      \"text\": \"1+2\",\n" +
                         "      \"expression\": {\n" +
-                        "        \"type\": \"expression-addition\",\n" +
+                        "        \"type\": \"add-expression\",\n" +
                         "        \"value\": [{\n" +
-                        "          \"type\": \"expression-big-decimal\",\n" +
+                        "          \"type\": \"big-decimal-expression\",\n" +
                         "          \"value\": \"1\"\n" +
                         "        }, {\n" +
-                        "          \"type\": \"expression-big-decimal\",\n" +
+                        "          \"type\": \"big-decimal-expression\",\n" +
                         "          \"value\": \"2\"\n" +
                         "        }]\n" +
                         "      }\n" +
@@ -224,12 +224,12 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                         "    \"formula\": {\n" +
                         "      \"text\": \"1+2\",\n" +
                         "      \"expression\": {\n" +
-                        "        \"type\": \"expression-addition\",\n" +
+                        "        \"type\": \"add-expression\",\n" +
                         "        \"value\": [{\n" +
-                        "          \"type\": \"expression-big-decimal\",\n" +
+                        "          \"type\": \"big-decimal-expression\",\n" +
                         "          \"value\": \"1\"\n" +
                         "        }, {\n" +
-                        "          \"type\": \"expression-big-decimal\",\n" +
+                        "          \"type\": \"big-decimal-expression\",\n" +
                         "          \"value\": \"2\"\n" +
                         "        }]\n" +
                         "      },\n" +
@@ -255,12 +255,12 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                         "    \"formula\": {\n" +
                         "      \"text\": \"1+2\",\n" +
                         "      \"expression\": {\n" +
-                        "        \"type\": \"expression-addition\",\n" +
+                        "        \"type\": \"add-expression\",\n" +
                         "        \"value\": [{\n" +
-                        "          \"type\": \"expression-big-decimal\",\n" +
+                        "          \"type\": \"big-decimal-expression\",\n" +
                         "          \"value\": \"1\"\n" +
                         "        }, {\n" +
-                        "          \"type\": \"expression-big-decimal\",\n" +
+                        "          \"type\": \"big-decimal-expression\",\n" +
                         "          \"value\": \"2\"\n" +
                         "        }]\n" +
                         "      },\n" +
@@ -286,12 +286,12 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                         "    \"formula\": {\n" +
                         "      \"text\": \"1+2\",\n" +
                         "      \"expression\": {\n" +
-                        "        \"type\": \"expression-addition\",\n" +
+                        "        \"type\": \"add-expression\",\n" +
                         "        \"value\": [{\n" +
-                        "          \"type\": \"expression-big-decimal\",\n" +
+                        "          \"type\": \"big-decimal-expression\",\n" +
                         "          \"value\": \"1\"\n" +
                         "        }, {\n" +
-                        "          \"type\": \"expression-big-decimal\",\n" +
+                        "          \"type\": \"big-decimal-expression\",\n" +
                         "          \"value\": \"2\"\n" +
                         "        }]\n" +
                         "      },\n" +
@@ -334,7 +334,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 @Override
                 public Map<HttpHeaderName<?>, Object> headers() {
                     return Maps.of(HttpHeaderName.ACCEPT_CHARSET, AcceptCharset.parse("UTF-8"),
-                            HttpHeaderName.CONTENT_LENGTH, (long)this.body().length,
+                            HttpHeaderName.CONTENT_LENGTH, (long) this.body().length,
                             HttpHeaderName.CONTENT_TYPE, contentType().contentType());
                 }
 
@@ -359,8 +359,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
             assertNotEquals(Optional.empty(), mapped, "request " + request.parameters());
 
             final RecordingHttpResponse response = HttpResponses.recording();
-            @SuppressWarnings("OptionalGetWithoutIsPresent")
-            final BiConsumer<HttpRequest, HttpResponse> consumer = mapped.get();
+            @SuppressWarnings("OptionalGetWithoutIsPresent") final BiConsumer<HttpRequest, HttpResponse> consumer = mapped.get();
             consumer.accept(request, response);
         }
 
@@ -380,7 +379,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
                 @Override
                 public Map<HttpHeaderName<?>, Object> headers() {
                     return Maps.of(HttpHeaderName.ACCEPT_CHARSET, AcceptCharset.parse("UTF-8"),
-                            HttpHeaderName.CONTENT_LENGTH, (long)this.body().length,
+                            HttpHeaderName.CONTENT_LENGTH, (long) this.body().length,
                             HttpHeaderName.CONTENT_TYPE, contentType().contentType());
                 }
 
@@ -406,7 +405,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
             expected.setStatus(HttpStatusCode.OK.setMessage("GET resource successful"));
 
             expected.addEntity(HttpEntity.with(Maps.of(
-                    HttpHeaderName.CONTENT_LENGTH, (long)expectedBody.getBytes(utf8).length,
+                    HttpHeaderName.CONTENT_LENGTH, (long) expectedBody.getBytes(utf8).length,
                     HttpHeaderName.CONTENT_TYPE, contentType().contentType().setCharset(CharsetName.UTF_8)),
                     Binary.with(expectedBody.getBytes(utf8))));
 
@@ -565,13 +564,13 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
         return metadata;
     }
 
-    private BiFunction<ExpressionNodeName, List<Object>, Object> spreadsheetIdFunctions(final SpreadsheetId spreadsheetId) {
+    private BiFunction<FunctionExpressionName, List<Object>, Object> spreadsheetIdFunctions(final SpreadsheetId spreadsheetId) {
         this.checkSpreadsheetId(spreadsheetId);
 
         return this::spreadsheetIdFunctions;
     }
 
-    private Object spreadsheetIdFunctions(final ExpressionNodeName functionName, final List<Object> parameters) {
+    private Object spreadsheetIdFunctions(final FunctionExpressionName functionName, final List<Object> parameters) {
         throw new UnsupportedOperationException(functionName + "(" + parameters + ")");
     }
 
@@ -580,7 +579,7 @@ public final class MemorySpreadsheetContextTest implements SpreadsheetContextTes
 
         SpreadsheetStoreRepository repository = this.idToRepositories.get(id);
 
-        if(null==repository) {
+        if (null == repository) {
             final SpreadsheetMetadataStore metadataStore = SpreadsheetMetadataStores.treeMap();
             metadataStore.save(SpreadsheetMetadata.EMPTY
                     .set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, id)
