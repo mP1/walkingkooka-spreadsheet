@@ -24,7 +24,7 @@ import walkingkooka.UsesToStringBuilder;
 import walkingkooka.spreadsheet.function.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.HasText;
-import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonObject;
@@ -38,7 +38,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A spreadsheet formula, including its compiled {@link ExpressionNode} and possibly its {@link Object value} or {@link SpreadsheetError}.
+ * A spreadsheet formula, including its compiled {@link Expression} and possibly its {@link Object value} or {@link SpreadsheetError}.
  */
 public final class SpreadsheetFormula implements HasText,
         UsesToStringBuilder {
@@ -46,7 +46,7 @@ public final class SpreadsheetFormula implements HasText,
     /**
      * No expression constant.
      */
-    public final static Optional<ExpressionNode> NO_EXPRESSION = Optional.empty();
+    public final static Optional<Expression> NO_EXPRESSION = Optional.empty();
 
     /**
      * No error constant.
@@ -78,7 +78,7 @@ public final class SpreadsheetFormula implements HasText,
     }
 
     private SpreadsheetFormula(final String text,
-                               final Optional<ExpressionNode> expression,
+                               final Optional<Expression> expression,
                                final Optional<Object> value,
                                final Optional<SpreadsheetError> error) {
         super();
@@ -115,11 +115,11 @@ public final class SpreadsheetFormula implements HasText,
 
     // expression .............................................................................................
 
-    public Optional<ExpressionNode> expression() {
+    public Optional<Expression> expression() {
         return this.expression;
     }
 
-    public SpreadsheetFormula setExpression(final Optional<ExpressionNode> expression) {
+    public SpreadsheetFormula setExpression(final Optional<Expression> expression) {
         checkExpression(expression);
 
         return this.expression.equals(expression) ?
@@ -130,9 +130,9 @@ public final class SpreadsheetFormula implements HasText,
     /**
      * The expression parsed from the text form of this formula. This can then be executed to produce a {@link #value}
      */
-    private Optional<ExpressionNode> expression;
+    private Optional<Expression> expression;
 
-    private static void checkExpression(final Optional<ExpressionNode> expression) {
+    private static void checkExpression(final Optional<Expression> expression) {
         Objects.requireNonNull(expression, "expression");
     }
 
@@ -198,7 +198,7 @@ public final class SpreadsheetFormula implements HasText,
     // internal factory .............................................................................................
 
     private SpreadsheetFormula replace(final String text,
-                                       final Optional<ExpressionNode> expression,
+                                       final Optional<Expression> expression,
                                        final Optional<Object> value,
                                        final Optional<SpreadsheetError> error) {
         return new SpreadsheetFormula(text, expression, value, error);
@@ -212,7 +212,7 @@ public final class SpreadsheetFormula implements HasText,
     static SpreadsheetFormula unmarshall(final JsonNode node,
                                            final JsonNodeUnmarshallContext context) {
         String text = null;
-        ExpressionNode expression = null;
+        Expression expression = null;
         Object value = null;
         SpreadsheetError error = null;
 
@@ -262,7 +262,7 @@ public final class SpreadsheetFormula implements HasText,
 
         object = object.set(TEXT, JsonNode.string(this.text));
 
-        final Optional<ExpressionNode> expression = this.expression;
+        final Optional<Expression> expression = this.expression;
         if (expression.isPresent()) {
             object = object.set(EXPRESSION_STRING, context.marshallWithType(expression.get()));
         }

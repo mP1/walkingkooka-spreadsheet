@@ -63,8 +63,8 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
-import walkingkooka.tree.expression.ExpressionNode;
-import walkingkooka.tree.expression.ExpressionNodeName;
+import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.text.FontStyle;
 import walkingkooka.tree.text.FontWeight;
@@ -574,7 +574,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         return SpreadsheetConditionalFormattingRule.with(SpreadsheetDescription.with(priority + "=" + result),
                 priority,
-                SpreadsheetFormula.with(String.valueOf(result)).setExpression(Optional.of(ExpressionNode.booleanNode(result))),
+                SpreadsheetFormula.with(String.valueOf(result)).setExpression(Optional.of(Expression.booleanExpression(result))),
                 (c) -> style);
     }
 
@@ -4780,9 +4780,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             }
 
             @Override
-            public Object evaluate(final ExpressionNode node) {
+            public Object evaluate(final Expression node) {
                 // throw an exception which is an "error" when the invalidCellReference function appears in a formula and executed
-                final BiFunction<ExpressionNodeName, List<Object>, Object> functions = (name, params) -> {
+                final BiFunction<FunctionExpressionName, List<Object>, Object> functions = (name, params) -> {
                     if (name.value().equals(SpreadsheetFormula.INVALID_CELL_REFERENCE.value())) {
                         throw new ExpressionEvaluationException("Invalid cell reference: " + params.get(0).toString());
                     }
@@ -4799,7 +4799,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 };
 
                 return node.toValue(ExpressionEvaluationContexts.basic(functions,
-                        SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(engine, labelStore, this),
+                        SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(engine, labelStore, this),
                         this.converter(),
                         converterContext()));
             }
@@ -4967,14 +4967,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     /**
      * Assumes the formula is syntactically correct and updates the cell.
      */
-    private Optional<ExpressionNode> parseFormula(final SpreadsheetFormula formula) {
+    private Optional<Expression> parseFormula(final SpreadsheetFormula formula) {
         final String formulaText = formula.text();
         return SpreadsheetParsers.expression()
                 .parse(TextCursors.charSequence(formulaText),
                         SpreadsheetParserContexts.basic(this.dateTimeContext(), this.decimalNumberContext()))
                 .orElseThrow(() -> new AssertionError("Failed to parse " + CharSequences.quote(formulaText)))
                 .cast(SpreadsheetParserToken.class)
-                .expressionNode();
+                .expression();
     }
 
     private void loadCellStoreAndCheck(final SpreadsheetCellStore store,

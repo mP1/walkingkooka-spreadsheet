@@ -68,8 +68,8 @@ public final class SpreadsheetFunctionNameParserTokenTest extends SpreadsheetNon
     }
 
     @Test
-    public void testToExpressionNode() {
-        this.toExpressionNodeAndFail();
+    public void testToExpression() {
+        this.toExpressionAndFail();
     }
 
     @Override

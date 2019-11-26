@@ -17,10 +17,10 @@
 
 package walkingkooka.spreadsheet.parser;
 
-public final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitorTest extends SpreadsheetParserTokenVisitorTestCase<SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor> {
+public final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitorTest extends SpreadsheetParserTokenVisitorTestCase<SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor> {
     @Override
-    public SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor createVisitor() {
-        return new SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor();
+    public SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor createVisitor() {
+        return new SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor();
     }
 
     @Override
@@ -29,7 +29,7 @@ public final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenV
     }
 
     @Override
-    public Class<SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor> type() {
-        return SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor.class;
+    public Class<SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor> type() {
+        return SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor.class;
     }
 }

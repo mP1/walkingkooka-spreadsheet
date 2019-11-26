@@ -180,12 +180,12 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
                                 "    \"formula\": {\n" +
                                 "      \"text\": \"1+2\",\n" +
                                 "      \"expression\": {\n" +
-                                "        \"type\": \"expression-addition\",\n" +
+                                "        \"type\": \"add-expression\",\n" +
                                 "        \"value\": [{\n" +
-                                "          \"type\": \"expression-big-decimal\",\n" +
+                                "          \"type\": \"big-decimal-expression\",\n" +
                                 "          \"value\": \"1\"\n" +
                                 "        }, {\n" +
-                                "          \"type\": \"expression-big-decimal\",\n" +
+                                "          \"type\": \"big-decimal-expression\",\n" +
                                 "          \"value\": \"2\"\n" +
                                 "        }]\n" +
                                 "      },\n" +
@@ -224,12 +224,12 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
                                 "    \"formula\": {\n" +
                                 "      \"text\": \"1+2\",\n" +
                                 "      \"expression\": {\n" +
-                                "        \"type\": \"expression-addition\",\n" +
+                                "        \"type\": \"add-expression\",\n" +
                                 "        \"value\": [{\n" +
-                                "          \"type\": \"expression-big-decimal\",\n" +
+                                "          \"type\": \"big-decimal-expression\",\n" +
                                 "          \"value\": \"1\"\n" +
                                 "        }, {\n" +
-                                "          \"type\": \"expression-big-decimal\",\n" +
+                                "          \"type\": \"big-decimal-expression\",\n" +
                                 "          \"value\": \"2\"\n" +
                                 "        }]\n" +
                                 "      },\n" +
@@ -256,12 +256,12 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
                                 "    \"formula\": {\n" +
                                 "      \"text\": \"4+A1\",\n" +
                                 "      \"expression\": {\n" +
-                                "        \"type\": \"expression-addition\",\n" +
+                                "        \"type\": \"add-expression\",\n" +
                                 "        \"value\": [{\n" +
-                                "          \"type\": \"expression-big-decimal\",\n" +
+                                "          \"type\": \"big-decimal-expression\",\n" +
                                 "          \"value\": \"4\"\n" +
                                 "        }, {\n" +
-                                "          \"type\": \"expression-reference\",\n" +
+                                "          \"type\": \"reference-expression\",\n" +
                                 "          \"value\": {\n" +
                                 "            \"type\": \"spreadsheet-cell-reference\",\n" +
                                 "            \"value\": \"A1\"\n" +
@@ -303,12 +303,12 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
                                 "    \"formula\": {\n" +
                                 "      \"text\": \"1+2\",\n" +
                                 "      \"expression\": {\n" +
-                                "        \"type\": \"expression-addition\",\n" +
+                                "        \"type\": \"add-expression\",\n" +
                                 "        \"value\": [{\n" +
-                                "          \"type\": \"expression-big-decimal\",\n" +
+                                "          \"type\": \"big-decimal-expression\",\n" +
                                 "          \"value\": \"1\"\n" +
                                 "        }, {\n" +
-                                "          \"type\": \"expression-big-decimal\",\n" +
+                                "          \"type\": \"big-decimal-expression\",\n" +
                                 "          \"value\": \"2\"\n" +
                                 "        }]\n" +
                                 "      },\n" +
@@ -344,12 +344,12 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
                                 "    \"formula\": {\n" +
                                 "      \"text\": \"3+4\",\n" +
                                 "      \"expression\": {\n" +
-                                "        \"type\": \"expression-addition\",\n" +
+                                "        \"type\": \"add-expression\",\n" +
                                 "        \"value\": [{\n" +
-                                "          \"type\": \"expression-big-decimal\",\n" +
+                                "          \"type\": \"big-decimal-expression\",\n" +
                                 "          \"value\": \"3\"\n" +
                                 "        }, {\n" +
-                                "          \"type\": \"expression-big-decimal\",\n" +
+                                "          \"type\": \"big-decimal-expression\",\n" +
                                 "          \"value\": \"4\"\n" +
                                 "        }]\n" +
                                 "      },\n" +
@@ -377,12 +377,12 @@ public final class SpreadsheetServerTest extends SpreadsheetServerTestCase<Sprea
                                 "    \"formula\": {\n" +
                                 "      \"text\": \"4+A1\",\n" +
                                 "      \"expression\": {\n" +
-                                "        \"type\": \"expression-addition\",\n" +
+                                "        \"type\": \"add-expression\",\n" +
                                 "        \"value\": [{\n" +
-                                "          \"type\": \"expression-big-decimal\",\n" +
+                                "          \"type\": \"big-decimal-expression\",\n" +
                                 "          \"value\": \"4\"\n" +
                                 "        }, {\n" +
-                                "          \"type\": \"expression-reference\",\n" +
+                                "          \"type\": \"reference-expression\",\n" +
                                 "          \"value\": {\n" +
                                 "            \"type\": \"spreadsheet-cell-reference\",\n" +
                                 "            \"value\": \"A1\"\n" +

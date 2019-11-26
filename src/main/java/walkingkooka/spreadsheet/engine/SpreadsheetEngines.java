@@ -26,7 +26,7 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
-import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.Optional;
@@ -61,12 +61,12 @@ public final class SpreadsheetEngines implements PublicStaticHelper {
     }
 
     /**
-     * {@see SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction}
+     * {@see SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction}
      */
-    public static Function<ExpressionReference, Optional<ExpressionNode>> expressionEvaluationContextExpressionReferenceExpressionNodeFunction(final SpreadsheetEngine engine,
+    public static Function<ExpressionReference, Optional<Expression>> expressionEvaluationContextExpressionReferenceExpressionFunction(final SpreadsheetEngine engine,
                                                                                                                                                final SpreadsheetLabelStore labelStore,
                                                                                                                                                final SpreadsheetEngineContext context) {
-        return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(engine, labelStore, context);
+        return SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(engine, labelStore, context);
     }
 
     /**

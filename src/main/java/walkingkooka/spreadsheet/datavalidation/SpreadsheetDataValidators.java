@@ -26,7 +26,7 @@ import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.expression.Expression;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -118,7 +118,7 @@ public final class SpreadsheetDataValidators implements PublicStaticHelper {
     /**
      * Creates a {@link SpreadsheetDataValidator} using the {@link Predicate condition}.
      */
-    public static SpreadsheetDataValidator<Object> customFormula(final ExpressionNode customFormula) {
+    public static SpreadsheetDataValidator<Object> customFormula(final Expression customFormula) {
         return CustomFormulaSpreadsheetDataValidator.with(customFormula);
     }
 

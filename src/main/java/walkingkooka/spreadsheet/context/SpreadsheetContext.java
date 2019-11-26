@@ -31,7 +31,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
-import walkingkooka.tree.expression.ExpressionNodeName;
+import walkingkooka.tree.expression.FunctionExpressionName;
 
 import java.util.List;
 import java.util.Locale;
@@ -78,7 +78,7 @@ public interface SpreadsheetContext extends Context {
     /**
      * Returns a {@link BiFunction} which knows available functions for the given {@link SpreadsheetId}.
      */
-    BiFunction<ExpressionNodeName, List<Object>, Object> functions(final SpreadsheetId id);
+    BiFunction<FunctionExpressionName, List<Object>, Object> functions(final SpreadsheetId id);
 
     /**
      * A {@link Router} that can handle hateos requests for the given identified spreadsheet.

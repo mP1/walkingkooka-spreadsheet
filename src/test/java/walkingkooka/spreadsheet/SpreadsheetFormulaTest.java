@@ -22,7 +22,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -167,7 +167,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Test
     public void testSetExpressionDifferent() {
         final SpreadsheetFormula formula = this.createObject();
-        final Optional<ExpressionNode> differentExpression = Optional.of(ExpressionNode.text("different!"));
+        final Optional<Expression> differentExpression = Optional.of(Expression.string("different!"));
         final SpreadsheetFormula different = formula.setExpression(differentExpression);
         assertNotSame(formula, different);
 
@@ -181,7 +181,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     public void testSetExpressionDifferentAndClear() {
         final SpreadsheetFormula formula = this.createObject()
                 .setExpression(this.expression());
-        final Optional<ExpressionNode> differentExpression = SpreadsheetFormula.NO_EXPRESSION;
+        final Optional<Expression> differentExpression = SpreadsheetFormula.NO_EXPRESSION;
         final SpreadsheetFormula different = formula.setExpression(differentExpression);
         assertNotSame(formula, different);
 
@@ -197,7 +197,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 .setExpression(this.expression())
                 .setValue(this.value());
 
-        final Optional<ExpressionNode> differentExpression = Optional.of(ExpressionNode.text("different!"));
+        final Optional<Expression> differentExpression = Optional.of(Expression.string("different!"));
         final SpreadsheetFormula different = formula.setExpression(differentExpression);
         assertNotSame(formula, different);
 
@@ -314,7 +314,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     private SpreadsheetFormula createFormula(final String formula,
-                                             final Optional<ExpressionNode> expression,
+                                             final Optional<Expression> expression,
                                              final Optional<Object> value,
                                              final Optional<SpreadsheetError> error) {
         return SpreadsheetFormula.with(formula)
@@ -399,7 +399,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                 "{\n" +
                         "  \"text\": \"a+2\",\n" +
                         "  \"expression\": {\n" +
-                        "    \"type\": \"expression-text\",\n" +
+                        "    \"type\": \"string-expression\",\n" +
                         "    \"value\": \"1+2\"\n" +
                         "  }\n" +
                         "}");
@@ -458,18 +458,18 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     private void checkText(final SpreadsheetFormula formula, final String text) {
-        assertEquals(text, formula.text(), "text(ExpressionNode)");
+        assertEquals(text, formula.text(), "text(Expression)");
     }
 
-    private Optional<ExpressionNode> expression() {
+    private Optional<Expression> expression() {
         return this.expression(EXPRESSION);
     }
 
-    private Optional<ExpressionNode> expression(final String text) {
-        return Optional.of(ExpressionNode.text(text));
+    private Optional<Expression> expression(final String text) {
+        return Optional.of(Expression.string(text));
     }
 
-    private void checkExpression(final SpreadsheetFormula formula, final Optional<ExpressionNode> expression) {
+    private void checkExpression(final SpreadsheetFormula formula, final Optional<Expression> expression) {
         assertEquals(expression, formula.expression(), "expression");
     }
 
