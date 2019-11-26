@@ -23,7 +23,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticFactoryTesting;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokenTesting;
-import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.expression.Expression;
 
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -63,22 +63,22 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
         }.accept(this.createToken());
     }
 
-    final void toExpressionNodeAndFail() {
-        this.toExpressionNodeAndFail(this.createToken());
+    final void toExpressionAndFail() {
+        this.toExpressionAndFail(this.createToken());
     }
 
-    final void toExpressionNodeAndFail(final T token) {
-        final Optional<ExpressionNode> node = token.expressionNode();
-        assertEquals(Optional.empty(), node, "toExpressionNode");
+    final void toExpressionAndFail(final T token) {
+        final Optional<Expression> node = token.expression();
+        assertEquals(Optional.empty(), node, "toExpression");
     }
 
-    final void toExpressionNodeAndCheck(final ExpressionNode expected) {
-        this.toExpressionNodeAndCheck(this.createToken(), expected);
+    final void toExpressionAndCheck(final Expression expected) {
+        this.toExpressionAndCheck(this.createToken(), expected);
     }
 
-    final void toExpressionNodeAndCheck(final T token, final ExpressionNode expected) {
-        final Optional<ExpressionNode> node = token.expressionNode();
-        assertEquals(Optional.of(expected), node, "toExpressionNode");
+    final void toExpressionAndCheck(final T token, final Expression expected) {
+        final Optional<Expression> node = token.expression();
+        assertEquals(Optional.of(expected), node, "toExpression");
     }
 
     // IsMethodTesting.................................................................................................

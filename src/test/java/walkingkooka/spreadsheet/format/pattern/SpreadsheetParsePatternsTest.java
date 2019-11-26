@@ -91,10 +91,10 @@ public final class SpreadsheetParsePatternsTest implements ClassTesting2<Spreads
                 SpreadsheetParsePatterns::parseTimeParsePatterns,
                 this.hhmm(), this.hhmmss());
     }
-    
+
     private void parseAndCheck(final String text,
                                final Function<String, SpreadsheetParsePatterns<?>> parse,
-                               final SpreadsheetFormatParserToken...tokens) {
+                               final SpreadsheetFormatParserToken... tokens) {
         assertEquals(Lists.of(tokens),
                 parse.apply(text).value(),
                 () -> "parse " + CharSequences.quoteAndEscape(text));

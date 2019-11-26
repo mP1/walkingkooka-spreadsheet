@@ -238,6 +238,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     private DateTimeContext dateTimeContext() {
         return DateTimeContexts.locale(LOCALE, 50);
     }
+
     private DecimalNumberContext decimalNumberContext() {
         return DecimalNumberContexts.basic(this.currencySymbol(),
                 this.decimalSeparator(),

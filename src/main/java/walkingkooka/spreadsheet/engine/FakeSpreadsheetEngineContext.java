@@ -22,7 +22,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.test.Fake;
-import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.expression.Expression;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -36,7 +36,7 @@ public class FakeSpreadsheetEngineContext implements SpreadsheetEngineContext, F
     }
 
     @Override
-    public Object evaluate(final ExpressionNode node) {
+    public Object evaluate(final Expression node) {
         Objects.requireNonNull(node, "node");
         throw new UnsupportedOperationException();
     }

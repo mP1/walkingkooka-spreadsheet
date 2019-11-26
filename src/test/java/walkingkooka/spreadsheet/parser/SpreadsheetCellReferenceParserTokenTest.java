@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.expression.Expression;
 
 import java.util.List;
 
@@ -64,8 +64,8 @@ public final class SpreadsheetCellReferenceParserTokenTest extends SpreadsheetPa
     }
 
     @Test
-    public void testToExpressionNode() {
-        this.toExpressionNodeAndCheck(ExpressionNode.reference(column().value().setRow(row().value())));
+    public void testToExpression() {
+        this.toExpressionAndCheck(Expression.reference(column().value().setRow(row().value())));
     }
 
     @Override

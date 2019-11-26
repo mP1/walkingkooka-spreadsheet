@@ -20,9 +20,9 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.stack.Stack;
 import walkingkooka.collect.stack.Stacks;
-import walkingkooka.tree.expression.ExpressionNode;
-import walkingkooka.tree.expression.ExpressionNodeName;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
@@ -31,15 +31,15 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
- * A {@link SpreadsheetParserTokenVisitor} that a {@link SpreadsheetParserToken} into its {@link ExpressionNode}.
+ * A {@link SpreadsheetParserTokenVisitor} that a {@link SpreadsheetParserToken} into its {@link Expression}.
  */
-final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVisitor {
+final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVisitor {
 
-    static Optional<ExpressionNode> accept(final SpreadsheetParserToken token) {
-        final SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor visitor = new SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor();
+    static Optional<Expression> accept(final SpreadsheetParserToken token) {
+        final SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor visitor = new SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor();
         token.accept(visitor);
 
-        final List<ExpressionNode> nodes = visitor.children;
+        final List<Expression> nodes = visitor.children;
         final int count = nodes.size();
         return count == 1 ?
                 Optional.of(nodes.get(0)) :
@@ -48,12 +48,12 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
                         fail(count, nodes);
     }
 
-    private static Optional<ExpressionNode> fail(final int count, final List<ExpressionNode> nodes) {
-        throw new SpreadsheetParserException("Expected either 0 or 1 ExpressionNodes but got " + count + "=" + nodes);
+    private static Optional<Expression> fail(final int count, final List<Expression> nodes) {
+        throw new SpreadsheetParserException("Expected either 0 or 1 Expressions but got " + count + "=" + nodes);
     }
 
     // @VisibleForTesting
-    SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor() {
+    SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor() {
         super();
     }
 
@@ -64,7 +64,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected void endVisit(final SpreadsheetAdditionParserToken token) {
-        this.exitBinary(ExpressionNode::addition, token);
+        this.exitBinary(Expression::add, token);
     }
 
     @Override
@@ -84,7 +84,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected void endVisit(final SpreadsheetDivisionParserToken token) {
-        this.exitBinary(ExpressionNode::division, token);
+        this.exitBinary(Expression::divide, token);
     }
 
     @Override
@@ -94,7 +94,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected void endVisit(final SpreadsheetEqualsParserToken token) {
-        this.exitBinary(ExpressionNode::equalsNode, token);
+        this.exitBinary(Expression::equalsExpression, token);
     }
 
     @Override
@@ -104,8 +104,8 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected void endVisit(final SpreadsheetFunctionParserToken token) {
-        final ExpressionNode function = ExpressionNode.function(
-                ExpressionNodeName.with(token.functionName().value()),
+        final Expression function = Expression.function(
+                FunctionExpressionName.with(token.functionName().value()),
                 this.children);
         this.exit();
         this.add(function, token);
@@ -118,7 +118,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected void endVisit(final SpreadsheetGreaterThanParserToken token) {
-        this.exitBinary(ExpressionNode::greaterThan, token);
+        this.exitBinary(Expression::greaterThan, token);
     }
 
     @Override
@@ -128,7 +128,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected void endVisit(final SpreadsheetGreaterThanEqualsParserToken token) {
-        this.exitBinary(ExpressionNode::greaterThanEquals, token);
+        this.exitBinary(Expression::greaterThanEquals, token);
     }
 
     @Override
@@ -138,7 +138,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected void endVisit(final SpreadsheetGroupParserToken token) {
-        final ExpressionNode parameter = this.children.get(0);
+        final Expression parameter = this.children.get(0);
         this.exit();
         this.add(parameter, token);
     }
@@ -150,7 +150,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected void endVisit(final SpreadsheetLessThanParserToken token) {
-        this.exitBinary(ExpressionNode::lessThan, token);
+        this.exitBinary(Expression::lessThan, token);
     }
 
     @Override
@@ -160,7 +160,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected void endVisit(final SpreadsheetLessThanEqualsParserToken token) {
-        this.exitBinary(ExpressionNode::lessThanEquals, token);
+        this.exitBinary(Expression::lessThanEquals, token);
     }
 
     @Override
@@ -170,7 +170,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected void endVisit(final SpreadsheetMultiplicationParserToken token) {
-        this.exitBinary(ExpressionNode::multiplication, token);
+        this.exitBinary(Expression::multiply, token);
     }
 
     @Override
@@ -180,7 +180,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected void endVisit(final SpreadsheetNegativeParserToken token) {
-        this.exitUnary(ExpressionNode::negative, token);
+        this.exitUnary(Expression::negative, token);
     }
 
     @Override
@@ -190,7 +190,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected void endVisit(final SpreadsheetNotEqualsParserToken token) {
-        this.exitBinary(ExpressionNode::notEquals, token);
+        this.exitBinary(Expression::notEquals, token);
     }
 
     @Override
@@ -203,9 +203,9 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
      */
     @Override
     protected void endVisit(final SpreadsheetPercentageParserToken token) {
-        final ExpressionNode parameter = this.children.get(0);
+        final Expression parameter = this.children.get(0);
         this.exit();
-        this.add(ExpressionNode.division(parameter, ExpressionNode.longNode(100L)), token);
+        this.add(Expression.divide(parameter, Expression.longExpression(100L)), token);
     }
 
     @Override
@@ -215,7 +215,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected void endVisit(final SpreadsheetPowerParserToken token) {
-        this.exitBinary(ExpressionNode::power, token);
+        this.exitBinary(Expression::power, token);
     }
 
     @Override
@@ -235,7 +235,7 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected void endVisit(final SpreadsheetSubtractionParserToken token) {
-        this.exitBinary(ExpressionNode::subtraction, token);
+        this.exitBinary(Expression::subtract, token);
     }
 
     // visit....................................................................................................
@@ -243,17 +243,17 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected void visit(final SpreadsheetBigDecimalParserToken token) {
-        this.add(ExpressionNode.bigDecimal(token.value()), token);
+        this.add(Expression.bigDecimal(token.value()), token);
     }
 
     @Override
     protected void visit(final SpreadsheetBigIntegerParserToken token) {
-        this.add(ExpressionNode.bigInteger(token.value()), token);
+        this.add(Expression.bigInteger(token.value()), token);
     }
 
     @Override
     protected void visit(final SpreadsheetDoubleParserToken token) {
-        this.add(ExpressionNode.doubleNode(token.value()), token);
+        this.add(Expression.doubleExpression(token.value()), token);
     }
 
     @Override
@@ -263,27 +263,27 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
 
     @Override
     protected void visit(final SpreadsheetLocalDateParserToken token) {
-        this.add(ExpressionNode.localDate(token.value()), token);
+        this.add(Expression.localDate(token.value()), token);
     }
 
     @Override
     protected void visit(final SpreadsheetLocalDateTimeParserToken token) {
-        this.add(ExpressionNode.localDateTime(token.value()), token);
+        this.add(Expression.localDateTime(token.value()), token);
     }
 
     @Override
     protected void visit(final SpreadsheetLocalTimeParserToken token) {
-        this.add(ExpressionNode.localTime(token.value()), token);
+        this.add(Expression.localTime(token.value()), token);
     }
 
     @Override
     protected void visit(final SpreadsheetLongParserToken token) {
-        this.add(ExpressionNode.longNode(token.value()), token);
+        this.add(Expression.longExpression(token.value()), token);
     }
 
     @Override
     protected void visit(final SpreadsheetTextParserToken token) {
-        this.add(ExpressionNode.text(token.value()), token);
+        this.add(Expression.string(token.value()), token);
     }
 
     // GENERAL PURPOSE .................................................................................................
@@ -296,15 +296,15 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
         return Visiting.CONTINUE;
     }
 
-    private void exitBinary(final BiFunction<ExpressionNode, ExpressionNode, ExpressionNode> factory, final SpreadsheetParserToken token) {
-        final ExpressionNode left = this.children.get(0);
-        final ExpressionNode right = this.children.get(1);
+    private void exitBinary(final BiFunction<Expression, Expression, Expression> factory, final SpreadsheetParserToken token) {
+        final Expression left = this.children.get(0);
+        final Expression right = this.children.get(1);
         this.exit();
         this.add(factory.apply(left, right), token);
     }
 
-    private void exitUnary(final Function<ExpressionNode, ExpressionNode> factory, final SpreadsheetParserToken token) {
-        final ExpressionNode parameter = this.children.get(0);
+    private void exitUnary(final Function<Expression, Expression> factory, final SpreadsheetParserToken token) {
+        final Expression parameter = this.children.get(0);
         this.exit();
         this.add(factory.apply(parameter), token);
     }
@@ -315,25 +315,25 @@ final class SpreadsheetParserTokenToExpressionNodeSpreadsheetParserTokenVisitor 
     }
 
     private void exitReference(final ExpressionReference reference, final SpreadsheetParserToken token) {
-        final ExpressionNode node = ExpressionNode.reference(reference);
+        final Expression node = Expression.reference(reference);
         this.exit();
         this.add(node, token);
     }
 
     private void addReference(final ExpressionReference reference, final SpreadsheetParserToken token) {
-        this.add(ExpressionNode.reference(reference), token);
+        this.add(Expression.reference(reference), token);
     }
 
-    private void add(final ExpressionNode node, final SpreadsheetParserToken token) {
+    private void add(final Expression node, final SpreadsheetParserToken token) {
         if (null == node) {
             throw new NullPointerException("Null node returned for " + token);
         }
         this.children.add(node);
     }
 
-    private Stack<List<ExpressionNode>> previousChildren = Stacks.arrayList();
+    private Stack<List<Expression>> previousChildren = Stacks.arrayList();
 
-    private List<ExpressionNode> children = Lists.array();
+    private List<Expression> children = Lists.array();
 
     @Override
     public String toString() {

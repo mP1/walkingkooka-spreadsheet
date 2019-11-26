@@ -19,34 +19,34 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReferenceVisitor;
-import walkingkooka.tree.expression.ExpressionNode;
-import walkingkooka.tree.expression.ExpressionNodeVisitor;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.expression.ExpressionReferenceNode;
+import walkingkooka.tree.expression.ExpressionVisitor;
+import walkingkooka.tree.expression.ReferenceExpression;
 
 /**
- * Accepts an {@link ExpressionNode} passes all {@link ExpressionReference} to a {@link SpreadsheetExpressionReferenceVisitor}.
+ * Accepts an {@link Expression} passes all {@link ExpressionReference} to a {@link SpreadsheetExpressionReferenceVisitor}.
  */
-final class BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitor extends ExpressionNodeVisitor {
+final class BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor extends ExpressionVisitor {
 
-    static void processReferences(final ExpressionNode node,
+    static void processReferences(final Expression node,
                                   final SpreadsheetCellReference target,
                                   final BasicSpreadsheetEngine engine) {
-        new BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitor(target, engine).accept(node);
+        new BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor(target, engine).accept(node);
     }
 
     // VisibleForTesting
-    BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitor(final SpreadsheetCellReference target,
-                                                                        final BasicSpreadsheetEngine engine) {
+    BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor(final SpreadsheetCellReference target,
+                                                                    final BasicSpreadsheetEngine engine) {
         super();
         this.target = target;
         this.engine = engine;
     }
 
     @Override
-    protected void visit(final ExpressionReferenceNode node) {
+    protected void visit(final ReferenceExpression node) {
         if (null == this.visitor) {
-            this.visitor = BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitorSpreadsheetExpressionReferenceVisitor.with(this.target,
+            this.visitor = BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor.with(this.target,
                     this.engine);
         }
         this.visitor.accept(node.value());
@@ -63,9 +63,9 @@ final class BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitor 
     private final BasicSpreadsheetEngine engine;
 
     /**
-     * Cache of the {@link BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitorSpreadsheetExpressionReferenceVisitor} that will process each and every encountered {@link ExpressionReferenceNode}.
+     * Cache of the {@link BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor} that will process each and every encountered {@link ReferenceExpression}.
      */
-    private BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitorSpreadsheetExpressionReferenceVisitor visitor;
+    private BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorSpreadsheetExpressionReferenceVisitor visitor;
 
     @Override
     public String toString() {

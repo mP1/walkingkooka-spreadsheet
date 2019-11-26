@@ -185,7 +185,7 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
      */
     abstract R replaceReferenceKind(final SpreadsheetReferenceKind referenceKind);
 
-        // Object...........................................................................................................
+    // Object...........................................................................................................
 
     @Override
     public final int hashCode() {

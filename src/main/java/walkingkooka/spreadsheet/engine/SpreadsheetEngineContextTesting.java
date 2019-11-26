@@ -26,7 +26,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.expression.Expression;
 
 import java.util.Optional;
 
@@ -64,7 +64,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
         assertThrows(NullPointerException.class, () -> this.createContext().evaluate(null));
     }
 
-    default void evaluateAndCheck(final ExpressionNode expression,
+    default void evaluateAndCheck(final Expression expression,
                                   final Object expected) {
         this.evaluateAndCheck(this.createContext(),
                 expression,
@@ -72,7 +72,7 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     }
 
     default void evaluateAndCheck(final SpreadsheetEngineContext context,
-                                  final ExpressionNode expression,
+                                  final Expression expression,
                                   final Object expected) {
         assertEquals(expected,
                 context.evaluate(expression),

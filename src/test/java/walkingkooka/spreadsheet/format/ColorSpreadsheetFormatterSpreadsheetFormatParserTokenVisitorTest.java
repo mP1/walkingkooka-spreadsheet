@@ -60,7 +60,7 @@ public final class ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitorT
 
     private void colorNameOrNumberOrFailAndCheck(final SpreadsheetFormatColorParserToken color,
                                                  final ColorSpreadsheetFormatterColorSource source,
-                                                 final Object nameOrNumber)  {
+                                                 final Object nameOrNumber) {
         final ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor visitor = ColorSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor.colorNameOrNumberOrFail(color);
         assertEquals(source, visitor.source, "source");
         assertEquals(nameOrNumber, visitor.nameOrNumber, "nameOrNumber");

@@ -40,9 +40,9 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
-import walkingkooka.tree.expression.ExpressionNode;
-import walkingkooka.tree.expression.ExpressionNodeName;
+import walkingkooka.tree.expression.FunctionExpressionName;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -60,7 +60,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     /**
      * Creates a new {@link BasicSpreadsheetEngineContext}
      */
-    static BasicSpreadsheetEngineContext with(final BiFunction<ExpressionNodeName, List<Object>, Object> functions,
+    static BasicSpreadsheetEngineContext with(final BiFunction<FunctionExpressionName, List<Object>, Object> functions,
                                               final SpreadsheetEngine engine,
                                               final SpreadsheetLabelStore labelStore,
                                               final Converter converter,
@@ -98,7 +98,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     /**
      * Private ctor use factory.
      */
-    private BasicSpreadsheetEngineContext(final BiFunction<ExpressionNodeName, List<Object>, Object> functions,
+    private BasicSpreadsheetEngineContext(final BiFunction<FunctionExpressionName, List<Object>, Object> functions,
                                           final SpreadsheetEngine engine,
                                           final SpreadsheetLabelStore labelStore,
                                           final Converter converter,
@@ -112,7 +112,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         this.parserContext = SpreadsheetParserContexts.basic(converterContext, converterContext);
 
         this.functions = functions;
-        this.function = SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction.with(engine, labelStore, this);
+        this.function = SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(engine, labelStore, this);
 
         this.converter = converter;
         this.converterContext = converterContext;
@@ -141,7 +141,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     private final SpreadsheetParserContext parserContext;
 
     @Override
-    public Object evaluate(final ExpressionNode node) {
+    public Object evaluate(final Expression node) {
         return node.toValue(ExpressionEvaluationContexts.basic(this.functions,
                 this.function,
                 this.converter,
@@ -151,9 +151,9 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     /**
      * Handles dispatching of functions.
      */
-    private final BiFunction<ExpressionNodeName, List<Object>, Object> functions;
+    private final BiFunction<FunctionExpressionName, List<Object>, Object> functions;
 
-    private final SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionNodeFunction function;
+    private final SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction function;
 
     // Converter........................................................................................................
 

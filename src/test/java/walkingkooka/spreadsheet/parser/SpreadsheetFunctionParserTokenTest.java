@@ -21,8 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.function.SpreadsheetFunctionName;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.tree.expression.ExpressionNode;
-import walkingkooka.tree.expression.ExpressionNodeName;
+import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.FunctionExpressionName;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -81,10 +81,10 @@ public final class SpreadsheetFunctionParserTokenTest extends SpreadsheetParentP
     }
 
     @Test
-    public void testToExpressionNode() {
-        this.toExpressionNodeAndCheck(ExpressionNode.function(
-                ExpressionNodeName.with(FUNCTION),
-                Lists.of(ExpressionNode.bigInteger(new BigInteger(NUMBER1, 10)))));
+    public void testToExpression() {
+        this.toExpressionAndCheck(Expression.function(
+                FunctionExpressionName.with(FUNCTION),
+                Lists.of(Expression.bigInteger(new BigInteger(NUMBER1, 10)))));
     }
 
     private void checkFunction(final SpreadsheetFunctionParserToken function, final SpreadsheetFunctionName name) {

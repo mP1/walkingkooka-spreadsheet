@@ -18,36 +18,36 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.tree.expression.ExpressionNode;
-import walkingkooka.tree.expression.ExpressionNodeVisitor;
-import walkingkooka.tree.expression.ExpressionNodeVisitorTesting;
+import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionVisitor;
+import walkingkooka.tree.expression.ExpressionVisitorTesting;
 
-public final class BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitorTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitor>
-        implements ExpressionNodeVisitorTesting<BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitor> {
+public final class BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitorTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor>
+        implements ExpressionVisitorTesting<BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor> {
 
     @Test
     public void testProcessReferences() {
-        BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitor.processReferences(ExpressionNode.text("abc123"), null, null);
+        BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor.processReferences(Expression.string("abc123"), null, null);
     }
 
     // TypeNameTesting..........................................................................
 
     @Override
     public String typeNameSuffix() {
-        return ExpressionNodeVisitor.class.getSimpleName();
+        return ExpressionVisitor.class.getSimpleName();
     }
 
     // ClassTesting..........................................................................
 
     @Override
-    public Class<BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitor> type() {
-        return BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitor.class;
+    public Class<BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor> type() {
+        return BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor.class;
     }
 
     // VisitingTesting....................................................................................
 
     @Override
-    public BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitor createVisitor() {
-        return new BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionNodeVisitor(null, null);
+    public BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor createVisitor() {
+        return new BasicSpreadsheetEngineUpdatedCellAddReferencesExpressionVisitor(null, null);
     }
 }

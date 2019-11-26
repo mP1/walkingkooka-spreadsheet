@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.datavalidation;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.tree.expression.ExpressionNode;
+import walkingkooka.tree.expression.Expression;
 
 public final class CustomFormulaSpreadsheetDataValidatorTest extends SpreadsheetDataValidatorTemplateTestCase<CustomFormulaSpreadsheetDataValidator, Object> {
 
@@ -44,10 +44,10 @@ public final class CustomFormulaSpreadsheetDataValidatorTest extends Spreadsheet
         return CustomFormulaSpreadsheetDataValidator.with(this.expression());
     }
 
-    private ExpressionNode expression() {
-        return ExpressionNode.greaterThan(
-                ExpressionNode.reference(this.cellReference()),
-                ExpressionNode.valueOrFail(VALUE));
+    private Expression expression() {
+        return Expression.greaterThan(
+                Expression.reference(this.cellReference()),
+                Expression.valueOrFail(VALUE));
     }
 
     @Override
