@@ -37,6 +37,7 @@ import java.util.Objects;
 /**
  * A reference that includes a defined name or column and row.
  */
+@SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 public final class SpreadsheetCellReference extends SpreadsheetExpressionReference
         implements Comparable<SpreadsheetCellReference> {
 

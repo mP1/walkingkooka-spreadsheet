@@ -33,6 +33,7 @@ import walkingkooka.text.CharSequences;
  * For example, the name AB11 is invalid because AB11 is a valid cell reference. Names are not case sensitive.
  * </pre>
  */
+@SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 final public class SpreadsheetLabelName extends SpreadsheetExpressionReference implements Name,
         Comparable<SpreadsheetLabelName> {
 
