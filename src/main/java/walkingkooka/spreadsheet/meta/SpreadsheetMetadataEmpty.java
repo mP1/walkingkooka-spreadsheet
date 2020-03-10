@@ -28,6 +28,7 @@ import java.util.Optional;
 /**
  * A {@link SpreadsheetMetadata} with no properties and values.
  */
+@SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
 
     /**
