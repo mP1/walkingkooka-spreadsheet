@@ -182,6 +182,9 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     // Object...........................................................................................................
 
     @Override
+    public abstract int hashCode();
+
+    @Override
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     public final boolean equals(final Object other) {
         return this == other ||
