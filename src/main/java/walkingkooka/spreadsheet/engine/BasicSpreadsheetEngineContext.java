@@ -131,11 +131,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     @Override
     public SpreadsheetParserToken parseFormula(final String formula) {
-        return SpreadsheetParsers.expression()
+        return Cast.to(SpreadsheetParsers.expression()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(formula), this.parserContext)
-                .get()
-                .cast(SpreadsheetParserToken.class);
+                .get());
     }
 
     private final SpreadsheetParserContext parserContext;

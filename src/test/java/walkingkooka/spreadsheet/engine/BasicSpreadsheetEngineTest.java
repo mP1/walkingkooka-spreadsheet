@@ -4772,11 +4772,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
             @Override
             public SpreadsheetParserToken parseFormula(final String formula) {
-                return SpreadsheetParsers.expression()
+                return Cast.to(SpreadsheetParsers.expression()
                         .orFailIfCursorNotEmpty(ParserReporters.basic())
                         .parse(TextCursors.charSequence(formula), SpreadsheetParserContexts.basic(DateTimeContexts.fake(), converterContext()))
-                        .get()
-                        .cast(SpreadsheetParserToken.class);
+                        .get());
             }
 
             @Override

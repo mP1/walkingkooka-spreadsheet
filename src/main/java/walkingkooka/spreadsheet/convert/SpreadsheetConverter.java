@@ -22,6 +22,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
@@ -160,24 +161,38 @@ final class SpreadsheetConverter implements Converter {
     /**
      * Creates a {@link Converter} that converts {@link Boolean} values to the given type.
      */
-    private static <T> Converter fromBoolean(final Class<T> type,
+    private static <T> Converter fromBoolean(final Class<T> targetType,
                                              final T trueValue,
                                              final T falseValue) {
-        return Converters.booleanTrueFalse(Boolean.class,
+        return booleanTrueFalseConverter(Boolean.class,
                 Boolean.FALSE,
-                type,
+                targetType,
                 trueValue,
                 falseValue);
     }
 
     private static <T> Converter toBoolean(final Class<T> from,
                                            final T falseValue) {
-        return Converters.booleanTrueFalse(from,
+        return booleanTrueFalseConverter(from,
                 falseValue,
                 Boolean.class,
                 Boolean.TRUE,
                 Boolean.FALSE);
     }
+
+    private static <T> Converter booleanTrueFalseConverter(final Class<?> fromType,
+                                                           final Object falseValueTest,
+                                                           final Class<T> targetType,
+                                                           final T trueValueResult,
+                                                           final T falseValueResult) {
+        return Converters.booleanTrueFalse(t -> t.getClass() == fromType,
+                Predicates.is(falseValueTest),
+                Predicates.is(targetType),
+                trueValueResult,
+                falseValueResult);
+    }
+
+    // booleanTrueFalse(Predicate<Object> source, Predicate<Object> falseValue, Predicate<Class<?>> target, D trueAnswer, D falseAnswer)
 
     private static LocalDateTime dateTime(final LocalDate date) {
         return LocalDateTime.of(date, LocalTime.MIDNIGHT);
