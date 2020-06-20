@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.stack.Stack;
 import walkingkooka.collect.stack.Stacks;
@@ -99,8 +100,7 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
             throw new IllegalStateException("Expected only 1 child but got " + count + "=" + tokens);
         }
 
-        return tokens.get(0)
-                .cast(SpreadsheetParserToken.class);
+        return Cast.to(tokens.get(0));
     }
 
     /**
