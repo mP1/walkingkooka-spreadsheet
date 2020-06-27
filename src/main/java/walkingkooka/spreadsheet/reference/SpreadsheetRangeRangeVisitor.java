@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.math.Range;
-import walkingkooka.math.RangeVisitor;
+import walkingkooka.collect.Range;
+import walkingkooka.collect.RangeVisitor;
 
 import java.util.Objects;
 

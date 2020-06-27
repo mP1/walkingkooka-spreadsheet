@@ -318,7 +318,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testToString() {
         this.toStringAndCheck(this.createContext(),
-                "converter=value instanceof target type. | Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean converterContext=DateTimeContext123 \"C\" 'D' 'E' 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN fractioner=Fractioner123 defaultSpreadsheetFormatter=SpreadsheetFormatter123");
+                "converter=value instanceof target type. | Number->Number | Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean converterContext=DateTimeContext123 \"C\" 'D' 'E' 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN fractioner=Fractioner123 defaultSpreadsheetFormatter=SpreadsheetFormatter123");
     }
 
     @Override
@@ -365,6 +365,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private Converter converter() {
         return Converters.collection(
                 Lists.of(Converters.simple(),
+                        Converters.numberNumber(),
                         Converters.truthyNumberBoolean()));
     }
 
