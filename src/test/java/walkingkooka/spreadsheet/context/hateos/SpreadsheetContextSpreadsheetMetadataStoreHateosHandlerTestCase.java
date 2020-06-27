@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.context.hateos;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.math.Range;
+import walkingkooka.collect.Range;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.net.http.server.hateos.HateosHandler;

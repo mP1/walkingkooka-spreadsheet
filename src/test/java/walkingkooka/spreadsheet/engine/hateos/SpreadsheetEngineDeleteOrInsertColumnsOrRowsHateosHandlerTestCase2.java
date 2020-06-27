@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet.engine.hateos;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.Range;
 import walkingkooka.collect.set.Sets;
-import walkingkooka.math.Range;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 
