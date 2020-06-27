@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.engine.hateos;
 
-import walkingkooka.math.Range;
+import walkingkooka.collect.Range;
 import walkingkooka.net.http.server.HttpRequestAttribute;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.engine.SpreadsheetEngine;
