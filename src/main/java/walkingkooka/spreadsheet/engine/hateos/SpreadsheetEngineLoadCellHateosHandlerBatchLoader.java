@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.engine.hateos;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.collect.map.Maps;
-import walkingkooka.math.Range;
+import walkingkooka.collect.Range;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.engine.SpreadsheetDelta;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
