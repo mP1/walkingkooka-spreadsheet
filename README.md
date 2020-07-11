@@ -60,11 +60,7 @@ require.
 
 The summary above is very brief and tickets creation for individual work items remain outstanding.
 
-## Dependencies
 
-- Junit
-- Jetty
-- Several other of my projects, examine `POM.xml` for more details
 
 ## Getting the source
 
