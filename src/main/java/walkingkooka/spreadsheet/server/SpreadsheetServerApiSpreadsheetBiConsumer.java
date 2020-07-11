@@ -25,10 +25,10 @@ import walkingkooka.net.http.server.HttpResponse;
 import walkingkooka.net.http.server.hateos.HateosContentType;
 import walkingkooka.route.Router;
 import walkingkooka.spreadsheet.SpreadsheetId;
-import walkingkooka.spreadsheet.context.SpreadsheetContext;
-import walkingkooka.spreadsheet.context.SpreadsheetContexts;
-import walkingkooka.spreadsheet.context.hateos.SpreadsheetContextHateosHandlers;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.server.context.SpreadsheetContext;
+import walkingkooka.spreadsheet.server.context.SpreadsheetContexts;
+import walkingkooka.spreadsheet.server.context.hateos.SpreadsheetContextHateosHandlers;
 import walkingkooka.spreadsheet.store.repo.SpreadsheetStoreRepository;
 import walkingkooka.tree.expression.FunctionExpressionName;
 
