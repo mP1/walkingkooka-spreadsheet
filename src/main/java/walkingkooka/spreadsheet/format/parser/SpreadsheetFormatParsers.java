@@ -22,21 +22,24 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.BigDecimalParserToken;
 import walkingkooka.text.cursor.parser.BigIntegerParserToken;
 import walkingkooka.text.cursor.parser.CharacterParserToken;
 import walkingkooka.text.cursor.parser.DoubleQuotedParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
+import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.cursor.parser.StringParserToken;
-import walkingkooka.text.cursor.parser.ebnf.EbnfGrammarLoader;
 import walkingkooka.text.cursor.parser.ebnf.EbnfGrammarParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfIdentifierName;
+import walkingkooka.text.cursor.parser.ebnf.EbnfParserContexts;
+import walkingkooka.text.cursor.parser.ebnf.EbnfParserToken;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.BiFunction;
 
 /**
@@ -466,8 +469,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     static {
         //noinspection CaughtExceptionImmediatelyRethrown
         try {
-            final Optional<EbnfGrammarParserToken> grammar = EbnfGrammarLoader.with("format.grammar", SpreadsheetFormatParsers.class)
-                    .grammar();
+            final TextCursor grammarFile = TextCursors.charSequence(new SpreadsheetFormatParsersGrammarProvider().text());
 
             final Map<EbnfIdentifierName, Parser<ParserContext>> predefined = Maps.sorted();
 
@@ -483,19 +485,24 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
 
             misc(predefined);
 
-            final Map<EbnfIdentifierName, Parser<ParserContext>> result = grammar.get()
+            final Map<EbnfIdentifierName, Parser<ParserContext>> parsers = EbnfParserToken.grammarParser()
+                    .orFailIfCursorNotEmpty(ParserReporters.basic())
+                    .parse(grammarFile, EbnfParserContexts.basic())
+                    .orElseThrow(() -> new IllegalStateException("Unable to parse format parsers grammar file."))
+                    .cast(EbnfGrammarParserToken.class)
                     .combinator(predefined, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer.INSTANCE);
 
-            COLOR_PARSER = result.get(COLOR_IDENTIFIER).cast();
-            CONDITION_PARSER = result.get(EbnfIdentifierName.with("CONDITION")).cast();
-            DATE_PARSER = result.get(EbnfIdentifierName.with("DATE")).cast();
-            DATETIME_PARSER = result.get(EbnfIdentifierName.with("DATETIME")).cast();
-            EXPRESSION_PARSER = result.get(EXPRESSION_IDENTIFIER).cast();
-            FRACTION_PARSER = result.get(EbnfIdentifierName.with("FRACTION")).cast();
-            GENERAL_PARSER = result.get(GENERAL_IDENTIFIER).cast();
-            NUMBER_PARSER = result.get(EbnfIdentifierName.with("NUMBER")).cast();
-            TEXT_PARSER = result.get(TEXT_IDENTIFIER).cast();
-            TIME_PARSER = result.get(EbnfIdentifierName.with("TIME")).cast();
+
+            COLOR_PARSER = parsers.get(COLOR_IDENTIFIER).cast();
+            CONDITION_PARSER = parsers.get(EbnfIdentifierName.with("CONDITION")).cast();
+            DATE_PARSER = parsers.get(EbnfIdentifierName.with("DATE")).cast();
+            DATETIME_PARSER = parsers.get(EbnfIdentifierName.with("DATETIME")).cast();
+            EXPRESSION_PARSER = parsers.get(EXPRESSION_IDENTIFIER).cast();
+            FRACTION_PARSER = parsers.get(EbnfIdentifierName.with("FRACTION")).cast();
+            GENERAL_PARSER = parsers.get(GENERAL_IDENTIFIER).cast();
+            NUMBER_PARSER = parsers.get(EbnfIdentifierName.with("NUMBER")).cast();
+            TEXT_PARSER = parsers.get(TEXT_IDENTIFIER).cast();
+            TIME_PARSER = parsers.get(EbnfIdentifierName.with("TIME")).cast();
 
         } catch (final SpreadsheetFormatParserException rethrow) {
             throw rethrow;
