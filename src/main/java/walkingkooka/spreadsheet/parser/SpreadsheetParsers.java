@@ -25,17 +25,22 @@ import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.function.SpreadsheetFunctionName;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharacterConstant;
+import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.BigDecimalParserToken;
 import walkingkooka.text.cursor.parser.CharacterParserToken;
 import walkingkooka.text.cursor.parser.DoubleQuotedParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
+import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.text.cursor.parser.StringParserToken;
-import walkingkooka.text.cursor.parser.ebnf.EbnfGrammarLoader;
+import walkingkooka.text.cursor.parser.ebnf.EbnfGrammarParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfIdentifierName;
+import walkingkooka.text.cursor.parser.ebnf.EbnfParserContexts;
+import walkingkooka.text.cursor.parser.ebnf.EbnfParserToken;
 
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -335,10 +340,15 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         math(predefined);
         misc(predefined);
 
-        @SuppressWarnings("OptionalGetWithoutIsPresent") final Map<EbnfIdentifierName, Parser<ParserContext>> parsers = EbnfGrammarLoader.with("spreadsheet-parsers.grammar", SpreadsheetParsers.class)
-                .grammar()
-                .get()
+        final TextCursor grammarFile = TextCursors.charSequence(new SpreadsheetParsersGrammarProvider().text());
+
+        final Map<EbnfIdentifierName, Parser<ParserContext>> parsers = EbnfParserToken.grammarParser()
+                .orFailIfCursorNotEmpty(ParserReporters.basic())
+                .parse(grammarFile, EbnfParserContexts.basic())
+                .orElseThrow(() -> new IllegalStateException("Unable to parse parsers grammar file."))
+                .cast(EbnfGrammarParserToken.class)
                 .combinator(predefined, SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer.INSTANCE);
+
         CELL_REFERENCES_PARSER = parsers.get(EbnfIdentifierName.with("CELL")).cast();
         EXPRESSION_PARSER = parsers.get(EXPRESSION_IDENTIFIER).cast();
         FUNCTION_PARSER = parsers.get(FUNCTION_IDENTIFIER).cast();
