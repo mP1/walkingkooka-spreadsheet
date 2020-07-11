@@ -43,14 +43,14 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:git:https://github.com/mP1/walkingkooka.git</connection>
-    <developerConnection>scm:git:git@github.com:mP1/walkingkooka.git</developerConnection>
-    <url>https://github.com/mP1/walkingkooka</url>
+    <connection>scm:git:https://github.com/mP1/walkingkooka-spreadsheet.git</connection>
+    <developerConnection>scm:git:git@github.com:mP1/walkingkooka-spreadsheet.git</developerConnection>
+    <url>https://github.com/mP1/walkingkooka-spreadsheet</url>
     <tag>HEAD</tag>
   </scm>
   <issueManagement>
     <system>GitHub</system>
-    <url>https://github.com/mP1/walkingkooka/issues</url>
+    <url>https://github.com/mP1/walkingkooka-spreadsheet/issues</url>
   </issueManagement>
 
   <repositories>
