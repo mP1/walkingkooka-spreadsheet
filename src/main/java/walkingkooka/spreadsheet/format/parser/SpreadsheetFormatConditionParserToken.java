@@ -41,7 +41,7 @@ abstract public class SpreadsheetFormatConditionParserToken extends SpreadsheetF
         }
 
         final Optional<SpreadsheetFormatParserToken> bigDecimal = without.stream()
-                .map(SpreadsheetFormatParserToken.class::cast)
+                .map(t -> t.cast(SpreadsheetFormatParserToken.class))
                 .filter(SpreadsheetFormatParserToken::isConditionNumber)
                 .findFirst();
         if (!bigDecimal.isPresent()) {
