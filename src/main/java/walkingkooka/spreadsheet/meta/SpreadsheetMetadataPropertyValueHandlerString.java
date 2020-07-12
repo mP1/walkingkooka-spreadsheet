@@ -46,7 +46,11 @@ final class SpreadsheetMetadataPropertyValueHandlerString extends SpreadsheetMet
 
     @Override
     void check0(final Object value, final SpreadsheetMetadataPropertyName<?> name) {
-        final String string = this.checkType(value, String.class, name);
+        this.checkType(value,
+                v -> v instanceof String,
+                name);
+
+        final String string = (String) value;
         if (false == this.predicate.test(string)) {
             throw new SpreadsheetMetadataPropertyValueException("Invalid value", name, string);
         }

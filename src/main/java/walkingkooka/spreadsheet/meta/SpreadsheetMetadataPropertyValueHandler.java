@@ -206,11 +206,12 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
     /**
      * Checks the type of the given value and throws a {@link SpreadsheetMetadataPropertyValueException} if this test fails.
      */
-    final <U> U checkType(final Object value, final Class<U> type, final SpreadsheetMetadataPropertyName<?> name) {
-        if (!type.isInstance(value)) {
+    final void checkType(final Object value,
+                         final Predicate<Object> typeChecker,
+                         final SpreadsheetMetadataPropertyName<?> name) {
+        if (!typeChecker.test(value)) {
             throw this.spreadsheetMetadataPropertyValueException(value, name);
         }
-        return type.cast(value);
     }
 
     /**
