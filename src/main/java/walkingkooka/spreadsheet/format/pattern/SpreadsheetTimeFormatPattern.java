@@ -51,7 +51,7 @@ public final class SpreadsheetTimeFormatPattern extends SpreadsheetFormatPattern
     SpreadsheetFormatter createFormatter() {
         final SpreadsheetFormatTimeParserToken time = this.value;
 
-        return SpreadsheetFormatters.dateTime(SpreadsheetFormatParserToken.dateTime(time.value(), time.text()), LocalTime.class);
+        return SpreadsheetFormatters.dateTime(SpreadsheetFormatParserToken.dateTime(time.value(), time.text()), v -> v instanceof LocalTime);
     }
 
     // Object...........................................................................................................

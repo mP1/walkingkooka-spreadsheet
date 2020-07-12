@@ -43,7 +43,7 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
     // with.............................................................................................................
 
     @Test
-    public void testWithNullTypeFails() {
+    public void testWithNullTypeTesterFails() {
         assertThrows(NullPointerException.class, () -> DateTimeSpreadsheetFormatter.with(this.parsePatternOrFail(this.pattern()), null));
     }
 
@@ -736,7 +736,7 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
 
     @Override
     DateTimeSpreadsheetFormatter createFormatter0(final SpreadsheetFormatDateTimeParserToken token) {
-        return DateTimeSpreadsheetFormatter.with(token, Temporal.class);
+        return DateTimeSpreadsheetFormatter.with(token, (v) -> v instanceof Temporal);
     }
 
     @Override

@@ -53,7 +53,7 @@ public final class SpreadsheetDateFormatPattern extends SpreadsheetFormatPattern
         final SpreadsheetFormatDateParserToken date = this.value;
 
         return SpreadsheetFormatters.dateTime(SpreadsheetFormatParserToken.dateTime(date.value(), date.text()),
-                LocalDate.class);
+                v -> v instanceof LocalDate);
     }
 
     // Object...........................................................................................................
