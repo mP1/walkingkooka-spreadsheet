@@ -172,14 +172,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         return SpreadsheetFormatParsers.expression()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(pattern), SpreadsheetFormatParserContexts.basic())
-                .map(SpreadsheetFormatExpressionParserToken.class::cast)
-                .map(this::expression)
+                .map(t -> SpreadsheetFormatters.expression(t.cast(SpreadsheetFormatExpressionParserToken.class), this.fractioner))
                 .get();
-    }
-
-    private SpreadsheetFormatter expression(final SpreadsheetFormatExpressionParserToken token) {
-        return SpreadsheetFormatters.expression(token,
-                this.fractioner);
     }
 
     /**
