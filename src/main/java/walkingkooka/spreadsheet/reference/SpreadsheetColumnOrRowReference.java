@@ -19,9 +19,9 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
 import walkingkooka.Value;
+import walkingkooka.collect.Range;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.collect.Range;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
@@ -109,8 +109,9 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
                                                        final Parser<ParserContext> parser,
                                                        final Class<T> type) {
         try {
-            return type.cast(parser.parse(TextCursors.charSequence(text), CONTEXT)
-                    .get());
+            return parser.parse(TextCursors.charSequence(text), CONTEXT)
+                    .get()
+                    .cast(type);
         } catch (final ParserException cause) {
             throw new IllegalArgumentException(cause.getMessage(), cause);
         }
