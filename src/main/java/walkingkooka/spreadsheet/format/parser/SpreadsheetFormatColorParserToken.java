@@ -49,7 +49,7 @@ public final class SpreadsheetFormatColorParserToken extends SpreadsheetFormatPa
             throw new IllegalArgumentException("Expected 1 token but got " + count + "=" + without);
         }
         final Optional<SpreadsheetFormatParserToken> nameOrNumber = without.stream()
-                .map(SpreadsheetFormatParserToken.class::cast)
+                .map(t -> t.cast(SpreadsheetFormatParserToken.class))
                 .filter(t -> t.isColorName() || t.isColorNumber())
                 .findFirst();
         if (!nameOrNumber.isPresent()) {
