@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.Temporal;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * A {@link SpreadsheetFormatter} that formats any value after converting it to a {@link LocalDateTime}.
@@ -33,20 +34,20 @@ final class DateTimeSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadshe
      * Creates a {@link DateTimeSpreadsheetFormatter} from a {@link SpreadsheetFormatDateTimeParserToken}
      */
     static DateTimeSpreadsheetFormatter with(final SpreadsheetFormatDateTimeParserToken token,
-                                             final Class<? extends Temporal> type) {
+                                             final Predicate<Object> typeTester) {
         checkParserToken(token);
-        Objects.requireNonNull(type, "type");
+        Objects.requireNonNull(typeTester, "typeTester");
 
-        return new DateTimeSpreadsheetFormatter(token, type);
+        return new DateTimeSpreadsheetFormatter(token, typeTester);
     }
 
     /**
      * Private ctor use static parse.
      */
     private DateTimeSpreadsheetFormatter(final SpreadsheetFormatDateTimeParserToken token,
-                                         final Class<? extends Temporal> type) {
+                                         final Predicate<Object> typeTester) {
         super(token);
-        this.type = type;
+        this.typeTester = typeTester;
 
         final DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor analysis = DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor.with();
         analysis.accept(token);
@@ -57,13 +58,13 @@ final class DateTimeSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadshe
     @Override
     public boolean canFormat(final Object value,
                              final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
-        return this.type.isInstance(value) && context.canConvert(value, LocalDateTime.class);
+        return this.typeTester.test(value) && context.canConvert(value, LocalDateTime.class);
     }
 
     /**
      * Used to filter allowing different formatters for different {@link Temporal} types.
      */
-    private final Class<? extends Temporal> type;
+    private final Predicate<Object> typeTester;
 
     @Override
     Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {

@@ -52,7 +52,7 @@ public final class SpreadsheetDateTimeFormatPattern extends SpreadsheetFormatPat
      */
     @Override
     SpreadsheetFormatter createFormatter() {
-        return SpreadsheetFormatters.dateTime(this.value, LocalDateTime.class);
+        return SpreadsheetFormatters.dateTime(this.value, v -> v instanceof LocalDateTime);
     }
 
     // Object...........................................................................................................

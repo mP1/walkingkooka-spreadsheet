@@ -129,7 +129,9 @@ final class ExpressionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor ex
 
     @Override
     protected void endVisit(final SpreadsheetFormatDateTimeParserToken token) {
-        this.setSpreadsheetFormatter(SpreadsheetFormatters.dateTime(token, Temporal.class), token);
+        this.setSpreadsheetFormatter(SpreadsheetFormatters.dateTime(token,
+                v -> v instanceof Temporal),
+                token);
     }
 
     // General................................................................................................
