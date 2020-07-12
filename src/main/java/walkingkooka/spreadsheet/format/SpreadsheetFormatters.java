@@ -31,6 +31,7 @@ import java.math.BigDecimal;
 import java.time.temporal.Temporal;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Collection of static factory methods for numerous {@link SpreadsheetFormatter}.
@@ -64,8 +65,8 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
      * {@see DateTimeSpreadsheetFormatter}
      */
     public static SpreadsheetFormatter dateTime(final SpreadsheetFormatDateTimeParserToken token,
-                                                final Class<? extends Temporal> type) {
-        return DateTimeSpreadsheetFormatter.with(token, type);
+                                                final Predicate<Object> typeTester) {
+        return DateTimeSpreadsheetFormatter.with(token, typeTester);
     }
 
     /**
