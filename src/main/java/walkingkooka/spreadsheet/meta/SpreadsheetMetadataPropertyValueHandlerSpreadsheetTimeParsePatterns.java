@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 
+import java.util.function.Predicate;
+
 /**
  * A {@link SpreadsheetMetadataPropertyValueHandler} for valid {@link SpreadsheetParsePatterns patterns}.
  */
@@ -35,6 +37,11 @@ final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimeParsePatterns 
      */
     private SpreadsheetMetadataPropertyValueHandlerSpreadsheetTimeParsePatterns() {
         super();
+    }
+
+    @Override
+    Predicate<Object> valueTypeChecker() {
+        return v -> v instanceof SpreadsheetTimeParsePatterns;
     }
 
     @Override

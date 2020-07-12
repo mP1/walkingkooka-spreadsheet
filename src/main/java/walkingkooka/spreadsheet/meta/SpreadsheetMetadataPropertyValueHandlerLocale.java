@@ -39,7 +39,9 @@ final class SpreadsheetMetadataPropertyValueHandlerLocale extends SpreadsheetMet
 
     @Override
     void check0(final Object value, final SpreadsheetMetadataPropertyName<?> name) {
-        this.checkType(value, Locale.class, name);
+        this.checkType(value,
+                v -> v instanceof Locale,
+                name);
     }
 
     @Override

@@ -48,7 +48,10 @@ final class SpreadsheetMetadataPropertyValueHandlerLong extends SpreadsheetMetad
 
     @Override
     void check0(final Object value, final SpreadsheetMetadataPropertyName<?> name) {
-        final Long longValue = this.checkType(value, Long.class, name);
+        this.checkType(value,
+                v -> v instanceof Long,
+                name);
+        final Long longValue = (Long) value;
         if (false == this.predicate.test(longValue)) {
             throw new SpreadsheetMetadataPropertyValueException("Invalid value", name, longValue);
         }

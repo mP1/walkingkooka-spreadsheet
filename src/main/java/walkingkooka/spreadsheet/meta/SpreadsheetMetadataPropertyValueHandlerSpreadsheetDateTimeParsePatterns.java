@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
 
+import java.util.function.Predicate;
+
 /**
  * A {@link SpreadsheetMetadataPropertyValueHandler} for valid {@link SpreadsheetDateTimeParsePatterns patterns}.
  */
@@ -34,6 +36,11 @@ final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimeParsePatte
      */
     private SpreadsheetMetadataPropertyValueHandlerSpreadsheetDateTimeParsePatterns() {
         super();
+    }
+
+    @Override
+    Predicate<Object> valueTypeChecker() {
+        return v -> v instanceof SpreadsheetDateTimeParsePatterns;
     }
 
     @Override

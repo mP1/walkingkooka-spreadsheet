@@ -37,7 +37,9 @@ final class SpreadsheetMetadataPropertyValueHandlerCharacter extends Spreadsheet
 
     @Override
     void check0(final Object value, final SpreadsheetMetadataPropertyName<?> name) {
-        this.checkType(value, Character.class, name);
+        this.checkType(value,
+                v -> v instanceof Character,
+                name);
     }
 
     @Override
