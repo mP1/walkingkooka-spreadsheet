@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 
+import java.util.function.Predicate;
+
 /**
  * A {@link SpreadsheetMetadataPropertyValueHandler} for valid {@link SpreadsheetTextFormatPattern pattern}.
  */
@@ -34,6 +36,11 @@ final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetTextFormatPattern 
      */
     private SpreadsheetMetadataPropertyValueHandlerSpreadsheetTextFormatPattern() {
         super();
+    }
+
+    @Override
+    Predicate<Object> valueTypeChecker() {
+        return v -> v instanceof SpreadsheetTextFormatPattern;
     }
 
     @Override

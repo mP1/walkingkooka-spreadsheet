@@ -23,6 +23,8 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.util.function.Predicate;
+
 /**
  * A base {@link SpreadsheetMetadataPropertyValueHandler} for all sub classes of {@link SpreadsheetParsePatterns patterns}.
  */
@@ -35,8 +37,10 @@ abstract class SpreadsheetMetadataPropertyValueHandlerSpreadsheetPattern<P exten
     @Override
     final void check0(final Object value,
                       final SpreadsheetMetadataPropertyName<?> name) {
-        this.checkType(value, this.valueType(), name);
+        this.checkType(value, this.valueTypeChecker(), name);
     }
+
+    abstract Predicate<Object> valueTypeChecker();
 
     @Override
     final String expectedTypeName(final Class<?> type) {

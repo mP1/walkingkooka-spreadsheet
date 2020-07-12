@@ -38,7 +38,9 @@ final class SpreadsheetMetadataPropertyValueHandlerEmailAddress extends Spreadsh
 
     @Override
     void check0(final Object value, final SpreadsheetMetadataPropertyName<?> name) {
-        this.checkType(value, EmailAddress.class, name);
+        this.checkType(value,
+                v -> v instanceof EmailAddress,
+                name);
     }
 
     @Override
