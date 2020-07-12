@@ -39,7 +39,9 @@ final class SpreadsheetMetadataPropertyValueHandlerRoundingMode extends Spreadsh
 
     @Override
     void check0(final Object value, final SpreadsheetMetadataPropertyName<?> name) {
-        this.checkType(value, RoundingMode.class, name);
+        this.checkType(value,
+                v -> v instanceof RoundingMode,
+                name);
     }
 
     @Override

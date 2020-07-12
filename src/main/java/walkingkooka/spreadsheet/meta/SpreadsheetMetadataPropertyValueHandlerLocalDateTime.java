@@ -39,7 +39,9 @@ final class SpreadsheetMetadataPropertyValueHandlerLocalDateTime extends Spreads
 
     @Override
     void check0(final Object value, final SpreadsheetMetadataPropertyName<?> name) {
-        this.checkType(value, LocalDateTime.class, name);
+        this.checkType(value,
+                v -> v instanceof LocalDateTime,
+                name);
     }
 
     @Override

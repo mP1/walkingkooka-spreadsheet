@@ -38,7 +38,9 @@ final class SpreadsheetMetadataPropertyValueHandlerSpreadsheetId extends Spreads
 
     @Override
     void check0(final Object value, final SpreadsheetMetadataPropertyName<?> name) {
-        this.checkType(value, SpreadsheetId.class, name);
+        this.checkType(value,
+                v -> v instanceof SpreadsheetId,
+                name);
     }
 
     @Override

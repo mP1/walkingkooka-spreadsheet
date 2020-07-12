@@ -48,7 +48,11 @@ final class SpreadsheetMetadataPropertyValueHandlerInteger extends SpreadsheetMe
 
     @Override
     void check0(final Object value, final SpreadsheetMetadataPropertyName<?> name) {
-        final Integer integer = this.checkType(value, Integer.class, name);
+        this.checkType(value,
+                v -> v instanceof Integer,
+                name);
+
+        final Integer integer = (Integer) value;
         if (false == this.predicate.test(integer)) {
             throw new SpreadsheetMetadataPropertyValueException("Invalid value", name, integer);
         }
