@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
 /**
  * A {@link SpreadsheetFormatter} that formats a {@link String}.
@@ -74,7 +75,7 @@ final class ExpressionSpreadsheetFormatter extends SpreadsheetFormatter3<Spreads
         return this.formatters.stream()
                 .skip(this.skip(value))
                 .filter(f -> f.canFormat(value, context))
-                .flatMap(f -> f.format(value, context).stream())
+                .flatMap(f -> f.format(value, context).map(Stream::of).orElse(Stream.empty())) // Optional.stream not supported in j2cl.
                 .findFirst()
                 .or(() -> context.defaultFormatText(value));
     }
