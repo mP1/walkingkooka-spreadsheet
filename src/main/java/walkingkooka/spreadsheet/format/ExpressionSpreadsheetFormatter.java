@@ -72,12 +72,16 @@ final class ExpressionSpreadsheetFormatter extends SpreadsheetFormatter3<Spreads
      */
     @Override
     Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
-        return this.formatters.stream()
+        final Optional<SpreadsheetText> formatted = this.formatters.stream()
                 .skip(this.skip(value))
                 .filter(f -> f.canFormat(value, context))
                 .flatMap(f -> f.format(value, context).map(Stream::of).orElse(Stream.empty())) // Optional.stream not supported in j2cl.
-                .findFirst()
-                .or(() -> context.defaultFormatText(value));
+                .findFirst();
+
+        // Optional.or not supported in j2cl
+        return formatted.isPresent() ?
+                formatted :
+                context.defaultFormatText(value);
     }
 
     /**
