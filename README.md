@@ -61,6 +61,35 @@ require.
 The summary above is very brief and tickets creation for individual work items remain outstanding.
 
 
+## [Sample](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/test/java/walkingkooka/spreadsheet/sample/Sample.java)
+
+A working sample that demonstrates a working engine that creates 2 cells, one referencing the value of the other
+and evaluates the formula of both. All other spreadsheets are supported, such as a conditional format, labels and more.
+The above link has the full sample.
+
+```java
+final SpreadsheetCellStore cellStore = cellStore();
+final SpreadsheetLabelStore labelStore = SpreadsheetLabelStores.treeMap();
+
+final SpreadsheetEngine engine = engine(cellStore, labelStore);
+final SpreadsheetEngineContext engineContext = engineContext(engine, labelStore);
+
+engine.saveCell(SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("A1"), SpreadsheetFormula.with("12+B2")), engineContext);
+
+final SpreadsheetDelta delta = engine.saveCell(SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("B2"), SpreadsheetFormula.with("34")), engineContext);
+
+final Set<String> saved = delta.cells()
+        .stream()
+        .map(c -> c.formula().value().get().toString())
+        .collect(Collectors.toCollection(Sets::sorted));
+
+// a1=12+b2
+// a1=12+34
+// b2=34
+assertEquals(Sets.of("46", "34"), saved);
+```
+
+
 
 ## Getting the source
 
