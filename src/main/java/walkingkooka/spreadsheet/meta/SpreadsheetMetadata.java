@@ -176,7 +176,12 @@ public abstract class SpreadsheetMetadata implements HasConverter,
     /**
      * Returns a {@link Function} that returns a {@link Color} given its {@link SpreadsheetColorName}
      */
-    public Function<SpreadsheetColorName, Optional<Color>> nameToColor() {
+    public abstract Function<SpreadsheetColorName, Optional<Color>> nameToColor();
+
+    /**
+     * Lazy factory.
+     */
+    final Function<SpreadsheetColorName, Optional<Color>> nameToColor0() {
         return SpreadsheetMetadataColorFunction.with(SpreadsheetMetadataNameToColorSpreadsheetMetadataVisitor.nameToColorMap(this));
     }
 
@@ -185,13 +190,14 @@ public abstract class SpreadsheetMetadata implements HasConverter,
     /**
      * Returns a {@link Function} that returns a {@link Color} given its number.
      */
-    public Function<Integer, Optional<Color>> numberToColor() {
+    public abstract Function<Integer, Optional<Color>> numberToColor();
+
+    /**
+     * Lazy factory that creates a {@link Function}.
+     */
+    final Function<Integer, Optional<Color>> numberToColor0() {
         return SpreadsheetMetadataColorFunction.with(SpreadsheetMetadataNumberToColorSpreadsheetMetadataVisitor.numberToColorMap(this));
     }
-
-    // SpreadsheetMetadataStyleVisitor..................................................................................
-
-    abstract void accept(final SpreadsheetMetadataVisitor visitor);
 
     /**
      * Returns a {@link DecimalNumberContext} if the required properties are present.
@@ -209,7 +215,12 @@ public abstract class SpreadsheetMetadata implements HasConverter,
      * </ul>
      */
     @Override
-    public final Converter converter() {
+    public abstract Converter converter();
+
+    /**
+     * Lazy factory that creates a {@link Converter} using current properties.
+     */
+    public final Converter converter0() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
         final SpreadsheetDateFormatPattern dateFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN);
@@ -251,7 +262,9 @@ public abstract class SpreadsheetMetadata implements HasConverter,
      * </ul>
      */
     @Override
-    public final DateTimeContext dateTimeContext() {
+    public abstract DateTimeContext dateTimeContext();
+
+    final DateTimeContext dateTimeContext0() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
         final Locale locale = components.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
@@ -283,7 +296,9 @@ public abstract class SpreadsheetMetadata implements HasConverter,
      * </ul>
      */
     @Override
-    public final DecimalNumberContext decimalNumberContext() {
+    public abstract DecimalNumberContext decimalNumberContext();
+
+    final DecimalNumberContext decimalNumberContext0() {
         return SpreadsheetMetadataDecimalNumberContextComponents.with(this).decimalNumberContext();
     }
 
@@ -297,7 +312,9 @@ public abstract class SpreadsheetMetadata implements HasConverter,
      * </ul>
      */
     @Override
-    public final MathContext mathContext() {
+    public abstract MathContext mathContext();
+
+    final MathContext mathContext0() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
         final Integer precision = components.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
@@ -314,7 +331,9 @@ public abstract class SpreadsheetMetadata implements HasConverter,
      * Creates a {@link SpreadsheetFormatter} that combines the formatting of all patterns.
      */
     @Override
-    public SpreadsheetFormatter formatter() {
+    public abstract SpreadsheetFormatter formatter();
+    
+    final SpreadsheetFormatter formatter0() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
         final SpreadsheetDateFormatPattern dateFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN);
@@ -333,10 +352,14 @@ public abstract class SpreadsheetMetadata implements HasConverter,
                 textFormat.formatter()));
     }
 
+    // SpreadsheetMetadataStyleVisitor..................................................................................
+
+    abstract void accept(final SpreadsheetMetadataVisitor visitor);
+
     // Object...........................................................................................................
 
     @Override
-    abstract public int hashCode();
+    public abstract int hashCode();
 
     @Override
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
@@ -351,7 +374,7 @@ public abstract class SpreadsheetMetadata implements HasConverter,
     abstract boolean equals0(final SpreadsheetMetadata other);
 
     @Override
-    abstract public String toString();
+    public abstract String toString();
 
     // JsonNodeContext..................................................................................................
 
