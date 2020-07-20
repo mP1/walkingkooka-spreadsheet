@@ -19,11 +19,19 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.color.Color;
+import walkingkooka.convert.Converter;
+import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
+import java.math.MathContext;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * A {@link SpreadsheetMetadata} with no properties and values.
@@ -72,6 +80,43 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     @Override
     SpreadsheetMetadata remove0(final SpreadsheetMetadataPropertyName<?> propertyName) {
         return this;
+    }
+
+    // getters..........................................................................................................
+
+    @Override
+    public Function<SpreadsheetColorName, Optional<Color>> nameToColor() {
+        return this.nameToColor0(); // dont cache let factory fail.
+    }
+
+    @Override
+    public Function<Integer, Optional<Color>> numberToColor() {
+        return this.numberToColor0();
+    }
+
+    @Override
+    public Converter converter() {
+        return this.converter0();
+    }
+
+    @Override
+    public DateTimeContext dateTimeContext() {
+        return this.dateTimeContext0();
+    }
+
+    @Override
+    public DecimalNumberContext decimalNumberContext() {
+        return this.decimalNumberContext0();
+    }
+
+    @Override
+    public MathContext mathContext() {
+        return this.mathContext0();
+    }
+
+    @Override
+    public SpreadsheetFormatter formatter() {
+        return this.formatter0();
     }
 
     // SpreadsheetMetadataVisitor........................................................................................
