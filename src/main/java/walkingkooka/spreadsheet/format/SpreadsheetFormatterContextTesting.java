@@ -19,16 +19,14 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Either;
 import walkingkooka.color.Color;
-import walkingkooka.datetime.DateTimeContextTesting2;
-import walkingkooka.math.DecimalNumberContextTesting2;
+import walkingkooka.convert.ConverterContextTesting;
 import walkingkooka.text.CharSequences;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatterContext> extends DateTimeContextTesting2<C>,
-        DecimalNumberContextTesting2<C> {
+public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatterContext> extends ConverterContextTesting<C> {
 
     default void colorNumberAndCheck(final SpreadsheetFormatterContext context,
                                      final int number,
