@@ -361,6 +361,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                         null));
     }
 
+    @Test
+    public void testNameToColorCached() {
+        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadata();
+        assertSame(metadata.nameToColor(), metadata.nameToColor());
+    }
+
     // NumberToColor....................................................................................................
 
     @Test
@@ -387,6 +393,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         }
     }
 
+    @Test
+    public void testNumberToColorCached() {
+        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadata();
+        assertSame(metadata.numberToColor(), metadata.numberToColor());
+    }
+    
     // HateosResource...................................................................................................
 
     @Test
@@ -528,7 +540,23 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     private void convertAndCheck2(final Object value,
                                   final Object expected) {
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter();
+
+        this.convertAndCheck(metadata.converter(),
+                value,
+                Cast.to(expected.getClass()),
+                ConverterContexts.basic(DateTimeContexts.locale(Locale.ENGLISH, 20), DecimalNumberContexts.american(MathContext.DECIMAL32)),
+                expected);
+    }
+
+    @Test
+    public void testConverterCached() {
+        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter();
+        assertSame(metadata.converter(), metadata.converter());
+    }
+
+    private SpreadsheetMetadata createSpreadsheetMetadataWithConverter() {
+        return SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.JAVA_EPOCH_OFFSET)
                 .set(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetPattern.parseDateFormatPattern("\"Date\" yyyy mm dd"))
                 .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS, SpreadsheetPattern.parseDateParsePatterns("\"Date\" yyyy mm dd"))
@@ -539,12 +567,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetPattern.parseTextFormatPattern("\"Text\" @"))
                 .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetPattern.parseTimeFormatPattern("\"Time\" ss hh"))
                 .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetPattern.parseTimeParsePatterns("\"Time\" ss hh"));
-
-        this.convertAndCheck(metadata.converter(),
-                value,
-                Cast.to(expected.getClass()),
-                ConverterContexts.basic(DateTimeContexts.locale(Locale.ENGLISH, 20), DecimalNumberContexts.american(MathContext.DECIMAL32)),
-                expected);
     }
 
     // HasDateTimeContext...............................................................................................
@@ -570,6 +592,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 );
     }
 
+    @Test
+    public void testDateTimeContextCached() {
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH,
+                SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20));
+        assertSame(metadata.dateTimeContext(), metadata.dateTimeContext());
+    }
+    
     // HasDecimalNumberContext..........................................................................................
 
     @Test
@@ -694,6 +723,17 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.hasMathContextAndCheck(context, new MathContext(precision, roundingMode));
     }
 
+    @Test
+    public void testDecimalNumberContextCached() {
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, 'E')
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
+                .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, '+')
+                .set(SpreadsheetMetadataPropertyName.PRECISION, 16)
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR);
+        assertSame(metadata.decimalNumberContext(), metadata.decimalNumberContext());
+    }
+    
     // HasFormatter.....................................................................................................
 
     @Test
@@ -723,12 +763,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     private void formatAndCheck2(final Object value,
                                  final String text) {
-        this.formatAndCheck(SpreadsheetMetadata.EMPTY
-                        .set(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetPattern.parseDateFormatPattern("\"Date\" ddmmyyyy"))
-                        .set(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetPattern.parseDateTimeFormatPattern("\"DateTime\" ddmmyyyy hhmmss"))
-                        .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("\"Number\" #.000"))
-                        .set(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetPattern.parseTextFormatPattern("\"Text\" @"))
-                        .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetPattern.parseTimeFormatPattern("\"Time\" hhmmss"))
+        this.formatAndCheck(this.createSpreadsheetMetadataWithFormatter()
                         .formatter(),
                 value,
                 new FakeSpreadsheetFormatterContext() {
@@ -778,6 +813,21 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, text));
     }
 
+    @Test
+    public void testFormatterCached() {
+        final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithFormatter();
+        assertSame(metadata.formatter(), metadata.formatter());
+    }
+
+    private SpreadsheetMetadata createSpreadsheetMetadataWithFormatter() {
+        return SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetPattern.parseDateFormatPattern("\"Date\" ddmmyyyy"))
+                .set(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetPattern.parseDateTimeFormatPattern("\"DateTime\" ddmmyyyy hhmmss"))
+                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("\"Number\" #.000"))
+                .set(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetPattern.parseTextFormatPattern("\"Text\" @"))
+                .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetPattern.parseTimeFormatPattern("\"Time\" hhmmss"));
+    }
+
     // HasMathContext...................................................................................................
 
     @Test
@@ -798,6 +848,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
             assertEquals(precision, mathContext.getPrecision(), "precision");
             assertEquals(r, mathContext.getRoundingMode(), "roundingMode");
         });
+    }
+
+    @Test
+    public void testMathContextCached() {
+        final SpreadsheetMetadata metadata = SpreadsheetMetadataNonEmpty.with(Maps.of(SpreadsheetMetadataPropertyName.PRECISION, 16,
+                SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR));
+        assertSame(metadata.mathContext(), metadata.mathContext());
     }
 
     // ToString.........................................................................................................
