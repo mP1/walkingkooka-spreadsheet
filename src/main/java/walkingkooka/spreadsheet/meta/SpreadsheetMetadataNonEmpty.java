@@ -20,13 +20,21 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.color.Color;
+import walkingkooka.convert.Converter;
+import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
+import java.math.MathContext;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * A {@link SpreadsheetMetadataNonEmpty} holds a non empty {@link Map} of {@link SpreadsheetMetadataPropertyName} and values.
@@ -128,6 +136,99 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
                 new SpreadsheetMetadataNonEmpty(SpreadsheetMetadataNonEmptyMap.withSpreadsheetMetadataMapEntrySet(SpreadsheetMetadataNonEmptyMapEntrySet.withList(list))); // no need to sort after a delete
     }
 
+    // getters..........................................................................................................
+
+    @Override
+    public Function<SpreadsheetColorName, Optional<Color>> nameToColor() {
+        if (null == this.nameToColor) {
+            this.nameToColor = this.nameToColor0();
+        }
+        return this.nameToColor;
+    }
+
+    /**
+     * Cache function
+     */
+    private Function<SpreadsheetColorName, Optional<Color>> nameToColor;
+
+    @Override
+    public Function<Integer, Optional<Color>> numberToColor() {
+        if (null == this.numberToColor) {
+            this.numberToColor = this.numberToColor0();
+        }
+        return this.numberToColor;
+    }
+
+    /**
+     * Cache function
+     */
+    private Function<Integer, Optional<Color>> numberToColor;
+
+    @Override
+    public Converter converter() {
+        if (null == this.converter) {
+            this.converter = this.converter0();
+        }
+        return this.converter;
+    }
+
+    /**
+     * Cached {@link Converter}.
+     */
+    private Converter converter;
+
+    @Override
+    public DateTimeContext dateTimeContext() {
+        if (null == this.dateTimeContext) {
+            this.dateTimeContext = this.dateTimeContext0();
+        }
+        return this.dateTimeContext;
+    }
+
+    /**
+     * Cached {@link DateTimeContext}.
+     */
+    private DateTimeContext dateTimeContext;
+
+    @Override
+    public DecimalNumberContext decimalNumberContext() {
+        if (null == this.decimalNumberContext) {
+            this.decimalNumberContext = this.decimalNumberContext0();
+        }
+        return this.decimalNumberContext;
+    }
+
+    /**
+     * Cached {@link DecimalNumberContext}.
+     */
+    private DecimalNumberContext decimalNumberContext;
+
+    @Override
+    public MathContext mathContext() {
+        if (null == this.mathContext) {
+            this.mathContext = this.mathContext0();
+        }
+        return this.mathContext;
+    }
+
+    /**
+     * Cached {@link MathContext}.
+     */
+    private MathContext mathContext;
+
+    @Override
+    public SpreadsheetFormatter formatter() {
+        if (null == this.formatter) {
+            this.formatter = this.formatter0();
+        }
+        return this.formatter;
+    }
+
+    /**
+     * Cached {@link SpreadsheetFormatter}.
+     */
+    private SpreadsheetFormatter formatter;
+    
     // SpreadsheetMetadataVisitor.......................................................................................
 
     @Override
