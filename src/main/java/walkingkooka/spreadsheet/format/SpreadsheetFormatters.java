@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.convert.Converter;
 import walkingkooka.math.Fraction;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
@@ -28,7 +29,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 
 import java.math.BigDecimal;
-import java.time.temporal.Temporal;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -59,6 +59,13 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     public static <T> SpreadsheetFormatter conditional(final SpreadsheetFormatConditionParserToken token,
                                                        final SpreadsheetFormatter formatter) {
         return ConditionSpreadsheetFormatter.with(token, formatter);
+    }
+
+    /**
+     * {@see ConverterSpreadsheetFormatter}
+     */
+    public static SpreadsheetFormatter converter(final Converter converter) {
+        return ConverterSpreadsheetFormatter.with(converter);
     }
 
     /**
