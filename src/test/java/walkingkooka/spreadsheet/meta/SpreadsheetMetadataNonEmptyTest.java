@@ -24,6 +24,8 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
@@ -542,11 +544,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                                   final Object expected) {
         final SpreadsheetMetadata metadata = this.createSpreadsheetMetadataWithConverter();
 
-        this.convertAndCheck(metadata.converter(),
-                value,
-                Cast.to(expected.getClass()),
-                ConverterContexts.basic(DateTimeContexts.locale(Locale.ENGLISH, 20), DecimalNumberContexts.american(MathContext.DECIMAL32)),
-                expected);
+        this.convertAndCheck3(value,
+                expected,
+                metadata.converter(),
+                ConverterContexts.basic(DateTimeContexts.locale(Locale.ENGLISH, 20), DecimalNumberContexts.american(MathContext.DECIMAL32)));
     }
 
     @Test
@@ -562,11 +563,46 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS, SpreadsheetPattern.parseDateParsePatterns("\"Date\" yyyy mm dd"))
                 .set(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetPattern.parseDateTimeFormatPattern("\"DateTime\" yyyy hh"))
                 .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetPattern.parseDateTimeParsePatterns("\"DateTime\" yyyy hh"))
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("\"Number\" 00.000"))
                 .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERNS, SpreadsheetPattern.parseNumberParsePatterns("\"Number\" 00.000"))
                 .set(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetPattern.parseTextFormatPattern("\"Text\" @"))
                 .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetPattern.parseTimeFormatPattern("\"Time\" ss hh"))
-                .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetPattern.parseTimeParsePatterns("\"Time\" ss hh"));
+                .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetPattern.parseTimeParsePatterns("\"Time\" ss hh"))
+                .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20);
+    }
+
+    private void convertAndCheck3(final Object value,
+                                  final Object expected,
+                                  final Converter converter,
+                                  final ConverterContext context) {
+        this.convertAndCheck(converter,
+                value,
+                Cast.to(expected.getClass()),
+                context,
+                expected);
+    }
+
+    @Test
+    public void testConvertWithConverterContext() {
+        final SpreadsheetMetadata metadata = createSpreadsheetMetadataWithConverterAndConverterContext();
+        this.convertAndCheck3(LocalTime.of(12, 58, 59),
+                "Time 59 12",
+                metadata.converter(),
+                metadata.converterContext());
+    }
+
+    @Test
+    public void testConverterContextCached() {
+        final SpreadsheetMetadata metadata = createSpreadsheetMetadataWithConverterAndConverterContext();
+        assertSame(metadata.converterContext(), metadata.converterContext());
+    }
+
+    private SpreadsheetMetadata createSpreadsheetMetadataWithConverterAndConverterContext() {
+        return this.createSpreadsheetMetadataWithConverter()
+                .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, 'E')
+                .set(SpreadsheetMetadataPropertyName.PRECISION, 16)
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.DOWN);
     }
 
     // HasDateTimeContext...............................................................................................
