@@ -23,6 +23,8 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContext;
+import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.HasConverter;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
@@ -256,6 +258,18 @@ public abstract class SpreadsheetMetadata implements HasConverter,
                 timeFormat.formatter(),
                 timeParser,
                 dateOffset);
+    }
+
+    /**
+     * Returns a {@link ConverterContext}
+     */
+    public abstract ConverterContext converterContext();
+
+    /**
+     * Factory that creates a {@link ConverterContext}
+     */
+    final ConverterContext converterContext0() {
+        return ConverterContexts.basic(this.dateTimeContext(), this.decimalNumberContext());
     }
 
     // HasDateTimeContext...............................................................................................
