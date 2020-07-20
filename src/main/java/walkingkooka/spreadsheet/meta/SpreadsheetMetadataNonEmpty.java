@@ -22,6 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContext;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
@@ -177,6 +178,19 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
      */
     private Converter converter;
 
+    @Override
+    public ConverterContext converterContext() {
+        if (null == this.converterContext) {
+            this.converterContext = this.converterContext0();
+        }
+        return this.converterContext;
+    }
+
+    /**
+     * Cached {@link ConverterContext}.
+     */
+    private ConverterContext converterContext;
+    
     @Override
     public DateTimeContext dateTimeContext() {
         if (null == this.dateTimeContext) {

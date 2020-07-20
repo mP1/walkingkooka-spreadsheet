@@ -21,6 +21,8 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContext;
+import walkingkooka.convert.ConverterContexts;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
@@ -97,6 +99,11 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     @Override
     public Converter converter() {
         return this.converter0();
+    }
+
+    @Override
+    public ConverterContext converterContext() {
+        return this.converterContext0();
     }
 
     @Override
