@@ -19,15 +19,14 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Either;
 import walkingkooka.color.Color;
-import walkingkooka.datetime.DateTimeContext;
-import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.convert.ConverterContext;
 
 import java.util.Optional;
 
 /**
- * Context that accompanies a value format, holding local sensitive attributes such as the decimal point character.
+ * A {@link }Context} that accompanies a value format, holding local sensitive attributes such as the decimal point character.
  */
-public interface SpreadsheetFormatterContext extends DecimalNumberContext, DateTimeContext {
+public interface SpreadsheetFormatterContext extends ConverterContext {
 
     /**
      * Returns the {@link Color} with the given number.
