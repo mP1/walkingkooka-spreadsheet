@@ -30,7 +30,7 @@ public final class SpreadsheetMetadataPropertyValueHandlerIntegerTest extends Sp
 
     @Test
     public void testPredicateFails() {
-        this.checkFails(-1, "Invalid value");
+        this.checkFails(-1, "Invalid value \"width\"");
     }
 
     @Test

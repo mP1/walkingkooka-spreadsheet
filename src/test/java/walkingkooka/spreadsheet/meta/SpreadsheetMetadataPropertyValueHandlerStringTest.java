@@ -31,7 +31,7 @@ public final class SpreadsheetMetadataPropertyValueHandlerStringTest extends Spr
 
     @Test
     public void testPredicateFails() {
-        this.checkFails("", "Invalid value");
+        this.checkFails("", "Invalid value \"currency-symbol\"");
     }
 
     @Test
