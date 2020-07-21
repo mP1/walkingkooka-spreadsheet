@@ -24,7 +24,7 @@ public final class SpreadsheetMetadataPropertyValueHandlerEmailAddressTest exten
 
     @Test
     public void testInvalidEmailFails() {
-        this.checkFails("invalid email", "Expected EmailAddress but got \"invalid email\" (java.lang.String)");
+        this.checkFails("invalid email", "Expected EmailAddress but got \"invalid email\" (java.lang.String) in \"creator\"");
     }
 
     @Test

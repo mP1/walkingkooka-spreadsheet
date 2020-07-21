@@ -26,7 +26,7 @@ public final class SpreadsheetMetadataPropertyValueHandlerRoundingModeTest exten
 
     @Test
     public void testInvalidRoundingModeFails() {
-        this.checkFails("invalid", "Expected RoundingMode but got \"invalid\" (java.lang.String)");
+        this.checkFails("invalid", "Expected RoundingMode but got \"invalid\" (java.lang.String) in \"rounding-mode\"");
     }
 
     @Test
