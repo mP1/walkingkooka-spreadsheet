@@ -36,6 +36,7 @@ import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.format.HasSpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.HasSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
@@ -71,6 +72,7 @@ public abstract class SpreadsheetMetadata implements HasConverter,
         HasDecimalNumberContext,
         HasMathContext,
         HasSpreadsheetFormatter,
+        HasSpreadsheetFormatterContext,
         HateosResource<SpreadsheetId>,
         Value<Map<SpreadsheetMetadataPropertyName<?>, Object>> {
 
@@ -372,6 +374,8 @@ public abstract class SpreadsheetMetadata implements HasConverter,
                 numberFormat.formatter(),
                 textFormat.formatter()));
     }
+
+    // HasSpreadsheetFormatterContext...................................................................................
 
     /**
      * Creates a {@link SpreadsheetFormatterContext} using the given formatter as the default.
