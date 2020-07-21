@@ -226,7 +226,7 @@ abstract class SpreadsheetMetadataPropertyValueHandler<T> {
             typeName = typeName.substring(1 + typeName.lastIndexOf('.'));
         }
 
-        return new SpreadsheetMetadataPropertyValueException("Expected " + this.expectedTypeName(type) + " but got " + CharSequences.quoteIfChars(value) + " (" + typeName + ")",
+        return new SpreadsheetMetadataPropertyValueException("Expected " + this.expectedTypeName(type) + " but got " + CharSequences.quoteIfChars(value) + " (" + typeName + ") in",
                 name,
                 value);
     }
