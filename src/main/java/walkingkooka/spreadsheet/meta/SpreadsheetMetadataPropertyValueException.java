@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.spreadsheet.SpreadsheetException;
+import walkingkooka.text.CharSequences;
 
 import java.util.Objects;
 
@@ -45,6 +46,11 @@ public class SpreadsheetMetadataPropertyValueException extends SpreadsheetExcept
     static SpreadsheetMetadataPropertyName<?> checkName(final SpreadsheetMetadataPropertyName<?> name) {
         Objects.requireNonNull(name, "name");
         return name;
+    }
+
+    @Override
+    public String getMessage() {
+        return super.getMessage() + " " + CharSequences.quote(this.name().value());
     }
 
     public SpreadsheetMetadataPropertyName<?> name() {
