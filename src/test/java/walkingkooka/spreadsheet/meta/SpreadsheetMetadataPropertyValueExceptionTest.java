@@ -71,6 +71,12 @@ public final class SpreadsheetMetadataPropertyValueExceptionTest implements Stan
     }
 
     @Override
+    public void checkMessage(final Throwable throwable,
+                             final String message) {
+        assertEquals(message + " \"" + this.name() + "\"", throwable.getMessage(), "message");
+    }
+
+    @Override
     public Class<SpreadsheetMetadataPropertyValueException> type() {
         return SpreadsheetMetadataPropertyValueException.class;
     }
