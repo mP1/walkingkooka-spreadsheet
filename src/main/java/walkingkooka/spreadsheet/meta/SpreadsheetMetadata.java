@@ -38,6 +38,8 @@ import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.format.HasSpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
@@ -369,6 +371,23 @@ public abstract class SpreadsheetMetadata implements HasConverter,
                 timeFormat.formatter(),
                 numberFormat.formatter(),
                 textFormat.formatter()));
+    }
+
+    /**
+     * Creates a {@link SpreadsheetFormatterContext} using the given formatter as the default.
+     */
+    public abstract SpreadsheetFormatterContext formatterContext(final SpreadsheetFormatter defaultFormatter);
+
+    /**
+     * Factory that combines properties and the given default {@link SpreadsheetFormatter} returning a {@link SpreadsheetFormatterContext}.
+     */
+    final SpreadsheetFormatterContext formatterContext0(final SpreadsheetFormatter defaultFormatter) {
+        return SpreadsheetFormatterContexts.basic(this.numberToColor(),
+                this.nameToColor(),
+                this.getOrFail(SpreadsheetMetadataPropertyName.WIDTH),
+                this.converter(),
+                defaultFormatter,
+                this.converterContext());
     }
 
     // SpreadsheetMetadataStyleVisitor..................................................................................

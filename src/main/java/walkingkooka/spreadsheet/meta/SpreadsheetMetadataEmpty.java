@@ -27,6 +27,7 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
@@ -124,6 +125,11 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     @Override
     public SpreadsheetFormatter formatter() {
         return this.formatter0();
+    }
+
+    @Override
+    public SpreadsheetFormatterContext formatterContext(final SpreadsheetFormatter defaultFormatter) {
+        return this.formatterContext0(defaultFormatter);
     }
 
     // SpreadsheetMetadataVisitor........................................................................................
