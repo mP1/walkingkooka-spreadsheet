@@ -17,9 +17,9 @@
     <inceptionYear>2020</inceptionYear>
 
     <properties>
-        <maven.compiler.source>1.9</maven.compiler.source>
-        <maven.compiler.target>1.9</maven.compiler.target>
-        <maven.compiler.plugin>3.7.0</maven.compiler.plugin>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.plugin>3.8.1</maven.compiler.plugin>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -164,6 +164,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
                 <configuration>
                     <skip>true</skip>
                 </configuration>
@@ -206,7 +207,6 @@
                                 <param>-Awalkingkooka.j2cl.locale.Logging=SLASH_SLASH_COMMENTS</param>
                             </java-compiler-arguments>
                             <language-out>ECMASCRIPT_2016</language-out>
-                            <!-- dont want to parallelize -->
                             <thread-pool-size>0</thread-pool-size>
 
                             <classpath-required/>
