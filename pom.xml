@@ -31,8 +31,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.9</maven.compiler.source>
-    <maven.compiler.target>1.9</maven.compiler.target>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
   </properties>
 
   <licenses>
@@ -141,6 +141,34 @@
     </resources>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>9</source>
+          <target>9</target>
+          <compilerArgs/>
+          <showWarnings>true</showWarnings>
+        </configuration>
+        <executions>
+          <execution>
+            <id>default-compile</id>
+            <phase>compile</phase>
+            <configuration>
+              <excludes>
+                <exclude>**/*.txt</exclude>
+                <!-- seems to solve failures on travis where the *.txt files are added to the compiler's path-->
+                <exclude>walkingkooka/spreadsheet/format/parser/*.txt</exclude>
+                <exclude>walkingkooka/spreadsheet/parser/*.txt</exclude>
+              </excludes>
+            </configuration>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <artifactId>maven-resources-plugin</artifactId>
         <version>3.1.0</version>
         <executions>
@@ -169,7 +197,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.19.1</version>
+        <version>2.22.2</version>
         <dependencies>
           <dependency>
             <groupId>org.junit.platform</groupId>
@@ -253,7 +281,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-invoker-plugin</artifactId>
-        <version>3.0.1</version>
+        <version>3.2.1</version>
         <executions>
           <execution>
             <goals>
@@ -264,12 +292,13 @@
           </execution>
         </executions>
         <configuration>
+          <mavenOpts>-Xms2000M -Xmx6000M</mavenOpts>
           <cloneProjectsTo>${project.build.directory}/it-tests</cloneProjectsTo>
           <debug>true</debug>
           <invokerPropertiesFile>${project.build.directory}/it-repo/invoker.properties</invokerPropertiesFile>
           <localRepositoryPath>${project.build.directory}/it-repo</localRepositoryPath>
           <settingsFile>src/it/settings.xml</settingsFile>
-          <streamLogs>false</streamLogs>
+          <streamLogs>true</streamLogs>
         </configuration>
       </plugin>
     </plugins>
