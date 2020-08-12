@@ -24,87 +24,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>github-mp1-appengine-repo</id>
-            <url>https://maven-repo-254709.appspot.com</url>
-        </repository>
-        <repository>
-            <id>vertispan-releases</id>
-            <name>Vertispan hosted artifacts-releases</name>
-            <url>https://repo.vertispan.com/j2cl</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>vertispan-gwt-snapshots</id>
-            <url>https://repo.vertispan.com/gwt-snapshot/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>google-sonatype-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/google-snapshots/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>github-mp1-appengine-repo</id>
-            <url>https://maven-repo-254709.appspot.com</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>vertispan-releases</id>
-            <name>Vertispan hosted artifacts-releases</name>
-            <url>https://repo.vertispan.com/j2cl</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-        <pluginRepository>
-            <id>vertispan-gwt-snapshots</id>
-            <url>https://repo.vertispan.com/gwt-snapshot/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-        <pluginRepository>
-            <id>google-sonatype-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/google-snapshots/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
-
     <dependencies>
         <dependency>
-            <groupId>@project.groupId@</groupId>
-            <artifactId>@project.artifactId@</artifactId>
-            <version>@project.version@</version>
+            <groupId>walkingkooka</groupId>
+            <artifactId>walkingkooka-spreadsheet</artifactId>
+            <version>1.0-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.apiguardian</groupId>
@@ -207,7 +131,7 @@
                                 <param>-Awalkingkooka.j2cl.locale.Logging=SLASH_SLASH_COMMENTS</param>
                             </java-compiler-arguments>
                             <language-out>ECMASCRIPT_2016</language-out>
-                            <thread-pool-size>0</thread-pool-size>
+                            <thread-pool-size>1</thread-pool-size>
 
                             <classpath-required/>
                             <ignored-dependencies>
