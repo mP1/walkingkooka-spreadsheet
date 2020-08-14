@@ -57,6 +57,14 @@
     <repository>
       <id>github-mp1-appengine-repo</id>
       <url>https://maven-repo-254709.appspot.com</url>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>daily</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>daily</updatePolicy>
+      </snapshots>
     </repository>
     <repository>
       <id>vertispan-releases</id>
@@ -64,29 +72,35 @@
       <url>https://repo.vertispan.com/j2cl</url>
       <releases>
         <enabled>true</enabled>
+        <updatePolicy>daily</updatePolicy>
       </releases>
       <snapshots>
         <enabled>true</enabled>
+        <updatePolicy>daily</updatePolicy>
       </snapshots>
     </repository>
     <repository>
       <id>vertispan-gwt-snapshots</id>
       <url>https://repo.vertispan.com/gwt-snapshot/</url>
       <releases>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
+        <updatePolicy>daily</updatePolicy>
       </releases>
       <snapshots>
         <enabled>true</enabled>
+        <updatePolicy>daily</updatePolicy>
       </snapshots>
     </repository>
     <repository>
       <id>google-sonatype-snapshots</id>
       <url>https://oss.sonatype.org/content/repositories/google-snapshots/</url>
       <releases>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
+        <updatePolicy>daily</updatePolicy>
       </releases>
       <snapshots>
         <enabled>true</enabled>
+        <updatePolicy>daily</updatePolicy>
       </snapshots>
     </repository>
   </repositories>
