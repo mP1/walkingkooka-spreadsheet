@@ -41,7 +41,7 @@ import java.util.Objects;
 
 /**
  * A {@link Visitor} which dispatches each {@link SpreadsheetMetadataPropertyName} to a visit method which accepts the accompanying
- * value.
+ * value. Note it does not visit default properties only those immediately set upon the given {@link SpreadsheetMetadata}.
  */
 public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMetadata> {
 

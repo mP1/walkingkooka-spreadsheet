@@ -28,7 +28,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
-import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
 import java.math.MathContext;
@@ -48,11 +48,12 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
      * Factory that creates a {@link SpreadsheetMetadataNonEmpty} from a {@link SpreadsheetMetadataNonEmptyMap}.
      */
     static SpreadsheetMetadataNonEmpty with(final SpreadsheetMetadataNonEmptyMap value) {
-        return new SpreadsheetMetadataNonEmpty(value);
+        return new SpreadsheetMetadataNonEmpty(value, null);
     }
 
-    private SpreadsheetMetadataNonEmpty(final SpreadsheetMetadataNonEmptyMap value) {
-        super();
+    private SpreadsheetMetadataNonEmpty(final SpreadsheetMetadataNonEmptyMap value,
+                                        final SpreadsheetMetadata defaults) {
+        super(defaults);
         this.value = value;
     }
 
@@ -65,10 +66,17 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
 
     final SpreadsheetMetadataNonEmptyMap value;
 
+    // setDefaults......................................................................................................
+
+    @Override
+    SpreadsheetMetadata replaceDefaults(final SpreadsheetMetadata defaults) {
+        return new SpreadsheetMetadataNonEmpty(this.value, defaults);
+    }
+
     // get..............................................................................................................
 
     @Override
-    <V> Optional<V> get0(final SpreadsheetMetadataPropertyName<V> propertyName) {
+    <V> Optional<V> get1(final SpreadsheetMetadataPropertyName<V> propertyName) {
         return Optional.ofNullable(Cast.to(this.value.get(propertyName)));
     }
 
@@ -77,7 +85,7 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     @Override
     <V> SpreadsheetMetadata set0(final SpreadsheetMetadataPropertyName<V> propertyName, final V value) {
         SpreadsheetMetadataNonEmptyMap map = this.value;
-        final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> list = Lists.array();
+        final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> values = Lists.array();
 
         int mode = 0; // new property added.
 
@@ -89,30 +97,30 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
                     mode = 1; // no change
                     break;
                 } else {
-                    list.add(Maps.entry(property, value));
+                    values.add(Maps.entry(property, value));
                     mode = 2; // replaced
                 }
             } else {
-                list.add(propertyAndValue);
+                values.add(propertyAndValue);
             }
         }
 
         // replace didnt happen
         if (0 == mode) {
-            list.add(Maps.entry(propertyName, value));
-            SpreadsheetMetadataNonEmptyMapEntrySet.sort(list);
+            values.add(Maps.entry(propertyName, value));
+            SpreadsheetMetadataNonEmptyMapEntrySet.sort(values);
         }
 
         return 1 == mode ?
                 this :
-                new SpreadsheetMetadataNonEmpty(SpreadsheetMetadataNonEmptyMap.withSpreadsheetMetadataMapEntrySet(SpreadsheetMetadataNonEmptyMapEntrySet.withList(list)));
+                this.setValues(values);
     }
 
     // remove...........................................................................................................
 
     @Override
     SpreadsheetMetadata remove0(final SpreadsheetMetadataPropertyName<?> propertyName) {
-        final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> list = Lists.array();
+        final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> values = Lists.array();
         boolean removed = false;
 
         for (Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : this.value.entries) {
@@ -120,22 +128,26 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
             if (propertyName.equals(property)) {
                 removed = true;
             } else {
-                list.add(propertyAndValue);
+                values.add(propertyAndValue);
             }
         }
 
         return removed ?
-                this.remove1(list) :
+                this.remove1(values) :
                 this;
     }
 
     /**
      * Accepts a list after removing a property, special casing if the list is empty.
      */
-    private SpreadsheetMetadata remove1(List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> list) {
+    private SpreadsheetMetadata remove1(final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> list) {
         return list.isEmpty() ?
-                SpreadsheetMetadata.EMPTY :
-                new SpreadsheetMetadataNonEmpty(SpreadsheetMetadataNonEmptyMap.withSpreadsheetMetadataMapEntrySet(SpreadsheetMetadataNonEmptyMapEntrySet.withList(list))); // no need to sort after a delete
+                SpreadsheetMetadata.EMPTY.setDefaults(this.defaults()) :
+                this.setValues(list); // no need to sort after a delete
+    }
+
+    private SpreadsheetMetadata setValues(final List<Entry<SpreadsheetMetadataPropertyName<?>, Object>> values) {
+        return new SpreadsheetMetadataNonEmpty(SpreadsheetMetadataNonEmptyMap.withSpreadsheetMetadataMapEntrySet(SpreadsheetMetadataNonEmptyMapEntrySet.withList(values)), this.defaults);
     }
 
     // getters..........................................................................................................
@@ -283,7 +295,7 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     }
 
     @Override
-    boolean equals0(final SpreadsheetMetadata other) {
+    boolean equalsValues(final SpreadsheetMetadata other) {
         return this.value.equals(other.value());
     }
 
@@ -295,7 +307,8 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     // JsonNodeContext..................................................................................................
 
     @Override
-    JsonNode marshall(final JsonNodeMarshallContext context) {
-        return this.value.marshall(context);
+    JsonObject marshallProperties(final JsonNodeMarshallContext context) {
+        return this.value.marshall(context)
+                .objectOrFail();
     }
 }

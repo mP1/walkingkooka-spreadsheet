@@ -22,13 +22,13 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
-import walkingkooka.convert.ConverterContexts;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
 import java.math.MathContext;
@@ -47,7 +47,7 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
      */
     static SpreadsheetMetadataEmpty instance() {
         if (null == instance) {
-            instance = new SpreadsheetMetadataEmpty();
+            instance = new SpreadsheetMetadataEmpty(null);
         }
         return instance;
     }
@@ -57,8 +57,8 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     /**
      * Private ctor
      */
-    private SpreadsheetMetadataEmpty() {
-        super();
+    private SpreadsheetMetadataEmpty(final SpreadsheetMetadata defaults) {
+        super(defaults);
     }
 
     // Value............................................................................................................
@@ -71,7 +71,7 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     // get/set/remove...................................................................................................
 
     @Override
-    <V> Optional<V> get0(final SpreadsheetMetadataPropertyName<V> propertyName) {
+    <V> Optional<V> get1(final SpreadsheetMetadataPropertyName<V> propertyName) {
         return Optional.empty();
     }
 
@@ -83,6 +83,13 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     @Override
     SpreadsheetMetadata remove0(final SpreadsheetMetadataPropertyName<?> propertyName) {
         return this;
+    }
+
+    // setDefaults......................................................................................................
+
+    @Override
+    SpreadsheetMetadata replaceDefaults(final SpreadsheetMetadata defaults) {
+        return new SpreadsheetMetadataEmpty(defaults);
     }
 
     // getters..........................................................................................................
@@ -152,8 +159,8 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     }
 
     @Override
-    boolean equals0(final SpreadsheetMetadata other) {
-        return true; // singleton
+    boolean equalsValues(final SpreadsheetMetadata other) {
+        return true; // no values to test
     }
 
     @Override
@@ -164,7 +171,7 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     // JsonNodeContext..................................................................................................
 
     @Override
-    JsonNode marshall(final JsonNodeMarshallContext context) {
+    JsonObject marshallProperties(final JsonNodeMarshallContext context) {
         return JsonNode.object();
     }
 }

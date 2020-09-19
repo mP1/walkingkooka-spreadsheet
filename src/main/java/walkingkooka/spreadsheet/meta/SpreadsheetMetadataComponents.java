@@ -46,7 +46,7 @@ final class SpreadsheetMetadataComponents {
 
     <T> T getOrElse(final SpreadsheetMetadataPropertyName<T> propertyName,
                     final Supplier<T> defaultValue) {
-        return this.metadata.get0(propertyName)
+        return this.metadata.get1(propertyName)
                 .orElseGet(() -> {
                     final T value = defaultValue.get();
                     if (null == value) {
