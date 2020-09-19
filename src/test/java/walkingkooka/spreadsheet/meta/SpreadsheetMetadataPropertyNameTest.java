@@ -45,6 +45,11 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
     }
 
     @Test
+    public void testDefaultsSpecialInternalConstantFails() {
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetMetadataPropertyName.with("_defaults"));
+    }
+
+    @Test
     public void testConstants() {
         assertEquals(Lists.empty(),
                 Arrays.stream(SpreadsheetMetadataPropertyName.class.getDeclaredFields())
