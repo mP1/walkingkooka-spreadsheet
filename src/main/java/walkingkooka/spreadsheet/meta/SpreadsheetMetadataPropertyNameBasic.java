@@ -55,7 +55,7 @@ final class SpreadsheetMetadataPropertyNameBasic<T> extends SpreadsheetMetadataP
 
     private final SpreadsheetMetadataPropertyValueHandler<T> handler;
 
-    // StyleMetadataVisitor.............................................................................................
+    // SpreadsheetMetadataVisitor.......................................................................................
 
     /**
      * Dispatches to the appropriate {@link SpreadsheetMetadataVisitor} visit method.
