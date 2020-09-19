@@ -46,7 +46,7 @@ final class SpreadsheetMetadataPropertyNameNamedColor extends SpreadsheetMetadat
         return SpreadsheetMetadataPropertyValueHandler.color();
     }
 
-    // StyleMetadataVisitor.............................................................................................
+    // SpreadsheetMetadataVisitor.......................................................................................
 
     /**
      * Dispatches to the appropriate {@link SpreadsheetMetadataVisitor} visit method.
