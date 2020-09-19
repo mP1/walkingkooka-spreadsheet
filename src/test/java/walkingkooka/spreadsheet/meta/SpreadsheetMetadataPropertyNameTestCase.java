@@ -20,10 +20,10 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.JavaVisibility;
 
-public abstract class SpreadsheetMetadataPropertyNameTestCase4<N extends SpreadsheetMetadataPropertyName<?>> extends SpreadsheetMetadataTestCase2<N>
+public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends SpreadsheetMetadataPropertyName<?>> extends SpreadsheetMetadataTestCase2<N>
         implements ToStringTesting<N> {
 
-    SpreadsheetMetadataPropertyNameTestCase4() {
+    SpreadsheetMetadataPropertyNameTestCase() {
         super();
     }
 
