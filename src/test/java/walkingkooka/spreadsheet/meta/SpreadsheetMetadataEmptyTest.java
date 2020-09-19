@@ -22,11 +22,20 @@ import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestCase<SpreadsheetMetadataEmpty> {
+
+    @Test
+    public void testCreated() {
+        final SpreadsheetMetadata empty = SpreadsheetMetadata.EMPTY;
+        this.checkDefaults(empty, null);
+    }
 
     @Test
     public void testEmpty() {
@@ -78,6 +87,17 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     @Test
     public void testFromEmptyJsonObject() {
         assertSame(SpreadsheetMetadata.EMPTY, SpreadsheetMetadata.unmarshall(JsonNode.object(), this.unmarshallContext()));
+    }
+
+    @Test
+    public void testMarshallWithDefaults() {
+        final SpreadsheetMetadata defaultNotEmpty = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"));
+        final JsonNodeMarshallContext context = JsonNodeMarshallContexts.basic();
+
+        assertEquals(JsonNode.object()
+                .set(SpreadsheetMetadata.DEFAULTS, context.marshall(defaultNotEmpty)),
+                context.marshall(SpreadsheetMetadata.EMPTY.setDefaults(defaultNotEmpty)));
     }
 
     // helper...........................................................................................................
