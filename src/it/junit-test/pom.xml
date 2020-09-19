@@ -26,9 +26,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>walkingkooka</groupId>
-            <artifactId>walkingkooka-spreadsheet</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>@project.groupId@</groupId>
+            <artifactId>@project.artifactId@</artifactId>
+            <version>@project.version@</version>
         </dependency>
         <dependency>
             <groupId>walkingkooka</groupId>
