@@ -23,6 +23,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterTesting;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -30,6 +31,8 @@ import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
@@ -37,6 +40,8 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -74,6 +79,45 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         this.getAndCheck(this.createObject(),
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
                 null);
+    }
+
+    @Test
+    public final void testGetUnknownDefaultsToDefault() {
+        final String value = "!!!";
+
+        final SpreadsheetMetadata metadata = this.createObject();
+
+        final SpreadsheetMetadataPropertyName<String> unknown = SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL;
+        this.getAndCheck(metadata, unknown, null);
+
+        this.getAndCheck(metadata.setDefaults(SpreadsheetMetadata.EMPTY.set(unknown, value)),
+                unknown,
+                value);
+    }
+
+    @Test
+    public final void testGetUnknownDefaultsToDefaultCascading() {
+        final String value1 = "!!!";
+        final Character value2 = '@';
+
+        final SpreadsheetMetadata metadata = this.createObject();
+
+        final SpreadsheetMetadataPropertyName<String> unknown1 = SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL;
+        this.getAndCheck(metadata, unknown1, null);
+
+        final SpreadsheetMetadataPropertyName<Character> unknown2 = SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR;
+        this.getAndCheck(metadata, unknown2, null);
+
+        final SpreadsheetMetadata withDefaults = this.createObject()
+                .setDefaults(SpreadsheetMetadata.EMPTY.set(unknown1, value1)
+                        .setDefaults(SpreadsheetMetadata.EMPTY.set(unknown2, value2)));
+
+        this.getAndCheck(withDefaults,
+                unknown1,
+                value1);
+        this.getAndCheck(withDefaults,
+                unknown2,
+                value2);
     }
 
     final <TT> void getAndCheck(final SpreadsheetMetadata metadata,
@@ -226,6 +270,71 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> this.createObject().mathContext());
         checkMessage(thrown,
                 "Required properties \"precision\", \"rounding-mode\" missing.");
+    }
+
+    // setDefaults......................................................................................................
+
+    @Test
+    public final void testDefaultsNotNull() {
+        final SpreadsheetMetadata metadata = this.createObject();
+        assertNotEquals(null, metadata.defaults());
+    }
+
+    @Test
+    public final void testSetDefaultsNullFails() {
+        final SpreadsheetMetadata metadata = this.createObject();
+        assertThrows(NullPointerException.class, () -> metadata.setDefaults(null));
+    }
+
+    @Test
+    public final void testSetDefaultsSame() {
+        final SpreadsheetMetadata metadata = this.createObject();
+        assertSame(metadata, metadata.setDefaults(metadata.defaults()));
+    }
+
+    @Test
+    public final void testSetDefaultsEmpty() {
+        final SpreadsheetMetadata metadata = this.createObject();
+        assertSame(metadata, metadata.setDefaults(SpreadsheetMetadata.EMPTY));
+    }
+
+    @Test
+    public final void testSetDefaultsNotEmpty() {
+        final SpreadsheetMetadata metadata = this.createObject();
+        final SpreadsheetMetadata notEmpty = SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator123@example.com"));
+
+        final SpreadsheetMetadata withDefaults = metadata.setDefaults(notEmpty);
+        assertNotSame(metadata, withDefaults);
+        this.checkDefaults(withDefaults, notEmpty);
+    }
+
+    @Test
+    public final void testSetDefaultsEmptyWithDefaultsItself() {
+        final SpreadsheetMetadata metadata = this.createObject();
+        final SpreadsheetMetadata notEmptyDefaults = SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator123@example.com"));
+        final SpreadsheetMetadata emptyWithDefaults = SpreadsheetMetadata.EMPTY.setDefaults(notEmptyDefaults);
+
+        final SpreadsheetMetadata withDefaults = metadata.setDefaults(emptyWithDefaults);
+        this.checkDefaults(withDefaults, notEmptyDefaults);
+    }
+
+    final void checkDefaults(final SpreadsheetMetadata metadata,
+                             final SpreadsheetMetadata defaults) {
+        if(null == defaults || defaults == SpreadsheetMetadata.EMPTY) {
+            assertSame(null, metadata.defaults, "defaults");
+        } else {
+            assertSame(defaults, metadata.defaults, "defaults");
+            assertEquals(false, metadata.defaults.isEmpty(), () -> "defaults should not be an empty SpreadsheetMetadata, " + metadata.defaults);
+        }
+    }
+
+    @Test
+    public final void testRoundtripWithDefaults() {
+        final SpreadsheetMetadata metadata = this.createObject();
+        final SpreadsheetMetadata notEmptyDefaults = SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator123@example.com"));
+        final SpreadsheetMetadata withDefaults = metadata.setDefaults(notEmptyDefaults);
+
+        this.marshallRoundTripTwiceAndCheck(withDefaults);
     }
 
     // ClassTesting.....................................................................................................

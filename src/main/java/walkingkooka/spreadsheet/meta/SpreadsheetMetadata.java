@@ -52,6 +52,8 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonObject;
+import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -98,8 +100,9 @@ public abstract class SpreadsheetMetadata implements HasConverter,
     /**
      * Private ctor to limit sub classes.
      */
-    SpreadsheetMetadata() {
+    SpreadsheetMetadata(final SpreadsheetMetadata defaults) {
         super();
+        this.defaults = defaults;
     }
 
     /**
@@ -135,7 +138,25 @@ public abstract class SpreadsheetMetadata implements HasConverter,
         return this.get0(propertyName);
     }
 
-    abstract <V> Optional<V> get0(final SpreadsheetMetadataPropertyName<V> propertyName);
+    /**
+     * Potentially recursive fetch to find a property, trying locally and then the defaults if one is present.
+     */
+    private <V> Optional<V> get0(final SpreadsheetMetadataPropertyName<V> propertyName) {
+        Optional<V> value = this.get1(propertyName);
+        if (false == value.isPresent()) {
+            // try again with defaults
+            final SpreadsheetMetadata defaults = this.defaults;
+            if (null != defaults) {
+                value = defaults.get0(propertyName);
+            }
+        }
+        return value;
+    }
+
+    /**
+     * Sub classes will fetch the property returning the value.
+     */
+    abstract <V> Optional<V> get1(final SpreadsheetMetadataPropertyName<V> propertyName);
 
     /**
      * Fetches the required property or throws a {@link SpreadsheetMetadataPropertyValueException}.
@@ -394,6 +415,55 @@ public abstract class SpreadsheetMetadata implements HasConverter,
                 this.converterContext());
     }
 
+    // setDefaults......................................................................................................
+
+    /**
+     * Sets a provider which will provide defaults when the value is not actually present in this instance.
+     */
+    public final SpreadsheetMetadata setDefaults(final SpreadsheetMetadata defaults) {
+        Objects.requireNonNull(defaults, "defaults");
+
+        if (EMPTY != defaults) {
+            this.checkDefaults(this, defaults);
+        }
+
+        // if new defaults is EMPTY set its defaults instead, even if that is null
+        return this.defaults().equals(defaults) ?
+                this :
+                this.replaceDefaults(EMPTY == defaults ? null : defaults.isEmpty() ? defaults.defaults : defaults);
+    }
+
+    /**
+     * Only {@link SpreadsheetMetadataNonEmpty} will perform checks
+     */
+    private void checkDefaults(final SpreadsheetMetadata defaults,
+                               final SpreadsheetMetadata replacement) {
+        if (null != defaults) {
+            if (defaults == replacement) {
+                throw new IllegalArgumentException("New defaults includes cycle: " + this);
+            }
+            this.checkDefaults(defaults.defaults, defaults);
+        }
+    }
+
+    /**
+     * Factory that creates a new {@link SpreadsheetMetadata} sub class with the given defaults.
+     */
+    abstract SpreadsheetMetadata replaceDefaults(final SpreadsheetMetadata defaults);
+
+    /**
+     * Returns another {@link SpreadsheetMetadata} which will provide defaults.
+     */
+    public final SpreadsheetMetadata defaults() {
+        final SpreadsheetMetadata defaults = this.defaults;
+        return null != defaults ?
+                defaults :
+                EMPTY;
+    }
+
+    // @VisibleForTesting
+    final SpreadsheetMetadata defaults;
+
     // SpreadsheetMetadataStyleVisitor..................................................................................
 
     abstract void accept(final SpreadsheetMetadataVisitor visitor);
@@ -413,27 +483,60 @@ public abstract class SpreadsheetMetadata implements HasConverter,
 
     abstract boolean canBeEquals(final Object other);
 
-    abstract boolean equals0(final SpreadsheetMetadata other);
+    private boolean equals0(final SpreadsheetMetadata other) {
+        return this.equalsValues(other) && Objects.equals(this.defaults, other.defaults);
+    }
+
+    /**
+     * Sub classes will test if ALL their values are equal
+     */
+    abstract boolean equalsValues(final SpreadsheetMetadata other);
 
     @Override
     public abstract String toString();
 
     // JsonNodeContext..................................................................................................
 
+    /**
+     * Marshalls the individual properties and values and defaults but not the cached constructed values.
+     */
+    final JsonNode marshall(final JsonNodeMarshallContext context) {
+        final JsonObject object = this.marshallProperties(context);
+        final SpreadsheetMetadata defaults = this.defaults;
+        return null != defaults ?
+                object.set(DEFAULTS, defaults.marshall(context)) :
+                object;
+    }
+
+    /**
+     * This property in the json form will hold the defaults. Note actual property names may not start with underscore.
+     */
+    // VisibleForTesting
+    final static JsonPropertyName DEFAULTS = JsonPropertyName.with("_defaults");
+
+    /**
+     * Sub classes must marshall their properties but not the defaults.
+     */
+    abstract JsonObject marshallProperties(final JsonNodeMarshallContext context);
+
     static SpreadsheetMetadata unmarshall(final JsonNode node,
                                           final JsonNodeUnmarshallContext context) {
         final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = Maps.ordered();
+        SpreadsheetMetadata defaults = EMPTY;
 
-        for (JsonNode child : node.objectOrFail().children()) {
+        for (final JsonNode child : node.objectOrFail().children()) {
+            if (child.name().equals(DEFAULTS)) {
+                defaults = context.unmarshall(child, SpreadsheetMetadata.class);
+                continue;
+            }
+
             final SpreadsheetMetadataPropertyName<?> name = SpreadsheetMetadataPropertyName.unmarshallName(child);
             properties.put(name,
                     name.handler().unmarshall(child, name, context));
         }
 
-        return with(properties);
+        return with(properties).setDefaults(defaults);
     }
-
-    abstract JsonNode marshall(final JsonNodeMarshallContext context);
 
     static {
         JsonNodeContext.register("metadata",

@@ -84,6 +84,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         final SpreadsheetMetadataNonEmpty metadata = this.createSpreadsheetMetadata(metadataMap);
         assertSame(metadataMap, metadata.value(), "value");
+        this.checkDefaults(metadata, null);
     }
 
     @Test
@@ -137,6 +138,17 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.getAndCheck(this.createSpreadsheetMetadata(),
                 this.property2(),
                 this.value2());
+    }
+
+    @Test
+    public void testGetIgnoresDefault() {
+        final SpreadsheetMetadataPropertyName<EmailAddress> propertyName = SpreadsheetMetadataPropertyName.CREATOR;
+        final EmailAddress value = EmailAddress.parse("creator111@example.com");
+
+        final SpreadsheetMetadata notEmpty = SpreadsheetMetadata.with(Maps.of(propertyName, value));
+        this.getAndCheck(notEmpty,
+                propertyName,
+                value);
     }
 
     // getOrFail........................................................................................................
@@ -401,6 +413,43 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testNumberToColorCached() {
         final SpreadsheetMetadata metadata = this.createSpreadsheetMetadata();
         assertSame(metadata.numberToColor(), metadata.numberToColor());
+    }
+
+    // setDefaults......................................................................................................
+
+    @Test
+    public void testSetDefaultsCycleFails() {
+        final SpreadsheetMetadata metadata = this.createObject();
+        assertThrows(IllegalArgumentException.class, () -> metadata.setDefaults(metadata));
+    }
+
+    @Test
+    public void testSetDefaultsCycleFails3() {
+        final SpreadsheetMetadata metadata = this.createObject();
+        final SpreadsheetMetadata notEmpty = SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator123@example.com"));
+
+        final SpreadsheetMetadata withDefaults = metadata.setDefaults(notEmpty);
+        assertThrows(IllegalArgumentException.class, () -> withDefaults.setDefaults(withDefaults));
+    }
+
+    @Test
+    public void testSetDefaultsCycleFails2() {
+        final SpreadsheetMetadata metadata = this.createObject();
+        final SpreadsheetMetadata notEmpty = SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator123@example.com"));
+        final SpreadsheetMetadata notEmpty2 = notEmpty.set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
+
+        final SpreadsheetMetadata withDefaults = metadata.setDefaults(notEmpty2);
+        assertThrows(IllegalArgumentException.class, () -> withDefaults.setDefaults(withDefaults));
+    }
+
+    @Test
+    public void testSetDefaultsTree() {
+        final SpreadsheetMetadata metadata = this.createObject();
+        final SpreadsheetMetadata notEmpty = SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator123@example.com"));
+        final SpreadsheetMetadata notEmpty2 = notEmpty.set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
+
+        final SpreadsheetMetadata withDefaults = metadata.setDefaults(notEmpty2);
+        this.checkDefaults(withDefaults, notEmpty2);
     }
     
     // HateosResource...................................................................................................
