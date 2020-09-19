@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.Cast;
 
-public final class SpreadsheetMetadataPropertyNameBasicTest extends SpreadsheetMetadataPropertyNameTestCase4<SpreadsheetMetadataPropertyNameBasic<?>> {
+public final class SpreadsheetMetadataPropertyNameBasicTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameBasic<?>> {
 
     // ClassTesting.....................................................................................................
 

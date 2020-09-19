@@ -23,7 +23,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetMetadataPropertyNameNamedColorTest extends SpreadsheetMetadataPropertyNameTestCase4<SpreadsheetMetadataPropertyNameNamedColor> {
+public final class SpreadsheetMetadataPropertyNameNamedColorTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameNamedColor> {
 
     @Test
     public void testWithNullFails() {

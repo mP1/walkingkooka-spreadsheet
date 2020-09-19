@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends SpreadsheetMetadataPropertyNameTestCase4<SpreadsheetMetadataPropertyNameNumberedColor> {
+public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameNumberedColor> {
 
     @Test
     public void testWithNumberFails() {
