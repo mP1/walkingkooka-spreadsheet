@@ -28,7 +28,7 @@ import java.util.function.LongPredicate;
 import java.util.function.Predicate;
 
 /**
- * Base converter that provides support for handling property values.
+ * Base for numerous handlers that handle values for an individual {@link SpreadsheetMetadataPropertyName}.
  */
 abstract class SpreadsheetMetadataPropertyValueHandler<T> {
 
