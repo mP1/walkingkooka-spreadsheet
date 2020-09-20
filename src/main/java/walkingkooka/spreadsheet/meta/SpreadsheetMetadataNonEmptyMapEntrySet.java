@@ -120,10 +120,9 @@ final class SpreadsheetMetadataNonEmptyMapEntrySet extends AbstractSet<Entry<Spr
                                                            final JsonNodeUnmarshallContext context) {
         final Map<SpreadsheetMetadataPropertyName<?>, Object> properties = Maps.ordered();
 
-        for (JsonNode child : json.children()) {
+        for (final JsonNode child : json.children()) {
             final SpreadsheetMetadataPropertyName<?> name = SpreadsheetMetadataPropertyName.unmarshallName(child);
-            properties.put(name,
-                    name.handler().unmarshall(child, name, context));
+            properties.put(name, name.unmarshall(child, context));
         }
 
         return with(properties);
@@ -137,8 +136,7 @@ final class SpreadsheetMetadataNonEmptyMapEntrySet extends AbstractSet<Entry<Spr
 
         for (Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : this.entries) {
             final SpreadsheetMetadataPropertyName<?> propertyName = propertyAndValue.getKey();
-            final JsonNode value = propertyName.handler()
-                    .marshall(Cast.to(propertyAndValue.getValue()), context);
+            final JsonNode value = context.marshall(propertyAndValue.getValue());
 
             json.add(value.setName(propertyName.jsonPropertyName));
         }

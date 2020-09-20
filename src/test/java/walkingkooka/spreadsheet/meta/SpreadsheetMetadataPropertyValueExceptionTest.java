@@ -25,12 +25,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class SpreadsheetMetadataPropertyValueExceptionTest implements StandardThrowableTesting<SpreadsheetMetadataPropertyValueException> {
 
+    @Override
+    public void testWithMessage() {
+    }
+
+    @Override
+    public void testWithMessageAndCause() {
+    }
+
     @Test
     public void testCreate() {
         final SpreadsheetMetadataPropertyValueException throwable = new SpreadsheetMetadataPropertyValueException(MESSAGE,
                 this.name(),
                 this.value());
-        this.checkMessage(throwable, MESSAGE);
+        this.checkMessage(throwable, "message, but got \"abc123\" for \"creator\"");
         this.checkPropertyNameAndValue(throwable);
     }
 
@@ -40,7 +48,7 @@ public final class SpreadsheetMetadataPropertyValueExceptionTest implements Stan
                 this.name(),
                 this.value(),
                 CAUSE);
-        this.checkMessage(throwable, MESSAGE);
+        this.checkMessage(throwable, "message, but got \"abc123\" for \"creator\"");
         this.checkPropertyNameAndValue(throwable);
         this.checkCause(throwable, CAUSE);
     }
@@ -73,7 +81,7 @@ public final class SpreadsheetMetadataPropertyValueExceptionTest implements Stan
     @Override
     public void checkMessage(final Throwable throwable,
                              final String message) {
-        assertEquals(message + " \"" + this.name() + "\"", throwable.getMessage(), "message");
+        assertEquals(message, throwable.getMessage(), "message");
     }
 
     @Override

@@ -17,15 +17,77 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.CharSequences;
 
-public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends SpreadsheetMetadataPropertyName<?>> extends SpreadsheetMetadataTestCase2<N>
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends SpreadsheetMetadataPropertyName<V>, V> extends SpreadsheetMetadataTestCase2<N>
         implements ToStringTesting<N> {
 
     SpreadsheetMetadataPropertyNameTestCase() {
         super();
     }
+
+    @Test
+    public final void testCheckValueNullFails() {
+        this.checkValueFails(null,
+                "Missing value, but got null for " + CharSequences.quote(this.createName().value()));
+    }
+
+    @Test
+    public final void testCheckValueInvalidFails() {
+        this.checkValueFails(this,
+                "Expected " + this.propertyValueType() + ", but got " + this + " for " + CharSequences.quote(this.createName().value()));
+    }
+
+    @Test
+    public final void testCheckInvalidValueFails2() {
+        final StringBuilder value = new StringBuilder("123abc");
+        this.checkValueFails(value,
+                "Expected " + this.propertyValueType() + ", but got \"123abc\" for " + CharSequences.quote(this.createName().value()));
+    }
+
+    @Test
+    public final void testCheckValue() {
+        this.checkValue(this.propertyValue());
+    }
+
+    final void checkValue(final Object value) {
+        this.createName().checkValue(value);
+    }
+
+    final void checkValueFails(final Object value, final String message) {
+        final SpreadsheetMetadataPropertyName<?> propertyName = this.createName();
+
+        final SpreadsheetMetadataPropertyValueException thrown = assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> propertyName.checkValue(value));
+        this.checkSpreadsheetMetadataPropertyValueException(thrown, message, propertyName, value);
+
+        final SpreadsheetMetadataPropertyValueException thrown2 = assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> propertyName.checkValue(value));
+        this.checkSpreadsheetMetadataPropertyValueException(thrown2, message, propertyName, value);
+    }
+
+    private void checkSpreadsheetMetadataPropertyValueException(final SpreadsheetMetadataPropertyValueException thrown,
+                                                                final String message,
+                                                                final SpreadsheetMetadataPropertyName<?> propertyName,
+                                                                final Object value) {
+        if (null != message) {
+            assertEquals(message, thrown.getMessage(), "message");
+        }
+        assertEquals(propertyName, thrown.name(), "propertyName");
+        assertEquals(value, thrown.value(), "value");
+    }
+
+    // NameTesting......................................................................................................
+
+    abstract N createName();
+
+    abstract V propertyValue();
+
+    abstract String propertyValueType();
 
     // ClassTesting.....................................................................................................
 
