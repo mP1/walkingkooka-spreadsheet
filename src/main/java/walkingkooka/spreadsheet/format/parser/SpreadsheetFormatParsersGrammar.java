@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.resource.TextResource;
 import walkingkooka.resource.TextResourceAware;
 
 /**
