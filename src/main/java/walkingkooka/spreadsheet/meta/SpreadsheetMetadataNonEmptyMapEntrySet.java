@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.Cast;
 import walkingkooka.collect.iterator.Iterators;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
