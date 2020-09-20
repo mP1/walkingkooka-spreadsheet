@@ -88,6 +88,11 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     // setDefaults......................................................................................................
 
     @Override
+    void checkDefaultsValues() {
+        // nop
+    }
+
+    @Override
     SpreadsheetMetadata replaceDefaults(final SpreadsheetMetadata defaults) {
         return new SpreadsheetMetadataEmpty(defaults);
     }

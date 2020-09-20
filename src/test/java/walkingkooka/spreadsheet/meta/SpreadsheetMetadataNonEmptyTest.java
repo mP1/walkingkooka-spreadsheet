@@ -424,9 +424,10 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     }
 
     @Test
-    public void testSetDefaultsCycleFails3() {
+    public void testSetDefaultsCycleFails1() {
         final SpreadsheetMetadata metadata = this.createObject();
-        final SpreadsheetMetadata notEmpty = SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator123@example.com"));
+        final SpreadsheetMetadata notEmpty = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
 
         final SpreadsheetMetadata withDefaults = metadata.setDefaults(notEmpty);
         assertThrows(IllegalArgumentException.class, () -> withDefaults.setDefaults(withDefaults));
@@ -435,7 +436,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testSetDefaultsCycleFails2() {
         final SpreadsheetMetadata metadata = this.createObject();
-        final SpreadsheetMetadata notEmpty = SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator123@example.com"));
+        final SpreadsheetMetadata notEmpty = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$AUD");
         final SpreadsheetMetadata notEmpty2 = notEmpty.set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
 
         final SpreadsheetMetadata withDefaults = metadata.setDefaults(notEmpty2);
@@ -445,7 +447,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testSetDefaultsTree() {
         final SpreadsheetMetadata metadata = this.createObject();
-        final SpreadsheetMetadata notEmpty = SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator123@example.com"));
+        final SpreadsheetMetadata notEmpty = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$AUD");
         final SpreadsheetMetadata notEmpty2 = notEmpty.set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
 
         final SpreadsheetMetadata withDefaults = metadata.setDefaults(notEmpty2);
