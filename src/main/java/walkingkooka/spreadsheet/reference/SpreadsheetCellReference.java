@@ -17,10 +17,10 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
+import walkingkooka.collect.Range;
 import walkingkooka.compare.Comparators;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.collect.Range;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
