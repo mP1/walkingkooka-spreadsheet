@@ -424,6 +424,7 @@ public abstract class SpreadsheetMetadata implements HasConverter,
         Objects.requireNonNull(defaults, "defaults");
 
         if (EMPTY != defaults) {
+            defaults.checkDefaultsValues();
             this.checkDefaults(this, defaults);
         }
 
@@ -432,6 +433,11 @@ public abstract class SpreadsheetMetadata implements HasConverter,
                 this :
                 this.replaceDefaults(EMPTY == defaults ? null : defaults.isEmpty() ? defaults.defaults : defaults);
     }
+
+    /**
+     * Checks that all property values are valid or general and not specific to a single spreadsheet.
+     */
+    abstract void checkDefaultsValues();
 
     /**
      * Only {@link SpreadsheetMetadataNonEmpty} will perform checks

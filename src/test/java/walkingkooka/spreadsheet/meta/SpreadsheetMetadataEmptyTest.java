@@ -25,6 +25,8 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 
+import java.util.Locale;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -92,7 +94,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     @Test
     public void testMarshallWithDefaults() {
         final SpreadsheetMetadata defaultNotEmpty = SpreadsheetMetadata.EMPTY
-                .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"));
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
         final JsonNodeMarshallContext context = JsonNodeMarshallContexts.basic();
 
         assertEquals(JsonNode.object()
