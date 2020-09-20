@@ -119,10 +119,10 @@ public final class SpreadsheetMetadataPropertyNameTest extends SpreadsheetMetada
 
     @Test
     public void testSort() {
-        final SpreadsheetMetadataPropertyName creator = SpreadsheetMetadataPropertyName.CREATOR;
-        final SpreadsheetMetadataPropertyName modifiedBy = SpreadsheetMetadataPropertyName.MODIFIED_BY;
-        final SpreadsheetMetadataPropertyName modifiedDateTime = SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME;
-        final SpreadsheetMetadataPropertyName spreadsheetId = SpreadsheetMetadataPropertyName.SPREADSHEET_ID;
+        final SpreadsheetMetadataPropertyName<?> creator = SpreadsheetMetadataPropertyName.CREATOR;
+        final SpreadsheetMetadataPropertyName<?> modifiedBy = SpreadsheetMetadataPropertyName.MODIFIED_BY;
+        final SpreadsheetMetadataPropertyName<?> modifiedDateTime = SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME;
+        final SpreadsheetMetadataPropertyName<?> spreadsheetId = SpreadsheetMetadataPropertyName.SPREADSHEET_ID;
 
         //noinspection unchecked
         this.compareToArraySortAndCheck(spreadsheetId, modifiedDateTime, creator, modifiedBy,

@@ -1,0 +1,51 @@
+/*
+ * Copyright 2019 Miroslav Pokorny (github.com/mP1)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package walkingkooka.spreadsheet.meta;
+
+import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
+
+public final class SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPatternTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern, SpreadsheetTimeFormatPattern> {
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern.INSTANCE, "time-format-pattern");
+    }
+
+    @Override
+    SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern createName() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern.INSTANCE;
+    }
+
+    @Override
+    SpreadsheetTimeFormatPattern propertyValue() {
+        return SpreadsheetTimeFormatPattern.parseTimeFormatPattern("hh mm ss\"custom\"");
+    }
+
+    @Override
+    String propertyValueType() {
+        return "Time format pattern";
+    }
+
+    // ClassTesting.....................................................................................................
+
+    @Override
+    public Class<SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern> type() {
+        return SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern.class;
+    }
+}

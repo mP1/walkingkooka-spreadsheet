@@ -25,7 +25,7 @@ import java.util.stream.IntStream;
 /**
  * The {@link Name} of metadata property for numbered colors.
  */
-final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMetadataPropertyName<Color> {
+final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMetadataPropertyNameColor {
 
     /**
      * Retrieves a {@link SpreadsheetMetadataPropertyNameNumberedColor} for a numbered {@link Color}.
@@ -72,21 +72,8 @@ final class SpreadsheetMetadataPropertyNameNumberedColor extends SpreadsheetMeta
     final int number;
 
     @Override
-    SpreadsheetMetadataPropertyValueHandler<Color> handler() {
-        return SpreadsheetMetadataPropertyValueHandler.color();
-    }
-
-    // SpreadsheetMetadataVisitor.......................................................................................
-
-    @Override
-    void accept(final Object value, final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitNumberedColor(this.number, (Color) value);
-    }
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetMetadataPropertyNameNumberedColor;
+    void accept(final Color value,
+                final SpreadsheetMetadataVisitor visitor) {
+        visitor.visitNumberedColor(this.number, value);
     }
 }
