@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameNumberedColor> {
+public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameNumberedColor, Color> {
 
     @Test
     public void testWithNumberFails() {
@@ -52,6 +52,21 @@ public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends Spre
     @Test
     public void testToString() {
         this.toStringAndCheck(SpreadsheetMetadataPropertyNameNumberedColor.withNumber(123), "color-123");
+    }
+
+    @Override
+    SpreadsheetMetadataPropertyNameNumberedColor createName() {
+        return SpreadsheetMetadataPropertyNameNumberedColor.withNumber(12);
+    }
+
+    @Override
+    Color propertyValue() {
+        return Color.fromArgb(0xffddaa);
+    }
+
+    @Override
+    String propertyValueType() {
+        return Color.class.getSimpleName();
     }
 
     // ClassTesting.....................................................................................................

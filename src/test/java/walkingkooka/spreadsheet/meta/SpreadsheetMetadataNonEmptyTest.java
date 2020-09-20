@@ -1048,7 +1048,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  \"creator\": \"creator@example.com\",\n" +
                 "  \"currency-symbol\": \"$AUD\",\n" +
                 "  \"date-format-pattern\": \"DD/MM/YYYY\",\n" +
-                "  \"date-parse-pattern\": \"DD/MM/YYYY;DDMMYYYY\",\n" +
+                "  \"date-parse-patterns\": \"DD/MM/YYYY;DDMMYYYY\",\n" +
                 "  \"date-time-format-pattern\": \"DD/MM/YYYY hh:mm\",\n" +
                 "  \"date-time-offset\": \"0\",\n" +
                 "  \"date-time-parse-patterns\": \"DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM\",\n" +

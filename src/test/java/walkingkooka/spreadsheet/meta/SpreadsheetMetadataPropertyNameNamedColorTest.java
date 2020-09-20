@@ -18,12 +18,13 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetMetadataPropertyNameNamedColorTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameNamedColor> {
+public final class SpreadsheetMetadataPropertyNameNamedColorTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameNamedColor, Color> {
 
     @Test
     public void testWithNullFails() {
@@ -44,6 +45,21 @@ public final class SpreadsheetMetadataPropertyNameNamedColorTest extends Spreads
 
     private SpreadsheetColorName colorName() {
         return SpreadsheetColorName.with("dull");
+    }
+
+    @Override
+    SpreadsheetMetadataPropertyNameNamedColor createName() {
+        return SpreadsheetMetadataPropertyNameNamedColor.withColorName(SpreadsheetColorName.with("dull"));
+    }
+
+    @Override
+    Color propertyValue() {
+        return Color.parse("#123abc");
+    }
+
+    @Override
+    String propertyValueType() {
+        return Color.class.getSimpleName();
     }
 
     // ClassTesting.....................................................................................................

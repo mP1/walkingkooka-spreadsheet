@@ -24,7 +24,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 /**
  * The {@link Name} of metadata property, with a custom handler and visitor to handle dispatching to a {@link SpreadsheetMetadataVisitor} method.
  */
-final class SpreadsheetMetadataPropertyNameNamedColor extends SpreadsheetMetadataPropertyName<Color> {
+final class SpreadsheetMetadataPropertyNameNamedColor extends SpreadsheetMetadataPropertyNameColor {
 
     /**
      * Factory used to create a new {@link SpreadsheetMetadataPropertyNameNamedColor} constant.
@@ -42,26 +42,10 @@ final class SpreadsheetMetadataPropertyNameNamedColor extends SpreadsheetMetadat
     }
 
     @Override
-    SpreadsheetMetadataPropertyValueHandler<Color> handler() {
-        return SpreadsheetMetadataPropertyValueHandler.color();
-    }
-
-    // SpreadsheetMetadataVisitor.......................................................................................
-
-    /**
-     * Dispatches to the appropriate {@link SpreadsheetMetadataVisitor} visit method.
-     */
-    @Override
-    void accept(final Object value, final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitNamedColor(this.name, (Color) value);
+    void accept(final Color value,
+                final SpreadsheetMetadataVisitor visitor) {
+        visitor.visitNamedColor(this.name, value);
     }
 
     final SpreadsheetColorName name;
-
-    // Object...........................................................................................................
-
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetMetadataPropertyNameNamedColor;
-    }
 }

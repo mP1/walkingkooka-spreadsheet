@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.naming.Name;
@@ -38,18 +39,16 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.IntPredicate;
-import java.util.function.LongPredicate;
 import java.util.function.Predicate;
 
 /**
- * The {@link Name} of metadata property, used to fetch a value given a name.
+ * The {@link Name} of metadata property.
  */
 public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Comparable<SpreadsheetMetadataPropertyName<?>> {
 
@@ -58,265 +57,152 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.SENSITIVE;
 
     /**
-     * An {@link IntPredicate} that tests true for unsigned integers.
-     */
-    private final static IntPredicate POSITIVE_INTEGER = (v) -> v >= 0;
-
-    /**
      * A read only cache of already prepared {@link SpreadsheetMetadataPropertyName names}..
      */
     final static Map<String, SpreadsheetMetadataPropertyName<?>> CONSTANTS = Maps.sorted(SpreadsheetMetadataPropertyName.CASE_SENSITIVITY.comparator());
 
     /**
-     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link Character value}.
-     */
-    private static SpreadsheetMetadataPropertyName<Character> registerCharacterConstant(final String name,
-                                                                                        final BiConsumer<Character, SpreadsheetMetadataVisitor> visitor) {
-        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.character(),
-                visitor);
-    }
-
-    /**
-     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link LocalDateTime value}.
-     */
-    private static SpreadsheetMetadataPropertyName<LocalDateTime> registerDateTimeConstant(final String name,
-                                                                                           final BiConsumer<LocalDateTime, SpreadsheetMetadataVisitor> visitor) {
-        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.localDateTime(),
-                visitor);
-    }
-
-    /**
-     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link EmailAddress value}.
-     */
-    private static SpreadsheetMetadataPropertyName<EmailAddress> registerEmailAddressConstant(final String name,
-                                                                                              final BiConsumer<EmailAddress, SpreadsheetMetadataVisitor> visitor) {
-        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.emailAddress(),
-                visitor);
-    }
-
-    /**
-     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a positive {@link Integer value}.
-     */
-    private static SpreadsheetMetadataPropertyName<Integer> registerIntegerConstant(final String name,
-                                                                                    final IntPredicate predicate,
-                                                                                    final BiConsumer<Integer, SpreadsheetMetadataVisitor> visitor) {
-        return registerConstant(name, SpreadsheetMetadataPropertyValueHandler.integer(predicate),
-                visitor);
-    }
-
-    /**
-     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a positive {@link Long value}.
-     */
-    private static SpreadsheetMetadataPropertyName<Long> registerLongConstant(final String name,
-                                                                              final LongPredicate predicate,
-                                                                              final BiConsumer<Long, SpreadsheetMetadataVisitor> visitor) {
-        return registerConstant(name,
-                SpreadsheetMetadataPropertyValueHandler.longHandler(predicate),
-                visitor);
-    }
-
-    /**
-     * Registers a new {@link SpreadsheetMetadataPropertyName} constant with a {@link String value}.
-     */
-    private static SpreadsheetMetadataPropertyName<String> registerStringConstant(final String name,
-                                                                                  final Predicate<String> predicate,
-                                                                                  final BiConsumer<String, SpreadsheetMetadataVisitor> visitor) {
-        return registerConstant(name,
-                SpreadsheetMetadataPropertyValueHandler.string(predicate),
-                visitor);
-    }
-
-    /**
      * Registers a new {@link SpreadsheetMetadataPropertyName}.
      */
-    private static <T> SpreadsheetMetadataPropertyName<T> registerConstant(final String name,
-                                                                           final SpreadsheetMetadataPropertyValueHandler<T> handler,
-                                                                           final BiConsumer<T, SpreadsheetMetadataVisitor> visitor) {
-        final SpreadsheetMetadataPropertyName<T> spreadsheetMetadataName = SpreadsheetMetadataPropertyNameBasic.with(name,
-                handler,
-                visitor);
-        SpreadsheetMetadataPropertyName.CONSTANTS.put(name, spreadsheetMetadataName);
-        return spreadsheetMetadataName;
+    private static <T> SpreadsheetMetadataPropertyName<T> registerConstant(final SpreadsheetMetadataPropertyName<T> constant) {
+        SpreadsheetMetadataPropertyName.CONSTANTS.put(constant.name, constant);
+        return constant;
     }
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>creator {@link EmailAddress}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<EmailAddress> CREATOR = registerEmailAddressConstant("creator",
-            (e, v) -> v.visitCreator(e));
+    public final static SpreadsheetMetadataPropertyName<EmailAddress> CREATOR = registerConstant(SpreadsheetMetadataPropertyNameCreator.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>creation {@link LocalDateTime}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<LocalDateTime> CREATE_DATE_TIME = registerDateTimeConstant("create-date-time",
-            (d, v) -> v.visitCreateDateTime(d));
+    public final static SpreadsheetMetadataPropertyName<LocalDateTime> CREATE_DATE_TIME = registerConstant(SpreadsheetMetadataPropertyNameCreateDateTime.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>currency {@link String}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<String> CURRENCY_SYMBOL = registerStringConstant("currency-symbol",
-            (s) -> s.length() > 0,
-            (c, v) -> v.visitCurrencySymbol(c));
+    public final static SpreadsheetMetadataPropertyName<String> CURRENCY_SYMBOL = registerConstant(SpreadsheetMetadataPropertyNameCurrencySymbol.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-format-pattern {@link String}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetDateFormatPattern> DATE_FORMAT_PATTERN = registerConstant("date-format-pattern",
-            SpreadsheetMetadataPropertyValueHandler.dateFormatPattern(),
-            (p, v) -> v.visitDateFormatPattern(p));
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetDateFormatPattern> DATE_FORMAT_PATTERN = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPattern.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-parse-patterns {@link String}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetDateParsePatterns> DATE_PARSE_PATTERNS = registerConstant("date-parse-pattern",
-            SpreadsheetMetadataPropertyValueHandler.dateParsePatterns(),
-            (p, v) -> v.visitDateParsePatterns(p));
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetDateParsePatterns> DATE_PARSE_PATTERNS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatterns.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-offset {@link Long}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<Long> DATETIME_OFFSET = registerLongConstant("date-time-offset",
-            (v) -> true,
-            (c, v) -> v.visitDateTimeOffset(c));
+    public final static SpreadsheetMetadataPropertyName<Long> DATETIME_OFFSET = registerConstant(SpreadsheetMetadataPropertyNameDateTimeOffset.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-format-pattern {@link String}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetDateTimeFormatPattern> DATETIME_FORMAT_PATTERN = registerConstant("date-time-format-pattern",
-            SpreadsheetMetadataPropertyValueHandler.dateTimeFormatPattern(),
-            (p, v) -> v.visitDateTimeFormatPattern(p));
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetDateTimeFormatPattern> DATETIME_FORMAT_PATTERN = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetDateTimeFormatPattern.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>date-time-parse-patterns</code>
      */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetDateTimeParsePatterns> DATETIME_PARSE_PATTERNS = registerConstant("date-time-parse-patterns",
-            SpreadsheetMetadataPropertyValueHandler.dateTimeParsePatterns(),
-            (p, v) -> v.visitDateTimeParsePatterns(p));
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetDateTimeParsePatterns> DATETIME_PARSE_PATTERNS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatterns.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>decimal-separator {@link Character}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<Character> DECIMAL_SEPARATOR = registerCharacterConstant("decimal-separator",
-            (c, v) -> v.visitDecimalSeparator(c));
+    public final static SpreadsheetMetadataPropertyName<Character> DECIMAL_SEPARATOR = registerConstant(SpreadsheetMetadataPropertyNameDecimalSeparator.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>exponent-symbol {@link Character}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<Character> EXPONENT_SYMBOL = registerCharacterConstant("exponent-symbol",
-            (c, v) -> v.visitExponentSymbol(c));
+    public final static SpreadsheetMetadataPropertyName<Character> EXPONENT_SYMBOL = registerConstant(SpreadsheetMetadataPropertyNameExponentSymbol.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>grouping-separator {@link Character}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<Character> GROUPING_SEPARATOR = registerCharacterConstant("grouping-separator",
-            (c, v) -> v.visitGroupingSeparator(c));
+    public final static SpreadsheetMetadataPropertyName<Character> GROUPING_SEPARATOR = registerConstant(SpreadsheetMetadataPropertyNameGroupingSymbol.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>{@link Locale}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<Locale> LOCALE = registerConstant("locale",
-            SpreadsheetMetadataPropertyValueHandler.locale(),
-            (l, v) -> v.visitLocale(l));
+    public final static SpreadsheetMetadataPropertyName<Locale> LOCALE = registerConstant(SpreadsheetMetadataPropertyNameLocale.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>last modified by {@link EmailAddress}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<EmailAddress> MODIFIED_BY = registerEmailAddressConstant("modified-by",
-            (e, v) -> v.visitModifiedBy(e));
+    public final static SpreadsheetMetadataPropertyName<EmailAddress> MODIFIED_BY = registerConstant(SpreadsheetMetadataPropertyNameModifiedBy.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>modified {@link LocalDateTime}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<LocalDateTime> MODIFIED_DATE_TIME = registerDateTimeConstant("modified-date-time",
-            (d, v) -> v.visitModifiedDateTime(d));
+    public final static SpreadsheetMetadataPropertyName<LocalDateTime> MODIFIED_DATE_TIME = registerConstant(SpreadsheetMetadataPropertyNameModifiedDateTime.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>negative-sign {@link Character}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<Character> NEGATIVE_SIGN = registerCharacterConstant("negative-sign",
-            (c, v) -> v.visitNegativeSign(c));
+    public final static SpreadsheetMetadataPropertyName<Character> NEGATIVE_SIGN = registerConstant(SpreadsheetMetadataPropertyNameNegativeSign.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>number-format-pattern</code>
      */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetNumberFormatPattern> NUMBER_FORMAT_PATTERN = registerConstant("number-format-pattern",
-            SpreadsheetMetadataPropertyValueHandler.numberFormatPattern(),
-            (p, v) -> v.visitNumberFormatPattern(p));
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetNumberFormatPattern> NUMBER_FORMAT_PATTERN = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>number-parse-pattern</code>
      */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetNumberParsePatterns> NUMBER_PARSE_PATTERNS = registerConstant("number-parse-patterns",
-            SpreadsheetMetadataPropertyValueHandler.numberParsePatterns(),
-            (p, v) -> v.visitNumberParsePatterns(p));
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetNumberParsePatterns> NUMBER_PARSE_PATTERNS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>percentage-symbol {@link Character}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<Character> PERCENTAGE_SYMBOL = registerCharacterConstant("percentage-symbol",
-            (c, v) -> v.visitPercentageSymbol(c));
+    public final static SpreadsheetMetadataPropertyName<Character> PERCENTAGE_SYMBOL = registerConstant(SpreadsheetMetadataPropertyNamePercentageSymbol.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>positive-sign {@link Character}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<Character> POSITIVE_SIGN = registerCharacterConstant("positive-sign",
-            (c, v) -> v.visitPositiveSign(c));
+    public final static SpreadsheetMetadataPropertyName<Character> POSITIVE_SIGN = registerConstant(SpreadsheetMetadataPropertyNamePositiveSign.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>rounding-mode {@link RoundingMode}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<RoundingMode> ROUNDING_MODE = registerConstant("rounding-mode",
-            SpreadsheetMetadataPropertyValueHandler.roundingMode(),
-            (c, v) -> v.visitRoundingMode(c));
+    public final static SpreadsheetMetadataPropertyName<RoundingMode> ROUNDING_MODE = registerConstant(SpreadsheetMetadataPropertyNameRoundingMode.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>precision {@link Integer}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<Integer> PRECISION = registerIntegerConstant("precision",
-            POSITIVE_INTEGER,
-            (c, v) -> v.visitPrecision(c));
+    public final static SpreadsheetMetadataPropertyName<Integer> PRECISION = registerConstant(SpreadsheetMetadataPropertyNamePrecision.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheet-id {@link SpreadsheetId}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetId> SPREADSHEET_ID = registerConstant("spreadsheet-id",
-            SpreadsheetMetadataPropertyValueHandler.spreadsheetId(),
-            (e, v) -> v.visitSpreadsheetId(e));
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetId> SPREADSHEET_ID = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetId.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>text-format-pattern {@link SpreadsheetFormatPattern}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetTextFormatPattern> TEXT_FORMAT_PATTERN = registerConstant("text-format-pattern",
-            SpreadsheetMetadataPropertyValueHandler.textFormatPattern(),
-            (p, v) -> v.visitTextFormatPattern(p));
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetTextFormatPattern> TEXT_FORMAT_PATTERN = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetTextFormatPattern.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>time-format-pattern {@link SpreadsheetFormatPattern}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetTimeFormatPattern> TIME_FORMAT_PATTERN = registerConstant("time-format-pattern",
-            SpreadsheetMetadataPropertyValueHandler.timeFormatPattern(),
-            (p, v) -> v.visitTimeFormatPattern(p));
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetTimeFormatPattern> TIME_FORMAT_PATTERN = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>time-parse-patterns</code>
      */
-    public final static SpreadsheetMetadataPropertyName<SpreadsheetTimeParsePatterns> TIME_PARSE_PATTERNS = registerConstant("time-parse-patterns",
-            SpreadsheetMetadataPropertyValueHandler.timeParsePatterns(),
-            (p, v) -> v.visitTimeParsePatterns(p));
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetTimeParsePatterns> TIME_PARSE_PATTERNS = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatterns.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>two-digit-year {@link SpreadsheetFormatPattern}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<Integer> TWO_DIGIT_YEAR = registerIntegerConstant("two-digit-year",
-            POSITIVE_INTEGER,
-            (two, v) -> v.visitTwoDigitYear(two));
+    public final static SpreadsheetMetadataPropertyName<Integer> TWO_DIGIT_YEAR = registerConstant(SpreadsheetMetadataPropertyNameTwoYearDigit.INSTANCE);
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link Integer}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<Integer> WIDTH = registerIntegerConstant("width",
-            POSITIVE_INTEGER,
-            (c, v) -> v.visitWidth(c));
+    public final static SpreadsheetMetadataPropertyName<Integer> WIDTH = registerConstant(SpreadsheetMetadataPropertyNameWidth.INSTANCE);
 
     /**
      * Factory that assumes a valid {@link SpreadsheetMetadataPropertyName} or fails.
@@ -385,17 +271,47 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      */
     @SuppressWarnings("UnusedReturnValue")
     public T checkValue(final Object value) {
-        return this.handler().check(value, this);
+        if (null == value) {
+            throw new SpreadsheetMetadataPropertyValueException("Missing value", this, value);
+        }
+
+        this.checkValue0(value);
+        return Cast.to(value);
     }
 
-    abstract SpreadsheetMetadataPropertyValueHandler<T> handler();
+    abstract void checkValue0(final Object value);
+
+    /**
+     * Checks the type of the given value and throws a {@link SpreadsheetMetadataPropertyValueException} if this test fails.
+     */
+    final T checkValueType(final Object value,
+                           final Predicate<Object> typeChecker) {
+        if (!typeChecker.test(value)) {
+            throw this.spreadsheetMetadataPropertyValueException(value);
+        }
+        return Cast.to(value);
+    }
+
+    /**
+     * Creates a {@link SpreadsheetMetadataPropertyValueException} used to report an invalid value.
+     */
+    final SpreadsheetMetadataPropertyValueException spreadsheetMetadataPropertyValueException(final Object value) {
+        return new SpreadsheetMetadataPropertyValueException("Expected " + this.expected(),
+                this,
+                value);
+    }
+
+    /**
+     * Prpvides the actual text with the exception message.
+     */
+    abstract String expected();
 
     // SpreadsheetMetadataVisitor.......................................................................................
 
     /**
      * Dispatches to the appropriate {@link SpreadsheetMetadataVisitor} visit method.
      */
-    abstract void accept(final Object value, final SpreadsheetMetadataVisitor visitor);
+    abstract void accept(final T value, final SpreadsheetMetadataVisitor visitor);
 
     // Object...........................................................................................................
 
@@ -408,11 +324,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     public final boolean equals(final Object other) {
         return this == other ||
-                this.canBeEqual(other) &&
+                other instanceof SpreadsheetMetadataPropertyName &&
                         this.equals0((SpreadsheetMetadataPropertyName) other);
     }
-
-    abstract boolean canBeEqual(final Object other);
 
     private boolean equals0(final SpreadsheetMetadataPropertyName other) {
         return this.caseSensitivity().equals(this.name, other.name);
@@ -440,7 +354,14 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
         return this.caseSensitivity().comparator().compare(this.name, other.name);
     }
 
-    // HasJsonNode......................................................................................................
+    // Json...........................................................................................................
+
+    final T unmarshall(final JsonNode node,
+                       final JsonNodeUnmarshallContext context) {
+        return context.unmarshall(node, this.type());
+    }
+
+    abstract Class<T> type();
 
     /**
      * Factory that retrieves a {@link SpreadsheetMetadataPropertyName} from a {@link JsonNode#name()}.

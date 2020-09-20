@@ -50,7 +50,7 @@ public class SpreadsheetMetadataPropertyValueException extends SpreadsheetExcept
 
     @Override
     public String getMessage() {
-        return super.getMessage() + " " + CharSequences.quote(this.name().value());
+        return super.getMessage() + ", but got " + CharSequences.quoteIfChars(this.value()) + " for " + CharSequences.quote(this.name().value());
     }
 
     public SpreadsheetMetadataPropertyName<?> name() {
