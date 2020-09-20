@@ -37,6 +37,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * A {@link SpreadsheetMetadataNonEmpty} holds a non empty {@link Map} of {@link SpreadsheetMetadataPropertyName} and values.
@@ -67,6 +68,21 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     final SpreadsheetMetadataNonEmptyMap value;
 
     // setDefaults......................................................................................................
+
+    /**
+     * Checks that all property values are valid or general and not specific to a single spreadsheet.
+     */
+    void checkDefaultsValues() {
+        final String invalid = this.value.keySet()
+                .stream()
+                .filter(SpreadsheetMetadataPropertyName::isInvalidGenericProperty)
+                .map(Object::toString)
+                .sorted()
+                .collect(Collectors.joining(", "));
+        if (false == invalid.isEmpty()) {
+            throw new IllegalArgumentException("Defaults includes invalid default values: " + invalid);
+        }
+    }
 
     @Override
     SpreadsheetMetadata replaceDefaults(final SpreadsheetMetadata defaults) {

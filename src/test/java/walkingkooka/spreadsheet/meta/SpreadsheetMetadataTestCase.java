@@ -28,12 +28,15 @@ import walkingkooka.net.http.server.hateos.HateosResourceTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.ThrowableTesting;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -299,7 +302,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testSetDefaultsNotEmpty() {
         final SpreadsheetMetadata metadata = this.createObject();
-        final SpreadsheetMetadata notEmpty = SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator123@example.com"));
+        final SpreadsheetMetadata notEmpty = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
 
         final SpreadsheetMetadata withDefaults = metadata.setDefaults(notEmpty);
         assertNotSame(metadata, withDefaults);
@@ -307,9 +311,58 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     }
 
     @Test
+    public final void testSetDefaultsIncludesCreatorFails() {
+        this.setDefaultsWithInvalidFails(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"));
+    }
+
+    @Test
+    public final void testSetDefaultsIncludesCreateDateTimeFails() {
+        this.setDefaultsWithInvalidFails(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now());
+    }
+
+    @Test
+    public final void testSetDefaultsIncludesModifiedByFails() {
+        this.setDefaultsWithInvalidFails(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
+    }
+
+    @Test
+    public final void testSetDefaultsIncludesModifiedDateTimeFails() {
+        this.setDefaultsWithInvalidFails(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.now());
+    }
+
+    @Test
+    public final void testSetDefaultsIncludesSpreadsheetIdFails() {
+        this.setDefaultsWithInvalidFails(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123));
+    }
+
+    private <TT> void setDefaultsWithInvalidFails(final SpreadsheetMetadataPropertyName<TT> property,
+                                                  final TT value) {
+        final SpreadsheetMetadata metadata = this.createObject();
+        final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY.set(property, value);
+
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> metadata.setDefaults(defaults));
+        assertEquals("Defaults includes invalid default values: " + property, thrown.getMessage(), () -> "defaults with " + defaults);
+    }
+
+    @Test
+    public final void testSetDefaultsSeveralInvalidsFails() {
+        final SpreadsheetMetadata metadata = this.createObject();
+        final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"))
+                .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now());
+
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> metadata.setDefaults(defaults));
+        assertEquals("Defaults includes invalid default values: " + SpreadsheetMetadataPropertyName.CREATE_DATE_TIME + ", " + SpreadsheetMetadataPropertyName.CREATOR,
+                thrown.getMessage(),
+                () -> "defaults with " + defaults);
+    }
+
+    @Test
     public final void testSetDefaultsEmptyWithDefaultsItself() {
         final SpreadsheetMetadata metadata = this.createObject();
-        final SpreadsheetMetadata notEmptyDefaults = SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator123@example.com"));
+        final SpreadsheetMetadata notEmptyDefaults = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
+
         final SpreadsheetMetadata emptyWithDefaults = SpreadsheetMetadata.EMPTY.setDefaults(notEmptyDefaults);
 
         final SpreadsheetMetadata withDefaults = metadata.setDefaults(emptyWithDefaults);
@@ -329,7 +382,8 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     @Test
     public final void testRoundtripWithDefaults() {
         final SpreadsheetMetadata metadata = this.createObject();
-        final SpreadsheetMetadata notEmptyDefaults = SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator123@example.com"));
+        final SpreadsheetMetadata notEmptyDefaults = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);
         final SpreadsheetMetadata withDefaults = metadata.setDefaults(notEmptyDefaults);
 
         this.marshallRoundTripTwiceAndCheck(withDefaults);
