@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.Cast;
 import walkingkooka.color.Color;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
@@ -77,7 +78,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         final Object value = entry.getValue();
 
         if (Visiting.CONTINUE == this.startVisit(propertyName, value)) {
-            propertyName.accept(value, this);
+            propertyName.accept(Cast.to(value), this);
         }
         this.endVisit(propertyName, value);
     }

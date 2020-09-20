@@ -531,8 +531,7 @@ public abstract class SpreadsheetMetadata implements HasConverter,
             }
 
             final SpreadsheetMetadataPropertyName<?> name = SpreadsheetMetadataPropertyName.unmarshallName(child);
-            properties.put(name,
-                    name.handler().unmarshall(child, name, context));
+            properties.put(name, name.unmarshall(child, context));
         }
 
         return with(properties).setDefaults(defaults);
