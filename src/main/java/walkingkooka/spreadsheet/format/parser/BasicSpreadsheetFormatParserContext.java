@@ -52,7 +52,7 @@ final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatPars
     }
 
     @Override
-    public char exponentSymbol() {
+    public String exponentSymbol() {
         return this.context.exponentSymbol();
     }
 

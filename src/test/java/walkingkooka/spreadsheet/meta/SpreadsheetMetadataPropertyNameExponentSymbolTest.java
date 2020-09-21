@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 
-public final class SpreadsheetMetadataPropertyNameExponentSymbolTest extends SpreadsheetMetadataPropertyNameCharacterTestCase<SpreadsheetMetadataPropertyNameExponentSymbol> {
+public final class SpreadsheetMetadataPropertyNameExponentSymbolTest extends SpreadsheetMetadataPropertyNameStringTestCase<SpreadsheetMetadataPropertyNameExponentSymbol> {
 
     @Test
     public void testToString() {

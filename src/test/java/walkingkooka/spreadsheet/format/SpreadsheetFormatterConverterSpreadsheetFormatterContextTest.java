@@ -95,7 +95,7 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
     }
 
     @Override
-    public char exponentSymbol() {
+    public String exponentSymbol() {
         return this.decimalNumberContext().exponentSymbol();
     }
 
@@ -134,7 +134,6 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
 
     private DecimalNumberContext decimalNumberContext() {
         return DecimalNumberContexts.decimalFormatSymbols(DecimalFormatSymbols.getInstance(this.locale()),
-                'E',
                 '+',
                 this.locale(),
                 MathContext.UNLIMITED);

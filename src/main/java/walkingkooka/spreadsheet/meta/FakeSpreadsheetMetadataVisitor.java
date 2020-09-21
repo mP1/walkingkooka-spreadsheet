@@ -108,7 +108,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitExponentSymbol(final Character exponentSymbol) {
+    protected void visitExponentSymbol(final String exponentSymbol) {
         throw new UnsupportedOperationException();
     }
 

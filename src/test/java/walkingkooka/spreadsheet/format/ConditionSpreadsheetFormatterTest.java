@@ -208,8 +208,8 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatte
             }
 
             @Override
-            public char exponentSymbol() {
-                return 'E';
+            public String exponentSymbol() {
+                return "E";
             }
 
             @Override
