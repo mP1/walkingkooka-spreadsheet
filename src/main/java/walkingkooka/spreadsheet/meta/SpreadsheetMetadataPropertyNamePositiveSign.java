@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import java.text.DecimalFormatSymbols;
+
 final class SpreadsheetMetadataPropertyNamePositiveSign extends SpreadsheetMetadataPropertyNameCharacter {
 
     /**
@@ -35,5 +37,10 @@ final class SpreadsheetMetadataPropertyNamePositiveSign extends SpreadsheetMetad
     void accept(final Character value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitPositiveSign(value);
+    }
+
+    @Override
+    Character extractLocaleValueCharacter(final DecimalFormatSymbols symbols) {
+        return '+'; // TODO Find propery WAY.
     }
 }

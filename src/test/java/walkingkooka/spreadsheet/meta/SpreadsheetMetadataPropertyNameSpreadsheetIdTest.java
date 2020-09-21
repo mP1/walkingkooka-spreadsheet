@@ -20,12 +20,19 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetId;
 
+import java.util.Locale;
+
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetIdTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetId, SpreadsheetId> {
 
     @Test
     public void testInvalidSpreadsheetIdFails() {
         this.checkValueFails("123-invalid", "Expected SpreadsheetId, but got \"123-invalid\" for \"spreadsheet-id\"");
+    }
+
+    @Test
+    public void testExtractLocaleValue() {
+        this.extractLocaleValueAndCheck(Locale.ENGLISH, null);
     }
 
     @Test

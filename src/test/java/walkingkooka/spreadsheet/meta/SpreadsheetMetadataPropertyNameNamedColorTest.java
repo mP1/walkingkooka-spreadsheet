@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 
+import java.util.Locale;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -36,6 +38,11 @@ public final class SpreadsheetMetadataPropertyNameNamedColorTest extends Spreads
         final SpreadsheetColorName colorName = this.colorName();
         final SpreadsheetMetadataPropertyNameNamedColor property = SpreadsheetMetadataPropertyNameNamedColor.withColorName(colorName);
         assertSame(colorName, property.name, "colorName");
+    }
+
+    @Test
+    public void testExtractLocaleValue() {
+        this.extractLocaleValueAndCheck(Locale.ENGLISH, null);
     }
 
     @Test

@@ -19,6 +19,9 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 
+import java.util.Locale;
+import java.util.Optional;
+
 final class SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatterns extends SpreadsheetMetadataPropertyName<SpreadsheetTimeParsePatterns> {
 
     /**
@@ -48,6 +51,11 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatterns extends 
     void accept(final SpreadsheetTimeParsePatterns value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitTimeParsePatterns(value);
+    }
+
+    @Override
+    Optional<SpreadsheetTimeParsePatterns> extractLocaleValue(final Locale locale) {
+        return Optional.empty(); // TODO fetch the DateTimeFormatter TIME patterns
     }
 
     @Override

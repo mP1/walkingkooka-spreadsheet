@@ -29,6 +29,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -90,6 +91,27 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.with(map);
         assertEquals(SpreadsheetMetadataNonEmptyMap.class, metadata.value().getClass(), () -> "" + metadata);
+    }
+
+    // loadFromLocale...................................................................................................
+
+    @Test
+    public void testLoadFromLocaleNullFails() {
+        assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> SpreadsheetMetadata.EMPTY.loadFromLocale());
+    }
+
+    @Test
+    public void testLoadFromLocale() {
+        assertEquals(SpreadsheetMetadata.EMPTY
+                        .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "¤")
+                        .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.')
+                        .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E")
+                        .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, ',')
+                        .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
+                        .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, '-')
+                        .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, '%')
+                        .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, '+'),
+                SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH).loadFromLocale());
     }
 
     // toString.........................................................................................................

@@ -20,6 +20,9 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.spreadsheet.SpreadsheetId;
 
+import java.util.Locale;
+import java.util.Optional;
+
 final class SpreadsheetMetadataPropertyNameSpreadsheetId extends SpreadsheetMetadataPropertyName<SpreadsheetId> {
 
     /**
@@ -49,6 +52,11 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetId extends SpreadsheetMeta
     void accept(final SpreadsheetId value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitSpreadsheetId(value);
+    }
+
+    @Override
+    Optional<SpreadsheetId> extractLocaleValue(final Locale locale) {
+        return Optional.empty();
     }
 
     @Override

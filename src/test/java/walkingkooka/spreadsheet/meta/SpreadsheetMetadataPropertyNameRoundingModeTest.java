@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 
 import java.math.RoundingMode;
+import java.util.Locale;
 
 
 public final class SpreadsheetMetadataPropertyNameRoundingModeTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameRoundingMode, RoundingMode> {
@@ -27,6 +28,11 @@ public final class SpreadsheetMetadataPropertyNameRoundingModeTest extends Sprea
     @Test
     public void testInvalidRoundingModeFails() {
         this.checkValueFails("invalid", "Expected RoundingMode, but got \"invalid\" for \"rounding-mode\"");
+    }
+
+    @Test
+    public void testExtractLocaleValue() {
+        this.extractLocaleValueAndCheck(Locale.ENGLISH, null);
     }
 
     @Test
