@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import java.text.DecimalFormatSymbols;
+
 final class SpreadsheetMetadataPropertyNamePercentageSymbol extends SpreadsheetMetadataPropertyNameCharacter {
 
     /**
@@ -35,5 +37,10 @@ final class SpreadsheetMetadataPropertyNamePercentageSymbol extends SpreadsheetM
     void accept(final Character value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitPercentageSymbol(value);
+    }
+
+    @Override
+    Character extractLocaleValueCharacter(final DecimalFormatSymbols symbols) {
+        return symbols.getPercent();
     }
 }

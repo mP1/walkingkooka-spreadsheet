@@ -19,6 +19,9 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.color.Color;
 
+import java.util.Locale;
+import java.util.Optional;
+
 abstract class SpreadsheetMetadataPropertyNameColor extends SpreadsheetMetadataPropertyName<Color> {
 
     /**
@@ -37,6 +40,11 @@ abstract class SpreadsheetMetadataPropertyNameColor extends SpreadsheetMetadataP
     @Override
     final String expected() {
         return Color.class.getSimpleName();
+    }
+
+    @Override
+    final Optional<Color> extractLocaleValue(final Locale locale) {
+        return Optional.empty(); // colours have nothing todo with Locales
     }
 
     @Override

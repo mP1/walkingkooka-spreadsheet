@@ -22,6 +22,9 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CharSequences;
 
+import java.util.Locale;
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -79,6 +82,16 @@ public abstract class SpreadsheetMetadataPropertyNameTestCase<N extends Spreadsh
         }
         assertEquals(propertyName, thrown.name(), "propertyName");
         assertEquals(value, thrown.value(), "value");
+    }
+
+    // extractLocaleValue...............................................................................................
+
+    final void extractLocaleValueAndCheck(final Locale locale,
+                                          final V value) {
+        final N propertyName = this.createName();
+        assertEquals(Optional.ofNullable(value),
+                propertyName.extractLocaleValue(locale),
+                propertyName + " extractLocaleValue " + locale);
     }
 
     // NameTesting......................................................................................................

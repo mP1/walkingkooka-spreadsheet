@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.meta;
 
 import java.math.RoundingMode;
+import java.util.Locale;
+import java.util.Optional;
 
 final class SpreadsheetMetadataPropertyNameRoundingMode extends SpreadsheetMetadataPropertyName<RoundingMode> {
 
@@ -48,6 +50,11 @@ final class SpreadsheetMetadataPropertyNameRoundingMode extends SpreadsheetMetad
     void accept(final RoundingMode value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitRoundingMode(value);
+    }
+
+    @Override
+    Optional<RoundingMode> extractLocaleValue(final Locale locale) {
+        return Optional.empty(); // RoundingMode have nothing todo with Locales
     }
 
     @Override

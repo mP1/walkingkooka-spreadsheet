@@ -19,6 +19,9 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.net.email.EmailAddress;
 
+import java.util.Locale;
+import java.util.Optional;
+
 abstract class SpreadsheetMetadataPropertyNameEmailAddress extends SpreadsheetMetadataPropertyName<EmailAddress> {
 
     /**
@@ -37,6 +40,11 @@ abstract class SpreadsheetMetadataPropertyNameEmailAddress extends SpreadsheetMe
     @Override
     final String expected() {
         return EmailAddress.class.getSimpleName();
+    }
+
+    @Override
+    final Optional<EmailAddress> extractLocaleValue(final Locale locale) {
+        return Optional.empty(); // emails have nothing todo with Locales
     }
 
     @Override
