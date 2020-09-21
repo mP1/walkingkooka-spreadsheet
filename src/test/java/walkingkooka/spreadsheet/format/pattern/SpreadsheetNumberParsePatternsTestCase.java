@@ -48,8 +48,8 @@ public abstract class SpreadsheetNumberParsePatternsTestCase<T> implements Class
             }
 
             @Override
-            public char exponentSymbol() {
-                return 'X';
+            public String exponentSymbol() {
+                return "X";
             }
 
             @Override

@@ -524,7 +524,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 DateTimeContexts.locale(Locale.ENGLISH, 20),
                 DecimalNumberContexts.basic("C",
                         'D',
-                        'E',
+                        "E",
                         'G',
                         'M',
                         'P',

@@ -31,7 +31,7 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
 
     private final static String CURRENCY = "$$";
     private final static char DECIMAL = 'D';
-    private final static char EXPONENT = 'X';
+    private final static String EXPONENT = "X";
     private final static char GROUPING = 'G';
     private final static char NEGATIVE = 'N';
     private final static char PERCENTAGE = 'R';
@@ -70,7 +70,7 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     }
 
     @Override
-    public char exponentSymbol() {
+    public String exponentSymbol() {
         return EXPONENT;
     }
 

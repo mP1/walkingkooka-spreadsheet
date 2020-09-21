@@ -17,23 +17,19 @@
 
 package walkingkooka.spreadsheet.meta;
 
-final class SpreadsheetMetadataPropertyNameExponentSymbol extends SpreadsheetMetadataPropertyNameString {
+public abstract class SpreadsheetMetadataPropertyNameStringTestCase<N extends SpreadsheetMetadataPropertyNameString> extends SpreadsheetMetadataPropertyNameTestCase<N, String> {
 
-    /**
-     * Singleton
-     */
-    final static SpreadsheetMetadataPropertyNameExponentSymbol INSTANCE = new SpreadsheetMetadataPropertyNameExponentSymbol();
-
-    /**
-     * Private constructor use singleton.
-     */
-    private SpreadsheetMetadataPropertyNameExponentSymbol() {
-        super("exponent-symbol");
+    SpreadsheetMetadataPropertyNameStringTestCase() {
+        super();
     }
 
     @Override
-    void accept(final String value,
-                final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitExponentSymbol(value);
+    final String propertyValue() {
+        return "ABC";
+    }
+
+    @Override
+    final String propertyValueType() {
+        return String.class.getSimpleName();
     }
 }

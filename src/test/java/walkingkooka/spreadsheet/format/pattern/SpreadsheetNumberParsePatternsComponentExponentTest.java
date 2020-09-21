@@ -18,8 +18,12 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
+import walkingkooka.math.DecimalNumberContexts;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -78,6 +82,41 @@ public final class SpreadsheetNumberParsePatternsComponentExponentTest extends S
                               final String textAfter,
                               final boolean negativeExponent) {
         final SpreadsheetNumberParsePatternsContext context = this.createContext();
+        this.parseAndCheck(text,
+                context,
+                textAfter,
+                BigDecimal.ZERO,
+                true);
+        this.checkMode(context, SpreadsheetNumberParsePatternsMode.EXPONENT);
+        assertEquals(negativeExponent, context.negativeExponent, "negativeExponent");
+    }
+
+    @Test
+    public void testMultiCharacterSymbol() {
+        this.parseAndCheck3("XYZ!",
+                "!",
+                false);
+    }
+
+    @Test
+    public void testMultiCharacterSymbolPositive() {
+        this.parseAndCheck3("XYZQ!",
+                "!",
+                false);
+    }
+
+    @Test
+    public void testMultiCharacterSymbolNegative() {
+        this.parseAndCheck3("XYZN!",
+                "!",
+                true);
+    }
+
+    private void parseAndCheck3(final String text,
+                                final String textAfter,
+                                final boolean negativeExponent) {
+        final SpreadsheetNumberParsePatternsContext context = SpreadsheetNumberParsePatternsContext.with(Lists.of(SpreadsheetNumberParsePatternsComponent.textLiteral("@")).iterator(),
+                DecimalNumberContexts.basic(CURRENCY, 'D', "XYZ", 'G', 'N', 'P', 'Q', Locale.ENGLISH, MathContext.UNLIMITED));
         this.parseAndCheck(text,
                 context,
                 textAfter,

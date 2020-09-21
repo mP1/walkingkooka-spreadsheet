@@ -79,8 +79,8 @@ public final class GeneralSpreadsheetFormatterTest extends SpreadsheetFormatterT
             }
 
             @Override
-            public char exponentSymbol() {
-                return 'X';
+            public String exponentSymbol() {
+                return "X";
             }
 
             @Override
