@@ -40,17 +40,24 @@ final class SpreadsheetNumberParsePatternsComponentExponent extends SpreadsheetN
     @Override
     void parse(final TextCursor cursor,
                final SpreadsheetNumberParsePatternsContext context) {
+        Loop:
+        //
         do {
-            if (cursor.isEmpty()) {
-                break;
-            }
+            final String exponentSymbol = context.context.exponentSymbol();
+            int exponentSymbolIndex = 0;
 
             // E
-            if (0 != CaseSensitivity.INSENSITIVE.compare(cursor.at(), context.context.exponentSymbol())) {
-                break;
-            }
+            do {
+                if (cursor.isEmpty()) {
+                    break Loop;
+                }
+                if (0 != CaseSensitivity.INSENSITIVE.compare(cursor.at(), exponentSymbol.charAt(exponentSymbolIndex))) {
+                    break Loop;
+                }
+                cursor.next();
+                exponentSymbolIndex++;
+            } while (exponentSymbolIndex < exponentSymbol.length());
 
-            cursor.next();
             boolean negativeExponent = false;
 
             if (false == cursor.isEmpty()) {

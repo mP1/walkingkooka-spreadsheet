@@ -205,10 +205,10 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     public void testVisitExponentSymbol() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitExponentSymbol(final Character c) {
-                this.visited = c;
+            protected void visitExponentSymbol(final String s) {
+                this.visited = s;
             }
-        }.accept(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, '.');
+        }.accept(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, ".");
     }
 
     @Test

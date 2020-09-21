@@ -46,7 +46,7 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
 
         final String currencySymbol = components.getOrElse(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, this::localeCurrencySymbol);
         final Character decimalSeparator = components.getOrElse(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, this::localeDecimalSeparator);
-        final Character exponentSymbol = components.getOrNull(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL);
+        final String exponentSymbol = components.getOrNull(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL);
         final Character groupingSeparator = components.getOrElse(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, this::localeGroupingSeparator);
         final Character negativeSign = components.getOrElse(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, this::localeNegativeSign);
         final Character percentSymbol = components.getOrElse(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, this::localePercentageSymbol);
@@ -117,7 +117,6 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
 
     private DecimalNumberContext localDecimalNumberContext0(final Locale locale) {
         return DecimalNumberContexts.decimalFormatSymbols(DecimalFormatSymbols.getInstance(locale),
-                'E',
                 '+',
                 locale,
                 MathContext.DECIMAL32); // exponent, plus, MathContext ignored

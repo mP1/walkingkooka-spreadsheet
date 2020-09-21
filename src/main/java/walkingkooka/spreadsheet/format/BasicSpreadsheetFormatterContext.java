@@ -169,7 +169,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     }
 
     @Override
-    public char exponentSymbol() {
+    public String exponentSymbol() {
         return this.converterContext.exponentSymbol();
     }
 

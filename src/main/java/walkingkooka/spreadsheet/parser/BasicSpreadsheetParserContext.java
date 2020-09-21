@@ -98,7 +98,7 @@ final class BasicSpreadsheetParserContext implements SpreadsheetParserContext {
     }
 
     @Override
-    public char exponentSymbol() {
+    public String exponentSymbol() {
         return this.decimalNumberContext.exponentSymbol();
     }
 

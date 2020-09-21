@@ -96,7 +96,7 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     }
 
     @Override
-    public char exponentSymbol() {
+    public String exponentSymbol() {
         return context.exponentSymbol();
     }
 
