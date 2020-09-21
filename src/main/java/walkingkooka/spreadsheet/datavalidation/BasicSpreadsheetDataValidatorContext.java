@@ -71,7 +71,7 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     }
 
     @Override
-    public char exponentSymbol() {
+    public String exponentSymbol() {
         return this.context.exponentSymbol();
     }
 

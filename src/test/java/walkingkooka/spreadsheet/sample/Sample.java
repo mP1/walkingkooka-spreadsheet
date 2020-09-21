@@ -113,7 +113,7 @@ public final class Sample {
                     .set(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetPattern.parseDateTimeFormatPattern("DD/MM/YYYY hh:mm"))
                     .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetPattern.parseDateTimeParsePatterns("DD/MM/YYYY hh:mmDDMMYYYYHHMMDDMMYYYY HHMM"))
                     .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, 'D')
-                    .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, 'E')
+                    .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E")
                     .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, 'G')
                     .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                     .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"))

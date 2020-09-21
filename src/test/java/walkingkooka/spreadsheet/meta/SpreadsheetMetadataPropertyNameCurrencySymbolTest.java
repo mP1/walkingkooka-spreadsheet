@@ -19,7 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 
-public final class SpreadsheetMetadataPropertyNameCurrencySymbolTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameCurrencySymbol, String> {
+public final class SpreadsheetMetadataPropertyNameCurrencySymbolTest extends SpreadsheetMetadataPropertyNameStringTestCase<SpreadsheetMetadataPropertyNameCurrencySymbol> {
 
     @Test
     public void testToString() {
@@ -29,16 +29,6 @@ public final class SpreadsheetMetadataPropertyNameCurrencySymbolTest extends Spr
     @Override
     SpreadsheetMetadataPropertyNameCurrencySymbol createName() {
         return SpreadsheetMetadataPropertyNameCurrencySymbol.INSTANCE;
-    }
-
-    @Override
-    String propertyValue() {
-        return "$AUD";
-    }
-
-    @Override
-    String propertyValueType() {
-        return String.class.getSimpleName();
     }
 
     // ClassTesting.....................................................................................................

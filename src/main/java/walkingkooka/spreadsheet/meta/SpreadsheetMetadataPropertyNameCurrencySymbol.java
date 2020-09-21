@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-final class SpreadsheetMetadataPropertyNameCurrencySymbol extends SpreadsheetMetadataPropertyName<String> {
+final class SpreadsheetMetadataPropertyNameCurrencySymbol extends SpreadsheetMetadataPropertyNameString {
 
     /**
      * Singleton
@@ -32,27 +32,8 @@ final class SpreadsheetMetadataPropertyNameCurrencySymbol extends SpreadsheetMet
     }
 
     @Override
-    void checkValue0(final Object value) {
-        final String stringValue = this.checkValueType(value,
-                v -> v instanceof String);
-        if (stringValue.isEmpty()) {
-            throw new SpreadsheetMetadataPropertyValueException("Invalid value", this, stringValue);
-        }
-    }
-
-    @Override
-    String expected() {
-        return "String";
-    }
-
-    @Override
     void accept(final String value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitCurrencySymbol(value);
-    }
-
-    @Override
-    Class<String> type() {
-        return String.class;
     }
 }

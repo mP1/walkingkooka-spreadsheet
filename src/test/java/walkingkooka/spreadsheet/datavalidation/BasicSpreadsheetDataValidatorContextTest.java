@@ -96,7 +96,7 @@ public final class BasicSpreadsheetDataValidatorContextTest implements Spreadshe
             }
 
             @Override
-            public char exponentSymbol() {
+            public String exponentSymbol() {
                 return decimalNumberContext.exponentSymbol();
             }
 
@@ -137,7 +137,7 @@ public final class BasicSpreadsheetDataValidatorContextTest implements Spreadshe
     }
 
     @Override
-    public char exponentSymbol() {
+    public String exponentSymbol() {
         return this.decimalNumberContext().exponentSymbol();
     }
 
