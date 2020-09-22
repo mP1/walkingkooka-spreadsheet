@@ -19,7 +19,14 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Locale;
+
 public final class SpreadsheetMetadataPropertyNameExponentSymbolTest extends SpreadsheetMetadataPropertyNameStringTestCase<SpreadsheetMetadataPropertyNameExponentSymbol> {
+
+    @Test
+    public void testExtractLocaleValue() {
+        this.extractLocaleValueAndCheck(Locale.ENGLISH, "E");
+    }
 
     @Test
     public void testToString() {

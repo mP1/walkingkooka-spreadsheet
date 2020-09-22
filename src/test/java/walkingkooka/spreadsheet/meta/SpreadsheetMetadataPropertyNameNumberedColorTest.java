@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
 
+import java.util.Locale;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -47,6 +48,11 @@ public final class SpreadsheetMetadataPropertyNameNumberedColorTest extends Spre
 
                     propertyName.checkValue(color);
                 });
+    }
+
+    @Test
+    public void testExtractLocaleValue() {
+        this.extractLocaleValueAndCheck(Locale.ENGLISH, null);
     }
 
     @Test

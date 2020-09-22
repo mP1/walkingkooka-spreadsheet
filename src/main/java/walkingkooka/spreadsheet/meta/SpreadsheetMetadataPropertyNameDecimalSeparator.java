@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import java.text.DecimalFormatSymbols;
+
 final class SpreadsheetMetadataPropertyNameDecimalSeparator extends SpreadsheetMetadataPropertyNameCharacter {
 
     /**
@@ -35,5 +37,10 @@ final class SpreadsheetMetadataPropertyNameDecimalSeparator extends SpreadsheetM
     void accept(final Character value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitDecimalSeparator(value);
+    }
+
+    @Override
+    Character extractLocaleValueCharacter(final DecimalFormatSymbols symbols) {
+        return symbols.getDecimalSeparator();
     }
 }

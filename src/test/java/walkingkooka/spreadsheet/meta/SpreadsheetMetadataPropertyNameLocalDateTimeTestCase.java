@@ -17,12 +17,20 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import org.junit.jupiter.api.Test;
+
 import java.time.LocalDateTime;
+import java.util.Locale;
 
 public abstract class SpreadsheetMetadataPropertyNameLocalDateTimeTestCase<N extends SpreadsheetMetadataPropertyNameLocalDateTime> extends SpreadsheetMetadataPropertyNameTestCase<N, LocalDateTime> {
 
     SpreadsheetMetadataPropertyNameLocalDateTimeTestCase() {
         super();
+    }
+
+    @Test
+    public void testExtractLocaleValue() {
+        this.extractLocaleValueAndCheck(Locale.ENGLISH, null);
     }
 
     @Override

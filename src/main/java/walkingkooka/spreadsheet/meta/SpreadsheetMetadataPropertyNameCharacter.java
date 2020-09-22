@@ -17,6 +17,10 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+import java.util.Optional;
+
 abstract class SpreadsheetMetadataPropertyNameCharacter extends SpreadsheetMetadataPropertyName<Character> {
 
     /**
@@ -36,6 +40,16 @@ abstract class SpreadsheetMetadataPropertyNameCharacter extends SpreadsheetMetad
     final String expected() {
         return Character.class.getSimpleName();
     }
+
+    @Override
+    final Optional<Character> extractLocaleValue(final Locale locale) {
+        return Optional.of(this.extractLocaleValueCharacter(DecimalFormatSymbols.getInstance(locale)));
+    }
+
+    /**
+     * Template method that supports sub classing retrieving a single property from the {@link DecimalFormatSymbols}
+     */
+    abstract Character extractLocaleValueCharacter(final DecimalFormatSymbols symbols);
 
     @Override
     Class<Character> type() {

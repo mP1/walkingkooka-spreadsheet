@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.net.email.EmailAddress;
 
+import java.util.Locale;
+
 public abstract class SpreadsheetMetadataPropertyNameEmailAddressTestCase<N extends SpreadsheetMetadataPropertyNameEmailAddress> extends SpreadsheetMetadataPropertyNameTestCase<N, EmailAddress> {
 
     SpreadsheetMetadataPropertyNameEmailAddressTestCase() {
@@ -29,6 +31,11 @@ public abstract class SpreadsheetMetadataPropertyNameEmailAddressTestCase<N exte
     @Test
     public final void testInvalidEmailFails() {
         this.checkValueFails("invalid email", "Expected EmailAddress, but got \"invalid email\" for \"" + this.createName().name + "\"");
+    }
+
+    @Test
+    public final void testExtractLocaleValue() {
+        this.extractLocaleValueAndCheck(Locale.ENGLISH, null);
     }
 
     @Override
