@@ -42,10 +42,14 @@ import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.math.RoundingMode;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
@@ -323,6 +327,39 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      * Some properties support providing a value for the given Locale for the parent {@link SpreadsheetMetadata} to be updated.
      */
     abstract Optional<T> extractLocaleValue(final Locale locale);
+
+    /**
+     * Factory that fetches a {@link DateFormat}, casts to a {@link SimpleDateFormat} and parses the pattern.
+     */
+    final Optional<T> extractLocaleSimpleDateFormat(final Locale locale,
+                                                    final Function<Locale, DateFormat> localeToDateFormat,
+                                                    final Function<String, T> patternParser) {
+        return Optional.of(patternParser.apply(simpleDateFormatPattern(localeToDateFormat.apply(locale))));
+    }
+
+    /**
+     * Casts and grabs the {@link SimpleDateFormat#toPattern()} and then converts the pattern using {@link SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor}.
+     */
+    final static String simpleDateFormatPattern(final DateFormat dateFormat) {
+        final SimpleDateFormat simpleDateFormat = (SimpleDateFormat) dateFormat;
+        return SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor.pattern(simpleDateFormat.toPattern());
+    }
+
+    /**
+     * This method is only called by {@link SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatterns} and
+     * {@link SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatterns}. It creates a pattern with FULL, LONG, MEDIUM and SHORT and
+     * then calls the factory.
+     */
+    final Optional<T> dateFormatThenParsePattern(final Locale locale,
+                                                 final BiFunction<Integer, Locale, String> pattern,
+                                                 final Function<String, T> parser) {
+        final String full = pattern.apply(DateFormat.FULL, locale).trim();
+        final String longPattern = pattern.apply(DateFormat.LONG, locale).trim();
+        final String medium = pattern.apply(DateFormat.MEDIUM, locale).trim();
+        final String shortPattern = pattern.apply(DateFormat.SHORT, locale).trim();
+
+        return Optional.of(parser.apply(full + ";" + longPattern + ";" + medium + ";" + shortPattern));
+    }
 
     // SpreadsheetMetadataVisitor.......................................................................................
 

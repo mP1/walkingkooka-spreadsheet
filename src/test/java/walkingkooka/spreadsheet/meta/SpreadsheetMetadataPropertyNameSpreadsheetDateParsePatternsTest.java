@@ -26,7 +26,8 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatternsTe
 
     @Test
     public void testExtractLocaleValue() {
-        this.extractLocaleValueAndCheck(Locale.ENGLISH, null);
+        this.extractLocaleValueAndCheck(Locale.ENGLISH,
+                SpreadsheetDateParsePatterns.parseDateParsePatterns("dddd, mmmm d, yyyy;mmmm d, yyyy;mmm d, yyyy;m/d/yy"));
     }
 
     @Test

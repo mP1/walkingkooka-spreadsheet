@@ -24,6 +24,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -104,13 +105,19 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     public void testLoadFromLocale() {
         assertEquals(SpreadsheetMetadata.EMPTY
                         .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "¤")
+                        .set(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetPattern.parseDateFormatPattern("dddd, mmmm d, yyyy"))
+                        .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS, SpreadsheetPattern.parseDateParsePatterns("dddd, mmmm d, yyyy;mmmm d, yyyy;mmm d, yyyy;m/d/yy"))
+                        .set(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetPattern.parseDateTimeFormatPattern("dddd, mmmm d, yyyy \\a\\t H:mm:ss AM/PM"))
+                        .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetPattern.parseDateTimeParsePatterns("dddd, mmmm d, yyyy \\a\\t H:mm:ss AM/PM;dddd, mmmm d, yyyy \\a\\t H:mm:ss AM/PM;dddd, mmmm d, yyyy, H:mm:ss AM/PM;dddd, mmmm d, yyyy, H:mm AM/PM;mmmm d, yyyy \\a\\t H:mm:ss AM/PM;mmmm d, yyyy \\a\\t H:mm:ss AM/PM;mmmm d, yyyy, H:mm:ss AM/PM;mmmm d, yyyy, H:mm AM/PM;mmm d, yyyy, H:mm:ss AM/PM;mmm d, yyyy, H:mm:ss AM/PM;mmm d, yyyy, H:mm:ss AM/PM;mmm d, yyyy, H:mm AM/PM;m/d/yy, H:mm:ss AM/PM;m/d/yy, H:mm:ss AM/PM;m/d/yy, H:mm:ss AM/PM;m/d/yy, H:mm AM/PM"))
                         .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.')
                         .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E")
                         .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, ',')
                         .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                         .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, '-')
                         .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, '%')
-                        .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, '+'),
+                        .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, '+')
+                        .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetPattern.parseTimeFormatPattern("H:mm:ss AM/PM"))
+                        .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetPattern.parseTimeParsePatterns("H:mm:ss AM/PM;H:mm:ss AM/PM;H:mm:ss AM/PM;H:mm AM/PM")),
                 SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH).loadFromLocale());
     }
 
