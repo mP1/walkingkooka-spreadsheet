@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import java.util.Locale;
+import java.util.Optional;
 
 final class SpreadsheetMetadataPropertyNameLocale extends SpreadsheetMetadataPropertyName<Locale> {
 
@@ -48,6 +49,11 @@ final class SpreadsheetMetadataPropertyNameLocale extends SpreadsheetMetadataPro
     void accept(final Locale value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitLocale(value);
+    }
+
+    @Override
+    Optional<Locale> extractLocaleValue(final Locale locale) {
+        return Optional.empty();
     }
 
     @Override

@@ -17,6 +17,10 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+import java.util.Optional;
+
 abstract class SpreadsheetMetadataPropertyNameString extends SpreadsheetMetadataPropertyName<String> {
 
     /**
@@ -44,4 +48,11 @@ abstract class SpreadsheetMetadataPropertyNameString extends SpreadsheetMetadata
     final Class<String> type() {
         return String.class;
     }
+
+    @Override
+    final Optional<String> extractLocaleValue(final Locale locale) {
+        return Optional.of(this.extractLocaleValueString(DecimalFormatSymbols.getInstance(locale)));
+    }
+
+    abstract String extractLocaleValueString(final DecimalFormatSymbols symbols);
 }

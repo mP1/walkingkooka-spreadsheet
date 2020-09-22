@@ -45,6 +45,7 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
@@ -315,6 +316,13 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
                 this instanceof SpreadsheetMetadataPropertyNameLocalDateTime ||
                 this instanceof SpreadsheetMetadataPropertyNameSpreadsheetId;
     }
+
+    // loadFromLocale...................................................................................................
+
+    /**
+     * Some properties support providing a value for the given Locale for the parent {@link SpreadsheetMetadata} to be updated.
+     */
+    abstract Optional<T> extractLocaleValue(final Locale locale);
 
     // SpreadsheetMetadataVisitor.......................................................................................
 

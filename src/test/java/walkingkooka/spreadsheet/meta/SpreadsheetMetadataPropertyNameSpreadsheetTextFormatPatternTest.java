@@ -20,7 +20,14 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 
+import java.util.Locale;
+
 public final class SpreadsheetMetadataPropertyNameSpreadsheetTextFormatPatternTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetTextFormatPattern, SpreadsheetTextFormatPattern> {
+
+    @Test
+    public void testExtractLocaleValue() {
+        this.extractLocaleValueAndCheck(Locale.ENGLISH, null);
+    }
 
     @Test
     public void testToString() {

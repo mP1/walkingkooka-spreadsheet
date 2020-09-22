@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import java.text.DecimalFormatSymbols;
+
 final class SpreadsheetMetadataPropertyNameExponentSymbol extends SpreadsheetMetadataPropertyNameString {
 
     /**
@@ -35,5 +37,10 @@ final class SpreadsheetMetadataPropertyNameExponentSymbol extends SpreadsheetMet
     void accept(final String value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitExponentSymbol(value);
+    }
+
+    @Override
+    String extractLocaleValueString(final DecimalFormatSymbols symbols) {
+        return symbols.getExponentSeparator();
     }
 }

@@ -19,7 +19,14 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Locale;
+
 public final class SpreadsheetMetadataPropertyNamePositiveSignTest extends SpreadsheetMetadataPropertyNameCharacterTestCase<SpreadsheetMetadataPropertyNamePositiveSign> {
+
+    @Test
+    public void testExtractLocaleValue() {
+        this.extractLocaleValueAndCheck(Locale.ENGLISH, '+');
+    }
 
     @Test
     public void testToString() {

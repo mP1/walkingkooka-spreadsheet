@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import java.text.DecimalFormatSymbols;
+
 final class SpreadsheetMetadataPropertyNameNegativeSign extends SpreadsheetMetadataPropertyNameCharacter {
 
     /**
@@ -35,5 +37,10 @@ final class SpreadsheetMetadataPropertyNameNegativeSign extends SpreadsheetMetad
     void accept(final Character value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitNegativeSign(value);
+    }
+
+    @Override
+    Character extractLocaleValueCharacter(final DecimalFormatSymbols symbols) {
+        return symbols.getMinusSign();
     }
 }

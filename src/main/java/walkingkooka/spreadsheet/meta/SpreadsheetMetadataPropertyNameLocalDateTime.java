@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.meta;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
+import java.util.Optional;
 
 abstract class SpreadsheetMetadataPropertyNameLocalDateTime extends SpreadsheetMetadataPropertyName<LocalDateTime> {
 
@@ -37,6 +39,11 @@ abstract class SpreadsheetMetadataPropertyNameLocalDateTime extends SpreadsheetM
     @Override
     final String expected() {
         return "DateTime";
+    }
+
+    @Override
+    final Optional<LocalDateTime> extractLocaleValue(final Locale locale) {
+        return Optional.empty(); // TODO dateTimes are not locale aware.
     }
 
     @Override

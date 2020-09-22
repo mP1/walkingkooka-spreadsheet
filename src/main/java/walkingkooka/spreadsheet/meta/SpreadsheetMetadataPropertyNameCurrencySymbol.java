@@ -17,8 +17,9 @@
 
 package walkingkooka.spreadsheet.meta;
 
-final class SpreadsheetMetadataPropertyNameCurrencySymbol extends SpreadsheetMetadataPropertyNameString {
+import java.text.DecimalFormatSymbols;
 
+final class SpreadsheetMetadataPropertyNameCurrencySymbol extends SpreadsheetMetadataPropertyNameString {
     /**
      * Singleton
      */
@@ -35,5 +36,10 @@ final class SpreadsheetMetadataPropertyNameCurrencySymbol extends SpreadsheetMet
     void accept(final String value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitCurrencySymbol(value);
+    }
+
+    @Override
+    String extractLocaleValueString(final DecimalFormatSymbols symbols) {
+        return symbols.getCurrencySymbol();
     }
 }
