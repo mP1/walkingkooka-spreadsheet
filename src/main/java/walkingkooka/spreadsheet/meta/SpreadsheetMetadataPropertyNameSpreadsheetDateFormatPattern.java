@@ -19,6 +19,10 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -57,7 +61,9 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPattern extends 
 
     @Override
     Optional<SpreadsheetDateFormatPattern> extractLocaleValue(final Locale locale) {
-        return Optional.empty(); // TODO fetch DateFormat FULL form
+        return this.extractLocaleSimpleDateFormat(locale,
+                (l) -> DateFormat.getDateInstance(DateFormat.FULL, l),
+                SpreadsheetDateFormatPattern::parseDateFormatPattern);
     }
 
     @Override

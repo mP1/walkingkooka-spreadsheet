@@ -18,15 +18,65 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
+import walkingkooka.convert.ConverterContext;
+import walkingkooka.convert.ConverterContexts;
+import walkingkooka.convert.FakeConverter;
+import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeFormatPattern;
 
+import java.math.MathContext;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.util.Locale;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeFormatPatternTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetDateTimeFormatPattern, SpreadsheetDateTimeFormatPattern> {
 
     @Test
     public void testExtractLocaleValue() {
-        this.extractLocaleValueAndCheck(Locale.ENGLISH, null);
+        final Locale locale = Locale.ENGLISH;
+        final SpreadsheetDateTimeFormatPattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetDateTimeFormatPattern.instance()
+                .extractLocaleValue(locale)
+                .get();
+
+        final LocalDateTime date = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
+        final String formatted = pattern.formatter()
+                .format(date, spreadsheetFormatterContext()).get().text();
+        assertEquals("Friday, December 31, 1999 at 12:58:59 PM", formatted, () -> pattern.toString());
+    }
+
+    private SpreadsheetFormatterContext spreadsheetFormatterContext() {
+        return SpreadsheetFormatterContexts.basic((n-> {throw new UnsupportedOperationException();}),
+                (n-> {throw new UnsupportedOperationException();}),
+                1,
+                new FakeConverter(){
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value, final Class<T> type, final ConverterContext context) {
+                        return Either.left(type.cast(value));
+                    }
+
+                    @Override
+                    public <T> T convertOrFail(Object value, Class<T> target, ConverterContext context) {
+                        final LocalDate date = (LocalDate)value;
+                        return target.cast(LocalDateTime.of(date, LocalTime.MIDNIGHT));
+                    }
+                },
+                SpreadsheetFormatters.fake(),
+                ConverterContexts.basic(DateTimeContexts.locale(Locale.ENGLISH, 20), DecimalNumberContexts.american(MathContext.DECIMAL32))
+        );
     }
 
     @Test
