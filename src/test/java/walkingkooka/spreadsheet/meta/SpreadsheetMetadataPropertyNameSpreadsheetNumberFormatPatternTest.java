@@ -31,12 +31,12 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern.INSTANCE, "number-format-pattern");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern.instance(), "number-format-pattern");
     }
 
     @Override
     SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern createName() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern.INSTANCE;
+        return SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern.instance();
     }
 
     @Override

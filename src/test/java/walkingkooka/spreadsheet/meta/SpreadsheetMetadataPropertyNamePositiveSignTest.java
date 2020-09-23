@@ -30,12 +30,12 @@ public final class SpreadsheetMetadataPropertyNamePositiveSignTest extends Sprea
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNamePositiveSign.INSTANCE, "positive-sign");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNamePositiveSign.instance(), "positive-sign");
     }
 
     @Override
     SpreadsheetMetadataPropertyNamePositiveSign createName() {
-        return SpreadsheetMetadataPropertyNamePositiveSign.INSTANCE;
+        return SpreadsheetMetadataPropertyNamePositiveSign.instance();
     }
 
     // ClassTesting.....................................................................................................

@@ -27,7 +27,9 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern extend
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern INSTANCE = new SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern();
+    final static SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern instance() {
+        return new SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern();
+    }
 
     /**
      * Private constructor use singleton.

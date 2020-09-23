@@ -31,12 +31,12 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPatternTe
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern.INSTANCE, "time-format-pattern");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern.instance(), "time-format-pattern");
     }
 
     @Override
     SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern createName() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern.INSTANCE;
+        return SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPattern.instance();
     }
 
     @Override

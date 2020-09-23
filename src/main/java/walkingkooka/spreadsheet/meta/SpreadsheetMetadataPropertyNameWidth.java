@@ -22,7 +22,9 @@ final class SpreadsheetMetadataPropertyNameWidth extends SpreadsheetMetadataProp
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameWidth INSTANCE = new SpreadsheetMetadataPropertyNameWidth();
+    final static SpreadsheetMetadataPropertyNameWidth instance() {
+        return new SpreadsheetMetadataPropertyNameWidth();
+    }
 
     /**
      * Private constructor use singleton.

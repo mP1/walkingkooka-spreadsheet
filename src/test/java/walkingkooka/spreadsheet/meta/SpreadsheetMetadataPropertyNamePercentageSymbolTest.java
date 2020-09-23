@@ -30,12 +30,12 @@ public final class SpreadsheetMetadataPropertyNamePercentageSymbolTest extends S
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNamePercentageSymbol.INSTANCE, "percentage-symbol");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNamePercentageSymbol.instance(), "percentage-symbol");
     }
 
     @Override
     SpreadsheetMetadataPropertyNamePercentageSymbol createName() {
-        return SpreadsheetMetadataPropertyNamePercentageSymbol.INSTANCE;
+        return SpreadsheetMetadataPropertyNamePercentageSymbol.instance();
     }
 
     // ClassTesting.....................................................................................................

@@ -24,12 +24,12 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPatternTe
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPattern.INSTANCE, "date-format-pattern");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPattern.instance(), "date-format-pattern");
     }
 
     @Override
     SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPattern createName() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPattern.INSTANCE;
+        return SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPattern.instance();
     }
 
     @Override

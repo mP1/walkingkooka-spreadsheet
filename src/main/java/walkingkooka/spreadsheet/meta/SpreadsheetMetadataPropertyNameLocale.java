@@ -25,7 +25,9 @@ final class SpreadsheetMetadataPropertyNameLocale extends SpreadsheetMetadataPro
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameLocale INSTANCE = new SpreadsheetMetadataPropertyNameLocale();
+    final static SpreadsheetMetadataPropertyNameLocale instance() {
+        return new SpreadsheetMetadataPropertyNameLocale();
+    }
 
     /**
      * Private constructor use singleton.
