@@ -17,11 +17,11 @@
 
 package walkingkooka.spreadsheet.format.parser;
 
-import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.BigDecimalParserToken;
@@ -525,7 +525,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
                                                          final Class<? extends SpreadsheetFormatLeafParserToken> tokenClass) {
         return Parsers.stringCharPredicate(CaseSensitivity.INSENSITIVE.charPredicate(c), 1, Integer.MAX_VALUE)
                 .transform((stringParserToken, context) -> factory.apply(((StringParserToken) stringParserToken).value(), stringParserToken.text()))
-                .setToString(tokenClass.getSimpleName());
+                .setToString(snakeCaseParserClassSimpleName(tokenClass));
     }
 
     /**
@@ -536,7 +536,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
                                                 final Class<? extends SpreadsheetFormatLeafParserToken> tokenClass) {
         return Parsers.character(CaseSensitivity.SENSITIVE.charPredicate(c))
                 .transform((characterParserToken, context) -> factory.apply(((CharacterParserToken) characterParserToken).value().toString(), characterParserToken.text()))
-                .setToString(tokenClass.getSimpleName());
+                .setToString(snakeCaseParserClassSimpleName(tokenClass));
     }
 
     private static Parser<ParserContext> symbol(final String text,
@@ -544,7 +544,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
                                                 final Class<? extends SpreadsheetFormatLeafParserToken> tokenClass) {
         return Parsers.string(text, CaseSensitivity.INSENSITIVE)
                 .transform((stringParserToken, context) -> factory.apply(((StringParserToken) stringParserToken).value(), stringParserToken.text()))
-                .setToString(tokenClass.getSimpleName());
+                .setToString(snakeCaseParserClassSimpleName(tokenClass));
     }
 
     private static Parser<ParserContext> escapeStarOrUnderline(final char initial,
@@ -552,7 +552,37 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
                                                                final Class<? extends SpreadsheetFormatLeafParserToken> tokenClass) {
         return Parsers.stringInitialAndPartCharPredicate(CharPredicates.is(initial), CharPredicates.always(), 1, 2)
                 .transform((stringParserToken, context) -> factory.apply(((StringParserToken) stringParserToken).value().charAt(1), stringParserToken.text()))
-                .setToString(tokenClass.getSimpleName());
+                .setToString(snakeCaseParserClassSimpleName(tokenClass));
+    }
+
+    /**
+     * Converts the type simple name into snake case dropping the <pre>SpreadsheetFormat</pre> and trailing <pre>Symbol</pre>
+     * and <pre>ParserToken</pre>
+     */
+    // VisibleForTesting.
+    static String snakeCaseParserClassSimpleName(final Class<?> type) {
+        String simpleName = CharSequences.subSequence(type.getSimpleName(),
+                "SpreadsheetFormat".length(),
+                -(ParserToken.class.getSimpleName().length()))
+                .toString();
+        if (simpleName.endsWith("Symbol")) {
+            simpleName = CharSequences.subSequence(simpleName, 0, -"Symbol".length()).toString();
+        }
+
+        // turn name into snake case.
+        final StringBuilder b = new StringBuilder();
+        int capitalCount = 0;
+
+        for (final char c : simpleName.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                capitalCount++;
+                if (capitalCount > 1) {
+                    b.append('_');
+                }
+            }
+            b.append(Character.toUpperCase(c));
+        }
+        return b.toString();
     }
 
     /**
