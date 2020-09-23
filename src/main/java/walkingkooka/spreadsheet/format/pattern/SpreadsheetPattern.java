@@ -271,8 +271,10 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
      * Parsers input that requires a single {@link SpreadsheetFormatParserToken token} followed by an optional separator and more tokens.
      */
     private static Parser<SpreadsheetFormatParserContext> parseParser(final Parser<ParserContext> parser) {
+        final Parser<ParserContext> expressionSeparator = SpreadsheetFormatParsers.expressionSeparator().cast();
+
         final Parser<ParserContext> optional = Parsers.sequenceParserBuilder()
-                .required(SpreadsheetFormatParsers.expressionSeparator().cast())
+                .required(expressionSeparator)
                 .required(parser)
                 .build()
                 .repeating();
@@ -280,6 +282,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
         return Parsers.sequenceParserBuilder()
                 .required(parser)
                 .optional(optional.repeating())
+                .optional(expressionSeparator)
                 .build()
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .cast();
