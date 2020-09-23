@@ -23,12 +23,12 @@ public final class SpreadsheetMetadataPropertyNameModifiedByTest extends Spreads
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameModifiedBy.INSTANCE, "modified-by");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameModifiedBy.instance(), "modified-by");
     }
 
     @Override
     SpreadsheetMetadataPropertyNameModifiedBy createName() {
-        return SpreadsheetMetadataPropertyNameModifiedBy.INSTANCE;
+        return SpreadsheetMetadataPropertyNameModifiedBy.instance();
     }
 
     // ClassTesting.....................................................................................................

@@ -26,7 +26,9 @@ final class SpreadsheetMetadataPropertyNameRoundingMode extends SpreadsheetMetad
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameRoundingMode INSTANCE = new SpreadsheetMetadataPropertyNameRoundingMode();
+    final static SpreadsheetMetadataPropertyNameRoundingMode instance() {
+        return new SpreadsheetMetadataPropertyNameRoundingMode();
+    }
 
     /**
      * Private constructor use singleton.

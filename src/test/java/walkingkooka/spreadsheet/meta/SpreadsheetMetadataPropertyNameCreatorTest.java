@@ -23,12 +23,12 @@ public final class SpreadsheetMetadataPropertyNameCreatorTest extends Spreadshee
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCreator.INSTANCE, "creator");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCreator.instance(), "creator");
     }
 
     @Override
     SpreadsheetMetadataPropertyNameCreator createName() {
-        return SpreadsheetMetadataPropertyNameCreator.INSTANCE;
+        return SpreadsheetMetadataPropertyNameCreator.instance();
     }
 
     // ClassTesting.....................................................................................................

@@ -31,12 +31,12 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatter
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatterns.INSTANCE, "date-time-parse-patterns");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatterns.instance(), "date-time-parse-patterns");
     }
 
     @Override
     SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatterns createName() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatterns.INSTANCE;
+        return SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatterns.instance();
     }
 
     @Override

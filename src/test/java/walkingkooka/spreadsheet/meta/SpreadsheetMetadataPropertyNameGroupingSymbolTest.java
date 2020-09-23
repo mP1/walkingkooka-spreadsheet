@@ -30,12 +30,12 @@ public final class SpreadsheetMetadataPropertyNameGroupingSymbolTest extends Spr
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameGroupingSymbol.INSTANCE, "grouping-separator");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameGroupingSymbol.instance(), "grouping-separator");
     }
 
     @Override
     SpreadsheetMetadataPropertyNameGroupingSymbol createName() {
-        return SpreadsheetMetadataPropertyNameGroupingSymbol.INSTANCE;
+        return SpreadsheetMetadataPropertyNameGroupingSymbol.instance();
     }
 
     // ClassTesting.....................................................................................................

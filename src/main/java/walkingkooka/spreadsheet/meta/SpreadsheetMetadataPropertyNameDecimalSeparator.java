@@ -24,7 +24,9 @@ final class SpreadsheetMetadataPropertyNameDecimalSeparator extends SpreadsheetM
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameDecimalSeparator INSTANCE = new SpreadsheetMetadataPropertyNameDecimalSeparator();
+    final static SpreadsheetMetadataPropertyNameDecimalSeparator instance() {
+        return new SpreadsheetMetadataPropertyNameDecimalSeparator();
+    }
 
     /**
      * Private constructor use singleton.

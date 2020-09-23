@@ -30,12 +30,12 @@ public final class SpreadsheetMetadataPropertyNameLocaleTest extends Spreadsheet
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameLocale.INSTANCE, "locale");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameLocale.instance(), "locale");
     }
 
     @Override
     SpreadsheetMetadataPropertyNameLocale createName() {
-        return SpreadsheetMetadataPropertyNameLocale.INSTANCE;
+        return SpreadsheetMetadataPropertyNameLocale.instance();
     }
 
     @Override

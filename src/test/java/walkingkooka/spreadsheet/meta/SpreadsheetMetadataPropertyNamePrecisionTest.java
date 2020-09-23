@@ -33,12 +33,12 @@ public final class SpreadsheetMetadataPropertyNamePrecisionTest extends Spreadsh
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNamePrecision.INSTANCE, "precision");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNamePrecision.instance(), "precision");
     }
 
     @Override
     SpreadsheetMetadataPropertyNamePrecision createName() {
-        return SpreadsheetMetadataPropertyNamePrecision.INSTANCE;
+        return SpreadsheetMetadataPropertyNamePrecision.instance();
     }
 
     // ClassTesting.....................................................................................................
