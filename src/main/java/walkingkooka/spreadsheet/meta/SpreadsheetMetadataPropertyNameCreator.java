@@ -24,7 +24,9 @@ final class SpreadsheetMetadataPropertyNameCreator extends SpreadsheetMetadataPr
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameCreator INSTANCE = new SpreadsheetMetadataPropertyNameCreator();
+    final static SpreadsheetMetadataPropertyNameCreator instance() {
+        return new SpreadsheetMetadataPropertyNameCreator();
+    }
 
     /**
      * Private constructor use singleton.

@@ -30,12 +30,12 @@ public final class SpreadsheetMetadataPropertyNameExponentSymbolTest extends Spr
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameExponentSymbol.INSTANCE, "exponent-symbol");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameExponentSymbol.instance(), "exponent-symbol");
     }
 
     @Override
     SpreadsheetMetadataPropertyNameExponentSymbol createName() {
-        return SpreadsheetMetadataPropertyNameExponentSymbol.INSTANCE;
+        return SpreadsheetMetadataPropertyNameExponentSymbol.instance();
     }
 
     // ClassTesting.....................................................................................................

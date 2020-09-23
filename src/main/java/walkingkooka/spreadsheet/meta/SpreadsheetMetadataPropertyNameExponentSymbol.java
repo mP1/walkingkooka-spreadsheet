@@ -24,7 +24,9 @@ final class SpreadsheetMetadataPropertyNameExponentSymbol extends SpreadsheetMet
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameExponentSymbol INSTANCE = new SpreadsheetMetadataPropertyNameExponentSymbol();
+    final static SpreadsheetMetadataPropertyNameExponentSymbol instance() {
+        return new SpreadsheetMetadataPropertyNameExponentSymbol();
+    }
 
     /**
      * Private constructor use singleton.

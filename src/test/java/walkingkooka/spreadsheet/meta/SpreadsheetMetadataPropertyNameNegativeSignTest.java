@@ -30,12 +30,12 @@ public final class SpreadsheetMetadataPropertyNameNegativeSignTest extends Sprea
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameNegativeSign.INSTANCE, "negative-sign");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameNegativeSign.instance(), "negative-sign");
     }
 
     @Override
     SpreadsheetMetadataPropertyNameNegativeSign createName() {
-        return SpreadsheetMetadataPropertyNameNegativeSign.INSTANCE;
+        return SpreadsheetMetadataPropertyNameNegativeSign.instance();
     }
 
     // ClassTesting.....................................................................................................

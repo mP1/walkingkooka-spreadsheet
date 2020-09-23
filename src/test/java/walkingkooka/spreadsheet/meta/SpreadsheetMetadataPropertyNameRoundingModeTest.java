@@ -37,12 +37,12 @@ public final class SpreadsheetMetadataPropertyNameRoundingModeTest extends Sprea
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameRoundingMode.INSTANCE, "rounding-mode");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameRoundingMode.instance(), "rounding-mode");
     }
 
     @Override
     SpreadsheetMetadataPropertyNameRoundingMode createName() {
-        return SpreadsheetMetadataPropertyNameRoundingMode.INSTANCE;
+        return SpreadsheetMetadataPropertyNameRoundingMode.instance();
     }
 
     @Override

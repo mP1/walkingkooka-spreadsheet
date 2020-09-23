@@ -33,12 +33,12 @@ public final class SpreadsheetMetadataPropertyNameWidthTest extends SpreadsheetM
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameWidth.INSTANCE, "width");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameWidth.instance(), "width");
     }
 
     @Override
     SpreadsheetMetadataPropertyNameWidth createName() {
-        return SpreadsheetMetadataPropertyNameWidth.INSTANCE;
+        return SpreadsheetMetadataPropertyNameWidth.instance();
     }
 
     // ClassTesting.....................................................................................................

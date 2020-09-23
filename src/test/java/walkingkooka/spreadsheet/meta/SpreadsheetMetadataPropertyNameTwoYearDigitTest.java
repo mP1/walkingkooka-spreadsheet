@@ -43,12 +43,12 @@ public final class SpreadsheetMetadataPropertyNameTwoYearDigitTest extends Sprea
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameTwoYearDigit.INSTANCE, "two-digit-year");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameTwoYearDigit.instance(), "two-digit-year");
     }
 
     @Override
     SpreadsheetMetadataPropertyNameTwoYearDigit createName() {
-        return SpreadsheetMetadataPropertyNameTwoYearDigit.INSTANCE;
+        return SpreadsheetMetadataPropertyNameTwoYearDigit.instance();
     }
 
     // ClassTesting.....................................................................................................

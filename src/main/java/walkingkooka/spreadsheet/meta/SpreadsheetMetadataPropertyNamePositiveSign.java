@@ -24,7 +24,9 @@ final class SpreadsheetMetadataPropertyNamePositiveSign extends SpreadsheetMetad
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNamePositiveSign INSTANCE = new SpreadsheetMetadataPropertyNamePositiveSign();
+    final static SpreadsheetMetadataPropertyNamePositiveSign instance() {
+        return new SpreadsheetMetadataPropertyNamePositiveSign();
+    }
 
     /**
      * Private constructor use singleton.

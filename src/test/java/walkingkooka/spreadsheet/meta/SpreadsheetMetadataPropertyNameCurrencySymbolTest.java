@@ -30,12 +30,12 @@ public final class SpreadsheetMetadataPropertyNameCurrencySymbolTest extends Spr
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCurrencySymbol.INSTANCE, "currency-symbol");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameCurrencySymbol.instance(), "currency-symbol");
     }
 
     @Override
     SpreadsheetMetadataPropertyNameCurrencySymbol createName() {
-        return SpreadsheetMetadataPropertyNameCurrencySymbol.INSTANCE;
+        return SpreadsheetMetadataPropertyNameCurrencySymbol.instance();
     }
 
     // ClassTesting.....................................................................................................

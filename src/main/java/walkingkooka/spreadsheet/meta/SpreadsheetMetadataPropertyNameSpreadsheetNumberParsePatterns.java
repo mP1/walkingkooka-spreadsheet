@@ -27,7 +27,9 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns extend
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns INSTANCE = new SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns();
+    final static SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns instance() {
+        return new SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns();
+    }
 
     /**
      * Private constructor use singleton.

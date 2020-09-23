@@ -37,12 +37,12 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetIdTest extends Spre
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetId.INSTANCE, "spreadsheet-id");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetId.instance(), "spreadsheet-id");
     }
 
     @Override
     SpreadsheetMetadataPropertyNameSpreadsheetId createName() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetId.INSTANCE;
+        return SpreadsheetMetadataPropertyNameSpreadsheetId.instance();
     }
 
     @Override
