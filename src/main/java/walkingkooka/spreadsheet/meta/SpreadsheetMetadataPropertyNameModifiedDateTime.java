@@ -24,7 +24,9 @@ final class SpreadsheetMetadataPropertyNameModifiedDateTime extends SpreadsheetM
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameModifiedDateTime INSTANCE = new SpreadsheetMetadataPropertyNameModifiedDateTime();
+    final static SpreadsheetMetadataPropertyNameModifiedDateTime instance() {
+        return new SpreadsheetMetadataPropertyNameModifiedDateTime();
+    }
 
     /**
      * Private constructor use singleton.

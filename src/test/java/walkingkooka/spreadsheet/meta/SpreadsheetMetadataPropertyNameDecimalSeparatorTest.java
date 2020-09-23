@@ -30,12 +30,12 @@ public final class SpreadsheetMetadataPropertyNameDecimalSeparatorTest extends S
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameDecimalSeparator.INSTANCE, "decimal-separator");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameDecimalSeparator.instance(), "decimal-separator");
     }
 
     @Override
     SpreadsheetMetadataPropertyNameDecimalSeparator createName() {
-        return SpreadsheetMetadataPropertyNameDecimalSeparator.INSTANCE;
+        return SpreadsheetMetadataPropertyNameDecimalSeparator.instance();
     }
 
     // ClassTesting.....................................................................................................

@@ -31,12 +31,12 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns.INSTANCE, "number-parse-patterns");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns.instance(), "number-parse-patterns");
     }
 
     @Override
     SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns createName() {
-        return SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns.INSTANCE;
+        return SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns.instance();
     }
 
     @Override

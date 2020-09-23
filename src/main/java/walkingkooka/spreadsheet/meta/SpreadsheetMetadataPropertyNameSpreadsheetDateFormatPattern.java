@@ -27,7 +27,9 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPattern extends 
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPattern INSTANCE = new SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPattern();
+    final static SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPattern instance() {
+        return new SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPattern();
+    }
 
     /**
      * Private constructor use singleton.

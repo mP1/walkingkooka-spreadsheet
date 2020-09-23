@@ -23,7 +23,9 @@ final class SpreadsheetMetadataPropertyNameCurrencySymbol extends SpreadsheetMet
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameCurrencySymbol INSTANCE = new SpreadsheetMetadataPropertyNameCurrencySymbol();
+    final static SpreadsheetMetadataPropertyNameCurrencySymbol instance() {
+        return new SpreadsheetMetadataPropertyNameCurrencySymbol();
+    }
 
     /**
      * Private constructor use singleton.

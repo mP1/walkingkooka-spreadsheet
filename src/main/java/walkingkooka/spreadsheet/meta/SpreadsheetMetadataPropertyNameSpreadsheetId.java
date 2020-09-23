@@ -28,7 +28,9 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetId extends SpreadsheetMeta
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameSpreadsheetId INSTANCE = new SpreadsheetMetadataPropertyNameSpreadsheetId();
+    final static SpreadsheetMetadataPropertyNameSpreadsheetId instance() {
+        return new SpreadsheetMetadataPropertyNameSpreadsheetId();
+    }
 
     /**
      * Private constructor use singleton.
