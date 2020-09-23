@@ -146,8 +146,22 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
     }
 
     @Test
+    public void testParseDateTrailingSeparator() {
+        this.parseAndCheck2("yyyymm;",
+                "200012",
+                LocalDateTime.of(2000, 12, 1, 0, 0, 0));
+    }
+
+    @Test
     public void testParseDateTimeMultiplePatterns() {
         this.parseAndCheck2("\"A\"ddmmyyyy hhmmss;\"B\"ddmmyyyy hhmmss",
+                "B31122000 115859",
+                LocalDateTime.of(2000, 12, 31, 11, 58, 59));
+    }
+
+    @Test
+    public void testParseDateTimeMultiplePatternsTrailingSeparator() {
+        this.parseAndCheck2("\"A\"ddmmyyyy hhmmss;\"B\"ddmmyyyy hhmmss;",
                 "B31122000 115859",
                 LocalDateTime.of(2000, 12, 31, 11, 58, 59));
     }

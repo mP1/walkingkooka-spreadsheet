@@ -140,8 +140,22 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     }
 
     @Test
+    public void testParsePatternTrailingSeparator() {
+        this.parseAndCheck2("hh;",
+                "11",
+                LocalTime.of(11, 0, 0));
+    }
+
+    @Test
     public void testParseHourMultiplePatterns() {
         this.parseAndCheck2("\"A\"hhmmss;\"B\"hhmmss",
+                "B115859",
+                LocalTime.of(11, 58, 59));
+    }
+
+    @Test
+    public void testParseHourMultiplePatternsTrailingSeparator() {
+        this.parseAndCheck2("\"A\"hhmmss;\"B\"hhmmss;",
                 "B115859",
                 LocalTime.of(11, 58, 59));
     }

@@ -149,6 +149,34 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
                 BigDecimal.valueOf(1.23));
     }
 
+    @Test
+    public void testParseNumberTrailingSeparator() {
+        this.parseAndCheck2("#.00;",
+                "1.23",
+                BigDecimal.valueOf(1.23));
+    }
+
+    @Test
+    public void testParseNumberFirstPattern() {
+        this.parseAndCheck2("0;0.0%",
+                "9",
+                BigDecimal.valueOf(9));
+    }
+
+    @Test
+    public void testParseNumberSecondPattern() {
+        this.parseAndCheck2("0.0;0$",
+                "9",
+                BigDecimal.valueOf(9 * 100));
+    }
+
+    @Test
+    public void testParseNumberSecondPatternTrailingSeparator() {
+        this.parseAndCheck2("$0.00;0.00;",
+                "1.23",
+                BigDecimal.valueOf(1.23));
+    }
+
     // helpers.........................................................................................................
 
     @Override
