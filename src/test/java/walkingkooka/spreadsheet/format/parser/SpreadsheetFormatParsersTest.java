@@ -37,6 +37,45 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserTestCase implements PublicStaticHelperTesting<SpreadsheetFormatParsers>,
         ParserTesting2<Parser<SpreadsheetFormatParserContext>, SpreadsheetFormatParserContext> {
 
+    // snakeCaseParserClassSimpleName...................................................................................
+
+    @Test
+    public void testSnakeCaseParserClassSimpleNameSpreadsheetFormatFractionSymbolParserToken() {
+        this.snakeCaseParserClassSimpleNameAndCheck(SpreadsheetFormatFractionSymbolParserToken.class, "FRACTION");
+    }
+
+    @Test
+    public void testSnakeCaseParserClassSimpleNameSpreadsheetFormatGreaterThanSymbolParserToken() {
+        this.snakeCaseParserClassSimpleNameAndCheck(SpreadsheetFormatGreaterThanSymbolParserToken.class, "GREATER_THAN");
+    }
+
+    @Test
+    public void testSnakeCaseParserClassSimpleNameSpreadsheetFormatGreaterThanEqualsSymbolParserToken() {
+        this.snakeCaseParserClassSimpleNameAndCheck(SpreadsheetFormatGreaterThanEqualsSymbolParserToken.class, "GREATER_THAN_EQUALS");
+    }
+
+    @Test
+    public void testSnakeCaseParserClassSimpleNameSpreadsheetFormatEscapeParserToken() {
+        this.snakeCaseParserClassSimpleNameAndCheck(SpreadsheetFormatEscapeParserToken.class, "ESCAPE");
+    }
+
+    @Test
+    public void testSnakeCaseParserClassSimpleNameSpreadsheetFormatStarParserToken() {
+        this.snakeCaseParserClassSimpleNameAndCheck(SpreadsheetFormatStarParserToken.class, "STAR");
+    }
+
+    @Test
+    public void testSnakeCaseParserClassSimpleNameSpreadsheetFormatUnderscoreParserToken() {
+        this.snakeCaseParserClassSimpleNameAndCheck(SpreadsheetFormatUnderscoreParserToken.class, "UNDERSCORE");
+    }
+
+    private void snakeCaseParserClassSimpleNameAndCheck(final Class<? extends SpreadsheetFormatParserToken> type,
+                                                        final String expected) {
+        assertEquals(expected,
+                SpreadsheetFormatParsers.snakeCaseParserClassSimpleName(type),
+                () -> "snakeCaseParserClassSimpleName " + type.getSimpleName());
+    }
+
     // color............................................................................................................
 
     @Test
