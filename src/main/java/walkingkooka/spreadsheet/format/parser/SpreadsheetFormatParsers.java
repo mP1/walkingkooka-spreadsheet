@@ -238,7 +238,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
      * Returns a {@link Parser} that given text returns a {@link SpreadsheetFormatParserToken}.
      */
     public static Parser<SpreadsheetFormatParserContext> expressionSeparator() {
-        return Cast.to(EXPRESSION_SEPARATOR_SYMBOL_PARSER);
+        return EXPRESSION_SEPARATOR_SYMBOL_PARSER.cast();
     }
 
     private static final Parser<ParserContext> EXPRESSION_SEPARATOR_SYMBOL_PARSER = symbol(';',
