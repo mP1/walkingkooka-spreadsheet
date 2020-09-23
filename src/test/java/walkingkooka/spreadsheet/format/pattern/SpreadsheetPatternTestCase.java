@@ -177,11 +177,6 @@ public abstract class SpreadsheetPatternTestCase<P extends SpreadsheetPattern<V>
         this.parseStringFails("\"unclosed quoted text inside patterns", IllegalArgumentException.class);
     }
 
-    @Test
-    public final void testParseStringHangingSeparatorFails() {
-        this.parseStringFails(this.patternText() + ";", IllegalArgumentException.class);
-    }
-
     // HashCodeEqualsDefined............................................................................................
 
     @Test
