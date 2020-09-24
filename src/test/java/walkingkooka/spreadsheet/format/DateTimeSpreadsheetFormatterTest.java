@@ -131,12 +131,12 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
 
     @Test
     public void testMonthMonthMonthDecember() {
-        this.parseFormatAndCheckMMM("2000-12-31T15:58:59.000", 12, "Dec!");
+        this.parseFormatAndCheckMMM("2000-12-31T15:58:59.000", 11, "Dec!");
     }
 
     @Test
     public void testMonthMonthMonthJanuary() {
-        this.parseFormatAndCheckMMM("1999-01-31T15:58:59.000", 1, "Jan!");
+        this.parseFormatAndCheckMMM("1999-01-31T15:58:59.000", 0, "Jan!");
     }
 
     private void parseFormatAndCheckMMM(final String date, final int monthNumber, final String monthName) {
@@ -154,12 +154,12 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
 
     @Test
     public void testMonthMonthMonthMonthDecember() {
-        this.parseFormatAndCheckMMMM("2000-12-31T15:58:59.000", 12, "December!");
+        this.parseFormatAndCheckMMMM("2000-12-31T15:58:59.000", 11, "December!");
     }
 
     @Test
     public void testMonthMonthMonthMonthJanuary() {
-        this.parseFormatAndCheckMMMM("1999-01-31T15:58:59.000", 1, "January!");
+        this.parseFormatAndCheckMMMM("1999-01-31T15:58:59.000", 0, "January!");
     }
 
     private void parseFormatAndCheckMMMM(final String dateTime, final int monthNumber, final String monthName) {
