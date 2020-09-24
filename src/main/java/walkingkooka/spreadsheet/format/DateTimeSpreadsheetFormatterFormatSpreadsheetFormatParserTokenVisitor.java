@@ -117,19 +117,20 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
 
     @Override
     protected void visit(final SpreadsheetFormatDayParserToken token) {
-        final int day = this.value.getDayOfMonth();
+        final LocalDateTime value = this.value;
+
         switch (token.text().length()) {
             case 1:
-                this.append(day);
+                this.append(value.getDayOfMonth());
                 break;
             case 2:
-                this.appendWithLeadingZero(day);
+                this.appendWithLeadingZero(value.getDayOfMonth());
                 break;
             case 3:
-                this.append(this.context.weekDayNameAbbreviation(day));
+                this.append(this.context.weekDayNameAbbreviation(value.getDayOfWeek().getValue()));
                 break;
             default:
-                this.append(this.context.weekDayName(day));
+                this.append(this.context.weekDayName(value.getDayOfWeek().getValue()));
                 break;
         }
         this.month = true;
