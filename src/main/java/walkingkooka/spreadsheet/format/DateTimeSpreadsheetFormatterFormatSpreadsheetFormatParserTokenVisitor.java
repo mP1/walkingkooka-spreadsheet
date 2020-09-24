@@ -187,13 +187,15 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
                 this.appendWithLeadingZero(month);
                 break;
             case 3:
-                this.append(this.context.monthNameAbbreviation(month));
+                this.append(this.context.monthNameAbbreviation(month - LOCALE_DATE_TIME_MONTH_BIAS));
                 break;
             default:
-                this.append(this.context.monthName(month));
+                this.append(this.context.monthName(month - LOCALE_DATE_TIME_MONTH_BIAS));
                 break;
         }
     }
+
+    private final int LOCALE_DATE_TIME_MONTH_BIAS = 1;
 
     private void visitMinute(final String pattern) {
         this.append(this.value.getMinute(),
