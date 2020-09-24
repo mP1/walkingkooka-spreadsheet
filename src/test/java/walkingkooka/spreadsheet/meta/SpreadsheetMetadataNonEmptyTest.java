@@ -675,8 +675,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                             this.monthNameAndCheck(context, 2, symbols.getMonths()[2]);
                             this.monthNameAbbreviationAndCheck(context, 3, symbols.getShortMonths()[3]);
                             this.twoDigitYearAndCheck(context, twoDigitYear);
-                            this.weekDayNameAndCheck(context, 1, symbols.getWeekdays()[1]);
-                            this.weekDayNameAbbreviationAndCheck(context, 3, symbols.getShortWeekdays()[3]);
+                            this.weekDayNameAndCheck(context, 1, symbols.getWeekdays()[2]);
+                            this.weekDayNameAbbreviationAndCheck(context, 3, symbols.getShortWeekdays()[4]);
 
                         }
                 );
