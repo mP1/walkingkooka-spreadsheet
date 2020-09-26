@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
 
 import java.util.Locale;
@@ -26,7 +27,8 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatter
 
     @Test
     public void testExtractLocaleValue() {
-        this.extractLocaleValueAndCheck(Locale.ENGLISH, null);
+        this.extractLocaleValueAndCheck(Locale.ENGLISH,
+                SpreadsheetDateParsePatterns.parseDateTimeParsePatterns("dddd, mmmm d, yyyy \\a\\t H:mm:ss AM/PM;dddd, mmmm d, yyyy \\a\\t H:mm:ss AM/PM;dddd, mmmm d, yyyy, H:mm:ss AM/PM;dddd, mmmm d, yyyy, H:mm AM/PM;mmmm d, yyyy \\a\\t H:mm:ss AM/PM;mmmm d, yyyy \\a\\t H:mm:ss AM/PM;mmmm d, yyyy, H:mm:ss AM/PM;mmmm d, yyyy, H:mm AM/PM;mmm d, yyyy, H:mm:ss AM/PM;mmm d, yyyy, H:mm:ss AM/PM;mmm d, yyyy, H:mm:ss AM/PM;mmm d, yyyy, H:mm AM/PM;m/d/yy, H:mm:ss AM/PM;m/d/yy, H:mm:ss AM/PM;m/d/yy, H:mm:ss AM/PM;m/d/yy, H:mm AM/PM"));
     }
 
     @Test
