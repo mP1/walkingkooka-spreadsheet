@@ -18,17 +18,73 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
+import walkingkooka.convert.ConverterContext;
+import walkingkooka.convert.ConverterContexts;
+import walkingkooka.convert.FakeConverter;
+import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberFormatPattern;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Locale;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPatternTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern, SpreadsheetNumberFormatPattern> {
 
     @Test
     public void testExtractLocaleValue() {
-        this.extractLocaleValueAndCheck(Locale.ENGLISH, null);
+        this.extractLocaleValueAndCheck(BigDecimal.valueOf(1.25), "1.25");
     }
 
+    @Test
+    public void testExtractLocaleValueInteger() {
+        this.extractLocaleValueAndCheck(BigDecimal.valueOf(789), "789.");
+    }
+
+    private void extractLocaleValueAndCheck(final BigDecimal number,
+                                            final String expected) {
+        final Locale locale = Locale.ENGLISH;
+        final SpreadsheetNumberFormatPattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern.instance()
+                .extractLocaleValue(locale)
+                .get();
+
+        final String formatted = pattern.formatter()
+                .format(number, spreadsheetFormatterContext()).get().text();
+
+        assertEquals(expected, formatted, () -> pattern.toString());
+    }
+
+    private SpreadsheetFormatterContext spreadsheetFormatterContext() {
+        return SpreadsheetFormatterContexts.basic((n -> {
+                    throw new UnsupportedOperationException();
+                }),
+                (n -> {
+                    throw new UnsupportedOperationException();
+                }),
+                1,
+                new FakeConverter() {
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value, final Class<T> type, final ConverterContext context) {
+                        return Either.left(type.cast(value));
+                    }
+
+                    @Override
+                    public <T> T convertOrFail(final Object value, final Class<T> target, final ConverterContext context) {
+                        return target.cast(value);
+                    }
+                },
+                SpreadsheetFormatters.fake(),
+                ConverterContexts.basic(DateTimeContexts.locale(Locale.ENGLISH, 20), DecimalNumberContexts.american(MathContext.DECIMAL32))
+        );
+    }
+    
     @Test
     public void testToString() {
         this.toStringAndCheck(SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern.instance(), "number-format-pattern");
