@@ -22,6 +22,7 @@ import walkingkooka.Either;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -138,21 +139,33 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
     public void testFormatterFormat() {
         this.formatAndCheck(this.createPattern("hh mm ss \"abc\"").formatter(),
                 LocalTime.of(12, 58, 59),
-                new FakeSpreadsheetFormatterContext() {
-
-                    @Override
-                    public boolean canConvert(final Object value,
-                                              final Class<?> target) {
-                        return Converters.localTimeLocalDateTime().canConvert(value, target, ConverterContexts.fake());
-                    }
-
-                    @Override
-                    public <T> Either<T, String> convert(final Object value,
-                                                         final Class<T> target) {
-                        return Converters.localTimeLocalDateTime().convert(value, target, ConverterContexts.fake());
-                    }
-                },
+                this.context(),
                 "12 58 59 abc");
+    }
+
+    @Test
+    public void testFormatterFormatComma() {
+        this.formatAndCheck(this.createPattern("hh,mm,ss").formatter(),
+                LocalTime.of(12, 58, 59),
+                this.context(),
+                "12,58,59");
+    }
+
+    private SpreadsheetFormatterContext context() {
+        return new FakeSpreadsheetFormatterContext() {
+
+            @Override
+            public boolean canConvert(final Object value,
+                                      final Class<?> target) {
+                return Converters.localTimeLocalDateTime().canConvert(value, target, ConverterContexts.fake());
+            }
+
+            @Override
+            public <T> Either<T, String> convert(final Object value,
+                                                 final Class<T> target) {
+                return Converters.localTimeLocalDateTime().convert(value, target, ConverterContexts.fake());
+            }
+        };
     }
 
     // ClassTesting.....................................................................................................

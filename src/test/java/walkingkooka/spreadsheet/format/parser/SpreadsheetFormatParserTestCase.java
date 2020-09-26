@@ -258,6 +258,10 @@ public abstract class SpreadsheetFormatParserTestCase {
         return textLiteral(':');
     }
 
+    static SpreadsheetFormatParserToken textLiteralComma() {
+        return textLiteral(',');
+    }
+
     static SpreadsheetFormatParserToken textLiteralDollar() {
         return textLiteral('$');
     }
