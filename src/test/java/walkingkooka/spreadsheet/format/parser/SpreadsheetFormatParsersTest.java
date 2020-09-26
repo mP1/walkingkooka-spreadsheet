@@ -374,11 +374,6 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testDateTextThousandsFails() {
-        this.dateParseThrows(thousands());
-    }
-
-    @Test
     public void testDateHourFails() {
         this.dateParseThrows(hour());
     }
@@ -486,6 +481,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testDateYearMonthDay() {
         this.dateParseAndCheck(year(), monthOrMinute(), day());
+    }
+
+    @Test
+    public void testDateYearCommaMonthCommaDay() {
+        this.dateParseAndCheck(year(), textLiteralComma(), monthOrMinute(), textLiteralComma(), day());
     }
 
     // escaped
@@ -2779,11 +2779,6 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     }
 
     @Test
-    public void testTimeTextThousandsFails() {
-        this.timeParseThrows(thousands());
-    }
-
-    @Test
     public void testTimeDayFails() {
         this.timeParseThrows(day());
     }
@@ -2911,6 +2906,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testTimeSecondMinuteHour() {
         this.timeParseAndCheck(second(), monthOrMinute(), hour());
+    }
+
+    @Test
+    public void testTimeSecondCommaMinuteCommaHour() {
+        this.timeParseAndCheck(second(), textLiteralComma(), monthOrMinute(), textLiteralComma(), hour());
     }
 
     // escaped
@@ -3541,6 +3541,11 @@ public final class SpreadsheetFormatParsersTest extends SpreadsheetFormatParserT
     @Test
     public void testDateTimeDayColor() {
         this.dateTimeParseAndCheck(day(), color());
+    }
+
+    @Test
+    public void testDateTimeDayCommaMonthCommaYear() {
+        this.dateTimeParseAndCheck(day(), textLiteralComma(), monthOrMinute(), textLiteralComma(), year());
     }
 
     // condition

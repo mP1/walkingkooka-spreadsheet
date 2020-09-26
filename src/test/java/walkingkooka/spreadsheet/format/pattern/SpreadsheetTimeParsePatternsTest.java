@@ -160,6 +160,13 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
                 LocalTime.of(11, 58, 59));
     }
 
+    @Test
+    public void testParseHourComma() {
+        this.parseAndCheck2("hh,mm,ss;",
+                "11,58,59",
+                LocalTime.of(11, 58, 59));
+    }
+
     // converter........................................................................................................
 
     @Test

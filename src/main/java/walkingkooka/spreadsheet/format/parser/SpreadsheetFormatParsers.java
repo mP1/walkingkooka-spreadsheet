@@ -459,7 +459,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
     private static final Parser<ParserContext> NUMBER_LITERAL = literal("(): +-", NUMBER_LITERAL_IDENTIFIER);
 
     private static final EbnfIdentifierName DATETIME_TEXT_LITERAL_IDENTIFIER = EbnfIdentifierName.with("DATETIME_TEXT_LITERAL");
-    private static final Parser<ParserContext> DATETIME_TEXT_LITERAL = literal("$-+(): /+-", DATETIME_TEXT_LITERAL_IDENTIFIER);
+    private static final Parser<ParserContext> DATETIME_TEXT_LITERAL = literal("$-+(): /+-,", DATETIME_TEXT_LITERAL_IDENTIFIER);
 
     // helpers..............................................................................................................
 
