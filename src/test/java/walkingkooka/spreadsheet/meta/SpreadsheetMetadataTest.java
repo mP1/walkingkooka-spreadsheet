@@ -114,6 +114,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, ',')
                         .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                         .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, '-')
+                        .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("#,##0.###"))
+                        .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERNS, SpreadsheetPattern.parseNumberParsePatterns("#,##0.###;#,##0"))
                         .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, '%')
                         .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, '+')
                         .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetPattern.parseTimeFormatPattern("H:mm:ss AM/PM"))

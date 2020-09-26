@@ -43,6 +43,8 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.math.RoundingMode;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -359,6 +361,15 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
         final String shortPattern = pattern.apply(DateFormat.SHORT, locale).trim();
 
         return Optional.of(parser.apply(full + ";" + longPattern + ";" + medium + ";" + shortPattern));
+    }
+
+    /**
+     * This makes an assumption that a {@link DecimalFormat} pattern will only use characters that are also equal in
+     * functionality and meaning within a spreadsheet number format.
+     */
+    static String decimalFormatPattern(final NumberFormat numberFormat) {
+        final DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
+        return decimalFormat.toPattern();
     }
 
     // SpreadsheetMetadataVisitor.......................................................................................
