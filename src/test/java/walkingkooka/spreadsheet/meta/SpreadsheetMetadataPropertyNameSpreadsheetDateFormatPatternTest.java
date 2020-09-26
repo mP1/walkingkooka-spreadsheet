@@ -18,9 +18,85 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
+import walkingkooka.color.Color;
+import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContext;
+import walkingkooka.convert.ConverterContexts;
+import walkingkooka.convert.Converters;
+import walkingkooka.convert.FakeConverter;
+import walkingkooka.convert.FakeConverterContext;
+import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetColorName;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
 
+import javax.swing.text.html.parser.DTDConstants;
+import java.math.MathContext;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.function.Function;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public final class SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPatternTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPattern, SpreadsheetDateFormatPattern> {
+
+    @Test
+    public void testExtractLocaleValue() {
+        final Locale locale = Locale.ENGLISH;
+        final SpreadsheetDateFormatPattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPattern.instance()
+                .extractLocaleValue(locale)
+                .get();
+
+        final LocalDate date = LocalDate.of(1999, 12, 31);
+        final String formatted = pattern.formatter()
+                .format(date, spreadsheetFormatterContext()).get().text();
+
+        final SimpleDateFormat simpleDateFormat = (SimpleDateFormat)DateFormat.getDateInstance(DateFormat.FULL, locale);
+        final String expected = simpleDateFormat.format(Date.from(date.atStartOfDay().toInstant(ZoneOffset.UTC)));
+
+        assertEquals(expected, formatted, () -> pattern + "\nSimpleDateFormat: " + simpleDateFormat.toPattern());
+    }
+
+    private SpreadsheetFormatterContext spreadsheetFormatterContext() {
+        return SpreadsheetFormatterContexts.basic((n-> {throw new UnsupportedOperationException();}),
+        (n-> {throw new UnsupportedOperationException();}),
+        1,
+                new FakeConverter(){
+
+                    @Override
+                    public <T> Either<T, String> convert(final Object value, final Class<T> type, final ConverterContext context) {
+                        final LocalDate date = (LocalDate)value;
+                        return Either.left(type.cast(LocalDateTime.of(date, LocalTime.MIDNIGHT)));
+                    }
+
+                    @Override
+                    public <T> T convertOrFail(Object value, Class<T> target, ConverterContext context) {
+                        final LocalDate date = (LocalDate)value;
+                        return target.cast(LocalDateTime.of(date, LocalTime.MIDNIGHT));
+                    }
+                },
+                SpreadsheetFormatters.fake(),
+                ConverterContexts.basic(DateTimeContexts.locale(Locale.ENGLISH, 20), DecimalNumberContexts.american(MathContext.DECIMAL32))
+        );
+    }
 
     @Test
     public void testToString() {

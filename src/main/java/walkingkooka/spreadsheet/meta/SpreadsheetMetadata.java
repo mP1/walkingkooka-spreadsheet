@@ -420,13 +420,15 @@ public abstract class SpreadsheetMetadata implements HasConverter,
     /**
      * Assumes a {@link Locale} has been set, failing if one is absent, and proceeds to set numerous properties with defaults,
      * note that existing values will be overwritten.
+     * Date, DateTime and Time defaults are loaded from {@link java.text.DateFormat} using the provided locale, formats pick the FULL style,
+     * while parse patterns will include all patterns with all styles.
      */
     public final SpreadsheetMetadata loadFromLocale() {
         final Locale locale = this.getOrFail(SpreadsheetMetadataPropertyName.LOCALE);
 
         SpreadsheetMetadata updated = this;
 
-        for(final SpreadsheetMetadataPropertyName<?> propertyName : SpreadsheetMetadataPropertyName.CONSTANTS.values()) {
+        for (final SpreadsheetMetadataPropertyName<?> propertyName : SpreadsheetMetadataPropertyName.CONSTANTS.values()) {
             final Optional<?> localeValue = propertyName.extractLocaleValue(locale);
             if (localeValue.isPresent()) {
                 updated = updated.set(propertyName, Cast.to(localeValue.get()));
