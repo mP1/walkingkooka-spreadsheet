@@ -166,6 +166,13 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
                 LocalDateTime.of(2000, 12, 31, 11, 58, 59));
     }
 
+    @Test
+    public void testParseDateTimeCommas() {
+        this.parseAndCheck2("dd,mm,yyyy,hh,mm,ss",
+                "31,12,2000,11,58,59",
+                LocalDateTime.of(2000, 12, 31, 11, 58, 59));
+    }
+
     // converter........................................................................................................
 
     @Test

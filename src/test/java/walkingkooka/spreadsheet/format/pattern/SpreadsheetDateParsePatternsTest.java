@@ -196,6 +196,13 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
                 LocalDate.of(2000, 12, 31));
     }
 
+    @Test
+    public void testParseDateShortMonthCommas() {
+        this.parseAndCheck2("dd,mmm,yyyy",
+                "31,Dec,2000",
+                LocalDate.of(2000, 12, 31));
+    }
+
     // converter........................................................................................................
 
     @Test
