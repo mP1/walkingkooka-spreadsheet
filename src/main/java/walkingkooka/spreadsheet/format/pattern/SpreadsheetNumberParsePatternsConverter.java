@@ -28,6 +28,7 @@ import walkingkooka.text.cursor.TextCursors;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * The {@link Converter} that handles each pattern returned by {@link SpreadsheetNumberParsePatterns#converter()}
@@ -66,11 +67,24 @@ final class SpreadsheetNumberParsePatternsConverter implements Converter {
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> type,
                                          final ConverterContext context) {
+        Objects.requireNonNull(value, "value");
+        Objects.requireNonNull(type, "type");
+        Objects.requireNonNull(context, "context");
+
+        return value instanceof String ?
+                this.convertString((String) value, type, context) :
+                this.failConversion(value, type);
+    }
+
+    private <T> Either<T, String> convertString(final String value,
+                                                final Class<T> type,
+                                                final ConverterContext context) {
         Either<T, String> result = null;
 
-        final TextCursor cursor = TextCursors.charSequence((String) value);
+        final TextCursor cursor = TextCursors.charSequence(value);
         final TextCursorSavePoint save = cursor.save();
 
+        // try all patterns until success or return failure.
         for (List<SpreadsheetNumberParsePatternsComponent> pattern : this.pattern.patterns) {
             final SpreadsheetNumberParsePatternsContext patternsContext = SpreadsheetNumberParsePatternsContext.with(pattern.iterator(), context);
             patternsContext.nextComponent(cursor);
