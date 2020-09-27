@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatLessThanParserTok
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNotEqualsParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatSeparatorSymbolParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
 
@@ -45,8 +46,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * This visitor is used exclusively by {@link ExpressionSpreadsheetFormatter} to create formatters for all individual formatters
- * in an expressioned.
+ * A {@link SpreadsheetFormatParserTokenVisitor} that is used exclusively by {@link ExpressionSpreadsheetFormatter} to
+ * create the compoennt formatters with an encompassing expression.
  */
 final class ExpressionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor {
 

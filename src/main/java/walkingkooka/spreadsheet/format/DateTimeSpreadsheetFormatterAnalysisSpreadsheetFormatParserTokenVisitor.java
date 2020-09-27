@@ -21,10 +21,11 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatAmPmParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitZeroParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 
 /**
- * A {@link SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor} which sets some properties recording whether the time is
- * an AMPM formatted time and the number of millisecond decimals.
+ * A {@link SpreadsheetFormatParserTokenVisitor} which tests if a date time tokens are 12/24 hour and also counts the
+ * number of millisecond decimal places.
  */
 final class DateTimeSpreadsheetFormatterAnalysisSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor {
 
