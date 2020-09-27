@@ -167,6 +167,13 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
                 LocalTime.of(11, 58, 59));
     }
 
+    @Test
+    public void testParseHourBackslashEscaped() {
+        this.parseAndCheck2("hh\\hmm\\mss\\s",
+                "11h58m59s",
+                LocalTime.of(11, 58, 59));
+    }
+
     // converter........................................................................................................
 
     @Test

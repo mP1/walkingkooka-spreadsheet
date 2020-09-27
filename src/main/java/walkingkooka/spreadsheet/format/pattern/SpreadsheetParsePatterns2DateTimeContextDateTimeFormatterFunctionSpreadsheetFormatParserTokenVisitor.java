@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.Value;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatAmPmParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDayParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEscapeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatHourParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMonthOrMinuteParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -121,6 +122,11 @@ final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpr
                 2);
 
         this.month = true;
+    }
+
+    @Override
+    protected void visit(final SpreadsheetFormatEscapeParserToken token) {
+        this.literal(token.value());
     }
 
     @Override
@@ -241,6 +247,10 @@ final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpr
 
     private void literal(final Value<String> value) {
         this.literal(value.value()); // text may have quotes etc.
+    }
+
+    private void literal(final char c) {
+        this.builder.appendLiteral(c);
     }
 
     private void literal(final String text) {

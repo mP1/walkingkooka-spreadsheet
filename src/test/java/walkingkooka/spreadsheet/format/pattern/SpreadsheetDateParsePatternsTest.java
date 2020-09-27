@@ -203,6 +203,13 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
                 LocalDate.of(2000, 12, 31));
     }
 
+    @Test
+    public void testParseDateBackslashEscaped() {
+        this.parseAndCheck2("dd\\dmmm\\myyyy\\y",
+                "31dDecm2000y",
+                LocalDate.of(2000, 12, 31));
+    }
+
     // converter........................................................................................................
 
     @Test
