@@ -48,6 +48,10 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatYearParserToken;
 import walkingkooka.visit.Visiting;
 
+/**
+ * A {@link SpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitor} that validates a text tokens within a pattern
+ * fails when invalid tokens for number format are encountered.
+ */
 final class SpreadsheetTextFormatPatternSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitor {
 
     static SpreadsheetTextFormatPatternSpreadsheetFormatParserTokenVisitor with() {
