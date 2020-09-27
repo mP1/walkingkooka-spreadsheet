@@ -18,9 +18,11 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
+import walkingkooka.text.cursor.parser.Parser;
 
 /**
- * A {@link SpreadsheetFormatParserTokenVisitor} sub classed and used by {@link SpreadsheetFormatter3}.
+ * A {@link SpreadsheetFormatParserTokenVisitor} that assembles a {@link SpreadsheetFormatter} using the individual
+ * {@link walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken tokens}.
  */
 abstract class SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 

@@ -26,6 +26,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitZeroParserTo
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEscapeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExponentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatPercentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatQuotedTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextLiteralParserToken;
@@ -35,7 +36,9 @@ import walkingkooka.visit.Visiting;
 import java.util.List;
 
 /**
- * Counts the number of pattern tokens for integerDigitSymbolCount, fractionDigitSymbolCount, thousands, and percentage symbols.
+ * A {@link SpreadsheetFormatParserTokenVisitor} that assembles a {@link SpreadsheetFormatter} that handles numbers.
+ * Most of this is achieved by counting parser tokens for integerDigitSymbolCount, fractionDigitSymbolCount, thousands,
+ * and percentage symbols.
  */
 final class NumberSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor {
 
