@@ -20,9 +20,6 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.Locale;
 import java.util.Optional;
 
