@@ -27,8 +27,8 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextPlaceholderPa
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatUnderscoreParserToken;
 
 /**
- * This visitor is used exclusively by {@link SpreadsheetFormatter#format(Object, SpreadsheetFormatterContext)}.
- * Only some methods in {@link SpreadsheetFormatParserTokenVisitor} are overridden, all other tokens will be ignored.
+ * A {@link SpreadsheetFormatParserTokenVisitor} is used exclusively by {@link SpreadsheetFormatter#format(Object, SpreadsheetFormatterContext)}
+ * to assemble a {@link SpreadsheetFormatter} that handles formatting text, all other tokens are ignored.
  */
 final class TextSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor {
 
