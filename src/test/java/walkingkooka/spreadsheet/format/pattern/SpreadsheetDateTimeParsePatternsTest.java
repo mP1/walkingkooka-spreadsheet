@@ -29,6 +29,7 @@ import walkingkooka.text.cursor.parser.ParserTokens;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -170,6 +171,13 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
     public void testParseDateTimeCommas() {
         this.parseAndCheck2("dd,mm,yyyy,hh,mm,ss",
                 "31,12,2000,11,58,59",
+                LocalDateTime.of(2000, 12, 31, 11, 58, 59));
+    }
+
+    @Test
+    public void testParseDateBackslashEscaped() {
+        this.parseAndCheck2("dd\\dmmm\\myyyy\\yhh\\hmm\\mss\\s",
+                "31dDecm2000y11h58m59s",
                 LocalDateTime.of(2000, 12, 31, 11, 58, 59));
     }
 
