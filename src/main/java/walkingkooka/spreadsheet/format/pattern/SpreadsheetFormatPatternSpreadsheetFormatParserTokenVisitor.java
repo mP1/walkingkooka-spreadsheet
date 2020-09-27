@@ -22,8 +22,8 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 
 /**
- * A base {@link SpreadsheetFormatParserTokenVisitor} for all {@link SpreadsheetFormatPattern} basically calling {@link #failInvalid(SpreadsheetFormatParserToken)}
- * when an invalid token is included such as HOURS within a DATE.
+ * A {@link SpreadsheetFormatParserTokenVisitor} for all {@link SpreadsheetFormatPattern} that is used to validate a pattern
+ * includes only supported tokens. Each sub class will call {@link #failInvalid(SpreadsheetFormatParserToken)} for invalid tokens.
  */
 abstract class SpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitor extends SpreadsheetPatternSpreadsheetFormatParserTokenVisitor {
 

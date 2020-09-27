@@ -31,6 +31,10 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatThousandsParserTo
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatYearParserToken;
 import walkingkooka.visit.Visiting;
 
+/**
+ * A {@link SpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitor} that validates a time tokens within a pattern
+ * fails when invalid tokens for number format are encountered.
+ */
 final class SpreadsheetTimeFormatPatternSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatPatternSpreadsheetFormatParserTokenVisitor {
 
     static SpreadsheetTimeFormatPatternSpreadsheetFormatParserTokenVisitor with() {
