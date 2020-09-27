@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitZeroParserTo
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEscapeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatFractionSymbolParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatPercentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatQuotedTextParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextLiteralParserToken;
@@ -34,7 +35,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Counts the number of pattern tokens for digits and percentage symbols and other components.
+ * A {@link SpreadsheetFormatParserTokenVisitor} that assembles a {@link SpreadsheetFormatter}. Much of the work is done
+ * by counting the number of pattern tokens for digits and percentage symbols and other components.
  */
 final class FractionSpreadsheetFormatterSpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatter3SpreadsheetFormatParserTokenVisitor {
 
