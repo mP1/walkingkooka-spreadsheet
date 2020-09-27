@@ -20,9 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import org.junit.jupiter.api.Test;
 import walkingkooka.datetime.SimpleDateFormatPatternVisitor;
 import walkingkooka.datetime.SimpleDateFormatPatternVisitorTesting;
-import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.visit.VisitorTesting;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

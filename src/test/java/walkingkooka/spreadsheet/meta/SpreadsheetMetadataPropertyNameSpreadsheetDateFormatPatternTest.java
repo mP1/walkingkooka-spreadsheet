@@ -19,26 +19,16 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
-import walkingkooka.color.Color;
-import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
-import walkingkooka.convert.Converters;
 import walkingkooka.convert.FakeConverter;
-import walkingkooka.convert.FakeConverterContext;
-import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetColorName;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
 
-import javax.swing.text.html.parser.DTDConstants;
 import java.math.MathContext;
 import java.sql.Date;
 import java.text.DateFormat;
@@ -46,13 +36,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.Locale;
-import java.util.Optional;
-import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
