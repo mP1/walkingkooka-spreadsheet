@@ -23,6 +23,7 @@ import walkingkooka.color.Color;
 import walkingkooka.naming.Name;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
@@ -185,6 +186,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheet-id {@link SpreadsheetId}</code>
      */
     public final static SpreadsheetMetadataPropertyName<SpreadsheetId> SPREADSHEET_ID = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetId.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheet-name {@link SpreadsheetName}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetName> SPREADSHEET_NAME = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetName.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>text-format-pattern {@link SpreadsheetFormatPattern}</code>
