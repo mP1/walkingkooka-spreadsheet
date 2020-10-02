@@ -57,6 +57,7 @@ import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -573,5 +574,16 @@ public abstract class SpreadsheetMetadata implements HasConverter,
                 SpreadsheetMetadata.class,
                 SpreadsheetMetadataNonEmpty.class,
                 SpreadsheetMetadataEmpty.class);
+    }
+
+    /**
+     * A {@link SpreadsheetMetadata} loaded with defaults that are not {@link Locale} aware.
+     */
+    public final static SpreadsheetMetadata NON_LOCALE_DEFAULTS = nonLocaleDefaults();
+
+    private static SpreadsheetMetadata nonLocaleDefaults() {
+        EMPTY.id(); // force JsonNodeContext registering of collaborating types.
+        return JsonNodeUnmarshallContexts.basic()
+                .unmarshall(JsonNode.parse(new SpreadsheetMetadataDefaultTextResourceProvider().text()), SpreadsheetMetadata.class);
     }
 }
