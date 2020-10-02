@@ -49,6 +49,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExpressionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
@@ -77,6 +78,11 @@ import java.util.stream.Collectors;
 // copied from Sample
 @J2clTestInput(JunitTest.class)
 public class JunitTest {
+
+    @Test
+    public void testMetadataNonLocaleDefaults() {
+        Assert.assertNotEquals(null, SpreadsheetMetadata.NON_LOCALE_DEFAULTS);
+    }
 
     @Test
     public void testWithCellReference() {
