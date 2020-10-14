@@ -18,13 +18,26 @@
 package walkingkooka.spreadsheet.engine;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
+import java.util.List;
 import java.util.Set;
 
-public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaNonWindowedTestCase<SpreadsheetDeltaNonWindowed> {
+public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestCase2<SpreadsheetDeltaNonWindowed> {
+
+    @Test
+    public void testSetDifferentCells() {
+        final SpreadsheetDeltaNonWindowed delta = this.createSpreadsheetDelta();
+        final Set<SpreadsheetCell> cells = this.cells0("B2", "C3");
+        final SpreadsheetDelta different = delta.setCells(cells);
+        this.checkCells(different, cells);
+
+        this.checkCells(delta);
+    }
 
     @Test
     public void testEqualsSpreadsheetDeltaWindowed() {
@@ -77,6 +90,11 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaNonWi
     @Override
     SpreadsheetDeltaNonWindowed createSpreadsheetDelta(final Set<SpreadsheetCell> cells) {
         return SpreadsheetDeltaNonWindowed.withNonWindowed(cells);
+    }
+
+    @Override
+    final List<SpreadsheetRange> window() {
+        return Lists.empty();
     }
 
     @Override
