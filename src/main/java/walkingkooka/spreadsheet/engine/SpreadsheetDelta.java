@@ -190,8 +190,10 @@ public abstract class SpreadsheetDelta {
     private final static String CELLS_PROPERTY_STRING = "cells";
     private final static String WINDOW_PROPERTY_STRING = "window";
 
+    // @VisibleForTesting
     final static JsonPropertyName CELLS_PROPERTY = JsonPropertyName.with(CELLS_PROPERTY_STRING);
-    private final static JsonPropertyName WINDOW_PROPERTY = JsonPropertyName.with(WINDOW_PROPERTY_STRING);
+    // @VisibleForTesting
+    final static JsonPropertyName WINDOW_PROPERTY = JsonPropertyName.with(WINDOW_PROPERTY_STRING);
 
     static {
         JsonNodeContext.register("spreadsheet-delta",
