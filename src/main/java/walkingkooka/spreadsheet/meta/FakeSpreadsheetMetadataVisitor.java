@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
+import walkingkooka.tree.text.FontFamilyName;
 import walkingkooka.tree.text.FontSize;
 import walkingkooka.visit.Visiting;
 
@@ -111,6 +112,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitDefaultColumnWidth(final int defaultColumnWidth) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitDefaultFontFamilyName(final FontFamilyName defaultFontFamilyName) {
         throw new UnsupportedOperationException();
     }
 
