@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.text.FontFamilyName;
 import walkingkooka.tree.text.FontSize;
 
 import java.time.LocalDateTime;
@@ -106,6 +107,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertNotEquals(SpreadsheetMetadata.EMPTY, nonLocaleDefaults);
         assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DATETIME_OFFSET));
         assertEquals(Optional.of(15), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DEFAULT_COLUMN_WIDTH));
+        assertEquals(Optional.of(FontFamilyName.with("MS Sans Serif")), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DEFAULT_FONT_FAMILY_NAME));
         assertEquals(Optional.of(FontSize.with(11)), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DEFAULT_FONT_SIZE));
         assertEquals(Optional.of(60), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DEFAULT_ROW_HEIGHT));
         assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.PRECISION));

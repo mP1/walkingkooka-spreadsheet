@@ -47,6 +47,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.text.FontFamilyName;
 import walkingkooka.tree.text.FontSize;
 
 import java.math.BigDecimal;
@@ -1095,6 +1096,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetPattern.parseDateTimeParsePatterns("DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM"));
         properties.put(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, 'D');
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_COLUMN_WIDTH, 60);
+        properties.put(SpreadsheetMetadataPropertyName.DEFAULT_FONT_FAMILY_NAME, FontFamilyName.with("MS Sans Serif"));
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_FONT_SIZE, FontSize.with(11));
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_ROW_HEIGHT, 15);
         properties.put(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E");
