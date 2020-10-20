@@ -129,6 +129,14 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitDefaultColumnWidth(final int defaultColumnWidth) {
+        // nop
+    }
+
+    protected void visitDefaultRowHeight(final int defaultRowHeight) {
+        // nop
+    }
+
     protected void visitExponentSymbol(final String exponentSymbol) {
         // nop
     }

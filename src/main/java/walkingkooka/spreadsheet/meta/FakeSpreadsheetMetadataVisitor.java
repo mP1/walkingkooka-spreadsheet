@@ -109,6 +109,16 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitDefaultColumnWidth(final int defaultColumnWidth) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitDefaultRowHeight(final int defaultRowHeight) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitExponentSymbol(final String exponentSymbol) {
         throw new UnsupportedOperationException();
     }

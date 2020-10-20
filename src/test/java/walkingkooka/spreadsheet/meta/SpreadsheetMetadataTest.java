@@ -104,6 +104,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
         assertNotEquals(SpreadsheetMetadata.EMPTY, nonLocaleDefaults);
         assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DATETIME_OFFSET));
+        assertEquals(Optional.of(15), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DEFAULT_COLUMN_WIDTH));
+        assertEquals(Optional.of(60), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DEFAULT_ROW_HEIGHT));
         assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.PRECISION));
         assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.ROUNDING_MODE));
         assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR));
