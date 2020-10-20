@@ -1093,6 +1093,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetPattern.parseDateTimeFormatPattern("DD/MM/YYYY hh:mm"));
         properties.put(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetPattern.parseDateTimeParsePatterns("DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM"));
         properties.put(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, 'D');
+        properties.put(SpreadsheetMetadataPropertyName.DEFAULT_COLUMN_WIDTH, 60);
+        properties.put(SpreadsheetMetadataPropertyName.DEFAULT_ROW_HEIGHT, 15);
         properties.put(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E");
         properties.put(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, 'G');
         properties.put(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);

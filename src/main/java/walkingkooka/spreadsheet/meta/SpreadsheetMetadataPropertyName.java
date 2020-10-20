@@ -123,6 +123,16 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     public final static SpreadsheetMetadataPropertyName<Character> DECIMAL_SEPARATOR = registerConstant(SpreadsheetMetadataPropertyNameDecimalSeparator.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>default-column-width {@link Integer}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<Integer> DEFAULT_COLUMN_WIDTH = registerConstant(SpreadsheetMetadataPropertyNameDefaultColumnWidth.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>default-row-height {@link Integer}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<Integer> DEFAULT_ROW_HEIGHT = registerConstant(SpreadsheetMetadataPropertyNameDefaultRowHeight.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>exponent-symbol {@link Character}</code>
      */
     public final static SpreadsheetMetadataPropertyName<String> EXPONENT_SYMBOL = registerConstant(SpreadsheetMetadataPropertyNameExponentSymbol.instance());
