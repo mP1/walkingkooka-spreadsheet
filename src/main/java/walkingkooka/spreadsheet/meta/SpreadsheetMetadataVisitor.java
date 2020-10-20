@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
+import walkingkooka.tree.text.FontSize;
 import walkingkooka.visit.Visiting;
 import walkingkooka.visit.Visitor;
 
@@ -130,6 +131,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitDefaultColumnWidth(final int defaultColumnWidth) {
+        // nop
+    }
+
+    protected void visitDefaultFontSize(final FontSize defaultFontSize) {
         // nop
     }
 

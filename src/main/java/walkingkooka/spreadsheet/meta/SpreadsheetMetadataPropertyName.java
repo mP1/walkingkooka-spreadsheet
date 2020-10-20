@@ -41,6 +41,7 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.text.FontSize;
 
 import java.math.RoundingMode;
 import java.text.DateFormat;
@@ -126,6 +127,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>default-column-width {@link Integer}</code>
      */
     public final static SpreadsheetMetadataPropertyName<Integer> DEFAULT_COLUMN_WIDTH = registerConstant(SpreadsheetMetadataPropertyNameDefaultColumnWidth.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>default-font-size {@link Integer}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<FontSize> DEFAULT_FONT_SIZE = registerConstant(SpreadsheetMetadataPropertyNameDefaultFontSize.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>default-row-height {@link Integer}</code>
@@ -458,6 +464,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     static {
         Color.BLACK.alpha();
         EmailAddress.tryParse("user@example.com");
+        FontSize.with(1);
         SpreadsheetPattern.parseNumberFormatPattern(" ");
         //noinspection ResultOfMethodCallIgnored
         SpreadsheetId.with(0);
