@@ -17,13 +17,17 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.function.SpreadsheetFunctionName;
@@ -42,18 +46,21 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 
 import java.lang.reflect.Method;
-import java.math.BigDecimal;
 import java.math.MathContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -62,6 +69,23 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<SpreadsheetParsers>,
         ParserTesting2<Parser<SpreadsheetParserContext>, SpreadsheetParserContext> {
+
+    private ExpressionNumberKind expressionNumberKind;
+
+    /**
+     * The name of the test (test method) is important and is used to select a {@link ExpressionNumberKind}.
+     */
+    @BeforeEach
+    public void setupExpressionNumberKind(final TestInfo testInfo) {
+        final String testName = testInfo.getDisplayName();
+        this.expressionNumberKind = testName.endsWith("BigDecimal()") ?
+                ExpressionNumberKind.BIG_DECIMAL :
+                testName.endsWith("Double()") ?
+                        ExpressionNumberKind.DOUBLE :
+                        null;
+
+        System.out.println(this.expressionNumberKind + " " + testInfo.getDisplayName());
+    }
 
     @Test
     public void testText() {
@@ -77,7 +101,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final String text = "1.5";
 
         this.parseAndCheck(text,
-                bigDecimal(1.5),
+                number(1.5),
                 text);
     }
 
@@ -201,7 +225,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final String text = "-1.5";
 
         this.parseAndCheck(text,
-                SpreadsheetParserToken.negative(Lists.of(minus(), bigDecimal(1.5)), text),
+                SpreadsheetParserToken.negative(Lists.of(minus(), number(1.5)), text),
                 text);
     }
 
@@ -210,21 +234,40 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final String text = "-  1.5";
 
         this.parseAndCheck(text,
-                SpreadsheetParserToken.negative(Lists.of(minus(), whitespace(), bigDecimal(1.5)), text),
+                SpreadsheetParserToken.negative(Lists.of(minus(), whitespace(), number(1.5)), text),
                 text);
     }
 
     @Test
-    public void testNegativeBigDecimal2() {
+    public void testNegativeNumberBigDecimal() {
+        this.testNegativeNumber();
+    }
+
+    @Test
+    public void testNegativeNumberDouble() {
+        this.testNegativeNumber();
+    }
+
+    private void testNegativeNumber() {
+
         final String text = "-1";
 
         this.parseAndCheck(text,
-                SpreadsheetParserToken.negative(Lists.of(minus(), bigDecimal(1)), text),
+                SpreadsheetParserToken.negative(Lists.of(minus(), number(1)), text),
                 text);
     }
 
     @Test
-    public void testNegativeCell() {
+    public void testNegativeCellBigDecimal() {
+        this.testNegativeCell();
+    }
+
+    @Test
+    public void testNegativeCellDouble() {
+        this.testNegativeCell();
+    }
+
+    private void testNegativeCell() {
         final String text = "-A1";
 
         this.parseAndCheck(text,
@@ -242,18 +285,36 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testNumberPercentage() {
+    public void testNumberPercentageBigDecimal() {
+        this.testNumberPercentage();
+    }
+
+    @Test
+    public void testNumberPercentageDouble() {
+        this.testNumberPercentage();
+    }
+
+    private void testNumberPercentage() {
         final String text = "1%";
 
         this.parseAndCheck(text,
-                SpreadsheetParserToken.percentage(Lists.of(bigDecimal(1), percent()), text),
+                SpreadsheetParserToken.percentage(Lists.of(number(1), percent()), text),
                 text);
     }
 
     @Test
-    public void testNegativeNumberPercentage() {
+    public void testNegativeNumberPercentageBigDecimal() {
+        this.testNegativeNumberPercentage();
+    }
+
+    @Test
+    public void testNegativeNumberPercentageDouble() {
+        this.testNegativeNumberPercentage();
+    }
+
+    private void testNegativeNumberPercentage() {
         final String text = "-1%";
-        final SpreadsheetParserToken percent = SpreadsheetParserToken.percentage(Lists.of(bigDecimal(1), percent()), "1%");
+        final SpreadsheetParserToken percent = SpreadsheetParserToken.percentage(Lists.of(number(1), percent()), "1%");
 
         this.parseAndCheck(text,
                 SpreadsheetParserToken.negative(Lists.of(minus(), percent), text),
@@ -281,8 +342,17 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testGroupNegativeNumber() {
-        final SpreadsheetParserToken negative = negative(bigDecimal(123));
+    public void testGroupNegativeNumberBigDecimal() {
+        this.testGroupNegativeNumber();
+    }
+
+    @Test
+    public void testGroupNegativeNumberDouble() {
+        this.testGroupNegativeNumber();
+    }
+
+    private void testGroupNegativeNumber() {
+        final SpreadsheetParserToken negative = negative(number(123));
 
         final String groupText = "(-123)";
         final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(Lists.of(openParenthesis(), negative, closeParenthesis()), groupText);
@@ -291,18 +361,36 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testNegativeGroupNumber() {
+    public void testNegativeGroupNumberBigDecimal() {
+        this.testNegativeGroupNumber();
+    }
+
+    @Test
+    public void testNegativeGroupNumberDouble() {
+        this.testNegativeGroupNumber();
+    }
+
+    private void testNegativeGroupNumber() {
         final String groupText = "(123)";
-        final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(Lists.of(openParenthesis(), bigDecimal(123), closeParenthesis()), groupText);
+        final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(Lists.of(openParenthesis(), number(123), closeParenthesis()), groupText);
 
         final String text = "-" + groupText;
         this.parseAndCheck(text, negative(group), text);
     }
 
     @Test
-    public void testAdd() {
-        final SpreadsheetParserToken left = bigDecimal(123);
-        final SpreadsheetParserToken right = bigDecimal(456);
+    public void testAddBigDecimal() {
+        this.testAdd();
+    }
+
+    @Test
+    public void testAddDouble() {
+        this.testAdd();
+    }
+
+    private void testAdd() {
+        final SpreadsheetParserToken left = number(123);
+        final SpreadsheetParserToken right = number(456);
         final String text = "123+456";
         final SpreadsheetAdditionParserToken add = SpreadsheetParserToken.addition(Lists.of(left, plus(), right), text);
 
@@ -310,36 +398,63 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testAdd2() {
-        final SpreadsheetParserToken left = bigDecimal(123);
-        final SpreadsheetParserToken right = bigDecimal(456);
+    public void testAdd2BigDecimal() {
+        this.testAdd2();
+    }
+
+    @Test
+    public void testAdd2Double() {
+        this.testAdd2();
+    }
+
+    private void testAdd2() {
+        final SpreadsheetParserToken left = number(123);
+        final SpreadsheetParserToken right = number(456);
         final String text = "123+456";
         final SpreadsheetAdditionParserToken add = SpreadsheetParserToken.addition(Lists.of(left, plus(), right), text);
 
         final String text2 = text + "+789";
-        final SpreadsheetAdditionParserToken add2 = SpreadsheetParserToken.addition(Lists.of(add, plus(), bigDecimal(789)), text2);
+        final SpreadsheetAdditionParserToken add2 = SpreadsheetParserToken.addition(Lists.of(add, plus(), number(789)), text2);
 
         this.parseAndCheck(text2, add2, text2);
     }
 
     @Test
-    public void testAddNegative() {
+    public void testAddNegativeBigDecimal() {
+        this.testAddNegative();
+    }
+
+    @Test
+    public void testAddNegativeDouble() {
+        this.testAddNegative();
+    }
+
+    private void testAddNegative() {
         // 123+-456+789
-        final SpreadsheetParserToken left = bigDecimal(123);
-        final SpreadsheetParserToken right = negative(bigDecimal(456));
+        final SpreadsheetParserToken left = number(123);
+        final SpreadsheetParserToken right = negative(number(456));
         final String text = "123+-456";
         final SpreadsheetAdditionParserToken add = SpreadsheetParserToken.addition(Lists.of(left, plus(), right), text);
 
         final String text2 = text + "+789";
-        final SpreadsheetAdditionParserToken add2 = SpreadsheetParserToken.addition(Lists.of(add, plus(), bigDecimal(789)), text2);
+        final SpreadsheetAdditionParserToken add2 = SpreadsheetParserToken.addition(Lists.of(add, plus(), number(789)), text2);
 
         this.parseAndCheck(text2, add2, text2);
     }
 
     @Test
-    public void testSubtract() {
-        final SpreadsheetParserToken left = bigDecimal(123);
-        final SpreadsheetParserToken right = bigDecimal(456);
+    public void testSubtractBigDecimal() {
+        this.testSubtract();
+    }
+
+    @Test
+    public void testSubtractDouble() {
+        this.testSubtract();
+    }
+
+    private void testSubtract() {
+        final SpreadsheetParserToken left = number(123);
+        final SpreadsheetParserToken right = number(456);
         final String text = "123-456";
         final SpreadsheetSubtractionParserToken add = SpreadsheetParserToken.subtraction(Lists.of(left, minus(), right), text);
 
@@ -347,22 +462,40 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testSubtract2() {
-        final SpreadsheetParserToken left = bigDecimal(123);
-        final SpreadsheetParserToken right = bigDecimal(456);
+    public void testSubtract2BigDecimal() {
+        this.testSubtract2();
+    }
+
+    @Test
+    public void testSubtract2Double() {
+        this.testSubtract2();
+    }
+
+    private void testSubtract2() {
+        final SpreadsheetParserToken left = number(123);
+        final SpreadsheetParserToken right = number(456);
         final String text = "123-456";
         final SpreadsheetSubtractionParserToken sub = SpreadsheetParserToken.subtraction(Lists.of(left, minus(), right), text);
 
         final String text2 = text + "-789";
-        final SpreadsheetSubtractionParserToken add2 = SpreadsheetParserToken.subtraction(Lists.of(sub, minus(), bigDecimal(789)), text2);
+        final SpreadsheetSubtractionParserToken add2 = SpreadsheetParserToken.subtraction(Lists.of(sub, minus(), number(789)), text2);
 
         this.parseAndCheck(text2, add2, text2);
     }
 
     @Test
-    public void testSubtractNegative() {
-        final SpreadsheetParserToken left = bigDecimal(123);
-        final SpreadsheetParserToken right = negative(bigDecimal(456));
+    public void testSubtractNegativeBigDecimal() {
+        this.subtractNegative();
+    }
+
+    @Test
+    public void testSubtractNegativeDouble() {
+        this.subtractNegative();
+    }
+
+    private void subtractNegative() {
+        final SpreadsheetParserToken left = number(123);
+        final SpreadsheetParserToken right = negative(number(456));
         final String text = "123--456";
         final SpreadsheetSubtractionParserToken add = SpreadsheetParserToken.subtraction(Lists.of(left, minus(), right), text);
 
@@ -370,35 +503,62 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testSubtractAdd() {
-        final SpreadsheetParserToken left = bigDecimal(123);
-        final SpreadsheetParserToken right = bigDecimal(456);
+    public void testSubtractAddBigDecimal() {
+        this.subtractAdd();
+    }
+
+    @Test
+    public void testSubtractAddDouble() {
+        this.subtractAdd();
+    }
+
+    private void subtractAdd() {
+        final SpreadsheetParserToken left = number(123);
+        final SpreadsheetParserToken right = number(456);
         final String text = "123-456";
         final SpreadsheetSubtractionParserToken sub = SpreadsheetParserToken.subtraction(Lists.of(left, minus(), right), text);
 
         final String text2 = text + "+789";
-        final SpreadsheetAdditionParserToken add2 = SpreadsheetParserToken.addition(Lists.of(sub, plus(), bigDecimal(789)), text2);
+        final SpreadsheetAdditionParserToken add2 = SpreadsheetParserToken.addition(Lists.of(sub, plus(), number(789)), text2);
 
         this.parseAndCheck(text2, add2, text2);
     }
 
     @Test
-    public void testSubtractWhitespaceAroundMinusSign() {
-        final SpreadsheetParserToken left = bigDecimal(123);
-        final SpreadsheetParserToken right = bigDecimal(456);
+    public void testSubtractWhitespaceAroundMinusSignBigDecimal() {
+        this.subtractWhitespaceAroundMinusSign();
+    }
+
+    @Test
+    public void testSubtractWhitespaceAroundMinusSignDouble() {
+        this.subtractWhitespaceAroundMinusSign();
+    }
+
+    private void subtractWhitespaceAroundMinusSign() {
+        final SpreadsheetParserToken left = number(123);
+        final SpreadsheetParserToken right = number(456);
         final String text = "123  -  456";
         final SpreadsheetSubtractionParserToken sub = SpreadsheetParserToken.subtraction(Lists.of(left, whitespace(), minus(), whitespace(), right), text);
 
         final String text2 = text + "+789";
-        final SpreadsheetAdditionParserToken add2 = SpreadsheetParserToken.addition(Lists.of(sub, plus(), bigDecimal(789)), text2);
+        final SpreadsheetAdditionParserToken add2 = SpreadsheetParserToken.addition(Lists.of(sub, plus(), number(789)), text2);
 
         this.parseAndCheck(text2, add2, text2);
     }
 
     @Test
-    public void testMultiply() {
-        final SpreadsheetParserToken left = bigDecimal(123);
-        final SpreadsheetParserToken right = bigDecimal(456);
+    public void testMultiplyBigDecimal() {
+        this.testMultiply1();
+    }
+
+    @Test
+    public void testMultiplyDouble() {
+        this.testMultiply1();
+    }
+
+    private void testMultiply1() {
+        final SpreadsheetParserToken left = number(123);
+        final SpreadsheetParserToken right = number(456);
         final String text = "123*456";
         final SpreadsheetMultiplicationParserToken multiply = SpreadsheetParserToken.multiplication(Lists.of(left, multiply(), right), text);
 
@@ -406,22 +566,40 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testMultiply2() {
-        final SpreadsheetParserToken left = bigDecimal(222);
-        final SpreadsheetParserToken right = bigDecimal(333);
+    public void testMultiply2BigDecimal() {
+        this.testMultiply2();
+    }
+
+    @Test
+    public void testMultiply2Double() {
+        this.testMultiply2();
+    }
+
+    private void testMultiply2() {
+        final SpreadsheetParserToken left = number(222);
+        final SpreadsheetParserToken right = number(333);
         final String text = "222*333";
         final SpreadsheetMultiplicationParserToken multiply = SpreadsheetParserToken.multiplication(Lists.of(left, multiply(), right), text);
 
         final String text2 = "111+" + text;
-        final SpreadsheetAdditionParserToken add2 = SpreadsheetParserToken.addition(Lists.of(bigDecimal(111), plus(), multiply), text2);
+        final SpreadsheetAdditionParserToken add2 = SpreadsheetParserToken.addition(Lists.of(number(111), plus(), multiply), text2);
 
         this.parseAndCheck(text2, add2, text2);
     }
 
     @Test
-    public void testNegativeMultiplyNegative() {
-        final SpreadsheetParserToken left = negative(bigDecimal(123));
-        final SpreadsheetParserToken right = negative(bigDecimal(456));
+    public void testNegativeMultiplyNegativeBigDecimal() {
+        this.negativeMultiplyNegative();
+    }
+
+    @Test
+    public void testNegativeMultiplyNegativeDouble() {
+        this.negativeMultiplyNegative();
+    }
+
+    private void negativeMultiplyNegative() {
+        final SpreadsheetParserToken left = negative(number(123));
+        final SpreadsheetParserToken right = negative(number(456));
         final String text = "-123*-456";
         final SpreadsheetMultiplicationParserToken multiply = SpreadsheetParserToken.multiplication(Lists.of(left, multiply(), right), text);
 
@@ -429,9 +607,18 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testDivide() {
-        final SpreadsheetParserToken left = bigDecimal(123);
-        final SpreadsheetParserToken right = bigDecimal(456);
+    public void testDivideBigDecimal() {
+        this.testDivide();
+    }
+
+    @Test
+    public void testDivideDouble() {
+        this.testDivide();
+    }
+
+    private void testDivide() {
+        final SpreadsheetParserToken left = number(123);
+        final SpreadsheetParserToken right = number(456);
         final String text = "123/456";
         final SpreadsheetDivisionParserToken divide = SpreadsheetParserToken.division(Lists.of(left, divide(), right), text);
 
@@ -439,22 +626,40 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testDivide2() {
-        final SpreadsheetParserToken left = bigDecimal(222);
-        final SpreadsheetParserToken right = bigDecimal(333);
+    public void testDivide2BigDecimal() {
+        this.testDivide2();
+    }
+
+    @Test
+    public void testDivide2Double() {
+        this.testDivide2();
+    }
+
+    private void testDivide2() {
+        final SpreadsheetParserToken left = number(222);
+        final SpreadsheetParserToken right = number(333);
         final String text = "222/333";
         final SpreadsheetDivisionParserToken divide = SpreadsheetParserToken.division(Lists.of(left, divide(), right), text);
 
         final String text2 = "111+" + text;
-        final SpreadsheetAdditionParserToken add2 = SpreadsheetParserToken.addition(Lists.of(bigDecimal(111), plus(), divide), text2);
+        final SpreadsheetAdditionParserToken add2 = SpreadsheetParserToken.addition(Lists.of(number(111), plus(), divide), text2);
 
         this.parseAndCheck(text2, add2, text2);
     }
 
     @Test
-    public void testNegativeDivideNegative() {
-        final SpreadsheetParserToken left = negative(bigDecimal(123));
-        final SpreadsheetParserToken right = negative(bigDecimal(456));
+    public void testNegativeDivideNegativeBigDecimal() {
+        this.testNegativeDivideNegative();
+    }
+
+    @Test
+    public void testNegativeDivideNegativeDouble() {
+        this.testNegativeDivideNegative();
+    }
+
+    private void testNegativeDivideNegative() {
+        final SpreadsheetParserToken left = negative(number(123));
+        final SpreadsheetParserToken right = negative(number(456));
         final String text = "-123/-456";
         final SpreadsheetDivisionParserToken divide = SpreadsheetParserToken.division(Lists.of(left, divide(), right), text);
 
@@ -462,9 +667,18 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testPower() {
-        final SpreadsheetParserToken left = bigDecimal(123);
-        final SpreadsheetParserToken right = bigDecimal(456);
+    public void testPowerBigDecimal() {
+        this.testPower();
+    }
+
+    @Test
+    public void testPowerDouble() {
+        this.testPower();
+    }
+
+    private void testPower() {
+        final SpreadsheetParserToken left = number(123);
+        final SpreadsheetParserToken right = number(456);
         final String text = "123^456";
         final SpreadsheetPowerParserToken power = SpreadsheetParserToken.power(Lists.of(left, power(), right), text);
 
@@ -472,22 +686,40 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testPower2() {
-        final SpreadsheetParserToken left = bigDecimal(222);
-        final SpreadsheetParserToken right = bigDecimal(333);
+    public void testPower2BigDecimal() {
+        this.testPower2();
+    }
+
+    @Test
+    public void testPower2Double() {
+        this.testPower2();
+    }
+
+    private void testPower2() {
+        final SpreadsheetParserToken left = number(222);
+        final SpreadsheetParserToken right = number(333);
         final String text = "222^333";
         final SpreadsheetPowerParserToken power = SpreadsheetParserToken.power(Lists.of(left, power(), right), text);
 
         final String text2 = "111*" + text;
-        final SpreadsheetMultiplicationParserToken multiply2 = SpreadsheetParserToken.multiplication(Lists.of(bigDecimal(111), multiply(), power), text2);
+        final SpreadsheetMultiplicationParserToken multiply2 = SpreadsheetParserToken.multiplication(Lists.of(number(111), multiply(), power), text2);
 
         this.parseAndCheck(text2, multiply2, text2);
     }
 
     @Test
-    public void testEquals() {
-        final SpreadsheetParserToken left = bigDecimal(123);
-        final SpreadsheetParserToken right = bigDecimal(456);
+    public void testEqualsBigDecimal() {
+        this.testEquals();
+    }
+
+    @Test
+    public void testEqualsDouble() {
+        this.testEquals();
+    }
+
+    private void testEquals() {
+        final SpreadsheetParserToken left = number(123);
+        final SpreadsheetParserToken right = number(456);
         final String text = "123==456";
         final SpreadsheetEqualsParserToken equals = SpreadsheetParserToken.equalsParserToken(Lists.of(left, equals(), right), text);
 
@@ -495,13 +727,22 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testEqualsAdd() {
-        final SpreadsheetParserToken middle = bigDecimal(456);
-        final SpreadsheetParserToken right = bigDecimal(789);
+    public void testEqualsAddBigDecimal() {
+        this.testEqualsAdd();
+    }
+
+    @Test
+    public void testEqualsAddDouble() {
+        this.testEqualsAdd();
+    }
+
+    private void testEqualsAdd() {
+        final SpreadsheetParserToken middle = number(456);
+        final SpreadsheetParserToken right = number(789);
         final String addText = "456+789";
         final SpreadsheetAdditionParserToken add = SpreadsheetParserToken.addition(Lists.of(middle, plus(), right), addText);
 
-        final SpreadsheetParserToken left = bigDecimal(123);
+        final SpreadsheetParserToken left = number(123);
         final String text = "123==" + addText;
         final SpreadsheetEqualsParserToken equals = SpreadsheetParserToken.equalsParserToken(Lists.of(left, equals(), add), text);
 
@@ -509,9 +750,18 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testNotEquals() {
-        final SpreadsheetParserToken left = bigDecimal(123);
-        final SpreadsheetParserToken right = bigDecimal(456);
+    public void testNotEqualsBigDecimal() {
+        this.testNotEquals();
+    }
+
+    @Test
+    public void testNotEqualsDouble() {
+        this.testNotEquals();
+    }
+
+    private void testNotEquals() {
+        final SpreadsheetParserToken left = number(123);
+        final SpreadsheetParserToken right = number(456);
         final String text = "123!=456";
         final SpreadsheetNotEqualsParserToken ne = SpreadsheetParserToken.notEquals(Lists.of(left, notEquals(), right), text);
 
@@ -519,13 +769,22 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testNotEqualsAdd() {
-        final SpreadsheetParserToken middle = bigDecimal(456);
-        final SpreadsheetParserToken right = bigDecimal(789);
+    public void testNotEqualsAddBigDecimal() {
+        this.testNotEqualsAdd();
+    }
+
+    @Test
+    public void testNotEqualsAddDouble() {
+        this.testNotEqualsAdd();
+    }
+
+    private void testNotEqualsAdd() {
+        final SpreadsheetParserToken middle = number(456);
+        final SpreadsheetParserToken right = number(789);
         final String addText = "456+789";
         final SpreadsheetAdditionParserToken add = SpreadsheetParserToken.addition(Lists.of(middle, plus(), right), addText);
 
-        final SpreadsheetParserToken left = bigDecimal(123);
+        final SpreadsheetParserToken left = number(123);
         final String text = "123!=" + addText;
         final SpreadsheetNotEqualsParserToken ne = SpreadsheetParserToken.notEquals(Lists.of(left, notEquals(), add), text);
 
@@ -533,9 +792,18 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testGreaterThan() {
-        final SpreadsheetParserToken left = bigDecimal(123);
-        final SpreadsheetParserToken right = bigDecimal(456);
+    public void testGreaterThanBigDecimal() {
+        this.testGreaterThan();
+    }
+
+    @Test
+    public void testGreaterThanDouble() {
+        this.testGreaterThan();
+    }
+
+    private void testGreaterThan() {
+        final SpreadsheetParserToken left = number(123);
+        final SpreadsheetParserToken right = number(456);
         final String text = "123>456";
         final SpreadsheetGreaterThanParserToken gt = SpreadsheetParserToken.greaterThan(Lists.of(left, greaterThan(), right), text);
 
@@ -543,13 +811,22 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testGreaterThanAdd() {
-        final SpreadsheetParserToken middle = bigDecimal(456);
-        final SpreadsheetParserToken right = bigDecimal(789);
+    public void testGreaterThanAddBigDecimal() {
+        this.testGreaterThanAdd();
+    }
+
+    @Test
+    public void testGreaterThanAddDouble() {
+        this.testGreaterThanAdd();
+    }
+
+    private void testGreaterThanAdd() {
+        final SpreadsheetParserToken middle = number(456);
+        final SpreadsheetParserToken right = number(789);
         final String addText = "456+789";
         final SpreadsheetAdditionParserToken add = SpreadsheetParserToken.addition(Lists.of(middle, plus(), right), addText);
 
-        final SpreadsheetParserToken left = bigDecimal(123);
+        final SpreadsheetParserToken left = number(123);
         final String text = "123>" + addText;
         final SpreadsheetGreaterThanParserToken gt = SpreadsheetParserToken.greaterThan(Lists.of(left, greaterThan(), add), text);
 
@@ -557,9 +834,18 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testGreaterThanEquals() {
-        final SpreadsheetParserToken left = bigDecimal(123);
-        final SpreadsheetParserToken right = bigDecimal(456);
+    public void testGreaterThanEqualsBigDecimal() {
+        this.testGreaterThanEquals();
+    }
+
+    @Test
+    public void testGreaterThanEqualsDouble() {
+        this.testGreaterThanEquals();
+    }
+
+    private void testGreaterThanEquals() {
+        final SpreadsheetParserToken left = number(123);
+        final SpreadsheetParserToken right = number(456);
         final String text = "123>=456";
         final SpreadsheetGreaterThanEqualsParserToken gte = SpreadsheetParserToken.greaterThanEquals(Lists.of(left, greaterThanEquals(), right), text);
 
@@ -567,13 +853,22 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testGreaterThanEqualsAdd() {
-        final SpreadsheetParserToken middle = bigDecimal(456);
-        final SpreadsheetParserToken right = bigDecimal(789);
+    public void testGreaterThanEqualsAddBigDecimal() {
+        this.testGreaterThanEqualsAdd();
+    }
+
+    @Test
+    public void testGreaterThanEqualsAddDouble() {
+        this.testGreaterThanEqualsAdd();
+    }
+
+    private void testGreaterThanEqualsAdd() {
+        final SpreadsheetParserToken middle = number(456);
+        final SpreadsheetParserToken right = number(789);
         final String addText = "456+789";
         final SpreadsheetAdditionParserToken add = SpreadsheetParserToken.addition(Lists.of(middle, plus(), right), addText);
 
-        final SpreadsheetParserToken left = bigDecimal(123);
+        final SpreadsheetParserToken left = number(123);
         final String text = "123>=" + addText;
         final SpreadsheetGreaterThanEqualsParserToken gte = SpreadsheetParserToken.greaterThanEquals(Lists.of(left, greaterThanEquals(), add), text);
 
@@ -581,9 +876,18 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testLessThan() {
-        final SpreadsheetParserToken left = bigDecimal(123);
-        final SpreadsheetParserToken right = bigDecimal(456);
+    public void testLessThanBigDecimal() {
+        this.testLessThan();
+    }
+
+    @Test
+    public void testLessThanDouble() {
+        this.testLessThan();
+    }
+
+    private void testLessThan() {
+        final SpreadsheetParserToken left = number(123);
+        final SpreadsheetParserToken right = number(456);
         final String text = "123<456";
         final SpreadsheetLessThanParserToken lt = SpreadsheetParserToken.lessThan(Lists.of(left, lessThan(), right), text);
 
@@ -591,13 +895,22 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testLessThanAdd() {
-        final SpreadsheetParserToken middle = bigDecimal(456);
-        final SpreadsheetParserToken right = bigDecimal(789);
+    public void testLessThanAddBigDecimal() {
+        this.testLessThanAdd();
+    }
+
+    @Test
+    public void testLessThanAddDouble() {
+        this.testLessThanAdd();
+    }
+
+    private void testLessThanAdd() {
+        final SpreadsheetParserToken middle = number(456);
+        final SpreadsheetParserToken right = number(789);
         final String addText = "456+789";
         final SpreadsheetAdditionParserToken add = SpreadsheetParserToken.addition(Lists.of(middle, plus(), right), addText);
 
-        final SpreadsheetParserToken left = bigDecimal(123);
+        final SpreadsheetParserToken left = number(123);
         final String text = "123<" + addText;
         final SpreadsheetLessThanParserToken lt = SpreadsheetParserToken.lessThan(Lists.of(left, lessThan(), add), text);
 
@@ -605,9 +918,18 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testLessThanEquals() {
-        final SpreadsheetParserToken left = bigDecimal(123);
-        final SpreadsheetParserToken right = bigDecimal(456);
+    public void testLessThanEqualsBigDecimal() {
+        this.testLessThanEquals();
+    }
+
+    @Test
+    public void testLessThanEqualsDouble() {
+        this.testLessThanEquals();
+    }
+
+    private void testLessThanEquals() {
+        final SpreadsheetParserToken left = number(123);
+        final SpreadsheetParserToken right = number(456);
         final String text = "123<=456";
         final SpreadsheetLessThanEqualsParserToken lte = SpreadsheetParserToken.lessThanEquals(Lists.of(left, lessThanEquals(), right), text);
 
@@ -615,13 +937,22 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testLessThanEqualsAdd() {
-        final SpreadsheetParserToken middle = bigDecimal(456);
-        final SpreadsheetParserToken right = bigDecimal(789);
+    public void testLessThanEqualsAddBigDecimal() {
+        this.testLessThanEqualsAdd();
+    }
+
+    @Test
+    public void testLessThanEqualsAddDouble() {
+        this.testLessThanEqualsAdd();
+    }
+
+    private void testLessThanEqualsAdd() {
+        final SpreadsheetParserToken middle = number(456);
+        final SpreadsheetParserToken right = number(789);
         final String addText = "456+789";
         final SpreadsheetAdditionParserToken add = SpreadsheetParserToken.addition(Lists.of(middle, plus(), right), addText);
 
-        final SpreadsheetParserToken left = bigDecimal(123);
+        final SpreadsheetParserToken left = number(123);
         final String text = "123<=" + addText;
         final SpreadsheetLessThanEqualsParserToken lte = SpreadsheetParserToken.lessThanEquals(Lists.of(left, lessThanEquals(), add), text);
 
@@ -629,19 +960,28 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testComplexExpression() {
+    public void testComplexExpressionBigDecimal() {
+        this.testComplexExpression();
+    }
+
+    @Test
+    public void testComplexExpressionDouble() {
+        this.testComplexExpression();
+    }
+
+    private void testComplexExpression() {
         //111+222+(-333)-444*555
         final String addText = "111+222";
-        final SpreadsheetAdditionParserToken add = SpreadsheetParserToken.addition(Lists.of(bigDecimal(111), plus(), bigDecimal(222)), addText);
+        final SpreadsheetAdditionParserToken add = SpreadsheetParserToken.addition(Lists.of(number(111), plus(), number(222)), addText);
 
         final String groupText = "(-333)";
-        final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(Lists.of(openParenthesis(), negative(bigDecimal(333)), closeParenthesis()), groupText);
+        final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(Lists.of(openParenthesis(), negative(number(333)), closeParenthesis()), groupText);
 
         final String addText2 = add + "+" + groupText;
         final SpreadsheetAdditionParserToken add2 = SpreadsheetParserToken.addition(Lists.of(add, plus(), group), addText2);
 
         final String multiplyText = "444*555";
-        final SpreadsheetMultiplicationParserToken multiply = SpreadsheetParserToken.multiplication(Lists.of(bigDecimal(444), multiply(), bigDecimal(555)), multiplyText);
+        final SpreadsheetMultiplicationParserToken multiply = SpreadsheetParserToken.multiplication(Lists.of(number(444), multiply(), number(555)), multiplyText);
 
         final String subText = addText2 + "-" + multiplyText;
         final SpreadsheetSubtractionParserToken sub = SpreadsheetParserToken.subtraction(Lists.of(add2, minus(), multiply), subText);
@@ -673,57 +1013,120 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testFunctionWithOneArgument() {
+    public void testFunctionWithOneArgumentBigDecimal() {
+        this.testFunctionWithOneArgument();
+    }
+
+    @Test
+    public void testFunctionWithOneArgumentDouble() {
+        this.testFunctionWithOneArgument();
+    }
+
+    private void testFunctionWithOneArgument() {
         final String text = "xyz(123)";
-        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), bigDecimal(123), closeParenthesis()), text);
+        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), number(123), closeParenthesis()), text);
 
         this.functionParseAndCheck(text, f, text);
     }
 
     @Test
-    public void testFunctionWithOneArgument2() {
+    public void testFunctionWithOneArgument2BigDecimal() {
+        this.testFunctionWithOneArgument2();
+    }
+
+    @Test
+    public void testFunctionWithOneArgument2Double() {
+        this.testFunctionWithOneArgument2();
+    }
+
+    private void testFunctionWithOneArgument2() {
         final String text = "xyz(  123)";
-        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), whitespace(), bigDecimal(123), closeParenthesis()), text);
+        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), whitespace(), number(123), closeParenthesis()), text);
 
         this.functionParseAndCheck(text, f, text);
     }
 
     @Test
-    public void testFunctionWithOneArgument3() {
+    public void testFunctionWithOneArgument3BigDecimal() {
+        this.testFunctionWithOneArgument3();
+    }
+
+    @Test
+    public void testFunctionWithOneArgument3Double() {
+        this.testFunctionWithOneArgument3();
+    }
+
+    private void testFunctionWithOneArgument3() {
         final String text = "xyz(123  )";
-        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), bigDecimal(123), whitespace(), closeParenthesis()), text);
+        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), number(123), whitespace(), closeParenthesis()), text);
 
         this.functionParseAndCheck(text, f, text);
     }
 
     @Test
-    public void testFunctionWithOneArgument4() {
+    public void testFunctionWithOneArgument4BigDecimal() {
+        this.testFunctionWithOneArgument4();
+    }
+
+    @Test
+    public void testFunctionWithOneArgument4Double() {
+        this.testFunctionWithOneArgument4();
+    }
+
+    private void testFunctionWithOneArgument4() {
         final String text = "xyz(  123  )";
-        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), whitespace(), bigDecimal(123), whitespace(), closeParenthesis()), text);
+        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), whitespace(), number(123), whitespace(), closeParenthesis()), text);
 
         this.functionParseAndCheck(text, f, text);
     }
 
     @Test
-    public void testFunctionWithTwoArguments() {
+    public void testFunctionWithTwoArgumentsBigDecimal() {
+        this.testFunctionWithTwoArguments();
+    }
+
+    @Test
+    public void testFunctionWithTwoArgumentsDouble() {
+        this.testFunctionWithTwoArguments();
+    }
+
+    private void testFunctionWithTwoArguments() {
         final String text = "xyz(123,456)";
-        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), bigDecimal(123), comma(), bigDecimal(456), closeParenthesis()), text);
+        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), number(123), comma(), number(456), closeParenthesis()), text);
 
         this.functionParseAndCheck(text, f, text);
     }
 
     @Test
-    public void testFunctionWithFourArguments() {
+    public void testFunctionWithFourArgumentsBigDecimal() {
+        this.testFunctionWithFourArguments();
+    }
+
+    @Test
+    public void testFunctionWithFourArgumentsDouble() {
+        this.testFunctionWithFourArguments();
+    }
+
+    private void testFunctionWithFourArguments() {
         final String text = "xyz(1,2,3,4)";
-        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), bigDecimal(1), comma(), bigDecimal(2), comma(), bigDecimal(3), comma(), bigDecimal(4), closeParenthesis()), text);
+        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), number(1), comma(), number(2), comma(), number(3), comma(), number(4), closeParenthesis()), text);
 
         this.functionParseAndCheck(text, f, text);
     }
 
     @Test
-    public void testFunctionWithinFunction() {
+    public void testFunctionWithinFunctionBigDecimal() {
+        this.testFunctionWithinFunction();
+    }
+
+    @Test
+    public void testFunctionWithinFunctionDouble() {
+        this.testFunctionWithinFunction();
+    }
+
+    private void testFunctionWithinFunction() {
         final String yText = "y(123)";
-        final SpreadsheetFunctionParserToken y = SpreadsheetParserToken.function(Lists.of(functionName("y"), openParenthesis(), bigDecimal(123), closeParenthesis()), yText);
+        final SpreadsheetFunctionParserToken y = SpreadsheetParserToken.function(Lists.of(functionName("y"), openParenthesis(), number(123), closeParenthesis()), yText);
 
         final String xText = "x(" + yText + ")";
         final SpreadsheetFunctionParserToken x = SpreadsheetParserToken.function(Lists.of(functionName("x"), openParenthesis(), y, closeParenthesis()), xText);
@@ -732,9 +1135,18 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testFunctionWithinFunctionWithinFunction() {
+    public void testFunctionWithinFunctionWithinFunctionBigDecimal() {
+        this.testFunctionWithinFunctionWithinFunction();
+    }
+
+    @Test
+    public void testFunctionWithinFunctionWithinFunctionDouble() {
+        this.testFunctionWithinFunctionWithinFunction();
+    }
+
+    private void testFunctionWithinFunctionWithinFunction() {
         final String zText = "z(123)";
-        final SpreadsheetFunctionParserToken z = SpreadsheetParserToken.function(Lists.of(functionName("z"), openParenthesis(), bigDecimal(123), closeParenthesis()), zText);
+        final SpreadsheetFunctionParserToken z = SpreadsheetParserToken.function(Lists.of(functionName("z"), openParenthesis(), number(123), closeParenthesis()), zText);
 
         final String yText = "y(" + zText + ")";
         final SpreadsheetFunctionParserToken y = SpreadsheetParserToken.function(Lists.of(functionName("y"), openParenthesis(), z, closeParenthesis()), yText);
@@ -746,7 +1158,16 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testFunctionWithRangeArgument() {
+    public void testFunctionWithRangeArgumentBigDecimal() {
+        this.testFunctionWithRangeArgument();
+    }
+
+    @Test
+    public void testFunctionWithRangeArgumentDouble() {
+        this.testFunctionWithRangeArgument();
+    }
+
+    private void testFunctionWithRangeArgument() {
         final SpreadsheetCellReferenceParserToken from = this.cell(0, "A", 0);
         final SpreadsheetCellReferenceParserToken to = this.cell(1, "B", 1);
 
@@ -777,27 +1198,45 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     // Group ....................................................................................................
 
     @Test
-    public void testGroupAndFurtherExpressions() {
-        final SpreadsheetParserToken left = bigDecimal(1);
-        final SpreadsheetParserToken right = bigDecimal(2);
+    public void testGroupAndFurtherExpressionsBigDecimal() {
+        this.testGroupAndFurtherExpressions();
+    }
+
+    @Test
+    public void testGroupAndFurtherExpressionsDouble() {
+        this.testGroupAndFurtherExpressions();
+    }
+
+    private void testGroupAndFurtherExpressions() {
+        final SpreadsheetParserToken left = number(1);
+        final SpreadsheetParserToken right = number(2);
         final SpreadsheetAdditionParserToken add = SpreadsheetParserToken.addition(Lists.of(left, plus(), right), "1+2");
         final SpreadsheetGroupParserToken group = SpreadsheetParserToken.group(Lists.of(this.openParenthesis(), add, this.closeParenthesis()), "(" + add.text() + ")");
 
-        final SpreadsheetParserToken last = bigDecimal(3);
+        final SpreadsheetParserToken last = number(3);
         final SpreadsheetMultiplicationParserToken mul = SpreadsheetParserToken.multiplication(Lists.of(group, multiply(), last), group.text() + "*3");
 
         this.parseAndCheck(mul.text(), mul, mul.text());
     }
 
     @Test
-    public void testNestedGroupAddition() {
-        final SpreadsheetParserToken left1 = bigDecimal(1);
-        final SpreadsheetParserToken right1 = bigDecimal(2);
+    public void testNestedGroupAdditionBigDecimal() {
+        this.testNestedGroupAddition();
+    }
+
+    @Test
+    public void testNestedGroupAdditionDouble() {
+        this.testNestedGroupAddition();
+    }
+
+    private void testNestedGroupAddition() {
+        final SpreadsheetParserToken left1 = number(1);
+        final SpreadsheetParserToken right1 = number(2);
         final SpreadsheetAdditionParserToken add1 = SpreadsheetParserToken.addition(Lists.of(left1, plus(), right1), "1+2");
         final SpreadsheetGroupParserToken group1 = SpreadsheetParserToken.group(Lists.of(this.openParenthesis(), add1, this.closeParenthesis()), "(" + add1.text() + ")");
 
-        final SpreadsheetParserToken left2 = bigDecimal(3);
-        final SpreadsheetParserToken right2 = bigDecimal(4);
+        final SpreadsheetParserToken left2 = number(3);
+        final SpreadsheetParserToken right2 = number(4);
         final SpreadsheetAdditionParserToken add2 = SpreadsheetParserToken.addition(Lists.of(left2, plus(), right2), "3+4");
         final SpreadsheetGroupParserToken group2 = SpreadsheetParserToken.group(Lists.of(this.openParenthesis(), add2, this.closeParenthesis()), "(" + add2.text() + ")");
 
@@ -816,7 +1255,16 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testInvalidBinaryTokenRightFails() {
+    public void testInvalidBinaryTokenRightFailsBigDecimal() {
+        this.testInvalidBinaryTokenRightFails();
+    }
+
+    @Test
+    public void testInvalidBinaryTokenRightFailsDouble() {
+        this.testInvalidBinaryTokenRightFails();
+    }
+
+    private void testInvalidBinaryTokenRightFails() {
         this.parseThrows("1+!", this.reporterMessage('!', 3, 1));
     }
 
@@ -830,137 +1278,356 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testSimpleAddition() {
+    public void testSimpleAdditionBigDecimal() {
+        this.testSimpleAddition();
+    }
+
+    @Test
+    public void testSimpleAdditionDouble() {
+        this.testSimpleAddition();
+    }
+
+    private void testSimpleAddition() {
         this.parseEvaluateAndCheck("1+2", 1 + 2);
     }
 
     @Test
-    public void testSimpleAdditionLeadingWhitespace() {
+    public void testSimpleAdditionLeadingWhitespaceBigDecimal() {
+        this.testSimpleAdditionLeadingWhitespace();
+    }
+
+    @Test
+    public void testSimpleAdditionLeadingWhitespaceDouble() {
+        this.testSimpleAdditionLeadingWhitespace();
+    }
+
+    private void testSimpleAdditionLeadingWhitespace() {
         this.parseEvaluateAndCheck(" 1+2", 1 + 2);
     }
 
     @Test
-    public void testSimpleAdditionLeadingWhitespace2() {
+    public void testSimpleAdditionLeadingWhitespace2BigDecimal() {
+        this.testSimpleAdditionLeadingWhitespace2();
+    }
+
+    @Test
+    public void testSimpleAdditionLeadingWhitespace2Double() {
+        this.testSimpleAdditionLeadingWhitespace2();
+    }
+
+    private void testSimpleAdditionLeadingWhitespace2() {
         this.parseEvaluateAndCheck("  1+2", 1 + 2);
     }
 
     @Test
-    public void testSimpleAdditionTrailingWhitespace() {
+    public void testSimpleAdditionTrailingWhitespaceBigDecimal() {
+        this.testSimpleAdditionTrailingWhitespace();
+    }
+
+    @Test
+    public void testSimpleAdditionTrailingWhitespaceDouble() {
+        this.testSimpleAdditionTrailingWhitespace();
+    }
+
+    private void testSimpleAdditionTrailingWhitespace() {
         this.parseEvaluateAndCheck("1+2 ", 1 + 2);
     }
 
     @Test
-    public void testSimpleAdditionTrailingWhitespace2() {
+    public void testSimpleAdditionTrailingWhitespace2BigDecimal() {
+        this.testSimpleAdditionTrailingWhitespace2();
+    }
+
+    @Test
+    public void testSimpleAdditionTrailingWhitespace2Double() {
+        this.testSimpleAdditionTrailingWhitespace2();
+    }
+
+    private void testSimpleAdditionTrailingWhitespace2() {
         this.parseEvaluateAndCheck("1+2  ", 1 + 2);
     }
 
     @Test
-    public void testSimpleAdditionSurroundedByWhitespace() {
+    public void testSimpleAdditionSurroundedByWhitespaceBigDecimal() {
+        this.testSimpleAdditionSurroundedByWhitespace();
+    }
+
+    @Test
+    public void testSimpleAdditionSurroundedByWhitespaceDouble() {
+        this.testSimpleAdditionSurroundedByWhitespace();
+    }
+
+    private void testSimpleAdditionSurroundedByWhitespace() {
         this.parseEvaluateAndCheck(" 1+2 ", 1 + 2);
     }
 
     @Test
-    public void testSimpleMultiplication() {
+    public void testSimpleMultiplicationBigDecimal() {
+        this.testSimpleMultiplication();
+    }
+
+    @Test
+    public void testSimpleMultiplicationDouble() {
+        this.testSimpleMultiplication();
+    }
+
+    private void testSimpleMultiplication() {
         this.parseEvaluateAndCheck("3*4.5", 3 * 4.5);
     }
 
     @Test
-    public void testMathOperatorPriority() {
+    public void testMathOperatorPriorityBigDecimal() {
+        this.testMathOperatorPriority();
+    }
+
+    @Test
+    public void testMathOperatorPriorityDouble() {
+        this.testMathOperatorPriority();
+    }
+
+    private void testMathOperatorPriority() {
         this.parseEvaluateAndCheck("1+2*3+4.5", 1 + 2 * 3 + 4.5);
     }
 
     @Test
-    public void testParenthesis() {
+    public void testParenthesisBigDecimal() {
+        this.testParenthesis();
+    }
+
+    @Test
+    public void testParenthesisDouble() {
+        this.testParenthesis();
+    }
+
+    private void testParenthesis() {
         this.parseEvaluateAndCheck("((1+2))", ((1 + 2)));
     }
 
 // FIXME Spreadsheet parsing ignores everything after the first right parens.
 
     @Test
-    public void testParenthesis2() {
+    public void testParenthesis2BigDecimal() {
+        this.testParenthesis2();
+    }
+
+    @Test
+    public void testParenthesis2Double() {
+        this.testParenthesis2();
+    }
+
+    private void testParenthesis2() {
         this.parseEvaluateAndCheck("(1+2)*3.5", (1 + 2) * 3.5);
     }
 
     @Test
-    public void testParenthesis3() {
+    public void testParenthesis3BigDecimal() {
+        this.testParenthesis3();
+    }
+
+    @Test
+    public void testParenthesis3Double() {
+        this.testParenthesis3();
+    }
+
+    private void testParenthesis3() {
         this.parseEvaluateAndCheck("((1+2)*3.5)", ((1 + 2) * 3.5));
     }
 
     @Test
-    public void testParenthesis4() {
+    public void testParenthesis4BigDecimal() {
+        this.testParenthesis4();
+    }
+
+    @Test
+    public void testParenthesis4Double() {
+        this.testParenthesis4();
+    }
+
+    private void testParenthesis4() {
         this.parseEvaluateAndCheck("(1+2)+(3+4.5)", (1 + 2) + (3 + 4.5));
     }
 
     @Test
-    public void testParenthesis5() {
-        assertEquals(-42.0, (1 + 2) + (3 + 4.5) * -6, 0.5);
-        this.parseEvaluateAndCheck("(1+2)+(3+4.5)*-6", -42.0);
+    public void testParenthesis5BigDecimal() {
+        this.testParenthesis5();
     }
 
     @Test
-    public void testParenthesis6() {
+    public void testParenthesis5Double() {
+        this.testParenthesis5();
+    }
+
+    private void testParenthesis5() {
+        assertEquals(-42.0, (1 + 2) + (3 + 4.5) * -6, 0.5);
+        this.parseEvaluateAndCheck("(1+2)+(3+4.5)*-6", -42);
+    }
+
+    @Test
+    public void testParenthesis6BigDecimal() {
+        this.testParenthesis6();
+    }
+
+    @Test
+    public void testParenthesis6Double() {
+        this.testParenthesis6();
+    }
+
+    private void testParenthesis6() {
         this.parseEvaluateAndCheck("(1+2*(3+4*(5+6)*-7))", (1 + 2 * (3 + 4 * (5 + 6) * -7)));
     }
 
     @Test
-    public void testParenthesis7() {
+    public void testParenthesis7BigDecimal() {
+        this.testParenthesis7();
+    }
+
+    @Test
+    public void testParenthesis7Double() {
+        this.testParenthesis7();
+    }
+
+    private void testParenthesis7() {
         this.parseEvaluateAndCheck("-(1+2*(3+4*(5+6)*-7))", -(1 + 2 * (3 + 4 * (5 + 6) * -7)));
     }
 
-    @SuppressWarnings("PointlessArithmeticExpression")
     @Test
-    public void testParenthesis8() {
+    public void testParenthesis8BigDecimal() {
+        this.testParenthesis8();
+    }
+
+    @Test
+    public void testParenthesis8Double() {
+        this.testParenthesis8();
+    }
+
+    @SuppressWarnings("PointlessArithmeticExpression")
+    private void testParenthesis8() {
         this.parseEvaluateAndCheck("-(1+2*(3+4*(5+6)*-(7*8+(9+0))))", -(1 + 2 * (3 + 4 * (5 + 6) * -(7 * 8 + (9 + 0)))));
     }
 
     @Test
-    public void testParenthesis9() {
+    public void testParenthesis9BigDecimal() {
+        this.testParenthesis9();
+    }
+
+    @Test
+    public void testParenthesis9Double() {
+        this.testParenthesis9();
+    }
+
+    @SuppressWarnings("PointlessArithmeticExpression")
+    private void testParenthesis9() {
         this.parseEvaluateAndCheck("((((1+2))))", ((((1 + 2)))));
     }
 
     @Test
-    public void testParenthesis10() {
-        this.parseEvaluateAndCheck("-(-(-(-(1+2))))", -(-(-(-(1 + 2)))));
+    public void testParenthesis10BigDecimal() {
+        this.testParenthesis10();
+    }
+
+    @Test
+    public void testParenthesis10Double() {
+        this.testParenthesis10();
     }
 
     @SuppressWarnings("PointlessArithmeticExpression")
+    private void testParenthesis10() {
+        this.parseEvaluateAndCheck("-(-(-(-(1+2))))", -(-(-(-(1 + 2)))));
+    }
+
     @Test
-    public void testLongFormulaWithoutParens() {
+    public void testLongFormulaWithoutParensBigDecimal() {
+        this.testLongFormulaWithoutParens();
+    }
+
+    @Test
+    public void testLongFormulaWithoutParensDouble() {
+        this.testLongFormulaWithoutParens();
+    }
+
+    @SuppressWarnings("PointlessArithmeticExpression")
+    private void testLongFormulaWithoutParens() {
         this.parseEvaluateAndCheck("1+2-3+4-5*6+7-8*9", 1 + 2 - 3 + 4 - 5 * 6 + 7 - 8 * 9);
     }
 
     @Test
-    public void testLongFormulaWithoutParens2() {
+    public void testLongFormulaWithoutParens2BigDecimal() {
+        this.testLongFormulaWithoutParens2();
+    }
+
+    @Test
+    public void testLongFormulaWithoutParens2Double() {
+        this.testLongFormulaWithoutParens2();
+    }
+
+    @SuppressWarnings("PointlessArithmeticExpression")
+    private void testLongFormulaWithoutParens2() {
         this.parseEvaluateAndCheck("-1+2-3+4-5*6+7-8*9", -1 + 2 - 3 + 4 - 5 * 6 + 7 - 8 * 9);
     }
 
     @Test
-    public void testLocalDateSubtraction() {
+    public void testLocalDateSubtractionBigDecimal() {
+        this.testLocalDateSubtraction();
+    }
+
+    @Test
+    public void testLocalDateSubtractionDouble() {
+        this.testLocalDateSubtraction();
+    }
+
+    private void testLocalDateSubtraction() {
         this.parseEvaluateAndCheck("toDate(\"2000-01-03\")-toDate(\"1999-12-31\")", 3);// days!
     }
 
     @Test
-    public void testLocalDateTimeSubtraction() {
+    public void testLocalDateTimeSubtractionBigDecimal() {
+        this.testLocalDateTimeSubtraction();
+    }
+
+    @Test
+    public void testLocalDateTimeSubtractionDouble() {
+        this.testLocalDateTimeSubtraction();
+    }
+
+    private void testLocalDateTimeSubtraction() {
         this.parseEvaluateAndCheck("toDateTime(\"2000-02-01T12:00:00\")-toDateTime(\"2000-01-31T06:00:00\")", 1.25); //1 1/4days
     }
 
     @Test
-    public void testLocalTimeSubtraction() {
+    public void testLocalTimeSubtractionBigDecimal() {
+        this.testLocalTimeSubtraction();
+    }
+
+    @Test
+    public void testLocalTimeSubtractionDouble() {
+        this.testLocalTimeSubtraction();
+    }
+
+    private void testLocalTimeSubtraction() {
         this.parseEvaluateAndCheck("toTime(toTime(\"18:00:00\")-toTime(\"06:00:00\"))", "12:00"); //1/2 a day or 12noon
     }
 
-    private void parseEvaluateAndCheck(final String formulaText, final Object expectedText) {
+    private void parseEvaluateAndCheck(final String formulaText,
+                                       final Object expectedText) {
         this.parseEvaluateAndCheck(formulaText, String.valueOf(expectedText));
     }
 
-    private void parseEvaluateAndCheck(final String formulaText, final String expectedText) {
+    private void parseEvaluateAndCheck(final String formulaText,
+                                       final String expectedText) {
+        this.parseEvaluateAndCheck(formulaText, ExpressionNumberKind.BIG_DECIMAL, expectedText);
+        this.parseEvaluateAndCheck(formulaText, ExpressionNumberKind.DOUBLE, expectedText);
+    }
+
+    private void parseEvaluateAndCheck(final String formulaText,
+                                       final ExpressionNumberKind kind,
+                                       final String expectedText) {
         final SpreadsheetParserToken formula = this.parse(formulaText);
-        final Optional<Expression> maybeExpression = formula.expression();
+        final Optional<Expression> maybeExpression = formula.expression(ExpressionNumberContexts.basic(kind, MathContext.DECIMAL32));
         if (!maybeExpression.isPresent()) {
             fail("Failed to convert spreadsheet formula to expression " + CharSequences.quoteAndEscape(formulaText));
         }
         final Expression expression = maybeExpression.get();
-        final String value = expression.toString(this.expressionEvaluationContext());
+        final String value = expression.toString(this.expressionEvaluationContext(kind));
         assertEquals(expectedText, value, "expression " + CharSequences.quoteAndEscape(formulaText) + " as text is");
     }
 
@@ -981,16 +1648,13 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 .cast(SpreadsheetParserToken.class);
     }
 
-    private ExpressionEvaluationContext expressionEvaluationContext() {
+    private ExpressionEvaluationContext expressionEvaluationContext(final ExpressionNumberKind kind) {
         final FunctionExpressionName toDate = FunctionExpressionName.with("toDate");
         final FunctionExpressionName toDateTime = FunctionExpressionName.with("toDateTime");
         final FunctionExpressionName toTime = FunctionExpressionName.with("toTime");
 
         final Function<ConverterContext, ParserContext> parserContext = (c) -> ParserContexts.basic(c, c);
 
-        final Converter stringNumber = Converters.parser(Number.class,
-                Parsers.bigDecimal(),
-                parserContext);
         final Converter stringDouble = Converters.parser(Double.class,
                 Parsers.doubleParser(),
                 parserContext);
@@ -1003,23 +1667,19 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final Converter stringLocalTime = Converters.parser(LocalTime.class,
                 Parsers.localTime((c) -> DateTimeFormatter.ISO_LOCAL_TIME),
                 parserContext);
-        final Converter stringLong = Converters.parser(Long.class,
-                Parsers.longParser(10),
-                parserContext);
 
         final Converter converter = Converters.collection(Lists.of(
                 Converters.simple(),
-                Converters.numberNumber(),
-                Converters.localDateNumber(Converters.JAVA_EPOCH_OFFSET),
-                Converters.localDateTimeNumber(Converters.JAVA_EPOCH_OFFSET),
-                Converters.localTimeNumber(),
-                Converters.numberLocalTime(),
-                stringDouble,
+                ExpressionNumber.toExpressionNumberConverter(),
+                kind.toConverter(Converters.numberNumber()),
+                kind.toConverter(Converters.localDateNumber(Converters.JAVA_EPOCH_OFFSET)),
+                kind.toConverter(Converters.localDateTimeNumber(Converters.JAVA_EPOCH_OFFSET)),
+                kind.toConverter(Converters.localTimeNumber()),
+                ExpressionNumber.fromExpressionNumberConverter(Converters.numberLocalTime()),
+                kind.toConverter(stringDouble),
                 stringLocalDate,
                 stringLocalDateTime,
                 stringLocalTime,
-                stringLong,
-                stringNumber,
                 Converters.objectString()
         ));
 
@@ -1073,12 +1733,101 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     @Override
     public SpreadsheetParserContext createContext() {
-        return SpreadsheetParserContexts.basic(this.dateTimeContext(), this.decimalNumberContext());
+        return this.createContext(this.expressionNumberKind);
     }
 
-    private SpreadsheetParserToken bigDecimal(final double value) {
-        final BigDecimal bigDecimal = BigDecimal.valueOf(value).stripTrailingZeros();
-        return SpreadsheetParserToken.bigDecimal(bigDecimal, bigDecimal.toString());
+    private SpreadsheetParserContext createContext(final ExpressionNumberKind kind) {
+        final DateTimeContext dateTimeContext = this.dateTimeContext();
+        final DecimalNumberContext decimalNumberContext = this.decimalNumberContext();
+        return new SpreadsheetParserContext() {
+            @Override
+            public List<String> ampms() {
+                return dateTimeContext.ampms();
+            }
+
+            @Override
+            public List<String> monthNames() {
+                return dateTimeContext.monthNames();
+            }
+
+            @Override
+            public List<String> monthNameAbbreviations() {
+                return dateTimeContext.monthNameAbbreviations();
+            }
+
+            @Override
+            public int twoDigitYear() {
+                return dateTimeContext.twoDigitYear();
+            }
+
+            @Override
+            public List<String> weekDayNames() {
+                return dateTimeContext.weekDayNames();
+            }
+
+            @Override
+            public List<String> weekDayNameAbbreviations() {
+                return dateTimeContext.weekDayNameAbbreviations();
+            }
+
+            @Override
+            public String currencySymbol() {
+                return decimalNumberContext.currencySymbol();
+            }
+
+            @Override
+            public char decimalSeparator() {
+                return decimalNumberContext.decimalSeparator();
+            }
+
+            @Override
+            public String exponentSymbol() {
+                return decimalNumberContext.exponentSymbol();
+            }
+
+            @Override
+            public char groupingSeparator() {
+                return decimalNumberContext.groupingSeparator();
+            }
+
+            @Override
+            public char percentageSymbol() {
+                return decimalNumberContext.percentageSymbol();
+            }
+
+            @Override
+            public MathContext mathContext() {
+                return decimalNumberContext.mathContext();
+            }
+
+            @Override
+            public char negativeSign() {
+                return decimalNumberContext.negativeSign();
+            }
+
+            @Override
+            public char positiveSign() {
+                return decimalNumberContext.positiveSign();
+            }
+
+            @Override
+            public Locale locale() {
+                return decimalNumberContext.locale();
+            }
+
+            @Override
+            public ExpressionNumberKind expressionNumberKind() {
+                if (null == expressionNumberKind) {
+                    throw new UnsupportedOperationException();
+                }
+                return expressionNumberKind;
+            }
+        };
+    }
+
+    private SpreadsheetParserToken number(final double value) {
+        final ExpressionNumber expressionNumber = this.expressionNumberKind.create(value);
+        return SpreadsheetParserToken.expressionNumber(expressionNumber, expressionNumber.toString());
     }
 
     private SpreadsheetCellReferenceParserToken cell(final int column, final String columnText, final int row) {

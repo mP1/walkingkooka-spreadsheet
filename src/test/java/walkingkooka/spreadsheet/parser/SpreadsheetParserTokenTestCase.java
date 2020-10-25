@@ -24,7 +24,11 @@ import walkingkooka.reflect.PublicStaticFactoryTesting;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokenTesting;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionNumberContext;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
+import java.math.MathContext;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -34,6 +38,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParserToken> implements ClassTesting2<T>,
         IsMethodTesting<T>,
         ParserTokenTesting<T> {
+
+    final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
+    final static ExpressionNumberContext EXPRESSION_NUMBER_CONTEXT = ExpressionNumberContexts.basic(EXPRESSION_NUMBER_KIND, MathContext.DECIMAL32);
 
     SpreadsheetParserTokenTestCase() {
         super();
@@ -68,7 +75,7 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
     }
 
     final void toExpressionAndFail(final T token) {
-        final Optional<Expression> node = token.expression();
+        final Optional<Expression> node = token.expression(EXPRESSION_NUMBER_CONTEXT);
         assertEquals(Optional.empty(), node, "toExpression");
     }
 
@@ -77,7 +84,7 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
     }
 
     final void toExpressionAndCheck(final T token, final Expression expected) {
-        final Optional<Expression> node = token.expression();
+        final Optional<Expression> node = token.expression(EXPRESSION_NUMBER_CONTEXT);
         assertEquals(Optional.of(expected), node, "toExpression");
     }
 

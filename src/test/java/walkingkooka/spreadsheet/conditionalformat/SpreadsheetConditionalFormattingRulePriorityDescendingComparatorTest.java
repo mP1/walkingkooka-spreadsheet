@@ -22,11 +22,15 @@ import walkingkooka.compare.ComparatorTesting;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.util.Optional;
 
 public final class SpreadsheetConditionalFormattingRulePriorityDescendingComparatorTest implements ComparatorTesting<SpreadsheetConditionalFormattingRulePriorityDescendingComparator,
         SpreadsheetConditionalFormattingRule> {
+
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     @Test
     public void testEqual() {
@@ -41,7 +45,7 @@ public final class SpreadsheetConditionalFormattingRulePriorityDescendingCompara
     private SpreadsheetConditionalFormattingRule createRule(final int priority) {
         return SpreadsheetConditionalFormattingRule.with(SpreadsheetDescription.with("description"),
                 priority,
-                SpreadsheetFormula.with("1").setExpression(Optional.of(Expression.longExpression(1))),
+                SpreadsheetFormula.with("1").setExpression(Optional.of(Expression.expressionNumber(EXPRESSION_NUMBER_KIND.create(1)))),
                 (c) -> null);
     }
 

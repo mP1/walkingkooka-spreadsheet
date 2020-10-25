@@ -20,6 +20,9 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberExpression;
 
 import java.util.List;
 
@@ -103,5 +106,21 @@ public abstract class SpreadsheetBinaryParserTokenTestCase<T extends Spreadsheet
         final SpreadsheetParserToken right = this.rightToken();
 
         return this.createToken(right.text() + operatorSymbol.text() + left.text(), right, operatorSymbol, left);
+    }
+
+    final ExpressionNumber expressionNumber1() {
+        return this.expressionNumber(NUMBER1);
+    }
+
+    final ExpressionNumber expressionNumber2() {
+        return this.expressionNumber(NUMBER2);
+    }
+
+    final ExpressionNumberExpression expressionNumberExpression1() {
+        return Expression.expressionNumber(this.expressionNumber1());
+    }
+
+    final ExpressionNumberExpression expressionNumberExpression2() {
+        return Expression.expressionNumber(this.expressionNumber2());
     }
 }

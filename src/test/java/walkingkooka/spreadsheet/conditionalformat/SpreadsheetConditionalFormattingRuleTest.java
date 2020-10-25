@@ -26,6 +26,8 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.text.TextStyle;
 
 import java.util.Optional;
@@ -38,6 +40,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetConditionalFormattingRuleTest implements ClassTesting2<SpreadsheetConditionalFormattingRule>,
         HashCodeEqualsDefinedTesting2<SpreadsheetConditionalFormattingRule>,
         ToStringTesting<SpreadsheetConditionalFormattingRule> {
+
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     @Test
     public void testWithNullDescriptionFails() {
@@ -182,7 +186,7 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
     public void testEqualsDifferentFormula() {
         this.checkNotEquals(SpreadsheetConditionalFormattingRule.with(description(),
                 priority(),
-                SpreadsheetFormula.with("999").setExpression(Optional.of(Expression.longExpression(99))),
+                SpreadsheetFormula.with("999").setExpression(Optional.of(Expression.expressionNumber(EXPRESSION_NUMBER_KIND.create(99)))),
                 style()));
     }
 
@@ -216,7 +220,7 @@ public final class SpreadsheetConditionalFormattingRuleTest implements ClassTest
     }
 
     private SpreadsheetFormula formula() {
-        return this.formulaUncompiled().setExpression(Optional.of(Expression.longExpression(123)));
+        return this.formulaUncompiled().setExpression(Optional.of(Expression.expressionNumber(EXPRESSION_NUMBER_KIND.create(123))));
     }
 
     private SpreadsheetFormula formulaUncompiled() {

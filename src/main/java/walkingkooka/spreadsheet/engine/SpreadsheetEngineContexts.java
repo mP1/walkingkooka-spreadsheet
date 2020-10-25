@@ -25,6 +25,7 @@ import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FunctionExpressionName;
 
 import java.math.BigDecimal;
@@ -38,7 +39,8 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetEngineContext}
      */
-    public static SpreadsheetEngineContext basic(final BiFunction<FunctionExpressionName, List<Object>, Object> functions,
+    public static SpreadsheetEngineContext basic(final ExpressionNumberKind expressionNumberKind,
+                                                 final BiFunction<FunctionExpressionName, List<Object>, Object> functions,
                                                  final SpreadsheetEngine engine,
                                                  final SpreadsheetLabelStore labelStore,
                                                  final Converter converter,
@@ -48,7 +50,8 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final int width,
                                                  final Function<BigDecimal, Fraction> fractioner,
                                                  final SpreadsheetFormatter defaultSpreadsheetFormatter) {
-        return BasicSpreadsheetEngineContext.with(functions,
+        return BasicSpreadsheetEngineContext.with(expressionNumberKind,
+                functions,
                 engine,
                 labelStore,
                 converter,

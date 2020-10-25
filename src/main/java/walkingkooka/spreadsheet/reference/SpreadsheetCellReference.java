@@ -19,11 +19,7 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.Cast;
 import walkingkooka.collect.Range;
 import walkingkooka.compare.Comparators;
-import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
@@ -31,7 +27,6 @@ import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.text.cursor.parser.ParserReporters;
 
-import java.math.MathContext;
 import java.util.Objects;
 
 /**
@@ -56,7 +51,7 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
     static SpreadsheetCellReference parseCellReference0(final String text) {
         try {
             return PARSER.parse(TextCursors.charSequence(text),
-                    CONTEXT)
+                    SpreadsheetReferenceSpreadsheetParserContext.INSTANCE)
                     .get()
                     .cast(SpreadsheetCellReferenceParserToken.class)
                     .cell();
@@ -66,8 +61,6 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
     }
 
     private static final Parser<ParserContext> PARSER = SpreadsheetParsers.columnAndRow().orReport(ParserReporters.basic());
-    private static final SpreadsheetParserContext CONTEXT = SpreadsheetParserContexts.basic(DateTimeContexts.fake(),
-            DecimalNumberContexts.american(MathContext.DECIMAL32));
 
     /**
      * Factory that creates a {@link SpreadsheetCellReference} with the given column and row.

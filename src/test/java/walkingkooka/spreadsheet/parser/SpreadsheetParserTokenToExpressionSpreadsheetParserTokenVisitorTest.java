@@ -17,10 +17,21 @@
 
 package walkingkooka.spreadsheet.parser;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.tree.expression.ExpressionNumberKind;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitorTest extends SpreadsheetParserTokenVisitorTestCase<SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor> {
+
+    @Test
+    public void testNullExpressionNumberContextFails() {
+        assertThrows(NullPointerException.class, () -> SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor.accept(SpreadsheetParserToken.expressionNumber(ExpressionNumberKind.DEFAULT.create(1), "1"), null));
+    }
+
     @Override
     public SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor createVisitor() {
-        return new SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor();
+        return new SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor(null);
     }
 
     @Override

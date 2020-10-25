@@ -74,7 +74,7 @@ public final class SpreadsheetGroupParserTokenTest extends SpreadsheetParentPars
 
     @Test
     public void testToExpression() {
-        this.toExpressionAndCheck(Expression.bigInteger(new BigInteger(NUMBER1, 10)));
+        this.toExpressionAndCheck(Expression.expressionNumber(this.expressionNumber(NUMBER1)));
     }
 
     @Override

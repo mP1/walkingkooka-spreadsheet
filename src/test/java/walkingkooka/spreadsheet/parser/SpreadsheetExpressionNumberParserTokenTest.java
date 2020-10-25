@@ -19,19 +19,20 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.visit.Visiting;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetBigIntegerParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetBigIntegerParserToken, BigInteger> {
+public final class SpreadsheetExpressionNumberParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetExpressionNumberParserToken, ExpressionNumber> {
 
     @Test
     public void testAccept() {
         final StringBuilder b = new StringBuilder();
-        final SpreadsheetBigIntegerParserToken token = this.createToken();
+        final SpreadsheetExpressionNumberParserToken token = this.createToken();
 
         new FakeSpreadsheetParserTokenVisitor() {
             @Override
@@ -61,7 +62,7 @@ public final class SpreadsheetBigIntegerParserTokenTest extends SpreadsheetNonSy
             }
 
             @Override
-            protected void visit(final SpreadsheetBigIntegerParserToken t) {
+            protected void visit(final SpreadsheetExpressionNumberParserToken t) {
                 assertSame(token, t);
                 b.append("5");
             }
@@ -71,31 +72,31 @@ public final class SpreadsheetBigIntegerParserTokenTest extends SpreadsheetNonSy
 
     @Test
     public void testToExpression() {
-        this.toExpressionAndCheck(Expression.bigInteger(this.value()));
+        this.toExpressionAndCheck(Expression.expressionNumber(this.value()));
     }
 
     @Override
     public String text() {
-        return "123";
+        return "123.5";
     }
 
     @Override
-    BigInteger value() {
-        return new BigInteger(this.text());
+    ExpressionNumber value() {
+        return EXPRESSION_NUMBER_KIND.create(new BigDecimal(this.text()));
     }
 
     @Override
-    SpreadsheetBigIntegerParserToken createToken(final BigInteger value, final String text) {
-        return SpreadsheetBigIntegerParserToken.with(value, text);
+    SpreadsheetExpressionNumberParserToken createToken(final ExpressionNumber value, final String text) {
+        return SpreadsheetExpressionNumberParserToken.with(value, text);
     }
 
     @Override
-    public SpreadsheetBigIntegerParserToken createDifferentToken() {
-        return SpreadsheetBigIntegerParserToken.with(BigInteger.valueOf(-1), "'different'");
+    public SpreadsheetExpressionNumberParserToken createDifferentToken() {
+        return SpreadsheetExpressionNumberParserToken.with(EXPRESSION_NUMBER_KIND.create(-1), "'different'");
     }
 
     @Override
-    public Class<SpreadsheetBigIntegerParserToken> type() {
-        return SpreadsheetBigIntegerParserToken.class;
+    public Class<SpreadsheetExpressionNumberParserToken> type() {
+        return SpreadsheetExpressionNumberParserToken.class;
     }
 }

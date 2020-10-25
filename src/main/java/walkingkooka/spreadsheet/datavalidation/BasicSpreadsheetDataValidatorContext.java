@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.datavalidation;
 import walkingkooka.Either;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
 
@@ -101,6 +102,11 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     }
 
     private final ExpressionReference cellReference;
+
+    @Override
+    public ExpressionNumberKind expressionNumberKind() {
+        return this.context.expressionNumberKind();
+    }
 
     @Override
     public Object function(final FunctionExpressionName functionName, final List<Object> list) {

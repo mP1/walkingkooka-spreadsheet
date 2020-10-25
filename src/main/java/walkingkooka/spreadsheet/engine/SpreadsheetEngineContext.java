@@ -24,13 +24,14 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionNumberContext;
 
 import java.util.Optional;
 
 /**
  * Context that accompanies a value format, holding local sensitive attributes such as the decimal point character.
  */
-public interface SpreadsheetEngineContext extends Context, ConvertOrFailFunction {
+public interface SpreadsheetEngineContext extends Context, ConvertOrFailFunction, ExpressionNumberContext {
 
     /**
      * Parses the formula into an {@link Expression}.

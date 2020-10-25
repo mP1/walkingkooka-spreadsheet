@@ -70,7 +70,7 @@ public final class SpreadsheetLessThanParserTokenTest extends SpreadsheetBinaryP
             }
 
             @Override
-            protected void visit(final SpreadsheetBigIntegerParserToken t) {
+            protected void visit(final SpreadsheetExpressionNumberParserToken t) {
                 b.append("5");
                 visited.add(t);
             }

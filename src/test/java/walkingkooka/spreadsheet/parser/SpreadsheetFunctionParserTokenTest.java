@@ -84,7 +84,7 @@ public final class SpreadsheetFunctionParserTokenTest extends SpreadsheetParentP
     public void testToExpression() {
         this.toExpressionAndCheck(Expression.function(
                 FunctionExpressionName.with(FUNCTION),
-                Lists.of(Expression.bigInteger(new BigInteger(NUMBER1, 10)))));
+                Lists.of(Expression.expressionNumber(this.expressionNumber(NUMBER1)))));
     }
 
     private void checkFunction(final SpreadsheetFunctionParserToken function, final SpreadsheetFunctionName name) {

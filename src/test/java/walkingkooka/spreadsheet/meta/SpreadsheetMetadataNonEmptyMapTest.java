@@ -22,6 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.MapTesting2;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 
@@ -83,7 +84,7 @@ public final class SpreadsheetMetadataNonEmptyMapTest implements MapTesting2<Spr
     @Test
     public void testFromEmptyJsonObject() {
         assertSame(SpreadsheetMetadataNonEmptyMap.EMPTY,
-                SpreadsheetMetadataNonEmptyMap.unmarshall(JsonNode.object(), JsonNodeUnmarshallContexts.basic()));
+                SpreadsheetMetadataNonEmptyMap.unmarshall(JsonNode.object(), JsonNodeUnmarshallContexts.basic(ExpressionNumberContexts.fake())));
     }
 
     @Test

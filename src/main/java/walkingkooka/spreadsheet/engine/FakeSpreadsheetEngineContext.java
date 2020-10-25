@@ -23,7 +23,9 @@ import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.test.Fake;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
+import java.math.MathContext;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -45,6 +47,16 @@ public class FakeSpreadsheetEngineContext implements SpreadsheetEngineContext, F
     public <T> Either<T, String> convert(Object value, Class<T> target) {
         Objects.requireNonNull(value, "value");
         Objects.requireNonNull(target, "target");
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public ExpressionNumberKind expressionNumberKind() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public MathContext mathContext() {
         throw new UnsupportedOperationException();
     }
 

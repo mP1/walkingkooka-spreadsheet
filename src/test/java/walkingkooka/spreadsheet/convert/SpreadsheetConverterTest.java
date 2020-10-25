@@ -43,6 +43,8 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -59,6 +61,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
         implements ConverterTesting2<SpreadsheetConverter> {
 
     private final static long DATE_OFFSET = Converters.JAVA_EPOCH_OFFSET;
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     // with.............................................................................................................
 
@@ -72,7 +75,8 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 numberParser(),
                 textFormatter(),
                 timeFormatter(),
-                timeParser());
+                timeParser(),
+                EXPRESSION_NUMBER_KIND);
     }
 
     @Test
@@ -85,7 +89,8 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 numberParser(),
                 textFormatter(),
                 timeFormatter(),
-                timeParser());
+                timeParser(),
+                EXPRESSION_NUMBER_KIND);
     }
 
     @Test
@@ -98,7 +103,8 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 numberParser(),
                 textFormatter(),
                 timeFormatter(),
-                timeParser());
+                timeParser(),
+                EXPRESSION_NUMBER_KIND);
     }
 
     @Test
@@ -111,7 +117,8 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 numberParser(),
                 textFormatter(),
                 timeFormatter(),
-                timeParser());
+                timeParser(),
+                EXPRESSION_NUMBER_KIND);
     }
 
     @Test
@@ -124,7 +131,8 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 numberParser(),
                 textFormatter(),
                 timeFormatter(),
-                timeParser());
+                timeParser(),
+                EXPRESSION_NUMBER_KIND);
     }
 
     @Test
@@ -137,7 +145,8 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 null,
                 textFormatter(),
                 timeFormatter(),
-                timeParser());
+                timeParser(),
+                EXPRESSION_NUMBER_KIND);
     }
 
     @Test
@@ -150,7 +159,8 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 numberParser(),
                 null,
                 timeFormatter(),
-                timeParser());
+                timeParser(),
+                EXPRESSION_NUMBER_KIND);
     }
 
     @Test
@@ -163,7 +173,8 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 numberParser(),
                 textFormatter(),
                 null,
-                timeParser());
+                timeParser(),
+                EXPRESSION_NUMBER_KIND);
     }
 
     @Test
@@ -176,6 +187,21 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 numberParser(),
                 textFormatter(),
                 timeFormatter(),
+                null,
+                EXPRESSION_NUMBER_KIND);
+    }
+
+    @Test
+    public void testWithNullExpressionNumberKindFails() {
+        withFails(dateFormatter(),
+                dateParser(),
+                dateTimeFormatter(),
+                dateTimeParser(),
+                numberFormatter(),
+                numberParser(),
+                textFormatter(),
+                timeFormatter(),
+                timeParser(),
                 null);
     }
 
@@ -187,7 +213,8 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                            final SpreadsheetNumberParsePatterns numberParser,
                            final SpreadsheetFormatter textFormatter,
                            final SpreadsheetFormatter timeFormatter,
-                           final SpreadsheetTimeParsePatterns timeParser) {
+                           final SpreadsheetTimeParsePatterns timeParser,
+                           final ExpressionNumberKind expressionNumberKind) {
         assertThrows(NullPointerException.class, () -> SpreadsheetConverter.with(dateFormatter,
                 dateParser,
                 dateTimeFormatter,
@@ -197,7 +224,8 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 textFormatter,
                 timeFormatter,
                 timeParser,
-                DATE_OFFSET));
+                DATE_OFFSET,
+                expressionNumberKind));
     }
 
     // convert..........................................................................................................
@@ -453,7 +481,8 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 textFormatter(),
                 timeFormatter(),
                 timeParser(),
-                DATE_OFFSET);
+                DATE_OFFSET,
+                EXPRESSION_NUMBER_KIND);
     }
 
     private SpreadsheetFormatter dateFormatter() {
@@ -548,17 +577,18 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
 
     private void convertNumberAndCheck(final Object value,
                                        final double expected) {
-        final Converter numberNumber = Converters.numberNumber();
+        final Converter converter = this.createConverter();
         final ConverterContext context = this.createContext();
 
-        this.convertAndBackCheck(value, numberNumber.convertOrFail(expected, BigDecimal.class, context));
-        this.convertAndBackCheck(value, numberNumber.convertOrFail(expected, BigInteger.class, context));
-        this.convertAndBackCheck(value, numberNumber.convertOrFail(expected, Byte.class, context));
-        this.convertAndBackCheck(value, numberNumber.convertOrFail(expected, Double.class, context));
-        this.convertAndBackCheck(value, numberNumber.convertOrFail(expected, Float.class, context));
-        this.convertAndBackCheck(value, numberNumber.convertOrFail(expected, Integer.class, context));
-        this.convertAndBackCheck(value, numberNumber.convertOrFail(expected, Long.class, context));
-        this.convertAndBackCheck(value, numberNumber.convertOrFail(expected, Short.class, context));
+        this.convertAndBackCheck(value, converter.convertOrFail(expected, BigDecimal.class, context));
+        this.convertAndBackCheck(value, converter.convertOrFail(expected, BigInteger.class, context));
+        this.convertAndBackCheck(value, converter.convertOrFail(expected, Byte.class, context));
+        this.convertAndBackCheck(value, converter.convertOrFail(expected, Double.class, context));
+        this.convertAndBackCheck(value, converter.convertOrFail(expected, Float.class, context));
+        this.convertAndBackCheck(value, converter.convertOrFail(expected, Integer.class, context));
+        this.convertAndBackCheck(value, converter.convertOrFail(expected, Long.class, context));
+        this.convertAndBackCheck(value, converter.convertOrFail(expected, Short.class, context));
+        this.convertAndBackCheck(value, converter.convertOrFail(expected, ExpressionNumber.class, context));
     }
 
     // ClassTesting.....................................................................................................

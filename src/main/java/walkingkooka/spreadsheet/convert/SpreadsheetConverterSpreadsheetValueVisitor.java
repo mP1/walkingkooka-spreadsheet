@@ -22,6 +22,7 @@ import walkingkooka.convert.ConversionException;
 import walkingkooka.convert.Converter;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitor;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.expression.ExpressionNumber;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -77,6 +78,11 @@ final class SpreadsheetConverterSpreadsheetValueVisitor extends SpreadsheetValue
 
     @Override
     protected void visit(final Double value) {
+        this.converter(this.mapping.number);
+    }
+
+    @Override
+    protected void visit(final ExpressionNumber value) {
         this.converter(this.mapping.number);
     }
 

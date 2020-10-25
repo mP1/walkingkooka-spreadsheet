@@ -15,16 +15,20 @@
  *
  */
 
-package walkingkooka.spreadsheet.datavalidation;
+package walkingkooka.spreadsheet.reference;
 
-import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.expression.ExpressionReference;
-import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
+import walkingkooka.reflect.ClassTesting;
+import walkingkooka.reflect.JavaVisibility;
 
-public class FakeSpreadsheetDataValidatorContext extends FakeExpressionEvaluationContext implements SpreadsheetDataValidatorContext {
+public final class SpreadsheetReferenceSpreadsheetParserContextTest implements ClassTesting<SpreadsheetReferenceSpreadsheetParserContext> {
 
     @Override
-    public ExpressionReference cellReference() {
-        throw new UnsupportedOperationException();
+    public Class<SpreadsheetReferenceSpreadsheetParserContext> type() {
+        return SpreadsheetReferenceSpreadsheetParserContext.class;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

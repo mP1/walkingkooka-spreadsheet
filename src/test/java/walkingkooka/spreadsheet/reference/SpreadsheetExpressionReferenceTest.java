@@ -22,6 +22,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
@@ -87,7 +88,7 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     }
 
     private JsonNodeUnmarshallContext unmarshallContext() {
-        return JsonNodeUnmarshallContexts.basic();
+        return JsonNodeUnmarshallContexts.basic(ExpressionNumberContexts.fake());
     }
 
     // parse............................................................................................................

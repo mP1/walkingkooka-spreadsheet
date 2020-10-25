@@ -24,6 +24,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 public final class SpreadsheetConverters implements PublicStaticHelper {
 
@@ -39,7 +40,8 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                                       final SpreadsheetFormatter textFormatter,
                                       final SpreadsheetFormatter timeFormatter,
                                       final SpreadsheetTimeParsePatterns timeParser,
-                                      final long dateOffset) {
+                                      final long dateOffset,
+                                      final ExpressionNumberKind expressionNumberKind) {
         return SpreadsheetConverter.with(dateFormatter,
                 dateParser,
                 dateTimeFormatter,
@@ -49,7 +51,8 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                 textFormatter,
                 timeFormatter,
                 timeParser,
-                dateOffset);
+                dateOffset,
+                expressionNumberKind);
     }
 
     /**

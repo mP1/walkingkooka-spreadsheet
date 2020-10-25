@@ -16,17 +16,20 @@
  */
 package walkingkooka.spreadsheet.parser;
 
-/**
- * Holds a single double precision number.
- */
-public final class SpreadsheetDoubleParserToken extends SpreadsheetNonSymbolParserToken<Double> {
+import walkingkooka.tree.expression.ExpressionNumber;
 
-    static SpreadsheetDoubleParserToken with(final double value, final String text) {
-        checkText(text);
-        return new SpreadsheetDoubleParserToken(value, text);
+/**
+ * Holds a single {@link ExpressionNumber} number.
+ */
+public final class SpreadsheetExpressionNumberParserToken extends SpreadsheetNonSymbolParserToken<ExpressionNumber> {
+
+    static SpreadsheetExpressionNumberParserToken with(final ExpressionNumber value, final String text) {
+        checkValueAndText(value, text);
+
+        return new SpreadsheetExpressionNumberParserToken(value, text);
     }
 
-    private SpreadsheetDoubleParserToken(final Double value, final String text) {
+    private SpreadsheetExpressionNumberParserToken(final ExpressionNumber value, final String text) {
         super(value, text);
     }
 
@@ -39,6 +42,6 @@ public final class SpreadsheetDoubleParserToken extends SpreadsheetNonSymbolPars
 
     @Override
     boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetDoubleParserToken;
+        return other instanceof SpreadsheetExpressionNumberParserToken;
     }
 }

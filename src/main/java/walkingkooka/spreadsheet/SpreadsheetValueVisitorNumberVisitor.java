@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet;
 
 import walkingkooka.math.NumberVisitor;
+import walkingkooka.tree.expression.ExpressionNumber;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -75,7 +76,11 @@ final class SpreadsheetValueVisitorNumberVisitor extends NumberVisitor {
 
     @Override
     protected void visitUnknown(final Number number) {
-        this.visitor.visit(number);
+        if(number instanceof ExpressionNumber) {
+            this.visitor.visit((ExpressionNumber)number);
+        } else {
+            this.visitor.visit(number);
+        }
     }
 
     private final SpreadsheetValueVisitor visitor;

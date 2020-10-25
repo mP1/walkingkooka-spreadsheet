@@ -70,7 +70,7 @@ public final class SpreadsheetNegativeParserTokenTest extends SpreadsheetUnaryPa
             }
 
             @Override
-            protected void visit(final SpreadsheetBigIntegerParserToken t) {
+            protected void visit(final SpreadsheetExpressionNumberParserToken t) {
                 b.append("5");
                 visited.add(t);
             }
@@ -105,7 +105,7 @@ public final class SpreadsheetNegativeParserTokenTest extends SpreadsheetUnaryPa
 
     @Test
     public final void testToExpression() {
-        this.toExpressionAndCheck(Expression.negative(Expression.bigInteger(new BigInteger(NUMBER1, 10))));
+        this.toExpressionAndCheck(Expression.negative(this.expressionNumberExpression()));
     }
 
     @Override

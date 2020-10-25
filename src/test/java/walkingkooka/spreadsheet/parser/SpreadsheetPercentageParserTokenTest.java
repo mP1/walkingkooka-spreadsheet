@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.visit.Visiting;
 
 import java.math.BigInteger;
@@ -70,7 +71,7 @@ public final class SpreadsheetPercentageParserTokenTest extends SpreadsheetUnary
             }
 
             @Override
-            protected void visit(final SpreadsheetBigIntegerParserToken t) {
+            protected void visit(final SpreadsheetExpressionNumberParserToken t) {
                 b.append("5");
                 visited.add(t);
             }
@@ -105,8 +106,7 @@ public final class SpreadsheetPercentageParserTokenTest extends SpreadsheetUnary
 
     @Test
     public final void testToExpression() {
-        this.toExpressionAndCheck(Expression.divide(Expression.bigInteger(new BigInteger(NUMBER1)),
-                Expression.longExpression(100L)));
+        this.toExpressionAndCheck(Expression.divide(this.expressionNumberExpression(), Expression.expressionNumber(EXPRESSION_NUMBER_KIND.create(100))));
     }
 
     @Override
@@ -121,7 +121,7 @@ public final class SpreadsheetPercentageParserTokenTest extends SpreadsheetUnary
 
     @Override
     List<ParserToken> tokens() {
-        return Lists.of(SpreadsheetParserToken.bigInteger(BigInteger.ONE, "100"), this.percentSymbol());
+        return Lists.of(SpreadsheetParserToken.expressionNumber(this.expressionNumber(BigInteger.ONE), "100"), this.percentSymbol());
     }
 
     @Override

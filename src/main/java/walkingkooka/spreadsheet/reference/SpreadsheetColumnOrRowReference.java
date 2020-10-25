@@ -20,11 +20,7 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.collect.Range;
-import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
@@ -39,7 +35,6 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.math.MathContext;
 import java.util.Objects;
 import java.util.function.IntFunction;
 
@@ -109,16 +104,13 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
                                                        final Parser<ParserContext> parser,
                                                        final Class<T> type) {
         try {
-            return parser.parse(TextCursors.charSequence(text), CONTEXT)
+            return parser.parse(TextCursors.charSequence(text), SpreadsheetReferenceSpreadsheetParserContext.INSTANCE)
                     .get()
                     .cast(type);
         } catch (final ParserException cause) {
             throw new IllegalArgumentException(cause.getMessage(), cause);
         }
     }
-
-    private final static SpreadsheetParserContext CONTEXT = SpreadsheetParserContexts.basic(DateTimeContexts.fake(),
-            DecimalNumberContexts.american(MathContext.DECIMAL32));
 
     final static int CACHE_SIZE = 100;
 

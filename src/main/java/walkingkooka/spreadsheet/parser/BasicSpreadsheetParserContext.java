@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
 import java.util.List;
@@ -34,21 +35,27 @@ final class BasicSpreadsheetParserContext implements SpreadsheetParserContext {
      * Creates a new {@link BasicSpreadsheetParserContext}.
      */
     static BasicSpreadsheetParserContext with(final DateTimeContext dateTimeContext,
-                                              final DecimalNumberContext decimalNumberContext) {
+                                              final DecimalNumberContext decimalNumberContext,
+                                              final ExpressionNumberKind expressionNumberKind) {
         Objects.requireNonNull(dateTimeContext, "dateTimeContext");
         Objects.requireNonNull(decimalNumberContext, "decimalNumberContext");
+        Objects.requireNonNull(expressionNumberKind, "expressionNumberKind");
 
-        return new BasicSpreadsheetParserContext(dateTimeContext, decimalNumberContext);
+        return new BasicSpreadsheetParserContext(dateTimeContext,
+                decimalNumberContext,
+                expressionNumberKind);
     }
 
     /**
      * Private ctor use factory
      */
     private BasicSpreadsheetParserContext(final DateTimeContext dateTimeContext,
-                                          final DecimalNumberContext decimalNumberContext) {
+                                          final DecimalNumberContext decimalNumberContext,
+                                          final ExpressionNumberKind expressionNumberKind) {
         super();
         this.dateTimeContext = dateTimeContext;
         this.decimalNumberContext = decimalNumberContext;
+        this.expressionNumberKind = expressionNumberKind;
     }
 
     // DateTimeContext..................................................................................................
@@ -135,7 +142,14 @@ final class BasicSpreadsheetParserContext implements SpreadsheetParserContext {
     private final DecimalNumberContext decimalNumberContext;
 
     @Override
+    public ExpressionNumberKind expressionNumberKind() {
+        return this.expressionNumberKind;
+    }
+
+    private final ExpressionNumberKind expressionNumberKind;
+
+    @Override
     public String toString() {
-        return this.dateTimeContext + " " + this.decimalNumberContext;
+        return this.dateTimeContext + " " + this.decimalNumberContext + " " + this.expressionNumberKind;
     }
 }

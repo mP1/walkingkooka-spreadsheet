@@ -18,16 +18,25 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.ToStringTesting;
+import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
 import java.util.Locale;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class BasicSpreadsheetParserContextTest implements ClassTesting2<BasicSpreadsheetParserContext>,
-        SpreadsheetParserContextTesting<BasicSpreadsheetParserContext> {
+        SpreadsheetParserContextTesting<BasicSpreadsheetParserContext>,
+        ToStringTesting<BasicSpreadsheetParserContext> {
+
+    private final static DateTimeContext DATE_TIME_CONTEXT = DateTimeContexts.fake();
 
     private final static String CURRENCY = "$$";
     private final static char DECIMAL = 'D';
@@ -39,24 +48,58 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     private final static Locale LOCALE = Locale.CANADA_FRENCH;
     private final static MathContext MATH_CONTEXT = MathContext.DECIMAL32;
 
+    private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = DecimalNumberContexts.basic(CURRENCY,
+            DECIMAL,
+            EXPONENT,
+            GROUPING,
+            NEGATIVE,
+            PERCENTAGE,
+            POSITIVE,
+            LOCALE,
+            MATH_CONTEXT);
+
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
+
+    @Test
+    public void testWithNullDateTimeContextFails() {
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetParserContext.with(
+                null,
+                DECIMAL_NUMBER_CONTEXT,
+                EXPRESSION_NUMBER_KIND));
+    }
+
+    @Test
+    public void testWithNullDecimalNumberContextFails() {
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetParserContext.with(
+                DATE_TIME_CONTEXT,
+                null,
+                EXPRESSION_NUMBER_KIND));
+    }
+
+    @Test
+    public void testWithNullExpressionNumberContextFails() {
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetParserContext.with(
+                DATE_TIME_CONTEXT,
+                DECIMAL_NUMBER_CONTEXT,
+                null));
+    }
+
     @Test
     public void testLocale() {
         this.hasLocaleAndCheck(this.createContext(), LOCALE);
     }
 
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(this.createContext(), DATE_TIME_CONTEXT + " " + DECIMAL_NUMBER_CONTEXT + " " + EXPRESSION_NUMBER_KIND);
+    }
+
     @Override
     public BasicSpreadsheetParserContext createContext() {
         return BasicSpreadsheetParserContext.with(
-                DateTimeContexts.fake(),
-                DecimalNumberContexts.basic(CURRENCY,
-                        DECIMAL,
-                        EXPONENT,
-                        GROUPING,
-                        NEGATIVE,
-                        PERCENTAGE,
-                        POSITIVE,
-                        LOCALE,
-                        MATH_CONTEXT));
+                DATE_TIME_CONTEXT,
+                DECIMAL_NUMBER_CONTEXT,
+                EXPRESSION_NUMBER_KIND);
     }
 
     @Override
