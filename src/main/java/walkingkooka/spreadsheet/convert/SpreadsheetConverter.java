@@ -110,7 +110,7 @@ final class SpreadsheetConverter implements Converter {
                 fromBoolean(LocalDate.class, dateTrue, dateFalse),
                 fromBoolean(LocalDateTime.class, dateTimeTrue, dateTimeFalse),
                 Converters.booleanNumber(),
-                fromBoolean(String.class, stringTrue, stringFalse).then(String.class, textFormatter.converter()), // boolean -> String
+                SpreadsheetConverterBooleanString.with(fromBoolean(String.class, stringTrue, stringFalse), textFormatter.converter()), // boolean -> String
                 fromBoolean(LocalTime.class, timeTrue, timeFalse)); // Time
 
         final SpreadsheetConverterMapping<Converter> date = SpreadsheetConverterMapping.with(toBoolean(LocalDate.class, dateFalse),
