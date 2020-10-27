@@ -34,37 +34,37 @@ public class FakeSpreadsheetValueVisitor extends SpreadsheetValueVisitor {
 
     @Override
     protected Visiting startVisit(final Object value) {
-        return super.startVisit(value);
+        throw new UnsupportedOperationException();
     }
 
     @Override
     protected void endVisit(final Object value) {
-        super.endVisit(value);
+        throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visit(final BigDecimal value) {
-        super.visit(value);
+       throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visit(final BigInteger value) {
-        super.visit(value);
+       throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visit(final Boolean value) {
-        super.visit(value);
+       throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visit(final Byte value) {
-        super.visit(value);
+       throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visit(final Double value) {
-        super.visit(value);
+       throw new UnsupportedOperationException();
     }
 
     @Override
@@ -74,31 +74,31 @@ public class FakeSpreadsheetValueVisitor extends SpreadsheetValueVisitor {
 
     @Override
     protected void visit(final LocalDate value) {
-        super.visit(value);
+       throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visit(final LocalDateTime value) {
-        super.visit(value);
+       throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visit(final LocalTime value) {
-        super.visit(value);
+       throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visit(final Long value) {
-        super.visit(value);
+       throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visit(final String value) {
-        super.visit(value);
+       throw new UnsupportedOperationException();
     }
 
     @Override
     protected void visit(final Object value) {
-        super.visit(value);
+       throw new UnsupportedOperationException();
     }
 }
