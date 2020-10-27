@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.convert.Converters;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
@@ -35,7 +36,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements ClassTe
 
         final JsonObject resource = JsonNode.parse(new SpreadsheetMetadataDefaultTextResourceProvider().text())
                 .objectOrFail();
-        final SpreadsheetMetadata metadata = JsonNodeUnmarshallContexts.basic()
+        final SpreadsheetMetadata metadata = JsonNodeUnmarshallContexts.basic(ExpressionNumberContexts.fake())
                 .unmarshall(resource, SpreadsheetMetadata.class);
         assertEquals(Converters.EXCEL_OFFSET, metadata.getOrFail(SpreadsheetMetadataPropertyName.DATETIME_OFFSET), () -> resource.toString());
     }

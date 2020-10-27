@@ -25,10 +25,14 @@ import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
 public abstract class SpreadsheetDataValidatorTemplateTestCase<V extends SpreadsheetDataValidatorTemplate, T> implements SpreadsheetDataValidatorTesting<V, T> {
+
 
     SpreadsheetDataValidatorTemplateTestCase() {
         super();
@@ -46,7 +50,8 @@ public abstract class SpreadsheetDataValidatorTemplateTestCase<V extends Spreads
     final ExpressionEvaluationContext expressionEvaluationContext() {
         final Converter all = Converters.collection(
                 Lists.of(Converters.simple(),
-                        Converters.truthyNumberBoolean()));
+                        ExpressionNumber.toExpressionNumberConverter(),
+                        ExpressionNumber.fromExpressionNumberConverter(Converters.truthyNumberBoolean())));
 
         return new FakeExpressionEvaluationContext() {
             @Override

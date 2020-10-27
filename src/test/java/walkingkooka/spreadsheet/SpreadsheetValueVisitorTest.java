@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.visit.Visiting;
 
 import java.math.BigDecimal;
@@ -33,6 +35,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisitorTesting<SpreadsheetValueVisitor> {
+
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     @Test
     public void testStartVisitSkip() {
@@ -231,6 +235,41 @@ public final class SpreadsheetValueVisitorTest implements SpreadsheetValueVisito
     public void testAcceptDouble2() {
         new SpreadsheetValueVisitor() {
         }.accept(2.0);
+    }
+
+    @Test
+    public void testAcceptExpressionNumber() {
+        final StringBuilder b = new StringBuilder();
+        final ExpressionNumber value = EXPRESSION_NUMBER_KIND.create(123);
+
+        new FakeSpreadsheetValueVisitor() {
+            @Override
+            protected Visiting startVisit(final Object v) {
+                assertSame(value, v);
+                b.append("1");
+                return Visiting.CONTINUE;
+            }
+
+            @Override
+            protected void endVisit(final Object v) {
+                assertSame(value, v);
+                b.append("2");
+            }
+
+            @Override
+            protected void visit(final ExpressionNumber v) {
+                assertSame(value, v);
+                b.append("3");
+            }
+        }.accept(value);
+
+        assertEquals("132", b.toString());
+    }
+
+    @Test
+    public void testAcceptExpressionNumber2() {
+        new SpreadsheetValueVisitor() {
+        }.accept(EXPRESSION_NUMBER_KIND.create(2));
     }
 
     @Test

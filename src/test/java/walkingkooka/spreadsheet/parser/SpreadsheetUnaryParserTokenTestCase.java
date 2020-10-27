@@ -18,18 +18,29 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberExpression;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetUnaryParserTokenTestCase<T extends SpreadsheetUnaryParserToken<T>> extends SpreadsheetParentParserTokenTestCase<T> {
 
     @Test
-    public void testWithMissingNonNoisyToken() {
+    public final void testWithMissingNonNoisyToken() {
         assertThrows(IllegalArgumentException.class, () -> this.createToken("", this.whitespace()));
     }
 
     @Test
-    public void testWithMissingNonNoisyToken2() {
+    public final void testWithMissingNonNoisyToken2() {
         assertThrows(IllegalArgumentException.class, () -> this.createToken("", this.whitespace(), this.whitespace()));
+    }
+
+    final ExpressionNumber expressionNumber() {
+        return this.expressionNumber(1);
+    }
+
+    final ExpressionNumberExpression expressionNumberExpression() {
+        return Expression.expressionNumber(this.expressionNumber());
     }
 }

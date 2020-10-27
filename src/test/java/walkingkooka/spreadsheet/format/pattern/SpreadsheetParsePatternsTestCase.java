@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.text.cursor.parser.ParentParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -39,6 +40,8 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
         T extends SpreadsheetFormatParserToken & ParentParserToken,
         V> extends SpreadsheetPatternTestCase<P, List<T>>
         implements ConverterTesting {
+
+    final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     SpreadsheetParsePatternsTestCase() {
         super();
@@ -255,7 +258,9 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
     }
 
     private SpreadsheetParserContext parserContext() {
-        return SpreadsheetParserContexts.basic(this.dateTimeContext(), this.decimalNumberContext());
+        return SpreadsheetParserContexts.basic(this.dateTimeContext(),
+                this.decimalNumberContext(),
+                EXPRESSION_NUMBER_KIND);
     }
 
     // ConverterTesting.................................................................................................

@@ -26,6 +26,9 @@ import walkingkooka.text.Whitespace;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokenVisitor;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberContext;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.HasExpression;
 import walkingkooka.visit.Visiting;
 
@@ -59,20 +62,6 @@ public abstract class SpreadsheetParserToken implements ParserToken,
     }
 
     /**
-     * {@see SpreadsheetBigDecimalParserToken}
-     */
-    public static SpreadsheetBigDecimalParserToken bigDecimal(final BigDecimal value, final String text) {
-        return SpreadsheetBigDecimalParserToken.with(value, text);
-    }
-
-    /**
-     * {@see SpreadsheetBigIntegerParserToken}
-     */
-    public static SpreadsheetBigIntegerParserToken bigInteger(final BigInteger value, final String text) {
-        return SpreadsheetBigIntegerParserToken.with(value, text);
-    }
-
-    /**
      * {@see SpreadsheetCellReferenceParserToken}
      */
     public static SpreadsheetCellReferenceParserToken cellReference(final List<ParserToken> value, final String text) {
@@ -101,13 +90,6 @@ public abstract class SpreadsheetParserToken implements ParserToken,
     }
 
     /**
-     * {@see SpreadsheetDoubleParserToken}
-     */
-    public static SpreadsheetDoubleParserToken doubleParserToken(final double value, final String text) {
-        return SpreadsheetDoubleParserToken.with(value, text);
-    }
-
-    /**
      * {@see SpreadsheetEqualsParserToken}
      */
     public static SpreadsheetEqualsParserToken equalsParserToken(final List<ParserToken> value, final String text) {
@@ -119,6 +101,13 @@ public abstract class SpreadsheetParserToken implements ParserToken,
      */
     public static SpreadsheetEqualsSymbolParserToken equalsSymbol(final String value, final String text) {
         return SpreadsheetEqualsSymbolParserToken.with(value, text);
+    }
+
+    /**
+     * {@see SpreadsheetExpressionNumberParserToken}
+     */
+    public static SpreadsheetExpressionNumberParserToken expressionNumber(final ExpressionNumber value, final String text) {
+        return SpreadsheetExpressionNumberParserToken.with(value, text);
     }
 
     /**
@@ -231,13 +220,6 @@ public abstract class SpreadsheetParserToken implements ParserToken,
      */
     public static SpreadsheetLocalTimeParserToken localTime(final LocalTime value, final String text) {
         return SpreadsheetLocalTimeParserToken.with(value, text);
-    }
-
-    /**
-     * {@see SpreadsheetLongParserToken}
-     */
-    public static SpreadsheetLongParserToken longParserToken(final long value, final String text) {
-        return SpreadsheetLongParserToken.with(value, text);
     }
 
     /**
@@ -418,20 +400,6 @@ public abstract class SpreadsheetParserToken implements ParserToken,
     }
 
     /**
-     * Only {@link SpreadsheetBigDecimalParserToken} return true
-     */
-    public final boolean isBigDecimal() {
-        return this instanceof SpreadsheetBigDecimalParserToken;
-    }
-
-    /**
-     * Only {@link SpreadsheetBigIntegerParserToken} return true
-     */
-    public final boolean isBigInteger() {
-        return this instanceof SpreadsheetBigIntegerParserToken;
-    }
-
-    /**
      * Only {@link SpreadsheetCellReferenceParserToken} return true
      */
     public final boolean isCellReference() {
@@ -453,13 +421,6 @@ public abstract class SpreadsheetParserToken implements ParserToken,
     }
 
     /**
-     * Only {@link SpreadsheetDoubleParserToken} return true
-     */
-    public final boolean isDouble() {
-        return this instanceof SpreadsheetDoubleParserToken;
-    }
-
-    /**
      * Only {@link SpreadsheetDivisionParserToken} return true
      */
     public final boolean isDivision() {
@@ -478,6 +439,13 @@ public abstract class SpreadsheetParserToken implements ParserToken,
      */
     public final boolean isEqualsSymbol() {
         return this instanceof SpreadsheetEqualsSymbolParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetExpressionNumberParserToken} return true
+     */
+    public final boolean isExpressionNumber() {
+        return this instanceof SpreadsheetExpressionNumberParserToken;
     }
 
     /**
@@ -590,13 +558,6 @@ public abstract class SpreadsheetParserToken implements ParserToken,
      */
     public final boolean isLocalTime() {
         return this instanceof SpreadsheetLocalTimeParserToken;
-    }
-
-    /**
-     * Only {@link SpreadsheetLongParserToken} return true
-     */
-    public final boolean isLong() {
-        return this instanceof SpreadsheetLongParserToken;
     }
 
     /**
@@ -781,8 +742,8 @@ public abstract class SpreadsheetParserToken implements ParserToken,
      * Converts this token to its {@link Expression} equivalent.
      */
     @Override
-    public final Optional<Expression> expression() {
-        return SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor.accept(this);
+    public final Optional<Expression> expression(final ExpressionNumberContext context) {
+        return SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor.accept(this, context);
     }
 
     // Object ...........................................................................................................

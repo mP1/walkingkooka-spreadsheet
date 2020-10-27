@@ -51,6 +51,8 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -283,7 +285,8 @@ public abstract class SpreadsheetMetadata implements HasConverter,
                 textFormat.formatter(),
                 timeFormat.formatter(),
                 timeParser,
-                dateOffset);
+                dateOffset,
+                ExpressionNumberKind.DEFAULT);
     }
 
     /**
@@ -583,7 +586,7 @@ public abstract class SpreadsheetMetadata implements HasConverter,
 
     private static SpreadsheetMetadata nonLocaleDefaults() {
         EMPTY.id(); // force JsonNodeContext registering of collaborating types.
-        return JsonNodeUnmarshallContexts.basic()
+        return JsonNodeUnmarshallContexts.basic(ExpressionNumberContexts.fake())
                 .unmarshall(JsonNode.parse(new SpreadsheetMetadataDefaultTextResourceProvider().text()), SpreadsheetMetadata.class);
     }
 }

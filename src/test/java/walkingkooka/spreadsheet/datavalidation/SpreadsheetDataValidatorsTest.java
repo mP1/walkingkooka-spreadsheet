@@ -31,11 +31,15 @@ import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -670,7 +674,8 @@ public final class SpreadsheetDataValidatorsTest implements ClassTesting2<Spread
     final ExpressionEvaluationContext expressionEvaluationContext() {
         final Converter all = Converters.collection(
                 Lists.of(Converters.simple(),
-                        Converters.truthyNumberBoolean()));
+                        ExpressionNumber.toExpressionNumberConverter(),
+                        ExpressionNumber.fromExpressionNumberConverter(Converters.truthyNumberBoolean())));
 
         return new FakeExpressionEvaluationContext() {
             @Override

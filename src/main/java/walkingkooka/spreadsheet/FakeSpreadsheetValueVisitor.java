@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.visit.Visiting;
 
 import java.math.BigDecimal;
@@ -64,6 +65,11 @@ public class FakeSpreadsheetValueVisitor extends SpreadsheetValueVisitor {
     @Override
     protected void visit(final Double value) {
         super.visit(value);
+    }
+
+    @Override
+    protected void visit(final ExpressionNumber value) {
+        throw new UnsupportedOperationException();
     }
 
     @Override

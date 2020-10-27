@@ -40,10 +40,12 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberExpression;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FunctionExpressionName;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.MathContext;
 import java.util.List;
 import java.util.Locale;
@@ -57,9 +59,27 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngineContextTesting<BasicSpreadsheetEngineContext> {
 
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
+
+    @Test
+    public void testWithNullExpressionNumberKindFails() {
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(null,
+                this.functions(),
+                this.engine(),
+                this.labelStore(),
+                this.converter(),
+                this.converterContext(),
+                this.numberToColor(),
+                this.nameToColor(),
+                WIDTH,
+                FRACTIONER,
+                this.defaultSpreadsheetFormatter()));
+    }
+
     @Test
     public void testWithNullFunctionsFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(null,
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(EXPRESSION_NUMBER_KIND,
+                null,
                 this.engine(),
                 this.labelStore(),
                 this.converter(),
@@ -73,7 +93,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testWithNullEngineFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(this.functions(),
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(EXPRESSION_NUMBER_KIND,
+                this.functions(),
                 null,
                 this.labelStore(),
                 this.converter(),
@@ -87,7 +108,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testWithNullLabelStoreFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(this.functions(),
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(EXPRESSION_NUMBER_KIND,
+                this.functions(),
                 this.engine(),
                 null,
                 this.converter(),
@@ -101,7 +123,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testWithNullConverterFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(this.functions(),
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(EXPRESSION_NUMBER_KIND,
+                this.functions(),
                 this.engine(),
                 this.labelStore(),
                 null,
@@ -115,7 +138,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testWithNullConverterContextFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(this.functions(),
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(EXPRESSION_NUMBER_KIND,
+                this.functions(),
                 this.engine(),
                 this.labelStore(),
                 this.converter(),
@@ -129,7 +153,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testWithNullNumberToColorFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(this.functions(),
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(EXPRESSION_NUMBER_KIND,
+                this.functions(),
                 this.engine(),
                 this.labelStore(),
                 this.converter(),
@@ -143,7 +168,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testWithNullNameToColorFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(this.functions(),
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(EXPRESSION_NUMBER_KIND,
+                this.functions(),
                 this.engine(),
                 this.labelStore(),
                 this.converter(),
@@ -157,7 +183,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testWithInvalidWidthFails() {
-        assertThrows(IllegalArgumentException.class, () -> BasicSpreadsheetEngineContext.with(this.functions(),
+        assertThrows(IllegalArgumentException.class, () -> BasicSpreadsheetEngineContext.with(EXPRESSION_NUMBER_KIND,
+                this.functions(),
                 this.engine(),
                 this.labelStore(),
                 this.converter(),
@@ -171,7 +198,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testWithNullFractionFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(this.functions(),
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(EXPRESSION_NUMBER_KIND,
+                this.functions(),
                 this.engine(),
                 this.labelStore(),
                 this.converter(),
@@ -185,7 +213,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testWithNullDefaultSpreadsheetFormatterFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(this.functions(),
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(EXPRESSION_NUMBER_KIND,
+                this.functions(),
                 this.engine(),
                 this.labelStore(),
                 this.converter(),
@@ -199,12 +228,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testConvert() {
-        this.convertAndCheck(BigInteger.valueOf(1), Boolean.class, Boolean.TRUE);
-    }
-
-    @Test
-    public void testConvert2() {
-        this.convertAndCheck(BigInteger.valueOf(0), Boolean.class, Boolean.FALSE);
+        this.convertAndCheck(BigDecimal.valueOf(123), Integer.class, 123);
     }
 
     @Test
@@ -216,22 +240,22 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testParseFormula() {
         this.parseFormulaAndCheck("1+2",
-                SpreadsheetParserToken.addition(Lists.of(SpreadsheetParserToken.bigDecimal(BigDecimal.valueOf(1), "1"),
+                SpreadsheetParserToken.addition(Lists.of(SpreadsheetParserToken.expressionNumber(this.number(1), "1"),
                         SpreadsheetParserToken.plusSymbol("+", "+"),
-                        SpreadsheetParserToken.bigDecimal(BigDecimal.valueOf(2), "2")),
+                        SpreadsheetParserToken.expressionNumber(this.number(2), "2")),
                         "1+2"));
     }
 
     @Test
     public void testEvaluate() {
-        this.evaluateAndCheck(Expression.add(Expression.longExpression(1), Expression.longExpression(2)),
-                1L + 2);
+        this.evaluateAndCheck(Expression.add(this.expression(1), this.expression(2)),
+                this.number(1 + 2));
     }
 
     @Test
     public void testEvaluateWithFunction() {
         this.evaluateAndCheck(Expression.function(FunctionExpressionName.with("xyz"),
-                Lists.of(Expression.longExpression(1), Expression.longExpression(2), Expression.longExpression(3))),
+                Lists.of(this.expression(1), this.expression(2), this.expression(3))),
                 1L + 2 + 3);
     }
 
@@ -318,7 +342,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testToString() {
         this.toStringAndCheck(this.createContext(),
-                "converter=value==target type | Number->Number | Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean converterContext=DateTimeContext123 \"C\" 'D' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN fractioner=Fractioner123 defaultSpreadsheetFormatter=SpreadsheetFormatter123");
+                "converter=value==target type | ExpressionNumber | Number->Number|ExpressionNumber(Double) | ExpressionNumber|Number->Number converterContext=DateTimeContext123 \"C\" 'D' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN fractioner=Fractioner123 defaultSpreadsheetFormatter=SpreadsheetFormatter123");
     }
 
     @Override
@@ -327,7 +351,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetFormatter defaultSpreadsheetFormatter) {
-        return BasicSpreadsheetEngineContext.with(this.functions(),
+        return BasicSpreadsheetEngineContext.with(EXPRESSION_NUMBER_KIND,
+                this.functions(),
                 this.engine(),
                 this.labelStore(),
                 this.converter(),
@@ -337,6 +362,14 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 WIDTH,
                 FRACTIONER,
                 defaultSpreadsheetFormatter);
+    }
+
+    private ExpressionNumber number(final Number value) {
+        return EXPRESSION_NUMBER_KIND.create(value);
+    }
+
+    private ExpressionNumberExpression expression(final Number value) {
+        return Expression.expressionNumber(this.number(value));
     }
 
     private BiFunction<FunctionExpressionName, List<Object>, Object> functions() {
@@ -364,9 +397,13 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     private Converter converter() {
         return Converters.collection(
-                Lists.of(Converters.simple(),
-                        Converters.numberNumber(),
-                        Converters.truthyNumberBoolean()));
+                Lists.of(
+                        Converters.simple(),
+                        ExpressionNumber.toExpressionNumberConverter(),
+                        EXPRESSION_NUMBER_KIND.toConverter(Converters.numberNumber()),
+                        ExpressionNumber.fromExpressionNumberConverter(Converters.numberNumber())
+                )
+        );
     }
 
     private ConverterContext converterContext() {

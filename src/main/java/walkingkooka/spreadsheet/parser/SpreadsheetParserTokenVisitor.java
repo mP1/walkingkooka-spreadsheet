@@ -199,14 +199,6 @@ public abstract class SpreadsheetParserTokenVisitor extends ParserTokenVisitor {
         // nop
     }
 
-    protected void visit(final SpreadsheetBigDecimalParserToken token) {
-        // nop
-    }
-
-    protected void visit(final SpreadsheetBigIntegerParserToken token) {
-        // nop
-    }
-
     protected void visit(final SpreadsheetColumnReferenceParserToken token) {
         // nop
     }
@@ -215,11 +207,11 @@ public abstract class SpreadsheetParserTokenVisitor extends ParserTokenVisitor {
         // nop
     }
 
-    protected void visit(final SpreadsheetDoubleParserToken token) {
+    protected void visit(final SpreadsheetEqualsSymbolParserToken token) {
         // nop
     }
 
-    protected void visit(final SpreadsheetEqualsSymbolParserToken token) {
+    protected void visit(final SpreadsheetExpressionNumberParserToken token) {
         // nop
     }
 
@@ -260,10 +252,6 @@ public abstract class SpreadsheetParserTokenVisitor extends ParserTokenVisitor {
     }
 
     protected void visit(final SpreadsheetLocalTimeParserToken token) {
-        // nop
-    }
-
-    protected void visit(final SpreadsheetLongParserToken token) {
         // nop
     }
 

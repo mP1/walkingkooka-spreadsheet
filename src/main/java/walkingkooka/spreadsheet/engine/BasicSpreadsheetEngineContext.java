@@ -42,9 +42,11 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FunctionExpressionName;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -60,7 +62,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     /**
      * Creates a new {@link BasicSpreadsheetEngineContext}
      */
-    static BasicSpreadsheetEngineContext with(final BiFunction<FunctionExpressionName, List<Object>, Object> functions,
+    static BasicSpreadsheetEngineContext with(final ExpressionNumberKind expressionNumberKind,
+                                              final BiFunction<FunctionExpressionName, List<Object>, Object> functions,
                                               final SpreadsheetEngine engine,
                                               final SpreadsheetLabelStore labelStore,
                                               final Converter converter,
@@ -70,6 +73,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                               final int width,
                                               final Function<BigDecimal, Fraction> fractioner,
                                               final SpreadsheetFormatter defaultSpreadsheetFormatter) {
+        Objects.requireNonNull(expressionNumberKind, "expressionNumberKind");
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(labelStore, "labelStore");
@@ -83,7 +87,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         Objects.requireNonNull(fractioner, "fractioner");
         Objects.requireNonNull(defaultSpreadsheetFormatter, "defaultSpreadsheetFormatter");
 
-        return new BasicSpreadsheetEngineContext(functions,
+        return new BasicSpreadsheetEngineContext(expressionNumberKind,
+                functions,
                 engine,
                 labelStore,
                 converter,
@@ -98,7 +103,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     /**
      * Private ctor use factory.
      */
-    private BasicSpreadsheetEngineContext(final BiFunction<FunctionExpressionName, List<Object>, Object> functions,
+    private BasicSpreadsheetEngineContext(final ExpressionNumberKind expressionNumberKind,
+                                          final BiFunction<FunctionExpressionName, List<Object>, Object> functions,
                                           final SpreadsheetEngine engine,
                                           final SpreadsheetLabelStore labelStore,
                                           final Converter converter,
@@ -109,7 +115,10 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final Function<BigDecimal, Fraction> fractioner,
                                           final SpreadsheetFormatter defaultSpreadsheetFormatter) {
         super();
-        this.parserContext = SpreadsheetParserContexts.basic(converterContext, converterContext);
+        this.expressionNumberKind = expressionNumberKind;
+        this.parserContext = SpreadsheetParserContexts.basic(converterContext,
+                converterContext,
+                expressionNumberKind);
 
         this.functions = functions;
         this.function = SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(engine, labelStore, this);
@@ -141,7 +150,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     @Override
     public Object evaluate(final Expression node) {
-        return node.toValue(ExpressionEvaluationContexts.basic(this.functions,
+        return node.toValue(ExpressionEvaluationContexts.basic(this.expressionNumberKind(),
+                this.functions,
                 this.function,
                 this.converter,
                 this.converterContext));
@@ -164,6 +174,20 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     private final Converter converter;
     private final ConverterContext converterContext;
+
+    // ExpressionNumberContext..........................................................................................
+
+    @Override
+    public ExpressionNumberKind expressionNumberKind() {
+        return this.expressionNumberKind;
+    }
+
+    final ExpressionNumberKind expressionNumberKind;
+
+    @Override
+    public MathContext mathContext() {
+        return this.converterContext.mathContext();
+    }
 
     // parsing and formatting text......................................................................................
 

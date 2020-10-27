@@ -24,15 +24,13 @@ import walkingkooka.collect.stack.Stack;
 import walkingkooka.collect.stack.Stacks;
 import walkingkooka.spreadsheet.parser.SpreadsheetAdditionParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetBetweenSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetBigDecimalParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetBigIntegerParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDivideSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDivisionParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetDoubleParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetEqualsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetEqualsSymbolParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetExpressionNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetFunctionNameParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetFunctionParameterSeparatorSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetFunctionParserToken;
@@ -49,7 +47,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetLessThanSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetLocalDateParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetLocalDateTimeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetLocalTimeParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetLongParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMinusSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMultiplicationParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMultiplySymbolParserToken;
@@ -301,16 +298,6 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
     }
 
     @Override
-    protected final void visit(final SpreadsheetBigDecimalParserToken token) {
-        this.leaf(token);
-    }
-
-    @Override
-    protected final void visit(final SpreadsheetBigIntegerParserToken token) {
-        this.leaf(token);
-    }
-
-    @Override
     protected final void visit(final SpreadsheetColumnReferenceParserToken token) {
         final SpreadsheetColumnReference reference = token.value();
 
@@ -345,12 +332,12 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
     }
 
     @Override
-    protected final void visit(final SpreadsheetDoubleParserToken token) {
+    protected final void visit(final SpreadsheetEqualsSymbolParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected final void visit(final SpreadsheetEqualsSymbolParserToken token) {
+    protected final void visit(final SpreadsheetExpressionNumberParserToken token) {
         this.leaf(token);
     }
 
@@ -401,11 +388,6 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void visit(final SpreadsheetLocalTimeParserToken token) {
-        this.leaf(token);
-    }
-
-    @Override
-    protected final void visit(final SpreadsheetLongParserToken token) {
         this.leaf(token);
     }
 

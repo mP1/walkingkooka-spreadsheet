@@ -22,6 +22,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserTesting2;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 public abstract class SpreadsheetParserTestCase<P extends Parser<SpreadsheetParserContext>,
         T extends SpreadsheetParserToken>
@@ -29,13 +30,17 @@ public abstract class SpreadsheetParserTestCase<P extends Parser<SpreadsheetPars
         ParserTesting2<P, SpreadsheetParserContext>,
         TypeNameTesting<P> {
 
+    final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
+
     SpreadsheetParserTestCase() {
         super();
     }
 
     @Override
     public final SpreadsheetParserContext createContext() {
-        return SpreadsheetParserContexts.basic(this.dateTimeContext(), this.decimalNumberContext());
+        return SpreadsheetParserContexts.basic(this.dateTimeContext(),
+                this.decimalNumberContext(),
+                EXPRESSION_NUMBER_KIND);
     }
 
     // TypeNameTesting .........................................................................................

@@ -26,6 +26,8 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTokenVisitorTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
 
@@ -33,10 +35,14 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitorTest implements SpreadsheetParserTokenVisitorTesting<BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor> {
 
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
+
     @Test
     public void testZeroZeroOffset() {
         final SpreadsheetParserToken token = SpreadsheetParsers.cellReferences()
-                .parse(TextCursors.charSequence("$A$1"), SpreadsheetParserContexts.basic(DateTimeContexts.fake(), DecimalNumberContexts.american(MathContext.DECIMAL32)))
+                .parse(TextCursors.charSequence("$A$1"), SpreadsheetParserContexts.basic(DateTimeContexts.fake(),
+                        DecimalNumberContexts.american(MathContext.DECIMAL32),
+                        EXPRESSION_NUMBER_KIND))
                 .map(SpreadsheetParserToken.class::cast)
                 .orElseThrow(() -> new Error("Unable to parse"));
         assertSame(token,
@@ -46,7 +52,7 @@ public final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerS
     @Test
     public void testToString() {
         final BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor visitor = new BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor(12, 34);
-        visitor.visit(SpreadsheetParserToken.doubleParserToken(1.24, "1.24"));
+        visitor.visit(SpreadsheetParserToken.expressionNumber(EXPRESSION_NUMBER_KIND.create(1.24), "1.24"));
         this.toStringAndCheck(visitor, "12,34 [1.24], []");
     }
 

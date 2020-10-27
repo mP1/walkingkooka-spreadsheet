@@ -26,28 +26,18 @@ public abstract class SpreadsheetBinaryParserTokenTestCase2<T extends Spreadshee
 
     @Test
     public final void testToExpression() {
-        this.toExpressionAndCheck(this.expressionNode(
-                Expression.bigInteger(leftBigInteger()),
-                Expression.bigInteger(rightBigInteger())));
+        this.toExpressionAndCheck(this.expressionNode(this.expressionNumberExpression1(), this.expressionNumberExpression2()));
     }
 
     abstract Expression expressionNode(final Expression left, final Expression right);
 
     @Override
     final SpreadsheetParserToken leftToken() {
-        return SpreadsheetParserToken.bigInteger(leftBigInteger(), "1");
-    }
-
-    private BigInteger leftBigInteger() {
-        return BigInteger.valueOf(1);
+        return this.number1();
     }
 
     @Override
     final SpreadsheetParserToken rightToken() {
-        return SpreadsheetParserToken.bigInteger(rightBigInteger(), "22");
-    }
-
-    private BigInteger rightBigInteger() {
-        return BigInteger.valueOf(22);
+        return this.number2();
     }
 }

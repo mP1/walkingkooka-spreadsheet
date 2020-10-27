@@ -20,7 +20,12 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberExpression;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -28,6 +33,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetParentParserTokenTestCase<T extends SpreadsheetParentParserToken<T>> extends SpreadsheetParserTokenTestCase<T> {
+
+    final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     final static String NUMBER1 = "1";
     final static String NUMBER2 = "22";
@@ -82,16 +89,16 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
         return SpreadsheetParserToken.minusSymbol("-", "-");
     }
 
-    final SpreadsheetBigIntegerParserToken number1() {
-        return this.number(1);
+    final SpreadsheetExpressionNumberParserToken number1() {
+        return this.number(NUMBER1);
     }
 
-    final SpreadsheetBigIntegerParserToken number2() {
-        return this.number(2);
+    final SpreadsheetExpressionNumberParserToken number2() {
+        return this.number(NUMBER2);
     }
 
-    final SpreadsheetBigIntegerParserToken number(final int value) {
-        return SpreadsheetParserToken.bigInteger(BigInteger.valueOf(value), String.valueOf(value));
+    final SpreadsheetExpressionNumberParserToken number(final String value) {
+        return SpreadsheetParserToken.expressionNumber(expressionNumber(value), value);
     }
 
     final SpreadsheetPercentSymbolParserToken percentSymbol() {
@@ -108,5 +115,17 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
 
     final SpreadsheetParenthesisCloseSymbolParserToken closeParenthesisSymbol() {
         return SpreadsheetParserToken.parenthesisCloseSymbol(")", ")");
+    }
+
+    final ExpressionNumber expressionNumber(final String value) {
+        return this.expressionNumber(new BigDecimal(value));
+    }
+
+    final ExpressionNumber expressionNumber(final Number value) {
+        return EXPRESSION_NUMBER_KIND.create(value);
+    }
+
+    final ExpressionNumberExpression expressionNumberExpression(final Number value) {
+        return Expression.expressionNumber(this.expressionNumber(value));
     }
 }

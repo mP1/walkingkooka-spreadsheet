@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.visit.Visiting;
 import walkingkooka.visit.Visitor;
 
@@ -93,6 +94,10 @@ public abstract class SpreadsheetValueVisitor extends Visitor<Object> {
     }
 
     protected void visit(final Byte value) {
+        // nop
+    }
+
+    protected void visit(final ExpressionNumber value) {
         // nop
     }
 

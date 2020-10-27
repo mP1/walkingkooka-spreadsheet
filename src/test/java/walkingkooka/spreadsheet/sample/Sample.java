@@ -57,6 +57,7 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
 
@@ -74,6 +75,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public final class Sample {
+
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     public static void main(final String[] args) {
         final SpreadsheetCellStore cellStore = cellStore();
@@ -115,7 +118,7 @@ public final class Sample {
                     .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, 'D')
                     .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E")
                     .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, 'G')
-                    .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
+                    .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
                     .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"))
                     .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.of(1999, 12, 31, 12, 58, 59))
                     .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, 'N')
@@ -164,13 +167,16 @@ public final class Sample {
             public SpreadsheetParserToken parseFormula(final String formula) {
                 return Cast.to(SpreadsheetParsers.expression()
                         .orFailIfCursorNotEmpty(ParserReporters.basic())
-                        .parse(TextCursors.charSequence(formula), SpreadsheetParserContexts.basic(DateTimeContexts.fake(), metadata.converterContext()))
+                        .parse(TextCursors.charSequence(formula), SpreadsheetParserContexts.basic(DateTimeContexts.fake(),
+                                metadata.converterContext(),
+                                EXPRESSION_NUMBER_KIND)) // TODO should fetch from metadata prop
                         .get());
             }
 
             @Override
             public Object evaluate(final Expression node) {
-                return node.toValue(ExpressionEvaluationContexts.basic(functions(),
+                return node.toValue(ExpressionEvaluationContexts.basic(EXPRESSION_NUMBER_KIND,
+                        functions(),
                         references(),
                         metadata.converter(),
                         metadata.converterContext()));
@@ -189,7 +195,7 @@ public final class Sample {
             @Override
             public <T> Either<T, String> convert(final Object value, final Class<T> target) {
                 assertEquals(Boolean.class, target, "Only support converting to Boolean=" + value);
-                return Either.left(target.cast(Boolean.parseBoolean(String.valueOf(value))));
+                return Cast.to(Either.left(Boolean.parseBoolean(String.valueOf(value))));
             }
 
             @Override

@@ -28,6 +28,8 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -55,7 +57,8 @@ final class SpreadsheetConverter implements Converter {
                                      final SpreadsheetFormatter textFormatter,
                                      final SpreadsheetFormatter timeFormatter,
                                      final SpreadsheetTimeParsePatterns timeParser,
-                                     final long dateOffset) {
+                                     final long dateOffset,
+                                     final ExpressionNumberKind expressionNumberKind) {
         Objects.requireNonNull(dateFormatter, "dateFormatter");
         Objects.requireNonNull(dateParser, "dateParser");
 
@@ -70,6 +73,8 @@ final class SpreadsheetConverter implements Converter {
         Objects.requireNonNull(timeFormatter, "timeFormatter");
         Objects.requireNonNull(timeParser, "timeParser");
 
+        Objects.requireNonNull(expressionNumberKind, "expressionNumberKind");
+
         return new SpreadsheetConverter(dateFormatter,
                 dateParser,
                 dateTimeFormatter,
@@ -79,7 +84,8 @@ final class SpreadsheetConverter implements Converter {
                 textFormatter,
                 timeFormatter,
                 timeParser,
-                dateOffset);
+                dateOffset,
+                expressionNumberKind);
     }
 
     private SpreadsheetConverter(final SpreadsheetFormatter dateFormatter,
@@ -91,7 +97,8 @@ final class SpreadsheetConverter implements Converter {
                                  final SpreadsheetFormatter textFormatter,
                                  final SpreadsheetFormatter timeFormatter,
                                  final SpreadsheetTimeParsePatterns timeParser,
-                                 final long dateOffset) {
+                                 final long dateOffset,
+                                 final ExpressionNumberKind expressionNumberKind) {
         super();
 
         final LocalDate dateTrue = LocalDate.ofEpochDay(dateOffset + 1);
@@ -106,47 +113,59 @@ final class SpreadsheetConverter implements Converter {
         final LocalTime timeTrue = LocalTime.ofSecondOfDay(1);
         final LocalTime timeFalse = LocalTime.MIDNIGHT;
 
-        final SpreadsheetConverterMapping<Converter> booleanConverter = SpreadsheetConverterMapping.with(Converters.simple(), // boolean -> boolean
+        // wrap all number from/to converters to also handle ExpressionNumber
+
+        // boolean ->
+        final SpreadsheetConverterMapping<Converter> booleanConverter = SpreadsheetConverterMapping.with(
+                Converters.simple(), // boolean -> boolean
                 fromBoolean(LocalDate.class, dateTrue, dateFalse),
                 fromBoolean(LocalDateTime.class, dateTimeTrue, dateTimeFalse),
-                Converters.booleanNumber(),
+                expressionNumberKind.toConverter(Converters.booleanNumber()),
                 SpreadsheetConverterBooleanString.with(fromBoolean(String.class, stringTrue, stringFalse), textFormatter.converter()), // boolean -> String
                 fromBoolean(LocalTime.class, timeTrue, timeFalse)); // Time
 
-        final SpreadsheetConverterMapping<Converter> date = SpreadsheetConverterMapping.with(toBoolean(LocalDate.class, dateFalse),
+        // LocalDate ->
+        final SpreadsheetConverterMapping<Converter> date = SpreadsheetConverterMapping.with(
+                toBoolean(LocalDate.class, dateFalse),
                 null, // date -> date
                 Converters.localDateLocalDateTime(),
-                Converters.localDateNumber(dateOffset),
+                expressionNumberKind.toConverter(Converters.localDateNumber(dateOffset)),
                 dateFormatter.converter(),
                 null); // date -> time INVALID
 
-        final SpreadsheetConverterMapping<Converter> dateTime = SpreadsheetConverterMapping.with(toBoolean(LocalDateTime.class, dateTimeFalse),
+        // LocalDateTime ->
+        final SpreadsheetConverterMapping<Converter> dateTime = SpreadsheetConverterMapping.with(
+                toBoolean(LocalDateTime.class, dateTimeFalse),
                 Converters.localDateTimeLocalDate(),
                 null, // dateTime -> dateTime
-                Converters.localDateTimeNumber(dateOffset),
+                expressionNumberKind.toConverter(Converters.localDateTimeNumber(dateOffset)),
                 dateTimeFormatter.converter(),
                 Converters.localDateTimeLocalTime());
 
-        final SpreadsheetConverterMapping<Converter> number = SpreadsheetConverterMapping.with(Converters.truthyNumberBoolean(),
-                Converters.numberLocalDate(dateOffset),
-                Converters.numberLocalDateTime(dateOffset),
-                Converters.numberNumber(),
-                numberFormatter.converter(),
-                Converters.numberLocalTime());
+        // Number ->
+        final SpreadsheetConverterMapping<Converter> number = SpreadsheetConverterMapping.with(
+                ExpressionNumber.fromExpressionNumberConverter(Converters.truthyNumberBoolean()),
+                ExpressionNumber.fromExpressionNumberConverter(Converters.numberLocalDate(dateOffset)),
+                ExpressionNumber.fromExpressionNumberConverter(Converters.numberLocalDateTime(dateOffset)),
+                expressionNumberKind.toConverter(ExpressionNumber.fromExpressionNumberConverter(Converters.numberNumber())),
+                ExpressionNumber.fromExpressionNumberConverter(numberFormatter.converter()),
+                ExpressionNumber.fromExpressionNumberConverter(Converters.numberLocalTime()));
 
-        final SpreadsheetConverterMapping<Converter> string = SpreadsheetConverterMapping.with(toBoolean(String.class, stringFalse), // string -> boolean
+        // String ->
+        final SpreadsheetConverterMapping<Converter> string = SpreadsheetConverterMapping.with(
+                toBoolean(String.class, stringFalse), // string -> boolean
                 dateParser.converter(),
                 dateTimeParser.converter(),
-                numberParser.converter(),
+                expressionNumberKind.toConverter(numberParser.converter()),
                 textFormatter.converter(), // String -> String
                 timeParser.converter()
         );
 
-        // time to
+        // LocalTime ->
         final SpreadsheetConverterMapping<Converter> time = SpreadsheetConverterMapping.with(toBoolean(LocalTime.class, timeFalse),
                 null, // time -> date invalid
                 Converters.localDateTimeLocalTime(),
-                Converters.localTimeNumber(),
+                ExpressionNumber.fromExpressionNumberConverter(Converters.localTimeNumber()),
                 timeFormatter.converter(),
                 null); // time -> time
 
@@ -226,6 +245,9 @@ final class SpreadsheetConverter implements Converter {
             Short.class,
             Float.class,
             Double.class,
+            ExpressionNumber.class,
+            ExpressionNumberKind.BIG_DECIMAL.create(1).getClass(),
+            ExpressionNumberKind.DOUBLE.create(1).getClass(),
             String.class);
 
     @Override

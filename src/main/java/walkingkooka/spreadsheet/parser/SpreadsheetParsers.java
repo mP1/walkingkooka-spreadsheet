@@ -41,6 +41,7 @@ import walkingkooka.text.cursor.parser.ebnf.EbnfGrammarParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfIdentifierName;
 import walkingkooka.text.cursor.parser.ebnf.EbnfParserContexts;
 import walkingkooka.text.cursor.parser.ebnf.EbnfParserToken;
+import walkingkooka.tree.expression.ExpressionNumber;
 
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -276,8 +277,14 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     private static final Parser<ParserContext> NUMBER = Parsers.bigDecimal()
             .transform(SpreadsheetParsers::transformNumber);
 
-    private static ParserToken transformNumber(final ParserToken token, final ParserContext context) {
-        return SpreadsheetParserToken.bigDecimal(((BigDecimalParserToken) token).value(), token.text());
+    private static ParserToken transformNumber(final ParserToken token,
+                                               final ParserContext context) {
+        return transformNumber0(token.cast(BigDecimalParserToken.class), (SpreadsheetParserContext)context);
+    }
+
+    private static ParserToken transformNumber0(final BigDecimalParserToken token,
+                                                final SpreadsheetParserContext context) {
+        return SpreadsheetParserToken.expressionNumber(context.expressionNumberKind().create(token.value()), token.text());
     }
 
     private static final EbnfIdentifierName PERCENT_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("PERCENT_SYMBOL");
