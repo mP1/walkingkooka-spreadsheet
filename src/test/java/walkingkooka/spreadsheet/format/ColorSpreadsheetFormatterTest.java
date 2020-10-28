@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
+import walkingkooka.Either;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatColorParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
@@ -69,7 +71,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
         this.parseFormatAndCheck0(
                 "[RED]",
                 text,
-                new FakeSpreadsheetFormatterContext() {
+                new TestSpreadsheetFormatterContext() {
                     @Override
                     public Optional<Color> colorName(final SpreadsheetColorName name) {
                         assertEquals(SpreadsheetColorName.with("RED"), name, "color name");
@@ -86,7 +88,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
         this.parseFormatAndCheck0(
                 "[RED]",
                 text,
-                new FakeSpreadsheetFormatterContext() {
+                new TestSpreadsheetFormatterContext() {
                     @Override
                     public Optional<Color> colorName(final SpreadsheetColorName name) {
                         assertEquals(SpreadsheetColorName.with("RED"), name, "color name");
@@ -103,7 +105,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
         this.parseFormatAndCheck0(
                 "[COLOR 15]",
                 text,
-                new FakeSpreadsheetFormatterContext() {
+                new TestSpreadsheetFormatterContext() {
                     @Override
                     public Optional<Color> colorNumber(final int number) {
                         assertEquals(15, number);
@@ -135,7 +137,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
                             }
                         })),
                 text,
-                new FakeSpreadsheetFormatterContext() {
+                new TestSpreadsheetFormatterContext() {
                     @Override
                     public Optional<Color> colorNumber(final int number) {
                         assertEquals(2, number);
@@ -152,7 +154,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
         this.parseFormatAndCheck0(
                 "[COLOR 15]",
                 text,
-                new FakeSpreadsheetFormatterContext() {
+                new TestSpreadsheetFormatterContext() {
                     @Override
                     public Optional<Color> colorNumber(final int number) {
                         assertEquals(15, number);
@@ -212,13 +214,7 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
 
     @Override
     public SpreadsheetFormatterContext createContext() {
-        return new FakeSpreadsheetFormatterContext() {
-
-            @Override
-            public boolean canConvert(final Object value,
-                                      final Class<?> target) {
-                return value instanceof String && String.class == target;
-            }
+        return new TestSpreadsheetFormatterContext() {
 
             @Override
             public Optional<Color> colorNumber(final int number) {
@@ -231,6 +227,26 @@ public final class ColorSpreadsheetFormatterTest extends SpreadsheetFormatter3Te
                 return "colorNumber: " + COLOR_NUMBER + "=" + COLOR;
             }
         };
+    }
+
+    abstract class TestSpreadsheetFormatterContext extends FakeSpreadsheetFormatterContext {
+
+        TestSpreadsheetFormatterContext() {
+            super();
+        }
+
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> target) {
+            return value instanceof String && String.class == target;
+        }
+
+        @Override
+        public <T> Either<T, String> convert(final Object value, final Class<T> target) {
+            return this.canConvert(value, target) ?
+                    Either.left(Cast.to(value.toString())) :
+                    this.failConversion(value, target);
+        }
     }
 
     @Override
