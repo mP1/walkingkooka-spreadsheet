@@ -19,19 +19,22 @@ package walkingkooka.spreadsheet.datavalidation;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 public final class CustomFormulaSpreadsheetDataValidatorTest extends SpreadsheetDataValidatorTemplateTestCase<CustomFormulaSpreadsheetDataValidator, Object> {
 
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     private final static long VALUE = 123;
 
     @Test
     public void testCustomFormulaTrue() {
-        this.validatePassCheck(VALUE + 1);
+        this.validatePassCheck(EXPRESSION_NUMBER_KIND.create(VALUE + 1));
     }
 
     @Test
     public void testCustomFormulaFalse() {
-        this.validateFailCheck(VALUE - 1);
+        this.validateFailCheck(EXPRESSION_NUMBER_KIND.create(VALUE - 1));
     }
 
     @Test
@@ -47,12 +50,12 @@ public final class CustomFormulaSpreadsheetDataValidatorTest extends Spreadsheet
     private Expression expression() {
         return Expression.greaterThan(
                 Expression.reference(this.cellReference()),
-                Expression.valueOrFail(VALUE));
+                Expression.valueOrFail(this.value()));
     }
 
     @Override
-    public Long value() {
-        return VALUE;
+    public ExpressionNumber value() {
+        return EXPRESSION_NUMBER_KIND.create(VALUE);
     }
 
     @Override
