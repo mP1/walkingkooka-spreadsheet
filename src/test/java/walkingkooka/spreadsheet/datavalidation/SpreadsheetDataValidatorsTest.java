@@ -32,14 +32,11 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
 import java.lang.reflect.Method;
-import java.math.BigDecimal;
-import java.math.MathContext;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -47,269 +44,275 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public final class SpreadsheetDataValidatorsTest implements ClassTesting2<SpreadsheetDataValidators>,
         PublicStaticHelperTesting<SpreadsheetDataValidators> {
 
-    private final static BigDecimal BIGDECIMAL_BELOW = BigDecimal.valueOf(5);
-    private final static BigDecimal BIGDECIMAL_LOWER = BigDecimal.valueOf(10);
-    private final static BigDecimal BIGDECIMAL_BETWEEN = BigDecimal.valueOf(15);
-    private final static BigDecimal BIGDECIMAL_UPPER = BigDecimal.valueOf(20);
-    private final static BigDecimal BIGDECIMAL_ABOVE = BigDecimal.valueOf(30);
-
-    // BigDecimal eq..........................................................................................
-
-    @Test
-    public void testBigDecimalEqualsBelow() {
-        this.validateFailCheck(bigDecimalEqualsValidator(), BIGDECIMAL_BELOW);
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
+    
+    private static ExpressionNumber expressionNumber(final int value) {
+        return EXPRESSION_NUMBER_KIND.create(value);
     }
+    
+    private final static ExpressionNumber EXPRESSION_NUMBER_BELOW = expressionNumber(5);
+    private final static ExpressionNumber EXPRESSION_NUMBER_LOWER = expressionNumber(10);
+    private final static ExpressionNumber EXPRESSION_NUMBER_BETWEEN = expressionNumber(15);
+    private final static ExpressionNumber EXPRESSION_NUMBER_UPPER = expressionNumber(20);
+    private final static ExpressionNumber EXPRESSION_NUMBER_ABOVE = expressionNumber(30);
+
+    // ExpressionNumber eq..........................................................................................
 
     @Test
-    public void testBigDecimalEqualsLower() {
-        this.validateFailCheck(bigDecimalEqualsValidator(), BIGDECIMAL_LOWER);
-    }
-
-    @Test
-    public void testBigDecimalEqualsValue() {
-        this.validatePassCheck(bigDecimalEqualsValidator(), BIGDECIMAL_BETWEEN);
+    public void testExpressionNumberEqualsBelow() {
+        this.validateFailCheck(expressionNumberEqualsValidator(), EXPRESSION_NUMBER_BELOW);
     }
 
     @Test
-    public void testBigDecimalEqualsUpper() {
-        this.validateFailCheck(bigDecimalEqualsValidator(), BIGDECIMAL_UPPER);
+    public void testExpressionNumberEqualsLower() {
+        this.validateFailCheck(expressionNumberEqualsValidator(), EXPRESSION_NUMBER_LOWER);
     }
 
     @Test
-    public void testBigDecimalEqualsAbove() {
-        this.validateFailCheck(bigDecimalEqualsValidator(), BIGDECIMAL_ABOVE);
-    }
-
-    private SpreadsheetDataValidator<BigDecimal> bigDecimalEqualsValidator() {
-        return SpreadsheetDataValidators.bigDecimalEquals(BIGDECIMAL_BETWEEN);
-    }
-
-    // BigDecimal eq..........................................................................................
-
-    @Test
-    public void testBigDecimalNotEqualsBelow() {
-        this.validatePassCheck(bigDecimalNotEqualsValidator(), BIGDECIMAL_BELOW);
+    public void testExpressionNumberEqualsValue() {
+        this.validatePassCheck(expressionNumberEqualsValidator(), EXPRESSION_NUMBER_BETWEEN);
     }
 
     @Test
-    public void testBigDecimalNotEqualsLower() {
-        this.validatePassCheck(bigDecimalNotEqualsValidator(), BIGDECIMAL_LOWER);
+    public void testExpressionNumberEqualsUpper() {
+        this.validateFailCheck(expressionNumberEqualsValidator(), EXPRESSION_NUMBER_UPPER);
     }
 
     @Test
-    public void testBigDecimalNotEqualsValue() {
-        this.validateFailCheck(bigDecimalNotEqualsValidator(), BIGDECIMAL_BETWEEN);
+    public void testExpressionNumberEqualsAbove() {
+        this.validateFailCheck(expressionNumberEqualsValidator(), EXPRESSION_NUMBER_ABOVE);
+    }
+
+    private SpreadsheetDataValidator<ExpressionNumber> expressionNumberEqualsValidator() {
+        return SpreadsheetDataValidators.expressionNumberEquals(EXPRESSION_NUMBER_BETWEEN);
+    }
+
+    // ExpressionNumber eq..........................................................................................
+
+    @Test
+    public void testExpressionNumberNotEqualsBelow() {
+        this.validatePassCheck(expressionNumberNotEqualsValidator(), EXPRESSION_NUMBER_BELOW);
     }
 
     @Test
-    public void testBigDecimalNotEqualsUpper() {
-        this.validatePassCheck(bigDecimalNotEqualsValidator(), BIGDECIMAL_UPPER);
+    public void testExpressionNumberNotEqualsLower() {
+        this.validatePassCheck(expressionNumberNotEqualsValidator(), EXPRESSION_NUMBER_LOWER);
     }
 
     @Test
-    public void testBigDecimalNotEqualsAbove() {
-        this.validatePassCheck(bigDecimalNotEqualsValidator(), BIGDECIMAL_ABOVE);
-    }
-
-    private SpreadsheetDataValidator<BigDecimal> bigDecimalNotEqualsValidator() {
-        return SpreadsheetDataValidators.bigDecimalNotEquals(BIGDECIMAL_BETWEEN);
-    }
-    // BigDecimal gt..........................................................................................
-
-    @Test
-    public void testBigDecimalGreaterThanBelow() {
-        this.validateFailCheck(bigDecimalGreaterThanValidator(), BIGDECIMAL_BELOW);
+    public void testExpressionNumberNotEqualsValue() {
+        this.validateFailCheck(expressionNumberNotEqualsValidator(), EXPRESSION_NUMBER_BETWEEN);
     }
 
     @Test
-    public void testBigDecimalGreaterThanLower() {
-        this.validateFailCheck(bigDecimalGreaterThanValidator(), BIGDECIMAL_LOWER);
+    public void testExpressionNumberNotEqualsUpper() {
+        this.validatePassCheck(expressionNumberNotEqualsValidator(), EXPRESSION_NUMBER_UPPER);
     }
 
     @Test
-    public void testBigDecimalGreaterThanValue() {
-        this.validateFailCheck(bigDecimalGreaterThanValidator(), BIGDECIMAL_BETWEEN);
+    public void testExpressionNumberNotEqualsAbove() {
+        this.validatePassCheck(expressionNumberNotEqualsValidator(), EXPRESSION_NUMBER_ABOVE);
+    }
+
+    private SpreadsheetDataValidator<ExpressionNumber> expressionNumberNotEqualsValidator() {
+        return SpreadsheetDataValidators.expressionNumberNotEquals(EXPRESSION_NUMBER_BETWEEN);
+    }
+    // ExpressionNumber gt..........................................................................................
+
+    @Test
+    public void testExpressionNumberGreaterThanBelow() {
+        this.validateFailCheck(expressionNumberGreaterThanValidator(), EXPRESSION_NUMBER_BELOW);
     }
 
     @Test
-    public void testBigDecimalGreaterThanUpper() {
-        this.validatePassCheck(bigDecimalGreaterThanValidator(), BIGDECIMAL_UPPER);
+    public void testExpressionNumberGreaterThanLower() {
+        this.validateFailCheck(expressionNumberGreaterThanValidator(), EXPRESSION_NUMBER_LOWER);
     }
 
     @Test
-    public void testBigDecimalGreaterThanAbove() {
-        this.validatePassCheck(bigDecimalGreaterThanValidator(), BIGDECIMAL_ABOVE);
-    }
-
-    private SpreadsheetDataValidator<BigDecimal> bigDecimalGreaterThanValidator() {
-        return SpreadsheetDataValidators.bigDecimalGreaterThan(BIGDECIMAL_BETWEEN);
-    }
-
-    // BigDecimal gte..........................................................................................
-
-    @Test
-    public void testBigDecimalGreaterThanEqualsBelow() {
-        this.validateFailCheck(bigDecimalGreaterThanEqualsValidator(), BIGDECIMAL_BELOW);
+    public void testExpressionNumberGreaterThanValue() {
+        this.validateFailCheck(expressionNumberGreaterThanValidator(), EXPRESSION_NUMBER_BETWEEN);
     }
 
     @Test
-    public void testBigDecimalGreaterThanEqualsLower() {
-        this.validateFailCheck(bigDecimalGreaterThanEqualsValidator(), BIGDECIMAL_LOWER);
+    public void testExpressionNumberGreaterThanUpper() {
+        this.validatePassCheck(expressionNumberGreaterThanValidator(), EXPRESSION_NUMBER_UPPER);
     }
 
     @Test
-    public void testBigDecimalGreaterThanEqualsValue() {
-        this.validatePassCheck(bigDecimalGreaterThanEqualsValidator(), BIGDECIMAL_BETWEEN);
+    public void testExpressionNumberGreaterThanAbove() {
+        this.validatePassCheck(expressionNumberGreaterThanValidator(), EXPRESSION_NUMBER_ABOVE);
+    }
+
+    private SpreadsheetDataValidator<ExpressionNumber> expressionNumberGreaterThanValidator() {
+        return SpreadsheetDataValidators.expressionNumberGreaterThan(EXPRESSION_NUMBER_BETWEEN);
+    }
+
+    // ExpressionNumber gte..........................................................................................
+
+    @Test
+    public void testExpressionNumberGreaterThanEqualsBelow() {
+        this.validateFailCheck(expressionNumberGreaterThanEqualsValidator(), EXPRESSION_NUMBER_BELOW);
     }
 
     @Test
-    public void testBigDecimalGreaterThanEqualsUpper() {
-        this.validatePassCheck(bigDecimalGreaterThanEqualsValidator(), BIGDECIMAL_UPPER);
+    public void testExpressionNumberGreaterThanEqualsLower() {
+        this.validateFailCheck(expressionNumberGreaterThanEqualsValidator(), EXPRESSION_NUMBER_LOWER);
     }
 
     @Test
-    public void testBigDecimalGreaterThanEqualsAbove() {
-        this.validatePassCheck(bigDecimalGreaterThanEqualsValidator(), BIGDECIMAL_ABOVE);
-    }
-
-    private SpreadsheetDataValidator<BigDecimal> bigDecimalGreaterThanEqualsValidator() {
-        return SpreadsheetDataValidators.bigDecimalGreaterThanEquals(BIGDECIMAL_BETWEEN);
-    }
-
-    // BigDecimal lt..........................................................................................
-
-    @Test
-    public void testBigDecimalLessThanBelow() {
-        this.validatePassCheck(bigDecimalLessThanValidator(), BIGDECIMAL_BELOW);
+    public void testExpressionNumberGreaterThanEqualsValue() {
+        this.validatePassCheck(expressionNumberGreaterThanEqualsValidator(), EXPRESSION_NUMBER_BETWEEN);
     }
 
     @Test
-    public void testBigDecimalLessThanLower() {
-        this.validatePassCheck(bigDecimalLessThanValidator(), BIGDECIMAL_LOWER);
+    public void testExpressionNumberGreaterThanEqualsUpper() {
+        this.validatePassCheck(expressionNumberGreaterThanEqualsValidator(), EXPRESSION_NUMBER_UPPER);
     }
 
     @Test
-    public void testBigDecimalLessThanLessThanValue() {
-        this.validateFailCheck(bigDecimalLessThanValidator(), BIGDECIMAL_BETWEEN);
+    public void testExpressionNumberGreaterThanEqualsAbove() {
+        this.validatePassCheck(expressionNumberGreaterThanEqualsValidator(), EXPRESSION_NUMBER_ABOVE);
+    }
+
+    private SpreadsheetDataValidator<ExpressionNumber> expressionNumberGreaterThanEqualsValidator() {
+        return SpreadsheetDataValidators.expressionNumberGreaterThanEquals(EXPRESSION_NUMBER_BETWEEN);
+    }
+
+    // ExpressionNumber lt..........................................................................................
+
+    @Test
+    public void testExpressionNumberLessThanBelow() {
+        this.validatePassCheck(expressionNumberLessThanValidator(), EXPRESSION_NUMBER_BELOW);
     }
 
     @Test
-    public void testBigDecimalLessThanUpper() {
-        this.validateFailCheck(bigDecimalLessThanValidator(), BIGDECIMAL_UPPER);
+    public void testExpressionNumberLessThanLower() {
+        this.validatePassCheck(expressionNumberLessThanValidator(), EXPRESSION_NUMBER_LOWER);
     }
 
     @Test
-    public void testBigDecimalLessThanAbove() {
-        this.validateFailCheck(bigDecimalLessThanValidator(), BIGDECIMAL_ABOVE);
-    }
-
-    private SpreadsheetDataValidator<BigDecimal> bigDecimalLessThanValidator() {
-        return SpreadsheetDataValidators.bigDecimalLessThan(BIGDECIMAL_BETWEEN);
-    }
-
-    // BigDecimal lte..........................................................................................
-
-    @Test
-    public void testBigDecimalLessThanEqualsBelow() {
-        this.validatePassCheck(bigDecimalLessThanEqualsValidator(), BIGDECIMAL_BELOW);
+    public void testExpressionNumberLessThanLessThanValue() {
+        this.validateFailCheck(expressionNumberLessThanValidator(), EXPRESSION_NUMBER_BETWEEN);
     }
 
     @Test
-    public void testBigDecimalLessThanEqualsLower() {
-        this.validatePassCheck(bigDecimalLessThanEqualsValidator(), BIGDECIMAL_LOWER);
+    public void testExpressionNumberLessThanUpper() {
+        this.validateFailCheck(expressionNumberLessThanValidator(), EXPRESSION_NUMBER_UPPER);
     }
 
     @Test
-    public void testBigDecimalLessThanEqualsLessValue() {
-        this.validatePassCheck(bigDecimalLessThanEqualsValidator(), BIGDECIMAL_BETWEEN);
+    public void testExpressionNumberLessThanAbove() {
+        this.validateFailCheck(expressionNumberLessThanValidator(), EXPRESSION_NUMBER_ABOVE);
+    }
+
+    private SpreadsheetDataValidator<ExpressionNumber> expressionNumberLessThanValidator() {
+        return SpreadsheetDataValidators.expressionNumberLessThan(EXPRESSION_NUMBER_BETWEEN);
+    }
+
+    // ExpressionNumber lte..........................................................................................
+
+    @Test
+    public void testExpressionNumberLessThanEqualsBelow() {
+        this.validatePassCheck(expressionNumberLessThanEqualsValidator(), EXPRESSION_NUMBER_BELOW);
     }
 
     @Test
-    public void testBigDecimalLessThanEqualsUpper() {
-        this.validateFailCheck(bigDecimalLessThanEqualsValidator(), BIGDECIMAL_UPPER);
+    public void testExpressionNumberLessThanEqualsLower() {
+        this.validatePassCheck(expressionNumberLessThanEqualsValidator(), EXPRESSION_NUMBER_LOWER);
     }
 
     @Test
-    public void testBigDecimalLessThanEqualsAbove() {
-        this.validateFailCheck(bigDecimalLessThanEqualsValidator(), BIGDECIMAL_ABOVE);
-    }
-
-    private SpreadsheetDataValidator<BigDecimal> bigDecimalLessThanEqualsValidator() {
-        return SpreadsheetDataValidators.bigDecimalLessThanEquals(BIGDECIMAL_BETWEEN);
-    }
-
-    // BigDecimal between..........................................................................................
-
-    @Test
-    public void testBigDecimalBetweenBelow() {
-        this.validateFailCheck(bigDecimalBetweenValidator(), BIGDECIMAL_BELOW);
+    public void testExpressionNumberLessThanEqualsLessValue() {
+        this.validatePassCheck(expressionNumberLessThanEqualsValidator(), EXPRESSION_NUMBER_BETWEEN);
     }
 
     @Test
-    public void testBigDecimalBetweenLower() {
-        this.validatePassCheck(bigDecimalBetweenValidator(), BIGDECIMAL_LOWER);
+    public void testExpressionNumberLessThanEqualsUpper() {
+        this.validateFailCheck(expressionNumberLessThanEqualsValidator(), EXPRESSION_NUMBER_UPPER);
     }
 
     @Test
-    public void testBigDecimalBetweenBetween() {
-        this.validatePassCheck(bigDecimalBetweenValidator(), BIGDECIMAL_BETWEEN);
+    public void testExpressionNumberLessThanEqualsAbove() {
+        this.validateFailCheck(expressionNumberLessThanEqualsValidator(), EXPRESSION_NUMBER_ABOVE);
+    }
+
+    private SpreadsheetDataValidator<ExpressionNumber> expressionNumberLessThanEqualsValidator() {
+        return SpreadsheetDataValidators.expressionNumberLessThanEquals(EXPRESSION_NUMBER_BETWEEN);
+    }
+
+    // ExpressionNumber between..........................................................................................
+
+    @Test
+    public void testExpressionNumberBetweenBelow() {
+        this.validateFailCheck(expressionNumberBetweenValidator(), EXPRESSION_NUMBER_BELOW);
     }
 
     @Test
-    public void testBigDecimalBetweenUpper() {
-        this.validatePassCheck(bigDecimalBetweenValidator(), BIGDECIMAL_UPPER);
+    public void testExpressionNumberBetweenLower() {
+        this.validatePassCheck(expressionNumberBetweenValidator(), EXPRESSION_NUMBER_LOWER);
     }
 
     @Test
-    public void testBigDecimalBetweenAbove() {
-        this.validateFailCheck(bigDecimalBetweenValidator(), BIGDECIMAL_ABOVE);
-    }
-
-    private SpreadsheetDataValidator<BigDecimal> bigDecimalBetweenValidator() {
-        return SpreadsheetDataValidators.bigDecimalBetween(BIGDECIMAL_LOWER, BIGDECIMAL_UPPER);
-    }
-
-    // BigDecimal NOT between..........................................................................................
-
-    @Test
-    public void testBigDecimalNotBetweenBelow() {
-        this.validatePassCheck(bigDecimalNotBetweenValidator(), BIGDECIMAL_BELOW);
+    public void testExpressionNumberBetweenBetween() {
+        this.validatePassCheck(expressionNumberBetweenValidator(), EXPRESSION_NUMBER_BETWEEN);
     }
 
     @Test
-    public void testBigDecimalNotBetweenLower() {
-        this.validateFailCheck(bigDecimalNotBetweenValidator(), BIGDECIMAL_LOWER);
+    public void testExpressionNumberBetweenUpper() {
+        this.validatePassCheck(expressionNumberBetweenValidator(), EXPRESSION_NUMBER_UPPER);
     }
 
     @Test
-    public void testBigDecimalNotBetweenBetween() {
-        this.validateFailCheck(bigDecimalNotBetweenValidator(), BIGDECIMAL_BETWEEN);
+    public void testExpressionNumberBetweenAbove() {
+        this.validateFailCheck(expressionNumberBetweenValidator(), EXPRESSION_NUMBER_ABOVE);
+    }
+
+    private SpreadsheetDataValidator<ExpressionNumber> expressionNumberBetweenValidator() {
+        return SpreadsheetDataValidators.expressionNumberBetween(EXPRESSION_NUMBER_LOWER, EXPRESSION_NUMBER_UPPER);
+    }
+
+    // ExpressionNumber NOT between..........................................................................................
+
+    @Test
+    public void testExpressionNumberNotBetweenBelow() {
+        this.validatePassCheck(expressionNumberNotBetweenValidator(), EXPRESSION_NUMBER_BELOW);
     }
 
     @Test
-    public void testBigDecimalNotBetweenUpper() {
-        this.validateFailCheck(bigDecimalNotBetweenValidator(), BIGDECIMAL_UPPER);
+    public void testExpressionNumberNotBetweenLower() {
+        this.validateFailCheck(expressionNumberNotBetweenValidator(), EXPRESSION_NUMBER_LOWER);
     }
 
     @Test
-    public void testBigDecimalNotBetweenAbove() {
-        this.validatePassCheck(bigDecimalNotBetweenValidator(), BIGDECIMAL_ABOVE);
+    public void testExpressionNumberNotBetweenBetween() {
+        this.validateFailCheck(expressionNumberNotBetweenValidator(), EXPRESSION_NUMBER_BETWEEN);
     }
 
-    private SpreadsheetDataValidator<BigDecimal> bigDecimalNotBetweenValidator() {
-        return SpreadsheetDataValidators.bigDecimalNotBetween(BIGDECIMAL_LOWER, BIGDECIMAL_UPPER);
+    @Test
+    public void testExpressionNumberNotBetweenUpper() {
+        this.validateFailCheck(expressionNumberNotBetweenValidator(), EXPRESSION_NUMBER_UPPER);
+    }
+
+    @Test
+    public void testExpressionNumberNotBetweenAbove() {
+        this.validatePassCheck(expressionNumberNotBetweenValidator(), EXPRESSION_NUMBER_ABOVE);
+    }
+
+    private SpreadsheetDataValidator<ExpressionNumber> expressionNumberNotBetweenValidator() {
+        return SpreadsheetDataValidators.expressionNumberNotBetween(EXPRESSION_NUMBER_LOWER, EXPRESSION_NUMBER_UPPER);
     }
 
     // custom .........................................................................................
 
     @Test
     public void testCustomFormulaFalse() {
-        this.validateFailCheck(this.customFormulaSpreadsheetDataValidator(), BIGDECIMAL_LOWER);
+        this.validateFailCheck(this.customFormulaSpreadsheetDataValidator(), EXPRESSION_NUMBER_LOWER);
     }
 
     @Test
     public void testCustomFormulaTrue() {
-        this.validatePassCheck(this.customFormulaSpreadsheetDataValidator(), BIGDECIMAL_UPPER);
+        this.validatePassCheck(this.customFormulaSpreadsheetDataValidator(), EXPRESSION_NUMBER_UPPER);
     }
 
     private SpreadsheetDataValidator<Object> customFormulaSpreadsheetDataValidator() {
@@ -319,7 +322,7 @@ public final class SpreadsheetDataValidatorsTest implements ClassTesting2<Spread
     private Expression expression() {
         return Expression.greaterThan(
                 Expression.reference(this.cellReference()),
-                Expression.valueOrFail(BIGDECIMAL_BETWEEN));
+                Expression.valueOrFail(EXPRESSION_NUMBER_BETWEEN));
     }
 
     // date ...........................................................................................................

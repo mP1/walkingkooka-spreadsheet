@@ -27,8 +27,8 @@ import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionNumber;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDate;
 import java.util.Arrays;
@@ -38,80 +38,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public final class SpreadsheetDataValidators implements PublicStaticHelper {
-
-    // BIG DECIMAL...................................................................................................
-
-    /**
-     * A {@link SpreadsheetDataValidator} that only accepts {@link BigDecimal} equal to the given value.
-     */
-    public static SpreadsheetDataValidator<BigDecimal> bigDecimalEquals(final BigDecimal value) {
-        return bigDecimal(ComparisonRelation.EQ, value);
-    }
-
-    /**
-     * A {@link SpreadsheetDataValidator} that only accepts {@link BigDecimal} greater than the given value.
-     */
-    public static SpreadsheetDataValidator<BigDecimal> bigDecimalGreaterThan(final BigDecimal value) {
-        return bigDecimal(ComparisonRelation.GT, value);
-    }
-
-    /**
-     * A {@link SpreadsheetDataValidator} that only accepts {@link BigDecimal} greater than equals the given value.
-     */
-    public static SpreadsheetDataValidator<BigDecimal> bigDecimalGreaterThanEquals(final BigDecimal value) {
-        return bigDecimal(ComparisonRelation.GTE, value);
-    }
-
-    /**
-     * A {@link SpreadsheetDataValidator} that only accepts {@link BigDecimal} less than the given value.
-     */
-    public static SpreadsheetDataValidator<BigDecimal> bigDecimalLessThan(final BigDecimal value) {
-        return bigDecimal(ComparisonRelation.LT, value);
-    }
-
-    /**
-     * A {@link SpreadsheetDataValidator} that only accepts {@link BigDecimal} less than equals the given value.
-     */
-    public static SpreadsheetDataValidator<BigDecimal> bigDecimalLessThanEquals(final BigDecimal value) {
-        return bigDecimal(ComparisonRelation.LTE, value);
-    }
-
-    /**
-     * A {@link SpreadsheetDataValidator} that only accepts {@link BigDecimal} not equal to the given value.
-     */
-    public static SpreadsheetDataValidator<BigDecimal> bigDecimalNotEquals(final BigDecimal value) {
-        return bigDecimal(ComparisonRelation.NE, value);
-    }
-
-    /**
-     * Factory that creates a {@link SpreadsheetDataValidator} that converts text into a {@link BigDecimal} and tests
-     * the given {@link Predicate condition}.
-     */
-    private static SpreadsheetDataValidator<BigDecimal> bigDecimal(final ComparisonRelation comparison,
-                                                                   final BigDecimal value) {
-        return bigDecimal(comparison.predicate(value));
-    }
-
-    /**
-     * A {@link SpreadsheetDataValidator} that only accepts {@link BigDecimal} between the given range.
-     */
-    public static SpreadsheetDataValidator<BigDecimal> bigDecimalBetween(final BigDecimal lower, final BigDecimal upper) {
-        return bigDecimal(range(lower, upper));
-    }
-
-    /**
-     * A {@link SpreadsheetDataValidator} that only accepts {@link BigDecimal} outside the given range.
-     */
-    public static SpreadsheetDataValidator<BigDecimal> bigDecimalNotBetween(final BigDecimal lower, final BigDecimal upper) {
-        return bigDecimal(range(lower, upper).negate());
-    }
-
-    /**
-     * Creates a {@link SpreadsheetDataValidator} using the {@link Predicate condition}.
-     */
-    private static SpreadsheetDataValidator<BigDecimal> bigDecimal(final Predicate<BigDecimal> condition) {
-        return PredicateSpreadsheetDataValidator.with(BigDecimal.class, condition, condition.toString());
-    }
 
     // CUSTOM..........................................................................................................
 
@@ -189,6 +115,80 @@ public final class SpreadsheetDataValidators implements PublicStaticHelper {
      */
     private static SpreadsheetDataValidator<LocalDate> localDate(final Predicate<ChronoLocalDate> condition) {
         return PredicateSpreadsheetDataValidator.with(LocalDate.class, condition, condition.toString());
+    }
+
+    // EXPRESSION NUMBER.................................................................................................
+
+    /**
+     * A {@link SpreadsheetDataValidator} that only accepts {@link ExpressionNumber} equal to the given value.
+     */
+    public static SpreadsheetDataValidator<ExpressionNumber> expressionNumberEquals(final ExpressionNumber value) {
+        return expressionNumber(ComparisonRelation.EQ, value);
+    }
+
+    /**
+     * A {@link SpreadsheetDataValidator} that only accepts {@link ExpressionNumber} greater than the given value.
+     */
+    public static SpreadsheetDataValidator<ExpressionNumber> expressionNumberGreaterThan(final ExpressionNumber value) {
+        return expressionNumber(ComparisonRelation.GT, value);
+    }
+
+    /**
+     * A {@link SpreadsheetDataValidator} that only accepts {@link ExpressionNumber} greater than equals the given value.
+     */
+    public static SpreadsheetDataValidator<ExpressionNumber> expressionNumberGreaterThanEquals(final ExpressionNumber value) {
+        return expressionNumber(ComparisonRelation.GTE, value);
+    }
+
+    /**
+     * A {@link SpreadsheetDataValidator} that only accepts {@link ExpressionNumber} less than the given value.
+     */
+    public static SpreadsheetDataValidator<ExpressionNumber> expressionNumberLessThan(final ExpressionNumber value) {
+        return expressionNumber(ComparisonRelation.LT, value);
+    }
+
+    /**
+     * A {@link SpreadsheetDataValidator} that only accepts {@link ExpressionNumber} less than equals the given value.
+     */
+    public static SpreadsheetDataValidator<ExpressionNumber> expressionNumberLessThanEquals(final ExpressionNumber value) {
+        return expressionNumber(ComparisonRelation.LTE, value);
+    }
+
+    /**
+     * A {@link SpreadsheetDataValidator} that only accepts {@link ExpressionNumber} not equal to the given value.
+     */
+    public static SpreadsheetDataValidator<ExpressionNumber> expressionNumberNotEquals(final ExpressionNumber value) {
+        return expressionNumber(ComparisonRelation.NE, value);
+    }
+
+    /**
+     * Factory that creates a {@link SpreadsheetDataValidator} that converts text into a {@link ExpressionNumber} and tests
+     * the given {@link Predicate condition}.
+     */
+    private static SpreadsheetDataValidator<ExpressionNumber> expressionNumber(final ComparisonRelation comparison,
+                                                                               final ExpressionNumber value) {
+        return expressionNumber(comparison.predicate(value));
+    }
+
+    /**
+     * A {@link SpreadsheetDataValidator} that only accepts {@link ExpressionNumber} between the given range.
+     */
+    public static SpreadsheetDataValidator<ExpressionNumber> expressionNumberBetween(final ExpressionNumber lower, final ExpressionNumber upper) {
+        return expressionNumber(range(lower, upper));
+    }
+
+    /**
+     * A {@link SpreadsheetDataValidator} that only accepts {@link ExpressionNumber} outside the given range.
+     */
+    public static SpreadsheetDataValidator<ExpressionNumber> expressionNumberNotBetween(final ExpressionNumber lower, final ExpressionNumber upper) {
+        return expressionNumber(range(lower, upper).negate());
+    }
+
+    /**
+     * Creates a {@link SpreadsheetDataValidator} using the {@link Predicate condition}.
+     */
+    private static SpreadsheetDataValidator<ExpressionNumber> expressionNumber(final Predicate<ExpressionNumber> condition) {
+        return PredicateSpreadsheetDataValidator.with(ExpressionNumber.class, condition, condition.toString());
     }
 
     // TEXT .......................................................................................................
