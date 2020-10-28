@@ -38,6 +38,8 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -148,6 +150,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>exponent-symbol {@link Character}</code>
      */
     public final static SpreadsheetMetadataPropertyName<String> EXPONENT_SYMBOL = registerConstant(SpreadsheetMetadataPropertyNameExponentSymbol.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>expression-number-kind {@link walkingkooka.tree.expression.ExpressionNumberKind}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<ExpressionNumberKind> EXPRESSION_NUMBER_KIND = registerConstant(SpreadsheetMetadataPropertyNameExpressionNumberKind.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>grouping-separator {@link Character}</code>
@@ -470,6 +477,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     static {
         Color.BLACK.alpha();
         EmailAddress.tryParse("user@example.com");
+        ExpressionNumberKind.DEFAULT.name();
         FontFamilyName.with("MS Sans Serif");
         FontSize.with(1);
         SpreadsheetPattern.parseNumberFormatPattern(" ");

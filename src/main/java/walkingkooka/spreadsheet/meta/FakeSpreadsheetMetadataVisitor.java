@@ -31,6 +31,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.text.FontFamilyName;
 import walkingkooka.tree.text.FontSize;
 import walkingkooka.visit.Visiting;
@@ -132,6 +133,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitExponentSymbol(final String exponentSymbol) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitExpressionNumberKind(final ExpressionNumberKind expressionNumberKind) {
         throw new UnsupportedOperationException();
     }
 

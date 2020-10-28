@@ -25,6 +25,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -110,6 +111,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertEquals(Optional.of(FontFamilyName.with("MS Sans Serif")), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DEFAULT_FONT_FAMILY_NAME));
         assertEquals(Optional.of(FontSize.with(11)), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DEFAULT_FONT_SIZE));
         assertEquals(Optional.of(60), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DEFAULT_ROW_HEIGHT));
+        assertNotEquals(Optional.of(ExpressionNumberKind.DEFAULT), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND));
         assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.PRECISION));
         assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.ROUNDING_MODE));
         assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR));
