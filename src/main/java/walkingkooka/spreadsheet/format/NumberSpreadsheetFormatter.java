@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -78,7 +77,7 @@ final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsheet
                 value instanceof Long ||
                 value instanceof Short ||
                 value instanceof ExpressionNumber) &&
-                context.canConvert(value, ExpressionNumberKind.class);
+                context.canConvert(value, BigDecimal.class);
 
     }
 
