@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
+import walkingkooka.Either;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
@@ -49,13 +51,7 @@ public final class TextSpreadsheetFormatterTest extends SpreadsheetFormatter3Tes
     public void testTextAndStar() {
         this.parseFormatAndCheck("@*A",
                 TEXT,
-                new FakeSpreadsheetFormatterContext() {
-
-                    @Override
-                    public boolean canConvert(final Object value,
-                                              final Class<?> target) {
-                        return value instanceof String && String.class == target;
-                    }
+                new TestSpreadsheetFormatterContext() {
 
                     @Override
                     public int width() {
@@ -128,13 +124,27 @@ public final class TextSpreadsheetFormatterTest extends SpreadsheetFormatter3Tes
 
     @Override
     public SpreadsheetFormatterContext createContext() {
-        return new FakeSpreadsheetFormatterContext() {
-            @Override
-            public boolean canConvert(final Object value,
-                                      final Class<?> target) {
-                return value instanceof String && String.class == target;
-            }
-        };
+        return new TestSpreadsheetFormatterContext();
+    }
+
+    class TestSpreadsheetFormatterContext extends FakeSpreadsheetFormatterContext {
+
+        TestSpreadsheetFormatterContext() {
+            super();
+        }
+
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> target) {
+            return value instanceof String && String.class == target;
+        }
+
+        @Override
+        public <T> Either<T, String> convert(final Object value, final Class<T> target) {
+            return this.canConvert(value, target) ?
+                    Either.left(Cast.to(value.toString())) :
+                    this.failConversion(value, target);
+        }
     }
 
     @Override
