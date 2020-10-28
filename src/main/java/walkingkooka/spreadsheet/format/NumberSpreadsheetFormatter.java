@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -26,14 +28,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * A {@link SpreadsheetFormatter} that handles formatting the 4 spreadsheet {@link Number} values.
- * <ul>
- * <li>{@link BigDecimal}</li>
- * <li>{@link java.math.BigInteger}</li>
- * <li>{@link Double}</li>
- * <li>{@link Long}</li>
- * </ul>
- * producing the text equivalent without a {@link Color}. The pattern would have been a {@link String} but the factory accepts it represented as a {@link SpreadsheetFormatNumberParserToken}.
+ * A {@link SpreadsheetFormatter} that handles formatting the all {@link Number} values producing the text equivalent without a {@link Color}.
+ * The pattern would have been a {@link String} but the factory accepts it represented as a {@link SpreadsheetFormatNumberParserToken}.
  */
 final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<SpreadsheetFormatNumberParserToken> {
 
@@ -73,15 +69,16 @@ final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsheet
     @Override
     public boolean canFormat(final Object value,
                              final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
-        return (value instanceof BigDecimal ||
+        return (value instanceof BigDecimal || // TODO https://github.com/mP1/walkingkooka-tree/issues/175
                 value instanceof BigInteger ||
                 value instanceof Byte ||
                 value instanceof Double ||
                 value instanceof Float ||
                 value instanceof Integer ||
                 value instanceof Long ||
-                value instanceof Short) &&
-                context.canConvert(value, BigDecimal.class);
+                value instanceof Short ||
+                value instanceof ExpressionNumber) &&
+                context.canConvert(value, ExpressionNumberKind.class);
 
     }
 
