@@ -26,6 +26,8 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporterException;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -38,6 +40,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  */
 public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3TestCase<NumberSpreadsheetFormatter,
         SpreadsheetFormatNumberParserToken> {
+
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     // text-literal, escaped etc........................................................................................
 
@@ -1300,7 +1304,10 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
                                       final SpreadsheetText text) {
         final NumberSpreadsheetFormatter formatter = this.createFormatter(pattern);
 
-        this.formatAndCheck(formatter, new BigDecimal(value), text);
+        this.formatAndCheck2(formatter,
+                value,
+                ExpressionNumberKind.BIG_DECIMAL,
+                text);
 
         BigInteger bigInteger;
         try {
@@ -1312,7 +1319,10 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
             this.formatAndCheck(formatter, bigInteger, text);
         }
 
-        this.formatAndCheck(formatter, Double.parseDouble(value), text);
+        this.formatAndCheck2(formatter,
+                value,
+                ExpressionNumberKind.DOUBLE,
+                text);
 
         Long longValue;
         try {
@@ -1323,6 +1333,19 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
         if (null != longValue) {
             this.formatAndCheck(formatter, longValue, text);
         }
+    }
+
+    private void formatAndCheck2(final NumberSpreadsheetFormatter formatter,
+                                 final String value,
+                                 final ExpressionNumberKind kind,
+                                 final SpreadsheetText text) {
+        this.formatAndCheck(formatter,
+                kind.create(new BigDecimal(value)),
+                text);
+
+        this.formatAndCheck(formatter,
+                kind.create(Double.parseDouble(value)),
+                text);
     }
 
     @Override
@@ -1363,7 +1386,8 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
             @Override
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
-                return Converters.numberNumber().convert(value, target, ConverterContexts.fake());
+                return ExpressionNumber.fromExpressionNumberConverter(Converters.numberNumber())
+                        .convert(value, target, ConverterContexts.fake());
             }
 
             @Override
