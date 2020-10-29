@@ -26,7 +26,7 @@ import walkingkooka.text.CharSequences;
 /**
  * A {@link Converter} which formats a value to {@link String text} using the given {@link SpreadsheetFormatter}.
  */
-final class SpreadsheetFormatterConverter implements Converter {
+final class SpreadsheetFormatterConverter implements Converter<ConverterContext> {
 
     static SpreadsheetFormatterConverter with(final SpreadsheetFormatter formatter) {
         return new SpreadsheetFormatterConverter(formatter);

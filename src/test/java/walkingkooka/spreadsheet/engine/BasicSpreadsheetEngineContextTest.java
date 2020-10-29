@@ -395,7 +395,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         return SpreadsheetLabelStores.fake();
     }
 
-    private Converter converter() {
+    private Converter<ConverterContext> converter() {
         return Converters.collection(
                 Lists.of(
                         Converters.simple(),

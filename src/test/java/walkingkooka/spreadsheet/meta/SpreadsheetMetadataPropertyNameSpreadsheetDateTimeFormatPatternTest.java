@@ -56,7 +56,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeFormatPatte
         return SpreadsheetFormatterContexts.basic((n-> {throw new UnsupportedOperationException();}),
                 (n-> {throw new UnsupportedOperationException();}),
                 1,
-                new FakeConverter(){
+                new FakeConverter<ConverterContext>(){
 
                     @Override
                     public <T> Either<T, String> convert(final Object value, final Class<T> type, final ConverterContext context) {

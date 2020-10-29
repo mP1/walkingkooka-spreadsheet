@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.convert.ConversionException;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContext;
 import walkingkooka.spreadsheet.SpreadsheetValueVisitor;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -34,23 +35,23 @@ import java.time.LocalTime;
  * A {@link SpreadsheetValueVisitor} which accepts the source value being converted. Each visit method will then select a
  * {@link SpreadsheetConverterMapping}
  */
-final class SpreadsheetConverterSpreadsheetValueVisitor extends SpreadsheetValueVisitor {
+final class SpreadsheetConverterSpreadsheetValueVisitor<C extends ConverterContext> extends SpreadsheetValueVisitor {
 
     /**
      * Uses the source value type and target type to pick a {@link Converter}.
      */
-    static Converter converter(final Object value,
-                               final Class<?> targetType,
-                               final SpreadsheetConverterMapping<SpreadsheetConverterMapping<Converter>> mapping) {
+    static <C extends ConverterContext> Converter<C> converter(final Object value,
+                                                               final Class<?> targetType,
+                                                               final SpreadsheetConverterMapping<SpreadsheetConverterMapping<Converter<C>>> mapping) {
 
-        final SpreadsheetConverterSpreadsheetValueVisitor visitor = new SpreadsheetConverterSpreadsheetValueVisitor(targetType,
+        final SpreadsheetConverterSpreadsheetValueVisitor<C> visitor = new SpreadsheetConverterSpreadsheetValueVisitor<>(targetType,
                 mapping);
         visitor.accept(value); // value = from
         return visitor.converter;
     }
 
     SpreadsheetConverterSpreadsheetValueVisitor(final Class<?> targetType,
-                                                final SpreadsheetConverterMapping<SpreadsheetConverterMapping<Converter>> mapping) {
+                                                final SpreadsheetConverterMapping<SpreadsheetConverterMapping<Converter<C>>> mapping) {
         super();
         this.targetType = targetType;
         this.mapping = mapping;
@@ -136,13 +137,13 @@ final class SpreadsheetConverterSpreadsheetValueVisitor extends SpreadsheetValue
      */
     private final Class<?> targetType;
 
-    private final SpreadsheetConverterMapping<SpreadsheetConverterMapping<Converter>> mapping;
+    private final SpreadsheetConverterMapping<SpreadsheetConverterMapping<Converter<C>>> mapping;
 
-    private void converter(final SpreadsheetConverterMapping<Converter> converters) {
+    private void converter(final SpreadsheetConverterMapping<Converter<C>> converters) {
         this.converter = SpreadsheetConverterSpreadsheetValueTypeVisitor.converter(converters, this.targetType);
     }
 
-    private Converter converter;
+    private Converter<C> converter;
 
     @Override
     public String toString() {

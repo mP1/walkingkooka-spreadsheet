@@ -43,7 +43,7 @@ import java.util.Set;
  * A {@link Converter} that supports converting all the spreadsheet types to other types.
  * </pre>
  */
-final class SpreadsheetConverter implements Converter {
+final class SpreadsheetConverter implements Converter<ConverterContext> {
 
     /**
      * Factory that creates a new {@link SpreadsheetConverter}.
@@ -116,7 +116,7 @@ final class SpreadsheetConverter implements Converter {
         // wrap all number from/to converters to also handle ExpressionNumber
 
         // boolean ->
-        final SpreadsheetConverterMapping<Converter> booleanConverter = SpreadsheetConverterMapping.with(
+        final SpreadsheetConverterMapping<Converter<ConverterContext>> booleanConverter = SpreadsheetConverterMapping.with(
                 Converters.simple(), // boolean -> boolean
                 fromBoolean(LocalDate.class, dateTrue, dateFalse),
                 fromBoolean(LocalDateTime.class, dateTimeTrue, dateTimeFalse),
@@ -125,7 +125,7 @@ final class SpreadsheetConverter implements Converter {
                 fromBoolean(LocalTime.class, timeTrue, timeFalse)); // Time
 
         // LocalDate ->
-        final SpreadsheetConverterMapping<Converter> date = SpreadsheetConverterMapping.with(
+        final SpreadsheetConverterMapping<Converter<ConverterContext>> date = SpreadsheetConverterMapping.with(
                 toBoolean(LocalDate.class, dateFalse),
                 null, // date -> date
                 Converters.localDateLocalDateTime(),
@@ -134,7 +134,7 @@ final class SpreadsheetConverter implements Converter {
                 null); // date -> time INVALID
 
         // LocalDateTime ->
-        final SpreadsheetConverterMapping<Converter> dateTime = SpreadsheetConverterMapping.with(
+        final SpreadsheetConverterMapping<Converter<ConverterContext>> dateTime = SpreadsheetConverterMapping.with(
                 toBoolean(LocalDateTime.class, dateTimeFalse),
                 Converters.localDateTimeLocalDate(),
                 null, // dateTime -> dateTime
@@ -143,7 +143,7 @@ final class SpreadsheetConverter implements Converter {
                 Converters.localDateTimeLocalTime());
 
         // Number ->
-        final SpreadsheetConverterMapping<Converter> number = SpreadsheetConverterMapping.with(
+        final SpreadsheetConverterMapping<Converter<ConverterContext>> number = SpreadsheetConverterMapping.with(
                 ExpressionNumber.fromExpressionNumberConverter(Converters.truthyNumberBoolean()),
                 ExpressionNumber.fromExpressionNumberConverter(Converters.numberLocalDate(dateOffset)),
                 ExpressionNumber.fromExpressionNumberConverter(Converters.numberLocalDateTime(dateOffset)),
@@ -152,7 +152,7 @@ final class SpreadsheetConverter implements Converter {
                 ExpressionNumber.fromExpressionNumberConverter(Converters.numberLocalTime()));
 
         // String ->
-        final SpreadsheetConverterMapping<Converter> string = SpreadsheetConverterMapping.with(
+        final SpreadsheetConverterMapping<Converter<ConverterContext>> string = SpreadsheetConverterMapping.with(
                 toBoolean(String.class, stringFalse), // string -> boolean
                 dateParser.converter(),
                 dateTimeParser.converter(),
@@ -162,7 +162,7 @@ final class SpreadsheetConverter implements Converter {
         );
 
         // LocalTime ->
-        final SpreadsheetConverterMapping<Converter> time = SpreadsheetConverterMapping.with(toBoolean(LocalTime.class, timeFalse),
+        final SpreadsheetConverterMapping<Converter<ConverterContext>> time = SpreadsheetConverterMapping.with(toBoolean(LocalTime.class, timeFalse),
                 null, // time -> date invalid
                 Converters.localDateTimeLocalTime(),
                 ExpressionNumber.fromExpressionNumberConverter(Converters.localTimeNumber()),
@@ -180,9 +180,9 @@ final class SpreadsheetConverter implements Converter {
     /**
      * Creates a {@link Converter} that converts {@link Boolean} values to the given type.
      */
-    private static <T> Converter fromBoolean(final Class<T> targetType,
-                                             final T trueValue,
-                                             final T falseValue) {
+    private static <T> Converter<ConverterContext> fromBoolean(final Class<T> targetType,
+                                                               final T trueValue,
+                                                               final T falseValue) {
         return booleanTrueFalseConverter(Boolean.class,
                 Boolean.FALSE,
                 targetType,
@@ -190,8 +190,8 @@ final class SpreadsheetConverter implements Converter {
                 falseValue);
     }
 
-    private static <T> Converter toBoolean(final Class<T> from,
-                                           final T falseValue) {
+    private static <T> Converter<ConverterContext> toBoolean(final Class<T> from,
+                                                             final T falseValue) {
         return booleanTrueFalseConverter(from,
                 falseValue,
                 Boolean.class,
@@ -199,11 +199,11 @@ final class SpreadsheetConverter implements Converter {
                 Boolean.FALSE);
     }
 
-    private static <T> Converter booleanTrueFalseConverter(final Class<?> fromType,
-                                                           final Object falseValueTest,
-                                                           final Class<T> targetType,
-                                                           final T trueValueResult,
-                                                           final T falseValueResult) {
+    private static <T> Converter<ConverterContext> booleanTrueFalseConverter(final Class<?> fromType,
+                                                                             final Object falseValueTest,
+                                                                             final Class<T> targetType,
+                                                                             final T trueValueResult,
+                                                                             final T falseValueResult) {
         return Converters.booleanTrueFalse(t -> t.getClass() == fromType,
                 Predicates.is(falseValueTest),
                 Predicates.is(targetType),
@@ -254,13 +254,13 @@ final class SpreadsheetConverter implements Converter {
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> targetType,
                                          final ConverterContext context) {
-        final Converter converter = SpreadsheetConverterSpreadsheetValueVisitor.converter(value, targetType, this.mapping);
+        final Converter<ConverterContext> converter = SpreadsheetConverterSpreadsheetValueVisitor.converter(value, targetType, this.mapping);
         return null != converter ?
                 converter.convert(value, targetType, context) :
                 this.failConversion(value, targetType);
     }
 
-    private final SpreadsheetConverterMapping<SpreadsheetConverterMapping<Converter>> mapping;
+    private final SpreadsheetConverterMapping<SpreadsheetConverterMapping<Converter<ConverterContext>>> mapping;
 
     // toString.........................................................................................................
 

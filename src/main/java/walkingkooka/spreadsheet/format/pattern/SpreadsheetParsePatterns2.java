@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.text.cursor.parser.Parser;
@@ -46,8 +47,8 @@ abstract class SpreadsheetParsePatterns2<T extends SpreadsheetFormatParserToken>
     // HasConverter.....................................................................................................
 
     @Override
-    final Converter createConverter() {
-        return Converters.tryConverter(IntStream.range(0, this.value().size())
+    final Converter<ConverterContext> createConverter() {
+        return Converters.collection(IntStream.range(0, this.value().size())
                 .mapToObj(this::createDateTimeFormatterConverter)
                 .collect(Collectors.toList()));
     }
@@ -55,7 +56,7 @@ abstract class SpreadsheetParsePatterns2<T extends SpreadsheetFormatParserToken>
     /**
      * Sub classes should create a {@link Converter} using the given nth {@link SpreadsheetFormatParserToken}.
      */
-    abstract Converter createDateTimeFormatterConverter(final int i);
+    abstract Converter<ConverterContext> createDateTimeFormatterConverter(final int i);
 
     // HasParser........................................................................................................
 

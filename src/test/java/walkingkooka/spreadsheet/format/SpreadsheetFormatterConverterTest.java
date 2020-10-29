@@ -33,7 +33,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
 
-public final class SpreadsheetFormatterConverterTest implements ConverterTesting2<SpreadsheetFormatterConverter> {
+public final class SpreadsheetFormatterConverterTest implements ConverterTesting2<SpreadsheetFormatterConverter, ConverterContext> {
 
     @Test
     public void testFormatBigDecimal() {

@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.HasConverter;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
@@ -66,19 +67,19 @@ public abstract class SpreadsheetParsePatterns<T extends SpreadsheetFormatParser
     /**
      * Returns a {@link Converter} which will try all the patterns.
      */
-    public final Converter converter() {
+    public final Converter<ConverterContext> converter() {
         if (null == this.converter) {
             this.converter = this.createConverter();
         }
         return this.converter;
     }
 
-    private Converter converter;
+    private Converter<ConverterContext> converter;
 
     /**
      * Factory that lazily creates a {@link Converter}
      */
-    abstract Converter createConverter();
+    abstract Converter<ConverterContext> createConverter();
 
     // HasParser........................................................................................................
 

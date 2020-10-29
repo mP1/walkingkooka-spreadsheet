@@ -62,17 +62,17 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     /**
      * Creates a new {@link BasicSpreadsheetEngineContext}
      */
-    static BasicSpreadsheetEngineContext with(final ExpressionNumberKind expressionNumberKind,
-                                              final BiFunction<FunctionExpressionName, List<Object>, Object> functions,
-                                              final SpreadsheetEngine engine,
-                                              final SpreadsheetLabelStore labelStore,
-                                              final Converter converter,
-                                              final ConverterContext converterContext,
-                                              final Function<Integer, Optional<Color>> numberToColor,
-                                              final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
-                                              final int width,
-                                              final Function<BigDecimal, Fraction> fractioner,
-                                              final SpreadsheetFormatter defaultSpreadsheetFormatter) {
+    static <C extends ConverterContext> BasicSpreadsheetEngineContext with(final ExpressionNumberKind expressionNumberKind,
+                                                                           final BiFunction<FunctionExpressionName, List<Object>, Object> functions,
+                                                                           final SpreadsheetEngine engine,
+                                                                           final SpreadsheetLabelStore labelStore,
+                                                                           final Converter<C> converter,
+                                                                           final C converterContext,
+                                                                           final Function<Integer, Optional<Color>> numberToColor,
+                                                                           final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
+                                                                           final int width,
+                                                                           final Function<BigDecimal, Fraction> fractioner,
+                                                                           final SpreadsheetFormatter defaultSpreadsheetFormatter) {
         Objects.requireNonNull(expressionNumberKind, "expressionNumberKind");
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(engine, "engine");
@@ -91,7 +91,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 functions,
                 engine,
                 labelStore,
-                converter,
+                converter.cast(ConverterContext.class),
                 converterContext,
                 numberToColor,
                 nameToColor,
@@ -107,7 +107,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final BiFunction<FunctionExpressionName, List<Object>, Object> functions,
                                           final SpreadsheetEngine engine,
                                           final SpreadsheetLabelStore labelStore,
-                                          final Converter converter,
+                                          final Converter<ConverterContext> converter,
                                           final ConverterContext converterContext,
                                           final Function<Integer, Optional<Color>> numberToColor,
                                           final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
@@ -172,7 +172,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         return this.converter.convert(value, target, this.converterContext);
     }
 
-    private final Converter converter;
+    private final Converter<ConverterContext> converter;
     private final ConverterContext converterContext;
 
     // ExpressionNumberContext..........................................................................................
