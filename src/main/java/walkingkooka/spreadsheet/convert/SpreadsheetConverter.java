@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.Either;
-import walkingkooka.collect.set.Sets;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
@@ -31,13 +30,10 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * A {@link Converter} that supports converting all the spreadsheet types to other types.
@@ -226,29 +222,20 @@ final class SpreadsheetConverter implements Converter<ConverterContext> {
     public boolean canConvert(final Object value,
                               final Class<?> targetType,
                               final ConverterContext context) {
-        return SUPPORTED_TYPES.contains(targetType) &&
+        return isSupportedType(targetType) &&
                 false == (value instanceof LocalTime && targetType == LocalDate.class) &&
                 false == (value instanceof LocalDate && targetType == LocalTime.class);
     }
 
-    private final static Set<Class<?>> SUPPORTED_TYPES = Sets.of(Boolean.class,
-            LocalDate.class,
-            LocalDateTime.class,
-            LocalTime.class,
-            BigDecimal.class,
-            BigInteger.class,
-            Byte.class,
-            Short.class,
-            Integer.class,
-            Long.class,
-            Number.class,
-            Short.class,
-            Float.class,
-            Double.class,
-            ExpressionNumber.class,
-            ExpressionNumberKind.BIG_DECIMAL.create(1).getClass(),
-            ExpressionNumberKind.DOUBLE.create(1).getClass(),
-            String.class);
+    private static boolean isSupportedType(final Class<?> type) {
+        return Boolean.class == type ||
+                LocalDate.class == type ||
+                LocalDateTime.class == type ||
+                LocalTime.class == type ||
+                ExpressionNumber.isClass(type) ||
+                Number.class == type ||
+                String.class == type;
+    }
 
     @Override
     public <T> Either<T, String> convert(final Object value,
