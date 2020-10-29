@@ -53,6 +53,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.HasExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -75,6 +76,7 @@ import java.util.function.Function;
 public abstract class SpreadsheetMetadata implements HasConverter,
         HasDateTimeContext,
         HasDecimalNumberContext,
+        HasExpressionNumberKind,
         HasMathContext,
         HasSpreadsheetFormatter,
         HasSpreadsheetFormatterContext,
@@ -199,6 +201,12 @@ public abstract class SpreadsheetMetadata implements HasConverter,
 
     private static void checkPropertyName(final SpreadsheetMetadataPropertyName<?> propertyName) {
         Objects.requireNonNull(propertyName, "propertyName");
+    }
+
+    // HasExpressionNumberKind...........................................................................................
+
+    public final ExpressionNumberKind expressionNumberKind() {
+        return this.getOrFail(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
     }
 
     // Function<SpreadsheetColorName, Optional<Color>>..................................................................

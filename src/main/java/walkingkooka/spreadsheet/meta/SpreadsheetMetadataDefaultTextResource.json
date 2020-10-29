@@ -4,6 +4,7 @@
   "default-font-family-name": "MS Sans Serif",
   "default-font-size": 11,
   "default-row-height": 60,
+  "expression-number-kind": "BIG_DECIMAL",
   "precision": 10,
   "rounding-mode": "HALF_UP",
   "two-digit-year": 20,

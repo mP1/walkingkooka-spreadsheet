@@ -46,6 +46,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.text.FontFamilyName;
 import walkingkooka.tree.text.FontSize;
@@ -1099,6 +1100,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_FONT_FAMILY_NAME, FontFamilyName.with("MS Sans Serif"));
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_FONT_SIZE, FontSize.with(11));
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_ROW_HEIGHT, 15);
+        properties.put(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL);
         properties.put(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E");
         properties.put(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, 'G');
         properties.put(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH);

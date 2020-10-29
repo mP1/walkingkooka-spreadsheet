@@ -32,6 +32,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.text.FontFamilyName;
 import walkingkooka.tree.text.FontSize;
 import walkingkooka.visit.Visiting;
@@ -148,6 +149,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitExponentSymbol(final String exponentSymbol) {
+        // nop
+    }
+
+    protected void visitExpressionNumberKind(final ExpressionNumberKind expressionNumberKind) {
         // nop
     }
 
