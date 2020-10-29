@@ -18,14 +18,16 @@
 package walkingkooka.spreadsheet.convert;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.SpreadsheetValueTypeVisitorTesting;
 
 import java.time.LocalDate;
 
-public final class SpreadsheetConverterSpreadsheetValueTypeVisitorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterSpreadsheetValueTypeVisitor>
-        implements SpreadsheetValueTypeVisitorTesting<SpreadsheetConverterSpreadsheetValueTypeVisitor> {
+public final class SpreadsheetConverterSpreadsheetValueTypeVisitorTest extends SpreadsheetConverterTestCase<SpreadsheetConverterSpreadsheetValueTypeVisitor<ConverterContext>>
+        implements SpreadsheetValueTypeVisitorTesting<SpreadsheetConverterSpreadsheetValueTypeVisitor<ConverterContext>> {
 
     @Override
     public void testAllConstructorsVisibility() {
@@ -33,39 +35,39 @@ public final class SpreadsheetConverterSpreadsheetValueTypeVisitorTest extends S
 
     @Test
     public void testToString() {
-        final SpreadsheetConverterMapping<Converter> mapping = SpreadsheetConverterMapping.with(Converters.fake().setToString("Boolean1"),
+        final SpreadsheetConverterMapping<Converter<ConverterContext>> mapping = SpreadsheetConverterMapping.with(Converters.fake().setToString("Boolean1"),
                 Converters.fake().setToString("Date2"),
                 Converters.fake().setToString("DateTime3"),
                 Converters.fake().setToString("Number4"),
                 Converters.fake().setToString("String5"),
                 Converters.fake().setToString("Time6"));
-        this.toStringAndCheck(new SpreadsheetConverterSpreadsheetValueTypeVisitor(mapping),
+        this.toStringAndCheck(new SpreadsheetConverterSpreadsheetValueTypeVisitor<ConverterContext>(mapping),
                 "mapping=boolean=Boolean1, date=Date2, dateTime=DateTime3, number=Number4, string=String5, time=Time6");
     }
 
     @Test
     public void testToString2() {
-        final SpreadsheetConverterMapping<Converter> mapping = SpreadsheetConverterMapping.with(Converters.fake().setToString("Boolean1"),
+        final SpreadsheetConverterMapping<Converter<ConverterContext>> mapping = SpreadsheetConverterMapping.with(Converters.fake().setToString("Boolean1"),
                 Converters.fake().setToString("Date2"),
                 Converters.fake().setToString("DateTime3"),
                 Converters.fake().setToString("Number4"),
                 Converters.fake().setToString("String5"),
                 Converters.fake().setToString("Time6"));
-        final SpreadsheetConverterSpreadsheetValueTypeVisitor visitor = new SpreadsheetConverterSpreadsheetValueTypeVisitor(mapping);
+        final SpreadsheetConverterSpreadsheetValueTypeVisitor<ConverterContext> visitor = new SpreadsheetConverterSpreadsheetValueTypeVisitor<>(mapping);
         visitor.accept(LocalDate.class);
 
         this.toStringAndCheck(visitor, "mapping=boolean=Boolean1, date=Date2, dateTime=DateTime3, number=Number4, string=String5, time=Time6, converter=Date2");
     }
 
     @Override
-    public SpreadsheetConverterSpreadsheetValueTypeVisitor createVisitor() {
+    public SpreadsheetConverterSpreadsheetValueTypeVisitor<ConverterContext> createVisitor() {
         return new SpreadsheetConverterSpreadsheetValueTypeVisitor(null);
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetConverterSpreadsheetValueTypeVisitor> type() {
-        return SpreadsheetConverterSpreadsheetValueTypeVisitor.class;
+    public Class<SpreadsheetConverterSpreadsheetValueTypeVisitor<ConverterContext>> type() {
+        return Cast.to(SpreadsheetConverterSpreadsheetValueTypeVisitor.class);
     }
 }

@@ -33,7 +33,7 @@ import java.util.Objects;
 /**
  * The {@link Converter} that handles each pattern returned by {@link SpreadsheetNumberParsePatterns#converter()}
  */
-final class SpreadsheetNumberParsePatternsConverter implements Converter {
+final class SpreadsheetNumberParsePatternsConverter implements Converter<ConverterContext> {
 
     static SpreadsheetNumberParsePatternsConverter with(final SpreadsheetNumberParsePatterns pattern) {
         return new SpreadsheetNumberParsePatternsConverter(pattern);

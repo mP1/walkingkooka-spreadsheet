@@ -58,7 +58,7 @@ import java.util.function.Function;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase<SpreadsheetConverter>
-        implements ConverterTesting2<SpreadsheetConverter> {
+        implements ConverterTesting2<SpreadsheetConverter, ConverterContext> {
 
     private final static long DATE_OFFSET = Converters.JAVA_EPOCH_OFFSET;
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;

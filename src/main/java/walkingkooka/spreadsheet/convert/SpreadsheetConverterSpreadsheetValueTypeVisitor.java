@@ -19,22 +19,23 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.ToStringBuilder;
 import walkingkooka.convert.Converter;
+import walkingkooka.convert.ConverterContext;
 import walkingkooka.spreadsheet.SpreadsheetValueTypeVisitor;
 import walkingkooka.visit.Visitor;
 
 /**
  * A {@link Visitor} that locates the appropriate {@link Converter} for a given source and target {@link Class}.
  */
-final class SpreadsheetConverterSpreadsheetValueTypeVisitor extends SpreadsheetValueTypeVisitor {
+final class SpreadsheetConverterSpreadsheetValueTypeVisitor<C extends ConverterContext> extends SpreadsheetValueTypeVisitor {
 
-    static Converter converter(final SpreadsheetConverterMapping<Converter> mapping,
-                               final Class<?> targetType) {
+    static <C extends ConverterContext> Converter<C> converter(final SpreadsheetConverterMapping<Converter<C>> mapping,
+                                                               final Class<?> targetType) {
         final SpreadsheetConverterSpreadsheetValueTypeVisitor visitor = new SpreadsheetConverterSpreadsheetValueTypeVisitor(mapping);
         visitor.accept(targetType);
         return visitor.converter;
     }
 
-    SpreadsheetConverterSpreadsheetValueTypeVisitor(final SpreadsheetConverterMapping<Converter> mapping) {
+    SpreadsheetConverterSpreadsheetValueTypeVisitor(final SpreadsheetConverterMapping<Converter<C>> mapping) {
         super();
         this.mapping = mapping;
     }
@@ -114,12 +115,12 @@ final class SpreadsheetConverterSpreadsheetValueTypeVisitor extends SpreadsheetV
         this.converter = this.mapping.number; // handles other Number types.
     }
 
-    private final SpreadsheetConverterMapping<Converter> mapping;
+    private final SpreadsheetConverterMapping<Converter<C>> mapping;
 
     /**
      * The {@link Converter} selected using the target type.
      */
-    private Converter converter;
+    private Converter<C> converter;
 
     @Override
     public final String toString() {
