@@ -97,7 +97,13 @@ public final class Sample {
         // a1=12+b2
         // a1=12+34
         // b2=34
-        assertEquals(Sets.of("46", "34"), saved);
+        checkEquals(Sets.of("46", "34"), saved, "saved formula values");
+    }
+
+    private static void checkEquals(final Object expected,
+                                    final Object actual,
+                                    final String message) {
+        assertEquals(expected, actual, message);
     }
 
     private static SpreadsheetCellStore cellStore() {
@@ -105,8 +111,8 @@ public final class Sample {
     }
 
     private static SpreadsheetMetadata metadata() {
-        if (null == Sample.metadata) {
-            SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+        if (null == metadata) {
+            SpreadsheetMetadata m = SpreadsheetMetadata.EMPTY
                     .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.of(2000, 12, 31, 12, 58, 59))
                     .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"))
                     .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$AUD")
@@ -137,12 +143,12 @@ public final class Sample {
                     .set(SpreadsheetMetadataPropertyName.WIDTH, 10);
 
             for (int i = 0; i < SpreadsheetMetadata.MAX_NUMBER_COLOR + 2; i++) {
-                metadata = metadata.set(SpreadsheetMetadataPropertyName.numberedColor(i), Color.fromRgb(i));
+                m = m.set(SpreadsheetMetadataPropertyName.numberedColor(i), Color.fromRgb(i));
             }
 
-            Sample.metadata = metadata;
+            metadata = m;
         }
-        return Sample.metadata;
+        return metadata;
     }
 
     private static SpreadsheetMetadata metadata;
@@ -195,7 +201,7 @@ public final class Sample {
 
             @Override
             public <T> Either<T, String> convert(final Object value, final Class<T> target) {
-                assertEquals(Boolean.class, target, "Only support converting to Boolean=" + value);
+                checkEquals(Boolean.class, target, "Only support converting to Boolean=" + value);
                 return Cast.to(Either.left(Boolean.parseBoolean(String.valueOf(value))));
             }
 
@@ -213,13 +219,13 @@ public final class Sample {
 
             @Override
             public SpreadsheetFormatter defaultSpreadsheetFormatter() {
-                return Sample.defaultSpreadsheetFormatter();
+                return defaultSpreadsheetFormatter0();
             }
 
             @Override
             public Optional<SpreadsheetText> format(final Object value,
                                                     final SpreadsheetFormatter formatter) {
-                assertFalse(value instanceof Optional, () -> "Value must not be optional" + value);
+                checkEquals(false, value instanceof Optional, "Value must not be optional" + value);
                 return formatter.format(value, formatterContext());
             }
         };
@@ -229,13 +235,13 @@ public final class Sample {
      * A {@lnk SpreadsheetFormatterContext} that is fully functional except for translating colour numbers and colour names to a {@link Color}.
      */
     private static SpreadsheetFormatterContext formatterContext() {
-        return metadata().formatterContext(defaultSpreadsheetFormatter());
+        return metadata().formatterContext(defaultSpreadsheetFormatter0());
     }
 
     /**
      * A {@link SpreadsheetFormatter} that accepts all values and creates a {@link SpreadsheetText} with {@link Object#toString()} and no colour.
      */
-    private static SpreadsheetFormatter defaultSpreadsheetFormatter() {
+    private static SpreadsheetFormatter defaultSpreadsheetFormatter0() {
         return new SpreadsheetFormatter() {
             @Override
             public boolean canFormat(final Object value,
