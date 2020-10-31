@@ -24,6 +24,7 @@ import walkingkooka.convert.Converters;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -33,7 +34,7 @@ import java.util.Objects;
 /**
  * The {@link Converter} that handles each pattern returned by {@link SpreadsheetNumberParsePatterns#converter()}
  */
-final class SpreadsheetNumberParsePatternsConverter implements Converter<ConverterContext> {
+final class SpreadsheetNumberParsePatternsConverter implements Converter<ExpressionNumberConverterContext> {
 
     static SpreadsheetNumberParsePatternsConverter with(final SpreadsheetNumberParsePatterns pattern) {
         return new SpreadsheetNumberParsePatternsConverter(pattern);
@@ -47,7 +48,7 @@ final class SpreadsheetNumberParsePatternsConverter implements Converter<Convert
     @Override
     public boolean canConvert(final Object value,
                               final Class<?> type,
-                              final ConverterContext context) {
+                              final ExpressionNumberConverterContext context) {
         return value instanceof String &&
                 (Byte.class == type ||
                         Short.class == type ||
@@ -66,7 +67,7 @@ final class SpreadsheetNumberParsePatternsConverter implements Converter<Convert
     @Override
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> type,
-                                         final ConverterContext context) {
+                                         final ExpressionNumberConverterContext context) {
         Objects.requireNonNull(value, "value");
         Objects.requireNonNull(type, "type");
         Objects.requireNonNull(context, "context");
@@ -105,7 +106,7 @@ final class SpreadsheetNumberParsePatternsConverter implements Converter<Convert
     /**
      * A {@link Converter} that converts the parsed {@link BigDecimal} to the requested {@link Number}.
      */
-    private final static Converter NUMBER = Converters.numberNumber();
+    private final static Converter<ConverterContext> NUMBER = Converters.numberNumber();
 
     @Override
     public String toString() {

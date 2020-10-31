@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.text.cursor.parser.HasParser;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,7 +36,7 @@ import java.util.stream.Collectors;
  * Holds a a {@link List} of {@link SpreadsheetFormatDateTimeParserToken date/time} or {@link SpreadsheetFormatNumberParserToken} number tokens and some common functionality.
  */
 public abstract class SpreadsheetParsePatterns<T extends SpreadsheetFormatParserToken> extends SpreadsheetPattern<List<T>>
-        implements HasConverter,
+        implements HasConverter<ExpressionNumberConverterContext>,
         HasParser<ParserContext> {
 
     // ctor.............................................................................................................
@@ -67,19 +68,19 @@ public abstract class SpreadsheetParsePatterns<T extends SpreadsheetFormatParser
     /**
      * Returns a {@link Converter} which will try all the patterns.
      */
-    public final Converter<ConverterContext> converter() {
+    public final Converter<ExpressionNumberConverterContext> converter() {
         if (null == this.converter) {
             this.converter = this.createConverter();
         }
         return this.converter;
     }
 
-    private Converter<ConverterContext> converter;
+    private Converter<ExpressionNumberConverterContext> converter;
 
     /**
      * Factory that lazily creates a {@link Converter}
      */
-    abstract Converter<ConverterContext> createConverter();
+    abstract Converter<ExpressionNumberConverterContext> createConverter();
 
     // HasParser........................................................................................................
 

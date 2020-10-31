@@ -24,6 +24,7 @@ import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 import java.util.List;
 
@@ -71,7 +72,7 @@ public final class SpreadsheetTimeParsePatterns extends SpreadsheetParsePatterns
     // HasConverter.....................................................................................................
 
     @Override
-    Converter createDateTimeFormatterConverter(final int i) {
+    Converter<ExpressionNumberConverterContext> createDateTimeFormatterConverter(final int i) {
         return Converters.stringLocalTime(this.dateTimeContextDateTimeFormatterFunction(i));
     }
 

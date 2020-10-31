@@ -19,15 +19,19 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
-import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.BigDecimal;
 
 public final class SpreadsheetNumberParsePatternsConverterTest extends SpreadsheetNumberParsePatternsTestCase2<SpreadsheetNumberParsePatternsConverter>
-        implements ConverterTesting2<SpreadsheetNumberParsePatternsConverter, ConverterContext> {
+        implements ConverterTesting2<SpreadsheetNumberParsePatternsConverter, ExpressionNumberConverterContext> {
+
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     @Test
     public void testHashInvalidFails() {
@@ -568,9 +572,11 @@ public final class SpreadsheetNumberParsePatternsConverterTest extends Spreadshe
     }
 
     @Override
-    public ConverterContext createContext() {
-        return ConverterContexts.basic(DateTimeContexts.fake(), // DateTimeContext unused
-                this.decimalNumberContext());
+    public ExpressionNumberConverterContext createContext() {
+        return ExpressionNumberConverterContexts.basic(
+                ConverterContexts.basic(DateTimeContexts.fake(), // DateTimeContext unused
+                        this.decimalNumberContext()),
+                EXPRESSION_NUMBER_KIND);
     }
 
     @Override
