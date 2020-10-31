@@ -22,12 +22,12 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContext;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 
@@ -195,7 +195,7 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     private Function<Integer, Optional<Color>> numberToColor;
 
     @Override
-    public Converter converter() {
+    public Converter<ExpressionNumberConverterContext> converter() {
         if (null == this.converter) {
             this.converter = this.converter0();
         }
@@ -205,10 +205,10 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     /**
      * Cached {@link Converter}.
      */
-    private Converter converter;
+    private Converter<ExpressionNumberConverterContext> converter;
 
     @Override
-    public ConverterContext converterContext() {
+    public ExpressionNumberConverterContext converterContext() {
         if (null == this.converterContext) {
             this.converterContext = this.converterContext0();
         }
@@ -216,9 +216,9 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
     }
 
     /**
-     * Cached {@link ConverterContext}.
+     * Cached {@link ExpressionNumberConverterContext}.
      */
-    private ConverterContext converterContext;
+    private ExpressionNumberConverterContext converterContext;
     
     @Override
     public DateTimeContext dateTimeContext() {

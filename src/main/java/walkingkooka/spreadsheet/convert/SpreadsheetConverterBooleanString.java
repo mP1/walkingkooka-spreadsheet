@@ -20,14 +20,15 @@ package walkingkooka.spreadsheet.convert;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 /**
  * Pipes the result of converting {@link Boolean} to {@link String} and then to the text formatter.
  */
-final class SpreadsheetConverterBooleanString implements Converter<ConverterContext> {
+final class SpreadsheetConverterBooleanString implements Converter<ExpressionNumberConverterContext> {
 
-    static <C extends ConverterContext> SpreadsheetConverterBooleanString with(final Converter<C> booleanString,
-                                                                               final Converter<C> textFormatter) {
+    static SpreadsheetConverterBooleanString with(final Converter<ExpressionNumberConverterContext> booleanString,
+                                                  final Converter<ExpressionNumberConverterContext> textFormatter) {
         return new SpreadsheetConverterBooleanString(booleanString.cast(ConverterContext.class),
                 textFormatter.cast(ConverterContext.class));
     }
@@ -42,14 +43,14 @@ final class SpreadsheetConverterBooleanString implements Converter<ConverterCont
     @Override
     public boolean canConvert(final Object value,
                               final Class<?> type,
-                              final ConverterContext context) {
+                              final ExpressionNumberConverterContext context) {
         return this.booleanString.canConvert(value, type, context);
     }
 
     @Override
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> type,
-                                         final ConverterContext context) {
+                                         final ExpressionNumberConverterContext context) {
         Either<T, String> result = this.booleanString.convert(value, type, context);
         if (result.isLeft()) {
             result = this.textFormatter.convert(result.leftValue(), type, context);
@@ -57,8 +58,8 @@ final class SpreadsheetConverterBooleanString implements Converter<ConverterCont
         return result;
     }
 
-    private final Converter booleanString;
-    private final Converter textFormatter;
+    private final Converter<ConverterContext> booleanString;
+    private final Converter<ConverterContext> textFormatter;
 
     @Override
     public String toString() {

@@ -44,6 +44,8 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.BigDecimal;
@@ -58,7 +60,7 @@ import java.util.function.Function;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase<SpreadsheetConverter>
-        implements ConverterTesting2<SpreadsheetConverter, ConverterContext> {
+        implements ConverterTesting2<SpreadsheetConverter, ExpressionNumberConverterContext> {
 
     private final static long DATE_OFFSET = Converters.JAVA_EPOCH_OFFSET;
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
@@ -75,8 +77,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 numberParser(),
                 textFormatter(),
                 timeFormatter(),
-                timeParser(),
-                EXPRESSION_NUMBER_KIND);
+                timeParser());
     }
 
     @Test
@@ -89,8 +90,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 numberParser(),
                 textFormatter(),
                 timeFormatter(),
-                timeParser(),
-                EXPRESSION_NUMBER_KIND);
+                timeParser());
     }
 
     @Test
@@ -103,8 +103,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 numberParser(),
                 textFormatter(),
                 timeFormatter(),
-                timeParser(),
-                EXPRESSION_NUMBER_KIND);
+                timeParser());
     }
 
     @Test
@@ -117,8 +116,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 numberParser(),
                 textFormatter(),
                 timeFormatter(),
-                timeParser(),
-                EXPRESSION_NUMBER_KIND);
+                timeParser());
     }
 
     @Test
@@ -131,8 +129,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 numberParser(),
                 textFormatter(),
                 timeFormatter(),
-                timeParser(),
-                EXPRESSION_NUMBER_KIND);
+                timeParser());
     }
 
     @Test
@@ -145,8 +142,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 null,
                 textFormatter(),
                 timeFormatter(),
-                timeParser(),
-                EXPRESSION_NUMBER_KIND);
+                timeParser());
     }
 
     @Test
@@ -159,8 +155,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 numberParser(),
                 null,
                 timeFormatter(),
-                timeParser(),
-                EXPRESSION_NUMBER_KIND);
+                timeParser());
     }
 
     @Test
@@ -173,8 +168,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 numberParser(),
                 textFormatter(),
                 null,
-                timeParser(),
-                EXPRESSION_NUMBER_KIND);
+                timeParser());
     }
 
     @Test
@@ -187,21 +181,6 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 numberParser(),
                 textFormatter(),
                 timeFormatter(),
-                null,
-                EXPRESSION_NUMBER_KIND);
-    }
-
-    @Test
-    public void testWithNullExpressionNumberKindFails() {
-        withFails(dateFormatter(),
-                dateParser(),
-                dateTimeFormatter(),
-                dateTimeParser(),
-                numberFormatter(),
-                numberParser(),
-                textFormatter(),
-                timeFormatter(),
-                timeParser(),
                 null);
     }
 
@@ -213,8 +192,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                            final SpreadsheetNumberParsePatterns numberParser,
                            final SpreadsheetFormatter textFormatter,
                            final SpreadsheetFormatter timeFormatter,
-                           final SpreadsheetTimeParsePatterns timeParser,
-                           final ExpressionNumberKind expressionNumberKind) {
+                           final SpreadsheetTimeParsePatterns timeParser) {
         assertThrows(NullPointerException.class, () -> SpreadsheetConverter.with(dateFormatter,
                 dateParser,
                 dateTimeFormatter,
@@ -224,8 +202,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 textFormatter,
                 timeFormatter,
                 timeParser,
-                DATE_OFFSET,
-                expressionNumberKind));
+                DATE_OFFSET));
     }
 
     // convert..........................................................................................................
@@ -481,8 +458,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                 textFormatter(),
                 timeFormatter(),
                 timeParser(),
-                DATE_OFFSET,
-                EXPRESSION_NUMBER_KIND);
+                DATE_OFFSET);
     }
 
     private SpreadsheetFormatter dateFormatter() {
@@ -548,8 +524,8 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     }
 
     @Override
-    public ConverterContext createContext() {
-        return ConverterContexts.basic(
+    public ExpressionNumberConverterContext createContext() {
+        return ExpressionNumberConverterContexts.basic(ConverterContexts.basic(
                 DateTimeContexts.locale(Locale.ENGLISH, 20),
                 DecimalNumberContexts.basic("C",
                         'D',
@@ -559,7 +535,8 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
                         'P',
                         'L',
                         Locale.ENGLISH,
-                        MathContext.DECIMAL32));
+                        MathContext.DECIMAL32)),
+                EXPRESSION_NUMBER_KIND);
     }
 
     private void convertAndCheck2(final Object value,

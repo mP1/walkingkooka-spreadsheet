@@ -40,8 +40,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                                       final SpreadsheetFormatter textFormatter,
                                       final SpreadsheetFormatter timeFormatter,
                                       final SpreadsheetTimeParsePatterns timeParser,
-                                      final long dateOffset,
-                                      final ExpressionNumberKind expressionNumberKind) {
+                                      final long dateOffset) {
         return SpreadsheetConverter.with(dateFormatter,
                 dateParser,
                 dateTimeFormatter,
@@ -51,8 +50,7 @@ public final class SpreadsheetConverters implements PublicStaticHelper {
                 textFormatter,
                 timeFormatter,
                 timeParser,
-                dateOffset,
-                expressionNumberKind);
+                dateOffset);
     }
 
     /**

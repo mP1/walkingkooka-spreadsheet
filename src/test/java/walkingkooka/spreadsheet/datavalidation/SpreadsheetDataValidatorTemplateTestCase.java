@@ -27,12 +27,15 @@ import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
 public abstract class SpreadsheetDataValidatorTemplateTestCase<V extends SpreadsheetDataValidatorTemplate, T> implements SpreadsheetDataValidatorTesting<V, T> {
 
+    final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     SpreadsheetDataValidatorTemplateTestCase() {
         super();
@@ -50,8 +53,8 @@ public abstract class SpreadsheetDataValidatorTemplateTestCase<V extends Spreads
     final ExpressionEvaluationContext expressionEvaluationContext() {
         final Converter all = Converters.collection(
                 Lists.of(Converters.simple(),
-                        ExpressionNumber.toExpressionNumberConverter(),
-                        ExpressionNumber.fromExpressionNumberConverter(Converters.truthyNumberBoolean())));
+                        ExpressionNumber.toConverter(Converters.simple()),
+                        ExpressionNumber.fromConverter(Converters.truthyNumberBoolean())));
 
         return new FakeExpressionEvaluationContext() {
             @Override
@@ -59,7 +62,7 @@ public abstract class SpreadsheetDataValidatorTemplateTestCase<V extends Spreads
                                                    final Class<TT> target) {
                 return all.convert(value,
                         target,
-                        ConverterContexts.basic(DateTimeContexts.fake(), this));
+                        ExpressionNumberConverterContexts.basic(ConverterContexts.basic(DateTimeContexts.fake(), this), EXPRESSION_NUMBER_KIND));
             }
         };
     }

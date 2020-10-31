@@ -116,6 +116,7 @@ public final class Sample {
                     .set(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetPattern.parseDateTimeFormatPattern("DD/MM/YYYY hh:mm"))
                     .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetPattern.parseDateTimeParsePatterns("DD/MM/YYYY hh:mmDDMMYYYYHHMMDDMMYYYY HHMM"))
                     .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, 'D')
+                    .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
                     .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E")
                     .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, 'G')
                     .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))

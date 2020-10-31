@@ -45,6 +45,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.store.Store;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 
 import java.math.MathContext;
@@ -721,8 +724,12 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         assertEquals(text, cell.formatted().get().text(), "formattedText");
     }
 
-    default ConverterContext converterContext() {
-        return ConverterContexts.basic(this.dateTimeContext(), this.decimalNumberContext());
+    default ExpressionNumberConverterContext converterContext() {
+        return ExpressionNumberConverterContexts.basic(ConverterContexts.basic(this.dateTimeContext(), this.decimalNumberContext()), this.expressionNumberKind());
+    }
+
+    default ExpressionNumberKind expressionNumberKind() {
+        return ExpressionNumberKind.DEFAULT;
     }
 
     default DateTimeContext dateTimeContext() {

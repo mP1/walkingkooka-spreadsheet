@@ -25,7 +25,6 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
@@ -46,6 +45,9 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.text.FontFamilyName;
@@ -78,6 +80,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         DateTimeContextTesting,
         DecimalNumberContextTesting,
         SpreadsheetFormatterTesting {
+
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     @Test
     public void testWithSpreadsheetMetadataMap() {
@@ -475,6 +479,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     // HasConverter.....................................................................................................
 
     @Test
+    public void testConverterExpressionNumberToString() {
+        this.convertAndCheck2(EXPRESSION_NUMBER_KIND.create(123.5),
+                "Number 123.500");
+    }
+
+    @Test
     public void testConverterBigDecimalToString() {
         this.convertAndCheck2(BigDecimal.valueOf(123.5),
                 "Number 123.500");
@@ -520,6 +530,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testConverterDoubleToString() {
         this.convertAndCheck2(123.5,
                 "Number 123.500");
+    }
+
+    @Test
+    public void testConverterStringToExpressionNumber() {
+        this.convertAndCheck2("Number 123.500", EXPRESSION_NUMBER_KIND.create(123.5));
     }
 
     @Test
@@ -605,7 +620,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.convertAndCheck3(value,
                 expected,
                 metadata.converter(),
-                ConverterContexts.basic(DateTimeContexts.locale(Locale.ENGLISH, 20), DecimalNumberContexts.american(MathContext.DECIMAL32)));
+                ExpressionNumberConverterContexts.basic(ConverterContexts.basic(DateTimeContexts.locale(Locale.ENGLISH, 20), DecimalNumberContexts.american(MathContext.DECIMAL32)), metadata.expressionNumberKind()));
     }
 
     @Test
@@ -621,6 +636,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS, SpreadsheetPattern.parseDateParsePatterns("\"Date\" yyyy mm dd"))
                 .set(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetPattern.parseDateTimeFormatPattern("\"DateTime\" yyyy hh"))
                 .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetPattern.parseDateTimeParsePatterns("\"DateTime\" yyyy hh"))
+                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("\"Number\" 00.000"))
                 .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERNS, SpreadsheetPattern.parseNumberParsePatterns("\"Number\" 00.000"))
@@ -632,8 +648,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     private void convertAndCheck3(final Object value,
                                   final Object expected,
-                                  final Converter converter,
-                                  final ConverterContext context) {
+                                  final Converter<ExpressionNumberConverterContext> converter,
+                                  final ExpressionNumberConverterContext context) {
         this.convertAndCheck(converter,
                 value,
                 Cast.to(expected.getClass()),
