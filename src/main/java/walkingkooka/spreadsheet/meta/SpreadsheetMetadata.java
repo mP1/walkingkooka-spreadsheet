@@ -75,7 +75,7 @@ import java.util.function.Function;
 /**
  * A {@link SpreadsheetMetadata} holds a {@link Map} of {@link SpreadsheetMetadataPropertyName} and values.
  */
-public abstract class SpreadsheetMetadata implements HasConverter,
+public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumberConverterContext>,
         HasDateTimeContext,
         HasDecimalNumberContext,
         HasExpressionNumberKind,

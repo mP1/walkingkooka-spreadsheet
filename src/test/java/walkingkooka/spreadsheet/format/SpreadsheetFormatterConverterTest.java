@@ -28,12 +28,17 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
 
-public final class SpreadsheetFormatterConverterTest implements ConverterTesting2<SpreadsheetFormatterConverter, ConverterContext> {
+public final class SpreadsheetFormatterConverterTest implements ConverterTesting2<SpreadsheetFormatterConverter, ExpressionNumberConverterContext> {
+
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     @Test
     public void testFormatBigDecimal() {
@@ -107,8 +112,8 @@ public final class SpreadsheetFormatterConverterTest implements ConverterTesting
     }
 
     @Override
-    public ConverterContext createContext() {
-        return ConverterContexts.basic(DateTimeContexts.fake(), DecimalNumberContexts.american(MathContext.UNLIMITED));
+    public ExpressionNumberConverterContext createContext() {
+        return ExpressionNumberConverterContexts.basic(ConverterContexts.basic(DateTimeContexts.fake(), DecimalNumberContexts.american(MathContext.UNLIMITED)), EXPRESSION_NUMBER_KIND);
     }
 
     @Override

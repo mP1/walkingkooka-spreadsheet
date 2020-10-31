@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.format.pattern;
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -28,6 +27,8 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.text.cursor.parser.ParentParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.BigDecimal;
@@ -285,8 +286,8 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
 
     abstract Class<V> targetType();
 
-    private ConverterContext converterContext() {
-        return ConverterContexts.basic(this.dateTimeContext(), this.decimalNumberContext());
+    private ExpressionNumberConverterContext converterContext() {
+        return ExpressionNumberConverterContexts.basic(ConverterContexts.basic(this.dateTimeContext(), this.decimalNumberContext()), EXPRESSION_NUMBER_KIND);
     }
 
     // IsMethodTesting..................................................................................................

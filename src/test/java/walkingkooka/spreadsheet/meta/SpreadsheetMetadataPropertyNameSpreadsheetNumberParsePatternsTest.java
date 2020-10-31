@@ -22,6 +22,8 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
+import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -32,6 +34,8 @@ import java.util.Locale;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatternsTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns, SpreadsheetNumberParsePatterns> {
+
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     @Test
     public void testExtractLocaleValue() throws ParseException{
@@ -50,7 +54,9 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns
                 .get();
 
         final BigDecimal value = pattern.converter()
-                .convertOrFail(text, BigDecimal.class, ConverterContexts.basic(DateTimeContexts.locale(Locale.ENGLISH, 20), DecimalNumberContexts.american(MathContext.DECIMAL32)));
+                .convertOrFail(text,
+                        BigDecimal.class,
+                        ExpressionNumberConverterContexts.basic(ConverterContexts.basic(DateTimeContexts.locale(Locale.ENGLISH, 20), DecimalNumberContexts.american(MathContext.DECIMAL32)), EXPRESSION_NUMBER_KIND));
 
         final DecimalFormat decimalFormat = (DecimalFormat) DecimalFormat.getInstance(locale);
         decimalFormat.setParseBigDecimal(true);
