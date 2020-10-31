@@ -32,6 +32,8 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
@@ -675,16 +677,16 @@ public final class SpreadsheetDataValidatorsTest implements ClassTesting2<Spread
     }
 
     final ExpressionEvaluationContext expressionEvaluationContext() {
-        final Converter all = Converters.collection(
+        final Converter<ExpressionNumberConverterContext> all = Converters.collection(
                 Lists.of(Converters.simple(),
-                        ExpressionNumber.toExpressionNumberConverter(),
-                        ExpressionNumber.fromExpressionNumberConverter(Converters.truthyNumberBoolean())));
+                        ExpressionNumber.toConverter(Converters.simple()),
+                        ExpressionNumber.fromConverter(Converters.truthyNumberBoolean())));
 
         return new FakeExpressionEvaluationContext() {
             @Override
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
-                return all.convert(value, target, ConverterContexts.basic(DateTimeContexts.fake(), this));
+                return all.convert(value, target, ExpressionNumberConverterContexts.basic(ConverterContexts.basic(DateTimeContexts.fake(), this), EXPRESSION_NUMBER_KIND));
             }
         };
     }

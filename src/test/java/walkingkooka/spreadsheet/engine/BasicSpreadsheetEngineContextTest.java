@@ -41,6 +41,8 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberExpression;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FunctionExpressionName;
@@ -342,7 +344,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testToString() {
         this.toStringAndCheck(this.createContext(),
-                "converter=value==target type | ExpressionNumber | Number->Number|ExpressionNumber(Double) | ExpressionNumber|Number->Number converterContext=DateTimeContext123 \"C\" 'D' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN fractioner=Fractioner123 defaultSpreadsheetFormatter=SpreadsheetFormatter123");
+                "converter=value==target type | Number->Number|ExpressionNumber | ExpressionNumber|Number->Number converterContext=DateTimeContext123 \"C\" 'D' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN DOUBLE fractioner=Fractioner123 defaultSpreadsheetFormatter=SpreadsheetFormatter123");
     }
 
     @Override
@@ -379,7 +381,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private Object functions(final FunctionExpressionName name, final List<Object> parameters) {
         assertEquals(functionName(), name, "function name");
         return parameters.stream()
-                .mapToLong(p -> this.converter().convertOrFail(p, Long.class, ConverterContexts.fake()))
+                .mapToLong(p -> this.converter().convertOrFail(p, Long.class, this.converterContext()))
                 .sum();
     }
 
@@ -395,19 +397,18 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         return SpreadsheetLabelStores.fake();
     }
 
-    private Converter<ConverterContext> converter() {
+    private Converter<ExpressionNumberConverterContext> converter() {
         return Converters.collection(
                 Lists.of(
                         Converters.simple(),
-                        ExpressionNumber.toExpressionNumberConverter(),
-                        EXPRESSION_NUMBER_KIND.toConverter(Converters.numberNumber()),
-                        ExpressionNumber.fromExpressionNumberConverter(Converters.numberNumber())
+                        ExpressionNumber.toConverter(Converters.numberNumber()),
+                        ExpressionNumber.fromConverter(Converters.numberNumber())
                 )
         );
     }
 
-    private ConverterContext converterContext() {
-        return ConverterContexts.basic(this.dateTimeContext(), this.decimalNumberContext());
+    private ExpressionNumberConverterContext converterContext() {
+        return ExpressionNumberConverterContexts.basic(ConverterContexts.basic(this.dateTimeContext(), this.decimalNumberContext()), EXPRESSION_NUMBER_KIND);
     }
 
     private DateTimeContext dateTimeContext() {

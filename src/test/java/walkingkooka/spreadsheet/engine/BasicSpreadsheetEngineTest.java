@@ -108,7 +108,6 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private final static SpreadsheetFormatterContext SPREADSHEET_TEXT_FORMAT_CONTEXT = SpreadsheetFormatterContexts.fake();
 
-    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     private final static MathContext MATH_CONTEXT = MathContext.DECIMAL32;
 
     @Test
@@ -4779,14 +4778,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
             @Override
             public ExpressionNumberKind expressionNumberKind() {
-                return EXPRESSION_NUMBER_KIND;
+                return BasicSpreadsheetEngineTest.this.expressionNumberKind();
             }
 
             @Override
             public SpreadsheetParserToken parseFormula(final String formula) {
                 return Cast.to(SpreadsheetParsers.expression()
                         .orFailIfCursorNotEmpty(ParserReporters.basic())
-                        .parse(TextCursors.charSequence(formula), SpreadsheetParserContexts.basic(DateTimeContexts.fake(), converterContext(), EXPRESSION_NUMBER_KIND))
+                        .parse(TextCursors.charSequence(formula), SpreadsheetParserContexts.basic(DateTimeContexts.fake(), converterContext(), this.expressionNumberKind()))
                         .get());
             }
 
@@ -4820,9 +4819,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 return Converters.collection(
                         Lists.of(
                                 Converters.simple(),
-                                ExpressionNumber.toExpressionNumberConverter(),
-                                this.expressionNumberKind().toConverter(Converters.numberNumber()),
-                                ExpressionNumber.fromExpressionNumberConverter(Converters.numberNumber())
+                                ExpressionNumber.toConverter(Converters.numberNumber()),
+                                ExpressionNumber.fromConverter(Converters.numberNumber())
                         )
                 );
             }
@@ -4992,13 +4990,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
      * Assumes the formula is syntactically correct and updates the cell.
      */
     private Optional<Expression> parseFormula(final SpreadsheetFormula formula) {
+        final ExpressionNumberKind expressionNumberKind = this.expressionNumberKind();
+
         final String formulaText = formula.text();
         return SpreadsheetParsers.expression()
                 .parse(TextCursors.charSequence(formulaText),
-                        SpreadsheetParserContexts.basic(this.dateTimeContext(), this.decimalNumberContext(), EXPRESSION_NUMBER_KIND))
+                        SpreadsheetParserContexts.basic(this.dateTimeContext(), this.decimalNumberContext(), expressionNumberKind))
                 .orElseThrow(() -> new AssertionError("Failed to parse " + CharSequences.quote(formulaText)))
                 .cast(SpreadsheetParserToken.class)
-                .expression(ExpressionNumberContexts.basic(EXPRESSION_NUMBER_KIND, MATH_CONTEXT));
+                .expression(ExpressionNumberContexts.basic(expressionNumberKind, MATH_CONTEXT));
     }
 
     private void loadCellStoreAndCheck(final SpreadsheetCellStore store,
@@ -5031,8 +5031,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 "referrers from " + cell);
     }
 
-    private static ExpressionNumber number(final Number number) {
-        return EXPRESSION_NUMBER_KIND.create(number);
+    private ExpressionNumber number(final Number number) {
+        return this.expressionNumberKind().create(number);
     }
 
     private SpreadsheetId id() {

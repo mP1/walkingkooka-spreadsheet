@@ -52,6 +52,8 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.HasExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
@@ -258,7 +260,7 @@ public abstract class SpreadsheetMetadata implements HasConverter,
      * </ul>
      */
     @Override
-    public abstract Converter converter();
+    public abstract Converter<ExpressionNumberConverterContext> converter();
 
     /**
      * Lazy factory that creates a {@link Converter} using current properties.
@@ -293,20 +295,19 @@ public abstract class SpreadsheetMetadata implements HasConverter,
                 textFormat.formatter(),
                 timeFormat.formatter(),
                 timeParser,
-                dateOffset,
-                ExpressionNumberKind.DEFAULT);
+                dateOffset);
     }
 
     /**
-     * Returns a {@link ConverterContext}
+     * Returns a {@link ExpressionNumberConverterContext}
      */
-    public abstract ConverterContext converterContext();
+    public abstract ExpressionNumberConverterContext converterContext();
 
     /**
      * Factory that creates a {@link ConverterContext}
      */
-    final ConverterContext converterContext0() {
-        return ConverterContexts.basic(this.dateTimeContext(), this.decimalNumberContext());
+    final ExpressionNumberConverterContext converterContext0() {
+        return ExpressionNumberConverterContexts.basic(ConverterContexts.basic(this.dateTimeContext(), this.decimalNumberContext()), this.expressionNumberKind());
     }
 
     // HasDateTimeContext...............................................................................................

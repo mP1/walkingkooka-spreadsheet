@@ -24,7 +24,6 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 
 public final class CustomFormulaSpreadsheetDataValidatorTest extends SpreadsheetDataValidatorTemplateTestCase<CustomFormulaSpreadsheetDataValidator, Object> {
 
-    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     private final static long VALUE = 123;
 
     @Test

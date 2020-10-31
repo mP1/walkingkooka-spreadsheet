@@ -48,6 +48,7 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
+import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
@@ -1670,13 +1671,12 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
         final Converter converter = Converters.collection(Lists.of(
                 Converters.simple(),
-                ExpressionNumber.toExpressionNumberConverter(),
-                kind.toConverter(Converters.numberNumber()),
-                kind.toConverter(Converters.localDateNumber(Converters.JAVA_EPOCH_OFFSET)),
-                kind.toConverter(Converters.localDateTimeNumber(Converters.JAVA_EPOCH_OFFSET)),
-                kind.toConverter(Converters.localTimeNumber()),
-                ExpressionNumber.fromExpressionNumberConverter(Converters.numberLocalTime()),
-                kind.toConverter(stringDouble),
+                ExpressionNumber.toConverter(Converters.numberNumber()),
+                ExpressionNumber.toConverter(Converters.localDateNumber(Converters.JAVA_EPOCH_OFFSET)),
+                ExpressionNumber.toConverter(Converters.localDateTimeNumber(Converters.JAVA_EPOCH_OFFSET)),
+                ExpressionNumber.toConverter(Converters.localTimeNumber()),
+                ExpressionNumber.fromConverter(Converters.numberLocalTime()),
+                ExpressionNumber.toConverter(stringDouble),
                 stringLocalDate,
                 stringLocalDateTime,
                 stringLocalTime,
@@ -1684,6 +1684,12 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         ));
 
         return new FakeExpressionEvaluationContext() {
+
+            @Override
+            public ExpressionNumberKind expressionNumberKind() {
+                return kind;
+            }
+
             @Override
             public Object function(final FunctionExpressionName name, final List<Object> parameters) {
                 if (toDate.equals(name)) {
@@ -1721,7 +1727,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
             public <T> Either<T, String> convert(final Object value, final Class<T> target) {
                 return converter.convert(value,
                         target,
-                        ConverterContexts.basic(dateTimeContext(), decimalNumberContext()));
+                        ExpressionNumberConverterContexts.basic(ConverterContexts.basic(dateTimeContext(), decimalNumberContext()), this.expressionNumberKind()));
             }
         };
     }
