@@ -105,7 +105,13 @@ public class JunitTest {
         // a1=12+b2
         // a1=12+34
         // b2=34
-        Assert.assertEquals(Sets.of("46", "34"), saved);
+        checkEquals(Sets.of("46", "34"), saved, "saved formula values");
+    }
+
+    private static void checkEquals(final Object expected,
+                                    final Object actual,
+                                    final String message) {
+        Assert.assertEquals(message, expected, actual);
     }
 
     private static SpreadsheetCellStore cellStore() {
@@ -113,8 +119,8 @@ public class JunitTest {
     }
 
     private static SpreadsheetMetadata metadata() {
-        if (null == JunitTest.metadata) {
-            SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+        if (null == metadata) {
+            SpreadsheetMetadata m = SpreadsheetMetadata.EMPTY
                     .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.of(2000, 12, 31, 12, 58, 59))
                     .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"))
                     .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$AUD")
@@ -145,12 +151,12 @@ public class JunitTest {
                     .set(SpreadsheetMetadataPropertyName.WIDTH, 10);
 
             for (int i = 0; i < SpreadsheetMetadata.MAX_NUMBER_COLOR + 2; i++) {
-                metadata = metadata.set(SpreadsheetMetadataPropertyName.numberedColor(i), Color.fromRgb(i));
+                m = m.set(SpreadsheetMetadataPropertyName.numberedColor(i), Color.fromRgb(i));
             }
 
-            JunitTest.metadata = metadata;
+            metadata = m;
         }
-        return JunitTest.metadata;
+        return metadata;
     }
 
     private static SpreadsheetMetadata metadata;
@@ -203,8 +209,8 @@ public class JunitTest {
 
             @Override
             public <T> Either<T, String> convert(final Object value, final Class<T> target) {
-                Assert.assertEquals("Only support converting to Boolean=" + value, Boolean.class, target);
-                return Cast.to(Either.left((Boolean.parseBoolean(String.valueOf(value)))));
+                checkEquals(Boolean.class, target, "Only support converting to Boolean=" + value);
+                return Cast.to(Either.left(Boolean.parseBoolean(String.valueOf(value))));
             }
 
             @Override
@@ -221,13 +227,13 @@ public class JunitTest {
 
             @Override
             public SpreadsheetFormatter defaultSpreadsheetFormatter() {
-                return JunitTest.defaultSpreadsheetFormatter();
+                return defaultSpreadsheetFormatter0();
             }
 
             @Override
             public Optional<SpreadsheetText> format(final Object value,
                                                     final SpreadsheetFormatter formatter) {
-                Assert.assertFalse("Value must not be optional" + value, value instanceof Optional);
+                checkEquals(false, value instanceof Optional, "Value must not be optional" + value);
                 return formatter.format(value, formatterContext());
             }
         };
@@ -237,13 +243,13 @@ public class JunitTest {
      * A {@lnk SpreadsheetFormatterContext} that is fully functional except for translating colour numbers and colour names to a {@link Color}.
      */
     private static SpreadsheetFormatterContext formatterContext() {
-        return metadata().formatterContext(defaultSpreadsheetFormatter());
+        return metadata().formatterContext(defaultSpreadsheetFormatter0());
     }
 
     /**
      * A {@link SpreadsheetFormatter} that accepts all values and creates a {@link SpreadsheetText} with {@link Object#toString()} and no colour.
      */
-    private static SpreadsheetFormatter defaultSpreadsheetFormatter() {
+    private static SpreadsheetFormatter defaultSpreadsheetFormatter0() {
         return new SpreadsheetFormatter() {
             @Override
             public boolean canFormat(final Object value,
@@ -259,3 +265,4 @@ public class JunitTest {
         };
     }
 }
+
