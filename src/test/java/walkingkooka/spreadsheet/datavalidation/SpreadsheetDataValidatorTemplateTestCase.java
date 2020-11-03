@@ -26,7 +26,6 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -51,7 +50,7 @@ public abstract class SpreadsheetDataValidatorTemplateTestCase<V extends Spreads
     }
 
     final ExpressionEvaluationContext expressionEvaluationContext() {
-        final Converter all = Converters.collection(
+        final Converter<ExpressionNumberConverterContext> all = Converters.collection(
                 Lists.of(Converters.simple(),
                         ExpressionNumber.toConverter(Converters.simple()),
                         ExpressionNumber.fromConverter(Converters.truthyNumberBoolean())));
@@ -62,7 +61,11 @@ public abstract class SpreadsheetDataValidatorTemplateTestCase<V extends Spreads
                                                    final Class<TT> target) {
                 return all.convert(value,
                         target,
-                        ExpressionNumberConverterContexts.basic(ConverterContexts.basic(DateTimeContexts.fake(), this), EXPRESSION_NUMBER_KIND));
+                        ExpressionNumberConverterContexts.basic(Converters.fake(),
+                                ConverterContexts.basic(Converters.fake(),
+                                        DateTimeContexts.fake(),
+                                        this),
+                                EXPRESSION_NUMBER_KIND));
             }
         };
     }

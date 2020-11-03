@@ -25,6 +25,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
+import walkingkooka.convert.Converters;
 import walkingkooka.convert.HasConverter;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
@@ -307,7 +308,11 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
      * Factory that creates a {@link ConverterContext}
      */
     final ExpressionNumberConverterContext converterContext0() {
-        return ExpressionNumberConverterContexts.basic(ConverterContexts.basic(this.dateTimeContext(), this.decimalNumberContext()), this.expressionNumberKind());
+        return ExpressionNumberConverterContexts.basic(this.converter(),
+                ConverterContexts.basic(Converters.fake(),
+                        this.dateTimeContext(),
+                        this.decimalNumberContext()),
+                this.expressionNumberKind());
     }
 
     // HasDateTimeContext...............................................................................................

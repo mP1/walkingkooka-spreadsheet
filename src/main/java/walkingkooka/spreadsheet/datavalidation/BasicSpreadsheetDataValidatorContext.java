@@ -138,8 +138,15 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     }
 
     @Override
-    public <T> Either<T, String> convert(final Object value, final Class<T> targetType) {
-        return this.context.convert(value, targetType);
+    public boolean canConvert(final Object value,
+                              final Class<?> type) {
+        return this.context.canConvert(value, type);
+    }
+
+    @Override
+    public <T> Either<T, String> convert(final Object value,
+                                         final Class<T> type) {
+        return this.context.convert(value, type);
     }
 
     private final ExpressionEvaluationContext context;

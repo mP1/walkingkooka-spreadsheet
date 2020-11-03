@@ -21,7 +21,7 @@ import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContext;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 import java.math.MathContext;
 import java.util.List;
@@ -38,16 +38,15 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     static BasicSpreadsheetFormatterContext with(final Function<Integer, Optional<Color>> numberToColor,
                                                  final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                                  final int width,
-                                                 final Converter converter,
+                                                 final Converter<ExpressionNumberConverterContext> converter,
                                                  final SpreadsheetFormatter defaultSpreadsheetFormatter,
-                                                 final ConverterContext converterContext) {
+                                                 final ExpressionNumberConverterContext converterContext) {
         Objects.requireNonNull(numberToColor, "numberToColor");
         Objects.requireNonNull(nameToColor, "nameToColor");
         if (width <= 0) {
             throw new IllegalArgumentException("Width " + width + " <= 0");
         }
         Objects.requireNonNull(converter, "converter");
-        Objects.requireNonNull(converterContext, "converterContext");
         Objects.requireNonNull(converterContext, "converterContext");
         Objects.requireNonNull(defaultSpreadsheetFormatter, "defaultSpreadsheetFormatter");
 
@@ -62,9 +61,9 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     private BasicSpreadsheetFormatterContext(final Function<Integer, Optional<Color>> numberToColor,
                                              final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                              final int width,
-                                             final Converter converter,
+                                             final Converter<ExpressionNumberConverterContext> converter,
                                              final SpreadsheetFormatter defaultSpreadsheetFormatter,
-                                             final ConverterContext converterContext) {
+                                             final ExpressionNumberConverterContext converterContext) {
         super();
 
         this.numberToColor = numberToColor;
@@ -113,7 +112,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         return this.converter.convert(value, target, this.converterContext);
     }
 
-    private final Converter converter;
+    private final Converter<ExpressionNumberConverterContext> converter;
 
     // defaultFormatText.................................................................................................
 
@@ -203,7 +202,7 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         return this.converterContext.locale();
     }
 
-    private final ConverterContext converterContext;
+    private final ExpressionNumberConverterContext converterContext;
 
     // Object...........................................................................................................
 

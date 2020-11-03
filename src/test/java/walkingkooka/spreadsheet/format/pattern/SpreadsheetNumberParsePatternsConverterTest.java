@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting2;
+import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
@@ -574,7 +575,9 @@ public final class SpreadsheetNumberParsePatternsConverterTest extends Spreadshe
     @Override
     public ExpressionNumberConverterContext createContext() {
         return ExpressionNumberConverterContexts.basic(
-                ConverterContexts.basic(DateTimeContexts.fake(), // DateTimeContext unused
+                Converters.fake(),
+                ConverterContexts.basic(Converters.fake(),
+                        DateTimeContexts.fake(), // DateTimeContext unused
                         this.decimalNumberContext()),
                 EXPRESSION_NUMBER_KIND);
     }

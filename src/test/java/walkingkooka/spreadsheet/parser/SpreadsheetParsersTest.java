@@ -1727,7 +1727,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
             public <T> Either<T, String> convert(final Object value, final Class<T> target) {
                 return converter.convert(value,
                         target,
-                        ExpressionNumberConverterContexts.basic(ConverterContexts.basic(dateTimeContext(), decimalNumberContext()), this.expressionNumberKind()));
+                        ExpressionNumberConverterContexts.basic(Converters.fake(),
+                                ConverterContexts.basic(Converters.fake(),
+                                        dateTimeContext(),
+                                        decimalNumberContext()),
+                                this.expressionNumberKind()));
             }
         };
     }

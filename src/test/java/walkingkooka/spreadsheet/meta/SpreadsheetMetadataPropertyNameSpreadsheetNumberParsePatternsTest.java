@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.convert.ConverterContexts;
+import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
@@ -56,7 +57,11 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns
         final BigDecimal value = pattern.converter()
                 .convertOrFail(text,
                         BigDecimal.class,
-                        ExpressionNumberConverterContexts.basic(ConverterContexts.basic(DateTimeContexts.locale(Locale.ENGLISH, 20), DecimalNumberContexts.american(MathContext.DECIMAL32)), EXPRESSION_NUMBER_KIND));
+                        ExpressionNumberConverterContexts.basic(Converters.fake(),
+                                ConverterContexts.basic(Converters.fake(),
+                                        DateTimeContexts.locale(Locale.ENGLISH, 20),
+                                        DecimalNumberContexts.american(MathContext.DECIMAL32)),
+                                EXPRESSION_NUMBER_KIND));
 
         final DecimalFormat decimalFormat = (DecimalFormat) DecimalFormat.getInstance(locale);
         decimalFormat.setParseBigDecimal(true);

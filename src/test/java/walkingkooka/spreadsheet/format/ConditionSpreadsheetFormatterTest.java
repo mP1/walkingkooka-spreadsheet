@@ -29,6 +29,9 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContexts;
 import walkingkooka.text.cursor.parser.Parsers;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -232,10 +235,14 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatte
                                                  final Class<T> target) {
                 return this.converter.convert(value,
                         target,
-                        ConverterContexts.basic(DateTimeContexts.fake(), this));
+                        ExpressionNumberConverterContexts.basic(Converters.fake(),
+                                ConverterContexts.basic(Converters.fake(),
+                                        DateTimeContexts.fake(), this),
+                                ExpressionNumberKind.DEFAULT)
+                );
             }
 
-            private final Converter converter = Converters.parser(BigDecimal.class,
+            private Converter<ExpressionNumberConverterContext> converter = Converters.parser(BigDecimal.class,
                     Parsers.bigDecimal(),
                     (c) -> ParserContexts.basic(c, c));
         };

@@ -22,6 +22,7 @@ import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
+import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
@@ -287,7 +288,11 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
     abstract Class<V> targetType();
 
     private ExpressionNumberConverterContext converterContext() {
-        return ExpressionNumberConverterContexts.basic(ConverterContexts.basic(this.dateTimeContext(), this.decimalNumberContext()), EXPRESSION_NUMBER_KIND);
+        return ExpressionNumberConverterContexts.basic(Converters.fake(),
+                ConverterContexts.basic(Converters.fake(),
+                        this.dateTimeContext(),
+                        this.decimalNumberContext()),
+                EXPRESSION_NUMBER_KIND);
     }
 
     // IsMethodTesting..................................................................................................
