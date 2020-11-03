@@ -21,11 +21,15 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
+import walkingkooka.tree.expression.FunctionExpressionName;
 
 import java.math.MathContext;
+import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -80,6 +84,19 @@ public final class BasicSpreadsheetDataValidatorContextTest implements Spreadshe
         final DecimalNumberContext decimalNumberContext = this.decimalNumberContext();
 
         return new FakeExpressionEvaluationContext() {
+            @Override
+            public Object evaluate(final Expression expression) {
+                return expression.toValue(this);
+            }
+
+            @Override
+            public Object function(final FunctionExpressionName name,
+                                   final List<Object> parameters) {
+                Objects.requireNonNull(name, "name");
+                Objects.requireNonNull(parameters, "parameters");
+                throw new IllegalArgumentException("Unknown function: " + name);
+            }
+
             @Override
             public MathContext mathContext() {
                 return decimalNumberContext.mathContext();
