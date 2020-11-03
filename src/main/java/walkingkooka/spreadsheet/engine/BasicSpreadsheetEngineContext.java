@@ -22,7 +22,6 @@ import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContext;
 import walkingkooka.math.Fraction;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -42,6 +41,7 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FunctionExpressionName;
 
@@ -62,17 +62,17 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     /**
      * Creates a new {@link BasicSpreadsheetEngineContext}
      */
-    static <C extends ConverterContext> BasicSpreadsheetEngineContext with(final ExpressionNumberKind expressionNumberKind,
-                                                                           final BiFunction<FunctionExpressionName, List<Object>, Object> functions,
-                                                                           final SpreadsheetEngine engine,
-                                                                           final SpreadsheetLabelStore labelStore,
-                                                                           final Converter<C> converter,
-                                                                           final C converterContext,
-                                                                           final Function<Integer, Optional<Color>> numberToColor,
-                                                                           final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
-                                                                           final int width,
-                                                                           final Function<BigDecimal, Fraction> fractioner,
-                                                                           final SpreadsheetFormatter defaultSpreadsheetFormatter) {
+    static <C extends ExpressionNumberConverterContext> BasicSpreadsheetEngineContext with(final ExpressionNumberKind expressionNumberKind,
+                                                                                           final BiFunction<FunctionExpressionName, List<Object>, Object> functions,
+                                                                                           final SpreadsheetEngine engine,
+                                                                                           final SpreadsheetLabelStore labelStore,
+                                                                                           final Converter<C> converter,
+                                                                                           final C converterContext,
+                                                                                           final Function<Integer, Optional<Color>> numberToColor,
+                                                                                           final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
+                                                                                           final int width,
+                                                                                           final Function<BigDecimal, Fraction> fractioner,
+                                                                                           final SpreadsheetFormatter defaultSpreadsheetFormatter) {
         Objects.requireNonNull(expressionNumberKind, "expressionNumberKind");
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(engine, "engine");
@@ -91,7 +91,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 functions,
                 engine,
                 labelStore,
-                converter.cast(ConverterContext.class),
+                converter.cast(ExpressionNumberConverterContext.class),
                 converterContext,
                 numberToColor,
                 nameToColor,
@@ -107,8 +107,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final BiFunction<FunctionExpressionName, List<Object>, Object> functions,
                                           final SpreadsheetEngine engine,
                                           final SpreadsheetLabelStore labelStore,
-                                          final Converter<ConverterContext> converter,
-                                          final ConverterContext converterContext,
+                                          final Converter<ExpressionNumberConverterContext> converter,
+                                          final ExpressionNumberConverterContext converterContext,
                                           final Function<Integer, Optional<Color>> numberToColor,
                                           final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                           final int width,
@@ -167,13 +167,19 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     // Converter........................................................................................................
 
     @Override
-    public <T> Either<T, String> convert(final Object value,
-                                         final Class<T> target) {
-        return this.converter.convert(value, target, this.converterContext);
+    public boolean canConvert(final Object value,
+                              final Class<?> type) {
+        return this.converter.canConvert(value, type, this.converterContext);
     }
 
-    private final Converter<ConverterContext> converter;
-    private final ConverterContext converterContext;
+    @Override
+    public <T> Either<T, String> convert(final Object value,
+                                         final Class<T> type) {
+        return this.converter.convert(value, type, this.converterContext);
+    }
+
+    private final Converter<ExpressionNumberConverterContext> converter;
+    private final ExpressionNumberConverterContext converterContext;
 
     // ExpressionNumberContext..........................................................................................
 

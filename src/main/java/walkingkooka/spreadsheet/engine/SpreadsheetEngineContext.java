@@ -18,8 +18,7 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Context;
-import walkingkooka.Either;
-import walkingkooka.convert.ConvertOrFailFunction;
+import walkingkooka.convert.CanConvert;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -31,7 +30,7 @@ import java.util.Optional;
 /**
  * Context that accompanies a value format, holding local sensitive attributes such as the decimal point character.
  */
-public interface SpreadsheetEngineContext extends Context, ConvertOrFailFunction, ExpressionNumberContext {
+public interface SpreadsheetEngineContext extends Context, CanConvert, ExpressionNumberContext {
 
     /**
      * Parses the formula into an {@link Expression}.
@@ -42,24 +41,6 @@ public interface SpreadsheetEngineContext extends Context, ConvertOrFailFunction
      * Evaluates the expression into a value.
      */
     Object evaluate(final Expression node);
-
-    /**
-     * Converts the value into the target type.
-     */
-    <T> Either<T, String> convert(Object value, Class<T> target);
-
-    /**
-     * Converts the given value to the {@link Class target type} or throws a {@link SpreadsheetEngineException}
-     */
-    default <T> T convertOrFail(final Object value,
-                                final Class<T> target) {
-        final Either<T, String> converted = this.convert(value, target);
-        if (converted.isRight()) {
-            throw new SpreadsheetEngineException(converted.rightValue());
-        }
-
-        return converted.leftValue();
-    }
 
     /**
      * Accepts a pattern and returns the equivalent {@link SpreadsheetFormatter}.

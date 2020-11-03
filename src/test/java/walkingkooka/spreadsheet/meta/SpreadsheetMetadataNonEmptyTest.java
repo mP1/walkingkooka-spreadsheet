@@ -45,7 +45,6 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -620,7 +619,12 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.convertAndCheck3(value,
                 expected,
                 metadata.converter(),
-                ExpressionNumberConverterContexts.basic(ConverterContexts.basic(DateTimeContexts.locale(Locale.ENGLISH, 20), DecimalNumberContexts.american(MathContext.DECIMAL32)), metadata.expressionNumberKind()));
+                ExpressionNumberConverterContexts.basic(Converters.fake(),
+                        ConverterContexts.basic(Converters.fake(),
+                                DateTimeContexts.locale(Locale.ENGLISH, 20),
+                                DecimalNumberContexts.american(MathContext.DECIMAL32)),
+                        metadata.expressionNumberKind())
+        );
     }
 
     @Test

@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
-import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
+import walkingkooka.convert.Converters;
 import walkingkooka.convert.FakeConverter;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
@@ -28,11 +28,12 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeFormatPattern;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -53,24 +54,27 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeFormatPatte
     }
 
     private SpreadsheetFormatterContext spreadsheetFormatterContext() {
-        return SpreadsheetFormatterContexts.basic((n-> {throw new UnsupportedOperationException();}),
-                (n-> {throw new UnsupportedOperationException();}),
+        return SpreadsheetFormatterContexts.basic((n -> {
+                    throw new UnsupportedOperationException();
+                }),
+                (n -> {
+                    throw new UnsupportedOperationException();
+                }),
                 1,
-                new FakeConverter<ConverterContext>(){
+                new FakeConverter<ExpressionNumberConverterContext>() {
 
                     @Override
-                    public <T> Either<T, String> convert(final Object value, final Class<T> type, final ConverterContext context) {
+                    public <T> Either<T, String> convert(final Object value,
+                                                         final Class<T> type,
+                                                         final ExpressionNumberConverterContext context) {
                         return Either.left(type.cast(value));
-                    }
-
-                    @Override
-                    public <T> T convertOrFail(Object value, Class<T> target, ConverterContext context) {
-                        final LocalDate date = (LocalDate)value;
-                        return target.cast(LocalDateTime.of(date, LocalTime.MIDNIGHT));
                     }
                 },
                 SpreadsheetFormatters.fake(),
-                ConverterContexts.basic(DateTimeContexts.locale(Locale.ENGLISH, 20), DecimalNumberContexts.american(MathContext.DECIMAL32))
+                ExpressionNumberConverterContexts.basic(
+                        Converters.fake(),
+                        ConverterContexts.basic(Converters.fake(), DateTimeContexts.locale(Locale.ENGLISH, 20), DecimalNumberContexts.american(MathContext.DECIMAL32)),
+                        ExpressionNumberKind.DEFAULT)
         );
     }
 

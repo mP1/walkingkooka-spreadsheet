@@ -125,7 +125,7 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
     }
 
     private ConverterContext converterContext() {
-        return ConverterContexts.basic(dateTimeContext(), decimalNumberContext());
+        return ConverterContexts.basic(Converters.fake(), dateTimeContext(), decimalNumberContext());
     }
 
     private DateTimeContext dateTimeContext() {

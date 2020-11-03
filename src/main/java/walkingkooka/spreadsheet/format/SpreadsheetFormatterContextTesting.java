@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.Either;
 import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterContextTesting;
 import walkingkooka.text.CharSequences;
@@ -27,6 +26,10 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatterContext> extends ConverterContextTesting<C> {
+
+    default C createCanConvert() {
+        return this.createContext();
+    }
 
     default void colorNumberAndCheck(final SpreadsheetFormatterContext context,
                                      final int number,
@@ -42,43 +45,6 @@ public interface SpreadsheetFormatterContextTesting<C extends SpreadsheetFormatt
         assertEquals(color,
                 context.colorName(name),
                 () -> "colorName " + name + " " + context);
-    }
-
-    default <T> void canConvertAndCheck(final Object value,
-                                        final Class<?> target,
-                                        final boolean expected) {
-        this.canConvertAndCheck(this.createContext(),
-                value,
-                target,
-                expected);
-    }
-
-    default <T> void canConvertAndCheck(final SpreadsheetFormatterContext context,
-                                        final Object value,
-                                        final Class<?> target,
-                                        final boolean expected) {
-        assertEquals(expected,
-                context.canConvert(value, target),
-                () -> context + " canConvert " + CharSequences.quoteIfChars(value) + " target: " + target.getName());
-    }
-
-    default <T> void convertAndCheck(final Object value,
-                                     final Class<T> target,
-                                     final T expected) {
-        this.convertAndCheck(this.createContext(),
-                value,
-                target,
-                expected);
-    }
-
-    default <T> void convertAndCheck(final SpreadsheetFormatterContext context,
-                                     final Object value,
-                                     final Class<T> target,
-                                     final T expected) {
-        this.canConvertAndCheck(context, value, target, true);
-        assertEquals(Either.left(expected),
-                context.convert(value, target),
-                () -> "convert " + CharSequences.quoteIfChars(value) + " target: " + target.getName());
     }
 
     default void defaultFormatTextAndCheck(final Object value,

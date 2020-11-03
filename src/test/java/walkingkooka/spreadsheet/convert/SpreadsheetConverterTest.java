@@ -525,17 +525,19 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
 
     @Override
     public ExpressionNumberConverterContext createContext() {
-        return ExpressionNumberConverterContexts.basic(ConverterContexts.basic(
-                DateTimeContexts.locale(Locale.ENGLISH, 20),
-                DecimalNumberContexts.basic("C",
-                        'D',
-                        "E",
-                        'G',
-                        'M',
-                        'P',
-                        'L',
-                        Locale.ENGLISH,
-                        MathContext.DECIMAL32)),
+        return ExpressionNumberConverterContexts.basic(Converters.fake(),
+                ConverterContexts.basic(
+                        Converters.fake(),
+                        DateTimeContexts.locale(Locale.ENGLISH, 20),
+                        DecimalNumberContexts.basic("C",
+                                'D',
+                                "E",
+                                'G',
+                                'M',
+                                'P',
+                                'L',
+                                Locale.ENGLISH,
+                                MathContext.DECIMAL32)),
                 EXPRESSION_NUMBER_KIND);
     }
 
@@ -554,8 +556,8 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
 
     private void convertNumberAndCheck(final Object value,
                                        final double expected) {
-        final Converter converter = this.createConverter();
-        final ConverterContext context = this.createContext();
+        final Converter<ExpressionNumberConverterContext> converter = this.createConverter();
+        final ExpressionNumberConverterContext context = this.createContext();
 
         this.convertAndBackCheck(value, converter.convertOrFail(expected, BigDecimal.class, context));
         this.convertAndBackCheck(value, converter.convertOrFail(expected, BigInteger.class, context));

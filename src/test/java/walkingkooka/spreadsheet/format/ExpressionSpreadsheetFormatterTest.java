@@ -434,7 +434,7 @@ public final class ExpressionSpreadsheetFormatterTest extends SpreadsheetFormatt
             }
 
             private ConverterContext converterContext() {
-                return ConverterContexts.basic(DateTimeContexts.fake(), this);
+                return ConverterContexts.basic(Converters.fake(), DateTimeContexts.fake(), this);
             }
 
             @Override

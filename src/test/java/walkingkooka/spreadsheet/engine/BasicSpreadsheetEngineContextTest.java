@@ -22,7 +22,6 @@ import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
@@ -408,7 +407,11 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     private ExpressionNumberConverterContext converterContext() {
-        return ExpressionNumberConverterContexts.basic(ConverterContexts.basic(this.dateTimeContext(), this.decimalNumberContext()), EXPRESSION_NUMBER_KIND);
+        return ExpressionNumberConverterContexts.basic(this.converter(),
+                ConverterContexts.basic(Converters.fake(),
+                        this.dateTimeContext(),
+                        this.decimalNumberContext()),
+                EXPRESSION_NUMBER_KIND);
     }
 
     private DateTimeContext dateTimeContext() {

@@ -20,13 +20,15 @@ package walkingkooka.spreadsheet.format;
 import org.junit.jupiter.api.Test;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -40,6 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFormatterContextTesting<BasicSpreadsheetFormatterContext> {
 
+    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     private final static Locale LOCALE = Locale.CANADA_FRENCH;
 
     @Test
@@ -115,9 +118,9 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     private void withFails(final Function<Integer, Optional<Color>> numberToColor,
                            final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                            final int width,
-                           final Converter converter,
+                           final Converter<ExpressionNumberConverterContext> converter,
                            final SpreadsheetFormatter defaultSpreadsheetFormatter,
-                           final ConverterContext converterContext) {
+                           final ExpressionNumberConverterContext converterContext) {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetFormatterContext.with(numberToColor,
                 nameToColor,
                 width,
@@ -162,7 +165,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     @Test
     public void testToString() {
         this.toStringAndCheck(this.createContext(),
-                "numberToColor=1=#123456 nameToColor=bingo=#123456 width=1 converter=Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean converterContext=locale=\"fr-CA\" twoDigitYear=50 \"$$\" '!' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN");
+                "numberToColor=1=#123456 nameToColor=bingo=#123456 width=1 converter=Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean converterContext=locale=\"fr-CA\" twoDigitYear=50 \"$$\" '!' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN DOUBLE");
     }
 
     @Override
@@ -174,7 +177,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
                 WIDTH,
                 CONVERTER,
                 this.defaultSpreadsheetFormatter(),
-                ConverterContexts.basic(DateTimeContexts.locale(decimalNumberContext.locale(), 50), decimalNumberContext));
+                this.converterContext());
     }
 
     private Function<Integer, Optional<Color>> numberToColor() {
@@ -214,7 +217,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     }
 
     private final static int WIDTH = 1;
-    private final Converter CONVERTER = Converters.truthyNumberBoolean();
+    private final Converter<ExpressionNumberConverterContext> CONVERTER = Converters.truthyNumberBoolean();
 
     private SpreadsheetFormatter defaultSpreadsheetFormatter() {
         return new SpreadsheetFormatter() {
@@ -231,8 +234,14 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         };
     }
 
-    private ConverterContext converterContext() {
-        return ConverterContexts.basic(this.dateTimeContext(), this.decimalNumberContext());
+    private ExpressionNumberConverterContext converterContext() {
+        return ExpressionNumberConverterContexts.basic(
+                CONVERTER,
+                ConverterContexts.basic(Converters.fake(),
+                        this.dateTimeContext(),
+                        this.decimalNumberContext()),
+                EXPRESSION_NUMBER_KIND
+        );
     }
 
     private DateTimeContext dateTimeContext() {

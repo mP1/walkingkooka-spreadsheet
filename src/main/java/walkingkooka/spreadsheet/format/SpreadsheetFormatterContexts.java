@@ -19,8 +19,8 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContext;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -33,9 +33,9 @@ public final class SpreadsheetFormatterContexts implements PublicStaticHelper {
     public static SpreadsheetFormatterContext basic(final Function<Integer, Optional<Color>> numberToColor,
                                                     final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                                     final int width,
-                                                    final Converter converter,
+                                                    final Converter<ExpressionNumberConverterContext> converter,
                                                     final SpreadsheetFormatter defaultSpreadsheetFormatter,
-                                                    final ConverterContext converterContext) {
+                                                    final ExpressionNumberConverterContext converterContext) {
         return BasicSpreadsheetFormatterContext.with(numberToColor,
                 nameToColor,
                 width,
