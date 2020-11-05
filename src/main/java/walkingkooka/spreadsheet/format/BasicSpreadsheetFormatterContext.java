@@ -38,7 +38,6 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     static BasicSpreadsheetFormatterContext with(final Function<Integer, Optional<Color>> numberToColor,
                                                  final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                                  final int width,
-                                                 final Converter<ExpressionNumberConverterContext> converter,
                                                  final SpreadsheetFormatter defaultSpreadsheetFormatter,
                                                  final ExpressionNumberConverterContext converterContext) {
         Objects.requireNonNull(numberToColor, "numberToColor");
@@ -46,14 +45,12 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         if (width <= 0) {
             throw new IllegalArgumentException("Width " + width + " <= 0");
         }
-        Objects.requireNonNull(converter, "converter");
         Objects.requireNonNull(converterContext, "converterContext");
         Objects.requireNonNull(defaultSpreadsheetFormatter, "defaultSpreadsheetFormatter");
 
         return new BasicSpreadsheetFormatterContext(numberToColor,
                 nameToColor,
                 width,
-                converter,
                 defaultSpreadsheetFormatter,
                 converterContext);
     }
@@ -61,7 +58,6 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     private BasicSpreadsheetFormatterContext(final Function<Integer, Optional<Color>> numberToColor,
                                              final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                              final int width,
-                                             final Converter<ExpressionNumberConverterContext> converter,
                                              final SpreadsheetFormatter defaultSpreadsheetFormatter,
                                              final ExpressionNumberConverterContext converterContext) {
         super();
@@ -70,7 +66,6 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
         this.nameToColor = nameToColor;
         this.width = width;
 
-        this.converter = converter;
         this.converterContext = converterContext;
 
         this.defaultSpreadsheetFormatter = defaultSpreadsheetFormatter;
@@ -103,16 +98,14 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
 
     @Override
     public boolean canConvert(final Object value, final Class<?> target) {
-        return this.converter.canConvert(value, target, this.converterContext);
+        return this.converterContext.canConvert(value, target);
     }
 
     @Override
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> target) {
-        return this.converter.convert(value, target, this.converterContext);
+        return this.converterContext.convert(value, target);
     }
-
-    private final Converter<ExpressionNumberConverterContext> converter;
 
     // defaultFormatText.................................................................................................
 
@@ -212,7 +205,6 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
                 .label("numberToColor").value(this.numberToColor)
                 .label("nameToColor").value(this.nameToColor)
                 .label("width").value(this.width)
-                .label("converter").value(this.converter)
                 .label("converterContext").value(this.converterContext)
                 .build();
     }

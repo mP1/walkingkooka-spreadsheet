@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.color.Color;
-import walkingkooka.convert.Converter;
 import walkingkooka.math.Fraction;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
@@ -39,22 +38,20 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetEngineContext}
      */
-    public static <C extends ExpressionNumberConverterContext> SpreadsheetEngineContext basic(final ExpressionNumberKind expressionNumberKind,
-                                                                                              final BiFunction<FunctionExpressionName, List<Object>, Object> functions,
-                                                                                              final SpreadsheetEngine engine,
-                                                                                              final SpreadsheetLabelStore labelStore,
-                                                                                              final Converter<C> converter,
-                                                                                              final C converterContext,
-                                                                                              final Function<Integer, Optional<Color>> numberToColor,
-                                                                                              final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
-                                                                                              final int width,
-                                                                                              final Function<BigDecimal, Fraction> fractioner,
-                                                                                              final SpreadsheetFormatter defaultSpreadsheetFormatter) {
+    public static SpreadsheetEngineContext basic(final ExpressionNumberKind expressionNumberKind,
+                                                 final BiFunction<FunctionExpressionName, List<Object>, Object> functions,
+                                                 final SpreadsheetEngine engine,
+                                                 final SpreadsheetLabelStore labelStore,
+                                                 final ExpressionNumberConverterContext converterContext,
+                                                 final Function<Integer, Optional<Color>> numberToColor,
+                                                 final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
+                                                 final int width,
+                                                 final Function<BigDecimal, Fraction> fractioner,
+                                                 final SpreadsheetFormatter defaultSpreadsheetFormatter) {
         return BasicSpreadsheetEngineContext.with(expressionNumberKind,
                 functions,
                 engine,
                 labelStore,
-                converter,
                 converterContext,
                 numberToColor,
                 nameToColor,

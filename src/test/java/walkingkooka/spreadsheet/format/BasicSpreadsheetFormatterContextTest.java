@@ -50,7 +50,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         this.withFails(null,
                 this.nameToColor(),
                 WIDTH,
-                CONVERTER,
                 this.defaultSpreadsheetFormatter(),
                 this.converterContext());
     }
@@ -60,7 +59,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         this.withFails(this.numberToColor(),
                 null,
                 WIDTH,
-                CONVERTER,
                 this.defaultSpreadsheetFormatter(),
                 this.converterContext());
     }
@@ -70,7 +68,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         assertThrows(IllegalArgumentException.class, () -> BasicSpreadsheetFormatterContext.with(this.numberToColor(),
                 this.nameToColor(),
                 -1,
-                CONVERTER,
                 this.defaultSpreadsheetFormatter(),
                 this.converterContext()));
     }
@@ -80,19 +77,8 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         assertThrows(IllegalArgumentException.class, () -> BasicSpreadsheetFormatterContext.with(this.numberToColor(),
                 this.nameToColor(),
                 0,
-                CONVERTER,
                 this.defaultSpreadsheetFormatter(),
                 this.converterContext()));
-    }
-
-    @Test
-    public void testWithNullConverterFails() {
-        this.withFails(this.numberToColor(),
-                this.nameToColor(),
-                WIDTH,
-                null,
-                this.defaultSpreadsheetFormatter(),
-                this.converterContext());
     }
 
     @Test
@@ -100,7 +86,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         this.withFails(this.numberToColor(),
                 this.nameToColor(),
                 WIDTH,
-                CONVERTER,
                 null,
                 this.converterContext());
     }
@@ -110,7 +95,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         this.withFails(this.numberToColor(),
                 this.nameToColor(),
                 WIDTH,
-                CONVERTER,
                 this.defaultSpreadsheetFormatter(),
                 null);
     }
@@ -118,13 +102,11 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     private void withFails(final Function<Integer, Optional<Color>> numberToColor,
                            final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                            final int width,
-                           final Converter<ExpressionNumberConverterContext> converter,
                            final SpreadsheetFormatter defaultSpreadsheetFormatter,
                            final ExpressionNumberConverterContext converterContext) {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetFormatterContext.with(numberToColor,
                 nameToColor,
                 width,
-                converter,
                 defaultSpreadsheetFormatter,
                 converterContext));
     }
@@ -165,7 +147,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     @Test
     public void testToString() {
         this.toStringAndCheck(this.createContext(),
-                "numberToColor=1=#123456 nameToColor=bingo=#123456 width=1 converter=Truthy BigDecimal|BigInteger|Byte|Short|Integer|Long|Float|Double->Boolean converterContext=locale=\"fr-CA\" twoDigitYear=50 \"$$\" '!' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN DOUBLE");
+                "numberToColor=1=#123456 nameToColor=bingo=#123456 width=1 converterContext=locale=\"fr-CA\" twoDigitYear=50 \"$$\" '!' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN DOUBLE");
     }
 
     @Override
@@ -175,7 +157,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
         return BasicSpreadsheetFormatterContext.with(this.numberToColor(),
                 this.nameToColor(),
                 WIDTH,
-                CONVERTER,
                 this.defaultSpreadsheetFormatter(),
                 this.converterContext());
     }
@@ -217,7 +198,6 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     }
 
     private final static int WIDTH = 1;
-    private final Converter<ExpressionNumberConverterContext> CONVERTER = Converters.truthyNumberBoolean();
 
     private SpreadsheetFormatter defaultSpreadsheetFormatter() {
         return new SpreadsheetFormatter() {
@@ -236,7 +216,7 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
 
     private ExpressionNumberConverterContext converterContext() {
         return ExpressionNumberConverterContexts.basic(
-                CONVERTER,
+                Converters.truthyNumberBoolean(),
                 ConverterContexts.basic(Converters.fake(),
                         this.dateTimeContext(),
                         this.decimalNumberContext()),

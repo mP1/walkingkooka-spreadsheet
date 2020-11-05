@@ -193,7 +193,6 @@ public class JunitTest {
                 return node.toValue(ExpressionEvaluationContexts.basic(EXPRESSION_NUMBER_KIND,
                         functions(),
                         references(),
-                        metadata.converter(),
                         metadata.converterContext()));
             }
 

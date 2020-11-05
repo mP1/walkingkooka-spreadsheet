@@ -24,8 +24,6 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
-import walkingkooka.convert.Converter;
-import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
@@ -4811,18 +4809,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 return node.toValue(ExpressionEvaluationContexts.basic(this.expressionNumberKind(),
                         functions,
                         SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(engine, labelStore, this),
-                        this.converter(),
                         converterContext()));
-            }
-
-            private Converter converter() {
-                return Converters.collection(
-                        Lists.of(
-                                Converters.simple(),
-                                ExpressionNumber.toConverter(Converters.numberNumber()),
-                                ExpressionNumber.fromConverter(Converters.numberNumber())
-                        )
-                );
             }
 
             @Override

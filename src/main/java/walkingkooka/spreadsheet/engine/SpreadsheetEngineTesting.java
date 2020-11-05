@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
+import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
@@ -45,6 +46,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.store.Store;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -724,8 +726,18 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         assertEquals(text, cell.formatted().get().text(), "formattedText");
     }
 
+    default Converter converter() {
+        return Converters.collection(
+                Lists.of(
+                        Converters.simple(),
+                        ExpressionNumber.toConverter(Converters.numberNumber()),
+                        ExpressionNumber.fromConverter(Converters.numberNumber())
+                )
+        );
+    }
+
     default ExpressionNumberConverterContext converterContext() {
-        return ExpressionNumberConverterContexts.basic(Converters.fake(),
+        return ExpressionNumberConverterContexts.basic(this.converter(),
                 ConverterContexts.basic(Converters.fake(),
                         this.dateTimeContext(),
                         this.decimalNumberContext()),

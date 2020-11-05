@@ -62,12 +62,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     /**
      * Creates a new {@link BasicSpreadsheetEngineContext}
      */
-    static <C extends ExpressionNumberConverterContext> BasicSpreadsheetEngineContext with(final ExpressionNumberKind expressionNumberKind,
+    static BasicSpreadsheetEngineContext with(final ExpressionNumberKind expressionNumberKind,
                                                                                            final BiFunction<FunctionExpressionName, List<Object>, Object> functions,
                                                                                            final SpreadsheetEngine engine,
                                                                                            final SpreadsheetLabelStore labelStore,
-                                                                                           final Converter<C> converter,
-                                                                                           final C converterContext,
+                                                                                           final ExpressionNumberConverterContext converterContext,
                                                                                            final Function<Integer, Optional<Color>> numberToColor,
                                                                                            final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
                                                                                            final int width,
@@ -77,7 +76,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(labelStore, "labelStore");
-        Objects.requireNonNull(converter, "converter");
         Objects.requireNonNull(converterContext, "converterContext");
         Objects.requireNonNull(numberToColor, "numberToColor");
         Objects.requireNonNull(nameToColor, "nameToColor");
@@ -91,7 +89,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 functions,
                 engine,
                 labelStore,
-                converter.cast(ExpressionNumberConverterContext.class),
                 converterContext,
                 numberToColor,
                 nameToColor,
@@ -107,7 +104,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final BiFunction<FunctionExpressionName, List<Object>, Object> functions,
                                           final SpreadsheetEngine engine,
                                           final SpreadsheetLabelStore labelStore,
-                                          final Converter<ExpressionNumberConverterContext> converter,
                                           final ExpressionNumberConverterContext converterContext,
                                           final Function<Integer, Optional<Color>> numberToColor,
                                           final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
@@ -123,13 +119,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         this.functions = functions;
         this.function = SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(engine, labelStore, this);
 
-        this.converter = converter;
         this.converterContext = converterContext;
 
         this.spreadsheetFormatContext = SpreadsheetFormatterContexts.basic(numberToColor,
                 nameToColor,
                 width,
-                converter,
                 defaultSpreadsheetFormatter,
                 converterContext);
         this.fractioner = fractioner;
@@ -153,7 +147,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         return node.toValue(ExpressionEvaluationContexts.basic(this.expressionNumberKind(),
                 this.functions,
                 this.function,
-                this.converter,
                 this.converterContext));
     }
 
@@ -169,16 +162,15 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     @Override
     public boolean canConvert(final Object value,
                               final Class<?> type) {
-        return this.converter.canConvert(value, type, this.converterContext);
+        return this.converterContext.canConvert(value, type);
     }
 
     @Override
     public <T> Either<T, String> convert(final Object value,
                                          final Class<T> type) {
-        return this.converter.convert(value, type, this.converterContext);
+        return this.converterContext.convert(value, type);
     }
 
-    private final Converter<ExpressionNumberConverterContext> converter;
     private final ExpressionNumberConverterContext converterContext;
 
     // ExpressionNumberContext..........................................................................................
@@ -231,7 +223,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     @Override
     public String toString() {
         return ToStringBuilder.empty()
-                .label("converter").value(this.converter)
                 .label("converterContext").value(this.converterContext)
                 .label("fractioner").value(this.fractioner)
                 .label("defaultSpreadsheetFormatter").value(this.defaultSpreadsheetFormatter)
