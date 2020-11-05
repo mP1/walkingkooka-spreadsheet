@@ -23,6 +23,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
@@ -64,7 +65,7 @@ public abstract class SpreadsheetDataValidatorTemplateTestCase<V extends Spreads
                         ExpressionNumberConverterContexts.basic(Converters.fake(),
                                 ConverterContexts.basic(Converters.fake(),
                                         DateTimeContexts.fake(),
-                                        this),
+                                        DecimalNumberContexts.fake()),
                                 EXPRESSION_NUMBER_KIND));
             }
         };
