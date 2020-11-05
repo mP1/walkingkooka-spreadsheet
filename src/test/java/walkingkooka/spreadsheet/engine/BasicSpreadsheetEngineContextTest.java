@@ -68,7 +68,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.functions(),
                 this.engine(),
                 this.labelStore(),
-                this.converter(),
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),
@@ -83,7 +82,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 null,
                 this.engine(),
                 this.labelStore(),
-                this.converter(),
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),
@@ -98,7 +96,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.functions(),
                 null,
                 this.labelStore(),
-                this.converter(),
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),
@@ -112,22 +109,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(EXPRESSION_NUMBER_KIND,
                 this.functions(),
                 this.engine(),
-                null,
-                this.converter(),
-                this.converterContext(),
-                this.numberToColor(),
-                this.nameToColor(),
-                WIDTH,
-                FRACTIONER,
-                this.defaultSpreadsheetFormatter()));
-    }
-
-    @Test
-    public void testWithNullConverterFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(EXPRESSION_NUMBER_KIND,
-                this.functions(),
-                this.engine(),
-                this.labelStore(),
                 null,
                 this.converterContext(),
                 this.numberToColor(),
@@ -143,7 +124,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.functions(),
                 this.engine(),
                 this.labelStore(),
-                this.converter(),
                 null,
                 this.numberToColor(),
                 this.nameToColor(),
@@ -158,7 +138,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.functions(),
                 this.engine(),
                 this.labelStore(),
-                this.converter(),
                 this.converterContext(),
                 null,
                 this.nameToColor(),
@@ -173,7 +152,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.functions(),
                 this.engine(),
                 this.labelStore(),
-                this.converter(),
                 this.converterContext(),
                 this.numberToColor(),
                 null,
@@ -188,7 +166,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.functions(),
                 this.engine(),
                 this.labelStore(),
-                this.converter(),
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),
@@ -203,7 +180,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.functions(),
                 this.engine(),
                 this.labelStore(),
-                this.converter(),
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),
@@ -218,7 +194,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.functions(),
                 this.engine(),
                 this.labelStore(),
-                this.converter(),
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),
@@ -343,7 +318,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testToString() {
         this.toStringAndCheck(this.createContext(),
-                "converter=value==target type | Number->Number|ExpressionNumber | ExpressionNumber|Number->Number converterContext=DateTimeContext123 \"C\" 'D' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN DOUBLE fractioner=Fractioner123 defaultSpreadsheetFormatter=SpreadsheetFormatter123");
+                "converterContext=DateTimeContext123 \"C\" 'D' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN DOUBLE fractioner=Fractioner123 defaultSpreadsheetFormatter=SpreadsheetFormatter123");
     }
 
     @Override
@@ -356,7 +331,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.functions(),
                 this.engine(),
                 this.labelStore(),
-                this.converter(),
                 this.converterContext(),
                 this.numberToColor(),
                 this.nameToColor(),

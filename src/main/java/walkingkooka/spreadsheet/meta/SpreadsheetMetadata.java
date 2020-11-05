@@ -428,7 +428,6 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
         return SpreadsheetFormatterContexts.basic(this.numberToColor(),
                 this.nameToColor(),
                 this.getOrFail(SpreadsheetMetadataPropertyName.WIDTH),
-                this.converter(),
                 defaultFormatter,
                 this.converterContext());
     }

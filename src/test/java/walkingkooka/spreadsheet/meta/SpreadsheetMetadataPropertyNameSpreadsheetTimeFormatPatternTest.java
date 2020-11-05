@@ -64,19 +64,18 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetTimeFormatPatternTe
                     throw new UnsupportedOperationException();
                 }),
                 1,
-                new FakeConverter<ExpressionNumberConverterContext>() {
-
-                    @Override
-                    public <T> Either<T, String> convert(final Object value,
-                                                         final Class<T> type,
-                                                         final ExpressionNumberConverterContext context) {
-                        final LocalTime time = (LocalTime) value;
-                        return Either.left(type.cast(LocalDateTime.of(LocalDate.EPOCH, time)));
-                    }
-                },
                 SpreadsheetFormatters.fake(),
                 ExpressionNumberConverterContexts.basic(
-                        Converters.fake(),
+                        new FakeConverter<>() {
+
+                            @Override
+                            public <T> Either<T, String> convert(final Object value,
+                                                                 final Class<T> type,
+                                                                 final ExpressionNumberConverterContext context) {
+                                final LocalTime time = (LocalTime) value;
+                                return Either.left(type.cast(LocalDateTime.of(LocalDate.EPOCH, time)));
+                            }
+                        },
                         ConverterContexts.basic(Converters.fake(),
                                 DateTimeContexts.locale(Locale.ENGLISH, 20),
                                 DecimalNumberContexts.american(MathContext.DECIMAL32)),
