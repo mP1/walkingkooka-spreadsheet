@@ -62,41 +62,6 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     }
 
     @Override
-    public String currencySymbol() {
-        return this.context.currencySymbol();
-    }
-
-    @Override
-    public char decimalSeparator() {
-        return this.context.decimalSeparator();
-    }
-
-    @Override
-    public String exponentSymbol() {
-        return this.context.exponentSymbol();
-    }
-
-    @Override
-    public char groupingSeparator() {
-        return this.context.groupingSeparator();
-    }
-
-    @Override
-    public char negativeSign() {
-        return this.context.negativeSign();
-    }
-
-    @Override
-    public char percentageSymbol() {
-        return this.context.percentageSymbol();
-    }
-
-    @Override
-    public char positiveSign() {
-        return this.context.positiveSign();
-    }
-
-    @Override
     public ExpressionReference cellReference() {
         return this.cellReference;
     }
@@ -114,8 +79,8 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     }
 
     @Override
-    public Object function(final FunctionExpressionName functionName, final List<Object> list) {
-        return this.context.function(functionName, list);
+    public Object evaluate(final FunctionExpressionName functionName, final List<Object> list) {
+        return this.context.evaluate(functionName, list);
     }
 
     @Override

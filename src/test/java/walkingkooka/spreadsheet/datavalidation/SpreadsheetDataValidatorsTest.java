@@ -24,6 +24,7 @@ import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
@@ -691,7 +692,7 @@ public final class SpreadsheetDataValidatorsTest implements ClassTesting2<Spread
                         ExpressionNumberConverterContexts.basic(Converters.fake(),
                                 ConverterContexts.basic(Converters.fake(),
                                         DateTimeContexts.fake(),
-                                        this),
+                                        DecimalNumberContexts.fake()),
                                 EXPRESSION_NUMBER_KIND));
             }
         };

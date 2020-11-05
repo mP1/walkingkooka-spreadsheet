@@ -1691,7 +1691,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
             }
 
             @Override
-            public Object function(final FunctionExpressionName name, final List<Object> parameters) {
+            public Object evaluate(final FunctionExpressionName name, final List<Object> parameters) {
                 if (toDate.equals(name)) {
                     return this.convertStringParameter(parameters, LocalDate.class);
                 }
