@@ -21,7 +21,6 @@ import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.color.Color;
-import walkingkooka.convert.Converter;
 import walkingkooka.math.Fraction;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
@@ -44,13 +43,13 @@ import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.ExpressionFunctionContext;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -63,15 +62,15 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
      * Creates a new {@link BasicSpreadsheetEngineContext}
      */
     static BasicSpreadsheetEngineContext with(final ExpressionNumberKind expressionNumberKind,
-                                                                                           final BiFunction<FunctionExpressionName, List<Object>, Object> functions,
-                                                                                           final SpreadsheetEngine engine,
-                                                                                           final SpreadsheetLabelStore labelStore,
-                                                                                           final ExpressionNumberConverterContext converterContext,
-                                                                                           final Function<Integer, Optional<Color>> numberToColor,
-                                                                                           final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
-                                                                                           final int width,
-                                                                                           final Function<BigDecimal, Fraction> fractioner,
-                                                                                           final SpreadsheetFormatter defaultSpreadsheetFormatter) {
+                                              final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
+                                              final SpreadsheetEngine engine,
+                                              final SpreadsheetLabelStore labelStore,
+                                              final ExpressionNumberConverterContext converterContext,
+                                              final Function<Integer, Optional<Color>> numberToColor,
+                                              final Function<SpreadsheetColorName, Optional<Color>> nameToColor,
+                                              final int width,
+                                              final Function<BigDecimal, Fraction> fractioner,
+                                              final SpreadsheetFormatter defaultSpreadsheetFormatter) {
         Objects.requireNonNull(expressionNumberKind, "expressionNumberKind");
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(engine, "engine");
@@ -101,7 +100,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
      * Private ctor use factory.
      */
     private BasicSpreadsheetEngineContext(final ExpressionNumberKind expressionNumberKind,
-                                          final BiFunction<FunctionExpressionName, List<Object>, Object> functions,
+                                          final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                           final SpreadsheetEngine engine,
                                           final SpreadsheetLabelStore labelStore,
                                           final ExpressionNumberConverterContext converterContext,
@@ -153,7 +152,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     /**
      * Handles dispatching of functions.
      */
-    private final BiFunction<FunctionExpressionName, List<Object>, Object> functions;
+    private final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions;
 
     private final SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction function;
 

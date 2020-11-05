@@ -63,14 +63,14 @@ import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.ExpressionFunctionContext;
 
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -196,9 +196,9 @@ public class JunitTest {
                         metadata.converterContext()));
             }
 
-            private BiFunction<FunctionExpressionName, List<Object>, Object> functions() {
-                return (n, p) -> {
-                    throw new UnsupportedOperationException("unsupported function " + n + " params:" + p);
+            private Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions() {
+                return (n) -> {
+                    throw new UnsupportedOperationException("unsupported function " + n);
                 };
             }
 
