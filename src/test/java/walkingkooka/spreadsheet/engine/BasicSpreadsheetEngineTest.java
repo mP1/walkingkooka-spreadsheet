@@ -67,6 +67,10 @@ import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.ExpressionFunctionContext;
+import walkingkooka.tree.expression.function.FakeExpressionFunction;
+import walkingkooka.tree.expression.function.UnknownFunctionException;
 import walkingkooka.tree.text.FontStyle;
 import walkingkooka.tree.text.FontWeight;
 import walkingkooka.tree.text.TextDecoration;
@@ -79,8 +83,7 @@ import java.math.MathContext;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.BiFunction;
-import java.util.stream.Collectors;
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -4790,20 +4793,53 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             @Override
             public Object evaluate(final Expression node) {
                 // throw an exception which is an "error" when the invalidCellReference function appears in a formula and executed
-                final BiFunction<FunctionExpressionName, List<Object>, Object> functions = (name, params) -> {
-                    if (name.value().equals(SpreadsheetFormula.INVALID_CELL_REFERENCE.value())) {
-                        throw new ExpressionEvaluationException("Invalid cell reference: " + params.get(0).toString());
+                final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions = (name) -> {
+                    assertEquals(SpreadsheetFormula.INVALID_CELL_REFERENCE.value(), "InvalidCellReference");
+                    switch (name.value()) {
+                        case "InvalidCellReference":
+                            return new FakeExpressionFunction<>() {
+                                @Override
+                                public Object apply(final List<Object> parameters,
+                                                    final ExpressionFunctionContext context) {
+                                    throw new ExpressionEvaluationException("Invalid cell reference: " + parameters.get(0).toString());
+                                }
+
+                                @Override
+                                public boolean resolveReferences() {
+                                    return true;
+                                }
+                            };
+                        case "BasicSpreadsheetEngineTestSum":
+                            return new FakeExpressionFunction<>() {
+                                @Override
+                                public Object apply(final List<Object> parameters,
+                                                    final ExpressionFunctionContext context) {
+                                    return parameters.stream()
+                                            .map(ExpressionNumber.class::cast)
+                                            .reduce(context.expressionNumberKind().create(0), (l, r) -> l.add(r, context));
+                                }
+
+                                @Override
+                                public boolean resolveReferences() {
+                                    return true;
+                                }
+                            };
+                        case "BasicSpreadsheetEngineTestCounter":
+                            return new FakeExpressionFunction<>() {
+                                @Override
+                                public Object apply(final List<Object> parameters,
+                                                    final ExpressionFunctionContext context) {
+                                    return BasicSpreadsheetEngineTest.this.counter;
+                                }
+
+                                @Override
+                                public boolean resolveReferences() {
+                                    return true;
+                                }
+                            };
+                        default:
+                            throw new UnknownFunctionException(name);
                     }
-                    if (name.value().equals("BasicSpreadsheetEngineTestSum")) {
-                        // assumes parameters are ExpressionNumber
-                        return params.stream()
-                                .map(ExpressionNumber.class::cast)
-                                .reduce(this.expressionNumberKind().create(0), (l, r) -> l.add(r,this));
-                    }
-                    if (name.value().equals("BasicSpreadsheetEngineTestCounter")) {
-                        return BasicSpreadsheetEngineTest.this.counter;
-                    }
-                    throw new UnsupportedOperationException(name + "(" + params.stream().map(Object::toString).collect(Collectors.joining(",")) + ")");
                 };
 
                 return node.toValue(ExpressionEvaluationContexts.basic(this.expressionNumberKind(),

@@ -24,6 +24,9 @@ import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.ExpressionFunctionContext;
+import walkingkooka.tree.expression.function.UnknownFunctionException;
 
 import java.math.MathContext;
 import java.util.List;
@@ -80,6 +83,12 @@ public final class BasicSpreadsheetDataValidatorContextTest implements Spreadshe
 
     private ExpressionEvaluationContext expressionEvaluationContext() {
         return new FakeExpressionEvaluationContext() {
+
+            @Override
+            public ExpressionFunction<?, ExpressionFunctionContext> function(final FunctionExpressionName name) {
+                throw new UnknownFunctionException(name);
+            }
+
             @Override
             public Object evaluate(final Expression expression) {
                 return expression.toValue(this);
@@ -90,7 +99,7 @@ public final class BasicSpreadsheetDataValidatorContextTest implements Spreadshe
                                    final List<Object> parameters) {
                 Objects.requireNonNull(name, "name");
                 Objects.requireNonNull(parameters, "parameters");
-                throw new IllegalArgumentException("Unknown function: " + name);
+                throw new UnknownFunctionException(name);
             }
 
             @Override

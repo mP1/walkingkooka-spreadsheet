@@ -53,6 +53,10 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.ExpressionFunctionContext;
+import walkingkooka.tree.expression.function.FakeExpressionFunction;
+import walkingkooka.tree.expression.function.UnknownFunctionException;
 
 import java.lang.reflect.Method;
 import java.math.MathContext;
@@ -1650,10 +1654,6 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private ExpressionEvaluationContext expressionEvaluationContext(final ExpressionNumberKind kind) {
-        final FunctionExpressionName toDate = FunctionExpressionName.with("toDate");
-        final FunctionExpressionName toDateTime = FunctionExpressionName.with("toDateTime");
-        final FunctionExpressionName toTime = FunctionExpressionName.with("toTime");
-
         final Function<ConverterContext, ParserContext> parserContext = (c) -> ParserContexts.basic(c, c);
 
         final Converter stringDouble = Converters.parser(Double.class,
@@ -1691,18 +1691,50 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
             }
 
             @Override
-            public Object evaluate(final FunctionExpressionName name, final List<Object> parameters) {
-                if (toDate.equals(name)) {
-                    return this.convertStringParameter(parameters, LocalDate.class);
-                }
-                if (toDateTime.equals(name)) {
-                    return this.convertStringParameter(parameters, LocalDateTime.class);
-                }
-                if (toTime.equals(name)) {
-                    return this.convertStringParameter(parameters, LocalTime.class);
-                }
+            public ExpressionFunction<?, ExpressionFunctionContext> function(final FunctionExpressionName name) {
+                switch (name.value()) {
+                    case "toDate":
+                        return new FakeExpressionFunction<>() {
+                            @Override
+                            public Object apply(final List<Object> parameters,
+                                                final ExpressionFunctionContext context) {
+                                return convertStringParameter(parameters, LocalDate.class);
+                            }
 
-                throw new UnsupportedOperationException(); //return context.function(name, parameters);
+                            @Override
+                            public boolean resolveReferences() {
+                                return true;
+                            }
+                        };
+                    case "toDateTime":
+                        return new FakeExpressionFunction<>() {
+                            @Override
+                            public Object apply(final List<Object> parameters,
+                                                final ExpressionFunctionContext context) {
+                                return convertStringParameter(parameters, LocalDateTime.class);
+                            }
+
+                            @Override
+                            public boolean resolveReferences() {
+                                return true;
+                            }
+                        };
+                    case "toTime":
+                        return new FakeExpressionFunction<>() {
+                            @Override
+                            public Object apply(final List<Object> parameters,
+                                                final ExpressionFunctionContext context) {
+                                return convertStringParameter(parameters, LocalTime.class);
+                            }
+
+                            @Override
+                            public boolean resolveReferences() {
+                                return true;
+                            }
+                        };
+                    default:
+                        throw new UnknownFunctionException(name);
+                }
             }
 
             private <T> T convertStringParameter(final List<Object> parameters, final Class<T> targetType) {

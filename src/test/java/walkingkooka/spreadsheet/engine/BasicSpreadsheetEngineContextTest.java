@@ -45,13 +45,15 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberExpression;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.expression.function.ExpressionFunction;
+import walkingkooka.tree.expression.function.ExpressionFunctionContext;
+import walkingkooka.tree.expression.function.FakeExpressionFunction;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -347,15 +349,24 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         return Expression.expressionNumber(this.number(value));
     }
 
-    private BiFunction<FunctionExpressionName, List<Object>, Object> functions() {
-        return this::functions;
-    }
+    private Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions() {
+        return (n) -> {
+            assertEquals(functionName(), n, "function name");
+            return new FakeExpressionFunction<>() {
+                @Override
+                public Object apply(final List<Object> parameters,
+                                    final ExpressionFunctionContext context) {
+                    return parameters.stream()
+                            .mapToLong(p -> context.convertOrFail(p, Long.class))
+                            .sum();
+                }
 
-    private Object functions(final FunctionExpressionName name, final List<Object> parameters) {
-        assertEquals(functionName(), name, "function name");
-        return parameters.stream()
-                .mapToLong(p -> this.converter().convertOrFail(p, Long.class, this.converterContext()))
-                .sum();
+                @Override
+                public boolean resolveReferences() {
+                    return true;
+                }
+            };
+        };
     }
 
     private FunctionExpressionName functionName() {
