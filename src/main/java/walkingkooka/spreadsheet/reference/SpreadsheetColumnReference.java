@@ -111,6 +111,20 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
         return b.toString();
     }
 
+    // max..............................................................................................................
+
+    /**
+     * Returns the max or right most column.
+     */
+    public SpreadsheetColumnReference max(final SpreadsheetColumnReference other) {
+        Objects.requireNonNull(other, "other");
+        return this.value >= other.value ?
+                this :
+                other;
+    }
+
+    // min..............................................................................................................
+
     /**
      * Returns the min or left most column.
      */
