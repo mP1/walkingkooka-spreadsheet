@@ -146,6 +146,92 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.unmarshallAndCheck(JsonNode.string("B"), SpreadsheetReferenceKind.RELATIVE.column(1));
     }
 
+    // min.............................................................................................................
+
+    @Test
+    public void testMinNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createReference().min(null));
+    }
+
+    @Test
+    public void testMinLess() {
+        this.minAndCheck("A", "B", LEFT);
+    }
+
+    @Test
+    public void testMinLess2() {
+        this.minAndCheck("$A", "B", LEFT);
+    }
+
+    @Test
+    public void testMinLess3() {
+        this.minAndCheck("A", "$B", LEFT);
+    }
+
+    @Test
+    public void testMinLess4() {
+        this.minAndCheck("$A", "$B", LEFT);
+    }
+
+    @Test
+    public void testMinEqual() {
+        this.minAndCheck("A", "A", LEFT);
+    }
+
+    @Test
+    public void testMinEqual2() {
+        this.minAndCheck("$A", "A", LEFT);
+    }
+
+    @Test
+    public void testMinEqual3() {
+        this.minAndCheck("A", "$A", LEFT);
+    }
+
+    @Test
+    public void testMinEqual4() {
+        this.minAndCheck("$A", "$A", LEFT);
+    }
+
+    @Test
+    public void testMinRight() {
+        this.minAndCheck("B", "A", RIGHT);
+    }
+
+    @Test
+    public void testMinRight2() {
+        this.minAndCheck("$B", "A", RIGHT);
+    }
+
+    @Test
+    public void testMinRight3() {
+        this.minAndCheck("B", "$A", RIGHT);
+    }
+
+    @Test
+    public void testMinRight4() {
+        this.minAndCheck("$B", "$A", RIGHT);
+    }
+
+    private final static boolean LEFT = true;
+    private final static boolean RIGHT = !LEFT;
+
+    private void minAndCheck(final String reference,
+                             final String other,
+                             final boolean left) {
+        this.minAndCheck(SpreadsheetColumnReference.parseColumn(reference),
+                SpreadsheetColumnReference.parseColumn(other),
+                left);
+    }
+
+    private void minAndCheck(final SpreadsheetColumnReference reference,
+                             final SpreadsheetColumnReference other,
+                             final boolean left) {
+        assertEquals(left ? reference : other,
+                reference.min(other),
+                () -> "min of " + reference + " and " + other);
+    }
+
     // toString.....................................................................................................
 
     @Test

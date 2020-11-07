@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
 
+import java.util.Objects;
+
 /**
  * Represents a column reference
  */
@@ -107,6 +109,16 @@ public final class SpreadsheetColumnReference extends SpreadsheetColumnOrRowRefe
         final StringBuilder b = new StringBuilder();
         toString1(this.value, b);
         return b.toString();
+    }
+
+    /**
+     * Returns the min or left most column.
+     */
+    public SpreadsheetColumnReference min(final SpreadsheetColumnReference other) {
+        Objects.requireNonNull(other, "other");
+        return this.value <= other.value ?
+                this :
+                other;
     }
 
     // Object...........................................................................................................
