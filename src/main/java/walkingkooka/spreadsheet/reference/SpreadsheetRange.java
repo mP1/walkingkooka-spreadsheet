@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.Cast;
 import walkingkooka.collect.Range;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.compare.Comparators;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.text.CharSequences;
 
@@ -125,25 +124,13 @@ public final class SpreadsheetRange extends SpreadsheetExpressionReference imple
                 top = cell.row();
                 bottom = top;
             } else {
-                // column
-                final SpreadsheetColumnReference cellColumn = cell.column();
-                if (cellColumn.compareTo(left) < Comparators.EQUAL) {
-                    left = cellColumn;
-                } else {
-                    if (cellColumn.compareTo(right) > Comparators.EQUAL) {
-                        right = cellColumn;
-                    }
-                }
+                final SpreadsheetColumnReference column = cell.column();
+                left = left.min(column);
+                right = right.max(column);
 
-                // row
-                final SpreadsheetRowReference cellRow = cell.row();
-                if (cellRow.compareTo(top) < Comparators.EQUAL) {
-                    top = cellRow;
-                } else {
-                    if (cellRow.compareTo(bottom) > Comparators.EQUAL) {
-                        bottom = cellRow;
-                    }
-                }
+                final SpreadsheetRowReference row = cell.row();
+                top = top.min(row);
+                bottom = bottom.max(row);
             }
         }
 
