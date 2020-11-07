@@ -146,6 +146,91 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
         this.unmarshallAndCheck(JsonNode.string("B"), SpreadsheetReferenceKind.RELATIVE.column(1));
     }
 
+    // max.............................................................................................................
+
+    private final static boolean LEFT = true;
+    private final static boolean RIGHT = !LEFT;
+
+    @Test
+    public void testMaxNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createReference().max(null));
+    }
+
+    @Test
+    public void testMaxLess() {
+        this.maxAndCheck("A", "B", RIGHT);
+    }
+
+    @Test
+    public void testMaxLess2() {
+        this.maxAndCheck("$A", "B", RIGHT);
+    }
+
+    @Test
+    public void testMaxLess3() {
+        this.maxAndCheck("A", "$B", RIGHT);
+    }
+
+    @Test
+    public void testMaxLess4() {
+        this.maxAndCheck("$A", "$B", RIGHT);
+    }
+
+    @Test
+    public void testMaxEqual() {
+        this.maxAndCheck("A", "A", LEFT);
+    }
+
+    @Test
+    public void testMaxEqual2() {
+        this.maxAndCheck("$A", "A", LEFT);
+    }
+
+    @Test
+    public void testMaxEqual3() {
+        this.maxAndCheck("A", "$A", LEFT);
+    }
+
+    @Test
+    public void testMaxEqual4() {
+        this.maxAndCheck("$A", "$A", LEFT);
+    }
+
+    @Test
+    public void testMaxMore() {
+        this.maxAndCheck("B", "A", LEFT);
+    }
+
+    @Test
+    public void testMaxMore2() {
+        this.maxAndCheck("$B", "A", LEFT);
+    }
+
+    @Test
+    public void testMaxMore3() {
+        this.maxAndCheck("B", "$A", LEFT);
+    }
+
+    @Test
+    public void testMaxMore4() {
+        this.maxAndCheck("$B", "$A", LEFT);
+    }
+
+    private void maxAndCheck(final String reference,
+                             final String other,
+                             final boolean RIGHT) {
+        this.maxAndCheck(SpreadsheetColumnReference.parseColumn(reference),
+                SpreadsheetColumnReference.parseColumn(other),
+                RIGHT);
+    }
+
+    private void maxAndCheck(final SpreadsheetColumnReference reference,
+                             final SpreadsheetColumnReference other,
+                             final boolean left) {
+        assertEquals(left ? reference : other,
+                reference.max(other),
+                () -> "max of " + reference + " and " + other);
+    }
     // min.............................................................................................................
 
     @Test
@@ -212,9 +297,6 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
     public void testMinRight4() {
         this.minAndCheck("$B", "$A", RIGHT);
     }
-
-    private final static boolean LEFT = true;
-    private final static boolean RIGHT = !LEFT;
 
     private void minAndCheck(final String reference,
                              final String other,
