@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.Cast;
 
+import java.util.Objects;
+
 /**
  * Represents a row reference
  */
@@ -100,6 +102,18 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
 
     public String hateosLinkId() {
         return String.valueOf(this.value + 1);
+    }
+
+    // max..............................................................................................................
+
+    /**
+     * Returns the max or bottom most row.
+     */
+    public SpreadsheetRowReference max(final SpreadsheetRowReference other) {
+        Objects.requireNonNull(other, "other");
+        return this.value >= other.value ?
+                this :
+                other;
     }
 
     // Object...........................................................................................................

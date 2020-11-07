@@ -122,6 +122,92 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
                 SpreadsheetColumnOrRowReference.parseRowRange("$2:$5"));
     }
 
+    // max.............................................................................................................
+
+    private final static boolean LEFT = true;
+    private final static boolean RIGHT = !LEFT;
+
+    @Test
+    public void testMaxNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createReference().max(null));
+    }
+
+    @Test
+    public void testMaxLess() {
+        this.maxAndCheck("5", "6", RIGHT);
+    }
+
+    @Test
+    public void testMaxLess2() {
+        this.maxAndCheck("$5", "6", RIGHT);
+    }
+
+    @Test
+    public void testMaxLess3() {
+        this.maxAndCheck("5", "$6", RIGHT);
+    }
+
+    @Test
+    public void testMaxLess4() {
+        this.maxAndCheck("$5", "$6", RIGHT);
+    }
+
+    @Test
+    public void testMaxEqual() {
+        this.maxAndCheck("5", "5", LEFT);
+    }
+
+    @Test
+    public void testMaxEqual2() {
+        this.maxAndCheck("$5", "5", LEFT);
+    }
+
+    @Test
+    public void testMaxEqual3() {
+        this.maxAndCheck("5", "$5", LEFT);
+    }
+
+    @Test
+    public void testMaxEqual4() {
+        this.maxAndCheck("$5", "$5", LEFT);
+    }
+
+    @Test
+    public void testMaxMore() {
+        this.maxAndCheck("6", "5", LEFT);
+    }
+
+    @Test
+    public void testMaxMore2() {
+        this.maxAndCheck("$6", "5", LEFT);
+    }
+
+    @Test
+    public void testMaxMore3() {
+        this.maxAndCheck("6", "$5", LEFT);
+    }
+
+    @Test
+    public void testMaxMore4() {
+        this.maxAndCheck("$6", "$5", LEFT);
+    }
+
+    private void maxAndCheck(final String reference,
+                             final String other,
+                             final boolean RIGHT) {
+        this.maxAndCheck(SpreadsheetRowReference.parseRow(reference),
+                SpreadsheetRowReference.parseRow(other),
+                RIGHT);
+    }
+
+    private void maxAndCheck(final SpreadsheetRowReference reference,
+                             final SpreadsheetRowReference other,
+                             final boolean left) {
+        assertEquals(left ? reference : other,
+                reference.max(other),
+                () -> "max of " + reference + " and " + other);
+    }
+
     // JsonNodeTesting..................................................................................................
 
     @Test
