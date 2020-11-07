@@ -217,62 +217,62 @@ public final class SpreadsheetRowReferenceTest extends SpreadsheetColumnOrRowRef
 
     @Test
     public void testMinLess() {
-        this.minAndCheck("A", "B", LEFT);
+        this.minAndCheck("5", "6", LEFT);
     }
 
     @Test
     public void testMinLess2() {
-        this.minAndCheck("$A", "B", LEFT);
+        this.minAndCheck("$5", "6", LEFT);
     }
 
     @Test
     public void testMinLess3() {
-        this.minAndCheck("A", "$B", LEFT);
+        this.minAndCheck("5", "$6", LEFT);
     }
 
     @Test
     public void testMinLess4() {
-        this.minAndCheck("$A", "$B", LEFT);
+        this.minAndCheck("$5", "$6", LEFT);
     }
 
     @Test
     public void testMinEqual() {
-        this.minAndCheck("A", "A", LEFT);
+        this.minAndCheck("5", "5", LEFT);
     }
 
     @Test
     public void testMinEqual2() {
-        this.minAndCheck("$A", "A", LEFT);
+        this.minAndCheck("$5", "5", LEFT);
     }
 
     @Test
     public void testMinEqual3() {
-        this.minAndCheck("A", "$A", LEFT);
+        this.minAndCheck("5", "$5", LEFT);
     }
 
     @Test
     public void testMinEqual4() {
-        this.minAndCheck("$A", "$A", LEFT);
+        this.minAndCheck("$5", "$5", LEFT);
     }
 
     @Test
     public void testMinRight() {
-        this.minAndCheck("B", "A", RIGHT);
+        this.minAndCheck("6", "5", RIGHT);
     }
 
     @Test
     public void testMinRight2() {
-        this.minAndCheck("$B", "A", RIGHT);
+        this.minAndCheck("$6", "5", RIGHT);
     }
 
     @Test
     public void testMinRight3() {
-        this.minAndCheck("B", "$A", RIGHT);
+        this.minAndCheck("6", "$5", RIGHT);
     }
 
     @Test
     public void testMinRight4() {
-        this.minAndCheck("$B", "$A", RIGHT);
+        this.minAndCheck("$6", "$5", RIGHT);
     }
 
     private void minAndCheck(final String reference,
