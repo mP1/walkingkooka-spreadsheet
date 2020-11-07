@@ -155,30 +155,17 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
     public Range<SpreadsheetCellReference> range(final SpreadsheetCellReference other) {
         Objects.requireNonNull(other, "other");
 
-        SpreadsheetColumnReference left = this.column;
-        SpreadsheetColumnReference right = left;
+        final SpreadsheetColumnReference column = this.column;
+        final SpreadsheetColumnReference column2 = other.column;
 
-        SpreadsheetRowReference top = this.row;
-        SpreadsheetRowReference bottom = top;
+        SpreadsheetColumnReference left = column.min(column2);
+        SpreadsheetColumnReference right = column.max(column2);
 
-        final SpreadsheetColumnReference cellColumn = other.column();
-        if (cellColumn.compareTo(left) < Comparators.EQUAL) {
-            left = cellColumn;
-        } else {
-            if (cellColumn.compareTo(right) > Comparators.EQUAL) {
-                right = cellColumn;
-            }
-        }
+        final SpreadsheetRowReference row = this.row;
+        final SpreadsheetRowReference row2 = other.row;
 
-        // row
-        final SpreadsheetRowReference cellRow = other.row();
-        if (cellRow.compareTo(top) < Comparators.EQUAL) {
-            top = cellRow;
-        } else {
-            if (cellRow.compareTo(bottom) > Comparators.EQUAL) {
-                bottom = cellRow;
-            }
-        }
+        SpreadsheetRowReference top = row.min(row2);
+        SpreadsheetRowReference bottom = row.max(row2);
 
         return Range.greaterThanEquals(left.setRow(top))
                 .and(Range.lessThanEquals(right.setRow(bottom)));
