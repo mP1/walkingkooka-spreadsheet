@@ -116,6 +116,18 @@ public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReferen
                 other;
     }
 
+    // min..............................................................................................................
+
+    /**
+     * Returns the min or top most row.
+     */
+    public SpreadsheetRowReference min(final SpreadsheetRowReference other) {
+        Objects.requireNonNull(other, "other");
+        return this.value <= other.value ?
+                this :
+                other;
+    }
+
     // Object...........................................................................................................
 
     @Override
