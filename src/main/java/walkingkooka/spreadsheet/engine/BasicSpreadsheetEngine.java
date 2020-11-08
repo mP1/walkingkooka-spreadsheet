@@ -493,6 +493,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return this.cellStore.maxColumnWidth(column);
     }
 
+    @Override
+    public double maxRowHeight(final SpreadsheetRowReference row) {
+        return this.cellStore.maxRowHeight(row);
+    }
+
     // checkers.........................................................................................................
 
     private static void checkLabel(final SpreadsheetLabelName name) {

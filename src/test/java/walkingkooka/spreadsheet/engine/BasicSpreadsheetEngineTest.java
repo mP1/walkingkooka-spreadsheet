@@ -4728,6 +4728,27 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.maxColumnWidthAndCheck(engine, column, expected);
     }
 
+    @Test
+    public void testMaxRowHeight() {
+        final SpreadsheetRowReference row = SpreadsheetRowReference.parseRow("987");
+        final double expected = 150.5;
+        final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(this.id(),
+                new FakeSpreadsheetCellStore() {
+                    @Override
+                    public double maxRowHeight(final SpreadsheetRowReference c) {
+                        assertEquals(row, c);
+                        return expected;
+                    }
+                },
+                SpreadsheetReferenceStores.fake(),
+                SpreadsheetLabelStores.fake(),
+                SpreadsheetReferenceStores.fake(),
+                SpreadsheetRangeStores.fake(),
+                SpreadsheetRangeStores.fake());
+
+        this.maxRowHeightAndCheck(engine, row, expected);
+    }
+
     //  helpers.......................................................................................................
 
     @Override

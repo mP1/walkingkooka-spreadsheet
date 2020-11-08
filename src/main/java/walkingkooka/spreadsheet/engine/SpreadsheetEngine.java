@@ -122,4 +122,9 @@ public interface SpreadsheetEngine {
      * Returns the max column width for the given {@link SpreadsheetColumnReference}
      */
     double maxColumnWidth(final SpreadsheetColumnReference column);
+
+    /**
+     * Returns the max row height for the given {@link SpreadsheetRowReference}
+     */
+    double maxRowHeight(final SpreadsheetRowReference row);
 }
