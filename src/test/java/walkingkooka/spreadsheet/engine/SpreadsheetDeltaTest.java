@@ -17,9 +17,20 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.JavaVisibility;
 
 public final class SpreadsheetDeltaTest extends SpreadsheetDeltaTestCase<SpreadsheetDelta> {
+
+    @Test
+    public void testWith() {
+        final SpreadsheetDelta delta = SpreadsheetDelta.with(this.cells());
+        this.checkCells(delta);
+        this.checkMaxColumnWidths(delta, SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS);
+        this.checkMaxRowHeights(delta, SpreadsheetDelta.NO_MAX_ROW_HEIGHTS);
+        this.checkWindow(delta, Lists.empty());
+    }
 
     // ClassTesting.....................................................................................................
 

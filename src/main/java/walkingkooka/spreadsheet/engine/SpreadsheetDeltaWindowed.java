@@ -17,10 +17,14 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.ToStringBuilder;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -32,19 +36,36 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
      * Factory that creates a new {@link SpreadsheetDeltaWindowed} without copying or filtering the cells.
      */
     static SpreadsheetDeltaWindowed withWindowed(final Set<SpreadsheetCell> cells,
+                                                 final Map<SpreadsheetColumnReference, Double> maxColumnWidths,
+                                                 final Map<SpreadsheetRowReference, Double> maxRowHeights,
                                                  final List<SpreadsheetRange> window) {
-        return new SpreadsheetDeltaWindowed(cells, window);
+        return new SpreadsheetDeltaWindowed(cells,
+                maxColumnWidths,
+                maxRowHeights,
+                window);
     }
 
     private SpreadsheetDeltaWindowed(final Set<SpreadsheetCell> cells,
+                                     final Map<SpreadsheetColumnReference, Double> maxColumnWidths,
+                                     final Map<SpreadsheetRowReference, Double> maxRowHeights,
                                      final List<SpreadsheetRange> window) {
-        super(cells);
+        super(cells, maxColumnWidths, maxRowHeights);
         this.window = window;
     }
 
     @Override
-    SpreadsheetDelta replace(final Set<SpreadsheetCell> cells) {
-        return new SpreadsheetDeltaWindowed(cells, this.window);
+    SpreadsheetDelta replaceCells(final Set<SpreadsheetCell> cells) {
+        return new SpreadsheetDeltaWindowed(cells, this.maxColumnWidths, this.maxRowHeights, this.window);
+    }
+
+    @Override
+    SpreadsheetDelta replaceMaxColumnWidths(final Map<SpreadsheetColumnReference, Double> maxColumnWidths) {
+        return new SpreadsheetDeltaWindowed(this.cells, maxColumnWidths, this.maxRowHeights, this.window);
+    }
+
+    @Override
+    SpreadsheetDelta replaceMaxRowHeights(final Map<SpreadsheetRowReference, Double> maxRowHeights) {
+        return new SpreadsheetDeltaWindowed(this.cells, this.maxColumnWidths, maxRowHeights, this.window);
     }
 
     @Override
@@ -72,5 +93,14 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     @Override
     boolean equals1(final SpreadsheetDelta other) {
         return this.window.equals(other.window());
+    }
+
+    @Override
+    void toStringWindow(final ToStringBuilder b) {
+        b.append(' ');
+        b.label("window")
+                .labelSeparator(": ")
+                .separator(" ")
+                .value(this.window());
     }
 }

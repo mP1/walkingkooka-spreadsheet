@@ -24,17 +24,21 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -73,6 +77,62 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
         final D delta = this.createSpreadsheetDelta();
         assertSame(delta, delta.setCells(this.cells()));
     }
+
+    // setMaxColumnWidths...............................................................................................
+
+    @Test
+    public final void testSetMaxColumnWidthsNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetDelta().setMaxColumnWidths(null));
+    }
+
+    @Test
+    public final void testSetMaxColumnWidthsSame() {
+        final D delta = this.createSpreadsheetDelta();
+        assertSame(delta, delta.setMaxColumnWidths(this.maxColumnWidths()));
+    }
+
+    @Test
+    public final void testSetMaxColumnWidthsDifferent() {
+        final D delta = this.createSpreadsheetDelta();
+        final Map<SpreadsheetColumnReference, Double> different = this.differentMaxColumnWidths();
+        final SpreadsheetDelta differentDelta = delta.setMaxColumnWidths(different);
+
+        assertNotSame(delta, differentDelta);
+
+        this.checkCells(differentDelta);
+        this.checkMaxColumnWidths(differentDelta, different);
+        this.checkMaxRowHeights(differentDelta);
+        this.checkWindow(differentDelta);
+    }
+
+    // setMaxRowHeights...............................................................................................
+
+    @Test
+    public final void testSetMaxRowHeightsNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetDelta().setMaxRowHeights(null));
+    }
+
+    @Test
+    public final void testSetMaxRowHeightsSame() {
+        final D delta = this.createSpreadsheetDelta();
+        assertSame(delta, delta.setMaxRowHeights(this.maxRowHeights()));
+    }
+
+    @Test
+    public final void testSetMaxRowHeightsDifferent() {
+        final D delta = this.createSpreadsheetDelta();
+        final Map<SpreadsheetRowReference, Double> different = this.differentMaxRowHeights();
+        final SpreadsheetDelta differentDelta = delta.setMaxRowHeights(different);
+
+        assertNotSame(delta, differentDelta);
+
+        this.checkCells(differentDelta);
+        this.checkMaxColumnWidths(differentDelta);
+        this.checkMaxRowHeights(differentDelta, different);
+        this.checkWindow(differentDelta);
+    }
+
+    // setWindow........................................................................................................
 
     @Test
     public final void testSetWindowsSame() {
@@ -128,6 +188,24 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
 
         this.checkNotEquals(this.createSpreadsheetDelta(cells));
     }
+
+    @Test
+    public final void testDifferentMaxColumnWidths() {
+        final Map<SpreadsheetColumnReference, Double> maxColumnWidths = this.differentMaxColumnWidths();
+        assertNotEquals(this.maxColumnWidths(), maxColumnWidths, "cells and differentCells must be un equal");
+
+        this.checkNotEquals(this.createSpreadsheetDelta().setMaxColumnWidths(maxColumnWidths));
+    }
+
+    @Test
+    public final void testDifferentMaxRowHeights() {
+        final Map<SpreadsheetRowReference, Double> maxRowHeights = this.differentMaxRowHeights();
+        assertNotEquals(this.maxRowHeights(), maxRowHeights, "cells and differentCells must be un equal");
+
+        this.checkNotEquals(this.createSpreadsheetDelta().setMaxRowHeights(maxRowHeights));
+    }
+
+    // helpers..........................................................................................................
 
     final D createSpreadsheetDelta() {
         return this.createSpreadsheetDelta(this.cells());
