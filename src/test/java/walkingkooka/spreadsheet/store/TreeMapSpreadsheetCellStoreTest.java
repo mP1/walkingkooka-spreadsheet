@@ -37,7 +37,7 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     // maxColumnWidth...................................................................................................
 
     @Test
-    public void testMaxColumnWidthithNullFails() {
+    public void testMaxColumnWidthWithNullFails() {
         assertThrows(NullPointerException.class, () -> this.createStore().maxColumnWidth(null));
     }
 
@@ -69,8 +69,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     public void testMaxColumnWidthWithSeveralCells() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
         store.save(cell("C3", 50.0));
-        store.save(cell("C3", 40.0));
-        store.save(cell("C3", 99.0));
+        store.save(cell("C4", 40.0));
+        store.save(cell("C5", 99.0));
         store.save(cell("D4", 150.0));
 
         this.maxColumnWidthAndCheck(store, SpreadsheetColumnReference.parseColumn("C"), 99.0);
