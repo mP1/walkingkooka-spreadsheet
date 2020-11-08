@@ -53,4 +53,9 @@ public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference
     public Set<SpreadsheetCell> column(final SpreadsheetColumnReference column) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public double maxColumnWidth(final SpreadsheetColumnReference column) {
+        throw new UnsupportedOperationException();
+    }
 }

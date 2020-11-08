@@ -49,4 +49,9 @@ public interface SpreadsheetCellStore extends Store<SpreadsheetCellReference, Sp
      * Returns a view of all cells in the given column.
      */
     Set<SpreadsheetCell> column(SpreadsheetColumnReference column);
+
+    /**
+     * Returns the max column width for the given {@link SpreadsheetColumnReference}
+     */
+    double maxColumnWidth(final SpreadsheetColumnReference column);
 }

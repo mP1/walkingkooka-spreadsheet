@@ -24,6 +24,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.store.Store;
 import walkingkooka.store.Stores;
+import walkingkooka.tree.text.Length;
+import walkingkooka.tree.text.PixelLength;
+import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.util.Comparator;
 import java.util.List;
@@ -139,6 +142,31 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                 .stream()
                 .filter(filter)
                 .collect(Collectors.toCollection(Sets::sorted));
+    }
+
+    /**
+     * Filters all cells with the given column and finds the max value.
+     */
+    @Override
+    public double maxColumnWidth(final SpreadsheetColumnReference column) {
+        Objects.requireNonNull(column, "column");
+
+        return this.all().stream()
+                .filter(c -> c.reference().column().equalsIgnoreReferenceKind(column))
+                .mapToDouble(c -> {
+                    double pixels = 0;
+
+                    final Optional<Length<?>> length = c.style()
+                            .get(TextStylePropertyName.WIDTH);
+                    if (length.isPresent()) {
+                        final PixelLength pixelLength = (PixelLength) length.get();
+                        pixels = pixelLength.value();
+                    }
+
+                    return pixels;
+                })
+                .max()
+                .orElse(0.0);
     }
 
     // VisibleForTesting
