@@ -28,6 +28,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonObject;
+import walkingkooka.tree.json.JsonPropertyName;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
@@ -248,6 +251,30 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
     @Override
     public final D createJsonNodeMappingValue() {
         return this.createSpreadsheetDelta();
+    }
+
+    final JsonNode cellsJson() {
+        final JsonNodeMarshallContext context = this.marshallContext();
+
+        JsonObject object = JsonNode.object();
+        object = cellsJson0(this.a1(), context, object);
+        object = cellsJson0(this.b2(), context, object);
+        object = cellsJson0(this.c3(), context, object);
+
+        return object;
+    }
+
+    private static JsonObject cellsJson0(final SpreadsheetCell cell,
+                                         final JsonNodeMarshallContext context,
+                                         final JsonObject object) {
+        JsonObject updated = object;
+        for (Map.Entry<JsonPropertyName, JsonNode> propertyAndValue : context.marshall(cell)
+                .objectOrFail()
+                .asMap()
+                .entrySet()) {
+            updated = updated.set(propertyAndValue.getKey(), propertyAndValue.getValue());
+        }
+        return updated;
     }
 
     @Override

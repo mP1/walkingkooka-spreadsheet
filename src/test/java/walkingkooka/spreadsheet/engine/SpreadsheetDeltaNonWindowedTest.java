@@ -52,7 +52,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     @Test
     public void testFromJsonCells() {
         this.unmarshallAndCheck(JsonNode.object()
-                        .set(SpreadsheetDelta.CELLS_PROPERTY, this.marshallContext().marshallSet(this.cells())),
+                        .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson()),
                 SpreadsheetDeltaNonWindowed.withNonWindowed(this.cells(),
                         SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS,
                         SpreadsheetDelta.NO_MAX_ROW_HEIGHTS));
@@ -70,7 +70,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testJsonNodeMarshallCells() {
         this.marshallAndCheck(SpreadsheetDeltaNonWindowed.withNonWindowed(this.cells(), SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS, SpreadsheetDelta.NO_MAX_ROW_HEIGHTS),
                 JsonNode.object()
-                        .set(SpreadsheetDelta.CELLS_PROPERTY, this.marshallContext().marshallSet(this.cells()))
+                        .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
         );
     }
 
@@ -78,7 +78,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testJsonNodeMarshallCellsMaxCellWidths() {
         this.marshallAndCheck(SpreadsheetDeltaNonWindowed.withNonWindowed(this.cells(), this.maxColumnWidths(), SpreadsheetDelta.NO_MAX_ROW_HEIGHTS),
                 JsonNode.object()
-                        .set(SpreadsheetDelta.CELLS_PROPERTY, this.marshallContext().marshallSet(this.cells()))
+                        .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
                         .set(SpreadsheetDelta.MAX_COLUMN_WIDTHS_PROPERTY, MAX_COLUMN_WIDTHS_JSON)
         );
     }
@@ -87,7 +87,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testJsonNodeMarshallCellsMaxRowHeights() {
         this.marshallAndCheck(SpreadsheetDeltaNonWindowed.withNonWindowed(this.cells(), SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS, this.maxRowHeights()),
                 JsonNode.object()
-                        .set(SpreadsheetDelta.CELLS_PROPERTY, this.marshallContext().marshallSet(this.cells()))
+                        .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
                         .set(SpreadsheetDelta.MAX_ROW_HEIGHTS_PROPERTY, MAX_ROW_HEIGHTS_JSON)
         );
     }
@@ -96,7 +96,7 @@ public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestC
     public void testJsonNodeMarshallCellsMaxCellWidthsMaxRowHeights() {
         this.marshallAndCheck(SpreadsheetDeltaNonWindowed.withNonWindowed(this.cells(), this.maxColumnWidths(), this.maxRowHeights()),
                 JsonNode.object()
-                        .set(SpreadsheetDelta.CELLS_PROPERTY, this.marshallContext().marshallSet(this.cells()))
+                        .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
                         .set(SpreadsheetDelta.MAX_COLUMN_WIDTHS_PROPERTY, MAX_COLUMN_WIDTHS_JSON)
                         .set(SpreadsheetDelta.MAX_ROW_HEIGHTS_PROPERTY, MAX_ROW_HEIGHTS_JSON)
         );

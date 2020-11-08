@@ -28,6 +28,7 @@ import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallException;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 
@@ -232,18 +233,38 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
                                       final JsonNodeUnmarshallContext context) {
         Objects.requireNonNull(node, "node");
 
+        SpreadsheetCell cell = null;
         SpreadsheetCellReference reference = null;
+
+        for (final JsonNode child : node.objectOrFail().children()) {
+            final JsonPropertyName name = child.name();
+            if (null != reference) {
+                JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
+            }
+
+            cell = unmarshall0(SpreadsheetCellReference.parseCellReference(name.value()),
+                    child,
+                    context);
+        }
+
+        if (null == cell) {
+            throw new JsonNodeUnmarshallException("Missing cell reference", node);
+        }
+
+        return cell;
+    }
+
+    private static SpreadsheetCell unmarshall0(final SpreadsheetCellReference reference,
+                                               final JsonNode node,
+                                               final JsonNodeUnmarshallContext context) {
         SpreadsheetFormula formula = null;
         TextStyle style = TextStyle.EMPTY;
         SpreadsheetCellFormat format = null;
         TextNode formatted = null;
 
-        for (JsonNode child : node.objectOrFail().children()) {
+        for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
             switch (name.value()) {
-                case REFERENCE_PROPERTY_STRING:
-                    reference = context.unmarshall(child, SpreadsheetCellReference.class);
-                    break;
                 case FORMULA_PROPERTY_STRING:
                     formula = context.unmarshall(child, SpreadsheetFormula.class);
                     break;
@@ -261,9 +282,6 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
             }
         }
 
-        if (null == reference) {
-            JsonNodeUnmarshallContext.requiredPropertyMissing(REFERENCE_PROPERTY, node);
-        }
         if (null == formula) {
             JsonNodeUnmarshallContext.requiredPropertyMissing(FORMULA_PROPERTY, node);
         }
@@ -272,8 +290,12 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
+        return JsonNode.object()
+                .set(JsonPropertyName.with(this.reference.toString()), marshall0(context));
+    }
+
+    private JsonNode marshall0(final JsonNodeMarshallContext context) {
         JsonObject object = JsonNode.object()
-                .set(REFERENCE_PROPERTY, context.marshall(this.reference))
                 .set(FORMULA_PROPERTY, context.marshall(this.formula));
 
         if (false == this.style.isEmpty()) {
@@ -289,13 +311,11 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
         return object;
     }
 
-    private final static String REFERENCE_PROPERTY_STRING = "reference";
     private final static String FORMULA_PROPERTY_STRING = "formula";
     private final static String STYLE_PROPERTY_STRING = "style";
     private final static String FORMAT_PROPERTY_STRING = "format";
     private final static String FORMATTED_PROPERTY_STRING = "formatted";
 
-    final static JsonPropertyName REFERENCE_PROPERTY = JsonPropertyName.with(REFERENCE_PROPERTY_STRING);
     final static JsonPropertyName FORMULA_PROPERTY = JsonPropertyName.with(FORMULA_PROPERTY_STRING);
     final static JsonPropertyName STYLE_PROPERTY = JsonPropertyName.with(STYLE_PROPERTY_STRING);
     final static JsonPropertyName FORMAT_PROPERTY = JsonPropertyName.with(FORMAT_PROPERTY_STRING);
