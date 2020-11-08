@@ -21,9 +21,14 @@ import walkingkooka.Cast;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringBuilderOption;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -32,8 +37,10 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -42,6 +49,8 @@ import java.util.stream.Collectors;
 public abstract class SpreadsheetDelta {
 
     public final static Set<SpreadsheetCell> NO_CELLS = Sets.empty();
+    public final static Map<SpreadsheetColumnReference, Double> NO_MAX_COLUMN_WIDTHS = Maps.empty();
+    public final static Map<SpreadsheetRowReference, Double> NO_MAX_ROW_HEIGHTS = Maps.empty();
 
     /**
      * Factory that creates a new {@link SpreadsheetDelta} with an id.
@@ -49,16 +58,22 @@ public abstract class SpreadsheetDelta {
     public static SpreadsheetDelta with(final Set<SpreadsheetCell> cells) {
         checkCells(cells);
 
-        return SpreadsheetDeltaNonWindowed.withNonWindowed(cells);
+        return SpreadsheetDeltaNonWindowed.withNonWindowed(cells,
+                NO_MAX_COLUMN_WIDTHS,
+                NO_MAX_ROW_HEIGHTS);
     }
 
     /**
      * Package private to limit sub classing.
      */
-    SpreadsheetDelta(final Set<SpreadsheetCell> cells) {
+    SpreadsheetDelta(final Set<SpreadsheetCell> cells,
+                     final Map<SpreadsheetColumnReference, Double> maxColumnWidths,
+                     final Map<SpreadsheetRowReference, Double> maxRowHeights) {
         super();
 
         this.cells = cells;
+        this.maxColumnWidths = maxColumnWidths;
+        this.maxRowHeights = maxRowHeights;
     }
 
     // cells............................................................................................................
@@ -77,21 +92,67 @@ public abstract class SpreadsheetDelta {
         final Set<SpreadsheetCell> copy = this.copyCells(cells);
         return this.cells.equals(copy) ?
                 this :
-                this.replace(copy);
+                this.replaceCells(copy);
     }
 
-    abstract SpreadsheetDelta replace(final Set<SpreadsheetCell> cells);
+    abstract SpreadsheetDelta replaceCells(final Set<SpreadsheetCell> cells);
 
     /**
      * Takes a copy of the cells, possibly filtering out cells if a window is present.
      */
     abstract Set<SpreadsheetCell> copyCells(final Set<SpreadsheetCell> cells);
 
-    private final Set<SpreadsheetCell> cells;
+    final Set<SpreadsheetCell> cells;
 
     private static void checkCells(final Set<SpreadsheetCell> cells) {
         Objects.requireNonNull(cells, "cells");
     }
+
+    // maxColumnWidths..................................................................................................
+
+    /**
+     * Returns a map of columns to max column width for each. The included columns should appear within one of the cells.
+     */
+    public final Map<SpreadsheetColumnReference, Double> maxColumnWidths() {
+        return this.maxColumnWidths;
+    }
+
+    public final SpreadsheetDelta setMaxColumnWidths(final Map<SpreadsheetColumnReference, Double> maxColumnWidths) {
+        Objects.requireNonNull(maxColumnWidths, "maxColumnWidths");
+
+        final Map<SpreadsheetColumnReference, Double> copy = Maps.immutable(maxColumnWidths);
+        return this.maxColumnWidths.equals(copy) ?
+                this :
+                this.replaceMaxColumnWidths(copy);
+
+    }
+
+    abstract SpreadsheetDelta replaceMaxColumnWidths(final Map<SpreadsheetColumnReference, Double> maxColumnWidths);
+
+    final Map<SpreadsheetColumnReference, Double> maxColumnWidths;
+
+    // maxRowHeights..................................................................................................
+
+    /**
+     * Returns a map of rows to max row height for each. The included rows should appear within one of the cells.
+     */
+    public final Map<SpreadsheetRowReference, Double> maxRowHeights() {
+        return this.maxRowHeights;
+    }
+
+    public final SpreadsheetDelta setMaxRowHeights(final Map<SpreadsheetRowReference, Double> maxRowHeights) {
+        Objects.requireNonNull(maxRowHeights, "maxRowHeights");
+
+        final Map<SpreadsheetRowReference, Double> copy = Maps.immutable(maxRowHeights);
+        return this.maxRowHeights.equals(copy) ?
+                this :
+                this.replaceMaxRowHeights(copy);
+
+    }
+
+    abstract SpreadsheetDelta replaceMaxRowHeights(final Map<SpreadsheetRowReference, Double> maxRowHeights);
+
+    final Map<SpreadsheetRowReference, Double> maxRowHeights;
 
     // window............................................................................................................
 
@@ -114,11 +175,13 @@ public abstract class SpreadsheetDelta {
 
     private SpreadsheetDelta setWindow0(final List<SpreadsheetRange> window) {
         final Set<SpreadsheetCell> cells = this.cells;
+        final Map<SpreadsheetColumnReference, Double> maxColumnWidths = this.maxColumnWidths;
+        final Map<SpreadsheetRowReference, Double> maxRowHeights = this.maxRowHeights;
 
         final Set<SpreadsheetCell> filtered = maybeFilterCells(cells, window);
         return window.isEmpty() ?
-                SpreadsheetDeltaNonWindowed.withNonWindowed(filtered) :
-                SpreadsheetDeltaWindowed.withWindowed(filtered, window);
+                SpreadsheetDeltaNonWindowed.withNonWindowed(filtered, maxColumnWidths, maxRowHeights) :
+                SpreadsheetDeltaWindowed.withWindowed(filtered, maxColumnWidths, maxRowHeights, window);
     }
 
     static Set<SpreadsheetCell> maybeFilterCells(final Set<SpreadsheetCell> cells,
@@ -135,6 +198,8 @@ public abstract class SpreadsheetDelta {
     static SpreadsheetDelta unmarshall(final JsonNode node,
                                        final JsonNodeUnmarshallContext context) {
         Set<SpreadsheetCell> cells = Sets.empty();
+        Map<SpreadsheetColumnReference, Double> maxColumnWidths = NO_MAX_COLUMN_WIDTHS;
+        Map<SpreadsheetRowReference, Double> maxRowsHeights = NO_MAX_ROW_HEIGHTS;
         List<SpreadsheetRange> window = null;
 
         for (JsonNode child : node.objectOrFail().children()) {
@@ -143,6 +208,12 @@ public abstract class SpreadsheetDelta {
             switch (name.value()) {
                 case CELLS_PROPERTY_STRING:
                     cells = context.unmarshallSet(child, SpreadsheetCell.class);
+                    break;
+                case MAX_COLUMN_WIDTHS_PROPERTY_STRING:
+                    maxColumnWidths = unmarshallMap(child, SpreadsheetColumnReference::parseColumn);
+                    break;
+                case MAX_ROW_HEIGHTS_PROPERTY_STRING:
+                    maxRowsHeights = unmarshallMap(child, SpreadsheetRowReference::parseRow);
                     break;
                 case WINDOW_PROPERTY_STRING:
                     window = rangeJsonNodeUnmarshall(child.stringValueOrFail());
@@ -153,8 +224,19 @@ public abstract class SpreadsheetDelta {
         }
 
         return null == window ?
-                SpreadsheetDeltaNonWindowed.withNonWindowed(cells) :
-                SpreadsheetDeltaWindowed.withWindowed(cells, window);
+                SpreadsheetDeltaNonWindowed.withNonWindowed(cells, maxColumnWidths, maxRowsHeights) :
+                SpreadsheetDeltaWindowed.withWindowed(cells, maxColumnWidths, maxRowsHeights, window);
+    }
+
+    private static <R extends SpreadsheetColumnOrRowReference<R>> Map<R, Double> unmarshallMap(final JsonNode object,
+                                                                                               final Function<String, R> reference) {
+        final Map<R, Double> max = Maps.ordered();
+
+        for(final JsonNode entry : object.children()) {
+            max.put(reference.apply(entry.name().value()), entry.numberValueOrFail().doubleValue());
+        }
+
+        return max;
     }
 
     private static List<SpreadsheetRange> rangeJsonNodeUnmarshall(final String range) {
@@ -171,6 +253,18 @@ public abstract class SpreadsheetDelta {
             children.add(context.marshallSet(cells).setName(CELLS_PROPERTY));
         }
 
+        final Map<SpreadsheetColumnReference, Double> maxColumnWidths = this.maxColumnWidths;
+        if (!maxColumnWidths.isEmpty()) {
+            children.add(marshallMap(maxColumnWidths,
+                    (r) -> r.setReferenceKind(SpreadsheetReferenceKind.RELATIVE)).setName(MAX_COLUMN_WIDTHS_PROPERTY));
+        }
+
+        final Map<SpreadsheetRowReference, Double> maxRowsHeights = this.maxRowHeights;
+        if (!maxRowsHeights.isEmpty()) {
+            children.add(marshallMap(maxRowsHeights,
+                    (r) -> r.setReferenceKind(SpreadsheetReferenceKind.RELATIVE)).setName(MAX_ROW_HEIGHTS_PROPERTY));
+        }
+
         final List<SpreadsheetRange> window = this.window();
         if (!window.isEmpty()) {
             children.add(JsonNode.string(window.stream()
@@ -183,15 +277,37 @@ public abstract class SpreadsheetDelta {
     }
 
     /**
+     * Creates a JSON object where the reference in string form is the key and the max width is the value.
+     */
+    private static <R extends SpreadsheetColumnOrRowReference<R>> JsonNode marshallMap(final Map<R, Double> referenceToWidth,
+                                                                                       final Function<R, R> withoutAbsolute) {
+        final List<JsonNode> children = Lists.array();
+
+        for(final Map.Entry<R, Double> referenceAndWidth : referenceToWidth.entrySet()) {
+            children.add(JsonNode.number(referenceAndWidth.getValue())
+                    .setName(JsonPropertyName.with(withoutAbsolute.apply(referenceAndWidth.getKey()).toString())));
+        }
+
+        return JsonNode.object()
+                .setChildren(children);
+    }
+
+    /**
      * Constant used to separate individual ranges in the window list.
      */
     private final static String WINDOW_SEPARATOR = ",";
 
     private final static String CELLS_PROPERTY_STRING = "cells";
+    private final static String MAX_COLUMN_WIDTHS_PROPERTY_STRING = "maxColumnWidths";
+    private final static String MAX_ROW_HEIGHTS_PROPERTY_STRING = "maxRowHeights";
     private final static String WINDOW_PROPERTY_STRING = "window";
 
     // @VisibleForTesting
     final static JsonPropertyName CELLS_PROPERTY = JsonPropertyName.with(CELLS_PROPERTY_STRING);
+    // @VisibleForTesting
+    final static JsonPropertyName MAX_COLUMN_WIDTHS_PROPERTY = JsonPropertyName.with(MAX_COLUMN_WIDTHS_PROPERTY_STRING);
+    // @VisibleForTesting
+    final static JsonPropertyName MAX_ROW_HEIGHTS_PROPERTY = JsonPropertyName.with(MAX_ROW_HEIGHTS_PROPERTY_STRING);
     // @VisibleForTesting
     final static JsonPropertyName WINDOW_PROPERTY = JsonPropertyName.with(WINDOW_PROPERTY_STRING);
 
@@ -208,7 +324,10 @@ public abstract class SpreadsheetDelta {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.cells, this.hashWindow());
+        return Objects.hash(this.cells,
+                this.hashWindow(),
+                this.maxColumnWidths,
+                this.maxRowHeights);
     }
 
     abstract int hashWindow();
@@ -225,24 +344,46 @@ public abstract class SpreadsheetDelta {
 
     private boolean equals0(final SpreadsheetDelta other) {
         return this.cells.equals(other.cells) &&
+                this.maxColumnWidths.equals(other.maxColumnWidths) &&
+                this.maxRowHeights.equals(other.maxRowHeights) &&
                 this.equals1(other);
     }
 
     abstract boolean equals1(final SpreadsheetDelta other);
 
     /**
-     * Produces a {@link String} the cells and window if present.
+     * Produces a {@link String} the cells, max columnWidths/rowHeights and window if present.
      */
     @Override
     public final String toString() {
-        return ToStringBuilder.empty()
+        final ToStringBuilder b = ToStringBuilder.empty()
                 .labelSeparator(": ")
                 .separator(" ")
                 .valueSeparator(", ")
                 .enable(ToStringBuilderOption.QUOTE)
                 .label("cells")
-                .value(this.cells)
-                .label("window").value(this.window())
-                .build();
+                .value(this.cells);
+
+        final Map<SpreadsheetColumnReference, Double> maxColumnWidths = this.maxColumnWidths;
+        final Map<SpreadsheetRowReference, Double> maxRowHeights = this.maxRowHeights;
+
+        if (maxColumnWidths.size() + maxRowHeights.size() > 0) {
+            b.append(" max: ");
+
+            b.labelSeparator("=");
+            b.value(maxColumnWidths);
+
+            if(maxColumnWidths.size() + maxRowHeights.size() > 1) {
+                b.append(", ");
+            }
+
+            b.value(maxRowHeights);
+        }
+
+        this.toStringWindow(b);
+
+        return b.build();
     }
+
+    abstract void toStringWindow(final ToStringBuilder b);
 }

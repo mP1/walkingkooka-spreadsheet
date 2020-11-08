@@ -17,15 +17,20 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.tree.json.JsonNode;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -75,6 +80,44 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final void checkCells(final SpreadsheetDelta delta, final Set<SpreadsheetCell> cells) {
         assertEquals(cells, delta.cells(), "cells");
+    }
+
+    final Map<SpreadsheetColumnReference, Double> maxColumnWidths() {
+        return Maps.of(SpreadsheetColumnReference.parseColumn("A"), 50.0);
+    }
+
+    final static JsonNode MAX_COLUMN_WIDTHS_JSON = JsonNode.parse("{\"A\": 50.0}");
+
+    final Map<SpreadsheetColumnReference, Double> differentMaxColumnWidths() {
+        return Maps.of(SpreadsheetColumnReference.parseColumn("B"), 999.0);
+    }
+
+    final void checkMaxColumnWidths(final SpreadsheetDelta delta) {
+        checkMaxColumnWidths(delta, this.maxColumnWidths());
+    }
+
+    final void checkMaxColumnWidths(final SpreadsheetDelta delta,
+                                    final Map<SpreadsheetColumnReference, Double> maxColumnWidths) {
+        assertEquals(maxColumnWidths, delta.maxColumnWidths(), "maxColumnWidths");
+    }
+
+    final Map<SpreadsheetRowReference, Double> maxRowHeights() {
+        return Maps.of(SpreadsheetRowReference.parseRow("1"), 75.0);
+    }
+
+    final static JsonNode MAX_ROW_HEIGHTS_JSON = JsonNode.parse("{\"1\": 75.0}");
+
+    final Map<SpreadsheetRowReference, Double> differentMaxRowHeights() {
+        return Maps.of(SpreadsheetRowReference.parseRow("2"), 999.0);
+    }
+
+    final void checkMaxRowHeights(final SpreadsheetDelta delta) {
+        checkMaxRowHeights(delta, this.maxRowHeights());
+    }
+
+    final void checkMaxRowHeights(final SpreadsheetDelta delta,
+                                  final Map<SpreadsheetRowReference, Double> maxRowHeights) {
+        assertEquals(maxRowHeights, delta.maxRowHeights(), "maxRowHeights");
     }
 
     final void checkWindow(final SpreadsheetDelta delta, final List<SpreadsheetRange> window) {
