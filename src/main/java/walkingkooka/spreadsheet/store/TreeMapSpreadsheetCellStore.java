@@ -169,6 +169,31 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                 .orElse(0.0);
     }
 
+    /**
+     * Filters all cells with the given row and finds the max {@link TextStylePropertyName#HEIGHT} value.
+     */
+    @Override
+    public double maxRowHeight(final SpreadsheetRowReference row) {
+        Objects.requireNonNull(row, "row");
+
+        return this.all().stream()
+                .filter(c -> c.reference().row().equalsIgnoreReferenceKind(row))
+                .mapToDouble(c -> {
+                    double pixels = 0;
+
+                    final Optional<Length<?>> length = c.style()
+                            .get(TextStylePropertyName.HEIGHT);
+                    if (length.isPresent()) {
+                        final PixelLength pixelLength = (PixelLength) length.get();
+                        pixels = pixelLength.value();
+                    }
+
+                    return pixels;
+                })
+                .max()
+                .orElse(0.0);
+    }
+
     // VisibleForTesting
     private final Store<SpreadsheetCellReference, SpreadsheetCell> store;
 

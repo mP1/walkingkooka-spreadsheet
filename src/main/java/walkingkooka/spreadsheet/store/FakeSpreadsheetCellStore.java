@@ -58,4 +58,9 @@ public class FakeSpreadsheetCellStore extends FakeStore<SpreadsheetCellReference
     public double maxColumnWidth(final SpreadsheetColumnReference column) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public double maxRowHeight(final SpreadsheetRowReference row) {
+        throw new UnsupportedOperationException();
+    }
 }

@@ -23,6 +23,7 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
@@ -50,8 +51,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     @Test
     public void testMaxColumnWidthWithCells() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
-        store.save(cell("C3", 50.0));
-        store.save(cell("D4", 150.0));
+        store.save(cellWithWidth("C3", 50.0));
+        store.save(cellWithWidth("D4", 150.0));
 
         this.maxColumnWidthAndCheck(store, SpreadsheetColumnReference.parseColumn("C"), 50.0);
     }
@@ -59,8 +60,8 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     @Test
     public void testMaxColumnWidthWithCellsMissingWidth() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
-        store.save(cell("C3", 50.0));
-        store.save(cell("C4", 0));
+        store.save(cellWithWidth("C3", 50.0));
+        store.save(cellWithWidth("C4", 0));
 
         this.maxColumnWidthAndCheck(store, SpreadsheetColumnReference.parseColumn("C"), 50.0);
     }
@@ -68,16 +69,16 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
     @Test
     public void testMaxColumnWidthWithSeveralCells() {
         final TreeMapSpreadsheetCellStore store = this.createStore();
-        store.save(cell("C3", 50.0));
-        store.save(cell("C4", 40.0));
-        store.save(cell("C5", 99.0));
-        store.save(cell("D4", 150.0));
+        store.save(cellWithWidth("C3", 50.0));
+        store.save(cellWithWidth("C4", 40.0));
+        store.save(cellWithWidth("C5", 99.0));
+        store.save(cellWithWidth("D4", 150.0));
 
         this.maxColumnWidthAndCheck(store, SpreadsheetColumnReference.parseColumn("C"), 99.0);
     }
 
-    private SpreadsheetCell cell(final String cellReference,
-                                 final double pixels) {
+    private SpreadsheetCell cellWithWidth(final String cellReference,
+                                          final double pixels) {
         SpreadsheetCell cell = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference(cellReference), SpreadsheetFormula.with("1+2"));
         if (pixels > 0) {
             cell = cell.setStyle(TextStyle.EMPTY
@@ -92,6 +93,66 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
         assertEquals(expected,
                 store.maxColumnWidth(column),
                 () -> "maxColumnWidth of " + column + " store=" + store);
+    }
+
+    // maxRowHeight...................................................................................................
+
+    @Test
+    public void testMaxRowHeightWithNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createStore().maxRowHeight(null));
+    }
+
+    @Test
+    public void testMaxRowHeightRowWithoutCells() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+        maxRowHeightAndCheck(store, SpreadsheetRowReference.parseRow("9"), 0);
+    }
+
+    @Test
+    public void testMaxRowHeightWithCells() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+        store.save(cellWithHeight("C3", 50.0));
+        store.save(cellWithHeight("D4", 150.0));
+
+        this.maxRowHeightAndCheck(store, SpreadsheetRowReference.parseRow("3"), 50.0);
+    }
+
+    @Test
+    public void testMaxRowHeightWithCellsMissingWidth() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+        store.save(cellWithHeight("C3", 50.0));
+        store.save(cellWithHeight("C4", 0));
+
+        this.maxRowHeightAndCheck(store, SpreadsheetRowReference.parseRow("3"), 50.0);
+    }
+
+    @Test
+    public void testMaxRowHeightWithSeveralCells() {
+        final TreeMapSpreadsheetCellStore store = this.createStore();
+        store.save(cellWithHeight("C3", 50.0));
+        store.save(cellWithHeight("D3", 40.0));
+        store.save(cellWithHeight("E3", 99.0));
+        store.save(cellWithHeight("Z99", 150.0));
+
+        this.maxRowHeightAndCheck(store, SpreadsheetRowReference.parseRow("3"), 99.0);
+    }
+
+    private SpreadsheetCell cellWithHeight(final String cellReference,
+                                           final double pixels) {
+        SpreadsheetCell cell = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference(cellReference), SpreadsheetFormula.with("1+2"));
+        if (pixels > 0) {
+            cell = cell.setStyle(TextStyle.EMPTY
+                    .set(TextStylePropertyName.HEIGHT, Length.pixel(pixels)));
+        }
+        return cell;
+    }
+
+    private void maxRowHeightAndCheck(final TreeMapSpreadsheetCellStore store,
+                                      final SpreadsheetRowReference row,
+                                      final double expected) {
+        assertEquals(expected,
+                store.maxRowHeight(row),
+                () -> "maxRowHeight of " + row + " store=" + store);
     }
 
     // toString.........................................................................................................
