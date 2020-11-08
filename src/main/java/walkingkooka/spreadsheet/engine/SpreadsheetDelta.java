@@ -30,6 +30,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -202,12 +203,12 @@ public abstract class SpreadsheetDelta {
         Map<SpreadsheetRowReference, Double> maxRowsHeights = NO_MAX_ROW_HEIGHTS;
         List<SpreadsheetRange> window = null;
 
-        for (JsonNode child : node.objectOrFail().children()) {
+        for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
 
             switch (name.value()) {
                 case CELLS_PROPERTY_STRING:
-                    cells = context.unmarshallSet(child, SpreadsheetCell.class);
+                    cells = unmarshallCells(child, context);
                     break;
                 case MAX_COLUMN_WIDTHS_PROPERTY_STRING:
                     maxColumnWidths = unmarshallMap(child, SpreadsheetColumnReference::parseColumn);
@@ -228,11 +229,25 @@ public abstract class SpreadsheetDelta {
                 SpreadsheetDeltaWindowed.withWindowed(cells, maxColumnWidths, maxRowsHeights, window);
     }
 
+    private static Set<SpreadsheetCell> unmarshallCells(final JsonNode node,
+                                                        final JsonNodeUnmarshallContext context) {
+
+        final Set<SpreadsheetCell> cells = Sets.ordered();
+
+        for (final Map.Entry<JsonPropertyName, JsonNode> child : node.objectOrFail().asMap().entrySet()) {
+            cells.add(context.unmarshall(JsonNode.object()
+                            .set(child.getKey(), child.getValue()),
+                    SpreadsheetCell.class));
+        }
+
+        return cells;
+    }
+
     private static <R extends SpreadsheetColumnOrRowReference<R>> Map<R, Double> unmarshallMap(final JsonNode object,
                                                                                                final Function<String, R> reference) {
         final Map<R, Double> max = Maps.ordered();
 
-        for(final JsonNode entry : object.children()) {
+        for (final JsonNode entry : object.children()) {
             max.put(reference.apply(entry.name().value()), entry.numberValueOrFail().doubleValue());
         }
 
@@ -245,12 +260,36 @@ public abstract class SpreadsheetDelta {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * <pre>
+     * {
+     *   "cells": {
+     *     "A1": {
+     *       "formula": {
+     *         "text": "1"
+     *       }
+     *     },
+     *     "B2": {
+     *       "formula": {
+     *         "text": "2"
+     *       }
+     *     },
+     *     "C3": {
+     *       "formula": {
+     *         "text": "3"
+     *       }
+     *     }
+     *   },
+     *   "window": "A1:E5,F6:Z99"
+     * }
+     * </pre>
+     */
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         final List<JsonNode> children = Lists.array();
 
         final Set<SpreadsheetCell> cells = this.cells;
         if (!cells.isEmpty()) {
-            children.add(context.marshallSet(cells).setName(CELLS_PROPERTY));
+            children.add(marshallCells(cells, context).setName(CELLS_PROPERTY));
         }
 
         final Map<SpreadsheetColumnReference, Double> maxColumnWidths = this.maxColumnWidths;
@@ -274,6 +313,23 @@ public abstract class SpreadsheetDelta {
         }
 
         return JsonNode.object().setChildren(children);
+    }
+
+    /**
+     * Creates a JSON object with each cell one of the properties.
+     */
+    private static JsonNode marshallCells(final Set<SpreadsheetCell> cells,
+                                          final JsonNodeMarshallContext context) {
+        final List<JsonNode> children = Lists.array();
+
+        for(final SpreadsheetCell cell : cells) {
+            final JsonObject json = context.marshall(cell)
+                    .objectOrFail();
+            children.add(json.children().get(0));
+        }
+
+        return JsonNode.object()
+                .setChildren(children);
     }
 
     /**

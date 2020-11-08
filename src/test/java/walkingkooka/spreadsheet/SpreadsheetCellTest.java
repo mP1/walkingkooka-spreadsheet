@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
+import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -334,7 +335,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testJsonNodeUnmarshallObjectFormulaMissingFails() {
         this.unmarshallFails(JsonNode.object()
-                        .set(SpreadsheetCell.REFERENCE_PROPERTY, this.marshallContext().marshall(reference())),
+                        .set(JsonPropertyName.with(reference().toString()), JsonNode.object()),
                 JsonNodeException.class);
     }
 
@@ -345,9 +346,10 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         final JsonNodeMarshallContext context = this.marshallContext();
 
         this.unmarshallAndCheck(JsonNode.object()
-                        .set(SpreadsheetCell.REFERENCE_PROPERTY, context.marshall(reference()))
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
-                        .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics)),
+                        .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
+                                .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
+                                .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
+                        ),
                 SpreadsheetCell.with(reference(), formula()).setStyle(boldAndItalics));
     }
 
@@ -359,10 +361,11 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         final JsonNodeMarshallContext context = this.marshallContext();
 
         this.unmarshallAndCheck(JsonNode.object()
-                        .set(SpreadsheetCell.REFERENCE_PROPERTY, context.marshall(reference()))
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
-                        .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
-                        .set(SpreadsheetCell.FORMAT_PROPERTY, context.marshall(format().get())),
+                        .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
+                                .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
+                                .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
+                                .set(SpreadsheetCell.FORMAT_PROPERTY, context.marshall(format().get()))
+                        ),
                 SpreadsheetCell.with(reference(), formula())
                         .setStyle(boldAndItalics)
                         .setFormat(format()));
@@ -376,10 +379,11 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         final JsonNodeMarshallContext context = this.marshallContext();
 
         this.unmarshallAndCheck(JsonNode.object()
-                        .set(SpreadsheetCell.REFERENCE_PROPERTY, context.marshall(reference()))
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
-                        .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
-                        .set(SpreadsheetCell.FORMATTED_PROPERTY, context.marshallWithType(formatted().get())),
+                        .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
+                                .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
+                                .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
+                                .set(SpreadsheetCell.FORMATTED_PROPERTY, context.marshallWithType(formatted().get()))
+                        ),
                 SpreadsheetCell.with(reference(), formula())
                         .setStyle(boldAndItalics)
                         .setFormatted(formatted()));
@@ -391,10 +395,11 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         final JsonNodeMarshallContext context = this.marshallContext();
 
         this.unmarshallAndCheck(JsonNode.object()
-                        .set(SpreadsheetCell.REFERENCE_PROPERTY, context.marshall(reference()))
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
-                        .set(SpreadsheetCell.FORMAT_PROPERTY, context.marshall(format().get()))
-                        .set(SpreadsheetCell.FORMATTED_PROPERTY, context.marshallWithType(formatted().get())),
+                        .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
+                                .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
+                                .set(SpreadsheetCell.FORMAT_PROPERTY, context.marshall(format().get()))
+                                .set(SpreadsheetCell.FORMATTED_PROPERTY, context.marshallWithType(formatted().get()))
+                        ),
                 SpreadsheetCell.with(reference(), formula())
                         .setFormat(format())
                         .setFormatted(formatted()));
@@ -408,11 +413,12 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         final JsonNodeMarshallContext context = this.marshallContext();
 
         this.unmarshallAndCheck(JsonNode.object()
-                        .set(SpreadsheetCell.REFERENCE_PROPERTY, context.marshall(reference()))
-                        .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
-                        .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
-                        .set(SpreadsheetCell.FORMAT_PROPERTY, context.marshall(format().get()))
-                        .set(SpreadsheetCell.FORMATTED_PROPERTY, context.marshallWithType(formatted().get())),
+                        .set(JsonPropertyName.with(reference().toString()), JsonNode.object()
+                                .set(SpreadsheetCell.FORMULA_PROPERTY, context.marshall(formula()))
+                                .set(SpreadsheetCell.STYLE_PROPERTY, context.marshall(boldAndItalics))
+                                .set(SpreadsheetCell.FORMAT_PROPERTY, context.marshall(format().get()))
+                                .set(SpreadsheetCell.FORMATTED_PROPERTY, context.marshallWithType(formatted().get()))
+                        ),
                 SpreadsheetCell.with(reference(), formula())
                         .setStyle(boldAndItalics)
                         .setFormat(format())
@@ -424,7 +430,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testJsonNode() {
         this.marshallAndCheck(SpreadsheetCell.with(reference(COLUMN, ROW), SpreadsheetFormula.with(FORMULA)),
-                "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}}");
+                "{\"$B$21\": {\"formula\": {\"text\": \"=1+2\"}}}");
     }
 
     @Test
@@ -433,9 +439,9 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
         this.marshallAndCheck(SpreadsheetCell.with(reference(COLUMN, ROW), SpreadsheetFormula.with(FORMULA))
                         .setStyle(boldAndItalics),
-                "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}, \"style\": " +
+                "{\"$B$21\": {\"formula\": {\"text\": \"=1+2\"}, \"style\": " +
                         this.marshallContext()
-                                .marshallWithType(boldAndItalics) + "}");
+                                .marshallWithType(boldAndItalics) + "}}");
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -444,10 +450,10 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         final JsonNodeMarshallContext context = this.marshallContext();
 
         this.marshallAndCheck(this.createCell(),
-                "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}" +
+                "{\"$B$21\": {\"formula\": {\"text\": \"=1+2\"}" +
                         ", \"format\": " + context.marshall(this.format().get()) +
                         ", \"formatted\": " + context.marshallWithType(this.formatted().get()) +
-                        "}");
+                        "}}");
     }
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -460,10 +466,10 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.marshallAndCheck(this.createCell()
                         .setStyle(boldAndItalics)
                         .setFormatted(this.formatted()),
-                "{\"reference\": \"$B$21\", \"formula\": {\"text\": \"=1+2\"}, \"style\": " + context.marshallWithType(boldAndItalics) +
+                "{\"$B$21\": {\"formula\": {\"text\": \"=1+2\"}, \"style\": " + context.marshallWithType(boldAndItalics) +
                         ", \"format\": " + context.marshall(this.format().get()) +
                         ", \"formatted\": " + context.marshallWithType(this.formatted().get()) +
-                        "}");
+                        "}}");
     }
 
     @Test
