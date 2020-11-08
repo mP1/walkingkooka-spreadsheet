@@ -59,6 +59,11 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     }
 
     @Override
+    int hashWindow() {
+        return 0;
+    }
+
+    @Override
     boolean canBeEquals(final Object other) {
         return other instanceof SpreadsheetDeltaNonWindowed;
     }

@@ -208,8 +208,10 @@ public abstract class SpreadsheetDelta {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.cells);
+        return Objects.hash(this.cells, this.hashWindow());
     }
+
+    abstract int hashWindow();
 
     @Override
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")

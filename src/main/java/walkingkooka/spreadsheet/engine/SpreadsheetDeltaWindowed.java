@@ -60,6 +60,11 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     }
 
     @Override
+    int hashWindow() {
+        return this.window.hashCode();
+    }
+
+    @Override
     boolean canBeEquals(final Object other) {
         return other instanceof SpreadsheetDeltaWindowed;
     }
