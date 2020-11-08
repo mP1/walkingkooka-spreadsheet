@@ -108,4 +108,9 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     public Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName name) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public double maxColumnWidth(final SpreadsheetColumnReference column) {
+        throw new UnsupportedOperationException();
+    }
 }
