@@ -54,6 +54,7 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStores;
+import walkingkooka.spreadsheet.store.FakeSpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 import walkingkooka.text.CharSequences;
@@ -4704,6 +4705,27 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithError("A1", label + "+1", "Unknown label: " + label));
 
         this.loadLabelFailCheck(labelStore, label);
+    }
+
+    @Test
+    public void testMaxColumnWidth() {
+        final SpreadsheetColumnReference column = SpreadsheetColumnReference.parseColumn("Z");
+        final double expected = 150.5;
+        final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(this.id(),
+                new FakeSpreadsheetCellStore() {
+                    @Override
+                    public double maxColumnWidth(final SpreadsheetColumnReference c) {
+                        assertEquals(column, c);
+                        return expected;
+                    }
+                },
+                SpreadsheetReferenceStores.fake(),
+                SpreadsheetLabelStores.fake(),
+                SpreadsheetReferenceStores.fake(),
+                SpreadsheetRangeStores.fake(),
+                SpreadsheetRangeStores.fake());
+
+        this.maxColumnWidthAndCheck(engine, column, expected);
     }
 
     //  helpers.......................................................................................................

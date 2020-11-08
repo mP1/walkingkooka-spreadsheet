@@ -486,6 +486,13 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return cell.setFormatted(Optional.of(cell.style().replace(TextNode.text(error.get().value()))));
     }
 
+    // max..............................................................................................................
+
+    @Override
+    public double maxColumnWidth(final SpreadsheetColumnReference column) {
+        return this.cellStore.maxColumnWidth(column);
+    }
+
     // checkers.........................................................................................................
 
     private static void checkLabel(final SpreadsheetLabelName name) {

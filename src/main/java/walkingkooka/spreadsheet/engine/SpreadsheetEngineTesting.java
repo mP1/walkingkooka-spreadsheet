@@ -375,6 +375,12 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> "loadLabel " + label);
     }
 
+    @Test
+    default void testMaxColumnWidthNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().maxColumnWidth(null));
+    }
+
+
     E createSpreadsheetEngine();
 
     SpreadsheetEngineContext createContext();
@@ -724,6 +730,19 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     default void checkFormattedText(final SpreadsheetCell cell, final String text) {
         assertNotEquals(Optional.empty(), cell.formatted(), "formatted text absent");
         assertEquals(text, cell.formatted().get().text(), "formattedText");
+    }
+
+    default void maxColumnWidthAndCheck(final SpreadsheetColumnReference column,
+                                        final double expected) {
+        this.maxColumnWidthAndCheck(this.createSpreadsheetEngine(), column, expected);
+    }
+
+    default void maxColumnWidthAndCheck(final SpreadsheetEngine engine,
+                                        final SpreadsheetColumnReference column,
+                                        final double expected) {
+        assertEquals(expected,
+                engine.maxColumnWidth(column),
+                () -> "maxColumnWidth " + column + " of " + engine);
     }
 
     default Converter converter() {
