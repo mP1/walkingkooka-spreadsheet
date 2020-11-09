@@ -36,9 +36,9 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
-import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -145,6 +145,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>default-row-height {@link Integer}</code>
      */
     public final static SpreadsheetMetadataPropertyName<Integer> DEFAULT_ROW_HEIGHT = registerConstant(SpreadsheetMetadataPropertyNameDefaultRowHeight.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>edit-cell</code> {@link walkingkooka.spreadsheet.reference.SpreadsheetCellReference}.
+     */
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetCellReference> EDIT_CELL = registerConstant(SpreadsheetMetadataPropertyNameEditCell.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>exponent-symbol {@link Character}</code>
