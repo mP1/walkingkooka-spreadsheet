@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.visit.Visiting;
 
 import java.math.RoundingMode;
@@ -210,6 +211,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
                 this.visited = cell;
             }
         }.accept(SpreadsheetMetadataPropertyName.EDIT_CELL, SpreadsheetCellReference.parseCellReference("A2:B3"));
+    }
+
+    @Test
+    public void testVisitEditRange() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitEditRange(final SpreadsheetRange range) {
+                this.visited = range;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.EDIT_RANGE, SpreadsheetRange.parseRange("B2:C3"));
     }
 
     @Test
