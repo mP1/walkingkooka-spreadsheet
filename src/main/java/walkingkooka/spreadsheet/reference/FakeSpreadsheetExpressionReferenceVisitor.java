@@ -58,6 +58,11 @@ public class FakeSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpres
     }
 
     @Override
+    protected void visit(final SpreadsheetPixelRectangle rectangle) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visit(final SpreadsheetRange range) {
         throw new UnsupportedOperationException();
     }

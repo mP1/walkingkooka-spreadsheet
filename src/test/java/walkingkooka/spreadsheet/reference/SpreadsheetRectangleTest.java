@@ -17,10 +17,32 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.test.ParseStringTesting;
 
-public final class SpreadsheetRectangleTest implements ClassTesting2<SpreadsheetRectangle> {
+public final class SpreadsheetRectangleTest implements ClassTesting2<SpreadsheetRectangle>, ParseStringTesting<SpreadsheetRectangle> {
+
+    @Test
+    public void testParsePixelRectangle() {
+        this.parseStringAndCheck("123x456", SpreadsheetPixelRectangle.with(123, 456));
+    }
+
+    @Test
+    public void testParsePixelRectangle2() {
+        this.parseStringAndCheck("123.5x456.5", SpreadsheetPixelRectangle.with(123.5, 456.5));
+    }
+
+    @Test
+    public void testParseRange() {
+        this.parseStringAndCheck("A1:B2", SpreadsheetRange.parseRange("A1:B2"));
+    }
+
+    @Test
+    public void testParseRange2() {
+        this.parseStringAndCheck("$A1:B2", SpreadsheetRange.parseRange("$A1:B2"));
+    }
 
     // ClassTesting.....................................................................................................
 
@@ -32,5 +54,22 @@ public final class SpreadsheetRectangleTest implements ClassTesting2<Spreadsheet
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
+    }
+
+    // ParseStringTesting...............................................................................................
+
+    @Override
+    public SpreadsheetRectangle parseString(final String text) {
+        return SpreadsheetRectangle.parseRectangle(text);
+    }
+
+    @Override
+    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> expected) {
+        return expected;
+    }
+
+    @Override
+    public RuntimeException parseStringFailedExpected(final RuntimeException expected) {
+        return expected;
     }
 }

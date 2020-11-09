@@ -139,6 +139,13 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     }
 
     /**
+     * Parsers the text expecting a valid {@link SpreadsheetPixelRectangle} or fails.
+     */
+    public static SpreadsheetPixelRectangle parsePixelRectangle(final String text) {
+        return SpreadsheetPixelRectangle.parsePixelRectangle0(text);
+    }
+
+    /**
      * Parsers the text expecting a valid {@link SpreadsheetRange} or fails.
      */
     public static SpreadsheetRange parseRange(final String text) {
@@ -166,6 +173,13 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
      */
     public final boolean isLabelName() {
         return this instanceof SpreadsheetLabelName;
+    }
+
+    /**
+     * Only {@link SpreadsheetPixelRectangle} returns true.
+     */
+    public final boolean isPixelRectangle() {
+        return this instanceof SpreadsheetPixelRectangle;
     }
 
     /**
@@ -242,6 +256,14 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     }
 
     /**
+     * Accepts a json string and returns a {@link SpreadsheetPixelRectangle} or fails.
+     */
+    static SpreadsheetPixelRectangle unmarshallPixelRectangle(final JsonNode node,
+                                                              final JsonNodeUnmarshallContext context) {
+        return unmarshall0(node, SpreadsheetExpressionReference::parsePixelRectangle);
+    }
+
+    /**
      * Accepts a json string and returns a {@link SpreadsheetRange} or fails.
      */
     static SpreadsheetRange unmarshallRange(final JsonNode node,
@@ -275,6 +297,11 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
                 SpreadsheetLabelName::unmarshallLabelName,
                 SpreadsheetLabelName::marshall,
                 SpreadsheetLabelName.class);
+        //noinspection StaticInitializerReferencesSubClass
+        JsonNodeContext.register("spreadsheet-pixel-rectangle",
+                SpreadsheetPixelRectangle::unmarshallPixelRectangle,
+                SpreadsheetPixelRectangle::marshall,
+                SpreadsheetPixelRectangle.class);
         //noinspection StaticInitializerReferencesSubClass
         JsonNodeContext.register("spreadsheet-range",
                 SpreadsheetRange::unmarshallRange,

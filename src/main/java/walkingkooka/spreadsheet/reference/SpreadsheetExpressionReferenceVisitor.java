@@ -77,6 +77,10 @@ public abstract class SpreadsheetExpressionReferenceVisitor extends Visitor<Expr
         // nop
     }
 
+    protected void visit(final SpreadsheetPixelRectangle rectangle) {
+        // nop
+    }
+
     protected void visit(final SpreadsheetRange range) {
         // nop
     }
