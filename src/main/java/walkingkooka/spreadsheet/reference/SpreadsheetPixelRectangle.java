@@ -24,6 +24,7 @@ import java.util.Objects;
 /**
  * Represents a rectangle selection of cells, starting from an cell reference covering the given pixel dimensions.
  */
+@SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 public final class SpreadsheetPixelRectangle extends SpreadsheetRectangle {
 
     private final static char SEPARATOR = 'x';
