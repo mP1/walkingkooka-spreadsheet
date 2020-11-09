@@ -119,12 +119,17 @@ public final class SpreadsheetPixelRectangleTest extends SpreadsheetExpressionRe
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetPixelRectangle.with(40, 50), "40.0x50.0");
+        this.toStringAndCheck(SpreadsheetPixelRectangle.with(40, 50), "40x50");
     }
 
     @Test
     public void testString2() {
         this.toStringAndCheck(SpreadsheetPixelRectangle.with(40.5, 50.75), "40.5x50.75");
+    }
+
+    @Test
+    public void testString3() {
+        this.toStringAndCheck(SpreadsheetPixelRectangle.with(40, 50.75), "40x50.75");
     }
 
     // helpers .........................................................................................................
@@ -193,8 +198,18 @@ public final class SpreadsheetPixelRectangleTest extends SpreadsheetExpressionRe
     }
 
     @Test
-    public void testJsonNodeMarshall2() {
+    public void testJsonNodeUnmarshall2() {
         this.unmarshallAndCheck(JsonNode.string("50.5x75.5"), SpreadsheetPixelRectangle.with(50.5, 75.5));
+    }
+
+    @Test
+    public void testJsonNodeMarshall2() {
+        this.marshallAndCheck(SpreadsheetPixelRectangle.with(50, 75), JsonNode.string("50x75"));
+    }
+
+    @Test
+    public void testJsonNodeMarshall3() {
+        this.marshallAndCheck(SpreadsheetPixelRectangle.with(50.5, 75.5), JsonNode.string("50.5x75.5"));
     }
 
     @Test
