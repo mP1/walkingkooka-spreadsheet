@@ -29,7 +29,6 @@ import walkingkooka.text.cursor.parser.ParserTokens;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 

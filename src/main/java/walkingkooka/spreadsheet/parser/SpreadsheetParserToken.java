@@ -28,12 +28,9 @@ import walkingkooka.text.cursor.parser.ParserTokenVisitor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberContext;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.HasExpression;
 import walkingkooka.visit.Visiting;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;

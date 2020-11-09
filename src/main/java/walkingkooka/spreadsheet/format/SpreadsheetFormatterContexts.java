@@ -18,7 +18,6 @@
 package walkingkooka.spreadsheet.format;
 
 import walkingkooka.color.Color;
-import walkingkooka.convert.Converter;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 

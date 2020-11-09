@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.datavalidation;
 
-import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 

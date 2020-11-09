@@ -41,7 +41,6 @@ import walkingkooka.text.cursor.parser.ebnf.EbnfGrammarParserToken;
 import walkingkooka.text.cursor.parser.ebnf.EbnfIdentifierName;
 import walkingkooka.text.cursor.parser.ebnf.EbnfParserContexts;
 import walkingkooka.text.cursor.parser.ebnf.EbnfParserToken;
-import walkingkooka.tree.expression.ExpressionNumber;
 
 import java.util.Map;
 import java.util.function.BiFunction;

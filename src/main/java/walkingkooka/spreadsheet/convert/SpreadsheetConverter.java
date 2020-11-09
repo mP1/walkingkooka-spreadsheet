@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.convert;
 
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;

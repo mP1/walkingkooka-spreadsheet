@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 

@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.datavalidation;
 import org.junit.jupiter.api.Test;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 
 public final class CustomFormulaSpreadsheetDataValidatorTest extends SpreadsheetDataValidatorTemplateTestCase<CustomFormulaSpreadsheetDataValidator, Object> {
 

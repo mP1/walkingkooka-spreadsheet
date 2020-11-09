@@ -22,7 +22,6 @@ import walkingkooka.compare.ComparatorTesting;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.util.Optional;

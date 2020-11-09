@@ -20,7 +20,6 @@ package walkingkooka.spreadsheet.format;
 import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContext;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
