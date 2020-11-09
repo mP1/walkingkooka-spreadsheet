@@ -22,6 +22,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 
 import java.util.List;
@@ -69,7 +70,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
      * There is no window.
      */
     @Override
-    public List<SpreadsheetRange> window() {
+    public List<SpreadsheetRectangle> window() {
         return Lists.empty();
     }
 

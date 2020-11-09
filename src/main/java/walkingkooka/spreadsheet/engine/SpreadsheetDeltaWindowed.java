@@ -21,6 +21,7 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 
 import java.util.List;
@@ -38,7 +39,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     static SpreadsheetDeltaWindowed withWindowed(final Set<SpreadsheetCell> cells,
                                                  final Map<SpreadsheetColumnReference, Double> maxColumnWidths,
                                                  final Map<SpreadsheetRowReference, Double> maxRowHeights,
-                                                 final List<SpreadsheetRange> window) {
+                                                 final List<SpreadsheetRectangle> window) {
         return new SpreadsheetDeltaWindowed(cells,
                 maxColumnWidths,
                 maxRowHeights,
@@ -48,7 +49,7 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     private SpreadsheetDeltaWindowed(final Set<SpreadsheetCell> cells,
                                      final Map<SpreadsheetColumnReference, Double> maxColumnWidths,
                                      final Map<SpreadsheetRowReference, Double> maxRowHeights,
-                                     final List<SpreadsheetRange> window) {
+                                     final List<SpreadsheetRectangle> window) {
         super(cells, maxColumnWidths, maxRowHeights);
         this.window = window;
     }
@@ -69,11 +70,11 @@ final class SpreadsheetDeltaWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    public List<SpreadsheetRange> window() {
+    public List<SpreadsheetRectangle> window() {
         return this.window;
     }
 
-    private final List<SpreadsheetRange> window;
+    private final List<SpreadsheetRectangle> window;
 
     @Override
     Set<SpreadsheetCell> copyCells(Set<SpreadsheetCell> cells) {

@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.tree.json.JsonNode;
@@ -160,21 +161,22 @@ public abstract class SpreadsheetDelta {
     /**
      * Getter that returns any windows for this delta. An empty list signifies, no filtering.
      */
-    public abstract List<SpreadsheetRange> window();
+    public abstract List<SpreadsheetRectangle> window();
 
     /**
      * Would be setter that if necessary returns a new {@link SpreadsheetDelta} which will also filter cells if necessary.
+     * Note {@link walkingkooka.spreadsheet.reference.SpreadsheetPixelRectangle} will be ignored.
      */
-    public final SpreadsheetDelta setWindow(final List<SpreadsheetRange> window) {
+    public final SpreadsheetDelta setWindow(final List<SpreadsheetRectangle> window) {
         Objects.requireNonNull(window, "window");
 
-        final List<SpreadsheetRange> copy = Lists.immutable(window);
+        final List<SpreadsheetRectangle> copy = Lists.immutable(window);
         return this.window().equals(copy) ?
                 this :
                 this.setWindow0(copy);
     }
 
-    private SpreadsheetDelta setWindow0(final List<SpreadsheetRange> window) {
+    private SpreadsheetDelta setWindow0(final List<SpreadsheetRectangle> window) {
         final Set<SpreadsheetCell> cells = this.cells;
         final Map<SpreadsheetColumnReference, Double> maxColumnWidths = this.maxColumnWidths;
         final Map<SpreadsheetRowReference, Double> maxRowHeights = this.maxRowHeights;
@@ -186,11 +188,16 @@ public abstract class SpreadsheetDelta {
     }
 
     static Set<SpreadsheetCell> maybeFilterCells(final Set<SpreadsheetCell> cells,
-                                                 final List<SpreadsheetRange> window) {
+                                                 final List<SpreadsheetRectangle> window) {
         return window.isEmpty() ?
                 cells :
                 cells.stream()
-                        .filter(c -> window.stream().anyMatch(r -> r.test(c.reference())))
+                        .filter(c -> {
+                            return window.stream()
+                                    .filter(r -> r.isRange())
+                                    .map(r -> (SpreadsheetRange) r)
+                                    .anyMatch(r -> r.test(c.reference()));
+                        })
                         .collect(Collectors.toCollection(Sets::ordered));
     }
 
@@ -201,7 +208,7 @@ public abstract class SpreadsheetDelta {
         Set<SpreadsheetCell> cells = Sets.empty();
         Map<SpreadsheetColumnReference, Double> maxColumnWidths = NO_MAX_COLUMN_WIDTHS;
         Map<SpreadsheetRowReference, Double> maxRowsHeights = NO_MAX_ROW_HEIGHTS;
-        List<SpreadsheetRange> window = null;
+        List<SpreadsheetRectangle> window = null;
 
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
@@ -254,7 +261,7 @@ public abstract class SpreadsheetDelta {
         return max;
     }
 
-    private static List<SpreadsheetRange> rangeJsonNodeUnmarshall(final String range) {
+    private static List<SpreadsheetRectangle> rangeJsonNodeUnmarshall(final String range) {
         return Arrays.stream(range.split(WINDOW_SEPARATOR))
                 .map(SpreadsheetRange::parseRange)
                 .collect(Collectors.toList());
@@ -304,10 +311,10 @@ public abstract class SpreadsheetDelta {
                     (r) -> r.setReferenceKind(SpreadsheetReferenceKind.RELATIVE)).setName(MAX_ROW_HEIGHTS_PROPERTY));
         }
 
-        final List<SpreadsheetRange> window = this.window();
+        final List<SpreadsheetRectangle> window = this.window();
         if (!window.isEmpty()) {
             children.add(JsonNode.string(window.stream()
-                    .map(SpreadsheetRange::toString)
+                    .map(SpreadsheetRectangle::toString)
                     .collect(Collectors.joining(WINDOW_SEPARATOR)))
                     .setName(WINDOW_PROPERTY));
         }
