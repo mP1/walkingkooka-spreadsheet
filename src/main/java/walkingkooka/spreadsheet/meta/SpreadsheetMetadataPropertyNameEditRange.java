@@ -39,7 +39,7 @@ final class SpreadsheetMetadataPropertyNameEditRange extends SpreadsheetMetadata
      * Private constructor use singleton.
      */
     private SpreadsheetMetadataPropertyNameEditRange() {
-        super("edit-cell");
+        super("edit-range");
     }
 
     @Override
