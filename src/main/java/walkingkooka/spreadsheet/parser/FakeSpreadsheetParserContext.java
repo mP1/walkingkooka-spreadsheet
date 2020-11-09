@@ -21,7 +21,6 @@ import walkingkooka.datetime.FakeDateTimeContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
-import java.util.List;
 import java.util.Locale;
 
 public class FakeSpreadsheetParserContext extends FakeDateTimeContext implements SpreadsheetParserContext{

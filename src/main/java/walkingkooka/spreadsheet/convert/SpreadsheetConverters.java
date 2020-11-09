@@ -24,7 +24,6 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
-import walkingkooka.tree.expression.ExpressionNumberKind;
 
 public final class SpreadsheetConverters implements PublicStaticHelper {
 
