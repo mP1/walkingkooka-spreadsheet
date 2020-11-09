@@ -45,6 +45,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
@@ -1122,6 +1123,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_FONT_SIZE, FontSize.with(11));
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_ROW_HEIGHT, 15);
         properties.put(SpreadsheetMetadataPropertyName.EDIT_CELL, SpreadsheetCellReference.parse("C987"));
+        properties.put(SpreadsheetMetadataPropertyName.EDIT_RANGE, SpreadsheetRange.parseRange("B99-C100"));
         properties.put(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL);
         properties.put(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E");
         properties.put(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, 'G');
