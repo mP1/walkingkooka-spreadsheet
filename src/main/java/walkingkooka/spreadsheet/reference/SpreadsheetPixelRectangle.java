@@ -142,6 +142,13 @@ public final class SpreadsheetPixelRectangle extends SpreadsheetRectangle {
 
     @Override
     public String toString() {
-        return "" + this.width + SEPARATOR + this.height;
+        return toStringWithoutTrailingZero(this.width) + SEPARATOR + toStringWithoutTrailingZero(this.height);
+    }
+
+    private static String toStringWithoutTrailingZero(final double value) {
+        final String toString = String.valueOf(value);
+        return toString.endsWith(".0") ?
+                toString.substring(0, toString.length() - 2) :
+                toString;
     }
 }
