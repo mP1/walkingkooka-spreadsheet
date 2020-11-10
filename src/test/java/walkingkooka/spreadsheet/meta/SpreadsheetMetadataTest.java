@@ -110,7 +110,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertEquals(Optional.of(15.0), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DEFAULT_COLUMN_WIDTH));
         assertEquals(Optional.of(FontFamilyName.with("MS Sans Serif")), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DEFAULT_FONT_FAMILY_NAME));
         assertEquals(Optional.of(FontSize.with(11)), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DEFAULT_FONT_SIZE));
-        assertEquals(Optional.of(60), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DEFAULT_ROW_HEIGHT));
+        assertEquals(Optional.of(60.0), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DEFAULT_ROW_HEIGHT));
         assertNotEquals(Optional.of(ExpressionNumberKind.DEFAULT), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND));
         assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.PRECISION));
         assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.ROUNDING_MODE));

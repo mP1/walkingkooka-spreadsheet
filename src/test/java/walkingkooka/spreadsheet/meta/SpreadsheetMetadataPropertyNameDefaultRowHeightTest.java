@@ -19,16 +19,21 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 
-public final class SpreadsheetMetadataPropertyNameDefaultRowHeightTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameDefaultRowHeight> {
+public final class SpreadsheetMetadataPropertyNameDefaultRowHeightTest extends SpreadsheetMetadataPropertyNameDoubleTestCase<SpreadsheetMetadataPropertyNameDefaultRowHeight> {
 
     @Test
     public void testNegativeValueFails() {
-        this.checkValueFails(-1, "Expected int > 0, but got -1 for \"default-row-height\"");
+        this.checkValueFails(-1.0, "Expected double > 0, but got -1.0 for \"default-row-height\"");
     }
 
     @Test
-    public void testZeroValue() {
-        this.checkValue(0);
+    public void testZeroValueFails() {
+        this.checkValueFails(0.0, "Expected double > 0, but got 0.0 for \"default-row-height\"");
+    }
+
+    @Test
+    public void testPositiveNonZeroValue() {
+        this.checkValue(1.0);
     }
 
     @Test
