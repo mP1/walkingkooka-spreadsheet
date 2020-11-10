@@ -376,8 +376,8 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     @Test
-    default void testMaxColumnWidthNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().maxColumnWidth(null));
+    default void testColumnWidthNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().columnWidth(null));
     }
 
     @Test
@@ -736,17 +736,17 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         assertEquals(text, cell.formatted().get().text(), "formattedText");
     }
 
-    default void maxColumnWidthAndCheck(final SpreadsheetColumnReference column,
-                                        final double expected) {
-        this.maxColumnWidthAndCheck(this.createSpreadsheetEngine(), column, expected);
+    default void columnWidthAndCheck(final SpreadsheetColumnReference column,
+                                     final double expected) {
+        this.columnWidthAndCheck(this.createSpreadsheetEngine(), column, expected);
     }
 
-    default void maxColumnWidthAndCheck(final SpreadsheetEngine engine,
-                                        final SpreadsheetColumnReference column,
-                                        final double expected) {
+    default void columnWidthAndCheck(final SpreadsheetEngine engine,
+                                     final SpreadsheetColumnReference column,
+                                     final double expected) {
         assertEquals(expected,
-                engine.maxColumnWidth(column),
-                () -> "maxColumnWidth " + column + " of " + engine);
+                engine.columnWidth(column),
+                () -> "columnWidth " + column + " of " + engine);
     }
 
     default void maxRowHeightAndCheck(final SpreadsheetRowReference row,

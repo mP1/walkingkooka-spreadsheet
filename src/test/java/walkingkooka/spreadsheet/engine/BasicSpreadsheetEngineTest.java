@@ -4708,7 +4708,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testMaxColumnWidth() {
+    public void testColumnWidth() {
         final SpreadsheetColumnReference column = SpreadsheetColumnReference.parseColumn("Z");
         final double expected = 150.5;
         final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(this.id(),
@@ -4725,7 +4725,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetRangeStores.fake(),
                 SpreadsheetRangeStores.fake());
 
-        this.maxColumnWidthAndCheck(engine, column, expected);
+        this.columnWidthAndCheck(engine, column, expected);
     }
 
     @Test

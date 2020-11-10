@@ -119,9 +119,9 @@ public interface SpreadsheetEngine {
     Optional<SpreadsheetLabelMapping> loadLabel(final SpreadsheetLabelName name);
 
     /**
-     * Returns the max column width for the given {@link SpreadsheetColumnReference}
+     * Returns the column width for the given {@link SpreadsheetColumnReference}
      */
-    double maxColumnWidth(final SpreadsheetColumnReference column);
+    double columnWidth(final SpreadsheetColumnReference column);
 
     /**
      * Returns the max row height for the given {@link SpreadsheetRowReference}

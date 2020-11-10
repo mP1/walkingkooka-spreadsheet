@@ -110,7 +110,7 @@ public class FakeSpreadsheetEngine implements SpreadsheetEngine, Fake {
     }
 
     @Override
-    public double maxColumnWidth(final SpreadsheetColumnReference column) {
+    public double columnWidth(final SpreadsheetColumnReference column) {
         throw new UnsupportedOperationException();
     }
 
