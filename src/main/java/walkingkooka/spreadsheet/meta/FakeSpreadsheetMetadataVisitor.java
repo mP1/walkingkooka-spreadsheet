@@ -129,7 +129,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitDefaultRowHeight(final int defaultRowHeight) {
+    protected void visitDefaultRowHeight(final double defaultRowHeight) {
         throw new UnsupportedOperationException();
     }
 

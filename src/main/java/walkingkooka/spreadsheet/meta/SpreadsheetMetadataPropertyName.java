@@ -145,7 +145,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>default-row-height {@link Integer}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<Integer> DEFAULT_ROW_HEIGHT = registerConstant(SpreadsheetMetadataPropertyNameDefaultRowHeight.instance());
+    public final static SpreadsheetMetadataPropertyName<Double> DEFAULT_ROW_HEIGHT = registerConstant(SpreadsheetMetadataPropertyNameDefaultRowHeight.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>edit-cell</code> {@link walkingkooka.spreadsheet.reference.SpreadsheetCellReference}.

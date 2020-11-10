@@ -146,7 +146,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDefaultRowHeight(final int defaultRowHeight) {
+    protected void visitDefaultRowHeight(final double defaultRowHeight) {
         // nop
     }
 

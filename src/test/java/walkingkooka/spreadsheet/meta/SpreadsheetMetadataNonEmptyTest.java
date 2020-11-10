@@ -1121,7 +1121,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_COLUMN_WIDTH, 60.0);
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_FONT_FAMILY_NAME, FontFamilyName.with("MS Sans Serif"));
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_FONT_SIZE, FontSize.with(11));
-        properties.put(SpreadsheetMetadataPropertyName.DEFAULT_ROW_HEIGHT, 15);
+        properties.put(SpreadsheetMetadataPropertyName.DEFAULT_ROW_HEIGHT, 15.0);
         properties.put(SpreadsheetMetadataPropertyName.EDIT_CELL, SpreadsheetCellReference.parse("C987"));
         properties.put(SpreadsheetMetadataPropertyName.EDIT_RANGE, SpreadsheetRange.parseRange("B99-C100"));
         properties.put(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.BIG_DECIMAL);

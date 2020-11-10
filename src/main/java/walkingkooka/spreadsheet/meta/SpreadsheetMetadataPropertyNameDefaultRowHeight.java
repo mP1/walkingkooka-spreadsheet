@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.meta;
 
-final class SpreadsheetMetadataPropertyNameDefaultRowHeight extends SpreadsheetMetadataPropertyNameInteger {
+final class SpreadsheetMetadataPropertyNameDefaultRowHeight extends SpreadsheetMetadataPropertyNameDouble {
 
     /**
      * Singleton
@@ -35,15 +35,15 @@ final class SpreadsheetMetadataPropertyNameDefaultRowHeight extends SpreadsheetM
 
     @Override
     void checkValue0(final Object value) {
-        final Integer integerValue = this.checkValueType(value,
-                v -> v instanceof Integer);
-        if (integerValue < 0) {
-            throw new SpreadsheetMetadataPropertyValueException("Expected int > 0", this, integerValue);
+        final Double doubleValue = this.checkValueType(value,
+                v -> v instanceof Double);
+        if (doubleValue <= 0) {
+            throw new SpreadsheetMetadataPropertyValueException("Expected double > 0", this, doubleValue);
         }
     }
 
     @Override
-    void accept(final Integer value,
+    void accept(final Double value,
                 final SpreadsheetMetadataVisitor visitor) {
         visitor.visitDefaultRowHeight(value);
     }
