@@ -37,7 +37,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
 
     // JsonNodeMarshallingTesting...........................................................................................
 
-    private final static JsonString WINDOW_PIXEL_WINDO_JSON_STRING = JsonNode.string("300x50");
+    private final static JsonString WINDOW_PIXEL_RECTANGLE_JSON_STRING = JsonNode.string("300x50");
     private final static JsonString WINDOW_RANGE_JSON_STRING = JsonNode.string("A1:E5,F6:Z99");
 
     @Test
@@ -69,7 +69,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
                         .set(SpreadsheetDelta.MAX_COLUMN_WIDTHS_PROPERTY, MAX_COLUMN_WIDTHS_JSON)
-                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_PIXEL_WINDO_JSON_STRING));
+                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_PIXEL_RECTANGLE_JSON_STRING));
     }
 
     @Test
@@ -87,7 +87,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                 JsonNode.object()
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
                         .set(SpreadsheetDelta.MAX_ROW_HEIGHTS_PROPERTY, MAX_ROW_HEIGHTS_JSON)
-                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_PIXEL_WINDO_JSON_STRING));
+                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_PIXEL_RECTANGLE_JSON_STRING));
     }
 
     @Test
@@ -106,7 +106,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
                         .set(SpreadsheetDelta.CELLS_PROPERTY, cellsJson())
                         .set(SpreadsheetDelta.MAX_COLUMN_WIDTHS_PROPERTY, MAX_COLUMN_WIDTHS_JSON)
                         .set(SpreadsheetDelta.MAX_ROW_HEIGHTS_PROPERTY, MAX_ROW_HEIGHTS_JSON)
-                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_PIXEL_WINDO_JSON_STRING));
+                        .set(SpreadsheetDeltaWindowed.WINDOW_PROPERTY, WINDOW_PIXEL_RECTANGLE_JSON_STRING));
     }
 
     @Test
