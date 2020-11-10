@@ -489,7 +489,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     // max..............................................................................................................
 
     @Override
-    public double maxColumnWidth(final SpreadsheetColumnReference column) {
+    public double columnWidth(final SpreadsheetColumnReference column) {
         return this.cellStore.maxColumnWidth(column);
     }
 
