@@ -19,16 +19,16 @@ package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
 
-public final class SpreadsheetMetadataPropertyNameDefaultColumnWidthTest extends SpreadsheetMetadataPropertyNameIntegerTestCase<SpreadsheetMetadataPropertyNameDefaultColumnWidth> {
+public final class SpreadsheetMetadataPropertyNameDefaultColumnWidthTest extends SpreadsheetMetadataPropertyNameDoubleTestCase<SpreadsheetMetadataPropertyNameDefaultColumnWidth> {
 
     @Test
     public void testNegativeValueFails() {
-        this.checkValueFails(-1, "Expected int > 0, but got -1 for \"default-column-width\"");
+        this.checkValueFails(-1.0, "Expected double > 0, but got -1.0 for \"default-column-width\"");
     }
 
     @Test
     public void testZeroValue() {
-        this.checkValue(0);
+        this.checkValue(0.0);
     }
 
     @Test

@@ -134,7 +134,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDefaultColumnWidth(final int defaultColumnWidth) {
+    protected void visitDefaultColumnWidth(final double defaultColumnWidth) {
         // nop
     }
 
