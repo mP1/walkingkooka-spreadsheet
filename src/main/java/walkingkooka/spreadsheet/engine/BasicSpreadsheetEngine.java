@@ -500,7 +500,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         double columnWidth = this.cellStore.maxColumnWidth(column);
         if (0 == columnWidth) {
             columnWidth = this.metadata.get(SpreadsheetMetadataPropertyName.DEFAULT_COLUMN_WIDTH)
-                    .orElse(0);
+                    .orElse(0.0);
         }
         return columnWidth;
     }
