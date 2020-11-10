@@ -26,6 +26,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetPixelRectangle;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
@@ -164,8 +165,10 @@ public abstract class SpreadsheetDelta {
     public abstract List<SpreadsheetRectangle> window();
 
     /**
-     * Would be setter that if necessary returns a new {@link SpreadsheetDelta} which will also filter cells if necessary.
-     * Note {@link walkingkooka.spreadsheet.reference.SpreadsheetPixelRectangle} will be ignored.
+     * Would be setter that if necessary returns a new {@link SpreadsheetDelta} which will also filter cells if necessary,
+     * only if all {@link SpreadsheetRectangle} are all {@link SpreadsheetRange ranges}. Filtering is not possible if a
+     * {@link SpreadsheetPixelRectangle} is present because it is not possible to determine if a cell is within those
+     * boundaries.
      */
     public final SpreadsheetDelta setWindow(final List<SpreadsheetRectangle> window) {
         Objects.requireNonNull(window, "window");
@@ -187,18 +190,31 @@ public abstract class SpreadsheetDelta {
                 SpreadsheetDeltaWindowed.withWindowed(filtered, maxColumnWidths, maxRowHeights, window);
     }
 
+    /**
+     * If the window is empty or contains a single {@link SpreadsheetPixelRectangle} do no filtering.
+     * This abort of filtering for the later is necessary because there is no way of accurately determining if a cell is
+     * within the {@link SpreadsheetPixelRectangle}.
+     */
     static Set<SpreadsheetCell> maybeFilterCells(final Set<SpreadsheetCell> cells,
                                                  final List<SpreadsheetRectangle> window) {
-        return window.isEmpty() ?
+        return window.isEmpty() || isMissingPixelRectangle(window) ?
                 cells :
-                cells.stream()
-                        .filter(c -> {
-                            return window.stream()
-                                    .filter(r -> r.isRange())
-                                    .map(r -> (SpreadsheetRange) r)
-                                    .anyMatch(r -> r.test(c.reference()));
-                        })
-                        .collect(Collectors.toCollection(Sets::ordered));
+                filterCells(cells, Cast.to(window));
+    }
+
+    private static boolean isMissingPixelRectangle(final List<SpreadsheetRectangle> window) {
+        return false == window.stream()
+                .anyMatch(SpreadsheetRectangle::isPixelRectangle);
+    }
+
+    private static Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
+                                                    final List<SpreadsheetRange> ranges) {
+        return cells.stream()
+                .filter(c -> {
+                    return ranges.stream()
+                            .anyMatch(r -> r.test(c.reference()));
+                })
+                .collect(Collectors.toCollection(Sets::ordered));
     }
 
     // JsonNodeContext..................................................................................................
