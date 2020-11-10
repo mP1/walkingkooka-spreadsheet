@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
 
 public final class SpreadsheetDeltaTest extends SpreadsheetDeltaTestCase<SpreadsheetDelta> {
 
@@ -30,6 +32,13 @@ public final class SpreadsheetDeltaTest extends SpreadsheetDeltaTestCase<Spreads
         this.checkMaxColumnWidths(delta, SpreadsheetDelta.NO_MAX_COLUMN_WIDTHS);
         this.checkMaxRowHeights(delta, SpreadsheetDelta.NO_MAX_ROW_HEIGHTS);
         this.checkWindow(delta, Lists.empty());
+    }
+
+    @Test
+    public void testSetWindowIncludesSpreadsheetPixelRectangle() {
+        final SpreadsheetDelta delta = SpreadsheetDelta.with(this.cells());
+        final SpreadsheetDelta different = delta.setWindow(Lists.of(SpreadsheetExpressionReference.parseRange("Z99:Z100"), SpreadsheetRectangle.parseRectangle("1x2")));
+        this.checkCells(different, this.cells());
     }
 
     // ClassTesting.....................................................................................................

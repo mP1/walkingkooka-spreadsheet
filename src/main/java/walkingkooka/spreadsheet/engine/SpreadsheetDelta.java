@@ -197,13 +197,13 @@ public abstract class SpreadsheetDelta {
      */
     static Set<SpreadsheetCell> maybeFilterCells(final Set<SpreadsheetCell> cells,
                                                  final List<SpreadsheetRectangle> window) {
-        return window.isEmpty() || isMissingPixelRectangle(window) ?
+        return window.isEmpty() || isContainsPixelRectangle(window) ?
                 cells :
                 filterCells(cells, Cast.to(window));
     }
 
-    private static boolean isMissingPixelRectangle(final List<SpreadsheetRectangle> window) {
-        return false == window.stream()
+    private static boolean isContainsPixelRectangle(final List<SpreadsheetRectangle> window) {
+        return window.stream()
                 .anyMatch(SpreadsheetRectangle::isPixelRectangle);
     }
 
