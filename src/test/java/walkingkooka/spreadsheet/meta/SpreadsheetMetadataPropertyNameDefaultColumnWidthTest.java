@@ -27,8 +27,13 @@ public final class SpreadsheetMetadataPropertyNameDefaultColumnWidthTest extends
     }
 
     @Test
-    public void testZeroValue() {
-        this.checkValue(0.0);
+    public void testZeroValueFails() {
+        this.checkValueFails(0.0, "Expected double > 0, but got 0.0 for \"default-column-width\"");
+    }
+
+    @Test
+    public void testPositiveNonZeroValue() {
+        this.checkValue(1.0);
     }
 
     @Test

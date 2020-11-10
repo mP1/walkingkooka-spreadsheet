@@ -37,7 +37,7 @@ final class SpreadsheetMetadataPropertyNameDefaultColumnWidth extends Spreadshee
     void checkValue0(final Object value) {
         final Double doubleValue = this.checkValueType(value,
                 v -> v instanceof Double);
-        if (doubleValue < 0) {
+        if (doubleValue <= 0) {
             throw new SpreadsheetMetadataPropertyValueException("Expected double > 0", this, doubleValue);
         }
     }
