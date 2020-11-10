@@ -4746,7 +4746,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetRangeStores.fake(),
                 SpreadsheetRangeStores.fake());
 
-        this.maxRowHeightAndCheck(engine, row, expected);
+        this.rowHeightAndCheck(engine, row, expected);
     }
 
     //  helpers.......................................................................................................

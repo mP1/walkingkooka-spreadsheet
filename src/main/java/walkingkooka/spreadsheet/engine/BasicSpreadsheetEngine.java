@@ -494,7 +494,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
-    public double maxRowHeight(final SpreadsheetRowReference row) {
+    public double rowHeight(final SpreadsheetRowReference row) {
         return this.cellStore.maxRowHeight(row);
     }
 
