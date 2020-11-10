@@ -101,6 +101,18 @@ public final class SpreadsheetPixelRectangle extends SpreadsheetRectangle {
         this.height = height;
     }
 
+    /**
+     * Tests if the offset (assumed to be relatve to {@link #reference} is within this rectangle.
+     * This will be used to test or load cells to fill a rectangular region or window of the spreadsheet being displayed.
+     */
+    public boolean test(final double x,
+                        final double y) {
+        return x >= 0 && x <= this.width &&
+                y >= 0 && y <= this.height;
+    }
+
+    // properties.......................................................................................................
+
     public SpreadsheetCellReference reference() {
         return this.reference;
     }

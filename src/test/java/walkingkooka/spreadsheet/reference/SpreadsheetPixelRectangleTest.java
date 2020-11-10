@@ -205,6 +205,64 @@ public final class SpreadsheetPixelRectangleTest extends SpreadsheetExpressionRe
         this.parseStringAndCheck("B9/400.5/500.5", SpreadsheetPixelRectangle.with(this.reference(), 400.5, 500.5));
     }
 
+    // test.............................................................................................................
+
+    @Test
+    public void testTestLeft() {
+        this.testAndCheck(100, 50, -1, 20, false);
+    }
+
+    @Test
+    public void testTestRight() {
+        this.testAndCheck(100, 50, 101, 20, false);
+    }
+
+    @Test
+    public void testTestUp() {
+        this.testAndCheck(100, 50, 1, -1, false);
+    }
+
+    @Test
+    public void testTestDown() {
+        this.testAndCheck(100, 50, 1, 51, false);
+    }
+
+    @Test
+    public void testTestTopLeft() {
+        this.testAndCheck(100, 50, 0, 0, true);
+    }
+
+    @Test
+    public void testTestTopRight() {
+        this.testAndCheck(100, 50, 100, 0, true);
+    }
+
+    @Test
+    public void testTestBottomLeft() {
+        this.testAndCheck(100, 50, 0, 50, true);
+    }
+
+    @Test
+    public void testTestBottomRight() {
+        this.testAndCheck(100, 50, 100, 50, true);
+    }
+
+    @Test
+    public void testTestCenter() {
+        this.testAndCheck(100, 50, 20, 20, true);
+    }
+
+    private void testAndCheck(final double width,
+                              final double height,
+                              final double x,
+                              final double y,
+                              final boolean expected) {
+        final SpreadsheetPixelRectangle rectangle = SpreadsheetPixelRectangle.with(reference(), width, height);
+        assertEquals(expected,
+                rectangle.test(x, y),
+                () -> "test " + x + ", " + y + " in " + rectangle);
+    }
+
     // JsonNodeMarshallingTesting...............................................................................................
 
     @Test
