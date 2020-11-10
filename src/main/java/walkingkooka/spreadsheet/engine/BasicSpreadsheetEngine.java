@@ -25,6 +25,8 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -57,6 +59,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * Factory that creates a new {@link BasicSpreadsheetEngine}
      */
     static BasicSpreadsheetEngine with(final SpreadsheetId id,
+                                       final SpreadsheetMetadata metadata,
                                        final SpreadsheetCellStore cellStore,
                                        final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferencesStore,
                                        final SpreadsheetLabelStore labelStore,
@@ -64,6 +67,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                        final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore,
                                        final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRuleStore) {
         Objects.requireNonNull(id, "id");
+        Objects.requireNonNull(metadata, "metadata");
         Objects.requireNonNull(cellStore, "cellStore");
         Objects.requireNonNull(cellReferencesStore, "cellReferencesStore");
         Objects.requireNonNull(labelStore, "labelStore");
@@ -72,6 +76,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         Objects.requireNonNull(rangeToConditionalFormattingRuleStore, "rangeToConditionalFormattingRuleStore");
 
         return new BasicSpreadsheetEngine(id,
+                metadata,
                 cellStore,
                 cellReferencesStore,
                 labelStore,
@@ -84,6 +89,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
      * Private ctor.
      */
     private BasicSpreadsheetEngine(final SpreadsheetId id,
+                                   final SpreadsheetMetadata metadata,
                                    final SpreadsheetCellStore cellStore,
                                    final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferencesStore,
                                    final SpreadsheetLabelStore labelStore,
@@ -91,6 +97,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                                    final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore,
                                    final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRuleStore) {
         this.id = id;
+        this.metadata = metadata;
         this.cellStore = cellStore;
         this.cellReferencesStore = cellReferencesStore;
         this.labelStore = labelStore;
@@ -490,13 +497,20 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     @Override
     public double columnWidth(final SpreadsheetColumnReference column) {
-        return this.cellStore.maxColumnWidth(column);
+        double columnWidth = this.cellStore.maxColumnWidth(column);
+        if (0 == columnWidth) {
+            columnWidth = this.metadata.get(SpreadsheetMetadataPropertyName.DEFAULT_COLUMN_WIDTH)
+                    .orElse(0);
+        }
+        return columnWidth;
     }
 
     @Override
     public double rowHeight(final SpreadsheetRowReference row) {
         return this.cellStore.maxRowHeight(row);
     }
+
+    private final SpreadsheetMetadata metadata;
 
     // checkers.........................................................................................................
 

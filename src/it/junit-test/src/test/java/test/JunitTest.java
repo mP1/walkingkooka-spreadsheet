@@ -165,6 +165,7 @@ public class JunitTest {
                                             final SpreadsheetLabelStore labelStore) {
         return SpreadsheetEngines.basic(
                 SpreadsheetId.with(123),
+                metadata(),
                 cellStore,
                 SpreadsheetReferenceStores.treeMap(),
                 labelStore,

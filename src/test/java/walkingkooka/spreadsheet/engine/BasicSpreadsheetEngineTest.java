@@ -37,6 +37,8 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
@@ -115,6 +117,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testWithNullIdFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(null,
+                this.metadata(),
+                this.cellStore(),
+                this.cellReferencesStore(),
+                this.labelStore(),
+                this.labelReferencesStore(),
+                this.rangeToCellStore(),
+                this.rangeToConditionalFormattingRuleStore()));
+    }
+
+    @Test
+    public void testWithNullMetadataFails() {
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(this.id(),
+                null,
                 this.cellStore(),
                 this.cellReferencesStore(),
                 this.labelStore(),
@@ -126,6 +141,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testWithNullCellStoreFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(this.id(),
+                this.metadata(),
                 null,
                 this.cellReferencesStore(),
                 this.labelStore(),
@@ -137,6 +153,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testWithNullCellReferencesStoreFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(this.id(),
+                this.metadata(),
                 this.cellStore(),
                 null,
                 this.labelStore(),
@@ -148,6 +165,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testWithNullLabelStoreFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(this.id(),
+                this.metadata(),
                 this.cellStore(),
                 this.cellReferencesStore(),
                 null,
@@ -159,6 +177,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testWithNullLabelReferencesStoreFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(this.id(),
+                this.metadata(),
                 this.cellStore(),
                 this.cellReferencesStore(),
                 this.labelStore(),
@@ -170,6 +189,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testWithNullRangeToCellStoreFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(this.id(),
+                this.metadata(),
                 this.cellStore(),
                 this.cellReferencesStore(),
                 this.labelStore(),
@@ -181,6 +201,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     @Test
     public void testWithNullRangeToConditionalFormattingRuleStoreFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngine.with(this.id(),
+                this.metadata(),
                 this.cellStore(),
                 this.cellReferencesStore(),
                 this.labelStore(),
@@ -4712,6 +4733,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetColumnReference column = SpreadsheetColumnReference.parseColumn("Z");
         final double expected = 150.5;
         final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(this.id(),
+                this.metadata(),
                 new FakeSpreadsheetCellStore() {
                     @Override
                     public double maxColumnWidth(final SpreadsheetColumnReference c) {
@@ -4729,10 +4751,33 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testColumnWidthDefaults() {
+        final SpreadsheetColumnReference column = SpreadsheetColumnReference.parseColumn("Z");
+        final double expected = 150.5;
+        final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(this.id(),
+                SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.DEFAULT_COLUMN_WIDTH, expected),
+                new FakeSpreadsheetCellStore() {
+                    @Override
+                    public double maxColumnWidth(final SpreadsheetColumnReference c) {
+                        assertEquals(column, c);
+                        return 0;
+                    }
+                },
+                SpreadsheetReferenceStores.fake(),
+                SpreadsheetLabelStores.fake(),
+                SpreadsheetReferenceStores.fake(),
+                SpreadsheetRangeStores.fake(),
+                SpreadsheetRangeStores.fake());
+
+        this.columnWidthAndCheck(engine, column, expected);
+    }
+
+    @Test
     public void testMaxRowHeight() {
         final SpreadsheetRowReference row = SpreadsheetRowReference.parseRow("987");
         final double expected = 150.5;
         final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(this.id(),
+                this.metadata(),
                 new FakeSpreadsheetCellStore() {
                     @Override
                     public double maxRowHeight(final SpreadsheetRowReference c) {
@@ -4777,6 +4822,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                            final SpreadsheetLabelStore labelStore,
                                                            final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToRules) {
         return BasicSpreadsheetEngine.with(this.id(),
+                this.metadata(),
                 cellStore,
                 this.cellReferencesStore(),
                 labelStore,
@@ -4799,6 +4845,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                                            final SpreadsheetLabelStore labelStore,
                                                            final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore) {
         return BasicSpreadsheetEngine.with(this.id(),
+                this.metadata(),
                 cellStore,
                 cellReferencesStore,
                 labelStore,
@@ -5103,6 +5150,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private SpreadsheetId id() {
         return SpreadsheetId.with(123);
+    }
+
+    private SpreadsheetMetadata metadata() {
+        return SpreadsheetMetadata.EMPTY;
     }
 
     private SpreadsheetCellStore cellStore() {
