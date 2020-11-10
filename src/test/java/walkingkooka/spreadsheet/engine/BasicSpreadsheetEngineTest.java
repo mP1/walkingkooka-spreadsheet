@@ -4773,16 +4773,38 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
-    public void testMaxRowHeight() {
+    public void testRowHeight() {
         final SpreadsheetRowReference row = SpreadsheetRowReference.parseRow("987");
         final double expected = 150.5;
         final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(this.id(),
-                this.metadata(),
+                SpreadsheetMetadata.EMPTY,
                 new FakeSpreadsheetCellStore() {
                     @Override
                     public double maxRowHeight(final SpreadsheetRowReference c) {
                         assertEquals(row, c);
                         return expected;
+                    }
+                },
+                SpreadsheetReferenceStores.fake(),
+                SpreadsheetLabelStores.fake(),
+                SpreadsheetReferenceStores.fake(),
+                SpreadsheetRangeStores.fake(),
+                SpreadsheetRangeStores.fake());
+
+        this.rowHeightAndCheck(engine, row, expected);
+    }
+
+    @Test
+    public void testRowHeightDefaults() {
+        final SpreadsheetRowReference row = SpreadsheetRowReference.parseRow("987");
+        final double expected = 150.5;
+        final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(this.id(),
+                SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.DEFAULT_ROW_HEIGHT, expected),
+                new FakeSpreadsheetCellStore() {
+                    @Override
+                    public double maxRowHeight(final SpreadsheetRowReference c) {
+                        assertEquals(row, c);
+                        return 0;
                     }
                 },
                 SpreadsheetReferenceStores.fake(),

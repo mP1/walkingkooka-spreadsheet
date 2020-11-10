@@ -507,7 +507,12 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     @Override
     public double rowHeight(final SpreadsheetRowReference row) {
-        return this.cellStore.maxRowHeight(row);
+        double rowHeight = this.cellStore.maxRowHeight(row);
+        if (0 == rowHeight) {
+            rowHeight = this.metadata.get(SpreadsheetMetadataPropertyName.DEFAULT_ROW_HEIGHT)
+                    .orElse(0.0);
+        }
+        return rowHeight;
     }
 
     private final SpreadsheetMetadata metadata;
