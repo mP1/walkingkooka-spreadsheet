@@ -253,6 +253,21 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
         return columnKind.column(column).setRow(rowKind.row(row));
     }
 
+    // SpreadsheetPixelRectangle.........................................................................................
+
+    @Test
+    public void testPixelRectangle() {
+        final double width = 100.5;
+        final double height = 20.5;
+        final SpreadsheetCellReference reference = this.createReference();
+
+        final SpreadsheetPixelRectangle rectangle = reference.pixelRectangle(width, height);
+
+        assertSame(reference, rectangle.reference(), "reference");
+        assertEquals(width, rectangle.width(), "width");
+        assertEquals(height, rectangle.height(), "height");
+    }
+
     // range.............................................................................................................
 
     @Test
