@@ -37,27 +37,27 @@ public final class SpreadsheetPixelRectangleTest extends SpreadsheetExpressionRe
 
     @Test
     public void testWithInvalidWidthFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetPixelRectangle.with(0, HEIGHT));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetPixelRectangle.with(this.reference(), 0, HEIGHT));
     }
 
     @Test
     public void testWithInvalidWidthFails2() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetPixelRectangle.with(-1, HEIGHT));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetPixelRectangle.with(this.reference(), -1, HEIGHT));
     }
 
     @Test
     public void testWithInvalidHeightFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetPixelRectangle.with(WIDTH, 0));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetPixelRectangle.with(this.reference(), WIDTH, 0));
     }
 
     @Test
     public void testWithInvalidHeightFails2() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetPixelRectangle.with(WIDTH, -1));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetPixelRectangle.with(this.reference(), WIDTH, -1));
     }
 
     @Test
     public void testWith() {
-        this.check(SpreadsheetPixelRectangle.with(WIDTH, HEIGHT));
+        this.check(SpreadsheetPixelRectangle.with(this.reference(), WIDTH, HEIGHT));
     }
 
     // SpreadsheetExpressionReferenceVisitor.............................................................................
@@ -106,30 +106,40 @@ public final class SpreadsheetPixelRectangleTest extends SpreadsheetExpressionRe
     // equals...........................................................................................................
 
     @Test
+    public void testEqualsDifferentReference() {
+        this.checkNotEquals(SpreadsheetPixelRectangle.with(SpreadsheetCellReference.parseCellReference("a1"), 1000 + WIDTH, HEIGHT));
+    }
+
+    @Test
     public void testEqualsDifferentWidth() {
-        this.checkNotEquals(SpreadsheetPixelRectangle.with(1000 + WIDTH, HEIGHT));
+        this.checkNotEquals(SpreadsheetPixelRectangle.with(this.reference(), 1000 + WIDTH, HEIGHT));
     }
 
     @Test
     public void testEqualsDifferentHeight() {
-        this.checkNotEquals(SpreadsheetPixelRectangle.with(WIDTH, 1000 + HEIGHT));
+        this.checkNotEquals(SpreadsheetPixelRectangle.with(this.reference(), WIDTH, 1000 + HEIGHT));
     }
 
     // toString.........................................................................................................
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetPixelRectangle.with(40, 50), "40x50");
+        this.toStringAndCheck(SpreadsheetPixelRectangle.with(this.reference(), 40, 50), "B9/40/50");
     }
 
     @Test
-    public void testString2() {
-        this.toStringAndCheck(SpreadsheetPixelRectangle.with(40.5, 50.75), "40.5x50.75");
+    public void testToString2() {
+        this.toStringAndCheck(SpreadsheetPixelRectangle.with(this.reference(), 40.5, 50.75), "B9/40.5/50.75");
     }
 
     @Test
-    public void testString3() {
-        this.toStringAndCheck(SpreadsheetPixelRectangle.with(40, 50.75), "40x50.75");
+    public void testToString3() {
+        this.toStringAndCheck(SpreadsheetPixelRectangle.with(this.reference(), 40, 50.75), "B9/40/50.75");
+    }
+
+    @Test
+    public void testToString4() {
+        this.toStringAndCheck(SpreadsheetPixelRectangle.with(SpreadsheetCellReference.parseCellReference("$C$3"), 40, 50.75), "$C$3/40/50.75");
     }
 
     // helpers .........................................................................................................
@@ -142,38 +152,38 @@ public final class SpreadsheetPixelRectangleTest extends SpreadsheetExpressionRe
     // ParseStringTesting...............................................................................................
 
     @Test
-    public void testParseMissingSeparatorFails() {
-        this.parseStringFails2("400", "Missing separator 'x' in \"400\"");
+    public void testParseMissingWidthFails() {
+        this.parseStringFails2("B9", "Missing width & height in \"B9\"");
     }
 
     @Test
-    public void testParseMissingWidthFails() {
-        this.parseStringFails2("x400", "Missing width in \"x400\"");
+    public void testParseMissingWidthFails2() {
+        this.parseStringFails2("B9/", "Missing width & height in \"B9/\"");
     }
 
     @Test
     public void testParseMissingHeightFails() {
-        this.parseStringFails2("400x", "Missing height in \"400x\"");
+        this.parseStringFails2("B9/400", "Missing height in \"B9/400\"");
     }
 
     @Test
     public void testParseInvalidWidthFails() {
-        this.parseStringFails2("abcx400", "Invalid width in \"abcx400\"");
+        this.parseStringFails2("B9/abc/400", "Invalid width in \"B9/abc/400\"");
     }
 
     @Test
     public void testParseInvalidWidthFails2() {
-        this.parseStringFails2("-1x400", "Invalid width -1.0 <= 0");
+        this.parseStringFails2("B9/-1/400", "Invalid width -1.0 <= 0");
     }
 
     @Test
     public void testParseInvalidHeightFails() {
-        this.parseStringFails2("400xXYZ", "Invalid height in \"400xXYZ\"");
+        this.parseStringFails2("B9/400/XYZ", "Invalid height in \"B9/400/XYZ\"");
     }
 
     @Test
     public void testParseInvalidHeightFails2() {
-        this.parseStringFails2("400x-1", "Invalid height 400.0 <= 0");
+        this.parseStringFails2("B9/400/-1", "Invalid height 400.0 <= 0");
     }
 
     private void parseStringFails2(final String text, final String expectedMessage) {
@@ -182,44 +192,54 @@ public final class SpreadsheetPixelRectangleTest extends SpreadsheetExpressionRe
 
     @Test
     public void testParse() {
-        this.parseStringAndCheck("400x500", SpreadsheetPixelRectangle.with(400, 500));
+        this.parseStringAndCheck("B9/400/500", SpreadsheetPixelRectangle.with(this.reference(), 400, 500));
     }
 
     @Test
     public void testParse2() {
-        this.parseStringAndCheck("400.5x500.5", SpreadsheetPixelRectangle.with(400.5, 500.5));
+        this.parseStringAndCheck("$B$9/400/500", SpreadsheetPixelRectangle.with(SpreadsheetCellReference.parseCellReference("$B$9"), 400, 500));
+    }
+
+    @Test
+    public void testParse3() {
+        this.parseStringAndCheck("B9/400.5/500.5", SpreadsheetPixelRectangle.with(this.reference(), 400.5, 500.5));
     }
 
     // JsonNodeMarshallingTesting...............................................................................................
 
     @Test
     public void testJsonNodeUnmarshall() {
-        this.unmarshallAndCheck(JsonNode.string("50x75"), SpreadsheetPixelRectangle.with(50, 75));
+        this.unmarshallAndCheck(JsonNode.string("B9/50/75"), SpreadsheetPixelRectangle.with(this.reference(), 50, 75));
     }
 
     @Test
     public void testJsonNodeUnmarshall2() {
-        this.unmarshallAndCheck(JsonNode.string("50.5x75.5"), SpreadsheetPixelRectangle.with(50.5, 75.5));
+        this.unmarshallAndCheck(JsonNode.string("B9/50.5/75.5"), SpreadsheetPixelRectangle.with(this.reference(), 50.5, 75.5));
+    }
+
+    @Test
+    public void testJsonNodeUnmarshall3() {
+        this.unmarshallAndCheck(JsonNode.string("$B$9/50.5/75.5"), SpreadsheetPixelRectangle.with(SpreadsheetCellReference.parseCellReference("$B$9"), 50.5, 75.5));
     }
 
     @Test
     public void testJsonNodeMarshall2() {
-        this.marshallAndCheck(SpreadsheetPixelRectangle.with(50, 75), JsonNode.string("50x75"));
+        this.marshallAndCheck(SpreadsheetPixelRectangle.with(this.reference(), 50, 75), JsonNode.string("B9/50/75"));
     }
 
     @Test
     public void testJsonNodeMarshall3() {
-        this.marshallAndCheck(SpreadsheetPixelRectangle.with(50.5, 75.5), JsonNode.string("50.5x75.5"));
+        this.marshallAndCheck(SpreadsheetPixelRectangle.with(this.reference(), 50.5, 75.5), JsonNode.string("B9/50.5/75.5"));
     }
 
     @Test
     public void testJsonNodeMarshallRoundtrip() {
-        this.marshallRoundTripTwiceAndCheck(SpreadsheetPixelRectangle.with(50, 75));
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetPixelRectangle.with(this.reference(), 50, 75));
     }
 
     @Test
     public void testJsonNodeMarshallRoundtrip2() {
-        this.marshallRoundTripTwiceAndCheck(SpreadsheetPixelRectangle.with(50.5, 75.75));
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetPixelRectangle.with(this.reference(), 50.5, 75.75));
     }
 
     //compare...........................................................................................................
@@ -237,25 +257,41 @@ public final class SpreadsheetPixelRectangleTest extends SpreadsheetExpressionRe
     //helper.................................................................................................
 
     private SpreadsheetPixelRectangle rectangle() {
-        return SpreadsheetPixelRectangle.with(WIDTH, HEIGHT);
+        return SpreadsheetPixelRectangle.with(this.reference(), WIDTH, HEIGHT);
+    }
+
+    private SpreadsheetCellReference reference() {
+        return SpreadsheetCellReference.parseCellReference("B9");
     }
 
     private void check(final SpreadsheetPixelRectangle rectangle) {
-        this.check(rectangle, WIDTH, HEIGHT);
+        this.check(rectangle,
+                this.reference(),
+                WIDTH,
+                HEIGHT);
     }
 
     private void check(final SpreadsheetPixelRectangle rectangle,
+                       final SpreadsheetCellReference reference,
                        final double width,
                        final double height) {
+        this.checkReference(rectangle, reference);
         this.checkWidth(rectangle, width);
         this.checkHeight(rectangle, height);
     }
 
-    private void checkWidth(final SpreadsheetPixelRectangle rectangle, final double width) {
+    private void checkReference(final SpreadsheetPixelRectangle rectangle,
+                                final SpreadsheetCellReference reference) {
+        assertEquals(reference, rectangle.reference(), () -> "rectangle width=" + rectangle);
+    }
+
+    private void checkWidth(final SpreadsheetPixelRectangle rectangle,
+                            final double width) {
         assertEquals(width, rectangle.width(), () -> "rectangle width=" + rectangle);
     }
 
-    private void checkHeight(final SpreadsheetPixelRectangle rectangle, final double height) {
+    private void checkHeight(final SpreadsheetPixelRectangle rectangle,
+                             final double height) {
         assertEquals(height, rectangle.height(), () -> "rectangle height=" + rectangle);
     }
 
