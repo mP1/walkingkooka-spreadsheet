@@ -22,6 +22,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStores;
@@ -34,6 +35,7 @@ public final class BasicSpreadsheetEngineUpdatedCellsTest extends BasicSpreadshe
     @Test
     public void testToString() {
         final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(SpreadsheetId.with(123),
+                SpreadsheetMetadata.EMPTY,
                 SpreadsheetCellStores.treeMap(),
                 SpreadsheetReferenceStores.treeMap(),
                 SpreadsheetLabelStores.treeMap(),

@@ -156,6 +156,7 @@ public final class Sample {
                                             final SpreadsheetLabelStore labelStore) {
         return SpreadsheetEngines.basic(
                 SpreadsheetId.with(123),
+                metadata(),
                 cellStore,
                 SpreadsheetReferenceStores.treeMap(),
                 labelStore,
