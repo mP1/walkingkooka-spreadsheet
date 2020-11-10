@@ -37,7 +37,7 @@ public final class SpreadsheetDeltaTest extends SpreadsheetDeltaTestCase<Spreads
     @Test
     public void testSetWindowIncludesSpreadsheetPixelRectangle() {
         final SpreadsheetDelta delta = SpreadsheetDelta.with(this.cells());
-        final SpreadsheetDelta different = delta.setWindow(Lists.of(SpreadsheetExpressionReference.parseRange("Z99:Z100"), SpreadsheetRectangle.parseRectangle("1x2")));
+        final SpreadsheetDelta different = delta.setWindow(Lists.of(SpreadsheetExpressionReference.parseRange("Z99:Z100"), SpreadsheetRectangle.parseRectangle("B1/1/2")));
         this.checkCells(different, this.cells());
     }
 

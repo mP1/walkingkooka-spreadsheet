@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.reference;
 
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.CharacterConstant;
 
 import java.util.Objects;
 
@@ -27,76 +28,96 @@ import java.util.Objects;
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 public final class SpreadsheetPixelRectangle extends SpreadsheetRectangle {
 
-    private final static char SEPARATOR = 'x';
+    final static CharacterConstant SEPARATOR = CharacterConstant.with('/');
 
     /**
      * Parses the width and height from text in the following format.
      * <pre>
-     * width x height
+     * cell-reference SEPARATOR width SEPARATOR height
      * </pre>
      * Where width and height are decimal numbers.
      */
     static SpreadsheetPixelRectangle parsePixelRectangle0(final String text) {
         CharSequences.failIfNullOrEmpty(text, "text");
 
-        final int separator = text.indexOf(SEPARATOR);
-        if (-1 == separator) {
-            throw new IllegalArgumentException("Missing separator " + CharSequences.quoteIfChars(SEPARATOR) + " in " + CharSequences.quoteAndEscape(text));
+        final String[] tokens = text.split(SEPARATOR.string());
+        switch (tokens.length) {
+            case 1:
+                throw new IllegalArgumentException("Missing width & height in " + CharSequences.quoteAndEscape(text));
+            case 2:
+                throw new IllegalArgumentException("Missing height in " + CharSequences.quoteAndEscape(text));
+            case 3:
+                break;
+            default:
+                throw new IllegalArgumentException("Incorrect number of tokens in " + CharSequences.quoteAndEscape(text));
         }
-        if (0 == separator) {
-            throw new IllegalArgumentException("Missing width in " + CharSequences.quoteAndEscape(text));
-        }
-        if (text.length() - 1 == separator) {
-            throw new IllegalArgumentException("Missing height in " + CharSequences.quoteAndEscape(text));
+
+        final SpreadsheetCellReference reference;
+        try {
+            reference = SpreadsheetCellReference.parseCellReference(tokens[0]);
+        } catch (final NumberFormatException cause) {
+            throw new IllegalArgumentException("Invalid width in " + CharSequences.quoteAndEscape(text));
         }
 
         final double width;
         try {
-            width = Double.parseDouble(text.substring(0, separator));
+            width = Double.parseDouble(tokens[1]);
         } catch (final NumberFormatException cause) {
             throw new IllegalArgumentException("Invalid width in " + CharSequences.quoteAndEscape(text));
         }
         final double height;
         try {
-            height = Double.parseDouble(text.substring(separator + 1));
+            height = Double.parseDouble(tokens[2]);
         } catch (final NumberFormatException cause) {
             throw new IllegalArgumentException("Invalid height in " + CharSequences.quoteAndEscape(text));
         }
 
-        return with(width, height);
+        return with(reference, width, height);
     }
 
     /**
      * Factory that creates a new {@link SpreadsheetPixelRectangle}.
      */
-    static SpreadsheetPixelRectangle with(final double width,
+    static SpreadsheetPixelRectangle with(final SpreadsheetCellReference reference,
+                                          final double width,
                                           final double height) {
+        Objects.requireNonNull(reference, "reference");
+
         if (width <= 0) {
             throw new IllegalArgumentException("Invalid width " + width + " <= 0");
         }
         if (height <= 0) {
             throw new IllegalArgumentException("Invalid height " + width + " <= 0");
         }
-        return new SpreadsheetPixelRectangle(width, height);
+        return new SpreadsheetPixelRectangle(reference, width, height);
     }
 
-    private SpreadsheetPixelRectangle(final double width,
+    private SpreadsheetPixelRectangle(final SpreadsheetCellReference reference,
+                                      final double width,
                                       final double height) {
+        super();
+        this.reference = reference;
         this.width = width;
         this.height = height;
     }
+
+    public SpreadsheetCellReference reference() {
+        return this.reference;
+    }
+
+    private final SpreadsheetCellReference reference;
 
     public double width() {
         return this.width;
     }
 
-    private double width;
+    private final double width;
 
     public double height() {
         return this.height;
     }
 
-    private double height;
+    private final double height;
 
     // SpreadsheetExpressionReferenceVisitor............................................................................
 
@@ -109,7 +130,7 @@ public final class SpreadsheetPixelRectangle extends SpreadsheetRectangle {
 
     @Override
     public int hashCode() {
-        return Objects.hash(Double.hashCode(this.width), Double.hashCode(this.height));
+        return Objects.hash(this.reference, Double.hashCode(this.width), Double.hashCode(this.height));
     }
 
     @Override
@@ -123,7 +144,9 @@ public final class SpreadsheetPixelRectangle extends SpreadsheetRectangle {
     }
 
     private boolean equals1(final SpreadsheetPixelRectangle other) {
-        return this.width == other.width && this.height == other.height;
+        return this.reference.equals0(other.reference) &&
+                this.width == other.width &&
+                this.height == other.height;
     }
 
     @Override
@@ -143,7 +166,11 @@ public final class SpreadsheetPixelRectangle extends SpreadsheetRectangle {
 
     @Override
     public String toString() {
-        return toStringWithoutTrailingZero(this.width) + SEPARATOR + toStringWithoutTrailingZero(this.height);
+        return this.reference.toString() +
+                SEPARATOR +
+                toStringWithoutTrailingZero(this.width) +
+                SEPARATOR +
+                toStringWithoutTrailingZero(this.height);
     }
 
     private static String toStringWithoutTrailingZero(final double value) {
