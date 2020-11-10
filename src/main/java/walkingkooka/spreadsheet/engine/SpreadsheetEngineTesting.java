@@ -381,8 +381,8 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     @Test
-    default void testMaxRowHeightNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().maxRowHeight(null));
+    default void testRowHeightNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createSpreadsheetEngine().rowHeight(null));
     }
 
     E createSpreadsheetEngine();
@@ -749,17 +749,17 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> "columnWidth " + column + " of " + engine);
     }
 
-    default void maxRowHeightAndCheck(final SpreadsheetRowReference row,
-                                      final double expected) {
-        this.maxRowHeightAndCheck(this.createSpreadsheetEngine(), row, expected);
+    default void rowHeightAndCheck(final SpreadsheetRowReference row,
+                                   final double expected) {
+        this.rowHeightAndCheck(this.createSpreadsheetEngine(), row, expected);
     }
 
-    default void maxRowHeightAndCheck(final SpreadsheetEngine engine,
-                                      final SpreadsheetRowReference row,
-                                      final double expected) {
+    default void rowHeightAndCheck(final SpreadsheetEngine engine,
+                                   final SpreadsheetRowReference row,
+                                   final double expected) {
         assertEquals(expected,
-                engine.maxRowHeight(row),
-                () -> "maxRowHeight " + row + " of " + engine);
+                engine.rowHeight(row),
+                () -> "rowHeight " + row + " of " + engine);
     }
 
     default Converter converter() {
