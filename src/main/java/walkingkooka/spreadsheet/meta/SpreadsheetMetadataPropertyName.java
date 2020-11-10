@@ -130,7 +130,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>default-column-width {@link Integer}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<Integer> DEFAULT_COLUMN_WIDTH = registerConstant(SpreadsheetMetadataPropertyNameDefaultColumnWidth.instance());
+    public final static SpreadsheetMetadataPropertyName<Double> DEFAULT_COLUMN_WIDTH = registerConstant(SpreadsheetMetadataPropertyNameDefaultColumnWidth.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>default-font-size {@link FontSize}</code>

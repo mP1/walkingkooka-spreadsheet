@@ -114,7 +114,7 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
-    protected void visitDefaultColumnWidth(final int defaultColumnWidth) {
+    protected void visitDefaultColumnWidth(final double defaultColumnWidth) {
         throw new UnsupportedOperationException();
     }
 

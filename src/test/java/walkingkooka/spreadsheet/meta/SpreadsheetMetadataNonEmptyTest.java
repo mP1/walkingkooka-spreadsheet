@@ -1118,7 +1118,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetPattern.parseDateTimeFormatPattern("DD/MM/YYYY hh:mm"));
         properties.put(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetPattern.parseDateTimeParsePatterns("DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM"));
         properties.put(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, 'D');
-        properties.put(SpreadsheetMetadataPropertyName.DEFAULT_COLUMN_WIDTH, 60);
+        properties.put(SpreadsheetMetadataPropertyName.DEFAULT_COLUMN_WIDTH, 60.0);
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_FONT_FAMILY_NAME, FontFamilyName.with("MS Sans Serif"));
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_FONT_SIZE, FontSize.with(11));
         properties.put(SpreadsheetMetadataPropertyName.DEFAULT_ROW_HEIGHT, 15);
