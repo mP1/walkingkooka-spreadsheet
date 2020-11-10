@@ -147,6 +147,16 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
         return new SpreadsheetCellReference(column, row);
     }
 
+    // SpreadsheetPixelRectangle........................................................................................
+
+    /**
+     * Creates a {@link SpreadsheetPixelRectangle} using this as the top/left.
+     */
+    public SpreadsheetPixelRectangle pixelRectangle(final double width,
+                                                    final double height) {
+        return SpreadsheetPixelRectangle.with(this, width, height);
+    }
+
     // range/spreadsheetRange...........................................................................................
 
     /**
