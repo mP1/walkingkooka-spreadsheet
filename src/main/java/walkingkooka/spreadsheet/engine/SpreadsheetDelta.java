@@ -62,7 +62,7 @@ public abstract class SpreadsheetDelta {
     public static SpreadsheetDelta with(final Set<SpreadsheetCell> cells) {
         checkCells(cells);
 
-        return SpreadsheetDeltaNonWindowed.withNonWindowed(cells,
+        return SpreadsheetDeltaNonWindowed.withNonWindowed(Sets.immutable(cells),
                 NO_MAX_COLUMN_WIDTHS,
                 NO_MAX_ROW_HEIGHTS);
     }
@@ -200,7 +200,7 @@ public abstract class SpreadsheetDelta {
                                                  final List<SpreadsheetRectangle> window) {
         return window.isEmpty() || isContainsPixelRectangle(window) ?
                 cells :
-                filterCells(cells, Cast.to(window));
+                Sets.readOnly(filterCells(cells, Cast.to(window)));
     }
 
     private static boolean isContainsPixelRectangle(final List<SpreadsheetRectangle> window) {
