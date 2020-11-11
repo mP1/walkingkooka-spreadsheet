@@ -40,6 +40,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetPixelRectangle;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -760,6 +761,21 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
         assertEquals(expected,
                 engine.rowHeight(row),
                 () -> "rowHeight " + row + " of " + engine);
+    }
+
+    default void computeRange(final SpreadsheetPixelRectangle rectangle,
+                              final SpreadsheetRange expected) {
+        this.computeRange(this.createSpreadsheetEngine(),
+                rectangle,
+                expected);
+    }
+
+    default void computeRange(final SpreadsheetEngine engine,
+                              final SpreadsheetPixelRectangle rectangle,
+                              final SpreadsheetRange expected) {
+        assertEquals(expected,
+                engine.computeRange(rectangle),
+                () -> "computeRange " + rectangle + " of " + engine);
     }
 
     default Converter converter() {
