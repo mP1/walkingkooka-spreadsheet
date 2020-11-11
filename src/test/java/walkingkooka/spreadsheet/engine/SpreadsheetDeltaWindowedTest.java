@@ -37,7 +37,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
 
     // JsonNodeMarshallingTesting...........................................................................................
 
-    private final static JsonString WINDOW_PIXEL_RECTANGLE_JSON_STRING = JsonNode.string("B9/300/50");
+    private final static JsonString WINDOW_PIXEL_RECTANGLE_JSON_STRING = JsonNode.string("B9:300:50");
     private final static JsonString WINDOW_RANGE_JSON_STRING = JsonNode.string("A1:E5,F6:Z99");
 
     @Test
@@ -172,7 +172,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     }
 
     private List<SpreadsheetRectangle> windowPixelRectangle() {
-        return this.window0("B9/300/50");
+        return this.window0("B9:300:50");
     }
 
     @Override

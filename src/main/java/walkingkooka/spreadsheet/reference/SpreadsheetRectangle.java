@@ -27,7 +27,7 @@ public abstract class SpreadsheetRectangle extends SpreadsheetExpressionReferenc
     public static SpreadsheetRectangle parseRectangle(final String text) {
         CharSequences.failIfNullOrEmpty(text, "text");
 
-        return text.indexOf(SpreadsheetPixelRectangle.SEPARATOR.character()) >= 0 ?
+        return text.split(SpreadsheetPixelRectangle.SEPARATOR.string()).length > 2 ?
                 SpreadsheetExpressionReference.parsePixelRectangle(text) :
                 SpreadsheetExpressionReference.parseRange(text);
     }

@@ -26,17 +26,17 @@ public final class SpreadsheetRectangleTest implements ClassTesting2<Spreadsheet
 
     @Test
     public void testParsePixelRectangle() {
-        this.parseStringAndCheck("A1/123/456", SpreadsheetPixelRectangle.with(SpreadsheetCellReference.parseCellReference("A1"), 123, 456));
+        this.parseStringAndCheck("A1:123:456", SpreadsheetPixelRectangle.with(SpreadsheetCellReference.parseCellReference("A1"), 123, 456));
     }
 
     @Test
     public void testParsePixelRectangle2() {
-        this.parseStringAndCheck("$A$1/123/456", SpreadsheetPixelRectangle.with(SpreadsheetCellReference.parseCellReference("$A$1"), 123, 456));
+        this.parseStringAndCheck("$A$1:123:456", SpreadsheetPixelRectangle.with(SpreadsheetCellReference.parseCellReference("$A$1"), 123, 456));
     }
 
     @Test
     public void testParsePixelRectangle3() {
-        this.parseStringAndCheck("A1/123.5/456.5", SpreadsheetPixelRectangle.with(SpreadsheetCellReference.parseCellReference("A1"),123.5, 456.5));
+        this.parseStringAndCheck("A1:123.5:456.5", SpreadsheetPixelRectangle.with(SpreadsheetCellReference.parseCellReference("A1"), 123.5, 456.5));
     }
 
     @Test

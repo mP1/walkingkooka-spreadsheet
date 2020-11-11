@@ -124,22 +124,22 @@ public final class SpreadsheetPixelRectangleTest extends SpreadsheetExpressionRe
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetPixelRectangle.with(this.reference(), 40, 50), "B9/40/50");
+        this.toStringAndCheck(SpreadsheetPixelRectangle.with(this.reference(), 40, 50), "B9:40:50");
     }
 
     @Test
     public void testToString2() {
-        this.toStringAndCheck(SpreadsheetPixelRectangle.with(this.reference(), 40.5, 50.75), "B9/40.5/50.75");
+        this.toStringAndCheck(SpreadsheetPixelRectangle.with(this.reference(), 40.5, 50.75), "B9:40.5:50.75");
     }
 
     @Test
     public void testToString3() {
-        this.toStringAndCheck(SpreadsheetPixelRectangle.with(this.reference(), 40, 50.75), "B9/40/50.75");
+        this.toStringAndCheck(SpreadsheetPixelRectangle.with(this.reference(), 40, 50.75), "B9:40:50.75");
     }
 
     @Test
     public void testToString4() {
-        this.toStringAndCheck(SpreadsheetPixelRectangle.with(SpreadsheetCellReference.parseCellReference("$C$3"), 40, 50.75), "$C$3/40/50.75");
+        this.toStringAndCheck(SpreadsheetPixelRectangle.with(SpreadsheetCellReference.parseCellReference("$C$3"), 40, 50.75), "$C$3:40:50.75");
     }
 
     // helpers .........................................................................................................
@@ -158,32 +158,32 @@ public final class SpreadsheetPixelRectangleTest extends SpreadsheetExpressionRe
 
     @Test
     public void testParseMissingWidthFails2() {
-        this.parseStringFails2("B9/", "Missing width & height in \"B9/\"");
+        this.parseStringFails2("B9:", "Missing width & height in \"B9:\"");
     }
 
     @Test
     public void testParseMissingHeightFails() {
-        this.parseStringFails2("B9/400", "Missing height in \"B9/400\"");
+        this.parseStringFails2("B9:400", "Missing height in \"B9:400\"");
     }
 
     @Test
     public void testParseInvalidWidthFails() {
-        this.parseStringFails2("B9/abc/400", "Invalid width in \"B9/abc/400\"");
+        this.parseStringFails2("B9:abc:400", "Invalid width in \"B9:abc:400\"");
     }
 
     @Test
     public void testParseInvalidWidthFails2() {
-        this.parseStringFails2("B9/-1/400", "Invalid width -1.0 <= 0");
+        this.parseStringFails2("B9:-1:400", "Invalid width -1.0 <= 0");
     }
 
     @Test
     public void testParseInvalidHeightFails() {
-        this.parseStringFails2("B9/400/XYZ", "Invalid height in \"B9/400/XYZ\"");
+        this.parseStringFails2("B9:400:XYZ", "Invalid height in \"B9:400:XYZ\"");
     }
 
     @Test
     public void testParseInvalidHeightFails2() {
-        this.parseStringFails2("B9/400/-1", "Invalid height 400.0 <= 0");
+        this.parseStringFails2("B9:400:-1", "Invalid height 400.0 <= 0");
     }
 
     private void parseStringFails2(final String text, final String expectedMessage) {
@@ -192,17 +192,17 @@ public final class SpreadsheetPixelRectangleTest extends SpreadsheetExpressionRe
 
     @Test
     public void testParse() {
-        this.parseStringAndCheck("B9/400/500", SpreadsheetPixelRectangle.with(this.reference(), 400, 500));
+        this.parseStringAndCheck("B9:400:500", SpreadsheetPixelRectangle.with(this.reference(), 400, 500));
     }
 
     @Test
     public void testParse2() {
-        this.parseStringAndCheck("$B$9/400/500", SpreadsheetPixelRectangle.with(SpreadsheetCellReference.parseCellReference("$B$9"), 400, 500));
+        this.parseStringAndCheck("$B$9:400:500", SpreadsheetPixelRectangle.with(SpreadsheetCellReference.parseCellReference("$B$9"), 400, 500));
     }
 
     @Test
     public void testParse3() {
-        this.parseStringAndCheck("B9/400.5/500.5", SpreadsheetPixelRectangle.with(this.reference(), 400.5, 500.5));
+        this.parseStringAndCheck("B9:400.5:500.5", SpreadsheetPixelRectangle.with(this.reference(), 400.5, 500.5));
     }
 
     // test.............................................................................................................
@@ -267,27 +267,27 @@ public final class SpreadsheetPixelRectangleTest extends SpreadsheetExpressionRe
 
     @Test
     public void testJsonNodeUnmarshall() {
-        this.unmarshallAndCheck(JsonNode.string("B9/50/75"), SpreadsheetPixelRectangle.with(this.reference(), 50, 75));
+        this.unmarshallAndCheck(JsonNode.string("B9:50:75"), SpreadsheetPixelRectangle.with(this.reference(), 50, 75));
     }
 
     @Test
     public void testJsonNodeUnmarshall2() {
-        this.unmarshallAndCheck(JsonNode.string("B9/50.5/75.5"), SpreadsheetPixelRectangle.with(this.reference(), 50.5, 75.5));
+        this.unmarshallAndCheck(JsonNode.string("B9:50.5:75.5"), SpreadsheetPixelRectangle.with(this.reference(), 50.5, 75.5));
     }
 
     @Test
     public void testJsonNodeUnmarshall3() {
-        this.unmarshallAndCheck(JsonNode.string("$B$9/50.5/75.5"), SpreadsheetPixelRectangle.with(SpreadsheetCellReference.parseCellReference("$B$9"), 50.5, 75.5));
+        this.unmarshallAndCheck(JsonNode.string("$B$9:50.5:75.5"), SpreadsheetPixelRectangle.with(SpreadsheetCellReference.parseCellReference("$B$9"), 50.5, 75.5));
     }
 
     @Test
     public void testJsonNodeMarshall2() {
-        this.marshallAndCheck(SpreadsheetPixelRectangle.with(this.reference(), 50, 75), JsonNode.string("B9/50/75"));
+        this.marshallAndCheck(SpreadsheetPixelRectangle.with(this.reference(), 50, 75), JsonNode.string("B9:50:75"));
     }
 
     @Test
     public void testJsonNodeMarshall3() {
-        this.marshallAndCheck(SpreadsheetPixelRectangle.with(this.reference(), 50.5, 75.5), JsonNode.string("B9/50.5/75.5"));
+        this.marshallAndCheck(SpreadsheetPixelRectangle.with(this.reference(), 50.5, 75.5), JsonNode.string("B9:50.5:75.5"));
     }
 
     @Test

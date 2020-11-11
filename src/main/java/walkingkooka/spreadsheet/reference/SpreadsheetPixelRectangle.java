@@ -28,7 +28,7 @@ import java.util.Objects;
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 public final class SpreadsheetPixelRectangle extends SpreadsheetRectangle {
 
-    final static CharacterConstant SEPARATOR = CharacterConstant.with('/');
+    final static CharacterConstant SEPARATOR = CharacterConstant.with(':');
 
     /**
      * Parses the width and height from text in the following format.
