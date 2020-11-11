@@ -39,6 +39,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
+import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyValueException;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
@@ -4728,11 +4729,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadLabelFailCheck(labelStore, label);
     }
 
+    // columnWidth, rowHeight...........................................................................................
+
     @Test
     public void testColumnWidth() {
         final SpreadsheetColumnReference column = SpreadsheetColumnReference.parseColumn("Z");
         final double expected = 150.5;
-        final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(this.id(),
+        final BasicSpreadsheetEngine engine = this.createEngine(
                 this.metadata(),
                 new FakeSpreadsheetCellStore() {
                     @Override
@@ -4740,12 +4743,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         assertEquals(column, c);
                         return expected;
                     }
-                },
-                SpreadsheetReferenceStores.fake(),
-                SpreadsheetLabelStores.fake(),
-                SpreadsheetReferenceStores.fake(),
-                SpreadsheetRangeStores.fake(),
-                SpreadsheetRangeStores.fake());
+                });
 
         this.columnWidthAndCheck(engine, column, expected);
     }
@@ -4754,7 +4752,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testColumnWidthDefaults() {
         final SpreadsheetColumnReference column = SpreadsheetColumnReference.parseColumn("Z");
         final double expected = 150.5;
-        final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(this.id(),
+        final BasicSpreadsheetEngine engine = this.createEngine(
                 SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.DEFAULT_COLUMN_WIDTH, expected),
                 new FakeSpreadsheetCellStore() {
                     @Override
@@ -4762,21 +4760,31 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         assertEquals(column, c);
                         return 0;
                     }
-                },
-                SpreadsheetReferenceStores.fake(),
-                SpreadsheetLabelStores.fake(),
-                SpreadsheetReferenceStores.fake(),
-                SpreadsheetRangeStores.fake(),
-                SpreadsheetRangeStores.fake());
+                });
 
         this.columnWidthAndCheck(engine, column, expected);
+    }
+
+    @Test
+    public void testColumnWidthDefaultMissing() {
+        final SpreadsheetColumnReference column = SpreadsheetColumnReference.parseColumn("Z");
+        final BasicSpreadsheetEngine engine = this.createEngine(
+                SpreadsheetMetadata.EMPTY,
+                new FakeSpreadsheetCellStore() {
+                    @Override
+                    public double maxColumnWidth(final SpreadsheetColumnReference c) {
+                        assertEquals(column, c);
+                        return 0;
+                    }
+                });
+        assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> engine.columnWidth(column));
     }
 
     @Test
     public void testRowHeight() {
         final SpreadsheetRowReference row = SpreadsheetRowReference.parseRow("987");
         final double expected = 150.5;
-        final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(this.id(),
+        final BasicSpreadsheetEngine engine = this.createEngine(
                 SpreadsheetMetadata.EMPTY,
                 new FakeSpreadsheetCellStore() {
                     @Override
@@ -4784,12 +4792,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         assertEquals(row, c);
                         return expected;
                     }
-                },
-                SpreadsheetReferenceStores.fake(),
-                SpreadsheetLabelStores.fake(),
-                SpreadsheetReferenceStores.fake(),
-                SpreadsheetRangeStores.fake(),
-                SpreadsheetRangeStores.fake());
+                });
 
         this.rowHeightAndCheck(engine, row, expected);
     }
@@ -4798,7 +4801,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testRowHeightDefaults() {
         final SpreadsheetRowReference row = SpreadsheetRowReference.parseRow("987");
         final double expected = 150.5;
-        final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(this.id(),
+        final BasicSpreadsheetEngine engine = this.createEngine(
                 SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.DEFAULT_ROW_HEIGHT, expected),
                 new FakeSpreadsheetCellStore() {
                     @Override
@@ -4806,14 +4809,37 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                         assertEquals(row, c);
                         return 0;
                     }
-                },
+                });
+
+        this.rowHeightAndCheck(engine, row, expected);
+    }
+
+    @Test
+    public void testRowHeightDefaultMissing() {
+        final SpreadsheetRowReference row = SpreadsheetRowReference.parseRow("999");
+        final BasicSpreadsheetEngine engine = this.createEngine(
+                SpreadsheetMetadata.EMPTY,
+                new FakeSpreadsheetCellStore() {
+
+                    @Override
+                    public double maxRowHeight(final SpreadsheetRowReference r) {
+                        assertEquals(row, r);
+                        return 0;
+                    }
+                });
+        assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> engine.rowHeight(row));
+    }
+
+    private BasicSpreadsheetEngine createEngine(final SpreadsheetMetadata metadata,
+                                                final SpreadsheetCellStore store) {
+        return BasicSpreadsheetEngine.with(this.id(),
+                metadata,
+                store,
                 SpreadsheetReferenceStores.fake(),
                 SpreadsheetLabelStores.fake(),
                 SpreadsheetReferenceStores.fake(),
                 SpreadsheetRangeStores.fake(),
                 SpreadsheetRangeStores.fake());
-
-        this.rowHeightAndCheck(engine, row, expected);
     }
 
     //  helpers.......................................................................................................
