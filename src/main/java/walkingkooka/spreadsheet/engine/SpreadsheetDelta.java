@@ -215,7 +215,7 @@ public abstract class SpreadsheetDelta {
                     return ranges.stream()
                             .anyMatch(r -> r.test(c.reference()));
                 })
-                .collect(Collectors.toCollection(Sets::ordered));
+                .collect(Collectors.toCollection(Sets::sorted));
     }
 
     // JsonNodeContext..................................................................................................
