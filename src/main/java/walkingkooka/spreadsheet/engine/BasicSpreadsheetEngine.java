@@ -32,7 +32,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.SpreadsheetPixelRectangle;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
+import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
@@ -514,6 +516,38 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     private final SpreadsheetMetadata metadata;
+
+    @Override
+    public SpreadsheetRange computeRange(final SpreadsheetPixelRectangle rectangle) {
+        Objects.requireNonNull(rectangle, "rectangle");
+
+        final SpreadsheetCellReference reference = rectangle.reference();
+
+        final double width = rectangle.width();
+        double x = 0;
+
+        SpreadsheetColumnReference column = reference.column()
+                .setReferenceKind(SpreadsheetReferenceKind.RELATIVE);
+
+        while (x < width) {
+            x = x + this.columnWidth(column); // TODO columnWidth defaulting to 0 is a problem.
+            column = column.add(1);
+        }
+
+        final double height = rectangle.height();
+
+        double y = 0;
+        SpreadsheetRowReference row = reference.row()
+                .setReferenceKind(SpreadsheetReferenceKind.RELATIVE);
+
+        while (y < height) {
+            y = y + this.rowHeight(row); // TODO columnWidth defaulting to 0 is a problem.
+            row = row.add(1);
+        }
+
+
+        return reference.spreadsheetRange(column.setRow(row));
+    }
 
     // checkers.........................................................................................................
 
