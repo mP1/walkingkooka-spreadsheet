@@ -23,7 +23,14 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public final class SpreadsheetDeltaTest extends SpreadsheetDeltaTestCase<SpreadsheetDelta> {
+
+    @Test
+    public void testNoWindowConstant() {
+        assertEquals(Lists.empty(), SpreadsheetDelta.NO_WINDOW);
+    }
 
     @Test
     public void testWith() {

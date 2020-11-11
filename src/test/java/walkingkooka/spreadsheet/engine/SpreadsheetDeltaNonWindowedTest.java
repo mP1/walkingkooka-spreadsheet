@@ -29,6 +29,13 @@ import java.util.Set;
 public final class SpreadsheetDeltaNonWindowedTest extends SpreadsheetDeltaTestCase2<SpreadsheetDeltaNonWindowed> {
 
     @Test
+    public void testWith() {
+        final SpreadsheetDeltaNonWindowed delta = this.createSpreadsheetDelta();
+        this.checkCells(delta);
+        this.checkWindow(delta, SpreadsheetDelta.NO_WINDOW);
+    }
+
+    @Test
     public void testSetDifferentCells() {
         final SpreadsheetDeltaNonWindowed delta = this.createSpreadsheetDelta();
         final Set<SpreadsheetCell> cells = this.cells0("B2", "C3");

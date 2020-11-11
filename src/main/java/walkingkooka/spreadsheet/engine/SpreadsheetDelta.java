@@ -52,6 +52,7 @@ import java.util.stream.Collectors;
 public abstract class SpreadsheetDelta {
 
     public final static Set<SpreadsheetCell> NO_CELLS = Sets.empty();
+    public final static List<SpreadsheetRectangle> NO_WINDOW = Lists.empty();
     public final static Map<SpreadsheetColumnReference, Double> NO_MAX_COLUMN_WIDTHS = Maps.empty();
     public final static Map<SpreadsheetRowReference, Double> NO_MAX_ROW_HEIGHTS = Maps.empty();
 
