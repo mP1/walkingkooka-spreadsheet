@@ -74,7 +74,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
     }
 
     @Override
-    Set<SpreadsheetCell> copyCells(Set<SpreadsheetCell> cells) {
+    Set<SpreadsheetCell> copyCells(final Set<SpreadsheetCell> cells) {
         return cells; // already empty
     }
 
