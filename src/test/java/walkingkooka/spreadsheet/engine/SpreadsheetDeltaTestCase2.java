@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCell;
@@ -224,9 +225,10 @@ public abstract class SpreadsheetDeltaTestCase2<D extends SpreadsheetDelta> exte
     }
 
     final List<SpreadsheetRectangle> window0(final String... rectangles) {
-        return Arrays.stream(rectangles)
-                .map(SpreadsheetRectangle::parseRectangle)
-                .collect(Collectors.toList());
+        return Lists.immutable(
+                Arrays.stream(rectangles)
+                        .map(SpreadsheetRectangle::parseRectangle)
+                        .collect(Collectors.toList()));
     }
 
     final void checkWindow(final SpreadsheetDelta delta) {

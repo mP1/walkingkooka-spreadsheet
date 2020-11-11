@@ -126,5 +126,6 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
 
     final void checkWindow(final SpreadsheetDelta delta, final List<SpreadsheetRectangle> window) {
         assertEquals(window, delta.window(), "window");
+        assertThrows(UnsupportedOperationException.class, () -> delta.window().add(SpreadsheetRectangle.parseRectangle("A1/1/1")));
     }
 }
