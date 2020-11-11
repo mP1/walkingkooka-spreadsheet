@@ -35,6 +35,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> implements ClassTesting2<D> {
 
@@ -78,8 +79,11 @@ public abstract class SpreadsheetDeltaTestCase<D extends SpreadsheetDelta> imple
         this.checkCells(delta, this.cells());
     }
 
-    final void checkCells(final SpreadsheetDelta delta, final Set<SpreadsheetCell> cells) {
+    final void checkCells(final SpreadsheetDelta delta,
+                          final Set<SpreadsheetCell> cells) {
         assertEquals(cells, delta.cells(), "cells");
+        assertThrows(UnsupportedOperationException.class, () -> delta.cells()
+                .add(this.cell("ZZ99", "read only")));
     }
 
     final Map<SpreadsheetColumnReference, Double> maxColumnWidths() {
