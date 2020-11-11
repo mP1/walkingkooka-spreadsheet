@@ -499,8 +499,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public double columnWidth(final SpreadsheetColumnReference column) {
         double columnWidth = this.cellStore.maxColumnWidth(column);
         if (0 == columnWidth) {
-            columnWidth = this.metadata.get(SpreadsheetMetadataPropertyName.DEFAULT_COLUMN_WIDTH)
-                    .orElse(0.0);
+            columnWidth = this.metadata.getOrFail(SpreadsheetMetadataPropertyName.DEFAULT_COLUMN_WIDTH);
         }
         return columnWidth;
     }
@@ -509,8 +508,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public double rowHeight(final SpreadsheetRowReference row) {
         double rowHeight = this.cellStore.maxRowHeight(row);
         if (0 == rowHeight) {
-            rowHeight = this.metadata.get(SpreadsheetMetadataPropertyName.DEFAULT_ROW_HEIGHT)
-                    .orElse(0.0);
+            rowHeight = this.metadata.getOrFail(SpreadsheetMetadataPropertyName.DEFAULT_ROW_HEIGHT);
         }
         return rowHeight;
     }
