@@ -26,7 +26,8 @@ import java.util.Objects;
  * Represents a rectangle selection of cells, starting from an cell reference covering the given pixel dimensions.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetPixelRectangle extends SpreadsheetRectangle {
+public final class SpreadsheetPixelRectangle extends SpreadsheetRectangle
+        implements Comparable<SpreadsheetPixelRectangle> {
 
     final static CharacterConstant SEPARATOR = CharacterConstant.with(':');
 
@@ -190,5 +191,15 @@ public final class SpreadsheetPixelRectangle extends SpreadsheetRectangle {
         return toString.endsWith(".0") ?
                 toString.substring(0, toString.length() - 2) :
                 toString;
+    }
+
+    // Comparable.......................................................................................................
+
+    /**
+     * Compares the {@link #reference()} ignoring the {@link #width()} and {@link #height()}
+     */
+    @Override
+    public int compareTo(final SpreadsheetPixelRectangle other) {
+        return this.reference.compareTo(other.reference);
     }
 }

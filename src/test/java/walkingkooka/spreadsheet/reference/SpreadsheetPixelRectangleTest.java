@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.reference;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.compare.ComparableTesting2;
+import walkingkooka.compare.Comparators;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -30,7 +32,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetPixelRectangleTest extends SpreadsheetExpressionReferenceTestCase<SpreadsheetPixelRectangle>
-        implements ParseStringTesting<SpreadsheetPixelRectangle> {
+        implements ParseStringTesting<SpreadsheetPixelRectangle>,
+        ComparableTesting2<SpreadsheetPixelRectangle> {
 
     private final static double WIDTH = 50;
     private final static double HEIGHT = 75;
@@ -312,7 +315,64 @@ public final class SpreadsheetPixelRectangleTest extends SpreadsheetExpressionRe
         assertThrows(UnsupportedOperationException.class, () -> this.rectangle().compare(this.rectangle()));
     }
 
-    //helper.................................................................................................
+    @Test
+    public void testCompareReferenceColumnLeft() {
+        this.compareToAndCheckMore(SpreadsheetPixelRectangle.with(this.reference().addColumn(-1), WIDTH, HEIGHT));
+    }
+
+    @Test
+    public void testCompareReferenceColumnRight() {
+        this.compareToAndCheckLess(SpreadsheetPixelRectangle.with(this.reference().addColumn(+1), WIDTH, HEIGHT));
+    }
+
+    @Test
+    public void testCompareReferenceRowDown() {
+        this.compareToAndCheckMore(SpreadsheetPixelRectangle.with(this.reference().addRow(-1), WIDTH, HEIGHT));
+    }
+
+    @Test
+    public void testCompareReferenceRowUp() {
+        this.compareToAndCheckLess(SpreadsheetPixelRectangle.with(this.reference().addRow(+1), WIDTH, HEIGHT));
+    }
+
+    @Test
+    public void testCompareReferenceWidth() {
+        this.compareToAndCheckEquals(SpreadsheetPixelRectangle.with(this.reference(), WIDTH + 1, HEIGHT));
+    }
+
+    @Test
+    public void testCompareReferenceHeight() {
+        this.compareToAndCheckEquals(SpreadsheetPixelRectangle.with(this.reference(), WIDTH, HEIGHT + 1));
+    }
+
+    @Override
+    public void compareToAndCheckEquals(final SpreadsheetPixelRectangle rectangle) {
+        this.compareToAndCheck(rectangle, Comparators.EQUAL);
+    }
+
+    @Override
+    public void compareToAndCheck(final SpreadsheetPixelRectangle comparable, final int expected) {
+        this.compareToAndCheck(this.createComparable(), comparable, expected);
+    }
+
+    //equals............................................................................................................
+
+    @Test
+    public void testDifferentReference() {
+        this.checkNotEquals(SpreadsheetPixelRectangle.with(this.reference().add(1, 1), WIDTH, HEIGHT));
+    }
+
+    @Test
+    public void testDifferentWidth() {
+        this.checkNotEquals(SpreadsheetPixelRectangle.with(this.reference(), WIDTH + 1, HEIGHT));
+    }
+
+    @Test
+    public void testDifferentHeight() {
+        this.checkNotEquals(SpreadsheetPixelRectangle.with(this.reference(), WIDTH, HEIGHT + 1));
+    }
+
+    //helper............................................................................................................
 
     private SpreadsheetPixelRectangle rectangle() {
         return SpreadsheetPixelRectangle.with(this.reference(), WIDTH, HEIGHT);
@@ -363,6 +423,13 @@ public final class SpreadsheetPixelRectangleTest extends SpreadsheetExpressionRe
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
+    }
+
+    // ComparableTesting................................................................................................
+
+    @Override
+    public SpreadsheetPixelRectangle createComparable() {
+        return SpreadsheetPixelRectangle.with(this.reference(), WIDTH, HEIGHT);
     }
 
     // JsonNodeMarshallingTesting...........................................................................................
