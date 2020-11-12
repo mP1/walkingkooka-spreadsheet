@@ -242,6 +242,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitViewportX(final double viewportX) {
+        // nop
+    }
+
     protected void visitWidth(final Integer value) {
         // nop
     }

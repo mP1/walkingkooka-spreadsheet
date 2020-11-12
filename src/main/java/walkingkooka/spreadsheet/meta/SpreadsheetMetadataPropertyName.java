@@ -253,6 +253,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     public final static SpreadsheetMetadataPropertyName<Integer> TWO_DIGIT_YEAR = registerConstant(SpreadsheetMetadataPropertyNameTwoYearDigit.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>viewport-x {@link Integer}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<Double> VIEWPORT_X = registerConstant(SpreadsheetMetadataPropertyNameViewportX.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link Integer}</code>
      */
     public final static SpreadsheetMetadataPropertyName<Integer> WIDTH = registerConstant(SpreadsheetMetadataPropertyNameWidth.instance());
