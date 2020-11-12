@@ -22,6 +22,9 @@ import walkingkooka.color.Color;
 import java.util.Locale;
 import java.util.Optional;
 
+/**
+ * A property that holds a {@link Color} value.
+ */
 abstract class SpreadsheetMetadataPropertyNameColor extends SpreadsheetMetadataPropertyName<Color> {
 
     /**
@@ -44,7 +47,7 @@ abstract class SpreadsheetMetadataPropertyNameColor extends SpreadsheetMetadataP
 
     @Override
     final Optional<Color> extractLocaleValue(final Locale locale) {
-        return Optional.empty(); // colours have nothing todo with Locales
+        return Optional.empty(); // colours are not Locale aware
     }
 
     @Override
