@@ -266,7 +266,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     /**
      * Lazy factory that creates a {@link Converter} using current properties.
      */
-    public final Converter converter0() {
+    public final Converter<ExpressionNumberConverterContext> converter0() {
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
         final SpreadsheetDateFormatPattern dateFormat = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN);

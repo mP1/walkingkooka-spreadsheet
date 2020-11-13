@@ -778,7 +778,7 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> "computeRange " + rectangle + " of " + engine);
     }
 
-    default Converter converter() {
+    default Converter<ExpressionNumberConverterContext> converter() {
         return Converters.collection(
                 Lists.of(
                         Converters.simple(),
