@@ -584,7 +584,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     }
 
     static {
-        JsonNodeContext.register("metadata",
+        JsonNodeContext.register("spreadsheet-metadata",
                 SpreadsheetMetadata::unmarshall,
                 SpreadsheetMetadata::marshall,
                 SpreadsheetMetadata.class,
