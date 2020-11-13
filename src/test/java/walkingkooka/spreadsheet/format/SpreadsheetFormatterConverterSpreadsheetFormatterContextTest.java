@@ -18,13 +18,15 @@
 package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -75,7 +77,7 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
 
     @Test
     public void testToString() {
-        final ConverterContext converterContext = this.converterContext();
+        final ExpressionNumberConverterContext converterContext = this.converterContext();
         this.toStringAndCheck(SpreadsheetFormatterConverterSpreadsheetFormatterContext.with(converterContext), converterContext.toString());
     }
 
@@ -124,8 +126,10 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
         return this.decimalNumberContext().positiveSign();
     }
 
-    private ConverterContext converterContext() {
-        return ConverterContexts.basic(Converters.fake(), dateTimeContext(), decimalNumberContext());
+    private ExpressionNumberConverterContext converterContext() {
+        return ExpressionNumberConverterContexts.basic(Converters.fake(),
+                ConverterContexts.basic(Converters.fake(), dateTimeContext(), decimalNumberContext()),
+                ExpressionNumberKind.DEFAULT);
     }
 
     private DateTimeContext dateTimeContext() {

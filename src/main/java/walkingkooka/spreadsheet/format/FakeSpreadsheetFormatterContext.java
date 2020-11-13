@@ -17,29 +17,12 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.Either;
 import walkingkooka.color.Color;
-import walkingkooka.math.FakeDecimalNumberContext;
+import walkingkooka.tree.expression.function.FakeExpressionFunctionContext;
 
-import java.util.List;
 import java.util.Optional;
 
-public class FakeSpreadsheetFormatterContext extends FakeDecimalNumberContext implements SpreadsheetFormatterContext {
-
-    @Override
-    public List<String> ampms() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public String ampm(final int hourOfDay) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean canConvert(final Object value, final Class<?> target) {
-        throw new UnsupportedOperationException();
-    }
+public class FakeSpreadsheetFormatterContext extends FakeExpressionFunctionContext implements SpreadsheetFormatterContext {
 
     @Override
     public Optional<Color> colorNumber(final int number) {
@@ -52,62 +35,7 @@ public class FakeSpreadsheetFormatterContext extends FakeDecimalNumberContext im
     }
 
     @Override
-    public <T> Either<T, String> convert(final Object value, final Class<T> target) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Optional<SpreadsheetText> defaultFormatText(final Object value) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public List<String> monthNames() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public String monthName(final int month) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public List<String> monthNameAbbreviations() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public String monthNameAbbreviation(final int month) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public char percentageSymbol() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public int twoDigitYear() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public List<String> weekDayNames() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public String weekDayName(final int day) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public List<String> weekDayNameAbbreviations() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public String weekDayNameAbbreviation(final int day) {
         throw new UnsupportedOperationException();
     }
 
