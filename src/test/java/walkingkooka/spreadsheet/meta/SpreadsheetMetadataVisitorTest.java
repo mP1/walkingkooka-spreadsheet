@@ -420,6 +420,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitViewportX() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitViewportX(final double viewportX) {
+                this.visited = viewportX;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.VIEWPORT_X, 345.6);
+    }
+
+    @Test
     public void testVisitViewportY() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
