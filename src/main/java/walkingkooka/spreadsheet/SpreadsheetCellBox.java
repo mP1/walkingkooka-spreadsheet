@@ -27,7 +27,8 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.Objects;
 
 /**
- * Captures the coordinates and dimensions of a rendered {@link SpreadsheetCell}.
+ * Captures the coordinates and dimensions of a rendered {@link SpreadsheetCell}. This information is useful to help the
+ * UI compute the origin of the visible {@link walkingkooka.spreadsheet.reference.SpreadsheetRange}.
  */
 public final class SpreadsheetCellBox {
 
