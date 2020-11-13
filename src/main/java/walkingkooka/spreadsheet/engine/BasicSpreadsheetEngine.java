@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetCellBox;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
@@ -547,6 +548,11 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
 
         return reference.spreadsheetRange(column.setRow(row));
+    }
+
+    @Override
+    public SpreadsheetCellBox cellBox(final double x, final double y) {
+        return this.cellStore.cellBox(x, y);
     }
 
     // checkers.........................................................................................................
