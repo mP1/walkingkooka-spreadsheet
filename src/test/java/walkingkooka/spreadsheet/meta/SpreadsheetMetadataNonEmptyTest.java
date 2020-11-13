@@ -1144,6 +1144,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetPattern.parseTimeParsePatterns("hh:mm;hh:mm:ss.000"));
         properties.put(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 31);
         properties.put(SpreadsheetMetadataPropertyName.VIEWPORT_X, 0.0);
+        properties.put(SpreadsheetMetadataPropertyName.VIEWPORT_Y, 0.0);
         properties.put(SpreadsheetMetadataPropertyName.WIDTH, 0);
 
         for (int i = 0; i < SpreadsheetMetadataPropertyNameNumberedColor.MAX_NUMBER + 2; i++) {
