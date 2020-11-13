@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet;
 
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -30,7 +31,12 @@ import java.util.Objects;
  */
 public final class SpreadsheetCellBox {
 
-    public static SpreadsheetCellBox with(final double x, final double y, final double width, final double height) {
+    public static SpreadsheetCellBox with(final SpreadsheetCellReference reference,
+                                          final double x,
+                                          final double y,
+                                          final double width,
+                                          final double height) {
+        Objects.requireNonNull(reference, "reference");
         if (x < 0) {
             throw new IllegalArgumentException("Invalid x < 0 was " + x);
         }
@@ -43,16 +49,27 @@ public final class SpreadsheetCellBox {
         if (height <= 0) {
             throw new IllegalArgumentException("Invalid height <= 0 was " + height);
         }
-        return new SpreadsheetCellBox(x, y, width, height);
+        return new SpreadsheetCellBox(reference, x, y, width, height);
     }
 
-    private SpreadsheetCellBox(final double x, final double y, final double width, final double height) {
+    private SpreadsheetCellBox(final SpreadsheetCellReference reference,
+                               final double x,
+                               final double y,
+                               final double width,
+                               final double height) {
         super();
+        this.reference = reference;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
     }
+
+    public SpreadsheetCellReference reference() {
+        return this.reference;
+    }
+
+    private final SpreadsheetCellReference reference;
 
     public double x() {
         return this.x;
@@ -82,7 +99,11 @@ public final class SpreadsheetCellBox {
 
     @Override
     public int hashCode() {
-        return Objects.hash(Double.hashCode(this.x), Double.hashCode(this.y), Double.hashCode(this.width), Double.hashCode(this.height));
+        return Objects.hash(this.reference,
+                this.x,
+                this.y,
+                this.width,
+                this.height);
     }
 
     @Override
@@ -92,7 +113,8 @@ public final class SpreadsheetCellBox {
     }
 
     private boolean equals0(final SpreadsheetCellBox other) {
-        return this.x == other.x &&
+        return this.reference.equals(other.reference) &&
+                this.x == other.x &&
                 this.y == other.y &&
                 this.width == other.width &&
                 this.height == other.height;
@@ -100,7 +122,7 @@ public final class SpreadsheetCellBox {
 
     @Override
     public String toString() {
-        return doubleToString(this.x) + "," + doubleToString(this.y) + " " + doubleToString(this.width) + "x" + doubleToString(this.height);
+        return this.reference + " " + doubleToString(this.x) + "," + doubleToString(this.y) + " " + doubleToString(this.width) + "x" + doubleToString(this.height);
     }
 
     private static String doubleToString(final double number) {
@@ -119,6 +141,7 @@ public final class SpreadsheetCellBox {
                                          final JsonNodeUnmarshallContext context) {
         Objects.requireNonNull(node, "node");
 
+        SpreadsheetCellReference reference = null;
         double x = -1;
         double y = -1;
         double width = -1;
@@ -127,6 +150,9 @@ public final class SpreadsheetCellBox {
         for (final JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
             switch (name.value()) {
+                case REFERENCE_PROPERTY_STRING:
+                    reference = context.unmarshall(child, SpreadsheetCellReference.class);
+                    break;
                 case X_PROPERTY_STRING:
                     x = child.numberValueOrFail().doubleValue();
                     break;
@@ -141,9 +167,13 @@ public final class SpreadsheetCellBox {
                     break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
+                    break;
             }
         }
 
+        if (null == reference) {
+            JsonNodeUnmarshallContext.requiredPropertyMissing(REFERENCE_PROPERTY, node);
+        }
         if (x < 0) {
             JsonNodeUnmarshallContext.requiredPropertyMissing(X_PROPERTY, node);
         }
@@ -156,22 +186,25 @@ public final class SpreadsheetCellBox {
         if (height < 0) {
             JsonNodeUnmarshallContext.requiredPropertyMissing(HEIGHT_PROPERTY, node);
         }
-        return with(x, y, width, height);
+        return with(reference, x, y, width, height);
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         return JsonNode.object()
+                .set(REFERENCE_PROPERTY, context.marshall(this.reference))
                 .set(X_PROPERTY, JsonNode.number(this.x))
                 .set(Y_PROPERTY, JsonNode.number(this.y))
                 .set(WIDTH_PROPERTY, JsonNode.number(this.width))
                 .set(HEIGHT_PROPERTY, JsonNode.number(this.height));
     }
 
+    private final static String REFERENCE_PROPERTY_STRING = "reference";
     private final static String X_PROPERTY_STRING = "x";
     private final static String Y_PROPERTY_STRING = "y";
     private final static String WIDTH_PROPERTY_STRING = "width";
     private final static String HEIGHT_PROPERTY_STRING = "height";
 
+    final static JsonPropertyName REFERENCE_PROPERTY = JsonPropertyName.with(REFERENCE_PROPERTY_STRING);
     final static JsonPropertyName X_PROPERTY = JsonPropertyName.with(X_PROPERTY_STRING);
     final static JsonPropertyName Y_PROPERTY = JsonPropertyName.with(Y_PROPERTY_STRING);
     final static JsonPropertyName WIDTH_PROPERTY = JsonPropertyName.with(WIDTH_PROPERTY_STRING);

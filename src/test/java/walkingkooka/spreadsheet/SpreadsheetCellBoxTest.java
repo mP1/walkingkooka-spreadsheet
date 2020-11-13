@@ -22,6 +22,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
@@ -42,33 +43,38 @@ public final class SpreadsheetCellBoxTest implements ClassTesting2<SpreadsheetCe
     private final static double HEIGHT = 30;
 
     @Test
+    public void testWithNullReferenceFails() {
+        assertThrows(NullPointerException.class, () -> SpreadsheetCellBox.with(null, X, Y, WIDTH, HEIGHT));
+    }
+
+    @Test
     public void testWithInvalidXFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellBox.with(-1, Y, WIDTH, HEIGHT));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellBox.with(reference(), -1, Y, WIDTH, HEIGHT));
     }
 
     @Test
     public void testWithInvalidYFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellBox.with(X, -1, WIDTH, HEIGHT));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellBox.with(reference(), X, -1, WIDTH, HEIGHT));
     }
 
     @Test
     public void testWithInvalidWidthFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellBox.with(X, Y, 0, HEIGHT));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellBox.with(reference(), X, Y, 0, HEIGHT));
     }
 
     @Test
     public void testWithInvalidWidthFails2() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellBox.with(X, Y, -1, HEIGHT));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellBox.with(reference(), X, Y, -1, HEIGHT));
     }
 
     @Test
     public void testWithInvalidHeightFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellBox.with(X, Y, WIDTH, 0));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellBox.with(reference(), X, Y, WIDTH, 0));
     }
 
     @Test
     public void testWithInvalidHeightFails2() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellBox.with(X, Y, WIDTH, -1));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellBox.with(reference(), X, Y, WIDTH, -1));
     }
 
     @Test
@@ -82,7 +88,7 @@ public final class SpreadsheetCellBoxTest implements ClassTesting2<SpreadsheetCe
 
     @Test
     public void testWithX0Y0() {
-        final SpreadsheetCellBox box = SpreadsheetCellBox.with(0, 0, WIDTH, HEIGHT);
+        final SpreadsheetCellBox box = SpreadsheetCellBox.with(reference(), 0, 0, WIDTH, HEIGHT);
         assertEquals(0, box.x(), "x");
         assertEquals(0, box.y(), "y");
         assertEquals(WIDTH, box.width(), "width");
@@ -92,23 +98,28 @@ public final class SpreadsheetCellBoxTest implements ClassTesting2<SpreadsheetCe
     // equals .............................................................................................
 
     @Test
+    public void testDifferentReferenceEquals() {
+        this.checkNotEquals(SpreadsheetCellBox.with(reference().addRow(1), X, Y, WIDTH, HEIGHT));
+    }
+
+    @Test
     public void testDifferentXEquals() {
-        this.checkNotEquals(SpreadsheetCellBox.with(100 + X, Y, WIDTH, HEIGHT));
+        this.checkNotEquals(SpreadsheetCellBox.with(reference(), 100 + X, Y, WIDTH, HEIGHT));
     }
 
     @Test
     public void testDifferentYEquals() {
-        this.checkNotEquals(SpreadsheetCellBox.with(X, 100 + Y, WIDTH, HEIGHT));
+        this.checkNotEquals(SpreadsheetCellBox.with(reference(), X, 100 + Y, WIDTH, HEIGHT));
     }
 
     @Test
     public void testDifferentWidthEquals() {
-        this.checkNotEquals(SpreadsheetCellBox.with(X, Y, 100 + WIDTH, HEIGHT));
+        this.checkNotEquals(SpreadsheetCellBox.with(reference(), X, Y, 100 + WIDTH, HEIGHT));
     }
 
     @Test
     public void testDifferentHeightEquals() {
-        this.checkNotEquals(SpreadsheetCellBox.with(X, Y, WIDTH, 100 + HEIGHT));
+        this.checkNotEquals(SpreadsheetCellBox.with(reference(), X, Y, WIDTH, 100 + HEIGHT));
     }
 
     // JsonNodeMarshallingTesting................................................................................
@@ -139,8 +150,19 @@ public final class SpreadsheetCellBoxTest implements ClassTesting2<SpreadsheetCe
     }
 
     @Test
+    public void testJsonNodeUnmarshallMissingReferenceFails() {
+        this.unmarshallFails(JsonNode.object()
+                        .set(SpreadsheetCellBox.X_PROPERTY, JsonNode.number(1))
+                        .set(SpreadsheetCellBox.Y_PROPERTY, JsonNode.number(1))
+                        .set(SpreadsheetCellBox.WIDTH_PROPERTY, JsonNode.number(1))
+                        .set(SpreadsheetCellBox.HEIGHT_PROPERTY, JsonNode.number(1)),
+                JsonNodeException.class);
+    }
+
+    @Test
     public void testJsonNodeUnmarshallMissingXFails() {
         this.unmarshallFails(JsonNode.object()
+                        .set(SpreadsheetCellBox.REFERENCE_PROPERTY, JsonNode.string("B9"))
                         .set(SpreadsheetCellBox.Y_PROPERTY, JsonNode.number(1))
                         .set(SpreadsheetCellBox.WIDTH_PROPERTY, JsonNode.number(1))
                         .set(SpreadsheetCellBox.HEIGHT_PROPERTY, JsonNode.number(1)),
@@ -150,6 +172,7 @@ public final class SpreadsheetCellBoxTest implements ClassTesting2<SpreadsheetCe
     @Test
     public void testJsonNodeUnmarshallMissingYFails() {
         this.unmarshallFails(JsonNode.object()
+                        .set(SpreadsheetCellBox.REFERENCE_PROPERTY, JsonNode.string("B9"))
                         .set(SpreadsheetCellBox.X_PROPERTY, JsonNode.number(1))
                         .set(SpreadsheetCellBox.WIDTH_PROPERTY, JsonNode.number(1))
                         .set(SpreadsheetCellBox.HEIGHT_PROPERTY, JsonNode.number(1)),
@@ -159,6 +182,7 @@ public final class SpreadsheetCellBoxTest implements ClassTesting2<SpreadsheetCe
     @Test
     public void testJsonNodeUnmarshallMissingWidthFails() {
         this.unmarshallFails(JsonNode.object()
+                        .set(SpreadsheetCellBox.REFERENCE_PROPERTY, JsonNode.string("B9"))
                         .set(SpreadsheetCellBox.X_PROPERTY, JsonNode.number(1))
                         .set(SpreadsheetCellBox.Y_PROPERTY, JsonNode.number(1))
                         .set(SpreadsheetCellBox.HEIGHT_PROPERTY, JsonNode.number(1)),
@@ -168,6 +192,7 @@ public final class SpreadsheetCellBoxTest implements ClassTesting2<SpreadsheetCe
     @Test
     public void testJsonNodeUnmarshallMissingHeightFails() {
         this.unmarshallFails(JsonNode.object()
+                        .set(SpreadsheetCellBox.REFERENCE_PROPERTY, JsonNode.string("B9"))
                         .set(SpreadsheetCellBox.X_PROPERTY, JsonNode.number(1))
                         .set(SpreadsheetCellBox.Y_PROPERTY, JsonNode.number(1))
                         .set(SpreadsheetCellBox.WIDTH_PROPERTY, JsonNode.number(1)),
@@ -177,7 +202,7 @@ public final class SpreadsheetCellBoxTest implements ClassTesting2<SpreadsheetCe
     @Test
     public void testJsonNode() {
         this.marshallAndCheck(this.createBox(),
-                "{\"x\": 1, \"y\": 2, \"width\": 50, \"height\": 30}");
+                "{\"reference\": \"B99\", \"x\": 1, \"y\": 2, \"width\": 50, \"height\": 30}");
     }
 
     @Test
@@ -190,11 +215,15 @@ public final class SpreadsheetCellBoxTest implements ClassTesting2<SpreadsheetCe
     @Test
     public void testToString() {
         this.toStringAndCheck(this.createBox(),
-                "1,2 50x30");
+                "B99 1,2 50x30");
     }
 
     private SpreadsheetCellBox createBox() {
-        return SpreadsheetCellBox.with(X, Y, WIDTH, HEIGHT);
+        return SpreadsheetCellBox.with(this.reference(), X, Y, WIDTH, HEIGHT);
+    }
+
+    private SpreadsheetCellReference reference() {
+        return SpreadsheetCellReference.parseCellReference("B99");
     }
 
     // ClassTesting.....................................................................................................
