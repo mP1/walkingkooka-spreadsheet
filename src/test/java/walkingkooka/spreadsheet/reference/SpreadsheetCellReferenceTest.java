@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.Range;
 import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetCellBox;
 import walkingkooka.test.ParseStringTesting;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.json.JsonNode;
@@ -251,6 +252,25 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
                                           final SpreadsheetReferenceKind rowKind,
                                           final int row) {
         return columnKind.column(column).setRow(rowKind.row(row));
+    }
+
+    // SpreadsheetCellBox...............................................................................................
+
+    @Test
+    public void testCellBox() {
+        final double x = 1;
+        final double y = 23;
+        final double width = 100.5;
+        final double height = 20.5;
+        final SpreadsheetCellReference reference = this.createReference();
+
+        final SpreadsheetCellBox rectangle = reference.cellBox(x, y, width, height);
+
+        assertSame(reference, rectangle.reference(), "reference");
+        assertEquals(x, rectangle.x(), "x");
+        assertEquals(y, rectangle.y(), "y");
+        assertEquals(width, rectangle.width(), "width");
+        assertEquals(height, rectangle.height(), "height");
     }
 
     // SpreadsheetPixelRectangle.........................................................................................
