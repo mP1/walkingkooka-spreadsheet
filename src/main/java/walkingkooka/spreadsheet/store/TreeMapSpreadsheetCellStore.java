@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetCellBox;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -193,6 +194,49 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
                 .max()
                 .orElse(0.0);
     }
+
+    @Override
+    public SpreadsheetCellBox cellBox(final double x, final double y) {
+        if (x < 0) {
+            throw new IllegalArgumentException("Invalid x < 0 was " + x);
+        }
+        if (y < 0) {
+            throw new IllegalArgumentException("Invalid y < 0 was " + y);
+        }
+
+        SpreadsheetColumnReference column = COLUMN_REFERENCE_A;
+        double xx = 0;
+        double width = 0;
+
+        for (; ; ) {
+            width = this.maxColumnWidth(column);
+            if( x >= xx && x < xx + width) {
+                break;
+            }
+            xx = xx + width;
+            column = column.add(1);
+        }
+
+        SpreadsheetRowReference row = ROW_REFERENCE_1;
+        double yy = 0;
+        double height = 0;
+
+        for (; ; ) {
+            height = this.maxRowHeight(row);
+            if( y >= yy && y < yy + height) {
+                break;
+            }
+
+            yy = yy + height;
+            row = row.add(1);
+        }
+
+        return column.setRow(row)
+                .cellBox(xx, yy, width, height);
+    }
+
+    private final static SpreadsheetColumnReference COLUMN_REFERENCE_A = SpreadsheetColumnReference.parseColumn("A");
+    private final static SpreadsheetRowReference ROW_REFERENCE_1 = SpreadsheetRowReference.parseRow("1");
 
     // VisibleForTesting
     private final Store<SpreadsheetCellReference, SpreadsheetCell> store;
