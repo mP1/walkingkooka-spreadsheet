@@ -46,6 +46,7 @@ import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.FontFamilyName;
 import walkingkooka.tree.text.FontSize;
+import walkingkooka.tree.text.TextStyle;
 
 import java.math.RoundingMode;
 import java.text.DateFormat;
@@ -126,26 +127,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>decimal-separator {@link Character}</code>
      */
     public final static SpreadsheetMetadataPropertyName<Character> DECIMAL_SEPARATOR = registerConstant(SpreadsheetMetadataPropertyNameDecimalSeparator.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>default-column-width {@link Integer}</code>
-     */
-    public final static SpreadsheetMetadataPropertyName<Double> DEFAULT_COLUMN_WIDTH = registerConstant(SpreadsheetMetadataPropertyNameDefaultColumnWidth.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>default-font-size {@link FontSize}</code>
-     */
-    public final static SpreadsheetMetadataPropertyName<FontSize> DEFAULT_FONT_SIZE = registerConstant(SpreadsheetMetadataPropertyNameDefaultFontSize.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>default-font-size {@link FontFamilyName}</code>
-     */
-    public final static SpreadsheetMetadataPropertyName<FontFamilyName> DEFAULT_FONT_FAMILY_NAME = registerConstant(SpreadsheetMetadataPropertyNameDefaultFontFamilyName.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>default-row-height {@link Integer}</code>
-     */
-    public final static SpreadsheetMetadataPropertyName<Double> DEFAULT_ROW_HEIGHT = registerConstant(SpreadsheetMetadataPropertyNameDefaultRowHeight.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>edit-cell</code> {@link walkingkooka.spreadsheet.reference.SpreadsheetCellReference}.
@@ -231,6 +212,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>spreadsheet-name {@link SpreadsheetName}</code>
      */
     public final static SpreadsheetMetadataPropertyName<SpreadsheetName> SPREADSHEET_NAME = registerConstant(SpreadsheetMetadataPropertyNameSpreadsheetName.instance());
+
+    /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>style {@link walkingkooka.tree.text.TextStyle}</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<TextStyle> STYLE = registerConstant(SpreadsheetMetadataPropertyNameStyle.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>text-format-pattern {@link SpreadsheetFormatPattern}</code>

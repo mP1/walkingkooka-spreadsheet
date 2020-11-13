@@ -36,6 +36,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.text.FontFamilyName;
 import walkingkooka.tree.text.FontSize;
+import walkingkooka.tree.text.TextStyle;
 import walkingkooka.visit.Visiting;
 
 import java.math.RoundingMode;
@@ -110,26 +111,6 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitDecimalSeparator(final Character decimalSeparator) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitDefaultColumnWidth(final double defaultColumnWidth) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitDefaultFontFamilyName(final FontFamilyName defaultFontFamilyName) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitDefaultFontSize(final FontSize defaultFontSize) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visitDefaultRowHeight(final double defaultRowHeight) {
         throw new UnsupportedOperationException();
     }
 
@@ -225,6 +206,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
 
     @Override
     protected void visitSpreadsheetName(final SpreadsheetName name) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visitStyle(final TextStyle style) {
         throw new UnsupportedOperationException();
     }
 

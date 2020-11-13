@@ -37,6 +37,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.text.FontFamilyName;
 import walkingkooka.tree.text.FontSize;
+import walkingkooka.tree.text.TextStyle;
 import walkingkooka.visit.Visiting;
 import walkingkooka.visit.Visitor;
 
@@ -134,22 +135,6 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitDefaultColumnWidth(final double defaultColumnWidth) {
-        // nop
-    }
-
-    protected void visitDefaultFontFamilyName(final FontFamilyName defaultFontFamilyName) {
-        // nop
-    }
-
-    protected void visitDefaultFontSize(final FontSize defaultFontSize) {
-        // nop
-    }
-
-    protected void visitDefaultRowHeight(final double defaultRowHeight) {
-        // nop
-    }
-
     protected void visitEditCell(final SpreadsheetCellReference cell) {
         // nop
     }
@@ -223,6 +208,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
     }
 
     protected void visitSpreadsheetName(final SpreadsheetName name) {
+        // nop
+    }
+
+    protected void visitStyle(final TextStyle style) {
         // nop
     }
 

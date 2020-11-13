@@ -78,6 +78,7 @@ import walkingkooka.tree.expression.function.FakeExpressionFunction;
 import walkingkooka.tree.expression.function.UnknownFunctionException;
 import walkingkooka.tree.text.FontStyle;
 import walkingkooka.tree.text.FontWeight;
+import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextDecoration;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
@@ -4753,8 +4754,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testColumnWidthDefaults() {
         final SpreadsheetColumnReference column = SpreadsheetColumnReference.parseColumn("Z");
         final double expected = 150.5;
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.NON_LOCALE_DEFAULTS;
+        final TextStyle style = metadata.getOrFail(SpreadsheetMetadataPropertyName.STYLE)
+                .set(TextStylePropertyName.WIDTH, Length.pixel(expected));
+
         final BasicSpreadsheetEngine engine = this.createEngine(
-                SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.DEFAULT_COLUMN_WIDTH, expected),
+                metadata.set(SpreadsheetMetadataPropertyName.STYLE, style),
                 new FakeSpreadsheetCellStore() {
                     @Override
                     public double maxColumnWidth(final SpreadsheetColumnReference c) {
@@ -4802,8 +4808,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testRowHeightDefaults() {
         final SpreadsheetRowReference row = SpreadsheetRowReference.parseRow("987");
         final double expected = 150.5;
+
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.NON_LOCALE_DEFAULTS;
+        final TextStyle style = metadata.getOrFail(SpreadsheetMetadataPropertyName.STYLE)
+                .set(TextStylePropertyName.HEIGHT, Length.pixel(expected));
+
         final BasicSpreadsheetEngine engine = this.createEngine(
-                SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.DEFAULT_ROW_HEIGHT, expected),
+                metadata.set(SpreadsheetMetadataPropertyName.STYLE, style),
                 new FakeSpreadsheetCellStore() {
                     @Override
                     public double maxRowHeight(final SpreadsheetRowReference c) {
