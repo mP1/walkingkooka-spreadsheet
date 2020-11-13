@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.reference;
 import walkingkooka.Cast;
 import walkingkooka.collect.Range;
 import walkingkooka.compare.Comparators;
+import walkingkooka.spreadsheet.SpreadsheetCellBox;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.text.cursor.TextCursors;
@@ -186,6 +187,16 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
      */
     public SpreadsheetRange spreadsheetRange(final SpreadsheetCellReference other) {
         return SpreadsheetRange.with(this.range(other));
+    }
+
+    /**
+     * Creates a {@link SpreadsheetCellBox}
+     */
+    public SpreadsheetCellBox cellBox(final double x,
+                                      final double y,
+                                      final double width,
+                                      final double height) {
+        return SpreadsheetCellBox.with(this, x, y, width, height);
     }
 
     public String hateosLinkId() {
