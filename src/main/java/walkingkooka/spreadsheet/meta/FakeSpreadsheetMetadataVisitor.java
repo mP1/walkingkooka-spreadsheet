@@ -254,6 +254,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitViewportY(final double viewportY) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitWidth(final Integer value) {
         throw new UnsupportedOperationException();
     }
