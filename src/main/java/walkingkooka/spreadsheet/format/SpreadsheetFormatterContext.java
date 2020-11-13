@@ -19,14 +19,14 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Either;
 import walkingkooka.color.Color;
-import walkingkooka.convert.ConverterContext;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 import java.util.Optional;
 
 /**
  * A {@link }Context} that accompanies a value format, holding local sensitive attributes such as the decimal point character.
  */
-public interface SpreadsheetFormatterContext extends ConverterContext {
+public interface SpreadsheetFormatterContext extends ExpressionNumberConverterContext {
 
     /**
      * Returns the {@link Color} with the given number.

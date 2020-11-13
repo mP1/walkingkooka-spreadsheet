@@ -21,8 +21,9 @@ import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
 import java.util.List;
@@ -31,11 +32,11 @@ import java.util.Optional;
 
 final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements SpreadsheetFormatterContext {
 
-    static SpreadsheetFormatterConverterSpreadsheetFormatterContext with(final ConverterContext context) {
+    static SpreadsheetFormatterConverterSpreadsheetFormatterContext with(final ExpressionNumberConverterContext context) {
         return new SpreadsheetFormatterConverterSpreadsheetFormatterContext(context);
     }
 
-    private SpreadsheetFormatterConverterSpreadsheetFormatterContext(final ConverterContext context) {
+    private SpreadsheetFormatterConverterSpreadsheetFormatterContext(final ExpressionNumberConverterContext context) {
         super();
 
         this.context = context;
@@ -74,7 +75,7 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     /**
      * Supports number -> number, date -> datetime, time -> datetime.
      */
-    private final static Converter CONVERTER = Converters.collection(Lists.of(
+    private final static Converter<ExpressionNumberConverterContext> CONVERTER = Converters.collection(Lists.of(
             Converters.simple(),
             Converters.numberNumber(),
             Converters.localDateLocalDateTime(),
@@ -177,10 +178,15 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
 
     @Override
     public int width() {
-        return 0;
+        throw new UnsupportedOperationException();
     }
 
-    private final ConverterContext context;
+    @Override
+    public ExpressionNumberKind expressionNumberKind() {
+        return this.context.expressionNumberKind();
+    }
+
+    private final ExpressionNumberConverterContext context;
 
     @Override
     public String toString() {

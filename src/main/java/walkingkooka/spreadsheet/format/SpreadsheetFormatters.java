@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatExpressionParserT
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatFractionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTextParserToken;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -64,7 +65,7 @@ public final class SpreadsheetFormatters implements PublicStaticHelper {
     /**
      * {@see ConverterSpreadsheetFormatter}
      */
-    public static SpreadsheetFormatter converter(final Converter converter) {
+    public static SpreadsheetFormatter converter(final Converter<ExpressionNumberConverterContext> converter) {
         return ConverterSpreadsheetFormatter.with(converter);
     }
 

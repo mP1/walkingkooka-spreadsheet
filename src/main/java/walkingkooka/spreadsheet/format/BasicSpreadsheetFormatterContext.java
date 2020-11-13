@@ -21,6 +21,7 @@ import walkingkooka.Either;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.color.Color;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
 import java.util.List;
@@ -192,6 +193,11 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     @Override
     public Locale locale() {
         return this.converterContext.locale();
+    }
+
+    @Override
+    public ExpressionNumberKind expressionNumberKind() {
+        return this.converterContext.expressionNumberKind();
     }
 
     private final ExpressionNumberConverterContext converterContext;

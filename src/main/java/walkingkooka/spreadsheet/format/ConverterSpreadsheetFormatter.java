@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.format;
 
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -28,12 +29,12 @@ import java.util.Optional;
  */
 final class ConverterSpreadsheetFormatter implements SpreadsheetFormatter {
 
-    static ConverterSpreadsheetFormatter with(final Converter converter) {
+    static ConverterSpreadsheetFormatter with(final Converter<ExpressionNumberConverterContext> converter) {
         Objects.requireNonNull(converter, "converter");
         return new ConverterSpreadsheetFormatter(converter);
     }
 
-    private ConverterSpreadsheetFormatter(final Converter converter) {
+    private ConverterSpreadsheetFormatter(final Converter<ExpressionNumberConverterContext> converter) {
         super();
         this.converter = converter;
     }
@@ -53,7 +54,7 @@ final class ConverterSpreadsheetFormatter implements SpreadsheetFormatter {
                 Optional.empty();
     }
 
-    private final Converter converter;
+    private final Converter<ExpressionNumberConverterContext> converter;
 
     @Override
     public String toString() {
