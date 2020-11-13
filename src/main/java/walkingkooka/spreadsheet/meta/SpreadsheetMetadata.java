@@ -64,6 +64,8 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
+import walkingkooka.tree.text.Length;
+import walkingkooka.tree.text.TextStyle;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -599,6 +601,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
 
     private static SpreadsheetMetadata nonLocaleDefaults() {
         EMPTY.id(); // force JsonNodeContext registering of collaborating types.
+        TextStyle.EMPTY.isEmpty();
         return JsonNodeUnmarshallContexts.basic(ExpressionNumberContexts.fake())
                 .unmarshall(JsonNode.parse(new SpreadsheetMetadataDefaultTextResourceProvider().text()), SpreadsheetMetadata.class);
     }

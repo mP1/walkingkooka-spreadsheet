@@ -31,6 +31,9 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.FontFamilyName;
 import walkingkooka.tree.text.FontSize;
+import walkingkooka.tree.text.Length;
+import walkingkooka.tree.text.TextStyle;
+import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -107,10 +110,14 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
         assertNotEquals(SpreadsheetMetadata.EMPTY, nonLocaleDefaults);
         assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DATETIME_OFFSET));
-        assertEquals(Optional.of(15.0), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DEFAULT_COLUMN_WIDTH));
-        assertEquals(Optional.of(FontFamilyName.with("MS Sans Serif")), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DEFAULT_FONT_FAMILY_NAME));
-        assertEquals(Optional.of(FontSize.with(11)), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DEFAULT_FONT_SIZE));
-        assertEquals(Optional.of(60.0), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DEFAULT_ROW_HEIGHT));
+
+        final TextStyle style = TextStyle.EMPTY
+                .set(TextStylePropertyName.FONT_FAMILY_NAME, FontFamilyName.with("MS Sans Serif"))
+                .set(TextStylePropertyName.FONT_SIZE, FontSize.with(11))
+                .set(TextStylePropertyName.HEIGHT, Length.pixel(60.0))
+                .set(TextStylePropertyName.WIDTH, Length.pixel(15.0));
+        assertEquals(Optional.of(style), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.STYLE));
+
         assertNotEquals(Optional.of(ExpressionNumberKind.DEFAULT), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND));
         assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.PRECISION));
         assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.ROUNDING_MODE));

@@ -43,8 +43,11 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
+import walkingkooka.tree.text.Length;
+import walkingkooka.tree.text.PixelLength;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
+import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -502,7 +505,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public double columnWidth(final SpreadsheetColumnReference column) {
         double columnWidth = this.cellStore.maxColumnWidth(column);
         if (0 == columnWidth) {
-            columnWidth = this.metadata.getOrFail(SpreadsheetMetadataPropertyName.DEFAULT_COLUMN_WIDTH);
+            columnWidth = textStyleProperty(TextStylePropertyName.WIDTH);
         }
         return columnWidth;
     }
@@ -511,9 +514,18 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     public double rowHeight(final SpreadsheetRowReference row) {
         double rowHeight = this.cellStore.maxRowHeight(row);
         if (0 == rowHeight) {
-            rowHeight = this.metadata.getOrFail(SpreadsheetMetadataPropertyName.DEFAULT_ROW_HEIGHT);
+            rowHeight = textStyleProperty(TextStylePropertyName.HEIGHT);
         }
         return rowHeight;
+    }
+
+    /**
+     * Gets the double value for the given {@link TextStylePropertyName} which is either WIDTH or HEIGHT>
+     */
+    private double textStyleProperty(final TextStylePropertyName<Length<?>> propertyName) {
+        final PixelLength pixels = (PixelLength) this.metadata.getOrFail(SpreadsheetMetadataPropertyName.STYLE)
+                .getOrFail(propertyName);
+        return pixels.value();
     }
 
     private final SpreadsheetMetadata metadata;
