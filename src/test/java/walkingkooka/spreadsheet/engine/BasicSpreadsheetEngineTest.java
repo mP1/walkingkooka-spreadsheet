@@ -26,6 +26,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
+import walkingkooka.spreadsheet.SpreadsheetCellBox;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetError;
@@ -4828,6 +4829,30 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     }
                 });
         assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> engine.rowHeight(row));
+    }
+
+    //  cellBox.........................................................................................................
+
+    @Test
+    public void testCellBox() {
+        final SpreadsheetCellBox box = SpreadsheetCellReference.parseCellReference("B999")
+                .cellBox(12, 34, 56, 78);
+        final double x = 1;
+        final double y = 2;
+
+        final BasicSpreadsheetEngine engine = this.createEngine(
+                SpreadsheetMetadata.EMPTY,
+                new FakeSpreadsheetCellStore() {
+
+                    @Override
+                    public SpreadsheetCellBox cellBox(final double xx, final double yy) {
+                        assertEquals(x, xx, "x");
+                        assertEquals(y, yy, "y");
+                        return box;
+                    }
+                });
+        assertEquals(box,
+                engine.cellBox(x, y));
     }
 
     private BasicSpreadsheetEngine createEngine(final SpreadsheetMetadata metadata,
