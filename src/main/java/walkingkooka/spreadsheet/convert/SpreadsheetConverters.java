@@ -24,22 +24,23 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 public final class SpreadsheetConverters implements PublicStaticHelper {
 
     /**
      * {@see SpreadsheetConverter}
      */
-    public static Converter converter(final SpreadsheetFormatter dateFormatter,
-                                      final SpreadsheetDateParsePatterns dateParser,
-                                      final SpreadsheetFormatter dateTimeFormatter,
-                                      final SpreadsheetDateTimeParsePatterns dateTimeParser,
-                                      final SpreadsheetFormatter numberFormatter,
-                                      final SpreadsheetNumberParsePatterns numberParser,
-                                      final SpreadsheetFormatter textFormatter,
-                                      final SpreadsheetFormatter timeFormatter,
-                                      final SpreadsheetTimeParsePatterns timeParser,
-                                      final long dateOffset) {
+    public static Converter<ExpressionNumberConverterContext> converter(final SpreadsheetFormatter dateFormatter,
+                                                                        final SpreadsheetDateParsePatterns dateParser,
+                                                                        final SpreadsheetFormatter dateTimeFormatter,
+                                                                        final SpreadsheetDateTimeParsePatterns dateTimeParser,
+                                                                        final SpreadsheetFormatter numberFormatter,
+                                                                        final SpreadsheetNumberParsePatterns numberParser,
+                                                                        final SpreadsheetFormatter textFormatter,
+                                                                        final SpreadsheetFormatter timeFormatter,
+                                                                        final SpreadsheetTimeParsePatterns timeParser,
+                                                                        final long dateOffset) {
         return SpreadsheetConverter.with(dateFormatter,
                 dateParser,
                 dateTimeFormatter,
