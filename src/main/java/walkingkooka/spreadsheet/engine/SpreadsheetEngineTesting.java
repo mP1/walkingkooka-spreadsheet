@@ -40,10 +40,10 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetPixelRectangle;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.store.Store;
 import walkingkooka.text.CharSequences;
@@ -763,19 +763,19 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
                 () -> "rowHeight " + row + " of " + engine);
     }
 
-    default void computeRange(final SpreadsheetPixelRectangle rectangle,
+    default void computeRange(final SpreadsheetViewport viewport,
                               final SpreadsheetRange expected) {
         this.computeRange(this.createSpreadsheetEngine(),
-                rectangle,
+                viewport,
                 expected);
     }
 
     default void computeRange(final SpreadsheetEngine engine,
-                              final SpreadsheetPixelRectangle rectangle,
+                              final SpreadsheetViewport viewport,
                               final SpreadsheetRange expected) {
         assertEquals(expected,
-                engine.computeRange(rectangle),
-                () -> "computeRange " + rectangle + " of " + engine);
+                engine.computeRange(viewport),
+                () -> "computeRange " + viewport + " of " + engine);
     }
 
     default Converter<ExpressionNumberConverterContext> converter() {

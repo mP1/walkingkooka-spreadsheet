@@ -273,21 +273,6 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
         assertEquals(height, rectangle.height(), "height");
     }
 
-    // SpreadsheetPixelRectangle.........................................................................................
-
-    @Test
-    public void testPixelRectangle() {
-        final double width = 100.5;
-        final double height = 20.5;
-        final SpreadsheetCellReference reference = this.createReference();
-
-        final SpreadsheetPixelRectangle rectangle = reference.pixelRectangle(width, height);
-
-        assertSame(reference, rectangle.reference(), "reference");
-        assertEquals(width, rectangle.width(), "width");
-        assertEquals(height, rectangle.height(), "height");
-    }
-
     // range.............................................................................................................
 
     @Test
@@ -358,6 +343,21 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
         assertEquals(SpreadsheetRange.with(expected),
                 cell.spreadsheetRange(other),
                 () -> cell + " spreadsheetRange " + other);
+    }
+
+    // SpreadsheetViewport.........................................................................................
+
+    @Test
+    public void testViewport() {
+        final double width = 100.5;
+        final double height = 20.5;
+        final SpreadsheetCellReference reference = this.createReference();
+
+        final SpreadsheetViewport viewport = reference.viewport(width, height);
+
+        assertSame(reference, viewport.reference(), "reference");
+        assertEquals(width, viewport.width(), "width");
+        assertEquals(height, viewport.height(), "height");
     }
 
     // ParseStringTesting...............................................................................................

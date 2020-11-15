@@ -139,17 +139,17 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     }
 
     /**
-     * Parsers the text expecting a valid {@link SpreadsheetPixelRectangle} or fails.
-     */
-    public static SpreadsheetPixelRectangle parsePixelRectangle(final String text) {
-        return SpreadsheetPixelRectangle.parsePixelRectangle0(text);
-    }
-
-    /**
      * Parsers the text expecting a valid {@link SpreadsheetRange} or fails.
      */
     public static SpreadsheetRange parseRange(final String text) {
         return SpreadsheetRange.parseRange0(text);
+    }
+
+    /**
+     * Parsers the text expecting a valid {@link SpreadsheetViewport} or fails.
+     */
+    public static SpreadsheetViewport parseViewport(final String text) {
+        return SpreadsheetViewport.parseViewport0(text);
     }
 
     /**
@@ -176,17 +176,17 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     }
 
     /**
-     * Only {@link SpreadsheetPixelRectangle} returns true.
-     */
-    public final boolean isPixelRectangle() {
-        return this instanceof SpreadsheetPixelRectangle;
-    }
-
-    /**
      * Only {@link SpreadsheetRange} returns true.
      */
     public final boolean isRange() {
         return this instanceof SpreadsheetRange;
+    }
+
+    /**
+     * Only {@link SpreadsheetViewport} returns true.
+     */
+    public final boolean isViewport() {
+        return this instanceof SpreadsheetViewport;
     }
 
     // SpreadsheetExpressionReferenceVisitor............................................................................
@@ -256,19 +256,19 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
     }
 
     /**
-     * Accepts a json string and returns a {@link SpreadsheetPixelRectangle} or fails.
-     */
-    static SpreadsheetPixelRectangle unmarshallPixelRectangle(final JsonNode node,
-                                                              final JsonNodeUnmarshallContext context) {
-        return unmarshall0(node, SpreadsheetExpressionReference::parsePixelRectangle);
-    }
-
-    /**
      * Accepts a json string and returns a {@link SpreadsheetRange} or fails.
      */
     static SpreadsheetRange unmarshallRange(final JsonNode node,
                                             final JsonNodeUnmarshallContext context) {
         return unmarshall0(node, SpreadsheetExpressionReference::parseRange);
+    }
+
+    /**
+     * Accepts a json string and returns a {@link SpreadsheetViewport} or fails.
+     */
+    static SpreadsheetViewport unmarshallViewport(final JsonNode node,
+                                                  final JsonNodeUnmarshallContext context) {
+        return unmarshall0(node, SpreadsheetExpressionReference::parseViewport);
     }
 
     /**
@@ -298,14 +298,14 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
                 SpreadsheetLabelName::marshall,
                 SpreadsheetLabelName.class);
         //noinspection StaticInitializerReferencesSubClass
-        JsonNodeContext.register("spreadsheet-pixel-rectangle",
-                SpreadsheetPixelRectangle::unmarshallPixelRectangle,
-                SpreadsheetPixelRectangle::marshall,
-                SpreadsheetPixelRectangle.class);
-        //noinspection StaticInitializerReferencesSubClass
         JsonNodeContext.register("spreadsheet-range",
                 SpreadsheetRange::unmarshallRange,
                 SpreadsheetRange::marshall,
                 SpreadsheetRange.class);
+        //noinspection StaticInitializerReferencesSubClass
+        JsonNodeContext.register("spreadsheet-viewport",
+                SpreadsheetViewport::unmarshallViewport,
+                SpreadsheetViewport::marshall,
+                SpreadsheetViewport.class);
     }
 }

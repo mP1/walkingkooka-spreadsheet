@@ -24,9 +24,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelMapping;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
-import walkingkooka.spreadsheet.reference.SpreadsheetPixelRectangle;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -131,9 +131,9 @@ public interface SpreadsheetEngine {
     double rowHeight(final SpreadsheetRowReference row);
 
     /**
-     * Computes the {@link SpreadsheetRange} from the given {@link SpreadsheetPixelRectangle} using the column width and row heights.
+     * Computes the {@link SpreadsheetRange} from the given {@link SpreadsheetViewport} using the column width and row heights.
      */
-    SpreadsheetRange computeRange(final SpreadsheetPixelRectangle rectangle);
+    SpreadsheetRange computeRange(final SpreadsheetViewport viewport);
 
     /**
      * Locates the {@link SpreadsheetCellBox} at the given coordinates.

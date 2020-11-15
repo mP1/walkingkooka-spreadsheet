@@ -148,14 +148,14 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
         return new SpreadsheetCellReference(column, row);
     }
 
-    // SpreadsheetPixelRectangle........................................................................................
+    // SpreadsheetViewport........................................................................................
 
     /**
-     * Creates a {@link SpreadsheetPixelRectangle} using this as the top/left.
+     * Creates a {@link SpreadsheetViewport} using this as the top/left.
      */
-    public SpreadsheetPixelRectangle pixelRectangle(final double width,
-                                                    final double height) {
-        return SpreadsheetPixelRectangle.with(this, width, height);
+    public SpreadsheetViewport viewport(final double width,
+                                        final double height) {
+        return SpreadsheetViewport.with(this, width, height);
     }
 
     // range/spreadsheetRange...........................................................................................
