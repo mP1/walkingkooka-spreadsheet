@@ -18,8 +18,8 @@
 package walkingkooka.spreadsheet;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.compare.ComparableTesting2;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.tree.json.JsonNode;
@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCoordinatesTest implements ClassTesting2<SpreadsheetCoordinates>,
         JsonNodeMarshallingTesting<SpreadsheetCoordinates>,
-        HashCodeEqualsDefinedTesting2<SpreadsheetCoordinates>,
+        ComparableTesting2<SpreadsheetCoordinates>,
         ToStringTesting<SpreadsheetCoordinates> {
 
 
@@ -113,6 +113,18 @@ public final class SpreadsheetCoordinatesTest implements ClassTesting2<Spreadshe
         this.marshallRoundTripTwiceAndCheck(this.createCoords());
     }
 
+    // Comparable.......................................................................................................
+
+    @Test
+    public void testCompareLessX() {
+        this.compareToAndCheckLess(SpreadsheetCoordinates.with(X + 100, Y));
+    }
+
+    @Test
+    public void testCompareLessY() {
+        this.compareToAndCheckLess(SpreadsheetCoordinates.with(X, Y + 100));
+    }
+
     // toString.........................................................................................................
 
     @Test
@@ -143,10 +155,10 @@ public final class SpreadsheetCoordinatesTest implements ClassTesting2<Spreadshe
         return JavaVisibility.PUBLIC;
     }
 
-    // HashCodeEqualsDefinedTesting2....................................................................................
+    // ComparableTesting2...............................................................................................
 
     @Override
-    public SpreadsheetCoordinates createObject() {
+    public SpreadsheetCoordinates createComparable() {
         return this.createCoords();
     }
 

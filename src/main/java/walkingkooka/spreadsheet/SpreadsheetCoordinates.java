@@ -28,7 +28,7 @@ import java.util.Objects;
 /**
  * The coordinates of a cell.
  */
-public final class SpreadsheetCoordinates {
+public final class SpreadsheetCoordinates implements Comparable<SpreadsheetCoordinates> {
 
     private final static String SEPARATOR = ",";
 
@@ -142,5 +142,16 @@ public final class SpreadsheetCoordinates {
                 SpreadsheetCoordinates::unmarshall,
                 SpreadsheetCoordinates::marshall,
                 SpreadsheetCoordinates.class);
+    }
+
+    // Comparable.......................................................................................................
+
+    @Override
+    public int compareTo(final SpreadsheetCoordinates other) {
+        int result = Double.compare(this.x, other.x);
+        if (0 == result) {
+            result = Double.compare(this.y, other.y);
+        }
+        return result;
     }
 }
