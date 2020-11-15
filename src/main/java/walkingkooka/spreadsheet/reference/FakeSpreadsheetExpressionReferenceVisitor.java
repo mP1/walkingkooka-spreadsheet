@@ -63,7 +63,7 @@ public class FakeSpreadsheetExpressionReferenceVisitor extends SpreadsheetExpres
     }
 
     @Override
-    protected void visit(final SpreadsheetViewport rectangle) {
+    protected void visit(final SpreadsheetViewport viewport) {
         throw new UnsupportedOperationException();
     }
 }
