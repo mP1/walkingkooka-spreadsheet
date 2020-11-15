@@ -22,6 +22,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.naming.Name;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
@@ -239,14 +240,9 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     public final static SpreadsheetMetadataPropertyName<Integer> TWO_DIGIT_YEAR = registerConstant(SpreadsheetMetadataPropertyNameTwoYearDigit.instance());
 
     /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>viewport-x {@link Double}</code>
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>viewport-coordinates {@link SpreadsheetCoordinates}</code>
      */
-    public final static SpreadsheetMetadataPropertyName<Double> VIEWPORT_X = registerConstant(SpreadsheetMetadataPropertyNameViewportX.instance());
-
-    /**
-     * A {@link SpreadsheetMetadataPropertyName} holding the <code>viewport-y {@link Double}</code>
-     */
-    public final static SpreadsheetMetadataPropertyName<Double> VIEWPORT_Y = registerConstant(SpreadsheetMetadataPropertyNameViewportY.instance());
+    public final static SpreadsheetMetadataPropertyName<SpreadsheetCoordinates> VIEWPORT_COORDINATES = registerConstant(SpreadsheetMetadataPropertyNameViewportCoordinates.instance());
 
     /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>width {@link Integer}</code>

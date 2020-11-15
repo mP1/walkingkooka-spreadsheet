@@ -10,7 +10,6 @@
     "width": "15px"
   },
   "two-digit-year": 20,
-  "viewport-x": 0,
-  "viewport-y": 0,
+  "viewport-coordinates": "0,0",
   "width": 1
 }
