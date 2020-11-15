@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.store;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellBox;
+import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -196,13 +197,9 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
     }
 
     @Override
-    public SpreadsheetCellBox cellBox(final double x, final double y) {
-        if (x < 0) {
-            throw new IllegalArgumentException("Invalid x < 0 was " + x);
-        }
-        if (y < 0) {
-            throw new IllegalArgumentException("Invalid y < 0 was " + y);
-        }
+    public SpreadsheetCellBox cellBox(final SpreadsheetCoordinates coords) {
+        final double x = coords.x();
+        final double y = coords.y();
 
         SpreadsheetColumnReference column = COLUMN_REFERENCE_A;
         double xx = 0;
@@ -210,7 +207,7 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
 
         for (; ; ) {
             width = this.maxColumnWidth(column);
-            if( x >= xx && x < xx + width) {
+            if (x >= xx && x < xx + width) {
                 break;
             }
             xx = xx + width;

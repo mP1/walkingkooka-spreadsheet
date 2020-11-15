@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellBox;
+import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -138,5 +139,5 @@ public interface SpreadsheetEngine {
     /**
      * Locates the {@link SpreadsheetCellBox} at the given coordinates.
      */
-    SpreadsheetCellBox cellBox(final double x, final double y);
+    SpreadsheetCellBox cellBox(final SpreadsheetCoordinates coords);
 }

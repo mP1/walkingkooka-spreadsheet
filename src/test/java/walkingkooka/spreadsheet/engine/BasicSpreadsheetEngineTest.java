@@ -28,6 +28,7 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellBox;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
+import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.SpreadsheetDescription;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
@@ -4848,22 +4849,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     public void testCellBox() {
         final SpreadsheetCellBox box = SpreadsheetCellReference.parseCellReference("B999")
                 .cellBox(12, 34, 56, 78);
-        final double x = 1;
-        final double y = 2;
+        final SpreadsheetCoordinates coords = SpreadsheetCoordinates.with(1, 2);
 
         final BasicSpreadsheetEngine engine = this.createEngine(
                 SpreadsheetMetadata.EMPTY,
                 new FakeSpreadsheetCellStore() {
 
                     @Override
-                    public SpreadsheetCellBox cellBox(final double xx, final double yy) {
-                        assertEquals(x, xx, "x");
-                        assertEquals(y, yy, "y");
+                    public SpreadsheetCellBox cellBox(final SpreadsheetCoordinates c) {
+                        assertEquals(coords, c);
                         return box;
                     }
                 });
         assertEquals(box,
-                engine.cellBox(x, y));
+                engine.cellBox(coords));
     }
 
     private BasicSpreadsheetEngine createEngine(final SpreadsheetMetadata metadata,

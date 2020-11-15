@@ -21,6 +21,7 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellBox;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
+import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
@@ -563,8 +564,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     }
 
     @Override
-    public SpreadsheetCellBox cellBox(final double x, final double y) {
-        return this.cellStore.cellBox(x, y);
+    public SpreadsheetCellBox cellBox(final SpreadsheetCoordinates coords) {
+        return this.cellStore.cellBox(coords);
     }
 
     // checkers.........................................................................................................

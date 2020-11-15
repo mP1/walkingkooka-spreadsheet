@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.store;
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellBox;
+import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
@@ -410,9 +411,10 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                                  final double x,
                                  final double y,
                                  final SpreadsheetCellBox expected) {
+        final SpreadsheetCoordinates coords = SpreadsheetCoordinates.with(x, y);
         assertEquals(expected,
-                store.cellBox(x, y),
-                () -> "cellBox " + x + ", " + y + " store=" + store);
+                store.cellBox(coords),
+                () -> "cellBox " + coords + " store=" + store);
     }
 
     // toString.........................................................................................................
