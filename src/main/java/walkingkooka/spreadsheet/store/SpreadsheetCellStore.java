@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.store;
 
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellBox;
+import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
@@ -64,5 +65,5 @@ public interface SpreadsheetCellStore extends Store<SpreadsheetCellReference, Sp
     /**
      * Locates the {@link SpreadsheetCellBox} at the given coordinates.
      */
-    SpreadsheetCellBox cellBox(final double x, final double y);
+    SpreadsheetCellBox cellBox(final SpreadsheetCoordinates coords);
 }
