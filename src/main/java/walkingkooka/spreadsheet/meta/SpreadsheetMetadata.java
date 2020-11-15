@@ -34,6 +34,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.HasDecimalNumberContext;
 import walkingkooka.math.HasMathContext;
 import walkingkooka.net.http.server.hateos.HateosResource;
+import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.convert.SpreadsheetConverters;
 import walkingkooka.spreadsheet.format.HasSpreadsheetFormatter;
@@ -601,6 +602,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
 
     private static SpreadsheetMetadata nonLocaleDefaults() {
         EMPTY.id(); // force JsonNodeContext registering of collaborating types.
+        SpreadsheetCoordinates.with(1, 2);
         TextStyle.EMPTY.isEmpty();
         return JsonNodeUnmarshallContexts.basic(ExpressionNumberContexts.fake())
                 .unmarshall(JsonNode.parse(new SpreadsheetMetadataDefaultTextResourceProvider().text()), SpreadsheetMetadata.class);
