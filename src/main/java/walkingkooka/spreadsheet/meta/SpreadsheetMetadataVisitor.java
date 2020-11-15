@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.meta;
 import walkingkooka.Cast;
 import walkingkooka.color.Color;
 import walkingkooka.net.email.EmailAddress;
+import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.SpreadsheetName;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
@@ -35,8 +36,6 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.tree.expression.ExpressionNumberKind;
-import walkingkooka.tree.text.FontFamilyName;
-import walkingkooka.tree.text.FontSize;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.visit.Visiting;
 import walkingkooka.visit.Visitor;
@@ -231,11 +230,7 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
-    protected void visitViewportX(final double viewportX) {
-        // nop
-    }
-
-    protected void visitViewportY(final double viewportY) {
+    protected void visitViewportCoordinates(final SpreadsheetCoordinates coords) {
         // nop
     }
 

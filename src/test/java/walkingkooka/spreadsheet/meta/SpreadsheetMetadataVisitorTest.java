@@ -23,6 +23,7 @@ import walkingkooka.color.Color;
 import walkingkooka.convert.Converters;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateFormatPattern;
@@ -431,23 +432,13 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitViewportX() {
+    public void testVisitViewport() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
-            protected void visitViewportX(final double viewportX) {
-                this.visited = viewportX;
+            protected void visitViewportCoordinates(final SpreadsheetCoordinates coords) {
+                this.visited = coords;
             }
-        }.accept(SpreadsheetMetadataPropertyName.VIEWPORT_X, 345.6);
-    }
-
-    @Test
-    public void testVisitViewportY() {
-        new TestSpreadsheetMetadataVisitor() {
-            @Override
-            protected void visitViewportY(final double viewportY) {
-                this.visited = viewportY;
-            }
-        }.accept(SpreadsheetMetadataPropertyName.VIEWPORT_Y, 456.0);
+        }.accept(SpreadsheetMetadataPropertyName.VIEWPORT_COORDINATES, SpreadsheetCoordinates.with(1, 2));
     }
 
     @Test
