@@ -544,7 +544,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 .setReferenceKind(SpreadsheetReferenceKind.RELATIVE);
 
         while (x < width) {
-            x = x + this.columnWidth(column); // TODO columnWidth defaulting to 0 is a problem.
+            x = x + this.columnWidth(column);
             column = column.add(1);
         }
 
@@ -555,7 +555,7 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
                 .setReferenceKind(SpreadsheetReferenceKind.RELATIVE);
 
         while (y < height) {
-            y = y + this.rowHeight(row); // TODO columnWidth defaulting to 0 is a problem.
+            y = y + this.rowHeight(row);
             row = row.add(1);
         }
 
