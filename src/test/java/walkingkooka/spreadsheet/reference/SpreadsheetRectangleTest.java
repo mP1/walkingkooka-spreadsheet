@@ -25,21 +25,6 @@ import walkingkooka.test.ParseStringTesting;
 public final class SpreadsheetRectangleTest implements ClassTesting2<SpreadsheetRectangle>, ParseStringTesting<SpreadsheetRectangle> {
 
     @Test
-    public void testParsePixelRectangle() {
-        this.parseStringAndCheck("A1:123:456", SpreadsheetPixelRectangle.with(SpreadsheetCellReference.parseCellReference("A1"), 123, 456));
-    }
-
-    @Test
-    public void testParsePixelRectangle2() {
-        this.parseStringAndCheck("$A$1:123:456", SpreadsheetPixelRectangle.with(SpreadsheetCellReference.parseCellReference("$A$1"), 123, 456));
-    }
-
-    @Test
-    public void testParsePixelRectangle3() {
-        this.parseStringAndCheck("A1:123.5:456.5", SpreadsheetPixelRectangle.with(SpreadsheetCellReference.parseCellReference("A1"), 123.5, 456.5));
-    }
-
-    @Test
     public void testParseRange() {
         this.parseStringAndCheck("A1:B2", SpreadsheetRange.parseRange("A1:B2"));
     }
@@ -47,6 +32,21 @@ public final class SpreadsheetRectangleTest implements ClassTesting2<Spreadsheet
     @Test
     public void testParseRange2() {
         this.parseStringAndCheck("$A1:B2", SpreadsheetRange.parseRange("$A1:B2"));
+    }
+
+    @Test
+    public void testParseViewport() {
+        this.parseStringAndCheck("A1:123:456", SpreadsheetViewport.with(SpreadsheetCellReference.parseCellReference("A1"), 123, 456));
+    }
+
+    @Test
+    public void testParseViewport2() {
+        this.parseStringAndCheck("$A$1:123:456", SpreadsheetViewport.with(SpreadsheetCellReference.parseCellReference("$A$1"), 123, 456));
+    }
+
+    @Test
+    public void testParseViewport3() {
+        this.parseStringAndCheck("A1:123.5:456.5", SpreadsheetViewport.with(SpreadsheetCellReference.parseCellReference("A1"), 123.5, 456.5));
     }
 
     // ClassTesting.....................................................................................................

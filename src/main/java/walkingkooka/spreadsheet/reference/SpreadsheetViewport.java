@@ -26,8 +26,8 @@ import java.util.Objects;
  * Represents a rectangle selection of cells, starting from an cell reference covering the given pixel dimensions.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetPixelRectangle extends SpreadsheetRectangle
-        implements Comparable<SpreadsheetPixelRectangle> {
+public final class SpreadsheetViewport extends SpreadsheetRectangle
+        implements Comparable<SpreadsheetViewport> {
 
     final static CharacterConstant SEPARATOR = CharacterConstant.with(':');
 
@@ -38,7 +38,7 @@ public final class SpreadsheetPixelRectangle extends SpreadsheetRectangle
      * </pre>
      * Where width and height are decimal numbers.
      */
-    static SpreadsheetPixelRectangle parsePixelRectangle0(final String text) {
+    static SpreadsheetViewport parseViewport0(final String text) {
         CharSequences.failIfNullOrEmpty(text, "text");
 
         final String[] tokens = text.split(SEPARATOR.string());
@@ -77,11 +77,11 @@ public final class SpreadsheetPixelRectangle extends SpreadsheetRectangle
     }
 
     /**
-     * Factory that creates a new {@link SpreadsheetPixelRectangle}.
+     * Factory that creates a new {@link SpreadsheetViewport}.
      */
-    static SpreadsheetPixelRectangle with(final SpreadsheetCellReference reference,
-                                          final double width,
-                                          final double height) {
+    static SpreadsheetViewport with(final SpreadsheetCellReference reference,
+                                    final double width,
+                                    final double height) {
         Objects.requireNonNull(reference, "reference");
 
         if (width <= 0) {
@@ -90,12 +90,12 @@ public final class SpreadsheetPixelRectangle extends SpreadsheetRectangle
         if (height <= 0) {
             throw new IllegalArgumentException("Invalid height " + width + " <= 0");
         }
-        return new SpreadsheetPixelRectangle(reference, width, height);
+        return new SpreadsheetViewport(reference, width, height);
     }
 
-    private SpreadsheetPixelRectangle(final SpreadsheetCellReference reference,
-                                      final double width,
-                                      final double height) {
+    private SpreadsheetViewport(final SpreadsheetCellReference reference,
+                                final double width,
+                                final double height) {
         super();
         this.reference = reference;
         this.width = width;
@@ -148,15 +148,15 @@ public final class SpreadsheetPixelRectangle extends SpreadsheetRectangle
 
     @Override
     boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetPixelRectangle;
+        return other instanceof SpreadsheetViewport;
     }
 
     @Override
     boolean equals0(final Object other) {
-        return this.equals1((SpreadsheetPixelRectangle) other);
+        return this.equals1((SpreadsheetViewport) other);
     }
 
-    private boolean equals1(final SpreadsheetPixelRectangle other) {
+    private boolean equals1(final SpreadsheetViewport other) {
         return this.reference.equals0(other.reference) &&
                 this.width == other.width &&
                 this.height == other.height;
@@ -199,7 +199,7 @@ public final class SpreadsheetPixelRectangle extends SpreadsheetRectangle
      * Compares the {@link #reference()} ignoring the {@link #width()} and {@link #height()}
      */
     @Override
-    public int compareTo(final SpreadsheetPixelRectangle other) {
+    public int compareTo(final SpreadsheetViewport other) {
         return this.reference.compareTo(other.reference);
     }
 }

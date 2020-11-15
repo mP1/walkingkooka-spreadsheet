@@ -26,11 +26,11 @@ import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
-import walkingkooka.spreadsheet.reference.SpreadsheetPixelRectangle;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetRectangle;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -168,7 +168,7 @@ public abstract class SpreadsheetDelta {
     /**
      * Would be setter that if necessary returns a new {@link SpreadsheetDelta} which will also filter cells if necessary,
      * only if all {@link SpreadsheetRectangle} are all {@link SpreadsheetRange ranges}. Filtering is not possible if a
-     * {@link SpreadsheetPixelRectangle} is present because it is not possible to determine if a cell is within those
+     * {@link SpreadsheetViewport} is present because it is not possible to determine if a cell is within those
      * boundaries.
      */
     public final SpreadsheetDelta setWindow(final List<SpreadsheetRectangle> window) {
@@ -192,9 +192,9 @@ public abstract class SpreadsheetDelta {
     }
 
     /**
-     * If the window is empty or contains a single {@link SpreadsheetPixelRectangle} do no filtering.
+     * If the window is empty or contains a single {@link SpreadsheetViewport} do no filtering.
      * This abort of filtering for the later is necessary because there is no way of accurately determining if a cell is
-     * within the {@link SpreadsheetPixelRectangle}.
+     * within the {@link SpreadsheetViewport}.
      */
     static Set<SpreadsheetCell> maybeFilterCells(final Set<SpreadsheetCell> cells,
                                                  final List<SpreadsheetRectangle> window) {
@@ -205,7 +205,7 @@ public abstract class SpreadsheetDelta {
 
     private static boolean isContainsPixelRectangle(final List<SpreadsheetRectangle> window) {
         return window.stream()
-                .anyMatch(SpreadsheetRectangle::isPixelRectangle);
+                .anyMatch(SpreadsheetRectangle::isViewport);
     }
 
     private static Set<SpreadsheetCell> filterCells(final Set<SpreadsheetCell> cells,
