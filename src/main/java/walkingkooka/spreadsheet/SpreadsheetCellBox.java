@@ -29,6 +29,7 @@ import java.util.Objects;
 /**
  * Captures the coordinates and dimensions of a rendered {@link SpreadsheetCell}. This information is useful to help the
  * UI compute the origin of the visible {@link walkingkooka.spreadsheet.reference.SpreadsheetRange}.
+ * Note the width and height may be empty when the spreadsheet has no cells and therefore there is no width/height.
  */
 public final class SpreadsheetCellBox {
 
@@ -44,11 +45,11 @@ public final class SpreadsheetCellBox {
         if (y < 0) {
             throw new IllegalArgumentException("Invalid y < 0 was " + y);
         }
-        if (width <= 0) {
-            throw new IllegalArgumentException("Invalid width <= 0 was " + width);
+        if (width < 0) {
+            throw new IllegalArgumentException("Invalid width < 0 was " + width);
         }
-        if (height <= 0) {
-            throw new IllegalArgumentException("Invalid height <= 0 was " + height);
+        if (height < 0) {
+            throw new IllegalArgumentException("Invalid height < 0 was " + height);
         }
         return new SpreadsheetCellBox(reference, x, y, width, height);
     }

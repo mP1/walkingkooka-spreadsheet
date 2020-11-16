@@ -59,22 +59,22 @@ public final class SpreadsheetCellBoxTest implements ClassTesting2<SpreadsheetCe
 
     @Test
     public void testWithInvalidWidthFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellBox.with(reference(), X, Y, 0, HEIGHT));
-    }
-
-    @Test
-    public void testWithInvalidWidthFails2() {
         assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellBox.with(reference(), X, Y, -1, HEIGHT));
     }
 
     @Test
+    public void testWithInvalidWidthFails2() {
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellBox.with(reference(), X, Y, -2, HEIGHT));
+    }
+
+    @Test
     public void testWithInvalidHeightFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellBox.with(reference(), X, Y, WIDTH, 0));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellBox.with(reference(), X, Y, WIDTH, -1));
     }
 
     @Test
     public void testWithInvalidHeightFails2() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellBox.with(reference(), X, Y, WIDTH, -1));
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCellBox.with(reference(), X, Y, WIDTH, -2));
     }
 
     @Test
@@ -87,12 +87,12 @@ public final class SpreadsheetCellBoxTest implements ClassTesting2<SpreadsheetCe
     }
 
     @Test
-    public void testWithX0Y0() {
-        final SpreadsheetCellBox box = SpreadsheetCellBox.with(reference(), 0, 0, WIDTH, HEIGHT);
+    public void testWithEverythingZero() {
+        final SpreadsheetCellBox box = SpreadsheetCellBox.with(reference(), 0, 0, 0, 0);
         assertEquals(0, box.x(), "x");
         assertEquals(0, box.y(), "y");
-        assertEquals(WIDTH, box.width(), "width");
-        assertEquals(HEIGHT, box.height(), "height");
+        assertEquals(0, box.width(), "width");
+        assertEquals(0, box.height(), "height");
     }
 
     // equals .............................................................................................

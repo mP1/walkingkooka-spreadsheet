@@ -201,26 +201,28 @@ final class TreeMapSpreadsheetCellStore implements SpreadsheetCellStore {
         final double x = coords.x();
         final double y = coords.y();
 
+        final int maxColumns = this.columns();
         SpreadsheetColumnReference column = COLUMN_REFERENCE_A;
         double xx = 0;
         double width = 0;
 
         for (; ; ) {
             width = this.maxColumnWidth(column);
-            if (x >= xx && x < xx + width) {
+            if (column.value() == maxColumns || x >= xx && x < xx + width) {
                 break;
             }
             xx = xx + width;
             column = column.add(1);
         }
 
+        final int maxRows = this.rows();
         SpreadsheetRowReference row = ROW_REFERENCE_1;
         double yy = 0;
         double height = 0;
 
         for (; ; ) {
             height = this.maxRowHeight(row);
-            if( y >= yy && y < yy + height) {
+            if (row.value() == maxRows || y >= yy && y < yy + height) {
                 break;
             }
 
