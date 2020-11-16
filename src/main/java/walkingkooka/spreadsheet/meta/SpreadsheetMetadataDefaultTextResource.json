@@ -9,6 +9,7 @@
     "height": "60px",
     "width": "15px"
   },
+  "text-format-pattern": "@",
   "two-digit-year": 20,
   "viewport-coordinates": "0,0",
   "width": 1
