@@ -393,6 +393,16 @@ final class TreeMapSpreadsheetCellStoreTest extends SpreadsheetCellStoreTestCase
                         .set(TextStylePropertyName.HEIGHT, Length.pixel(height)));
     }
 
+    @Test
+    public void testCellBoxWhenEmpty() {
+        this.cellBoxAndCheck(this.createStore(), 0, 0, "A1", 0, 0, 0, 0);
+    }
+
+    @Test
+    public void testCellBoxWhenEmpty2() {
+        this.cellBoxAndCheck(this.createStore(), 123, 456, "A1", 0, 0, 0, 0);
+    }
+
     private void cellBoxAndCheck(final TreeMapSpreadsheetCellStore store,
                                  final double x,
                                  final double y,
