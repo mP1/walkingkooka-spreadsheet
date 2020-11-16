@@ -155,6 +155,16 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH).loadFromLocale());
     }
 
+    // converter........................................................................................................
+
+    @Test
+    public void testNonLocaleDefaultsConverter() {
+        SpreadsheetMetadata.NON_LOCALE_DEFAULTS
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
+                .loadFromLocale()
+                .converter();
+    }
+
     // toString.........................................................................................................
 
     @Test
