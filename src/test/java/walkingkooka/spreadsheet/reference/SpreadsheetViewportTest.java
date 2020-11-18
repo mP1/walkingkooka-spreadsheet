@@ -149,7 +149,7 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
 
     @Override
     SpreadsheetViewport createReference() {
-        return this.rectangle();
+        return this.viewport();
     }
 
     // ParseStringTesting...............................................................................................
@@ -260,10 +260,10 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
                               final double x,
                               final double y,
                               final boolean expected) {
-        final SpreadsheetViewport rectangle = SpreadsheetViewport.with(reference(), width, height);
+        final SpreadsheetViewport viewport = SpreadsheetViewport.with(reference(), width, height);
         assertEquals(expected,
-                rectangle.test(x, y),
-                () -> "test " + x + ", " + y + " in " + rectangle);
+                viewport.test(x, y),
+                () -> "test " + x + ", " + y + " in " + viewport);
     }
 
     // JsonNodeMarshallingTesting...............................................................................................
@@ -307,12 +307,12 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
 
     @Test
     public void testCompareCellFails() {
-        assertThrows(UnsupportedOperationException.class, () -> this.rectangle().compareTo0(SpreadsheetCellReference.parseCellReference("A1")));
+        assertThrows(UnsupportedOperationException.class, () -> this.viewport().compareTo0(SpreadsheetCellReference.parseCellReference("A1")));
     }
 
     @Test
     public void testCompareRectangleFails() {
-        assertThrows(UnsupportedOperationException.class, () -> this.rectangle().compareTo0(this.rectangle()));
+        assertThrows(UnsupportedOperationException.class, () -> this.viewport().compareTo0(this.viewport()));
     }
 
     @Test
@@ -346,8 +346,8 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
     }
 
     @Override
-    public void compareToAndCheckEquals(final SpreadsheetViewport rectangle) {
-        this.compareToAndCheck(rectangle, Comparators.EQUAL);
+    public void compareToAndCheckEquals(final SpreadsheetViewport viewport) {
+        this.compareToAndCheck(viewport, Comparators.EQUAL);
     }
 
     @Override
@@ -374,7 +374,7 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
 
     //helper............................................................................................................
 
-    private SpreadsheetViewport rectangle() {
+    private SpreadsheetViewport viewport() {
         return SpreadsheetViewport.with(this.reference(), WIDTH, HEIGHT);
     }
 
@@ -382,35 +382,35 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
         return SpreadsheetCellReference.parseCellReference("B9");
     }
 
-    private void check(final SpreadsheetViewport rectangle) {
-        this.check(rectangle,
+    private void check(final SpreadsheetViewport viewport) {
+        this.check(viewport,
                 this.reference(),
                 WIDTH,
                 HEIGHT);
     }
 
-    private void check(final SpreadsheetViewport rectangle,
+    private void check(final SpreadsheetViewport viewport,
                        final SpreadsheetCellReference reference,
                        final double width,
                        final double height) {
-        this.checkReference(rectangle, reference);
-        this.checkWidth(rectangle, width);
-        this.checkHeight(rectangle, height);
+        this.checkReference(viewport, reference);
+        this.checkWidth(viewport, width);
+        this.checkHeight(viewport, height);
     }
 
-    private void checkReference(final SpreadsheetViewport rectangle,
+    private void checkReference(final SpreadsheetViewport viewport,
                                 final SpreadsheetCellReference reference) {
-        assertEquals(reference, rectangle.reference(), () -> "rectangle width=" + rectangle);
+        assertEquals(reference, viewport.reference(), () -> "viewport width=" + viewport);
     }
 
-    private void checkWidth(final SpreadsheetViewport rectangle,
+    private void checkWidth(final SpreadsheetViewport viewport,
                             final double width) {
-        assertEquals(width, rectangle.width(), () -> "rectangle width=" + rectangle);
+        assertEquals(width, viewport.width(), () -> "viewport width=" + viewport);
     }
 
-    private void checkHeight(final SpreadsheetViewport rectangle,
+    private void checkHeight(final SpreadsheetViewport viewport,
                              final double height) {
-        assertEquals(height, rectangle.height(), () -> "rectangle height=" + rectangle);
+        assertEquals(height, viewport.height(), () -> "viewport height=" + viewport);
     }
 
     // ClassTesting.....................................................................................................
