@@ -60,7 +60,7 @@ public final class SpreadsheetCellBox {
                                final double width,
                                final double height) {
         super();
-        this.reference = reference;
+        this.reference = reference.toRelative();
         this.x = x;
         this.y = y;
         this.width = width;

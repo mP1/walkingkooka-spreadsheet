@@ -80,6 +80,7 @@ public final class SpreadsheetCellBoxTest implements ClassTesting2<SpreadsheetCe
     @Test
     public void testWith() {
         final SpreadsheetCellBox box = this.createBox();
+        assertEquals(reference().toRelative(), box.reference(), "reference");
         assertEquals(X, box.x(), "x");
         assertEquals(Y, box.y(), "y");
         assertEquals(WIDTH, box.width(), "width");
@@ -89,10 +90,21 @@ public final class SpreadsheetCellBoxTest implements ClassTesting2<SpreadsheetCe
     @Test
     public void testWithEverythingZero() {
         final SpreadsheetCellBox box = SpreadsheetCellBox.with(reference(), 0, 0, 0, 0);
+        assertEquals(reference().toRelative(), box.reference(), "reference");
         assertEquals(0, box.x(), "x");
         assertEquals(0, box.y(), "y");
         assertEquals(0, box.width(), "width");
         assertEquals(0, box.height(), "height");
+    }
+
+    @Test
+    public void testWithAbsoluteSpreadsheetCellReference() {
+        final SpreadsheetCellBox box = SpreadsheetCellBox.with(reference().toAbsolute(), X, Y, WIDTH, HEIGHT);
+        assertEquals(reference().toRelative(), box.reference(), "reference");
+        assertEquals(X, box.x(), "x");
+        assertEquals(Y, box.y(), "y");
+        assertEquals(WIDTH, box.width(), "width");
+        assertEquals(HEIGHT, box.height(), "height");
     }
 
     // equals .............................................................................................
