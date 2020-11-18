@@ -491,9 +491,9 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
 
         final SpreadsheetCell b1 = this.b1();
         final SpreadsheetCell b2 = this.b2();
-        final SpreadsheetCellReference b3 = this.cellReference("$B$3");
-        final SpreadsheetCellReference c1 = this.cellReference("$C$1");
-        final SpreadsheetCellReference c2 = this.cellReference("$C$2");
+        final SpreadsheetCellReference b3 = this.cellReference("B3");
+        final SpreadsheetCellReference c1 = this.cellReference("C1");
+        final SpreadsheetCellReference c2 = this.cellReference("C2");
         final SpreadsheetCell c3 = this.c3();
 
         final List<Object> consumed = Lists.array();
@@ -514,11 +514,11 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
     public void testCellsMixed2() {
         final SpreadsheetRange range = SpreadsheetRange.parseRange("B1:C3"); // B1, B2, B3, C1, C2, C3
 
-        final SpreadsheetCellReference b1 = this.cellReference("$B$1");
-        final SpreadsheetCellReference b2 = this.cellReference("$B$2");
+        final SpreadsheetCellReference b1 = this.cellReference("B1");
+        final SpreadsheetCellReference b2 = this.cellReference("B2");
         final SpreadsheetCell b3 = this.b3();
-        final SpreadsheetCellReference c1 = this.cellReference("$C$1");
-        final SpreadsheetCellReference c2 = this.cellReference("$C$2");
+        final SpreadsheetCellReference c1 = this.cellReference("C1");
+        final SpreadsheetCellReference c2 = this.cellReference("C2");
         final SpreadsheetCell c3 = this.c3();
 
         final List<Object> consumed = Lists.array();
@@ -540,11 +540,37 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
         final SpreadsheetRange range = SpreadsheetRange.parseRange("B1:C3"); // B1, B2, B3, C1, C2, C3
 
         final SpreadsheetCell b1 = this.b1();
-        final SpreadsheetCellReference b2 = this.cellReference("$B$2");
-        final SpreadsheetCellReference b3 = this.cellReference("$B$3");
-        final SpreadsheetCellReference c1 = this.cellReference("$C$1");
-        final SpreadsheetCellReference c2 = this.cellReference("$C$2");
-        final SpreadsheetCellReference c3 = this.cellReference("$C$3");
+        final SpreadsheetCellReference b2 = this.cellReference("B2");
+        final SpreadsheetCellReference b3 = this.cellReference("B3");
+        final SpreadsheetCellReference c1 = this.cellReference("C1");
+        final SpreadsheetCellReference c2 = this.cellReference("C2");
+        final SpreadsheetCellReference c3 = this.cellReference("C3");
+
+        final List<Object> consumed = Lists.array();
+
+        range.cells(Lists.of(b1), consumed::add, consumed::add);
+
+        assertEquals(Lists.of(b1,
+                c1,
+                b2,
+                c2,
+                b3,
+                c3),
+                consumed,
+                "consumed");
+    }
+
+
+    @Test
+    public void testCellsMixedAbsoluteCellReferences() {
+        final SpreadsheetRange range = SpreadsheetRange.parseRange("$B$1:$C$3"); // B1, B2, B3, C1, C2, C3
+
+        final SpreadsheetCell b1 = this.b1();
+        final SpreadsheetCellReference b2 = this.cellReference("B2");
+        final SpreadsheetCellReference b3 = this.cellReference("B3");
+        final SpreadsheetCellReference c1 = this.cellReference("C1");
+        final SpreadsheetCellReference c2 = this.cellReference("C2");
+        final SpreadsheetCellReference c3 = this.cellReference("C3");
 
         final List<Object> consumed = Lists.array();
 
@@ -565,9 +591,9 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
         final SpreadsheetRange range = SpreadsheetRange.parseRange("B1:C2"); // B1, B2, B3, C1, C2, C3
 
         final SpreadsheetCell b1 = this.b1();
-        final SpreadsheetCellReference b2 = this.cellReference("$B$2");
-        final SpreadsheetCellReference c1 = this.cellReference("$C$1");
-        final SpreadsheetCellReference c2 = this.cellReference("$C$2");
+        final SpreadsheetCellReference b2 = this.cellReference("B2");
+        final SpreadsheetCellReference c1 = this.cellReference("C1");
+        final SpreadsheetCellReference c2 = this.cellReference("C2");
 
         @SuppressWarnings("unused") final SpreadsheetCell z99 = this.cell("Z99", "99+0");
 
@@ -848,11 +874,11 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
     }
 
     private SpreadsheetColumnReference column(final int column) {
-        return SpreadsheetReferenceKind.ABSOLUTE.column(column);
+        return SpreadsheetReferenceKind.RELATIVE.column(column);
     }
 
     private SpreadsheetRowReference row(final int row) {
-        return SpreadsheetReferenceKind.ABSOLUTE.row(row);
+        return SpreadsheetReferenceKind.RELATIVE.row(row);
     }
 
     private void check(final SpreadsheetRange range,

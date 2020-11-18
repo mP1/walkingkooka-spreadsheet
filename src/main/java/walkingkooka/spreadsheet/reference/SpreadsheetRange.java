@@ -215,7 +215,7 @@ public final class SpreadsheetRange extends SpreadsheetRectangle implements
      */
     public Stream<SpreadsheetColumnReference> columnStream() {
         return IntStream.range(this.begin().column().value(), this.end().column().value())
-                .mapToObj(SpreadsheetReferenceKind.ABSOLUTE::column);
+                .mapToObj(CELL_SPREADSHEET_REFERENCE_KIND::column);
     }
 
     /**
@@ -223,7 +223,7 @@ public final class SpreadsheetRange extends SpreadsheetRectangle implements
      */
     public Stream<SpreadsheetRowReference> rowStream() {
         return IntStream.range(this.begin().row().value(), this.end().row().value())
-                .mapToObj(SpreadsheetReferenceKind.ABSOLUTE::row);
+                .mapToObj(CELL_SPREADSHEET_REFERENCE_KIND::row);
     }
 
     /**
@@ -237,10 +237,12 @@ public final class SpreadsheetRange extends SpreadsheetRectangle implements
         final int columnOffset = begin.column().value();
 
         return IntStream.range(0, width * this.height())
-                .mapToObj(index -> SpreadsheetReferenceKind.ABSOLUTE.column(columnOffset + (index % width))
-                        .setRow(SpreadsheetReferenceKind.ABSOLUTE.row(rowOffset + (index / width)))
+                .mapToObj(index -> CELL_SPREADSHEET_REFERENCE_KIND.column(columnOffset + (index % width))
+                        .setRow(CELL_SPREADSHEET_REFERENCE_KIND.row(rowOffset + (index / width)))
                 );
     }
+
+    private final static SpreadsheetReferenceKind CELL_SPREADSHEET_REFERENCE_KIND = SpreadsheetReferenceKind.RELATIVE;
 
     /**
      * Visits all the {@link SpreadsheetCellReference} within this range, and dispatches either the present or absent
