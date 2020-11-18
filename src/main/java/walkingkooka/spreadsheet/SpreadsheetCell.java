@@ -90,7 +90,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
                             final Optional<TextNode> formatted) {
         super();
 
-        this.reference = reference;
+        this.reference = reference.toRelative();
         this.formula = formula;
         this.style = style;
         this.format = format;

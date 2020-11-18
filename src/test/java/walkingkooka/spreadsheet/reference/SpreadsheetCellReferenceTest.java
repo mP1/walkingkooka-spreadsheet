@@ -300,13 +300,13 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
         final double height = 20.5;
         final SpreadsheetCellReference reference = this.createReference();
 
-        final SpreadsheetCellBox rectangle = reference.cellBox(x, y, width, height);
+        final SpreadsheetCellBox box = reference.cellBox(x, y, width, height);
 
-        assertSame(reference, rectangle.reference(), "reference");
-        assertEquals(x, rectangle.x(), "x");
-        assertEquals(y, rectangle.y(), "y");
-        assertEquals(width, rectangle.width(), "width");
-        assertEquals(height, rectangle.height(), "height");
+        assertEquals(reference.toRelative(), box.reference(), "reference");
+        assertEquals(x, box.x(), "x");
+        assertEquals(y, box.y(), "y");
+        assertEquals(width, box.width(), "width");
+        assertEquals(height, box.height(), "height");
     }
 
     // range.............................................................................................................
@@ -391,7 +391,7 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
 
         final SpreadsheetViewport viewport = reference.viewport(width, height);
 
-        assertSame(reference, viewport.reference(), "reference");
+        assertEquals(reference.toRelative(), viewport.reference(), "reference");
         assertEquals(width, viewport.width(), "width");
         assertEquals(height, viewport.height(), "height");
     }
