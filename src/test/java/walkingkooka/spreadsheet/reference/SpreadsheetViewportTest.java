@@ -63,6 +63,11 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
         this.check(SpreadsheetViewport.with(this.reference(), WIDTH, HEIGHT));
     }
 
+    @Test
+    public void testWithAbsoluteReference() {
+        this.check(SpreadsheetViewport.with(this.reference().toAbsolute(), WIDTH, HEIGHT));
+    }
+
     // SpreadsheetExpressionReferenceVisitor.............................................................................
 
     @Test
@@ -138,11 +143,6 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
     @Test
     public void testToString3() {
         this.toStringAndCheck(SpreadsheetViewport.with(this.reference(), 40, 50.75), "B9:40:50.75");
-    }
-
-    @Test
-    public void testToString4() {
-        this.toStringAndCheck(SpreadsheetViewport.with(SpreadsheetCellReference.parseCellReference("$C$3"), 40, 50.75), "$C$3:40:50.75");
     }
 
     // helpers .........................................................................................................
