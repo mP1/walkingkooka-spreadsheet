@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.Cast;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
@@ -82,7 +81,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
      * {@see SpreadsheetColumnReferenceParser}
      */
     public static Parser<ParserContext> column() {
-        return Cast.to(SpreadsheetColumnReferenceParser.INSTANCE);
+        return SpreadsheetColumnReferenceParser.INSTANCE.cast();
     }
 
     /**
@@ -182,7 +181,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
      * {@see SpreadsheetRowReferenceParser}
      */
     public static Parser<ParserContext> row() {
-        return Cast.to(SpreadsheetRowReferenceParser.INSTANCE);
+        return SpreadsheetRowReferenceParser.INSTANCE.cast();
     }
 
     // conditions.............................................................................................................
