@@ -28,8 +28,6 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
-import java.util.function.Function;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -500,6 +498,11 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
     }
 
     @Test
+    public void testEqualsIgnoreReferenceKindDifferentTypeFalse() {
+        this.equalsIgnoreReferenceKindAndCheck(this.createReference(), this, false);
+    }
+
+    @Test
     public void testEqualsIgnoreReferenceKindSameTrue() {
         this.equalsIgnoreReferenceKindAndCheck(this.createReference(),
                 this.createReference(),
@@ -536,13 +539,14 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
     }
 
     private void equalsIgnoreReferenceKindAndCheck(final SpreadsheetCellReference reference1,
-                                                   final SpreadsheetCellReference reference2,
+                                                   final Object other,
                                                    final boolean expected) {
         assertEquals(expected,
-                reference1.equalsIgnoreReferenceKind(reference2),
-                () -> reference1 + " equalsIgnoreReferenceKind " + reference2
+                reference1.equalsIgnoreReferenceKind(other),
+                () -> reference1 + " equalsIgnoreReferenceKind " + other
         );
-        if (null != reference2) {
+        if (other instanceof SpreadsheetCellReference) {
+            final SpreadsheetCellReference reference2 = (SpreadsheetCellReference) other;
             assertEquals(expected,
                     reference2.equalsIgnoreReferenceKind(reference1),
                     () -> reference2 + " equalsIgnoreReferenceKind " + reference1);

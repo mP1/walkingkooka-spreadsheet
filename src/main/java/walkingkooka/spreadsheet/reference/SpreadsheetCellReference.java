@@ -291,7 +291,7 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
      */
     public boolean equalsIgnoreReferenceKind(final Object other) {
         return this == other ||
-                (null != other && this.equalsIgnoreReferenceKind0(Cast.to(other)));
+                (other instanceof SpreadsheetCellReference && this.equalsIgnoreReferenceKind0(Cast.to(other)));
     }
 
     private boolean equalsIgnoreReferenceKind0(final SpreadsheetCellReference other) {
