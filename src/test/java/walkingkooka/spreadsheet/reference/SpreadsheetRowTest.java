@@ -85,7 +85,7 @@ public final class SpreadsheetRowTest implements ClassTesting2<SpreadsheetRow>,
         this.compareToAndCheckLess(this.createComparable(ROW + 999));
     }
 
-    // compare..........................................................................................................
+    // compareTo0..........................................................................................................
 
     @Test
     public void testArraySort() {

@@ -40,7 +40,7 @@ final class SpreadsheetExpressionReferenceComparator implements Comparator<Sprea
 
     @Override
     public int compare(final SpreadsheetExpressionReference first, final SpreadsheetExpressionReference second) {
-        return first.compare(second);
+        return first.compareTo0(second);
     }
 
     @Override
