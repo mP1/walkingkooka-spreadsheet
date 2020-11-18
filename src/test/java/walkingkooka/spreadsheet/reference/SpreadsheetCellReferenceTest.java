@@ -28,6 +28,8 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
+import java.util.function.Function;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -102,6 +104,34 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
         this.checkRow(different, differentRow);
     }
 
+    // toRelative........................................................................................................
+
+    @Test
+    public void testToRelativeAlreadyAbsolute() {
+        this.toRelativeAndCheck(SpreadsheetCellReference.parseCellReference("$B$2"));
+    }
+
+    @Test
+    public void testToRelativeRelative() {
+        this.toRelativeAndCheck(SpreadsheetCellReference.parseCellReference("B2"));
+    }
+
+    @Test
+    public void testToRelativeMixed() {
+        this.toRelativeAndCheck(SpreadsheetCellReference.parseCellReference("$B2"));
+    }
+
+    @Test
+    public void testToRelativeMixed2() {
+        this.toRelativeAndCheck(SpreadsheetCellReference.parseCellReference("B$2"));
+    }
+
+    private void toRelativeAndCheck(final SpreadsheetCellReference reference) {
+        this.toRelativeOrAbsoluteAndCheck(reference,
+                reference.toRelative(),
+                SpreadsheetReferenceKind.RELATIVE);
+    }
+
     // toAbsolute.......................................................................................................
 
     @Test
@@ -125,13 +155,19 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
     }
 
     private void toAbsoluteAndCheck(final SpreadsheetCellReference reference) {
+        this.toRelativeOrAbsoluteAndCheck(reference,
+                reference.toAbsolute(),
+                SpreadsheetReferenceKind.ABSOLUTE);
+    }
+
+    private void toRelativeOrAbsoluteAndCheck(final SpreadsheetCellReference reference,
+                                              final SpreadsheetCellReference to,
+                                              final SpreadsheetReferenceKind kind) {
         final SpreadsheetColumnReference column = reference.column();
         final SpreadsheetRowReference row = reference.row();
 
-        final SpreadsheetCellReference absolute = reference.toAbsolute();
-
-        this.checkColumn(absolute, column.setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE));
-        this.checkRow(absolute, row.setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE));
+        this.checkColumn(to, column.setReferenceKind(kind));
+        this.checkRow(to, row.setReferenceKind(kind));
 
         this.checkColumn(reference, column);
         this.checkRow(reference, row);
