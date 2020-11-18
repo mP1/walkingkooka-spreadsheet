@@ -778,7 +778,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCell a1 = this.cell("$A$1", "1+2");
         engine.saveCell(a1, context);
 
-        final SpreadsheetCell b2 = this.cell("$B$2", "5+$A$1");
+        final SpreadsheetCellReference a1Reference = SpreadsheetCellReference.parseCellReference("$A$1");
+        final SpreadsheetCell b2 = this.cell("$B$2", "5+" + a1Reference);
 
         this.saveCellAndCheck(engine,
                 b2,
@@ -788,7 +789,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference());
         this.loadReferrersAndCheck(cellReferenceStore, a1.reference(), b2.reference());
 
-        this.loadReferencesAndCheck(cellReferenceStore, b2.reference(), a1.reference());
+        this.loadReferencesAndCheck(cellReferenceStore, b2.reference(), a1Reference);
         this.loadReferrersAndCheck(cellReferenceStore, b2.reference());
     }
 
@@ -857,7 +858,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 labelStore);
         final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
-        final SpreadsheetCell a1 = this.cell("$A$1", "$B$2+5");
+        final SpreadsheetCellReference b2Reference = SpreadsheetCellReference.parseCellReference("$B2$2");
+        final SpreadsheetCell a1 = this.cell("$A$1", b2Reference + "+5");
         engine.saveCell(a1, context);
 
         final SpreadsheetCell b2 = this.cell("$B$2", "1+2");
@@ -867,7 +869,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 this.formattedCellWithValue(a1, number(1 + 2 + 5)),
                 this.formattedCellWithValue(b2, number(1 + 2)));
 
-        this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), b2.reference());
+        this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), b2Reference);
         this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
 
         this.loadReferencesAndCheck(cellReferenceStore, b2.reference());
@@ -1035,13 +1037,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         engine.saveCell(this.cell("$A$1", "10+" + labelB2 + "+C2"), context);
 
-        final SpreadsheetCell a1 = this.cell("$A$1", "40+" + labelD4 + "+$E$5");
+        final SpreadsheetCellReference e5Reference = SpreadsheetCellReference.parseCellReference("$E$5");
+        final SpreadsheetCell a1 = this.cell("$A$1", "40+" + labelD4 + "+" + e5Reference);
         this.saveCellAndCheck(engine,
                 a1,
                 context,
                 this.formattedCellWithValue(a1, number(40 + 20 + 30)));
 
-        this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), e5.reference());
+        this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), e5Reference);
         this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
 
         this.loadReferencesAndCheck(cellReferenceStore, d4.reference());
@@ -1088,7 +1091,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 labelStore);
         final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
-        final SpreadsheetCell a1 = this.cell("$A$1", "1+$B$2");
+        final SpreadsheetCellReference b2Reference = SpreadsheetCellReference.parseCellReference("$B$2");
+
+        final SpreadsheetCell a1 = this.cell("$A$1", "1+" + b2Reference);
         engine.saveCell(a1, context);
 
         final SpreadsheetCell b2 = this.cell("$B$2", "20");
@@ -1097,9 +1102,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.deleteCellAndCheck(engine,
                 b2.reference(),
                 context,
-                this.formattedCellWithError(a1, "Unknown cell reference $B$2"));
+                this.formattedCellWithError(a1, "Unknown cell reference " + b2Reference));
 
-        this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), b2.reference());
+        this.loadReferencesAndCheck(cellReferenceStore, a1.reference(), b2Reference);
         this.loadReferrersAndCheck(cellReferenceStore, a1.reference());
 
         this.loadReferencesAndCheck(cellReferenceStore, b2.reference());

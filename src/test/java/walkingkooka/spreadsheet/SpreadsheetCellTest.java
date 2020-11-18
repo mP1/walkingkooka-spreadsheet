@@ -80,6 +80,19 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     @Test
+    public void testWithAbsoluteReference() {
+        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("$B$2");
+        final SpreadsheetCell cell = SpreadsheetCell.with(SpreadsheetCellReference.parseCellReference("$B$2"),
+                formula(FORMULA));
+
+        this.checkReference(cell, reference.toRelative());
+        this.checkFormula(cell);
+        this.checkTextStyle(cell);
+        this.checkFormat(cell, SpreadsheetCell.NO_FORMAT);
+        this.checkFormatted(cell, SpreadsheetCell.NO_FORMATTED_CELL);
+    }
+
+    @Test
     public void testWithFormula() {
         final SpreadsheetCell cell = SpreadsheetCell.with(REFERENCE, this.formula());
         this.checkReference(cell);
@@ -430,7 +443,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     @Test
     public void testJsonNode() {
         this.marshallAndCheck(SpreadsheetCell.with(reference(COLUMN, ROW), SpreadsheetFormula.with(FORMULA)),
-                "{\"$B$21\": {\"formula\": {\"text\": \"=1+2\"}}}");
+                "{\"B21\": {\"formula\": {\"text\": \"=1+2\"}}}");
     }
 
     @Test
@@ -439,7 +452,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
 
         this.marshallAndCheck(SpreadsheetCell.with(reference(COLUMN, ROW), SpreadsheetFormula.with(FORMULA))
                         .setStyle(boldAndItalics),
-                "{\"$B$21\": {\"formula\": {\"text\": \"=1+2\"}, \"style\": " +
+                "{\"B21\": {\"formula\": {\"text\": \"=1+2\"}, \"style\": " +
                         this.marshallContext()
                                 .marshallWithType(boldAndItalics) + "}}");
     }
@@ -450,7 +463,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         final JsonNodeMarshallContext context = this.marshallContext();
 
         this.marshallAndCheck(this.createCell(),
-                "{\"$B$21\": {\"formula\": {\"text\": \"=1+2\"}" +
+                "{\"B21\": {\"formula\": {\"text\": \"=1+2\"}" +
                         ", \"format\": " + context.marshall(this.format().get()) +
                         ", \"formatted\": " + context.marshallWithType(this.formatted().get()) +
                         "}}");
@@ -466,7 +479,7 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
         this.marshallAndCheck(this.createCell()
                         .setStyle(boldAndItalics)
                         .setFormatted(this.formatted()),
-                "{\"$B$21\": {\"formula\": {\"text\": \"=1+2\"}, \"style\": " + context.marshallWithType(boldAndItalics) +
+                "{\"B21\": {\"formula\": {\"text\": \"=1+2\"}, \"style\": " + context.marshallWithType(boldAndItalics) +
                         ", \"format\": " + context.marshall(this.format().get()) +
                         ", \"formatted\": " + context.marshallWithType(this.formatted().get()) +
                         "}}");
@@ -550,7 +563,10 @@ public final class SpreadsheetCellTest implements ClassTesting2<SpreadsheetCell>
     }
 
     private static SpreadsheetCellReference reference(final int column, final int row) {
-        return SpreadsheetExpressionReference.cellReference(SpreadsheetReferenceKind.ABSOLUTE.column(column), SpreadsheetReferenceKind.ABSOLUTE.row(row));
+        return SpreadsheetExpressionReference.cellReference(
+                SpreadsheetReferenceKind.RELATIVE.column(column),
+                SpreadsheetReferenceKind.RELATIVE.row(row)
+        );
     }
 
     private void checkReference(final SpreadsheetCell cell) {
