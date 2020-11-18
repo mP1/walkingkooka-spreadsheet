@@ -319,17 +319,17 @@ public final class SpreadsheetRange extends SpreadsheetRectangle implements
     }
 
     @Override
-    final int compare(final SpreadsheetExpressionReference other) {
+    final int compareTo0(final SpreadsheetExpressionReference other) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    final int compare0(final SpreadsheetCellReference other) {
+    final int compareTo1(final SpreadsheetCellReference other) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    final int compare0(final SpreadsheetLabelName other) {
+    final int compareTo1(final SpreadsheetLabelName other) {
         throw new UnsupportedOperationException();
     }
 }

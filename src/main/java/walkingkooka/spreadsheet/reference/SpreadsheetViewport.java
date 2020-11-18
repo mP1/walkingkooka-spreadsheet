@@ -163,17 +163,17 @@ public final class SpreadsheetViewport extends SpreadsheetRectangle
     }
 
     @Override
-    int compare(final SpreadsheetExpressionReference other) {
+    int compareTo0(final SpreadsheetExpressionReference other) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    int compare0(final SpreadsheetCellReference other) {
+    int compareTo1(final SpreadsheetCellReference other) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    int compare0(final SpreadsheetLabelName other) {
+    int compareTo1(final SpreadsheetLabelName other) {
         throw new UnsupportedOperationException();
     }
 

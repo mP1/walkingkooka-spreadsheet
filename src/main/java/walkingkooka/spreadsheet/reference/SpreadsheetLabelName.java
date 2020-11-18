@@ -125,7 +125,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference i
     }
 
     private boolean equals1(final SpreadsheetLabelName other) {
-        return this.compare(other) == 0;
+        return this.compareTo0(other) == 0;
     }
 
     @Override
@@ -136,17 +136,17 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference i
     // SpreadsheetExpressionReferenceComparator........................................................................
 
     @Override
-    final int compare(final SpreadsheetExpressionReference other) {
-        return other.compare0(this);
+    final int compareTo0(final SpreadsheetExpressionReference other) {
+        return other.compareTo1(this);
     }
 
     @Override
-    final int compare0(final SpreadsheetCellReference other) {
+    final int compareTo1(final SpreadsheetCellReference other) {
         return -LABEL_COMPARED_WITH_CELL_RESULT;
     }
 
     @Override
-    final int compare0(final SpreadsheetLabelName other) {
+    final int compareTo1(final SpreadsheetLabelName other) {
         return other.compareTo(this);
     }
 

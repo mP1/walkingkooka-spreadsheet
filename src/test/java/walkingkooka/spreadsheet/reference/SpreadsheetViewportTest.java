@@ -303,16 +303,16 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
         this.marshallRoundTripTwiceAndCheck(SpreadsheetViewport.with(this.reference(), 50.5, 75.75));
     }
 
-    //compare...........................................................................................................
+    //compareTo0...........................................................................................................
 
     @Test
     public void testCompareCellFails() {
-        assertThrows(UnsupportedOperationException.class, () -> this.rectangle().compare(SpreadsheetCellReference.parseCellReference("A1")));
+        assertThrows(UnsupportedOperationException.class, () -> this.rectangle().compareTo0(SpreadsheetCellReference.parseCellReference("A1")));
     }
 
     @Test
     public void testCompareRectangleFails() {
-        assertThrows(UnsupportedOperationException.class, () -> this.rectangle().compare(this.rectangle()));
+        assertThrows(UnsupportedOperationException.class, () -> this.rectangle().compareTo0(this.rectangle()));
     }
 
     @Test

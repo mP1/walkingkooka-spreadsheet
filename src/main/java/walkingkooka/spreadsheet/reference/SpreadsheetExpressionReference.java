@@ -214,14 +214,14 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
 
     /**
      * Invoked by {@link SpreadsheetExpressionReferenceComparator} using double dispatch
-     * to compare two {@link SpreadsheetExpressionReference}. Each sub class will use double dispatch which will invoke
-     * either of the #compare0 methods. saving the need for instanceof checks.
+     * to compareTo0 two {@link SpreadsheetExpressionReference}. Each sub class will use double dispatch which will invoke
+     * either of the #compareTo1 methods. saving the need for instanceof checks.
      */
-    abstract int compare(final SpreadsheetExpressionReference other);
+    abstract int compareTo0(final SpreadsheetExpressionReference other);
 
-    abstract int compare0(final SpreadsheetCellReference other);
+    abstract int compareTo1(final SpreadsheetCellReference other);
 
-    abstract int compare0(final SpreadsheetLabelName other);
+    abstract int compareTo1(final SpreadsheetLabelName other);
 
     /**
      * Labels come before references, used as the result when a label compares with a reference.

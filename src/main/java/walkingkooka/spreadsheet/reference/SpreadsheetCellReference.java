@@ -256,8 +256,8 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
 
     @Override
     public int compareTo(final SpreadsheetCellReference other) {
-        // reverse sign because #compare0 does compare in reverse because of double dispatch.
-        return -this.compare0(other);
+        // reverse sign because #compareTo1 does compareTo0 in reverse because of double dispatch.
+        return -this.compareTo1(other);
     }
 
     // SpreadsheetExpressionReferenceComparator........................................................................
@@ -267,12 +267,12 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
      * is ignored.
      */
     @Override
-    final int compare(final SpreadsheetExpressionReference other) {
-        return other.compare0(this);
+    final int compareTo0(final SpreadsheetExpressionReference other) {
+        return other.compareTo1(this);
     }
 
     @Override
-    final int compare0(final SpreadsheetCellReference other) {
+    final int compareTo1(final SpreadsheetCellReference other) {
         final int result = other.column.value - this.column.value;
         return Comparators.EQUAL != result ?
                 result :
@@ -280,7 +280,7 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
     }
 
     @Override
-    final int compare0(final SpreadsheetLabelName other) {
+    final int compareTo1(final SpreadsheetLabelName other) {
         return LABEL_COMPARED_WITH_CELL_RESULT;
     }
 
