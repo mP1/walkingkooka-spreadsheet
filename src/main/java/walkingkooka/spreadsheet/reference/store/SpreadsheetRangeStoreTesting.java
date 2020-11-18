@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.store.StoreTesting;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -151,7 +152,8 @@ public interface SpreadsheetRangeStoreTesting<S extends SpreadsheetRangeStore<V>
     // helpers ............................................................
 
     static SpreadsheetCellReference cell(final int column, final int row) {
-        return SpreadsheetReferenceKind.ABSOLUTE.column(column).setRow(SpreadsheetReferenceKind.ABSOLUTE.row(row));
+        return SpreadsheetReferenceKind.RELATIVE.column(column)
+                .setRow(SpreadsheetReferenceKind.RELATIVE.row(row));
     }
 
     default void loadRangeFails(final SpreadsheetRangeStore<V> store, final SpreadsheetRange range) {

@@ -134,6 +134,15 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
         checkRange(range);
         checkValue(value);
 
+        this.addValue0(range.begin()
+                        .toRelative()
+                        .spreadsheetRange(range.end()
+                                .toRelative()
+                        ),
+                value);
+    }
+
+    private void addValue0(final SpreadsheetRange range, final V value) {
         this.addTopLeft(range, value);
         this.addBottomRight(range, value);
         this.addValueToValueToRanges(range, value);
@@ -328,7 +337,7 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
 //
         for (final TreeMapSpreadsheetRangeStoreTopLeftEntry<V> entry : this.topLeft.values()) {
             for (final SpreadsheetRange range : entry.ranges()) {
-                copy = copy | range.equals(from); // doesnt find > from must be ==
+                copy = copy | range.equalsIgnoreReferenceKind(from); // doesnt find > from must be ==
 
                 if (copy) {
                     if (values.size() == count) {
@@ -366,6 +375,9 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
     /**
      * The top left cell is the key, with the value holding all ranges that share the same top/left cell.
      * To locate matching values, all entries will be filtered.
+     * <ul>
+     * <li>Only {@link SpreadsheetCellReference} that are relative are added</li>
+     * </ul>
      */
     private final NavigableMap<SpreadsheetCellReference, TreeMapSpreadsheetRangeStoreTopLeftEntry<V>> topLeft = new TreeMap<>();
 
