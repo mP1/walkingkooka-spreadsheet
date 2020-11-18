@@ -97,7 +97,7 @@ public final class SpreadsheetViewport extends SpreadsheetRectangle
                                 final double width,
                                 final double height) {
         super();
-        this.reference = reference;
+        this.reference = reference.toRelative();
         this.width = width;
         this.height = height;
     }
