@@ -22,7 +22,8 @@ import walkingkooka.Cast;
 import java.util.Objects;
 
 /**
- * Represents a row reference
+ * Represents a row reference. The {@link Comparable} method ignores the {@link SpreadsheetReferenceKind} component
+ * only comparing the value.
  */
 public final class SpreadsheetRowReference extends SpreadsheetColumnOrRowReference<SpreadsheetRowReference> {
 
