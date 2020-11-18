@@ -31,7 +31,8 @@ import walkingkooka.text.cursor.parser.ParserReporters;
 import java.util.Objects;
 
 /**
- * A reference that includes a defined name or column and row.
+ * A {@link SpreadsheetExpressionReference reference} that includes a defined name or column and row. Note the
+ * {@link #compareTo(SpreadsheetCellReference)} ignores the {@link SpreadsheetReferenceKind} of the column and row.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
 public final class SpreadsheetCellReference extends SpreadsheetExpressionReference
@@ -261,6 +262,10 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
 
     // SpreadsheetExpressionReferenceComparator........................................................................
 
+    /**
+     * Note the {@link SpreadsheetReferenceKind} of the {@link SpreadsheetColumnReference} and {@link SpreadsheetRowReference}
+     * is ignored.
+     */
     @Override
     final int compare(final SpreadsheetExpressionReference other) {
         return other.compare0(this);
