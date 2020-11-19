@@ -28,6 +28,8 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
 import java.util.function.Predicate;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public abstract class SpreadsheetExpressionReferenceTestCase<R extends SpreadsheetExpressionReference> implements ClassTesting2<R>,
         HashCodeEqualsDefinedTesting2<R>,
         JsonNodeMarshallingTesting<R>,
@@ -37,6 +39,50 @@ public abstract class SpreadsheetExpressionReferenceTestCase<R extends Spreadshe
     SpreadsheetExpressionReferenceTestCase() {
         super();
     }
+
+    // equalsIgnoreReferenceKind........................................................................................
+
+    @Test
+    public final void testEqualsIgnoreReferenceKindNullFalse() {
+        this.equalsIgnoreReferenceKindAndCheck(this.createReference(), null, false);
+    }
+
+    @Test
+    public final void testEqualsIgnoreReferenceKindDifferentTypeFalse() {
+        this.equalsIgnoreReferenceKindAndCheck(this.createReference(), this, false);
+    }
+
+    @Test
+    public final void testEqualsIgnoreReferenceKindSameTrue() {
+        final R reference = this.createReference();
+        this.equalsIgnoreReferenceKindAndCheck(reference,
+                reference,
+                true);
+    }
+
+    @Test
+    public final void testEqualsIgnoreReferenceKindSameTrue2() {
+        this.equalsIgnoreReferenceKindAndCheck(this.createReference(),
+                this.createReference(),
+                true);
+    }
+
+    final void equalsIgnoreReferenceKindAndCheck(final R reference1,
+                                                 final Object other,
+                                                 final boolean expected) {
+        assertEquals(expected,
+                reference1.equalsIgnoreReferenceKind(other),
+                () -> reference1 + " equalsIgnoreReferenceKind " + other
+        );
+        if (other instanceof SpreadsheetExpressionReference) {
+            final R reference2 = (R) other;
+            assertEquals(expected,
+                    reference2.equalsIgnoreReferenceKind(reference1),
+                    () -> reference2 + " equalsIgnoreReferenceKind " + reference1);
+        }
+    }
+
+    // Json..............................................................................................................
 
     @Test
     public final void testJsonNodeMarshall() {

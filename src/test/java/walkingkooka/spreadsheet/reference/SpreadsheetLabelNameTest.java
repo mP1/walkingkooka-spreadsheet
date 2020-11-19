@@ -176,6 +176,15 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
         assertEquals("13542", b.toString());
     }
 
+    // equalsIgnoreReferenceKind.......................................................................................
+
+    @Test
+    public void testEqualsIgnoreReferenceDifferentName() {
+        this.equalsIgnoreReferenceKindAndCheck(this.createReference(),
+                SpreadsheetLabelName.with("different"),
+                false);
+    }
+
     // JsonNodeMarshallingTesting.......................................................................................
 
     @Test

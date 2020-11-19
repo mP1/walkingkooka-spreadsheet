@@ -493,23 +493,6 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
     // equalsIgnoreReferenceKind........................................................................................
 
     @Test
-    public void testEqualsIgnoreReferenceKindNullFalse() {
-        this.equalsIgnoreReferenceKindAndCheck(this.createReference(), null, false);
-    }
-
-    @Test
-    public void testEqualsIgnoreReferenceKindDifferentTypeFalse() {
-        this.equalsIgnoreReferenceKindAndCheck(this.createReference(), this, false);
-    }
-
-    @Test
-    public void testEqualsIgnoreReferenceKindSameTrue() {
-        this.equalsIgnoreReferenceKindAndCheck(this.createReference(),
-                this.createReference(),
-                true);
-    }
-
-    @Test
     public void testEqualsIgnoreReferenceKindDifferentValuesFalse() {
         this.equalsIgnoreReferenceKindAndCheck("$A1",
                 "$B2",
@@ -536,21 +519,6 @@ public final class SpreadsheetCellReferenceTest extends SpreadsheetExpressionRef
         this.equalsIgnoreReferenceKindAndCheck(SpreadsheetCellReference.parseCellReference(reference1),
                 SpreadsheetCellReference.parseCellReference(reference2),
                 expected);
-    }
-
-    private void equalsIgnoreReferenceKindAndCheck(final SpreadsheetCellReference reference1,
-                                                   final Object other,
-                                                   final boolean expected) {
-        assertEquals(expected,
-                reference1.equalsIgnoreReferenceKind(other),
-                () -> reference1 + " equalsIgnoreReferenceKind " + other
-        );
-        if (other instanceof SpreadsheetCellReference) {
-            final SpreadsheetCellReference reference2 = (SpreadsheetCellReference) other;
-            assertEquals(expected,
-                    reference2.equalsIgnoreReferenceKind(reference1),
-                    () -> reference2 + " equalsIgnoreReferenceKind " + reference1);
-        }
     }
 
     // compare..........................................................................................................

@@ -648,23 +648,6 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
     // equalsIgnoreReferenceKind........................................................................................
 
     @Test
-    public void testEqualsIgnoreReferenceKindNullFalse() {
-        this.equalsIgnoreReferenceKindAndCheck(this.range(), null, false);
-    }
-
-    @Test
-    public void testEqualsIgnoreReferenceKindDifferentTypeFalse() {
-        this.equalsIgnoreReferenceKindAndCheck(this.range(), this, false);
-    }
-
-    @Test
-    public void testEqualsIgnoreReferenceKindSameTrue() {
-        this.equalsIgnoreReferenceKindAndCheck(this.range(),
-                this.range(),
-                true);
-    }
-
-    @Test
     public void testEqualsIgnoreReferenceKindDifferentValuesFalse() {
         this.equalsIgnoreReferenceKindAndCheck("$A1",
                 "$B2",
@@ -719,21 +702,6 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
         this.equalsIgnoreReferenceKindAndCheck(SpreadsheetRange.parseRange(range1),
                 SpreadsheetRange.parseRange(range2),
                 expected);
-    }
-
-    private void equalsIgnoreReferenceKindAndCheck(final SpreadsheetRange range1,
-                                                   final Object other,
-                                                   final boolean expected) {
-        assertEquals(expected,
-                range1.equalsIgnoreReferenceKind(other),
-                () -> range1 + " equalsIgnoreReferenceKind " + other
-        );
-        if (other instanceof SpreadsheetRange) {
-            final SpreadsheetRange range2 = (SpreadsheetRange) other;
-            assertEquals(expected,
-                    range2.equalsIgnoreReferenceKind(range1),
-                    () -> range2 + " equalsIgnoreReferenceKind " + range1);
-        }
     }
 
     // SpreadsheetExpressionReferenceVisitor.............................................................................
