@@ -330,7 +330,7 @@ public final class SpreadsheetRange extends SpreadsheetRectangle implements
     // toRelative.......................................................................................................
 
     @Override
-    public SpreadsheetExpressionReference toRelative() {
+    public SpreadsheetRange toRelative() {
         final SpreadsheetRange relative = this.begin()
                 .toRelative()
                 .spreadsheetRange(this.end()
