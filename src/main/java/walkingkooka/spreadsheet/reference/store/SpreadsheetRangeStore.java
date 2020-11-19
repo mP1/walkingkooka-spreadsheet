@@ -27,7 +27,10 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 /**
- * A store that holds one or more values for {@link SpreadsheetRange}.
+ * A {@link Store} that holds one or more values for {@link SpreadsheetRange}.
+ * For parameter types {@link SpreadsheetCellReference} and {@link SpreadsheetRange} the {@link walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind}
+ * is ignored passing either variant must return the same results.
+ * All returned {@link SpreadsheetCellReference} including those within a {@link SpreadsheetRange} will be relative and never absolute.
  */
 public interface SpreadsheetRangeStore<V> extends Store<SpreadsheetRange, List<V>> {
 
