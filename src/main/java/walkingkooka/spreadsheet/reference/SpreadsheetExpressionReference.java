@@ -201,6 +201,12 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
      */
     abstract boolean equalsIgnoreReferenceKind0(final Object other);
 
+    /**
+     * If the sub class has a {@link SpreadsheetReferenceKind} return a new instance with that set to {@link SpreadsheetReferenceKind#RELATIVE}.
+     * Sub classes such as {@link SpreadsheetLabelName} and {@link SpreadsheetViewport} will always return this.
+     */
+    public abstract SpreadsheetExpressionReference toRelative();
+
     // SpreadsheetExpressionReferenceVisitor............................................................................
 
     abstract void accept(final SpreadsheetExpressionReferenceVisitor visitor);

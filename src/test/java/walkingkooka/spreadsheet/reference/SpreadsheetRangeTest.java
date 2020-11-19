@@ -704,6 +704,36 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
                 expected);
     }
 
+    // toRelative.......................................................................................................
+
+    @Test
+    public void testToRelative() {
+        final SpreadsheetRange range = this.createReference();
+        assertSame(range, range.toRelative());
+    }
+
+    @Test
+    public void testToRelativeBeginAbsolute() {
+        this.toRelativeAndCheck("$A1:B2", "A1:B2");
+    }
+
+    @Test
+    public void testToRelativeBeginAbsoluteEndAbsolute() {
+        this.toRelativeAndCheck("$A1:$B2", "A1:B2");
+    }
+
+    @Test
+    public void testToRelativeEndAbsolute() {
+        this.toRelativeAndCheck("A1:$B2", "A1:B2");
+    }
+
+    private void toRelativeAndCheck(final String start,
+                                    final String expected) {
+        assertEquals(SpreadsheetRange.parseRange(expected),
+                SpreadsheetRange.parseRange(start).toRelative(),
+                () -> start + " toRelative");
+    }
+
     // SpreadsheetExpressionReferenceVisitor.............................................................................
 
     @Test
