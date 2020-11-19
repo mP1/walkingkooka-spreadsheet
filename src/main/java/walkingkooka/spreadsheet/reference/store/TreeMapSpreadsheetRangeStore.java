@@ -134,12 +134,7 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
         checkRange(range);
         checkValue(value);
 
-        this.addValue0(range.begin()
-                        .toRelative()
-                        .spreadsheetRange(range.end()
-                                .toRelative()
-                        ),
-                value);
+        this.addValue0(range.toRelative(), value);
     }
 
     private void addValue0(final SpreadsheetRange range, final V value) {
