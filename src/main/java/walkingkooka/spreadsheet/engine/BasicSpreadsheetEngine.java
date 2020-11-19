@@ -38,9 +38,9 @@ import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetViewport;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.text.cursor.parser.ParserException;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
@@ -68,9 +68,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     static BasicSpreadsheetEngine with(final SpreadsheetId id,
                                        final SpreadsheetMetadata metadata,
                                        final SpreadsheetCellStore cellStore,
-                                       final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferencesStore,
+                                       final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferencesStore,
                                        final SpreadsheetLabelStore labelStore,
-                                       final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore,
+                                       final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore,
                                        final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore,
                                        final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRuleStore) {
         Objects.requireNonNull(id, "id");
@@ -98,9 +98,9 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     private BasicSpreadsheetEngine(final SpreadsheetId id,
                                    final SpreadsheetMetadata metadata,
                                    final SpreadsheetCellStore cellStore,
-                                   final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferencesStore,
+                                   final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferencesStore,
                                    final SpreadsheetLabelStore labelStore,
-                                   final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore,
+                                   final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore,
                                    final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCellStore,
                                    final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRuleStore) {
         this.id = id;
@@ -605,8 +605,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * Tracks all references to a single cell.
      */
-    final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferencesStore;
-    final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferencesStore;
+    final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferencesStore;
+    final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore;
 
     /**
      * Used to track ranges to cells references.

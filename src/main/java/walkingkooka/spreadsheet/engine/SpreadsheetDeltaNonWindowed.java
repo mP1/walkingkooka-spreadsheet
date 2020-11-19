@@ -70,7 +70,7 @@ final class SpreadsheetDeltaNonWindowed extends SpreadsheetDelta {
      * There is no window.
      */
     @Override
-    public List<SpreadsheetRectangle> window() {
+    public List<SpreadsheetRectangle<?>> window() {
         return Lists.empty();
     }
 

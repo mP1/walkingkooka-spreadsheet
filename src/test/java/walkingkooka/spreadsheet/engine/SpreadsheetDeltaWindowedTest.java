@@ -167,11 +167,11 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     // helpers..........................................................................................................
 
     @Override
-    final List<SpreadsheetRectangle> window() {
+    final List<SpreadsheetRectangle<?>> window() {
         return this.window0("A1:E5", "F6:Z99");
     }
 
-    private List<SpreadsheetRectangle> windowPixelRectangle() {
+    private List<SpreadsheetRectangle<?>> windowPixelRectangle() {
         return this.window0("B9:300:50");
     }
 
@@ -181,7 +181,7 @@ public final class SpreadsheetDeltaWindowedTest extends SpreadsheetDeltaTestCase
     }
 
     private SpreadsheetDeltaWindowed createSpreadsheetDelta(final Set<SpreadsheetCell> cells,
-                                                            final List<SpreadsheetRectangle> window) {
+                                                            final List<SpreadsheetRectangle<?>> window) {
         return SpreadsheetDeltaWindowed.withWindowed(cells, this.maxColumnWidths(), this.maxRowHeights(), window);
     }
 

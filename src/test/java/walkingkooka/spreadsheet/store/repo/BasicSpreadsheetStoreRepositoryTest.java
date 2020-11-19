@@ -23,12 +23,12 @@ import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStores;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStore;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStores;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStore;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStores;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
@@ -158,10 +158,10 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     }
 
     private void withFails(final SpreadsheetCellStore cells,
-                           final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferences,
+                           final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences,
                            final SpreadsheetGroupStore groups,
                            final SpreadsheetLabelStore labels,
-                           final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences,
+                           final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences,
                            final SpreadsheetMetadataStore metadatas,
                            final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells,
                            final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
@@ -180,10 +180,10 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
     @Test
     public void testToString() {
         final SpreadsheetCellStore cells = this.cells();
-        final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferences = this.cellReferences();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences = this.cellReferences();
         final SpreadsheetGroupStore groups = this.groups();
         final SpreadsheetLabelStore labels = this.labels();
-        final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences = this.labelReferences();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences = this.labelReferences();
         final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells = this.rangeToCells();
         final SpreadsheetMetadataStore metadatas = this.metadatas();
         final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules = this.rangeToConditionalFormattingRules();
@@ -218,8 +218,8 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
         return SpreadsheetCellStores.fake();
     }
 
-    private SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferences() {
-        return SpreadsheetReferenceStores.fake();
+    private SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences() {
+        return SpreadsheetExpressionReferenceStores.fake();
     }
 
     private SpreadsheetGroupStore groups() {
@@ -230,8 +230,8 @@ public final class BasicSpreadsheetStoreRepositoryTest implements SpreadsheetSto
         return SpreadsheetLabelStores.fake();
     }
 
-    private SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences() {
-        return SpreadsheetReferenceStores.fake();
+    private SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences() {
+        return SpreadsheetExpressionReferenceStores.fake();
     }
 
     private SpreadsheetMetadataStore metadatas() {

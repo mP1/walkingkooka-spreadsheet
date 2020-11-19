@@ -33,7 +33,7 @@ import java.util.TreeMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceStoreTestCase<TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference>, SpreadsheetCellReference> {
+public class TreeMapSpreadsheetExpressionReferenceStoreTest extends SpreadsheetExpressionReferenceStoreTestCase<TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference>, SpreadsheetCellReference> {
 
     @Override
     public void testAddSaveWatcherAndSave() {
@@ -45,7 +45,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testSave() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -58,7 +58,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testSave2() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -72,7 +72,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testSave3() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -85,8 +85,22 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
     }
 
     @Test
+    public void testSave3Absolute() {
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
+
+        final SpreadsheetCellReference a1 = this.a1().toAbsolute();
+        final SpreadsheetCellReference b1 = this.b1();
+        final SpreadsheetCellReference c1 = this.c1();
+
+        store.saveReferences(a1, Sets.of(b1.toAbsolute(), c1.toAbsolute()));
+
+        this.checkTargetToReferences(store, Maps.of(a1, Sets.of(b1, c1)));
+        this.checkReferenceToTargets(store, Maps.of(b1, Sets.of(a1), c1, Sets.of(a1)));
+    }
+
+    @Test
     public void testSaveAndLoad() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -102,7 +116,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testSaveAndLoad2() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -121,7 +135,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testSaveAndLoad3() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -140,7 +154,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testSaveAndLoadDifferentReferenceKind() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -149,7 +163,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
         store.saveReferences(a1, Sets.of(b1, c1));
         store.saveReferences(b1, Sets.of(c1));
 
-        final SpreadsheetCellReference absoluteB1 = SpreadsheetExpressionReference.parseCellReference("$B$1");
+        final SpreadsheetCellReference absoluteB1 = b1.toAbsolute();
         assertNotEquals(b1, absoluteB1, "expected same cell but relative/absolute");
         assertEquals(true, absoluteB1.equalsIgnoreReferenceKind(b1), () -> absoluteB1 + " " + b1);
 
@@ -162,11 +176,35 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
         this.loadReferredAndCheck(store, c1, a1, b1);
     }
 
+    @Test
+    public void testSaveAndLoadDifferentReferenceKind2() {
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
+
+        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference b1 = this.b1();
+        final SpreadsheetCellReference c1 = this.c1();
+
+        store.saveReferences(a1, Sets.of(b1, c1));
+        store.saveReferences(b1, Sets.of(c1));
+
+        final SpreadsheetCellReference absoluteB1 = b1.toAbsolute();
+        assertNotEquals(b1, absoluteB1, "expected same cell but relative/absolute");
+        assertEquals(true, absoluteB1.equalsIgnoreReferenceKind(b1), () -> absoluteB1 + " " + b1);
+
+        this.loadAndCheck(store, a1.toAbsolute(), b1, c1);
+        this.loadAndCheck(store, b1.toAbsolute(), c1);
+        this.loadFailCheck(store, c1.toAbsolute());
+
+        this.loadReferredAndCheck(store, b1, a1);
+        this.loadReferredAndCheck(store, absoluteB1, a1);
+        this.loadReferredAndCheck(store, c1, a1, b1);
+    }
+
     // delete.........................................................................................
 
     @Test
     public void testDeleteAfterSaveReferences() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -181,7 +219,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testDeleteAfterSaveReferences2() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -197,11 +235,26 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
         this.checkTargetToReferences(store, Maps.of(c1, Sets.of(d1)));
     }
 
+    @Test
+    public void testDeleteAfterSaveReferencesAbsolute() {
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
+
+        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference b1 = this.b1();
+
+        store.saveReferences(a1, Sets.of(b1));
+
+        store.delete(a1.toAbsolute());
+
+        this.checkReferenceToTargets(store, Maps.empty());
+        this.checkTargetToReferences(store, Maps.empty());
+    }
+
     // ids.................................................................................
 
     @Test
     public final void testIds() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a = this.a1();
         final SpreadsheetCellReference b = this.b1();
@@ -216,8 +269,24 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
     }
 
     @Test
+    public final void testIdsAbsolute() {
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
+
+        final SpreadsheetCellReference a = this.a1().toAbsolute();
+        final SpreadsheetCellReference b = this.b1().toAbsolute();
+        final SpreadsheetCellReference c = this.c1().toAbsolute();
+        final SpreadsheetCellReference f = this.f99().toAbsolute();
+
+        store.saveReferences(a, Sets.of(f));
+        store.saveReferences(b, Sets.of(f));
+        store.saveReferences(c, Sets.of(f));
+
+        this.idsAndCheck(store, 0, 3, a, b, c);
+    }
+
+    @Test
     public final void testIdsWindow() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a = this.a1();
         final SpreadsheetCellReference b = this.b1();
@@ -239,7 +308,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testIdsWithoutReferences() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -259,7 +328,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public final void testValues() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a = this.a1();
         final SpreadsheetCellReference b = this.b1();
@@ -278,8 +347,28 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
     }
 
     @Test
+    public final void testValuesAbsolute() {
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
+
+        final SpreadsheetCellReference a = this.a1().toAbsolute();
+        final SpreadsheetCellReference b = this.b1().toAbsolute();
+        final SpreadsheetCellReference c = this.c1().toAbsolute();
+
+        final Set<SpreadsheetCellReference> f = Sets.of(this.f99());
+        final Set<SpreadsheetCellReference> g = Sets.of(this.g99());
+        final Set<SpreadsheetCellReference> hi = Sets.of(this.h99(), this.i99());
+
+        store.saveReferences(a, f);
+        store.saveReferences(b, g);
+        store.saveReferences(c, hi);
+
+        //noinspection unchecked
+        this.valuesAndCheck(store, a, 3, f, g, hi);
+    }
+
+    @Test
     public final void testValuesWindow() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a = this.a1();
         final SpreadsheetCellReference b = this.b1();
@@ -302,7 +391,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testValuesWithoutReferences() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -323,7 +412,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testSaveReferences() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -334,8 +423,20 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
     }
 
     @Test
+    public void testSaveReferencesAbsolute() {
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
+
+        final SpreadsheetCellReference a1 = this.a1().toAbsolute();
+        final SpreadsheetCellReference b1 = this.b1();
+        store.saveReferences(a1, Sets.of(b1));
+
+        this.checkReferenceToTargets(store, Maps.of(b1, Sets.of(a1)));
+        this.checkTargetToReferences(store, Maps.of(a1, Sets.of(b1)));
+    }
+
+    @Test
     public void testSaveReferencesReplaceSome() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -350,7 +451,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testSaveReferencesReplaceAll() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -369,7 +470,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testSaveReferencesReplaceSomeAddReferenceWatcherRemoveReferenceWatcher() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -400,7 +501,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testSaveReferencesReplaceAllAddReferenceWatcherRemoveReferenceWatcher() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -426,7 +527,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testAddReference() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -438,7 +539,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testAddReference2() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -453,8 +554,20 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
     }
 
     @Test
+    public void testAddReferenceAbsolute() {
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
+
+        final SpreadsheetCellReference a1 = this.a1().toAbsolute();
+        final SpreadsheetCellReference b1 = this.b1();
+        store.addReference(TargetAndSpreadsheetCellReference.with(a1, b1));
+
+        this.checkReferenceToTargets(store, Maps.of(b1, Sets.of(a1)));
+        this.checkTargetToReferences(store, Maps.of(a1, Sets.of(b1)));
+    }
+
+    @Test
     public void testAddReferenceSameTarget() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -469,7 +582,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testSaveReferencesAddReferenceAndLoad() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -489,7 +602,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testSaveReferencesAddReferenceAndLoad2() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -515,7 +628,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testRemoveReference() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -529,7 +642,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testRemoveReference2() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -546,8 +659,22 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
     }
 
     @Test
+    public void testRemoveReferenceAbsolute() {
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
+
+        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference b1 = this.b1();
+        store.saveReferences(a1, Sets.of(b1));
+
+        store.removeReference(TargetAndSpreadsheetCellReference.with(a1.toAbsolute(), b1));
+
+        this.checkReferenceToTargets(store, Maps.empty());
+        this.checkTargetToReferences(store, Maps.empty());
+    }
+
+    @Test
     public void testRemoveReferenceManyValues() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -561,8 +688,23 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
     }
 
     @Test
+    public void testRemoveReferenceManyValuesAbsolute() {
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
+
+        final SpreadsheetCellReference a1 = this.a1();
+        final SpreadsheetCellReference b1 = this.b1();
+        final SpreadsheetCellReference c1 = this.c1();
+        store.saveReferences(a1, Sets.of(b1, c1));
+
+        store.removeReference(TargetAndSpreadsheetCellReference.with(a1.toAbsolute(), c1));
+
+        this.checkReferenceToTargets(store, Maps.of(b1, Sets.of(a1)));
+        this.checkTargetToReferences(store, Maps.of(a1, Sets.of(b1)));
+    }
+
+    @Test
     public void testRemoveReferenceUnknownAndLoad() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -582,7 +724,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testSaveReferencesRemoveReferenceAndLoad() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -604,7 +746,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testSaveReferencesAndAddReferenceAndRemoveReference() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -632,7 +774,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testSaveReferencesAndAddReferenceAndRemoveReference2() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -663,7 +805,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testSaveReferencesAndAddReferenceAndRemoveReference3() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -690,7 +832,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testLoadReferredDefensivelyCopied() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -710,7 +852,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testSaveReferencesAddReferenceRemoveReferenceAndCount() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -727,7 +869,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
 
     @Test
     public void testToString() {
-        final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> store = this.createStore();
+        final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> store = this.createStore();
 
         final SpreadsheetCellReference a1 = this.a1();
         final SpreadsheetCellReference b1 = this.b1();
@@ -737,7 +879,7 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
         this.toStringAndCheck(store, "{A1=[B1, C1]}");
     }
 
-    // SpreadsheetReferenceStoreTesting.............................................................
+    // SpreadsheetExpressionReferenceStoreTesting.............................................................
 
     @Override
     public SpreadsheetCellReference id() {
@@ -789,12 +931,12 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
         return Sets.of(this.f99(), this.g99(), this.i99(), this.j99());
     }
 
-    private void checkTargetToReferences(final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> map,
+    private void checkTargetToReferences(final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> map,
                                          final Map<SpreadsheetCellReference, Set<SpreadsheetCellReference>> targetToReferences) {
         assertEquals(targetToReferences, map.targetToReferences, "targetToReferences");
     }
 
-    private void checkReferenceToTargets(final TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> map,
+    private void checkReferenceToTargets(final TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> map,
                                          final Map<SpreadsheetCellReference, Set<SpreadsheetCellReference>> referenceToTargets) {
         assertEquals(referenceToTargets, map.referenceToTargets, "referenceToTargets");
     }
@@ -802,13 +944,13 @@ public class TreeMapSpreadsheetReferenceStoreTest extends SpreadsheetReferenceSt
     // StoreTesting.................................................................................
 
     @Override
-    public TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference> createStore() {
-        return TreeMapSpreadsheetReferenceStore.create();
+    public TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference> createStore() {
+        return TreeMapSpreadsheetExpressionReferenceStore.create();
     }
 
     @Override
-    public Class<TreeMapSpreadsheetReferenceStore<SpreadsheetCellReference>> type() {
-        return Cast.to(TreeMapSpreadsheetReferenceStore.class);
+    public Class<TreeMapSpreadsheetExpressionReferenceStore<SpreadsheetCellReference>> type() {
+        return Cast.to(TreeMapSpreadsheetExpressionReferenceStore.class);
     }
 
     // TypeNameTesting.................................................................................

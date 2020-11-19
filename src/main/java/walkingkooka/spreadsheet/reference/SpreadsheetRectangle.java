@@ -22,9 +22,9 @@ import walkingkooka.text.CharSequences;
 /**
  * A rectangular region that selects one or more cells
  */
-public abstract class SpreadsheetRectangle extends SpreadsheetExpressionReference {
+public abstract class SpreadsheetRectangle<T extends SpreadsheetExpressionReference<T>> extends SpreadsheetExpressionReference<T> {
 
-    public static SpreadsheetRectangle parseRectangle(final String text) {
+    public static SpreadsheetRectangle<?> parseRectangle(final String text) {
         CharSequences.failIfNullOrEmpty(text, "text");
 
         return text.split(SpreadsheetViewport.SEPARATOR.string()).length > 2 ?

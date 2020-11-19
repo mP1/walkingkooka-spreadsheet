@@ -21,9 +21,9 @@ import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormatti
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -41,7 +41,7 @@ public class FakeSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     }
 
     @Override
-    public SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferences() {
+    public SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences() {
         throw new UnsupportedOperationException();
     }
 
@@ -56,7 +56,7 @@ public class FakeSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     }
 
     @Override
-    public SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences() {
+    public SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences() {
         throw new UnsupportedOperationException();
     }
 

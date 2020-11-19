@@ -34,8 +34,7 @@ import walkingkooka.text.CharSequences;
  * </pre>
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-final public class SpreadsheetLabelName extends SpreadsheetExpressionReference implements Name,
-        Comparable<SpreadsheetLabelName> {
+final public class SpreadsheetLabelName extends SpreadsheetExpressionReference<SpreadsheetLabelName> implements Name {
 
     private final static CharPredicate LETTER = CharPredicates.range('A', 'Z').or(CharPredicates.range('a', 'z'));
 

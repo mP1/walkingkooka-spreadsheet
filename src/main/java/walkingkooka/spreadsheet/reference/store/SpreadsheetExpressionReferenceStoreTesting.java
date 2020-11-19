@@ -24,7 +24,6 @@ import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.store.StoreTesting;
-import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @SuppressWarnings("unchecked")
-public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReferenceStore<T>, T extends ExpressionReference & Comparable<T>>
+public interface SpreadsheetExpressionReferenceStoreTesting<S extends SpreadsheetExpressionReferenceStore<T>, T extends SpreadsheetExpressionReference<T>>
         extends StoreTesting<S, T, Set<SpreadsheetCellReference>>,
         TypeNameTesting<S> {
 
@@ -328,6 +327,6 @@ public interface SpreadsheetReferenceStoreTesting<S extends SpreadsheetReference
 
     @Override
     default String typeNameSuffix() {
-        return SpreadsheetReferenceStore.class.getSimpleName();
+        return SpreadsheetExpressionReferenceStore.class.getSimpleName();
     }
 }

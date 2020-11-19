@@ -21,9 +21,9 @@ import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormatti
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -37,10 +37,10 @@ import java.util.Objects;
 final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepository {
 
     static BasicSpreadsheetStoreRepository with(final SpreadsheetCellStore cells,
-                                                final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferences,
+                                                final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences,
                                                 final SpreadsheetGroupStore groups,
                                                 final SpreadsheetLabelStore labels,
-                                                final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences,
+                                                final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences,
                                                 final SpreadsheetMetadataStore metadatas,
                                                 final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells,
                                                 final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
@@ -67,10 +67,10 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     }
 
     private BasicSpreadsheetStoreRepository(final SpreadsheetCellStore cells,
-                                            final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferences,
+                                            final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences,
                                             final SpreadsheetGroupStore groups,
                                             final SpreadsheetLabelStore labels,
-                                            final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences,
+                                            final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences,
                                             final SpreadsheetMetadataStore metadatas,
                                             final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells,
                                             final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
@@ -94,11 +94,11 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     private final SpreadsheetCellStore cells;
 
     @Override
-    public SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferences() {
+    public SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences() {
         return this.cellReferences;
     }
 
-    private final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferences;
+    private final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences;
 
     @Override
     public SpreadsheetGroupStore groups() {
@@ -115,11 +115,11 @@ final class BasicSpreadsheetStoreRepository implements SpreadsheetStoreRepositor
     private final SpreadsheetLabelStore labels;
 
     @Override
-    public SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences() {
+    public SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences() {
         return this.labelReferences;
     }
 
-    private final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences;
+    private final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences;
 
     @Override
     public SpreadsheetMetadataStore metadatas() {

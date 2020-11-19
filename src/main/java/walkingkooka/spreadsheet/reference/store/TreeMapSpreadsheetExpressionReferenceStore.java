@@ -21,9 +21,9 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.store.Store;
 import walkingkooka.store.Watchers;
-import walkingkooka.tree.expression.ExpressionReference;
 
 import java.util.List;
 import java.util.Map;
@@ -34,15 +34,15 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
- * A {@link SpreadsheetReferenceStore} that uses a {@link Map} to store an entity to {@link SpreadsheetCellReference}
+ * A {@link SpreadsheetExpressionReferenceStore} that uses a {@link Map} to store an entity to {@link SpreadsheetCellReference}
  */
-final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Comparable<T>> implements SpreadsheetReferenceStore<T> {
+final class TreeMapSpreadsheetExpressionReferenceStore<T extends SpreadsheetExpressionReference<T>> implements SpreadsheetExpressionReferenceStore<T> {
 
-    static <T extends ExpressionReference & Comparable<T>> TreeMapSpreadsheetReferenceStore<T> create() {
-        return new TreeMapSpreadsheetReferenceStore<>();
+    static <T extends SpreadsheetExpressionReference<T>> TreeMapSpreadsheetExpressionReferenceStore<T> create() {
+        return new TreeMapSpreadsheetExpressionReferenceStore<>();
     }
 
-    private TreeMapSpreadsheetReferenceStore() {
+    private TreeMapSpreadsheetExpressionReferenceStore() {
         super();
     }
 
@@ -147,6 +147,7 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
             copy.addAll(previous);
 
             referrers.stream()
+                    .map(SpreadsheetCellReference::toRelative)
                     .filter(r -> !copy.contains(r))
                     .forEach(r -> this.addReference0(TargetAndSpreadsheetCellReference.with(id, r)));
 
@@ -165,7 +166,8 @@ final class TreeMapSpreadsheetReferenceStore<T extends ExpressionReference & Com
 
     private void addReference0(final TargetAndSpreadsheetCellReference<T> targetAndReference) {
         final T id = targetAndReference.target();
-        final SpreadsheetCellReference reference = targetAndReference.reference();
+        final SpreadsheetCellReference reference = targetAndReference.reference()
+                .toRelative();
 
         Set<SpreadsheetCellReference> referrers = this.targetToReferences.get(id);
         //noinspection Java8MapApi

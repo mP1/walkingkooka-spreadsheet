@@ -24,9 +24,9 @@ import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStores;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 
 public final class BasicSpreadsheetEngineUpdatedCellsTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineUpdatedCells>
@@ -37,9 +37,9 @@ public final class BasicSpreadsheetEngineUpdatedCellsTest extends BasicSpreadshe
         final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(SpreadsheetId.with(123),
                 SpreadsheetMetadata.EMPTY,
                 SpreadsheetCellStores.treeMap(),
-                SpreadsheetReferenceStores.treeMap(),
+                SpreadsheetExpressionReferenceStores.treeMap(),
                 SpreadsheetLabelStores.treeMap(),
-                SpreadsheetReferenceStores.treeMap(),
+                SpreadsheetExpressionReferenceStores.treeMap(),
                 SpreadsheetRangeStores.treeMap(),
                 SpreadsheetRangeStores.treeMap()
         );

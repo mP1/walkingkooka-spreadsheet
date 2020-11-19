@@ -22,9 +22,9 @@ import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormatti
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -45,10 +45,10 @@ public final class SpreadsheetStoreRepositories implements PublicStaticHelper {
      * {@see BasicSpreadsheetStoreRepository}
      */
     public static SpreadsheetStoreRepository basic(final SpreadsheetCellStore cells,
-                                                   final SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferences,
+                                                   final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences,
                                                    final SpreadsheetGroupStore groups,
                                                    final SpreadsheetLabelStore labels,
-                                                   final SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences,
+                                                   final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences,
                                                    final SpreadsheetMetadataStore metadatas,
                                                    final SpreadsheetRangeStore<SpreadsheetCellReference> rangeToCells,
                                                    final SpreadsheetRangeStore<SpreadsheetConditionalFormattingRule> rangeToConditionalFormattingRules,
