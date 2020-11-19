@@ -46,7 +46,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStore> implements StoreTesting<S, SpreadsheetCellReference, SpreadsheetCell>,
         TypeNameTesting<S> {
 
-    final static SpreadsheetCellReference REFERENCE = SpreadsheetReferenceKind.ABSOLUTE.column(1).setRow(SpreadsheetReferenceKind.ABSOLUTE.row(2));
+    final static SpreadsheetCellReference REFERENCE = SpreadsheetReferenceKind.RELATIVE
+            .column(1)
+            .setRow(SpreadsheetReferenceKind.RELATIVE.row(2));
 
     SpreadsheetCellStoreTestCase() {
         super();
@@ -69,6 +71,17 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
 
     @Test
+    public final void testSaveAndLoadAbsoluteCellReference() {
+        final S store = this.createStore();
+
+        final SpreadsheetCellReference reference = this.cellReference(1, 2);
+        final SpreadsheetCell cell = this.cell(reference);
+        assertEquals(cell, store.save(cell), "incorrect key returned");
+
+        assertSame(cell, store.loadOrFail(reference.toAbsolute()));
+    }
+
+    @Test
     public final void testSaveDeleteLoad() {
         final S store = this.createStore();
 
@@ -76,6 +89,18 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         final SpreadsheetCell cell = this.cell(reference);
         store.save(cell);
         store.delete(reference);
+
+        this.loadFailCheck(store, reference);
+    }
+
+    @Test
+    public final void testSaveDeleteLoadAbsoluteSpreadsheetCellReference() {
+        final S store = this.createStore();
+
+        final SpreadsheetCellReference reference = this.cellReference(1, 2);
+        final SpreadsheetCell cell = this.cell(reference);
+        store.save(cell);
+        store.delete(reference.toAbsolute());
 
         this.loadFailCheck(store, reference);
     }
@@ -149,6 +174,20 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
 
     @Test
+    public final void testRowAbsolute() {
+        final S store = this.createStore();
+
+        final SpreadsheetCell a = this.cell(11, 1);
+        store.save(a);
+
+        checkEquals("row 1",
+                store.row(a.reference()
+                        .row()
+                        .setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE)),
+                a);
+    }
+
+    @Test
     public final void testColumnNullFails() {
         assertThrows(NullPointerException.class, () -> this.createStore().column(null));
     }
@@ -170,6 +209,20 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
         checkEquals("column 1", store.column(a.reference().column()), a, b);
         checkEquals("column 2", store.column(c.reference().column()), c, d);
         checkEquals("column 99", store.column(SpreadsheetColumnOrRowReference.parseColumn("ZZ")));
+    }
+
+    @Test
+    public final void testColumnAbsolute() {
+        final S store = this.createStore();
+
+        final SpreadsheetCell a = this.cell(1, 11);
+        store.save(a);
+
+        checkEquals("column 1",
+                store.column(a.reference()
+                        .column()
+                        .setReferenceKind(SpreadsheetReferenceKind.ABSOLUTE)),
+                a);
     }
 
     @Test
@@ -284,8 +337,8 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
 
     final SpreadsheetCellReference cellReference(final int column, final int row) {
-        return SpreadsheetExpressionReference.cellReference(SpreadsheetReferenceKind.ABSOLUTE.column(column),
-                SpreadsheetReferenceKind.ABSOLUTE.row(row));
+        return SpreadsheetExpressionReference.cellReference(SpreadsheetReferenceKind.RELATIVE.column(column),
+                SpreadsheetReferenceKind.RELATIVE.row(row));
     }
 
     final void rowsAndCheck(final SpreadsheetCellStore store, final int row) {

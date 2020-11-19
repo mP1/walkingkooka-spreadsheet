@@ -28,7 +28,9 @@ import walkingkooka.store.Store;
 import java.util.Set;
 
 /**
- * A store that holds all cells for a spreadsheet. No additional actions are supported.
+ * A {@link Store} that holds all cells for a spreadsheet. No additional actions are supported.
+ * Parameters of type {@link SpreadsheetCellReference}, {@link SpreadsheetColumnReference} or {@link SpreadsheetRowReference}
+ * ignore their {@link walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind}, either form should return the same results.
  */
 public interface SpreadsheetCellStore extends Store<SpreadsheetCellReference, SpreadsheetCell> {
 
@@ -45,12 +47,12 @@ public interface SpreadsheetCellStore extends Store<SpreadsheetCellReference, Sp
     /**
      * Returns a view of all cells in the given row.
      */
-    Set<SpreadsheetCell> row(SpreadsheetRowReference row);
+    Set<SpreadsheetCell> row(final SpreadsheetRowReference row);
 
     /**
      * Returns a view of all cells in the given column.
      */
-    Set<SpreadsheetCell> column(SpreadsheetColumnReference column);
+    Set<SpreadsheetCell> column(final SpreadsheetColumnReference column);
 
     /**
      * Returns the max column width for the given {@link SpreadsheetColumnReference}
