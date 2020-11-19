@@ -189,6 +189,18 @@ abstract public class SpreadsheetExpressionReference implements ExpressionRefere
         return this instanceof SpreadsheetViewport;
     }
 
+    /**
+     * Performs equals but ignores any {@link SpreadsheetReferenceKind}.
+     */
+    public final boolean equalsIgnoreReferenceKind(final Object other) {
+        return this == other || this.canBeEqual(other) && equalsIgnoreReferenceKind0(other);
+    }
+
+    /**
+     * Sub classes must do equals except for any {@link SpreadsheetReferenceKind} property.
+     */
+    abstract boolean equalsIgnoreReferenceKind0(final Object other);
+
     // SpreadsheetExpressionReferenceVisitor............................................................................
 
     abstract void accept(final SpreadsheetExpressionReferenceVisitor visitor);

@@ -317,15 +317,12 @@ public final class SpreadsheetRange extends SpreadsheetRectangle implements
 
     // equalsIgnoreReferenceKind........................................................................................
 
-    /**
-     * Returns true if the other {@link SpreadsheetRange} begin/end are equal ignoring {@link SpreadsheetReferenceKind}.
-     */
-    public boolean equalsIgnoreReferenceKind(final Object other) {
-        return this == other ||
-                (other instanceof SpreadsheetRange && this.equalsIgnoreReferenceKind0(Cast.to(other)));
+    @Override
+    boolean equalsIgnoreReferenceKind0(final Object other) {
+        return this.equalsIgnoreReferenceKind1((SpreadsheetRange) other);
     }
 
-    private boolean equalsIgnoreReferenceKind0(final SpreadsheetRange other) {
+    private boolean equalsIgnoreReferenceKind1(final SpreadsheetRange other) {
         return this.begin().equalsIgnoreReferenceKind(other.begin()) &&
                 this.end().equalsIgnoreReferenceKind(other.end());
     }

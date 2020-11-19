@@ -68,6 +68,15 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
         this.check(SpreadsheetViewport.with(this.reference().toAbsolute(), WIDTH, HEIGHT));
     }
 
+    // equalsIgnoreReferenceKind........................................................................................
+
+    @Test
+    public void testEqualsIgnoreReferenceDifferentName() {
+        this.equalsIgnoreReferenceKindAndCheck(this.createReference(),
+                SpreadsheetViewport.with(SpreadsheetCellReference.parseCellReference("Z99"), WIDTH + 1, HEIGHT + 1),
+                false);
+    }
+
     // SpreadsheetExpressionReferenceVisitor.............................................................................
 
     @Test

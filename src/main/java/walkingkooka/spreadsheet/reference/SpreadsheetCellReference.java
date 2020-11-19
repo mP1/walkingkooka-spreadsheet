@@ -289,12 +289,12 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
     /**
      * Returns true if the other {@link SpreadsheetCellReference} is equal ignoring {@link SpreadsheetReferenceKind}.
      */
-    public boolean equalsIgnoreReferenceKind(final Object other) {
-        return this == other ||
-                (other instanceof SpreadsheetCellReference && this.equalsIgnoreReferenceKind0(Cast.to(other)));
+    @Override
+    boolean equalsIgnoreReferenceKind0(final Object other) {
+        return this.equalsIgnoreReferenceKind1((SpreadsheetCellReference) other);
     }
 
-    private boolean equalsIgnoreReferenceKind0(final SpreadsheetCellReference other) {
+    private boolean equalsIgnoreReferenceKind1(final SpreadsheetCellReference other) {
         return this.column.equalsIgnoreReferenceKind(other.column) &&
                 this.row.equalsIgnoreReferenceKind(other.row);
     }

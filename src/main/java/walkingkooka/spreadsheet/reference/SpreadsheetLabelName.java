@@ -133,6 +133,15 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference i
         return this.name;
     }
 
+    /**
+     * Delegates to {@link #equals0(Object)} which is equivalent because {@link SpreadsheetLabelName} has no
+     * {@link SpreadsheetReferenceKind} property.
+     */
+    @Override
+    boolean equalsIgnoreReferenceKind0(final Object other) {
+        return this.equals0(other);
+    }
+
     // SpreadsheetExpressionReferenceComparator........................................................................
 
     @Override
