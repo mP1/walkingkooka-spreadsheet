@@ -35,7 +35,7 @@ import java.util.function.Consumer;
 public interface SpreadsheetRangeStore<V> extends Store<SpreadsheetRange, List<V>> {
 
     /**
-     * Values dont include the actual range, thereore this {@link Store} method is invalid.
+     * Values dont include the actual range, therefore this {@link Store} method is invalid and throws {@link UnsupportedOperationException}.
      */
     @Override
     default List<V> save(final List<V> value) {
@@ -43,6 +43,9 @@ public interface SpreadsheetRangeStore<V> extends Store<SpreadsheetRange, List<V
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Also throws {@link UnsupportedOperationException} to match {@link #save(List)}
+     */
     @Override
     default Runnable addSaveWatcher(final Consumer<List<V>> saved) {
         Objects.requireNonNull(saved, "saved");
