@@ -645,6 +645,97 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
         return this.cell("C3", "6");
     }
 
+    // equalsIgnoreReferenceKind........................................................................................
+
+    @Test
+    public void testEqualsIgnoreReferenceKindNullFalse() {
+        this.equalsIgnoreReferenceKindAndCheck(this.range(), null, false);
+    }
+
+    @Test
+    public void testEqualsIgnoreReferenceKindDifferentTypeFalse() {
+        this.equalsIgnoreReferenceKindAndCheck(this.range(), this, false);
+    }
+
+    @Test
+    public void testEqualsIgnoreReferenceKindSameTrue() {
+        this.equalsIgnoreReferenceKindAndCheck(this.range(),
+                this.range(),
+                true);
+    }
+
+    @Test
+    public void testEqualsIgnoreReferenceKindDifferentValuesFalse() {
+        this.equalsIgnoreReferenceKindAndCheck("$A1",
+                "$B2",
+                false);
+    }
+
+    @Test
+    public void testEqualsIgnoreReferenceKindDifferentValuesFalse2() {
+        this.equalsIgnoreReferenceKindAndCheck("$A1:$Z99",
+                "$B2:$Z99",
+                false);
+    }
+
+    @Test
+    public void testEqualsIgnoreReferenceKindDifferentReferenceKindSameValues() {
+        this.equalsIgnoreReferenceKindAndCheck("$C3",
+                "C3",
+                true);
+    }
+
+    @Test
+    public void testEqualsIgnoreReferenceKindDifferentReferenceKindSameValues2() {
+        this.equalsIgnoreReferenceKindAndCheck("$C3:$D4",
+                "C3:D4",
+                true);
+    }
+
+    @Test
+    public void testEqualsIgnoreReferenceKindDifferentReferenceKindSameValues3() {
+        this.equalsIgnoreReferenceKindAndCheck("$C3:$D4",
+                "C$3:D$4",
+                true);
+    }
+
+    @Test
+    public void testEqualsIgnoreReferenceKindSameReferenceKindDifferentValues() {
+        this.equalsIgnoreReferenceKindAndCheck("$C3",
+                "$C4",
+                false);
+    }
+
+    @Test
+    public void testEqualsIgnoreReferenceKindSameReferenceKindDifferentValues2() {
+        this.equalsIgnoreReferenceKindAndCheck("$C3:$D4",
+                "$C4:$D4",
+                false);
+    }
+
+    private void equalsIgnoreReferenceKindAndCheck(final String range1,
+                                                   final String range2,
+                                                   final boolean expected) {
+        this.equalsIgnoreReferenceKindAndCheck(SpreadsheetRange.parseRange(range1),
+                SpreadsheetRange.parseRange(range2),
+                expected);
+    }
+
+    private void equalsIgnoreReferenceKindAndCheck(final SpreadsheetRange range1,
+                                                   final Object other,
+                                                   final boolean expected) {
+        assertEquals(expected,
+                range1.equalsIgnoreReferenceKind(other),
+                () -> range1 + " equalsIgnoreReferenceKind " + other
+        );
+        if (other instanceof SpreadsheetRange) {
+            final SpreadsheetRange range2 = (SpreadsheetRange) other;
+            assertEquals(expected,
+                    range2.equalsIgnoreReferenceKind(range1),
+                    () -> range2 + " equalsIgnoreReferenceKind " + range1);
+        }
+    }
+
     // SpreadsheetExpressionReferenceVisitor.............................................................................
 
     @Test

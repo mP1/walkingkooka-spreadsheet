@@ -306,11 +306,28 @@ public final class SpreadsheetRange extends SpreadsheetRectangle implements
         return this.range.equals(other.range);
     }
 
+    // toString........................................................................................................
+
     @Override
     public String toString() {
         return this.isSingleCell() ?
                 this.begin().toString() :
                 this.begin() + SEPARATOR + this.end();
+    }
+
+    // equalsIgnoreReferenceKind........................................................................................
+
+    /**
+     * Returns true if the other {@link SpreadsheetRange} begin/end are equal ignoring {@link SpreadsheetReferenceKind}.
+     */
+    public boolean equalsIgnoreReferenceKind(final Object other) {
+        return this == other ||
+                (other instanceof SpreadsheetRange && this.equalsIgnoreReferenceKind0(Cast.to(other)));
+    }
+
+    private boolean equalsIgnoreReferenceKind0(final SpreadsheetRange other) {
+        return this.begin().equalsIgnoreReferenceKind(other.begin()) &&
+                this.end().equalsIgnoreReferenceKind(other.end());
     }
 
     // SpreadsheetExpressionReferenceComparator........................................................................
