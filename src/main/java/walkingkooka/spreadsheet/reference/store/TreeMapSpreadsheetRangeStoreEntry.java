@@ -95,7 +95,7 @@ abstract class TreeMapSpreadsheetRangeStoreEntry<V> implements Comparable<TreeMa
 
         // loop over all entries until cell is after entry.
         final Comparator<SpreadsheetCellReference> comparator = this.comparator();
-        for (Map.Entry<SpreadsheetCellReference, Set<V>> refAndValues : this.secondaryCellReferenceToValues.entrySet()) {
+        for (final Map.Entry<SpreadsheetCellReference, Set<V>> refAndValues : this.secondaryCellReferenceToValues.entrySet()) {
             if (comparator.compare(cell, refAndValues.getKey()) > 0) {
                 break;
             }

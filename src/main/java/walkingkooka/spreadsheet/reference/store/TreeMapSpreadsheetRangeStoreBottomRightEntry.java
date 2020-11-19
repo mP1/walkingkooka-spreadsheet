@@ -43,7 +43,7 @@ final class TreeMapSpreadsheetRangeStoreBottomRightEntry<V> extends TreeMapSprea
     }
 
     @Override
-    SpreadsheetCellReference secondaryCellReference(SpreadsheetRange range) {
+    SpreadsheetCellReference secondaryCellReference(final SpreadsheetRange range) {
         return range.begin();
     }
 }
