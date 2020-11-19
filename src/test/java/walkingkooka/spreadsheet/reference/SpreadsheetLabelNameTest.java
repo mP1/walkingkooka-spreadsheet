@@ -190,7 +190,8 @@ final public class SpreadsheetLabelNameTest extends SpreadsheetExpressionReferen
     @Test
     public void testToRelative() {
         final SpreadsheetLabelName labelName = this.createReference();
-        assertSame(labelName, labelName.toRelative());
+        final SpreadsheetLabelName relative = labelName.toRelative();
+        assertSame(labelName, relative);
     }
 
     // JsonNodeMarshallingTesting.......................................................................................

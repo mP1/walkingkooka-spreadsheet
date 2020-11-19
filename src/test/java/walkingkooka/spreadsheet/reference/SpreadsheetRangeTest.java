@@ -729,8 +729,9 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
 
     private void toRelativeAndCheck(final String start,
                                     final String expected) {
+        final SpreadsheetRange actual = SpreadsheetRange.parseRange(start).toRelative();
         assertEquals(SpreadsheetRange.parseRange(expected),
-                SpreadsheetRange.parseRange(start).toRelative(),
+                actual,
                 () -> start + " toRelative");
     }
 

@@ -146,7 +146,7 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference i
      * Always returns this.
      */
     @Override
-    public SpreadsheetExpressionReference toRelative() {
+    public SpreadsheetLabelName toRelative() {
         return this;
     }
 

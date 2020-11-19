@@ -145,7 +145,7 @@ public final class SpreadsheetViewport extends SpreadsheetRectangle
      * The {@link #reference()} is already a {@link SpreadsheetReferenceKind#RELATIVE}.
      */
     @Override
-    public SpreadsheetExpressionReference toRelative() {
+    public SpreadsheetViewport toRelative() {
         return this;
     }
 
