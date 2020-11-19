@@ -17,12 +17,13 @@
 
 package walkingkooka.spreadsheet.reference.store;
 
-import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 
-public abstract class SpreadsheetReferenceStoreTestCase<S extends SpreadsheetReferenceStore<T>, T extends ExpressionReference & Comparable<T>>
-        implements SpreadsheetReferenceStoreTesting<S, T> {
+public abstract class SpreadsheetExpressionReferenceStoreTestCase<S extends SpreadsheetExpressionReferenceStore<T>,
+        T extends SpreadsheetExpressionReference<T>>
+        implements SpreadsheetExpressionReferenceStoreTesting<S, T> {
 
-    SpreadsheetReferenceStoreTestCase() {
+    SpreadsheetExpressionReferenceStoreTestCase() {
         super();
     }
 

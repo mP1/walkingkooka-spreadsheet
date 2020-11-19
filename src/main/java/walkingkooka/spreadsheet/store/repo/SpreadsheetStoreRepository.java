@@ -21,9 +21,9 @@ import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormatti
 import walkingkooka.spreadsheet.meta.store.SpreadsheetMetadataStore;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetGroupStore;
 import walkingkooka.spreadsheet.security.store.SpreadsheetUserStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
@@ -40,9 +40,9 @@ public interface SpreadsheetStoreRepository {
     SpreadsheetCellStore cells();
 
     /**
-     * A {@link SpreadsheetReferenceStore} holding cell references.
+     * A {@link SpreadsheetExpressionReferenceStore} holding cell references.
      */
-    SpreadsheetReferenceStore<SpreadsheetCellReference> cellReferences();
+    SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferences();
 
     /**
      * A {@link SpreadsheetGroupStore} holding groups.
@@ -55,9 +55,9 @@ public interface SpreadsheetStoreRepository {
     SpreadsheetLabelStore labels();
 
     /**
-     * A {@link SpreadsheetReferenceStore} holding label references.
+     * A {@link SpreadsheetExpressionReferenceStore} holding label references.
      */
-    SpreadsheetReferenceStore<SpreadsheetLabelName> labelReferences();
+    SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferences();
 
     /**
      * A {@link SpreadsheetMetadataStore} holding all {@link SpreadsheetMetadataStore}.

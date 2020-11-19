@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.reference.store;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-import walkingkooka.tree.expression.ExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 
 import java.util.List;
 import java.util.Objects;
@@ -27,16 +27,16 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 /**
- * A read only wrapper around a {@link SpreadsheetReferenceStore}
+ * A read only wrapper around a {@link SpreadsheetExpressionReferenceStore}
  */
-final class ReadOnlySpreadsheetReferenceStore<T extends ExpressionReference & Comparable<T>> implements SpreadsheetReferenceStore<T> {
+final class ReadOnlySpreadsheetExpressionReferenceStore<T extends SpreadsheetExpressionReference<T>> implements SpreadsheetExpressionReferenceStore<T> {
 
-    static <T extends ExpressionReference & Comparable<T>> ReadOnlySpreadsheetReferenceStore<T> with(final SpreadsheetReferenceStore<T> store) {
+    static <T extends SpreadsheetExpressionReference<T>> ReadOnlySpreadsheetExpressionReferenceStore<T> with(final SpreadsheetExpressionReferenceStore<T> store) {
         Objects.requireNonNull(store, "store");
-        return new ReadOnlySpreadsheetReferenceStore<>(store);
+        return new ReadOnlySpreadsheetExpressionReferenceStore<>(store);
     }
 
-    private ReadOnlySpreadsheetReferenceStore(final SpreadsheetReferenceStore<T> store) {
+    private ReadOnlySpreadsheetExpressionReferenceStore(final SpreadsheetExpressionReferenceStore<T> store) {
         this.store = store;
     }
 
@@ -125,7 +125,7 @@ final class ReadOnlySpreadsheetReferenceStore<T extends ExpressionReference & Co
         return store.loadReferred(reference);
     }
 
-    private final SpreadsheetReferenceStore<T> store;
+    private final SpreadsheetExpressionReferenceStore<T> store;
 
     @Override
     public String toString() {

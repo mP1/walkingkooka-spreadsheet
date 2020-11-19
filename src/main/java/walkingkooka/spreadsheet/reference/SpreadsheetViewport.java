@@ -26,8 +26,7 @@ import java.util.Objects;
  * Represents a rectangle selection of cells, starting from an cell reference covering the given pixel dimensions.
  */
 @SuppressWarnings("lgtm[java/inconsistent-equals-and-hashcode]")
-public final class SpreadsheetViewport extends SpreadsheetRectangle
-        implements Comparable<SpreadsheetViewport> {
+public final class SpreadsheetViewport extends SpreadsheetRectangle<SpreadsheetViewport> {
 
     final static CharacterConstant SEPARATOR = CharacterConstant.with(':');
 

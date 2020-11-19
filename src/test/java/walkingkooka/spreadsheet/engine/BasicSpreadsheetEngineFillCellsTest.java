@@ -21,9 +21,9 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
+import walkingkooka.spreadsheet.reference.store.SpreadsheetExpressionReferenceStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStores;
-import walkingkooka.spreadsheet.reference.store.SpreadsheetReferenceStores;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStores;
 
 public final class BasicSpreadsheetEngineFillCellsTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineFillCells>
@@ -34,9 +34,9 @@ public final class BasicSpreadsheetEngineFillCellsTest extends BasicSpreadsheetE
         final BasicSpreadsheetEngine engine = BasicSpreadsheetEngine.with(SpreadsheetId.with(123),
                 SpreadsheetMetadata.EMPTY,
                 SpreadsheetCellStores.fake(),
-                SpreadsheetReferenceStores.fake(),
+                SpreadsheetExpressionReferenceStores.fake(),
                 SpreadsheetLabelStores.fake(),
-                SpreadsheetReferenceStores.fake(),
+                SpreadsheetExpressionReferenceStores.fake(),
                 SpreadsheetRangeStores.fake(),
                 SpreadsheetRangeStores.fake()
         );

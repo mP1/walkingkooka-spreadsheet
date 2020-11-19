@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.reference;
 
+import walkingkooka.Cast;
 import walkingkooka.collect.Range;
 import walkingkooka.compare.Comparators;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
@@ -34,13 +35,13 @@ import java.util.function.Function;
 /**
  * Base class for all Spreadsheet {@link ExpressionReference}
  */
-abstract public class SpreadsheetExpressionReference implements ExpressionReference {
+abstract public class SpreadsheetExpressionReference<T extends Comparable<T>> implements ExpressionReference, Comparable<T> {
 
     /**
      * A comparator that orders {@link SpreadsheetLabelName} before {@link SpreadsheetCellReference}.
      * Note when comparing {@link SpreadsheetCellReference} the {@link SpreadsheetReferenceKind} component is ignored.
      */
-    public final static Comparator<SpreadsheetExpressionReference> COMPARATOR = SpreadsheetExpressionReferenceComparator.INSTANCE;
+    public final static Comparator<SpreadsheetExpressionReference<?>> COMPARATOR = Cast.to(SpreadsheetExpressionReferenceComparator.INSTANCE);
 
     // modes used by isTextCellReference
     private final static int MODE_COLUMN = 0;
