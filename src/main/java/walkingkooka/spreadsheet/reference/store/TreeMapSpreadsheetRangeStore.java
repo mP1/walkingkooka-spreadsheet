@@ -118,7 +118,7 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
                                                                          final Predicate<SpreadsheetCellReference> stop,
                                                                          final Consumer<E> values) {
         // loop over all entries until cell is after entry.
-        for (Map.Entry<SpreadsheetCellReference, E> refAndValues : cellReferenceToEntry.tailMap(cell, true)
+        for (final Map.Entry<SpreadsheetCellReference, E> refAndValues : cellReferenceToEntry.tailMap(cell, true)
                 .entrySet()) {
             if (stop.test(refAndValues.getKey())) {
                 break;
@@ -262,7 +262,7 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
      * Slowly visits and deletes all entries that contain a {@link SpreadsheetRange}.
      */
     private void deleteRangeFromValueToRanges(final SpreadsheetRange range) {
-        for (Iterator<Map.Entry<V, Set<SpreadsheetRange>>> i = this.valueToRanges.entrySet().iterator(); i.hasNext(); ) {
+        for (final Iterator<Map.Entry<V, Set<SpreadsheetRange>>> i = this.valueToRanges.entrySet().iterator(); i.hasNext(); ) {
             Map.Entry<V, Set<SpreadsheetRange>> valueToRange = i.next();
 
             final Set<SpreadsheetRange> ranges = valueToRange.getValue();
@@ -300,8 +300,8 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
         int i = 0;
 
         Exit:
-        for (TreeMapSpreadsheetRangeStoreTopLeftEntry<V> entry : this.topLeft.values()) {
-            for (SpreadsheetRange range : entry.ranges()) {
+        for (final TreeMapSpreadsheetRangeStoreTopLeftEntry<V> entry : this.topLeft.values()) {
+            for (final SpreadsheetRange range : entry.ranges()) {
                 if (i >= from) {
                     ids.add(range);
 
@@ -326,8 +326,8 @@ final class TreeMapSpreadsheetRangeStore<V> implements SpreadsheetRangeStore<V> 
 
         Exit:
 //
-        for (TreeMapSpreadsheetRangeStoreTopLeftEntry<V> entry : this.topLeft.values()) {
-            for (SpreadsheetRange range : entry.ranges()) {
+        for (final TreeMapSpreadsheetRangeStoreTopLeftEntry<V> entry : this.topLeft.values()) {
+            for (final SpreadsheetRange range : entry.ranges()) {
                 copy = copy | range.equals(from); // doesnt find > from must be ==
 
                 if (copy) {
