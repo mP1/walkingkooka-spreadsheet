@@ -142,6 +142,14 @@ final public class SpreadsheetLabelName extends SpreadsheetExpressionReference i
         return this.equals0(other);
     }
 
+    /**
+     * Always returns this.
+     */
+    @Override
+    public SpreadsheetExpressionReference toRelative() {
+        return this;
+    }
+
     // SpreadsheetExpressionReferenceComparator........................................................................
 
     @Override

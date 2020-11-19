@@ -141,6 +141,14 @@ public final class SpreadsheetViewport extends SpreadsheetRectangle
         return this.equals0(other);
     }
 
+    /**
+     * The {@link #reference()} is already a {@link SpreadsheetReferenceKind#RELATIVE}.
+     */
+    @Override
+    public SpreadsheetExpressionReference toRelative() {
+        return this;
+    }
+
     // SpreadsheetExpressionReferenceVisitor............................................................................
 
     @Override

@@ -327,6 +327,19 @@ public final class SpreadsheetRange extends SpreadsheetRectangle implements
                 this.end().equalsIgnoreReferenceKind(other.end());
     }
 
+    // toRelative.......................................................................................................
+
+    @Override
+    public SpreadsheetExpressionReference toRelative() {
+        final SpreadsheetRange relative = this.begin()
+                .toRelative()
+                .spreadsheetRange(this.end()
+                        .toRelative());
+        return this.equals(relative) ?
+                this :
+                relative;
+    }
+
     // SpreadsheetExpressionReferenceComparator........................................................................
 
     @Override

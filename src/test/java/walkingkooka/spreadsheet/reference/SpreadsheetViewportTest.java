@@ -77,6 +77,14 @@ public final class SpreadsheetViewportTest extends SpreadsheetExpressionReferenc
                 false);
     }
 
+    // toRelative.......................................................................................................
+
+    @Test
+    public void testToRelative() {
+        final SpreadsheetViewport viewport = this.createReference();
+        assertSame(viewport, viewport.toRelative());
+    }
+
     // SpreadsheetExpressionReferenceVisitor.............................................................................
 
     @Test
