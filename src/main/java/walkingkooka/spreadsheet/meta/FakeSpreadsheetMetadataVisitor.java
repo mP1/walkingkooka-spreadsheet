@@ -234,6 +234,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitViewportCell(final SpreadsheetCellReference cell) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitViewportCoordinates(final SpreadsheetCoordinates coords) {
         throw new UnsupportedOperationException();
     }

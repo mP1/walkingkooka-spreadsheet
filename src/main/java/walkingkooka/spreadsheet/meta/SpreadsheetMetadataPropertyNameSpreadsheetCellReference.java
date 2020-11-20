@@ -17,34 +17,38 @@
 
 package walkingkooka.spreadsheet.meta;
 
-
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 
 import java.util.Locale;
 import java.util.Optional;
 
-/**
- * Holds the cell currently being edited.
- */
-final class SpreadsheetMetadataPropertyNameEditCell extends SpreadsheetMetadataPropertyNameSpreadsheetCellReference {
+abstract class SpreadsheetMetadataPropertyNameSpreadsheetCellReference extends SpreadsheetMetadataPropertyName<SpreadsheetCellReference> {
 
     /**
-     * Singleton
+     * Package private to limit sub classing.
      */
-    final static SpreadsheetMetadataPropertyNameEditCell instance() {
-        return new SpreadsheetMetadataPropertyNameEditCell();
-    }
-
-    /**
-     * Private constructor use singleton.
-     */
-    private SpreadsheetMetadataPropertyNameEditCell() {
-        super("edit-cell");
+    SpreadsheetMetadataPropertyNameSpreadsheetCellReference(final String name) {
+        super(name);
     }
 
     @Override
-    void accept(final SpreadsheetCellReference value,
-                final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitEditCell(value);
+    void checkValue0(final Object value) {
+        this.checkValueType(value,
+                v -> v instanceof SpreadsheetCellReference);
+    }
+
+    @Override
+    final String expected() {
+        return SpreadsheetCellReference.class.getSimpleName();
+    }
+
+    @Override
+    final Optional<SpreadsheetCellReference> extractLocaleValue(final Locale locale) {
+        return Optional.empty();
+    }
+
+    @Override
+    final Class<SpreadsheetCellReference> type() {
+        return SpreadsheetCellReference.class;
     }
 }

@@ -18,27 +18,24 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-
-import java.util.Locale;
 
 
-public final class SpreadsheetMetadataPropertyNameEditCellTest extends SpreadsheetMetadataPropertyNameSpreadsheetCellReferenceTestCase<SpreadsheetMetadataPropertyNameEditCell> {
+public final class SpreadsheetMetadataPropertyNameViewportCellTest extends SpreadsheetMetadataPropertyNameSpreadsheetCellReferenceTestCase<SpreadsheetMetadataPropertyNameViewportCell> {
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(SpreadsheetMetadataPropertyNameEditCell.instance(), "edit-cell");
+        this.toStringAndCheck(SpreadsheetMetadataPropertyNameViewportCell.instance(), "viewport-cell");
     }
 
     @Override
-    SpreadsheetMetadataPropertyNameEditCell createName() {
-        return SpreadsheetMetadataPropertyNameEditCell.instance();
+    SpreadsheetMetadataPropertyNameViewportCell createName() {
+        return SpreadsheetMetadataPropertyNameViewportCell.instance();
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetMetadataPropertyNameEditCell> type() {
-        return SpreadsheetMetadataPropertyNameEditCell.class;
+    public Class<SpreadsheetMetadataPropertyNameViewportCell> type() {
+        return SpreadsheetMetadataPropertyNameViewportCell.class;
     }
 }
