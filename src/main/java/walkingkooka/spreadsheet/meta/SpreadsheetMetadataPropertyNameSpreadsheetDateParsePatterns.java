@@ -41,8 +41,8 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatterns extends 
     }
 
     @Override
-    void checkValue0(final Object value) {
-        this.checkValueType(value,
+    SpreadsheetDateParsePatterns checkValue0(final Object value) {
+        return this.checkValueType(value,
                 v -> v instanceof SpreadsheetDateParsePatterns);
     }
 

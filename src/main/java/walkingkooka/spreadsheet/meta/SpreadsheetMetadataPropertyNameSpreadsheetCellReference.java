@@ -31,10 +31,14 @@ abstract class SpreadsheetMetadataPropertyNameSpreadsheetCellReference extends S
         super(name);
     }
 
+    /**
+     * After checking the type force the {@link SpreadsheetCellReference#toRelative()}
+     */
     @Override
-    void checkValue0(final Object value) {
-        this.checkValueType(value,
-                v -> v instanceof SpreadsheetCellReference);
+    final SpreadsheetCellReference checkValue0(final Object value) {
+        return this.checkValueType(value,
+                v -> v instanceof SpreadsheetCellReference)
+                .toRelative();
     }
 
     @Override

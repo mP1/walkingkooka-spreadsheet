@@ -35,8 +35,8 @@ abstract class SpreadsheetMetadataPropertyNameColor extends SpreadsheetMetadataP
     }
 
     @Override
-    final void checkValue0(final Object value) {
-        this.checkValueType(value,
+    final Color checkValue0(final Object value) {
+        return this.checkValueType(value,
                 v -> v instanceof Color);
     }
 

@@ -31,12 +31,13 @@ abstract class SpreadsheetMetadataPropertyNameString extends SpreadsheetMetadata
     }
 
     @Override
-    final void checkValue0(final Object value) {
+    final String checkValue0(final Object value) {
         final String stringValue = this.checkValueType(value,
                 v -> v instanceof String);
         if (stringValue.isEmpty()) {
             throw new SpreadsheetMetadataPropertyValueException("Invalid value", this, stringValue);
         }
+        return stringValue;
     }
 
     @Override

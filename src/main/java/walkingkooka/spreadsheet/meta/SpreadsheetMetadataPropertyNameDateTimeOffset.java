@@ -37,8 +37,8 @@ final class SpreadsheetMetadataPropertyNameDateTimeOffset extends SpreadsheetMet
     }
 
     @Override
-    void checkValue0(final Object value) {
-        this.checkValueType(value,
+    Long checkValue0(final Object value) {
+        return this.checkValueType(value,
                 v -> v instanceof Long);
     }
 

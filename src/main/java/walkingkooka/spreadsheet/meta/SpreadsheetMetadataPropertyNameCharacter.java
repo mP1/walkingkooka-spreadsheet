@@ -31,8 +31,8 @@ abstract class SpreadsheetMetadataPropertyNameCharacter extends SpreadsheetMetad
     }
 
     @Override
-    final void checkValue0(final Object value) {
-        this.checkValueType(value,
+    final Character checkValue0(final Object value) {
+        return this.checkValueType(value,
                 v -> v instanceof Character);
     }
 

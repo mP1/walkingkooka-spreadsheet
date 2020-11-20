@@ -31,8 +31,8 @@ abstract class SpreadsheetMetadataPropertyNameLocalDateTime extends SpreadsheetM
     }
 
     @Override
-    final void checkValue0(final Object value) {
-        this.checkValueType(value,
+    final LocalDateTime checkValue0(final Object value) {
+        return this.checkValueType(value,
                 v -> v instanceof LocalDateTime);
     }
 

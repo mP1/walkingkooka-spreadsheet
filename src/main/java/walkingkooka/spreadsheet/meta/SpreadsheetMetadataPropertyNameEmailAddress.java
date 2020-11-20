@@ -32,8 +32,8 @@ abstract class SpreadsheetMetadataPropertyNameEmailAddress extends SpreadsheetMe
     }
 
     @Override
-    final void checkValue0(final Object value) {
-        this.checkValueType(value,
+    final EmailAddress checkValue0(final Object value) {
+        return this.checkValueType(value,
                 v -> v instanceof EmailAddress);
     }
 
