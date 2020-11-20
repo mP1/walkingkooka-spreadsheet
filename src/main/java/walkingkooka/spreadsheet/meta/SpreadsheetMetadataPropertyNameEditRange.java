@@ -45,7 +45,8 @@ final class SpreadsheetMetadataPropertyNameEditRange extends SpreadsheetMetadata
     @Override
     SpreadsheetRange checkValue0(final Object value) {
         return this.checkValueType(value,
-                v -> v instanceof SpreadsheetRange);
+                v -> v instanceof SpreadsheetRange)
+                .toRelative();
     }
 
     @Override
