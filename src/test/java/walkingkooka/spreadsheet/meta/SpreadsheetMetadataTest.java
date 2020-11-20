@@ -27,6 +27,8 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
@@ -105,20 +107,31 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     }
 
     @Test
-    public void testSetEditCell() {
+    public void testSetEditCellAbsolute() {
         this.setAndCheck(SpreadsheetMetadataPropertyName.EDIT_CELL);
     }
 
     @Test
-    public void testSetViewportCell() {
+    public void testSetViewportCellAbsolute() {
         this.setAndCheck(SpreadsheetMetadataPropertyName.VIEWPORT_CELL);
     }
 
     private void setAndCheck(final SpreadsheetMetadataPropertyName<SpreadsheetCellReference> property) {
-        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("B99");
+        this.setAndCheck(property,
+                SpreadsheetCellReference.parseCellReference("$B$99"));
+    }
+
+    @Test
+    public void testSetEditRangeAbsolute() {
+        this.setAndCheck(SpreadsheetMetadataPropertyName.EDIT_RANGE,
+                SpreadsheetRange.parseRange("$B$2:$C$3"));
+    }
+
+    private <T extends SpreadsheetExpressionReference<T>> void setAndCheck(final SpreadsheetMetadataPropertyName<T> property,
+                                                                           final T value) {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
-                .set(property, reference.toAbsolute());
-        assertEquals(reference, metadata.getOrFail(property));
+                .set(property, value);
+        assertEquals(value.toRelative(), metadata.getOrFail(property));
     }
 
     // NON_LOCALE_DEFAULTS..............................................................................................
