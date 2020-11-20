@@ -28,7 +28,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetCoordinatesTest implements ClassTesting2<SpreadsheetCoordinates>,
         JsonNodeMarshallingTesting<SpreadsheetCoordinates>,
@@ -39,29 +38,25 @@ public final class SpreadsheetCoordinatesTest implements ClassTesting2<Spreadshe
     private final static double X = 1;
     private final static double Y = 2;
 
-
-    @Test
-    public void testWithInvalidXFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCoordinates.with(-1, Y));
-    }
-
-    @Test
-    public void testWithInvalidYFails() {
-        assertThrows(IllegalArgumentException.class, () -> SpreadsheetCoordinates.with(X, -1));
-    }
-
     @Test
     public void testWith() {
-        final SpreadsheetCoordinates coords = this.createCoords();
-        assertEquals(X, coords.x(), "x");
-        assertEquals(Y, coords.y(), "y");
+        this.withAndCheck(X, Y);
     }
 
     @Test
     public void testWithX0Y0() {
-        final SpreadsheetCoordinates coords = SpreadsheetCoordinates.with(0, 0);
-        assertEquals(0, coords.x(), "x");
-        assertEquals(0, coords.y(), "y");
+        this.withAndCheck(0, 0);
+    }
+
+    @Test
+    public void testWithNegativeXNegativeY() {
+        this.withAndCheck(-1, -1);
+    }
+
+    private void withAndCheck(final double x, final double y) {
+        final SpreadsheetCoordinates coords = SpreadsheetCoordinates.with(x, y);
+        assertEquals(x, coords.x(), "x");
+        assertEquals(y, coords.y(), "y");
     }
 
     // equals .............................................................................................

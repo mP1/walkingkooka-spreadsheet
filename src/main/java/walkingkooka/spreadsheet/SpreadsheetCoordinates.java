@@ -65,12 +65,6 @@ public final class SpreadsheetCoordinates implements Comparable<SpreadsheetCoord
 
     public static SpreadsheetCoordinates with(final double x,
                                               final double y) {
-        if (x < 0) {
-            throw new IllegalArgumentException("Invalid x < 0 was " + x);
-        }
-        if (y < 0) {
-            throw new IllegalArgumentException("Invalid y < 0 was " + y);
-        }
         return new SpreadsheetCoordinates(x, y);
     }
 
