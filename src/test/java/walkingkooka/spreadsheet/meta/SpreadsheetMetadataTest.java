@@ -24,7 +24,9 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.SpreadsheetCoordinates;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
@@ -124,6 +126,9 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertEquals(Optional.of(SpreadsheetPattern.parseTextFormatPattern("@")), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN));
         assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR));
         assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.WIDTH));
+
+        assertEquals(Optional.of(SpreadsheetCellReference.parseCellReference("A1")), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.VIEWPORT_CELL));
+        assertEquals(Optional.of(SpreadsheetCoordinates.with(0, 0)), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.VIEWPORT_COORDINATES));
     }
 
     // loadFromLocale...................................................................................................

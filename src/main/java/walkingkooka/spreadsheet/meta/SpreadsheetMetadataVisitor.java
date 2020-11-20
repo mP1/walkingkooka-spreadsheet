@@ -230,6 +230,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitViewportCell(final SpreadsheetCellReference cell) {
+        // nop
+    }
+
     protected void visitViewportCoordinates(final SpreadsheetCoordinates coords) {
         // nop
     }

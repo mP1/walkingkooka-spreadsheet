@@ -20,31 +20,28 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 
-import java.util.Locale;
-import java.util.Optional;
-
 /**
- * Holds the cell currently being edited.
+ * Holds the home cell at the viewport-coordinates.
  */
-final class SpreadsheetMetadataPropertyNameEditCell extends SpreadsheetMetadataPropertyNameSpreadsheetCellReference {
+final class SpreadsheetMetadataPropertyNameViewportCell extends SpreadsheetMetadataPropertyNameSpreadsheetCellReference {
 
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameEditCell instance() {
-        return new SpreadsheetMetadataPropertyNameEditCell();
+    final static SpreadsheetMetadataPropertyNameViewportCell instance() {
+        return new SpreadsheetMetadataPropertyNameViewportCell();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameEditCell() {
-        super("edit-cell");
+    private SpreadsheetMetadataPropertyNameViewportCell() {
+        super("viewport-cell");
     }
 
     @Override
     void accept(final SpreadsheetCellReference value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitEditCell(value);
+        visitor.visitViewportCell(value);
     }
 }

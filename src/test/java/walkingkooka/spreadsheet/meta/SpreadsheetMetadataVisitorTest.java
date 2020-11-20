@@ -432,7 +432,17 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
-    public void testVisitViewport() {
+    public void testVisitViewportCell() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitViewportCell(final SpreadsheetCellReference cell) {
+                this.visited = cell;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.VIEWPORT_CELL, SpreadsheetCellReference.parseCellReference("B99"));
+    }
+
+    @Test
+    public void testVisitViewportCoordinates() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
             protected void visitViewportCoordinates(final SpreadsheetCoordinates coords) {
