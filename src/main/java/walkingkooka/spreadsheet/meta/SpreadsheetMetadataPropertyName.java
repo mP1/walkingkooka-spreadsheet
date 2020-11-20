@@ -317,7 +317,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     final JsonPropertyName jsonPropertyName;
 
     /**
-     * Validates the value.
+     * Validates the value, returning the value that will be saved.
      */
     @SuppressWarnings("UnusedReturnValue")
     public T checkValue(final Object value) {
@@ -325,11 +325,10 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
             throw new SpreadsheetMetadataPropertyValueException("Missing value", this, value);
         }
 
-        this.checkValue0(value);
-        return Cast.to(value);
+        return this.checkValue0(value);
     }
 
-    abstract void checkValue0(final Object value);
+    abstract T checkValue0(final Object value);
 
     /**
      * Checks the type of the given value and throws a {@link SpreadsheetMetadataPropertyValueException} if this test fails.

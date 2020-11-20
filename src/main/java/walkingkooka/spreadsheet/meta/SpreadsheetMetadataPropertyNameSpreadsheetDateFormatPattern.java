@@ -40,8 +40,8 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPattern extends 
     }
 
     @Override
-    void checkValue0(final Object value) {
-        this.checkValueType(value,
+    SpreadsheetDateFormatPattern checkValue0(final Object value) {
+        return this.checkValueType(value,
                 v -> v instanceof SpreadsheetDateFormatPattern);
     }
 

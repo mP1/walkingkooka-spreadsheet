@@ -187,8 +187,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     public final <V> SpreadsheetMetadata set(final SpreadsheetMetadataPropertyName<V> propertyName, final V value) {
         checkPropertyName(propertyName);
 
-        propertyName.checkValue(value);
-        return this.set0(propertyName, value);
+        return this.set0(propertyName, propertyName.checkValue(value));
     }
 
     abstract <V> SpreadsheetMetadata set0(final SpreadsheetMetadataPropertyName<V> propertyName, final V value);

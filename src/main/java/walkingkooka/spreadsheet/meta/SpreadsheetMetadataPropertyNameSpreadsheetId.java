@@ -40,8 +40,8 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetId extends SpreadsheetMeta
     }
 
     @Override
-    void checkValue0(final Object value) {
-        this.checkValueType(value,
+    SpreadsheetId checkValue0(final Object value) {
+        return this.checkValueType(value,
                 v -> v instanceof SpreadsheetId);
     }
 

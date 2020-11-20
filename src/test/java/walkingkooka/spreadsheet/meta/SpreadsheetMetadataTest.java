@@ -104,6 +104,23 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertEquals(SpreadsheetMetadataNonEmptyMap.class, metadata.value().getClass(), () -> "" + metadata);
     }
 
+    @Test
+    public void testSetEditCell() {
+        this.setAndCheck(SpreadsheetMetadataPropertyName.EDIT_CELL);
+    }
+
+    @Test
+    public void testSetViewportCell() {
+        this.setAndCheck(SpreadsheetMetadataPropertyName.VIEWPORT_CELL);
+    }
+
+    private void setAndCheck(final SpreadsheetMetadataPropertyName<SpreadsheetCellReference> property) {
+        final SpreadsheetCellReference reference = SpreadsheetCellReference.parseCellReference("B99");
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(property, reference.toAbsolute());
+        assertEquals(reference, metadata.getOrFail(property));
+    }
+
     // NON_LOCALE_DEFAULTS..............................................................................................
 
     @Test

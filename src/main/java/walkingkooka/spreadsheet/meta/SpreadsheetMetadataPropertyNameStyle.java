@@ -50,21 +50,22 @@ final class SpreadsheetMetadataPropertyNameStyle extends SpreadsheetMetadataProp
     }
 
     @Override
-    void checkValue0(final Object value) {
+    TextStyle checkValue0(final Object value) {
         final TextStyle style = this.checkValueType(value, v -> v instanceof TextStyle);
 
         final Set<TextStylePropertyName<?>> missing = Sets.ordered();
-        for(final TextStylePropertyName<?> required : REQUIRED) {
-            if(false == style.get(required).isPresent()) {
+        for (final TextStylePropertyName<?> required : REQUIRED) {
+            if (false == style.get(required).isPresent()) {
                 missing.add(required);
             }
         }
 
-        if(false == missing.isEmpty()) {
+        if (false == missing.isEmpty()) {
             throw new SpreadsheetMetadataPropertyValueException("Missing required properties " + missing,
                     this,
                     value);
         }
+        return style;
     }
 
     private final static TextStylePropertyName[] REQUIRED = new TextStylePropertyName[] {

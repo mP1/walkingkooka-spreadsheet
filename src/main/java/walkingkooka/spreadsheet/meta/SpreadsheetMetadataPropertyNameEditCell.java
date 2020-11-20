@@ -20,9 +20,6 @@ package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 
-import java.util.Locale;
-import java.util.Optional;
-
 /**
  * Holds the cell currently being edited.
  */

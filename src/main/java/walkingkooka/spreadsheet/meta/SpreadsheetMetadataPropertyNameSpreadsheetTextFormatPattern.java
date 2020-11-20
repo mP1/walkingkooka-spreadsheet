@@ -39,8 +39,8 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetTextFormatPattern extends 
     }
 
     @Override
-    void checkValue0(final Object value) {
-        this.checkValueType(value,
+    SpreadsheetTextFormatPattern checkValue0(final Object value) {
+        return this.checkValueType(value,
                 v -> v instanceof SpreadsheetTextFormatPattern);
     }
 

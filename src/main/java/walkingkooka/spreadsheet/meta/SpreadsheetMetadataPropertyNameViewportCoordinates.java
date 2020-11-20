@@ -48,8 +48,8 @@ final class SpreadsheetMetadataPropertyNameViewportCoordinates extends Spreadshe
     }
 
     @Override
-    void checkValue0(final Object value) {
-        this.checkValueType(value,
+    SpreadsheetCoordinates checkValue0(final Object value) {
+        return this.checkValueType(value,
                 v -> v instanceof SpreadsheetCoordinates);
     }
 
