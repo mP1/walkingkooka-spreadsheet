@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.color.Color;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
@@ -33,11 +34,15 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.text.BorderStyle;
 import walkingkooka.tree.text.FontFamilyName;
 import walkingkooka.tree.text.FontSize;
 import walkingkooka.tree.text.Length;
+import walkingkooka.tree.text.TextAlignment;
+import walkingkooka.tree.text.TextJustify;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
+import walkingkooka.tree.text.WordWrap;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -143,11 +148,38 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertNotEquals(SpreadsheetMetadata.EMPTY, nonLocaleDefaults);
         assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.DATETIME_OFFSET));
 
+        final Length<?> borderWidth = Length.pixel(1.0);
+        final Color borderColor = Color.BLACK;
+        final BorderStyle borderStyle = BorderStyle.SOLID;
+
         final TextStyle style = TextStyle.EMPTY
+                .set(TextStylePropertyName.BORDER_LEFT_WIDTH, borderWidth)
+                .set(TextStylePropertyName.BORDER_LEFT_COLOR, borderColor)
+                .set(TextStylePropertyName.BORDER_LEFT_STYLE, borderStyle)
+
+                .set(TextStylePropertyName.BORDER_TOP_WIDTH, borderWidth)
+                .set(TextStylePropertyName.BORDER_TOP_COLOR, borderColor)
+                .set(TextStylePropertyName.BORDER_TOP_STYLE, borderStyle)
+
+                .set(TextStylePropertyName.BORDER_RIGHT_WIDTH, borderWidth)
+                .set(TextStylePropertyName.BORDER_RIGHT_COLOR, borderColor)
+                .set(TextStylePropertyName.BORDER_RIGHT_STYLE, borderStyle)
+
+                .set(TextStylePropertyName.BORDER_BOTTOM_WIDTH, borderWidth)
+                .set(TextStylePropertyName.BORDER_BOTTOM_COLOR, borderColor)
+                .set(TextStylePropertyName.BORDER_BOTTOM_STYLE, borderStyle)
+
+                .set(TextStylePropertyName.BACKGROUND_COLOR, Color.WHITE)
+                .set(TextStylePropertyName.TEXT_COLOR, Color.BLACK)
+
                 .set(TextStylePropertyName.FONT_FAMILY_NAME, FontFamilyName.with("MS Sans Serif"))
                 .set(TextStylePropertyName.FONT_SIZE, FontSize.with(11))
-                .set(TextStylePropertyName.WIDTH, Length.pixel(100.0))
-                .set(TextStylePropertyName.HEIGHT, Length.pixel(30.0));
+                .set(TextStylePropertyName.TEXT_ALIGNMENT, TextAlignment.LEFT)
+                .set(TextStylePropertyName.TEXT_JUSTIFY, TextJustify.NONE)
+                .set(TextStylePropertyName.WORD_WRAP, WordWrap.NORMAL)
+
+                .set(TextStylePropertyName.HEIGHT, Length.pixel(30.0))
+                .set(TextStylePropertyName.WIDTH, Length.pixel(100.0));
         assertEquals(Optional.of(style), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.STYLE));
 
         assertNotEquals(Optional.of(ExpressionNumberKind.DEFAULT), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND));

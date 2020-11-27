@@ -587,6 +587,8 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     }
 
     static {
+        SpreadsheetMetadataPropertyName.CREATOR.value();
+
         JsonNodeContext.register("spreadsheet-metadata",
                 SpreadsheetMetadata::unmarshall,
                 SpreadsheetMetadata::marshall,
