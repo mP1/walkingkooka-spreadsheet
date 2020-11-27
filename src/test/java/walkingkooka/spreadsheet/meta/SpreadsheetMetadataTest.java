@@ -146,8 +146,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final TextStyle style = TextStyle.EMPTY
                 .set(TextStylePropertyName.FONT_FAMILY_NAME, FontFamilyName.with("MS Sans Serif"))
                 .set(TextStylePropertyName.FONT_SIZE, FontSize.with(11))
-                .set(TextStylePropertyName.HEIGHT, Length.pixel(100.0))
-                .set(TextStylePropertyName.WIDTH, Length.pixel(30.0));
+                .set(TextStylePropertyName.WIDTH, Length.pixel(100.0))
+                .set(TextStylePropertyName.HEIGHT, Length.pixel(30.0));
         assertEquals(Optional.of(style), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.STYLE));
 
         assertNotEquals(Optional.of(ExpressionNumberKind.DEFAULT), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND));
