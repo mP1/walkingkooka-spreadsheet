@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.tree.text.FontFamilyName;
+import walkingkooka.tree.text.FontFamily;
 import walkingkooka.tree.text.FontSize;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStyle;
@@ -28,7 +28,7 @@ public final class SpreadsheetMetadataPropertyNameStyleTest extends SpreadsheetM
 
     @Test
     public void testValueMissingFontFamilyFails() {
-        this.checkValueFails(this.propertyValue().remove(TextStylePropertyName.FONT_FAMILY_NAME), null);
+        this.checkValueFails(this.propertyValue().remove(TextStylePropertyName.FONT_FAMILY), null);
     }
 
     @Test
@@ -66,7 +66,7 @@ public final class SpreadsheetMetadataPropertyNameStyleTest extends SpreadsheetM
     @Override
     TextStyle propertyValue() {
         return TextStyle.EMPTY
-                .set(TextStylePropertyName.FONT_FAMILY_NAME, FontFamilyName.with("Times"))
+                .set(TextStylePropertyName.FONT_FAMILY, FontFamily.with("Times"))
                 .set(TextStylePropertyName.FONT_SIZE, FontSize.with(10))
                 .set(TextStylePropertyName.HEIGHT, Length.pixel(12.0))
                 .set(TextStylePropertyName.WIDTH, Length.pixel(100.0));

@@ -20,7 +20,7 @@
     "text-color": "#000000",
     "text-alignment": "LEFT",
     "word-wrap": "NORMAL",
-    "font-family-name": "MS Sans Serif",
+    "font-family": "MS Sans Serif",
     "font-size": 11,
     "text-justify": "NONE",
     "height": "30px",

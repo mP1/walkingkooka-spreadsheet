@@ -35,7 +35,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.BorderStyle;
-import walkingkooka.tree.text.FontFamilyName;
+import walkingkooka.tree.text.FontFamily;
 import walkingkooka.tree.text.FontSize;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextAlignment;
@@ -172,7 +172,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 .set(TextStylePropertyName.BACKGROUND_COLOR, Color.WHITE)
                 .set(TextStylePropertyName.TEXT_COLOR, Color.BLACK)
 
-                .set(TextStylePropertyName.FONT_FAMILY_NAME, FontFamilyName.with("MS Sans Serif"))
+                .set(TextStylePropertyName.FONT_FAMILY, FontFamily.with("MS Sans Serif"))
                 .set(TextStylePropertyName.FONT_SIZE, FontSize.with(11))
                 .set(TextStylePropertyName.TEXT_ALIGNMENT, TextAlignment.LEFT)
                 .set(TextStylePropertyName.TEXT_JUSTIFY, TextJustify.NONE)

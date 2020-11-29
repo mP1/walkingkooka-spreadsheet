@@ -52,7 +52,7 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
-import walkingkooka.tree.text.FontFamilyName;
+import walkingkooka.tree.text.FontFamily;
 import walkingkooka.tree.text.FontSize;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStyle;
@@ -1124,7 +1124,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, 'D');
         properties.put(SpreadsheetMetadataPropertyName.STYLE,
                 TextStyle.EMPTY
-                        .set(TextStylePropertyName.FONT_FAMILY_NAME, FontFamilyName.with("MS Sans Serif"))
+                        .set(TextStylePropertyName.FONT_FAMILY, FontFamily.with("MS Sans Serif"))
                         .set(TextStylePropertyName.FONT_SIZE, FontSize.with(11))
                         .set(TextStylePropertyName.HEIGHT, Length.pixel(60.0))
                         .set(TextStylePropertyName.WIDTH, Length.pixel(15.0))
