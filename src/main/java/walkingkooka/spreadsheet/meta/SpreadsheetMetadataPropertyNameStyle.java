@@ -69,7 +69,7 @@ final class SpreadsheetMetadataPropertyNameStyle extends SpreadsheetMetadataProp
     }
 
     private final static TextStylePropertyName[] REQUIRED = new TextStylePropertyName[] {
-            TextStylePropertyName.FONT_FAMILY_NAME,
+            TextStylePropertyName.FONT_FAMILY,
             TextStylePropertyName.FONT_SIZE,
             TextStylePropertyName.HEIGHT,
             TextStylePropertyName.WIDTH

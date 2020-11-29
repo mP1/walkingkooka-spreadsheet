@@ -45,7 +45,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.tree.text.FontFamilyName;
+import walkingkooka.tree.text.FontFamily;
 import walkingkooka.tree.text.FontSize;
 import walkingkooka.tree.text.TextStyle;
 
@@ -485,7 +485,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
         Color.BLACK.alpha();
         EmailAddress.tryParse("user@example.com");
         ExpressionNumberKind.DEFAULT.name();
-        FontFamilyName.with("MS Sans Serif");
+        FontFamily.with("MS Sans Serif");
         FontSize.with(1);
         SpreadsheetPattern.parseNumberFormatPattern(" ");
         //noinspection ResultOfMethodCallIgnored
