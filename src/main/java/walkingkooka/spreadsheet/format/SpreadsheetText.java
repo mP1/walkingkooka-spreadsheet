@@ -107,7 +107,7 @@ public final class SpreadsheetText implements HasText,
 
     @Override
     public TextNode toTextNode() {
-        return this.color.map(c -> TextStyle.with(Maps.of(TextStylePropertyName.TEXT_COLOR, c)))
+        return this.color.map(c -> TextStyle.with(Maps.of(TextStylePropertyName.COLOR, c)))
                 .orElse(TextStyle.EMPTY)
                 .replace(TextNode.text(this.text));
     }
