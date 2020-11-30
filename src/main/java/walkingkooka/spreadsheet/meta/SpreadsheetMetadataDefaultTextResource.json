@@ -22,6 +22,10 @@
     "word-wrap": "NORMAL",
     "font-family": "MS Sans Serif",
     "font-size": 11,
+    "padding-left": "none",
+    "padding-top": "none",
+    "padding-right": "none",
+    "padding-bottom": "none",
     "text-justify": "NONE",
     "height": "30px",
     "width": "100px"
