@@ -120,7 +120,7 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
         final Color color = Color.fromRgb(0x123456);
 
         this.toTextNodeAndCheck(SpreadsheetText.with(Optional.of(color), text),
-                TextNode.text(text).setAttributes(Maps.of(TextStylePropertyName.TEXT_COLOR, color)));
+                TextNode.text(text).setAttributes(Maps.of(TextStylePropertyName.COLOR, color)));
     }
 
     // HashCodeEqualsDefined ..................................................................................................

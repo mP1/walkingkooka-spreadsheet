@@ -17,7 +17,7 @@
     "border-bottom-color": "#000000",
     "border-bottom-style": "SOLID",
     "background-color": "#ffffff",
-    "text-color": "#000000",
+    "color": "#000000",
     "text-align": "LEFT",
     "word-wrap": "NORMAL",
     "font-family": "MS Sans Serif",

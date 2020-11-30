@@ -176,7 +176,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 .set(TextStylePropertyName.PADDING_RIGHT, none)
 
                 .set(TextStylePropertyName.BACKGROUND_COLOR, Color.WHITE)
-                .set(TextStylePropertyName.TEXT_COLOR, Color.BLACK)
+                .set(TextStylePropertyName.COLOR, Color.BLACK)
 
                 .set(TextStylePropertyName.FONT_FAMILY, FontFamily.with("MS Sans Serif"))
                 .set(TextStylePropertyName.FONT_SIZE, FontSize.with(11))
