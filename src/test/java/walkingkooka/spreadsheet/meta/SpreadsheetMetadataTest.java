@@ -151,6 +151,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         final Length<?> borderWidth = Length.pixel(1.0);
         final Color borderColor = Color.BLACK;
         final BorderStyle borderStyle = BorderStyle.SOLID;
+        final Length<?> none = Length.none();
 
         final TextStyle style = TextStyle.EMPTY
                 .set(TextStylePropertyName.BORDER_LEFT_WIDTH, borderWidth)
@@ -168,6 +169,11 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 .set(TextStylePropertyName.BORDER_BOTTOM_WIDTH, borderWidth)
                 .set(TextStylePropertyName.BORDER_BOTTOM_COLOR, borderColor)
                 .set(TextStylePropertyName.BORDER_BOTTOM_STYLE, borderStyle)
+
+                .set(TextStylePropertyName.PADDING_LEFT, none)
+                .set(TextStylePropertyName.PADDING_TOP, none)
+                .set(TextStylePropertyName.PADDING_BOTTOM, none)
+                .set(TextStylePropertyName.PADDING_RIGHT, none)
 
                 .set(TextStylePropertyName.BACKGROUND_COLOR, Color.WHITE)
                 .set(TextStylePropertyName.TEXT_COLOR, Color.BLACK)
