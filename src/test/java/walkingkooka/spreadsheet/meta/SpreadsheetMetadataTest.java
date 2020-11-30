@@ -38,7 +38,7 @@ import walkingkooka.tree.text.BorderStyle;
 import walkingkooka.tree.text.FontFamily;
 import walkingkooka.tree.text.FontSize;
 import walkingkooka.tree.text.Length;
-import walkingkooka.tree.text.TextAlignment;
+import walkingkooka.tree.text.TextAlign;
 import walkingkooka.tree.text.TextJustify;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
@@ -180,7 +180,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
 
                 .set(TextStylePropertyName.FONT_FAMILY, FontFamily.with("MS Sans Serif"))
                 .set(TextStylePropertyName.FONT_SIZE, FontSize.with(11))
-                .set(TextStylePropertyName.TEXT_ALIGNMENT, TextAlignment.LEFT)
+                .set(TextStylePropertyName.TEXT_ALIGN, TextAlign.LEFT)
                 .set(TextStylePropertyName.TEXT_JUSTIFY, TextJustify.NONE)
                 .set(TextStylePropertyName.WORD_WRAP, WordWrap.NORMAL)
 
