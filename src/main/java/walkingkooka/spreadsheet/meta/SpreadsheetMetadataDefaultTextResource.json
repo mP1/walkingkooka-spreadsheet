@@ -18,7 +18,7 @@
     "border-bottom-style": "SOLID",
     "background-color": "#ffffff",
     "text-color": "#000000",
-    "text-alignment": "LEFT",
+    "text-align": "LEFT",
     "word-wrap": "NORMAL",
     "font-family": "MS Sans Serif",
     "font-size": 11,
