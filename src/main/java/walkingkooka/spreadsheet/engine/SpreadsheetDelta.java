@@ -392,6 +392,9 @@ public abstract class SpreadsheetDelta {
     final static JsonPropertyName WINDOW_PROPERTY = JsonPropertyName.with(WINDOW_PROPERTY_STRING);
 
     static {
+        // force static initializers to run, preventing Json type name lookup failures.
+        SpreadsheetCell.NO_FORMATTED_CELL.isPresent();
+
         JsonNodeContext.register("spreadsheet-delta",
                 SpreadsheetDelta::unmarshall,
                 SpreadsheetDelta::marshall,
