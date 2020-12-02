@@ -22,6 +22,7 @@ import walkingkooka.ToStringBuilder;
 import walkingkooka.UsesToStringBuilder;
 import walkingkooka.net.http.server.hateos.HateosResource;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
+import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -322,6 +323,12 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
     final static JsonPropertyName FORMATTED_PROPERTY = JsonPropertyName.with(FORMATTED_PROPERTY_STRING);
 
     static {
+        SpreadsheetExpressionReference.COMPARATOR.hashCode();
+        SpreadsheetFormula.ERROR_PROPERTY.hashCode();
+        TextNode.NO_ATTRIBUTES.isEmpty();
+        SpreadsheetCellFormat.NO_FORMATTER.isPresent();
+
+
         JsonNodeContext.register("spreadsheet-cell",
                 SpreadsheetCell::unmarshall,
                 SpreadsheetCell::marshall,
