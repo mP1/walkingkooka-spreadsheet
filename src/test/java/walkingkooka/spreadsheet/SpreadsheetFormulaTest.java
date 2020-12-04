@@ -433,6 +433,25 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.marshallRoundTripTwiceAndCheck(this.createObject());
     }
 
+    @Test
+    public void testJsonNodeMarshallRoundtripTextAndValue() {
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetFormula.with(TEXT)
+                .setValue(Optional.of(123L)));
+    }
+
+    @Test
+    public void testJsonNodeMarshallRoundtripTextValueAndExpression() {
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetFormula.with(TEXT)
+                .setValue(Optional.of(123L))
+                .setExpression(this.expression()));
+    }
+
+    @Test
+    public void testJsonNodeMarshallRoundtripTextAndError() {
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetFormula.with(TEXT)
+                .setError(Optional.of(SpreadsheetError.with("error message #1"))));
+    }
+
     // toString...............................................................................................
 
     @Test

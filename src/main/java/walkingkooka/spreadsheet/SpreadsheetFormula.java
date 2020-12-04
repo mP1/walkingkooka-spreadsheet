@@ -231,7 +231,7 @@ public final class SpreadsheetFormula implements HasText,
                     value = context.unmarshallWithType(child);
                     break;
                 case VALUE_PROPERTY_STRING:
-                    value = child.value();
+                    value = context.unmarshallWithType(child);
                     break;
                 case ERROR_PROPERTY_STRING:
                     error = context.unmarshall(child, SpreadsheetError.class);
