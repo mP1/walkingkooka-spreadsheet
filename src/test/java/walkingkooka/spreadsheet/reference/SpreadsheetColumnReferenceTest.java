@@ -71,6 +71,33 @@ public final class SpreadsheetColumnReferenceTest extends SpreadsheetColumnOrRow
                 column1, column2, column3, column4);
     }
 
+    // parseColumn.......................................................................................................
+
+    @Test
+    public void testParseColumnUpperCased() {
+        this.parseStringAndCheck("A", SpreadsheetColumnReference.with(0, SpreadsheetReferenceKind.RELATIVE));
+    }
+
+    @Test
+    public void testParseColumnUpperCased2() {
+        this.parseStringAndCheck("B", SpreadsheetColumnReference.with(1, SpreadsheetReferenceKind.RELATIVE));
+    }
+
+    @Test
+    public void testParseColumnUpperCasedAbsolute() {
+        this.parseStringAndCheck("$C", SpreadsheetColumnReference.with(2, SpreadsheetReferenceKind.ABSOLUTE));
+    }
+
+    @Test
+    public void testParseColumnLowerCased() {
+        this.parseStringAndCheck("d", SpreadsheetColumnReference.with(3, SpreadsheetReferenceKind.RELATIVE));
+    }
+
+    @Test
+    public void testParseColumnLowerCasedAbsolute() {
+        this.parseStringAndCheck("$e", SpreadsheetColumnReference.with(4, SpreadsheetReferenceKind.ABSOLUTE));
+    }
+
     // parseColumnRange....................................................................................................
 
     @Test

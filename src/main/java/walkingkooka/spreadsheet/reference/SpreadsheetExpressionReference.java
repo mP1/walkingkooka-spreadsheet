@@ -44,8 +44,10 @@ abstract public class SpreadsheetExpressionReference<T extends Comparable<T>> im
     public final static Comparator<SpreadsheetExpressionReference<?>> COMPARATOR = Cast.to(SpreadsheetExpressionReferenceComparator.INSTANCE);
 
     // modes used by isTextCellReference
-    private final static int MODE_COLUMN = 0;
-    private final static int MODE_ROW = MODE_COLUMN + 1;
+    private final static int MODE_COLUMN_FIRST = 0;
+    private final static int MODE_COLUMN = MODE_COLUMN_FIRST + 1;
+    private final static int MODE_ROW_FIRST = MODE_COLUMN + 1;
+    private final static int MODE_ROW = MODE_ROW_FIRST + 1;
     private final static int MODE_FAIL = MODE_ROW + 1;
 
     /**
@@ -54,7 +56,7 @@ abstract public class SpreadsheetExpressionReference<T extends Comparable<T>> im
     public static boolean isTextCellReference(final String name) {
         Objects.requireNonNull(name, "name");
 
-        int mode = MODE_COLUMN; // -1 too long or contains invalid char
+        int mode = MODE_COLUMN_FIRST; // -1 too long or contains invalid char
         int column = 0;
         int row = 0;
 
@@ -63,7 +65,15 @@ abstract public class SpreadsheetExpressionReference<T extends Comparable<T>> im
         for (int i = 0; i < length; i++) {
             final char c = name.charAt(i);
 
-            // try and parseCellReference into column + row
+            if (MODE_COLUMN_FIRST == mode) {
+                mode = MODE_COLUMN;
+                if ('$' == c) {
+                    continue;
+                }
+                // fall-thru might be column letter
+            }
+
+            // try and consume column letters
             if (MODE_COLUMN == mode) {
                 final int digit = SpreadsheetParsers.valueFromDigit(c);
                 if (-1 != digit) {
@@ -74,8 +84,18 @@ abstract public class SpreadsheetExpressionReference<T extends Comparable<T>> im
                     }
                     continue;
                 }
-                mode = MODE_ROW;
+                mode = MODE_ROW_FIRST;
             }
+
+            if (MODE_ROW_FIRST == mode) {
+                mode = MODE_ROW;
+                if ('$' == c) {
+                    continue;
+                }
+                // fall-thru might be row letter
+            }
+
+
             if (MODE_ROW == mode) {
                 final int digit = Character.digit(c, SpreadsheetRowReference.RADIX);
                 if (-1 != digit) {
@@ -120,7 +140,7 @@ abstract public class SpreadsheetExpressionReference<T extends Comparable<T>> im
     public static SpreadsheetExpressionReference parse(final String text) {
         Objects.requireNonNull(text, "text");
 
-        return SpreadsheetLabelName.isTextCellReference(text) ?
+        return isTextCellReference(text) ?
                 parseCellReference(text) :
                 labelName(text);
     }
