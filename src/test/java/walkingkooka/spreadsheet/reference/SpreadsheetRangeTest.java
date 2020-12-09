@@ -900,7 +900,37 @@ public final class SpreadsheetRangeTest extends SpreadsheetExpressionReferenceTe
 
     @Test
     public void testParse() {
-        this.parseStringAndCheck("A1:A2", SpreadsheetRange.with(SpreadsheetExpressionReference.parseCellReference("A1").range(SpreadsheetExpressionReference.parseCellReference("A2"))));
+        this.parseStringAndCheck("A2:C4",
+                SpreadsheetRange.with(SpreadsheetExpressionReference.parseCellReference("A2")
+                        .range(SpreadsheetExpressionReference.parseCellReference("C4"))));
+    }
+
+    @Test
+    public void testParseAbsoluteBegin() {
+        this.parseStringAndCheck("$A$2:C4",
+                SpreadsheetRange.with(SpreadsheetExpressionReference.parseCellReference("$A$2")
+                        .range(SpreadsheetExpressionReference.parseCellReference("C4"))));
+    }
+
+    @Test
+    public void testParseAbsoluteBegin2() {
+        this.parseStringAndCheck("$A2:C4",
+                SpreadsheetRange.with(SpreadsheetExpressionReference.parseCellReference("$A2")
+                        .range(SpreadsheetExpressionReference.parseCellReference("C4"))));
+    }
+
+    @Test
+    public void testParseAbsoluteEnd() {
+        this.parseStringAndCheck("A2:$C4",
+                SpreadsheetRange.with(SpreadsheetExpressionReference.parseCellReference("A2")
+                        .range(SpreadsheetExpressionReference.parseCellReference("$C4"))));
+    }
+
+    @Test
+    public void testParseAbsoluteEnd2() {
+        this.parseStringAndCheck("A2:$C$4",
+                SpreadsheetRange.with(SpreadsheetExpressionReference.parseCellReference("A2")
+                        .range(SpreadsheetExpressionReference.parseCellReference("$C$4"))));
     }
 
     // JsonNodeMarshallingTesting...............................................................................................
