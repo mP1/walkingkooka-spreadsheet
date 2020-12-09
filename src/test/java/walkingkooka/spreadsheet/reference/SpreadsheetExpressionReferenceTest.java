@@ -45,8 +45,23 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     }
 
     @Test
-    public void testIsTextCellWithCellReference() {
+    public void testIsTextCellWithCellReferenceUppercase() {
         this.isTextCellReferenceAndCheck("A1", true);
+    }
+
+    @Test
+    public void testIsTextCellWithCellReferenceUppercaseAbsolute() {
+        this.isTextCellReferenceAndCheck("$A1", true);
+    }
+
+    @Test
+    public void testIsTextCellWithCellReferenceLowercase() {
+        this.isTextCellReferenceAndCheck("a1", true);
+    }
+
+    @Test
+    public void testIsTextCellWithCellReferenceLowercaseAbsolute() {
+        this.isTextCellReferenceAndCheck("$a1", true);
     }
 
     @Test
@@ -95,9 +110,39 @@ public final class SpreadsheetExpressionReferenceTest implements ClassTesting2<S
     // parse............................................................................................................
 
     @Test
-    public void testParseCellReference() {
-        final String reference = "A1";
-        this.parseStringAndCheck(reference, SpreadsheetExpressionReference.parseCellReference(reference));
+    public void testParseCellReferenceUpperCaseRelativeRelative() {
+        final String reference = "A2";
+        this.parseStringAndCheck(reference, SpreadsheetReferenceKind.RELATIVE.column(0).setRow(SpreadsheetReferenceKind.RELATIVE.row(1)));
+    }
+
+    @Test
+    public void testParseCellReferenceUpperCaseRelativeAbsolute() {
+        final String reference = "C$4";
+        this.parseStringAndCheck(reference, SpreadsheetReferenceKind.RELATIVE.column(2).setRow(SpreadsheetReferenceKind.ABSOLUTE.row(3)));
+    }
+
+    @Test
+    public void testParseCellReferenceUpperCaseAbsoluteRelative() {
+        final String reference = "$E6";
+        this.parseStringAndCheck(reference, SpreadsheetReferenceKind.ABSOLUTE.column(4).setRow(SpreadsheetReferenceKind.RELATIVE.row(5)));
+    }
+
+    @Test
+    public void testParseCellReferenceUpperCaseAbsoluteAbsolute() {
+        final String reference = "$G$8";
+        this.parseStringAndCheck(reference, SpreadsheetReferenceKind.ABSOLUTE.column(6).setRow(SpreadsheetReferenceKind.ABSOLUTE.row(7)));
+    }
+
+    @Test
+    public void testParseCellReferenceLowercaseRelativeRelative() {
+        final String reference = "i10";
+        this.parseStringAndCheck(reference, SpreadsheetReferenceKind.RELATIVE.column(8).setRow(SpreadsheetReferenceKind.RELATIVE.row(9)));
+    }
+
+    @Test
+    public void testParseCellReferenceLowercaseAbsolute() {
+        final String reference = "$k12";
+        this.parseStringAndCheck(reference, SpreadsheetReferenceKind.ABSOLUTE.column(10).setRow(SpreadsheetReferenceKind.RELATIVE.row(11)));
     }
 
     @Test
