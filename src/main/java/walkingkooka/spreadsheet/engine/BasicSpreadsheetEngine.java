@@ -43,6 +43,7 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.text.cursor.parser.ParserException;
+import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.PixelLength;
@@ -351,9 +352,15 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         SpreadsheetFormula result;
 
         try {
-            final SpreadsheetParserToken updated = parsed.apply(context.parseFormula(formula.text()));
-            result = formula.setText(updated.text())
-                    .setExpression(updated.expression(context));
+            final String text = formula.text();
+            if (text.isEmpty()) {
+                result = formula.setExpression(EMPTY_FORMULA); // will evaluate to empty string
+            } else {
+                final SpreadsheetParserToken updated = parsed.apply(context.parseFormula(text));
+                result = formula.setText(updated.text())
+                        .setExpression(updated.expression(context));
+            }
+
         } catch (final ParserException failed) {
             // parsing failed set the error message
             result = this.setError(formula, failed.getMessage());
@@ -361,6 +368,8 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
         return result;
     }
+
+    private final static Optional<Expression> EMPTY_FORMULA = Optional.of(Expression.valueOrFail(""));
 
     // EVAL .........................................................................................................
 

@@ -613,6 +613,29 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     // saveCell....................................................................................................
 
     @Test
+    public void testSaveCellEmptyFormula() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
+                cellReferenceStore,
+                labelStore);
+        final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
+
+        final SpreadsheetCell a1 = this.cell("a1", "");
+        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(a1, "");
+        this.saveCellAndCheck(engine,
+                a1,
+                context,
+                a1Formatted);
+
+        this.loadCellStoreAndCheck(cellStore, a1Formatted);
+        this.loadLabelStoreAndCheck(labelStore);
+        this.countAndCheck(cellReferenceStore, 0);
+    }
+
+    @Test
     public void testSaveCellWithoutReferences() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final SpreadsheetExpressionReferenceStore<SpreadsheetCellReference> cellReferenceStore = this.cellReferencesStore();
@@ -5150,8 +5173,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .replace(formattedText.toTextNode())
                 .root());
 
-        return cell.setFormula(cell.formula()
-                .setExpression(this.parseFormula(cell.formula()))
+        final SpreadsheetFormula formula = cell.formula();
+        return cell.setFormula(formula
+                .setExpression(formula.text().isEmpty() ? Optional.of(Expression.string("")) : this.parseFormula(formula))
                 .setValue(Optional.of(value)))
                 .setFormatted(formattedCell);
     }
