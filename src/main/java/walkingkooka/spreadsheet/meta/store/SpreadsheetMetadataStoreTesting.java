@@ -17,16 +17,34 @@
 
 package walkingkooka.spreadsheet.meta.store;
 
+import org.junit.jupiter.api.Test;
+import walkingkooka.collect.map.Maps;
+import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.store.StoreTesting;
 
+import java.time.LocalDateTime;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public interface SpreadsheetMetadataStoreTesting<S extends SpreadsheetMetadataStore> extends StoreTesting<S, SpreadsheetId, SpreadsheetMetadata>,
         TypeNameTesting<S> {
 
     int ID = 1;
+
+    @Test
+    default void testSaveWithoutRequiredFails() {
+        final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> this.createStore().save(SpreadsheetMetadata.EMPTY));
+
+        final String message = thrown.getMessage();
+        final String required = "Missing required properties: create-date-time, creator, modified-by, modified-date-time";
+
+        assertTrue(message.startsWith(required), () -> "Message doesnt start with \"" + required + "\"" + "\n" + message);
+    }
 
     @Override
     default SpreadsheetId id() {
@@ -35,7 +53,16 @@ public interface SpreadsheetMetadataStoreTesting<S extends SpreadsheetMetadataSt
 
     @Override
     default SpreadsheetMetadata value() {
-        return SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, this.id());
+        final EmailAddress creatorEmail = EmailAddress.parse("creator@example.com");
+        final LocalDateTime createDateTime = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
+        final EmailAddress modifiedEmail = EmailAddress.parse("modified@example.com");
+        final LocalDateTime modifiedDateTime = LocalDateTime.of(2000, 1, 2, 12, 58, 59);
+
+        return SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, this.id(),
+                SpreadsheetMetadataPropertyName.CREATOR, creatorEmail,
+                SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, createDateTime,
+                SpreadsheetMetadataPropertyName.MODIFIED_BY, modifiedEmail,
+                SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, modifiedDateTime));
     }
 
     // TypeNameTesting..................................................................

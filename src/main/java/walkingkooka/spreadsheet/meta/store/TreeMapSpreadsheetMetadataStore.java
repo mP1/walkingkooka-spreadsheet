@@ -26,9 +26,11 @@ import walkingkooka.store.Stores;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * A {@link SpreadsheetMetadataStore} that uses a {@link Map}.
@@ -64,6 +66,13 @@ final class TreeMapSpreadsheetMetadataStore implements SpreadsheetMetadataStore 
 
     @Override
     public SpreadsheetMetadata save(final SpreadsheetMetadata spreadsheetMetadata) {
+        Objects.requireNonNull(spreadsheetMetadata, "spreadsheetMetadata");
+
+        final Set<SpreadsheetMetadataPropertyName<?>> missing = spreadsheetMetadata.missingRequiredProperties();
+        if (!missing.isEmpty()) {
+            throw new IllegalArgumentException("Missing required properties: " + missing.stream().map(SpreadsheetMetadataPropertyName::toString).collect(Collectors.joining(", ")) + " has " + spreadsheetMetadata);
+        }
+
         return this.store.save(spreadsheetMetadata);
     }
 

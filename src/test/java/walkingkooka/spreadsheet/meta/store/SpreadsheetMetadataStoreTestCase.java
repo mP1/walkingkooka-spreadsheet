@@ -24,6 +24,8 @@ import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMetadataStore> implements SpreadsheetMetadataStoreTesting<S> {
@@ -157,8 +159,17 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
         return this.metadata(SpreadsheetId.with(id), creator);
     }
 
-    final SpreadsheetMetadata metadata(final SpreadsheetId id, final String creator) {
+    final SpreadsheetMetadata metadata(final SpreadsheetId id,
+                                       final String creator) {
+        final EmailAddress creatorEmail = EmailAddress.parse(creator);
+        final LocalDateTime createDateTime = LocalDateTime.of(1999, 12, 31, 12, 58, 59);
+        final EmailAddress modifiedEmail = EmailAddress.parse("modified@example.com");
+        final LocalDateTime modifiedDateTime = LocalDateTime.of(2000, 1, 2, 12, 58, 59);
+
         return SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, id,
-                SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse(creator)));
+                SpreadsheetMetadataPropertyName.CREATOR, creatorEmail,
+                SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, createDateTime,
+                SpreadsheetMetadataPropertyName.MODIFIED_BY, modifiedEmail,
+                SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, modifiedDateTime));
     }
 }

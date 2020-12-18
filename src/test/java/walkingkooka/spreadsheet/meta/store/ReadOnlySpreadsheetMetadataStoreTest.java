@@ -33,6 +33,11 @@ public final class ReadOnlySpreadsheetMetadataStoreTest extends SpreadsheetMetad
         assertThrows(NullPointerException.class, () -> ReadOnlySpreadsheetMetadataStore.with(null));
     }
 
+    @Override
+    public void testSaveWithoutRequiredFails() {
+        // ignore
+    }
+
     @Test
     public void testSaveAndLoad() {
         final SpreadsheetMetadataStore store = SpreadsheetMetadataStores.treeMap();
