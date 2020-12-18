@@ -26,6 +26,7 @@ import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.SpreadsheetCoordinates;
+import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -67,6 +68,13 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
     @Test
     public void testWithInvalidPropertyFails() {
         assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.CREATOR, null)));
+    }
+
+    @Test
+    public void testWithSpreadsheetMetadataMapNullValueFails() {
+        final Map<SpreadsheetMetadataPropertyName<?>, Object> map = Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, SpreadsheetId.with(123), SpreadsheetMetadataPropertyName.SPREADSHEET_NAME, null);
+        final SpreadsheetMetadataPropertyValueException thrown = assertThrows(SpreadsheetMetadataPropertyValueException.class, () -> SpreadsheetMetadata.with(map));
+        assertEquals("Missing value, but got null for \"spreadsheet-name\"", thrown.getMessage(), "message");
     }
 
     @Test
