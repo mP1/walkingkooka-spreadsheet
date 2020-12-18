@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.net.email.EmailAddress;
@@ -392,6 +393,21 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
         final SpreadsheetMetadata withDefaults = metadata.setDefaults(notEmptyDefaults);
 
         this.marshallRoundTripTwiceAndCheck(withDefaults);
+    }
+
+    // missingRequiredProperties........................................................................................
+
+    @Test
+    public final void testMissingRequiredPropertiesReadOnly() {
+        assertThrows(UnsupportedOperationException.class,
+                () -> this.createObject().missingRequiredProperties().add(SpreadsheetMetadataPropertyName.EDIT_RANGE));
+    }
+
+    final void missingRequiredPropertiesAndCheck(final SpreadsheetMetadata metadata,
+                                                 final SpreadsheetMetadataPropertyName<?>... missing) {
+        assertEquals(Sets.of(missing),
+                metadata.missingRequiredProperties(),
+                () -> "" + metadata);
     }
 
     // ClassTesting.....................................................................................................

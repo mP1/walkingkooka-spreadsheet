@@ -77,6 +77,29 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
         });
     }
 
+    // missingRequiredProperties.........................................................................................
+
+    @Test
+    public void testMissingProperties() {
+        this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY,
+                SpreadsheetMetadataPropertyName.CREATOR,
+                SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                SpreadsheetMetadataPropertyName.MODIFIED_BY,
+                SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME);
+    }
+
+    @Test
+    public void testMissingPropertiesIgnoresDefaults() {
+        final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$");
+
+        this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY.setDefaults(defaults),
+                SpreadsheetMetadataPropertyName.CREATOR,
+                SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                SpreadsheetMetadataPropertyName.MODIFIED_BY,
+                SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME);
+    }
+
     // toString.........................................................................................................
 
     @Test

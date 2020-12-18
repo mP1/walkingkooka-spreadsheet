@@ -1020,6 +1020,47 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         assertSame(metadata.mathContext(), metadata.mathContext());
     }
 
+    // missingRequiredProperties.........................................................................................
+
+    @Test
+    public void testMissingProperties() {
+        this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$"),
+                SpreadsheetMetadataPropertyName.CREATOR,
+                SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                SpreadsheetMetadataPropertyName.MODIFIED_BY,
+                SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME);
+    }
+
+    @Test
+    public void testMissingPropertiesIgnoresDefaults() {
+        final SpreadsheetMetadata defaults = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$");
+
+        this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY.setDefaults(defaults),
+                SpreadsheetMetadataPropertyName.CREATOR,
+                SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                SpreadsheetMetadataPropertyName.MODIFIED_BY,
+                SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME);
+    }
+
+    @Test
+    public void testMissingPropertiesNonMissing() {
+        this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"))
+                .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now())
+                .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"))
+                .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.now()));
+    }
+
+    @Test
+    public void testMissingPropertiesSomeMissing() {
+        this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY
+                        .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"))
+                        .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now()),
+                SpreadsheetMetadataPropertyName.MODIFIED_BY,
+                SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME);
+    }
+
     // ToString.........................................................................................................
 
     @Test

@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
 import walkingkooka.convert.Converter;
 import walkingkooka.convert.ConverterContext;
@@ -66,7 +67,6 @@ import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
-import walkingkooka.tree.text.Length;
 import walkingkooka.tree.text.TextStyle;
 
 import java.math.MathContext;
@@ -75,6 +75,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 
 /**
@@ -115,6 +116,27 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     SpreadsheetMetadata(final SpreadsheetMetadata defaults) {
         super();
         this.defaults = defaults;
+    }
+
+    /**
+     * Returns all the missing required properties.
+     */
+    public final Set<SpreadsheetMetadataPropertyName<?>> missingRequiredProperties() {
+        final Set<SpreadsheetMetadataPropertyName<?>> missing = Sets.sorted();
+
+        addIfMissing(SpreadsheetMetadataPropertyName.CREATOR, missing);
+        addIfMissing(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, missing);
+        addIfMissing(SpreadsheetMetadataPropertyName.MODIFIED_BY, missing);
+        addIfMissing(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, missing);
+
+        return Sets.readOnly(missing);
+    }
+
+    private void addIfMissing(final SpreadsheetMetadataPropertyName<?> property,
+                              final Set<SpreadsheetMetadataPropertyName<?>> missing) {
+        if (false == this.get(property).isPresent()) {
+            missing.add(property);
+        }
     }
 
     /**
