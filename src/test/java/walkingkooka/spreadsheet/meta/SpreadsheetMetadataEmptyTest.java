@@ -84,6 +84,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
         this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY,
                 SpreadsheetMetadataPropertyName.CREATOR,
                 SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                SpreadsheetMetadataPropertyName.LOCALE,
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
                 SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME);
     }
@@ -96,6 +97,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
         this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY.setDefaults(defaults),
                 SpreadsheetMetadataPropertyName.CREATOR,
                 SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                SpreadsheetMetadataPropertyName.LOCALE,
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
                 SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME);
     }
