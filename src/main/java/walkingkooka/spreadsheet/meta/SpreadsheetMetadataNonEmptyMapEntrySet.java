@@ -55,6 +55,10 @@ final class SpreadsheetMetadataNonEmptyMapEntrySet extends AbstractSet<Entry<Spr
 
         for (Entry<SpreadsheetMetadataPropertyName<?>, Object> propertyAndValue : entries.entrySet()) {
             final SpreadsheetMetadataPropertyName<?> property = propertyAndValue.getKey();
+            if (null == property) {
+                throw new NullPointerException("Map contains null key got " + entries);
+            }
+
             final Object value = propertyAndValue.getValue();
             property.checkValue(value);
 
