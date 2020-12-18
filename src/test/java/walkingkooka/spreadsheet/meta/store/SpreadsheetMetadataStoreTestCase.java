@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
@@ -169,6 +170,7 @@ public abstract class SpreadsheetMetadataStoreTestCase<S extends SpreadsheetMeta
         return SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, id,
                 SpreadsheetMetadataPropertyName.CREATOR, creatorEmail,
                 SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, createDateTime,
+                SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"),
                 SpreadsheetMetadataPropertyName.MODIFIED_BY, modifiedEmail,
                 SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, modifiedDateTime));
     }

@@ -1027,6 +1027,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "$"),
                 SpreadsheetMetadataPropertyName.CREATOR,
                 SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                SpreadsheetMetadataPropertyName.LOCALE,
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
                 SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME);
     }
@@ -1039,6 +1040,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY.setDefaults(defaults),
                 SpreadsheetMetadataPropertyName.CREATOR,
                 SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                SpreadsheetMetadataPropertyName.LOCALE,
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
                 SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME);
     }
@@ -1048,6 +1050,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"))
                 .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now())
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"))
                 .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.now()));
     }
@@ -1056,9 +1059,20 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testMissingPropertiesSomeMissing() {
         this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY
                         .set(SpreadsheetMetadataPropertyName.CREATOR, EmailAddress.parse("creator@example.com"))
-                        .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now()),
+                        .set(SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, LocalDateTime.now())
+                        .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH),
                 SpreadsheetMetadataPropertyName.MODIFIED_BY,
                 SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME);
+    }
+
+    @Test
+    public void testMissingPropertiesSomeMissing2() {
+        this.missingRequiredPropertiesAndCheck(SpreadsheetMetadata.EMPTY
+                        .set(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("creator@example.com"))
+                        .set(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, LocalDateTime.now()),
+                SpreadsheetMetadataPropertyName.CREATOR,
+                SpreadsheetMetadataPropertyName.CREATE_DATE_TIME,
+                SpreadsheetMetadataPropertyName.LOCALE);
     }
 
     // ToString.........................................................................................................

@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.store.StoreTesting;
 
 import java.time.LocalDateTime;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -41,7 +42,7 @@ public interface SpreadsheetMetadataStoreTesting<S extends SpreadsheetMetadataSt
         final IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> this.createStore().save(SpreadsheetMetadata.EMPTY));
 
         final String message = thrown.getMessage();
-        final String required = "Missing required properties: create-date-time, creator, modified-by, modified-date-time";
+        final String required = "Missing required properties: create-date-time, creator, locale, modified-by, modified-date-time";
 
         assertTrue(message.startsWith(required), () -> "Message doesnt start with \"" + required + "\"" + "\n" + message);
     }
@@ -61,6 +62,7 @@ public interface SpreadsheetMetadataStoreTesting<S extends SpreadsheetMetadataSt
         return SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.SPREADSHEET_ID, this.id(),
                 SpreadsheetMetadataPropertyName.CREATOR, creatorEmail,
                 SpreadsheetMetadataPropertyName.CREATE_DATE_TIME, createDateTime,
+                SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH,
                 SpreadsheetMetadataPropertyName.MODIFIED_BY, modifiedEmail,
                 SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, modifiedDateTime));
     }

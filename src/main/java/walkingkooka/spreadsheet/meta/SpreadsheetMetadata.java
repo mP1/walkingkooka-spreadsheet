@@ -129,6 +129,8 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
         addIfMissing(SpreadsheetMetadataPropertyName.MODIFIED_BY, missing);
         addIfMissing(SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME, missing);
 
+        addIfMissing(SpreadsheetMetadataPropertyName.LOCALE, missing);
+
         return Sets.readOnly(missing);
     }
 
