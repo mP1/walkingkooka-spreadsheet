@@ -156,16 +156,16 @@ public final class SpreadsheetCellBox {
                     reference = context.unmarshall(child, SpreadsheetCellReference.class);
                     break;
                 case X_PROPERTY_STRING:
-                    x = child.numberValueOrFail().doubleValue();
+                    x = child.numberOrFail().doubleValue();
                     break;
                 case Y_PROPERTY_STRING:
-                    y = child.numberValueOrFail().doubleValue();
+                    y = child.numberOrFail().doubleValue();
                     break;
                 case WIDTH_PROPERTY_STRING:
-                    width = child.numberValueOrFail().doubleValue();
+                    width = child.numberOrFail().doubleValue();
                     break;
                 case HEIGHT_PROPERTY_STRING:
-                    height = child.numberValueOrFail().doubleValue();
+                    height = child.numberOrFail().doubleValue();
                     break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);

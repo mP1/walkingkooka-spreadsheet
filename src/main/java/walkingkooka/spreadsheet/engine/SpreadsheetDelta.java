@@ -272,7 +272,7 @@ public abstract class SpreadsheetDelta {
         final Map<R, Double> max = Maps.ordered();
 
         for (final JsonNode entry : object.children()) {
-            max.put(reference.apply(entry.name().value()), entry.numberValueOrFail().doubleValue());
+            max.put(reference.apply(entry.name().value()), entry.numberOrFail().doubleValue());
         }
 
         return max;
