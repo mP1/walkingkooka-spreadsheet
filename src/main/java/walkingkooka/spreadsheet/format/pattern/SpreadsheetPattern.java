@@ -395,7 +395,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                                                                     final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
-        return parseDateFormatPattern(node.stringValueOrFail());
+        return parseDateFormatPattern(node.stringOrFail());
     }
 
     /**
@@ -405,7 +405,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                                                                     final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
-        return parseDateParsePatterns(node.stringValueOrFail());
+        return parseDateParsePatterns(node.stringOrFail());
     }
 
     /**
@@ -415,7 +415,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                                                                             final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
-        return parseDateTimeFormatPattern(node.stringValueOrFail());
+        return parseDateTimeFormatPattern(node.stringOrFail());
     }
 
     /**
@@ -425,7 +425,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                                                                             final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
-        return parseDateTimeParsePatterns(node.stringValueOrFail());
+        return parseDateTimeParsePatterns(node.stringOrFail());
     }
 
     /**
@@ -435,7 +435,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                                                                         final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
-        return parseNumberFormatPattern(node.stringValueOrFail());
+        return parseNumberFormatPattern(node.stringOrFail());
     }
 
     /**
@@ -445,7 +445,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                                                                         final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
-        return parseNumberParsePatterns(node.stringValueOrFail());
+        return parseNumberParsePatterns(node.stringOrFail());
     }
 
     /**
@@ -455,7 +455,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                                                                     final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
-        return parseTextFormatPattern(node.stringValueOrFail());
+        return parseTextFormatPattern(node.stringOrFail());
     }
 
     /**
@@ -465,7 +465,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                                                                     final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
-        return parseTimeFormatPattern(node.stringValueOrFail());
+        return parseTimeFormatPattern(node.stringOrFail());
     }
 
     /**
@@ -475,7 +475,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                                                                     final JsonNodeUnmarshallContext context) {
         checkNode(node);
 
-        return parseTimeParsePatterns(node.stringValueOrFail());
+        return parseTimeParsePatterns(node.stringOrFail());
     }
 
     private static void checkNode(final JsonNode node) {

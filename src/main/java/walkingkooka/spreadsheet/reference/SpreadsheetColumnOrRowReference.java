@@ -225,7 +225,7 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
      */
     static SpreadsheetColumnReference unmarshallColumn(final JsonNode from,
                                                        final JsonNodeUnmarshallContext context) {
-        return SpreadsheetColumnOrRowReference.parseColumn(from.stringValueOrFail());
+        return SpreadsheetColumnOrRowReference.parseColumn(from.stringOrFail());
     }
 
     /**
@@ -233,7 +233,7 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
      */
     static SpreadsheetRowReference unmarshallRow(final JsonNode from,
                                                  final JsonNodeUnmarshallContext context) {
-        return SpreadsheetColumnOrRowReference.parseRow(from.stringValueOrFail());
+        return SpreadsheetColumnOrRowReference.parseRow(from.stringOrFail());
     }
 
     final JsonNode marshall(final JsonNodeMarshallContext context) {

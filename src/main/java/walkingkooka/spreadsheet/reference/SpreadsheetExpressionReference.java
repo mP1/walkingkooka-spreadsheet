@@ -317,7 +317,7 @@ abstract public class SpreadsheetExpressionReference<T extends Comparable<T>> im
                                                                             final Function<String, R> parse) {
         Objects.requireNonNull(node, "node");
 
-        return parse.apply(node.stringValueOrFail());
+        return parse.apply(node.stringOrFail());
     }
 
     /**

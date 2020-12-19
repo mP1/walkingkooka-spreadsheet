@@ -93,7 +93,7 @@ public final class SpreadsheetName implements Comparable<SpreadsheetName>,
 
     static SpreadsheetName unmarshall(final JsonNode node,
                                       final JsonNodeUnmarshallContext context) {
-        return with(node.stringValueOrFail());
+        return with(node.stringOrFail());
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {

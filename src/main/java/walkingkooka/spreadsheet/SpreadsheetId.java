@@ -84,7 +84,7 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
 
     static SpreadsheetId unmarshall(final JsonNode node,
                                     final JsonNodeUnmarshallContext context) {
-        return parse(node.stringValueOrFail());
+        return parse(node.stringOrFail());
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
