@@ -98,7 +98,7 @@ public enum SpreadsheetEngineEvaluation {
 
     static SpreadsheetEngineEvaluation unmarshall(final JsonNode node,
                                                   final JsonNodeUnmarshallContext context) {
-        return valueOf(node.stringValueOrFail());
+        return valueOf(node.stringOrFail());
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {

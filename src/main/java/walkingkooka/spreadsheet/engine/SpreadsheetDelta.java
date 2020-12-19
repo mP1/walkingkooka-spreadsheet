@@ -241,7 +241,7 @@ public abstract class SpreadsheetDelta {
                     maxRowsHeights = unmarshallMap(child, SpreadsheetRowReference::parseRow);
                     break;
                 case WINDOW_PROPERTY_STRING:
-                    window = rangeJsonNodeUnmarshall(child.stringValueOrFail());
+                    window = rangeJsonNodeUnmarshall(child.stringOrFail());
                     break;
                 default:
                     JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);

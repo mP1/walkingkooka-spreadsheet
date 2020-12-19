@@ -93,7 +93,7 @@ final public class GroupName implements Name,
      */
     static GroupName unmarshall(final JsonNode node,
                                 final JsonNodeUnmarshallContext context) {
-        return with(node.stringValueOrFail());
+        return with(node.stringOrFail());
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {

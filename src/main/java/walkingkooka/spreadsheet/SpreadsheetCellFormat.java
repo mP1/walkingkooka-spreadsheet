@@ -118,7 +118,7 @@ public final class SpreadsheetCellFormat implements UsesToStringBuilder {
      */
     static SpreadsheetCellFormat unmarshall(final JsonNode node,
                                             final JsonNodeUnmarshallContext context) {
-        return with(node.stringValueOrFail());
+        return with(node.stringOrFail());
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {

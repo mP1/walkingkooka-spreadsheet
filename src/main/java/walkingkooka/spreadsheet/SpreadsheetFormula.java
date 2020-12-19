@@ -221,7 +221,7 @@ public final class SpreadsheetFormula implements HasText,
             switch (name.value()) {
                 case TEXT_STRING:
                     try {
-                        text = child.stringValueOrFail();
+                        text = child.stringOrFail();
                     } catch (final JsonNodeException cause) {
                         throw new JsonNodeUnmarshallException("Node " + TEXT + " is not a string=" + child, node);
                     }

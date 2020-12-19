@@ -130,7 +130,7 @@ public final class SpreadsheetCoordinates implements Comparable<SpreadsheetCoord
      */
     static SpreadsheetCoordinates unmarshall(final JsonNode node,
                                              final JsonNodeUnmarshallContext context) {
-        return parse(node.stringValueOrFail());
+        return parse(node.stringOrFail());
     }
 
     private JsonNode marshall(final JsonNodeMarshallContext context) {
