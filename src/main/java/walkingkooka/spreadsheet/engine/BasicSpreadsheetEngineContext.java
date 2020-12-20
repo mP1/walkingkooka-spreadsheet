@@ -198,7 +198,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     }
 
     /**
-     * Used to convert a number info a fraction within expressions.
+     * Used to convert a number into a fraction within expressions.
      */
     private final Function<BigDecimal, Fraction> fractioner;
 
