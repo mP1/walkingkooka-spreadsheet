@@ -66,6 +66,7 @@ import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.JsonPropertyName;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContexts;
 import walkingkooka.tree.text.TextStyle;
@@ -414,6 +415,15 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
         components.reportIfMissing();
 
         return ExpressionNumberContexts.basic(this.expressionNumberKind(), this.mathContext());
+    }
+
+    // HasJsonNodeMarshallContext.......................................................................................
+
+    /**
+     * Returns a {@link JsonNodeMarshallContext}
+     */
+    public final JsonNodeMarshallContext jsonNodeMarshallContext() {
+        return JsonNodeMarshallContexts.basic();
     }
 
     // HasMathContext....................................................................................................
