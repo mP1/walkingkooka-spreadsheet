@@ -426,6 +426,14 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
         return JsonNodeMarshallContexts.basic();
     }
 
+    // HasJsonNodeUnmarshallContext......................................................................................
+
+    public abstract JsonNodeUnmarshallContext jsonNodeUnmarshallContext();
+
+    final JsonNodeUnmarshallContext jsonNodeUnmarshallContext0() {
+        return JsonNodeUnmarshallContexts.basic(this.expressionNumberContext());
+    }
+
     // HasMathContext....................................................................................................
 
     /**

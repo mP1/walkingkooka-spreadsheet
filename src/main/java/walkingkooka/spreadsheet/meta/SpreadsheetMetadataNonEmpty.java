@@ -31,6 +31,7 @@ import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.math.MathContext;
 import java.util.List;
@@ -259,6 +260,19 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
      * Cached {@link ExpressionNumberContext}.
      */
     private ExpressionNumberContext expressionNumberContext;
+
+    @Override
+    public JsonNodeUnmarshallContext jsonNodeUnmarshallContext() {
+        if (null == this.jsonNodeUnmarshallContext) {
+            this.jsonNodeUnmarshallContext = this.jsonNodeUnmarshallContext0();
+        }
+        return this.jsonNodeUnmarshallContext;
+    }
+
+    /**
+     * Cached {@link JsonNodeUnmarshallContext}.
+     */
+    private JsonNodeUnmarshallContext jsonNodeUnmarshallContext;
 
     @Override
     public MathContext mathContext() {

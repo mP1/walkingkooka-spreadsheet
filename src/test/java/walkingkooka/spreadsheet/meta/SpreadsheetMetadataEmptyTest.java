@@ -113,6 +113,17 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 "message");
     }
 
+    // HasJsonNodeUnmarshallContext.....................................................................................
+
+    @Test
+    public void testJsonNodeUnmarshallContextAllRequiredPropertiesAbsentFails() {
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadata.EMPTY
+                .jsonNodeUnmarshallContext());
+        assertEquals("Required properties \"expression-number-kind\", \"precision\", \"rounding-mode\" missing.",
+                thrown.getMessage(),
+                "message");
+    }
+
     // toString.........................................................................................................
 
     @Test
