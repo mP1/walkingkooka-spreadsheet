@@ -55,6 +55,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
@@ -389,6 +390,30 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
 
     final DecimalNumberContext decimalNumberContext0() {
         return SpreadsheetMetadataDecimalNumberContextComponents.with(this).decimalNumberContext();
+    }
+
+    // HasExpressionNumberContext.......................................................................................
+
+    /**
+     * Returns a {@link ExpressionNumberContext} if the required properties are present.
+     * <ul>
+     * <li>{@link SpreadsheetMetadataPropertyName#EXPRESSION_NUMBER_KIND}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#PRECISION}</li>
+     * <li>{@link SpreadsheetMetadataPropertyName#ROUNDING_MODE}</li>
+     * </ul>
+     */
+    public abstract ExpressionNumberContext expressionNumberContext();
+
+    final ExpressionNumberContext expressionNumberContext0() {
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        components.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
+        components.getOrNull(SpreadsheetMetadataPropertyName.PRECISION);
+        components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
+
+        components.reportIfMissing();
+
+        return ExpressionNumberContexts.basic(this.expressionNumberKind(), this.mathContext());
     }
 
     // HasMathContext....................................................................................................
