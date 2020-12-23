@@ -48,6 +48,7 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -853,7 +854,44 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR);
         assertSame(metadata.decimalNumberContext(), metadata.decimalNumberContext());
     }
-    
+
+    // HasExpressionNumberContext.......................................................................................
+
+    @Test
+    public void testExpressionNumberContextSomeRequiredPropertiesAbsentFails() {
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
+                .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
+                .expressionNumberContext());
+        assertEquals("Required properties \"rounding-mode\" missing.",
+                thrown.getMessage(),
+                "message");
+    }
+
+    @Test
+    public void testExpressionNumberContextSomeRequiredPropertiesAbsentFails2() {
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING)
+                .expressionNumberContext());
+        assertEquals("Required properties \"precision\" missing.",
+                thrown.getMessage(),
+                "message");
+    }
+
+    @Test
+    public void testExpressionNumberContext() {
+        final ExpressionNumberKind kind = ExpressionNumberKind.DOUBLE;
+
+        final ExpressionNumberContext context = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, kind)
+                .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING)
+                .expressionNumberContext();
+        assertEquals(kind, context.expressionNumberKind(), "expressionNumberKind");
+        assertNotEquals(null, context.mathContext(), "mathContext");
+    }
+
     // HasFormatter.....................................................................................................
 
     @Test

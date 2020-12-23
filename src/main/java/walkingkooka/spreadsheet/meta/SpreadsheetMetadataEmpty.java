@@ -26,6 +26,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
+import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
@@ -127,6 +128,11 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     @Override
     public DecimalNumberContext decimalNumberContext() {
         return this.decimalNumberContext0();
+    }
+
+    @Override
+    public ExpressionNumberContext expressionNumberContext() {
+        return this.expressionNumberContext0();
     }
 
     @Override

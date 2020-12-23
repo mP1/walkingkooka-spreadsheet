@@ -102,6 +102,17 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 SpreadsheetMetadataPropertyName.MODIFIED_DATE_TIME);
     }
 
+    // HasExpressionNumberContext.......................................................................................
+
+    @Test
+    public void testExpressionNumberContextAllRequiredPropertiesAbsentFails() {
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadata.EMPTY
+                .expressionNumberContext());
+        assertEquals("Required properties \"expression-number-kind\", \"precision\", \"rounding-mode\" missing.",
+                thrown.getMessage(),
+                "message");
+    }
+
     // toString.........................................................................................................
 
     @Test
