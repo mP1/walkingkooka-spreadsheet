@@ -53,6 +53,8 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.FontFamily;
 import walkingkooka.tree.text.FontSize;
 import walkingkooka.tree.text.Length;
@@ -1027,6 +1029,62 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 10)
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.DOWN)
                 .set(SpreadsheetMetadataPropertyName.WIDTH, 10);
+    }
+
+    // HasJsonNodeUnmarshallContext.......................................................................................
+
+    @Test
+    public void testJsonNodeUnmarshallContextSomeRequiredPropertiesAbsentFails() {
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
+                .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
+                .jsonNodeUnmarshallContext());
+        assertEquals("Required properties \"rounding-mode\" missing.",
+                thrown.getMessage(),
+                "message");
+    }
+
+    @Test
+    public void testJsonNodeUnmarshallContextSomeRequiredPropertiesAbsentFails2() {
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING)
+                .jsonNodeUnmarshallContext());
+        assertEquals("Required properties \"precision\" missing.",
+                thrown.getMessage(),
+                "message");
+    }
+
+    @Test
+    public void testJsonNodeUnmarshallContext() {
+        final ExpressionNumberKind kind = ExpressionNumberKind.DOUBLE;
+
+        final JsonNodeUnmarshallContext context = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, kind)
+                .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING)
+                .jsonNodeUnmarshallContext();
+        assertEquals(kind, context.expressionNumberKind(), "expressionNumberKind");
+        assertNotEquals(null, context.mathContext(), "mathContext");
+    }
+
+    @Test
+    public void testJsonNodeUnmarshallContextUnmarshall() {
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
+                .set(SpreadsheetMetadataPropertyName.PRECISION, 5)
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.CEILING);
+
+        final JsonNodeUnmarshallContext context = metadata.jsonNodeUnmarshallContext();
+        final JsonNodeMarshallContext marshallContext = metadata.jsonNodeMarshallContext();
+
+        final BigDecimal bigDecimal = BigDecimal.valueOf(1.5);
+        assertEquals(bigDecimal, context.unmarshallWithType(marshallContext.marshallWithType(bigDecimal)), () -> "roundtrip json " + bigDecimal);
+
+        final LocalDateTime localDateTime = LocalDateTime.now();
+        assertEquals(localDateTime, context.unmarshallWithType(marshallContext.marshallWithType(localDateTime)), () -> "roundtrip json " + localDateTime);
+
+        assertEquals(metadata, context.unmarshallWithType(marshallContext.marshallWithType(metadata)), () -> "roundtrip json " + metadata);
     }
 
     // HasMathContext...................................................................................................

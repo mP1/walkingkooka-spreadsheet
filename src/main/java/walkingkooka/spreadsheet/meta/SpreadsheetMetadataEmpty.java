@@ -31,6 +31,7 @@ import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonObject;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.math.MathContext;
 import java.util.Map;
@@ -133,6 +134,11 @@ final class SpreadsheetMetadataEmpty extends SpreadsheetMetadata {
     @Override
     public ExpressionNumberContext expressionNumberContext() {
         return this.expressionNumberContext0();
+    }
+
+    @Override
+    public JsonNodeUnmarshallContext jsonNodeUnmarshallContext() {
+        return this.jsonNodeUnmarshallContext0();
     }
 
     @Override
