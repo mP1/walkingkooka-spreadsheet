@@ -33,6 +33,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContexts;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.BorderStyle;
@@ -45,6 +47,7 @@ import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 import walkingkooka.tree.text.WordWrap;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
@@ -244,6 +247,24 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
                 .loadFromLocale()
                 .converter();
+    }
+
+    // HasJsonNodeMarshallContext.......................................................................................
+
+    @Test
+    public void testJsonNodeMarshallContext() {
+        final SpreadsheetMetadata metadata = this.createObject();
+        final JsonNodeMarshallContext marshallContext = metadata.jsonNodeMarshallContext();
+        final JsonNodeMarshallContext marshallContext2 = JsonNodeMarshallContexts.basic();
+
+        final BigDecimal bigDecimal = BigDecimal.valueOf(1.25);
+        assertEquals(marshallContext.marshall(bigDecimal), marshallContext2.marshall(bigDecimal), () -> "" + bigDecimal);
+
+        final LocalDateTime localDateTime = LocalDateTime.now();
+        ;
+        assertEquals(marshallContext.marshall(localDateTime), marshallContext2.marshall(localDateTime), () -> "" + localDateTime);
+
+        assertEquals(marshallContext.marshall(metadata), marshallContext2.marshall(metadata), () -> "" + metadata);
     }
 
     // toString.........................................................................................................
