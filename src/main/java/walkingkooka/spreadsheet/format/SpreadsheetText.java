@@ -24,6 +24,12 @@ import walkingkooka.UsesToStringBuilder;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.color.Color;
 import walkingkooka.text.HasText;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonObject;
+import walkingkooka.tree.json.JsonPropertyName;
+import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.HasTextNode;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
@@ -143,5 +149,64 @@ public final class SpreadsheetText implements HasText,
 
         builder.enable(ToStringBuilderOption.QUOTE);
         builder.value(this.text);
+    }
+
+    // json..............................................................................................................
+
+    /**
+     * Factory that creates a {@link SpreadsheetText} from a {@link JsonNode}.
+     */
+    static SpreadsheetText unmarshall(final JsonNode node,
+                                      final JsonNodeUnmarshallContext context) {
+        Objects.requireNonNull(node, "node");
+
+        Color color = null;
+        String text = null;
+
+        for (final JsonNode child : node.objectOrFail().children()) {
+            final JsonPropertyName name = child.name();
+            switch (name.value()) {
+                case COLOR_PROPERTY_STRING:
+                    color = context.unmarshall(child, Color.class);
+                    break;
+                case TEXT_PROPERTY_STRING:
+                    text = child.stringOrFail();
+                    break;
+                default:
+                    JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
+            }
+        }
+
+        if (null == text) {
+            JsonNodeUnmarshallContext.requiredPropertyMissing(TEXT_PROPERTY, node);
+        }
+
+        return with(Optional.ofNullable(color), text);
+    }
+
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
+        JsonObject object = JsonNode.object();
+
+        final Optional<Color> color = this.color;
+        if (color.isPresent()) {
+            object = object.set(COLOR_PROPERTY, context.marshall(color.get()));
+        }
+
+        return object.set(TEXT_PROPERTY, JsonNode.string(this.text));
+    }
+
+    private final static String COLOR_PROPERTY_STRING = "color";
+    private final static String TEXT_PROPERTY_STRING = "text";
+
+    final static JsonPropertyName COLOR_PROPERTY = JsonPropertyName.with(COLOR_PROPERTY_STRING);
+    final static JsonPropertyName TEXT_PROPERTY = JsonPropertyName.with(TEXT_PROPERTY_STRING);
+
+    static {
+        Color.BLACK.hashCode();
+
+        JsonNodeContext.register("spreadsheet-text",
+                SpreadsheetText::unmarshall,
+                SpreadsheetText::marshall,
+                SpreadsheetText.class);
     }
 }

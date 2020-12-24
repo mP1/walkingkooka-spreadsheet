@@ -25,6 +25,9 @@ import walkingkooka.color.Color;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CharSequences;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.text.HasTextNodeTesting;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStylePropertyName;
@@ -39,6 +42,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>,
         HashCodeEqualsDefinedTesting2<SpreadsheetText>,
         HasTextNodeTesting,
+        JsonNodeMarshallingTesting<SpreadsheetText>,
         ToStringTesting<SpreadsheetText> {
 
     private final static Optional<Color> COLOR = Optional.of(Color.BLACK);
@@ -158,6 +162,35 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
         return SpreadsheetText.with(COLOR, TEXT);
     }
 
+    // json ............................................................................................................
+
+    @Test
+    public void testFromJsonTextOnly() {
+        this.unmarshallAndCheck("{ \"text\":  \"1/1/2000\"}", SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, TEXT));
+    }
+
+    @Test
+    public void testFromJsonColorAndText() {
+        this.unmarshallAndCheck("{ \"color\": \"#000000\", \"text\":  \"1/1/2000\"}", SpreadsheetText.with(COLOR, TEXT));
+    }
+
+    @Test
+    public void testToJsonTextOnly() {
+        this.marshallAndCheck(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, TEXT), "{ \"text\":  \"1/1/2000\"}");
+    }
+
+    @Test
+    public void testToJsonColorAndText() {
+        this.marshallAndCheck(SpreadsheetText.with(COLOR, TEXT), "{ \"color\": \"#000000\", \"text\":  \"1/1/2000\"}");
+    }
+
+    @Test
+    public void testJsonRoundtrip() {
+        this.marshallRoundTripTwiceAndCheck(SpreadsheetText.with(Optional.of(Color.fromRgb(0x123456)), "text-abc-123"));
+    }
+
+    // ClassTesting.....................................................................................................
+
     @Override
     public Class<SpreadsheetText> type() {
         return SpreadsheetText.class;
@@ -168,8 +201,23 @@ public final class SpreadsheetTextTest implements ClassTesting2<SpreadsheetText>
         return JavaVisibility.PUBLIC;
     }
 
+    // Object...........................................................................................................
+
     @Override
     public SpreadsheetText createObject() {
         return SpreadsheetText.with(COLOR, TEXT);
+    }
+
+    // json.............................................................................................................
+
+    @Override
+    public SpreadsheetText unmarshall(final JsonNode from,
+                                      final JsonNodeUnmarshallContext context) {
+        return SpreadsheetText.unmarshall(from, context);
+    }
+
+    @Override
+    public SpreadsheetText createJsonNodeMappingValue() {
+        return this.createObject();
     }
 }
