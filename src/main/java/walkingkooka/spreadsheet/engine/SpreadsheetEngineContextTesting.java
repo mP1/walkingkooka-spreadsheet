@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.ContextTesting;
 import walkingkooka.Either;
+import walkingkooka.locale.HasLocaleTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
@@ -31,9 +32,11 @@ import walkingkooka.tree.expression.Expression;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineContext> extends ContextTesting<C> {
+public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineContext> extends ContextTesting<C>,
+        HasLocaleTesting {
 
     // parseFormula......................................................................................................
 
@@ -151,6 +154,13 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
         assertEquals(Either.left(expected),
                 context.convert(value, target),
                 () -> "convert " + CharSequences.quoteIfChars(value) + " target: " + target.getName());
+    }
+
+    // HasLocale........................................................................................................
+
+    @Test
+    default <T> void testLocaleNotNull() {
+        assertNotEquals(null, this.createContext().locale());
     }
 
     // TypeNameTesting .........................................................................................

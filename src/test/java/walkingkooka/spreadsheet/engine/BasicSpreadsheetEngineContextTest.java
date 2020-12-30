@@ -317,6 +317,15 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, "N123D5Abc123")));
     }
 
+    // hasLocale........................................................................................................
+
+    @Test
+    public void testLocale() {
+        assertEquals(this.converterContext().locale(), this.createContext().locale());
+    }
+
+    // toString.........................................................................................................
+
     @Test
     public void testToString() {
         this.toStringAndCheck(this.createContext(),
