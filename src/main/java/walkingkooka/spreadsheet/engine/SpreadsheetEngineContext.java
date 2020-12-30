@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.engine;
 
 import walkingkooka.Context;
 import walkingkooka.convert.CanConvert;
+import walkingkooka.locale.HasLocale;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -30,7 +31,10 @@ import java.util.Optional;
 /**
  * Context that accompanies a value format, holding local sensitive attributes such as the decimal point character.
  */
-public interface SpreadsheetEngineContext extends Context, CanConvert, ExpressionNumberContext {
+public interface SpreadsheetEngineContext extends Context,
+        CanConvert,
+        ExpressionNumberContext,
+        HasLocale {
 
     /**
      * Parses the formula into an {@link Expression}.
