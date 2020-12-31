@@ -493,7 +493,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                 SpreadsheetPattern::marshall,
                 SpreadsheetDateFormatPattern.class);
 
-        JsonNodeContext.register("spreadsheet-date-parse-pattern",
+        JsonNodeContext.register("spreadsheet-date-parse-patterns",
                 SpreadsheetPattern::unmarshallDateParsePatterns,
                 SpreadsheetPattern::marshall,
                 SpreadsheetDateParsePatterns.class);
@@ -503,7 +503,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                 SpreadsheetPattern::marshall,
                 SpreadsheetDateTimeFormatPattern.class);
 
-        JsonNodeContext.register("spreadsheet-datetime-parse-pattern",
+        JsonNodeContext.register("spreadsheet-datetime-parse-patterns",
                 SpreadsheetPattern::unmarshallDateTimeParsePatterns,
                 SpreadsheetPattern::marshall,
                 SpreadsheetDateTimeParsePatterns.class);
@@ -513,7 +513,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                 SpreadsheetPattern::marshall,
                 SpreadsheetNumberFormatPattern.class);
 
-        JsonNodeContext.register("spreadsheet-number-parse-pattern",
+        JsonNodeContext.register("spreadsheet-number-parse-patterns",
                 SpreadsheetPattern::unmarshallNumberParsePatterns,
                 SpreadsheetPattern::marshall,
                 SpreadsheetNumberParsePatterns.class);
@@ -528,7 +528,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                 SpreadsheetPattern::marshall,
                 SpreadsheetTimeFormatPattern.class);
 
-        JsonNodeContext.register("spreadsheet-time-parse-pattern",
+        JsonNodeContext.register("spreadsheet-time-parse-patterns",
                 SpreadsheetPattern::unmarshallTimeParsePatterns,
                 SpreadsheetPattern::marshall,
                 SpreadsheetTimeParsePatterns.class);
