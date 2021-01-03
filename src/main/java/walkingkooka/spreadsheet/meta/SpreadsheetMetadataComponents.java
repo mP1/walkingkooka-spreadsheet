@@ -24,6 +24,10 @@ import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+/**
+ * Used to aggregate that all the required properties are present, tracking those that are missing.
+ * This is used only by {@link SpreadsheetMetadata} methods such as getting a {@link walkingkooka.convert.Converter}.
+ */
 final class SpreadsheetMetadataComponents {
 
     static SpreadsheetMetadataComponents with(final SpreadsheetMetadata metadata) {
@@ -46,7 +50,7 @@ final class SpreadsheetMetadataComponents {
 
     <T> T getOrElse(final SpreadsheetMetadataPropertyName<T> propertyName,
                     final Supplier<T> defaultValue) {
-        return this.metadata.get1(propertyName)
+        return this.metadata.getOrGetDefaults(propertyName)
                 .orElseGet(() -> {
                     final T value = defaultValue.get();
                     if (null == value) {

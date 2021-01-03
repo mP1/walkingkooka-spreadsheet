@@ -173,19 +173,19 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     public final <V> Optional<V> get(final SpreadsheetMetadataPropertyName<V> propertyName) {
         checkPropertyName(propertyName);
 
-        return this.get0(propertyName);
+        return this.getOrGetDefaults(propertyName);
     }
 
     /**
      * Potentially recursive fetch to find a property, trying locally and then the defaults if one is present.
      */
-    private <V> Optional<V> get0(final SpreadsheetMetadataPropertyName<V> propertyName) {
-        Optional<V> value = this.get1(propertyName);
+    final <V> Optional<V> getOrGetDefaults(final SpreadsheetMetadataPropertyName<V> propertyName) {
+        Optional<V> value = this.getIgnoringDefaults(propertyName);
         if (false == value.isPresent()) {
             // try again with defaults
             final SpreadsheetMetadata defaults = this.defaults;
             if (null != defaults) {
-                value = defaults.get0(propertyName);
+                value = defaults.getOrGetDefaults(propertyName);
             }
         }
         return value;
@@ -194,7 +194,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     /**
      * Sub classes will fetch the property returning the value.
      */
-    abstract <V> Optional<V> get1(final SpreadsheetMetadataPropertyName<V> propertyName);
+    abstract <V> Optional<V> getIgnoringDefaults(final SpreadsheetMetadataPropertyName<V> propertyName);
 
     /**
      * Fetches the required property or throws a {@link SpreadsheetMetadataPropertyValueException}.
