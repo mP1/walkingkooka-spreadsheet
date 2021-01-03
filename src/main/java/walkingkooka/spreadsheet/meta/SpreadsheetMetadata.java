@@ -121,7 +121,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     }
 
     /**
-     * Returns all the missing required properties.
+     * Returns all the missing required properties. NOTE the defaults are also checked.
      */
     public final Set<SpreadsheetMetadataPropertyName<?>> missingRequiredProperties() {
         final Set<SpreadsheetMetadataPropertyName<?>> missing = Sets.sorted();
