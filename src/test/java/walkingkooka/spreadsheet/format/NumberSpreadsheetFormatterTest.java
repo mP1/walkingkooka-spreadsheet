@@ -456,6 +456,11 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     }
 
     @Test
+    public void testHashDecimalHash0_01() {
+        this.parseFormatAndCheck("#.#", 0.01, "!");
+    }
+
+    @Test
     public void testHashDecimalHash0_71() {
         this.parseFormatAndCheck("#.#", 0.71, "!7");
     }
@@ -488,6 +493,41 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
     @Test
     public void testHashDecimalHash0_0001() {
         this.parseFormatAndCheck("#.#", 0.0001, "!");
+    }
+
+    @Test
+    public void testHashDecimalHashHash0_01() {
+        this.parseFormatAndCheck("#.##", 0.01, "!01");
+    }
+
+    @Test
+    public void testHashDecimalHashHash0_012() {
+        this.parseFormatAndCheck("#.##", 0.012, "!01");
+    }
+
+    @Test
+    public void testHashDecimalHashHash0_0123() {
+        this.parseFormatAndCheck("#.##", 0.0123, "!01");
+    }
+
+    @Test
+    public void testHashDecimalHashHashHash0_001() {
+        this.parseFormatAndCheck("#.###", 0.001, "!001");
+    }
+
+    @Test
+    public void testHashDecimalHashHashHash0_0012() {
+        this.parseFormatAndCheck("#.###", 0.0012, "!001");
+    }
+
+    @Test
+    public void testHashDecimalHashHashHash0_00123() {
+        this.parseFormatAndCheck("#.###", 0.00123, "!001");
+    }
+
+    @Test
+    public void testHashDecimalHashHashHash0_001234() {
+        this.parseFormatAndCheck("#.###", 0.001234, "!001");
     }
 
     // fraction space. space dot space ...................................................................................
