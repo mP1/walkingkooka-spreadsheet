@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.format;
 
+import walkingkooka.text.CharSequences;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -46,8 +48,13 @@ enum NumberSpreadsheetFormatterNormalOrScientific {
                         .abs()
                         .toString();
                 final int integerDigitCount = Math.min(rounded.precision() - rounded.scale(), digits.length());
-                integerDigits = digits.substring(0, integerDigitCount);
-                fractionDigits = digits.substring(integerDigitCount);
+                integerDigits = integerDigitCount > 0 ?
+                        digits.substring(0, integerDigitCount) :
+                        "";
+                fractionDigits = integerDigitCount >= 0 ?
+                        digits.substring(integerDigitCount):
+                        CharSequences.repeating('0', -integerDigitCount) + digits;
+            //:digits;
             }
 
             return NumberSpreadsheetFormatterContext.with(
