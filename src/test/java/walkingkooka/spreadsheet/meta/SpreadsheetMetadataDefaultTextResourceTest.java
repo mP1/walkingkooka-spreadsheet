@@ -38,7 +38,7 @@ public final class SpreadsheetMetadataDefaultTextResourceTest implements ClassTe
                 .objectOrFail();
         final SpreadsheetMetadata metadata = JsonNodeUnmarshallContexts.basic(ExpressionNumberContexts.fake())
                 .unmarshall(resource, SpreadsheetMetadata.class);
-        assertEquals(Converters.EXCEL_OFFSET, metadata.getOrFail(SpreadsheetMetadataPropertyName.DATETIME_OFFSET), () -> resource.toString());
+        assertEquals(Converters.EXCEL_1900_DATE_SYSTEM_OFFSET, metadata.getOrFail(SpreadsheetMetadataPropertyName.DATETIME_OFFSET), () -> resource.toString());
     }
 
     @Override

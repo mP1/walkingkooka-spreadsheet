@@ -182,7 +182,7 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
             protected void visitDateTimeOffset(final Long offset) {
                 this.visited = offset;
             }
-        }.accept(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.EXCEL_OFFSET);
+        }.accept(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, Converters.EXCEL_1900_DATE_SYSTEM_OFFSET);
     }
 
     @Test
