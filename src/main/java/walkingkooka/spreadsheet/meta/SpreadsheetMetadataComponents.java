@@ -18,9 +18,12 @@
 package walkingkooka.spreadsheet.meta;
 
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.text.CharSequences;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -67,17 +70,16 @@ final class SpreadsheetMetadataComponents {
     }
 
     void reportIfMissing() {
-        final List<SpreadsheetMetadataPropertyName<?>> missing = this.missing;
+        final Collection<SpreadsheetMetadataPropertyName<?>> missing = this.missing;
         if (!missing.isEmpty()) {
             throw new IllegalStateException(missing.stream()
-                    .sorted()
                     .map(Object::toString)
                     .map(CharSequences::quoteAndEscape)
                     .collect(Collectors.joining(", ", "Required properties ", " missing.")));
         }
     }
 
-    final List<SpreadsheetMetadataPropertyName<?>> missing = Lists.array();
+    final Set<SpreadsheetMetadataPropertyName<?>> missing = Sets.sorted();
 
     @Override
     public String toString() {

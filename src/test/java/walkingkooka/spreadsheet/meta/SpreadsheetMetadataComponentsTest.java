@@ -21,10 +21,14 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
+import walkingkooka.collect.set.Sets;
 import walkingkooka.net.email.EmailAddress;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.TypeNameTesting;
+
+import java.util.Arrays;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -117,6 +121,17 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
     }
 
     @Test
+    public void testReportIfMissingMissingDuplicates() {
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
+        components.getOrNull(SpreadsheetMetadataPropertyName.CREATOR);
+        components.getOrNull(SpreadsheetMetadataPropertyName.ROUNDING_MODE);
+        components.getOrNull(SpreadsheetMetadataPropertyName.CREATOR);
+
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, components::reportIfMissing);
+        assertEquals("Required properties \"creator\", \"rounding-mode\" missing.", thrown.getMessage(), "message");
+    }
+
+    @Test
     public void testReportIfMissingNone() {
         final SpreadsheetMetadataPropertyName<EmailAddress> property = SpreadsheetMetadataPropertyName.CREATOR;
         final EmailAddress value = EmailAddress.parse("user@example.com");
@@ -128,7 +143,9 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
 
     private void checkMissing(final SpreadsheetMetadataComponents components,
                               final SpreadsheetMetadataPropertyName<?>... missings) {
-        assertEquals(Lists.of(missings), components.missing, "missing");
+        final Set<SpreadsheetMetadataPropertyName<?>> set = Sets.sorted();
+        set.addAll(Arrays.asList(missings));
+        assertEquals(set, components.missing, "missing");
     }
 
     // ToString.........................................................................................................
