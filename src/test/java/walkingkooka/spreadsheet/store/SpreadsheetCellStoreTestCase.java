@@ -25,17 +25,21 @@ import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellFormat;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.store.StoreTesting;
+import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.text.FontWeight;
 import walkingkooka.tree.text.TextNode;
 import walkingkooka.tree.text.TextStyle;
 import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -45,6 +49,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStore> implements StoreTesting<S, SpreadsheetCellReference, SpreadsheetCell>,
         TypeNameTesting<S> {
+
+    final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DOUBLE;
 
     final static SpreadsheetCellReference REFERENCE = SpreadsheetReferenceKind.RELATIVE
             .column(1)
@@ -350,7 +356,34 @@ public abstract class SpreadsheetCellStoreTestCase<S extends SpreadsheetCellStor
     }
 
     private SpreadsheetFormula formula() {
-        return SpreadsheetFormula.with("1+2");
+        final String text = "1+2";
+        return SpreadsheetFormula.with(text)
+                .setToken(Optional.of(
+                        SpreadsheetParserToken.addition(
+                                List.of(
+                                        SpreadsheetParserToken.number(
+                                                Lists.of(
+                                                        SpreadsheetParserToken.digits("1", "1")
+                                                ),
+                                                "1"
+                                        ),
+                                        SpreadsheetParserToken.plusSymbol("+", "+"),
+                                        SpreadsheetParserToken.number(
+                                                Lists.of(
+                                                        SpreadsheetParserToken.digits("2", "2")
+                                                ),
+                                                "2"
+                                        )
+                                ),
+                                text
+                        )
+                ))
+                .setExpression(Optional.of(
+                        Expression.add(
+                                Expression.expressionNumber(EXPRESSION_NUMBER_KIND.create(1)),
+                                Expression.expressionNumber(EXPRESSION_NUMBER_KIND.create(2))
+                        )
+                ));
     }
 
     private TextStyle style() {
