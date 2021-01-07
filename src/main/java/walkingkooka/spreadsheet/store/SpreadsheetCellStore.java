@@ -62,7 +62,7 @@ public interface SpreadsheetCellStore extends Store<SpreadsheetCellReference, Sp
     /**
      * Returns the max row height for the given {@link SpreadsheetRowReference}
      */
-    double maxRowHeight(final SpreadsheetRowReference column);
+    double maxRowHeight(final SpreadsheetRowReference row);
 
     /**
      * Locates the {@link SpreadsheetCellBox} at the given coordinates.
