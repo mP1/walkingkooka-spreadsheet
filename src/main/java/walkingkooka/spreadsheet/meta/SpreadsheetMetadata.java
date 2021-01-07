@@ -54,6 +54,8 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTextFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
@@ -500,6 +502,24 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
                 this.getOrFail(SpreadsheetMetadataPropertyName.WIDTH),
                 defaultFormatter,
                 this.converterContext());
+    }
+
+    // HasSpreadsheetParserContext......................................................................................
+
+    /**
+     * Returns a {@link SpreadsheetParserContext}.
+     */
+    public abstract SpreadsheetParserContext parserContext();
+
+    /**
+     * Creates a {@link SpreadsheetParserContext} after verifying required properties.
+     */
+    final SpreadsheetParserContext parserContext0() {
+        return SpreadsheetParserContexts.basic(
+                this.dateTimeContext(),
+                this.decimalNumberContext(),
+                this.expressionNumberKind()
+        );
     }
 
     // loadFromLocale...................................................................................................

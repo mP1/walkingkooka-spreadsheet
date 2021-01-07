@@ -124,6 +124,17 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 "message");
     }
 
+    // HasParserContext.....................................................................................
+
+    @Test
+    public void testParserContextAllRequiredPropertiesAbsentFails() {
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadata.EMPTY
+                .parserContext());
+        assertEquals("Required properties \"expression-number-kind\", \"precision\", \"rounding-mode\" missing.",
+                thrown.getMessage(),
+                "message");
+    }
+
     // toString.........................................................................................................
 
     @Test
