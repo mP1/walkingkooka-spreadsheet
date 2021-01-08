@@ -1116,6 +1116,23 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         assertSame(metadata.mathContext(), metadata.mathContext());
     }
 
+    // HasParserContext.................................................................................................
+
+    @Test
+    public void testParserContext() {
+        final SpreadsheetMetadata metadata = SpreadsheetMetadataNonEmpty.with(
+                Maps.of(
+                        SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E",
+                        SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE,
+                        SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH,
+                        SpreadsheetMetadataPropertyName.PRECISION, 16,
+                        SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR,
+                        SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20
+                )
+        );
+        assertSame(metadata.parserContext(), metadata.parserContext());
+    }
+
     // missingRequiredProperties.........................................................................................
 
     @Test
