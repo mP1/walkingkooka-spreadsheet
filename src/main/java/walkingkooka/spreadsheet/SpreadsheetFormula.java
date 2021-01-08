@@ -264,7 +264,7 @@ public final class SpreadsheetFormula implements HasText,
 
         final Optional<Expression> expression = this.expression;
         if (expression.isPresent()) {
-            object = object.set(EXPRESSION_STRING, context.marshallWithType(expression.get()));
+            object = object.set(EXPRESSION_PROPERTY, context.marshallWithType(expression.get()));
         }
 
         final Optional<Object> value = this.value;
@@ -288,7 +288,7 @@ public final class SpreadsheetFormula implements HasText,
     // @VisibleForTesting
 
     final static JsonPropertyName TEXT = JsonPropertyName.with(TEXT_STRING);
-    private final static JsonPropertyName EXPRESSION_STRING = JsonPropertyName.with(EXPRESSION_PROPERTY_STRING);
+    private final static JsonPropertyName EXPRESSION_PROPERTY = JsonPropertyName.with(EXPRESSION_PROPERTY_STRING);
     final static JsonPropertyName VALUE_PROPERTY = JsonPropertyName.with(VALUE_PROPERTY_STRING);
     final static JsonPropertyName ERROR_PROPERTY = JsonPropertyName.with(ERROR_PROPERTY_STRING);
 
