@@ -219,11 +219,11 @@ public final class SpreadsheetFormula implements HasText,
         for (JsonNode child : node.objectOrFail().children()) {
             final JsonPropertyName name = child.name();
             switch (name.value()) {
-                case TEXT_STRING:
+                case TEXT_PROPERTY_STRING:
                     try {
                         text = child.stringOrFail();
                     } catch (final JsonNodeException cause) {
-                        throw new JsonNodeUnmarshallException("Node " + TEXT + " is not a string=" + child, node);
+                        throw new JsonNodeUnmarshallException("Node " + TEXT_PROPERTY + " is not a string=" + child, node);
                     }
                     checkText(text);
                     break;
@@ -242,7 +242,7 @@ public final class SpreadsheetFormula implements HasText,
         }
 
         if (null == text) {
-            JsonNodeUnmarshallContext.requiredPropertyMissing(TEXT, node);
+            JsonNodeUnmarshallContext.requiredPropertyMissing(TEXT_PROPERTY, node);
         }
         if (null != value && null != error) {
             throw new JsonNodeUnmarshallException("Node contains both " + VALUE_PROPERTY + " and " + ERROR_PROPERTY + " set=" + node, node);
@@ -260,7 +260,7 @@ public final class SpreadsheetFormula implements HasText,
     private JsonNode marshall(final JsonNodeMarshallContext context) {
         JsonObject object = JsonNode.object();
 
-        object = object.set(TEXT, JsonNode.string(this.text));
+        object = object.set(TEXT_PROPERTY, JsonNode.string(this.text));
 
         final Optional<Expression> expression = this.expression;
         if (expression.isPresent()) {
@@ -280,14 +280,14 @@ public final class SpreadsheetFormula implements HasText,
         return object;
     }
 
-    private final static String TEXT_STRING = "text";
+    private final static String TEXT_PROPERTY_STRING = "text";
     private final static String EXPRESSION_PROPERTY_STRING = "expression";
     private final static String VALUE_PROPERTY_STRING = "value";
     private final static String ERROR_PROPERTY_STRING = "error";
 
     // @VisibleForTesting
 
-    final static JsonPropertyName TEXT = JsonPropertyName.with(TEXT_STRING);
+    final static JsonPropertyName TEXT_PROPERTY = JsonPropertyName.with(TEXT_PROPERTY_STRING);
     private final static JsonPropertyName EXPRESSION_PROPERTY = JsonPropertyName.with(EXPRESSION_PROPERTY_STRING);
     final static JsonPropertyName VALUE_PROPERTY = JsonPropertyName.with(VALUE_PROPERTY_STRING);
     final static JsonPropertyName ERROR_PROPERTY = JsonPropertyName.with(ERROR_PROPERTY_STRING);
