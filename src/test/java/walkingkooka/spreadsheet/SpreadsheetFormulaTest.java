@@ -358,6 +358,18 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
+    public void testJsonNodeUnmarshallTextAndExpression() {
+        final Optional<Expression> expression = this.expression();
+
+        this.unmarshallAndCheck(JsonNode.object()
+                        .set(SpreadsheetFormula.TEXT_PROPERTY, JsonNode.string(TEXT))
+                        .set(SpreadsheetFormula.EXPRESSION_PROPERTY, this.marshallContext().marshallWithType(expression.get())),
+                SpreadsheetFormula.with(TEXT)
+                        .setExpression(expression)
+        );
+    }
+
+    @Test
     public void testJsonNodeUnmarshallTextAndError() {
         final SpreadsheetError error = SpreadsheetError.with(ERROR);
 
