@@ -261,7 +261,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertEquals(marshallContext.marshall(bigDecimal), marshallContext2.marshall(bigDecimal), () -> "" + bigDecimal);
 
         final LocalDateTime localDateTime = LocalDateTime.now();
-        ;
+
         assertEquals(marshallContext.marshall(localDateTime), marshallContext2.marshall(localDateTime), () -> "" + localDateTime);
 
         assertEquals(marshallContext.marshall(metadata), marshallContext2.marshall(metadata), () -> "" + metadata);
