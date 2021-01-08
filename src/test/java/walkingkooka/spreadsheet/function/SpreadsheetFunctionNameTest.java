@@ -22,9 +22,13 @@ import walkingkooka.naming.NameTesting2;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 final public class SpreadsheetFunctionNameTest implements ClassTesting2<SpreadsheetFunctionName>,
-        NameTesting2<SpreadsheetFunctionName, SpreadsheetFunctionName> {
+        NameTesting2<SpreadsheetFunctionName, SpreadsheetFunctionName>,
+        JsonNodeMarshallingTesting<SpreadsheetFunctionName> {
 
     // Comparator ......................................................................................................
 
@@ -94,5 +98,18 @@ final public class SpreadsheetFunctionNameTest implements ClassTesting2<Spreadsh
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
+    }
+
+    // Json.............................................................................................................
+
+    @Override
+    public SpreadsheetFunctionName unmarshall(final JsonNode from,
+                                              final JsonNodeUnmarshallContext context) {
+        return SpreadsheetFunctionName.unmarshall(from, context);
+    }
+
+    @Override
+    public SpreadsheetFunctionName createJsonNodeMappingValue() {
+        return this.createObject();
     }
 }
