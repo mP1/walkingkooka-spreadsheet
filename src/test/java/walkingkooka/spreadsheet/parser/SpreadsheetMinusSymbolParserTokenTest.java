@@ -18,6 +18,8 @@ package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -89,5 +91,11 @@ public final class SpreadsheetMinusSymbolParserTokenTest extends SpreadsheetSymb
     @Override
     public Class<SpreadsheetMinusSymbolParserToken> type() {
         return SpreadsheetMinusSymbolParserToken.class;
+    }
+
+    @Override
+    public SpreadsheetMinusSymbolParserToken unmarshall(final JsonNode from,
+                                                        final JsonNodeUnmarshallContext context) {
+        return SpreadsheetParserToken.unmarshallMinusSymbol(from, context);
     }
 }

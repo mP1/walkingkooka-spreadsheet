@@ -20,6 +20,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
 import java.math.BigDecimal;
@@ -98,5 +100,11 @@ public final class SpreadsheetExpressionNumberParserTokenTest extends Spreadshee
     @Override
     public Class<SpreadsheetExpressionNumberParserToken> type() {
         return SpreadsheetExpressionNumberParserToken.class;
+    }
+
+    @Override
+    public SpreadsheetExpressionNumberParserToken unmarshall(final JsonNode from,
+                                                             final JsonNodeUnmarshallContext context) {
+        return SpreadsheetParserToken.unmarshallExpressionNumber(from, context);
     }
 }

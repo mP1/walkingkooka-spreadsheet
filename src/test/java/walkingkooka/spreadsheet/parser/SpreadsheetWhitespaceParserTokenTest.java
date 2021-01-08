@@ -18,6 +18,8 @@ package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -101,5 +103,11 @@ public final class SpreadsheetWhitespaceParserTokenTest extends SpreadsheetSymbo
     @Override
     public Class<SpreadsheetWhitespaceParserToken> type() {
         return SpreadsheetWhitespaceParserToken.class;
+    }
+
+    @Override
+    public SpreadsheetWhitespaceParserToken unmarshall(final JsonNode from,
+                                                       final JsonNodeUnmarshallContext context) {
+        return SpreadsheetParserToken.unmarshallWhitespace(from, context);
     }
 }

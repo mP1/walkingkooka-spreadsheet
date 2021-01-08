@@ -29,6 +29,13 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.HasExpression;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.JsonNodeException;
+import walkingkooka.tree.json.JsonPropertyName;
+import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallException;
 import walkingkooka.visit.Visiting;
 
 import java.time.LocalDate;
@@ -37,6 +44,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.BiFunction;
 
 /**
  * Represents a token within the grammar.
@@ -768,5 +776,814 @@ public abstract class SpreadsheetParserToken implements ParserToken,
     @Override
     public final String toString() {
         return this.text();
+    }
+
+    // json. ...........................................................................................................
+
+    // SpreadsheetNonSymbolParserToken..................................................................................
+
+    static {
+        registerLeafParserToken(
+                "spreadsheet-column-reference-parser-token",
+                SpreadsheetParserToken::unmarshallColumnReference,
+                SpreadsheetColumnReferenceParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-expression-number-parser-token",
+                SpreadsheetParserToken::unmarshallExpressionNumber,
+                SpreadsheetExpressionNumberParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-function-name-parser-token",
+                SpreadsheetParserToken::unmarshallFunctionName,
+                SpreadsheetFunctionNameParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-label-name-parser-token",
+                SpreadsheetParserToken::unmarshallLabelName,
+                SpreadsheetLabelNameParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-local-date-parser-token",
+                SpreadsheetParserToken::unmarshallLocalDate,
+                SpreadsheetLocalDateParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-local-datetime-parser-token",
+                SpreadsheetParserToken::unmarshallLocalDateTime,
+                SpreadsheetLocalDateTimeParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-local-time-parser-token",
+                SpreadsheetParserToken::unmarshallLocalTime,
+                SpreadsheetLocalTimeParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-row-reference-parser-token",
+                SpreadsheetParserToken::unmarshallRowReference,
+                SpreadsheetRowReferenceParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-text-parser-token",
+                SpreadsheetParserToken::unmarshallText,
+                SpreadsheetTextParserToken.class
+        );
+    }
+
+    static SpreadsheetColumnReferenceParserToken unmarshallColumnReference(final JsonNode node,
+                                                                           final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                SpreadsheetColumnReference.class,
+                context,
+                SpreadsheetParserToken::columnReference
+        );
+    }
+
+    static SpreadsheetExpressionNumberParserToken unmarshallExpressionNumber(final JsonNode node,
+                                                                             final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                ExpressionNumber.class,
+                context,
+                SpreadsheetParserToken::expressionNumber
+        );
+    }
+
+    static SpreadsheetFunctionNameParserToken unmarshallFunctionName(final JsonNode node,
+                                                                     final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                SpreadsheetFunctionName.class,
+                context,
+                SpreadsheetParserToken::functionName
+        );
+    }
+
+    static SpreadsheetLabelNameParserToken unmarshallLabelName(final JsonNode node,
+                                                               final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                SpreadsheetLabelName.class,
+                context,
+                SpreadsheetParserToken::labelName
+        );
+    }
+
+    static SpreadsheetLocalDateParserToken unmarshallLocalDate(final JsonNode node,
+                                                               final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                LocalDate.class,
+                context,
+                SpreadsheetParserToken::localDate
+        );
+    }
+
+    static SpreadsheetLocalDateTimeParserToken unmarshallLocalDateTime(final JsonNode node,
+                                                                       final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                LocalDateTime.class,
+                context,
+                SpreadsheetParserToken::localDateTime
+        );
+    }
+
+    static SpreadsheetLocalTimeParserToken unmarshallLocalTime(final JsonNode node,
+                                                               final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                LocalTime.class,
+                context,
+                SpreadsheetParserToken::localTime
+        );
+    }
+
+    static SpreadsheetRowReferenceParserToken unmarshallRowReference(final JsonNode node,
+                                                                     final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                SpreadsheetRowReference.class,
+                context,
+                SpreadsheetParserToken::rowReference
+        );
+    }
+
+    static SpreadsheetTextParserToken unmarshallText(final JsonNode node,
+                                                     final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                String.class,
+                context,
+                SpreadsheetParserToken::text
+        );
+    }
+
+    // SpreadsheetSymbolParserToken sub classes.........................................................................
+
+    static {
+        registerLeafParserToken(
+                "spreadsheet-between-symbol-parser-token",
+                SpreadsheetParserToken::unmarshallBetweenSymbol,
+                SpreadsheetBetweenSymbolParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-divide-symbol-parser-token",
+                SpreadsheetParserToken::unmarshallDivideSymbol,
+                SpreadsheetDivideSymbolParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-equals-symbol-parser-token",
+                SpreadsheetParserToken::unmarshallEqualsSymbol,
+                SpreadsheetEqualsSymbolParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-function-parameter-separator-symbol-parser-token",
+                SpreadsheetParserToken::unmarshallFunctionParameterSeparatorSymbol,
+                SpreadsheetFunctionParameterSeparatorSymbolParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-greater-than-equals-symbol-parser-token",
+                SpreadsheetParserToken::unmarshallGreaterThanEqualsSymbol,
+                SpreadsheetGreaterThanEqualsSymbolParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-greater-than-symbol-parser-token",
+                SpreadsheetParserToken::unmarshallGreaterThanSymbol,
+                SpreadsheetGreaterThanSymbolParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-less-than-equals-symbol-parser-token",
+                SpreadsheetParserToken::unmarshallLessThanEqualsSymbol,
+                SpreadsheetLessThanEqualsSymbolParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-less-than-symbol-parser-token",
+                SpreadsheetParserToken::unmarshallLessThanSymbol,
+                SpreadsheetLessThanSymbolParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-minus-symbol-parser-token",
+                SpreadsheetParserToken::unmarshallMinusSymbol,
+                SpreadsheetMinusSymbolParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-multiply-symbol-parser-token",
+                SpreadsheetParserToken::unmarshallMultiplySymbol,
+                SpreadsheetMultiplySymbolParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-not-equals-symbol-parser-token",
+                SpreadsheetParserToken::unmarshallNotEqualsSymbol,
+                SpreadsheetNotEqualsSymbolParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-parenthesis-close-symbol-parser-token",
+                SpreadsheetParserToken::unmarshallParenthesisCloseSymbol,
+                SpreadsheetParenthesisCloseSymbolParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-parenthesis-open-symbol-parser-token",
+                SpreadsheetParserToken::unmarshallParenthesisOpenSymbol,
+                SpreadsheetParenthesisOpenSymbolParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-percent-symbol-parser-token",
+                SpreadsheetParserToken::unmarshallPercentSymbol,
+                SpreadsheetPercentSymbolParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-plus-symbol-parser-token",
+                SpreadsheetParserToken::unmarshallPlusSymbol,
+                SpreadsheetPlusSymbolParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-power-symbol-parser-token",
+                SpreadsheetParserToken::unmarshallPowerSymbol,
+                SpreadsheetPowerSymbolParserToken.class
+        );
+
+        registerLeafParserToken(
+                "spreadsheet-whitespace-parser-token",
+                SpreadsheetParserToken::unmarshallWhitespace,
+                SpreadsheetWhitespaceParserToken.class
+        );
+    }
+
+    static SpreadsheetBetweenSymbolParserToken unmarshallBetweenSymbol(final JsonNode node,
+                                                                       final JsonNodeUnmarshallContext context) {
+        return unmarshallSymbolParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::betweenSymbol
+        );
+    }
+
+    static SpreadsheetDivideSymbolParserToken unmarshallDivideSymbol(final JsonNode node,
+                                                                     final JsonNodeUnmarshallContext context) {
+        return unmarshallSymbolParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::divideSymbol
+        );
+    }
+
+    static SpreadsheetEqualsSymbolParserToken unmarshallEqualsSymbol(final JsonNode node,
+                                                                     final JsonNodeUnmarshallContext context) {
+        return unmarshallSymbolParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::equalsSymbol
+        );
+    }
+
+    static SpreadsheetFunctionParameterSeparatorSymbolParserToken unmarshallFunctionParameterSeparatorSymbol(final JsonNode node,
+                                                                                                             final JsonNodeUnmarshallContext context) {
+        return unmarshallSymbolParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::functionParameterSeparatorSymbol
+        );
+    }
+
+    static SpreadsheetGreaterThanEqualsSymbolParserToken unmarshallGreaterThanEqualsSymbol(final JsonNode node,
+                                                                                           final JsonNodeUnmarshallContext context) {
+        return unmarshallSymbolParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::greaterThanEqualsSymbol
+        );
+    }
+
+
+    static SpreadsheetGreaterThanSymbolParserToken unmarshallGreaterThanSymbol(final JsonNode node,
+                                                                               final JsonNodeUnmarshallContext context) {
+        return unmarshallSymbolParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::greaterThanSymbol
+        );
+    }
+
+    static SpreadsheetLessThanEqualsSymbolParserToken unmarshallLessThanEqualsSymbol(final JsonNode node,
+                                                                                     final JsonNodeUnmarshallContext context) {
+        return unmarshallSymbolParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::lessThanEqualsSymbol
+        );
+    }
+
+    static SpreadsheetLessThanSymbolParserToken unmarshallLessThanSymbol(final JsonNode node,
+                                                                         final JsonNodeUnmarshallContext context) {
+        return unmarshallSymbolParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::lessThanSymbol
+        );
+    }
+
+    static SpreadsheetMinusSymbolParserToken unmarshallMinusSymbol(final JsonNode node,
+                                                                   final JsonNodeUnmarshallContext context) {
+        return unmarshallSymbolParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::minusSymbol
+        );
+    }
+
+    static SpreadsheetMultiplySymbolParserToken unmarshallMultiplySymbol(final JsonNode node,
+                                                                         final JsonNodeUnmarshallContext context) {
+        return unmarshallSymbolParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::multiplySymbol
+        );
+    }
+
+    static SpreadsheetNotEqualsSymbolParserToken unmarshallNotEqualsSymbol(final JsonNode node,
+                                                                           final JsonNodeUnmarshallContext context) {
+        return unmarshallSymbolParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::notEqualsSymbol
+        );
+    }
+
+    static SpreadsheetParenthesisCloseSymbolParserToken unmarshallParenthesisCloseSymbol(final JsonNode node,
+                                                                                         final JsonNodeUnmarshallContext context) {
+        return unmarshallSymbolParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::parenthesisCloseSymbol
+        );
+    }
+
+    static SpreadsheetParenthesisOpenSymbolParserToken unmarshallParenthesisOpenSymbol(final JsonNode node,
+                                                                                       final JsonNodeUnmarshallContext context) {
+        return unmarshallSymbolParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::parenthesisOpenSymbol
+        );
+    }
+
+    static SpreadsheetPercentSymbolParserToken unmarshallPercentSymbol(final JsonNode node,
+                                                                       final JsonNodeUnmarshallContext context) {
+        return unmarshallSymbolParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::percentSymbol
+        );
+    }
+
+    static SpreadsheetPlusSymbolParserToken unmarshallPlusSymbol(final JsonNode node,
+                                                                 final JsonNodeUnmarshallContext context) {
+        return unmarshallSymbolParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::plusSymbol
+        );
+    }
+
+    static SpreadsheetPowerSymbolParserToken unmarshallPowerSymbol(final JsonNode node,
+                                                                   final JsonNodeUnmarshallContext context) {
+        return unmarshallSymbolParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::powerSymbol
+        );
+    }
+
+    static SpreadsheetWhitespaceParserToken unmarshallWhitespace(final JsonNode node,
+                                                                 final JsonNodeUnmarshallContext context) {
+        return unmarshallSymbolParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::whitespace
+        );
+    }
+
+    /**
+     * Helper that knows how to unmarshall a sub class of {@link SpreadsheetLeafParserToken}
+     */
+    static <T extends SpreadsheetSymbolParserToken> T unmarshallSymbolParserToken(final JsonNode node,
+                                                                                  final JsonNodeUnmarshallContext context,
+                                                                                  final BiFunction<String, String, T> factory) {
+        return unmarshallLeafParserToken(
+                node,
+                String.class,
+                context,
+                factory
+        );
+    }
+
+    /**
+     * Helper that knows how to unmarshall a sub class of {@link SpreadsheetParserToken}
+     */
+    private static <V, T extends SpreadsheetLeafParserToken<V>> T unmarshallLeafParserToken(final JsonNode node,
+                                                                                            final Class<V> valueType,
+                                                                                            final JsonNodeUnmarshallContext context,
+                                                                                            final BiFunction<V, String, T> factory) {
+        V value = null;
+        String text = null;
+
+        for (final JsonNode child : node.objectOrFail().children()) {
+            final JsonPropertyName name = child.name();
+
+            switch (name.value()) {
+                case VALUE_PROPERTY_STRING:
+                    value = context.unmarshall(child, valueType);
+                    break;
+                case TEXT_PROPERTY_STRING:
+                    try {
+                        text = child.stringOrFail();
+                    } catch (final JsonNodeException cause) {
+                        throw new JsonNodeUnmarshallException("Node " + TEXT_PROPERTY + " is not a string=" + child, node);
+                    }
+                    break;
+                default:
+                    JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
+            }
+        }
+
+        if (null == value) {
+            JsonNodeUnmarshallContext.requiredPropertyMissing(VALUE_PROPERTY, node);
+        }
+        if (null == text) {
+            JsonNodeUnmarshallContext.requiredPropertyMissing(TEXT_PROPERTY, node);
+        }
+
+        return factory.apply(value, text);
+    }
+
+    private static <T extends SpreadsheetLeafParserToken<?>> void registerLeafParserToken(final String typeName,
+                                                                                          final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from,
+                                                                                          final Class<T> type) {
+        JsonNodeContext.register(
+                typeName,
+                from,
+                SpreadsheetParserToken::marshallLeafParserToken,
+                type
+        );
+    }
+
+    // SpreadsheetParentParserToken.....................................................................................
+
+    static {
+        registerParentParserToken(
+                "spreadsheet-addition-parser-token",
+                SpreadsheetParserToken::unmarshallAddition,
+                SpreadsheetAdditionParserToken.class
+        );
+
+        registerParentParserToken(
+                "spreadsheet-division-parser-token",
+                SpreadsheetParserToken::unmarshallDivision,
+                SpreadsheetDivisionParserToken.class
+        );
+
+        registerParentParserToken(
+                "spreadsheet-equals-parser-token",
+                SpreadsheetParserToken::unmarshallEquals,
+                SpreadsheetEqualsParserToken.class
+        );
+
+        registerParentParserToken(
+                "spreadsheet-greater-than-equals-parser-token",
+                SpreadsheetParserToken::unmarshallGreaterThanEquals,
+                SpreadsheetGreaterThanEqualsParserToken.class
+        );
+
+        registerParentParserToken(
+                "spreadsheet-greater-than-parser-token",
+                SpreadsheetParserToken::unmarshallGreaterThan,
+                SpreadsheetGreaterThanParserToken.class
+        );
+
+        registerParentParserToken(
+                "spreadsheet-less-than-equals-parser-token",
+                SpreadsheetParserToken::unmarshallLessThanEquals,
+                SpreadsheetLessThanEqualsParserToken.class
+        );
+
+        registerParentParserToken(
+                "spreadsheet-less-than-parser-token",
+                SpreadsheetParserToken::unmarshallLessThan,
+                SpreadsheetLessThanParserToken.class
+        );
+
+        registerParentParserToken(
+                "spreadsheet-multiplication-parser-token",
+                SpreadsheetParserToken::unmarshallMultiplication,
+                SpreadsheetMultiplicationParserToken.class
+        );
+
+        registerParentParserToken(
+                "spreadsheet-not-equals-parser-token",
+                SpreadsheetParserToken::unmarshallNotEquals,
+                SpreadsheetNotEqualsParserToken.class
+        );
+
+        registerParentParserToken(
+                "spreadsheet-power-parser-token",
+                SpreadsheetParserToken::unmarshallPower,
+                SpreadsheetPowerParserToken.class
+        );
+
+        registerParentParserToken(
+                "spreadsheet-range-parser-token",
+                SpreadsheetParserToken::unmarshallRange,
+                SpreadsheetRangeParserToken.class
+        );
+
+        registerParentParserToken(
+                "spreadsheet-subtraction-parser-token",
+                SpreadsheetParserToken::unmarshallSubtraction,
+                SpreadsheetSubtractionParserToken.class
+        );
+
+        registerParentParserToken(
+                "spreadsheet-cell-reference-parser-token",
+                SpreadsheetParserToken::unmarshallCellReference,
+                SpreadsheetCellReferenceParserToken.class
+        );
+
+        registerParentParserToken(
+                "spreadsheet-function-parser-token",
+                SpreadsheetParserToken::unmarshallFunction,
+                SpreadsheetFunctionParserToken.class
+        );
+
+        registerParentParserToken(
+                "spreadsheet-group-parser-token",
+                SpreadsheetParserToken::unmarshallGroup,
+                SpreadsheetGroupParserToken.class
+        );
+
+        registerParentParserToken(
+                "spreadsheet-negative-parser-token",
+                SpreadsheetParserToken::unmarshallNegative,
+                SpreadsheetNegativeParserToken.class
+        );
+
+        registerParentParserToken(
+                "spreadsheet-percentage-parser-token",
+                SpreadsheetParserToken::unmarshallPercentage,
+                SpreadsheetPercentageParserToken.class
+        );
+    }
+
+    static SpreadsheetAdditionParserToken unmarshallAddition(final JsonNode node,
+                                                             final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::addition
+        );
+    }
+
+    static SpreadsheetDivisionParserToken unmarshallDivision(final JsonNode node,
+                                                             final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::division
+        );
+    }
+
+    static SpreadsheetEqualsParserToken unmarshallEquals(final JsonNode node,
+                                                         final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::equalsParserToken
+        );
+    }
+
+    static SpreadsheetGreaterThanEqualsParserToken unmarshallGreaterThanEquals(final JsonNode node,
+                                                                               final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::greaterThanEquals
+        );
+    }
+
+    static SpreadsheetGreaterThanParserToken unmarshallGreaterThan(final JsonNode node,
+                                                                   final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::greaterThan
+        );
+    }
+
+    static SpreadsheetLessThanEqualsParserToken unmarshallLessThanEquals(final JsonNode node,
+                                                                         final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::lessThanEquals
+        );
+    }
+
+    static SpreadsheetLessThanParserToken unmarshallLessThan(final JsonNode node,
+                                                             final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::lessThan
+        );
+    }
+
+    static SpreadsheetMultiplicationParserToken unmarshallMultiplication(final JsonNode node,
+                                                                         final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::multiplication
+        );
+    }
+
+    static SpreadsheetNotEqualsParserToken unmarshallNotEquals(final JsonNode node,
+                                                               final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::notEquals
+        );
+    }
+
+    static SpreadsheetPowerParserToken unmarshallPower(final JsonNode node,
+                                                       final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::power
+        );
+    }
+
+    static SpreadsheetRangeParserToken unmarshallRange(final JsonNode node,
+                                                       final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::range
+        );
+    }
+
+    static SpreadsheetSubtractionParserToken unmarshallSubtraction(final JsonNode node,
+                                                                   final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::subtraction
+        );
+    }
+
+    static SpreadsheetCellReferenceParserToken unmarshallCellReference(final JsonNode node,
+                                                                       final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::cellReference
+        );
+    }
+
+    static SpreadsheetFunctionParserToken unmarshallFunction(final JsonNode node,
+                                                             final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::function
+        );
+    }
+
+    static SpreadsheetGroupParserToken unmarshallGroup(final JsonNode node,
+                                                       final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::group
+        );
+    }
+
+    static SpreadsheetNegativeParserToken unmarshallNegative(final JsonNode node,
+                                                             final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::negative
+        );
+    }
+
+    static SpreadsheetPercentageParserToken unmarshallPercentage(final JsonNode node,
+                                                                 final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::percentage
+        );
+    }
+
+    /**
+     * Helper that knows how to unmarshall a sub class of {@link SpreadsheetLeafParserToken}
+     */
+    private static <T extends SpreadsheetParentParserToken> T unmarshallParentParserToken(final JsonNode node,
+                                                                                          final JsonNodeUnmarshallContext context,
+                                                                                          final BiFunction<List<ParserToken>, String, T> factory) {
+        List<ParserToken> value = null;
+        String text = null;
+
+        for (final JsonNode child : node.objectOrFail().children()) {
+            final JsonPropertyName name = child.name();
+
+            switch (name.value()) {
+                case VALUE_PROPERTY_STRING:
+                    value = context.unmarshallWithTypeList(child);
+                    break;
+                case TEXT_PROPERTY_STRING:
+                    try {
+                        text = child.stringOrFail();
+                    } catch (final JsonNodeException cause) {
+                        throw new JsonNodeUnmarshallException("Node " + TEXT_PROPERTY + " is not a string=" + child, node);
+                    }
+                    break;
+                default:
+                    JsonNodeUnmarshallContext.unknownPropertyPresent(name, node);
+            }
+        }
+
+        if (null == value) {
+            JsonNodeUnmarshallContext.requiredPropertyMissing(VALUE_PROPERTY, node);
+        }
+        if (null == text) {
+            JsonNodeUnmarshallContext.requiredPropertyMissing(TEXT_PROPERTY, node);
+        }
+
+        return factory.apply(value, text);
+    }
+
+    /**
+     * Handles marshalling any {@link SpreadsheetLeafParserToken}
+     */
+    private JsonNode marshallParentParserToken(final JsonNodeMarshallContext context) {
+        return JsonNode.object()
+                .set(VALUE_PROPERTY, context.marshallWithTypeList(Cast.to(this.value()))) // unnecessary to include type.
+                .set(TEXT_PROPERTY, JsonNode.string(this.text()));
+    }
+
+    private static <T extends SpreadsheetParentParserToken> void registerParentParserToken(final String typeName,
+                                                                                           final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from,
+                                                                                           final Class<T> type) {
+        JsonNodeContext.register(
+                typeName,
+                from,
+                SpreadsheetParserToken::marshallParentParserToken,
+                type
+        );
+    }
+
+    private final static String VALUE_PROPERTY_STRING = "value";
+    private final static String TEXT_PROPERTY_STRING = "text";
+
+    // @VisibleForTesting
+
+    final static JsonPropertyName VALUE_PROPERTY = JsonPropertyName.with(VALUE_PROPERTY_STRING);
+    final static JsonPropertyName TEXT_PROPERTY = JsonPropertyName.with(TEXT_PROPERTY_STRING);
+
+
+    /**
+     * Handles marshalling any {@link SpreadsheetLeafParserToken}
+     */
+    private JsonNode marshallLeafParserToken(final JsonNodeMarshallContext context) {
+        return JsonNode.object()
+                .set(VALUE_PROPERTY, context.marshall(this.value())) // unnecessary to include type.
+                .set(TEXT_PROPERTY, JsonNode.string(this.text()));
     }
 }

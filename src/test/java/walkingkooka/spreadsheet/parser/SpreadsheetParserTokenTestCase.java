@@ -27,6 +27,7 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
 import java.math.MathContext;
 import java.util.Optional;
@@ -37,6 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParserToken> implements ClassTesting2<T>,
         IsMethodTesting<T>,
+        JsonNodeMarshallingTesting<T>,
         ParserTokenTesting<T> {
 
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
@@ -108,6 +110,13 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
     @Override
     public final Predicate<String> isMethodIgnoreMethodFilter() {
         return (m) -> m.equals("isNoise") || m.equals("isSymbol");
+    }
+
+    // JsonNodeMarshallTesting..........................................................................................
+
+    @Override
+    public final T createJsonNodeMappingValue() {
+        return this.createToken();
     }
 
     // ClassTestCase..............................................................................................
