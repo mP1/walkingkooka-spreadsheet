@@ -22,6 +22,10 @@ import walkingkooka.naming.Name;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.text.CaseSensitivity;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeContext;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 /**
  * The {@link Name} of a function.
@@ -104,4 +108,22 @@ final public class SpreadsheetFunctionName implements Name, Comparable<Spreadshe
     }
 
     private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.SENSITIVE;
+
+    // Json.............................................................................................................
+
+    static SpreadsheetFunctionName unmarshall(final JsonNode node,
+                                              final JsonNodeUnmarshallContext context) {
+        return with(node.stringOrFail());
+    }
+
+    private JsonNode marshall(final JsonNodeMarshallContext context) {
+        return JsonNode.string(this.toString());
+    }
+
+    static {
+        JsonNodeContext.register("spreadsheet-function-name",
+                SpreadsheetFunctionName::unmarshall,
+                SpreadsheetFunctionName::marshall,
+                SpreadsheetFunctionName.class);
+    }
 }
