@@ -44,6 +44,11 @@ public final class SpreadsheetFormula implements HasText,
         UsesToStringBuilder {
 
     /**
+     * No {@link SpreadsheetParserToken} constant.
+     */
+    public final static Optional<SpreadsheetParserToken> NO_TOKEN = Optional.empty();
+
+    /**
      * No expression constant.
      */
     public final static Optional<Expression> NO_EXPRESSION = Optional.empty();
@@ -74,16 +79,22 @@ public final class SpreadsheetFormula implements HasText,
     public static SpreadsheetFormula with(final String text) {
         checkText(text);
 
-        return new SpreadsheetFormula(text, NO_EXPRESSION, NO_VALUE, NO_ERROR);
+        return new SpreadsheetFormula(text,
+                NO_TOKEN,
+                NO_EXPRESSION,
+                NO_VALUE,
+                NO_ERROR);
     }
 
     private SpreadsheetFormula(final String text,
+                               final Optional<SpreadsheetParserToken> token,
                                final Optional<Expression> expression,
                                final Optional<Object> value,
                                final Optional<SpreadsheetError> error) {
         super();
 
         this.text = text;
+        this.token = token;
         this.expression = expression;
         this.value = value;
         this.error = error;
@@ -100,7 +111,13 @@ public final class SpreadsheetFormula implements HasText,
         checkText(text);
         return this.text.equals(text) ?
                 this :
-                this.replace(text, NO_EXPRESSION, NO_VALUE, NO_ERROR);
+                this.replace(
+                        text,
+                        NO_TOKEN,
+                        NO_EXPRESSION,
+                        NO_VALUE,
+                        NO_ERROR
+                );
     }
 
     /**
@@ -111,6 +128,36 @@ public final class SpreadsheetFormula implements HasText,
 
     private static void checkText(final String text) {
         Objects.requireNonNull(text, "text");
+    }
+
+    // token .............................................................................................
+
+    public Optional<SpreadsheetParserToken> token() {
+        return this.token;
+    }
+
+    public SpreadsheetFormula setToken(final Optional<SpreadsheetParserToken> token) {
+        checkToken(token);
+
+        return this.token.equals(token) ?
+                this :
+                this.replace(
+                        this.text,
+                        token,
+                        NO_EXPRESSION,
+                        NO_VALUE,
+                        NO_ERROR
+                );
+    }
+
+    /**
+     * The token parsed from the text form of this formula. When loading a stored/persisted formula this should be
+     * used to reconstruct the text form.
+     */
+    private Optional<SpreadsheetParserToken> token;
+
+    private static void checkToken(final Optional<SpreadsheetParserToken> token) {
+        Objects.requireNonNull(token, "token");
     }
 
     // expression .............................................................................................
@@ -124,7 +171,13 @@ public final class SpreadsheetFormula implements HasText,
 
         return this.expression.equals(expression) ?
                 this :
-                this.replace(this.text, expression, NO_VALUE, NO_ERROR);
+                this.replace(
+                        this.text,
+                        this.token,
+                        expression,
+                        NO_VALUE,
+                        NO_ERROR
+                );
     }
 
     /**
@@ -147,7 +200,13 @@ public final class SpreadsheetFormula implements HasText,
 
         return this.value.equals(value) ?
                 this :
-                this.replace(this.text, this.expression, value, NO_ERROR);
+                this.replace(
+                        this.text,
+                        this.token,
+                        this.expression,
+                        value,
+                        NO_ERROR
+                );
     }
 
     /**
@@ -170,10 +229,13 @@ public final class SpreadsheetFormula implements HasText,
 
         return this.error.equals(error) ?
                 this :
-                this.replace(this.text,
+                this.replace(
+                        this.text,
+                        this.token,
                         this.expression,
                         error.isPresent() ? NO_VALUE : this.value, // if error is present clear the value.
-                        error);
+                        error
+                );
     }
 
     /**
@@ -198,10 +260,17 @@ public final class SpreadsheetFormula implements HasText,
     // internal factory .............................................................................................
 
     private SpreadsheetFormula replace(final String text,
+                                       final Optional<SpreadsheetParserToken> token,
                                        final Optional<Expression> expression,
                                        final Optional<Object> value,
                                        final Optional<SpreadsheetError> error) {
-        return new SpreadsheetFormula(text, expression, value, error);
+        return new SpreadsheetFormula(
+                text,
+                token,
+                expression,
+                value,
+                error
+        );
     }
 
     // JsonNodeContext..................................................................................................
@@ -212,6 +281,7 @@ public final class SpreadsheetFormula implements HasText,
     static SpreadsheetFormula unmarshall(final JsonNode node,
                                          final JsonNodeUnmarshallContext context) {
         String text = null;
+        SpreadsheetParserToken token = null;
         Expression expression = null;
         Object value = null;
         SpreadsheetError error = null;
@@ -223,9 +293,12 @@ public final class SpreadsheetFormula implements HasText,
                     try {
                         text = child.stringOrFail();
                     } catch (final JsonNodeException cause) {
-                        throw new JsonNodeUnmarshallException("Node " + TEXT_PROPERTY + " is not a string=" + child, node);
+                        throw new JsonNodeUnmarshallException("Node " + TEXT_PROPERTY_STRING + " is not a string=" + child, node);
                     }
                     checkText(text);
+                    break;
+                case TOKEN_PROPERTY_STRING:
+                    token = context.unmarshallWithType(child);
                     break;
                 case EXPRESSION_PROPERTY_STRING:
                     expression = context.unmarshallWithType(child);
@@ -249,6 +322,7 @@ public final class SpreadsheetFormula implements HasText,
         }
 
         return new SpreadsheetFormula(text,
+                Optional.ofNullable(token),
                 Optional.ofNullable(expression),
                 Optional.ofNullable(value),
                 Optional.ofNullable(error));
@@ -261,6 +335,11 @@ public final class SpreadsheetFormula implements HasText,
         JsonObject object = JsonNode.object();
 
         object = object.set(TEXT_PROPERTY, JsonNode.string(this.text));
+
+        final Optional<SpreadsheetParserToken> token = this.token;
+        if (token.isPresent()) {
+            object = object.set(TOKEN_PROPERTY, context.marshallWithType(token.get()));
+        }
 
         final Optional<Expression> expression = this.expression;
         if (expression.isPresent()) {
@@ -281,6 +360,7 @@ public final class SpreadsheetFormula implements HasText,
     }
 
     private final static String TEXT_PROPERTY_STRING = "text";
+    private final static String TOKEN_PROPERTY_STRING = "token";
     private final static String EXPRESSION_PROPERTY_STRING = "expression";
     private final static String VALUE_PROPERTY_STRING = "value";
     private final static String ERROR_PROPERTY_STRING = "error";
@@ -288,6 +368,7 @@ public final class SpreadsheetFormula implements HasText,
     // @VisibleForTesting
 
     final static JsonPropertyName TEXT_PROPERTY = JsonPropertyName.with(TEXT_PROPERTY_STRING);
+    final static JsonPropertyName TOKEN_PROPERTY = JsonPropertyName.with(TOKEN_PROPERTY_STRING);
     final static JsonPropertyName EXPRESSION_PROPERTY = JsonPropertyName.with(EXPRESSION_PROPERTY_STRING);
     final static JsonPropertyName VALUE_PROPERTY = JsonPropertyName.with(VALUE_PROPERTY_STRING);
     final static JsonPropertyName ERROR_PROPERTY = JsonPropertyName.with(ERROR_PROPERTY_STRING);
@@ -303,7 +384,13 @@ public final class SpreadsheetFormula implements HasText,
 
     @Override
     public int hashCode() {
-        return this.value.hashCode();
+        return Objects.hash(
+                this.text,
+                this.token,
+                this.expression,
+                this.value,
+                this.error
+        );
     }
 
     @Override
@@ -315,6 +402,7 @@ public final class SpreadsheetFormula implements HasText,
 
     private boolean equals0(final SpreadsheetFormula other) {
         return this.text.equals(other.text) &&
+                this.token.equals(other.token) &&
                 this.expression.equals(other.expression) &&
                 this.value.equals(other.value) &&
                 this.error.equals(other.error);

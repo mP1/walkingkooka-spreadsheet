@@ -22,6 +22,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
@@ -108,6 +109,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         assertNotSame(formula, different);
 
         this.checkText(different, differentText);
+        this.checkTokenAbsent(different);
         this.checkExpressionAbsent(different);
         this.checkValueAbsent(different);
         this.checkErrorAbsent(different);
@@ -121,6 +123,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         assertNotSame(formula, different);
 
         this.checkText(different, DIFFERENT_TEXT);
+        this.checkTokenAbsent(different);
         this.checkExpressionAbsent(different);
         this.checkValueAbsent(different);
         this.checkErrorAbsent(different);
@@ -135,11 +138,41 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         assertNotSame(formula, different);
 
         this.checkText(different, DIFFERENT_TEXT);
+        this.checkTokenAbsent(different);
         this.checkExpressionAbsent(different);
         this.checkValueAbsent(different);
         this.checkErrorAbsent(different);
     }
 
+    // SetToken.....................................................................................................
+
+    @SuppressWarnings("OptionalAssignedToNull")
+    @Test
+    public void testSetTokenNullFails() {
+        assertThrows(NullPointerException.class, () -> this.createObject().setToken(null));
+    }
+
+    @Test
+    public void testSetTokenSame() {
+        final SpreadsheetFormula formula = this.createObject();
+        assertSame(formula, formula.setToken(formula.token()));
+    }
+
+    @Test
+    public void testSetTokenDifferent() {
+        final SpreadsheetFormula formula = this.createObject();
+        final Optional<SpreadsheetParserToken> differentToken = this.token("different!");
+        final SpreadsheetFormula different = formula.setToken(differentToken);
+        assertNotSame(formula, different);
+
+        this.checkText(different, TEXT);
+        this.checkToken(different, differentToken);
+
+        this.checkExpressionAbsent(different); // should also clear expression, value, error
+        this.checkValueAbsent(different);
+        this.checkErrorAbsent(different);
+    }
+    
     // SetExpression.....................................................................................................
 
     @SuppressWarnings("OptionalAssignedToNull")
@@ -156,12 +189,14 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     @Test
     public void testSetExpressionDifferent() {
-        final SpreadsheetFormula formula = this.createObject();
+        final SpreadsheetFormula formula = this.createObject()
+                .setToken(this.token());
         final Optional<Expression> differentExpression = Optional.of(Expression.string("different!"));
         final SpreadsheetFormula different = formula.setExpression(differentExpression);
         assertNotSame(formula, different);
 
         this.checkText(different, TEXT);
+        this.checkToken(different);
         this.checkExpression(different, differentExpression);
         this.checkValueAbsent(different);
         this.checkErrorAbsent(different);
@@ -170,12 +205,14 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Test
     public void testSetExpressionDifferentAndClear() {
         final SpreadsheetFormula formula = this.createObject()
+                .setToken(this.token())
                 .setExpression(this.expression());
         final Optional<Expression> differentExpression = SpreadsheetFormula.NO_EXPRESSION;
         final SpreadsheetFormula different = formula.setExpression(differentExpression);
         assertNotSame(formula, different);
 
         this.checkText(different, TEXT);
+        this.checkToken(different);
         this.checkExpressionAbsent(different);
         this.checkValueAbsent(different);
         this.checkErrorAbsent(different);
@@ -184,6 +221,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Test
     public void testSetExpressionDifferentAfterSetValue() {
         final SpreadsheetFormula formula = this.createObject()
+                .setToken(this.token())
                 .setExpression(this.expression())
                 .setValue(this.value());
 
@@ -192,6 +230,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         assertNotSame(formula, different);
 
         this.checkText(different, TEXT);
+        this.checkToken(different);
         this.checkExpression(different, differentExpression);
         this.checkValueAbsent(different);
         this.checkErrorAbsent(different);
@@ -213,12 +252,14 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     @Test
     public void testSetErrorDifferent() {
-        final SpreadsheetFormula formula = this.createObject();
+        final SpreadsheetFormula formula = this.createObject()
+                .setToken(this.token());
         final Optional<SpreadsheetError> differentError = this.error("different");
         final SpreadsheetFormula different = formula.setError(differentError);
         assertNotSame(formula, different);
 
         this.checkText(different, TEXT);
+        this.checkToken(different);
         this.checkExpressionAbsent(different);
         this.checkValueAbsent(different);
         this.checkError(different, differentError);
@@ -227,12 +268,14 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Test
     public void testSetErrorDifferent2() {
         final SpreadsheetFormula formula = this.createObject()
+                .setToken(this.token())
                 .setError(this.error());
         final Optional<SpreadsheetError> differentError = this.error("different");
         final SpreadsheetFormula different = formula.setError(differentError);
         assertNotSame(formula, different);
 
         this.checkText(different, TEXT);
+        this.checkToken(different);
         this.checkExpressionAbsent(different);
         this.checkValueAbsent(different);
         this.checkError(different, differentError);
@@ -241,12 +284,14 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Test
     public void testSetErrorDifferentAfterSetValue() {
         final SpreadsheetFormula formula = this.createObject()
+                .setToken(this.token())
                 .setValue(this.value());
         final Optional<SpreadsheetError> differentError = this.error("different");
         final SpreadsheetFormula different = formula.setError(differentError);
         assertNotSame(formula, different);
 
         this.checkText(different, TEXT);
+        this.checkToken(different);
         this.checkExpressionAbsent(different);
         this.checkValueAbsent(different);
         this.checkError(different, differentError);
@@ -279,23 +324,72 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     @Test
     public void testEqualsDifferentText() {
-        checkNotEquals(this.createFormula("99+88", this.expression(), this.value(), this.error()));
+        checkNotEquals(
+                this.createFormula(
+                        "99+88",
+                        this.token(),
+                        this.expression(),
+                        this.value(),
+                        this.error()
+                )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentToken() {
+        checkNotEquals(
+                this.createFormula(
+                        TEXT,
+                        this.token("different"),
+                        this.expression(),
+                        this.value(),
+                        this.error()
+                )
+        );
     }
 
     @Test
     public void testEqualsDifferentExpression() {
-        checkNotEquals(this.createFormula(TEXT, this.expression("44"), this.value(), this.error()));
+        checkNotEquals(
+                this.createFormula(
+                        TEXT,
+                        this.token(),
+                        this.expression("44"),
+                        this.value(),
+                        this.error()
+                )
+        );
     }
 
     @Test
     public void testEqualsDifferentValue() {
-        checkNotEquals(this.createFormula(TEXT, this.expression(), this.value(), SpreadsheetFormula.NO_ERROR),
-                this.createFormula(TEXT, this.expression(), this.value("different-value"), SpreadsheetFormula.NO_ERROR));
+        checkNotEquals(
+                this.createFormula(
+                        TEXT,
+                        this.token(),
+                        this.expression(),
+                        this.value(),
+                        SpreadsheetFormula.NO_ERROR
+                ),
+                this.createFormula(
+                        TEXT,
+                        this.token(),
+                        this.expression(),
+                        this.value("different-value"),
+                        SpreadsheetFormula.NO_ERROR
+                )
+        );
     }
 
     @Test
     public void testEqualsDifferentError() {
-        checkNotEquals(this.createFormula(TEXT, this.expression(), this.value(), this.error("different error message")));
+        checkNotEquals(
+                this.createFormula(TEXT,
+                this.token(),
+                this.expression(),
+                this.value(),
+                this.error("different error message"))
+        );
     }
 
     @Test
@@ -304,10 +398,12 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     private SpreadsheetFormula createFormula(final String formula,
+                                             final Optional<SpreadsheetParserToken> token,
                                              final Optional<Expression> expression,
                                              final Optional<Object> value,
                                              final Optional<SpreadsheetError> error) {
         return SpreadsheetFormula.with(formula)
+                .setToken(token)
                 .setExpression(expression)
                 .setValue(value)
                 .setError(error);
@@ -348,6 +444,18 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
+    public void testJsonNodeUnmarshallTextAndToken() {
+        final Optional<SpreadsheetParserToken> token = this.token();
+
+        this.unmarshallAndCheck(JsonNode.object()
+                        .set(SpreadsheetFormula.TEXT_PROPERTY, JsonNode.string(TEXT))
+                        .set(SpreadsheetFormula.TOKEN_PROPERTY, this.marshallContext().marshallWithType(token.get())),
+                SpreadsheetFormula.with(TEXT)
+                        .setToken(token)
+        );
+    }
+
+    @Test
     public void testJsonNodeUnmarshallTextAndExpression() {
         final Optional<Expression> expression = this.expression();
 
@@ -355,6 +463,21 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         .set(SpreadsheetFormula.TEXT_PROPERTY, JsonNode.string(TEXT))
                         .set(SpreadsheetFormula.EXPRESSION_PROPERTY, this.marshallContext().marshallWithType(expression.get())),
                 SpreadsheetFormula.with(TEXT)
+                        .setExpression(expression)
+        );
+    }
+
+    @Test
+    public void testJsonNodeUnmarshallTextTokenAndExpression() {
+        final Optional<SpreadsheetParserToken> token = this.token();
+        final Optional<Expression> expression = this.expression();
+
+        this.unmarshallAndCheck(JsonNode.object()
+                        .set(SpreadsheetFormula.TEXT_PROPERTY, JsonNode.string(TEXT))
+                        .set(SpreadsheetFormula.TOKEN_PROPERTY, this.marshallContext().marshallWithType(token.get()))
+                        .set(SpreadsheetFormula.EXPRESSION_PROPERTY, this.marshallContext().marshallWithType(expression.get())),
+                SpreadsheetFormula.with(TEXT)
+                        .setToken(token)
                         .setExpression(expression)
         );
     }
@@ -395,11 +518,48 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
+    public void testJsonNodeMarshallTextAndToken() {
+        this.marshallAndCheck(SpreadsheetFormula.with(TEXT)
+                        .setToken(this.token()),
+                "{\n" +
+                        "  \"text\": \"a+2\",\n" +
+                        "  \"token\": {\n" +
+                        "    \"type\": \"spreadsheet-text-parser-token\",\n" +
+                        "    \"value\": {\n" +
+                        "      \"value\": \"1+2\",\n" +
+                        "      \"text\": \"1+2\"\n" +
+                        "    }\n" +
+                        "  }\n" +
+                        "}");
+    }
+
+    @Test
     public void testJsonNodeMarshallTextAndExpression() {
         this.marshallAndCheck(SpreadsheetFormula.with(TEXT)
                         .setExpression(this.expression()),
                 "{\n" +
                         "  \"text\": \"a+2\",\n" +
+                        "  \"expression\": {\n" +
+                        "    \"type\": \"string-expression\",\n" +
+                        "    \"value\": \"1+2\"\n" +
+                        "  }\n" +
+                        "}");
+    }
+
+    @Test
+    public void testJsonNodeMarshallTextTokenAndExpression() {
+        this.marshallAndCheck(SpreadsheetFormula.with(TEXT)
+                        .setToken(this.token())
+                        .setExpression(this.expression()),
+                "{\n" +
+                        "  \"text\": \"a+2\",\n" +
+                        "  \"token\": {\n" +
+                        "    \"type\": \"spreadsheet-text-parser-token\",\n" +
+                        "    \"value\": {\n" +
+                        "      \"value\": \"1+2\",\n" +
+                        "      \"text\": \"1+2\"\n" +
+                        "    }\n" +
+                        "  },\n" +
                         "  \"expression\": {\n" +
                         "    \"type\": \"string-expression\",\n" +
                         "    \"value\": \"1+2\"\n" +
@@ -480,6 +640,26 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
 
     private void checkText(final SpreadsheetFormula formula, final String text) {
         assertEquals(text, formula.text(), "text(Expression)");
+    }
+
+    private Optional<SpreadsheetParserToken> token() {
+        return this.token(EXPRESSION);
+    }
+
+    private Optional<SpreadsheetParserToken> token(final String text) {
+        return Optional.of(SpreadsheetParserToken.text(text, text));
+    }
+
+    private void checkToken(final SpreadsheetFormula formula) {
+        this.checkToken(formula, this.token());
+    }
+
+    private void checkTokenAbsent(final SpreadsheetFormula formula) {
+        this.checkToken(formula, SpreadsheetFormula.NO_TOKEN);
+    }
+
+    private void checkToken(final SpreadsheetFormula formula, final Optional<SpreadsheetParserToken> token) {
+        assertEquals(token, formula.token(), "token");
     }
 
     private Optional<Expression> expression() {
