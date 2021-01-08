@@ -23,6 +23,8 @@ import walkingkooka.spreadsheet.function.SpreadsheetFunctionName;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.FunctionExpressionName;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 
@@ -133,5 +135,11 @@ public final class SpreadsheetFunctionParserTokenTest extends SpreadsheetParentP
     @Override
     public Class<SpreadsheetFunctionParserToken> type() {
         return SpreadsheetFunctionParserToken.class;
+    }
+
+    @Override
+    public SpreadsheetFunctionParserToken unmarshall(final JsonNode from,
+                                                     final JsonNodeUnmarshallContext context) {
+        return SpreadsheetParserToken.unmarshallFunction(from, context);
     }
 }

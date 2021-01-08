@@ -24,6 +24,8 @@ import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 
@@ -115,5 +117,11 @@ public final class SpreadsheetCellReferenceParserTokenTest extends SpreadsheetPa
     @Override
     public Class<SpreadsheetCellReferenceParserToken> type() {
         return SpreadsheetCellReferenceParserToken.class;
+    }
+
+    @Override
+    public SpreadsheetCellReferenceParserToken unmarshall(final JsonNode from,
+                                                          final JsonNodeUnmarshallContext context) {
+        return SpreadsheetParserToken.unmarshallCellReference(from, context);
     }
 }

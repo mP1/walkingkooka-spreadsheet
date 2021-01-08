@@ -20,6 +20,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -91,5 +93,11 @@ public final class SpreadsheetLabelNameParserTokenTest extends SpreadsheetNonSym
     @Override
     public Class<SpreadsheetLabelNameParserToken> type() {
         return SpreadsheetLabelNameParserToken.class;
+    }
+
+    @Override
+    public SpreadsheetLabelNameParserToken unmarshall(final JsonNode from,
+                                                      final JsonNodeUnmarshallContext context) {
+        return SpreadsheetParserToken.unmarshallLabelName(from, context);
     }
 }

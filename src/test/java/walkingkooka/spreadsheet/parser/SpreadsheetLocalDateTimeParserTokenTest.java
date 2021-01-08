@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
 import java.time.LocalDateTime;
@@ -97,5 +99,11 @@ public final class SpreadsheetLocalDateTimeParserTokenTest extends SpreadsheetNo
     @Override
     public Class<SpreadsheetLocalDateTimeParserToken> type() {
         return SpreadsheetLocalDateTimeParserToken.class;
+    }
+
+    @Override
+    public SpreadsheetLocalDateTimeParserToken unmarshall(final JsonNode from,
+                                                          final JsonNodeUnmarshallContext context) {
+        return SpreadsheetParserToken.unmarshallLocalDateTime(from, context);
     }
 }

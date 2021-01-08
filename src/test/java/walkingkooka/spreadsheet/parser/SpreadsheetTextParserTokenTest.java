@@ -19,6 +19,8 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -106,5 +108,11 @@ public final class SpreadsheetTextParserTokenTest extends SpreadsheetNonSymbolPa
     @Override
     public Class<SpreadsheetTextParserToken> type() {
         return SpreadsheetTextParserToken.class;
+    }
+
+    @Override
+    public SpreadsheetTextParserToken unmarshall(final JsonNode from,
+                                                 final JsonNodeUnmarshallContext context) {
+        return SpreadsheetParserToken.unmarshallText(from, context);
     }
 }

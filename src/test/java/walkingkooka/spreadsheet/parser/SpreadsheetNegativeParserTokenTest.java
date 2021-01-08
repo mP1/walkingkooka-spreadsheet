@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
@@ -130,5 +132,11 @@ public final class SpreadsheetNegativeParserTokenTest extends SpreadsheetUnaryPa
     @Override
     public Class<SpreadsheetNegativeParserToken> type() {
         return SpreadsheetNegativeParserToken.class;
+    }
+
+    @Override
+    public SpreadsheetNegativeParserToken unmarshall(final JsonNode from,
+                                                     final JsonNodeUnmarshallContext context) {
+        return SpreadsheetParserToken.unmarshallNegative(from, context);
     }
 }

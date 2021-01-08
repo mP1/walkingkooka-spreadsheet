@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
 import java.math.BigInteger;
@@ -131,5 +133,11 @@ public final class SpreadsheetPercentageParserTokenTest extends SpreadsheetUnary
     @Override
     public Class<SpreadsheetPercentageParserToken> type() {
         return SpreadsheetPercentageParserToken.class;
+    }
+
+    @Override
+    public SpreadsheetPercentageParserToken unmarshall(final JsonNode from,
+                                                       final JsonNodeUnmarshallContext context) {
+        return SpreadsheetParserToken.unmarshallPercentage(from, context);
     }
 }

@@ -20,6 +20,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -102,5 +104,11 @@ public final class SpreadsheetColumnReferenceParserTokenTest extends Spreadsheet
     @Override
     public Class<SpreadsheetColumnReferenceParserToken> type() {
         return SpreadsheetColumnReferenceParserToken.class;
+    }
+
+    @Override
+    public SpreadsheetColumnReferenceParserToken unmarshall(final JsonNode from,
+                                                            final JsonNodeUnmarshallContext context) {
+        return SpreadsheetParserToken.unmarshallColumnReference(from, context);
     }
 }

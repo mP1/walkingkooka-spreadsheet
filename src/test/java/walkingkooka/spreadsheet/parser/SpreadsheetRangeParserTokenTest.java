@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
@@ -127,5 +129,11 @@ public final class SpreadsheetRangeParserTokenTest extends SpreadsheetBinaryPars
     @Override
     public Class<SpreadsheetRangeParserToken> type() {
         return SpreadsheetRangeParserToken.class;
+    }
+
+    @Override
+    public SpreadsheetRangeParserToken unmarshall(final JsonNode from,
+                                                  final JsonNodeUnmarshallContext context) {
+        return SpreadsheetParserToken.unmarshallRange(from, context);
     }
 }

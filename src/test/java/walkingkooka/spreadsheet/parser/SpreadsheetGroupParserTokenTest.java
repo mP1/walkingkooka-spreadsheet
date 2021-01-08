@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 
@@ -99,5 +101,11 @@ public final class SpreadsheetGroupParserTokenTest extends SpreadsheetParentPars
     @Override
     public Class<SpreadsheetGroupParserToken> type() {
         return SpreadsheetGroupParserToken.class;
+    }
+
+    @Override
+    public SpreadsheetGroupParserToken unmarshall(final JsonNode from,
+                                                  final JsonNodeUnmarshallContext context) {
+        return SpreadsheetParserToken.unmarshallGroup(from, context);
     }
 }

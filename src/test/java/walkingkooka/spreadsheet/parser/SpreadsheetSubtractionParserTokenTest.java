@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
@@ -122,5 +124,11 @@ public final class SpreadsheetSubtractionParserTokenTest extends SpreadsheetBina
     @Override
     public Class<SpreadsheetSubtractionParserToken> type() {
         return SpreadsheetSubtractionParserToken.class;
+    }
+
+    @Override
+    public SpreadsheetSubtractionParserToken unmarshall(final JsonNode from,
+                                                        final JsonNodeUnmarshallContext context) {
+        return SpreadsheetParserToken.unmarshallSubtraction(from, context);
     }
 }
