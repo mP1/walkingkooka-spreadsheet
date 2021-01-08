@@ -228,7 +228,7 @@ public final class SpreadsheetFormula implements HasText,
                     checkText(text);
                     break;
                 case EXPRESSION_PROPERTY_STRING:
-                    value = context.unmarshallWithType(child);
+                    expression = context.unmarshallWithType(child);
                     break;
                 case VALUE_PROPERTY_STRING:
                     value = context.unmarshallWithType(child);
@@ -288,7 +288,7 @@ public final class SpreadsheetFormula implements HasText,
     // @VisibleForTesting
 
     final static JsonPropertyName TEXT_PROPERTY = JsonPropertyName.with(TEXT_PROPERTY_STRING);
-    private final static JsonPropertyName EXPRESSION_PROPERTY = JsonPropertyName.with(EXPRESSION_PROPERTY_STRING);
+    final static JsonPropertyName EXPRESSION_PROPERTY = JsonPropertyName.with(EXPRESSION_PROPERTY_STRING);
     final static JsonPropertyName VALUE_PROPERTY = JsonPropertyName.with(VALUE_PROPERTY_STRING);
     final static JsonPropertyName ERROR_PROPERTY = JsonPropertyName.with(ERROR_PROPERTY_STRING);
 
