@@ -5173,9 +5173,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .replace(formattedText.toTextNode())
                 .root());
 
-        final SpreadsheetFormula formula = cell.formula();
-        return cell.setFormula(formula
-                .setExpression(formula.text().isEmpty() ? Optional.of(Expression.string("")) : this.parseFormula(formula))
+        return cell.setFormula(this.parseFormula(cell.formula())
                 .setValue(Optional.of(value)))
                 .setFormatted(formattedCell);
     }
@@ -5204,8 +5202,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .replace(TextNode.text(errorMessage))
                 .root());
 
-        return cell.setFormula(cell.formula()
-                .setExpression(this.parseFormula(cell.formula()))
+        return cell.setFormula(this.parseFormula(cell.formula())
                 .setError(Optional.of(SpreadsheetError.with(errorMessage))))
                 .setFormatted(formattedCell);
     }
@@ -5213,16 +5210,34 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     /**
      * Assumes the formula is syntactically correct and updates the cell.
      */
-    private Optional<Expression> parseFormula(final SpreadsheetFormula formula) {
+    private SpreadsheetFormula parseFormula(final SpreadsheetFormula formula) {
+        final String text = formula.text();
         final ExpressionNumberKind expressionNumberKind = this.expressionNumberKind();
 
-        final String formulaText = formula.text();
-        return SpreadsheetParsers.expression()
-                .parse(TextCursors.charSequence(formulaText),
-                        SpreadsheetParserContexts.basic(this.dateTimeContext(), this.decimalNumberContext(), expressionNumberKind))
-                .orElseThrow(() -> new AssertionError("Failed to parse " + CharSequences.quote(formulaText)))
-                .cast(SpreadsheetParserToken.class)
-                .expression(ExpressionNumberContexts.basic(expressionNumberKind, MATH_CONTEXT));
+        final SpreadsheetParserToken token =
+                text.isEmpty() ?
+                null :
+                SpreadsheetParsers.expression()
+                        .parse(TextCursors.charSequence(text),
+                                SpreadsheetParserContexts.basic(
+                                    this.dateTimeContext(),
+                                        this.decimalNumberContext(),
+                                        expressionNumberKind
+                                )
+                        ).orElseThrow(() -> new AssertionError("Failed to arseFormula " + CharSequences.quote(text)))
+                        .cast(SpreadsheetParserToken.class);
+        return null == token ?
+                formula.setToken(BasicSpreadsheetEngine.EMPTY_TOKEN)
+                    .setExpression(BasicSpreadsheetEngine.EMPTY_EXPRESSION):
+                formula.setToken(Optional.of(token))
+                .setExpression(
+                        token.expression(
+                                ExpressionNumberContexts.basic(
+                                    expressionNumberKind,
+                                    MATH_CONTEXT
+                                )
+                        )
+                );
     }
 
     private void loadCellStoreAndCheck(final SpreadsheetCellStore store,

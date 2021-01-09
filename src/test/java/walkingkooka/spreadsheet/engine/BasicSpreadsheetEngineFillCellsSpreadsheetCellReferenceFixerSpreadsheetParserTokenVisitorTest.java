@@ -43,7 +43,7 @@ public final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerS
                         DecimalNumberContexts.american(MathContext.DECIMAL32),
                         EXPRESSION_NUMBER_KIND))
                 .map(SpreadsheetParserToken.class::cast)
-                .orElseThrow(() -> new Error("Unable to parse"));
+                .orElseThrow(() -> new Error("Unable to parseFormula"));
         assertSame(token,
                 BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.expressionFixReferences(token, 0, 0));
     }

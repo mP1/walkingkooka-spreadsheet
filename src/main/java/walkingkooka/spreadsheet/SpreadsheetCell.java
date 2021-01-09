@@ -339,7 +339,7 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.reference, this.formula, this.style, this.format, this.formatted);
+        return Objects.hash(this.reference);///, this.formula, this.style, this.format, this.formatted);
     }
 
     @Override

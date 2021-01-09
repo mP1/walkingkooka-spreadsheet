@@ -328,37 +328,44 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
 
     private SpreadsheetFormula parseFormulaAndEvaluate(final SpreadsheetFormula formula,
                                                        final SpreadsheetEngineContext context) {
-        return this.evaluateIfPossible(this.parseIfNecessary(formula, context), context);
+        return this.evaluateIfPossible(
+                this.parseFormulaIfNecessary(formula,
+                        Function.identity(),
+                        context),
+                context);
     }
 
     // PARSE .........................................................................................................
 
     /**
-     * If an expression is not present, parse the formula.
-     */
-    private SpreadsheetFormula parseIfNecessary(final SpreadsheetFormula formula,
-                                                final SpreadsheetEngineContext context) {
-        return formula.expression().isPresent() ?
-                formula :
-                this.parse(formula, Function.identity(), context);
-    }
-
-    /**
      * Parsers the formula for this cell, and sets its expression or error if parsing fails.
      */
-    final SpreadsheetFormula parse(final SpreadsheetFormula formula,
-                                   final Function<SpreadsheetParserToken, SpreadsheetParserToken> parsed,
-                                   final SpreadsheetEngineContext context) {
-        SpreadsheetFormula result;
+    final SpreadsheetFormula parseFormulaIfNecessary(final SpreadsheetFormula formula,
+                                                     final Function<SpreadsheetParserToken, SpreadsheetParserToken> parsed,
+                                                     final SpreadsheetEngineContext context) {
+        SpreadsheetFormula result = formula;
 
         try {
             final String text = formula.text();
             if (text.isEmpty()) {
-                result = formula.setExpression(EMPTY_FORMULA); // will evaluate to empty string
+                result = formula.setToken(EMPTY_TOKEN)
+                        .setExpression(EMPTY_EXPRESSION); // will evaluate to empty string
             } else {
-                final SpreadsheetParserToken updated = parsed.apply(context.parseFormula(text));
-                result = formula.setText(updated.text())
-                        .setExpression(updated.expression(context));
+                // if a token is NOT present parse the formula text
+                SpreadsheetParserToken token = formula.token()
+                        .orElse(null);
+                if (null == token) {
+                    token = context.parseFormula(text);
+                }
+                if (null != token) {
+                    token = parsed.apply(token);
+                    result = result.setText(token.text())
+                            .setToken(Optional.of(token));
+                }
+                // if expression is absent, convert token into expression
+                if (null != token && false == result.expression().isPresent()) {
+                    result = result.setExpression(token.expression(context));
+                }
             }
 
         } catch (final ParserException failed) {
@@ -369,7 +376,15 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
         return result;
     }
 
-    private final static Optional<Expression> EMPTY_FORMULA = Optional.of(Expression.valueOrFail(""));
+    /**
+     * This {@link SpreadsheetParserToken} is set upon {@link SpreadsheetFormula} when the {@link SpreadsheetFormula#text()} is empty.
+     */
+    final static Optional<SpreadsheetParserToken> EMPTY_TOKEN = Optional.of(SpreadsheetParserToken.text("", ""));
+
+    /**
+     * This {@link Expression} is set upon {@link SpreadsheetFormula} when the {@link SpreadsheetFormula#text()} is empty.
+     */
+    final static Optional<Expression> EMPTY_EXPRESSION = Optional.of(Expression.valueOrFail(""));
 
     // EVAL .........................................................................................................
 
