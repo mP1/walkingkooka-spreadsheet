@@ -17,12 +17,17 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.text.DecimalFormatSymbols;
+import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * Handles building a {@link DecimalNumberContext} for {@link SpreadsheetMetadata#decimalNumberContext()}.
@@ -66,6 +71,21 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
                 locale,
                 new MathContext(precision, roundingMode));
     }
+
+    // this list should match the properties used in the method above.
+    static List<SpreadsheetMetadataPropertyName<?>> REQUIRED = Lists.of(
+            SpreadsheetMetadataPropertyName.LOCALE,
+
+            SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL,
+            SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR,
+            SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL,
+            SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR,
+            SpreadsheetMetadataPropertyName.NEGATIVE_SIGN,
+            SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL,
+            SpreadsheetMetadataPropertyName.POSITIVE_SIGN,
+            SpreadsheetMetadataPropertyName.PRECISION,
+            SpreadsheetMetadataPropertyName.ROUNDING_MODE
+    );
 
     final SpreadsheetMetadataComponents components;
 

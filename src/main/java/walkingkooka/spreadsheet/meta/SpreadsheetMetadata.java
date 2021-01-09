@@ -75,6 +75,7 @@ import walkingkooka.tree.text.TextStyle;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -368,6 +369,11 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
         return DateTimeContexts.locale(locale, twoYearDigit);
     }
 
+    final static List<SpreadsheetMetadataPropertyName<?>> DATE_TIME_CONTEXT_REQUIRED = Lists.of(
+            SpreadsheetMetadataPropertyName.LOCALE,
+            SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR
+    );
+
     // HasDecimalNumberContext..........................................................................................
 
     /**
@@ -515,6 +521,19 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
      * Creates a {@link SpreadsheetParserContext} after verifying required properties.
      */
     final SpreadsheetParserContext parserContext0() {
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        // DateTimeContext
+        DATE_TIME_CONTEXT_REQUIRED.forEach(components::getOrNull);
+
+        // DecimalNumberContext
+        SpreadsheetMetadataDecimalNumberContextComponents.REQUIRED.forEach(components::getOrNull);
+
+        // ExpressionNumberKind
+        components.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
+
+        components.reportIfMissing();
+
         return SpreadsheetParserContexts.basic(
                 this.dateTimeContext(),
                 this.decimalNumberContext(),
