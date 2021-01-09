@@ -69,6 +69,8 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.checkText(formula, text);
     }
 
+    // SetText..........................................................................................................
+
     @Test
     public void testSetTextNullFails() {
         assertThrows(NullPointerException.class, () -> this.createObject().setText(null));
@@ -97,22 +99,10 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
         this.checkText(different, differentText);
     }
 
-    // SetFormula.....................................................................................................
-
     @Test
-    public void testSetFormulaNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createObject().setText(null));
-    }
-
-    @Test
-    public void testSetFormulaSame() {
+    public void testSetTextDifferent2() {
         final SpreadsheetFormula formula = this.createObject();
-        assertSame(formula, formula.setText(formula.text()));
-    }
 
-    @Test
-    public void testSetFormulaDifferent() {
-        final SpreadsheetFormula formula = this.createObject();
         final String differentText = "different";
         final SpreadsheetFormula different = formula.setText(differentText);
         assertNotSame(formula, different);
@@ -124,7 +114,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testSetFormulaAfterSetExpression() {
+    public void testSetTextAfterSetExpression() {
         final SpreadsheetFormula formula = this.createObject()
                 .setExpression(this.expression());
         final SpreadsheetFormula different = formula.setText(DIFFERENT_TEXT);
@@ -137,7 +127,7 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
-    public void testSetFormulaAfterSetExpressionSetValue() {
+    public void testSetTextAfterSetExpressionSetValue() {
         final SpreadsheetFormula formula = this.createObject()
                 .setExpression(this.expression())
                 .setValue(this.value());
