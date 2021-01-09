@@ -748,7 +748,12 @@ public abstract class SpreadsheetParserToken implements ParserToken,
      */
     @Override
     public final Optional<Expression> expression(final ExpressionNumberContext context) {
-        return SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor.accept(this, context);
+        Objects.requireNonNull(context, "context");
+
+        return SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor.accept(
+                this,
+                context.expressionNumberKind()
+        );
     }
 
     // Object ...........................................................................................................
