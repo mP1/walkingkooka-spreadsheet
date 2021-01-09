@@ -130,7 +130,7 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     public void testParserContextAllRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadata.EMPTY
                 .parserContext());
-        assertEquals("Required properties \"expression-number-kind\", \"precision\", \"rounding-mode\" missing.",
+        assertEquals("Required properties \"locale\", \"two-digit-year\" missing.",
                 thrown.getMessage(),
                 "message");
     }
