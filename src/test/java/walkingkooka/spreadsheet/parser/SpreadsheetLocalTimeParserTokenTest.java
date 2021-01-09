@@ -27,8 +27,14 @@ import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetLocalTimeParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetLocalTimeParserToken, LocalTime> {
+
+    @Test
+    public void testWithEmptyTextFails() {
+        assertThrows(IllegalArgumentException.class, () -> this.createToken(""));
+    }
 
     @Test
     public void testAccept() {

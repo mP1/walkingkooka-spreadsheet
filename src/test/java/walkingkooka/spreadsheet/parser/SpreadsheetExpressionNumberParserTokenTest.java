@@ -28,8 +28,14 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetExpressionNumberParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetExpressionNumberParserToken, ExpressionNumber> {
+
+    @Test
+    public void testWithEmptyTextFails() {
+        assertThrows(IllegalArgumentException.class, () -> this.createToken(""));
+    }
 
     @Test
     public void testAccept() {

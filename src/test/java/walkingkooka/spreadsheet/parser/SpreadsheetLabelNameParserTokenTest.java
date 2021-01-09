@@ -26,8 +26,14 @@ import walkingkooka.visit.Visiting;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SpreadsheetLabelNameParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetLabelNameParserToken, SpreadsheetLabelName> {
+
+    @Test
+    public void testWithEmptyTextFails() {
+        assertThrows(IllegalArgumentException.class, () -> this.createToken(""));
+    }
 
     @Test
     public void testAccept() {

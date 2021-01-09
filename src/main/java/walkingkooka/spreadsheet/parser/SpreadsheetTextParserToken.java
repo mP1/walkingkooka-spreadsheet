@@ -16,7 +16,7 @@
  */
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.text.CharSequences;
+import java.util.Objects;
 
 /**
  * Holds a text which may be empty
@@ -25,7 +25,7 @@ public final class SpreadsheetTextParserToken extends SpreadsheetNonSymbolParser
 
     static SpreadsheetTextParserToken with(final String value, final String text) {
         checkValue(value);
-        CharSequences.failIfNullOrEmpty(text, "text");
+        Objects.requireNonNull(text, "text");
 
         return new SpreadsheetTextParserToken(value, text);
     }
