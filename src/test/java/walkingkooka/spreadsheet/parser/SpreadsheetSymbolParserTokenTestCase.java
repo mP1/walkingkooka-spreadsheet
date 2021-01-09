@@ -19,10 +19,17 @@ package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public abstract class SpreadsheetSymbolParserTokenTestCase<T extends SpreadsheetSymbolParserToken> extends SpreadsheetLeafParserTokenTestCase<T, String> {
 
     SpreadsheetSymbolParserTokenTestCase() {
         super();
+    }
+
+    @Test
+    public final void testWithEmptyTextFails() {
+        assertThrows(IllegalArgumentException.class, () -> this.createToken(""));
     }
 
     @Test
