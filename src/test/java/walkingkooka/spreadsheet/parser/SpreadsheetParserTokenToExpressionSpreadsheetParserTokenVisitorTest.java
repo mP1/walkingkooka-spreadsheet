@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitorTest extends SpreadsheetParserTokenVisitorTestCase<SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor> {
 
     @Test
-    public void testNullExpressionNumberContextFails() {
+    public void testNullExpressionNumberKindFails() {
         assertThrows(NullPointerException.class, () -> SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor.accept(SpreadsheetParserToken.expressionNumber(ExpressionNumberKind.DEFAULT.create(1), "1"), null));
     }
 
