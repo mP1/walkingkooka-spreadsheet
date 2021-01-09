@@ -56,37 +56,6 @@ public final class SpreadsheetMetadataComponentsTest implements ClassTesting2,
         this.checkMissing(components);
     }
 
-    // getOrElse........................................................................................................
-
-    @Test
-    public void testGetOrElseAbsentSupplierNull() {
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
-        assertEquals(null, components.getOrElse(SpreadsheetMetadataPropertyName.CREATOR, () -> null));
-        this.checkMissing(components, SpreadsheetMetadataPropertyName.CREATOR);
-    }
-
-    @Test
-    public void testGetOrElseSupplierPresent() {
-        final SpreadsheetMetadataPropertyName<EmailAddress> property = SpreadsheetMetadataPropertyName.CREATOR;
-        final EmailAddress value = EmailAddress.parse("user@example.com");
-
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.EMPTY);
-        assertEquals(value, components.getOrElse(property, () -> value));
-        this.checkMissing(components);
-    }
-
-    @Test
-    public void testGetOrElsePresent() {
-        final SpreadsheetMetadataPropertyName<EmailAddress> property = SpreadsheetMetadataPropertyName.CREATOR;
-        final EmailAddress value = EmailAddress.parse("user@example.com");
-
-        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(SpreadsheetMetadata.with(Maps.of(property, value)));
-        assertEquals(value, components.getOrElse(property, () -> {
-            throw new UnsupportedOperationException();
-        }));
-        this.checkMissing(components);
-    }
-
     // reportIfMissing..................................................................................................
 
     @Test
