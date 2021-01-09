@@ -236,6 +236,11 @@ public class JunitTest {
                 checkEquals(false, value instanceof Optional, "Value must not be optional" + value);
                 return formatter.format(value, formatterContext());
             }
+
+            @Override
+            public ExpressionNumberKind expressionNumberKind() {
+                return EXPRESSION_NUMBER_KIND;
+            }
         };
     }
 
