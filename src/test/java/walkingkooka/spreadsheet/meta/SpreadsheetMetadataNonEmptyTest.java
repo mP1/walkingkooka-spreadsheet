@@ -66,7 +66,6 @@ import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DateFormatSymbols;
-import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -687,7 +686,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     private SpreadsheetMetadata createSpreadsheetMetadataWithConverterAndConverterContext() {
         return this.createSpreadsheetMetadataWithConverter()
+                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "C")
+                .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, 'D')
                 .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E")
+                .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, 'G')
+                .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, 'N')
+                .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, 'R')
+                .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, 'P')
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 16)
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.DOWN);
     }
@@ -790,38 +795,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 });
     }
 
-    @Test
-    public void testDecimalNumberContextLocaleDefaults() {
-        final String exponentSymbol = "E";
-        final Character positiveSign = '+';
-
-        Arrays.stream(Locale.getAvailableLocales())
-                .forEach(locale -> Lists.of(MathContext.DECIMAL32, MathContext.DECIMAL64, MathContext.DECIMAL128, MathContext.UNLIMITED)
-                        .forEach(mc -> {
-                            final int precision = mc.getPrecision();
-                            final RoundingMode roundingMode = mc.getRoundingMode();
-
-                            final DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(locale);
-
-                            this.decimalNumberContextAndCheck(SpreadsheetMetadata.EMPTY
-                                            .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, exponentSymbol)
-                                            .set(SpreadsheetMetadataPropertyName.LOCALE, locale)
-                                            .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, positiveSign)
-                                            .set(SpreadsheetMetadataPropertyName.PRECISION, precision)
-                                            .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, roundingMode),
-                                    symbols.getCurrencySymbol(),
-                                    symbols.getDecimalSeparator(),
-                                    exponentSymbol,
-                                    symbols.getGroupingSeparator(),
-                                    locale,
-                                    symbols.getMinusSign(),
-                                    symbols.getPercent(),
-                                    positiveSign,
-                                    precision,
-                                    roundingMode);
-                        }));
-    }
-
     private void decimalNumberContextAndCheck(final SpreadsheetMetadata metadata,
                                               final String currencySymbol,
                                               final Character decimalSeparator,
@@ -849,9 +822,14 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testDecimalNumberContextCached() {
         final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "C")
+                .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, 'D')
                 .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E")
+                .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, 'G')
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
-                .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, '+')
+                .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, 'N')
+                .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, 'R')
+                .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, 'P')
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 16)
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR);
         assertSame(metadata.decimalNumberContext(), metadata.decimalNumberContext());
@@ -1025,7 +1003,14 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     private SpreadsheetMetadata createSpreadsheetMetadataWithFormatterContext() {
         return this.createSpreadsheetMetadataWithConverter()
+                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "C")
+                .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, 'D')
                 .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E")
+                .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, 'G')
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
+                .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, 'N')
+                .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, 'R')
+                .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, 'P')
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 10)
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.DOWN)
                 .set(SpreadsheetMetadataPropertyName.WIDTH, 10);
@@ -1120,16 +1105,20 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testParserContext() {
-        final SpreadsheetMetadata metadata = SpreadsheetMetadataNonEmpty.with(
-                Maps.of(
-                        SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E",
-                        SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE,
-                        SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH,
-                        SpreadsheetMetadataPropertyName.PRECISION, 16,
-                        SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.FLOOR,
-                        SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20
-                )
-        );
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "C")
+                .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, 'D')
+                .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E")
+                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
+                .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, 'G')
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
+                .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, 'N')
+                .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, 'R')
+                .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, 'P')
+                .set(SpreadsheetMetadataPropertyName.PRECISION, 10)
+                .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.DOWN)
+                .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20);
+
         assertSame(metadata.parserContext(), metadata.parserContext());
     }
 

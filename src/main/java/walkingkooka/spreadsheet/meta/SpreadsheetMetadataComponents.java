@@ -17,14 +17,11 @@
 
 package walkingkooka.spreadsheet.meta;
 
-import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.text.CharSequences;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -43,30 +40,15 @@ final class SpreadsheetMetadataComponents {
     }
 
     <T> T getOrNull(final SpreadsheetMetadataPropertyName<T> propertyName) {
-        return this.getOrElse(propertyName, this::defaultNull);
-    }
-
-    @SuppressWarnings("SameReturnValue")
-    private <T> T defaultNull() {
-        return null;
-    }
-
-    <T> T getOrElse(final SpreadsheetMetadataPropertyName<T> propertyName,
-                    final Supplier<T> defaultValue) {
         return this.metadata.getOrGetDefaults(propertyName)
-                .orElseGet(() -> {
-                    final T value = defaultValue.get();
-                    if (null == value) {
-                        this.addMissing(propertyName);
-                    }
-                    return value;
-                });
+                .orElseGet(() -> this.addMissing(propertyName));
     }
 
     final SpreadsheetMetadata metadata;
 
-    private void addMissing(final SpreadsheetMetadataPropertyName<?> propertyName) {
+    private <T> T addMissing(final SpreadsheetMetadataPropertyName<?> propertyName) {
         this.missing.add(propertyName);
+        return null;
     }
 
     void reportIfMissing() {

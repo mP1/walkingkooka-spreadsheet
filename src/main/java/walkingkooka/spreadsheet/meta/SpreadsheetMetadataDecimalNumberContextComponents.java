@@ -22,10 +22,7 @@ import walkingkooka.math.DecimalNumberContexts;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.text.DecimalFormatSymbols;
 import java.util.Locale;
-import java.util.Optional;
-import java.util.function.Function;
 
 /**
  * Handles building a {@link DecimalNumberContext} for {@link SpreadsheetMetadata#decimalNumberContext()}.
@@ -44,13 +41,13 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
     final DecimalNumberContext decimalNumberContext() {
         final SpreadsheetMetadataComponents components = this.components;
 
-        final String currencySymbol = components.getOrElse(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, this::localeCurrencySymbol);
-        final Character decimalSeparator = components.getOrElse(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, this::localeDecimalSeparator);
+        final String currencySymbol = components.getOrNull(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL);
+        final Character decimalSeparator = components.getOrNull(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR);
         final String exponentSymbol = components.getOrNull(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL);
-        final Character groupingSeparator = components.getOrElse(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, this::localeGroupingSeparator);
-        final Character negativeSign = components.getOrElse(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, this::localeNegativeSign);
-        final Character percentSymbol = components.getOrElse(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, this::localePercentageSymbol);
-        final Character positiveSign = components.getOrElse(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, this::localePositiveSign);
+        final Character groupingSeparator = components.getOrNull(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR);
+        final Character negativeSign = components.getOrNull(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN);
+        final Character percentSymbol = components.getOrNull(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL);
+        final Character positiveSign = components.getOrNull(SpreadsheetMetadataPropertyName.POSITIVE_SIGN);
 
         final Locale locale = components.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
 
@@ -69,61 +66,6 @@ final class SpreadsheetMetadataDecimalNumberContextComponents {
                 locale,
                 new MathContext(precision, roundingMode));
     }
-
-    private String localeCurrencySymbol() {
-        return this.tryPropertyFromLocale(DecimalNumberContext::currencySymbol);
-    }
-
-    private Character localeDecimalSeparator() {
-        return this.tryPropertyFromLocale(DecimalNumberContext::decimalSeparator);
-    }
-
-    private Character localeGroupingSeparator() {
-        return this.tryPropertyFromLocale(DecimalNumberContext::groupingSeparator);
-    }
-
-    private Character localeNegativeSign() {
-        return this.tryPropertyFromLocale(DecimalNumberContext::negativeSign);
-    }
-
-    private Character localePercentageSymbol() {
-        return this.tryPropertyFromLocale(DecimalNumberContext::percentageSymbol);
-    }
-
-    private Character localePositiveSign() {
-        return this.tryPropertyFromLocale(DecimalNumberContext::positiveSign);
-    }
-
-    private <T> T tryPropertyFromLocale(final Function<DecimalNumberContext, T> localDecimalNumberContextGetter) {
-        final DecimalNumberContext decimalNumberContext = this.localDecimalNumberContext();
-        return null != decimalNumberContext ?
-                localDecimalNumberContextGetter.apply(decimalNumberContext) :
-                null;
-    }
-
-    /**
-     * Lazy {@link Locale} getter.
-     */
-    @SuppressWarnings("OptionalAssignedToNull")
-    private DecimalNumberContext localDecimalNumberContext() {
-        if (null == this.locale) {
-            this.locale = this.components.metadata.get(SpreadsheetMetadataPropertyName.LOCALE);
-            this.decimalNumberContext = this.locale
-                    .map(this::localDecimalNumberContext0)
-                    .orElse(null);
-        }
-        return this.decimalNumberContext;
-    }
-
-    private DecimalNumberContext localDecimalNumberContext0(final Locale locale) {
-        return DecimalNumberContexts.decimalFormatSymbols(DecimalFormatSymbols.getInstance(locale),
-                '+',
-                locale,
-                MathContext.DECIMAL32); // exponent, plus, MathContext ignored
-    }
-
-    private Optional<Locale> locale;
-    private DecimalNumberContext decimalNumberContext;
 
     final SpreadsheetMetadataComponents components;
 
