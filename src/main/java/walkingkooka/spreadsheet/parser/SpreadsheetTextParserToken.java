@@ -18,6 +18,8 @@ package walkingkooka.spreadsheet.parser;
 
 import java.util.Objects;
 
+import java.util.Objects;
+
 /**
  * Holds a text which may be empty
  */
