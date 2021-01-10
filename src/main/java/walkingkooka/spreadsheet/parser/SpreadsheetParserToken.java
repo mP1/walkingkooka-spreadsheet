@@ -789,57 +789,48 @@ public abstract class SpreadsheetParserToken implements ParserToken,
 
     static {
         registerLeafParserToken(
-                "spreadsheet-column-reference-parser-token",
-                SpreadsheetParserToken::unmarshallColumnReference,
-                SpreadsheetColumnReferenceParserToken.class
+                SpreadsheetColumnReferenceParserToken.class,
+                SpreadsheetParserToken::unmarshallColumnReference
         );
 
         registerLeafParserToken(
-                "spreadsheet-expression-number-parser-token",
-                SpreadsheetParserToken::unmarshallExpressionNumber,
-                SpreadsheetExpressionNumberParserToken.class
+                SpreadsheetExpressionNumberParserToken.class,
+                SpreadsheetParserToken::unmarshallExpressionNumber
         );
 
         registerLeafParserToken(
-                "spreadsheet-function-name-parser-token",
-                SpreadsheetParserToken::unmarshallFunctionName,
-                SpreadsheetFunctionNameParserToken.class
+                SpreadsheetFunctionNameParserToken.class,
+                SpreadsheetParserToken::unmarshallFunctionName
         );
 
         registerLeafParserToken(
-                "spreadsheet-label-name-parser-token",
-                SpreadsheetParserToken::unmarshallLabelName,
-                SpreadsheetLabelNameParserToken.class
+                SpreadsheetLabelNameParserToken.class,
+                SpreadsheetParserToken::unmarshallLabelName
         );
 
         registerLeafParserToken(
-                "spreadsheet-local-date-parser-token",
-                SpreadsheetParserToken::unmarshallLocalDate,
-                SpreadsheetLocalDateParserToken.class
+                SpreadsheetLocalDateParserToken.class,
+                SpreadsheetParserToken::unmarshallLocalDate
         );
 
         registerLeafParserToken(
-                "spreadsheet-local-datetime-parser-token",
-                SpreadsheetParserToken::unmarshallLocalDateTime,
-                SpreadsheetLocalDateTimeParserToken.class
+                SpreadsheetLocalDateTimeParserToken.class,
+                SpreadsheetParserToken::unmarshallLocalDateTime
         );
 
         registerLeafParserToken(
-                "spreadsheet-local-time-parser-token",
-                SpreadsheetParserToken::unmarshallLocalTime,
-                SpreadsheetLocalTimeParserToken.class
+                SpreadsheetLocalTimeParserToken.class,
+                SpreadsheetParserToken::unmarshallLocalTime
         );
 
         registerLeafParserToken(
-                "spreadsheet-row-reference-parser-token",
-                SpreadsheetParserToken::unmarshallRowReference,
-                SpreadsheetRowReferenceParserToken.class
+                SpreadsheetRowReferenceParserToken.class,
+                SpreadsheetParserToken::unmarshallRowReference
         );
 
         registerLeafParserToken(
-                "spreadsheet-text-parser-token",
-                SpreadsheetParserToken::unmarshallText,
-                SpreadsheetTextParserToken.class
+                SpreadsheetTextParserToken.class,
+                SpreadsheetParserToken::unmarshallText
         );
     }
 
@@ -937,105 +928,88 @@ public abstract class SpreadsheetParserToken implements ParserToken,
 
     static {
         registerLeafParserToken(
-                "spreadsheet-between-symbol-parser-token",
-                SpreadsheetParserToken::unmarshallBetweenSymbol,
-                SpreadsheetBetweenSymbolParserToken.class
+                SpreadsheetBetweenSymbolParserToken.class,
+                SpreadsheetParserToken::unmarshallBetweenSymbol
         );
 
         registerLeafParserToken(
-                "spreadsheet-divide-symbol-parser-token",
-                SpreadsheetParserToken::unmarshallDivideSymbol,
-                SpreadsheetDivideSymbolParserToken.class
+                SpreadsheetDivideSymbolParserToken.class,
+                SpreadsheetParserToken::unmarshallDivideSymbol
         );
 
         registerLeafParserToken(
-                "spreadsheet-equals-symbol-parser-token",
-                SpreadsheetParserToken::unmarshallEqualsSymbol,
-                SpreadsheetEqualsSymbolParserToken.class
+                SpreadsheetEqualsSymbolParserToken.class,
+                SpreadsheetParserToken::unmarshallEqualsSymbol
         );
 
         registerLeafParserToken(
-                "spreadsheet-function-parameter-separator-symbol-parser-token",
-                SpreadsheetParserToken::unmarshallFunctionParameterSeparatorSymbol,
-                SpreadsheetFunctionParameterSeparatorSymbolParserToken.class
+                SpreadsheetFunctionParameterSeparatorSymbolParserToken.class,
+                SpreadsheetParserToken::unmarshallFunctionParameterSeparatorSymbol
         );
 
         registerLeafParserToken(
-                "spreadsheet-greater-than-equals-symbol-parser-token",
-                SpreadsheetParserToken::unmarshallGreaterThanEqualsSymbol,
-                SpreadsheetGreaterThanEqualsSymbolParserToken.class
+                SpreadsheetGreaterThanEqualsSymbolParserToken.class,
+                SpreadsheetParserToken::unmarshallGreaterThanEqualsSymbol
         );
 
         registerLeafParserToken(
-                "spreadsheet-greater-than-symbol-parser-token",
-                SpreadsheetParserToken::unmarshallGreaterThanSymbol,
-                SpreadsheetGreaterThanSymbolParserToken.class
+                SpreadsheetGreaterThanSymbolParserToken.class,
+                SpreadsheetParserToken::unmarshallGreaterThanSymbol
         );
 
         registerLeafParserToken(
-                "spreadsheet-less-than-equals-symbol-parser-token",
-                SpreadsheetParserToken::unmarshallLessThanEqualsSymbol,
-                SpreadsheetLessThanEqualsSymbolParserToken.class
+                SpreadsheetLessThanEqualsSymbolParserToken.class,
+                SpreadsheetParserToken::unmarshallLessThanEqualsSymbol
         );
 
         registerLeafParserToken(
-                "spreadsheet-less-than-symbol-parser-token",
-                SpreadsheetParserToken::unmarshallLessThanSymbol,
-                SpreadsheetLessThanSymbolParserToken.class
+                SpreadsheetLessThanSymbolParserToken.class,
+                SpreadsheetParserToken::unmarshallLessThanSymbol
         );
 
         registerLeafParserToken(
-                "spreadsheet-minus-symbol-parser-token",
-                SpreadsheetParserToken::unmarshallMinusSymbol,
-                SpreadsheetMinusSymbolParserToken.class
+                SpreadsheetMinusSymbolParserToken.class,
+                SpreadsheetParserToken::unmarshallMinusSymbol
         );
 
         registerLeafParserToken(
-                "spreadsheet-multiply-symbol-parser-token",
-                SpreadsheetParserToken::unmarshallMultiplySymbol,
-                SpreadsheetMultiplySymbolParserToken.class
+                SpreadsheetMultiplySymbolParserToken.class,
+                SpreadsheetParserToken::unmarshallMultiplySymbol
         );
 
         registerLeafParserToken(
-                "spreadsheet-not-equals-symbol-parser-token",
-                SpreadsheetParserToken::unmarshallNotEqualsSymbol,
-                SpreadsheetNotEqualsSymbolParserToken.class
+                SpreadsheetNotEqualsSymbolParserToken.class,
+                SpreadsheetParserToken::unmarshallNotEqualsSymbol
         );
 
         registerLeafParserToken(
-                "spreadsheet-parenthesis-close-symbol-parser-token",
-                SpreadsheetParserToken::unmarshallParenthesisCloseSymbol,
-                SpreadsheetParenthesisCloseSymbolParserToken.class
+                SpreadsheetParenthesisCloseSymbolParserToken.class,
+                SpreadsheetParserToken::unmarshallParenthesisCloseSymbol
         );
 
         registerLeafParserToken(
-                "spreadsheet-parenthesis-open-symbol-parser-token",
-                SpreadsheetParserToken::unmarshallParenthesisOpenSymbol,
-                SpreadsheetParenthesisOpenSymbolParserToken.class
+                SpreadsheetParenthesisOpenSymbolParserToken.class,
+                SpreadsheetParserToken::unmarshallParenthesisOpenSymbol
         );
 
         registerLeafParserToken(
-                "spreadsheet-percent-symbol-parser-token",
-                SpreadsheetParserToken::unmarshallPercentSymbol,
-                SpreadsheetPercentSymbolParserToken.class
+                SpreadsheetPercentSymbolParserToken.class,
+                SpreadsheetParserToken::unmarshallPercentSymbol
         );
 
         registerLeafParserToken(
-                "spreadsheet-plus-symbol-parser-token",
-                SpreadsheetParserToken::unmarshallPlusSymbol,
-                SpreadsheetPlusSymbolParserToken.class
+                SpreadsheetPlusSymbolParserToken.class,
+                SpreadsheetParserToken::unmarshallPlusSymbol
         );
 
         registerLeafParserToken(
-                "spreadsheet-power-symbol-parser-token",
-                SpreadsheetParserToken::unmarshallPowerSymbol,
-                SpreadsheetPowerSymbolParserToken.class
+                SpreadsheetPowerSymbolParserToken.class,
+                SpreadsheetParserToken::unmarshallPowerSymbol
         );
 
         registerLeafParserToken(
-                "spreadsheet-whitespace-parser-token",
-                SpreadsheetParserToken::unmarshallWhitespace,
-                SpreadsheetWhitespaceParserToken.class
+                SpreadsheetWhitespaceParserToken.class,
+                SpreadsheetParserToken::unmarshallWhitespace
         );
     }
 
@@ -1246,14 +1220,12 @@ public abstract class SpreadsheetParserToken implements ParserToken,
         return factory.apply(value, text);
     }
 
-    private static <T extends SpreadsheetLeafParserToken<?>> void registerLeafParserToken(final String typeName,
-                                                                                          final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from,
-                                                                                          final Class<T> type) {
-        JsonNodeContext.register(
-                typeName,
+    private static <T extends SpreadsheetLeafParserToken<?>> void registerLeafParserToken(final Class<T> type,
+                                                                                          final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from) {
+        register(
+                type,
                 from,
-                SpreadsheetParserToken::marshallLeafParserToken,
-                type
+                SpreadsheetParserToken::marshallLeafParserToken
         );
     }
 
@@ -1261,105 +1233,88 @@ public abstract class SpreadsheetParserToken implements ParserToken,
 
     static {
         registerParentParserToken(
-                "spreadsheet-addition-parser-token",
-                SpreadsheetParserToken::unmarshallAddition,
-                SpreadsheetAdditionParserToken.class
+                SpreadsheetAdditionParserToken.class,
+                SpreadsheetParserToken::unmarshallAddition
         );
 
         registerParentParserToken(
-                "spreadsheet-division-parser-token",
-                SpreadsheetParserToken::unmarshallDivision,
-                SpreadsheetDivisionParserToken.class
+                SpreadsheetDivisionParserToken.class,
+                SpreadsheetParserToken::unmarshallDivision
         );
 
         registerParentParserToken(
-                "spreadsheet-equals-parser-token",
-                SpreadsheetParserToken::unmarshallEquals,
-                SpreadsheetEqualsParserToken.class
+                SpreadsheetEqualsParserToken.class,
+                SpreadsheetParserToken::unmarshallEquals
         );
 
         registerParentParserToken(
-                "spreadsheet-greater-than-equals-parser-token",
-                SpreadsheetParserToken::unmarshallGreaterThanEquals,
-                SpreadsheetGreaterThanEqualsParserToken.class
+                SpreadsheetGreaterThanEqualsParserToken.class,
+                SpreadsheetParserToken::unmarshallGreaterThanEquals
         );
 
         registerParentParserToken(
-                "spreadsheet-greater-than-parser-token",
-                SpreadsheetParserToken::unmarshallGreaterThan,
-                SpreadsheetGreaterThanParserToken.class
+                SpreadsheetGreaterThanParserToken.class,
+                SpreadsheetParserToken::unmarshallGreaterThan
         );
 
         registerParentParserToken(
-                "spreadsheet-less-than-equals-parser-token",
-                SpreadsheetParserToken::unmarshallLessThanEquals,
-                SpreadsheetLessThanEqualsParserToken.class
+                SpreadsheetLessThanEqualsParserToken.class,
+                SpreadsheetParserToken::unmarshallLessThanEquals
         );
 
         registerParentParserToken(
-                "spreadsheet-less-than-parser-token",
-                SpreadsheetParserToken::unmarshallLessThan,
-                SpreadsheetLessThanParserToken.class
+                SpreadsheetLessThanParserToken.class,
+                SpreadsheetParserToken::unmarshallLessThan
         );
 
         registerParentParserToken(
-                "spreadsheet-multiplication-parser-token",
-                SpreadsheetParserToken::unmarshallMultiplication,
-                SpreadsheetMultiplicationParserToken.class
+                SpreadsheetMultiplicationParserToken.class,
+                SpreadsheetParserToken::unmarshallMultiplication
         );
 
         registerParentParserToken(
-                "spreadsheet-not-equals-parser-token",
-                SpreadsheetParserToken::unmarshallNotEquals,
-                SpreadsheetNotEqualsParserToken.class
+                SpreadsheetNotEqualsParserToken.class,
+                SpreadsheetParserToken::unmarshallNotEquals
         );
 
         registerParentParserToken(
-                "spreadsheet-power-parser-token",
-                SpreadsheetParserToken::unmarshallPower,
-                SpreadsheetPowerParserToken.class
+                SpreadsheetPowerParserToken.class,
+                SpreadsheetParserToken::unmarshallPower
         );
 
         registerParentParserToken(
-                "spreadsheet-range-parser-token",
-                SpreadsheetParserToken::unmarshallRange,
-                SpreadsheetRangeParserToken.class
+                SpreadsheetRangeParserToken.class,
+                SpreadsheetParserToken::unmarshallRange
         );
 
         registerParentParserToken(
-                "spreadsheet-subtraction-parser-token",
-                SpreadsheetParserToken::unmarshallSubtraction,
-                SpreadsheetSubtractionParserToken.class
+                SpreadsheetSubtractionParserToken.class,
+                SpreadsheetParserToken::unmarshallSubtraction
         );
 
         registerParentParserToken(
-                "spreadsheet-cell-reference-parser-token",
-                SpreadsheetParserToken::unmarshallCellReference,
-                SpreadsheetCellReferenceParserToken.class
+                SpreadsheetCellReferenceParserToken.class,
+                SpreadsheetParserToken::unmarshallCellReference
         );
 
         registerParentParserToken(
-                "spreadsheet-function-parser-token",
-                SpreadsheetParserToken::unmarshallFunction,
-                SpreadsheetFunctionParserToken.class
+                SpreadsheetFunctionParserToken.class,
+                SpreadsheetParserToken::unmarshallFunction
         );
 
         registerParentParserToken(
-                "spreadsheet-group-parser-token",
-                SpreadsheetParserToken::unmarshallGroup,
-                SpreadsheetGroupParserToken.class
+                SpreadsheetGroupParserToken.class,
+                SpreadsheetParserToken::unmarshallGroup
         );
 
         registerParentParserToken(
-                "spreadsheet-negative-parser-token",
-                SpreadsheetParserToken::unmarshallNegative,
-                SpreadsheetNegativeParserToken.class
+                SpreadsheetNegativeParserToken.class,
+                SpreadsheetParserToken::unmarshallNegative
         );
 
         registerParentParserToken(
-                "spreadsheet-percentage-parser-token",
-                SpreadsheetParserToken::unmarshallPercentage,
-                SpreadsheetPercentageParserToken.class
+                SpreadsheetPercentageParserToken.class,
+                SpreadsheetParserToken::unmarshallPercentage
         );
     }
 
@@ -1563,13 +1518,22 @@ public abstract class SpreadsheetParserToken implements ParserToken,
                 .set(TEXT_PROPERTY, JsonNode.string(this.text()));
     }
 
-    private static <T extends SpreadsheetParentParserToken> void registerParentParserToken(final String typeName,
-                                                                                           final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from,
-                                                                                           final Class<T> type) {
-        JsonNodeContext.register(
-                typeName,
+    private static <T extends SpreadsheetParentParserToken> void registerParentParserToken(final Class<T> type,
+                                                                                           final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from) {
+        register(
+                type,
                 from,
-                SpreadsheetParserToken::marshallParentParserToken,
+                SpreadsheetParserToken::marshallParentParserToken
+        );
+    }
+
+    private static <T extends SpreadsheetParserToken> void register(final Class<T> type,
+                                                                    final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from,
+                                                                    final BiFunction<T, JsonNodeMarshallContext, JsonNode> to) {
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(type),
+                from,
+                to,
                 type
         );
     }
