@@ -130,7 +130,17 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
     public void testParserContextAllRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadata.EMPTY
                 .parserContext());
-        assertEquals("Required properties \"locale\", \"two-digit-year\" missing.",
+        assertEquals("Required properties \"currency-symbol\", \"decimal-separator\", \"exponent-symbol\", \"expression-number-kind\", \"grouping-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\", \"two-digit-year\" missing.",
+                thrown.getMessage(),
+                "message");
+    }
+
+    @Test
+    public void testParserContextAllRequiredPropertiesAbsentFails2() {
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "AUD")
+                .parserContext());
+        assertEquals("Required properties \"decimal-separator\", \"exponent-symbol\", \"expression-number-kind\", \"grouping-separator\", \"locale\", \"negative-sign\", \"percentage-symbol\", \"positive-sign\", \"precision\", \"rounding-mode\", \"two-digit-year\" missing.",
                 thrown.getMessage(),
                 "message");
     }
