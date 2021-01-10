@@ -18,6 +18,8 @@ package walkingkooka.spreadsheet.format.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -84,5 +86,11 @@ public final class SpreadsheetFormatLessThanSymbolParserTokenTest extends Spread
     @Override
     public Class<SpreadsheetFormatLessThanSymbolParserToken> type() {
         return SpreadsheetFormatLessThanSymbolParserToken.class;
+    }
+
+    @Override
+    public SpreadsheetFormatLessThanSymbolParserToken unmarshall(final JsonNode node,
+                                                                 final JsonNodeUnmarshallContext context) {
+        return SpreadsheetFormatParserToken.unmarshallLessThanSymbol(node, context);
     }
 }

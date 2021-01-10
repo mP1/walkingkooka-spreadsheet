@@ -23,6 +23,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticFactoryTesting;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokenTesting;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
 import java.util.function.Predicate;
 
@@ -30,6 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetFormatParserTokenTestCase<T extends SpreadsheetFormatParserToken> implements ClassTesting2<T>,
         IsMethodTesting<T>,
+        JsonNodeMarshallingTesting<T>,
         ParserTokenTesting<T> {
 
     SpreadsheetFormatParserTokenTestCase() {
@@ -79,5 +81,12 @@ public abstract class SpreadsheetFormatParserTokenTestCase<T extends Spreadsheet
     @Override
     public final JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
+    }
+
+    // JsonNodeMarshallTesting..........................................................................................
+
+    @Override
+    public final T createJsonNodeMappingValue() {
+        return this.createToken();
     }
 }

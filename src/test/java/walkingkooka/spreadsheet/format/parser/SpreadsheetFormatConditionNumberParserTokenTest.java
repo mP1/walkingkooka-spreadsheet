@@ -18,6 +18,8 @@ package walkingkooka.spreadsheet.format.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
 import java.math.BigDecimal;
@@ -91,5 +93,11 @@ public final class SpreadsheetFormatConditionNumberParserTokenTest extends Sprea
     @Override
     public Class<SpreadsheetFormatConditionNumberParserToken> type() {
         return SpreadsheetFormatConditionNumberParserToken.class;
+    }
+
+    @Override
+    public SpreadsheetFormatConditionNumberParserToken unmarshall(final JsonNode node,
+                                                                  final JsonNodeUnmarshallContext context) {
+        return SpreadsheetFormatParserToken.unmarshallConditionNumber(node, context);
     }
 }

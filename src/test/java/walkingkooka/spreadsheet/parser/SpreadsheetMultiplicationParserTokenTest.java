@@ -105,7 +105,7 @@ public final class SpreadsheetMultiplicationParserTokenTest extends SpreadsheetB
                 visited,
                 "visited");
     }
-    
+
     @Override
     SpreadsheetMultiplicationParserToken createToken(final String text, final List<ParserToken> tokens) {
         return SpreadsheetParserToken.multiplication(tokens, text);
