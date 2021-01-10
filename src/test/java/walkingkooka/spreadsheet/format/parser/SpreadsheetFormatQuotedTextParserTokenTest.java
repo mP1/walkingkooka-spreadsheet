@@ -18,6 +18,8 @@ package walkingkooka.spreadsheet.format.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -89,5 +91,11 @@ public final class SpreadsheetFormatQuotedTextParserTokenTest extends Spreadshee
     @Override
     public Class<SpreadsheetFormatQuotedTextParserToken> type() {
         return SpreadsheetFormatQuotedTextParserToken.class;
+    }
+
+    @Override
+    public SpreadsheetFormatQuotedTextParserToken unmarshall(final JsonNode node,
+                                                             final JsonNodeUnmarshallContext context) {
+        return SpreadsheetFormatParserToken.unmarshallQuotedText(node, context);
     }
 }

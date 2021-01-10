@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.format.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
@@ -132,5 +134,11 @@ public final class SpreadsheetFormatDateTimeParserTokenTest extends SpreadsheetF
     @Override
     public Class<SpreadsheetFormatDateTimeParserToken> type() {
         return SpreadsheetFormatDateTimeParserToken.class;
+    }
+
+    @Override
+    public SpreadsheetFormatDateTimeParserToken unmarshall(final JsonNode node,
+                                                           final JsonNodeUnmarshallContext context) {
+        return SpreadsheetFormatParserToken.unmarshallDateTime(node, context);
     }
 }

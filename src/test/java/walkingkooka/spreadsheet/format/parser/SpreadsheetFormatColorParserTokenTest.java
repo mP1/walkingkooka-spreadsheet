@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.format.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
@@ -160,5 +162,11 @@ public final class SpreadsheetFormatColorParserTokenTest extends SpreadsheetForm
     @Override
     public Class<SpreadsheetFormatColorParserToken> type() {
         return SpreadsheetFormatColorParserToken.class;
+    }
+
+    @Override
+    public SpreadsheetFormatColorParserToken unmarshall(final JsonNode node,
+                                                        final JsonNodeUnmarshallContext context) {
+        return SpreadsheetFormatParserToken.unmarshallColor(node, context);
     }
 }
