@@ -503,7 +503,7 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
                 SpreadsheetPattern::marshall,
                 SpreadsheetDateTimeFormatPattern.class);
 
-        JsonNodeContext.register("spreadsheet-datetime-parse-patterns",
+        JsonNodeContext.register("spreadsheet-date-time-parse-patterns",
                 SpreadsheetPattern::unmarshallDateTimeParsePatterns,
                 SpreadsheetPattern::marshall,
                 SpreadsheetDateTimeParsePatterns.class);
