@@ -43,6 +43,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -488,49 +489,57 @@ abstract public class SpreadsheetPattern<V> implements Value<V> {
 
     static {
 
-        JsonNodeContext.register("spreadsheet-date-format-pattern",
-                SpreadsheetPattern::unmarshallDateFormatPattern,
-                SpreadsheetPattern::marshall,
-                SpreadsheetDateFormatPattern.class);
+        register(
+                SpreadsheetDateFormatPattern.class,
+                SpreadsheetPattern::unmarshallDateFormatPattern
+        );
 
-        JsonNodeContext.register("spreadsheet-date-parse-patterns",
-                SpreadsheetPattern::unmarshallDateParsePatterns,
-                SpreadsheetPattern::marshall,
-                SpreadsheetDateParsePatterns.class);
+        register(
+                SpreadsheetDateParsePatterns.class,
+                SpreadsheetPattern::unmarshallDateParsePatterns
+        );
 
-        JsonNodeContext.register("spreadsheet-date-time-format-pattern",
-                SpreadsheetPattern::unmarshallDateTimeFormatPattern,
-                SpreadsheetPattern::marshall,
-                SpreadsheetDateTimeFormatPattern.class);
+        register(
+                SpreadsheetDateTimeFormatPattern.class,
+                SpreadsheetPattern::unmarshallDateTimeFormatPattern
+        );
 
-        JsonNodeContext.register("spreadsheet-date-time-parse-patterns",
-                SpreadsheetPattern::unmarshallDateTimeParsePatterns,
-                SpreadsheetPattern::marshall,
-                SpreadsheetDateTimeParsePatterns.class);
+        register(
+                SpreadsheetDateTimeParsePatterns.class,
+                SpreadsheetPattern::unmarshallDateTimeParsePatterns
+        );
 
-        JsonNodeContext.register("spreadsheet-number-format-pattern",
-                SpreadsheetPattern::unmarshallNumberFormatPattern,
-                SpreadsheetPattern::marshall,
-                SpreadsheetNumberFormatPattern.class);
+        register(
+                SpreadsheetNumberFormatPattern.class,
+                SpreadsheetPattern::unmarshallNumberFormatPattern
+        );
 
-        JsonNodeContext.register("spreadsheet-number-parse-patterns",
-                SpreadsheetPattern::unmarshallNumberParsePatterns,
-                SpreadsheetPattern::marshall,
-                SpreadsheetNumberParsePatterns.class);
+        register(
+                SpreadsheetNumberParsePatterns.class,
+                SpreadsheetPattern::unmarshallNumberParsePatterns
+        );
 
-        JsonNodeContext.register("spreadsheet-text-format-pattern",
-                SpreadsheetPattern::unmarshallTextFormatPattern,
-                SpreadsheetPattern::marshall,
-                SpreadsheetTextFormatPattern.class);
+        register(
+                SpreadsheetTextFormatPattern.class,
+                SpreadsheetPattern::unmarshallTextFormatPattern
+        );
 
-        JsonNodeContext.register("spreadsheet-time-format-pattern",
-                SpreadsheetPattern::unmarshallTimeFormatPattern,
-                SpreadsheetPattern::marshall,
-                SpreadsheetTimeFormatPattern.class);
+        register(
+                SpreadsheetTimeFormatPattern.class,
+                SpreadsheetPattern::unmarshallTimeFormatPattern
+        );
 
-        JsonNodeContext.register("spreadsheet-time-parse-patterns",
-                SpreadsheetPattern::unmarshallTimeParsePatterns,
+        register(
+                SpreadsheetTimeParsePatterns.class,
+                SpreadsheetPattern::unmarshallTimeParsePatterns
+        );
+    }
+
+    private static <P extends SpreadsheetPattern<?>> void register(final Class<P> type,
+                                                                   final BiFunction<JsonNode, JsonNodeUnmarshallContext, P> unmarshaller) {
+        JsonNodeContext.register(JsonNodeContext.computeTypeName(type),
+                unmarshaller,
                 SpreadsheetPattern::marshall,
-                SpreadsheetTimeParsePatterns.class);
+                type);
     }
 }
