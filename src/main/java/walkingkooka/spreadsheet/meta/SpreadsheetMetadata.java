@@ -695,12 +695,14 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
     static {
         SpreadsheetMetadataPropertyName.CREATOR.value();
 
-        JsonNodeContext.register("spreadsheet-metadata",
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetMetadata.class),
                 SpreadsheetMetadata::unmarshall,
                 SpreadsheetMetadata::marshall,
                 SpreadsheetMetadata.class,
                 SpreadsheetMetadataNonEmpty.class,
-                SpreadsheetMetadataEmpty.class);
+                SpreadsheetMetadataEmpty.class
+        );
     }
 
     /**

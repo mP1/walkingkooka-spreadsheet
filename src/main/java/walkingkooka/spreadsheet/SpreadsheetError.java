@@ -83,9 +83,11 @@ public final class SpreadsheetError implements Value<String> {
     }
 
     static {
-        JsonNodeContext.register("spreadsheet-error",
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetError.class),
                 SpreadsheetError::unmarshall,
                 SpreadsheetError::marshall,
-                SpreadsheetError.class);
+                SpreadsheetError.class
+        );
     }
 }

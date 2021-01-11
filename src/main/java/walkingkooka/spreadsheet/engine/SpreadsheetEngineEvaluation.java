@@ -110,10 +110,12 @@ public enum SpreadsheetEngineEvaluation {
                 .map(SpreadsheetEngineEvaluation::getClass)
                 .toArray(Class[]::new));
 
-        JsonNodeContext.register("spreadsheet-engine-evaluation",
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetEngineEvaluation.class),
                 SpreadsheetEngineEvaluation::unmarshall,
                 SpreadsheetEngineEvaluation::marshall,
                 SpreadsheetEngineEvaluation.class,
-                types);
+                types
+        );
     }
 }

@@ -150,10 +150,12 @@ public final class SpreadsheetLabelMapping implements HateosResource<Spreadsheet
     private final static JsonPropertyName REFERENCE_PROPERTY = JsonPropertyName.with(REFERENCE_PROPERTY_STRING);
 
     static {
-        JsonNodeContext.register("spreadsheet-label-mapping",
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetLabelMapping.class),
                 SpreadsheetLabelMapping::unmarshall,
                 SpreadsheetLabelMapping::marshall,
-                SpreadsheetLabelMapping.class);
+                SpreadsheetLabelMapping.class
+        );
     }
 
     // HashCodeEqualsDefined..........................................................................................

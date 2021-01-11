@@ -92,10 +92,12 @@ public final class SpreadsheetId implements Comparable<SpreadsheetId>,
     }
 
     static {
-        JsonNodeContext.register("spreadsheet-id",
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetId.class),
                 SpreadsheetId::unmarshall,
                 SpreadsheetId::marshall,
-                SpreadsheetId.class);
+                SpreadsheetId.class
+        );
     }
 
     // Object............................................................................................................

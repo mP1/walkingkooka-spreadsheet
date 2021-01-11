@@ -138,10 +138,12 @@ public final class SpreadsheetCoordinates implements Comparable<SpreadsheetCoord
     }
 
     static {
-        JsonNodeContext.register("spreadsheet-coordinates",
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetCoordinates.class),
                 SpreadsheetCoordinates::unmarshall,
                 SpreadsheetCoordinates::marshall,
-                SpreadsheetCoordinates.class);
+                SpreadsheetCoordinates.class
+        );
     }
 
     // Comparable.......................................................................................................

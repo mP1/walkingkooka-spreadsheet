@@ -213,9 +213,11 @@ public final class SpreadsheetCellBox {
     final static JsonPropertyName HEIGHT_PROPERTY = JsonPropertyName.with(HEIGHT_PROPERTY_STRING);
 
     static {
-        JsonNodeContext.register("spreadsheet-cell-box",
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetCellBox.class),
                 SpreadsheetCellBox::unmarshall,
                 SpreadsheetCellBox::marshall,
-                SpreadsheetCellBox.class);
+                SpreadsheetCellBox.class
+        );
     }
 }

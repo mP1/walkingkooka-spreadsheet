@@ -48,10 +48,12 @@ public final class UserId extends IdentityId
     }
 
     static {
-        JsonNodeContext.register("user-id",
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(UserId.class),
                 UserId::unmarshall,
                 UserId::marshall,
-                UserId.class);
+                UserId.class
+        );
     }
 
     // Comparable..............................................................................................

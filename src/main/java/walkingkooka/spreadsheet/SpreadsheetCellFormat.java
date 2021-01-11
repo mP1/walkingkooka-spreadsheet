@@ -126,10 +126,12 @@ public final class SpreadsheetCellFormat implements UsesToStringBuilder {
     }
 
     static {
-        JsonNodeContext.register("spreadsheet-cell-format",
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetCellFormat.class),
                 SpreadsheetCellFormat::unmarshall,
                 SpreadsheetCellFormat::marshall,
-                SpreadsheetCellFormat.class);
+                SpreadsheetCellFormat.class
+        );
     }
 
     // Object ..........................................................................................................

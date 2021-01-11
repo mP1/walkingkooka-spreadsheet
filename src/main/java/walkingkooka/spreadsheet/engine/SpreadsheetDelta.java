@@ -395,12 +395,14 @@ public abstract class SpreadsheetDelta {
         // force static initializers to run, preventing Json type name lookup failures.
         SpreadsheetCell.NO_FORMATTED_CELL.isPresent();
 
-        JsonNodeContext.register("spreadsheet-delta",
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetDelta.class),
                 SpreadsheetDelta::unmarshall,
                 SpreadsheetDelta::marshall,
                 SpreadsheetDelta.class,
                 SpreadsheetDeltaNonWindowed.class,
-                SpreadsheetDeltaWindowed.class);
+                SpreadsheetDeltaWindowed.class
+        );
     }
 
     // equals...........................................................................................................
