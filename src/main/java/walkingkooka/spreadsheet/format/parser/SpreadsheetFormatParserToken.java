@@ -912,6 +912,11 @@ public abstract class SpreadsheetFormatParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
+                SpreadsheetFormatCurrencyParserToken.class,
+                SpreadsheetFormatParserToken::unmarshallCurrency
+        );
+
+        registerLeafParserToken(
                 SpreadsheetFormatDayParserToken.class,
                 SpreadsheetFormatParserToken::unmarshallDay
         );
