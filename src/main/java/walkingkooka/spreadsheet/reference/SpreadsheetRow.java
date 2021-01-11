@@ -99,10 +99,12 @@ public final class SpreadsheetRow implements Comparable<SpreadsheetRow>,
     }
 
     static {
-        JsonNodeContext.register("spreadsheet-row",
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetRow.class),
                 SpreadsheetRow::unmarshall,
                 SpreadsheetRow::marshall,
-                SpreadsheetRow.class);
+                SpreadsheetRow.class
+        );
     }
 
     // HashCodeEqualsDefined..........................................................................................

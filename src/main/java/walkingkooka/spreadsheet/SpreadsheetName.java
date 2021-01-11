@@ -101,10 +101,12 @@ public final class SpreadsheetName implements Comparable<SpreadsheetName>,
     }
 
     static {
-        JsonNodeContext.register("spreadsheet-name",
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetName.class),
                 SpreadsheetName::unmarshall,
                 SpreadsheetName::marshall,
-                SpreadsheetName.class);
+                SpreadsheetName.class
+        );
     }
 
     // Object............................................................................................................

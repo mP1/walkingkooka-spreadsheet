@@ -329,10 +329,12 @@ public final class SpreadsheetCell implements Comparable<SpreadsheetCell>,
         SpreadsheetCellFormat.NO_FORMATTER.isPresent();
 
 
-        JsonNodeContext.register("spreadsheet-cell",
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetCell.class),
                 SpreadsheetCell::unmarshall,
                 SpreadsheetCell::marshall,
-                SpreadsheetCell.class);
+                SpreadsheetCell.class
+        );
     }
 
     // HashCodeEqualsDefined..........................................................................................

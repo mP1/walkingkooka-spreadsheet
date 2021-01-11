@@ -374,10 +374,12 @@ public final class SpreadsheetFormula implements HasText,
     final static JsonPropertyName ERROR_PROPERTY = JsonPropertyName.with(ERROR_PROPERTY_STRING);
 
     static {
-        JsonNodeContext.register("spreadsheet-formula",
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetFormula.class),
                 SpreadsheetFormula::unmarshall,
                 SpreadsheetFormula::marshall,
-                SpreadsheetFormula.class);
+                SpreadsheetFormula.class
+        );
     }
 
     // HashCodeEqualsDefined..........................................................................................

@@ -204,9 +204,11 @@ public final class SpreadsheetText implements HasText,
     static {
         Color.BLACK.hashCode();
 
-        JsonNodeContext.register("spreadsheet-text",
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetText.class),
                 SpreadsheetText::unmarshall,
                 SpreadsheetText::marshall,
-                SpreadsheetText.class);
+                SpreadsheetText.class
+        );
     }
 }

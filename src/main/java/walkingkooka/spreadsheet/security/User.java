@@ -115,10 +115,12 @@ public final class User extends Identity<UserId> {
     final static JsonPropertyName EMAIL_PROPERTY = JsonPropertyName.with(EMAIL_PROPERTY_STRING);
 
     static {
-        JsonNodeContext.register("user",
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(User.class),
                 User::unmarshall,
                 User::marshall,
-                User.class);
+                User.class
+        );
     }
 
     // Identity.........................................................................................................

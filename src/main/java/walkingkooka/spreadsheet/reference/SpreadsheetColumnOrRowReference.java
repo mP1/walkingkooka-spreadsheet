@@ -36,6 +36,7 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Objects;
+import java.util.function.BiFunction;
 import java.util.function.IntFunction;
 
 /**
@@ -241,15 +242,29 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
     }
 
     static {
-        JsonNodeContext.register("spreadsheet-column-reference",
+        register(
                 SpreadsheetColumnReference::unmarshallColumn,
                 SpreadsheetColumnReference::marshall,
-                SpreadsheetColumnReference.class);
+                SpreadsheetColumnReference.class
+        );
 
         //noinspection StaticInitializerReferencesSubClass
-        JsonNodeContext.register("spreadsheet-row-reference",
+        register(
                 SpreadsheetRowReference::unmarshallRow,
                 SpreadsheetRowReference::marshall,
-                SpreadsheetRowReference.class);
+                SpreadsheetRowReference.class
+        );
+    }
+
+    private static <T extends SpreadsheetColumnOrRowReference<T>> void register(
+            final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from,
+            final BiFunction<T, JsonNodeMarshallContext, JsonNode> to,
+            final Class<T> type) {
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(type),
+                from,
+                to,
+                type
+        );
     }
 }

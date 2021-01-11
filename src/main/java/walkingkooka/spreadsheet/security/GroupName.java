@@ -101,10 +101,12 @@ final public class GroupName implements Name,
     }
 
     static {
-        JsonNodeContext.register("group-name",
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(GroupName.class),
                 GroupName::unmarshall,
                 GroupName::marshall,
-                GroupName.class);
+                GroupName.class
+        );
     }
 
     // Object...........................................................................................................

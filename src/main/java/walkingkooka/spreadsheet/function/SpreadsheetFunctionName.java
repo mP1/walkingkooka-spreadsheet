@@ -121,9 +121,11 @@ final public class SpreadsheetFunctionName implements Name, Comparable<Spreadshe
     }
 
     static {
-        JsonNodeContext.register("spreadsheet-function-name",
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(SpreadsheetFunctionName.class),
                 SpreadsheetFunctionName::unmarshall,
                 SpreadsheetFunctionName::marshall,
-                SpreadsheetFunctionName.class);
+                SpreadsheetFunctionName.class
+        );
     }
 }

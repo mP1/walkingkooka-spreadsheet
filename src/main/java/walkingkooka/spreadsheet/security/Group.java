@@ -111,10 +111,12 @@ public final class Group extends Identity<GroupId> {
     final static JsonPropertyName NAME_PROPERTY = JsonPropertyName.with(NAME_PROPERTY_STRING);
 
     static {
-        JsonNodeContext.register("group",
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(Group.class),
                 Group::unmarshall,
                 Group::marshall,
-                Group.class);
+                Group.class
+        );
     }
 
     // Identity.........................................................................................................

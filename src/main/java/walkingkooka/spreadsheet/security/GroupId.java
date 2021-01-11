@@ -48,10 +48,12 @@ public final class GroupId extends IdentityId
     }
 
     static {
-        JsonNodeContext.register("group-id",
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(GroupId.class),
                 GroupId::unmarshall,
                 GroupId::marshall,
-                GroupId.class);
+                GroupId.class
+        );
     }
 
     // Comparable..............................................................................................

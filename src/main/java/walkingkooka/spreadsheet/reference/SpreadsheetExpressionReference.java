@@ -30,6 +30,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -328,23 +329,42 @@ abstract public class SpreadsheetExpressionReference<T extends Comparable<T>> im
     }
 
     static {
-        JsonNodeContext.register("spreadsheet-cell-reference",
+        register(
                 SpreadsheetCellReference::unmarshallCellReference,
                 SpreadsheetCellReference::marshall,
-                SpreadsheetCellReference.class);
-        JsonNodeContext.register("spreadsheet-label-name",
+                SpreadsheetCellReference.class
+        );
+
+        register(
                 SpreadsheetLabelName::unmarshallLabelName,
                 SpreadsheetLabelName::marshall,
-                SpreadsheetLabelName.class);
+                SpreadsheetLabelName.class
+        );
+
         //noinspection StaticInitializerReferencesSubClass
-        JsonNodeContext.register("spreadsheet-range",
+        register(
                 SpreadsheetRange::unmarshallRange,
                 SpreadsheetRange::marshall,
-                SpreadsheetRange.class);
+                SpreadsheetRange.class
+        );
+
         //noinspection StaticInitializerReferencesSubClass
-        JsonNodeContext.register("spreadsheet-viewport",
+        register(
                 SpreadsheetViewport::unmarshallViewport,
                 SpreadsheetViewport::marshall,
-                SpreadsheetViewport.class);
+                SpreadsheetViewport.class
+        );
+    }
+
+    private static <T extends SpreadsheetExpressionReference<T>> void register(
+            final BiFunction<JsonNode, JsonNodeUnmarshallContext, T> from,
+            final BiFunction<T, JsonNodeMarshallContext, JsonNode> to,
+            final Class<T> type) {
+        JsonNodeContext.register(
+                JsonNodeContext.computeTypeName(type),
+                from,
+                to,
+                type
+        );
     }
 }
