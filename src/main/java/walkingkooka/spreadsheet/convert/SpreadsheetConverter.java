@@ -147,7 +147,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
                 dateParser.converter().cast(ExpressionNumberConverterContext.class),
                 dateTimeParser.converter().cast(ExpressionNumberConverterContext.class),
                 ExpressionNumber.toConverter(numberParser.converter().cast(ExpressionNumberConverterContext.class)),
-                textFormatter.converter().cast(ExpressionNumberConverterContext.class), // String -> String
+                Converters.simple(), // String -> String
                 timeParser.converter().cast(ExpressionNumberConverterContext.class)
         );
 

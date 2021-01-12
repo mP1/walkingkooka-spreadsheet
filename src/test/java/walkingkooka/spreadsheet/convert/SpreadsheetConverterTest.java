@@ -435,7 +435,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     @Test
     public void testStringString() {
         final String text = "abc123";
-        this.convertAndCheck2(text, text + TEXT_SUFFIX);
+        this.convertAndCheck2(text, text);
     }
 
     // toString.........................................................................................................
