@@ -607,7 +607,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     @Test
     public void testConverterStringToString() {
         final String text = "abc123";
-        this.convertAndCheck2(text, "Text " + text);
+        this.convertAndCheck2(text, text);
     }
 
     @Test

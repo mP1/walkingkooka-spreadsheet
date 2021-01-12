@@ -202,7 +202,6 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         assertNotEquals(Optional.of(ExpressionNumberKind.DEFAULT), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND));
         assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.PRECISION));
         assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.ROUNDING_MODE));
-        assertEquals(Optional.of(SpreadsheetPattern.parseTextFormatPattern("@")), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN));
         assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR));
         assertNotEquals(Optional.empty(), nonLocaleDefaults.get(SpreadsheetMetadataPropertyName.WIDTH));
 
@@ -246,6 +245,7 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
         SpreadsheetMetadata.NON_LOCALE_DEFAULTS
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
                 .loadFromLocale()
+                .set(SpreadsheetMetadataPropertyName.TEXT_FORMAT_PATTERN, SpreadsheetPattern.parseTextFormatPattern("@"))
                 .converter();
     }
 
