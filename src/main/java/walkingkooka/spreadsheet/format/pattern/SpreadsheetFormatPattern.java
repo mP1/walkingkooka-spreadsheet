@@ -43,6 +43,7 @@ public abstract class SpreadsheetFormatPattern<T extends SpreadsheetFormatParser
     /**
      * Returns a {@link SpreadsheetFormatter} built from this pattern.
      */
+    @Override
     public final SpreadsheetFormatter formatter() {
         if (null == this.formatter) {
             this.formatter = this.createFormatter();
