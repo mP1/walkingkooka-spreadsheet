@@ -112,24 +112,118 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     }
 
     @Test
-    public void testParseHourMinutesOnlyPattern() {
+    public void testParseHourMinutes() {
         this.parseAndCheck2("hh:mm",
                 "11:59",
                 LocalTime.of(11, 59));
     }
 
     @Test
-    public void testParseHourMinutesSecondsOnlyPattern() {
+    public void testParseHourMinutesSeconds() {
         this.parseAndCheck2("hh:mm:ss",
                 "11:58:59",
                 LocalTime.of(11, 58, 59));
     }
 
     @Test
-    public void testParseHourMinutesSecondsAmpmOnlyPattern() {
+    public void testParseHourMinutesSecondsDecimal() {
+        this.parseAndCheck2("hh:mm:ss.",
+                "11:58:59",
+                LocalTime.of(11, 58, 59)
+        );
+    }
+
+    @Test
+    public void testParseHourMinutesSecondsDecimal2() {
+        this.parseAndCheck2("hh:mm:ss.",
+                "11:58:59.",
+                LocalTime.of(11, 58, 59)
+        );
+    }
+
+    @Test
+    public void testParseHourMinutesSecondsDecimal1Millis() {
+        this.parseAndCheck2("hh:mm:ss.0",
+                "11:58:59.1",
+                LocalTime.of(11, 58, 59)
+        );
+    }
+
+    @Test
+    public void testParseHourMinutesSecondsDecimal1Millis2() {
+        this.parseAndCheck2("hh:mm:ss.0",
+                "11:58:59.",
+                LocalTime.of(11, 58, 59)
+        );
+    }
+
+    @Test
+    public void testParseHourMinutesSecondsDecimal2Millis() {
+        this.parseAndCheck2("hh:mm:ss.00",
+                "11:58:59.12",
+                LocalTime.of(11, 58, 59, 120 * 1000)
+        );
+    }
+
+    @Test
+    public void testParseHourMinutesSecondsDecimal3Millis() {
+        this.parseAndCheck2("hh:mm:ss.000",
+                "11:58:59.123",
+                LocalTime.of(11, 58, 59, 123 * 1000)
+        );
+    }
+
+    @Test
+    public void testParseHourMinutesSecondsDecimal3Millis2() {
+        this.parseAndCheck2("hh:mm:ss.000",
+                "11:58:59.12",
+                LocalTime.of(11, 58, 59, 120 * 1000)
+        );
+    }
+
+    @Test
+    public void testParseHourMinutesSecondsDecimal3Millis3() {
+        this.parseAndCheck2("hh:mm:ss.000",
+                "11:58:59.1",
+                LocalTime.of(11, 58, 59, 120 * 1000)
+        );
+    }
+
+    @Test
+    public void testParseHourMinutesSecondsDecimal3Millis4() {
+        this.parseAndCheck2("hh:mm:ss.000",
+                "11:58:59.",
+                LocalTime.of(11, 58, 59)
+        );
+    }
+
+    @Test
+    public void testParseHourMinutesSecondsDecimal3Millis5() {
+        this.parseAndCheck2("hh:mm:ss.000",
+                "11:58:59",
+                LocalTime.of(11, 58, 59)
+        );
+    }
+
+    @Test
+    public void testParseHourMinutesAmpm() {
+        this.parseAndCheck2("hh:mm AM/PM",
+                "11:58 PM",
+                LocalTime.of(23, 58));
+    }
+
+    @Test
+    public void testParseHourMinutesSecondsAmpm() {
         this.parseAndCheck2("hh:mm:ss AM/PM",
                 "11:58:59 PM",
                 LocalTime.of(23, 58, 59));
+    }
+
+    @Test
+    public void testParseHourMinutesSecondsMillisAmpm() {
+        this.parseAndCheck2("hh:mm:ss.0 AM/PM",
+                "11:58:59.1 PM",
+                LocalTime.of(23, 58, 59, 100 * 1000));
     }
 
     @Test

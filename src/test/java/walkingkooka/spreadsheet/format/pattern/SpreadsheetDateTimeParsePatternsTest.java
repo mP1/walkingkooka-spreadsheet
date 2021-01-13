@@ -97,24 +97,80 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
     }
 
     @Test
-    public void testParseHourMinutesOnlyPattern() {
+    public void testParseHourMinutes() {
         this.parseAndCheck2("hh:mm",
                 "11:59",
                 LocalDateTime.of(1900, 1, 1, 11, 59));
     }
 
     @Test
-    public void testParseHourMinutesSecondsOnlyPattern() {
+    public void testParseHourMinutesSeconds() {
         this.parseAndCheck2("hh:mm:ss",
                 "11:58:59",
                 LocalDateTime.of(1900, 1, 1, 11, 58, 59));
     }
 
     @Test
-    public void testParseHourMinutesSecondsAmpmOnlyPattern() {
+    public void testParseHourMinutesSecondsDecimal() {
+        this.parseAndCheck2("hh:mm:ss.",
+                "11:58:59.",
+                LocalDateTime.of(1900, 1, 1, 11, 58, 59));
+    }
+
+    @Test
+    public void testParseHourMinutesSecondsMillis() {
+        this.parseAndCheck2("hh:mm:ss.0",
+                "11:58:59.1",
+                LocalDateTime.of(1900, 1, 1, 11, 58, 59, 100 * 1000));
+    }
+
+    @Test
+    public void testParseHourMinutesSeconds2Millis() {
+        this.parseAndCheck2("hh:mm:ss.00",
+                "11:58:59.12",
+                LocalDateTime.of(1900, 1, 1, 11, 58, 59, 120 * 1000));
+    }
+
+    @Test
+    public void testParseHourMinutesSeconds3Millis() {
+        this.parseAndCheck2("hh:mm:ss.000",
+                "11:58:59.123",
+                LocalDateTime.of(1900, 1, 1, 11, 58, 59, 123 * 1000));
+    }
+
+    @Test
+    public void testParseHourMinutesSeconds3Millis2() {
+        this.parseAndCheck2("hh:mm:ss.000",
+                "11:58:59.12",
+                LocalDateTime.of(1900, 1, 1, 11, 58, 59, 120 * 1000));
+    }
+
+    @Test
+    public void testParseHourMinutesSeconds3Millis3() {
+        this.parseAndCheck2("hh:mm:ss.000",
+                "11:58:59.1",
+                LocalDateTime.of(1900, 1, 1, 11, 58, 59, 100 * 1000));
+    }
+
+    @Test
+    public void testParseHourMinutesSeconds3Millis4() {
+        this.parseAndCheck2("hh:mm:ss.000",
+                "11:58:59.",
+                LocalDateTime.of(1900, 1, 1, 11, 58, 59));
+    }
+
+    @Test
+    public void testParseHourMinutesSecondsAmpm() {
         this.parseAndCheck2("hh:mm:ss AM/PM",
                 "11:58:59 PM",
                 LocalDateTime.of(1900, 1, 1, 23, 58, 59));
+    }
+
+    @Test
+    public void testParseHourMinutesSecondsMillisAmpm() {
+        this.parseAndCheck2("hh:mm:ss.0 AM/PM",
+                "11:58:59.1 PM",
+                LocalDateTime.of(1900, 1, 1, 23, 58, 59, 100 * 1000));
     }
 
     @Test

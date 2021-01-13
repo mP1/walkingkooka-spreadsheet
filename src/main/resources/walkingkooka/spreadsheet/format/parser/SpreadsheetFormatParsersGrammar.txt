@@ -92,7 +92,8 @@ DATE_DATETIME_TIME            = COLOR | CONDITION | ESCAPE | DATETIME_TEXT_LITER
 
 (* seconds decimal zeroes.............................................................................................*)
 SECOND_MILLIS                 = SECOND,
-                                [ DECIMAL_POINT, DIGIT_ZERO, [{DIGIT_ZERO}]];
+                                [ DECIMAL_POINT, [{DIGIT_ZERO}]];
+
 
 
 
