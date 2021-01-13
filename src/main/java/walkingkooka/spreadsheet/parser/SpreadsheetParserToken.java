@@ -38,9 +38,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallException;
 import walkingkooka.visit.Visiting;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -204,27 +201,6 @@ public abstract class SpreadsheetParserToken implements ParserToken,
      */
     public static SpreadsheetLessThanEqualsSymbolParserToken lessThanEqualsSymbol(final String value, final String text) {
         return SpreadsheetLessThanEqualsSymbolParserToken.with(value, text);
-    }
-
-    /**
-     * {@see SpreadsheetLocalDateParserToken}
-     */
-    public static SpreadsheetLocalDateParserToken localDate(final LocalDate value, final String text) {
-        return SpreadsheetLocalDateParserToken.with(value, text);
-    }
-
-    /**
-     * {@see SpreadsheetLocalDateTimeParserToken}
-     */
-    public static SpreadsheetLocalDateTimeParserToken localDateTime(final LocalDateTime value, final String text) {
-        return SpreadsheetLocalDateTimeParserToken.with(value, text);
-    }
-
-    /**
-     * {@see SpreadsheetLocalTimeParserToken}
-     */
-    public static SpreadsheetLocalTimeParserToken localTime(final LocalTime value, final String text) {
-        return SpreadsheetLocalTimeParserToken.with(value, text);
     }
 
     /**
@@ -545,27 +521,6 @@ public abstract class SpreadsheetParserToken implements ParserToken,
     }
 
     /**
-     * Only {@link SpreadsheetLocalDateParserToken} return true
-     */
-    public final boolean isLocalDate() {
-        return this instanceof SpreadsheetLocalDateParserToken;
-    }
-
-    /**
-     * Only {@link SpreadsheetLocalDateTimeParserToken} return true
-     */
-    public final boolean isLocalDateTime() {
-        return this instanceof SpreadsheetLocalDateTimeParserToken;
-    }
-
-    /**
-     * Only {@link SpreadsheetLocalTimeParserToken} return true
-     */
-    public final boolean isLocalTime() {
-        return this instanceof SpreadsheetLocalTimeParserToken;
-    }
-
-    /**
      * Only {@link SpreadsheetMinusSymbolParserToken} returns true
      */
     public final boolean isMinusSymbol() {
@@ -808,20 +763,6 @@ public abstract class SpreadsheetParserToken implements ParserToken,
                 SpreadsheetParserToken::unmarshallLabelName
         );
 
-        registerLeafParserToken(
-                SpreadsheetLocalDateParserToken.class,
-                SpreadsheetParserToken::unmarshallLocalDate
-        );
-
-        registerLeafParserToken(
-                SpreadsheetLocalDateTimeParserToken.class,
-                SpreadsheetParserToken::unmarshallLocalDateTime
-        );
-
-        registerLeafParserToken(
-                SpreadsheetLocalTimeParserToken.class,
-                SpreadsheetParserToken::unmarshallLocalTime
-        );
 
         registerLeafParserToken(
                 SpreadsheetRowReferenceParserToken.class,
@@ -871,36 +812,6 @@ public abstract class SpreadsheetParserToken implements ParserToken,
                 SpreadsheetLabelName.class,
                 context,
                 SpreadsheetParserToken::labelName
-        );
-    }
-
-    static SpreadsheetLocalDateParserToken unmarshallLocalDate(final JsonNode node,
-                                                               final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
-                node,
-                LocalDate.class,
-                context,
-                SpreadsheetParserToken::localDate
-        );
-    }
-
-    static SpreadsheetLocalDateTimeParserToken unmarshallLocalDateTime(final JsonNode node,
-                                                                       final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
-                node,
-                LocalDateTime.class,
-                context,
-                SpreadsheetParserToken::localDateTime
-        );
-    }
-
-    static SpreadsheetLocalTimeParserToken unmarshallLocalTime(final JsonNode node,
-                                                               final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
-                node,
-                LocalTime.class,
-                context,
-                SpreadsheetParserToken::localTime
         );
     }
 

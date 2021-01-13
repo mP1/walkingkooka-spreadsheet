@@ -258,21 +258,6 @@ public class FakeSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVis
     }
 
     @Override
-    protected void visit(final SpreadsheetLocalDateParserToken token) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visit(final SpreadsheetLocalDateTimeParserToken token) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void visit(final SpreadsheetLocalTimeParserToken token) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected void visit(final SpreadsheetMinusSymbolParserToken token) {
         throw new UnsupportedOperationException();
     }

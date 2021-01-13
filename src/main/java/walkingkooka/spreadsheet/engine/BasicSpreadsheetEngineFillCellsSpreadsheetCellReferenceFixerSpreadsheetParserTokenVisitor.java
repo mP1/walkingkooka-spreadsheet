@@ -44,9 +44,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetLessThanEqualsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetLessThanEqualsSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetLessThanParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetLessThanSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetLocalDateParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetLocalDateTimeParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetLocalTimeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMinusSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMultiplicationParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMultiplySymbolParserToken;
@@ -373,21 +370,6 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void visit(final SpreadsheetLessThanEqualsSymbolParserToken token) {
-        this.leaf(token);
-    }
-
-    @Override
-    protected final void visit(final SpreadsheetLocalDateParserToken token) {
-        this.leaf(token);
-    }
-
-    @Override
-    protected final void visit(final SpreadsheetLocalDateTimeParserToken token) {
-        this.leaf(token);
-    }
-
-    @Override
-    protected final void visit(final SpreadsheetLocalTimeParserToken token) {
         this.leaf(token);
     }
 

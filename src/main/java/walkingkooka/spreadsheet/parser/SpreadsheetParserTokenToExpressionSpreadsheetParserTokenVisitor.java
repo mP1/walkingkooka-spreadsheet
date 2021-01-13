@@ -260,21 +260,6 @@ final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor exte
     }
 
     @Override
-    protected void visit(final SpreadsheetLocalDateParserToken token) {
-        this.add(Expression.localDate(token.value()), token);
-    }
-
-    @Override
-    protected void visit(final SpreadsheetLocalDateTimeParserToken token) {
-        this.add(Expression.localDateTime(token.value()), token);
-    }
-
-    @Override
-    protected void visit(final SpreadsheetLocalTimeParserToken token) {
-        this.add(Expression.localTime(token.value()), token);
-    }
-
-    @Override
     protected void visit(final SpreadsheetTextParserToken token) {
         this.add(Expression.string(token.value()), token);
     }
