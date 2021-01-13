@@ -28,7 +28,6 @@ import walkingkooka.text.cursor.parser.ParserTokenVisitor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberContext;
-import walkingkooka.tree.expression.HasExpression;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -46,8 +45,7 @@ import java.util.function.BiFunction;
 /**
  * Represents a token within the grammar.
  */
-public abstract class SpreadsheetParserToken implements ParserToken,
-        HasExpression {
+public abstract class SpreadsheetParserToken implements ParserToken {
 
     /**
      * {@see SpreadsheetAdditionParserToken}
@@ -699,9 +697,10 @@ public abstract class SpreadsheetParserToken implements ParserToken,
     // HasExpression................................................................................................
 
     /**
-     * Converts this token to its {@link Expression} equivalent.
+     * Converts this token to its {@link Expression} equivalent. Token sub classes that represent a complete value
+     * typically have a {@link Expression} equivalent, while those holding symbols or components such as a decimal-point
+     * are not.
      */
-    @Override
     public final Optional<Expression> expression(final ExpressionNumberContext context) {
         Objects.requireNonNull(context, "context");
 
