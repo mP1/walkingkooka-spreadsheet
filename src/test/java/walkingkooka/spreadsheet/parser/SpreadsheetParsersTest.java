@@ -56,7 +56,7 @@ import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionContext;
 import walkingkooka.tree.expression.function.FakeExpressionFunction;
-import walkingkooka.tree.expression.function.UnknownFunctionException;
+import walkingkooka.tree.expression.function.UnknownExpressionFunctionException;
 
 import java.lang.reflect.Method;
 import java.math.MathContext;
@@ -1733,7 +1733,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                             }
                         };
                     default:
-                        throw new UnknownFunctionException(name);
+                        throw new UnknownExpressionFunctionException(name);
                 }
             }
 
