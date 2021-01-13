@@ -20,6 +20,8 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.Value;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatAmPmParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDayParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDecimalPointParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDigitZeroParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatEscapeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatHourParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatMonthOrMinuteParserToken;
@@ -80,6 +82,10 @@ final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpr
                     hour,
                     token);
             visitor.accept(token);
+
+            visitor.appendMillisecondsIfNecessary();
+            visitor.optionalEndIfNecessary();
+
             return visitor.builder
                     .parseDefaulting(YEAR, DEFAULT_YEAR)
                     .parseDefaulting(MONTH, DEFAULT_MONTH)
@@ -102,6 +108,9 @@ final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpr
         this.hour = hour;
         this.token = token;
         this.builder = new DateTimeFormatterBuilder();
+
+        this.optionalEndRequired = false;
+        this.milliseconds = 0;
     }
 
     // symbols within a date/datetime/time..............................................................................
@@ -123,6 +132,21 @@ final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpr
 
         this.month = true;
     }
+
+    @Override
+    protected void visit(final SpreadsheetFormatDecimalPointParserToken token) {
+        this.builder.optionalStart();
+        this.optionalEndRequired = true;
+        this.literal0('.');
+    }
+
+    // milliseconds...
+    @Override
+    protected void visit(final SpreadsheetFormatDigitZeroParserToken token) {
+        this.milliseconds++;
+    }
+
+    private int milliseconds;
 
     @Override
     protected void visit(final SpreadsheetFormatEscapeParserToken token) {
@@ -236,13 +260,30 @@ final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpr
 
     private void text(final ChronoField field,
                       final TextStyle textStyle) {
+        this.appendMillisecondsIfNecessary();
         this.builder.appendText(field, textStyle);
     }
 
     private void value(final ChronoField field,
                        final int minWidth,
                        final int maxWidth) {
-        this.builder.appendValue(field, minWidth, maxWidth, SignStyle.NEVER);
+        this.appendMillisecondsIfNecessary();
+        this.value0(
+                field,
+                minWidth,
+                maxWidth
+        );
+    }
+
+    private void value0(final ChronoField field,
+                       final int minWidth,
+                       final int maxWidth) {
+        this.builder.appendValue(
+                field,
+                minWidth,
+                maxWidth,
+                SignStyle.NEVER
+        );
     }
 
     private void literal(final Value<String> value) {
@@ -250,13 +291,47 @@ final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpr
     }
 
     private void literal(final char c) {
+        this.appendMillisecondsIfNecessary();
+        this.literal0(c);
+    }
+
+    private void literal0(final char c) {
         this.builder.appendLiteral(c);
     }
 
     private void literal(final String text) {
+        this.appendMillisecondsIfNecessary();
         this.builder.appendLiteral(text);
     }
 
+    /**
+     * Milliseconds digit zero may repeat so a counter is kept. When a non digit zero symbol appears the millisecond
+     * count must be added to the builder before adding other builder components.
+     */
+    private void appendMillisecondsIfNecessary() {
+        final int millis = this.milliseconds;
+        if(millis > 0) {
+            this.milliseconds = 0;
+
+            this.builder.optionalStart();
+            this.value0(ChronoField.MILLI_OF_SECOND, 1, millis);
+            this.builder.optionalEnd();
+        }
+
+        this.optionalEndIfNecessary(); // close the optional around the decimal and millis.
+    }
+
+    private void optionalEndIfNecessary() {
+        if(this.optionalEndRequired) {
+            this.builder.optionalEnd();
+            this.optionalEndRequired = false;
+        }
+    }
+
+    /**
+     * A flag that helps close the optional section holding the SECOND-MILLI-DECIMAL-SEPARATOR and MILLIS.
+     */
+    private boolean optionalEndRequired;
     private final DateTimeFormatterBuilder builder;
 
     private <T> void failInvalid(final SpreadsheetFormatParserToken token) {
