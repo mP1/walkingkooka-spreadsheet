@@ -243,18 +243,6 @@ public abstract class SpreadsheetParserTokenVisitor extends ParserTokenVisitor {
         // nop
     }
 
-    protected void visit(final SpreadsheetLocalDateParserToken token) {
-        // nop
-    }
-
-    protected void visit(final SpreadsheetLocalDateTimeParserToken token) {
-        // nop
-    }
-
-    protected void visit(final SpreadsheetLocalTimeParserToken token) {
-        // nop
-    }
-
     protected void visit(final SpreadsheetMinusSymbolParserToken token) {
         // nop
     }
