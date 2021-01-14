@@ -110,9 +110,7 @@ final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor exte
 
     @Override
     protected void endVisit(final SpreadsheetExpressionParserToken token) {
-        final Expression parameter = this.children.get(0);
-        this.exit();
-        this.add(parameter, token);
+        this.exitUnary(token);
     }
 
     @Override
@@ -156,9 +154,7 @@ final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor exte
 
     @Override
     protected void endVisit(final SpreadsheetGroupParserToken token) {
-        final Expression parameter = this.children.get(0);
-        this.exit();
-        this.add(parameter, token);
+        this.exitUnary(token);
     }
 
     @Override
@@ -296,6 +292,10 @@ final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor exte
         final Expression right = this.children.get(1);
         this.exit();
         this.add(factory.apply(left, right), token);
+    }
+
+    private void exitUnary(final SpreadsheetParentParserToken token) {
+        this.exitUnary(Function.identity(), token);
     }
 
     private void exitUnary(final Function<Expression, Expression> factory, final SpreadsheetParserToken token) {
