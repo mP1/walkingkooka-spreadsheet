@@ -15,11 +15,10 @@
  *
  */
 
-package walkingkooka.spreadsheet.format.parser;
+package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.spreadsheet.parser.SpreadsheetParentParserToken;
 
 public final class SpreadsheetParentParserTokenTest implements ClassTesting<SpreadsheetParentParserToken> {
 
