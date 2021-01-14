@@ -18,8 +18,6 @@ package walkingkooka.spreadsheet.parser;
 
 import java.util.Objects;
 
-import java.util.Objects;
-
 /**
  * Holds literal text which may be empty. Together with a {@link SpreadsheetApostropheSymbolParserToken} this is a component of
  * a {@link SpreadsheetTextParserToken}.
@@ -46,6 +44,6 @@ public final class SpreadsheetTextLiteralParserToken extends SpreadsheetNonSymbo
 
     @Override
     boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetTextParserToken;
+        return other instanceof SpreadsheetTextLiteralParserToken;
     }
 }
