@@ -20,8 +20,7 @@ package walkingkooka.spreadsheet.engine;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTokenVisitor;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTokenVisitorTesting;
 
-public final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitorTest extends BasicSpreadsheetEngineTestCase<BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor>
-        implements SpreadsheetParserTokenVisitorTesting<BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor> {
+public final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitorTest extends BasicSpreadsheetEngineSpreadsheetParserTokenVisitorTestCase<BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor> {
 
     @Override
     public BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor createVisitor() {
@@ -31,12 +30,5 @@ public final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCel
     @Override
     public Class<BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor> type() {
         return BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.class;
-    }
-
-    // TypeNameTesting..........................................................................
-
-    @Override
-    public String typeNameSuffix() {
-        return SpreadsheetParserTokenVisitor.class.getSimpleName();
     }
 }
