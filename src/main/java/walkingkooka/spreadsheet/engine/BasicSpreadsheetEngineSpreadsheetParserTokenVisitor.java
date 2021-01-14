@@ -97,7 +97,7 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetCellReferenceParserToken token) {
+    protected final Visiting startVisit(final SpreadsheetCellReferenceParserToken token) {
         return this.enter();
     }
 
@@ -107,7 +107,7 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetDivisionParserToken token) {
+    protected final Visiting startVisit(final SpreadsheetDivisionParserToken token) {
         return this.enter();
     }
 
@@ -117,7 +117,7 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetEqualsParserToken token) {
+    protected final Visiting startVisit(final SpreadsheetEqualsParserToken token) {
         return this.enter();
     }
 
@@ -127,7 +127,7 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFunctionParserToken token) {
+    protected final Visiting startVisit(final SpreadsheetFunctionParserToken token) {
         return this.enter();
     }
 
@@ -137,7 +137,7 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetGreaterThanParserToken token) {
+    protected final Visiting startVisit(final SpreadsheetGreaterThanParserToken token) {
         return this.enter();
     }
 
@@ -147,7 +147,7 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetGreaterThanEqualsParserToken token) {
+    protected final Visiting startVisit(final SpreadsheetGreaterThanEqualsParserToken token) {
         return this.enter();
     }
 
@@ -157,7 +157,7 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetGroupParserToken token) {
+    protected final Visiting startVisit(final SpreadsheetGroupParserToken token) {
         return this.enter();
     }
 
@@ -167,7 +167,7 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetLessThanParserToken token) {
+    protected final Visiting startVisit(final SpreadsheetLessThanParserToken token) {
         return this.enter();
     }
 
@@ -177,7 +177,7 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetLessThanEqualsParserToken token) {
+    protected final Visiting startVisit(final SpreadsheetLessThanEqualsParserToken token) {
         return this.enter();
     }
 
@@ -187,7 +187,7 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetMultiplicationParserToken token) {
+    protected final Visiting startVisit(final SpreadsheetMultiplicationParserToken token) {
         return this.enter();
     }
 
@@ -197,7 +197,7 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetNegativeParserToken token) {
+    protected final Visiting startVisit(final SpreadsheetNegativeParserToken token) {
         return this.enter();
     }
 
@@ -207,7 +207,7 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetNotEqualsParserToken token) {
+    protected final Visiting startVisit(final SpreadsheetNotEqualsParserToken token) {
         return this.enter();
     }
 
@@ -217,7 +217,7 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetPercentageParserToken token) {
+    protected final Visiting startVisit(final SpreadsheetPercentageParserToken token) {
         return this.enter();
     }
 
@@ -227,7 +227,7 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetPowerParserToken token) {
+    protected final Visiting startVisit(final SpreadsheetPowerParserToken token) {
         return this.enter();
     }
 
@@ -237,7 +237,7 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetRangeParserToken token) {
+    protected final Visiting startVisit(final SpreadsheetRangeParserToken token) {
         return this.enter();
     }
 
@@ -247,7 +247,7 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetSubtractionParserToken token) {
+    protected final Visiting startVisit(final SpreadsheetSubtractionParserToken token) {
         return this.enter();
     }
 
