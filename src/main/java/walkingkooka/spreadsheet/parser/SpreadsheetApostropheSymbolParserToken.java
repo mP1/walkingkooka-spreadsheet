@@ -37,12 +37,12 @@ public final class SpreadsheetApostropheSymbolParserToken extends SpreadsheetSym
 
     @Override
     final int operatorPriority() {
-        return RANGE_BETWEEN_PRIORITY;
+        return IGNORED;
     }
 
     @Override
     final SpreadsheetParserToken binaryOperand(final List<ParserToken> tokens, final String text) {
-        return range(tokens, text);
+        throw new UnsupportedOperationException();
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................
