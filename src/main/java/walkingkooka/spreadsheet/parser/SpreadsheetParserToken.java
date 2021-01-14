@@ -55,6 +55,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetApostropheSymbolParserToken}
+     */
+    public static SpreadsheetApostropheSymbolParserToken apostropheSymbol(final String value, final String text) {
+        return SpreadsheetApostropheSymbolParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetBetweenSymbolParserToken}
      */
     public static SpreadsheetBetweenSymbolParserToken betweenSymbol(final String value, final String text) {
@@ -369,6 +376,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public final boolean isAddition() {
         return this instanceof SpreadsheetAdditionParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetApostropheSymbolParserToken} returns true
+     */
+    public final boolean isApostropheSymbol() {
+        return this instanceof SpreadsheetApostropheSymbolParserToken;
     }
 
     /**
@@ -838,6 +852,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
 
     static {
         registerLeafParserToken(
+                SpreadsheetApostropheSymbolParserToken.class,
+                SpreadsheetParserToken::unmarshallApostropheSymbol
+        );
+
+        registerLeafParserToken(
                 SpreadsheetBetweenSymbolParserToken.class,
                 SpreadsheetParserToken::unmarshallBetweenSymbol
         );
@@ -920,6 +939,15 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         registerLeafParserToken(
                 SpreadsheetWhitespaceParserToken.class,
                 SpreadsheetParserToken::unmarshallWhitespace
+        );
+    }
+
+    static SpreadsheetApostropheSymbolParserToken unmarshallApostropheSymbol(final JsonNode node,
+                                                                             final JsonNodeUnmarshallContext context) {
+        return unmarshallSymbolParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::apostropheSymbol
         );
     }
 
