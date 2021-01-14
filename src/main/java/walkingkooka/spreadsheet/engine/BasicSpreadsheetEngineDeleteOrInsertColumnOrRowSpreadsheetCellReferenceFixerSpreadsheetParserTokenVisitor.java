@@ -29,6 +29,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDivideSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDivisionParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetDoubleQuoteSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetEqualsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetEqualsSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetExpressionNumberParserToken;
@@ -299,6 +300,11 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
 
     @Override
     protected void visit(final SpreadsheetDivideSymbolParserToken token) {
+        this.leaf(token);
+    }
+
+    @Override
+    protected void visit(final SpreadsheetDoubleQuoteSymbolParserToken token) {
         this.leaf(token);
     }
 

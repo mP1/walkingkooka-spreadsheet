@@ -97,6 +97,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetDoubleQuoteSymbolParserToken}
+     */
+    public static SpreadsheetDoubleQuoteSymbolParserToken doubleQuoteSymbol(final String value, final String text) {
+        return SpreadsheetDoubleQuoteSymbolParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetEqualsParserToken}
      */
     public static SpreadsheetEqualsParserToken equalsParserToken(final List<ParserToken> value, final String text) {
@@ -425,6 +432,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public final boolean isDivision() {
         return this instanceof SpreadsheetDivisionParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetDoubleQuoteSymbolParserToken} returns true
+     */
+    public final boolean isDoubleQuoteSymbol() {
+        return this instanceof SpreadsheetDoubleQuoteSymbolParserToken;
     }
 
     /**
@@ -896,6 +910,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
+                SpreadsheetDoubleQuoteSymbolParserToken.class,
+                SpreadsheetParserToken::unmarshallDoubleQuoteSymbol
+        );
+
+        registerLeafParserToken(
                 SpreadsheetEqualsSymbolParserToken.class,
                 SpreadsheetParserToken::unmarshallEqualsSymbol
         );
@@ -995,6 +1014,15 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 node,
                 context,
                 SpreadsheetParserToken::divideSymbol
+        );
+    }
+
+    static SpreadsheetDoubleQuoteSymbolParserToken unmarshallDoubleQuoteSymbol(final JsonNode node,
+                                                                               final JsonNodeUnmarshallContext context) {
+        return unmarshallSymbolParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::doubleQuoteSymbol
         );
     }
 
