@@ -35,8 +35,13 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
 
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
+    final static String APOSTROPHE = "\'";
+    final static String DOUBLE_QUOTE = "\"";
+
     final static String NUMBER1 = "1";
     final static String NUMBER2 = "22";
+
+    final static String TEXT = "abc123";
 
     final static String WHITESPACE = "   ";
 
@@ -89,6 +94,14 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
         assertEquals(value, token.value(), "value");
     }
 
+    final SpreadsheetApostropheSymbolParserToken apostropheSymbol() {
+        return SpreadsheetParserToken.apostropheSymbol(APOSTROPHE, APOSTROPHE);
+    }
+
+    final SpreadsheetDoubleQuoteSymbolParserToken doubleQuoteSymbol() {
+        return SpreadsheetParserToken.doubleQuoteSymbol(DOUBLE_QUOTE, DOUBLE_QUOTE);
+    }
+
     final SpreadsheetEqualsSymbolParserToken equalsSymbol() {
         return SpreadsheetParserToken.equalsSymbol("=", "=");
     }
@@ -111,6 +124,10 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
 
     final SpreadsheetPercentSymbolParserToken percentSymbol() {
         return SpreadsheetParserToken.percentSymbol("%", "%");
+    }
+
+    final SpreadsheetTextLiteralParserToken textLiteral() {
+        return SpreadsheetParserToken.textLiteral(TEXT, TEXT);
     }
 
     final SpreadsheetWhitespaceParserToken whitespace() {

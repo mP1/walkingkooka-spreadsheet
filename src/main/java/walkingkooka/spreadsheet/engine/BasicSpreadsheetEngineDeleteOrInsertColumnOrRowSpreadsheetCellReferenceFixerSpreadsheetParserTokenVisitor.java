@@ -110,7 +110,13 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
 
         final List<ParserToken> tokens = Lists.of(SpreadsheetFormula.INVALID_CELL_REFERENCE_PARSER_TOKEN,
                 SpreadsheetParserToken.parenthesisOpenSymbol("(", "("),
-                SpreadsheetParserToken.text(text, CharSequences.quote(text).toString()),
+                SpreadsheetParserToken.text(
+                        Lists.<ParserToken>of( // J2clTranspiler: Error
+                                SpreadsheetParserToken.doubleQuoteSymbol("\"", "\""),
+                                SpreadsheetParserToken.textLiteral(text, text),
+                                SpreadsheetParserToken.doubleQuoteSymbol("\"", "\"")
+                        ), CharSequences.quote(text).toString()
+                ),
                 SpreadsheetParserToken.parenthesisCloseSymbol(")", ")"));
         return SpreadsheetParserToken.function(tokens, ParserToken.text(tokens));
     }

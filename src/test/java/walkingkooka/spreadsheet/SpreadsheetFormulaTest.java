@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -647,7 +648,14 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     private Optional<SpreadsheetParserToken> token(final String text) {
-        return Optional.of(SpreadsheetParserToken.text(text, text));
+        return Optional.of(
+                SpreadsheetParserToken.text(
+                        Lists.of(
+                                SpreadsheetParserToken.textLiteral(text, text)
+                        ),
+                        text
+                )
+        );
     }
 
     private void checkToken(final SpreadsheetFormula formula) {

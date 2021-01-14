@@ -28,7 +28,6 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.BigDecimalParserToken;
 import walkingkooka.text.cursor.parser.CharacterParserToken;
-import walkingkooka.text.cursor.parser.DoubleQuotedParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -384,21 +383,10 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     );
 
     /**
-     * Text
+     * Text, parses excel style double quoted text, including escaped (triple) double quotes.
      */
     public static Parser<ParserContext> text() {
-        return TEXT;
-    }
-
-    private final static Parser<ParserContext> TEXT = Parsers.doubleQuoted()
-            .transform(SpreadsheetParsers::transformText)
-            .setToString(SpreadsheetTextParserToken.class.getSimpleName());
-
-    private static ParserToken transformText(final ParserToken token, final ParserContext context) {
-        return SpreadsheetParserToken.text(
-                token.cast(DoubleQuotedParserToken.class).value(),
-                token.text()
-        );
+        return SpreadsheetDoubleQuotesParser.INSTANCE.cast();
     }
 
     /**

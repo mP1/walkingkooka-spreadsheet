@@ -83,7 +83,7 @@ public final class SpreadsheetTextLiteralParserTokenTest extends SpreadsheetNonS
 
     @Test
     public void testToExpression() {
-        this.toExpressionAndCheck(Expression.string(this.text()));
+        this.toExpressionAndFail();
     }
 
     @Override
