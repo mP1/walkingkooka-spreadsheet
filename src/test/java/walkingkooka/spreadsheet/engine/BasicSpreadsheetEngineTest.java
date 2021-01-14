@@ -5231,10 +5231,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                     .setExpression(BasicSpreadsheetEngine.EMPTY_EXPRESSION):
                 formula.setToken(Optional.of(token))
                 .setExpression(
-                        token.expression(
+                        token.toExpression(
                                 ExpressionNumberContexts.basic(
-                                    expressionNumberKind,
-                                    MATH_CONTEXT
+                                        expressionNumberKind,
+                                        MATH_CONTEXT
                                 )
                         )
                 );

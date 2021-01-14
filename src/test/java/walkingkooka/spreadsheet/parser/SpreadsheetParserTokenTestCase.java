@@ -72,7 +72,7 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
     }
 
     final void toExpressionAndFail(final T token) {
-        final Optional<Expression> node = token.expression(EXPRESSION_NUMBER_CONTEXT);
+        final Optional<Expression> node = token.toExpression(EXPRESSION_NUMBER_CONTEXT);
         assertEquals(Optional.empty(), node, "toExpression");
     }
 
@@ -81,7 +81,7 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
     }
 
     final void toExpressionAndCheck(final T token, final Expression expected) {
-        final Optional<Expression> node = token.expression(EXPRESSION_NUMBER_CONTEXT);
+        final Optional<Expression> node = token.toExpression(EXPRESSION_NUMBER_CONTEXT);
         assertEquals(Optional.of(expected), node, "toExpression");
     }
 

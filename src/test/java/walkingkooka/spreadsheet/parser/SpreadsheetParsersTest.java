@@ -1627,7 +1627,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                        final ExpressionNumberKind kind,
                                        final String expectedText) {
         final SpreadsheetParserToken formula = this.parse(formulaText);
-        final Optional<Expression> maybeExpression = formula.expression(ExpressionNumberContexts.basic(kind, MathContext.DECIMAL32));
+        final Optional<Expression> maybeExpression = formula.toExpression(ExpressionNumberContexts.basic(kind, MathContext.DECIMAL32));
         if (!maybeExpression.isPresent()) {
             fail("Failed to convert spreadsheet formula to expression " + CharSequences.quoteAndEscape(formulaText));
         }
