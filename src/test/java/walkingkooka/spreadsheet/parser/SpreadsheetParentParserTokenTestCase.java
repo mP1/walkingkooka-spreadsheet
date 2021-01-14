@@ -89,6 +89,10 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
         assertEquals(value, token.value(), "value");
     }
 
+    final SpreadsheetEqualsSymbolParserToken equalsSymbol() {
+        return SpreadsheetParserToken.equalsSymbol("=", "=");
+    }
+
     final SpreadsheetMinusSymbolParserToken minusSymbol() {
         return SpreadsheetParserToken.minusSymbol("-", "-");
     }
