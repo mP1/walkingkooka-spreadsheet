@@ -49,6 +49,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetMultiplySymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNegativeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNotEqualsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNotEqualsSymbolParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParentParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParenthesisCloseSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParenthesisOpenSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
@@ -65,7 +66,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetTextLiteralParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTextParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetValueSeparatorSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetWhitespaceParserToken;
-import walkingkooka.text.cursor.parser.ParentParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
@@ -405,17 +405,17 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
 
     abstract void enter0();
 
-    private <PP extends SpreadsheetParserToken & ParentParserToken> void exit(final PP parent,
-                                                                              final BiFunction<List<ParserToken>, String, PP> factory) {
+    private <PP extends SpreadsheetParentParserToken> void exit(final PP parent,
+                                                                final BiFunction<List<ParserToken>, String, PP> factory) {
         final List<ParserToken> children = this.children;
         this.children = this.previousChildren.peek();
         this.previousChildren = this.previousChildren.pop();
         this.add(this.exit0(parent, children, factory));
     }
 
-    abstract <PP extends SpreadsheetParserToken & ParentParserToken> SpreadsheetParserToken exit0(final PP parent,
-                                                                                                  final List<ParserToken> children,
-                                                                                                  final BiFunction<List<ParserToken>, String, PP> factory);
+    abstract <PP extends SpreadsheetParentParserToken> SpreadsheetParserToken exit0(final PP parent,
+                                                                                    final List<ParserToken> children,
+                                                                                    final BiFunction<List<ParserToken>, String, PP> factory);
 
     abstract void leaf(final Optional<? extends SpreadsheetParserToken> token);
 

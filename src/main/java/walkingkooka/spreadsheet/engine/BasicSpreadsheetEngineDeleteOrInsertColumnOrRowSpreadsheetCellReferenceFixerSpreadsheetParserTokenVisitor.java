@@ -22,11 +22,11 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParentParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTokenVisitor;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.text.CharSequences;
-import walkingkooka.text.cursor.parser.ParentParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
@@ -85,9 +85,9 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
     }
 
     @Override
-    <PP extends SpreadsheetParserToken & ParentParserToken> SpreadsheetParserToken exit0(final PP parent,
-                                                                                         final List<ParserToken> children,
-                                                                                         final BiFunction<List<ParserToken>, String, PP> factory) {
+    <PP extends SpreadsheetParentParserToken> SpreadsheetParserToken exit0(final PP parent,
+                                                                           final List<ParserToken> children,
+                                                                           final BiFunction<List<ParserToken>, String, PP> factory) {
         final boolean invalidCellReference = this.invalidCellReference;
         this.invalidCellReference = false;
         return invalidCellReference ?
