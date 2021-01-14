@@ -118,6 +118,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetExpressionParserToken}
+     */
+    public static SpreadsheetExpressionParserToken expression(final List<ParserToken> value, final String text) {
+        return SpreadsheetExpressionParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetExpressionNumberParserToken}
      */
     public static SpreadsheetExpressionNumberParserToken expressionNumber(final ExpressionNumber value, final String text) {
@@ -453,6 +460,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public final boolean isEqualsSymbol() {
         return this instanceof SpreadsheetEqualsSymbolParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetExpressionParserToken} return true
+     */
+    public final boolean isExpression() {
+        return this instanceof SpreadsheetExpressionParserToken;
     }
 
     /**
@@ -1293,6 +1307,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerParentParserToken(
+                SpreadsheetExpressionParserToken.class,
+                SpreadsheetParserToken::unmarshallExpression
+        );
+
+        registerParentParserToken(
                 SpreadsheetFunctionParserToken.class,
                 SpreadsheetParserToken::unmarshallFunction
         );
@@ -1427,6 +1446,15 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 node,
                 context,
                 SpreadsheetParserToken::cellReference
+        );
+    }
+
+    static SpreadsheetExpressionParserToken unmarshallExpression(final JsonNode node,
+                                                                 final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::expression
         );
     }
 

@@ -104,6 +104,18 @@ final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor exte
     }
 
     @Override
+    protected Visiting startVisit(final SpreadsheetExpressionParserToken token) {
+        return this.enter();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetExpressionParserToken token) {
+        final Expression parameter = this.children.get(0);
+        this.exit();
+        this.add(parameter, token);
+    }
+
+    @Override
     protected Visiting startVisit(final SpreadsheetFunctionParserToken token) {
         return this.enter();
     }

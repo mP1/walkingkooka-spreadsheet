@@ -63,6 +63,16 @@ public abstract class SpreadsheetParserTokenVisitor extends ParserTokenVisitor {
         // nop
     }
 
+    // SpreadsheetExpressionParserToken....................................................................................
+
+    protected Visiting startVisit(final SpreadsheetExpressionParserToken token) {
+        return Visiting.CONTINUE;
+    }
+
+    protected void endVisit(final SpreadsheetExpressionParserToken token) {
+        // nop
+    }
+
     // SpreadsheetFunctionParserToken....................................................................................
 
     protected Visiting startVisit(final SpreadsheetFunctionParserToken token) {
