@@ -23,15 +23,15 @@ import java.util.List;
 /**
  * Represents a comma symbol token which is used to separate parameters to a function.
  */
-public final class SpreadsheetFunctionParameterSeparatorSymbolParserToken extends SpreadsheetSymbolParserToken {
+public final class SpreadsheetValueSeparatorSymbolParserToken extends SpreadsheetSymbolParserToken {
 
-    static SpreadsheetFunctionParameterSeparatorSymbolParserToken with(final String value, final String text) {
+    static SpreadsheetValueSeparatorSymbolParserToken with(final String value, final String text) {
         checkValueAndText(value, text);
 
-        return new SpreadsheetFunctionParameterSeparatorSymbolParserToken(value, text);
+        return new SpreadsheetValueSeparatorSymbolParserToken(value, text);
     }
 
-    private SpreadsheetFunctionParameterSeparatorSymbolParserToken(final String value, final String text) {
+    private SpreadsheetValueSeparatorSymbolParserToken(final String value, final String text) {
         super(value, text);
     }
 
@@ -56,6 +56,6 @@ public final class SpreadsheetFunctionParameterSeparatorSymbolParserToken extend
 
     @Override
     boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetFunctionParameterSeparatorSymbolParserToken;
+        return other instanceof SpreadsheetValueSeparatorSymbolParserToken;
     }
 }

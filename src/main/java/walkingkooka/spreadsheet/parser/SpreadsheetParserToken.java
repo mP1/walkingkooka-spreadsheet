@@ -132,13 +132,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * {@see SpreadsheetFunctionParameterSeparatorSymbolParserToken}
-     */
-    public static SpreadsheetFunctionParameterSeparatorSymbolParserToken functionParameterSeparatorSymbol(final String value, final String text) {
-        return SpreadsheetFunctionParameterSeparatorSymbolParserToken.with(value, text);
-    }
-
-    /**
      * {@see SpreadsheetGreaterThanParserToken}
      */
     public static SpreadsheetGreaterThanParserToken greaterThan(final List<ParserToken> value, final String text) {
@@ -335,6 +328,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetValueSeparatorSymbolParserToken}
+     */
+    public static SpreadsheetValueSeparatorSymbolParserToken valueSeparatorSymbol(final String value, final String text) {
+        return SpreadsheetValueSeparatorSymbolParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetWhitespaceParserToken}
      */
     public static SpreadsheetWhitespaceParserToken whitespace(final String value, final String text) {
@@ -460,13 +460,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public final boolean isFunctionName() {
         return this instanceof SpreadsheetFunctionNameParserToken;
-    }
-
-    /**
-     * Only {@link SpreadsheetFunctionParameterSeparatorSymbolParserToken} returns true
-     */
-    public final boolean isFunctionParameterSeparatorSymbol() {
-        return this instanceof SpreadsheetFunctionParameterSeparatorSymbolParserToken;
     }
 
     /**
@@ -677,6 +670,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public final boolean isTextLiteral() {
         return this instanceof SpreadsheetTextLiteralParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetValueSeparatorSymbolParserToken} returns true
+     */
+    public final boolean isValueSeparatorSymbol() {
+        return this instanceof SpreadsheetValueSeparatorSymbolParserToken;
     }
 
     /**
@@ -901,7 +901,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
-                SpreadsheetFunctionParameterSeparatorSymbolParserToken.class,
+                SpreadsheetValueSeparatorSymbolParserToken.class,
                 SpreadsheetParserToken::unmarshallFunctionParameterSeparatorSymbol
         );
 
@@ -1007,12 +1007,12 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetFunctionParameterSeparatorSymbolParserToken unmarshallFunctionParameterSeparatorSymbol(final JsonNode node,
-                                                                                                             final JsonNodeUnmarshallContext context) {
+    static SpreadsheetValueSeparatorSymbolParserToken unmarshallFunctionParameterSeparatorSymbol(final JsonNode node,
+                                                                                                 final JsonNodeUnmarshallContext context) {
         return unmarshallSymbolParserToken(
                 node,
                 context,
-                SpreadsheetParserToken::functionParameterSeparatorSymbol
+                SpreadsheetParserToken::valueSeparatorSymbol
         );
     }
 
