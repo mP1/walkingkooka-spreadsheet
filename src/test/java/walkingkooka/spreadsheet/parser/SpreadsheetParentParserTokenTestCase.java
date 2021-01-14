@@ -31,7 +31,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetParentParserTokenTestCase<T extends SpreadsheetParentParserToken<T>> extends SpreadsheetParserTokenTestCase<T> {
+public abstract class SpreadsheetParentParserTokenTestCase<T extends SpreadsheetParentParserToken> extends SpreadsheetParserTokenTestCase<T> {
 
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
@@ -81,11 +81,11 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
 
     abstract List<ParserToken> tokens();
 
-    final void checkValue(final SpreadsheetParentParserToken<?> token, final ParserToken... value) {
+    final void checkValue(final SpreadsheetParentParserToken token, final ParserToken... value) {
         this.checkValue(token, Lists.of(value));
     }
 
-    final void checkValue(final SpreadsheetParentParserToken<?> token, final List<ParserToken> value) {
+    final void checkValue(final SpreadsheetParentParserToken token, final List<ParserToken> value) {
         assertEquals(value, token.value(), "value");
     }
 

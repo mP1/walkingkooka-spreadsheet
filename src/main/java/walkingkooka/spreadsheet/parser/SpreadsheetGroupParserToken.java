@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * A wrapper around a numeric type that is also a percentage.
  */
-public final class SpreadsheetGroupParserToken extends SpreadsheetParentParserToken<SpreadsheetGroupParserToken> {
+public final class SpreadsheetGroupParserToken extends SpreadsheetParentParserToken {
 
     static SpreadsheetGroupParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetGroupParserToken(copyAndCheckTokens(value), checkText(text));

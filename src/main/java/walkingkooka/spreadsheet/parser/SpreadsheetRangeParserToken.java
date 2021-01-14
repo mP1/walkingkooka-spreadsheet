@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * A wrapper around a numeric type that is also a percentage.
  */
-public final class SpreadsheetRangeParserToken extends SpreadsheetBinaryParserToken<SpreadsheetRangeParserToken> {
+public final class SpreadsheetRangeParserToken extends SpreadsheetBinaryParserToken {
 
     static SpreadsheetRangeParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetRangeParserToken(copyAndCheckTokens(value), checkText(text));

@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * A reference that includes a defined name or column and row.
  */
-public final class SpreadsheetCellReferenceParserToken extends SpreadsheetParentParserToken<SpreadsheetCellReferenceParserToken>
+public final class SpreadsheetCellReferenceParserToken extends SpreadsheetParentParserToken
         implements SpreadsheetReferenceParserToken {
 
     static SpreadsheetCellReferenceParserToken with(final List<ParserToken> value, final String text) {

@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.tree.expression.Expression;
 
-public abstract class SpreadsheetBinaryParserTokenTestCase2<T extends SpreadsheetBinaryParserToken<T>> extends SpreadsheetBinaryParserTokenTestCase<T> {
+public abstract class SpreadsheetBinaryParserTokenTestCase2<T extends SpreadsheetBinaryParserToken> extends SpreadsheetBinaryParserTokenTestCase<T> {
 
     @Test
     public final void testToExpression() {

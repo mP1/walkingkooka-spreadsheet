@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Base class for any token with a single parameter.
  */
-abstract class SpreadsheetUnaryParserToken<T extends SpreadsheetUnaryParserToken> extends SpreadsheetParentParserToken<T> {
+abstract class SpreadsheetUnaryParserToken extends SpreadsheetParentParserToken {
 
     SpreadsheetUnaryParserToken(final List<ParserToken> value, final String text) {
         super(value, text);
