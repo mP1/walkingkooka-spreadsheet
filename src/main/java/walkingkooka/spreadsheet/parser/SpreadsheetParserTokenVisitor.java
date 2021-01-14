@@ -211,6 +211,10 @@ public abstract class SpreadsheetParserTokenVisitor extends ParserTokenVisitor {
         // nop
     }
 
+    protected void visit(final SpreadsheetDoubleQuoteSymbolParserToken token) {
+        // nop
+    }
+
     protected void visit(final SpreadsheetEqualsSymbolParserToken token) {
         // nop
     }
