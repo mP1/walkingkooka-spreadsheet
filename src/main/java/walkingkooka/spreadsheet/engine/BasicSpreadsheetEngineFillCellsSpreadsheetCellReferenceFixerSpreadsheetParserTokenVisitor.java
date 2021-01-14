@@ -33,7 +33,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetEqualsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetEqualsSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetExpressionNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetFunctionNameParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetFunctionParameterSeparatorSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetFunctionParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetGreaterThanEqualsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetGreaterThanEqualsSymbolParserToken;
@@ -64,6 +63,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetRangeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetSubtractionParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTextParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetValueSeparatorSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetWhitespaceParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetReferenceKind;
@@ -350,11 +350,6 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
     }
 
     @Override
-    protected final void visit(final SpreadsheetFunctionParameterSeparatorSymbolParserToken token) {
-        this.leaf(token);
-    }
-
-    @Override
     protected final void visit(final SpreadsheetGreaterThanSymbolParserToken token) {
         this.leaf(token);
     }
@@ -450,6 +445,11 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
 
     @Override
     protected final void visit(final SpreadsheetTextParserToken token) {
+        this.leaf(token);
+    }
+
+    @Override
+    protected final void visit(final SpreadsheetValueSeparatorSymbolParserToken token) {
         this.leaf(token);
     }
 

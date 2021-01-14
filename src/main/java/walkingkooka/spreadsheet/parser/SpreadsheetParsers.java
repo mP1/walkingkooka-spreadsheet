@@ -150,16 +150,15 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
     private static void functions(final Map<EbnfIdentifierName, Parser<ParserContext>> predefined) {
         predefined.put(FUNCTION_NAME_IDENTIFIER, functionName());
-        predefined.put(FUNCTION_PARAMETER_SEPARATOR_SYMBOL_IDENTIFIER, FUNCTION_PARAMETER_SEPARATOR_SYMBOL);
+        predefined.put(VALUE_SEPARATOR_SYMBOL_IDENTIFIER, VALUE_SEPARATOR_SYMBOL);
     }
 
-    private static final Parser<ParserContext> FUNCTION_PARAMETER_SEPARATOR_SYMBOL = symbol(',',
-            SpreadsheetParserToken::functionParameterSeparatorSymbol,
-            SpreadsheetFunctionParameterSeparatorSymbolParserToken.class);
+    private static final Parser<ParserContext> VALUE_SEPARATOR_SYMBOL = symbol(',',
+            SpreadsheetParserToken::valueSeparatorSymbol,
+            SpreadsheetValueSeparatorSymbolParserToken.class);
 
     private static final EbnfIdentifierName FUNCTION_NAME_IDENTIFIER = EbnfIdentifierName.with("FUNCTION_NAME");
-    private static final EbnfIdentifierName FUNCTION_PARAMETER_SEPARATOR_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("FUNCTION_PARAMETER_SEPARATOR_SYMBOL");
-
+    private static final EbnfIdentifierName VALUE_SEPARATOR_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("VALUE_SEPARATOR_SYMBOL");
 
     /**
      * {@see SpreadsheetLabelNameParser}

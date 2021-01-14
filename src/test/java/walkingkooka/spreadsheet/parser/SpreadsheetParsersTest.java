@@ -1097,7 +1097,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private void testFunctionWithTwoArguments() {
         final String text = "xyz(123,456)";
-        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), number(123), comma(), number(456), closeParenthesis()), text);
+        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), number(123), valueSeparator(), number(456), closeParenthesis()), text);
 
         this.functionParseAndCheck(text, f, text);
     }
@@ -1114,7 +1114,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private void testFunctionWithFourArguments() {
         final String text = "xyz(1,2,3,4)";
-        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), number(1), comma(), number(2), comma(), number(3), comma(), number(4), closeParenthesis()), text);
+        final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), number(1), valueSeparator(), number(2), valueSeparator(), number(3), valueSeparator(), number(4), closeParenthesis()), text);
 
         this.functionParseAndCheck(text, f, text);
     }
@@ -1898,10 +1898,6 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         return SpreadsheetParserToken.betweenSymbol(":", ":");
     }
 
-    private SpreadsheetParserToken comma() {
-        return SpreadsheetParserToken.functionParameterSeparatorSymbol(",", ",");
-    }
-
     private SpreadsheetParserToken divide() {
         return SpreadsheetParserToken.divideSymbol("/", "/");
     }
@@ -1961,6 +1957,10 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     private SpreadsheetRangeParserToken range(final SpreadsheetParserToken from, final SpreadsheetParserToken to) {
         final String text = from.text() + between() + to.text();
         return SpreadsheetParserToken.range(Lists.of(from, between(), to), text);
+    }
+
+    private SpreadsheetParserToken valueSeparator() {
+        return SpreadsheetParserToken.valueSeparatorSymbol(",", ",");
     }
 
     // PublicStaticHelperTesting........................................................................................

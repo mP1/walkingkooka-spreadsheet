@@ -25,7 +25,7 @@ import walkingkooka.visit.Visiting;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetFunctionParameterSeparatorSymbolParserTokenTest extends SpreadsheetSymbolParserTokenTestCase<SpreadsheetFunctionParameterSeparatorSymbolParserToken> {
+public final class SpreadsheetValueSeparatorSymbolParserTokenTest extends SpreadsheetSymbolParserTokenTestCase<SpreadsheetValueSeparatorSymbolParserToken> {
 
     @Test
     public void testAccept() {
@@ -60,7 +60,7 @@ public final class SpreadsheetFunctionParameterSeparatorSymbolParserTokenTest ex
             }
 
             @Override
-            protected void visit(final SpreadsheetFunctionParameterSeparatorSymbolParserToken t) {
+            protected void visit(final SpreadsheetValueSeparatorSymbolParserToken t) {
                 assertSame(token, t);
                 b.append("5");
             }
@@ -79,23 +79,23 @@ public final class SpreadsheetFunctionParameterSeparatorSymbolParserTokenTest ex
     }
 
     @Override
-    SpreadsheetFunctionParameterSeparatorSymbolParserToken createToken(final String value, final String text) {
-        return SpreadsheetFunctionParameterSeparatorSymbolParserToken.with(value, text);
+    SpreadsheetValueSeparatorSymbolParserToken createToken(final String value, final String text) {
+        return SpreadsheetValueSeparatorSymbolParserToken.with(value, text);
     }
 
     @Override
-    public SpreadsheetFunctionParameterSeparatorSymbolParserToken createDifferentToken() {
-        return SpreadsheetFunctionParameterSeparatorSymbolParserToken.with(this.text(), "different");
+    public SpreadsheetValueSeparatorSymbolParserToken createDifferentToken() {
+        return SpreadsheetValueSeparatorSymbolParserToken.with(this.text(), "different");
     }
 
     @Override
-    public Class<SpreadsheetFunctionParameterSeparatorSymbolParserToken> type() {
-        return SpreadsheetFunctionParameterSeparatorSymbolParserToken.class;
+    public Class<SpreadsheetValueSeparatorSymbolParserToken> type() {
+        return SpreadsheetValueSeparatorSymbolParserToken.class;
     }
 
     @Override
-    public SpreadsheetFunctionParameterSeparatorSymbolParserToken unmarshall(final JsonNode from,
-                                                                             final JsonNodeUnmarshallContext context) {
+    public SpreadsheetValueSeparatorSymbolParserToken unmarshall(final JsonNode from,
+                                                                 final JsonNodeUnmarshallContext context) {
         return SpreadsheetParserToken.unmarshallFunctionParameterSeparatorSymbol(from, context);
     }
 }
