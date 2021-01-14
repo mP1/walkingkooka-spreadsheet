@@ -142,21 +142,16 @@ abstract class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowColumnOrRow {
     }
 
     /**
-     * Returned when the input reference was deleted.
-     */
-    final static Optional<SpreadsheetParserToken> INVALID_CELL_REFERENCE = Optional.empty();
-
-    /**
      * Handles a column {@link SpreadsheetColumnReferenceParserToken} within an expression.
      * It may be returned unmodified, replaced by a function if the reference was deleted or simply have the reference adjusted.
      */
-    abstract Optional<SpreadsheetParserToken> fixCellReferencesWithinExpression(final SpreadsheetColumnReferenceParserToken token);
+    abstract Optional<SpreadsheetColumnReferenceParserToken> fixCellReferencesWithinExpression(final SpreadsheetColumnReferenceParserToken token);
 
     /**
      * Handles a column {@link SpreadsheetRowReferenceParserToken} within an expression.
      * It may be returned unmodified, replaced by a function if the reference was deleted or simply have the reference adjusted.
      */
-    abstract Optional<SpreadsheetParserToken> fixCellReferencesWithinExpression(final SpreadsheetRowReferenceParserToken token);
+    abstract Optional<SpreadsheetRowReferenceParserToken> fixCellReferencesWithinExpression(final SpreadsheetRowReferenceParserToken token);
 
     /**
      * Adjusts the reference to match the delete or insert column/row value to it still points to the "same" cell.

@@ -32,7 +32,7 @@ import java.math.MathContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitorTest implements SpreadsheetParserTokenVisitorTesting<BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor> {
+public final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitorTest extends BasicSpreadsheetEngineSpreadsheetParserTokenVisitorTestCase<BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor> {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
@@ -61,17 +61,7 @@ public final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerS
     }
 
     @Override
-    public String typeNamePrefix() {
-        return BasicSpreadsheetEngine.class.getSimpleName();
-    }
-
-    @Override
     public Class<BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor> type() {
         return BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
