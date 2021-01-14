@@ -63,6 +63,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetPowerSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetRangeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetSubtractionParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetTextLiteralParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTextParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetWhitespaceParserToken;
 import walkingkooka.text.CharSequences;
@@ -393,6 +394,11 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
 
     @Override
     protected final void visit(final SpreadsheetTextParserToken token) {
+        this.leaf(token);
+    }
+
+    @Override
+    protected void visit(final SpreadsheetTextLiteralParserToken token) {
         this.leaf(token);
     }
 
