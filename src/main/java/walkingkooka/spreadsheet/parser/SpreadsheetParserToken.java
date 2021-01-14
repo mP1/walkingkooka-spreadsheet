@@ -701,7 +701,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      * typically have a {@link Expression} equivalent, while those holding symbols or components such as a decimal-point
      * are not.
      */
-    public final Optional<Expression> expression(final ExpressionNumberContext context) {
+    public final Optional<Expression> toExpression(final ExpressionNumberContext context) {
         Objects.requireNonNull(context, "context");
 
         return SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor.accept(
