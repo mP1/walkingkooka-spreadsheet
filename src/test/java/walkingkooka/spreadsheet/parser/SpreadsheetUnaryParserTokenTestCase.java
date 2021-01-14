@@ -24,7 +24,7 @@ import walkingkooka.tree.expression.ExpressionNumberExpression;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetUnaryParserTokenTestCase<T extends SpreadsheetUnaryParserToken<T>> extends SpreadsheetParentParserTokenTestCase<T> {
+public abstract class SpreadsheetUnaryParserTokenTestCase<T extends SpreadsheetUnaryParserToken> extends SpreadsheetParentParserTokenTestCase<T> {
 
     @Test
     public final void testWithMissingNonNoisyToken() {

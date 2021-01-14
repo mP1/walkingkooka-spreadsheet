@@ -28,7 +28,7 @@ import java.util.List;
  * <br>
  * SUM(A10:A20)
  */
-public final class SpreadsheetFunctionParserToken extends SpreadsheetParentParserToken<SpreadsheetFunctionParserToken> {
+public final class SpreadsheetFunctionParserToken extends SpreadsheetParentParserToken {
 
     static SpreadsheetFunctionParserToken with(final List<ParserToken> value, final String text) {
         return new SpreadsheetFunctionParserToken(copyAndCheckTokens(value),

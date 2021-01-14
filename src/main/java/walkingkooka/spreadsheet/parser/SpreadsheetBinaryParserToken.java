@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Base class for any token with two parameters.
  */
-abstract class SpreadsheetBinaryParserToken<T extends SpreadsheetBinaryParserToken> extends SpreadsheetParentParserToken<T> {
+abstract class SpreadsheetBinaryParserToken extends SpreadsheetParentParserToken {
 
     SpreadsheetBinaryParserToken(final List<ParserToken> value, final String text) {
         super(value, text);

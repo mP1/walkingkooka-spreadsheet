@@ -28,7 +28,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public abstract class SpreadsheetBinaryParserTokenTestCase<T extends SpreadsheetBinaryParserToken<T>> extends SpreadsheetParentParserTokenTestCase<T> {
+public abstract class SpreadsheetBinaryParserTokenTestCase<T extends SpreadsheetBinaryParserToken> extends SpreadsheetParentParserTokenTestCase<T> {
 
     @Test
     public final void testWithLeftMissingFails() {
