@@ -264,6 +264,11 @@ final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor exte
         this.add(Expression.string(token.value()), token);
     }
 
+    @Override
+    protected void visit(final SpreadsheetTextLiteralParserToken token) {
+        this.add(Expression.string(token.value()), token);
+    }
+
     // GENERAL PURPOSE .................................................................................................
 
     @SuppressWarnings("SameReturnValue")
