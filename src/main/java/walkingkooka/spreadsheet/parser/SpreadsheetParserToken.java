@@ -328,6 +328,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetTextLiteralParserToken}
+     */
+    public static SpreadsheetTextLiteralParserToken textLiteral(final String value, final String text) {
+        return SpreadsheetTextLiteralParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetWhitespaceParserToken}
      */
     public static SpreadsheetWhitespaceParserToken whitespace(final String value, final String text) {
@@ -666,6 +673,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * Only {@link SpreadsheetTextLiteralParserToken} return true
+     */
+    public final boolean isTextLiteral() {
+        return this instanceof SpreadsheetTextLiteralParserToken;
+    }
+
+    /**
      * Only {@link SpreadsheetWhitespaceParserToken} return true
      */
     public final boolean isWhitespace() {
@@ -786,6 +800,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 SpreadsheetTextParserToken.class,
                 SpreadsheetParserToken::unmarshallText
         );
+
+        registerLeafParserToken(
+                SpreadsheetTextLiteralParserToken.class,
+                SpreadsheetParserToken::unmarshallTextLiteral
+        );
     }
 
     static SpreadsheetColumnReferenceParserToken unmarshallColumnReference(final JsonNode node,
@@ -845,6 +864,16 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 String.class,
                 context,
                 SpreadsheetParserToken::text
+        );
+    }
+
+    static SpreadsheetTextLiteralParserToken unmarshallTextLiteral(final JsonNode node,
+                                                                   final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                String.class,
+                context,
+                SpreadsheetParserToken::textLiteral
         );
     }
 
