@@ -119,173 +119,173 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
     }
 
     @Override
-    protected final Visiting startVisit(final SpreadsheetAdditionParserToken token) {
+    protected Visiting startVisit(final SpreadsheetAdditionParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected final void endVisit(final SpreadsheetAdditionParserToken token) {
+    protected void endVisit(final SpreadsheetAdditionParserToken token) {
         this.exit(SpreadsheetParserToken::addition);
     }
 
     @Override
-    protected final Visiting startVisit(final SpreadsheetCellReferenceParserToken token) {
+    protected Visiting startVisit(final SpreadsheetCellReferenceParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected final void endVisit(final SpreadsheetCellReferenceParserToken token) {
+    protected void endVisit(final SpreadsheetCellReferenceParserToken token) {
         this.exit(SpreadsheetParserToken::cellReference);
     }
 
     @Override
-    protected final Visiting startVisit(final SpreadsheetDivisionParserToken token) {
+    protected Visiting startVisit(final SpreadsheetDivisionParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected final void endVisit(final SpreadsheetDivisionParserToken token) {
+    protected void endVisit(final SpreadsheetDivisionParserToken token) {
         this.exit(SpreadsheetParserToken::division);
     }
 
     @Override
-    protected final Visiting startVisit(final SpreadsheetEqualsParserToken token) {
+    protected Visiting startVisit(final SpreadsheetEqualsParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected final void endVisit(final SpreadsheetEqualsParserToken token) {
+    protected void endVisit(final SpreadsheetEqualsParserToken token) {
         this.exit(SpreadsheetParserToken::equalsParserToken);
     }
 
     @Override
-    protected final Visiting startVisit(final SpreadsheetFunctionParserToken token) {
+    protected Visiting startVisit(final SpreadsheetFunctionParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected final void endVisit(final SpreadsheetFunctionParserToken token) {
+    protected void endVisit(final SpreadsheetFunctionParserToken token) {
         this.exit(SpreadsheetParserToken::function);
     }
 
     @Override
-    protected final Visiting startVisit(final SpreadsheetGreaterThanParserToken token) {
+    protected Visiting startVisit(final SpreadsheetGreaterThanParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected final void endVisit(final SpreadsheetGreaterThanParserToken token) {
+    protected void endVisit(final SpreadsheetGreaterThanParserToken token) {
         this.exit(SpreadsheetParserToken::greaterThan);
     }
 
     @Override
-    protected final Visiting startVisit(final SpreadsheetGreaterThanEqualsParserToken token) {
+    protected Visiting startVisit(final SpreadsheetGreaterThanEqualsParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected final void endVisit(final SpreadsheetGreaterThanEqualsParserToken token) {
+    protected void endVisit(final SpreadsheetGreaterThanEqualsParserToken token) {
         this.exit(SpreadsheetParserToken::greaterThanEquals);
     }
 
     @Override
-    protected final Visiting startVisit(final SpreadsheetGroupParserToken token) {
+    protected Visiting startVisit(final SpreadsheetGroupParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected final void endVisit(final SpreadsheetGroupParserToken token) {
+    protected void endVisit(final SpreadsheetGroupParserToken token) {
         this.exit(SpreadsheetParserToken::group);
     }
 
     @Override
-    protected final Visiting startVisit(final SpreadsheetLessThanParserToken token) {
+    protected Visiting startVisit(final SpreadsheetLessThanParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected final void endVisit(final SpreadsheetLessThanParserToken token) {
+    protected void endVisit(final SpreadsheetLessThanParserToken token) {
         this.exit(SpreadsheetParserToken::lessThan);
     }
 
     @Override
-    protected final Visiting startVisit(final SpreadsheetLessThanEqualsParserToken token) {
+    protected Visiting startVisit(final SpreadsheetLessThanEqualsParserToken token) {
         this.enter();
         return super.startVisit(token);
     }
 
     @Override
-    protected final void endVisit(final SpreadsheetLessThanEqualsParserToken token) {
+    protected void endVisit(final SpreadsheetLessThanEqualsParserToken token) {
         this.exit(SpreadsheetParserToken::lessThanEquals);
     }
 
     @Override
-    protected final Visiting startVisit(final SpreadsheetMultiplicationParserToken token) {
+    protected Visiting startVisit(final SpreadsheetMultiplicationParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected final void endVisit(final SpreadsheetMultiplicationParserToken token) {
+    protected void endVisit(final SpreadsheetMultiplicationParserToken token) {
         this.exit(SpreadsheetParserToken::multiplication);
     }
 
     @Override
-    protected final Visiting startVisit(final SpreadsheetNegativeParserToken token) {
+    protected Visiting startVisit(final SpreadsheetNegativeParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected final void endVisit(final SpreadsheetNegativeParserToken token) {
+    protected void endVisit(final SpreadsheetNegativeParserToken token) {
         this.exit(SpreadsheetParserToken::negative);
     }
 
     @Override
-    protected final Visiting startVisit(final SpreadsheetNotEqualsParserToken token) {
+    protected Visiting startVisit(final SpreadsheetNotEqualsParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected final void endVisit(final SpreadsheetNotEqualsParserToken token) {
+    protected void endVisit(final SpreadsheetNotEqualsParserToken token) {
         this.exit(SpreadsheetParserToken::notEquals);
     }
 
     @Override
-    protected final Visiting startVisit(final SpreadsheetPercentageParserToken token) {
+    protected Visiting startVisit(final SpreadsheetPercentageParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected final void endVisit(final SpreadsheetPercentageParserToken token) {
+    protected void endVisit(final SpreadsheetPercentageParserToken token) {
         this.exit(SpreadsheetParserToken::percentage);
     }
 
     @Override
-    protected final Visiting startVisit(final SpreadsheetPowerParserToken token) {
+    protected Visiting startVisit(final SpreadsheetPowerParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected final void endVisit(final SpreadsheetPowerParserToken token) {
+    protected void endVisit(final SpreadsheetPowerParserToken token) {
         this.exit(SpreadsheetParserToken::power);
     }
 
     @Override
-    protected final Visiting startVisit(final SpreadsheetRangeParserToken token) {
+    protected Visiting startVisit(final SpreadsheetRangeParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected final void endVisit(final SpreadsheetRangeParserToken token) {
+    protected void endVisit(final SpreadsheetRangeParserToken token) {
         this.exit(SpreadsheetParserToken::range);
     }
 
     @Override
-    protected final Visiting startVisit(final SpreadsheetSubtractionParserToken token) {
+    protected Visiting startVisit(final SpreadsheetSubtractionParserToken token) {
         return this.enter();
     }
 
     @Override
-    protected final void endVisit(final SpreadsheetSubtractionParserToken token) {
+    protected void endVisit(final SpreadsheetSubtractionParserToken token) {
         this.exit(SpreadsheetParserToken::subtraction);
     }
 
@@ -297,12 +297,12 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
     }
 
     @Override
-    protected final void visit(final SpreadsheetBetweenSymbolParserToken token) {
+    protected void visit(final SpreadsheetBetweenSymbolParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected final void visit(final SpreadsheetColumnReferenceParserToken token) {
+    protected void visit(final SpreadsheetColumnReferenceParserToken token) {
         final SpreadsheetColumnReference reference = token.value();
 
         SpreadsheetColumnReferenceParserToken replacement;
@@ -331,7 +331,7 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
     private final int xOffset;
 
     @Override
-    protected final void visit(final SpreadsheetDivideSymbolParserToken token) {
+    protected void visit(final SpreadsheetDivideSymbolParserToken token) {
         this.leaf(token);
     }
 
@@ -341,87 +341,87 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
     }
 
     @Override
-    protected final void visit(final SpreadsheetEqualsSymbolParserToken token) {
+    protected void visit(final SpreadsheetEqualsSymbolParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected final void visit(final SpreadsheetExpressionNumberParserToken token) {
+    protected void visit(final SpreadsheetExpressionNumberParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected final void visit(final SpreadsheetFunctionNameParserToken token) {
+    protected void visit(final SpreadsheetFunctionNameParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected final void visit(final SpreadsheetGreaterThanSymbolParserToken token) {
+    protected void visit(final SpreadsheetGreaterThanSymbolParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected final void visit(final SpreadsheetGreaterThanEqualsSymbolParserToken token) {
+    protected void visit(final SpreadsheetGreaterThanEqualsSymbolParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected final void visit(final SpreadsheetLabelNameParserToken token) {
+    protected void visit(final SpreadsheetLabelNameParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected final void visit(final SpreadsheetLessThanSymbolParserToken token) {
+    protected void visit(final SpreadsheetLessThanSymbolParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected final void visit(final SpreadsheetLessThanEqualsSymbolParserToken token) {
+    protected void visit(final SpreadsheetLessThanEqualsSymbolParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected final void visit(final SpreadsheetMinusSymbolParserToken token) {
+    protected void visit(final SpreadsheetMinusSymbolParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected final void visit(final SpreadsheetMultiplySymbolParserToken token) {
+    protected void visit(final SpreadsheetMultiplySymbolParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected final void visit(final SpreadsheetNotEqualsSymbolParserToken token) {
+    protected void visit(final SpreadsheetNotEqualsSymbolParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected final void visit(final SpreadsheetParenthesisCloseSymbolParserToken token) {
+    protected void visit(final SpreadsheetParenthesisCloseSymbolParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected final void visit(final SpreadsheetParenthesisOpenSymbolParserToken token) {
+    protected void visit(final SpreadsheetParenthesisOpenSymbolParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected final void visit(final SpreadsheetPercentSymbolParserToken token) {
+    protected void visit(final SpreadsheetPercentSymbolParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected final void visit(final SpreadsheetPlusSymbolParserToken token) {
+    protected void visit(final SpreadsheetPlusSymbolParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected final void visit(final SpreadsheetPowerSymbolParserToken token) {
+    protected void visit(final SpreadsheetPowerSymbolParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected final void visit(final SpreadsheetRowReferenceParserToken token) {
+    protected void visit(final SpreadsheetRowReferenceParserToken token) {
         final SpreadsheetRowReference reference = token.value();
 
         SpreadsheetRowReferenceParserToken replacement;
@@ -450,17 +450,17 @@ final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsh
     private final int yOffset;
 
     @Override
-    protected final void visit(final SpreadsheetTextParserToken token) {
+    protected void visit(final SpreadsheetTextParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected final void visit(final SpreadsheetValueSeparatorSymbolParserToken token) {
+    protected void visit(final SpreadsheetValueSeparatorSymbolParserToken token) {
         this.leaf(token);
     }
 
     @Override
-    protected final void visit(final SpreadsheetWhitespaceParserToken token) {
+    protected void visit(final SpreadsheetWhitespaceParserToken token) {
         this.leaf(token);
     }
 
