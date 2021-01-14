@@ -23,6 +23,7 @@ import walkingkooka.collect.stack.Stack;
 import walkingkooka.collect.stack.Stacks;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.parser.SpreadsheetAdditionParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetApostropheSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetBetweenSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
@@ -279,6 +280,11 @@ final class BasicSpreadsheetEngineDeleteOrInsertColumnOrRowSpreadsheetCellRefere
     }
 
     // leaf ......................................................................................................
+
+    @Override
+    protected void visit(final SpreadsheetApostropheSymbolParserToken token) {
+        this.leaf(token);
+    }
 
     @Override
     protected final void visit(final SpreadsheetBetweenSymbolParserToken token) {
