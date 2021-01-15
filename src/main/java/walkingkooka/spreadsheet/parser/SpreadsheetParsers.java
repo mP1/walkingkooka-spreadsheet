@@ -259,6 +259,8 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     // misc.............................................................................................................
 
     private static void misc(final Map<EbnfIdentifierName, Parser<ParserContext>> predefined) {
+        predefined.put(FORMULA_EQUALS_SYMBOL_IDENTIFIER, FORMULA_EQUALS_SYMBOL);
+
         predefined.put(NUMBER_IDENTIFIER, NUMBER);
         predefined.put(PERCENT_SYMBOL_IDENTIFIER, PERCENT_SYMBOL);
 
@@ -269,6 +271,12 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
         predefined.put(WHITESPACE_IDENTIFIER, whitespace());
     }
+    private static final EbnfIdentifierName FORMULA_EQUALS_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("FORMULA_EQUALS_SYMBOL");
+    private static final Parser<ParserContext> FORMULA_EQUALS_SYMBOL = symbol(
+            "=",
+            SpreadsheetParserToken::equalsSymbol,
+            SpreadsheetEqualsSymbolParserToken.class
+    );
 
     private static final EbnfIdentifierName NUMBER_IDENTIFIER = EbnfIdentifierName.with("NUMBER");
     private static final Parser<ParserContext> NUMBER = Parsers.bigDecimal()
@@ -316,6 +324,30 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     /**
+     * Value literals such as apostrophe string, number, date, date-time, time or equals-sign and expression.
+     * TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1249">formula: Apostrophe text entry support</a>
+     * TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1250">SpreadsheetDatePatternsParser used when parsing formula value</a>
+     * TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1251">SpreadsheetDateTimePatternsParser used when parsing formula value</a>
+     * TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1252">SpreadsheetTimePatternsParser used when parsing formula value</a>
+     * TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1253">SpreadsheetNumberPatternsParser used when parsing formula value</a>
+     * TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1254">default formula value parsing after apostrophe-string, date, datetime, number & time</a>
+     */
+    public static Parser<SpreadsheetParserContext> valueOrExpression() {
+        return EQUALS_EXPRESSION_PARSER;
+    }
+
+    private static Parser<SpreadsheetParserContext> EQUALS_EXPRESSION_PARSER;
+
+    private static final EbnfIdentifierName EQUALS_EXPRESSION_IDENTIFIER = EbnfIdentifierName.with("EQUALS_EXPRESSION");
+
+    private static ParserToken transformValueOrExpression(final ParserToken token, final ParserContext context) {
+        return SpreadsheetParserToken.expression(
+                token.cast(SequenceParserToken.class).value(),
+                token.text()
+        );
+    }
+
+    /**
      * Whitespace
      */
     public static Parser<ParserContext> whitespace() {
@@ -355,6 +387,11 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
         CELL_REFERENCES_PARSER = parsers.get(EbnfIdentifierName.with("CELL")).cast();
         EXPRESSION_PARSER = parsers.get(EXPRESSION_IDENTIFIER).cast();
+        EQUALS_EXPRESSION_PARSER = parsers.get(EQUALS_EXPRESSION_IDENTIFIER)
+                .cast()
+                .transform(SpreadsheetParsers::transformValueOrExpression)
+                .setToString(SpreadsheetExpressionParserToken.class.getSimpleName())
+                .cast();
         FUNCTION_PARSER = parsers.get(FUNCTION_IDENTIFIER).cast();
         RANGE_PARSER = parsers.get(EbnfIdentifierName.with("RANGE")).cast();
     }
