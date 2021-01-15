@@ -110,8 +110,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     private final static Parser<SpreadsheetParserContext> EXPRESSION_PARSER;
-
-    static final EbnfIdentifierName EXPRESSION_IDENTIFIER = EbnfIdentifierName.with("EXPRESSION");
+    private final static EbnfIdentifierName EXPRESSION_IDENTIFIER = EbnfIdentifierName.with("EXPRESSION");
 
     /**
      * Returns a {@link Parser} that parsers function invocations, starting with the name and parameters.
@@ -120,7 +119,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         return FUNCTION_PARSER;
     }
 
-    static final EbnfIdentifierName FUNCTION_IDENTIFIER = EbnfIdentifierName.with("FUNCTION");
+    private final static EbnfIdentifierName FUNCTION_IDENTIFIER = EbnfIdentifierName.with("FUNCTION");
     private final static Parser<SpreadsheetParserContext> FUNCTION_PARSER;
 
     /**
