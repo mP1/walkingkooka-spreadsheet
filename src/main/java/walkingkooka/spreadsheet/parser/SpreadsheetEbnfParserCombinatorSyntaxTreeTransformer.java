@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.collect.map.Maps;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -37,7 +36,6 @@ import walkingkooka.text.cursor.parser.ebnf.EbnfTerminalParserToken;
 import walkingkooka.text.cursor.parser.ebnf.combinator.EbnfParserCombinatorSyntaxTreeTransformer;
 
 import java.util.List;
-import java.util.Map;
 import java.util.function.BiFunction;
 
 /**
@@ -45,50 +43,6 @@ import java.util.function.BiFunction;
  * Processing of other tokens will be done after this process completes.
  */
 final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer implements EbnfParserCombinatorSyntaxTreeTransformer {
-
-    /**
-     * If the expression had a leading or trailing whitespace it will appear as a {@link SequenceParserToken},
-     * otherwise the token will be a {@link SpreadsheetParserToken}. If the former, wrap all tokens in the
-     * {@link SequenceParserToken} in a {@link SpreadsheetGroupParserToken}.
-     */
-    private static ParserToken expression(final ParserToken token,
-                                          final ParserContext context) {
-        return token instanceof SpreadsheetParserToken ?
-                token :
-                SpreadsheetParserToken.group(((SequenceParserToken) token).value(), token.text());
-    }
-
-    private static ParserToken function(final ParserToken token,
-                                        final ParserContext context) {
-        return SpreadsheetParserToken.function(clean(token), token.text());
-    }
-
-    private static ParserToken group(final ParserToken token,
-                                     final ParserContext context) {
-        return SpreadsheetParserToken.group(clean(token), token.text());
-    }
-
-    private static final EbnfIdentifierName GROUP_IDENTIFIER = EbnfIdentifierName.with("GROUP");
-
-    private static ParserToken negative(final ParserToken token,
-                                        final ParserContext context) {
-        return SpreadsheetParserToken.negative(clean(token), token.text());
-    }
-
-    private static final EbnfIdentifierName NEGATIVE_IDENTIFIER = EbnfIdentifierName.with("NEGATIVE");
-
-    private static ParserToken percentage(final ParserToken token,
-                                          final ParserContext context) {
-        return SpreadsheetParserToken.percentage(clean(token), token.text());
-    }
-
-    private static final EbnfIdentifierName PERCENTAGE_IDENTIFIER = EbnfIdentifierName.with("PERCENTAGE");
-
-    private static List<ParserToken> clean(final ParserToken token) {
-        return token.cast(RepeatedOrSequenceParserToken.class)
-                .flat()
-                .value();
-    }
 
     /**
      * Singleton
@@ -100,16 +54,6 @@ final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer implements Ebnf
      */
     private SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer() {
         super();
-
-        final Map<EbnfIdentifierName, BiFunction<ParserToken, ParserContext, ParserToken>> identiferToTransform = Maps.sorted();
-
-        identiferToTransform.put(SpreadsheetParsers.EXPRESSION_IDENTIFIER, SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::expression);
-        identiferToTransform.put(SpreadsheetParsers.FUNCTION_IDENTIFIER, SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::function);
-        identiferToTransform.put(GROUP_IDENTIFIER, SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::group);
-        identiferToTransform.put(NEGATIVE_IDENTIFIER, SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::negative);
-        identiferToTransform.put(PERCENTAGE_IDENTIFIER, SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::percentage);
-
-        this.identiferToTransform = identiferToTransform;
     }
 
     @Override
@@ -158,15 +102,77 @@ final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer implements Ebnf
     public Parser<ParserContext> identifier(final EbnfIdentifierParserToken token,
                                             final Parser<ParserContext> parser) {
         final EbnfIdentifierName name = token.value();
-        final BiFunction<ParserToken, ParserContext, ParserToken> transform = this.identiferToTransform.get(name);
-        return null != transform ?
-                parser.transform(transform) :
+        final BiFunction<ParserToken, ParserContext, ParserToken> transformer;
+
+        switch (name.value()) {
+
+            case "EXPRESSION":
+                transformer = SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::expression;
+                break;
+            case "FUNCTION":
+                transformer = SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::function;
+                break;
+            case "GROUP":
+                transformer = SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::group;
+                break;
+            case "NEGATIVE":
+                transformer = SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::negative;
+                break;
+            case "PERCENTAGE":
+                transformer = SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::percentage;
+                break;
+            default:
+                transformer = null;
+                break;
+        }
+
+        return null != transformer ?
+                parser.transform(transformer) :
                 name.value().endsWith("REQUIRED") ?
                         parser.orReport(ParserReporters.basic()) :
                         parser;
     }
 
-    private final Map<EbnfIdentifierName, BiFunction<ParserToken, ParserContext, ParserToken>> identiferToTransform;
+    /**
+     * If the expression had a leading or trailing whitespace it will appear as a {@link SequenceParserToken},
+     * otherwise the token will be a {@link SpreadsheetParserToken}. If the former, wrap all tokens in the
+     * {@link SequenceParserToken} in a {@link SpreadsheetGroupParserToken}.
+     */
+    private static ParserToken expression(final ParserToken token,
+                                          final ParserContext context) {
+        return token instanceof SpreadsheetParserToken ?
+                token :
+                SpreadsheetParserToken.group(
+                        token.cast(SequenceParserToken.class).value(),
+                        token.text()
+                );
+    }
+
+    private static ParserToken function(final ParserToken token,
+                                        final ParserContext context) {
+        return SpreadsheetParserToken.function(clean(token), token.text());
+    }
+
+    private static ParserToken group(final ParserToken token,
+                                     final ParserContext context) {
+        return SpreadsheetParserToken.group(clean(token), token.text());
+    }
+
+    private static ParserToken negative(final ParserToken token,
+                                        final ParserContext context) {
+        return SpreadsheetParserToken.negative(clean(token), token.text());
+    }
+
+    private static ParserToken percentage(final ParserToken token,
+                                          final ParserContext context) {
+        return SpreadsheetParserToken.percentage(clean(token), token.text());
+    }
+
+    private static List<ParserToken> clean(final ParserToken token) {
+        return token.cast(RepeatedOrSequenceParserToken.class)
+                .flat()
+                .value();
+    }
 
     @Override
     public Parser<ParserContext> optional(final EbnfOptionalParserToken token,
