@@ -42,17 +42,17 @@ import java.util.function.BiFunction;
  * A {@link EbnfParserCombinatorSyntaxTreeTransformer} that only transforms terminal and ranges into their corresponding {@link SpreadsheetParserToken} equivalents.
  * Processing of other tokens will be done after this process completes.
  */
-final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer implements EbnfParserCombinatorSyntaxTreeTransformer {
+final class SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer implements EbnfParserCombinatorSyntaxTreeTransformer {
 
     /**
      * Singleton
      */
-    final static SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer INSTANCE = new SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer();
+    final static SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer INSTANCE = new SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer();
 
     /**
      * Private ctor use singleton.
      */
-    private SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer() {
+    private SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer() {
         super();
     }
 
@@ -80,7 +80,7 @@ final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer implements Ebnf
     private ParserToken concatenation(final ParserToken token,
                                       final ParserContext context) {
         return token.cast(SequenceParserToken.class)
-                .transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformerBinaryOperatorTransformer.INSTANCE);
+                .transform(SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformerBinaryOperatorTransformer.INSTANCE);
     }
 
     @Override
@@ -107,19 +107,19 @@ final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer implements Ebnf
         switch (name.value()) {
 
             case "EXPRESSION":
-                transformer = SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::expression;
+                transformer = SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::expression;
                 break;
             case "FUNCTION":
-                transformer = SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::function;
+                transformer = SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::function;
                 break;
             case "GROUP":
-                transformer = SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::group;
+                transformer = SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::group;
                 break;
             case "NEGATIVE":
-                transformer = SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::negative;
+                transformer = SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::negative;
                 break;
             case "PERCENTAGE":
-                transformer = SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::percentage;
+                transformer = SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::percentage;
                 break;
             default:
                 transformer = null;
@@ -186,7 +186,7 @@ final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer implements Ebnf
     @Override
     public Parser<ParserContext> range(final EbnfRangeParserToken token,
                                        final Parser<ParserContext> parser) {
-        return parser.transform(SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer::transformRange);
+        return parser.transform(SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::transformRange);
     }
 
     private static ParserToken transformRange(final ParserToken token,

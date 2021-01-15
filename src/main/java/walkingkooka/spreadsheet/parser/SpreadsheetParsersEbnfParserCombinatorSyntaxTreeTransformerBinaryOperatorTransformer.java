@@ -22,17 +22,17 @@ import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
 
-final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformerBinaryOperatorTransformer implements BinaryOperatorTransformer {
+final class SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformerBinaryOperatorTransformer implements BinaryOperatorTransformer {
 
     /**
      * Singleton
      */
-    final static SpreadsheetEbnfParserCombinatorSyntaxTreeTransformerBinaryOperatorTransformer INSTANCE = new SpreadsheetEbnfParserCombinatorSyntaxTreeTransformerBinaryOperatorTransformer();
+    final static SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformerBinaryOperatorTransformer INSTANCE = new SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformerBinaryOperatorTransformer();
 
     /**
      * Private ctor use singleton
      */
-    private SpreadsheetEbnfParserCombinatorSyntaxTreeTransformerBinaryOperatorTransformer() {
+    private SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformerBinaryOperatorTransformer() {
         super();
     }
 
@@ -62,6 +62,6 @@ final class SpreadsheetEbnfParserCombinatorSyntaxTreeTransformerBinaryOperatorTr
 
     @Override
     public String toString() {
-        return SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer.class.getSimpleName();
+        return SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer.class.getSimpleName();
     }
 }
