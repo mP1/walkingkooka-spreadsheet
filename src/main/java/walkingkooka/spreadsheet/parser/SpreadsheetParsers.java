@@ -131,7 +131,10 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     static {
-        final CharPredicate initial = CharPredicates.range('A', 'Z').or(CharPredicates.range('a', 'z')); // SpreadsheetFunctionName.INITIAL
+        final CharPredicate initial = CharPredicates.range('A', 'Z')
+                .or(
+                        CharPredicates.range('a', 'z')
+                ); // SpreadsheetFunctionName.INITIAL
 
         FUNCTION_NAME = Parsers.stringInitialAndPartCharPredicate(
                 initial,
@@ -145,7 +148,10 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     private final static Parser<ParserContext> FUNCTION_NAME;
 
     private static ParserToken transformFunctionName(final ParserToken token, final ParserContext context) {
-        return SpreadsheetParserToken.functionName(SpreadsheetFunctionName.with(((StringParserToken) token).value()), token.text());
+        return SpreadsheetParserToken.functionName(
+                SpreadsheetFunctionName.with(token.cast(StringParserToken.class).value()),
+                token.text()
+        );
     }
 
     private static void functions(final Map<EbnfIdentifierName, Parser<ParserContext>> predefined) {
@@ -153,9 +159,11 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         predefined.put(VALUE_SEPARATOR_SYMBOL_IDENTIFIER, VALUE_SEPARATOR_SYMBOL);
     }
 
-    private static final Parser<ParserContext> VALUE_SEPARATOR_SYMBOL = symbol(',',
+    private static final Parser<ParserContext> VALUE_SEPARATOR_SYMBOL = symbol(
+            ',',
             SpreadsheetParserToken::valueSeparatorSymbol,
-            SpreadsheetValueSeparatorSymbolParserToken.class);
+            SpreadsheetValueSeparatorSymbolParserToken.class
+    );
 
     private static final EbnfIdentifierName FUNCTION_NAME_IDENTIFIER = EbnfIdentifierName.with("FUNCTION_NAME");
     private static final EbnfIdentifierName VALUE_SEPARATOR_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("VALUE_SEPARATOR_SYMBOL");
@@ -195,24 +203,36 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         predefined.put(LESS_THAN_EQUALS_SYMBOL_IDENTIFIER, LESS_THAN_EQUALS_SYMBOL);
     }
 
-    private static final Parser<ParserContext> EQUALS_SYMBOL = symbol("==",
+    private static final Parser<ParserContext> EQUALS_SYMBOL = symbol(
+            "==",
             SpreadsheetParserToken::equalsSymbol,
-            SpreadsheetEqualsSymbolParserToken.class);
-    private static final Parser<ParserContext> NOT_EQUALS_SYMBOL = symbol("!=",
+            SpreadsheetEqualsSymbolParserToken.class
+    );
+    private static final Parser<ParserContext> NOT_EQUALS_SYMBOL = symbol(
+            "!=",
             SpreadsheetParserToken::notEqualsSymbol,
-            SpreadsheetNotEqualsSymbolParserToken.class);
-    private static final Parser<ParserContext> GREATER_THAN_SYMBOL = symbol('>',
+            SpreadsheetNotEqualsSymbolParserToken.class
+    );
+    private static final Parser<ParserContext> GREATER_THAN_SYMBOL = symbol(
+            '>',
             SpreadsheetParserToken::greaterThanSymbol,
-            SpreadsheetGreaterThanSymbolParserToken.class);
-    private static final Parser<ParserContext> GREATER_THAN_EQUALS_SYMBOL = symbol(">=",
+            SpreadsheetGreaterThanSymbolParserToken.class
+    );
+    private static final Parser<ParserContext> GREATER_THAN_EQUALS_SYMBOL = symbol(
+            ">=",
             SpreadsheetParserToken::greaterThanEqualsSymbol,
-            SpreadsheetGreaterThanEqualsSymbolParserToken.class);
-    private static final Parser<ParserContext> LESS_THAN_SYMBOL = symbol('<',
+            SpreadsheetGreaterThanEqualsSymbolParserToken.class
+    );
+    private static final Parser<ParserContext> LESS_THAN_SYMBOL = symbol(
+            '<',
             SpreadsheetParserToken::lessThanSymbol,
-            SpreadsheetLessThanSymbolParserToken.class);
-    private static final Parser<ParserContext> LESS_THAN_EQUALS_SYMBOL = symbol("<=",
+            SpreadsheetLessThanSymbolParserToken.class
+    );
+    private static final Parser<ParserContext> LESS_THAN_EQUALS_SYMBOL = symbol(
+            "<=",
             SpreadsheetParserToken::lessThanEqualsSymbol,
-            SpreadsheetLessThanEqualsSymbolParserToken.class);
+            SpreadsheetLessThanEqualsSymbolParserToken.class
+    );
 
     private static final EbnfIdentifierName EQUALS_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("EQUALS_SYMBOL");
     private static final EbnfIdentifierName NOT_EQUALS_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("NOT_EQUALS_SYMBOL");
@@ -240,21 +260,31 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     private static final EbnfIdentifierName DIVIDE_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("DIVIDE_SYMBOL");
     private static final EbnfIdentifierName POWER_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("POWER_SYMBOL");
 
-    private static final Parser<ParserContext> PLUS_SYMBOL = symbol('+',
+    private static final Parser<ParserContext> PLUS_SYMBOL = symbol(
+            '+',
             SpreadsheetParserToken::plusSymbol,
-            SpreadsheetPlusSymbolParserToken.class);
-    private static final Parser<ParserContext> NEGATIVE_SYMBOL = symbol('-',
+            SpreadsheetPlusSymbolParserToken.class
+    );
+    private static final Parser<ParserContext> NEGATIVE_SYMBOL = symbol(
+            '-',
             SpreadsheetParserToken::minusSymbol,
-            SpreadsheetMinusSymbolParserToken.class);
-    private static final Parser<ParserContext> MULTIPLY_SYMBOL = symbol('*',
+            SpreadsheetMinusSymbolParserToken.class
+    );
+    private static final Parser<ParserContext> MULTIPLY_SYMBOL = symbol(
+            '*',
             SpreadsheetParserToken::multiplySymbol,
-            SpreadsheetMultiplySymbolParserToken.class);
-    private static final Parser<ParserContext> DIVIDE_SYMBOL = symbol('/',
+            SpreadsheetMultiplySymbolParserToken.class
+    );
+    private static final Parser<ParserContext> DIVIDE_SYMBOL = symbol(
+            '/',
             SpreadsheetParserToken::divideSymbol,
-            SpreadsheetDivideSymbolParserToken.class);
-    private static final Parser<ParserContext> POWER_SYMBOL = symbol('^',
+            SpreadsheetDivideSymbolParserToken.class
+    );
+    private static final Parser<ParserContext> POWER_SYMBOL = symbol(
+            '^',
             SpreadsheetParserToken::powerSymbol,
-            SpreadsheetPowerSymbolParserToken.class);
+            SpreadsheetPowerSymbolParserToken.class
+    );
 
     // misc.............................................................................................................
 
@@ -284,12 +314,19 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
     private static ParserToken transformNumber(final ParserToken token,
                                                final ParserContext context) {
-        return transformNumber0(token.cast(BigDecimalParserToken.class), (SpreadsheetParserContext)context);
+        return transformNumber0(
+                token.cast(BigDecimalParserToken.class),
+                (SpreadsheetParserContext) context
+        );
     }
 
     private static ParserToken transformNumber0(final BigDecimalParserToken token,
                                                 final SpreadsheetParserContext context) {
-        return SpreadsheetParserToken.expressionNumber(context.expressionNumberKind().create(token.value()), token.text());
+        return SpreadsheetParserToken.expressionNumber(
+                context.expressionNumberKind()
+                        .create(token.value()),
+                token.text()
+        );
     }
 
     private static final EbnfIdentifierName PERCENT_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("PERCENT_SYMBOL");
@@ -298,15 +335,21 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     private static final EbnfIdentifierName TEXT_IDENTIFIER = EbnfIdentifierName.with("TEXT");
     private static final EbnfIdentifierName WHITESPACE_IDENTIFIER = EbnfIdentifierName.with("WHITESPACE");
 
-    private static final Parser<ParserContext> PERCENT_SYMBOL = symbol('%',
+    private static final Parser<ParserContext> PERCENT_SYMBOL = symbol(
+            '%',
             SpreadsheetParserToken::percentSymbol,
-            SpreadsheetPercentSymbolParserToken.class);
-    private static final Parser<ParserContext> PARENTHESIS_OPEN_SYMBOL = symbol('(',
+            SpreadsheetPercentSymbolParserToken.class
+    );
+    private static final Parser<ParserContext> PARENTHESIS_OPEN_SYMBOL = symbol(
+            '(',
             SpreadsheetParserToken::parenthesisOpenSymbol,
-            SpreadsheetParenthesisOpenSymbolParserToken.class);
-    private static final Parser<ParserContext> PARENTHESIS_CLOSE_SYMBOL = symbol(')',
+            SpreadsheetParenthesisOpenSymbolParserToken.class
+    );
+    private static final Parser<ParserContext> PARENTHESIS_CLOSE_SYMBOL = symbol(
+            ')',
             SpreadsheetParserToken::parenthesisCloseSymbol,
-            SpreadsheetParenthesisCloseSymbolParserToken.class);
+            SpreadsheetParenthesisCloseSymbolParserToken.class
+    );
 
     /**
      * Text
@@ -320,7 +363,10 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
             .setToString(SpreadsheetTextParserToken.class.getSimpleName());
 
     private static ParserToken transformText(final ParserToken token, final ParserContext context) {
-        return SpreadsheetParserToken.text(((DoubleQuotedParserToken) token).value(), token.text());
+        return SpreadsheetParserToken.text(
+                token.cast(DoubleQuotedParserToken.class).value(),
+                token.text()
+        );
     }
 
     /**
@@ -354,12 +400,19 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         return WHITESPACE;
     }
 
-    private final static Parser<ParserContext> WHITESPACE = Parsers.stringCharPredicate(CharPredicates.whitespace(), 1, Integer.MAX_VALUE)
-            .transform(SpreadsheetParsers::transformWhitespace)
+    private final static Parser<ParserContext> WHITESPACE = Parsers.stringCharPredicate(
+            CharPredicates.whitespace(),
+            1,
+            Integer.MAX_VALUE
+    ).transform(SpreadsheetParsers::transformWhitespace)
             .setToString(SpreadsheetWhitespaceParserToken.class.getSimpleName());
 
-    private static ParserToken transformWhitespace(final ParserToken token, final ParserContext context) {
-        return SpreadsheetParserToken.whitespace(((StringParserToken) token).value(), token.text());
+    private static ParserToken transformWhitespace(final ParserToken token,
+                                                   final ParserContext context) {
+        return SpreadsheetParserToken.whitespace(
+                token.cast(StringParserToken.class).value(),
+                token.text()
+        );
     }
 
     // helpers .........................................................................................................
@@ -400,7 +453,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                                                 final BiFunction<String, String, ParserToken> factory,
                                                 final Class<? extends SpreadsheetSymbolParserToken> tokenClass) {
         return Parsers.character(CharPredicates.is(c))
-                .transform((charParserToken, context) -> factory.apply(((CharacterParserToken) charParserToken).value().toString(), charParserToken.text()))
+                .transform((charParserToken, context) -> factory.apply(charParserToken.cast(CharacterParserToken.class).value().toString(), charParserToken.text()))
                 .setToString(tokenClass.getSimpleName());
     }
 
@@ -408,7 +461,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                                                 final BiFunction<String, String, ParserToken> factory,
                                                 final Class<? extends SpreadsheetSymbolParserToken> tokenClass) {
         return Parsers.string(text, CaseSensitivity.INSENSITIVE)
-                .transform((stringParserToken, context) -> factory.apply(((StringParserToken) stringParserToken).value(), stringParserToken.text()))
+                .transform((stringParserToken, context) -> factory.apply(stringParserToken.cast(StringParserToken.class).value(), stringParserToken.text()))
                 .setToString(tokenClass.getSimpleName());
     }
 
