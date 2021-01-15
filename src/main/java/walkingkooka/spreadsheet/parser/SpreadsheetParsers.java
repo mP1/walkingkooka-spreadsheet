@@ -435,7 +435,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                 .parse(grammarFile, EbnfParserContexts.basic())
                 .orElseThrow(() -> new IllegalStateException("Unable to parse parsers grammar file."))
                 .cast(EbnfGrammarParserToken.class)
-                .combinator(predefined, SpreadsheetEbnfParserCombinatorSyntaxTreeTransformer.INSTANCE);
+                .combinator(predefined, SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer.INSTANCE);
 
         CELL_REFERENCES_PARSER = parsers.get(EbnfIdentifierName.with("CELL")).cast();
         EXPRESSION_PARSER = parsers.get(EXPRESSION_IDENTIFIER).cast();
