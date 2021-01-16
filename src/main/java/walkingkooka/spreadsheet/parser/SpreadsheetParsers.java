@@ -288,6 +288,9 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     // misc.............................................................................................................
 
     private static void misc(final Map<EbnfIdentifierName, Parser<ParserContext>> predefined) {
+        predefined.put(APOSTROPHE_SYMBOL_IDENTIFIER, APOSTROPHE_SYMBOL);
+        predefined.put(STRING_IDENTIFIER, STRING);
+
         predefined.put(FORMULA_EQUALS_SYMBOL_IDENTIFIER, FORMULA_EQUALS_SYMBOL);
 
         predefined.put(NUMBER_IDENTIFIER, NUMBER);
@@ -300,6 +303,36 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
         predefined.put(WHITESPACE_IDENTIFIER, whitespace());
     }
+
+    /**
+     * The leading apostrophe before a string literal within a formula.
+     * <pre>
+     * 'Everything after the single quote is a string, escaping of any kind is not supported only literal characters.
+     * </pre>
+     */
+    private static final EbnfIdentifierName APOSTROPHE_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("APOSTROPHE_SYMBOL");
+    private static final Parser<ParserContext> APOSTROPHE_SYMBOL = symbol(
+            "'",
+            SpreadsheetParserToken::apostropheSymbol,
+            SpreadsheetApostropheSymbolParserToken.class
+    );
+
+    private static final EbnfIdentifierName STRING_IDENTIFIER = EbnfIdentifierName.with("STRING");
+    private static final Parser<ParserContext> STRING = Parsers.stringCharPredicate(
+            CharPredicates.always(),
+            1,
+            65536
+    ).transform(SpreadsheetParsers::transformString)
+            .setToString(SpreadsheetTextLiteralParserToken.class.getSimpleName());
+
+    private static ParserToken transformString(final ParserToken token,
+                                               final ParserContext context) {
+        return SpreadsheetParserToken.textLiteral(
+                token.cast(StringParserToken.class).value(),
+                token.text()
+        );
+    }
+
     private static final EbnfIdentifierName FORMULA_EQUALS_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("FORMULA_EQUALS_SYMBOL");
     private static final Parser<ParserContext> FORMULA_EQUALS_SYMBOL = symbol(
             "=",
@@ -370,7 +403,6 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
     /**
      * Value literals such as apostrophe string, number, date, date-time, time or equals-sign and expression.
-     * TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1249">formula: Apostrophe text entry support</a>
      * TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1250">SpreadsheetDatePatternsParser used when parsing formula value</a>
      * TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1251">SpreadsheetDateTimePatternsParser used when parsing formula value</a>
      * TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1252">SpreadsheetTimePatternsParser used when parsing formula value</a>
@@ -378,18 +410,23 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
      * TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1254">default formula value parsing after apostrophe-string, date, datetime, number & time</a>
      */
     public static Parser<SpreadsheetParserContext> valueOrExpression() {
-        return EQUALS_EXPRESSION_PARSER;
+        return VALUE_OR_EXPRESSION_PARSER;
     }
 
-    private static Parser<SpreadsheetParserContext> EQUALS_EXPRESSION_PARSER;
+    private static Parser<SpreadsheetParserContext> VALUE_OR_EXPRESSION_PARSER;
 
-    private static final EbnfIdentifierName EQUALS_EXPRESSION_IDENTIFIER = EbnfIdentifierName.with("EQUALS_EXPRESSION");
+    private static final EbnfIdentifierName VALUE_OR_EXPRESSION_IDENTIFIER = EbnfIdentifierName.with("VALUE_OR_EXPRESSION");
 
+    /**
+     * If the token is a {@link SequenceParserToken} then it needs to be wrapped inside an {@link SpreadsheetExpressionParserToken}.
+     */
     private static ParserToken transformValueOrExpression(final ParserToken token, final ParserContext context) {
-        return SpreadsheetParserToken.expression(
-                token.cast(SequenceParserToken.class).value(),
-                token.text()
-        );
+        final String text = token.text();
+        return text.startsWith("=") ?
+                SpreadsheetParserToken.expression(
+                        token.cast(SequenceParserToken.class).value(),
+                        text) :
+                token;
     }
 
     /**
@@ -439,7 +476,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
         CELL_REFERENCES_PARSER = parsers.get(EbnfIdentifierName.with("CELL")).cast();
         EXPRESSION_PARSER = parsers.get(EXPRESSION_IDENTIFIER).cast();
-        EQUALS_EXPRESSION_PARSER = parsers.get(EQUALS_EXPRESSION_IDENTIFIER)
+        VALUE_OR_EXPRESSION_PARSER = parsers.get(VALUE_OR_EXPRESSION_IDENTIFIER)
                 .cast()
                 .transform(SpreadsheetParsers::transformValueOrExpression)
                 .setToString(SpreadsheetExpressionParserToken.class.getSimpleName())

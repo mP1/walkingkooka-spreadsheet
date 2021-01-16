@@ -92,6 +92,41 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         System.out.println(this.expressionNumberKind + " " + testInfo.getDisplayName());
     }
 
+    // values.... ......................................................................................................
+
+    @Test
+    public void testApostropheStringEmpty() {
+        this.parseStringAndCheck("");
+    }
+
+    @Test
+    public void testApostropheString() {
+        this.parseStringAndCheck("abc-123");
+    }
+
+    @Test
+    public void testApostropheStringIncludesSingleAndDoubleQuote() {
+
+        this.parseStringAndCheck("1abc-'123\"456");
+    }
+
+    @Test
+    public void testApostropheStringIgnoresBackslashEscaping() {
+        this.parseStringAndCheck("new-line\\ntab\\t");
+    }
+
+    private void parseStringAndCheck(final String text) {
+        this.parseAndCheck(
+                SpreadsheetParsers.valueOrExpression(),
+                '\'' + text,
+                SpreadsheetTextParserToken.text(text, '\'' + text),
+                '\'' + text,
+                ""
+        );
+    }
+
+    // values...........................................................................................................
+
     @Test
     public void testText() {
         final String text = "\"abc-123\"";

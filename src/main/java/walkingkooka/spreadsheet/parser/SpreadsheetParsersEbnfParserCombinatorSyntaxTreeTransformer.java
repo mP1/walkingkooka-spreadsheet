@@ -105,7 +105,9 @@ final class SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer implemen
         final BiFunction<ParserToken, ParserContext, ParserToken> transformer;
 
         switch (name.value()) {
-
+            case "APOSTROPHE_STRING":
+                transformer = SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::apostropheString;
+                break;
             case "EXPRESSION":
                 transformer = SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer::expression;
                 break;
@@ -131,6 +133,14 @@ final class SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer implemen
                 name.value().endsWith("REQUIRED") ?
                         parser.orReport(ParserReporters.basic()) :
                         parser;
+    }
+
+    private static ParserToken apostropheString(final ParserToken token,
+                                                final ParserContext context) {
+        return SpreadsheetParserToken.text(
+                ParserToken.text(clean(token)),
+                token.text()
+        );
     }
 
     /**
