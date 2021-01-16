@@ -188,6 +188,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetHourParserToken}
+     */
+    public static SpreadsheetHourParserToken hour(final int value, final String text) {
+        return SpreadsheetHourParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetLabelNameParserToken}
      */
     public static SpreadsheetLabelNameParserToken labelName(final SpreadsheetLabelName value, final String text) {
@@ -554,6 +561,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * Only {@link SpreadsheetHourParserToken} returns true
+     */
+    public final boolean isHour() {
+        return this instanceof SpreadsheetHourParserToken;
+    }
+
+    /**
      * Only {@link SpreadsheetLabelNameParserToken} return true
      */
     public final boolean isLabelName() {
@@ -861,6 +875,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
+                SpreadsheetHourParserToken.class,
+                SpreadsheetParserToken::unmarshallHour
+        );
+
+        registerLeafParserToken(
                 SpreadsheetLabelNameParserToken.class,
                 SpreadsheetParserToken::unmarshallLabelName
         );
@@ -928,6 +947,16 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 SpreadsheetFunctionName.class,
                 context,
                 SpreadsheetParserToken::functionName
+        );
+    }
+
+    static SpreadsheetHourParserToken unmarshallHour(final JsonNode node,
+                                                     final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                Integer.class,
+                context,
+                SpreadsheetParserToken::hour
         );
     }
 
