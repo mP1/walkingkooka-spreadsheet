@@ -23,7 +23,6 @@ import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
 import walkingkooka.text.CharSequences;
-import walkingkooka.text.Whitespace;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokenVisitor;
 import walkingkooka.tree.expression.Expression;
@@ -228,6 +227,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public static SpreadsheetMinusSymbolParserToken minusSymbol(final String value, final String text) {
         return SpreadsheetMinusSymbolParserToken.with(value, text);
+    }
+
+    /**
+     * {@see SpreadsheetMonthParserToken}
+     */
+    public static SpreadsheetMonthParserToken month(final int value, final String text) {
+        return SpreadsheetMonthParserToken.with(value, text);
     }
 
     /**
@@ -583,6 +589,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * Only {@link SpreadsheetMonthParserToken} returns true
+     */
+    public final boolean isMonth() {
+        return this instanceof SpreadsheetMonthParserToken;
+    }
+
+    /**
      * Only {@link SpreadsheetMultiplicationParserToken} return true
      */
     public final boolean isMultiplication() {
@@ -838,6 +851,10 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 SpreadsheetParserToken::unmarshallLabelName
         );
 
+        registerLeafParserToken(
+                SpreadsheetMonthParserToken.class,
+                SpreadsheetParserToken::unmarshallMonth
+        );
 
         registerLeafParserToken(
                 SpreadsheetRowReferenceParserToken.class,
@@ -902,6 +919,16 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 SpreadsheetLabelName.class,
                 context,
                 SpreadsheetParserToken::labelName
+        );
+    }
+
+    static SpreadsheetMonthParserToken unmarshallMonth(final JsonNode node,
+                                                       final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                Integer.class,
+                context,
+                SpreadsheetParserToken::month
         );
     }
 
