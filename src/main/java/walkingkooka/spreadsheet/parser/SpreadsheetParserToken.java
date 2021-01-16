@@ -55,6 +55,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetAmPmParserToken}
+     */
+    public static SpreadsheetAmPmParserToken amPm(final int value, final String text) {
+        return SpreadsheetAmPmParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetApostropheSymbolParserToken}
      */
     public static SpreadsheetApostropheSymbolParserToken apostropheSymbol(final String value, final String text) {
@@ -439,6 +446,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public final boolean isAddition() {
         return this instanceof SpreadsheetAdditionParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetAmPmParserToken} returns true
+     */
+    public final boolean isAmPm() {
+        return this instanceof SpreadsheetAmPmParserToken;
     }
 
     /**
@@ -883,6 +897,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
 
     static {
         registerLeafParserToken(
+                SpreadsheetAmPmParserToken.class,
+                SpreadsheetParserToken::unmarshallAmPm
+        );
+
+        registerLeafParserToken(
                 SpreadsheetColumnReferenceParserToken.class,
                 SpreadsheetParserToken::unmarshallColumnReference
         );
@@ -945,6 +964,16 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         registerLeafParserToken(
                 SpreadsheetYearParserToken.class,
                 SpreadsheetParserToken::unmarshallYear
+        );
+    }
+
+    static SpreadsheetAmPmParserToken unmarshallAmPm(final JsonNode node,
+                                                     final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                Integer.class,
+                context,
+                SpreadsheetParserToken::amPm
         );
     }
 
