@@ -349,6 +349,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetSecondsParserToken}
+     */
+    public static SpreadsheetSecondsParserToken seconds(final int value, final String text) {
+        return SpreadsheetSecondsParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetSubtractionParserToken}
      */
     public static SpreadsheetSubtractionParserToken subtraction(final List<ParserToken> value, final String text) {
@@ -736,6 +743,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * Only {@link SpreadsheetSecondsParserToken} returns true
+     */
+    public final boolean isSeconds() {
+        return this instanceof SpreadsheetSecondsParserToken;
+    }
+
+    /**
      * Only {@link SpreadsheetSubtractionParserToken} return true
      */
     public final boolean isSubtraction() {
@@ -914,6 +928,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
+                SpreadsheetSecondsParserToken.class,
+                SpreadsheetParserToken::unmarshallSeconds
+        );
+
+        registerLeafParserToken(
                 SpreadsheetTextParserToken.class,
                 SpreadsheetParserToken::unmarshallText
         );
@@ -1016,6 +1035,16 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 SpreadsheetRowReference.class,
                 context,
                 SpreadsheetParserToken::rowReference
+        );
+    }
+
+    static SpreadsheetSecondsParserToken unmarshallSeconds(final JsonNode node,
+                                                           final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                Integer.class,
+                context,
+                SpreadsheetParserToken::seconds
         );
     }
 

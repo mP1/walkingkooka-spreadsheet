@@ -66,6 +66,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetPowerParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetPowerSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetRangeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetSecondsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetSubtractionParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTextLiteralParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTextParserToken;
@@ -407,6 +408,11 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     abstract Optional<SpreadsheetRowReferenceParserToken> visitRow(final SpreadsheetRowReferenceParserToken token);
+
+    @Override
+    protected final void visit(final SpreadsheetSecondsParserToken token) {
+        this.leaf(token);
+    }
 
     @Override
     protected final void visit(final SpreadsheetTextParserToken token) {
