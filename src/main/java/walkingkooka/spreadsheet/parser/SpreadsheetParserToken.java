@@ -84,6 +84,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetDayParserToken}
+     */
+    public static SpreadsheetDayParserToken day(final int value, final String text) {
+        return SpreadsheetDayParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetDivideSymbolParserToken}
      */
     public static SpreadsheetDivideSymbolParserToken divideSymbol(final String value, final String text) {
@@ -426,6 +433,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public final boolean isColumnReference() {
         return this instanceof SpreadsheetColumnReferenceParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetDayParserToken} returns true
+     */
+    public final boolean isDay() {
+        return this instanceof SpreadsheetDayParserToken;
     }
 
     /**
@@ -805,6 +819,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
+                SpreadsheetDayParserToken.class,
+                SpreadsheetParserToken::unmarshallDay
+        );
+
+        registerLeafParserToken(
                 SpreadsheetExpressionNumberParserToken.class,
                 SpreadsheetParserToken::unmarshallExpressionNumber
         );
@@ -843,6 +862,16 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 SpreadsheetColumnReference.class,
                 context,
                 SpreadsheetParserToken::columnReference
+        );
+    }
+
+    static SpreadsheetDayParserToken unmarshallDay(final JsonNode node,
+                                                   final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                Integer.class,
+                context,
+                SpreadsheetParserToken::day
         );
     }
 

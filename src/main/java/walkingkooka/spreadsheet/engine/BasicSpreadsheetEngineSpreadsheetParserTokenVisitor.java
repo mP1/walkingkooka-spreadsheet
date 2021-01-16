@@ -25,6 +25,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetApostropheSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetBetweenSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetDayParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDivideSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDivisionParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDoubleQuoteSymbolParserToken;
@@ -285,6 +286,11 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     abstract Optional<SpreadsheetColumnReferenceParserToken> visitColumn(final SpreadsheetColumnReferenceParserToken token);
+
+    @Override
+    protected final void visit(final SpreadsheetDayParserToken token) {
+        this.leaf(token);
+    }
 
     @Override
     protected final void visit(final SpreadsheetDivideSymbolParserToken token) {
