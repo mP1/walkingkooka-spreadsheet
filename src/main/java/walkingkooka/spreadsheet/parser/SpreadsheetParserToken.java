@@ -369,6 +369,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         return SpreadsheetWhitespaceParserToken.with(value, text);
     }
 
+    /**
+     * {@see SpreadsheetYearParserToken}
+     */
+    public static SpreadsheetYearParserToken year(final int value, final String text) {
+        return SpreadsheetYearParserToken.with(value, text);
+    }
+
     static List<ParserToken> copyAndCheckTokens(final List<ParserToken> tokens) {
         Objects.requireNonNull(tokens, "tokens");
 
@@ -743,6 +750,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * Only {@link SpreadsheetYearParserToken} returns true
+     */
+    public final boolean isYear() {
+        return this instanceof SpreadsheetYearParserToken;
+    }
+
+    /**
      * The priority of this token, tokens with a value of zero are left in their original position.
      */
     abstract int operatorPriority();
@@ -870,6 +884,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 SpreadsheetTextLiteralParserToken.class,
                 SpreadsheetParserToken::unmarshallTextLiteral
         );
+
+        registerLeafParserToken(
+                SpreadsheetYearParserToken.class,
+                SpreadsheetParserToken::unmarshallYear
+        );
     }
 
     static SpreadsheetColumnReferenceParserToken unmarshallColumnReference(final JsonNode node,
@@ -959,6 +978,16 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 String.class,
                 context,
                 SpreadsheetParserToken::textLiteral
+        );
+    }
+
+    static SpreadsheetYearParserToken unmarshallYear(final JsonNode node,
+                                                     final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                Integer.class,
+                context,
+                SpreadsheetParserToken::year
         );
     }
 

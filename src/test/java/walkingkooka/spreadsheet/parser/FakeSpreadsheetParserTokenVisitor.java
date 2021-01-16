@@ -348,6 +348,11 @@ public class FakeSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVis
     }
 
     @Override
+    protected void visit(final SpreadsheetYearParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected Visiting startVisit(ParserToken token) {
         throw new UnsupportedOperationException();
     }
