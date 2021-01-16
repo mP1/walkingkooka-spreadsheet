@@ -1936,10 +1936,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
             @Override
             public ExpressionNumberKind expressionNumberKind() {
-                if (null == expressionNumberKind) {
-                    throw new UnsupportedOperationException();
-                }
-                return expressionNumberKind;
+                return kind;
             }
         };
     }
