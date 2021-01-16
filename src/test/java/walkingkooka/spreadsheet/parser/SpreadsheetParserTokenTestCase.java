@@ -57,11 +57,6 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
     }
 
     @Test
-    public void testWithWhitespaceTextFails() {
-        assertThrows(IllegalArgumentException.class, () -> this.createToken("   "));
-    }
-
-    @Test
     public final void testAccept2() {
         new SpreadsheetParserTokenVisitor() {
         }.accept(this.createToken());

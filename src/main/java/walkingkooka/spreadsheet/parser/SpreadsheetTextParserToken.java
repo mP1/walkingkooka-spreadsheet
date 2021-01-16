@@ -27,7 +27,7 @@ public final class SpreadsheetTextParserToken extends SpreadsheetNonSymbolParser
 
     static SpreadsheetTextParserToken with(final String value, final String text) {
         checkValue(value);
-        Objects.requireNonNull(text, "text");
+        Objects.requireNonNull(text, "text"); // empty string is okay eg apostrophe string or empty string
 
         return new SpreadsheetTextParserToken(value, text);
     }
