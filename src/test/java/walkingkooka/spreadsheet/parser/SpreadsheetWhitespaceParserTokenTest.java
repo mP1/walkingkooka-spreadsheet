@@ -27,12 +27,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetWhitespaceParserTokenTest extends SpreadsheetSymbolParserTokenTestCase<SpreadsheetWhitespaceParserToken> {
 
-    @Override
-    @SuppressWarnings("unused")
-    public void testWithWhitespaceTextFails() {
-        throw new UnsupportedOperationException();
-    }
-
     @Test
     public void testWithWhitespace() {
         final SpreadsheetWhitespaceParserToken token = this.createToken("   ");

@@ -28,11 +28,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SpreadsheetTextLiteralParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetTextLiteralParserToken, String> {
 
-    @Override
-    public void testWithWhitespaceTextFails() {
-        throw new UnsupportedOperationException();
-    }
-
     @Test
     public void testWithEmptyString() {
         final SpreadsheetTextLiteralParserToken token = this.createToken("");

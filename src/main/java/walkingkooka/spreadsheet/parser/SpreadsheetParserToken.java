@@ -22,6 +22,7 @@ import walkingkooka.spreadsheet.function.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetLabelName;
 import walkingkooka.spreadsheet.reference.SpreadsheetRowReference;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.Whitespace;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokenVisitor;
@@ -366,7 +367,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     static String checkText(final String text) {
-        Whitespace.failIfNullOrEmptyOrWhitespace(text, "text");
+        CharSequences.failIfNullOrEmpty(text, "text");
         return text;
     }
 

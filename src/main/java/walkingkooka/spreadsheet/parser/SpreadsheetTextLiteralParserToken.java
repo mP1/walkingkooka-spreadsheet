@@ -26,7 +26,7 @@ public final class SpreadsheetTextLiteralParserToken extends SpreadsheetNonSymbo
 
     static SpreadsheetTextLiteralParserToken with(final String value, final String text) {
         checkValue(value);
-        Objects.requireNonNull(text, "text");
+        Objects.requireNonNull(text, "text"); // empty is ok! eg apostrophe string
 
         return new SpreadsheetTextLiteralParserToken(value, text);
     }
