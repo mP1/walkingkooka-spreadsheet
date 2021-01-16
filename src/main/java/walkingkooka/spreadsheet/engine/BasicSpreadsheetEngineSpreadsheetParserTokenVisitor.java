@@ -21,6 +21,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.stack.Stack;
 import walkingkooka.collect.stack.Stacks;
 import walkingkooka.spreadsheet.parser.SpreadsheetAdditionParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetAmPmParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetApostropheSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetBetweenSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
@@ -274,6 +275,11 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     // leaf ......................................................................................................
+
+    @Override
+    protected final void visit(final SpreadsheetAmPmParserToken token) {
+        this.leaf(token);
+    }
 
     @Override
     protected final void visit(final SpreadsheetApostropheSymbolParserToken token) {
