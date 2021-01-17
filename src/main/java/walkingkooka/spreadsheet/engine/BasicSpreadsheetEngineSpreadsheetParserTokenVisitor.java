@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetDivisionParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDoubleQuoteSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetEqualsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetEqualsSymbolParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetExponentSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetExpressionNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetExpressionParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetFunctionNameParserToken;
@@ -328,6 +329,11 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
 
     @Override
     protected final void visit(final SpreadsheetEqualsSymbolParserToken token) {
+        this.leaf(token);
+    }
+
+    @Override
+    protected final void visit(final SpreadsheetExponentSymbolParserToken token) {
         this.leaf(token);
     }
 
