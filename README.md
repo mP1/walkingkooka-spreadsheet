@@ -5,68 +5,107 @@
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/mP1/walkingkooka-spreadsheet.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/mP1/walkingkooka-spreadsheet/alerts/)
 [![J2CL compatible](https://img.shields.io/badge/J2CL-compatible-brightgreen.svg)](https://github.com/mP1/j2cl-central)
 
+## Composition
+
+A web based spreadsheet application. This project while central also includes features and more from other sister
+projects [github](https://github.com/mP1).
+
+- The [react](https://github.com/mP1/walkingkooka-spreadsheet-react) contains a pure web client with little if any
+  spreadsheet logic.
+- The [server](https://github.com/mP1/walkingkooka-spreadsheet-server) contains the many REST APIs (all json), which
+  forward requests to services within this project. This project takes care of http/network/json type stuff.
 
 
-A web based spreadsheet application.
 
-## High level Achievements, Goals, Wishlist
+## Tests
 
-The list is not exhaustive but does provide some detail of numerous sub systems or building blocks that a complete spreadsheet web application
-require.
+There are automated tests for all areas or components within the spreadsheet including related and dependent projects of
+which there are many. These are mentioned first because they illustrate the care and features available and also provide
+an example of the API usage.
 
-- Tests: There are tests and mixins to assist testing in many forms.
-- Parsing formula expressions into a tree of expression tokens
-- Support for 32/64bit/Unlimited precision integers/decimal point numbers with transparent conversion at execution.
-- Support during formula evaluation for cell references, labels and ranges
-- Conversion during evaluation between data types is open and transparent during evaluation, with potential for introduction of user selected
-  types and conversion strategies.
-- Row, Cell and Range creation, insertion, deletion concepts along with storage.
-- Custom Number, Date/Time, Text formats: Mostly completed except for fractions which remain outstanding.
-- Conditional formatting - basic foundation available
-- Functions within formula expressions are supported but the 300 or so different formulas within Excel remain outstanding.
-- Storage: Storage abstractions are available and currently use memory structures (Maps) and are intended for quick and fast testing.
-  It should be relatively painless to introduce implementations that use a real persistant storage such as a RDBMS or similar technology.
-- Security: This has not been implemented, however a design is available that exists as a distinct system with permissions
-  and roles for users and groups matched to individual components within the entire Spreadsheet document. Limited support for these components
-  are already available, and such components includes:
-  - Cells
-  - Ranges
-  - Columns
-  - Rows
-  - Comments
-  - Live data sources: This concept requires some expansion
-- Multiple live data sources: 
-  - A csv file could provided a view of columns and rows
-  - A table from a URL identified by an xpath.
-  - Many other, one possibility would be to expose the interface and allow user selected implementations.
-  - The above ranges would be read only from the web, but updates notified by period fetching or watching the filesystem for user request.   
-- Authentication: The authentication system must be separate and pluggable and not deeply embedded within the Spreadsheet in any manner.
-- REST interface: Spreadsheet CRUD and individual operations such as cell evaluation, and other operations are currently exposed in JSON.
-- Numerous customisation of the spreadsheet to the individual are already captured in metadata, these includes:
-  - Default (numerous) parsing and formatting patterns for the different base custom types: numbers, date/times, text.
-  - Locale aware choices
-  - Other spreadsheet metadata such as default date system base, audit metadata and more.
-- Data validation: This remains outstanding.
-- Rich text: All text is stored in a platform agnostic manner that supports numerous attributes to provide a rich text
-  experience, including colour, text styling and more.
-- Web UI: Currently react and probably a MaterialUI look and feel has been selected and work has started using the provided working server REST services.
-- Reports created by mixing text and images together with variable placeholders that refer to artifacts in a spreadsheet.
-- Plugin support for components such as:
-  - parsing
-  - formatting
-  - formulas
-  - data sources
-- A mirror system would be required to introduce a layer for security (eg guard and limit reflection access) and to
-  provide abstractions around system facilities which require attention (file and network access).
+- Helpers (interfaces with default/defender methods) are provided for basically all interfaces, think mixins.
+- Helpers include numerous methods so tests concentrate on data, logic and not boilerplate.
+- Mocks and fakes are also provided for all interfaces.
+- Helpers include informative messages and asserts to ensure correctness.
 
-The summary above is very brief and tickets creation for individual work items remain outstanding.
+
+
+## Global settings (Metadata)
+
+- All global like settings are captured and not hardcoded [SEE](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadata.java).
+- The user can change each and every one of these settings or values including the decimal point, locale and more and
+  they are honoured.
+- The [react](https://github.com/mP1/walkingkooka-spreadsheet-react) include numerous cypress integration tests that
+  demonstrate updating of this global metadata and instant feedback such as cells being updated with new locale settings etc.  
+- User selectable support for `double` (fast, lower precision, less memory) or `java.math.BigDecimal` (slower, user selectable precision, more memory).
+- User selectable rounding, precision support.
+- The `SpreadsheetMetadata` class captures many properties/settings and makes for an interesting read to get a deeper understanding of internals.
+
+
+
+## Functions
+
+- About 30-40 functions are completed, into numerous projects, much work remains outstanding.
+- Basic number type functions: [numbers](https://github.com/mP1/walkingkooka-tree-expression-function-number)
+- Basic string type functions: [string](https://github.com/mP1/walkingkooka-tree-expression-function-string)
+- Work remains to create projects to host other categories of functions such as: banking/finance etc.
+- Ideas include the support of user/3rd party/open source functions which would execute within a sandbox.
+
+
+
+## Storage
+
+- Interfaces are defined for storage of all artifacts within a spreadsheet, including but not limited too cells, label &
+  range definitions and more.
+- Possible ideas may be separated into two broad categories of storage, read only and read/write.
+- Examples of read/write include memory (DONE),
+  RDBMS [TODO](https://github.com/mP1/walkingkooka-spreadsheet/issues/1291)
+- Other forms of read only Storage would allow mixture of numerous data sources
+- A CSV, TSV or XML file (uploaded, a network path, url) could provide a table like range, Rules would be implemented to
+  update a local (server) cache copy.
+- Same idea as for the previous read only files but for a table within a web page.
+
+
+
+## Formatting
+
+- Support for text, numbers, dates, date/time, time including honouring of spreadsheet set localization completed.
+- Formatting numbers as fractions [TODO](https://github.com/mP1/walkingkooka-spreadsheet/issues/341)
+- Conditional formatting is also supported.
+
+
+
+## Data Validation
+
+- Minimal work has been done in this area.
+- This is another area where support for 3rd party plugins executed within a sandbox would help enable users to truely
+  customise their experience and data security.
+
+
+
+## Security
+
+- Security and permissions remain outstanding.
+
+
+
+## Comments / Multi-user
+
+- Comments for individual cells or ranges [TODO](https://github.com/mP1/walkingkooka-spreadsheet/issues/352)
+- Chat like features.
+- Multi user support should be possible as each API call currently supports returning all related updated cells.
+
+
+
+A lot has been done and a lot remains, the README and [issues](https://github.com/mP1/walkingkooka-spreadsheet/issues/) for each project are ideal starting grounds to discover progress and features.
+
 
 
 ## [Sample](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/test/java/walkingkooka/spreadsheet/sample/Sample.java)
 
-A working sample that demonstrates a working engine that creates 2 cells, one referencing the value of the other
-and evaluates the formula of both. All other spreadsheets are supported, such as a conditional format, labels and more.
-The above link has the full sample.
+A working sample that demonstrates a working engine that creates 2 cells, one referencing the value of the other and
+evaluates the formula of both. All other spreadsheets are supported, such as a conditional format, labels and more. The
+above link has the full sample.
 
 ```java
 final SpreadsheetCellStore cellStore = cellStore();
