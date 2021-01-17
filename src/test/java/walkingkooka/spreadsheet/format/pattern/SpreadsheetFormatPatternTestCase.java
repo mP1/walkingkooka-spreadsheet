@@ -21,8 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
-import walkingkooka.text.cursor.parser.ParentParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetFormatPattern<T>,
-        T extends SpreadsheetFormatParserToken & ParentParserToken> extends SpreadsheetPatternTestCase<P, T>
+        T extends SpreadsheetFormatParentParserToken> extends SpreadsheetPatternTestCase<P, T>
         implements SpreadsheetFormatterTesting {
 
     SpreadsheetFormatPatternTestCase() {
