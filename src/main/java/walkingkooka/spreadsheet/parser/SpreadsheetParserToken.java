@@ -1207,11 +1207,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
-                SpreadsheetValueSeparatorSymbolParserToken.class,
-                SpreadsheetParserToken::unmarshallFunctionParameterSeparatorSymbol
-        );
-
-        registerLeafParserToken(
                 SpreadsheetGreaterThanEqualsSymbolParserToken.class,
                 SpreadsheetParserToken::unmarshallGreaterThanEqualsSymbol
         );
@@ -1274,6 +1269,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         registerLeafParserToken(
                 SpreadsheetThousandsSymbolParserToken.class,
                 SpreadsheetParserToken::unmarshallThousandsSymbol
+        );
+
+        registerLeafParserToken(
+                SpreadsheetValueSeparatorSymbolParserToken.class,
+                SpreadsheetParserToken::unmarshallValueSeparatorSymbol
         );
 
         registerLeafParserToken(
@@ -1351,15 +1351,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 node,
                 context,
                 SpreadsheetParserToken::exponentSymbol
-        );
-    }
-
-    static SpreadsheetValueSeparatorSymbolParserToken unmarshallFunctionParameterSeparatorSymbol(final JsonNode node,
-                                                                                                 final JsonNodeUnmarshallContext context) {
-        return unmarshallSymbolParserToken(
-                node,
-                context,
-                SpreadsheetParserToken::valueSeparatorSymbol
         );
     }
 
@@ -1478,6 +1469,15 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 node,
                 context,
                 SpreadsheetParserToken::thousandsSymbol
+        );
+    }
+
+    static SpreadsheetValueSeparatorSymbolParserToken unmarshallValueSeparatorSymbol(final JsonNode node,
+                                                                                     final JsonNodeUnmarshallContext context) {
+        return unmarshallSymbolParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::valueSeparatorSymbol
         );
     }
 
