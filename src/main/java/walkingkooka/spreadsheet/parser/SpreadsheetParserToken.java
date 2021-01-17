@@ -391,6 +391,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetThousandsSymbolParserToken}
+     */
+    public static SpreadsheetThousandsSymbolParserToken thousandsSymbol(final String value, final String text) {
+        return SpreadsheetThousandsSymbolParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetValueSeparatorSymbolParserToken}
      */
     public static SpreadsheetValueSeparatorSymbolParserToken valueSeparatorSymbol(final String value, final String text) {
@@ -803,6 +810,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public final boolean isTextLiteral() {
         return this instanceof SpreadsheetTextLiteralParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetThousandsSymbolParserToken} returns true
+     */
+    public final boolean isThousandsSymbol() {
+        return this instanceof SpreadsheetThousandsSymbolParserToken;
     }
 
     /**
@@ -1220,6 +1234,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
+                SpreadsheetThousandsSymbolParserToken.class,
+                SpreadsheetParserToken::unmarshallThousandsSymbol
+        );
+
+        registerLeafParserToken(
                 SpreadsheetWhitespaceParserToken.class,
                 SpreadsheetParserToken::unmarshallWhitespace
         );
@@ -1394,6 +1413,15 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 node,
                 context,
                 SpreadsheetParserToken::powerSymbol
+        );
+    }
+
+    static SpreadsheetThousandsSymbolParserToken unmarshallThousandsSymbol(final JsonNode node,
+                                                                           final JsonNodeUnmarshallContext context) {
+        return unmarshallSymbolParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::thousandsSymbol
         );
     }
 

@@ -72,6 +72,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetSecondsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetSubtractionParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTextLiteralParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTextParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetThousandsSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetValueSeparatorSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetWhitespaceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetYearParserToken;
@@ -433,6 +434,11 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
 
     @Override
     protected final void visit(final SpreadsheetTextLiteralParserToken token) {
+        this.leaf(token);
+    }
+
+    @Override
+    protected final void visit(final SpreadsheetThousandsSymbolParserToken token) {
         this.leaf(token);
     }
 

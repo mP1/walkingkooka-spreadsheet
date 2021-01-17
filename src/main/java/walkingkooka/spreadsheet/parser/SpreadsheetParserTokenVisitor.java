@@ -329,6 +329,10 @@ public abstract class SpreadsheetParserTokenVisitor extends ParserTokenVisitor {
         // nop
     }
 
+    protected void visit(final SpreadsheetThousandsSymbolParserToken token) {
+        // nop
+    }
+
     protected void visit(final SpreadsheetValueSeparatorSymbolParserToken token) {
         // nop
     }
