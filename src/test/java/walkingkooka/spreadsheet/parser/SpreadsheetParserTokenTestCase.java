@@ -20,7 +20,9 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.IsMethodTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.MethodAttributes;
 import walkingkooka.reflect.PublicStaticFactoryTesting;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokenTesting;
 import walkingkooka.tree.expression.Expression;
@@ -29,12 +31,14 @@ import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
+import java.lang.reflect.Method;
 import java.math.MathContext;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParserToken> implements ClassTesting2<T>,
         IsMethodTesting<T>,
@@ -54,6 +58,65 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
                 "Spreadsheet",
                 ParserToken.class.getSimpleName(),
                 this.type());
+    }
+
+    @Test
+    public final void testPublicStaticFactoryMethodNames() {
+        final Class<?> type = this.type();
+
+        final Optional<Method> possibleMethod = Arrays.stream(SpreadsheetParserToken.class.getDeclaredMethods())
+                .filter(MethodAttributes.STATIC::is)
+                .filter(m -> m.getReturnType() == type)
+                .filter(m -> JavaVisibility.PUBLIC == JavaVisibility.of(m))
+                .findFirst();
+        assertNotEquals(
+                Optional.empty(),
+                possibleMethod,
+                () -> "Unable to find a static public method that returns " + type.getName()
+        );
+
+        // eg: SpreadsheetParenthesisCloseSymbolParserToken}
+        final Method method = possibleMethod.get();
+        final String name = method.getName();
+
+        String expected = type == SpreadsheetEqualsParserToken.class ?
+                "equalsParserToken" :
+                CharSequences.subSequence(type.getSimpleName(), "Spreadsheet".length(), -ParserToken.class.getSimpleName().length())
+                        .toString();
+        expected = Character.toLowerCase(expected.charAt(0)) + expected.substring(1);
+
+        assertEquals(expected,
+                name,
+                () -> "Token public static factory method name incorrect: " + method.toGenericString());
+    }
+
+    @Test
+    public final void testPrivateStaticUnmarshallMethodNames() {
+        final Class<?> type = this.type();
+
+        final Optional<Method> possibleMethod = Arrays.stream(SpreadsheetParserToken.class.getDeclaredMethods())
+                .filter(MethodAttributes.STATIC::is)
+                .filter(m -> m.getReturnType() == type)
+                .filter(m -> JavaVisibility.PACKAGE_PRIVATE == JavaVisibility.of(m))
+                .findFirst();
+        assertNotEquals(
+                Optional.empty(),
+                possibleMethod,
+                () -> "Unable to find a static package private method that returns " + type.getName()
+        );
+
+        // eg: SpreadsheetParenthesisCloseSymbolParserToken}
+        final Method method = possibleMethod.get();
+        final String name = method.getName();
+
+        final String expected = "unmarshall" +
+                CharSequences.subSequence(
+                        type.getSimpleName(), "Spreadsheet".length(), -ParserToken.class.getSimpleName().length()
+                );
+
+        assertEquals(expected,
+                name,
+                () -> "Token package private unmarshall method name incorrect: " + method.toGenericString());
     }
 
     @Test
