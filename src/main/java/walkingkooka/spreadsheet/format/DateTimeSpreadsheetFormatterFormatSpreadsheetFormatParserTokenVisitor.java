@@ -199,7 +199,11 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
                 this.append(this.context.monthNameAbbreviation(month - LOCALE_DATE_TIME_MONTH_BIAS));
                 break;
             default:
-                this.append(this.context.monthName(month - LOCALE_DATE_TIME_MONTH_BIAS));
+                // https://www.myonlinetraininghub.com/excel-date-and-time-formatting
+                final String full = this.context.monthName(month - LOCALE_DATE_TIME_MONTH_BIAS);
+                this.append(5 == patternLength ?
+                        full.substring(0, 1) :
+                        full);
                 break;
         }
     }
