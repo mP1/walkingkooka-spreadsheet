@@ -229,6 +229,10 @@ public abstract class SpreadsheetParserTokenVisitor extends ParserTokenVisitor {
         // nop
     }
 
+    protected void visit(final SpreadsheetDecimalSeparatorSymbolParserToken token) {
+        // nop
+    }
+
     protected void visit(final SpreadsheetDivideSymbolParserToken token) {
         // nop
     }

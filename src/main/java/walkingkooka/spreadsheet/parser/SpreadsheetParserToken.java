@@ -104,6 +104,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetDecimalSeparatorSymbolParserToken}
+     */
+    public static SpreadsheetDecimalSeparatorSymbolParserToken decimalSeparatorSymbol(final String value, final String text) {
+        return SpreadsheetDecimalSeparatorSymbolParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetDivideSymbolParserToken}
      */
     public static SpreadsheetDivideSymbolParserToken divideSymbol(final String value, final String text) {
@@ -509,6 +516,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public final boolean isDay() {
         return this instanceof SpreadsheetDayParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetDecimalSeparatorSymbolParserToken} returns true
+     */
+    public final boolean isDecimalSeparatorSymbol() {
+        return this instanceof SpreadsheetDecimalSeparatorSymbolParserToken;
     }
 
     /**
@@ -1154,6 +1168,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
+                SpreadsheetDecimalSeparatorSymbolParserToken.class,
+                SpreadsheetParserToken::unmarshallDecimalSeparatorSymbol
+        );
+
+        registerLeafParserToken(
                 SpreadsheetDivideSymbolParserToken.class,
                 SpreadsheetParserToken::unmarshallDivideSymbol
         );
@@ -1268,6 +1287,15 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 node,
                 context,
                 SpreadsheetParserToken::currencySymbol
+        );
+    }
+
+    static SpreadsheetDecimalSeparatorSymbolParserToken unmarshallDecimalSeparatorSymbol(final JsonNode node,
+                                                                                         final JsonNodeUnmarshallContext context) {
+        return unmarshallSymbolParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::decimalSeparatorSymbol
         );
     }
 
