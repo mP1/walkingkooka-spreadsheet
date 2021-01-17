@@ -137,20 +137,254 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
     // HasFormatter.....................................................................................................
 
     @Test
-    public void testFormatterFormat() {
+    public void testFormatterFormatTextLiteral() {
         this.formatAndCheck2(
-                "hh mm ss \"abc\"",
+                "\"abc\"",
                 LocalTime.of(12, 58, 59),
-                "12 58 59 abc"
+                "abc"
         );
     }
 
     @Test
-    public void testFormatterFormatComma() {
+    public void testFormatterFormatCharacterLiteral() {
         this.formatAndCheck2(
-                "hh,mm,ss",
+                ":,",
                 LocalTime.of(12, 58, 59),
-                "12,58,59"
+                ":,"
+        );
+    }
+
+    @Test
+    public void testFormatterH1() {
+        this.formatAndCheck2(
+                "h",
+                LocalTime.of(1, 58, 59),
+                "1"
+        );
+    }
+
+    @Test
+    public void testFormatterH2() {
+        this.formatAndCheck2(
+                "h",
+                LocalTime.of(12, 58, 59),
+                "12"
+        );
+    }
+
+    @Test
+    public void testFormatterHh1() {
+        this.formatAndCheck2(
+                "hh",
+                LocalTime.of(1, 58, 59),
+                "01"
+        );
+    }
+
+    @Test
+    public void testFormatterHh2() {
+        this.formatAndCheck2(
+                "hh",
+                LocalTime.of(12, 58, 59),
+                "12"
+        );
+    }
+
+    @Test
+    public void testFormatterHhh() {
+        this.formatAndCheck2(
+                "hhh",
+                LocalTime.of(12, 58, 59),
+                "12"
+        );
+    }
+
+    @Test
+    public void testFormatterHM1() {
+        this.formatAndCheck2(
+                "hm",
+                LocalTime.of(12, 1, 59),
+                "121"
+        );
+    }
+
+    @Test
+    public void testFormatterHM2() {
+        this.formatAndCheck2(
+                "hm",
+                LocalTime.of(12, 58, 59),
+                "1258"
+        );
+    }
+
+    @Test
+    public void testFormatterHMm1() {
+        this.formatAndCheck2(
+                "hmm",
+                LocalTime.of(12, 1, 59),
+                "1201"
+        );
+    }
+
+    @Test
+    public void testFormatterHMm2() {
+        this.formatAndCheck2(
+                "hmm",
+                LocalTime.of(12, 58, 59),
+                "1258"
+        );
+    }
+
+    @Test
+    public void testFormatterHMmm() {
+        this.formatAndCheck2(
+                "hmmm",
+                LocalTime.of(12, 58, 59),
+                "1258"
+        );
+    }
+
+    @Test
+    public void testFormatterS1() {
+        this.formatAndCheck2(
+                "s",
+                LocalTime.of(12, 58, 1),
+                "1"
+        );
+    }
+
+    @Test
+    public void testFormatterS2() {
+        this.formatAndCheck2(
+                "s",
+                LocalTime.of(12, 58, 59),
+                "59"
+        );
+    }
+
+    @Test
+    public void testFormatterSs1() {
+        this.formatAndCheck2(
+                "ss",
+                LocalTime.of(12, 58, 1),
+                "01"
+        );
+    }
+
+    @Test
+    public void testFormatterSs2() {
+        this.formatAndCheck2(
+                "ss",
+                LocalTime.of(12, 58, 59),
+                "59"
+        );
+    }
+
+    @Test
+    public void testFormatterSss() {
+        this.formatAndCheck2(
+                "sss",
+                LocalTime.of(12, 58, 59),
+                "59"
+        );
+    }
+
+    @Test
+    public void testFormatterSssDot() {
+        this.formatAndCheck2(
+                "sss.",
+                LocalTime.of(12, 58, 59, 12345678),
+                "59"
+        );
+    }
+
+    @Test
+    public void testFormatterSssDotZero() {
+        this.formatAndCheck2(
+                "sss.0",
+                LocalTime.of(12, 58, 59, 123456789),
+                "59d.1"
+        );
+    }
+
+    @Test
+    public void testFormatterSssDotZeroZero() {
+        this.formatAndCheck2(
+                "sss.00",
+                LocalTime.of(12, 58, 59, 123456789),
+                "59d.12"
+        );
+    }
+
+    @Test
+    public void testFormatterSssDotZeroZero2() {
+        this.formatAndCheck2(
+                "sss.00",
+                LocalTime.of(12, 58, 59),
+                "59.00"
+        );
+    }
+
+    @Test
+    public void testFormatterSssDotZeroZeroZero() {
+        this.formatAndCheck2(
+                "sss.000",
+                LocalTime.of(12, 58, 59, 123456789),
+                "59d.123"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatHhmmssDot0000() {
+        this.formatAndCheck2(
+                "hhmmss.0000",
+                LocalTime.of(12, 58, 59, 123456789),
+                "125859d.1235"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatA() {
+        this.formatAndCheck2(
+                "a",
+                LocalTime.of(12, 58, 59, 123456789),
+                "Q"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatA2() {
+        this.formatAndCheck2(
+                "a",
+                LocalTime.of(23, 58, 59, 123456789),
+                "R"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatAmpm() {
+        this.formatAndCheck2(
+                "am/pm",
+                LocalTime.of(12, 58, 59, 123456789),
+                "QAM"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatAmpm2() {
+        this.formatAndCheck2(
+                "am/pm",
+                LocalTime.of(23, 58, 59, 123456789),
+                "RPM"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatHhmmAm() {
+        this.formatAndCheck2(
+                "hhmmam",
+                LocalTime.of(12, 58, 59, 123456789),
+                "1258QAM"
         );
     }
 
@@ -168,6 +402,18 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
             public <T> Either<T, String> convert(final Object value,
                                                  final Class<T> target) {
                 return Converters.localTimeLocalDateTime().convert(value, target, ConverterContexts.fake());
+            }
+
+            @Override
+            public String ampm(final int hourOfDay) {
+                return hourOfDay < 13 ?
+                        "QAM" :
+                        "RPM";
+            }
+
+            @Override
+            public char decimalSeparator() {
+                return 'D';
             }
         };
     }
