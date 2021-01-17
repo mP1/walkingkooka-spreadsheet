@@ -64,7 +64,7 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
     public final void testPublicStaticFactoryMethodNames() {
         final Class<?> type = this.type();
 
-        final Optional<Method> possibleMethod = Arrays.stream(SpreadsheetParserToken.class.getDeclaredMethods())
+        final Optional<Method> possibleMethod = Arrays.stream(PARENT.getDeclaredMethods())
                 .filter(MethodAttributes.STATIC::is)
                 .filter(m -> m.getReturnType() == type)
                 .filter(m -> JavaVisibility.PUBLIC == JavaVisibility.of(m))
@@ -75,13 +75,13 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
                 () -> "Unable to find a static public method that returns " + type.getName()
         );
 
-        // eg: SpreadsheetParenthesisCloseSymbolParserToken}
+        // eg: SpreadsheetFormatSecondParserToken
         final Method method = possibleMethod.get();
         final String name = method.getName();
 
         String expected = type == SpreadsheetEqualsParserToken.class ?
                 "equalsParserToken" :
-                CharSequences.subSequence(type.getSimpleName(), "Spreadsheet".length(), -ParserToken.class.getSimpleName().length())
+                CharSequences.subSequence(type.getSimpleName(), PARENT_NAME.length(), -ParserToken.class.getSimpleName().length())
                         .toString();
         expected = Character.toLowerCase(expected.charAt(0)) + expected.substring(1);
 
@@ -94,7 +94,7 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
     public final void testPrivateStaticUnmarshallMethodNames() {
         final Class<?> type = this.type();
 
-        final Optional<Method> possibleMethod = Arrays.stream(SpreadsheetParserToken.class.getDeclaredMethods())
+        final Optional<Method> possibleMethod = Arrays.stream(PARENT.getDeclaredMethods())
                 .filter(MethodAttributes.STATIC::is)
                 .filter(m -> m.getReturnType() == type)
                 .filter(m -> JavaVisibility.PACKAGE_PRIVATE == JavaVisibility.of(m))
@@ -105,19 +105,24 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
                 () -> "Unable to find a static package private method that returns " + type.getName()
         );
 
-        // eg: SpreadsheetParenthesisCloseSymbolParserToken}
+        // eg: SpreadsheetFormatSecondParserToken -> unmarshallSecond
         final Method method = possibleMethod.get();
         final String name = method.getName();
 
         final String expected = "unmarshall" +
                 CharSequences.subSequence(
-                        type.getSimpleName(), "Spreadsheet".length(), -ParserToken.class.getSimpleName().length()
+                        type.getSimpleName(), PARENT_NAME.length(), -ParserToken.class.getSimpleName().length()
                 );
 
         assertEquals(expected,
                 name,
                 () -> "Token package private unmarshall method name incorrect: " + method.toGenericString());
     }
+
+    private final static Class<SpreadsheetParserToken> PARENT = SpreadsheetParserToken.class;
+    private final static String PARENT_NAME = CharSequences.subSequence(
+            PARENT.getSimpleName(), 0, -ParserToken.class.getSimpleName().length()
+    ).toString();
 
     @Test
     public final void testAccept2() {
