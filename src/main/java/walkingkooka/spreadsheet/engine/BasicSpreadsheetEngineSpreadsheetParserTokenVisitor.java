@@ -58,6 +58,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetMultiplySymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNegativeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNotEqualsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNotEqualsSymbolParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetDigitsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParentParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParenthesisCloseSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParenthesisOpenSymbolParserToken;
@@ -314,6 +315,11 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
 
     @Override
     protected final void visit(final SpreadsheetDecimalSeparatorSymbolParserToken token) {
+        this.leaf(token);
+    }
+
+    @Override
+    protected final void visit(final SpreadsheetDigitsParserToken token) {
         this.leaf(token);
     }
     
