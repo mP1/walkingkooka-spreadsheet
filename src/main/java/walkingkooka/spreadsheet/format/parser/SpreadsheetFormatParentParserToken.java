@@ -22,9 +22,9 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import java.util.List;
 
 /**
- * Base class for a token that contain another child token.
+ * Base parent class for a {@link SpreadsheetFormatParserToken} that holds child tokens.
  */
-abstract class SpreadsheetFormatParentParserToken extends SpreadsheetFormatParserToken
+abstract public class SpreadsheetFormatParentParserToken extends SpreadsheetFormatParserToken
         implements ParentParserToken {
 
     SpreadsheetFormatParentParserToken(final List<ParserToken> value, final String text) {
