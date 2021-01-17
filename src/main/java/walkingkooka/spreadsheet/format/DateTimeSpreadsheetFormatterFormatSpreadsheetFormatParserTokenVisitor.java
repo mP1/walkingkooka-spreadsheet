@@ -127,13 +127,21 @@ final class DateTimeSpreadsheetFormatterFormatSpreadsheetFormatParserTokenVisito
                 this.appendWithLeadingZero(value.getDayOfMonth());
                 break;
             case 3:
-                this.append(this.context.weekDayNameAbbreviation(value.getDayOfWeek().getValue()));
+                this.append(this.context.weekDayNameAbbreviation(dayOfWeekIndex(value)));
                 break;
             default:
-                this.append(this.context.weekDayName(value.getDayOfWeek().getValue()));
+                this.append(this.context.weekDayName(dayOfWeekIndex(value)));
                 break;
         }
         this.month = true;
+    }
+
+    // DayOfWeek 1=Monday 2=Tuesday.
+    private static int dayOfWeekIndex(final LocalDateTime dateTime) {
+        final int value = dateTime.getDayOfWeek().getValue();
+        return 7 == value ?
+                0 :
+                value;
     }
 
     @Override

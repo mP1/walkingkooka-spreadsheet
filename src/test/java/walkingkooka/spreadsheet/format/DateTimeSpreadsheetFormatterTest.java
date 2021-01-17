@@ -199,7 +199,7 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
 
     @Test
     public void testDayDayDay31() {
-        this.parseFormatAndCheckDDD("2000-12-31T15:58:59.000", 7, "Mon!"); // dayOfWeek name
+        this.parseFormatAndCheckDDD("2000-12-31T15:58:59.000", 0, "Mon!"); // dayOfWeek name
     }
 
     @Test
@@ -222,7 +222,7 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
 
     @Test
     public void testDayDayDayDay31() {
-        this.parseFormatAndCheckDDDD("2000-12-31T15:58:59.000", 7, "Monday!"); // dayOfWeek name
+        this.parseFormatAndCheckDDDD("2000-12-31T15:58:59.000", 0, "Monday!"); // dayOfWeek name
     }
 
     @Test
