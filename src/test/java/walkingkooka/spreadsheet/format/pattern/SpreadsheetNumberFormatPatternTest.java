@@ -110,10 +110,311 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
     // HasFormatter.....................................................................................................
 
     @Test
-    public void testFormatterFormat() {
-        this.formatAndCheck2("#.000 \"abc\"",
+    public void testFormatterFormatTextLiteral() {
+        this.formatAndCheck2("\"abc\"",
                 123.5,
-                "123.500 abc");
+                "abc");
+    }
+
+    @Test
+    public void testFormatterFormatHash() {
+        this.formatAndCheck2("#",
+                0.0,
+                "");
+    }
+
+    @Test
+    public void testFormatterFormatHash2() {
+        this.formatAndCheck2("#",
+                1.0,
+                "1");
+    }
+
+    @Test
+    public void testFormatterFormatHash3() {
+        this.formatAndCheck2("#",
+                -2.0,
+                "n2");
+    }
+
+    @Test
+    public void testFormatterFormatHashHash() {
+        this.formatAndCheck2("##",
+                0.0,
+                "");
+    }
+
+    @Test
+    public void testFormatterFormatHashHash2() {
+        this.formatAndCheck2("##",
+                1.0,
+                "1");
+    }
+
+    @Test
+    public void testFormatterFormatHashHash3() {
+        this.formatAndCheck2("##",
+                -2.0,
+                "n2");
+    }
+
+    @Test
+    public void testFormatterFormatQuestion() {
+        this.formatAndCheck2("?",
+                0.0,
+                " ");
+    }
+
+    @Test
+    public void testFormatterFormatQuestion2() {
+        this.formatAndCheck2("?",
+                1.0,
+                "1");
+    }
+
+    @Test
+    public void testFormatterFormatQuestion3() {
+        this.formatAndCheck2("?",
+                -2.0,
+                "n2");
+    }
+
+    @Test
+    public void testFormatterFormatQuestionQuestion() {
+        this.formatAndCheck2("??",
+                0.0,
+                "  ");
+    }
+
+    @Test
+    public void testFormatterFormatQuestionQuestion2() {
+        this.formatAndCheck2("??",
+                1.0,
+                " 1");
+    }
+
+    @Test
+    public void testFormatterFormatQuestionQuestion3() {
+        this.formatAndCheck2("??",
+                -2.0,
+                "n 2");
+    }
+
+    @Test
+    public void testFormatterFormatZero() {
+        this.formatAndCheck2("0",
+                0.0,
+                "0");
+    }
+
+    @Test
+    public void testFormatterFormatZero2() {
+        this.formatAndCheck2("0",
+                1.0,
+                "1");
+    }
+
+    @Test
+    public void testFormatterFormatZero3() {
+        this.formatAndCheck2("0",
+                -2.0,
+                "n2");
+    }
+
+    @Test
+    public void testFormatterFormatZeroZero() {
+        this.formatAndCheck2("00",
+                0.0,
+                "00");
+    }
+
+    @Test
+    public void testFormatterFormatZeroZero2() {
+        this.formatAndCheck2("00",
+                1.0,
+                "01");
+    }
+
+    @Test
+    public void testFormatterFormatZeroZero3() {
+        this.formatAndCheck2("00",
+                -2.0,
+                "n02");
+    }
+
+    @Test
+    public void testFormatterFormatDecimalHash() {
+        this.formatAndCheck2("0.#",
+                0.0,
+                "0d");
+    }
+
+    @Test
+    public void testFormatterFormatDecimalHash2() {
+        this.formatAndCheck2("0.#",
+                1.0,
+                "1d");
+    }
+
+    @Test
+    public void testFormatterFormatDecimalHash3() {
+        this.formatAndCheck2("0.#",
+                -2.0,
+                "n2d");
+    }
+
+    @Test
+    public void testFormatterFormatDecimalHashHash() {
+        this.formatAndCheck2("0.##",
+                0.0,
+                "0d");
+    }
+
+    @Test
+    public void testFormatterFormatDecimalHashHash2() {
+        this.formatAndCheck2("0.##",
+                1.0,
+                "1d");
+    }
+
+    @Test
+    public void testFormatterFormatDecimalHashHash3() {
+        this.formatAndCheck2("0.##",
+                -2.0,
+                "n2d");
+    }
+
+    @Test
+    public void testFormatterFormatDecimalQuestion() {
+        this.formatAndCheck2("0.?",
+                0.0,
+                "0d ");
+    }
+
+    @Test
+    public void testFormatterFormatDecimalQuestion2() {
+        this.formatAndCheck2("0.?",
+                1.0,
+                "1d ");
+    }
+
+    @Test
+    public void testFormatterFormatDecimalQuestion3() {
+        this.formatAndCheck2("0.?",
+                -2.0,
+                "n2d ");
+    }
+
+    @Test
+    public void testFormatterFormatDecimalQuestionQuestion() {
+        this.formatAndCheck2("0.??",
+                0.0,
+                "0d  ");
+    }
+
+    @Test
+    public void testFormatterFormatDecimalQuestionQuestion2() {
+        this.formatAndCheck2("0.??",
+                1.0,
+                "1d  ");
+    }
+
+    @Test
+    public void testFormatterFormatDecimalQuestionQuestion3() {
+        this.formatAndCheck2("0.??",
+                -2.0,
+                "n2d  ");
+    }
+
+    @Test
+    public void testFormatterFormatDecimalZero() {
+        this.formatAndCheck2("0.0",
+                0.0,
+                "0d0");
+    }
+
+    @Test
+    public void testFormatterFormatDecimalZero2() {
+        this.formatAndCheck2("0.0",
+                1.0,
+                "1d0");
+    }
+
+    @Test
+    public void testFormatterFormatDecimalZero3() {
+        this.formatAndCheck2("0.0",
+                -2.0,
+                "n2d0");
+    }
+
+    @Test
+    public void testFormatterFormatDecimalZeroZero() {
+        this.formatAndCheck2("0.00",
+                0.0,
+                "0d00");
+    }
+
+    @Test
+    public void testFormatterFormatDecimalZeroZero2() {
+        this.formatAndCheck2("0.00",
+                1.0,
+                "1d00");
+    }
+
+    @Test
+    public void testFormatterFormatDecimalZeroZero3() {
+        this.formatAndCheck2("0.00",
+                -2.0,
+                "n2d00");
+    }
+
+    @Test
+    public void testFormatterFormatExponentHash() {
+        this.formatAndCheck2("0E+#",
+                -123.0,
+                "n1x2");
+    }
+
+    @Test
+    public void testFormatterFormatExponentHash2() {
+        this.formatAndCheck2("0e+#",
+                -123.0,
+                "n1x2");
+    }
+
+    @Test
+    public void testFormatterFormatExponentQuestion() {
+        this.formatAndCheck2("0E+?",
+                -123.0,
+                "n1x2");
+    }
+
+    @Test
+    public void testFormatterFormatExponentQuestion2() {
+        this.formatAndCheck2("0e+?",
+                -123.0,
+                "n1x2");
+    }
+
+    @Test
+    public void testFormatterFormatExponentZero() {
+        this.formatAndCheck2("0E+0",
+                -123.0,
+                "n1x2");
+    }
+
+    @Test
+    public void testFormatterFormatExponentZero2() {
+        this.formatAndCheck2("0e+0",
+                -123.0,
+                "n1x2");
+    }
+
+    @Test
+    public void testFormatterFormatMixed() {
+        this.formatAndCheck2("\"before \"0E+#",
+                -123.0,
+                "before n1x2");
     }
 
     @Override
@@ -139,7 +440,17 @@ public final class SpreadsheetNumberFormatPatternTest extends SpreadsheetFormatP
 
             @Override
             public char decimalSeparator() {
-                return '.';
+                return 'd';
+            }
+
+            @Override
+            public String exponentSymbol() {
+                return "x";
+            }
+
+            @Override
+            public char negativeSign() {
+                return 'n';
             }
 
             @Override
