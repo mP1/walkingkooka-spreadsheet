@@ -25,24 +25,24 @@ import walkingkooka.visit.Visiting;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetDayParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetDayParserToken, Integer> {
+public final class SpreadsheetDayNumberParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetDayNumberParserToken, Integer> {
 
     @Test
     public void testWithEmptyString() {
-        final SpreadsheetDayParserToken token = this.createToken("");
+        final SpreadsheetDayNumberParserToken token = this.createToken("");
         this.textAndCheck(token, "");
     }
 
     @Test
     public void testWithWhitespace() {
-        final SpreadsheetDayParserToken token = this.createToken("   ");
+        final SpreadsheetDayNumberParserToken token = this.createToken("   ");
         this.textAndCheck(token, "   ");
     }
 
     @Test
     public void testAccept() {
         final StringBuilder b = new StringBuilder();
-        final SpreadsheetDayParserToken token = this.createToken();
+        final SpreadsheetDayNumberParserToken token = this.createToken();
 
         new FakeSpreadsheetParserTokenVisitor() {
             @Override
@@ -72,7 +72,7 @@ public final class SpreadsheetDayParserTokenTest extends SpreadsheetNonSymbolPar
             }
 
             @Override
-            protected void visit(final SpreadsheetDayParserToken t) {
+            protected void visit(final SpreadsheetDayNumberParserToken t) {
                 assertSame(token, t);
                 b.append("5");
             }
@@ -96,23 +96,23 @@ public final class SpreadsheetDayParserTokenTest extends SpreadsheetNonSymbolPar
     }
 
     @Override
-    SpreadsheetDayParserToken createToken(final Integer value, final String text) {
-        return SpreadsheetDayParserToken.with(value, text);
+    SpreadsheetDayNumberParserToken createToken(final Integer value, final String text) {
+        return SpreadsheetDayNumberParserToken.with(value, text);
     }
 
     @Override
-    public SpreadsheetDayParserToken createDifferentToken() {
-        return SpreadsheetDayParserToken.with(1, "'different'");
+    public SpreadsheetDayNumberParserToken createDifferentToken() {
+        return SpreadsheetDayNumberParserToken.with(1, "'different'");
     }
 
     @Override
-    public Class<SpreadsheetDayParserToken> type() {
-        return SpreadsheetDayParserToken.class;
+    public Class<SpreadsheetDayNumberParserToken> type() {
+        return SpreadsheetDayNumberParserToken.class;
     }
 
     @Override
-    public SpreadsheetDayParserToken unmarshall(final JsonNode from,
-                                                final JsonNodeUnmarshallContext context) {
-        return SpreadsheetParserToken.unmarshallDay(from, context);
+    public SpreadsheetDayNumberParserToken unmarshall(final JsonNode from,
+                                                      final JsonNodeUnmarshallContext context) {
+        return SpreadsheetParserToken.unmarshallDayNumber(from, context);
     }
 }

@@ -98,10 +98,10 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * {@see SpreadsheetDayParserToken}
+     * {@see SpreadsheetDayNumberParserToken}
      */
-    public static SpreadsheetDayParserToken day(final int value, final String text) {
-        return SpreadsheetDayParserToken.with(value, text);
+    public static SpreadsheetDayNumberParserToken dayNumber(final int value, final String text) {
+        return SpreadsheetDayNumberParserToken.with(value, text);
     }
 
     /**
@@ -527,10 +527,10 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * Only {@link SpreadsheetDayParserToken} returns true
+     * Only {@link SpreadsheetDayNumberParserToken} returns true
      */
-    public final boolean isDay() {
-        return this instanceof SpreadsheetDayParserToken;
+    public final boolean isDayNumber() {
+        return this instanceof SpreadsheetDayNumberParserToken;
     }
 
     /**
@@ -978,8 +978,8 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
-                SpreadsheetDayParserToken.class,
-                SpreadsheetParserToken::unmarshallDay
+                SpreadsheetDayNumberParserToken.class,
+                SpreadsheetParserToken::unmarshallDayNumber
         );
 
         registerLeafParserToken(
@@ -1063,13 +1063,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetDayParserToken unmarshallDay(final JsonNode node,
-                                                   final JsonNodeUnmarshallContext context) {
+    static SpreadsheetDayNumberParserToken unmarshallDayNumber(final JsonNode node,
+                                                               final JsonNodeUnmarshallContext context) {
         return unmarshallLeafParserToken(
                 node,
                 Integer.class,
                 context,
-                SpreadsheetParserToken::day
+                SpreadsheetParserToken::dayNumber
         );
     }
 

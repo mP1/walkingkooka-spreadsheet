@@ -21,16 +21,16 @@ import java.util.Objects;
 /**
  * Represents the day within a date or date/time.
  */
-public final class SpreadsheetDayParserToken extends SpreadsheetNonSymbolParserToken<Integer> {
+public final class SpreadsheetDayNumberParserToken extends SpreadsheetNonSymbolParserToken<Integer> {
 
-    static SpreadsheetDayParserToken with(final int value, final String text) {
+    static SpreadsheetDayNumberParserToken with(final int value, final String text) {
         checkValue(value);
         Objects.requireNonNull(text, "text");
 
-        return new SpreadsheetDayParserToken(value, text);
+        return new SpreadsheetDayNumberParserToken(value, text);
     }
 
-    private SpreadsheetDayParserToken(final int value, final String text) {
+    private SpreadsheetDayNumberParserToken(final int value, final String text) {
         super(value, text);
     }
 
@@ -43,6 +43,6 @@ public final class SpreadsheetDayParserToken extends SpreadsheetNonSymbolParserT
 
     @Override
     boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetDayParserToken;
+        return other instanceof SpreadsheetDayNumberParserToken;
     }
 }
