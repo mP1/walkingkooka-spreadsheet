@@ -22,6 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
@@ -35,7 +36,8 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.List;
 
 public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetTextFormatPattern,
-        SpreadsheetFormatTextParserToken> {
+        SpreadsheetFormatTextParserToken,
+        String> {
 
     @Test
     public void testWithAmpmFails() {
@@ -231,58 +233,46 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
     // HasFormatter.....................................................................................................
 
     @Test
-    public void testFormatterFormat() {
-        this.formatAndCheck(this.createPattern("* \"text-literal\" @").formatter(),
+    public void testFormatterFormatTextLiteralTextPlaceholder() {
+        this.formatAndCheck2(
+                "* \"text-literal\" @",
                 "ABC123",
-                new FakeSpreadsheetFormatterContext() {
-
-                    @Override
-                    public boolean canConvert(final Object value,
-                                              final Class<?> target) {
-                        return value instanceof String && target == String.class;
-                    }
-
-                    @Override
-                    public <T> Either<T, String> convert(final Object value, final Class<T> target) {
-                        return this.canConvert(value, target) ?
-                                Either.left(Cast.to(value.toString())) :
-                                this.failConversion(value, target);
-                    }
-
-                    @Override
-                    public int width() {
-                        return 2;
-                    }
-                },
-                "  text-literal ABC123");
+                "  text-literal ABC123"
+        );
     }
 
     // https://github.com/mP1/walkingkooka-spreadsheet/issues/1211 Formatting string with "@@" repeats string 4x should be 2x
     @Test
     public void testFormatterFormatPlaceholderPlaceholder() {
-        this.formatAndCheck(this.createPattern("@@").formatter(),
+        this.formatAndCheck2(
+                "@@",
                 "ABC123",
-                new FakeSpreadsheetFormatterContext() {
+                "ABC123ABC123"
+        );
+    }
 
-                    @Override
-                    public boolean canConvert(final Object value,
-                                              final Class<?> target) {
-                        return value instanceof String && target == String.class;
-                    }
+    @Override
+    SpreadsheetFormatterContext formatterContext() {
+        return new FakeSpreadsheetFormatterContext() {
 
-                    @Override
-                    public <T> Either<T, String> convert(final Object value, final Class<T> target) {
-                        return this.canConvert(value, target) ?
-                                Either.left(Cast.to(value.toString())) :
-                                this.failConversion(value, target);
-                    }
+            @Override
+            public boolean canConvert(final Object value,
+                                      final Class<?> target) {
+                return value instanceof String && target == String.class;
+            }
 
-                    @Override
-                    public int width() {
-                        return 2;
-                    }
-                },
-                "ABC123ABC123");
+            @Override
+            public <T> Either<T, String> convert(final Object value, final Class<T> target) {
+                return this.canConvert(value, target) ?
+                        Either.left(Cast.to(value.toString())) :
+                        this.failConversion(value, target);
+            }
+
+            @Override
+            public int width() {
+                return 2;
+            }
+        };
     }
 
     // ClassTesting.....................................................................................................

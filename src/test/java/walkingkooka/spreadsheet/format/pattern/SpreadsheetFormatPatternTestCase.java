@@ -20,6 +20,7 @@ package walkingkooka.spreadsheet.format.pattern;
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
@@ -31,7 +32,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetFormatPattern<T>,
-        T extends SpreadsheetFormatParentParserToken> extends SpreadsheetPatternTestCase<P, T>
+        T extends SpreadsheetFormatParentParserToken,
+        V> extends SpreadsheetPatternTestCase<P, T>
         implements SpreadsheetFormatterTesting {
 
     SpreadsheetFormatPatternTestCase() {
@@ -95,6 +97,21 @@ public abstract class SpreadsheetFormatPatternTestCase<P extends SpreadsheetForm
     }
 
     abstract T createFormatParserToken(final List<ParserToken> tokens, final String text);
+
+    // format...........................................................................................................
+
+    final void formatAndCheck2(final String pattern,
+                               final V value,
+                               final String expected) {
+        this.formatAndCheck(
+                this.createPattern(pattern).formatter(),
+                value,
+                this.formatterContext(),
+                expected
+        );
+    }
+
+    abstract SpreadsheetFormatterContext formatterContext();
 
     // Parse............................................................................................................
 

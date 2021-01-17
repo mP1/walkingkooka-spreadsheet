@@ -37,7 +37,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetDateFormatPattern,
-        SpreadsheetFormatDateParserToken> {
+        SpreadsheetFormatDateParserToken,
+        LocalDate> {
 
     @Test
     public void testWithAmpmFails() {
@@ -125,21 +126,24 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
 
     @Test
     public void testFormatterFormat() {
-        this.formatAndCheck(this.createPattern("yyyy mm dd \"abc\"").formatter(),
+        this.formatAndCheck2(
+                "yyyy mm dd \"abc\"",
                 LocalDate.of(2000, 12, 31),
-                this.context(),
-                "2000 12 31 abc");
+                "2000 12 31 abc"
+        );
     }
 
     @Test
     public void testFormatterFormatIncludesComma() {
-        this.formatAndCheck(this.createPattern("yyyy,mm,dd").formatter(),
+        this.formatAndCheck2(
+                "yyyy,mm,dd",
                 LocalDate.of(2000, 12, 31),
-                this.context(),
-                "2000,12,31");
+                "2000,12,31"
+        );
     }
 
-    private SpreadsheetFormatterContext context() {
+    @Override
+    SpreadsheetFormatterContext formatterContext() {
         return new FakeSpreadsheetFormatterContext() {
 
             @Override
