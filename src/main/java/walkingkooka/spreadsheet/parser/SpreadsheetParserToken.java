@@ -37,6 +37,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallException;
 import walkingkooka.visit.Visiting;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -108,6 +109,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public static SpreadsheetDecimalSeparatorSymbolParserToken decimalSeparatorSymbol(final String value, final String text) {
         return SpreadsheetDecimalSeparatorSymbolParserToken.with(value, text);
+    }
+
+    /**
+     * {@see SpreadsheetDigitsParserToken}
+     */
+    public static SpreadsheetDigitsParserToken digits(final BigInteger value, final String text) {
+        return SpreadsheetDigitsParserToken.with(value, text);
     }
 
     /**
@@ -530,6 +538,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public final boolean isDecimalSeparatorSymbol() {
         return this instanceof SpreadsheetDecimalSeparatorSymbolParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetDigitsParserToken} returns true
+     */
+    public final boolean isDigits() {
+        return this instanceof SpreadsheetDigitsParserToken;
     }
 
     /**
@@ -968,6 +983,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
+                SpreadsheetDigitsParserToken.class,
+                SpreadsheetParserToken::unmarshallDigits
+        );
+
+        registerLeafParserToken(
                 SpreadsheetExpressionNumberParserToken.class,
                 SpreadsheetParserToken::unmarshallExpressionNumber
         );
@@ -1050,6 +1070,16 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 Integer.class,
                 context,
                 SpreadsheetParserToken::day
+        );
+    }
+
+    static SpreadsheetDigitsParserToken unmarshallDigits(final JsonNode node,
+                                                         final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                BigInteger.class,
+                context,
+                SpreadsheetParserToken::digits
         );
     }
 
