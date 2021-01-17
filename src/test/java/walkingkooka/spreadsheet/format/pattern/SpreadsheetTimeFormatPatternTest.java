@@ -37,7 +37,8 @@ import java.time.LocalTime;
 import java.util.List;
 
 public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetTimeFormatPattern,
-        SpreadsheetFormatTimeParserToken> {
+        SpreadsheetFormatTimeParserToken,
+        LocalTime> {
 
     @Test
     public void testWithDateFails() {
@@ -137,21 +138,24 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
 
     @Test
     public void testFormatterFormat() {
-        this.formatAndCheck(this.createPattern("hh mm ss \"abc\"").formatter(),
+        this.formatAndCheck2(
+                "hh mm ss \"abc\"",
                 LocalTime.of(12, 58, 59),
-                this.context(),
-                "12 58 59 abc");
+                "12 58 59 abc"
+        );
     }
 
     @Test
     public void testFormatterFormatComma() {
-        this.formatAndCheck(this.createPattern("hh,mm,ss").formatter(),
+        this.formatAndCheck2(
+                "hh,mm,ss",
                 LocalTime.of(12, 58, 59),
-                this.context(),
-                "12,58,59");
+                "12,58,59"
+        );
     }
 
-    private SpreadsheetFormatterContext context() {
+    @Override
+    SpreadsheetFormatterContext formatterContext() {
         return new FakeSpreadsheetFormatterContext() {
 
             @Override

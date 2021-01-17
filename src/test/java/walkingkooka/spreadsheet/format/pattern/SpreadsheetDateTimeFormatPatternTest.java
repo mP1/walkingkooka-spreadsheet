@@ -41,7 +41,8 @@ import java.time.temporal.Temporal;
 import java.util.List;
 
 public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetDateTimeFormatPattern,
-        SpreadsheetFormatDateTimeParserToken> {
+        SpreadsheetFormatDateTimeParserToken,
+        LocalDateTime> {
 
     @Test
     public void testWithCurrencyFails() {
@@ -145,21 +146,24 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
 
     @Test
     public void testFormatterFormat() {
-        this.formatAndCheck(this.createPattern("yyyy mm dd hh mm ss \"abc\"").formatter(),
+        this.formatAndCheck2(
+                "yyyy mm dd hh mm ss \"abc\"",
                 LocalDateTime.of(2000, 12, 31, 12, 58, 59),
-                this.context(),
-                "2000 12 31 12 58 59 abc");
+                "2000 12 31 12 58 59 abc"
+        );
     }
 
     @Test
     public void testFormatterFormatComma() {
-        this.formatAndCheck(this.createPattern("yyyy,mm,dd,hh,mm,ss").formatter(),
+        this.formatAndCheck2(
+                "yyyy,mm,dd,hh,mm,ss",
                 LocalDateTime.of(2000, 12, 31, 12, 58, 59),
-                this.context(),
-                "2000,12,31,12,58,59");
+                "2000,12,31,12,58,59"
+        );
     }
 
-    private SpreadsheetFormatterContext context() {
+    @Override
+    final SpreadsheetFormatterContext formatterContext() {
         return new FakeSpreadsheetFormatterContext() {
 
             @Override
