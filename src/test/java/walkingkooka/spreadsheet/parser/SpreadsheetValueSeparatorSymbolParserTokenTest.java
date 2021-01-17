@@ -96,6 +96,6 @@ public final class SpreadsheetValueSeparatorSymbolParserTokenTest extends Spread
     @Override
     public SpreadsheetValueSeparatorSymbolParserToken unmarshall(final JsonNode from,
                                                                  final JsonNodeUnmarshallContext context) {
-        return SpreadsheetParserToken.unmarshallFunctionParameterSeparatorSymbol(from, context);
+        return SpreadsheetParserToken.unmarshallValueSeparatorSymbol(from, context);
     }
 }
