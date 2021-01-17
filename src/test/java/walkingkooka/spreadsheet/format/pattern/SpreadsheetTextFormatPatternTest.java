@@ -233,11 +233,13 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
     // HasFormatter.....................................................................................................
 
     @Test
-    public void testFormatterFormatTextLiteralTextPlaceholder() {
+    public void testFormatterFormatTextPlaceholder() {
+        final String text = "abc123";
+
         this.formatAndCheck2(
-                "* \"text-literal\" @",
-                "ABC123",
-                "  text-literal ABC123"
+                "@",
+                text,
+                text
         );
     }
 
@@ -248,6 +250,43 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
                 "@@",
                 "ABC123",
                 "ABC123ABC123"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatTextLiteral() {
+        this.formatAndCheck2(
+                "\"text-literal-123\"",
+                "xyz456",
+                "text-literal-123"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatTextLiteralTextPlaceholder() {
+        this.formatAndCheck2(
+                "\"text-literal\" @",
+                "ABC123",
+                "text-literal ABC123"
+        );
+    }
+
+
+    @Test
+    public void testFormatterFormatStar() {
+        this.formatAndCheck2(
+                "*1",
+                "abc123",
+                "11"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatNonSpecial() {
+        this.formatAndCheck2(
+                " @",
+                "abc123",
+                " abc123"
         );
     }
 
