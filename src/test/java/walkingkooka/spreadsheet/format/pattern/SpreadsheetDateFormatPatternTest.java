@@ -21,6 +21,8 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.Converters;
+import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
@@ -35,6 +37,7 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 
 public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPatternTestCase<SpreadsheetDateFormatPattern,
         SpreadsheetFormatDateParserToken,
@@ -125,20 +128,245 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
     // HasFormatter.....................................................................................................
 
     @Test
-    public void testFormatterFormat() {
+    public void testFormatterFormatYy() {
         this.formatAndCheck2(
-                "yyyy mm dd \"abc\"",
+                "yy",
                 LocalDate.of(2000, 12, 31),
-                "2000 12 31 abc"
+                "00"
         );
     }
 
     @Test
-    public void testFormatterFormatIncludesComma() {
+    public void testFormatterFormatYy2() {
+        this.formatAndCheck2(
+                "yy",
+                LocalDate.of(1999, 12, 31),
+                "99"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatYyyy() {
+        this.formatAndCheck2(
+                "yyyy",
+                LocalDate.of(2000, 12, 31),
+                "2000"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatYyyy2() {
+        this.formatAndCheck2(
+                "yyyy",
+                LocalDate.of(1999, 12, 31),
+                "1999"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatM() {
+        this.formatAndCheck2(
+                "m",
+                LocalDate.of(2000, 1, 31),
+                "1"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatM2() {
+        this.formatAndCheck2(
+                "m",
+                LocalDate.of(2000, 12, 31),
+                "12"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatMm() {
+        this.formatAndCheck2(
+                "mm",
+                LocalDate.of(2000, 1, 31),
+                "01"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatMm2() {
+        this.formatAndCheck2(
+                "mm",
+                LocalDate.of(2000, 12, 31),
+                "12"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatMmm() {
+        this.formatAndCheck2(
+                "mmm",
+                LocalDate.of(2000, 1, 31),
+                "Jan."
+        );
+    }
+
+    @Test
+    public void testFormatterFormatMmm2() {
+        this.formatAndCheck2(
+                "mmm",
+                LocalDate.of(2000, 12, 31),
+                "Dec."
+        );
+    }
+
+    @Test
+    public void testFormatterFormatMmmm() {
+        this.formatAndCheck2(
+                "mmmm",
+                LocalDate.of(2000, 1, 31),
+                "January"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatMmmm2() {
+        this.formatAndCheck2(
+                "mmmm",
+                LocalDate.of(2000, 12, 31),
+                "December"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatMmmmm() {
+        this.formatAndCheck2(
+                "mmmmm",
+                LocalDate.of(2000, 1, 31),
+                "January"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatMmmmm2() {
+        this.formatAndCheck2(
+                "mmmmm",
+                LocalDate.of(2000, 12, 31),
+                "December"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatD() {
+        this.formatAndCheck2(
+                "d",
+                LocalDate.of(2000, 12, 1),
+                "1"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatD2() {
+        this.formatAndCheck2(
+                "d",
+                LocalDate.of(2000, 12, 31),
+                "31"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatDd() {
+        this.formatAndCheck2(
+                "dd",
+                LocalDate.of(2000, 12, 1),
+                "01"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatDd2() {
+        this.formatAndCheck2(
+                "dd",
+                LocalDate.of(2000, 12, 31),
+                "31"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatDdd() {
+        this.formatAndCheck2(
+                "ddd",
+                LocalDate.of(2000, 12, 1),
+                "Fri."
+        );
+    }
+
+    @Test
+    public void testFormatterFormatDdd2() {
+        this.formatAndCheck2(
+                "ddd",
+                LocalDate.of(2000, 12, 31),
+                "Sun."
+        );
+    }
+
+    @Test
+    public void testFormatterFormatDddd() {
+        this.formatAndCheck2(
+                "dddd",
+                LocalDate.of(2000, 12, 1),
+                "Friday"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatDddd2() {
+        this.formatAndCheck2(
+                "dddd",
+                LocalDate.of(2000, 12, 31),
+                "Sunday"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatDdddd() {
+        this.formatAndCheck2(
+                "ddddd",
+                LocalDate.of(2000, 12, 1),
+                "Friday"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatDdddd2() {
+        this.formatAndCheck2(
+                "ddddd",
+                LocalDate.of(2000, 12, 31),
+                "Sunday"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatYyyymmdd() {
+        this.formatAndCheck2(
+                "yyyymmdd",
+                LocalDate.of(2000, 12, 31),
+                "20001231"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatYyyymmdd2() {
         this.formatAndCheck2(
                 "yyyy,mm,dd",
                 LocalDate.of(2000, 12, 31),
                 "2000,12,31"
+        );
+    }
+
+    @Test
+    public void testFormatterFormatLiteral() {
+        this.formatAndCheck2(
+                ",",
+                LocalDate.of(2000, 12, 31),
+                ","
         );
     }
 
@@ -157,6 +385,55 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
                                                  final Class<T> target) {
                 return Converters.localDateLocalDateTime()
                         .convert(value, target, ConverterContexts.fake());
+            }
+
+            @Override
+            public List<String> monthNames() {
+                return this.dateTimeContext().monthNames();
+            }
+
+            @Override
+            public String monthName(final int month) {
+                return this.dateTimeContext().monthName(month);
+            }
+
+            @Override
+            public List<String> monthNameAbbreviations() {
+                return this.dateTimeContext().monthNameAbbreviations();
+            }
+
+            @Override
+            public String monthNameAbbreviation(final int month) {
+                return this.dateTimeContext().monthNameAbbreviation(month);
+            }
+
+            @Override
+            public int twoDigitYear() {
+                return this.dateTimeContext().twoDigitYear();
+            }
+
+            @Override
+            public List<String> weekDayNames() {
+                return this.dateTimeContext().weekDayNames();
+            }
+
+            @Override
+            public String weekDayName(final int day) {
+                return this.dateTimeContext().weekDayName(day);
+            }
+
+            @Override
+            public List<String> weekDayNameAbbreviations() {
+                return this.dateTimeContext().weekDayNameAbbreviations();
+            }
+
+            @Override
+            public String weekDayNameAbbreviation(final int day) {
+                return this.dateTimeContext().weekDayNameAbbreviation(day);
+            }
+
+            private DateTimeContext dateTimeContext() {
+                return DateTimeContexts.locale(Locale.forLanguageTag("EN-AU"), 20);
             }
         };
     }
