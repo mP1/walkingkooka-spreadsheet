@@ -28,18 +28,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 public final class SpreadsheetMonthNameParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetMonthNameParserToken, Integer> {
 
     @Test
-    public void testWithEmptyString() {
-        final SpreadsheetMonthNameParserToken token = this.createToken("");
-        this.textAndCheck(token, "");
-    }
-
-    @Test
-    public void testWithWhitespace() {
-        final SpreadsheetMonthNameParserToken token = this.createToken("   ");
-        this.textAndCheck(token, "   ");
-    }
-
-    @Test
     public void testAccept() {
         final StringBuilder b = new StringBuilder();
         final SpreadsheetMonthNameParserToken token = this.createToken();
