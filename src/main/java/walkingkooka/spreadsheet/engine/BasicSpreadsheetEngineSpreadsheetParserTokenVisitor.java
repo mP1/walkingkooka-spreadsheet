@@ -56,6 +56,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetLessThanSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMinusSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMinuteParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMonthNameAbbreviationParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetMonthNameInitialParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMonthNameParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMonthNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMultiplicationParserToken;
@@ -424,6 +425,11 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
 
     @Override
     protected final void visit(final SpreadsheetMonthNameAbbreviationParserToken token) {
+        this.leaf(token);
+    }
+
+    @Override
+    protected final void visit(final SpreadsheetMonthNameInitialParserToken token) {
         this.leaf(token);
     }
 
