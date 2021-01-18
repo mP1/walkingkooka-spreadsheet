@@ -294,10 +294,10 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * {@see SpreadsheetMonthParserToken}
+     * {@see SpreadsheetMonthNumberParserToken}
      */
-    public static SpreadsheetMonthParserToken month(final int value, final String text) {
-        return SpreadsheetMonthParserToken.with(value, text);
+    public static SpreadsheetMonthNumberParserToken monthNumber(final int value, final String text) {
+        return SpreadsheetMonthNumberParserToken.with(value, text);
     }
 
     /**
@@ -737,10 +737,10 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * Only {@link SpreadsheetMonthParserToken} returns true
+     * Only {@link SpreadsheetMonthNumberParserToken} returns true
      */
-    public final boolean isMonth() {
-        return this instanceof SpreadsheetMonthParserToken;
+    public final boolean isMonthNumber() {
+        return this instanceof SpreadsheetMonthNumberParserToken;
     }
 
     /**
@@ -1051,8 +1051,8 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
-                SpreadsheetMonthParserToken.class,
-                SpreadsheetParserToken::unmarshallMonth
+                SpreadsheetMonthNumberParserToken.class,
+                SpreadsheetParserToken::unmarshallMonthNumber
         );
 
         registerLeafParserToken(
@@ -1191,13 +1191,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetMonthParserToken unmarshallMonth(final JsonNode node,
-                                                       final JsonNodeUnmarshallContext context) {
+    static SpreadsheetMonthNumberParserToken unmarshallMonthNumber(final JsonNode node,
+                                                                   final JsonNodeUnmarshallContext context) {
         return unmarshallLeafParserToken(
                 node,
                 Integer.class,
                 context,
-                SpreadsheetParserToken::month
+                SpreadsheetParserToken::monthNumber
         );
     }
 

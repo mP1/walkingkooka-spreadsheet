@@ -19,18 +19,17 @@ package walkingkooka.spreadsheet.parser;
 import java.util.Objects;
 
 /**
- * Represents the month within a date or date/time.
+ * Represents the month number within a date or date/time.
  */
-public final class SpreadsheetMonthParserToken extends SpreadsheetNonSymbolParserToken<Integer> {
+public final class SpreadsheetMonthNumberParserToken extends SpreadsheetNonSymbolParserToken<Integer> {
 
-    static SpreadsheetMonthParserToken with(final int value, final String text) {
-        checkValue(value);
+    static SpreadsheetMonthNumberParserToken with(final int value, final String text) {
         Objects.requireNonNull(text, "text");
 
-        return new SpreadsheetMonthParserToken(value, text);
+        return new SpreadsheetMonthNumberParserToken(value, text);
     }
 
-    private SpreadsheetMonthParserToken(final int value, final String text) {
+    private SpreadsheetMonthNumberParserToken(final int value, final String text) {
         super(value, text);
     }
 
@@ -43,6 +42,6 @@ public final class SpreadsheetMonthParserToken extends SpreadsheetNonSymbolParse
 
     @Override
     boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetMonthParserToken;
+        return other instanceof SpreadsheetMonthNumberParserToken;
     }
 }
