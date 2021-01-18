@@ -294,6 +294,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetMillisecondParserToken}
+     */
+    public static SpreadsheetMillisecondParserToken millisecond(final int value, final String text) {
+        return SpreadsheetMillisecondParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetMinuteParserToken}
      */
     public static SpreadsheetMinuteParserToken minute(final int value, final String text) {
@@ -765,6 +772,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * Only {@link SpreadsheetMillisecondParserToken} returns true
+     */
+    public final boolean isMillisecond() {
+        return this instanceof SpreadsheetMillisecondParserToken;
+    }
+
+    /**
      * Only {@link SpreadsheetMinuteParserToken} returns true
      */
     public final boolean isMinute() {
@@ -1102,6 +1116,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
+                SpreadsheetMillisecondParserToken.class,
+                SpreadsheetParserToken::unmarshallMillisecond
+        );
+
+        registerLeafParserToken(
                 SpreadsheetMinuteParserToken.class,
                 SpreadsheetParserToken::unmarshallMinute
         );
@@ -1244,6 +1263,16 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 SpreadsheetLabelName.class,
                 context,
                 SpreadsheetParserToken::labelName
+        );
+    }
+
+    static SpreadsheetMillisecondParserToken unmarshallMillisecond(final JsonNode node,
+                                                                   final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                Integer.class,
+                context,
+                SpreadsheetParserToken::millisecond
         );
     }
 
