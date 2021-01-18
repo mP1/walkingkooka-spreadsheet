@@ -138,7 +138,7 @@ final class SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer implemen
     private static ParserToken apostropheString(final ParserToken token,
                                                 final ParserContext context) {
         return SpreadsheetParserToken.text(
-                ParserToken.text(clean(token)),
+                clean(token),
                 token.text()
         );
     }

@@ -68,6 +68,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -116,11 +117,20 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private void parseStringAndCheck(final String text) {
+        final String apostropheText = '\'' + text;
+
         this.parseAndCheck(
                 SpreadsheetParsers.valueOrExpression(),
-                '\'' + text,
-                SpreadsheetTextParserToken.text(text, '\'' + text),
-                '\'' + text,
+                apostropheText,
+                SpreadsheetTextParserToken.text(
+                        Lists.of(
+                                SpreadsheetParserToken.apostropheSymbol("'", "'"),
+                                SpreadsheetParserToken.textLiteral(text, text)
+                        ).stream()
+                                .filter(t -> !t.text().isEmpty())
+                                .collect(Collectors.toList()),
+                        apostropheText),
+                apostropheText,
                 ""
         );
     }
@@ -132,7 +142,28 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final String text = "\"abc-123\"";
 
         this.parseExpressionAndCheck(text,
-                SpreadsheetTextParserToken.text("abc-123", text),
+                SpreadsheetParserToken.text(
+                        Lists.of(
+                                doubleQuotes(),
+                                SpreadsheetParserToken.textLiteral("abc-123", "abc-123"),
+                                doubleQuotes()
+                        ),
+                        text),
+                text);
+    }
+
+    @Test
+    public void testTextWithEscapedDoubleQuote() {
+        final String text = "\"abc-\"\"-123\"";
+
+        this.parseExpressionAndCheck(text,
+                SpreadsheetParserToken.text(
+                        Lists.of(
+                                doubleQuotes(),
+                                SpreadsheetParserToken.textLiteral("abc-\"-123", "abc-\"\"-123"),
+                                doubleQuotes()
+                        ),
+                        text),
                 text);
     }
 
@@ -2009,6 +2040,10 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private SpreadsheetParserToken divide() {
         return SpreadsheetParserToken.divideSymbol("/", "/");
+    }
+
+    private SpreadsheetParserToken doubleQuotes() {
+        return SpreadsheetParserToken.doubleQuoteSymbol("\"", "\"");
     }
 
     private SpreadsheetParserToken equals() {

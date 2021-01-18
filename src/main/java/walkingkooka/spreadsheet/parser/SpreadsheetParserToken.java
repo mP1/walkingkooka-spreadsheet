@@ -429,7 +429,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     /**
      * {@see SpreadsheetTextParserToken}
      */
-    public static SpreadsheetTextParserToken text(final String value, final String text) {
+    public static SpreadsheetTextParserToken text(final List<ParserToken> value, final String text) {
         return SpreadsheetTextParserToken.with(value, text);
     }
 
@@ -1101,12 +1101,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         registerLeafParserToken(
                 SpreadsheetSecondsParserToken.class,
                 SpreadsheetParserToken::unmarshallSeconds
-        );
-
-        registerLeafParserToken(
-                SpreadsheetTextParserToken.class,
-                SpreadsheetParserToken::unmarshallText
-        );
+        );;
 
         registerLeafParserToken(
                 SpreadsheetTextLiteralParserToken.class,
@@ -1276,16 +1271,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 Integer.class,
                 context,
                 SpreadsheetParserToken::seconds
-        );
-    }
-
-    static SpreadsheetTextParserToken unmarshallText(final JsonNode node,
-                                                     final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
-                node,
-                String.class,
-                context,
-                SpreadsheetParserToken::text
         );
     }
 
@@ -1790,6 +1775,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 SpreadsheetPercentageParserToken.class,
                 SpreadsheetParserToken::unmarshallPercentage
         );
+
+        registerParentParserToken(
+                SpreadsheetTextParserToken.class,
+                SpreadsheetParserToken::unmarshallText
+        );
     }
 
     static SpreadsheetAdditionParserToken unmarshallAddition(final JsonNode node,
@@ -1897,6 +1887,15 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 node,
                 context,
                 SpreadsheetParserToken::subtraction
+        );
+    }
+
+    static SpreadsheetTextParserToken unmarshallText(final JsonNode node,
+                                                     final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::text
         );
     }
 

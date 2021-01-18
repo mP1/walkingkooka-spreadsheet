@@ -254,6 +254,27 @@ final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor exte
         this.exitBinary(Expression::subtract, token);
     }
 
+    @Override
+    protected Visiting startVisit(final SpreadsheetTextParserToken token) {
+        this.text = new StringBuilder();
+        return this.enter();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetTextParserToken token) {
+        this.exit();
+        this.add(
+                Expression.string(this.text.toString()),
+                token
+        );
+        this.text = null;
+    }
+
+    /**
+     * Collects the text within a {@link SpreadsheetTextParserToken}.
+     */
+    private StringBuilder text = new StringBuilder();
+    
     // visit....................................................................................................
     // ignore all SymbolParserTokens, dont bother to collect them.
 
@@ -268,13 +289,8 @@ final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor exte
     }
 
     @Override
-    protected void visit(final SpreadsheetTextParserToken token) {
-        this.add(Expression.string(token.value()), token);
-    }
-
-    @Override
     protected void visit(final SpreadsheetTextLiteralParserToken token) {
-        this.add(Expression.string(token.value()), token);
+        this.text.append(token.value());
     }
 
     // GENERAL PURPOSE .................................................................................................

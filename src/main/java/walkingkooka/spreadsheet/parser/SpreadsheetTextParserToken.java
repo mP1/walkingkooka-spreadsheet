@@ -16,23 +16,24 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.visit.Visiting;
+
+import java.util.List;
 import java.util.Objects;
 
 import java.util.Objects;
 
 /**
- * Holds a text which may be empty
+ * Holds a text expression in both forms an apostrophe prefixed string literal and a double quoted string.
  */
-public final class SpreadsheetTextParserToken extends SpreadsheetNonSymbolParserToken<String> {
+public final class SpreadsheetTextParserToken extends SpreadsheetParentParserToken {
 
-    static SpreadsheetTextParserToken with(final String value, final String text) {
-        checkValue(value);
-        Objects.requireNonNull(text, "text"); // empty string is okay eg apostrophe string or empty string
-
-        return new SpreadsheetTextParserToken(value, text);
+    static SpreadsheetTextParserToken with(final List<ParserToken> value, final String text) {
+        return new SpreadsheetTextParserToken(copyAndCheckTokens(value), checkText(text));
     }
 
-    private SpreadsheetTextParserToken(final String value, final String text) {
+    private SpreadsheetTextParserToken(final List<ParserToken> value, final String text) {
         super(value, text);
     }
 
@@ -40,8 +41,13 @@ public final class SpreadsheetTextParserToken extends SpreadsheetNonSymbolParser
 
     @Override
     void accept(final SpreadsheetParserTokenVisitor visitor) {
-        visitor.visit(this);
+        if (Visiting.CONTINUE == visitor.startVisit(this)) {
+            this.acceptValues(visitor);
+        }
+        visitor.endVisit(this);
     }
+
+    // Object...........................................................................................................
 
     @Override
     boolean canBeEqual(final Object other) {

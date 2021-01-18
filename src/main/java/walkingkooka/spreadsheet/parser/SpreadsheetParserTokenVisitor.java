@@ -203,6 +203,16 @@ public abstract class SpreadsheetParserTokenVisitor extends ParserTokenVisitor {
         // nop
     }
 
+    // SpreadsheetTextParserToken....................................................................................
+
+    protected Visiting startVisit(final SpreadsheetTextParserToken token) {
+        return Visiting.CONTINUE;
+    }
+
+    protected void endVisit(final SpreadsheetTextParserToken token) {
+        // nop
+    }
+
     // SpreadsheetLeafParserToken ....................................................................................
 
     protected void visit(final SpreadsheetAmPmParserToken token) {
@@ -346,10 +356,6 @@ public abstract class SpreadsheetParserTokenVisitor extends ParserTokenVisitor {
     }
 
     protected void visit(final SpreadsheetSecondsParserToken token) {
-        // nop
-    }
-
-    protected void visit(final SpreadsheetTextParserToken token) {
         // nop
     }
 

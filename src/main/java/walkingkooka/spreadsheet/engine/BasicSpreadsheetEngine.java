@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.engine;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellBox;
@@ -43,6 +44,7 @@ import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetRangeStore;
 import walkingkooka.spreadsheet.store.SpreadsheetCellStore;
 import walkingkooka.text.cursor.parser.ParserException;
+import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.text.Length;
@@ -379,7 +381,14 @@ final class BasicSpreadsheetEngine implements SpreadsheetEngine {
     /**
      * This {@link SpreadsheetParserToken} is set upon {@link SpreadsheetFormula} when the {@link SpreadsheetFormula#text()} is empty.
      */
-    final static Optional<SpreadsheetParserToken> EMPTY_TOKEN = Optional.of(SpreadsheetParserToken.text("", ""));
+    final static Optional<SpreadsheetParserToken> EMPTY_TOKEN = Optional.of(
+            SpreadsheetParserToken.text(
+                    Lists.<ParserToken>of( // J2clTranspiler: Error:BasicSpreadsheetEngine.java:386: The method of(T...) of type Lists is not applicable as the formal varargs element type T is not accessible here
+                            SpreadsheetParserToken.apostropheSymbol("\"", "\""),
+                            SpreadsheetParserToken.textLiteral("", "")
+                    ),
+                    "\"")
+    );
 
     /**
      * This {@link Expression} is set upon {@link SpreadsheetFormula} when the {@link SpreadsheetFormula#text()} is empty.
