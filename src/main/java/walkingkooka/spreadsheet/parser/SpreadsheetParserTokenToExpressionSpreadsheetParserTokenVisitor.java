@@ -27,6 +27,7 @@ import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.visit.Visiting;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -290,10 +291,29 @@ final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor exte
      * Collects the text within a {@link SpreadsheetTextParserToken}.
      */
     private StringBuilder text = new StringBuilder();
-    
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetTimeParserToken token) {
+        this.resetTime();
+        return this.enter();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetTimeParserToken token) {
+        this.exit();
+        this.add(
+                Expression.localTime(this.toLocalTime()),
+                token
+        );
+    }
+
     // visit....................................................................................................
     // ignore all SymbolParserTokens, dont bother to collect them.
 
+    @Override
+    protected void visit(final SpreadsheetAmPmParserToken token) {
+        this.ampm = token.value();
+    }
 
     @Override
     protected void visit(final SpreadsheetDayNumberParserToken token) {
@@ -306,8 +326,23 @@ final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor exte
     }
 
     @Override
+    protected void visit(final SpreadsheetHourParserToken token) {
+        this.hour = token.value();
+    }
+
+    @Override
     protected void visit(final SpreadsheetLabelNameParserToken token) {
         this.addReference(token.value(), token);
+    }
+
+    @Override
+    protected void visit(final SpreadsheetMillisecondParserToken token) {
+        this.millis = token.value();
+    }
+
+    @Override
+    protected void visit(final SpreadsheetMinuteParserToken token) {
+        this.minute = token.value();
     }
 
     @Override
@@ -328,6 +363,11 @@ final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor exte
     @Override
     protected void visit(final SpreadsheetMonthNumberParserToken token) {
         this.month = token.value();
+    }
+
+    @Override
+    protected void visit(final SpreadsheetSecondsParserToken token) {
+        this.seconds = token.value();
     }
 
     @Override
@@ -359,6 +399,35 @@ final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor exte
     private int day;
     private int month;
     private int year;
+
+    // TIME ............................................................................................................
+
+    private void resetTime() {
+        this.hour = 0;
+        this.minute = 0;
+        this.seconds = 0;
+        this.millis = 0;
+        this.ampm = 0;
+    }
+
+    /**
+     * Creates a {@link LocalTime} assuming defaults have been set and an entire {@link SpreadsheetTimeParserToken} has
+     * been visited.
+     */
+    private LocalTime toLocalTime() {
+        return LocalTime.of(
+                this.hour + this.ampm,
+                this.minute,
+                this.seconds,
+                this.millis
+        );
+    }
+
+    private int hour;
+    private int minute;
+    private int seconds;
+    private int millis;
+    private int ampm;
 
     // GENERAL PURPOSE .................................................................................................
 

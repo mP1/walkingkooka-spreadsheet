@@ -98,10 +98,18 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
         return SpreadsheetParserToken.apostropheSymbol(APOSTROPHE, APOSTROPHE);
     }
 
+    final SpreadsheetTextLiteralParserToken colonTextLiteral() {
+        return SpreadsheetParserToken.textLiteral(":", ":");
+    }
+
     final static int DAY = 31;
 
     final SpreadsheetDayNumberParserToken dayNumber() {
         return SpreadsheetParserToken.dayNumber(DAY, "" + DAY);
+    }
+
+    final SpreadsheetDecimalSeparatorSymbolParserToken decimalSeparator() {
+        return SpreadsheetParserToken.decimalSeparatorSymbol(".", ".");
     }
 
     final SpreadsheetDoubleQuoteSymbolParserToken doubleQuoteSymbol() {
@@ -110,6 +118,24 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
 
     final SpreadsheetEqualsSymbolParserToken equalsSymbol() {
         return SpreadsheetParserToken.equalsSymbol("=", "=");
+    }
+
+    final static int HOUR = 12;
+
+    final SpreadsheetHourParserToken hour() {
+        return SpreadsheetParserToken.hour(HOUR, "" + HOUR);
+    }
+
+    final static int MILLISECOND = 123456789;
+
+    final SpreadsheetMillisecondParserToken millisecond() {
+        return SpreadsheetParserToken.millisecond(MILLISECOND, "" + MILLISECOND);
+    }
+    
+    final static int MINUTE = 58;
+
+    final SpreadsheetMinuteParserToken minute() {
+        return SpreadsheetParserToken.minute(MINUTE, "" + MINUTE);
     }
 
     final static int MONTH = 12;
@@ -150,6 +176,12 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
         return SpreadsheetParserToken.percentSymbol("%", "%");
     }
 
+    final static int SECONDS = 59;
+
+    final SpreadsheetSecondsParserToken seconds() {
+        return SpreadsheetParserToken.seconds(SECONDS, "" + SECONDS);
+    }
+    
     final SpreadsheetTextLiteralParserToken slashTextLiteral() {
         return SpreadsheetParserToken.textLiteral("/", "/");
     }
