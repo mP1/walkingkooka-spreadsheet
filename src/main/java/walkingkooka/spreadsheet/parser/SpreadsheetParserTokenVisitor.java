@@ -225,6 +225,10 @@ public abstract class SpreadsheetParserTokenVisitor extends ParserTokenVisitor {
         // nop
     }
 
+    protected void visit(final SpreadsheetDayNameParserToken token) {
+        // nop
+    }
+
     protected void visit(final SpreadsheetDayNumberParserToken token) {
         // nop
     }

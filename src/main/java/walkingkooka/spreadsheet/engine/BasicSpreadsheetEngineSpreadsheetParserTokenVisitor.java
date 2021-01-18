@@ -27,8 +27,10 @@ import walkingkooka.spreadsheet.parser.SpreadsheetBetweenSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetCurrencySymbolParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetDayNameParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDayNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDecimalSeparatorSymbolParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetDigitsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDivideSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDivisionParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDoubleQuoteSymbolParserToken;
@@ -58,7 +60,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetMultiplySymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNegativeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNotEqualsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNotEqualsSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetDigitsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParentParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParenthesisCloseSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParenthesisOpenSymbolParserToken;
@@ -305,6 +306,11 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
 
     @Override
     protected final void visit(final SpreadsheetCurrencySymbolParserToken token) {
+        this.leaf(token);
+    }
+
+    @Override
+    protected final void visit(final SpreadsheetDayNameParserToken token) {
         this.leaf(token);
     }
 
