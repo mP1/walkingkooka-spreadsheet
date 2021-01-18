@@ -967,7 +967,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         if (visitor instanceof SpreadsheetParserTokenVisitor) {
             final SpreadsheetParserTokenVisitor visitor2 = (SpreadsheetParserTokenVisitor) visitor;
             if (Visiting.CONTINUE == visitor2.startVisit(this)) {
-                this.accept((SpreadsheetParserTokenVisitor) visitor);
+                this.accept(visitor2);
             }
             visitor2.endVisit(this);
         }
