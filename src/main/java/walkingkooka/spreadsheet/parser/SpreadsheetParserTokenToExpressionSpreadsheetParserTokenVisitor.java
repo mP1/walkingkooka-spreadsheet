@@ -27,6 +27,7 @@ import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.visit.Visiting;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
@@ -96,6 +97,21 @@ final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor exte
         this.exit();
         this.add(
                 Expression.localDate(this.toLocalDate()),
+                token
+        );
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetDateTimeParserToken token) {
+        this.resetDateTime();
+        return this.enter();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetDateTimeParserToken token) {
+        this.exit();
+        this.add(
+                Expression.localDateTime(this.toLocalDateTime()),
                 token
         );
     }
@@ -428,6 +444,24 @@ final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor exte
     private int seconds;
     private int millis;
     private int ampm;
+
+    // DATETIME ........................................................................................................
+
+    private void resetDateTime() {
+        this.resetDate();
+        this.resetTime();
+    }
+
+    /**
+     * Creates a {@link LocalDateTime} assuming defaults have been set and an entire {@link SpreadsheetDateTimeParserToken} has
+     * been visited.
+     */
+    private LocalDateTime toLocalDateTime() {
+        return LocalDateTime.of(
+                this.toLocalDate(),
+                this.toLocalTime()
+        );
+    }
 
     // GENERAL PURPOSE .................................................................................................
 

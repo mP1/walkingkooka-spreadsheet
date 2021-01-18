@@ -58,6 +58,16 @@ public class FakeSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVis
     }
 
     @Override
+    protected Visiting startVisit(final SpreadsheetDateTimeParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetDateTimeParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected Visiting startVisit(final SpreadsheetDivisionParserToken token) {
         throw new UnsupportedOperationException();
     }

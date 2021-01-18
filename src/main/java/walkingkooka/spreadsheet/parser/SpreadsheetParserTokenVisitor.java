@@ -53,6 +53,16 @@ public abstract class SpreadsheetParserTokenVisitor extends ParserTokenVisitor {
         // nop
     }
 
+    // SpreadsheetDateTimeParserToken....................................................................................
+
+    protected Visiting startVisit(final SpreadsheetDateTimeParserToken token) {
+        return Visiting.CONTINUE;
+    }
+
+    protected void endVisit(final SpreadsheetDateTimeParserToken token) {
+        // nop
+    }
+
     // SpreadsheetDivisionParserToken....................................................................................
 
     protected Visiting startVisit(final SpreadsheetDivisionParserToken token) {
