@@ -25,24 +25,24 @@ import walkingkooka.visit.Visiting;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetMonthParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetMonthParserToken, Integer> {
+public final class SpreadsheetMonthNumberParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetMonthNumberParserToken, Integer> {
 
     @Test
     public void testWithEmptyString() {
-        final SpreadsheetMonthParserToken token = this.createToken("");
+        final SpreadsheetMonthNumberParserToken token = this.createToken("");
         this.textAndCheck(token, "");
     }
 
     @Test
     public void testWithWhitespace() {
-        final SpreadsheetMonthParserToken token = this.createToken("   ");
+        final SpreadsheetMonthNumberParserToken token = this.createToken("   ");
         this.textAndCheck(token, "   ");
     }
 
     @Test
     public void testAccept() {
         final StringBuilder b = new StringBuilder();
-        final SpreadsheetMonthParserToken token = this.createToken();
+        final SpreadsheetMonthNumberParserToken token = this.createToken();
 
         new FakeSpreadsheetParserTokenVisitor() {
             @Override
@@ -72,7 +72,7 @@ public final class SpreadsheetMonthParserTokenTest extends SpreadsheetNonSymbolP
             }
 
             @Override
-            protected void visit(final SpreadsheetMonthParserToken t) {
+            protected void visit(final SpreadsheetMonthNumberParserToken t) {
                 assertSame(token, t);
                 b.append("5");
             }
@@ -96,23 +96,23 @@ public final class SpreadsheetMonthParserTokenTest extends SpreadsheetNonSymbolP
     }
 
     @Override
-    SpreadsheetMonthParserToken createToken(final Integer value, final String text) {
-        return SpreadsheetMonthParserToken.with(value, text);
+    SpreadsheetMonthNumberParserToken createToken(final Integer value, final String text) {
+        return SpreadsheetMonthNumberParserToken.with(value, text);
     }
 
     @Override
-    public SpreadsheetMonthParserToken createDifferentToken() {
-        return SpreadsheetMonthParserToken.with(1, "'different'");
+    public SpreadsheetMonthNumberParserToken createDifferentToken() {
+        return SpreadsheetMonthNumberParserToken.with(1, "'different'");
     }
 
     @Override
-    public Class<SpreadsheetMonthParserToken> type() {
-        return SpreadsheetMonthParserToken.class;
+    public Class<SpreadsheetMonthNumberParserToken> type() {
+        return SpreadsheetMonthNumberParserToken.class;
     }
 
     @Override
-    public SpreadsheetMonthParserToken unmarshall(final JsonNode from,
-                                                  final JsonNodeUnmarshallContext context) {
-        return SpreadsheetParserToken.unmarshallMonth(from, context);
+    public SpreadsheetMonthNumberParserToken unmarshall(final JsonNode from,
+                                                        final JsonNodeUnmarshallContext context) {
+        return SpreadsheetParserToken.unmarshallMonthNumber(from, context);
     }
 }
