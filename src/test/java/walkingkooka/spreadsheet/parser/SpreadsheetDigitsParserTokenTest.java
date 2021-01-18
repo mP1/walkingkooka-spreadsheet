@@ -30,18 +30,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 public final class SpreadsheetDigitsParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetDigitsParserToken, BigInteger> {
 
     @Test
-    public void testWithEmptyString() {
-        final SpreadsheetDigitsParserToken token = this.createToken("");
-        this.textAndCheck(token, "");
-    }
-
-    @Test
-    public void testWithWhitespace() {
-        final SpreadsheetDigitsParserToken token = this.createToken("   ");
-        this.textAndCheck(token, "   ");
-    }
-
-    @Test
     public void testAccept() {
         final StringBuilder b = new StringBuilder();
         final SpreadsheetDigitsParserToken token = this.createToken();

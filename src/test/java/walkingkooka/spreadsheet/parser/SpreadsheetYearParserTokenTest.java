@@ -28,18 +28,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 public final class SpreadsheetYearParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetYearParserToken, Integer> {
 
     @Test
-    public void testWithEmptyString() {
-        final SpreadsheetYearParserToken token = this.createToken("");
-        this.textAndCheck(token, "");
-    }
-
-    @Test
-    public void testWithWhitespace() {
-        final SpreadsheetYearParserToken token = this.createToken("   ");
-        this.textAndCheck(token, "   ");
-    }
-
-    @Test
     public void testAccept() {
         final StringBuilder b = new StringBuilder();
         final SpreadsheetYearParserToken token = this.createToken();

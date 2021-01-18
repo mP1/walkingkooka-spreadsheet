@@ -28,18 +28,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 public final class SpreadsheetHourParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetHourParserToken, Integer> {
 
     @Test
-    public void testWithEmptyString() {
-        final SpreadsheetHourParserToken token = this.createToken("");
-        this.textAndCheck(token, "");
-    }
-
-    @Test
-    public void testWithWhitespace() {
-        final SpreadsheetHourParserToken token = this.createToken("   ");
-        this.textAndCheck(token, "   ");
-    }
-
-    @Test
     public void testAccept() {
         final StringBuilder b = new StringBuilder();
         final SpreadsheetHourParserToken token = this.createToken();

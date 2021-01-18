@@ -28,18 +28,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 public final class SpreadsheetDayNumberParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetDayNumberParserToken, Integer> {
 
     @Test
-    public void testWithEmptyString() {
-        final SpreadsheetDayNumberParserToken token = this.createToken("");
-        this.textAndCheck(token, "");
-    }
-
-    @Test
-    public void testWithWhitespace() {
-        final SpreadsheetDayNumberParserToken token = this.createToken("   ");
-        this.textAndCheck(token, "   ");
-    }
-
-    @Test
     public void testAccept() {
         final StringBuilder b = new StringBuilder();
         final SpreadsheetDayNumberParserToken token = this.createToken();

@@ -28,18 +28,6 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 public final class SpreadsheetAmPmParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetAmPmParserToken, Integer> {
 
     @Test
-    public void testWithEmptyString() {
-        final SpreadsheetAmPmParserToken token = this.createToken("");
-        this.textAndCheck(token, "");
-    }
-
-    @Test
-    public void testWithWhitespace() {
-        final SpreadsheetAmPmParserToken token = this.createToken("   ");
-        this.textAndCheck(token, "   ");
-    }
-
-    @Test
     public void testAccept() {
         final StringBuilder b = new StringBuilder();
         final SpreadsheetAmPmParserToken token = this.createToken();
