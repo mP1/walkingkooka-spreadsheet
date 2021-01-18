@@ -333,6 +333,11 @@ public class FakeSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVis
     }
 
     @Override
+    protected void visit(final SpreadsheetMonthNameAbbreviationParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visit(final SpreadsheetMonthNumberParserToken token) {
         throw new UnsupportedOperationException();
     }

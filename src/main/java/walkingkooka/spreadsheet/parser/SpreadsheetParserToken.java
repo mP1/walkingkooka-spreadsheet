@@ -301,6 +301,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetMonthNameAbbreviationParserToken}
+     */
+    public static SpreadsheetMonthNameAbbreviationParserToken monthNameAbbreviation(final int value, final String text) {
+        return SpreadsheetMonthNameAbbreviationParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetMonthNumberParserToken}
      */
     public static SpreadsheetMonthNumberParserToken monthNumber(final int value, final String text) {
@@ -751,6 +758,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * Only {@link SpreadsheetMonthNameAbbreviationParserToken} returns true
+     */
+    public final boolean isMonthNameAbbreviation() {
+        return this instanceof SpreadsheetMonthNameAbbreviationParserToken;
+    }
+
+    /**
      * Only {@link SpreadsheetMonthNumberParserToken} returns true
      */
     public final boolean isMonthNumber() {
@@ -1070,6 +1084,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
+                SpreadsheetMonthNameAbbreviationParserToken.class,
+                SpreadsheetParserToken::unmarshallMonthNameAbbreviation
+        );
+
+        registerLeafParserToken(
                 SpreadsheetMonthNumberParserToken.class,
                 SpreadsheetParserToken::unmarshallMonthNumber
         );
@@ -1217,6 +1236,16 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 Integer.class,
                 context,
                 SpreadsheetParserToken::monthName
+        );
+    }
+
+    static SpreadsheetMonthNameAbbreviationParserToken unmarshallMonthNameAbbreviation(final JsonNode node,
+                                                                                       final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                Integer.class,
+                context,
+                SpreadsheetParserToken::monthNameAbbreviation
         );
     }
 
