@@ -308,6 +308,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetMonthNameInitialParserToken}
+     */
+    public static SpreadsheetMonthNameInitialParserToken monthNameInitial(final int value, final String text) {
+        return SpreadsheetMonthNameInitialParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetMonthNumberParserToken}
      */
     public static SpreadsheetMonthNumberParserToken monthNumber(final int value, final String text) {
@@ -765,6 +772,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * Only {@link SpreadsheetMonthNameInitialParserToken} returns true
+     */
+    public final boolean isMonthNameInitial() {
+        return this instanceof SpreadsheetMonthNameInitialParserToken;
+    }
+
+    /**
      * Only {@link SpreadsheetMonthNumberParserToken} returns true
      */
     public final boolean isMonthNumber() {
@@ -1089,6 +1103,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
+                SpreadsheetMonthNameInitialParserToken.class,
+                SpreadsheetParserToken::unmarshallMonthNameInitial
+        );
+
+        registerLeafParserToken(
                 SpreadsheetMonthNumberParserToken.class,
                 SpreadsheetParserToken::unmarshallMonthNumber
         );
@@ -1241,6 +1260,16 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 Integer.class,
                 context,
                 SpreadsheetParserToken::monthNameAbbreviation
+        );
+    }
+
+    static SpreadsheetMonthNameInitialParserToken unmarshallMonthNameInitial(final JsonNode node,
+                                                                             final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                Integer.class,
+                context,
+                SpreadsheetParserToken::monthNameInitial
         );
     }
 
