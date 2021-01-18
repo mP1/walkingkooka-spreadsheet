@@ -469,6 +469,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetTimeParserToken}
+     */
+    public static SpreadsheetTimeParserToken time(final List<ParserToken> value, final String text) {
+        return SpreadsheetTimeParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetValueSeparatorSymbolParserToken}
      */
     public static SpreadsheetValueSeparatorSymbolParserToken valueSeparatorSymbol(final String value, final String text) {
@@ -958,6 +965,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public final boolean isThousandsSymbol() {
         return this instanceof SpreadsheetThousandsSymbolParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetTimeParserToken} return true
+     */
+    public final boolean isTime() {
+        return this instanceof SpreadsheetTimeParserToken;
     }
 
     /**
@@ -1824,6 +1838,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerParentParserToken(
+                SpreadsheetTimeParserToken.class,
+                SpreadsheetParserToken::unmarshallTime
+        );
+
+        registerParentParserToken(
                 SpreadsheetCellReferenceParserToken.class,
                 SpreadsheetParserToken::unmarshallCellReference
         );
@@ -1982,6 +2001,15 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 node,
                 context,
                 SpreadsheetParserToken::text
+        );
+    }
+
+    static SpreadsheetTimeParserToken unmarshallTime(final JsonNode node,
+                                                     final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::time
         );
     }
 
