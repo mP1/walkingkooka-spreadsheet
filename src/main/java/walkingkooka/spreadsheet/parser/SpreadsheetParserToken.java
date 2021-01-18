@@ -105,6 +105,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetDayNameAbbrevParserToken}
+     */
+    public static SpreadsheetDayNameAbbrevParserToken dayNameAbbrev(final int value, final String text) {
+        return SpreadsheetDayNameAbbrevParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetDayNumberParserToken}
      */
     public static SpreadsheetDayNumberParserToken dayNumber(final int value, final String text) {
@@ -538,6 +545,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public final boolean isDayName() {
         return this instanceof SpreadsheetDayNameParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetDayNameAbbrevParserToken} returns true
+     */
+    public final boolean isDayNameAbbrev() {
+        return this instanceof SpreadsheetDayNameAbbrevParserToken;
     }
 
     /**
@@ -997,6 +1011,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
+                SpreadsheetDayNameAbbrevParserToken.class,
+                SpreadsheetParserToken::unmarshallDayNameAbbrev
+        );
+
+        registerLeafParserToken(
                 SpreadsheetDayNumberParserToken.class,
                 SpreadsheetParserToken::unmarshallDayNumber
         );
@@ -1089,6 +1108,16 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 Integer.class,
                 context,
                 SpreadsheetParserToken::dayName
+        );
+    }
+
+    static SpreadsheetDayNameAbbrevParserToken unmarshallDayNameAbbrev(final JsonNode node,
+                                                                       final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                Integer.class,
+                context,
+                SpreadsheetParserToken::dayNameAbbrev
         );
     }
 
