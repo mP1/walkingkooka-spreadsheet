@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetCurrencySymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDayNameAbbreviationParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDayNameParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDayNumberParserToken;
@@ -135,6 +136,16 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     @Override
     protected final void endVisit(final SpreadsheetDateParserToken token) {
         this.exit(token, SpreadsheetParserToken::date);
+    }
+
+    @Override
+    protected final Visiting startVisit(final SpreadsheetDateTimeParserToken token) {
+        return this.enter();
+    }
+
+    @Override
+    protected final void endVisit(final SpreadsheetDateTimeParserToken token) {
+        this.exit(token, SpreadsheetParserToken::dateTime);
     }
 
     @Override

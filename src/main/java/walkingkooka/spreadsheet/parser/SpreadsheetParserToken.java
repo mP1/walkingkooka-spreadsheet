@@ -105,6 +105,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetDateTimeParserToken}
+     */
+    public static SpreadsheetDateTimeParserToken dateTime(final List<ParserToken> value, final String text) {
+        return SpreadsheetDateTimeParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetDayNameParserToken}
      */
     public static SpreadsheetDayNameParserToken dayName(final int value, final String text) {
@@ -587,6 +594,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public final boolean isDate() {
         return this instanceof SpreadsheetDateParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetDateTimeParserToken} return true
+     */
+    public final boolean isDateTime() {
+        return this instanceof SpreadsheetDateTimeParserToken;
     }
 
     /**
@@ -1783,6 +1797,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerParentParserToken(
+                SpreadsheetDateTimeParserToken.class,
+                SpreadsheetParserToken::unmarshallDateTime
+        );
+
+        registerParentParserToken(
                 SpreadsheetDivisionParserToken.class,
                 SpreadsheetParserToken::unmarshallDivision
         );
@@ -1893,6 +1912,15 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 node,
                 condate,
                 SpreadsheetParserToken::date
+        );
+    }
+
+    static SpreadsheetDateTimeParserToken unmarshallDateTime(final JsonNode node,
+                                                             final JsonNodeUnmarshallContext condateTime) {
+        return unmarshallParentParserToken(
+                node,
+                condateTime,
+                SpreadsheetParserToken::dateTime
         );
     }
 
