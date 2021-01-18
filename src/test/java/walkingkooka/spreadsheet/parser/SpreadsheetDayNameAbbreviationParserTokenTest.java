@@ -25,12 +25,12 @@ import walkingkooka.visit.Visiting;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetDayNameAbbrevParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetDayNameAbbrevParserToken, Integer> {
+public final class SpreadsheetDayNameAbbreviationParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetDayNameAbbreviationParserToken, Integer> {
 
     @Test
     public void testAccept() {
         final StringBuilder b = new StringBuilder();
-        final SpreadsheetDayNameAbbrevParserToken token = this.createToken();
+        final SpreadsheetDayNameAbbreviationParserToken token = this.createToken();
 
         new FakeSpreadsheetParserTokenVisitor() {
             @Override
@@ -60,7 +60,7 @@ public final class SpreadsheetDayNameAbbrevParserTokenTest extends SpreadsheetNo
             }
 
             @Override
-            protected void visit(final SpreadsheetDayNameAbbrevParserToken t) {
+            protected void visit(final SpreadsheetDayNameAbbreviationParserToken t) {
                 assertSame(token, t);
                 b.append("5");
             }
@@ -84,23 +84,23 @@ public final class SpreadsheetDayNameAbbrevParserTokenTest extends SpreadsheetNo
     }
 
     @Override
-    SpreadsheetDayNameAbbrevParserToken createToken(final Integer value, final String text) {
-        return SpreadsheetDayNameAbbrevParserToken.with(value, text);
+    SpreadsheetDayNameAbbreviationParserToken createToken(final Integer value, final String text) {
+        return SpreadsheetDayNameAbbreviationParserToken.with(value, text);
     }
 
     @Override
-    public SpreadsheetDayNameAbbrevParserToken createDifferentToken() {
-        return SpreadsheetDayNameAbbrevParserToken.with(6, "'different'");
+    public SpreadsheetDayNameAbbreviationParserToken createDifferentToken() {
+        return SpreadsheetDayNameAbbreviationParserToken.with(6, "'different'");
     }
 
     @Override
-    public Class<SpreadsheetDayNameAbbrevParserToken> type() {
-        return SpreadsheetDayNameAbbrevParserToken.class;
+    public Class<SpreadsheetDayNameAbbreviationParserToken> type() {
+        return SpreadsheetDayNameAbbreviationParserToken.class;
     }
 
     @Override
-    public SpreadsheetDayNameAbbrevParserToken unmarshall(final JsonNode from,
-                                                          final JsonNodeUnmarshallContext context) {
-        return SpreadsheetParserToken.unmarshallDayNameAbbrev(from, context);
+    public SpreadsheetDayNameAbbreviationParserToken unmarshall(final JsonNode from,
+                                                                final JsonNodeUnmarshallContext context) {
+        return SpreadsheetParserToken.unmarshallDayNameAbbreviation(from, context);
     }
 }

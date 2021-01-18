@@ -21,15 +21,15 @@ import java.util.Objects;
 /**
  * Represents the week day name within a date or date/time.
  */
-public final class SpreadsheetDayNameAbbrevParserToken extends SpreadsheetNonSymbolParserToken<Integer> {
+public final class SpreadsheetDayNameAbbreviationParserToken extends SpreadsheetNonSymbolParserToken<Integer> {
 
-    static SpreadsheetDayNameAbbrevParserToken with(final int value, final String text) {
+    static SpreadsheetDayNameAbbreviationParserToken with(final int value, final String text) {
         Objects.requireNonNull(text, "text");
 
-        return new SpreadsheetDayNameAbbrevParserToken(value, text);
+        return new SpreadsheetDayNameAbbreviationParserToken(value, text);
     }
 
-    private SpreadsheetDayNameAbbrevParserToken(final int value, final String text) {
+    private SpreadsheetDayNameAbbreviationParserToken(final int value, final String text) {
         super(value, text);
     }
 
@@ -42,6 +42,6 @@ public final class SpreadsheetDayNameAbbrevParserToken extends SpreadsheetNonSym
 
     @Override
     boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetDayNameAbbrevParserToken;
+        return other instanceof SpreadsheetDayNameAbbreviationParserToken;
     }
 }
