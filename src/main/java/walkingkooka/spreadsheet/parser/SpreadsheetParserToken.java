@@ -105,10 +105,10 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * {@see SpreadsheetDayNameAbbrevParserToken}
+     * {@see SpreadsheetDayNameAbbreviationParserToken}
      */
-    public static SpreadsheetDayNameAbbrevParserToken dayNameAbbrev(final int value, final String text) {
-        return SpreadsheetDayNameAbbrevParserToken.with(value, text);
+    public static SpreadsheetDayNameAbbreviationParserToken dayNameAbbreviation(final int value, final String text) {
+        return SpreadsheetDayNameAbbreviationParserToken.with(value, text);
     }
 
     /**
@@ -562,10 +562,10 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * Only {@link SpreadsheetDayNameAbbrevParserToken} returns true
+     * Only {@link SpreadsheetDayNameAbbreviationParserToken} returns true
      */
-    public final boolean isDayNameAbbrev() {
-        return this instanceof SpreadsheetDayNameAbbrevParserToken;
+    public final boolean isDayNameAbbreviation() {
+        return this instanceof SpreadsheetDayNameAbbreviationParserToken;
     }
 
     /**
@@ -1039,8 +1039,8 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
-                SpreadsheetDayNameAbbrevParserToken.class,
-                SpreadsheetParserToken::unmarshallDayNameAbbrev
+                SpreadsheetDayNameAbbreviationParserToken.class,
+                SpreadsheetParserToken::unmarshallDayNameAbbreviation
         );
 
         registerLeafParserToken(
@@ -1149,13 +1149,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
     }
 
-    static SpreadsheetDayNameAbbrevParserToken unmarshallDayNameAbbrev(final JsonNode node,
-                                                                       final JsonNodeUnmarshallContext context) {
+    static SpreadsheetDayNameAbbreviationParserToken unmarshallDayNameAbbreviation(final JsonNode node,
+                                                                                   final JsonNodeUnmarshallContext context) {
         return unmarshallLeafParserToken(
                 node,
                 Integer.class,
                 context,
-                SpreadsheetParserToken::dayNameAbbrev
+                SpreadsheetParserToken::dayNameAbbreviation
         );
     }
 

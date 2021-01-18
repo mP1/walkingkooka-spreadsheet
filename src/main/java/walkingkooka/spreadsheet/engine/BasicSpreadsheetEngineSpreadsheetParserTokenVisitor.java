@@ -27,7 +27,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetBetweenSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetCurrencySymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetDayNameAbbrevParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetDayNameAbbreviationParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDayNameParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDayNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDecimalSeparatorSymbolParserToken;
@@ -318,7 +318,7 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     @Override
-    protected final void visit(final SpreadsheetDayNameAbbrevParserToken token) {
+    protected final void visit(final SpreadsheetDayNameAbbreviationParserToken token) {
         this.leaf(token);
     }
 

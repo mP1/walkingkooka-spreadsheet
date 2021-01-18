@@ -238,7 +238,7 @@ public class FakeSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVis
     }
 
     @Override
-    protected void visit(final SpreadsheetDayNameAbbrevParserToken token) {
+    protected void visit(final SpreadsheetDayNameAbbreviationParserToken token) {
         throw new UnsupportedOperationException();
     }
 
