@@ -1,0 +1,202 @@
+/*
+ * Copyright 2019 Miroslav Pokorny (github.com/mP1)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package walkingkooka.spreadsheet.format.pattern;
+
+import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
+import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.spreadsheet.parser.FakeSpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.text.CaseSensitivity;
+import walkingkooka.text.CharSequences;
+import walkingkooka.text.cursor.TextCursors;
+
+import java.util.List;
+import java.util.Locale;
+
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
+public final class SpreadsheetParsePatterns2ParserStringTest extends SpreadsheetParsePatterns2ParserTestCase<SpreadsheetParsePatterns2ParserString> {
+
+    private final static String PATTERN = "Pattern-123";
+
+    @Test
+    public void testParseNone() {
+        this.parseFailAndCheck("Z"); // fails to match any month starting character
+    }
+
+    @Test
+    public void testParseNone2() {
+        this.parseFailAndCheck("Zebra");
+    }
+
+    @Test
+    public void testParseInitialTooMany() {
+        this.parseFailAndCheck("J"); // too many months start with J
+    }
+
+    @Test
+    public void testParseInitial() {
+        this.parseAndCheck2(
+                "O"
+        );
+    }
+
+    @Test
+    public void testParseIncompleteTooMany2() {
+        this.parseFailAndCheck("Ju"); // not unique matches June and July
+    }
+
+    @Test
+    public void testParseIncompleteTooMany3() {
+        this.parseFailAndCheck("JuQ"); // not unique matches June and July
+    }
+
+    @Test
+    public void testParseIncomplete() {
+        this.parseAndCheck2(
+                "Jul"
+        );
+    }
+
+    @Test
+    public void testParseIncomplete2() {
+        this.parseAndCheck2(
+                "Jun"
+        );
+    }
+
+    @Test
+    public void testParseIncompleteCaseInsensitive() {
+        this.parseAndCheck2(
+                "JUN"
+        );
+    }
+
+    @Test
+    public void testParseComplete() {
+        this.parseAndCheck2(
+                "May",
+                "!"
+        );
+    }
+
+    @Test
+    public void testParseComplete2() {
+        this.parseAndCheck2(
+                "December"
+        );
+    }
+
+    @Test
+    public void testParseComplete3() {
+        this.parseAndCheck2(
+                "December",
+                "123"
+        );
+    }
+
+    @Test
+    public void testParseCompleteCaseInsensitive() {
+        this.parseAndCheck2(
+                "DECEMBER",
+                "123"
+        );
+    }
+
+    @Test
+    public void testParseCompleteAll() {
+        for(final String month : this.monthNames()) {
+            this.parseAndCheck2(
+                    month,
+                    "123"
+            );
+        }
+    }
+
+    private void parseAndCheck2(final String text) {
+        this.parseAndCheck2(
+                text,
+                ""
+        );
+    }
+
+    private void parseAndCheck2(final String text,
+                                final String after) {
+        int index = -1;
+        int i = 0;
+        for(final String month : this.monthNames()) {
+            if(CaseSensitivity.INSENSITIVE.startsWith(month, text) || CaseSensitivity.INSENSITIVE.equals(month, text)) {
+                index = i;
+                break;
+            }
+            i++;
+        }
+        assertNotEquals(-1, index, ()-> "failed to match a month with " + CharSequences.quote(text));
+
+        this.parseAndCheck(
+                text + after,
+                SpreadsheetParserToken.monthName(
+                        index,
+                        text
+                ),
+                text,
+                after
+        );
+    }
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(this.createParser(), PATTERN);
+    }
+
+    @Override
+    public SpreadsheetParsePatterns2ParserString createParser() {
+        return SpreadsheetParsePatterns2ParserString.stringChoices(
+                (c) -> c.monthNames(),
+                SpreadsheetParserToken::monthName,
+                PATTERN
+        );
+    }
+
+    @Override
+    public SpreadsheetParserContext createContext() {
+        return new FakeSpreadsheetParserContext() {
+            @Override
+            public List<String> monthNames() {
+                return SpreadsheetParsePatterns2ParserStringTest.this.monthNames();
+            }
+        };
+    }
+
+    private List<String> monthNames() {
+        return DateTimeContexts.locale(Locale.forLanguageTag("EN-AU"), 20)
+                .monthNames();
+    }
+
+    @Override
+    public Class<SpreadsheetParsePatterns2ParserString> type() {
+        return SpreadsheetParsePatterns2ParserString.class;
+    }
+
+    @Override
+    public String typeNameSuffix() {
+        return String.class.getSimpleName();
+    }
+}

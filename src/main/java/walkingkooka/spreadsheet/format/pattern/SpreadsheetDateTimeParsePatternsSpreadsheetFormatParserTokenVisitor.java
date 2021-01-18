@@ -51,18 +51,9 @@ final class SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor 
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatDateTimeParserToken token) {
-        this.hour = ChronoField.HOUR_OF_DAY;
-        return Visiting.CONTINUE;
-    }
-
-    @Override
     protected void endVisit(final SpreadsheetFormatDateTimeParserToken token) {
         this.addToken(token);
-        this.hours.add(this.hour);
     }
-
-    final List<ChronoField> hours = Lists.array();
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatNumberParserToken token) {
@@ -78,16 +69,6 @@ final class SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor 
     protected Visiting startVisit(final SpreadsheetFormatTimeParserToken token) {
         return this.failInvalid(token);
     }
-
-    @Override
-    protected void visit(final SpreadsheetFormatAmPmParserToken token) {
-        this.hour = ChronoField.HOUR_OF_AMPM;
-    }
-
-    /**
-     * Holds the {@link ChronoField} for hours either 12 or 24.
-     */
-    private ChronoField hour;
 
     @Override
     protected void visit(final SpreadsheetFormatCurrencyParserToken token) {

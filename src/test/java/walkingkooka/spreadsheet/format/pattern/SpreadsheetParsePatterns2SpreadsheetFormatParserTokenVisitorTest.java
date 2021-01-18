@@ -24,9 +24,9 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisito
 
 import java.time.temporal.ChronoField;
 
-public final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpreadsheetFormatParserTokenVisitorTest
-        extends SpreadsheetParsePatterns2TestCase<SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpreadsheetFormatParserTokenVisitor>
-        implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpreadsheetFormatParserTokenVisitor> {
+public final class SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitorTest
+        extends SpreadsheetParsePatterns2TestCase<SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor>
+        implements SpreadsheetFormatParserTokenVisitorTesting<SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor> {
 
     @Override
     public void testIfClassIsFinalIfAllConstructorsArePrivate() {
@@ -41,9 +41,7 @@ public final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunc
     @Test
     public void testToString() {
         final SpreadsheetFormatParserToken token = this.parserToken("yyyymmdd");
-        final SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpreadsheetFormatParserTokenVisitor(30,
-                ChronoField.HOUR_OF_DAY,
-                token);
+        final SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor(token);
         visitor.accept(token);
 
         this.toStringAndCheck(visitor, token.toString());
@@ -54,26 +52,21 @@ public final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunc
     }
 
     @Override
-    public SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpreadsheetFormatParserTokenVisitor createVisitor() {
-        return new SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpreadsheetFormatParserTokenVisitor(Integer.MAX_VALUE, null, null);
+    public SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor createVisitor() {
+        return new SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor(null);
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpreadsheetFormatParserTokenVisitor> type() {
-        return SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpreadsheetFormatParserTokenVisitor.class;
+    public Class<SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor> type() {
+        return SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor.class;
     }
 
     // TypeNameTesting..................................................................................................
 
     @Override
     public String typeNamePrefix() {
-        return SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunction.class.getSimpleName();
-    }
-
-    @Override
-    public String typeNameSuffix() {
-        return SpreadsheetFormatParserTokenVisitor.class.getSimpleName();
+        return SpreadsheetParsePatterns2.class.getSimpleName();
     }
 }

@@ -17,22 +17,20 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.convert.Converter;
-import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
-import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.text.cursor.parser.Parsers;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
-import java.time.temporal.ChronoField;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
  * Holds a valid {@link SpreadsheetDateTimeParsePatterns}.
  */
-public final class SpreadsheetDateTimeParsePatterns extends SpreadsheetParsePatterns2<SpreadsheetFormatDateTimeParserToken> {
+public final class SpreadsheetDateTimeParsePatterns extends SpreadsheetParsePatterns2<SpreadsheetFormatDateTimeParserToken,
+        SpreadsheetDateTimeParserToken,
+        LocalDateTime> {
 
     /**
      * Factory that creates a {@link SpreadsheetDateTimeParsePatterns} from the given tokens.
@@ -40,7 +38,7 @@ public final class SpreadsheetDateTimeParsePatterns extends SpreadsheetParsePatt
     static SpreadsheetDateTimeParsePatterns withToken(final ParserToken token) {
         final SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor.with();
         visitor.startAccept(token);
-        return new SpreadsheetDateTimeParsePatterns(visitor.tokens(), visitor.hours);
+        return new SpreadsheetDateTimeParsePatterns(visitor.tokens());
     }
 
     /**
@@ -51,16 +49,30 @@ public final class SpreadsheetDateTimeParsePatterns extends SpreadsheetParsePatt
 
         final SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor.with();
         tokens.forEach(visitor::startAccept);
-        return new SpreadsheetDateTimeParsePatterns(visitor.tokens(), visitor.hours);
+        return new SpreadsheetDateTimeParsePatterns(visitor.tokens());
     }
 
     /**
      * Private ctor use factory
      */
-    private SpreadsheetDateTimeParsePatterns(final List<SpreadsheetFormatDateTimeParserToken> tokens,
-                                             final List<ChronoField> hours) {
+    private SpreadsheetDateTimeParsePatterns(final List<SpreadsheetFormatDateTimeParserToken> tokens) {
         super(tokens);
-        this.hours = hours;
+    }
+
+    @Override
+    Class<LocalDateTime> targetType() {
+        return LocalDateTime.class;
+    }
+
+    @Override
+    LocalDateTime converterTransformer(final ParserToken token) {
+        return token.cast(SpreadsheetDateTimeParserToken.class).toLocalDateTime();
+    }
+
+    @Override
+    SpreadsheetDateTimeParserToken parserTransform0(final List<ParserToken> token,
+                                                    final String text) {
+        return SpreadsheetParserToken.dateTime(token, text);
     }
 
     // Object...........................................................................................................
@@ -69,27 +81,4 @@ public final class SpreadsheetDateTimeParsePatterns extends SpreadsheetParsePatt
     boolean canBeEquals(final Object other) {
         return other instanceof SpreadsheetDateTimeParsePatterns;
     }
-
-    // HasConverter.....................................................................................................
-
-    @Override
-    Converter<ExpressionNumberConverterContext> createDateTimeFormatterConverter(final int i) {
-        return Converters.stringLocalDateTime(this.dateTimeContextDateTimeFormatterFunction(i));
-    }
-
-    // HasParser........................................................................................................
-
-    @Override
-    Parser<ParserContext> createDateTimeFormatterParser(final int i) {
-        return Parsers.localDateTime(this.dateTimeContextDateTimeFormatterFunction(i));
-    }
-
-    private SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunction dateTimeContextDateTimeFormatterFunction(final int i) {
-        return SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunction.with(
-                this.value().get(i),
-                this.hours.get(i)
-        );
-    }
-
-    private final List<ChronoField> hours;
 }

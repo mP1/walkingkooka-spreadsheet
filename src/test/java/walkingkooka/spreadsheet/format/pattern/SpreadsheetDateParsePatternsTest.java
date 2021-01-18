@@ -22,6 +22,8 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
+import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -34,6 +36,7 @@ import java.util.List;
 
 public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatternsTestCase<SpreadsheetDateParsePatterns,
         SpreadsheetFormatDateParserToken,
+        SpreadsheetDateParserToken,
         LocalDate> {
 
     @Test
@@ -128,86 +131,153 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseDateOnlyPattern() {
-        this.parseAndCheck2("dd/mm/yyyy",
+        this.parseAndCheck3(
+                "dd/mm/yyyy",
                 "31/12/2000",
-                LocalDate.of(2000, 12, 31));
+                day31(),
+                slash(),
+                month12(),
+                slash(),
+                year2000()
+        );
     }
 
     @Test
     public void testParseDateOnlyPatternSeparator() {
-        this.parseAndCheck2("dd/mm/yyyy;",
+        this.parseAndCheck3(
+                "dd/mm/yyyy;",
                 "31/12/2000",
-                LocalDate.of(2000, 12, 31));
+                day31(),
+                slash(),
+                month12(),
+                slash(),
+                year2000()
+        );
     }
 
     @Test
     public void testParseDateOnlyPatternTwoDigitYear() {
-        this.parseAndCheck2("dd/mm/yy",
+        this.parseAndCheck3(
+                "dd/mm/yy",
                 "31/12/20",
-                LocalDate.of(2020, 12, 31));
+                day31(),
+                slash(),
+                month12(),
+                slash(),
+                SpreadsheetParserToken.year(20, "20")
+        );
     }
 
     @Test
     public void testParseDateOnlyPatternDefaultsYear() {
-        this.parseAndCheck2("dd/mm",
+        this.parseAndCheck3(
+                "dd/mm",
                 "31/12",
-                LocalDate.of(1900, 12, 31));
+                day31(),
+                slash(),
+                month12()
+        );
     }
 
     @Test
     public void testParseDateOnlyPatternDefaultsMonth() {
-        this.parseAndCheck2("dd yyyy",
+        this.parseAndCheck3(
+                "dd yyyy",
                 "31 2000",
-                LocalDate.of(2000, 1, 31));
+                day31(),
+                textLiteralWhitespace(),
+                year2000()
+        );
     }
 
     @Test
     public void testParseDateOnlyPatternDefaultsDay() {
-        this.parseAndCheck2("mm yyyy",
+        this.parseAndCheck3(
+                "mm yyyy",
                 "12 2000",
-                LocalDate.of(2000, 12, 1));
+                month12(),
+                textLiteralWhitespace(),
+                year2000()
+        );
     }
 
     @Test
     public void testParseDateFirstPattern() {
-        this.parseAndCheck2("dd/mm/yyyy;yyyy/mm/dd",
+        this.parseAndCheck3(
+                "dd/mm/yyyy;yyyy/mm/dd",
                 "31/12/2000",
-                LocalDate.of(2000, 12, 31));
+                day31(),
+                slash(),
+                month12(),
+                slash(),
+                year2000()
+        );
     }
 
     @Test
     public void testParseDateSecondPattern() {
-        this.parseAndCheck2("dd/mm/yyyy;yyyy/mm/dd",
+        this.parseAndCheck3(
+                "dd/mm/yyyy;yyyy/mm/dd",
                 "2000/12/31",
-                LocalDate.of(2000, 12, 31));
+                year2000(),
+                slash(),
+                month12(),
+                slash(),
+                day31()
+        );
     }
 
     @Test
     public void testParseDateSecondPatternExtraSeparator() {
-        this.parseAndCheck2("dd/mm/yyyy;yyyy/mm/dd;",
+        this.parseAndCheck3(
+                "dd/mm/yyyy;yyyy/mm/dd;",
                 "2000/12/31",
-                LocalDate.of(2000, 12, 31));
+                year2000(),
+                slash(),
+                month12(),
+                slash(),
+                day31()
+        );
     }
 
     @Test
     public void testParseDateShortMonth() {
-        this.parseAndCheck2("dd/mmm/yyy;yyyy/mm/dd",
+        this.parseAndCheck3(
+                "dd/mmm/yyy;yyyy/mm/dd",
                 "31/Dec/2000",
-                LocalDate.of(2000, 12, 31));
+                day31(),
+                slash(),
+                monthDec(),
+                slash(),
+                year2000()
+        );
     }
 
     @Test
     public void testParseDateShortMonthCommas() {
-        this.parseAndCheck2("dd,mmm,yyyy",
+        this.parseAndCheck3(
+                "dd,mmm,yyyy",
                 "31,Dec,2000",
-                LocalDate.of(2000, 12, 31));
+                day31(),
+                comma(),
+                monthDec(),
+                comma(),
+                year2000()
+        );
     }
 
     @Test
     public void testParseDateBackslashEscaped() {
-        this.parseAndCheck2("dd\\dmmm\\myyyy\\y",
+        this.parseAndCheck3(
+                "dd\\dmmm\\myyyy\\y",
                 "31dDecm2000y",
-                LocalDate.of(2000, 12, 31));
+                day31(),
+                textLiteral("d"),
+                monthDec(),
+                textLiteral("m"),
+                year2000(),
+                textLiteral("y")
+        );
     }
 
     // converter........................................................................................................
@@ -229,28 +299,28 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
     public void testConvertDateOnlyPatternTwoDigitYear2039() {
         this.convertAndCheck2("dd/mm/yy",
                 "31/12/39",
-                LocalDate.of(2039, 12, 31));
+                LocalDate.of(39, 12, 31));
     }
 
     @Test
     public void testConvertDateOnlyPatternTwoDigitYear2019() {
         this.convertAndCheck2("dd/mm/yy",
                 "31/12/19",
-                LocalDate.of(2019, 12, 31));
+                LocalDate.of(19, 12, 31));
     }
 
     @Test
     public void testConvertDateOnlyPatternTwoDigitYear1980() {
         this.convertAndCheck2("dd/mm/yy",
                 "31/12/80",
-                LocalDate.of(1980, 12, 31));
+                LocalDate.of(80, 12, 31));
     }
 
     @Test
     public void testConvertDateOnlyPatternDefaultsYear() {
         this.convertAndCheck2("dd/mm",
                 "31/12",
-                LocalDate.of(1900, 12, 31));
+                LocalDate.of(0, 12, 31));
     }
 
     @Test
@@ -318,6 +388,12 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
     @Override
     ParserToken parserParserToken(final LocalDate value, final String text) {
         return ParserTokens.localDate(value, text);
+    }
+
+    @Override
+    SpreadsheetDateParserToken parent(final List<ParserToken> tokens,
+                                      final String text) {
+        return SpreadsheetParserToken.date(tokens, text);
     }
 
     @Override

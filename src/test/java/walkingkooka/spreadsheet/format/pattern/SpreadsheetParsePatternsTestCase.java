@@ -25,8 +25,22 @@ import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetAmPmParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetDayNumberParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetDecimalSeparatorSymbolParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetHourParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetMillisecondParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetMinuteParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetMonthNameAbbreviationParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetMonthNameParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetMonthNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetSecondsParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetTextLiteralParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetWhitespaceParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetYearParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
@@ -40,6 +54,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetParsePatterns<T>,
         T extends SpreadsheetFormatParentParserToken,
+        SPT extends SpreadsheetParserToken, // SpreadsheetParentParserToken
         V> extends SpreadsheetPatternTestCase<P, List<T>>
         implements ConverterTesting {
 
@@ -227,6 +242,89 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
                 this.createPattern(Lists.of(parseFormatParserToken(patternText), parseFormatParserToken(patternText2))));
     }
 
+    static SpreadsheetAmPmParserToken am() {
+        return SpreadsheetParserToken.amPm(0, "AM");
+    }
+    static SpreadsheetTextLiteralParserToken colon() {
+        return textLiteral(":");
+    }
+
+    static SpreadsheetTextLiteralParserToken comma() {
+        return textLiteral(",");
+    }
+
+    static SpreadsheetDayNumberParserToken day31() {
+        return SpreadsheetParserToken.dayNumber(31, "31");
+    }
+
+    static SpreadsheetDecimalSeparatorSymbolParserToken decimalSeparator() {
+        return SpreadsheetParserToken.decimalSeparatorSymbol(".", ".");
+    }
+
+    static SpreadsheetHourParserToken hour9() {
+        return SpreadsheetParserToken.hour(9, "9");
+    }
+
+    static SpreadsheetHourParserToken hour11() {
+        return SpreadsheetParserToken.hour(11, "11");
+    }
+
+    static SpreadsheetHourParserToken hour13() {
+        return SpreadsheetParserToken.hour(13, "13");
+    }
+
+    static SpreadsheetMillisecondParserToken milli(final int value, final String text) {
+        return SpreadsheetParserToken.millisecond(value, text);
+    }
+
+    static SpreadsheetMinuteParserToken minute8() {
+        return SpreadsheetParserToken.minute(8, "8");
+    }
+    
+    static SpreadsheetMinuteParserToken minute58() {
+        return SpreadsheetParserToken.minute(58, "58");
+    }
+
+    static SpreadsheetMonthNumberParserToken month12() {
+        return SpreadsheetParserToken.monthNumber(12, "12");
+    }
+
+    static SpreadsheetMonthNameAbbreviationParserToken monthDec() {
+        return SpreadsheetParserToken.monthNameAbbreviation(12, "Dec");
+    }
+
+    static SpreadsheetMonthNameParserToken monthDecember() {
+        return SpreadsheetParserToken.monthName(12, "December");
+    }
+
+    static SpreadsheetAmPmParserToken pm() {
+        return SpreadsheetParserToken.amPm(12, "PM");
+    }
+
+    static SpreadsheetSecondsParserToken second9() {
+        return SpreadsheetParserToken.seconds(9, "9");
+    }
+
+    static SpreadsheetSecondsParserToken second59() {
+        return SpreadsheetParserToken.seconds(59, "59");
+    }
+
+    static SpreadsheetTextLiteralParserToken slash() {
+        return SpreadsheetParserToken.textLiteral("/", "/");
+    }
+
+    static SpreadsheetTextLiteralParserToken textLiteral(final String text) {
+        return SpreadsheetParserToken.textLiteral(text, text);
+    }
+
+    static SpreadsheetTextLiteralParserToken textLiteralWhitespace() {
+        return textLiteral(" ");
+    }
+
+    static SpreadsheetYearParserToken year2000() {
+        return SpreadsheetParserToken.year(2000, "2000");
+    }
+
     // ParserTesting....................................................................................................
 
     final void parseAndCheck2(final String pattern,
@@ -251,6 +349,42 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
     }
 
     abstract ParserToken parserParserToken(final V value, final String text);
+
+    final void parseAndCheck3(final String pattern,
+                              final String text,
+                              final SpreadsheetParserToken...tokens) {
+        this.parseAndCheck3(
+                pattern,
+                text,
+                "",
+                tokens
+        );
+    }
+
+    final void parseAndCheck3(final String pattern,
+                              final String text,
+                              final String textAfter,
+                              final SpreadsheetParserToken... tokens) {
+        this.parseAndCheck(
+                this.parseString(pattern).parser(),
+                this.parserContext(),
+                text,
+                this.parent(tokens),
+                text,
+                textAfter
+        );
+    }
+
+    private SPT parent(final SpreadsheetParserToken... tokens) {
+        final List<ParserToken> list = Lists.of(tokens);
+        return this.parent(
+                list,
+                ParserToken.text(list)
+        );
+    }
+
+    abstract SPT parent(final List<ParserToken> tokens,
+                        final String text);
 
     final void parseFails2(final String pattern,
                            final String text) {

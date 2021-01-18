@@ -22,6 +22,9 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserTok
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
+import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -34,6 +37,7 @@ import java.util.List;
 
 public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParsePatternsTestCase<SpreadsheetDateTimeParsePatterns,
         SpreadsheetFormatDateTimeParserToken,
+        SpreadsheetDateTimeParserToken,
         LocalDateTime> {
 
     @Test
@@ -98,142 +102,281 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
 
     @Test
     public void testParseHourMinutes() {
-        this.parseAndCheck2("hh:mm",
-                "11:59",
-                LocalDateTime.of(1900, 1, 1, 11, 59));
+        this.parseAndCheck3(
+                "hh:mm",
+                "11:58",
+                hour11(),
+                colon(),
+                minute58()
+        );
     }
 
     @Test
     public void testParseHourMinutesSeconds() {
-        this.parseAndCheck2("hh:mm:ss",
+        this.parseAndCheck3(
+                "hh:mm:ss",
                 "11:58:59",
-                LocalDateTime.of(1900, 1, 1, 11, 58, 59));
+                hour11(),
+                colon(),
+                minute58(),
+                colon(),
+                second59()
+        );
     }
 
     @Test
     public void testParseHourMinutesSecondsDecimal() {
-        this.parseAndCheck2("hh:mm:ss.",
+        this.parseAndCheck3(
+                "hh:mm:ss.",
                 "11:58:59.",
-                LocalDateTime.of(1900, 1, 1, 11, 58, 59));
+                hour11(),
+                colon(),
+                minute58(),
+                colon(),
+                second59(),
+                decimalSeparator()
+        );
     }
 
     @Test
     public void testParseHourMinutesSecondsMillis() {
-        this.parseAndCheck2("hh:mm:ss.0",
+        this.parseAndCheck3(
+                "hh:mm:ss.0",
                 "11:58:59.1",
-                LocalDateTime.of(1900, 1, 1, 11, 58, 59, 100 * 1000));
+                hour11(),
+                colon(),
+                minute58(),
+                colon(),
+                second59(),
+                decimalSeparator(),
+                milli( 100 * 1000, "1")
+        );
     }
 
     @Test
     public void testParseHourMinutesSeconds2Millis() {
-        this.parseAndCheck2("hh:mm:ss.00",
+        this.parseAndCheck3(
+                "hh:mm:ss.00",
                 "11:58:59.12",
-                LocalDateTime.of(1900, 1, 1, 11, 58, 59, 120 * 1000));
+                hour11(),
+                colon(),
+                minute58(),
+                colon(),
+                second59(),
+                decimalSeparator(),
+                milli( 120 * 1000, "12")
+        );
     }
 
     @Test
     public void testParseHourMinutesSeconds3Millis() {
-        this.parseAndCheck2("hh:mm:ss.000",
+        this.parseAndCheck3(
+                "hh:mm:ss.000",
                 "11:58:59.123",
-                LocalDateTime.of(1900, 1, 1, 11, 58, 59, 123 * 1000));
+                hour11(),
+                colon(),
+                minute58(),
+                colon(),
+                second59(),
+                decimalSeparator(),
+                milli( 123 * 1000, "123")
+        );
     }
 
     @Test
     public void testParseHourMinutesSeconds3Millis2() {
-        this.parseAndCheck2("hh:mm:ss.000",
+        this.parseAndCheck3(
+                "hh:mm:ss.000",
                 "11:58:59.12",
-                LocalDateTime.of(1900, 1, 1, 11, 58, 59, 120 * 1000));
+                hour11(),
+                colon(),
+                minute58(),
+                colon(),
+                second59(),
+                decimalSeparator(),
+                milli( 120 * 1000, "12")
+        );
     }
 
     @Test
     public void testParseHourMinutesSeconds3Millis3() {
-        this.parseAndCheck2("hh:mm:ss.000",
+        this.parseAndCheck3(
+                "hh:mm:ss.000",
                 "11:58:59.1",
-                LocalDateTime.of(1900, 1, 1, 11, 58, 59, 100 * 1000));
+                hour11(),
+                colon(),
+                minute58(),
+                colon(),
+                second59(),
+                decimalSeparator(),
+                milli( 100 * 1000, "1")
+        );
     }
 
     @Test
     public void testParseHourMinutesSeconds3Millis4() {
-        this.parseAndCheck2("hh:mm:ss.000",
+        this.parseAndCheck3(
+                "hh:mm:ss.000",
                 "11:58:59.",
-                LocalDateTime.of(1900, 1, 1, 11, 58, 59));
+                hour11(),
+                colon(),
+                minute58(),
+                colon(),
+                second59(),
+                decimalSeparator()
+        );
     }
 
     @Test
     public void testParseHourMinutesSecondsAmpm() {
-        this.parseAndCheck2("hh:mm:ss AM/PM",
+        this.parseAndCheck3(
+                "hh:mm:ss AM/PM",
                 "11:58:59 PM",
-                LocalDateTime.of(1900, 1, 1, 23, 58, 59));
+                hour11(),
+                colon(),
+                minute58(),
+                colon(),
+                second59(),
+                textLiteralWhitespace(),
+                pm()
+        );
     }
 
     @Test
     public void testParseHourMinutesSecondsMillisAmpm() {
-        this.parseAndCheck2("hh:mm:ss.0 AM/PM",
+        this.parseAndCheck3(
+                "hh:mm:ss.0 AM/PM",
                 "11:58:59.1 PM",
-                LocalDateTime.of(1900, 1, 1, 23, 58, 59, 100 * 1000));
+                hour11(),
+                colon(),
+                minute58(),
+                colon(),
+                second59(),
+                decimalSeparator(),
+                milli( 100 * 1000, "1"),
+                textLiteralWhitespace(),
+                pm()
+        );
     }
 
     @Test
     public void testParseHourDefaultsMinutes() {
-        this.parseAndCheck2("hh",
+        this.parseAndCheck3(
+                "hh",
                 "11",
-                LocalDateTime.of(1900, 1, 1, 11, 0, 0));
+                hour11()
+        );
     }
 
     @Test
     public void testParseDateTimeYearMonthDay() {
-        this.parseAndCheck2("yyyymmdd",
+        this.parseAndCheck3(
+                "yyyymmdd",
                 "20001231",
-                LocalDateTime.of(2000, 12, 31, 0, 0, 0));
+                year2000(),
+                month12(),
+                day31()
+        );
     }
 
     @Test
     public void testParseDateTimeYear() {
-        this.parseAndCheck2("yyyy",
+        this.parseAndCheck3(
+                "yyyy",
                 "2000",
-                LocalDateTime.of(2000, 1, 1, 0, 0, 0));
+                year2000()
+        );
     }
 
     @Test
     public void testParseDateTimeYearMonth() {
-        this.parseAndCheck2("yyyymm",
+        this.parseAndCheck3(
+                "yyyymm",
                 "200012",
-                LocalDateTime.of(2000, 12, 1, 0, 0, 0));
+                year2000(),
+                month12()
+        );
     }
 
     @Test
     public void testParseDateTrailingSeparator() {
-        this.parseAndCheck2("yyyymm;",
+        this.parseAndCheck3(
+                "yyyymm;",
                 "200012",
-                LocalDateTime.of(2000, 12, 1, 0, 0, 0));
+                year2000(),
+                month12()
+        );
     }
 
     @Test
     public void testParseDateTimeMultiplePatterns() {
-        this.parseAndCheck2("\"A\"ddmmyyyy hhmmss;\"B\"ddmmyyyy hhmmss",
+        this.parseAndCheck3(
+                "\"A\"ddmmyyyy hhmmss;\"B\"ddmmyyyy hhmmss",
                 "B31122000 115859",
-                LocalDateTime.of(2000, 12, 31, 11, 58, 59));
+                textLiteral("B"),
+                day31(),
+                month12(),
+                year2000(),
+                textLiteralWhitespace(),
+                hour11(),
+                minute58(),
+                second59()
+        );
     }
 
     @Test
     public void testParseDateTimeMultiplePatternsTrailingSeparator() {
-        this.parseAndCheck2("\"A\"ddmmyyyy hhmmss;\"B\"ddmmyyyy hhmmss;",
+        this.parseAndCheck3(
+                "\"A\"ddmmyyyy hhmmss;\"B\"ddmmyyyy hhmmss;",
                 "B31122000 115859",
-                LocalDateTime.of(2000, 12, 31, 11, 58, 59));
+                textLiteral("B"),
+                day31(),
+                month12(),
+                year2000(),
+                textLiteralWhitespace(),
+                hour11(),
+                minute58(),
+                second59()
+        );
     }
 
     @Test
     public void testParseDateTimeCommas() {
-        this.parseAndCheck2("dd,mm,yyyy,hh,mm,ss",
+        this.parseAndCheck3(
+                "dd,mm,yyyy,hh,mm,ss",
                 "31,12,2000,11,58,59",
-                LocalDateTime.of(2000, 12, 31, 11, 58, 59));
+                day31(),
+                comma(),
+                month12(),
+                comma(),
+                year2000(),
+                comma(),
+                hour11(),
+                comma(),
+                minute58(),
+                comma(),
+                second59()
+        );
     }
 
     @Test
     public void testParseDateBackslashEscaped() {
-        this.parseAndCheck2("dd\\dmmm\\myyyy\\yhh\\hmm\\mss\\s",
+        this.parseAndCheck3(
+                "dd\\dmmm\\myyyy\\yhh\\hmm\\mss\\s",
                 "31dDecm2000y11h58m59s",
-                LocalDateTime.of(2000, 12, 31, 11, 58, 59));
+                day31(),
+                textLiteral("d"),
+                monthDec(),
+                textLiteral("m"),
+                year2000(),
+                textLiteral("y"),
+                hour11(),
+                textLiteral("h"),
+                minute58(),
+                textLiteral("m"),
+                second59(),
+                textLiteral("s")
+        );
     }
 
     // converter........................................................................................................
@@ -248,28 +391,28 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
     public void testConvertHourMinutesOnlyPattern() {
         this.convertAndCheck2("hh:mm",
                 "11:59",
-                LocalDateTime.of(1900, 1, 1, 11, 59));
+                LocalDateTime.of(0, 1, 1, 11, 59));
     }
 
     @Test
     public void testConvertHourMinutesSecondsOnlyPattern() {
         this.convertAndCheck2("hh:mm:ss",
                 "11:58:59",
-                LocalDateTime.of(1900, 1, 1, 11, 58, 59));
+                LocalDateTime.of(0, 1, 1, 11, 58, 59));
     }
 
     @Test
     public void testConvertHourMinutesSecondsAmpmOnlyPattern() {
         this.convertAndCheck2("hh:mm:ss AM/PM",
                 "11:58:59 PM",
-                LocalDateTime.of(1900, 1, 1, 23, 58, 59));
+                LocalDateTime.of(0, 1, 1, 23, 58, 59));
     }
 
     @Test
     public void testConvertHourDefaultsMinutes() {
         this.convertAndCheck2("hh",
                 "11",
-                LocalDateTime.of(1900, 1, 1, 11, 0, 0));
+                LocalDateTime.of(0, 1, 1, 11, 0, 0));
     }
 
     @Test
@@ -330,6 +473,12 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
     @Override
     ParserToken parserParserToken(final LocalDateTime value, final String text) {
         return ParserTokens.localDateTime(value, text);
+    }
+
+    @Override
+    SpreadsheetDateTimeParserToken parent(final List<ParserToken> tokens,
+                                          final String text) {
+        return SpreadsheetParserToken.dateTime(tokens, text);
     }
 
     @Override

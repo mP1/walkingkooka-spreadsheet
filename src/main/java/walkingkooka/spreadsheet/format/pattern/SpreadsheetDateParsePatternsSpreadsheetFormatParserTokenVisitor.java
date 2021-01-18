@@ -46,9 +46,8 @@ final class SpreadsheetDateParsePatternsSpreadsheetFormatParserTokenVisitor exte
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatDateParserToken token) {
+    protected void endVisit(final SpreadsheetFormatDateParserToken token) {
         this.addToken(token);
-        return Visiting.CONTINUE;
     }
 
     @Override
