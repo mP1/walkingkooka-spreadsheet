@@ -26,6 +26,7 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.visit.Visiting;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -81,6 +82,21 @@ final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor exte
     @Override
     protected void endVisit(final SpreadsheetCellReferenceParserToken token) {
         this.exitReference(token.cell(), token);
+    }
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetDateParserToken token) {
+        this.resetDate();
+        return this.enter();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetDateParserToken token) {
+        this.exit();
+        this.add(
+                Expression.localDate(this.toLocalDate()),
+                token
+        );
     }
 
     @Override
@@ -278,6 +294,12 @@ final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor exte
     // visit....................................................................................................
     // ignore all SymbolParserTokens, dont bother to collect them.
 
+
+    @Override
+    protected void visit(final SpreadsheetDayNumberParserToken token) {
+        this.day = token.value();
+    }
+
     @Override
     protected void visit(final SpreadsheetExpressionNumberParserToken token) {
         this.add(Expression.expressionNumber(token.value()), token);
@@ -289,9 +311,54 @@ final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor exte
     }
 
     @Override
+    protected void visit(final SpreadsheetMonthNameParserToken token) {
+        this.month = token.value();
+    }
+
+    @Override
+    protected void visit(final SpreadsheetMonthNameAbbreviationParserToken token) {
+        this.month = token.value();
+    }
+
+    @Override
+    protected void visit(final SpreadsheetMonthNameInitialParserToken token) {
+        this.month = token.value();
+    }
+
+    @Override
+    protected void visit(final SpreadsheetMonthNumberParserToken token) {
+        this.month = token.value();
+    }
+
+    @Override
     protected void visit(final SpreadsheetTextLiteralParserToken token) {
         this.text.append(token.value());
     }
+
+    @Override
+    protected void visit(final SpreadsheetYearParserToken token) {
+        this.year = token.value();
+    }
+
+    // DATE ............................................................................................................
+
+    private void resetDate() {
+        this.day = 1; // 1st
+        this.month = 1; // January
+        this.year = 0; // https://github.com/mP1/walkingkooka-spreadsheet/issues/1309 Default year when parsing date or date/time
+    }
+
+    /**
+     * Creates a {@link LocalDate} assuming defaults have been set and an entire {@link SpreadsheetDateParserToken} has
+     * been visited.
+     */
+    private LocalDate toLocalDate() {
+        return LocalDate.of(this.year, this.month, this.day);
+    }
+
+    private int day;
+    private int month;
+    private int year;
 
     // GENERAL PURPOSE .................................................................................................
 

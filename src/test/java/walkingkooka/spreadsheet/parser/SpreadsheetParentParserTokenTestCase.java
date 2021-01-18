@@ -98,12 +98,36 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
         return SpreadsheetParserToken.apostropheSymbol(APOSTROPHE, APOSTROPHE);
     }
 
+    final static int DAY = 31;
+
+    final SpreadsheetDayNumberParserToken dayNumber() {
+        return SpreadsheetParserToken.dayNumber(DAY, "" + DAY);
+    }
+
     final SpreadsheetDoubleQuoteSymbolParserToken doubleQuoteSymbol() {
         return SpreadsheetParserToken.doubleQuoteSymbol(DOUBLE_QUOTE, DOUBLE_QUOTE);
     }
 
     final SpreadsheetEqualsSymbolParserToken equalsSymbol() {
         return SpreadsheetParserToken.equalsSymbol("=", "=");
+    }
+
+    final static int MONTH = 12;
+
+    final SpreadsheetMonthNameParserToken monthName() {
+        return SpreadsheetParserToken.monthName(MONTH, "December");
+    }
+
+    final SpreadsheetMonthNameAbbreviationParserToken monthNameAbbreviation() {
+        return SpreadsheetParserToken.monthNameAbbreviation(MONTH, "Dec.");
+    }
+
+    final SpreadsheetMonthNameInitialParserToken monthNameInitial() {
+        return SpreadsheetParserToken.monthNameInitial(MONTH, "F");
+    }
+    
+    final SpreadsheetMonthNumberParserToken monthNumber() {
+        return SpreadsheetParserToken.monthNumber(MONTH, "" + MONTH);
     }
 
     final SpreadsheetMinusSymbolParserToken minusSymbol() {
@@ -126,12 +150,22 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
         return SpreadsheetParserToken.percentSymbol("%", "%");
     }
 
+    final SpreadsheetTextLiteralParserToken slashTextLiteral() {
+        return SpreadsheetParserToken.textLiteral("/", "/");
+    }
+
     final SpreadsheetTextLiteralParserToken textLiteral() {
         return SpreadsheetParserToken.textLiteral(TEXT, TEXT);
     }
 
     final SpreadsheetWhitespaceParserToken whitespace() {
         return SpreadsheetParserToken.whitespace(WHITESPACE, WHITESPACE);
+    }
+
+    final static int YEAR = 1999;
+
+    final SpreadsheetYearParserToken year() {
+        return SpreadsheetParserToken.year(YEAR, "" + YEAR);
     }
 
     final SpreadsheetParenthesisOpenSymbolParserToken openParenthesisSymbol() {
