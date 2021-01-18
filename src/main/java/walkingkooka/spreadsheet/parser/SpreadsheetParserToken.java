@@ -294,6 +294,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetMonthNameParserToken}
+     */
+    public static SpreadsheetMonthNameParserToken monthName(final int value, final String text) {
+        return SpreadsheetMonthNameParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetMonthNumberParserToken}
      */
     public static SpreadsheetMonthNumberParserToken monthNumber(final int value, final String text) {
@@ -737,6 +744,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * Only {@link SpreadsheetMonthNameParserToken} returns true
+     */
+    public final boolean isMonthName() {
+        return this instanceof SpreadsheetMonthNameParserToken;
+    }
+
+    /**
      * Only {@link SpreadsheetMonthNumberParserToken} returns true
      */
     public final boolean isMonthNumber() {
@@ -1051,6 +1065,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
+                SpreadsheetMonthNameParserToken.class,
+                SpreadsheetParserToken::unmarshallMonthName
+        );
+
+        registerLeafParserToken(
                 SpreadsheetMonthNumberParserToken.class,
                 SpreadsheetParserToken::unmarshallMonthNumber
         );
@@ -1188,6 +1207,16 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 Integer.class,
                 context,
                 SpreadsheetParserToken::minute
+        );
+    }
+
+    static SpreadsheetMonthNameParserToken unmarshallMonthName(final JsonNode node,
+                                                               final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                Integer.class,
+                context,
+                SpreadsheetParserToken::monthName
         );
     }
 
