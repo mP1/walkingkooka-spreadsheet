@@ -97,7 +97,11 @@ public final class SpreadsheetTextParserTokenTest extends SpreadsheetParentParse
 
     @Override
     List<ParserToken> tokens() {
-        return Lists.of(this.openParenthesisSymbol(), this.textLiteral(), this.closeParenthesisSymbol());
+        return Lists.of(
+                doubleQuoteSymbol(),
+                textLiteral(),
+                doubleQuoteSymbol()
+        );
     }
 
     @Override
