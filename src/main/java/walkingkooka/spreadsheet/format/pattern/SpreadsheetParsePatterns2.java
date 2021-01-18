@@ -46,6 +46,10 @@ abstract class SpreadsheetParsePatterns2<T extends SpreadsheetFormatParserToken>
 
     // HasConverter.....................................................................................................
 
+    /**
+     * Creates a {@link Converter} that tries each of the individual patterns, after converting each pattern to a
+     * {@link DateTimeFormatter}.
+     */
     @Override
     final Converter<ExpressionNumberConverterContext> createConverter() {
         return Converters.collection(IntStream.range(0, this.value().size())
@@ -54,17 +58,23 @@ abstract class SpreadsheetParsePatterns2<T extends SpreadsheetFormatParserToken>
     }
 
     /**
-     * Sub classes should create a {@link Converter} using the given nth {@link SpreadsheetFormatParserToken}.
+     * Sub classes should create a {@link Converter} using the given nth {@link SpreadsheetFormatParserToken} pattern
+     * within this group of one or many patterns.
      */
     abstract Converter<ExpressionNumberConverterContext> createDateTimeFormatterConverter(final int i);
 
     // HasParser........................................................................................................
 
+    /**
+     * Creates a {@link Parsers#alternatives(List)} that tries each of the individual patterns until success.
+     */
     @Override
     final Parser<ParserContext> createParser() {
-        return Parsers.alternatives(IntStream.range(0, this.value().size())
-                .mapToObj(this::createDateTimeFormatterParser)
-                .collect(Collectors.toList()));
+        return Parsers.alternatives(
+                IntStream.range(0, this.value().size())
+                        .mapToObj(this::createDateTimeFormatterParser)
+                        .collect(Collectors.toList())
+        );
     }
 
     /**
