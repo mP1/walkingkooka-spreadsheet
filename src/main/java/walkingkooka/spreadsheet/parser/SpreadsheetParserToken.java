@@ -98,6 +98,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetDateParserToken}
+     */
+    public static SpreadsheetDateParserToken date(final List<ParserToken> value, final String text) {
+        return SpreadsheetDateParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetDayNameParserToken}
      */
     public static SpreadsheetDayNameParserToken dayName(final int value, final String text) {
@@ -559,6 +566,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public final boolean isCurrencySymbol() {
         return this instanceof SpreadsheetCurrencySymbolParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetDateParserToken} return true
+     */
+    public final boolean isDate() {
+        return this instanceof SpreadsheetDateParserToken;
     }
 
     /**
@@ -1721,6 +1735,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerParentParserToken(
+                SpreadsheetDateParserToken.class,
+                SpreadsheetParserToken::unmarshallDate
+        );
+
+        registerParentParserToken(
                 SpreadsheetDivisionParserToken.class,
                 SpreadsheetParserToken::unmarshallDivision
         );
@@ -1817,6 +1836,15 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 node,
                 context,
                 SpreadsheetParserToken::addition
+        );
+    }
+
+    static SpreadsheetDateParserToken unmarshallDate(final JsonNode node,
+                                                     final JsonNodeUnmarshallContext condate) {
+        return unmarshallParentParserToken(
+                node,
+                condate,
+                SpreadsheetParserToken::date
         );
     }
 
