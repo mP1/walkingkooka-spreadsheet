@@ -21,32 +21,37 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
 import java.util.function.Function;
 
+/**
+ * A factory that creates a {@link DateTimeFormatter} using the {@link DateTimeContext} to customize the {@link java.util.Locale} and two-digit-year.
+ */
 final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunction implements Function<DateTimeContext, DateTimeFormatter> {
 
     static SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunction with(final SpreadsheetFormatParserToken token,
-                                                                                  final boolean ampm) {
-        return new SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunction(token, ampm);
+                                                                                  final ChronoField hour) {
+        return new SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunction(token, hour);
     }
 
     private SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunction(final SpreadsheetFormatParserToken token,
-                                                                              final boolean ampm) {
+                                                                              final ChronoField hour) {
         super();
         this.token = token;
-        this.ampm = ampm;
+        this.hour = hour;
     }
 
     @Override
     public DateTimeFormatter apply(final DateTimeContext context) {
-        return SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpreadsheetFormatParserTokenVisitor.toDateTimeFormatter(this.token,
+        return SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpreadsheetFormatParserTokenVisitor.toDateTimeFormatter(
+                this.token,
                 context.twoDigitYear(),
-                this.ampm)
-                .withLocale(context.locale());
+                this.hour
+        ).withLocale(context.locale());
     }
 
     final SpreadsheetFormatParserToken token;
-    final boolean ampm;
+    final ChronoField hour;
 
     @Override
     public String toString() {

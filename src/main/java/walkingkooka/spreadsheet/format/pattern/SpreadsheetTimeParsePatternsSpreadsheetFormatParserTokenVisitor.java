@@ -34,6 +34,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatYearParserToken;
 import walkingkooka.visit.Visiting;
 
+import java.time.temporal.ChronoField;
 import java.util.List;
 
 final class SpreadsheetTimeParsePatternsSpreadsheetFormatParserTokenVisitor extends SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<SpreadsheetFormatTimeParserToken> {
@@ -68,27 +69,27 @@ final class SpreadsheetTimeParsePatternsSpreadsheetFormatParserTokenVisitor exte
 
     @Override
     protected Visiting startVisit(final SpreadsheetFormatTimeParserToken token) {
-        this.ampm = false;
+        this.hour = ChronoField.HOUR_OF_DAY;
         return Visiting.CONTINUE;
     }
 
     @Override
     protected void endVisit(final SpreadsheetFormatTimeParserToken token) {
         this.addToken(token);
-        this.ampms.add(this.ampm);
+        this.hours.add(this.hour);
     }
 
-    final List<Boolean> ampms = Lists.array();
+    final List<ChronoField> hours = Lists.array();
 
     @Override
     protected void visit(final SpreadsheetFormatAmPmParserToken token) {
-        this.ampm = true;
+        this.hour = ChronoField.HOUR_OF_AMPM;
     }
 
     /**
-     * When true 12 hour patterns must be used.
+     * Holds the {@link ChronoField}
      */
-    boolean ampm = false;
+    private ChronoField hour = ChronoField.HOUR_OF_DAY;
 
     @Override
     protected void visit(final SpreadsheetFormatCurrencyParserToken token) {
