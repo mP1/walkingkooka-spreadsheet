@@ -22,25 +22,20 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitorTest extends SpreadsheetParserTokenVisitorTestCase<SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor> {
+public final class SpreadsheetParserTokenVisitorToExpressionTest extends SpreadsheetParserTokenVisitorTestCase<SpreadsheetParserTokenVisitorToExpression> {
 
     @Test
     public void testNullExpressionNumberKindFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor.accept(SpreadsheetParserToken.expressionNumber(ExpressionNumberKind.DEFAULT.create(1), "1"), null));
+        assertThrows(NullPointerException.class, () -> SpreadsheetParserTokenVisitorToExpression.accept(SpreadsheetParserToken.expressionNumber(ExpressionNumberKind.DEFAULT.create(1), "1"), null));
     }
 
     @Override
-    public SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor createVisitor() {
-        return new SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor(null);
+    public SpreadsheetParserTokenVisitorToExpression createVisitor() {
+        return new SpreadsheetParserTokenVisitorToExpression(null);
     }
 
     @Override
-    public String typeNamePrefix() {
-        return SpreadsheetParserToken.class.getSimpleName();
-    }
-
-    @Override
-    public Class<SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor> type() {
-        return SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor.class;
+    public Class<SpreadsheetParserTokenVisitorToExpression> type() {
+        return SpreadsheetParserTokenVisitorToExpression.class;
     }
 }

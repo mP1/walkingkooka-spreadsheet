@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -32,6 +33,14 @@ public final class SpreadsheetDateTimeParserToken extends SpreadsheetParentParse
 
     private SpreadsheetDateTimeParserToken(final List<ParserToken> value, final String text) {
         super(value, text);
+    }
+
+    /**
+     * Creates a {@link LocalDateTime} from the components in this {@link SpreadsheetDateTimeParserToken}.
+     */
+    public LocalDateTime toLocalDateTime() {
+        return SpreadsheetParserTokenVisitorLocalDateTime.acceptSpreadsheetParentParserToken(this)
+                .toLocalDateTime();
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................

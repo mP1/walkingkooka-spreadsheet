@@ -29,6 +29,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public final class SpreadsheetDateTimeParserTokenTest extends SpreadsheetParentParserTokenTestCase<SpreadsheetDateTimeParserToken> {
 
     @Test
@@ -241,11 +243,19 @@ public final class SpreadsheetDateTimeParserTokenTest extends SpreadsheetParentP
                                        final SpreadsheetParserToken... tokens) {
         final List<ParserToken> tokensList = Lists.of(tokens);
 
+        final SpreadsheetDateTimeParserToken dateTimeParserToken = SpreadsheetDateTimeParserToken.with(
+                tokensList,
+                ParserToken.text(tokensList)
+        );
+
+        assertEquals(
+                expected,
+                dateTimeParserToken.toLocalDateTime(),
+                () -> "toLocalDateTime() " + dateTimeParserToken
+        );
+
         this.toExpressionAndCheck(
-                SpreadsheetDateTimeParserToken.with(
-                        tokensList,
-                        ParserToken.text(tokensList)
-                ),
+                dateTimeParserToken,
                 Expression.localDateTime(expected)
         );
     }

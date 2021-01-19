@@ -17,22 +17,20 @@
 
 package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.test.Fake;
+import org.junit.jupiter.api.Test;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
-public final class FakeSpreadsheetParserTokenVisitorTest extends SpreadsheetParserTokenVisitorTestCase<FakeSpreadsheetParserTokenVisitor> {
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+public final class SpreadsheetParserTokenVisitorLocalDateTimeTest extends SpreadsheetParserTokenVisitorTestCase<SpreadsheetParserTokenVisitorLocalDateTime> {
 
     @Override
-    public FakeSpreadsheetParserTokenVisitor createVisitor() {
-        return new FakeSpreadsheetParserTokenVisitor();
+    public SpreadsheetParserTokenVisitorLocalDateTime createVisitor() {
+        return new SpreadsheetParserTokenVisitorLocalDateTime();
     }
 
     @Override
-    public String typeNamePrefix() {
-        return Fake.class.getSimpleName();
-    }
-
-    @Override
-    public Class<FakeSpreadsheetParserTokenVisitor> type() {
-        return FakeSpreadsheetParserTokenVisitor.class;
+    public Class<SpreadsheetParserTokenVisitorLocalDateTime> type() {
+        return SpreadsheetParserTokenVisitorLocalDateTime.class;
     }
 }
