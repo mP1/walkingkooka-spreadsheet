@@ -492,6 +492,42 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
     }
 
     @Test
+    public void testFormatterHMmmAp() {
+        this.formatAndCheck4(
+                "hmmma/p",
+                LocalTime.of(12, 58, 59),
+                "1258QAM"
+        );
+    }
+
+    @Test
+    public void testFormatterHMmmAp2() {
+        this.formatAndCheck4(
+                "hmmma/p",
+                LocalTime.of(23, 58, 59),
+                "1158RPM"
+        );
+    }
+
+    @Test
+    public void testFormatterHMmmAmpm() {
+        this.formatAndCheck4(
+                "hmmmam/pm",
+                LocalTime.of(12, 58, 59),
+                "1258QAM"
+        );
+    }
+
+    @Test
+    public void testFormatterHMmmAmpm2() {
+        this.formatAndCheck4(
+                "hmmmam/pm",
+                LocalTime.of(23, 58, 59),
+                "1158RPM"
+        );
+    }
+
+    @Test
     public void testFormatterS1() {
         this.formatAndCheck4(
                 "s",
