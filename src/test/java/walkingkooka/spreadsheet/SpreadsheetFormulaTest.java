@@ -527,7 +527,13 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         "  \"token\": {\n" +
                         "    \"type\": \"spreadsheet-text-parser-token\",\n" +
                         "    \"value\": {\n" +
-                        "      \"value\": \"1+2\",\n" +
+                        "      \"value\": [{\n" +
+                        "        \"type\": \"spreadsheet-text-literal-parser-token\",\n" +
+                        "        \"value\": {\n" +
+                        "          \"value\": \"1+2\",\n" +
+                        "          \"text\": \"1+2\"\n" +
+                        "        }\n" +
+                        "      }],\n" +
                         "      \"text\": \"1+2\"\n" +
                         "    }\n" +
                         "  }\n" +
@@ -557,7 +563,13 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
                         "  \"token\": {\n" +
                         "    \"type\": \"spreadsheet-text-parser-token\",\n" +
                         "    \"value\": {\n" +
-                        "      \"value\": \"1+2\",\n" +
+                        "      \"value\": [{\n" +
+                        "        \"type\": \"spreadsheet-text-literal-parser-token\",\n" +
+                        "        \"value\": {\n" +
+                        "          \"value\": \"1+2\",\n" +
+                        "          \"text\": \"1+2\"\n" +
+                        "        }\n" +
+                        "      }],\n" +
                         "      \"text\": \"1+2\"\n" +
                         "    }\n" +
                         "  },\n" +

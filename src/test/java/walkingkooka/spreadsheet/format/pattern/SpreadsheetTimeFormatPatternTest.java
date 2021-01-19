@@ -303,7 +303,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
                 "sss.0",
                 LocalTime.of(12, 58, 59, 123456789),
-                "59d.1"
+                "59D1"
         );
     }
 
@@ -312,7 +312,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
                 "sss.00",
                 LocalTime.of(12, 58, 59, 123456789),
-                "59d.12"
+                "59D12"
         );
     }
 
@@ -321,7 +321,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
                 "sss.00",
                 LocalTime.of(12, 58, 59),
-                "59.00"
+                "59D00"
         );
     }
 
@@ -330,7 +330,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
                 "sss.000",
                 LocalTime.of(12, 58, 59, 123456789),
-                "59d.123"
+                "59D123"
         );
     }
 
@@ -339,11 +339,11 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         this.formatAndCheck2(
                 "hhmmss.0000",
                 LocalTime.of(12, 58, 59, 123456789),
-                "125859d.1235"
+                "125859D1235"
         );
     }
 
-    @Test
+    //@Test "https://github.com/mP1/walkingkooka-spreadsheet/issues/1280"
     public void testFormatterFormatA() {
         this.formatAndCheck2(
                 "a",
@@ -352,7 +352,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
-    @Test
+    //@Test "https://github.com/mP1/walkingkooka-spreadsheet/issues/1280"
     public void testFormatterFormatA2() {
         this.formatAndCheck2(
                 "a",
@@ -379,7 +379,7 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
         );
     }
 
-    @Test
+    //@Test "https://github.com/mP1/walkingkooka-spreadsheet/issues/1280"
     public void testFormatterFormatHhmmAm() {
         this.formatAndCheck2(
                 "hhmmam",
