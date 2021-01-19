@@ -26,9 +26,6 @@ import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.visit.Visiting;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -38,13 +35,13 @@ import java.util.function.Function;
 /**
  * A {@link SpreadsheetParserTokenVisitor} that a {@link SpreadsheetParserToken} into its {@link Expression}.
  */
-final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVisitor {
+final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserTokenVisitor {
 
     static Optional<Expression> accept(final SpreadsheetParserToken token,
                                        final ExpressionNumberKind expressionNumberKind) {
         Objects.requireNonNull(expressionNumberKind, "expressionNumberKind");
 
-        final SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor visitor = new SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor(expressionNumberKind);
+        final SpreadsheetParserTokenVisitorToExpression visitor = new SpreadsheetParserTokenVisitorToExpression(expressionNumberKind);
         token.accept(visitor);
 
         final List<Expression> nodes = visitor.children;
@@ -61,7 +58,7 @@ final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor exte
     }
 
     // @VisibleForTesting
-    SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor(final ExpressionNumberKind expressionNumberKind) {
+    SpreadsheetParserTokenVisitorToExpression(final ExpressionNumberKind expressionNumberKind) {
         super();
         this.expressionNumberKind = expressionNumberKind;
     }
@@ -88,30 +85,30 @@ final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor exte
 
     @Override
     protected Visiting startVisit(final SpreadsheetDateParserToken token) {
-        this.resetDate();
-        return this.enter();
+        this.enter();
+        return Visiting.SKIP;
     }
 
     @Override
     protected void endVisit(final SpreadsheetDateParserToken token) {
         this.exit();
         this.add(
-                Expression.localDate(this.toLocalDate()),
+                Expression.localDate(token.toLocalDate()),
                 token
         );
     }
 
     @Override
     protected Visiting startVisit(final SpreadsheetDateTimeParserToken token) {
-        this.resetDateTime();
-        return this.enter();
+        this.enter();
+        return Visiting.SKIP;
     }
 
     @Override
     protected void endVisit(final SpreadsheetDateTimeParserToken token) {
         this.exit();
         this.add(
-                Expression.localDateTime(this.toLocalDateTime()),
+                Expression.localDateTime(token.toLocalDateTime()),
                 token
         );
     }
@@ -310,15 +307,15 @@ final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor exte
 
     @Override
     protected Visiting startVisit(final SpreadsheetTimeParserToken token) {
-        this.resetTime();
-        return this.enter();
+        this.enter();
+        return Visiting.SKIP;
     }
 
     @Override
     protected void endVisit(final SpreadsheetTimeParserToken token) {
         this.exit();
         this.add(
-                Expression.localTime(this.toLocalTime()),
+                Expression.localTime(token.toLocalTime()),
                 token
         );
     }
@@ -327,23 +324,8 @@ final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor exte
     // ignore all SymbolParserTokens, dont bother to collect them.
 
     @Override
-    protected void visit(final SpreadsheetAmPmParserToken token) {
-        this.ampm = token.value();
-    }
-
-    @Override
-    protected void visit(final SpreadsheetDayNumberParserToken token) {
-        this.day = token.value();
-    }
-
-    @Override
     protected void visit(final SpreadsheetExpressionNumberParserToken token) {
         this.add(Expression.expressionNumber(token.value()), token);
-    }
-
-    @Override
-    protected void visit(final SpreadsheetHourParserToken token) {
-        this.hour = token.value();
     }
 
     @Override
@@ -352,115 +334,8 @@ final class SpreadsheetParserTokenToExpressionSpreadsheetParserTokenVisitor exte
     }
 
     @Override
-    protected void visit(final SpreadsheetMillisecondParserToken token) {
-        this.millis = token.value();
-    }
-
-    @Override
-    protected void visit(final SpreadsheetMinuteParserToken token) {
-        this.minute = token.value();
-    }
-
-    @Override
-    protected void visit(final SpreadsheetMonthNameParserToken token) {
-        this.month = token.value();
-    }
-
-    @Override
-    protected void visit(final SpreadsheetMonthNameAbbreviationParserToken token) {
-        this.month = token.value();
-    }
-
-    @Override
-    protected void visit(final SpreadsheetMonthNameInitialParserToken token) {
-        this.month = token.value();
-    }
-
-    @Override
-    protected void visit(final SpreadsheetMonthNumberParserToken token) {
-        this.month = token.value();
-    }
-
-    @Override
-    protected void visit(final SpreadsheetSecondsParserToken token) {
-        this.seconds = token.value();
-    }
-
-    @Override
     protected void visit(final SpreadsheetTextLiteralParserToken token) {
         this.text.append(token.value());
-    }
-
-    @Override
-    protected void visit(final SpreadsheetYearParserToken token) {
-        this.year = token.value();
-    }
-
-    // DATE ............................................................................................................
-
-    private void resetDate() {
-        this.day = 1; // 1st
-        this.month = 1; // January
-        this.year = 0; // https://github.com/mP1/walkingkooka-spreadsheet/issues/1309 Default year when parsing date or date/time
-    }
-
-    /**
-     * Creates a {@link LocalDate} assuming defaults have been set and an entire {@link SpreadsheetDateParserToken} has
-     * been visited.
-     */
-    private LocalDate toLocalDate() {
-        return LocalDate.of(this.year, this.month, this.day);
-    }
-
-    private int day;
-    private int month;
-    private int year;
-
-    // TIME ............................................................................................................
-
-    private void resetTime() {
-        this.hour = 0;
-        this.minute = 0;
-        this.seconds = 0;
-        this.millis = 0;
-        this.ampm = 0;
-    }
-
-    /**
-     * Creates a {@link LocalTime} assuming defaults have been set and an entire {@link SpreadsheetTimeParserToken} has
-     * been visited.
-     */
-    private LocalTime toLocalTime() {
-        return LocalTime.of(
-                this.hour + this.ampm,
-                this.minute,
-                this.seconds,
-                this.millis
-        );
-    }
-
-    private int hour;
-    private int minute;
-    private int seconds;
-    private int millis;
-    private int ampm;
-
-    // DATETIME ........................................................................................................
-
-    private void resetDateTime() {
-        this.resetDate();
-        this.resetTime();
-    }
-
-    /**
-     * Creates a {@link LocalDateTime} assuming defaults have been set and an entire {@link SpreadsheetDateTimeParserToken} has
-     * been visited.
-     */
-    private LocalDateTime toLocalDateTime() {
-        return LocalDateTime.of(
-                this.toLocalDate(),
-                this.toLocalTime()
-        );
     }
 
     // GENERAL PURPOSE .................................................................................................

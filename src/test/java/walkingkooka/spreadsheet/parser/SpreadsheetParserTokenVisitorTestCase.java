@@ -26,8 +26,13 @@ public abstract class SpreadsheetParserTokenVisitorTestCase<V extends Spreadshee
     }
 
     @Override
-    public final String typeNameSuffix() {
+    public final String typeNamePrefix() {
         return SpreadsheetParserTokenVisitor.class.getSimpleName();
+    }
+
+    @Override
+    public final String typeNameSuffix() {
+        return "";
     }
 
     @Override

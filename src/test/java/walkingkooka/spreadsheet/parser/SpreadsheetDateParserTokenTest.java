@@ -27,6 +27,8 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public final class SpreadsheetDateParserTokenTest extends SpreadsheetParentParserTokenTestCase<SpreadsheetDateParserToken> {
 
     @Test
@@ -128,12 +130,21 @@ public final class SpreadsheetDateParserTokenTest extends SpreadsheetParentParse
                                        final SpreadsheetParserToken...tokens) {
         final List<ParserToken> tokensList = Lists.of(tokens);
 
+        final SpreadsheetDateParserToken dateParserToken = SpreadsheetDateParserToken.with(
+                tokensList,
+                ParserToken.text(tokensList)
+        );
+
+        assertEquals(
+                expected,
+                dateParserToken.toLocalDate(),
+                () -> "toLocalDate() " + dateParserToken
+        );
+
         this.toExpressionAndCheck(
-                SpreadsheetDateParserToken.with(
-                        tokensList,
-                        ParserToken.text(tokensList)
-                ),
-                Expression.localDate(expected));
+                dateParserToken,
+                Expression.localDate(expected)
+        );
     }
 
     @Override
