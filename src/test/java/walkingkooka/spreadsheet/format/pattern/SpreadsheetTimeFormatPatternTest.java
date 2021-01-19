@@ -245,6 +245,42 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
     }
 
     @Test
+    public void testFormatterHMmmAp() {
+        this.formatAndCheck2(
+                "hmmma/p",
+                LocalTime.of(12, 58, 59),
+                "1258QAM"
+        );
+    }
+
+    @Test
+    public void testFormatterHMmmAp2() {
+        this.formatAndCheck2(
+                "hmmma/p",
+                LocalTime.of(23, 58, 59),
+                "1158RPM"
+        );
+    }
+
+    @Test
+    public void testFormatterHMmmAmpm() {
+        this.formatAndCheck2(
+                "hmmmam/pm",
+                LocalTime.of(12, 58, 59),
+                "1258QAM"
+        );
+    }
+
+    @Test
+    public void testFormatterHMmmAmpm2() {
+        this.formatAndCheck2(
+                "hmmmam/pm",
+                LocalTime.of(23, 58, 59),
+                "1158RPM"
+        );
+    }
+
+    @Test
     public void testFormatterS1() {
         this.formatAndCheck2(
                 "s",
@@ -340,51 +376,6 @@ public final class SpreadsheetTimeFormatPatternTest extends SpreadsheetFormatPat
                 "hhmmss.0000",
                 LocalTime.of(12, 58, 59, 123456789),
                 "125859D1235"
-        );
-    }
-
-    //@Test "https://github.com/mP1/walkingkooka-spreadsheet/issues/1280"
-    public void testFormatterFormatA() {
-        this.formatAndCheck2(
-                "a",
-                LocalTime.of(12, 58, 59, 123456789),
-                "Q"
-        );
-    }
-
-    //@Test "https://github.com/mP1/walkingkooka-spreadsheet/issues/1280"
-    public void testFormatterFormatA2() {
-        this.formatAndCheck2(
-                "a",
-                LocalTime.of(23, 58, 59, 123456789),
-                "R"
-        );
-    }
-
-    @Test
-    public void testFormatterFormatAmpm() {
-        this.formatAndCheck2(
-                "am/pm",
-                LocalTime.of(12, 58, 59, 123456789),
-                "QAM"
-        );
-    }
-
-    @Test
-    public void testFormatterFormatAmpm2() {
-        this.formatAndCheck2(
-                "am/pm",
-                LocalTime.of(23, 58, 59, 123456789),
-                "RPM"
-        );
-    }
-
-    //@Test "https://github.com/mP1/walkingkooka-spreadsheet/issues/1280"
-    public void testFormatterFormatHhmmAm() {
-        this.formatAndCheck2(
-                "hhmmam",
-                LocalTime.of(12, 58, 59, 123456789),
-                "1258QAM"
         );
     }
 
