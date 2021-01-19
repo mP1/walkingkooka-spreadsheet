@@ -260,7 +260,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         this.formatAndCheck3(
                 "mmmmm",
                 LocalDate.of(2000, 1, 31),
-                "January"
+                "J"
         );
     }
 
@@ -269,7 +269,7 @@ public final class SpreadsheetDateTimeFormatPatternTest extends SpreadsheetForma
         this.formatAndCheck3(
                 "mmmmm",
                 LocalDate.of(2000, 12, 31),
-                "December"
+                "D"
         );
     }
 
