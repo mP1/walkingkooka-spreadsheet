@@ -26,6 +26,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
+import java.time.temporal.ChronoField;
 import java.util.List;
 
 /**
@@ -39,7 +40,7 @@ public final class SpreadsheetDateTimeParsePatterns extends SpreadsheetParsePatt
     static SpreadsheetDateTimeParsePatterns withToken(final ParserToken token) {
         final SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor.with();
         visitor.startAccept(token);
-        return new SpreadsheetDateTimeParsePatterns(visitor.tokens(), visitor.ampms);
+        return new SpreadsheetDateTimeParsePatterns(visitor.tokens(), visitor.hours);
     }
 
     /**
@@ -50,16 +51,16 @@ public final class SpreadsheetDateTimeParsePatterns extends SpreadsheetParsePatt
 
         final SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor visitor = SpreadsheetDateTimeParsePatternsSpreadsheetFormatParserTokenVisitor.with();
         tokens.forEach(visitor::startAccept);
-        return new SpreadsheetDateTimeParsePatterns(visitor.tokens(), visitor.ampms);
+        return new SpreadsheetDateTimeParsePatterns(visitor.tokens(), visitor.hours);
     }
 
     /**
      * Private ctor use factory
      */
     private SpreadsheetDateTimeParsePatterns(final List<SpreadsheetFormatDateTimeParserToken> tokens,
-                                             final List<Boolean> ampms) {
+                                             final List<ChronoField> hours) {
         super(tokens);
-        this.ampms = ampms;
+        this.hours = hours;
     }
 
     // Object...........................................................................................................
@@ -84,8 +85,11 @@ public final class SpreadsheetDateTimeParsePatterns extends SpreadsheetParsePatt
     }
 
     private SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunction dateTimeContextDateTimeFormatterFunction(final int i) {
-        return SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunction.with(this.value().get(i), this.ampms.get(i));
+        return SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunction.with(
+                this.value().get(i),
+                this.hours.get(i)
+        );
     }
 
-    private final List<Boolean> ampms;
+    private final List<ChronoField> hours;
 }

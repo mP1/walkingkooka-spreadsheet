@@ -60,9 +60,6 @@ final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpr
     private final static ChronoField MONTH = ChronoField.MONTH_OF_YEAR;
     private final static ChronoField DAY = ChronoField.DAY_OF_MONTH;
 
-    private final static ChronoField HOUR_24 = ChronoField.HOUR_OF_DAY;
-    private final static ChronoField HOUR_AMPM = ChronoField.HOUR_OF_AMPM;
-
     private final static ChronoField MINUTES = ChronoField.MINUTE_OF_HOUR;
     private final static ChronoField SECONDS = ChronoField.SECOND_OF_MINUTE;
 
@@ -73,11 +70,8 @@ final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpr
      */
     static DateTimeFormatter toDateTimeFormatter(final SpreadsheetFormatParserToken token,
                                                  final int twoDigitYear,
-                                                 final boolean ampm) {
+                                                 final ChronoField hour) {
         try {
-            final ChronoField hour = ampm ?
-                    HOUR_AMPM :
-                    HOUR_24;
             final SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpreadsheetFormatParserTokenVisitor visitor = new SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpreadsheetFormatParserTokenVisitor(twoDigitYear,
                     hour,
                     token);

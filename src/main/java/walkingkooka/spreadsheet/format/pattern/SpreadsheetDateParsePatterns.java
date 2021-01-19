@@ -26,6 +26,7 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
+import java.time.temporal.ChronoField;
 import java.util.List;
 
 /**
@@ -82,6 +83,9 @@ public final class SpreadsheetDateParsePatterns extends SpreadsheetParsePatterns
     }
 
     private SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunction dateTimeContextDateTimeFormatterFunction(final int i) {
-        return SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunction.with(this.value().get(i), false);
+        return SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunction.with(
+                this.value().get(i),
+                ChronoField.HOUR_OF_DAY // 24 hours
+        );
     }
 }
