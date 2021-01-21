@@ -245,7 +245,7 @@ final class SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunctionSpr
     }
 
     private void twoDigitYear(final int min) {
-        this.builder.appendValueReduced(YEAR, min, 2, this.twoDigitYear);
+        this.builder.appendValueReduced(YEAR, min, 2, 2000 - this.twoDigitYear);
     }
 
     private final int twoDigitYear;
