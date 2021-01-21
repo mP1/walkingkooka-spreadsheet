@@ -26,6 +26,7 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatConditionParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
+import walkingkooka.text.cursor.parser.BigDecimalParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserContexts;
 import walkingkooka.text.cursor.parser.Parsers;
@@ -242,9 +243,12 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatte
                 );
             }
 
-            private Converter<ExpressionNumberConverterContext> converter = Converters.parser(BigDecimal.class,
+            private Converter<ExpressionNumberConverterContext> converter = Converters.parser(
+                    BigDecimal.class,
                     Parsers.bigDecimal(),
-                    (c) -> ParserContexts.basic(c, c));
+                    (c) -> ParserContexts.basic(c, c),
+                    (t) -> t.cast(BigDecimalParserToken.class).value()
+            );
         };
     }
 
