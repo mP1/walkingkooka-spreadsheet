@@ -93,7 +93,7 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     protected void endVisit(final SpreadsheetDateParserToken token) {
         this.exit();
         this.add(
-                Expression.localDate(token.toLocalDate()),
+                Expression.localDate(token.toLocalDate(this.context)),
                 token
         );
     }
@@ -108,10 +108,12 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     protected void endVisit(final SpreadsheetDateTimeParserToken token) {
         this.exit();
         this.add(
-                Expression.localDateTime(token.toLocalDateTime()),
+                Expression.localDateTime(token.toLocalDateTime(this.context)),
                 token
         );
     }
+
+    private final ExpressionEvaluationContext context;
 
     @Override
     protected Visiting startVisit(final SpreadsheetDivisionParserToken token) {
@@ -253,15 +255,11 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
                 Expression.divide(
                         parameter,
                         Expression.expressionNumber(
-                                this.context.expressionNumberKind()
-                                        .create(100L)
+                                this.context.expressionNumberKind().create(100L)
                         )
                 ),
-                token
-        );
+                token);
     }
-
-    private final ExpressionEvaluationContext context;
 
     @Override
     protected Visiting startVisit(final SpreadsheetPowerParserToken token) {

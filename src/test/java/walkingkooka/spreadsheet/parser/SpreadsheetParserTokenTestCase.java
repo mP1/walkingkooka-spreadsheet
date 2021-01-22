@@ -150,11 +150,25 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
     }
 
     final void toExpressionAndCheck(final Expression expected) {
-        this.toExpressionAndCheck(this.createToken(), expected);
+        this.toExpressionAndCheck(
+                this.createToken(),
+                expected
+        );
     }
 
-    final void toExpressionAndCheck(final T token, final Expression expected) {
-        final Optional<Expression> node = token.toExpression(EXPRESSION_EVALUATION_CONTEXT);
+    final void toExpressionAndCheck(final T token,
+                                    final Expression expected) {
+        this.toExpressionAndCheck(
+                token,
+                EXPRESSION_EVALUATION_CONTEXT,
+                expected
+        );
+    }
+
+    final void toExpressionAndCheck(final T token,
+                                    final ExpressionEvaluationContext context,
+                                    final Expression expected) {
+        final Optional<Expression> node = token.toExpression(context);
         assertEquals(Optional.of(expected), node, "toExpression");
     }
 

@@ -19,11 +19,15 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.datetime.FakeDateTimeContext;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberExpression;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -218,5 +222,14 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
 
     final ExpressionNumberExpression expressionNumberExpression(final Number value) {
         return Expression.expressionNumber(this.expressionNumber(value));
+    }
+
+    final ExpressionEvaluationContext expressionEvaluationContext(final int twoDigitYear) {
+        return new FakeExpressionEvaluationContext() {
+            @Override
+            public int twoDigitYear() {
+                return twoDigitYear;
+            }
+        };
     }
 }
