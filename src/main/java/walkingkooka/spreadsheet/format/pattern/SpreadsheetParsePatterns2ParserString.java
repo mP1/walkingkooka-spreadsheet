@@ -97,11 +97,11 @@ final class SpreadsheetParsePatterns2ParserString extends SpreadsheetParsePatter
                     TextCursorSavePoint save = cursor.save();
 
                     for(;;) {
-                        if (cursor.isEmpty() || i == choiceText.length()) {
+                        if (cursor.isEmpty() || i == choiceText.length()) { // lgtm [java/dereferenced-value-may-be-null]
                             token = this.token(choice, start);
                             break Exit;
                         }
-                        if(!isEqual(choiceText.charAt(i) , cursor.at())) {
+                        if (!isEqual(choiceText.charAt(i), cursor.at())) {
                             save.restore();
                             token = this.token(choice, start);
                             break Exit;
