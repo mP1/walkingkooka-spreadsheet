@@ -22,6 +22,9 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
+import walkingkooka.spreadsheet.parser.SpreadsheetExpressionNumberParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -34,6 +37,7 @@ import java.util.List;
 
 public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePatternsTestCase<SpreadsheetNumberParsePatterns,
         SpreadsheetFormatNumberParserToken,
+        SpreadsheetExpressionNumberParserToken,
         BigDecimal> {
 
     @Test
@@ -167,7 +171,7 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
     public void testParseNumberSecondPattern() {
         this.parseAndCheck2("0.0;0$",
                 "9",
-                BigDecimal.valueOf(9 * 100));
+                BigDecimal.valueOf(9));
     }
 
     @Test
@@ -207,6 +211,12 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
     @Override
     ParserToken parserParserToken(final BigDecimal value, final String text) {
         return ParserTokens.bigDecimal(value, text);
+    }
+
+    @Override
+    SpreadsheetExpressionNumberParserToken parent(final List<ParserToken> tokens,
+                                                  final String text) {
+        throw new UnsupportedOperationException();
     }
 
     @Override

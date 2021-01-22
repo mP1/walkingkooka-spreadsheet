@@ -391,9 +391,6 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
     /**
      * Value literals such as apostrophe string, number, date, date-time, time or equals-sign and expression.
-     * TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1250">SpreadsheetDatePatternsParser used when parsing formula value</a>
-     * TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1251">SpreadsheetDateTimePatternsParser used when parsing formula value</a>
-     * TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1252">SpreadsheetTimePatternsParser used when parsing formula value</a>
      * TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1253">SpreadsheetNumberPatternsParser used when parsing formula value</a>
      * TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1254">default formula value parsing after apostrophe-string, date, datetime, number & time</a>
      */

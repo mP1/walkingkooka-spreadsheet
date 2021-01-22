@@ -17,22 +17,20 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.convert.Converter;
-import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
-import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.text.cursor.parser.Parsers;
-import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
-import java.time.temporal.ChronoField;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
  * Holds a valid {@link SpreadsheetDateParsePatterns}.
  */
-public final class SpreadsheetDateParsePatterns extends SpreadsheetParsePatterns2<SpreadsheetFormatDateParserToken> {
+public final class SpreadsheetDateParsePatterns extends SpreadsheetParsePatterns2<SpreadsheetFormatDateParserToken,
+        SpreadsheetDateParserToken,
+        LocalDate> {
 
     /**
      * Factory that creates a {@link SpreadsheetDateParsePatterns} from the given tokens.
@@ -61,31 +59,26 @@ public final class SpreadsheetDateParsePatterns extends SpreadsheetParsePatterns
         super(tokens);
     }
 
+    @Override
+    Class<LocalDate> targetType() {
+        return LocalDate.class;
+    }
+
+    @Override
+    LocalDate converterTransformer(final ParserToken token) {
+        return token.cast(SpreadsheetDateParserToken.class).toLocalDate();
+    }
+
+    @Override
+    SpreadsheetDateParserToken parserTransform0(final List<ParserToken> token,
+                                                final String text) {
+        return SpreadsheetParserToken.date(token, text);
+    }
+
     // Object...........................................................................................................
 
     @Override
     boolean canBeEquals(final Object other) {
         return other instanceof SpreadsheetDateParsePatterns;
-    }
-
-    // HasConverter.....................................................................................................
-
-    @Override
-    Converter<ExpressionNumberConverterContext> createDateTimeFormatterConverter(final int i) {
-        return Converters.stringLocalDate(this.dateTimeContextDateTimeFormatterFunction(i));
-    }
-
-    // HasParser........................................................................................................
-
-    @Override
-    Parser<ParserContext> createDateTimeFormatterParser(final int i) {
-        return Parsers.localDate(this.dateTimeContextDateTimeFormatterFunction(i));
-    }
-
-    private SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunction dateTimeContextDateTimeFormatterFunction(final int i) {
-        return SpreadsheetParsePatterns2DateTimeContextDateTimeFormatterFunction.with(
-                this.value().get(i),
-                ChronoField.HOUR_OF_DAY // 24 hours
-        );
     }
 }

@@ -22,7 +22,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.TypeNameTesting;
 
-public abstract class SpreadsheetParsePatterns2TestCase<T> implements ClassTesting2<T>, TypeNameTesting<T> {
+public abstract class SpreadsheetParsePatterns2TestCase<T> implements ClassTesting2<T> {
 
     SpreadsheetParsePatterns2TestCase() {
         super();
