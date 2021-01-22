@@ -26,6 +26,7 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokenVisitor;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.json.JsonNode;
@@ -1052,12 +1053,12 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      * typically have a {@link Expression} equivalent, while those holding symbols or components such as a decimal-point
      * are not.
      */
-    public final Optional<Expression> toExpression(final ExpressionNumberContext context) {
+    public final Optional<Expression> toExpression(final ExpressionEvaluationContext context) {
         Objects.requireNonNull(context, "context");
 
         return SpreadsheetParserTokenVisitorToExpression.accept(
                 this,
-                context.expressionNumberKind()
+                context
         );
     }
 

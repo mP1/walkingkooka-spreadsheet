@@ -69,8 +69,8 @@ import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
 import walkingkooka.tree.expression.ExpressionEvaluationException;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.tree.expression.function.ExpressionFunction;
 import walkingkooka.tree.expression.function.ExpressionFunctionContext;
@@ -116,6 +116,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static SpreadsheetFormatterContext SPREADSHEET_TEXT_FORMAT_CONTEXT = SpreadsheetFormatterContexts.fake();
 
     private final static MathContext MATH_CONTEXT = MathContext.DECIMAL32;
+
+    private final static int TWO_DIGIT_YEAR = 20;
 
     @Test
     public void testWithNullIdFails() {
@@ -5232,10 +5234,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 formula.setToken(Optional.of(token))
                 .setExpression(
                         token.toExpression(
-                                ExpressionNumberContexts.basic(
-                                        expressionNumberKind,
-                                        MATH_CONTEXT
-                                )
+                                new FakeExpressionEvaluationContext() {
+                                    @Override
+                                    public ExpressionNumberKind expressionNumberKind() {
+                                        return expressionNumberKind;
+                                    }
+
+                                    @Override
+                                    public int twoDigitYear() {
+                                        return TWO_DIGIT_YEAR;
+                                    }
+                                }
                         )
                 );
     }

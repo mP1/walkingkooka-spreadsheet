@@ -80,6 +80,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<SpreadsheetParsers>,
         ParserTesting2<Parser<SpreadsheetParserContext>, SpreadsheetParserContext> {
 
+    private final static int TWO_DIGIT_YEAR = 20;
     private ExpressionNumberKind expressionNumberKind;
 
     /**
@@ -1764,16 +1765,41 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     private void parseExpressionEvaluateAndCheck0(final Parser<SpreadsheetParserContext> parser,
                                                   final String formulaText,
                                                   final String expectedText) {
-        this.parseExpressionEvaluateAndCheck1(parser, formulaText, ExpressionNumberKind.BIG_DECIMAL, expectedText);
-        this.parseExpressionEvaluateAndCheck1(parser, formulaText, ExpressionNumberKind.DOUBLE, expectedText);
+        this.parseExpressionEvaluateAndCheck1(
+                parser,
+                formulaText,
+                ExpressionNumberKind.BIG_DECIMAL,
+                TWO_DIGIT_YEAR,
+                expectedText
+        );
+        this.parseExpressionEvaluateAndCheck1(
+                parser,
+                formulaText,
+                ExpressionNumberKind.DOUBLE,
+                TWO_DIGIT_YEAR,
+                expectedText
+        );
     }
 
     private void parseExpressionEvaluateAndCheck1(final Parser<SpreadsheetParserContext> parser,
                                                   final String formulaText,
                                                   final ExpressionNumberKind kind,
+                                                  final int twoDigitYear,
                                                   final String expectedText) {
         final SpreadsheetParserToken formula = this.parse(parser, formulaText);
-        final Optional<Expression> maybeExpression = formula.toExpression(ExpressionNumberContexts.basic(kind, MathContext.DECIMAL32));
+        final Optional<Expression> maybeExpression = formula.toExpression(
+                new FakeExpressionEvaluationContext() {
+                    @Override
+                    public ExpressionNumberKind expressionNumberKind() {
+                        return expressionNumberKind;
+                    }
+
+                    @Override
+                    public int twoDigitYear() {
+                        return twoDigitYear;
+                    }
+                }
+        );
         if (!maybeExpression.isPresent()) {
             fail("Failed to convert spreadsheet formula to expression " + CharSequences.quoteAndEscape(formulaText));
         }

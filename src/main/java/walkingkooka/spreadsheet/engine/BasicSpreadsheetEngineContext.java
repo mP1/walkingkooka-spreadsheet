@@ -225,6 +225,18 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         return this.converterContext.locale();
     }
 
+    // YearContext......................................................................................................
+
+    @Override
+    public int twoToFourDigitYear(final int year) {
+        return this.converterContext.twoToFourDigitYear(year);
+    }
+
+    @Override
+    public int twoDigitYear() {
+        return this.converterContext.twoDigitYear();
+    }
+
     // Object...........................................................................................................
 
     @Override
