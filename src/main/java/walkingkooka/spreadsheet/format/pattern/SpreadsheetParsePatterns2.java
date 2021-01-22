@@ -73,7 +73,8 @@ abstract class SpreadsheetParsePatterns2<F extends SpreadsheetFormatParserToken,
     /**
      * Transforms the {@link SpreadsheetParserToken} into a {@link LocalDate} etc.
      */
-    abstract V converterTransformer(final ParserToken token);
+    abstract V converterTransformer(final ParserToken token,
+                                    final ExpressionNumberConverterContext context);
 
     /**
      * The target {@link Class type} of the {@link Converter}.

@@ -51,7 +51,6 @@ import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.ExpressionReference;
@@ -1833,25 +1832,25 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 Double.class,
                 Parsers.doubleParser(),
                 parserContext,
-                (t) -> t.cast(DoubleParserToken.class).value()
+                (t, c) -> t.cast(DoubleParserToken.class).value()
         );
         final Converter stringLocalDate = Converters.parser(
                 LocalDate.class,
                 Parsers.localDate((c) -> DateTimeFormatter.ISO_LOCAL_DATE),
                 parserContext,
-                (t) -> t.cast(LocalDateParserToken.class).value()
+                (t, c) -> t.cast(LocalDateParserToken.class).value()
         );
         final Converter stringLocalDateTime = Converters.parser(
                 LocalDateTime.class,
                 Parsers.localDateTime((c) -> DateTimeFormatter.ISO_LOCAL_DATE_TIME),
                 parserContext,
-                (t) -> t.cast(LocalDateTimeParserToken.class).value()
+                (t, c) -> t.cast(LocalDateTimeParserToken.class).value()
         );
         final Converter stringLocalTime = Converters.parser(
                 LocalTime.class,
                 Parsers.localTime((c) -> DateTimeFormatter.ISO_LOCAL_TIME),
                 parserContext,
-                (t) -> t.cast(LocalTimeParserToken.class).value()
+                (t, c) -> t.cast(LocalTimeParserToken.class).value()
         );
 
         final Converter converter = Converters.collection(Lists.of(
