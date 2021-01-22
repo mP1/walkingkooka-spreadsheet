@@ -19,8 +19,10 @@ package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
@@ -126,7 +128,47 @@ public final class SpreadsheetDateParserTokenTest extends SpreadsheetParentParse
         );
     }
 
+    @Test
+    public void testToExpressionMonthNumberYearBeforeTwoDigitYearBefore() {
+        this.toExpressionAndCheck2(
+                LocalDate.of(2010, MONTH, 1),
+                monthNumber(),
+                slashTextLiteral(),
+                SpreadsheetParserToken.year(10, "10")
+        );
+    }
+
+    @Test
+    public void testToExpressionMonthNumberYearBeforeTwoDigitYearEqual() {
+        this.toExpressionAndCheck2(
+                LocalDate.of(1920, MONTH, 1),
+                monthNumber(),
+                slashTextLiteral(),
+                SpreadsheetParserToken.year(20, "20")
+        );
+    }
+
+    @Test
+    public void testToExpressionMonthNumberYearBeforeTwoDigitYearAfter() {
+        this.toExpressionAndCheck2(
+                LocalDate.of(1950, MONTH, 1),
+                monthNumber(),
+                slashTextLiteral(),
+                SpreadsheetParserToken.year(50, "50")
+        );
+    }
+
     private void toExpressionAndCheck2(final LocalDate expected,
+                                       final SpreadsheetParserToken...tokens) {
+        this.toExpressionAndCheck2(
+                this.expressionEvaluationContext(20),
+                expected,
+                tokens
+        );
+    }
+
+    private void toExpressionAndCheck2(final ExpressionEvaluationContext context,
+                                       final LocalDate expected,
                                        final SpreadsheetParserToken...tokens) {
         final List<ParserToken> tokensList = Lists.of(tokens);
 
@@ -137,7 +179,7 @@ public final class SpreadsheetDateParserTokenTest extends SpreadsheetParentParse
 
         assertEquals(
                 expected,
-                dateParserToken.toLocalDate(),
+                dateParserToken.toLocalDate(context),
                 () -> "toLocalDate() " + dateParserToken
         );
 

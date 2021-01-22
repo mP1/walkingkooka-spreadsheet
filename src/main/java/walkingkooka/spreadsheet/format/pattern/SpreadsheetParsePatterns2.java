@@ -29,6 +29,7 @@ import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
@@ -70,11 +71,19 @@ abstract class SpreadsheetParsePatterns2<F extends SpreadsheetFormatParserToken,
         );
     }
 
+    private V converterTransformer(final ParserToken token,
+                                   final ExpressionNumberConverterContext context) {
+        return this.converterTransformer0(
+                token,
+                SpreadsheetParserPattern2ExpressionEvaluationContext.with(context)
+        );
+    }
+
     /**
      * Transforms the {@link SpreadsheetParserToken} into a {@link LocalDate} etc.
      */
-    abstract V converterTransformer(final ParserToken token,
-                                    final ExpressionNumberConverterContext context);
+    abstract V converterTransformer0(final ParserToken token,
+                                     final ExpressionEvaluationContext context);
 
     /**
      * The target {@link Class type} of the {@link Converter}.

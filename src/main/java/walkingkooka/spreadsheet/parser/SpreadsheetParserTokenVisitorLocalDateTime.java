@@ -18,10 +18,13 @@
 package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.ToStringBuilder;
+import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Objects;
 
 /**
  * A {@link SpreadsheetParserTokenVisitor} that accepts a {@link SpreadsheetParserToken} and after visiting may be used to create
@@ -100,6 +103,7 @@ final class SpreadsheetParserTokenVisitorLocalDateTime extends SpreadsheetParser
     @Override
     protected void visit(final SpreadsheetYearParserToken token) {
         this.year = token.value();
+        this.twoDigitYear = token.text().length() <= 2;
     }
 
     // toXXX ............................................................................................................
@@ -108,9 +112,13 @@ final class SpreadsheetParserTokenVisitorLocalDateTime extends SpreadsheetParser
      * Creates a {@link LocalDate} assuming defaults have been set and an entire {@link SpreadsheetDateParserToken} has
      * been visited.
      */
-    LocalDate toLocalDate() {
+    LocalDate toLocalDate(final ExpressionEvaluationContext context) {
+        Objects.requireNonNull(context, "context");
+
+        final int year = this.year;
+
         return LocalDate.of(
-                this.year,
+                this.twoDigitYear ? context.twoToFourDigitYear(year) : year,
                 this.month,
                 this.day
         );
@@ -133,9 +141,9 @@ final class SpreadsheetParserTokenVisitorLocalDateTime extends SpreadsheetParser
      * Creates a {@link LocalDateTime} assuming defaults have been set and an entire {@link SpreadsheetDateTimeParserToken} has
      * been visited.
      */
-    LocalDateTime toLocalDateTime() {
+    LocalDateTime toLocalDateTime(final ExpressionEvaluationContext context) {
         return LocalDateTime.of(
-                this.toLocalDate(),
+                this.toLocalDate(context),
                 this.toLocalTime()
         );
     }
@@ -143,6 +151,7 @@ final class SpreadsheetParserTokenVisitorLocalDateTime extends SpreadsheetParser
     private int day = 1;
     private int month = 1;
     private int year = 0; // https://github.com/mP1/walkingkooka-spreadsheet/issues/1309 Default year when parsing date or date/time
+    private boolean twoDigitYear = false;
 
     private int hour = 0;
     private int minute = 0;
