@@ -26,13 +26,12 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokenTesting;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionNumberContext;
-import walkingkooka.tree.expression.ExpressionNumberContexts;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallingTesting;
 
 import java.lang.reflect.Method;
-import java.math.MathContext;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -46,7 +45,18 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
         ParserTokenTesting<T> {
 
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
-    final static ExpressionNumberContext EXPRESSION_NUMBER_CONTEXT = ExpressionNumberContexts.basic(EXPRESSION_NUMBER_KIND, MathContext.DECIMAL32);
+    final static int TWO_DIGIT_YEAR = 20;
+    final static ExpressionEvaluationContext EXPRESSION_EVALUATION_CONTEXT = new FakeExpressionEvaluationContext() {
+        @Override
+        public ExpressionNumberKind expressionNumberKind() {
+            return EXPRESSION_NUMBER_KIND;
+        }
+
+        @Override
+        public int twoDigitYear() {
+            return TWO_DIGIT_YEAR;
+        }
+    };
 
     SpreadsheetParserTokenTestCase() {
         super();
@@ -135,7 +145,7 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
     }
 
     final void toExpressionAndFail(final T token) {
-        final Optional<Expression> node = token.toExpression(EXPRESSION_NUMBER_CONTEXT);
+        final Optional<Expression> node = token.toExpression(EXPRESSION_EVALUATION_CONTEXT);
         assertEquals(Optional.empty(), node, "toExpression");
     }
 
@@ -144,7 +154,7 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
     }
 
     final void toExpressionAndCheck(final T token, final Expression expected) {
-        final Optional<Expression> node = token.toExpression(EXPRESSION_NUMBER_CONTEXT);
+        final Optional<Expression> node = token.toExpression(EXPRESSION_EVALUATION_CONTEXT);
         assertEquals(Optional.of(expected), node, "toExpression");
     }
 

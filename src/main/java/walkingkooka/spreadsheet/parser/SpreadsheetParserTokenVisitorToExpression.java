@@ -21,7 +21,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.stack.Stack;
 import walkingkooka.collect.stack.Stacks;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionReference;
 import walkingkooka.tree.expression.FunctionExpressionName;
 import walkingkooka.visit.Visiting;
@@ -38,10 +38,10 @@ import java.util.function.Function;
 final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserTokenVisitor {
 
     static Optional<Expression> accept(final SpreadsheetParserToken token,
-                                       final ExpressionNumberKind expressionNumberKind) {
-        Objects.requireNonNull(expressionNumberKind, "expressionNumberKind");
+                                       final ExpressionEvaluationContext context) {
+        Objects.requireNonNull(context, "context");
 
-        final SpreadsheetParserTokenVisitorToExpression visitor = new SpreadsheetParserTokenVisitorToExpression(expressionNumberKind);
+        final SpreadsheetParserTokenVisitorToExpression visitor = new SpreadsheetParserTokenVisitorToExpression(context);
         token.accept(visitor);
 
         final List<Expression> nodes = visitor.children;
@@ -58,9 +58,9 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     }
 
     // @VisibleForTesting
-    SpreadsheetParserTokenVisitorToExpression(final ExpressionNumberKind expressionNumberKind) {
+    SpreadsheetParserTokenVisitorToExpression(final ExpressionEvaluationContext context) {
         super();
-        this.expressionNumberKind = expressionNumberKind;
+        this.context = context;
     }
 
     @Override
@@ -249,10 +249,19 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     protected void endVisit(final SpreadsheetPercentageParserToken token) {
         final Expression parameter = this.children.get(0);
         this.exit();
-        this.add(Expression.divide(parameter, Expression.expressionNumber(this.expressionNumberKind.create(100L))), token);
+        this.add(
+                Expression.divide(
+                        parameter,
+                        Expression.expressionNumber(
+                                this.context.expressionNumberKind()
+                                        .create(100L)
+                        )
+                ),
+                token
+        );
     }
 
-    private final ExpressionNumberKind expressionNumberKind;
+    private final ExpressionEvaluationContext context;
 
     @Override
     protected Visiting startVisit(final SpreadsheetPowerParserToken token) {
