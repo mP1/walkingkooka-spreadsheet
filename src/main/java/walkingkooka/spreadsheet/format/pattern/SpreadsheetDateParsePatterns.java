@@ -21,6 +21,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -65,7 +66,8 @@ public final class SpreadsheetDateParsePatterns extends SpreadsheetParsePatterns
     }
 
     @Override
-    LocalDate converterTransformer(final ParserToken token) {
+    LocalDate converterTransformer(final ParserToken token,
+                                   final ExpressionNumberConverterContext context) {
         return token.cast(SpreadsheetDateParserToken.class).toLocalDate();
     }
 

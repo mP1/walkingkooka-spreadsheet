@@ -247,7 +247,7 @@ public final class ConditionSpreadsheetFormatterTest extends SpreadsheetFormatte
                     BigDecimal.class,
                     Parsers.bigDecimal(),
                     (c) -> ParserContexts.basic(c, c),
-                    (t) -> t.cast(BigDecimalParserToken.class).value()
+                    (t, c) -> t.cast(BigDecimalParserToken.class).value()
             );
         };
     }
