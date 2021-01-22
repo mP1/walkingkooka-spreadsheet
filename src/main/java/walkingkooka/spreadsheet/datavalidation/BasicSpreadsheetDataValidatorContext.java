@@ -110,6 +110,16 @@ final class BasicSpreadsheetDataValidatorContext implements SpreadsheetDataValid
     }
 
     @Override
+    public int twoToFourDigitYear(final int year) {
+        return this.context.twoToFourDigitYear(year);
+    }
+
+    @Override
+    public int twoDigitYear() {
+        return this.context.twoDigitYear();
+    }
+
+    @Override
     public boolean canConvert(final Object value,
                               final Class<?> type) {
         return this.context.canConvert(value, type);
