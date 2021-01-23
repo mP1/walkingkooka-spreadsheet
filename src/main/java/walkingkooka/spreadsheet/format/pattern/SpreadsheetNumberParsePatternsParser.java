@@ -17,11 +17,11 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.parser.BigDecimalParserToken;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokens;
 
@@ -32,7 +32,7 @@ import java.util.Optional;
  * The {@link Parser} returned by {@link SpreadsheetNumberParsePatterns#converter()}, that tries each pattern until a
  * {@link BigDecimalParserToken} is created.
  */
-final class SpreadsheetNumberParsePatternsParser implements Parser<ParserContext> {
+final class SpreadsheetNumberParsePatternsParser implements Parser<SpreadsheetParserContext> {
 
     static SpreadsheetNumberParsePatternsParser with(final SpreadsheetNumberParsePatterns pattern) {
         return new SpreadsheetNumberParsePatternsParser(pattern);
@@ -45,7 +45,7 @@ final class SpreadsheetNumberParsePatternsParser implements Parser<ParserContext
 
     @Override
     public Optional<ParserToken> parse(final TextCursor cursor,
-                                       final ParserContext context) {
+                                       final SpreadsheetParserContext context) {
         BigDecimalParserToken token = null;
 
         final TextCursorSavePoint save = cursor.save();
