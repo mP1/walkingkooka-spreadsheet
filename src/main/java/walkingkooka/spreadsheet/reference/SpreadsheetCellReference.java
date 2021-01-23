@@ -21,6 +21,7 @@ import walkingkooka.collect.Range;
 import walkingkooka.compare.Comparators;
 import walkingkooka.spreadsheet.SpreadsheetCellBox;
 import walkingkooka.spreadsheet.parser.SpreadsheetCellReferenceParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.Parser;
@@ -61,7 +62,7 @@ public final class SpreadsheetCellReference extends SpreadsheetExpressionReferen
         }
     }
 
-    private static final Parser<ParserContext> PARSER = SpreadsheetParsers.columnAndRow().orReport(ParserReporters.basic());
+    private static final Parser<SpreadsheetParserContext> PARSER = SpreadsheetParsers.columnAndRow().orReport(ParserReporters.basic());
 
     /**
      * Factory that creates a {@link SpreadsheetCellReference} with the given column and row.
