@@ -87,10 +87,10 @@ final class SpreadsheetNumberParsePatternsConverter implements Converter<Express
 
         // try all patterns until success or return failure.
         for (List<SpreadsheetNumberParsePatternsComponent> pattern : this.pattern.patterns) {
-            final SpreadsheetNumberParsePatternsContext patternsContext = SpreadsheetNumberParsePatternsContext.with(pattern.iterator(), context);
-            patternsContext.nextComponent(cursor);
-            if (cursor.isEmpty() && false == patternsContext.isRequired()) {
-                result = NUMBER.convert(patternsContext.computeValue(), type, context);
+            final SpreadsheetNumberParsePatternsRequest request = SpreadsheetNumberParsePatternsRequest.with(pattern.iterator(), context);
+            request.nextComponent(cursor);
+            if (cursor.isEmpty() && false == request.isRequired()) {
+                result = NUMBER.convert(request.computeValue(), type, context);
                 break; // conversion successful.
             }
             save.restore();

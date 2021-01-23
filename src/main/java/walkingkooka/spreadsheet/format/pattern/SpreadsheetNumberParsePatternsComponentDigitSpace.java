@@ -34,8 +34,8 @@ final class SpreadsheetNumberParsePatternsComponentDigitSpace extends Spreadshee
 
     @Override
     boolean handle(final char c,
-                   final SpreadsheetNumberParsePatternsContext context) {
-        return Character.isWhitespace(c) || this.handleDigit(c, context);
+                   final SpreadsheetNumberParsePatternsRequest request) {
+        return Character.isWhitespace(c) || this.handleDigit(c, request);
     }
 
     @Override

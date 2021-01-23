@@ -34,8 +34,8 @@ final class SpreadsheetNumberParsePatternsComponentDigitDigit extends Spreadshee
 
     @Override
     boolean handle(final char c,
-                   final SpreadsheetNumberParsePatternsContext context) {
-        return this.handleDigit(c, context);
+                   final SpreadsheetNumberParsePatternsRequest request) {
+        return this.handleDigit(c, request);
     }
 
     @Override

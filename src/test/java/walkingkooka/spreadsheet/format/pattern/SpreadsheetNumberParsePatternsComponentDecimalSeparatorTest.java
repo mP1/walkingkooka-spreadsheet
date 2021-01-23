@@ -36,7 +36,7 @@ public final class SpreadsheetNumberParsePatternsComponentDecimalSeparatorTest e
 
     final void parseAndCheck2(final String text,
                               final String textAfter) {
-        final SpreadsheetNumberParsePatternsContext context = this.createContext();
+        final SpreadsheetNumberParsePatternsRequest context = this.createRequest();
         this.parseAndCheck(this.createComponent(),
                 text,
                 context,

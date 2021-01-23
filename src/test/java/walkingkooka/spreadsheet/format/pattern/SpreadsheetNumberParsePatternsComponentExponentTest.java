@@ -81,7 +81,7 @@ public final class SpreadsheetNumberParsePatternsComponentExponentTest extends S
     final void parseAndCheck2(final String text,
                               final String textAfter,
                               final boolean negativeExponent) {
-        final SpreadsheetNumberParsePatternsContext context = this.createContext();
+        final SpreadsheetNumberParsePatternsRequest context = this.createRequest();
         this.parseAndCheck(text,
                 context,
                 textAfter,
@@ -115,15 +115,15 @@ public final class SpreadsheetNumberParsePatternsComponentExponentTest extends S
     private void parseAndCheck3(final String text,
                                 final String textAfter,
                                 final boolean negativeExponent) {
-        final SpreadsheetNumberParsePatternsContext context = SpreadsheetNumberParsePatternsContext.with(Lists.of(SpreadsheetNumberParsePatternsComponent.textLiteral("@")).iterator(),
+        final SpreadsheetNumberParsePatternsRequest request = SpreadsheetNumberParsePatternsRequest.with(Lists.of(SpreadsheetNumberParsePatternsComponent.textLiteral("@")).iterator(),
                 DecimalNumberContexts.basic(CURRENCY, 'D', "XYZ", 'G', 'N', 'P', 'Q', Locale.ENGLISH, MathContext.UNLIMITED));
         this.parseAndCheck(text,
-                context,
+                request,
                 textAfter,
                 BigDecimal.ZERO,
                 true);
-        this.checkMode(context, SpreadsheetNumberParsePatternsMode.EXPONENT);
-        assertEquals(negativeExponent, context.negativeExponent, "negativeExponent");
+        this.checkMode(request, SpreadsheetNumberParsePatternsMode.EXPONENT);
+        assertEquals(negativeExponent, request.negativeExponent, "negativeExponent");
     }
 
     @Test

@@ -31,7 +31,7 @@ enum SpreadsheetNumberParsePatternsMode {
     INTEGER {
         @Override
         void onDigit(final int digit,
-                     final SpreadsheetNumberParsePatternsContext context) {
+                     final SpreadsheetNumberParsePatternsRequest context) {
             final MathContext mathContext = context.context.mathContext();
 
             context.mantissa = context.mantissa.multiply(BigDecimal.TEN, mathContext)
@@ -39,7 +39,7 @@ enum SpreadsheetNumberParsePatternsMode {
         }
 
         @Override
-        void onDecimalSeparator(final SpreadsheetNumberParsePatternsContext context) {
+        void onDecimalSeparator(final SpreadsheetNumberParsePatternsRequest context) {
             context.mode = DECIMAL;
         }
     },
@@ -50,7 +50,7 @@ enum SpreadsheetNumberParsePatternsMode {
     DECIMAL {
         @Override
         void onDigit(final int digit,
-                     final SpreadsheetNumberParsePatternsContext context) {
+                     final SpreadsheetNumberParsePatternsRequest context) {
             final MathContext mathContext = context.context.mathContext();
 
             context.mantissa = context.mantissa.multiply(BigDecimal.TEN, mathContext)
@@ -59,7 +59,7 @@ enum SpreadsheetNumberParsePatternsMode {
         }
 
         @Override
-        void onDecimalSeparator(final SpreadsheetNumberParsePatternsContext context) {
+        void onDecimalSeparator(final SpreadsheetNumberParsePatternsRequest context) {
             // ignored
         }
     },
@@ -70,12 +70,12 @@ enum SpreadsheetNumberParsePatternsMode {
     EXPONENT {
         @Override
         void onDigit(final int digit,
-                     final SpreadsheetNumberParsePatternsContext context) {
+                     final SpreadsheetNumberParsePatternsRequest context) {
             context.exponent = context.exponent * 10 + digit;
         }
 
         @Override
-        void onDecimalSeparator(final SpreadsheetNumberParsePatternsContext context) {
+        void onDecimalSeparator(final SpreadsheetNumberParsePatternsRequest context) {
             // ignored
         }
     };
@@ -84,10 +84,10 @@ enum SpreadsheetNumberParsePatternsMode {
      * Handles a onDigit with a number
      */
     abstract void onDigit(final int digit,
-                          final SpreadsheetNumberParsePatternsContext context);
+                          final SpreadsheetNumberParsePatternsRequest context);
 
     /**
      * Handles a decimal separator, possibly switching onDigit mode.
      */
-    abstract void onDecimalSeparator(final SpreadsheetNumberParsePatternsContext context);
+    abstract void onDecimalSeparator(final SpreadsheetNumberParsePatternsRequest context);
 }

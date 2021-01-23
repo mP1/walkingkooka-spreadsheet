@@ -27,14 +27,14 @@ import java.util.Iterator;
 /**
  * The {@link Context} which accompanies the parsing process and builds up the {@link Number}.
  */
-final class SpreadsheetNumberParsePatternsContext implements Context {
+final class SpreadsheetNumberParsePatternsRequest {
 
-    static SpreadsheetNumberParsePatternsContext with(final Iterator<SpreadsheetNumberParsePatternsComponent> next,
+    static SpreadsheetNumberParsePatternsRequest with(final Iterator<SpreadsheetNumberParsePatternsComponent> next,
                                                       final DecimalNumberContext context) {
-        return new SpreadsheetNumberParsePatternsContext(next, context);
+        return new SpreadsheetNumberParsePatternsRequest(next, context);
     }
 
-    private SpreadsheetNumberParsePatternsContext(final Iterator<SpreadsheetNumberParsePatternsComponent> next,
+    private SpreadsheetNumberParsePatternsRequest(final Iterator<SpreadsheetNumberParsePatternsComponent> next,
                                                   final DecimalNumberContext context) {
         super();
 

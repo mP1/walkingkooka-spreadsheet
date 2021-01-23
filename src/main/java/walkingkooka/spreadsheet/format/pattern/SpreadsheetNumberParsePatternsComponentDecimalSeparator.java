@@ -35,12 +35,12 @@ final class SpreadsheetNumberParsePatternsComponentDecimalSeparator extends Spre
 
     @Override
     void parse(final TextCursor cursor,
-               final SpreadsheetNumberParsePatternsContext context) {
+               final SpreadsheetNumberParsePatternsRequest request) {
         if (false == cursor.isEmpty()) {
-            if (context.context.decimalSeparator() == cursor.at()) {
-                context.mode.onDecimalSeparator(context);
+            if (request.context.decimalSeparator() == cursor.at()) {
+                request.mode.onDecimalSeparator(request);
                 cursor.next();
-                context.nextComponent(cursor);
+                request.nextComponent(cursor);
             }
         }
     }
