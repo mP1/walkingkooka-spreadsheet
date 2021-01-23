@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.Value;
 import walkingkooka.collect.Range;
 import walkingkooka.spreadsheet.parser.SpreadsheetColumnReferenceParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetRowReferenceParserToken;
@@ -76,7 +77,7 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
     /**
      * Leverages the {@link SpreadsheetParsers#column()} combined with an error reporter.
      */
-    private static final Parser<ParserContext> COLUMN_PARSER = SpreadsheetParsers.column().orReport(ParserReporters.basic());
+    private static final Parser<SpreadsheetParserContext> COLUMN_PARSER = SpreadsheetParsers.column().orReport(ParserReporters.basic());
 
     /**
      * Parsers a range of rows.
@@ -95,14 +96,14 @@ abstract public class SpreadsheetColumnOrRowReference<R extends SpreadsheetColum
     /**
      * Leverages the {@link SpreadsheetParsers#row()} combined with an error reporter.
      */
-    private static final Parser<ParserContext> ROW_PARSER = SpreadsheetParsers.row().orReport(ParserReporters.basic());
+    private static final Parser<SpreadsheetParserContext> ROW_PARSER = SpreadsheetParsers.row().orReport(ParserReporters.basic());
 
     /**
      * Parsers the text expecting a valid {@link SpreadsheetRowReference} or fails.
      */
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     static <T extends SpreadsheetParserToken> T parse0(final String text,
-                                                       final Parser<ParserContext> parser,
+                                                       final Parser<SpreadsheetParserContext> parser,
                                                        final Class<T> type) {
         try {
             return parser.parse(TextCursors.charSequence(text), SpreadsheetReferenceSpreadsheetParserContext.INSTANCE)
