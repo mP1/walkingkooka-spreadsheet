@@ -109,7 +109,6 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     private final static Parser<SpreadsheetParserContext> EXPRESSION_PARSER;
-    private final static EbnfIdentifierName EXPRESSION_IDENTIFIER = EbnfIdentifierName.with("EXPRESSION");
 
     /**
      * Returns a {@link Parser} that parsers function invocations, starting with the name and parameters.
@@ -118,7 +117,6 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         return FUNCTION_PARSER;
     }
 
-    private final static EbnfIdentifierName FUNCTION_IDENTIFIER = EbnfIdentifierName.with("FUNCTION");
     private final static Parser<SpreadsheetParserContext> FUNCTION_PARSER;
 
     /**
@@ -485,8 +483,8 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> parsers = resolveParsers(Parsers.never());
 
         CELL_REFERENCES_PARSER = parsers.get(EbnfIdentifierName.with("CELL"));
-        EXPRESSION_PARSER = parsers.get(EXPRESSION_IDENTIFIER);
-        FUNCTION_PARSER = parsers.get(FUNCTION_IDENTIFIER);
+        EXPRESSION_PARSER = parsers.get(EbnfIdentifierName.with("EXPRESSION"));
+        FUNCTION_PARSER = parsers.get(EbnfIdentifierName.with("FUNCTION"));
         RANGE_PARSER = parsers.get(EbnfIdentifierName.with("RANGE"));
     }
 
