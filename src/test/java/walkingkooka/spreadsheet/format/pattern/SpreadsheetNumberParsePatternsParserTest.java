@@ -19,16 +19,17 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserContext;
-import walkingkooka.text.cursor.parser.ParserContexts;
 import walkingkooka.text.cursor.parser.ParserTesting2;
 import walkingkooka.text.cursor.parser.ParserTokens;
+import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.BigDecimal;
 
 public final class SpreadsheetNumberParsePatternsParserTest extends SpreadsheetNumberParsePatternsTestCase2<SpreadsheetNumberParsePatternsParser>
-        implements ParserTesting2<SpreadsheetNumberParsePatternsParser, ParserContext> {
+        implements ParserTesting2<SpreadsheetNumberParsePatternsParser, SpreadsheetParserContext> {
 
     @Test
     public void testHashInvalidFails() {
@@ -508,9 +509,12 @@ public final class SpreadsheetNumberParsePatternsParserTest extends SpreadsheetN
     }
 
     @Override
-    public ParserContext createContext() {
-        return ParserContexts.basic(DateTimeContexts.fake(), // DateTimeContext unused
-                this.decimalNumberContext());
+    public SpreadsheetParserContext createContext() {
+        return SpreadsheetParserContexts.basic(
+                DateTimeContexts.fake(),
+                this.decimalNumberContext(),
+                ExpressionNumberKind.BIG_DECIMAL
+        );
     }
 
     @Override

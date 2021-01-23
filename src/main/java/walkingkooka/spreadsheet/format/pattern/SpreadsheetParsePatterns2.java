@@ -25,7 +25,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
@@ -107,7 +106,7 @@ abstract class SpreadsheetParsePatterns2<F extends SpreadsheetFormatParserToken,
      * Creates a {@link Parsers#alternatives(List)} that tries each of the individual patterns until success.
      */
     @Override
-    final Parser<ParserContext> createParser() {
+    final Parser<SpreadsheetParserContext> createParser() {
         return Parsers.alternatives(
                 IntStream.range(0, this.value().size())
                         .mapToObj(this::createParser0)
@@ -119,7 +118,7 @@ abstract class SpreadsheetParsePatterns2<F extends SpreadsheetFormatParserToken,
     private Parser<SpreadsheetParserContext> createParser0(final int i) {
         return SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor.toParser(
                 this.value().get(i)
-        ).cast();
+        );
     }
 
     /**
