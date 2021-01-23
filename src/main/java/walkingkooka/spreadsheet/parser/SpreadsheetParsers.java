@@ -21,7 +21,6 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.PublicStaticHelper;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
 import walkingkooka.spreadsheet.function.SpreadsheetFunctionName;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharacterConstant;
@@ -81,7 +80,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
      * {@see SpreadsheetColumnReferenceParser}
      */
     public static Parser<SpreadsheetParserContext> column() {
-        return SpreadsheetColumnReferenceParser.INSTANCE.cast();
+        return SpreadsheetColumnReferenceParser.INSTANCE;
     }
 
     /**
@@ -172,7 +171,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
      * {@see SpreadsheetLabelNameParser}
      */
     public static Parser<SpreadsheetParserContext> labelName() {
-        return SpreadsheetLabelNameParser.INSTANCE.cast();
+        return SpreadsheetLabelNameParser.INSTANCE;
     }
 
     /**
@@ -188,7 +187,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
      * {@see SpreadsheetRowReferenceParser}
      */
     public static Parser<SpreadsheetParserContext> row() {
-        return SpreadsheetRowReferenceParser.INSTANCE.cast();
+        return SpreadsheetRowReferenceParser.INSTANCE;
     }
 
     // conditions.............................................................................................................
@@ -390,7 +389,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
      * Text, parses excel style double quoted text, including escaped (triple) double quotes.
      */
     public static Parser<SpreadsheetParserContext> text() {
-        return SpreadsheetDoubleQuotesParser.INSTANCE.cast();
+        return SpreadsheetDoubleQuotesParser.INSTANCE;
     }
 
     /**
@@ -464,20 +463,18 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                 .cast(EbnfGrammarParserToken.class)
                 .combinator(predefined, SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer.INSTANCE);
 
-        CELL_REFERENCES_PARSER = parsers.get(EbnfIdentifierName.with("CELL")).cast();
-        EXPRESSION_PARSER = parsers.get(EXPRESSION_IDENTIFIER).cast();
+        CELL_REFERENCES_PARSER = parsers.get(EbnfIdentifierName.with("CELL"));
+        EXPRESSION_PARSER = parsers.get(EXPRESSION_IDENTIFIER);
         VALUE_OR_EXPRESSION_PARSER = parsers.get(VALUE_OR_EXPRESSION_IDENTIFIER)
-                .cast()
                 .transform(SpreadsheetParsers::transformValueOrExpression)
-                .setToString(SpreadsheetExpressionParserToken.class.getSimpleName())
-                .cast();
-        FUNCTION_PARSER = parsers.get(FUNCTION_IDENTIFIER).cast();
-        RANGE_PARSER = parsers.get(EbnfIdentifierName.with("RANGE")).cast();
+                .setToString(SpreadsheetExpressionParserToken.class.getSimpleName());
+        FUNCTION_PARSER = parsers.get(FUNCTION_IDENTIFIER);
+        RANGE_PARSER = parsers.get(EbnfIdentifierName.with("RANGE"));
     }
 
     private static Parser<SpreadsheetParserContext> symbol(final char c,
-                                                final BiFunction<String, String, ParserToken> factory,
-                                                final Class<? extends SpreadsheetSymbolParserToken> tokenClass) {
+                                                           final BiFunction<String, String, ParserToken> factory,
+                                                           final Class<? extends SpreadsheetSymbolParserToken> tokenClass) {
         return Parsers.character(CharPredicates.is(c))
                 .transform((charParserToken, context) -> factory.apply(charParserToken.cast(CharacterParserToken.class).value().toString(), charParserToken.text()))
                 .setToString(tokenClass.getSimpleName())
@@ -485,8 +482,8 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     private static Parser<SpreadsheetParserContext> symbol(final String text,
-                                                final BiFunction<String, String, ParserToken> factory,
-                                                final Class<? extends SpreadsheetSymbolParserToken> tokenClass) {
+                                                           final BiFunction<String, String, ParserToken> factory,
+                                                           final Class<? extends SpreadsheetSymbolParserToken> tokenClass) {
         return Parsers.string(text, CaseSensitivity.INSENSITIVE)
                 .transform((stringParserToken, context) -> factory.apply(stringParserToken.cast(StringParserToken.class).value(), stringParserToken.text()))
                 .setToString(tokenClass.getSimpleName())
