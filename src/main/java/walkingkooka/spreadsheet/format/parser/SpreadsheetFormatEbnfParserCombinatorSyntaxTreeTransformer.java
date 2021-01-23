@@ -19,7 +19,6 @@ package walkingkooka.spreadsheet.format.parser;
 
 import walkingkooka.collect.map.Maps;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.RepeatedOrSequenceParserToken;
@@ -43,59 +42,59 @@ import java.util.function.BiFunction;
 /**
  * Helps transform the EBNF grammar into a {@link Parser} which will then return a {@link SpreadsheetFormatParserToken}
  */
-final class SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer implements EbnfParserCombinatorSyntaxTreeTransformer {
+final class SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer implements EbnfParserCombinatorSyntaxTreeTransformer<SpreadsheetFormatParserContext> {
 
     // constants must be init before singleton/ctor is run........................................................................
 
     private static ParserToken transformColor(final ParserToken token,
-                                              final ParserContext context) {
+                                              final SpreadsheetFormatParserContext context) {
         return SpreadsheetFormatParserToken.color(clean0(token), token.text());
     }
 
     private static ParserToken transformConditionEqual(final ParserToken token,
-                                                       final ParserContext context) {
+                                                       final SpreadsheetFormatParserContext context) {
         return clean(token, SpreadsheetFormatParserToken::equalsParserToken);
     }
 
     private static final EbnfIdentifierName CONDITION_EQUAL_IDENTIFIER = EbnfIdentifierName.with("CONDITION_EQUAL");
 
     private static ParserToken transformConditionGreaterThan(final ParserToken token,
-                                                             final ParserContext context) {
+                                                             final SpreadsheetFormatParserContext context) {
         return clean(token, SpreadsheetFormatParserToken::greaterThan);
     }
 
     private static final EbnfIdentifierName CONDITION_GREATER_THAN_IDENTIFIER = EbnfIdentifierName.with("CONDITION_GREATER_THAN");
 
     private static ParserToken transformConditionGreaterThanEqual(final ParserToken token,
-                                                                  final ParserContext context) {
+                                                                  final SpreadsheetFormatParserContext context) {
         return clean(token, SpreadsheetFormatParserToken::greaterThanEquals);
     }
 
     private static final EbnfIdentifierName CONDITION_GREATER_THAN_EQUAL_IDENTIFIER = EbnfIdentifierName.with("CONDITION_GREATER_THAN_EQUAL");
 
     private static ParserToken transformConditionLessThan(final ParserToken token,
-                                                          final ParserContext context) {
+                                                          final SpreadsheetFormatParserContext context) {
         return clean(token, SpreadsheetFormatParserToken::lessThan);
     }
 
     private static final EbnfIdentifierName CONDITION_LESS_THAN_IDENTIFIER = EbnfIdentifierName.with("CONDITION_LESS_THAN");
 
     private static ParserToken transformConditionLessThanEqual(final ParserToken token,
-                                                               final ParserContext context) {
+                                                               final SpreadsheetFormatParserContext context) {
         return clean(token, SpreadsheetFormatParserToken::lessThanEquals);
     }
 
     private static final EbnfIdentifierName CONDITION_LESS_THAN_EQUAL_IDENTIFIER = EbnfIdentifierName.with("CONDITION_LESS_THAN_EQUAL");
 
     private static ParserToken transformConditionNotEqual(final ParserToken token,
-                                                          final ParserContext context) {
+                                                          final SpreadsheetFormatParserContext context) {
         return clean(token, SpreadsheetFormatParserToken::notEquals);
     }
 
     private static final EbnfIdentifierName CONDITION_NOT_EQUAL_IDENTIFIER = EbnfIdentifierName.with("CONDITION_NOT_EQUAL");
 
     private static ParserToken transformDate(final ParserToken token,
-                                             final ParserContext context) {
+                                             final SpreadsheetFormatParserContext context) {
         return clean(token, SpreadsheetFormatParserToken::date);
     }
 
@@ -103,7 +102,7 @@ final class SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer implement
     private static final EbnfIdentifierName DATE_LIST_IDENTIFIER = EbnfIdentifierName.with("DATE_LIST");
 
     private static ParserToken transformDateTime(final ParserToken token,
-                                                 final ParserContext context) {
+                                                 final SpreadsheetFormatParserContext context) {
         return clean(token, SpreadsheetFormatParserToken::dateTime);
     }
 
@@ -111,39 +110,39 @@ final class SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer implement
     private static final EbnfIdentifierName DATETIME_LIST_IDENTIFIER = EbnfIdentifierName.with("DATETIME_LIST");
 
     private static ParserToken transformExponentSymbol(final ParserToken token,
-                                                       final ParserContext context) {
+                                                       final SpreadsheetFormatParserContext context) {
         return SpreadsheetFormatParserToken.exponentSymbol(token.cast(StringParserToken.class).value(), token.text());
     }
 
     private static ParserToken transformExpression(final ParserToken token,
-                                                   final ParserContext context) {
+                                                   final SpreadsheetFormatParserContext context) {
         return clean(token, SpreadsheetFormatParserToken::expression);
     }
 
     private static ParserToken transformFraction(final ParserToken token,
-                                                 final ParserContext context) {
+                                                 final SpreadsheetFormatParserContext context) {
         return clean(token, SpreadsheetFormatParserToken::fraction);
     }
 
     private static final EbnfIdentifierName FRACTION_IDENTIFIER = EbnfIdentifierName.with("FRACTION");
 
     private static ParserToken transformGeneral(final ParserToken token,
-                                                final ParserContext context) {
+                                                final SpreadsheetFormatParserContext context) {
         return SpreadsheetFormatParserToken.general(clean0(token), token.text());
     }
 
     private static ParserToken transformText(final ParserToken token,
-                                             final ParserContext context) {
+                                             final SpreadsheetFormatParserContext context) {
         return clean(token, SpreadsheetFormatParserToken::text);
     }
 
     private static ParserToken transformTime(final ParserToken token,
-                                             final ParserContext context) {
+                                             final SpreadsheetFormatParserContext context) {
         return clean(token, SpreadsheetFormatParserToken::time);
     }
 
     private static ParserToken transformNumber(final ParserToken token,
-                                               final ParserContext context) {
+                                               final SpreadsheetFormatParserContext context) {
         return clean(token, SpreadsheetFormatParserToken::number);
     }
 
@@ -152,7 +151,7 @@ final class SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer implement
     private static final EbnfIdentifierName NUMBER_EXPONENT_IDENTIFIER = EbnfIdentifierName.with("NUMBER_EXPONENT");
 
     private static ParserToken transformBigDecimalExponent(final ParserToken token,
-                                                           final ParserContext context) {
+                                                           final SpreadsheetFormatParserContext context) {
         return clean(token, SpreadsheetFormatParserToken::exponent);
     }
 
@@ -183,7 +182,7 @@ final class SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer implement
     private SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer() {
         super();
 
-        final Map<EbnfIdentifierName, BiFunction<ParserToken, ParserContext, ParserToken>> identiferToTransform = Maps.sorted();
+        final Map<EbnfIdentifierName, BiFunction<ParserToken, SpreadsheetFormatParserContext, ParserToken>> identiferToTransform = Maps.sorted();
 
         identiferToTransform.put(SpreadsheetFormatParsers.COLOR_IDENTIFIER, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer::transformColor);
 
@@ -219,26 +218,26 @@ final class SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer implement
     }
 
     @Override
-    public Parser<ParserContext> alternatives(final EbnfAlternativeParserToken token,
-                                              final Parser<ParserContext> parser) {
+    public Parser<SpreadsheetFormatParserContext> alternatives(final EbnfAlternativeParserToken token,
+                                                               final Parser<SpreadsheetFormatParserContext> parser) {
         return parser;
     }
 
     @Override
-    public Parser<ParserContext> concatenation(final EbnfConcatenationParserToken token,
-                                               final Parser<ParserContext> parser) {
+    public Parser<SpreadsheetFormatParserContext> concatenation(final EbnfConcatenationParserToken token,
+                                                                final Parser<SpreadsheetFormatParserContext> parser) {
         return parser;
     }
 
     @Override
-    public Parser<ParserContext> exception(final EbnfExceptionParserToken token,
-                                           final Parser<ParserContext> parser) {
+    public Parser<SpreadsheetFormatParserContext> exception(final EbnfExceptionParserToken token,
+                                                            final Parser<SpreadsheetFormatParserContext> parser) {
         throw new UnsupportedOperationException(token.text()); // there are no exception tokens.
     }
 
     @Override
-    public Parser<ParserContext> group(final EbnfGroupParserToken token,
-                                       final Parser<ParserContext> parser) {
+    public Parser<SpreadsheetFormatParserContext> group(final EbnfGroupParserToken token,
+                                                        final Parser<SpreadsheetFormatParserContext> parser) {
         return parser; //leave group definitions as they are.
     }
 
@@ -246,45 +245,45 @@ final class SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer implement
      * For identified rules, transform or special checks for required rules.
      */
     @Override
-    public Parser<ParserContext> identifier(final EbnfIdentifierParserToken token,
-                                            final Parser<ParserContext> parser) {
+    public Parser<SpreadsheetFormatParserContext> identifier(final EbnfIdentifierParserToken token,
+                                                             final Parser<SpreadsheetFormatParserContext> parser) {
         final EbnfIdentifierName name = token.value();
-        final BiFunction<ParserToken, ParserContext, ParserToken> transform = this.identiferToTransform.get(name);
+        final BiFunction<ParserToken, SpreadsheetFormatParserContext, ParserToken> transform = this.identiferToTransform.get(name);
         return null != transform ?
                 parser.transform(transform) :
                 this.requiredCheck(name, parser);
     }
 
-    private final Map<EbnfIdentifierName, BiFunction<ParserToken, ParserContext, ParserToken>> identiferToTransform;
+    private final Map<EbnfIdentifierName, BiFunction<ParserToken, SpreadsheetFormatParserContext, ParserToken>> identiferToTransform;
 
-    private Parser<ParserContext> requiredCheck(final EbnfIdentifierName name,
-                                                final Parser<ParserContext> parser) {
+    private Parser<SpreadsheetFormatParserContext> requiredCheck(final EbnfIdentifierName name,
+                                                                 final Parser<SpreadsheetFormatParserContext> parser) {
         return name.value().endsWith("REQUIRED") ?
                 parser.orReport(ParserReporters.basic()) :
                 parser; // leave as is...
     }
 
     @Override
-    public Parser<ParserContext> optional(final EbnfOptionalParserToken token,
-                                          final Parser<ParserContext> parser) {
+    public Parser<SpreadsheetFormatParserContext> optional(final EbnfOptionalParserToken token,
+                                                           final Parser<SpreadsheetFormatParserContext> parser) {
         return parser; // leave optionals alone...
     }
 
     @Override
-    public Parser<ParserContext> range(final EbnfRangeParserToken token,
-                                       final Parser<ParserContext> parserd) {
+    public Parser<SpreadsheetFormatParserContext> range(final EbnfRangeParserToken token,
+                                                        final Parser<SpreadsheetFormatParserContext> parser) {
         throw new UnsupportedOperationException(token.text()); // there are no ranges...
     }
 
     @Override
-    public Parser<ParserContext> repeated(final EbnfRepeatedParserToken token,
-                                          final Parser<ParserContext> parser) {
+    public Parser<SpreadsheetFormatParserContext> repeated(final EbnfRepeatedParserToken token,
+                                                           final Parser<SpreadsheetFormatParserContext> parser) {
         return parser;
     }
 
     @Override
-    public Parser<ParserContext> terminal(final EbnfTerminalParserToken token,
-                                          final Parser<ParserContext> parser) {
+    public Parser<SpreadsheetFormatParserContext> terminal(final EbnfTerminalParserToken token,
+                                                           final Parser<SpreadsheetFormatParserContext> parser) {
         return parser;
     }
 }
