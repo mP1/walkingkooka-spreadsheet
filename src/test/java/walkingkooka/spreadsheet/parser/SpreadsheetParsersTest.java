@@ -30,6 +30,7 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 import walkingkooka.spreadsheet.function.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -70,6 +71,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -97,7 +99,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         System.out.println(this.expressionNumberKind + " " + testInfo.getDisplayName());
     }
 
-    // values.... ......................................................................................................
+    // apostrophe string values.........................................................................................
 
     @Test
     public void testApostropheStringEmpty() {
@@ -124,7 +126,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final String apostropheText = '\'' + text;
 
         this.parseAndCheck(
-                SpreadsheetParsers.valueOrExpression(),
+                SpreadsheetParsers.valueOrExpression(Parsers.never()),
                 apostropheText,
                 SpreadsheetTextParserToken.text(
                         Lists.of(
@@ -137,6 +139,219 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                 apostropheText,
                 ""
         );
+    }
+
+    // date values.......................................................................................................
+
+    @Test
+    public void testDateDayMonthYear2000() {
+        this.parseDateAndCheck(
+                "31/12/2000",
+                "dd/mm/yyyy",
+                day31(),
+                slash(),
+                month12(),
+                slash(),
+                year2000()
+        );
+    }
+
+    @Test
+    public void testDateDayMonthYear99() {
+        this.parseDateAndCheck(
+                "31/12/99",
+                "dd/mm/yy",
+                day31(),
+                slash(),
+                month12(),
+                slash(),
+                year99()
+        );
+    }
+
+    @Test
+    public void testDateYear2000MonthDay() {
+        this.parseDateAndCheck(
+                "2000/12/31",
+                "yyyy/mm/dd",
+                year2000(),
+                slash(),
+                month12(),
+                slash(),
+                day31()
+        );
+    }
+
+    private void parseDateAndCheck(final String text,
+                                   final String pattern,
+                                   final SpreadsheetParserToken... tokens) {
+        this.parseValueAndCheck(
+                text,
+                SpreadsheetParsePatterns.parseDateParsePatterns(pattern).parser(),
+                SpreadsheetParserToken::date,
+                tokens
+        );
+    }
+
+    // date/time values.................................................................................................
+
+    @Test
+    public void testDateTimeDayMonthYearHourMinutes() {
+        this.parseDateTimeAndCheck(
+                "31/12/2000 11:58:59.123 pm",
+                "dd/mm/yyyy hh:mm:ss.000 a/p",
+                day31(),
+                slash(),
+                month12(),
+                slash(),
+                year2000(),
+                textLiteral(" "),
+                hour11(),
+                colon(),
+                minute58(),
+                colon(),
+                seconds59(),
+                decimal(),
+                millis123(),
+                textLiteral(" "),
+                pm()
+        );
+    }
+
+    private void parseDateTimeAndCheck(final String text,
+                                       final String pattern,
+                                       final SpreadsheetParserToken... tokens) {
+        this.parseValueAndCheck(
+                text,
+                SpreadsheetParsePatterns.parseDateTimeParsePatterns(pattern).parser(),
+                SpreadsheetParserToken::dateTime,
+                tokens
+        );
+    }
+
+    // time values.......................................................................................................
+
+    @Test
+    public void testTimeHourMinutes() {
+        this.parseTimeAndCheck(
+                "11:58",
+                "hh:mm",
+                hour11(),
+                colon(),
+                minute58()
+        );
+    }
+
+    @Test
+    public void testTimeHourMinutesSeconds() {
+        this.parseTimeAndCheck(
+                "11:58:59",
+                "hh:mm:ss",
+                hour11(),
+                colon(),
+                minute58(),
+                colon(),
+                seconds59()
+        );
+    }
+
+    @Test
+    public void testTimeHourMinutesSecondsMillis() {
+        this.parseTimeAndCheck(
+                "11:58:59.123",
+                "hh:mm:ss.000",
+                hour11(),
+                colon(),
+                minute58(),
+                colon(),
+                seconds59(),
+                decimal(),
+                millis123()
+        );
+    }
+
+    private void parseTimeAndCheck(final String text,
+                                   final String pattern,
+                                   final SpreadsheetParserToken... tokens) {
+        this.parseValueAndCheck(
+                text,
+                SpreadsheetParsePatterns.parseTimeParsePatterns(pattern).parser(),
+                SpreadsheetParserToken::time,
+                tokens
+        );
+    }
+
+    private void parseValueAndCheck(final String text,
+                                    final Parser<SpreadsheetParserContext> parser,
+                                    final BiFunction<List<ParserToken>, String, SpreadsheetParentParserToken> factory,
+                                    final SpreadsheetParserToken... tokens) {
+        final List<ParserToken> list = Lists.of(tokens);
+        this.parseAndCheck(
+                SpreadsheetParsers.valueOrExpression(parser),
+                text,
+                factory.apply(
+                        list,
+                        ParserToken.text(list)
+                ),
+                text,
+                ""
+        );
+    }
+
+    private SpreadsheetAmPmParserToken am() {
+        return SpreadsheetParserToken.amPm(0, "am");
+    }
+
+    private SpreadsheetTextLiteralParserToken colon() {
+        return textLiteral(":");
+    }
+
+    private SpreadsheetDayNumberParserToken day31() {
+        return SpreadsheetParserToken.dayNumber(31, "31");
+    }
+
+    private SpreadsheetDecimalSeparatorSymbolParserToken decimal() {
+        return SpreadsheetParserToken.decimalSeparatorSymbol(".", ".");
+    }
+
+    private SpreadsheetHourParserToken hour11() {
+        return SpreadsheetParserToken.hour(11, "11");
+    }
+
+    private SpreadsheetMillisecondParserToken millis123() {
+        return SpreadsheetParserToken.millisecond(123000, "123");
+    }
+
+    private SpreadsheetMinuteParserToken minute58() {
+        return SpreadsheetParserToken.minute(58, "58");
+    }
+
+    private SpreadsheetMonthNumberParserToken month12() {
+        return SpreadsheetParserToken.monthNumber(12, "12");
+    }
+
+    private SpreadsheetAmPmParserToken pm() {
+        return SpreadsheetParserToken.amPm(12, "pm");
+    }
+
+    private SpreadsheetSecondsParserToken seconds59() {
+        return SpreadsheetParserToken.seconds(59, "59");
+    }
+
+    private SpreadsheetTextLiteralParserToken slash() {
+        return textLiteral("/");
+    }
+
+    private SpreadsheetTextLiteralParserToken textLiteral(final String text) {
+        return SpreadsheetParserToken.textLiteral(text, text);
+    }
+
+    private SpreadsheetYearParserToken year99() {
+        return SpreadsheetParserToken.year(99, "99");
+    }
+
+    private SpreadsheetYearParserToken year2000() {
+        return SpreadsheetParserToken.year(2000, "2000");
     }
 
     // values...........................................................................................................
@@ -1698,7 +1913,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
         //+1 to the column number in the message
         this.parseThrows(
-                SpreadsheetParsers.valueOrExpression(),
+                SpreadsheetParsers.valueOrExpression(Parsers.never()),
                 "=" + text,
                 message.substring(0, at + 4) + (column+1) + message.substring(at2)
         );
@@ -1717,7 +1932,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
         final String equalsFormula = "=" + formula;
         this.parseAndCheck(
-                SpreadsheetParsers.valueOrExpression(),
+                SpreadsheetParsers.valueOrExpression(Parsers.never()),
                 equalsFormula,
                 SpreadsheetParserToken.expression(
                         Lists.of(
@@ -1738,7 +1953,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     /**
      * Accepts a formula with an expression. Note the expression is assumed to NOT having the leading equals sign.
-     * The second part of the test will prefix an equals sign and attempt to parse using the {@link SpreadsheetParsers#valueOrExpression()} parser.
+     * The second part of the test will prefix an equals sign and attempt to parse using the {@link SpreadsheetParsers#valueOrExpression} parser.
      */
     private void parseExpressionEvaluateAndCheck(final String formulaText,
                                                  final String expectedText) {
@@ -1749,13 +1964,13 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         );
 
         this.parseExpressionEvaluateAndCheck0(
-                SpreadsheetParsers.valueOrExpression(),
+                SpreadsheetParsers.valueOrExpression(Parsers.never()),
                 "=" + formulaText,
                 expectedText
         );
 
         this.parseExpressionEvaluateAndCheck0(
-                SpreadsheetParsers.valueOrExpression(),
+                SpreadsheetParsers.valueOrExpression(Parsers.never()),
                 "= " + formulaText,
                 expectedText
         );

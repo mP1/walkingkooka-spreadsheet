@@ -29,7 +29,6 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.BigDecimalParserToken;
 import walkingkooka.text.cursor.parser.CharacterParserToken;
 import walkingkooka.text.cursor.parser.Parser;
-import walkingkooka.text.cursor.parser.ParserContext;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.Parsers;
@@ -41,6 +40,7 @@ import walkingkooka.text.cursor.parser.ebnf.EbnfParserContexts;
 import walkingkooka.text.cursor.parser.ebnf.EbnfParserToken;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.BiFunction;
 
 /**
@@ -97,7 +97,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
             .transform(SpreadsheetParsers::transformColumnAndRow);
 
     private static ParserToken transformColumnAndRow(final ParserToken token,
-                                                     final ParserContext context) {
+                                                     final SpreadsheetParserContext context) {
         return SpreadsheetParserToken.cellReference(token.cast(SequenceParserToken.class).value(), token.text());
     }
 
@@ -134,19 +134,18 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                         CharPredicates.range('a', 'z')
                 ); // SpreadsheetFunctionName.INITIAL
 
-        FUNCTION_NAME = Parsers.stringInitialAndPartCharPredicate(
+        FUNCTION_NAME = Parsers.<SpreadsheetParserContext>stringInitialAndPartCharPredicate(
                 initial,
                 initial.or(CharPredicates.range('0', '9').or(CharPredicates.is('.'))), // SpreadsheetFunctionName.PART,
                 1,
                 SpreadsheetFunctionName.MAX_LENGTH)
                 .transform(SpreadsheetParsers::transformFunctionName)
-                .setToString(SpreadsheetFunctionName.class.getSimpleName())
-                .cast();
+                .setToString(SpreadsheetFunctionName.class.getSimpleName());
     }
 
     private final static Parser<SpreadsheetParserContext> FUNCTION_NAME;
 
-    private static ParserToken transformFunctionName(final ParserToken token, final ParserContext context) {
+    private static ParserToken transformFunctionName(final ParserToken token, final SpreadsheetParserContext context) {
         return SpreadsheetParserToken.functionName(
                 SpreadsheetFunctionName.with(token.cast(StringParserToken.class).value()),
                 token.text()
@@ -318,16 +317,15 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     );
 
     private static final EbnfIdentifierName STRING_IDENTIFIER = EbnfIdentifierName.with("STRING");
-    private static final Parser<SpreadsheetParserContext> STRING = Parsers.stringCharPredicate(
+    private static final Parser<SpreadsheetParserContext> STRING = Parsers.<SpreadsheetParserContext>stringCharPredicate(
             CharPredicates.always(),
             1,
             65536
     ).transform(SpreadsheetParsers::transformString)
-            .setToString(SpreadsheetTextLiteralParserToken.class.getSimpleName())
-            .cast();
+            .setToString(SpreadsheetTextLiteralParserToken.class.getSimpleName());
 
     private static ParserToken transformString(final ParserToken token,
-                                               final ParserContext context) {
+                                               final SpreadsheetParserContext context) {
         return SpreadsheetParserToken.textLiteral(
                 token.cast(StringParserToken.class).value(),
                 token.text()
@@ -342,12 +340,11 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     );
 
     private static final EbnfIdentifierName NUMBER_IDENTIFIER = EbnfIdentifierName.with("NUMBER");
-    private static final Parser<SpreadsheetParserContext> NUMBER = Parsers.bigDecimal()
-            .transform(SpreadsheetParsers::transformNumber)
-            .cast();
+    private static final Parser<SpreadsheetParserContext> NUMBER = Parsers.<SpreadsheetParserContext>bigDecimal()
+            .transform(SpreadsheetParsers::transformNumber);
 
     private static ParserToken transformNumber(final ParserToken token,
-                                               final ParserContext context) {
+                                               final SpreadsheetParserContext context) {
         return transformNumber0(
                 token.cast(BigDecimalParserToken.class),
                 (SpreadsheetParserContext) context
@@ -397,18 +394,22 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
      * TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1253">SpreadsheetNumberPatternsParser used when parsing formula value</a>
      * TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1254">default formula value parsing after apostrophe-string, date, datetime, number & time</a>
      */
-    public static Parser<SpreadsheetParserContext> valueOrExpression() {
-        return VALUE_OR_EXPRESSION_PARSER;
-    }
+    public static Parser<SpreadsheetParserContext> valueOrExpression(final Parser<SpreadsheetParserContext> value) {
+        Objects.requireNonNull(value, "value");
 
-    private static Parser<SpreadsheetParserContext> VALUE_OR_EXPRESSION_PARSER;
+        return resolveParsers(value)
+                .get(VALUE_OR_EXPRESSION_IDENTIFIER)
+                .transform(SpreadsheetParsers::transformValueOrExpression)
+                .setToString(SpreadsheetExpressionParserToken.class.getSimpleName())
+                .cast();
+    }
 
     private static final EbnfIdentifierName VALUE_OR_EXPRESSION_IDENTIFIER = EbnfIdentifierName.with("VALUE_OR_EXPRESSION");
 
     /**
      * If the token is a {@link SequenceParserToken} then it needs to be wrapped inside an {@link SpreadsheetExpressionParserToken}.
      */
-    private static ParserToken transformValueOrExpression(final ParserToken token, final ParserContext context) {
+    private static ParserToken transformValueOrExpression(final ParserToken token, final SpreadsheetParserContext context) {
         final String text = token.text();
         return text.startsWith("=") ?
                 SpreadsheetParserToken.expression(
@@ -424,16 +425,15 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         return WHITESPACE;
     }
 
-    private final static Parser<SpreadsheetParserContext> WHITESPACE = Parsers.stringCharPredicate(
+    private final static Parser<SpreadsheetParserContext> WHITESPACE = Parsers.<SpreadsheetParserContext>stringCharPredicate(
             CharPredicates.whitespace(),
             1,
             Integer.MAX_VALUE
     ).transform(SpreadsheetParsers::transformWhitespace)
-            .setToString(SpreadsheetWhitespaceParserToken.class.getSimpleName())
-            .cast();
+            .setToString(SpreadsheetWhitespaceParserToken.class.getSimpleName());
 
     private static ParserToken transformWhitespace(final ParserToken token,
-                                                   final ParserContext context) {
+                                                   final SpreadsheetParserContext context) {
         return SpreadsheetParserToken.whitespace(
                 token.cast(StringParserToken.class).value(),
                 token.text()
@@ -442,10 +442,26 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
     // helpers .........................................................................................................
 
-    /*
-     * Uses the grammar file to fetch one of the parsers.
+
+    /**
+     * Loads the grammar text file.
      */
-    static {
+    private static EbnfGrammarParserToken loadGrammar() {
+        final TextCursor grammarFile = TextCursors.charSequence(new SpreadsheetParsersGrammarProvider().text());
+
+        return EbnfParserToken.grammarParser()
+                .orFailIfCursorNotEmpty(ParserReporters.basic())
+                .parse(grammarFile, EbnfParserContexts.basic())
+                .orElseThrow(() -> new IllegalStateException("Unable to parse parsers grammar file."))
+                .cast(EbnfGrammarParserToken.class);
+    }
+
+    private final static EbnfGrammarParserToken GRAMMAR_PARSER_TOKEN = loadGrammar();
+
+    /**
+     * Returns a {@link Map} of all parsers.
+     */
+    private static Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> resolveParsers(final Parser<SpreadsheetParserContext> value) {
         final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> predefined = Maps.sorted();
 
         cellReferences(predefined);
@@ -454,20 +470,22 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         math(predefined);
         misc(predefined);
 
-        final TextCursor grammarFile = TextCursors.charSequence(new SpreadsheetParsersGrammarProvider().text());
+        predefined.put(DATE_DATETIME_TIME_IDENTIFIER, value);
 
-        final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> parsers = EbnfParserToken.grammarParser()
-                .orFailIfCursorNotEmpty(ParserReporters.basic())
-                .parse(grammarFile, EbnfParserContexts.basic())
-                .orElseThrow(() -> new IllegalStateException("Unable to parse parsers grammar file."))
-                .cast(EbnfGrammarParserToken.class)
+        return GRAMMAR_PARSER_TOKEN
                 .combinator(predefined, SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer.INSTANCE);
+    }
+
+    private static final EbnfIdentifierName DATE_DATETIME_TIME_IDENTIFIER = EbnfIdentifierName.with("DATE_DATETIME_TIME");
+
+    /*
+     * Processes the grammar and sets all parsers that have static fields.
+     */
+    static {
+        final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> parsers = resolveParsers(Parsers.never());
 
         CELL_REFERENCES_PARSER = parsers.get(EbnfIdentifierName.with("CELL"));
         EXPRESSION_PARSER = parsers.get(EXPRESSION_IDENTIFIER);
-        VALUE_OR_EXPRESSION_PARSER = parsers.get(VALUE_OR_EXPRESSION_IDENTIFIER)
-                .transform(SpreadsheetParsers::transformValueOrExpression)
-                .setToString(SpreadsheetExpressionParserToken.class.getSimpleName());
         FUNCTION_PARSER = parsers.get(FUNCTION_IDENTIFIER);
         RANGE_PARSER = parsers.get(EbnfIdentifierName.with("RANGE"));
     }
