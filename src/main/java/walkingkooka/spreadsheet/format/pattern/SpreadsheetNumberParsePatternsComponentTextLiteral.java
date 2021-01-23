@@ -35,8 +35,8 @@ final class SpreadsheetNumberParsePatternsComponentTextLiteral extends Spreadshe
 
     @Override
     void parse(final TextCursor cursor,
-               final SpreadsheetNumberParsePatternsContext context) {
-        this.parseToken(cursor, this.text, context);
+               final SpreadsheetNumberParsePatternsRequest request) {
+        this.parseToken(cursor, this.text, request);
     }
 
     private final String text;

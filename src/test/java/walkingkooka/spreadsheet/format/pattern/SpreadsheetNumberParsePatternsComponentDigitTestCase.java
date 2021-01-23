@@ -142,7 +142,7 @@ public abstract class SpreadsheetNumberParsePatternsComponentDigitTestCase<C ext
                               final String textAfter,
                               final BigDecimal value,
                               final Boolean negative) {
-        final SpreadsheetNumberParsePatternsContext context = this.createContext();
+        final SpreadsheetNumberParsePatternsRequest context = this.createRequest();
         this.parseAndCheck(text,
                 context,
                 textAfter,

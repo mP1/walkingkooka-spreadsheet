@@ -35,11 +35,11 @@ final class SpreadsheetNumberParsePatternsComponentWhitespace extends Spreadshee
 
     @Override
     void parse(final TextCursor cursor,
-               final SpreadsheetNumberParsePatternsContext context) {
+               final SpreadsheetNumberParsePatternsRequest request) {
         if (false == cursor.isEmpty()) {
             if (Character.isWhitespace(cursor.at())) {
                 cursor.next();
-                context.nextComponent(cursor);
+                request.nextComponent(cursor);
             }
         }
     }

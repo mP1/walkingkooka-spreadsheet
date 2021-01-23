@@ -18,20 +18,20 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.Context;
-import walkingkooka.ContextTesting;
 import walkingkooka.ToStringBuilder;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.iterator.Iterators;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.reflect.ClassTesting;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public final class SpreadsheetNumberParsePatternsContextTest extends SpreadsheetNumberParsePatternsTestCase2<SpreadsheetNumberParsePatternsContext>
-        implements ContextTesting<SpreadsheetNumberParsePatternsContext>, ToStringTesting<SpreadsheetNumberParsePatternsContext> {
+public final class SpreadsheetNumberParsePatternsRequestTest extends SpreadsheetNumberParsePatternsTestCase2<SpreadsheetNumberParsePatternsRequest>
+        implements ClassTesting<SpreadsheetNumberParsePatternsRequest>,
+        ToStringTesting<SpreadsheetNumberParsePatternsRequest> {
 
     @Test
     public void testComputeValueNeitherNegativeOrPositiveZero() {
@@ -90,14 +90,14 @@ public final class SpreadsheetNumberParsePatternsContextTest extends Spreadsheet
                                       final boolean negativeExponent,
                                       final int exponent,
                                       final BigDecimal expected) {
-        final SpreadsheetNumberParsePatternsContext context = this.createContext();
-        context.negativeMantissa = negativeMantissa;
-        context.mantissa = mantissa;
-        context.negativeExponent = negativeExponent;
-        context.exponent = exponent;
+        final SpreadsheetNumberParsePatternsRequest request = this.createRequest();
+        request.negativeMantissa = negativeMantissa;
+        request.mantissa = mantissa;
+        request.negativeExponent = negativeExponent;
+        request.exponent = exponent;
 
         assertEquals(expected.stripTrailingZeros(),
-                context.computeValue().stripTrailingZeros(),
+                request.computeValue().stripTrailingZeros(),
                 () -> ToStringBuilder.empty()
                         .label("negativeMantissa").value(negativeMantissa)
                         .label("mantissa").value(mantissa)
@@ -108,43 +108,42 @@ public final class SpreadsheetNumberParsePatternsContextTest extends Spreadsheet
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createContext(), "INTEGER 0");
+        this.toStringAndCheck(this.createRequest(), "INTEGER 0");
     }
 
     @Test
     public void testToString2() {
-        final SpreadsheetNumberParsePatternsContext context = this.createContext();
-        context.negativeMantissa = true;
-        context.mantissa = BigDecimal.valueOf(123.5);
+        final SpreadsheetNumberParsePatternsRequest request = this.createRequest();
+        request.negativeMantissa = true;
+        request.mantissa = BigDecimal.valueOf(123.5);
 
-        this.toStringAndCheck(context, "INTEGER -123.5");
+        this.toStringAndCheck(request, "INTEGER -123.5");
     }
 
     @Test
     public void testToStringPercent() {
-        final SpreadsheetNumberParsePatternsContext context = this.createContext();
-        context.mantissa = BigDecimal.valueOf(123.5);
-        context.percentage = true;
+        final SpreadsheetNumberParsePatternsRequest request = this.createRequest();
+        request.mantissa = BigDecimal.valueOf(123.5);
+        request.percentage = true;
 
-        this.toStringAndCheck(context, "INTEGER 1.235");
+        this.toStringAndCheck(request, "INTEGER 1.235");
     }
 
-    @Override
-    public SpreadsheetNumberParsePatternsContext createContext() {
-        return SpreadsheetNumberParsePatternsContext.with(Iterators.fake(), DecimalNumberContexts.american(MathContext.UNLIMITED));
+    private SpreadsheetNumberParsePatternsRequest createRequest() {
+        return SpreadsheetNumberParsePatternsRequest.with(Iterators.fake(), DecimalNumberContexts.american(MathContext.UNLIMITED));
     }
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetNumberParsePatternsContext> type() {
-        return SpreadsheetNumberParsePatternsContext.class;
+    public Class<SpreadsheetNumberParsePatternsRequest> type() {
+        return SpreadsheetNumberParsePatternsRequest.class;
     }
 
     // TypeNameTesting..................................................................................................
 
     @Override
     public String typeNameSuffix() {
-        return Context.class.getSimpleName();
+        return "Request";
     }
 }

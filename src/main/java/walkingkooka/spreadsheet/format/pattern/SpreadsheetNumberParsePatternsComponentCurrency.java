@@ -35,10 +35,10 @@ final class SpreadsheetNumberParsePatternsComponentCurrency extends SpreadsheetN
 
     @Override
     void parse(final TextCursor cursor,
-               final SpreadsheetNumberParsePatternsContext context) {
+               final SpreadsheetNumberParsePatternsRequest request) {
         this.parseToken(cursor,
-                context.context.currencySymbol(),
-                context);
+                request.context.currencySymbol(),
+                request);
     }
 
     @Override

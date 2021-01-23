@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 
@@ -39,11 +40,13 @@ final class SpreadsheetNumberParsePatternsComponentExponent extends SpreadsheetN
 
     @Override
     void parse(final TextCursor cursor,
-               final SpreadsheetNumberParsePatternsContext context) {
+               final SpreadsheetNumberParsePatternsRequest request) {
+
+        final DecimalNumberContext context = request.context;
         Loop:
         //
         do {
-            final String exponentSymbol = context.context.exponentSymbol();
+            final String exponentSymbol = context.exponentSymbol();
             int exponentSymbolIndex = 0;
 
             // E
@@ -64,20 +67,20 @@ final class SpreadsheetNumberParsePatternsComponentExponent extends SpreadsheetN
                 final char sign = cursor.at();
 
                 // E+
-                if (context.context.positiveSign() == sign) {
+                if (context.positiveSign() == sign) {
                     cursor.next();
                     negativeExponent = false;
                 } else {
                     // E-
-                    if (context.context.negativeSign() == sign) {
+                    if (context.negativeSign() == sign) {
                         cursor.next();
                         negativeExponent = true;
                     }
                 }
             }
-            context.mode = SpreadsheetNumberParsePatternsMode.EXPONENT;
-            context.negativeExponent = negativeExponent;
-            context.nextComponent(cursor);
+            request.mode = SpreadsheetNumberParsePatternsMode.EXPONENT;
+            request.negativeExponent = negativeExponent;
+            request.nextComponent(cursor);
         } while (false);
     }
 

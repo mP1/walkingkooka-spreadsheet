@@ -107,7 +107,7 @@ abstract class SpreadsheetNumberParsePatternsComponent {
     /**
      * Each component in turn is asked to consume and possibly update the number value in the context.
      */
-    abstract void parse(final TextCursor cursor, final SpreadsheetNumberParsePatternsContext context);
+    abstract void parse(final TextCursor cursor, final SpreadsheetNumberParsePatternsRequest request);
 
     /**
      * Some components must be matched in order, while the {@link SpreadsheetNumberParsePatternsComponentDigit} are optional.
@@ -119,7 +119,7 @@ abstract class SpreadsheetNumberParsePatternsComponent {
      */
     final void parseToken(final TextCursor cursor,
                           final String token,
-                          final SpreadsheetNumberParsePatternsContext context) {
+                          final SpreadsheetNumberParsePatternsRequest request) {
         final int length = token.length();
 
         int i = 0;
@@ -134,7 +134,7 @@ abstract class SpreadsheetNumberParsePatternsComponent {
             cursor.next();
             i++;
             if (i == length) {
-                context.nextComponent(cursor);
+                request.nextComponent(cursor);
                 break;
             }
         }

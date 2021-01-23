@@ -62,7 +62,7 @@ public final class SpreadsheetNumberParsePatternsComponentTextLiteralTest extend
 
         this.parseAndCheck(SpreadsheetNumberParsePatternsComponentTextLiteral.with(token),
                 token + after,
-                this.createContext(),
+                this.createRequest(),
                 after,
                 VALUE_WITHOUT,
                 NEXT_CALLED);

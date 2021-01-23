@@ -35,12 +35,12 @@ final class SpreadsheetNumberParsePatternsComponentPercent extends SpreadsheetNu
 
     @Override
     void parse(final TextCursor cursor,
-               final SpreadsheetNumberParsePatternsContext context) {
+               final SpreadsheetNumberParsePatternsRequest request) {
         if (false == cursor.isEmpty()) {
-            if (context.context.percentageSymbol() == cursor.at()) {
-                context.percentage = true;
+            if (request.context.percentageSymbol() == cursor.at()) {
+                request.percentage = true;
                 cursor.next();
-                context.nextComponent(cursor);
+                request.nextComponent(cursor);
             }
         }
     }

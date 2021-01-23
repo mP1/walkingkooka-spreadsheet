@@ -42,13 +42,13 @@ public abstract class SpreadsheetNumberParsePatternsComponentTestCase<C extends 
 
     abstract C createComponent();
 
-    final SpreadsheetNumberParsePatternsContext createContext() {
-        return this.createContext(Lists.of(SpreadsheetNumberParsePatternsComponent.textLiteral("@")).iterator());
+    final SpreadsheetNumberParsePatternsRequest createRequest() {
+        return this.createRequest(Lists.of(SpreadsheetNumberParsePatternsComponent.textLiteral("@")).iterator());
     }
 
 
-    final SpreadsheetNumberParsePatternsContext createContext(final Iterator<SpreadsheetNumberParsePatternsComponent> nextComponent) {
-        return SpreadsheetNumberParsePatternsContext.with(nextComponent, this.decimalNumberContext());
+    final SpreadsheetNumberParsePatternsRequest createRequest(final Iterator<SpreadsheetNumberParsePatternsComponent> nextComponent) {
+        return SpreadsheetNumberParsePatternsRequest.with(nextComponent, this.decimalNumberContext());
     }
 
     final void parseFails(final String text) {
@@ -77,14 +77,14 @@ public abstract class SpreadsheetNumberParsePatternsComponentTestCase<C extends 
                              final boolean next) {
         this.parseAndCheck(this.createComponent(),
                 text,
-                this.createContext(),
+                this.createRequest(),
                 textAfter,
                 value,
                 next);
     }
 
     final void parseAndCheck(final String text,
-                             final SpreadsheetNumberParsePatternsContext context,
+                             final SpreadsheetNumberParsePatternsRequest context,
                              final String textAfter,
                              final BigDecimal value,
                              final boolean next) {
@@ -98,7 +98,7 @@ public abstract class SpreadsheetNumberParsePatternsComponentTestCase<C extends 
 
     final void parseAndCheck(final SpreadsheetNumberParsePatternsComponent component,
                              final String text,
-                             final SpreadsheetNumberParsePatternsContext context,
+                             final SpreadsheetNumberParsePatternsRequest context,
                              final String textAfter,
                              final BigDecimal value,
                              final boolean next) {
@@ -123,7 +123,7 @@ public abstract class SpreadsheetNumberParsePatternsComponentTestCase<C extends 
                 () -> " next component called after parsing text " + CharSequences.quoteAndEscape(text));
     }
 
-    final void checkMode(final SpreadsheetNumberParsePatternsContext context,
+    final void checkMode(final SpreadsheetNumberParsePatternsRequest context,
                          final SpreadsheetNumberParsePatternsMode mode) {
         assertEquals(mode, context.mode, "mode");
     }

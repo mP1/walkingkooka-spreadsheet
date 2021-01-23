@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.text.cursor.TextCursor;
 
 /**
@@ -34,8 +35,9 @@ abstract class SpreadsheetNumberParsePatternsComponentDigit extends SpreadsheetN
 
     @Override
     final void parse(final TextCursor cursor,
-                     final SpreadsheetNumberParsePatternsContext context) {
-        final char groupingSeparator = context.context.groupingSeparator();
+                     final SpreadsheetNumberParsePatternsRequest request) {
+        final DecimalNumberContext context = request.context;
+        final char groupingSeparator = context.groupingSeparator();
         final int max = this.max;
         int count = 0;
 
@@ -52,22 +54,22 @@ abstract class SpreadsheetNumberParsePatternsComponentDigit extends SpreadsheetN
             }
 
             // special case positive/negative sign if in INTEGER mode.
-            if (SpreadsheetNumberParsePatternsMode.INTEGER == context.mode && null == context.negativeMantissa) {
-                if (context.context.negativeSign() == c) {
+            if (SpreadsheetNumberParsePatternsMode.INTEGER == request.mode && null == request.negativeMantissa) {
+                if (context.negativeSign() == c) {
                     cursor.next();
-                    context.negativeMantissa = true;
+                    request.negativeMantissa = true;
                     continue;
                 }
 
-                if (context.context.positiveSign() == c) {
+                if (context.positiveSign() == c) {
                     cursor.next();
-                    context.negativeMantissa = false;
+                    request.negativeMantissa = false;
                     continue;
                 }
             }
 
             // $c might be a digit or space
-            if (false == this.handle(c, context)) {
+            if (false == this.handle(c, request)) {
                 break;
             }
             cursor.next();
@@ -77,21 +79,21 @@ abstract class SpreadsheetNumberParsePatternsComponentDigit extends SpreadsheetN
             }
         }
 
-        context.nextComponent(cursor);
+        request.nextComponent(cursor);
     }
 
     /**
      * Called for each character found.
      */
     abstract boolean handle(final char c,
-                            final SpreadsheetNumberParsePatternsContext context);
+                            final SpreadsheetNumberParsePatternsRequest request);
 
     final boolean handleDigit(final char c,
-                              final SpreadsheetNumberParsePatternsContext context) {
+                              final SpreadsheetNumberParsePatternsRequest request) {
         final int digit = Character.digit(c, 10);
         final boolean hasDigitValue = -1 != digit;
         if (hasDigitValue) {
-            context.mode.onDigit(digit, context);
+            request.mode.onDigit(digit, request);
         }
         return hasDigitValue;
     }

@@ -51,12 +51,12 @@ final class SpreadsheetNumberParsePatternsParser implements Parser<SpreadsheetPa
         final TextCursorSavePoint save = cursor.save();
 
         for (List<SpreadsheetNumberParsePatternsComponent> pattern : this.pattern.patterns) {
-            final SpreadsheetNumberParsePatternsContext patternsContext = SpreadsheetNumberParsePatternsContext.with(pattern.iterator(), context);
-            patternsContext.nextComponent(cursor);
-            if (false == patternsContext.isRequired()) {
+            final SpreadsheetNumberParsePatternsRequest request = SpreadsheetNumberParsePatternsRequest.with(pattern.iterator(), context);
+            request.nextComponent(cursor);
+            if (false == request.isRequired()) {
                 final CharSequence text = save.textBetween();
                 if (text.length() > 0) {
-                    token = ParserTokens.bigDecimal(patternsContext.computeValue(), text.toString());
+                    token = ParserTokens.bigDecimal(request.computeValue(), text.toString());
                     break;
                 }
             }

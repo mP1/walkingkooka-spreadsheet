@@ -42,7 +42,7 @@ public final class SpreadsheetNumberParsePatternsComponentPercentTest extends Sp
 
     final void parseAndCheck2(final String text,
                               final String textAfter) {
-        final SpreadsheetNumberParsePatternsContext context = this.createContext();
+        final SpreadsheetNumberParsePatternsRequest context = this.createRequest();
         this.parseAndCheck(text,
                 context,
                 textAfter,
