@@ -71,24 +71,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testWithNullParserFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
                 null,
-                EXPRESSION_NUMBER_KIND,
-                this.functions(),
-                this.engine(),
-                this.labelStore(),
-                this.converterContext(),
-                this.numberToColor(),
-                this.nameToColor(),
-                WIDTH,
-                FRACTIONER,
-                this.defaultSpreadsheetFormatter())
-        );
-    }
-
-    @Test
-    public void testWithNullExpressionNumberKindFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
-                this.numberParser(),
-                null,
                 this.functions(),
                 this.engine(),
                 this.labelStore(),
@@ -105,7 +87,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testWithNullFunctionsFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
                 this.numberParser(),
-                EXPRESSION_NUMBER_KIND,
                 null,
                 this.engine(),
                 this.labelStore(),
@@ -122,7 +103,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testWithNullEngineFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
                 this.numberParser(),
-                EXPRESSION_NUMBER_KIND,
                 this.functions(),
                 null,
                 this.labelStore(),
@@ -139,7 +119,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testWithNullLabelStoreFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
                 this.numberParser(),
-                EXPRESSION_NUMBER_KIND,
                 this.functions(),
                 this.engine(),
                 null,
@@ -156,7 +135,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testWithNullConverterContextFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
                 this.numberParser(),
-                EXPRESSION_NUMBER_KIND,
                 this.functions(),
                 this.engine(),
                 this.labelStore(),
@@ -173,7 +151,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testWithNullNumberToColorFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
                 this.numberParser(),
-                EXPRESSION_NUMBER_KIND,
                 this.functions(),
                 this.engine(),
                 this.labelStore(),
@@ -190,7 +167,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testWithNullNameToColorFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
                 this.numberParser(),
-                EXPRESSION_NUMBER_KIND,
                 this.functions(),
                 this.engine(),
                 this.labelStore(),
@@ -207,7 +183,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testWithInvalidWidthFails() {
         assertThrows(IllegalArgumentException.class, () -> BasicSpreadsheetEngineContext.with(
                 this.numberParser(),
-                EXPRESSION_NUMBER_KIND,
                 this.functions(),
                 this.engine(),
                 this.labelStore(),
@@ -224,7 +199,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testWithNullFractionFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
                 this.numberParser(),
-                EXPRESSION_NUMBER_KIND,
                 this.functions(),
                 this.engine(),
                 this.labelStore(),
@@ -241,7 +215,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     public void testWithNullDefaultSpreadsheetFormatterFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
                 this.numberParser(),
-                EXPRESSION_NUMBER_KIND,
                 this.functions(),
                 this.engine(),
                 this.labelStore(),
@@ -390,7 +363,6 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetFormatter defaultSpreadsheetFormatter) {
         return BasicSpreadsheetEngineContext.with(
                 this.numberParser(),
-                EXPRESSION_NUMBER_KIND,
                 this.functions(),
                 this.engine(),
                 this.labelStore(),

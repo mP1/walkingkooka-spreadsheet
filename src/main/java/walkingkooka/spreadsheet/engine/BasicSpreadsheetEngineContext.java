@@ -64,7 +64,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
      * Creates a new {@link BasicSpreadsheetEngineContext}
      */
     static BasicSpreadsheetEngineContext with(final Parser<SpreadsheetParserContext> numberParser,
-                                              final ExpressionNumberKind expressionNumberKind,
                                               final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                               final SpreadsheetEngine engine,
                                               final SpreadsheetLabelStore labelStore,
@@ -75,7 +74,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                               final Function<BigDecimal, Fraction> fractioner,
                                               final SpreadsheetFormatter defaultSpreadsheetFormatter) {
         Objects.requireNonNull(numberParser, "numberParser");
-        Objects.requireNonNull(expressionNumberKind, "expressionNumberKind");
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(labelStore, "labelStore");
@@ -90,7 +88,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
         return new BasicSpreadsheetEngineContext(
                 numberParser,
-                expressionNumberKind,
                 functions,
                 engine,
                 labelStore,
@@ -107,7 +104,6 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
      * Private ctor use factory.
      */
     private BasicSpreadsheetEngineContext(final Parser<SpreadsheetParserContext> numberParser,
-                                          final ExpressionNumberKind expressionNumberKind,
                                           final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                           final SpreadsheetEngine engine,
                                           final SpreadsheetLabelStore labelStore,
@@ -119,10 +115,9 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final SpreadsheetFormatter defaultSpreadsheetFormatter) {
         super();
         this.numberParser = numberParser;
-        this.expressionNumberKind = expressionNumberKind;
         this.parserContext = SpreadsheetParserContexts.basic(converterContext,
                 converterContext,
-                expressionNumberKind);
+                converterContext.expressionNumberKind());
 
         this.functions = functions;
         this.function = SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(engine, labelStore, this);
@@ -186,10 +181,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     @Override
     public ExpressionNumberKind expressionNumberKind() {
-        return this.expressionNumberKind;
+        return this.converterContext.expressionNumberKind();
     }
-
-    final ExpressionNumberKind expressionNumberKind;
 
     @Override
     public MathContext mathContext() {
