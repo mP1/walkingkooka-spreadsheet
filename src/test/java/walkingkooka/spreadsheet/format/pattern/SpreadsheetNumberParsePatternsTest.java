@@ -22,9 +22,7 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
-import walkingkooka.spreadsheet.parser.SpreadsheetExpressionNumberParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
@@ -37,7 +35,7 @@ import java.util.List;
 
 public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePatternsTestCase<SpreadsheetNumberParsePatterns,
         SpreadsheetFormatNumberParserToken,
-        SpreadsheetExpressionNumberParserToken,
+        SpreadsheetNumberParserToken,
         BigDecimal> {
 
     @Test
@@ -214,8 +212,8 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
     }
 
     @Override
-    SpreadsheetExpressionNumberParserToken parent(final List<ParserToken> tokens,
-                                                  final String text) {
+    SpreadsheetNumberParserToken parent(final List<ParserToken> tokens,
+                                        final String text) {
         throw new UnsupportedOperationException();
     }
 

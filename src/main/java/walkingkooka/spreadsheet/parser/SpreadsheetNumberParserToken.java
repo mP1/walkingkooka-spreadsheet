@@ -21,15 +21,15 @@ import walkingkooka.tree.expression.ExpressionNumber;
 /**
  * Holds a single {@link ExpressionNumber} number.
  */
-public final class SpreadsheetExpressionNumberParserToken extends SpreadsheetNonSymbolParserToken<ExpressionNumber> {
+public final class SpreadsheetNumberParserToken extends SpreadsheetNonSymbolParserToken<ExpressionNumber> {
 
-    static SpreadsheetExpressionNumberParserToken with(final ExpressionNumber value, final String text) {
+    static SpreadsheetNumberParserToken with(final ExpressionNumber value, final String text) {
         checkValueAndText(value, text);
 
-        return new SpreadsheetExpressionNumberParserToken(value, text);
+        return new SpreadsheetNumberParserToken(value, text);
     }
 
-    private SpreadsheetExpressionNumberParserToken(final ExpressionNumber value, final String text) {
+    private SpreadsheetNumberParserToken(final ExpressionNumber value, final String text) {
         super(value, text);
     }
 
@@ -42,6 +42,6 @@ public final class SpreadsheetExpressionNumberParserToken extends SpreadsheetNon
 
     @Override
     boolean canBeEqual(final Object other) {
-        return other instanceof SpreadsheetExpressionNumberParserToken;
+        return other instanceof SpreadsheetNumberParserToken;
     }
 }

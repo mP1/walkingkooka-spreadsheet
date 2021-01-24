@@ -351,7 +351,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
     private static ParserToken transformNumber0(final BigDecimalParserToken token,
                                                 final SpreadsheetParserContext context) {
-        return SpreadsheetParserToken.expressionNumber(
+        return SpreadsheetParserToken.number(
                 context.expressionNumberKind()
                         .create(token.value()),
                 token.text()

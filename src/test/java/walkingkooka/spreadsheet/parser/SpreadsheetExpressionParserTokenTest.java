@@ -90,9 +90,9 @@ public final class SpreadsheetExpressionParserTokenTest extends SpreadsheetParen
                                 equalsSymbol(),
                                 SpreadsheetParserToken.addition(
                                         Lists.of(
-                                                SpreadsheetParserToken.expressionNumber(number1, "1"),
+                                                SpreadsheetParserToken.number(number1, "1"),
                                                 SpreadsheetParserToken.plusSymbol("+", "+"),
-                                                SpreadsheetParserToken.expressionNumber(number2, "2")
+                                                SpreadsheetParserToken.number(number2, "2")
                                         ),
                                         "1+2"
                                 )
@@ -118,9 +118,9 @@ public final class SpreadsheetExpressionParserTokenTest extends SpreadsheetParen
                                 whitespace(),
                                 SpreadsheetParserToken.addition(
                                         Lists.of(
-                                                SpreadsheetParserToken.expressionNumber(number1, "1"),
+                                                SpreadsheetParserToken.number(number1, "1"),
                                                 SpreadsheetParserToken.plusSymbol("+", "+"),
-                                                SpreadsheetParserToken.expressionNumber(number2, "2")
+                                                SpreadsheetParserToken.number(number2, "2")
                                         ),
                                         "1+2"
                                 )

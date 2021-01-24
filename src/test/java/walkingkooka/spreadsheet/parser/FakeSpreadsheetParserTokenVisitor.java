@@ -283,11 +283,6 @@ public class FakeSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVis
     }
 
     @Override
-    protected void visit(final SpreadsheetDayNumberParserToken token) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected void visit(final SpreadsheetDecimalSeparatorSymbolParserToken token) {
         throw new UnsupportedOperationException();
     }
@@ -318,7 +313,7 @@ public class FakeSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVis
     }
 
     @Override
-    protected void visit(final SpreadsheetExpressionNumberParserToken token) {
+    protected void visit(final SpreadsheetNumberParserToken token) {
         throw new UnsupportedOperationException();
     }
 
@@ -394,6 +389,11 @@ public class FakeSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVis
 
     @Override
     protected void visit(final SpreadsheetNotEqualsSymbolParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visit(final SpreadsheetDayNumberParserToken token) {
         throw new UnsupportedOperationException();
     }
 

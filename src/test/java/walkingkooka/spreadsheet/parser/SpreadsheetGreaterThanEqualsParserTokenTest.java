@@ -72,7 +72,7 @@ public final class SpreadsheetGreaterThanEqualsParserTokenTest extends Spreadshe
             }
 
             @Override
-            protected void visit(final SpreadsheetExpressionNumberParserToken t) {
+            protected void visit(final SpreadsheetNumberParserToken t) {
                 b.append("5");
                 visited.add(t);
             }

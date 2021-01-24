@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetExpressionNumberParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetExpressionNumberParserToken, ExpressionNumber> {
+public final class SpreadsheetNumberParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetNumberParserToken, ExpressionNumber> {
 
     @Test
     public void testWithEmptyTextFails() {
@@ -40,7 +40,7 @@ public final class SpreadsheetExpressionNumberParserTokenTest extends Spreadshee
     @Test
     public void testAccept() {
         final StringBuilder b = new StringBuilder();
-        final SpreadsheetExpressionNumberParserToken token = this.createToken();
+        final SpreadsheetNumberParserToken token = this.createToken();
 
         new FakeSpreadsheetParserTokenVisitor() {
             @Override
@@ -70,7 +70,7 @@ public final class SpreadsheetExpressionNumberParserTokenTest extends Spreadshee
             }
 
             @Override
-            protected void visit(final SpreadsheetExpressionNumberParserToken t) {
+            protected void visit(final SpreadsheetNumberParserToken t) {
                 assertSame(token, t);
                 b.append("5");
             }
@@ -94,23 +94,23 @@ public final class SpreadsheetExpressionNumberParserTokenTest extends Spreadshee
     }
 
     @Override
-    SpreadsheetExpressionNumberParserToken createToken(final ExpressionNumber value, final String text) {
-        return SpreadsheetExpressionNumberParserToken.with(value, text);
+    SpreadsheetNumberParserToken createToken(final ExpressionNumber value, final String text) {
+        return SpreadsheetNumberParserToken.with(value, text);
     }
 
     @Override
-    public SpreadsheetExpressionNumberParserToken createDifferentToken() {
-        return SpreadsheetExpressionNumberParserToken.with(EXPRESSION_NUMBER_KIND.create(-1), "'different'");
+    public SpreadsheetNumberParserToken createDifferentToken() {
+        return SpreadsheetNumberParserToken.with(EXPRESSION_NUMBER_KIND.create(-1), "'different'");
     }
 
     @Override
-    public Class<SpreadsheetExpressionNumberParserToken> type() {
-        return SpreadsheetExpressionNumberParserToken.class;
+    public Class<SpreadsheetNumberParserToken> type() {
+        return SpreadsheetNumberParserToken.class;
     }
 
     @Override
-    public SpreadsheetExpressionNumberParserToken unmarshall(final JsonNode from,
-                                                             final JsonNodeUnmarshallContext context) {
-        return SpreadsheetParserToken.unmarshallExpressionNumber(from, context);
+    public SpreadsheetNumberParserToken unmarshall(final JsonNode from,
+                                                   final JsonNodeUnmarshallContext context) {
+        return SpreadsheetParserToken.unmarshallNumber(from, context);
     }
 }

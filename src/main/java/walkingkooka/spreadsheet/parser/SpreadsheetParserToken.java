@@ -28,7 +28,6 @@ import walkingkooka.text.cursor.parser.ParserTokenVisitor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
-import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -194,13 +193,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public static SpreadsheetExpressionParserToken expression(final List<ParserToken> value, final String text) {
         return SpreadsheetExpressionParserToken.with(value, text);
-    }
-
-    /**
-     * {@see SpreadsheetExpressionNumberParserToken}
-     */
-    public static SpreadsheetExpressionNumberParserToken expressionNumber(final ExpressionNumber value, final String text) {
-        return SpreadsheetExpressionNumberParserToken.with(value, text);
     }
 
     /**
@@ -376,6 +368,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public static SpreadsheetNotEqualsSymbolParserToken notEqualsSymbol(final String value, final String text) {
         return SpreadsheetNotEqualsSymbolParserToken.with(value, text);
+    }
+
+    /**
+     * {@see SpreadsheetNumberParserToken}
+     */
+    public static SpreadsheetNumberParserToken number(final ExpressionNumber value, final String text) {
+        return SpreadsheetNumberParserToken.with(value, text);
     }
 
     /**
@@ -689,10 +688,10 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * Only {@link SpreadsheetExpressionNumberParserToken} return true
+     * Only {@link SpreadsheetNumberParserToken} return true
      */
     public final boolean isExpressionNumber() {
-        return this instanceof SpreadsheetExpressionNumberParserToken;
+        return this instanceof SpreadsheetNumberParserToken;
     }
 
     /**
@@ -1125,11 +1124,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
-                SpreadsheetExpressionNumberParserToken.class,
-                SpreadsheetParserToken::unmarshallExpressionNumber
-        );
-
-        registerLeafParserToken(
                 SpreadsheetFunctionNameParserToken.class,
                 SpreadsheetParserToken::unmarshallFunctionName
         );
@@ -1172,6 +1166,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         registerLeafParserToken(
                 SpreadsheetMonthNumberParserToken.class,
                 SpreadsheetParserToken::unmarshallMonthNumber
+        );
+
+        registerLeafParserToken(
+                SpreadsheetNumberParserToken.class,
+                SpreadsheetParserToken::unmarshallNumber
         );
 
         registerLeafParserToken(
@@ -1252,16 +1251,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 BigInteger.class,
                 context,
                 SpreadsheetParserToken::digits
-        );
-    }
-
-    static SpreadsheetExpressionNumberParserToken unmarshallExpressionNumber(final JsonNode node,
-                                                                             final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
-                node,
-                ExpressionNumber.class,
-                context,
-                SpreadsheetParserToken::expressionNumber
         );
     }
 
@@ -1352,6 +1341,16 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 Integer.class,
                 context,
                 SpreadsheetParserToken::monthNumber
+        );
+    }
+
+    static SpreadsheetNumberParserToken unmarshallNumber(final JsonNode node,
+                                                         final JsonNodeUnmarshallContext context) {
+        return unmarshallLeafParserToken(
+                node,
+                ExpressionNumber.class,
+                context,
+                SpreadsheetParserToken::number
         );
     }
 

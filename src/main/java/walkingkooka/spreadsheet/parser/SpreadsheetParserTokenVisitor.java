@@ -301,10 +301,6 @@ public abstract class SpreadsheetParserTokenVisitor extends ParserTokenVisitor {
         // nop
     }
 
-    protected void visit(final SpreadsheetExpressionNumberParserToken token) {
-        // nop
-    }
-
     protected void visit(final SpreadsheetFunctionNameParserToken token) {
         // nop
     }
@@ -366,6 +362,10 @@ public abstract class SpreadsheetParserTokenVisitor extends ParserTokenVisitor {
     }
 
     protected void visit(final SpreadsheetNotEqualsSymbolParserToken token) {
+        // nop
+    }
+
+    protected void visit(final SpreadsheetNumberParserToken token) {
         // nop
     }
 

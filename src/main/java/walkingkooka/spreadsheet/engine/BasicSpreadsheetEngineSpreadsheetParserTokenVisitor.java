@@ -40,7 +40,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetDoubleQuoteSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetEqualsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetEqualsSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetExponentSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetExpressionNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetExpressionParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetFunctionNameParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetFunctionParserToken;
@@ -67,6 +66,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetMultiplySymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNegativeParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNotEqualsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetNotEqualsSymbolParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParentParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParenthesisCloseSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParenthesisOpenSymbolParserToken;
@@ -403,11 +403,6 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     @Override
-    protected final void visit(final SpreadsheetExpressionNumberParserToken token) {
-        this.leaf(token);
-    }
-
-    @Override
     protected final void visit(final SpreadsheetFunctionNameParserToken token) {
         this.leaf(token);
     }
@@ -484,6 +479,11 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
 
     @Override
     protected final void visit(final SpreadsheetNotEqualsSymbolParserToken token) {
+        this.leaf(token);
+    }
+
+    @Override
+    protected final void visit(final SpreadsheetNumberParserToken token) {
         this.leaf(token);
     }
 

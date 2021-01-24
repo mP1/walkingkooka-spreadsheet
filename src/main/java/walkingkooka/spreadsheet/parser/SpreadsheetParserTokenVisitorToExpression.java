@@ -331,13 +331,13 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     // ignore all SymbolParserTokens, dont bother to collect them.
 
     @Override
-    protected void visit(final SpreadsheetExpressionNumberParserToken token) {
-        this.add(Expression.expressionNumber(token.value()), token);
+    protected void visit(final SpreadsheetLabelNameParserToken token) {
+        this.addReference(token.value(), token);
     }
 
     @Override
-    protected void visit(final SpreadsheetLabelNameParserToken token) {
-        this.addReference(token.value(), token);
+    protected void visit(final SpreadsheetNumberParserToken token) {
+        this.add(Expression.expressionNumber(token.value()), token);
     }
 
     @Override
