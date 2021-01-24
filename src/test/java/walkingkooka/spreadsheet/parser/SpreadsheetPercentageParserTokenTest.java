@@ -72,7 +72,7 @@ public final class SpreadsheetPercentageParserTokenTest extends SpreadsheetUnary
             }
 
             @Override
-            protected void visit(final SpreadsheetExpressionNumberParserToken t) {
+            protected void visit(final SpreadsheetNumberParserToken t) {
                 b.append("5");
                 visited.add(t);
             }
@@ -122,7 +122,7 @@ public final class SpreadsheetPercentageParserTokenTest extends SpreadsheetUnary
 
     @Override
     List<ParserToken> tokens() {
-        return Lists.of(SpreadsheetParserToken.expressionNumber(this.expressionNumber(BigInteger.ONE), "100"), this.percentSymbol());
+        return Lists.of(SpreadsheetParserToken.number(this.expressionNumber(BigInteger.ONE), "100"), this.percentSymbol());
     }
 
     @Override

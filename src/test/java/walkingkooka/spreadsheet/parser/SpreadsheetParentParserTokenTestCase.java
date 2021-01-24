@@ -19,8 +19,6 @@ package walkingkooka.spreadsheet.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.datetime.DateTimeContext;
-import walkingkooka.datetime.FakeDateTimeContext;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
@@ -164,16 +162,16 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
         return SpreadsheetParserToken.minusSymbol("-", "-");
     }
 
-    final SpreadsheetExpressionNumberParserToken number1() {
+    final SpreadsheetNumberParserToken number1() {
         return this.number(NUMBER1);
     }
 
-    final SpreadsheetExpressionNumberParserToken number2() {
+    final SpreadsheetNumberParserToken number2() {
         return this.number(NUMBER2);
     }
 
-    final SpreadsheetExpressionNumberParserToken number(final String value) {
-        return SpreadsheetParserToken.expressionNumber(expressionNumber(value), value);
+    final SpreadsheetNumberParserToken number(final String value) {
+        return SpreadsheetParserToken.number(expressionNumber(value), value);
     }
 
     final SpreadsheetPercentSymbolParserToken percentSymbol() {

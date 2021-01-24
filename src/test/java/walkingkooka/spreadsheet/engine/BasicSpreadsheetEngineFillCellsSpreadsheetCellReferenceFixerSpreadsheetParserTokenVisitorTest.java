@@ -20,10 +20,8 @@ package walkingkooka.spreadsheet.engine;
 import org.junit.jupiter.api.Test;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetParserTokenVisitorTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -51,7 +49,7 @@ public final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerS
     @Test
     public void testToString() {
         final BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor visitor = new BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor(12, 34);
-        visitor.visit(SpreadsheetParserToken.expressionNumber(EXPRESSION_NUMBER_KIND.create(1.24), "1.24"));
+        visitor.visit(SpreadsheetParserToken.number(EXPRESSION_NUMBER_KIND.create(1.24), "1.24"));
         this.toStringAndCheck(visitor, "12,34 [1.24], []");
     }
 

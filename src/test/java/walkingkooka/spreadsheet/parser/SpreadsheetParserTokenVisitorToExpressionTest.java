@@ -26,7 +26,7 @@ public final class SpreadsheetParserTokenVisitorToExpressionTest extends Spreads
 
     @Test
     public void testNullExpressionNumberKindFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetParserTokenVisitorToExpression.accept(SpreadsheetParserToken.expressionNumber(ExpressionNumberKind.DEFAULT.create(1), "1"), null));
+        assertThrows(NullPointerException.class, () -> SpreadsheetParserTokenVisitorToExpression.accept(SpreadsheetParserToken.number(ExpressionNumberKind.DEFAULT.create(1), "1"), null));
     }
 
     @Override

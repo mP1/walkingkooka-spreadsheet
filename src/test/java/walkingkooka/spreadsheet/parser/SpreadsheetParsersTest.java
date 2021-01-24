@@ -2265,7 +2265,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private SpreadsheetParserToken number(final double value) {
         final ExpressionNumber expressionNumber = this.expressionNumberKind.create(value);
-        return SpreadsheetParserToken.expressionNumber(expressionNumber, expressionNumber.toString());
+        return SpreadsheetParserToken.number(expressionNumber, expressionNumber.toString());
     }
 
     private SpreadsheetCellReferenceParserToken cell(final int column, final String columnText, final int row) {
