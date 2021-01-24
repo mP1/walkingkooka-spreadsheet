@@ -35,9 +35,12 @@ import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
@@ -65,8 +68,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
 
     @Test
-    public void testWithNullExpressionNumberKindFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(null,
+    public void testWithNullParserFails() {
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
+                null,
+                EXPRESSION_NUMBER_KIND,
                 this.functions(),
                 this.engine(),
                 this.labelStore(),
@@ -75,12 +80,32 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.nameToColor(),
                 WIDTH,
                 FRACTIONER,
-                this.defaultSpreadsheetFormatter()));
+                this.defaultSpreadsheetFormatter())
+        );
+    }
+
+    @Test
+    public void testWithNullExpressionNumberKindFails() {
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
+                this.numberParser(),
+                null,
+                this.functions(),
+                this.engine(),
+                this.labelStore(),
+                this.converterContext(),
+                this.numberToColor(),
+                this.nameToColor(),
+                WIDTH,
+                FRACTIONER,
+                this.defaultSpreadsheetFormatter())
+        );
     }
 
     @Test
     public void testWithNullFunctionsFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(EXPRESSION_NUMBER_KIND,
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
+                this.numberParser(),
+                EXPRESSION_NUMBER_KIND,
                 null,
                 this.engine(),
                 this.labelStore(),
@@ -89,12 +114,15 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.nameToColor(),
                 WIDTH,
                 FRACTIONER,
-                this.defaultSpreadsheetFormatter()));
+                this.defaultSpreadsheetFormatter())
+        );
     }
 
     @Test
     public void testWithNullEngineFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(EXPRESSION_NUMBER_KIND,
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
+                this.numberParser(),
+                EXPRESSION_NUMBER_KIND,
                 this.functions(),
                 null,
                 this.labelStore(),
@@ -103,12 +131,15 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.nameToColor(),
                 WIDTH,
                 FRACTIONER,
-                this.defaultSpreadsheetFormatter()));
+                this.defaultSpreadsheetFormatter())
+        );
     }
 
     @Test
     public void testWithNullLabelStoreFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(EXPRESSION_NUMBER_KIND,
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
+                this.numberParser(),
+                EXPRESSION_NUMBER_KIND,
                 this.functions(),
                 this.engine(),
                 null,
@@ -117,12 +148,15 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.nameToColor(),
                 WIDTH,
                 FRACTIONER,
-                this.defaultSpreadsheetFormatter()));
+                this.defaultSpreadsheetFormatter())
+        );
     }
 
     @Test
     public void testWithNullConverterContextFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(EXPRESSION_NUMBER_KIND,
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
+                this.numberParser(),
+                EXPRESSION_NUMBER_KIND,
                 this.functions(),
                 this.engine(),
                 this.labelStore(),
@@ -131,12 +165,15 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.nameToColor(),
                 WIDTH,
                 FRACTIONER,
-                this.defaultSpreadsheetFormatter()));
+                this.defaultSpreadsheetFormatter())
+        );
     }
 
     @Test
     public void testWithNullNumberToColorFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(EXPRESSION_NUMBER_KIND,
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
+                this.numberParser(),
+                EXPRESSION_NUMBER_KIND,
                 this.functions(),
                 this.engine(),
                 this.labelStore(),
@@ -145,12 +182,15 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.nameToColor(),
                 WIDTH,
                 FRACTIONER,
-                this.defaultSpreadsheetFormatter()));
+                this.defaultSpreadsheetFormatter())
+        );
     }
 
     @Test
     public void testWithNullNameToColorFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(EXPRESSION_NUMBER_KIND,
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
+                this.numberParser(),
+                EXPRESSION_NUMBER_KIND,
                 this.functions(),
                 this.engine(),
                 this.labelStore(),
@@ -159,12 +199,15 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 null,
                 WIDTH,
                 FRACTIONER,
-                this.defaultSpreadsheetFormatter()));
+                this.defaultSpreadsheetFormatter())
+        );
     }
 
     @Test
     public void testWithInvalidWidthFails() {
-        assertThrows(IllegalArgumentException.class, () -> BasicSpreadsheetEngineContext.with(EXPRESSION_NUMBER_KIND,
+        assertThrows(IllegalArgumentException.class, () -> BasicSpreadsheetEngineContext.with(
+                this.numberParser(),
+                EXPRESSION_NUMBER_KIND,
                 this.functions(),
                 this.engine(),
                 this.labelStore(),
@@ -173,12 +216,15 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.nameToColor(),
                 0,
                 FRACTIONER,
-                this.defaultSpreadsheetFormatter()));
+                this.defaultSpreadsheetFormatter())
+        );
     }
 
     @Test
     public void testWithNullFractionFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(EXPRESSION_NUMBER_KIND,
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
+                this.numberParser(),
+                EXPRESSION_NUMBER_KIND,
                 this.functions(),
                 this.engine(),
                 this.labelStore(),
@@ -187,12 +233,15 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.nameToColor(),
                 WIDTH,
                 null,
-                this.defaultSpreadsheetFormatter()));
+                this.defaultSpreadsheetFormatter())
+        );
     }
 
     @Test
     public void testWithNullDefaultSpreadsheetFormatterFails() {
-        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(EXPRESSION_NUMBER_KIND,
+        assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
+                this.numberParser(),
+                EXPRESSION_NUMBER_KIND,
                 this.functions(),
                 this.engine(),
                 this.labelStore(),
@@ -201,7 +250,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.nameToColor(),
                 WIDTH,
                 FRACTIONER,
-                null));
+                null)
+        );
     }
 
     @Test
@@ -338,7 +388,9 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetFormatter defaultSpreadsheetFormatter) {
-        return BasicSpreadsheetEngineContext.with(EXPRESSION_NUMBER_KIND,
+        return BasicSpreadsheetEngineContext.with(
+                this.numberParser(),
+                EXPRESSION_NUMBER_KIND,
                 this.functions(),
                 this.engine(),
                 this.labelStore(),
@@ -347,7 +399,12 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 this.nameToColor(),
                 WIDTH,
                 FRACTIONER,
-                defaultSpreadsheetFormatter);
+                defaultSpreadsheetFormatter
+        );
+    }
+
+    private Parser<SpreadsheetParserContext> numberParser() {
+        return SpreadsheetParsePatterns.parseNumberParsePatterns("#;#.#").parser();
     }
 
     private ExpressionNumber number(final Number value) {

@@ -37,6 +37,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContexts;
@@ -62,7 +63,8 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     /**
      * Creates a new {@link BasicSpreadsheetEngineContext}
      */
-    static BasicSpreadsheetEngineContext with(final ExpressionNumberKind expressionNumberKind,
+    static BasicSpreadsheetEngineContext with(final Parser<SpreadsheetParserContext> numberParser,
+                                              final ExpressionNumberKind expressionNumberKind,
                                               final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                               final SpreadsheetEngine engine,
                                               final SpreadsheetLabelStore labelStore,
@@ -72,6 +74,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                               final int width,
                                               final Function<BigDecimal, Fraction> fractioner,
                                               final SpreadsheetFormatter defaultSpreadsheetFormatter) {
+        Objects.requireNonNull(numberParser, "numberParser");
         Objects.requireNonNull(expressionNumberKind, "expressionNumberKind");
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(engine, "engine");
@@ -85,7 +88,9 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         Objects.requireNonNull(fractioner, "fractioner");
         Objects.requireNonNull(defaultSpreadsheetFormatter, "defaultSpreadsheetFormatter");
 
-        return new BasicSpreadsheetEngineContext(expressionNumberKind,
+        return new BasicSpreadsheetEngineContext(
+                numberParser,
+                expressionNumberKind,
                 functions,
                 engine,
                 labelStore,
@@ -94,13 +99,15 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 nameToColor,
                 width,
                 fractioner,
-                defaultSpreadsheetFormatter);
+                defaultSpreadsheetFormatter
+        );
     }
 
     /**
      * Private ctor use factory.
      */
-    private BasicSpreadsheetEngineContext(final ExpressionNumberKind expressionNumberKind,
+    private BasicSpreadsheetEngineContext(final Parser<SpreadsheetParserContext> numberParser,
+                                          final ExpressionNumberKind expressionNumberKind,
                                           final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                           final SpreadsheetEngine engine,
                                           final SpreadsheetLabelStore labelStore,
@@ -111,6 +118,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final Function<BigDecimal, Fraction> fractioner,
                                           final SpreadsheetFormatter defaultSpreadsheetFormatter) {
         super();
+        this.numberParser = numberParser;
         this.expressionNumberKind = expressionNumberKind;
         this.parserContext = SpreadsheetParserContexts.basic(converterContext,
                 converterContext,
@@ -140,6 +148,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                 .get());
     }
 
+    private final Parser<SpreadsheetParserContext> numberParser;
     private final SpreadsheetParserContext parserContext;
 
     @Override
