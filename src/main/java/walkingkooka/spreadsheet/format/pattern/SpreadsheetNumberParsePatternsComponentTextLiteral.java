@@ -20,7 +20,7 @@ package walkingkooka.spreadsheet.format.pattern;
 import walkingkooka.text.cursor.TextCursor;
 
 /**
- * A component within a number that requires each and every character in the given text to be matched with case being important.
+ * Text literals within a parse number pattern are not required and ignored
  */
 final class SpreadsheetNumberParsePatternsComponentTextLiteral extends SpreadsheetNumberParsePatternsComponent2 {
 
@@ -34,9 +34,10 @@ final class SpreadsheetNumberParsePatternsComponentTextLiteral extends Spreadshe
     }
 
     @Override
-    void parse(final TextCursor cursor,
+    boolean parse(final TextCursor cursor,
                final SpreadsheetNumberParsePatternsRequest request) {
-        this.parseToken(cursor, this.text, request);
+        // not consumed
+        return request.nextComponent(cursor);
     }
 
     private final String text;

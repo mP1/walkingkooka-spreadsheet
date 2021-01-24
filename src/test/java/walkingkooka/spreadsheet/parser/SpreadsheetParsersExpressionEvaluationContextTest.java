@@ -15,14 +15,20 @@
  *
  */
 
-package walkingkooka.spreadsheet.format.pattern;
+package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.ToStringTesting;
+import walkingkooka.reflect.ClassTesting;
+import walkingkooka.reflect.JavaVisibility;
 
-public abstract class SpreadsheetNumberParsePatternsComponentTestCase2<C extends SpreadsheetNumberParsePatternsComponent2> extends SpreadsheetNumberParsePatternsComponentTestCase<C>
-        implements ToStringTesting<C> {
+public final class SpreadsheetParsersExpressionEvaluationContextTest implements ClassTesting<SpreadsheetParsersExpressionEvaluationContext> {
 
-    SpreadsheetNumberParsePatternsComponentTestCase2() {
-        super();
+    @Override
+    public Class<SpreadsheetParsersExpressionEvaluationContext> type() {
+        return SpreadsheetParsersExpressionEvaluationContext.class;
+    }
+
+    @Override
+    public JavaVisibility typeVisibility() {
+        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }

@@ -23,6 +23,7 @@ import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting2;
 import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
@@ -43,79 +44,101 @@ public final class SpreadsheetNumberParsePatternsConverterTest extends Spreadshe
 
     @Test
     public void testHashBigDecimalZero() {
-        this.convertAndCheck2("#",
+        this.convertAndCheck2(
+                "#",
                 "0",
-                BigDecimal.valueOf(0));
+                BigDecimal.valueOf(0)
+        );
     }
 
     @Test
     public void testHashBigDecimalPlusInteger() {
-        this.convertAndCheck2("#",
-                "Q1",
-                BigDecimal.valueOf(1));
+        this.convertAndCheck2(
+                "#",
+                PLUS + "1",
+                BigDecimal.ONE
+        );
     }
 
     @Test
     public void testHashBigDecimalPlusInteger2() {
-        this.convertAndCheck2("#",
-                "Q23",
-                BigDecimal.valueOf(23));
+        this.convertAndCheck2(
+                "#",
+                PLUS + "23",
+                BigDecimal.valueOf(23)
+        );
     }
 
     @Test
     public void testHashBigDecimalPlusInteger3() {
-        this.convertAndCheck2("#",
-                "Q456",
-                BigDecimal.valueOf(456));
+        this.convertAndCheck2(
+                "#",
+                PLUS + "456",
+                BigDecimal.valueOf(456)
+        );
     }
 
     @Test
     public void testHashBigDecimalMinusInteger() {
-        this.convertAndCheck2("#",
-                "N1",
-                BigDecimal.valueOf(-1));
+        this.convertAndCheck2(
+                "#",
+                MINUS + "1",
+                BigDecimal.valueOf(-1)
+        );
     }
 
     @Test
     public void testHashBigDecimalMinusInteger2() {
-        this.convertAndCheck2("#",
-                "N23",
-                BigDecimal.valueOf(-23));
+        this.convertAndCheck2(
+                "#",
+                MINUS + "23",
+                BigDecimal.valueOf(-23)
+        );
     }
 
     @Test
     public void testHashBigDecimalMinusInteger3() {
-        this.convertAndCheck2("#",
-                "N456",
-                BigDecimal.valueOf(-456));
+        this.convertAndCheck2(
+                "#",
+                MINUS + "456",
+                BigDecimal.valueOf(-456)
+        );
     }
 
     @Test
     public void testHashBigDecimalLeadingZeroInteger() {
-        this.convertAndCheck2("#",
-                "N0789",
-                BigDecimal.valueOf(-789));
+        this.convertAndCheck2(
+                "#",
+                MINUS + "0789",
+                BigDecimal.valueOf(-789)
+        );
     }
 
     @Test
     public void testHashBigDecimalLeadingZeroInteger2() {
-        this.convertAndCheck2("#",
-                "N00789",
-                BigDecimal.valueOf(-789));
+        this.convertAndCheck2(
+                "#",
+                MINUS + "00789",
+                BigDecimal.valueOf(-789)
+        );
     }
 
     @Test
     public void testQuestionMarkBigDecimalLeadingZeroInteger2() {
-        this.convertAndCheck2("?",
-                "N00789",
-                BigDecimal.valueOf(-789));
+        this.convertAndCheck2(
+                "?",
+                MINUS + "00789",
+                BigDecimal.valueOf(-789)
+        );
     }
 
     @Test
     public void testZeroBigDecimalLeadingZeroInteger2() {
-        this.convertAndCheck2("0",
-                "N00789",
-                BigDecimal.valueOf(-789));
+        this.convertAndCheck2(
+                "0",
+                MINUS + "00789",
+                BigDecimal.valueOf(-789)
+        );
     }
 
     @Test
@@ -141,161 +164,205 @@ public final class SpreadsheetNumberParsePatternsConverterTest extends Spreadshe
 
     @Test
     public void testHashHashBigDecimalExtraPattern() {
-        this.convertAndCheck2("##",
+        this.convertAndCheck2(
+                "##",
                 "9",
-                BigDecimal.valueOf(9));
+                BigDecimal.valueOf(9)
+        );
     }
 
     @Test
     public void testQuestionQuestionQuestionBigDecimalExtraPattern() {
-        this.convertAndCheck2("???",
+        this.convertAndCheck2(
+                "???",
                 "78",
-                BigDecimal.valueOf(78));
+                BigDecimal.valueOf(78)
+        );
     }
 
     @Test
     public void testZeroZeroZeroZeroBigDecimalExtraPattern() {
-        this.convertAndCheck2("0000",
+        this.convertAndCheck2(
+                "0000",
                 "6",
-                BigDecimal.valueOf(6));
+                BigDecimal.valueOf(6)
+        );
     }
 
     // fraction values .................................................................................................
 
     @Test
     public void testHashBigDecimalFractionFails() {
-        this.convertAndFail2("#",
-                "0.5");
+        this.convertAndFail2(
+                "#",
+                "0.5"
+        );
     }
 
     @Test
     public void testHashDecimalHashBigDecimalFraction() {
-        this.convertAndCheck2("#.#",
-                "0D5",
-                BigDecimal.valueOf(0.5));
+        this.convertAndCheck2(
+                "#.#",
+                "0" + DECIMAL + "5",
+                BigDecimal.valueOf(0.5)
+        );
     }
 
     @Test
     public void testQuestionDecimalQuestionBigDecimalFraction() {
-        this.convertAndCheck2("?.?",
-                "0D5",
-                BigDecimal.valueOf(0.5));
+        this.convertAndCheck2(
+                "?.?",
+                "0" + DECIMAL + "5",
+                BigDecimal.valueOf(0.5)
+        );
     }
 
     @Test
     public void testZeroDecimalZeroBigDecimalFraction() {
-        this.convertAndCheck2("0.0",
-                "0D5",
-                BigDecimal.valueOf(0.5));
+        this.convertAndCheck2(
+                "0.0",
+                "0" + DECIMAL + "5",
+                BigDecimal.valueOf(0.5)
+        );
     }
 
     @Test
     public void testZeroDecimalZeroBigDecimalFractionExtraPattern() {
-        this.convertAndCheck2("0.00",
-                "0D5",
-                BigDecimal.valueOf(0.5));
+        this.convertAndCheck2(
+                "0.00",
+                "0" + DECIMAL + "5",
+                BigDecimal.valueOf(0.5)
+        );
     }
 
     @Test
     public void testZeroDecimalZeroBigDecimalFractionExtraPattern2() {
-        this.convertAndCheck2("0.000",
-                "0D5",
-                BigDecimal.valueOf(0.5));
+        this.convertAndCheck2(
+                "0.000",
+                "0" + DECIMAL + "5",
+                BigDecimal.valueOf(0.5)
+        );
     }
 
     @Test
     public void testZeroDecimalZeroZeroBigDecimalFraction() {
-        this.convertAndCheck2("0.00",
-                "0D56",
-                BigDecimal.valueOf(0.56));
+        this.convertAndCheck2(
+                "0.00",
+                "0" + DECIMAL + "56",
+                BigDecimal.valueOf(0.56)
+        );
     }
 
     @Test
     public void testZeroDecimalZeroZeroZeroBigDecimalFraction() {
-        this.convertAndCheck2("0.000",
-                "0D56",
-                BigDecimal.valueOf(0.56));
+        this.convertAndCheck2(
+                "0.000",
+                "0" + DECIMAL + "56",
+                BigDecimal.valueOf(0.56)
+        );
     }
 
     // mixed patterns...................................................................................................
 
     @Test
     public void testHashQuestionZeroBigDecimalDigit() {
-        this.convertAndCheck2("#?0",
+        this.convertAndCheck2(
+                "#?0",
                 "1",
-                BigDecimal.valueOf(1));
+                BigDecimal.ONE
+        );
     }
 
     @Test
     public void testHashQuestionZeroBigDecimalSpaceDigit() {
-        this.convertAndCheck2("#?0",
+        this.convertAndCheck2(
+                "#?0",
                 " 1",
-                BigDecimal.valueOf(1));
+                BigDecimal.ONE
+        );
     }
 
     @Test
     public void testHashQuestionZeroBigDecimalDigitSpaceDigit() {
-        this.convertAndCheck2("#?0",
+        this.convertAndCheck2(
+                "#?0",
                 "0 1",
-                BigDecimal.valueOf(1));
+                BigDecimal.ONE
+        );
     }
 
     @Test
     public void testHashQuestionZeroBigDecimalDigitSpaceDigit2() {
-        this.convertAndCheck2("#?0",
+        this.convertAndCheck2(
+                "#?0",
                 "3 4",
-                BigDecimal.valueOf(34));
+                BigDecimal.valueOf(34)
+        );
     }
 
     // exponent.........................................................................................................
 
     @Test
     public void testHashExponentPlusHashBigDecimalDigitExponentDigit() {
-        this.convertAndCheck2("#E+#",
-                "2XQ3",
-                BigDecimal.valueOf(2000));
+        this.convertAndCheck2(
+                "#E+#",
+                "2" + EXPONENT + PLUS + "3",
+                BigDecimal.valueOf(2000)
+        );
     }
 
     @Test
     public void testHashExponentMinusHashBigDecimalDigitExponentDigit() {
-        this.convertAndCheck2("#E+#",
-                "2XQ3",
-                BigDecimal.valueOf(2000));
+        this.convertAndCheck2(
+                "#E+#",
+                "2" + EXPONENT + PLUS + "3",
+                BigDecimal.valueOf(2000)
+        );
     }
 
     @Test
     public void testHashExponentPlusHashBigDecimalDigitExponentDigit2() {
-        this.convertAndCheck2("#E+#",
-                "2xQ3",
-                BigDecimal.valueOf(2000));
+        this.convertAndCheck2(
+                "#E+#",
+                "2" + EXPONENT + PLUS + "3",
+                BigDecimal.valueOf(2000)
+        );
     }
 
     @Test
     public void testHashExponentPlusHashBigDecimalDigitExponentPlusDigit() {
-        this.convertAndCheck2("#E+#",
-                "4XQ5",
-                new BigDecimal("4E+5"));
+        this.convertAndCheck2(
+                "#E+#",
+                "4" + EXPONENT + PLUS + "5",
+                new BigDecimal("4E+5")
+        );
     }
 
     @Test
     public void testHashExponentPlusHashBigDecimalDigitExponentMinusDigit() {
-        this.convertAndCheck2("#E+#",
-                "6XN7",
-                new BigDecimal("6E-7"));
+        this.convertAndCheck2(
+                "#E+#",
+                "6" + EXPONENT + MINUS + "7",
+                new BigDecimal("6E-7")
+        );
     }
 
     @Test
     public void testHashExponentPlusHashHashBigDecimalDigitExponentDigit() {
-        this.convertAndCheck2("#E+##",
-                "8X90",
-                new BigDecimal("8E+90"));
+        this.convertAndCheck2(
+                "#E+##",
+                "8" + EXPONENT + PLUS + "90",
+                new BigDecimal("8E+90")
+        );
     }
 
     @Test
     public void testHashExponentPlusQuestionBigDecimalDigitExponentSpaceDigit() {
-        this.convertAndCheck2("#E+?",
-                "1X 2",
-                new BigDecimal("1E+2"));
+        this.convertAndCheck2(
+                "#E+?",
+                "1" + EXPONENT + " 2",
+                new BigDecimal("1E+2")
+        );
     }
 
     // currency.........................................................................................................
@@ -303,135 +370,51 @@ public final class SpreadsheetNumberParsePatternsConverterTest extends Spreadshe
     @Test
     public void testCurrencyHashBigDecimal() {
         this.convertAndCheck2("$#",
-                "aud1",
-                BigDecimal.valueOf(1));
+                CURRENCY + "1",
+                BigDecimal.ONE);
     }
 
     @Test
     public void testHashCurrencyBigDecimal() {
-        this.convertAndCheck2("#$",
-                "1aud",
-                BigDecimal.valueOf(1));
+        this.convertAndCheck2(
+                "#$",
+                "1" + CURRENCY,
+                BigDecimal.ONE
+        );
     }
 
     // percent..........................................................................................................
 
     @Test
     public void testPercentHashBigDecimalPercentDigit() {
-        this.convertAndCheck2("%#",
-                "P1",
-                BigDecimal.valueOf(0.01));
+        this.convertAndCheck2(
+                "%#",
+                PERCENT + "1",
+                BigDecimal.ONE
+        );
     }
 
     @Test
     public void testHashPercentBigDecimalDigitPercent() {
-        this.convertAndCheck2("#%",
-                "1P",
-                BigDecimal.valueOf(0.01));
+        this.convertAndCheck2(
+                "#%",
+                "1" + PERCENT,
+                BigDecimal.ONE
+        );
     }
 
     @Test
     public void testHashPercentBigDecimalDigitDigitDigitPercent() {
         this.convertAndCheck2("#%",
-                "123P",
-                BigDecimal.valueOf(1.23));
+                "123" + PERCENT,
+                BigDecimal.valueOf(123));
     }
 
     @Test
     public void testHashDecimalPercentBigDecimalDigitDigitDigitPercent() {
         this.convertAndCheck2("#.#%",
-                "45D6P",
-                BigDecimal.valueOf(0.456));
-    }
-
-    // escape.............................................................................................................
-
-    @Test
-    public void testEscapeHashBigDecimalTextDigit() {
-        this.convertAndCheck2("\\a#",
-                "a1",
-                BigDecimal.valueOf(1));
-    }
-
-    @Test
-    public void testEscapeHashEscapeHashBigDecimalTextDigitTextDigit() {
-        this.convertAndCheck2("\\a#\\b#",
-                "a2b3",
-                BigDecimal.valueOf(23));
-    }
-
-    // text.............................................................................................................
-
-    @Test
-    public void testTextHashBigDecimalTextDigit() {
-        this.convertAndCheck2("\"abc\"#",
-                "abc1",
-                BigDecimal.valueOf(1));
-    }
-
-    @Test
-    public void testTextHashBigDecimalTextDigitDigit() {
-        this.convertAndCheck2("\"abc\"#",
-                "abc23",
-                BigDecimal.valueOf(23));
-    }
-
-    @Test
-    public void testHashTextBigDecimalTextDigit() {
-        this.convertAndCheck2("#\"abc\"",
-                "4abc",
-                BigDecimal.valueOf(4));
-    }
-
-    @Test
-    public void testTextDigitTextBigDecimalTextDigitTextDigitTextDigit() {
-        this.convertAndCheck2("\"a\"#\"b\"#\"c\"#",
-                "a5b6c7",
-                BigDecimal.valueOf(567));
-    }
-
-    @Test
-    public void testTextDigitTextBigDecimalTextMinusDigitTextDigitTextDigit() {
-        this.convertAndCheck2("\"a\"#\"b\"#\"c\"#",
-                "aN8b9c0",
-                BigDecimal.valueOf(-890));
-    }
-
-    // whitespace.......................................................................................................
-
-    @Test
-    public void testWhitespaceHashBigDecimalSpaceDigit() {
-        this.convertAndCheck2(" #",
-                " 1",
-                BigDecimal.valueOf(1));
-    }
-
-    @Test
-    public void testWhitespaceHashBigDecimalSpaceDigitDigitDigit() {
-        this.convertAndCheck2(" #",
-                " 234",
-                BigDecimal.valueOf(234));
-    }
-
-    @Test
-    public void testWhitespaceHashBigDecimalSpaceMinusDigit() {
-        this.convertAndCheck2(" #",
-                " N5",
-                BigDecimal.valueOf(-5));
-    }
-
-    @Test
-    public void testWhitespaceHashWhitespaceHashBigDecimal() {
-        this.convertAndCheck2(" # #",
-                " 6 7",
-                BigDecimal.valueOf(67));
-    }
-
-    @Test
-    public void testWhitespaceHashWhitespaceDecimalHashBigDecimal() {
-        this.convertAndCheck2(" # .#",
-                " 8 D9",
-                BigDecimal.valueOf(8.9));
+                "45" + DECIMAL + "6" + PERCENT,
+                BigDecimal.valueOf(45.6));
     }
 
     // several patterns.................................................................................................
@@ -440,7 +423,7 @@ public final class SpreadsheetNumberParsePatternsConverterTest extends Spreadshe
     public void testFirstPatternMatches() {
         this.convertAndCheck2("0;\"text-literal\"",
                 "1",
-                BigDecimal.valueOf(1));
+                BigDecimal.ONE);
     }
 
     @Test
@@ -490,7 +473,7 @@ public final class SpreadsheetNumberParsePatternsConverterTest extends Spreadshe
 
     @Test
     public void testLong() {
-        this.convertAndCheck2(Long.MAX_VALUE);
+        this.convertAndCheck2(999L);
     }
 
     @Test
@@ -513,18 +496,51 @@ public final class SpreadsheetNumberParsePatternsConverterTest extends Spreadshe
         this.convertAndCheck2(1234567890);
     }
 
-    @Test
-    public void testNumber() {
-        this.convertAndCheck2("#",
-                "1234567890",
-                Number.class,
-                BigDecimal.valueOf(1234567890));
+    private void convertAndCheck2(final Number number) {
+        this.convertAndCheck2(
+                "#.#;#",
+                number.toString().replace('.', DECIMAL).replace('+', PLUS).replace('-', MINUS).replace("E", EXPONENT),
+                number
+        );
     }
 
-    private void convertAndCheck2(final Number number) {
-        this.convertAndCheck2("#;#.#",
-                number.toString().replace('.', 'D'),
-                number);
+    @Test
+    public void testNumber() {
+        this.convertAndCheck3(
+                "##.##",
+                "1" + DECIMAL + "25",
+                1.25
+        );
+    }
+
+    private void convertAndCheck3(final String pattern,
+                                  final String text,
+                                  final Number number) {
+        this.convertAndCheck4(
+                pattern,
+                text,
+                ExpressionNumberKind.BIG_DECIMAL,
+                number
+        );
+        this.convertAndCheck4(
+                pattern,
+                text,
+                ExpressionNumberKind.DOUBLE,
+                number
+        );
+    }
+
+    private void convertAndCheck4(final String pattern,
+                                  final String text,
+                                  final ExpressionNumberKind kind,
+                                  final Number number) {
+        this.convertAndCheck(
+                SpreadsheetNumberParsePatterns.parseNumberParsePatterns(pattern).createConverter(),
+                text,
+                ExpressionNumber.class,
+                this.createContext0(kind),
+                kind.create(number)
+        );
     }
 
     // helpers..........................................................................................................
@@ -574,12 +590,16 @@ public final class SpreadsheetNumberParsePatternsConverterTest extends Spreadshe
 
     @Override
     public ExpressionNumberConverterContext createContext() {
+        return this.createContext0(EXPRESSION_NUMBER_KIND);
+    }
+
+    private ExpressionNumberConverterContext createContext0(final ExpressionNumberKind kind) {
         return ExpressionNumberConverterContexts.basic(
                 Converters.fake(),
                 ConverterContexts.basic(Converters.fake(),
                         DateTimeContexts.fake(), // DateTimeContext unused
                         this.decimalNumberContext()),
-                EXPRESSION_NUMBER_KIND);
+                kind);
     }
 
     @Override

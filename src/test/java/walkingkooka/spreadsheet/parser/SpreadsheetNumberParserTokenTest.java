@@ -14,93 +14,377 @@
  * limitations under the License.
  *
  */
+
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
-import walkingkooka.visit.Visiting;
 
-import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SpreadsheetNumberParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetNumberParserToken, ExpressionNumber> {
+public final class SpreadsheetNumberParserTokenTest extends SpreadsheetParentParserTokenTestCase<SpreadsheetNumberParserToken> {
 
     @Test
-    public void testWithEmptyTextFails() {
-        assertThrows(IllegalArgumentException.class, () -> this.createToken(""));
+    public void testWithZeroTokensFails() {
+        this.createToken("1/2/2003");
     }
 
     @Test
-    public void testAccept() {
-        final StringBuilder b = new StringBuilder();
-        final SpreadsheetNumberParserToken token = this.createToken();
-
-        new FakeSpreadsheetParserTokenVisitor() {
-            @Override
-            protected Visiting startVisit(final ParserToken t) {
-                assertSame(token, t);
-                b.append("1");
-                return Visiting.CONTINUE;
-            }
-
-            @Override
-            protected void endVisit(final ParserToken t) {
-                assertSame(token, t);
-                b.append("2");
-            }
-
-            @Override
-            protected Visiting startVisit(final SpreadsheetParserToken t) {
-                assertSame(token, t);
-                b.append("3");
-                return Visiting.CONTINUE;
-            }
-
-            @Override
-            protected void endVisit(final SpreadsheetParserToken t) {
-                assertSame(token, t);
-                b.append("4");
-            }
-
-            @Override
-            protected void visit(final SpreadsheetNumberParserToken t) {
-                assertSame(token, t);
-                b.append("5");
-            }
-        }.accept(token);
-        assertEquals("13542", b.toString());
+    public void testNumberNullContextFails() {
+        assertThrows(NullPointerException.class, () -> this.createToken().toNumber(null));
     }
 
     @Test
-    public void testToExpression() {
-        this.toExpressionAndCheck(Expression.expressionNumber(this.value()));
+    public void testToExpressionNumber0() {
+        this.toExpressionAndCheck2(
+                0.0,
+                digit("0")
+        );
+    }
+
+    @Test
+    public void testToExpressionNumber01() {
+        this.toExpressionAndCheck2(
+                1.0,
+                digit("01")
+        );
+    }
+
+    @Test
+    public void testToExpressionNumber001() {
+        this.toExpressionAndCheck2(
+                1.0,
+                digit("001")
+        );
+    }
+
+    @Test
+    public void testToExpressionNumber1() {
+        this.toExpressionAndCheck2(
+                1.0,
+                digit("1")
+        );
+    }
+
+    @Test
+    public void testToExpressionNumber5600() {
+        this.toExpressionAndCheck2(
+                5600.0,
+                digit("5600")
+        );
+    }
+
+    @Test
+    public void testToExpressionNumber123() {
+        this.toExpressionAndCheck2(
+                123.0,
+                digit("123")
+        );
+    }
+
+    @Test
+    public void testToExpressionPlusNumber1() {
+        this.toExpressionAndCheck2(
+                1.0,
+                plus(),
+                digit("1")
+        );
+    }
+
+    @Test
+    public void testToExpressionNumber0Dot0() {
+        this.toExpressionAndCheck2(
+                0.0,
+                plus(),
+                digit("0"),
+                decimalSeparator(),
+                digit("0")
+        );
+    }
+
+    @Test
+    public void testToExpressionPlusNumber1Dot0() {
+        this.toExpressionAndCheck2(
+                1.0,
+                plus(),
+                digit("1"),
+                decimalSeparator(),
+                digit("0")
+        );
+    }
+
+    @Test
+    public void testToExpressionPlusNumber1Dot23() {
+        this.toExpressionAndCheck2(
+                1.23,
+                plus(),
+                digit("1"),
+                decimalSeparator(),
+                digit("23")
+        );
+    }
+
+    @Test
+    public void testToExpressionMinusNumber1() {
+        this.toExpressionAndCheck2(
+                -1.0,
+                minus(),
+                digit("1")
+        );
+    }
+
+    @Test
+    public void testToExpressionMinusNumber1Dot0() {
+        this.toExpressionAndCheck2(
+                -1.0,
+                minus(),
+                digit("1"),
+                decimalSeparator(),
+                digit("0")
+        );
+    }
+
+    @Test
+    public void testToExpressionMinusNumber1Dot23() {
+        this.toExpressionAndCheck2(
+                -1.23,
+                minus(),
+                digit("1"),
+                decimalSeparator(),
+                digit("23")
+        );
+    }
+
+    @Test
+    public void testToExpressionNumber1ExponentNumber1() {
+        this.toExpressionAndCheck2(
+                1E2,
+                digit("1"),
+                exponent(),
+                digit("2")
+        );
+    }
+
+    @Test
+    public void testToExpressionNumber1ExponentNumber12() {
+        this.toExpressionAndCheck2(
+                1E12,
+                digit("1"),
+                exponent(),
+                digit("12")
+        );
+    }
+
+    @Test
+    public void testToExpressionNumber1DecimalNumber2ExponentPlusNumber3() {
+        this.toExpressionAndCheck2(
+                1.2E+3,
+                digit("1"),
+                decimalSeparator(),
+                digit("2"),
+                exponent(),
+                plus(),
+                digit("3")
+        );
+    }
+
+    @Test
+    public void testToExpressionNumber1DecimalNumber2ExponentPlusNumber34() {
+        this.toExpressionAndCheck2(
+                1.2E+34,
+                digit("1"),
+                decimalSeparator(),
+                digit("2"),
+                exponent(),
+                plus(),
+                digit("34")
+        );
+    }
+
+    @Test
+    public void testToExpressionNumber1DecimalNumber2ExponentMinusNumber3() {
+        this.toExpressionAndCheck2(
+                1.2E-3,
+                digit("1"),
+                decimalSeparator(),
+                digit("2"),
+                exponent(),
+                minus(),
+                digit("3")
+        );
+    }
+
+    @Test
+    public void testToExpressionNumber1DecimalNumber2ExponentMinusNumber34() {
+        this.toExpressionAndCheck2(
+                1.2E-34,
+                digit("1"),
+                decimalSeparator(),
+                digit("2"),
+                exponent(),
+                minus(),
+                digit("34")
+        );
+    }
+
+    @Test
+    public void testToExpressionNumber1ExponentPlusNumber1() {
+        this.toExpressionAndCheck2(
+                1E+2,
+                digit("1"),
+                exponent(),
+                plus(),
+                digit("2")
+        );
+    }
+
+    @Test
+    public void testToExpressionNumber1ExponentPlusNumber12() {
+        this.toExpressionAndCheck2(
+                1E+12,
+                digit("1"),
+                exponent(),
+                plus(),
+                digit("12")
+        );
+    }
+
+    @Test
+    public void testToExpressionNumber1ExponentMinusNumber1() {
+        this.toExpressionAndCheck2(
+                1E-2,
+                digit("1"),
+                exponent(),
+                minus(),
+                digit("2")
+        );
+    }
+
+    @Test
+    public void testToExpressionNumber1ExponentMinusNumber23() {
+        this.toExpressionAndCheck2(
+                1E-23,
+                digit("1"),
+                exponent(),
+                minus(),
+                digit("23")
+        );
+    }
+
+    private static SpreadsheetDigitsParserToken digit(final String text) {
+        return SpreadsheetDigitsParserToken.digits(text, text);
+    }
+
+    private static SpreadsheetExponentSymbolParserToken exponent() {
+        return SpreadsheetDigitsParserToken.exponentSymbol("E", "E");
+    }
+
+    private static SpreadsheetMinusSymbolParserToken minus() {
+        return SpreadsheetDigitsParserToken.minusSymbol("-", "-");
+    }
+
+    private static SpreadsheetPlusSymbolParserToken plus() {
+        return SpreadsheetDigitsParserToken.plusSymbol("+", "+");
+    }
+
+    private void toExpressionAndCheck2(final Double expected,
+                                       final SpreadsheetParserToken... tokens) {
+        final List<ParserToken> tokensList = Lists.of(tokens);
+
+        final SpreadsheetNumberParserToken numberParserToken = SpreadsheetNumberParserToken.with(
+                tokensList,
+                ParserToken.text(tokensList)
+        );
+        this.toExpressionAndCheck2(
+                numberParserToken,
+                ExpressionNumberKind.BIG_DECIMAL,
+                expected
+        );
+        this.toExpressionAndCheck2(
+                numberParserToken,
+                ExpressionNumberKind.DOUBLE,
+                expected
+        );
+    }
+
+
+    private void toExpressionAndCheck2(final SpreadsheetNumberParserToken token,
+                                       final ExpressionNumberKind kind,
+                                       final Double expected) {
+        final ExpressionNumber expressionNumber = kind.create(expected);
+        final ExpressionEvaluationContext context = this.expressionEvaluationContext(kind);
+
+        assertEquals(
+                expressionNumber,
+                token.toNumber(context),
+                () -> "toNumber() " + token
+        );
+
+        this.toExpressionAndCheck(
+                token,
+                context,
+                Expression.expressionNumber(expressionNumber)
+        );
+    }
+
+    private ExpressionEvaluationContext expressionEvaluationContext(final ExpressionNumberKind kind) {
+        return new FakeExpressionEvaluationContext() {
+            @Override
+            public ExpressionNumberKind expressionNumberKind() {
+                return kind;
+            }
+        };
+    }
+
+    @Override
+    SpreadsheetNumberParserToken createToken(final String text, final List<ParserToken> tokens) {
+        return SpreadsheetParserToken.number(tokens, text);
     }
 
     @Override
     public String text() {
-        return "123.5";
+        return "" + DAY + "/" + MONTH + "/" + YEAR;
     }
 
     @Override
-    ExpressionNumber value() {
-        return EXPRESSION_NUMBER_KIND.create(new BigDecimal(this.text()));
+    List<ParserToken> tokens() {
+        return Lists.of(
+                this.dayNumber(),
+                this.slashTextLiteral(),
+                this.monthNumber(),
+                this.slashTextLiteral(),
+                this.year()
+        );
     }
 
-    @Override
-    SpreadsheetNumberParserToken createToken(final ExpressionNumber value, final String text) {
-        return SpreadsheetNumberParserToken.with(value, text);
+    private LocalDate date() {
+        return LocalDate.of(YEAR, MONTH, DAY);
     }
 
     @Override
     public SpreadsheetNumberParserToken createDifferentToken() {
-        return SpreadsheetNumberParserToken.with(EXPRESSION_NUMBER_KIND.create(-1), "'different'");
+        final String different = "" + YEAR + "/" + MONTH + "/" + DAY;
+
+        return this.createToken(
+                different,
+                year(),
+                slashTextLiteral(),
+                monthNumber(),
+                slashTextLiteral(),
+                dayNumber()
+        );
     }
 
     @Override

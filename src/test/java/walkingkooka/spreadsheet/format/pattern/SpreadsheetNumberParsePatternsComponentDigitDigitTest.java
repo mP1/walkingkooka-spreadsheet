@@ -22,42 +22,25 @@ import org.junit.jupiter.api.Test;
 public final class SpreadsheetNumberParsePatternsComponentDigitDigitTest extends SpreadsheetNumberParsePatternsComponentDigitTestCase<SpreadsheetNumberParsePatternsComponentDigitDigit> {
 
     @Test
-    public void testSpace() {
-        this.parseAndCheck2(" ",
-                " ",
-                VALUE_WITHOUT,
-                NEGATIVE_POSITIVE_MISSING);
-    }
-
-    @Test
-    public void testSpaceLetter() {
-        this.parseAndCheck2(" A",
-                " A",
-                VALUE_WITHOUT,
-                NEGATIVE_POSITIVE_MISSING);
-    }
-
-    @Test
-    public void testSpaceDigit() {
-        this.parseAndCheck2(" 1",
-                " 1",
-                VALUE_WITHOUT,
-                NEGATIVE_POSITIVE_MISSING);
-    }
-
-    @Test
     public void testToString() {
         this.toStringAndCheck(this.createComponent(), "#");
     }
 
     @Test
     public void testToString2() {
-        this.toStringAndCheck(SpreadsheetNumberParsePatternsComponentDigitDigit.with(1), "#");
+        this.toStringAndCheck(
+                SpreadsheetNumberParsePatternsComponentDigitDigit.with(
+                        SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL,
+                        1
+                ),
+                "#"
+        );
     }
 
     @Override
-    SpreadsheetNumberParsePatternsComponentDigitDigit createComponent(final int max) {
-        return SpreadsheetNumberParsePatternsComponentDigitDigit.with(max);
+    SpreadsheetNumberParsePatternsComponentDigitDigit createComponent(final SpreadsheetNumberParsePatternsComponentDigitMode mode,
+                                                                      final int max) {
+        return SpreadsheetNumberParsePatternsComponentDigitDigit.with(mode, max);
     }
 
     // ClassTesting.....................................................................................................

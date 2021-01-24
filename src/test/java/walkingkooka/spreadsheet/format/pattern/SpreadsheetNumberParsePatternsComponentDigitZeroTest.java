@@ -22,26 +22,23 @@ import org.junit.jupiter.api.Test;
 public final class SpreadsheetNumberParsePatternsComponentDigitZeroTest extends SpreadsheetNumberParsePatternsComponentDigitTestCase<SpreadsheetNumberParsePatternsComponentDigitZero> {
 
     @Test
-    public void testSpace() {
-        this.parseAndCheck2(" ",
-                " ",
-                VALUE_WITHOUT,
-                NEGATIVE_POSITIVE_MISSING);
-    }
-
-    @Test
     public void testToString() {
         this.toStringAndCheck(this.createComponent(), "0");
     }
 
     @Test
     public void testToString2() {
-        this.toStringAndCheck(SpreadsheetNumberParsePatternsComponentDigitZero.with(1), "0");
+        this.toStringAndCheck(
+                SpreadsheetNumberParsePatternsComponentDigitZero.with(
+                        SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER,
+                        1),
+                "0");
     }
 
     @Override
-    SpreadsheetNumberParsePatternsComponentDigitZero createComponent(final int max) {
-        return SpreadsheetNumberParsePatternsComponentDigitZero.with(max);
+    SpreadsheetNumberParsePatternsComponentDigitZero createComponent(final SpreadsheetNumberParsePatternsComponentDigitMode mode,
+                                                                     final int max) {
+        return SpreadsheetNumberParsePatternsComponentDigitZero.with(mode, max);
     }
 
     // ClassTesting.....................................................................................................

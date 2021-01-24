@@ -183,6 +183,16 @@ public abstract class SpreadsheetParserTokenVisitor extends ParserTokenVisitor {
         // nop
     }
 
+    // SpreadsheetNumberParserToken.....................................................................................
+
+    protected Visiting startVisit(final SpreadsheetNumberParserToken token) {
+        return Visiting.CONTINUE;
+    }
+
+    protected void endVisit(final SpreadsheetNumberParserToken token) {
+        // nop
+    }
+
     // SpreadsheetPercentageParserToken....................................................................................
 
     protected Visiting startVisit(final SpreadsheetPercentageParserToken token) {
@@ -366,10 +376,6 @@ public abstract class SpreadsheetParserTokenVisitor extends ParserTokenVisitor {
     }
 
     protected void visit(final SpreadsheetNotEqualsSymbolParserToken token) {
-        // nop
-    }
-
-    protected void visit(final SpreadsheetNumberParserToken token) {
         // nop
     }
 

@@ -18,39 +18,57 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 
-import java.math.BigDecimal;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public final class SpreadsheetNumberParsePatternsComponentPercentTest extends SpreadsheetNumberParsePatternsComponentTestCase2<SpreadsheetNumberParsePatternsComponentPercent> {
 
     @Test
-    public void testPercentSymbol() {
-        this.parseAndCheck2("P", "");
+    public void testFails() {
+        final String text = "A";
+        assertNotEquals("" + PERCENT, text);
+
+        this.parseFails(
+                text
+        );
     }
 
     @Test
-    public void testPercentSymbolCharacter() {
-        this.parseAndCheck2("P!", "!");
+    public void testToken1() {
+        this.parseAndCheck2(
+                PERCENT,
+                ""
+        );
     }
 
     @Test
-    public void testPercentSymbolPercentSymbol() {
-        this.parseAndCheck2("P", "");
+    public void testToken2() {
+        this.parseAndCheck2(
+                PERCENT,
+                "!"
+        );
     }
 
-    final void parseAndCheck2(final String text,
+    @Test
+    public void testTokenTwice() {
+        this.parseAndCheck2(
+                PERCENT,
+                PERCENT + "!"
+        );
+    }
+
+    final void parseAndCheck2(final char c,
                               final String textAfter) {
-        final SpreadsheetNumberParsePatternsRequest context = this.createRequest();
-        this.parseAndCheck(text,
-                context,
+        final String textString = "" + c;
+        this.parseAndCheck2(
+                textString,
                 textAfter,
-                BigDecimal.ZERO,
-                true);
-        assertEquals(true, context.percentage, "percentage");
+                NEXT_CALLED,
+                SpreadsheetParserToken.percentSymbol(textString, textString)
+        );
     }
-
+    
     @Test
     public void testToString() {
         this.toStringAndCheck(this.createComponent(), ".");

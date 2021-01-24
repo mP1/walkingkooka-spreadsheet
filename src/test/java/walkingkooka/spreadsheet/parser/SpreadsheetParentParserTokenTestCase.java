@@ -27,7 +27,7 @@ import walkingkooka.tree.expression.ExpressionNumberExpression;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 
-import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -40,8 +40,8 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
     final static String APOSTROPHE = "\'";
     final static String DOUBLE_QUOTE = "\"";
 
-    final static String NUMBER1 = "1";
-    final static String NUMBER2 = "22";
+    final static BigInteger NUMBER1 = BigInteger.valueOf(1);
+    final static BigInteger NUMBER2 = BigInteger.valueOf(22);
 
     final static String TEXT = "abc123";
 
@@ -163,15 +163,24 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
     }
 
     final SpreadsheetNumberParserToken number1() {
-        return this.number(NUMBER1);
+        return this.number("" + NUMBER1);
     }
 
     final SpreadsheetNumberParserToken number2() {
-        return this.number(NUMBER2);
+        return this.number("" + NUMBER2);
     }
 
-    final SpreadsheetNumberParserToken number(final String value) {
-        return SpreadsheetParserToken.number(expressionNumber(value), value);
+    private SpreadsheetNumberParserToken number(final String value) {
+        return this.number(value, value);
+    }
+
+    final SpreadsheetNumberParserToken number(final String value, final String text) {
+        return SpreadsheetParserToken.number(
+                Lists.of(
+                        SpreadsheetParserToken.digits(value, text)
+                ),
+                "" + value
+        );
     }
 
     final SpreadsheetPercentSymbolParserToken percentSymbol() {
@@ -210,16 +219,20 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
         return SpreadsheetParserToken.parenthesisCloseSymbol(")", ")");
     }
 
-    final ExpressionNumber expressionNumber(final String value) {
-        return this.expressionNumber(new BigDecimal(value));
+    final ExpressionNumberExpression expression1() {
+        return this.expression(NUMBER1);
+    }
+
+    final ExpressionNumberExpression expression2() {
+        return this.expression(NUMBER2);
+    }
+
+    final ExpressionNumberExpression expression(final Number number) {
+        return Expression.expressionNumber(EXPRESSION_NUMBER_KIND.create(number));
     }
 
     final ExpressionNumber expressionNumber(final Number value) {
         return EXPRESSION_NUMBER_KIND.create(value);
-    }
-
-    final ExpressionNumberExpression expressionNumberExpression(final Number value) {
-        return Expression.expressionNumber(this.expressionNumber(value));
     }
 
     final ExpressionEvaluationContext expressionEvaluationContext(final int twoDigitYear) {

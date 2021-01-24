@@ -35,7 +35,7 @@ public final class SpreadsheetGroupParserTokenTest extends SpreadsheetParentPars
 
     @Test
     public void testWithTwoTokensFails() {
-        this.createToken(NUMBER1 + NUMBER2, this.number1(), this.number2());
+        this.createToken("" + NUMBER1 + NUMBER2, this.number1(), this.number2());
     }
 
     @Test
@@ -95,7 +95,7 @@ public final class SpreadsheetGroupParserTokenTest extends SpreadsheetParentPars
 
     @Override
     public SpreadsheetGroupParserToken createDifferentToken() {
-        return this.createToken(NUMBER2, this.number2());
+        return this.createToken("" + NUMBER2, this.number2());
     }
 
     @Override

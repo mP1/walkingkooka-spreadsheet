@@ -21,12 +21,12 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 import walkingkooka.spreadsheet.function.SpreadsheetFunctionName;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharacterConstant;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
-import walkingkooka.text.cursor.parser.BigDecimalParserToken;
 import walkingkooka.text.cursor.parser.CharacterParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporters;
@@ -108,7 +108,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         return EXPRESSION_PARSER;
     }
 
-    private final static Parser<SpreadsheetParserContext> EXPRESSION_PARSER;
+    private static final Parser<SpreadsheetParserContext> EXPRESSION_PARSER;
 
     /**
      * Returns a {@link Parser} that parsers function invocations, starting with the name and parameters.
@@ -117,7 +117,21 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         return FUNCTION_PARSER;
     }
 
-    private final static Parser<SpreadsheetParserContext> FUNCTION_PARSER;
+    private static final Parser<SpreadsheetParserContext> FUNCTION_PARSER;
+
+    private static void functions(final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> predefined) {
+        predefined.put(FUNCTION_NAME_IDENTIFIER, functionName());
+        predefined.put(VALUE_SEPARATOR_SYMBOL_IDENTIFIER, VALUE_SEPARATOR_SYMBOL);
+    }
+
+    private static final Parser<SpreadsheetParserContext> VALUE_SEPARATOR_SYMBOL = symbol(
+            ',',
+            SpreadsheetParserToken::valueSeparatorSymbol,
+            SpreadsheetValueSeparatorSymbolParserToken.class
+    );
+
+    private static final EbnfIdentifierName FUNCTION_NAME_IDENTIFIER = EbnfIdentifierName.with("FUNCTION_NAME");
+    private static final EbnfIdentifierName VALUE_SEPARATOR_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("VALUE_SEPARATOR_SYMBOL");
 
     /**
      * A parser that returns {@see SpreadsheetFunctionName}
@@ -149,20 +163,6 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                 token.text()
         );
     }
-
-    private static void functions(final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> predefined) {
-        predefined.put(FUNCTION_NAME_IDENTIFIER, functionName());
-        predefined.put(VALUE_SEPARATOR_SYMBOL_IDENTIFIER, VALUE_SEPARATOR_SYMBOL);
-    }
-
-    private static final Parser<SpreadsheetParserContext> VALUE_SEPARATOR_SYMBOL = symbol(
-            ',',
-            SpreadsheetParserToken::valueSeparatorSymbol,
-            SpreadsheetValueSeparatorSymbolParserToken.class
-    );
-
-    private static final EbnfIdentifierName FUNCTION_NAME_IDENTIFIER = EbnfIdentifierName.with("FUNCTION_NAME");
-    private static final EbnfIdentifierName VALUE_SEPARATOR_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("VALUE_SEPARATOR_SYMBOL");
 
     /**
      * {@see SpreadsheetLabelNameParser}
@@ -290,7 +290,6 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
         predefined.put(FORMULA_EQUALS_SYMBOL_IDENTIFIER, FORMULA_EQUALS_SYMBOL);
 
-        predefined.put(NUMBER_IDENTIFIER, NUMBER);
         predefined.put(PERCENT_SYMBOL_IDENTIFIER, PERCENT_SYMBOL);
 
         predefined.put(PARENTHESIS_OPEN_SYMBOL_IDENTIFIER, PARENTHESIS_OPEN_SYMBOL);
@@ -337,27 +336,6 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
             SpreadsheetEqualsSymbolParserToken.class
     );
 
-    private static final EbnfIdentifierName NUMBER_IDENTIFIER = EbnfIdentifierName.with("NUMBER");
-    private static final Parser<SpreadsheetParserContext> NUMBER = Parsers.<SpreadsheetParserContext>bigDecimal()
-            .transform(SpreadsheetParsers::transformNumber);
-
-    private static ParserToken transformNumber(final ParserToken token,
-                                               final SpreadsheetParserContext context) {
-        return transformNumber0(
-                token.cast(BigDecimalParserToken.class),
-                (SpreadsheetParserContext) context
-        );
-    }
-
-    private static ParserToken transformNumber0(final BigDecimalParserToken token,
-                                                final SpreadsheetParserContext context) {
-        return SpreadsheetParserToken.number(
-                context.expressionNumberKind()
-                        .create(token.value()),
-                token.text()
-        );
-    }
-
     private static final EbnfIdentifierName PERCENT_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("PERCENT_SYMBOL");
     private static final EbnfIdentifierName PARENTHESIS_OPEN_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("PARENTHESIS_OPEN_SYMBOL");
     private static final EbnfIdentifierName PARENTHESIS_CLOSE_SYMBOL_IDENTIFIER = EbnfIdentifierName.with("PARENTHESIS_CLOSE_SYMBOL");
@@ -388,9 +366,7 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
     }
 
     /**
-     * Value literals such as apostrophe string, number, date, date-time, time or equals-sign and expression.
-     * TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1253">SpreadsheetNumberPatternsParser used when parsing formula value</a>
-     * TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1254">default formula value parsing after apostrophe-string, date, datetime, number & time</a>
+     * Value literals such as apostrophe string, number, date, date-time, time or equals-sign and expression.* TODO <a href="https://github.com/mP1/walkingkooka-spreadsheet/issues/1254">default formula value parsing after apostrophe-string, date, datetime, number & time</a>
      */
     public static Parser<SpreadsheetParserContext> valueOrExpression(final Parser<SpreadsheetParserContext> value) {
         Objects.requireNonNull(value, "value");
@@ -398,7 +374,6 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         return resolveParsers(value)
                 .get(VALUE_OR_EXPRESSION_IDENTIFIER)
                 .transform(SpreadsheetParsers::transformValueOrExpression)
-                .setToString(SpreadsheetExpressionParserToken.class.getSimpleName())
                 .cast();
     }
 
@@ -440,7 +415,6 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
 
     // helpers .........................................................................................................
 
-
     /**
      * Loads the grammar text file.
      */
@@ -468,19 +442,24 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
         math(predefined);
         misc(predefined);
 
-        predefined.put(DATE_DATETIME_TIME_IDENTIFIER, value);
+        predefined.put(
+                NUMBER_IDENTIFIER,
+                SpreadsheetParsePatterns.parseNumberParsePatterns("#.#E+#;#.#;#").expresionParser() //
+        );
+        predefined.put(DATE_DATETIME_TIME_IDENTIFIER, value.setToString(DATE_DATETIME_TIME_IDENTIFIER.toString()));
 
         return GRAMMAR_PARSER_TOKEN
                 .combinator(predefined, SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer.INSTANCE);
     }
 
+    private static final EbnfIdentifierName NUMBER_IDENTIFIER = EbnfIdentifierName.with("NUMBER");
     private static final EbnfIdentifierName DATE_DATETIME_TIME_IDENTIFIER = EbnfIdentifierName.with("DATE_DATETIME_TIME");
 
     /*
      * Processes the grammar and sets all parsers that have static fields.
      */
     static {
-        final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> parsers = resolveParsers(Parsers.never());
+        final Map<EbnfIdentifierName, Parser<SpreadsheetParserContext>> parsers = resolveParsers(Parsers.fake());
 
         CELL_REFERENCES_PARSER = parsers.get(EbnfIdentifierName.with("CELL"));
         EXPRESSION_PARSER = parsers.get(EbnfIdentifierName.with("EXPRESSION"));

@@ -17,7 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 
@@ -39,49 +39,16 @@ final class SpreadsheetNumberParsePatternsComponentExponent extends SpreadsheetN
     }
 
     @Override
-    void parse(final TextCursor cursor,
+    boolean parse(final TextCursor cursor,
                final SpreadsheetNumberParsePatternsRequest request) {
-
-        final DecimalNumberContext context = request.context;
-        Loop:
-        //
-        do {
-            final String exponentSymbol = context.exponentSymbol();
-            int exponentSymbolIndex = 0;
-
-            // E
-            do {
-                if (cursor.isEmpty()) {
-                    break Loop;
-                }
-                if (0 != CaseSensitivity.INSENSITIVE.compare(cursor.at(), exponentSymbol.charAt(exponentSymbolIndex))) {
-                    break Loop;
-                }
-                cursor.next();
-                exponentSymbolIndex++;
-            } while (exponentSymbolIndex < exponentSymbol.length());
-
-            boolean negativeExponent = false;
-
-            if (false == cursor.isEmpty()) {
-                final char sign = cursor.at();
-
-                // E+
-                if (context.positiveSign() == sign) {
-                    cursor.next();
-                    negativeExponent = false;
-                } else {
-                    // E-
-                    if (context.negativeSign() == sign) {
-                        cursor.next();
-                        negativeExponent = true;
-                    }
-                }
-            }
-            request.mode = SpreadsheetNumberParsePatternsMode.EXPONENT;
-            request.negativeExponent = negativeExponent;
-            request.nextComponent(cursor);
-        } while (false);
+        return this.parseToken(
+                cursor,
+                request.context.exponentSymbol(),
+                CaseSensitivity.INSENSITIVE,
+                SpreadsheetParserToken::exponentSymbol,
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT_OR_SIGN,
+                request
+        );
     }
 
     @Override

@@ -25,7 +25,6 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
-import java.math.BigInteger;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -57,9 +56,22 @@ public final class SpreadsheetPercentageParserTokenTest extends SpreadsheetUnary
             }
 
             @Override
+            protected Visiting startVisit(final SpreadsheetNumberParserToken t) {
+                b.append("3");
+                visited.add(t);
+                return Visiting.SKIP;
+            }
+
+            @Override
+            protected void endVisit(final SpreadsheetNumberParserToken t) {
+                b.append("4");
+                visited.add(t);
+            }
+            
+            @Override
             protected Visiting startVisit(final SpreadsheetPercentageParserToken t) {
                 assertSame(unary, t);
-                b.append("3");
+                b.append("5");
                 visited.add(t);
                 return Visiting.CONTINUE;
             }
@@ -67,25 +79,19 @@ public final class SpreadsheetPercentageParserTokenTest extends SpreadsheetUnary
             @Override
             protected void endVisit(final SpreadsheetPercentageParserToken t) {
                 assertSame(unary, t);
-                b.append("4");
-                visited.add(t);
-            }
-
-            @Override
-            protected void visit(final SpreadsheetNumberParserToken t) {
-                b.append("5");
-                visited.add(t);
-            }
-
-            @Override
-            protected void visit(final SpreadsheetPercentSymbolParserToken t) {
                 b.append("6");
                 visited.add(t);
             }
 
             @Override
-            protected Visiting startVisit(final ParserToken t) {
+            protected void visit(final SpreadsheetPercentSymbolParserToken t) {
                 b.append("7");
+                visited.add(t);
+            }
+
+            @Override
+            protected Visiting startVisit(final ParserToken t) {
+                b.append("8");
                 visited.add(t);
                 return Visiting.CONTINUE;
             }
@@ -96,9 +102,9 @@ public final class SpreadsheetPercentageParserTokenTest extends SpreadsheetUnary
                 visited.add(t);
             }
         }.accept(unary);
-        assertEquals("7137152871628428", b.toString());
+        assertEquals("81581342881728628", b.toString());
         assertEquals(Lists.of(unary, unary, unary,
-                parameter, parameter, parameter, parameter, parameter,
+                parameter, parameter, parameter, parameter, parameter, parameter,
                 symbol, symbol, symbol, symbol, symbol,
                 unary, unary, unary),
                 visited,
@@ -107,7 +113,16 @@ public final class SpreadsheetPercentageParserTokenTest extends SpreadsheetUnary
 
     @Test
     public final void testToExpression() {
-        this.toExpressionAndCheck(Expression.divide(this.expressionNumberExpression(), Expression.expressionNumber(EXPRESSION_NUMBER_KIND.create(100))));
+        this.toExpressionAndCheck(
+                Expression.divide(
+                        Expression.expressionNumber(
+                                this.expressionNumber(200)
+                        ),
+                        Expression.expressionNumber(
+                                this.expressionNumber(100)
+                        )
+                )
+        );
     }
 
     @Override
@@ -117,17 +132,20 @@ public final class SpreadsheetPercentageParserTokenTest extends SpreadsheetUnary
 
     @Override
     public String text() {
-        return NUMBER1 + "00" + "%";
+        return "200%";
     }
 
     @Override
     List<ParserToken> tokens() {
-        return Lists.of(SpreadsheetParserToken.number(this.expressionNumber(BigInteger.ONE), "100"), this.percentSymbol());
+        return Lists.of(
+                this.number("200", "200"),
+                this.percentSymbol()
+        );
     }
 
     @Override
     public SpreadsheetPercentageParserToken createDifferentToken() {
-        return this.createToken(NUMBER2, this.number2(), this.percentSymbol());
+        return this.createToken(NUMBER2.toString(), this.number2(), this.percentSymbol());
     }
 
     @Override

@@ -18,117 +18,89 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.collect.list.Lists;
-import walkingkooka.math.DecimalNumberContexts;
-
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.util.Locale;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public final class SpreadsheetNumberParsePatternsComponentExponentTest extends SpreadsheetNumberParsePatternsComponentTestCase2<SpreadsheetNumberParsePatternsComponentExponent> {
 
     @Test
-    public void testLowerCaseExponent() {
-        this.parseAndCheck2("x",
-                "",
-                false);
+    public void testIncomplete() {
+        this.parseFails(EXPONENT.substring(0, 1));
     }
 
     @Test
-    public void testLowerCaseExponent2() {
-        this.parseAndCheck2("x!",
-                "!",
-                false);
+    public void testIncomplete2() {
+        this.parseFails(EXPONENT.substring(0, 1) + "!");
     }
 
     @Test
-    public void testLowerCaseExponentPositive() {
-        this.parseAndCheck2("xQ",
-                "",
-                false);
+    public void testIncomplete3() {
+        this.parseFails(EXPONENT.substring(0, 2));
     }
 
     @Test
-    public void testLowerCaseExponentPositive2() {
-        this.parseAndCheck2("xQ!",
-                "!",
-                false);
+    public void testIncomplete4() {
+        this.parseFails(EXPONENT.substring(0, 2) + "!");
     }
 
     @Test
-    public void testUpperCaseExponent() {
-        this.parseAndCheck2("X!",
-                "!",
-                false);
+    public void testToken1() {
+        assertEquals(EXPONENT.toUpperCase(), EXPONENT);
+
+        this.parseAndCheck2(
+                EXPONENT,
+                ""
+        );
     }
 
     @Test
-    public void testUpperCaseExponentNegativeSymbol() {
-        this.parseAndCheck2("XN",
-                "",
-                true);
+    public void testToken2() {
+        assertEquals(EXPONENT.toUpperCase(), EXPONENT);
+
+        this.parseAndCheck2(
+                EXPONENT,
+                "!"
+        );
     }
 
     @Test
-    public void testUpperCaseExponentNegativeSymbol2() {
-        this.parseAndCheck2("XN!",
-                "!",
-                true);
+    public void testToken3() {
+        assertNotEquals(EXPONENT.toLowerCase(), EXPONENT);
+
+        this.parseAndCheck2(
+                EXPONENT.toLowerCase(),
+                ""
+        );
+    }
+
+    @Test
+    public void testToken4() {
+        assertNotEquals(EXPONENT.toLowerCase(), EXPONENT);
+
+        this.parseAndCheck2(
+                EXPONENT.toLowerCase(),
+                "!"
+        );
+    }
+
+    @Test
+    public void testCaseUnimportant() {
+        this.parseAndCheck2(
+                EXPONENT.toLowerCase().substring(0, 1) + EXPONENT.toUpperCase().substring(1),
+                ""
+        );
     }
 
     final void parseAndCheck2(final String text,
-                              final String textAfter,
-                              final boolean negativeExponent) {
-        final SpreadsheetNumberParsePatternsRequest context = this.createRequest();
-        this.parseAndCheck(text,
-                context,
+                              final String textAfter) {
+        this.parseAndCheck2(
+                text,
                 textAfter,
-                BigDecimal.ZERO,
-                true);
-        this.checkMode(context, SpreadsheetNumberParsePatternsMode.EXPONENT);
-        assertEquals(negativeExponent, context.negativeExponent, "negativeExponent");
-    }
-
-    @Test
-    public void testMultiCharacterSymbol() {
-        this.parseAndCheck3("XYZ!",
-                "!",
-                false);
-    }
-
-    @Test
-    public void testMultiCharacterSymbolPositive() {
-        this.parseAndCheck3("XYZQ!",
-                "!",
-                false);
-    }
-
-    @Test
-    public void testMultiCharacterSymbolNegative() {
-        this.parseAndCheck3("XYZN!",
-                "!",
-                true);
-    }
-
-    private void parseAndCheck3(final String text,
-                                final String textAfter,
-                                final boolean negativeExponent) {
-        final SpreadsheetNumberParsePatternsRequest request = SpreadsheetNumberParsePatternsRequest.with(Lists.of(SpreadsheetNumberParsePatternsComponent.textLiteral("@")).iterator(),
-                DecimalNumberContexts.basic(CURRENCY, 'D', "XYZ", 'G', 'N', 'P', 'Q', Locale.ENGLISH, MathContext.UNLIMITED));
-        this.parseAndCheck(text,
-                request,
-                textAfter,
-                BigDecimal.ZERO,
-                true);
-        this.checkMode(request, SpreadsheetNumberParsePatternsMode.EXPONENT);
-        assertEquals(negativeExponent, request.negativeExponent, "negativeExponent");
-    }
-
-    @Test
-    public void testNonSpaceFails() {
-        this.parseFails("AB");
+                NEXT_CALLED,
+                SpreadsheetParserToken.exponentSymbol(text, text)
+        );
     }
 
     @Test

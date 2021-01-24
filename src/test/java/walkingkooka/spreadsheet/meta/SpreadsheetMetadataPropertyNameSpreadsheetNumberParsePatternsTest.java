@@ -23,10 +23,10 @@ import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetNumberParsePatterns;
+import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
-import java.math.BigDecimal;
 import java.math.MathContext;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -49,25 +49,45 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns
     }
 
     private void extractLocaleValueAndCheck(final String text) throws ParseException {
+        this.extractLocaleValueAndCheck2(
+                text,
+                ExpressionNumberKind.BIG_DECIMAL
+        );
+        this.extractLocaleValueAndCheck2(
+                text,
+                ExpressionNumberKind.DOUBLE
+        );
+    }
+
+    private void extractLocaleValueAndCheck2(final String text,
+                                             final ExpressionNumberKind kind) throws ParseException {
         final Locale locale = Locale.ENGLISH;
         final SpreadsheetNumberParsePatterns pattern = SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns.instance()
                 .extractLocaleValue(locale)
                 .get();
 
-        final BigDecimal value = pattern.converter()
+        final ExpressionNumber value = pattern.converter()
                 .convertOrFail(text,
-                        BigDecimal.class,
-                        ExpressionNumberConverterContexts.basic(Converters.fake(),
-                                ConverterContexts.basic(Converters.fake(),
-                                        DateTimeContexts.locale(Locale.ENGLISH, 20),
-                                        DecimalNumberContexts.american(MathContext.DECIMAL32)),
-                                EXPRESSION_NUMBER_KIND));
+                        ExpressionNumber.class,
+                        ExpressionNumberConverterContexts.basic(
+                                Converters.fake(),
+                                ConverterContexts.basic(
+                                        Converters.fake(),
+                                        DateTimeContexts.locale(locale, 20),
+                                        DecimalNumberContexts.american(MathContext.DECIMAL32)
+                                ),
+                                kind)
+                );
 
         final DecimalFormat decimalFormat = (DecimalFormat) DecimalFormat.getInstance(locale);
         decimalFormat.setParseBigDecimal(true);
         final Number expected = decimalFormat.parse(text);
 
-        assertEquals(expected, value, () -> pattern + "\nDecimalFormat: " + decimalFormat.toPattern());
+        assertEquals(
+                kind.create(expected),
+                value,
+                () -> pattern + "\n" + kind + "\nDecimalFormat: " + decimalFormat.toPattern()
+        );
     }
 
     @Test

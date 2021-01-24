@@ -19,28 +19,24 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
-
 public final class SpreadsheetNumberParsePatternsComponentWhitespaceTest extends SpreadsheetNumberParsePatternsComponentTestCase2<SpreadsheetNumberParsePatternsComponentWhitespace> {
 
     @Test
     public void testSpace() {
-        this.parseAndCheck(" A",
-                "A", BigDecimal.ZERO,
-                true);
+        this.parseAndCheck2(
+                "",
+                " ",
+                NEXT_CALLED
+        );
     }
 
     @Test
     public void testTab() {
-        this.parseAndCheck("\tA",
-                "A",
-                BigDecimal.ZERO,
-                true);
-    }
-
-    @Test
-    public void testNonSpace() {
-        this.parseFails("AB");
+        this.parseAndCheck2(
+                "",
+                "\t",
+                NEXT_CALLED
+        );
     }
 
     @Test

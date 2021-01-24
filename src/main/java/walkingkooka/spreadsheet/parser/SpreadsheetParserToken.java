@@ -27,7 +27,6 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.text.cursor.parser.ParserTokenVisitor;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionEvaluationContext;
-import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
 import walkingkooka.tree.json.JsonPropertyName;
@@ -379,7 +378,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     /**
      * {@see SpreadsheetNumberParserToken}
      */
-    public static SpreadsheetNumberParserToken number(final ExpressionNumber value, final String text) {
+    public static SpreadsheetNumberParserToken number(final List<ParserToken> value, final String text) {
         return SpreadsheetNumberParserToken.with(value, text);
     }
 
@@ -1182,11 +1181,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
-                SpreadsheetNumberParserToken.class,
-                SpreadsheetParserToken::unmarshallNumber
-        );
-
-        registerLeafParserToken(
                 SpreadsheetRowReferenceParserToken.class,
                 SpreadsheetParserToken::unmarshallRowReference
         );
@@ -1354,16 +1348,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 Integer.class,
                 context,
                 SpreadsheetParserToken::monthNumber
-        );
-    }
-
-    static SpreadsheetNumberParserToken unmarshallNumber(final JsonNode node,
-                                                         final JsonNodeUnmarshallContext context) {
-        return unmarshallLeafParserToken(
-                node,
-                ExpressionNumber.class,
-                context,
-                SpreadsheetParserToken::number
         );
     }
 
@@ -1869,6 +1853,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerParentParserToken(
+                SpreadsheetNumberParserToken.class,
+                SpreadsheetParserToken::unmarshallNumber
+        );
+
+        registerParentParserToken(
                 SpreadsheetPowerParserToken.class,
                 SpreadsheetParserToken::unmarshallPower
         );
@@ -2020,6 +2009,15 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 node,
                 context,
                 SpreadsheetParserToken::notEquals
+        );
+    }
+
+    static SpreadsheetNumberParserToken unmarshallNumber(final JsonNode node,
+                                                         final JsonNodeUnmarshallContext context) {
+        return unmarshallParentParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::number
         );
     }
 

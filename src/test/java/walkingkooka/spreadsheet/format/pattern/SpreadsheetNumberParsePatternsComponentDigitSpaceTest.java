@@ -18,65 +18,65 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
-
-import java.math.BigDecimal;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 
 public final class SpreadsheetNumberParsePatternsComponentDigitSpaceTest extends SpreadsheetNumberParsePatternsComponentDigitTestCase<SpreadsheetNumberParsePatternsComponentDigitSpace> {
 
+
+    // space.............................................................................................................
+
     @Test
-    public void testDigitsSpace() {
-        this.parseAndCheck("12 Z",
-                "Z",
-                BigDecimal.valueOf(12),
-                NEXT_CALLED);
+    public  void testSpaceIntegerOrSign() {
+        this.testSpace(
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER_OR_SIGN
+        );
     }
 
     @Test
-    public void testSpaceDigitDigit() {
-        this.parseAndCheck2(" 12",
-                "",
-                BigDecimal.valueOf(12),
-                NEGATIVE_POSITIVE_MISSING);
+    public  void testSpaceInteger() {
+        this.testSpace(
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER
+        );
     }
 
     @Test
-    public void testSpacePlusDigitDigit() {
-        this.parseAndCheck2(" Q12",
-                "",
-                BigDecimal.valueOf(12),
-                POSITIVE);
+    public  void testSpaceDecimalFirst() {
+        this.testSpace(
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL_FIRST
+        );
     }
 
     @Test
-    public void testSpaceMinusDigitDigit() {
-        this.parseAndCheck2(" N12",
-                "",
-                BigDecimal.valueOf(-12),
-                NEGATIVE);
+    public  void testSpaceDecimal() {
+        this.testSpace(
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL
+        );
     }
 
     @Test
-    public void testSpaceMinusDigitDigitLetter() {
-        this.parseAndCheck2(" N12!",
-                "!",
-                BigDecimal.valueOf(-12),
-                NEGATIVE);
+    public  void testSpaceExponentOrSign() {
+        this.testSpace(
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT_OR_SIGN
+        );
     }
 
     @Test
-    public void testMaximumSpaces() {
-        this.parseAndCheck2("    ",
+    public  void testSpaceExponent() {
+        this.testSpace(
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT
+        );
+    }
+
+    private void testSpace(final SpreadsheetNumberParsePatternsComponentDigitMode mode) {
+        this.parseAndCheck3(
+                1,
+                mode,
                 " ",
-                VALUE_WITHOUT,
-                NEGATIVE_POSITIVE_MISSING);
-    }
-
-    @Test
-    public void testMaximumSpaceDigit() {
-        this.parseAndCheck2("   4",
-                "4",
-                VALUE_WITHOUT,
-                NEGATIVE_POSITIVE_MISSING);
+                "",
+                mode,
+                NEXT_SKIPPED,
+                SpreadsheetParserToken.whitespace(" ", " ")
+        );
     }
 
     @Test
@@ -86,12 +86,18 @@ public final class SpreadsheetNumberParsePatternsComponentDigitSpaceTest extends
 
     @Test
     public void testToString2() {
-        this.toStringAndCheck(SpreadsheetNumberParsePatternsComponentDigitSpace.with(1), "?");
+        this.toStringAndCheck(
+                SpreadsheetNumberParsePatternsComponentDigitSpace.with(
+                        SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL_FIRST,
+                        1
+                ),
+                "?");
     }
 
     @Override
-    SpreadsheetNumberParsePatternsComponentDigitSpace createComponent(final int max) {
-        return SpreadsheetNumberParsePatternsComponentDigitSpace.with(max);
+    SpreadsheetNumberParsePatternsComponentDigitSpace createComponent(final SpreadsheetNumberParsePatternsComponentDigitMode mode,
+                                                                      final int max) {
+        return SpreadsheetNumberParsePatternsComponentDigitSpace.with(mode, max);
     }
 
     // ClassTesting.....................................................................................................

@@ -18,144 +18,742 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
-
-import java.math.BigDecimal;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public abstract class SpreadsheetNumberParsePatternsComponentDigitTestCase<C extends SpreadsheetNumberParsePatternsComponentDigit> extends SpreadsheetNumberParsePatternsComponentTestCase<C> {
 
+    private final static String TEXT5 = "5";
+    private final static String VALUE5 = TEXT5;
+
+    private final static String TEXT6 = "6";
+    private final static String VALUE6 = TEXT6;
+
     SpreadsheetNumberParsePatternsComponentDigitTestCase() {
     }
 
-    final static Boolean NEGATIVE = true;
-    final static Boolean POSITIVE = false;
-    final static Boolean NEGATIVE_POSITIVE_MISSING = null;
+    // grouping.............................................................................................................
 
     @Test
-    public final void testGroupingSeparatorNonDigit() {
-        this.parseAndCheck2("GA",
-                "A",
-                VALUE_WITHOUT,
-                NEGATIVE_POSITIVE_MISSING);
+    public final void testGroupingIntegerOrSign() {
+        this.testGrouping(
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER_OR_SIGN
+        );
     }
 
     @Test
-    public final void testGroupingSeparatorDigit() {
-        this.parseAndCheck2("G0A",
-                "A",
-                VALUE_WITHOUT,
-                NEGATIVE_POSITIVE_MISSING);
+    public final void testGroupingInteger() {
+        this.testGrouping(
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER
+        );
     }
 
     @Test
-    public final void testDigits() {
-        final String after = "abc";
-
-        this.parseAndCheck2("123" + after,
-                after,
-                BigDecimal.valueOf(123),
-                NEGATIVE_POSITIVE_MISSING);
+    public final void testGroupingDecimalFirst() {
+        this.testGrouping(
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL_FIRST
+        );
     }
 
     @Test
-    public final void testMaximumDigits() {
-        this.parseAndCheck2("123",
+    public final void testGroupingDecimal() {
+        this.testGrouping(
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL
+        );
+    }
+
+    @Test
+    public final void testGroupingExponentOrSign() {
+        this.testGrouping(
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT_OR_SIGN
+        );
+    }
+
+    @Test
+    public final void testGroupingExponent() {
+        this.testGrouping(
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT
+        );
+    }
+
+    private void testGrouping(final SpreadsheetNumberParsePatternsComponentDigitMode mode) {
+        this.parseAndCheck3(
+                1,
+                mode,
+                "" + GROUP,
                 "",
-                BigDecimal.valueOf(123),
-                NEGATIVE_POSITIVE_MISSING);
+                mode,
+                NEXT_SKIPPED,
+                SpreadsheetParserToken.groupingSeparatorSymbol("" + GROUP, "" + GROUP)
+        );
+    }
+
+    // plus.............................................................................................................
+
+    @Test
+    public final void testPlusIntegerOrSign() {
+        this.testPlus(
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER_OR_SIGN
+        );
     }
 
     @Test
-    public final void testMaximumDigitsLetter() {
-        this.parseAndCheck2("123A",
-                "A",
-                BigDecimal.valueOf(123),
-                NEGATIVE_POSITIVE_MISSING);
+    public final void testPlusInteger() {
+        this.testPlus(
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER
+        );
     }
 
     @Test
-    public final void testMaximumDigitsDigit() {
-        this.parseAndCheck2("123456",
-                "456",
-                BigDecimal.valueOf(123),
-                NEGATIVE_POSITIVE_MISSING);
+    public final void testPlusDecimalFirst() {
+        this.testPlus(
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL_FIRST
+        );
     }
 
     @Test
-    public final void testPlusDigit() {
-        this.parseAndCheck2("Q123456",
-                "456",
-                BigDecimal.valueOf(123),
-                POSITIVE);
+    public final void testPlusDecimal() {
+        this.testPlus(
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL
+        );
     }
 
     @Test
-    public final void testMinusDigit() {
-        this.parseAndCheck2("N123456",
-                "456",
-                BigDecimal.valueOf(-123),
-                NEGATIVE);
+    public final void testPlusExponentOrSign() {
+        this.testPlus(
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT_OR_SIGN
+        );
     }
 
     @Test
-    public final void testDigitPlusDigit() {
-        this.parseAndCheck2("12Q345",
-                "45",
-                BigDecimal.valueOf(123),
-                POSITIVE);
+    public final void testPlusExponent() {
+        this.testPlus(
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT
+        );
+    }
+    
+    private void testPlus(final SpreadsheetNumberParsePatternsComponentDigitMode mode) {
+        final String text = "" + PLUS;
+
+        if(mode.isSign()) {
+            this.parseAndCheck3(
+                    1,
+                    mode,
+                    text,
+                    "",
+                    mode.next(),
+                    NEXT_SKIPPED,
+                    SpreadsheetParserToken.plusSymbol(text, text)
+            );
+        } else {
+            this.parseAndCheck3(
+                    1,
+                    mode,
+                    "",
+                    text,
+                    mode,
+                    NEXT_SKIPPED
+            );
+        }
+    }
+
+    // minus.............................................................................................................
+
+    @Test
+    public final void testMinusIntegerOrSign() {
+        this.testMinus(
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER_OR_SIGN
+        );
     }
 
     @Test
-    public final void testDigitMinusDigit() {
-        this.parseAndCheck2("12N345",
-                "45",
-                BigDecimal.valueOf(-123),
-                NEGATIVE);
+    public final void testMinusInteger() {
+        this.testMinus(
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER
+        );
     }
 
     @Test
-    public final void testDigitGroupingSeparatorDigit() {
-        this.parseAndCheck2("1G2",
+    public final void testMinusDecimalFirst() {
+        this.testMinus(
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL_FIRST
+        );
+    }
+
+    @Test
+    public final void testMinusDecimal() {
+        this.testMinus(
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL
+        );
+    }
+
+    @Test
+    public final void testMinusExponentOrSign() {
+        this.testMinus(
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT_OR_SIGN
+        );
+    }
+
+    @Test
+    public final void testMinusExponent() {
+        this.testMinus(
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT
+        );
+    }
+
+    private void testMinus(final SpreadsheetNumberParsePatternsComponentDigitMode mode) {
+        final String text = "" + MINUS;
+
+        if(mode.isSign()) {
+            this.parseAndCheck3(
+                    1,
+                    mode,
+                    text,
+                    "",
+                    mode.next(),
+                    NEXT_SKIPPED,
+                    SpreadsheetParserToken.minusSymbol(text, text)
+            );
+        } else {
+            this.parseAndCheck3(
+                    1,
+                    mode,
+                    "",
+                    text,
+                    mode,
+                    NEXT_SKIPPED
+            );
+        }
+    }
+    
+    // digits 1, max=1..................................................................................................
+
+    @Test
+    public final void testDigit1Max1IntegerOrSign() {
+        this.testDigit1Max1(
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER_OR_SIGN,
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER
+        );
+
+    }
+
+    @Test
+    public final void testDigit1Max1Integer() {
+        this.testDigit1Max1(
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER,
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER
+        );
+    }
+
+    @Test
+    public final void testDigit1Max1DecimalFirst() {
+        this.testDigit1Max1(
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL_FIRST,
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL
+        );
+
+    }
+
+    @Test
+    public final void testDigit1Max1Decimal() {
+        this.testDigit1Max1(
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL,
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL
+        );
+    }
+
+    @Test
+    public final void testDigit1Max1ExponentOrSign() {
+        this.testDigit1Max1(
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT_OR_SIGN,
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT
+        );
+    }
+
+    @Test
+    public final void testDigit1Max1Exponent() {
+        this.testDigit1Max1(
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT,
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT
+        );
+    }
+
+    private void testDigit1Max1(final SpreadsheetNumberParsePatternsComponentDigitMode mode,
+                                final SpreadsheetNumberParsePatternsComponentDigitMode expectedMode) {
+        this.parseAndCheck3(
+                1,
+                mode,
+                TEXT5,
                 "",
-                BigDecimal.valueOf(12),
-                NEGATIVE_POSITIVE_MISSING);
+                expectedMode,
+                NEXT_CALLED,
+                SpreadsheetParserToken.digits(VALUE5, TEXT5)
+        );
+    }
+
+    // 1x digit, text max=1
+
+    @Test
+    public final void testDigit1TextMax1IntegerOrSign() {
+        this.testDigit1TextMax1(
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER_OR_SIGN,
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER
+        );
+
     }
 
     @Test
-    public final void testDigitGroupingSeparatorLetter() {
-        this.parseAndCheck2("1GA",
-                "A",
-                BigDecimal.valueOf(1),
-                NEGATIVE_POSITIVE_MISSING);
+    public final void testDigit1TextMax1Integer() {
+        this.testDigit1TextMax1(
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER,
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER
+        );
     }
 
     @Test
-    public final void testDigitGroupingSeparatorDigitMaximum() {
-        this.parseAndCheck2("1G234",
-                "4",
-                BigDecimal.valueOf(123),
-                NEGATIVE_POSITIVE_MISSING);
+    public final void testDigit1TextMax1DecimalFirst() {
+        this.testDigit1TextMax1(
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL_FIRST,
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL
+        );
+
     }
 
-    final void parseAndCheck2(final String text,
+    @Test
+    public final void testDigit1TextMax1Decimal() {
+        this.testDigit1TextMax1(
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL,
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL
+        );
+    }
+
+    @Test
+    public final void testDigit1TextMax1ExponentOrSign() {
+        this.testDigit1TextMax1(
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT_OR_SIGN,
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT
+        );
+    }
+
+    @Test
+    public final void testDigit1TextMax1Exponent() {
+        this.testDigit1TextMax1(
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT,
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT
+        );
+    }
+
+    private void testDigit1TextMax1(final SpreadsheetNumberParsePatternsComponentDigitMode mode,
+                                    final SpreadsheetNumberParsePatternsComponentDigitMode expectedMode) {
+        this.parseAndCheck3(
+                1,
+                mode,
+                TEXT5,
+                "a",
+                expectedMode,
+                NEXT_CALLED,
+                SpreadsheetParserToken.digits(VALUE5, TEXT5)
+        );
+    }
+
+    // 1x digit, digit max=1
+
+    @Test
+    public final void testDigit2Max1IntegerOrSign() {
+        this.testDigit2Max1(
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER_OR_SIGN,
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER
+        );
+
+    }
+
+    @Test
+    public final void testDigit2Max1Integer() {
+        this.testDigit2Max1(
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER,
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER
+        );
+    }
+
+    @Test
+    public final void testDigit2Max1DecimalFirst() {
+        this.testDigit2Max1(
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL_FIRST,
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL
+        );
+
+    }
+
+    @Test
+    public final void testDigit2Max1Decimal() {
+        this.testDigit2Max1(
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL,
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL
+        );
+    }
+
+    @Test
+    public final void testDigit2Max1ExponentOrSign() {
+        this.testDigit2Max1(
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT_OR_SIGN,
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT
+        );
+    }
+
+    @Test
+    public final void testDigit2Max1Exponent() {
+        this.testDigit2Max1(
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT,
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT
+        );
+    }
+
+    private void testDigit2Max1(final SpreadsheetNumberParsePatternsComponentDigitMode mode,
+                                final SpreadsheetNumberParsePatternsComponentDigitMode expectedMode) {
+        this.parseAndCheck3(
+                1,
+                mode,
+                TEXT5,
+                "a",
+                expectedMode,
+                NEXT_CALLED,
+                SpreadsheetParserToken.digits(VALUE5, TEXT5)
+        );
+    }
+
+    // digits2, max=2..................................................................................................
+
+    @Test
+    public final void testDigit2Max2IntegerOrSign() {
+        this.testDigit2Max2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER_OR_SIGN,
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER
+        );
+
+    }
+
+    @Test
+    public final void testDigit2Max2Integer() {
+        this.testDigit2Max2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER,
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER
+        );
+    }
+
+    @Test
+    public final void testDigit2Max2DecimalFirst() {
+        this.testDigit2Max2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL_FIRST,
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL
+        );
+
+    }
+
+    @Test
+    public final void testDigit2Max2Decimal() {
+        this.testDigit2Max2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL,
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL
+        );
+    }
+
+    @Test
+    public final void testDigit2Max2ExponentOrSign() {
+        this.testDigit2Max2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT_OR_SIGN,
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT
+        );
+    }
+
+    @Test
+    public final void testDigit2Max2Exponent() {
+        this.testDigit2Max2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT,
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT
+        );
+    }
+
+    private void testDigit2Max2(final SpreadsheetNumberParsePatternsComponentDigitMode mode,
+                                     final SpreadsheetNumberParsePatternsComponentDigitMode expectedMode) {
+        final String text = TEXT5 + TEXT6;
+        this.parseAndCheck3(
+                2,
+                mode,
+                text,
+                "",
+                expectedMode,
+                NEXT_CALLED,
+                SpreadsheetParserToken.digits(text, text)
+        );
+    }
+
+    // digits2, text max=2..................................................................................................
+
+    @Test
+    public final void testDigit2TextMax2IntegerOrSign() {
+        this.testDigit2TextMax2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER_OR_SIGN,
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER
+        );
+
+    }
+
+    @Test
+    public final void testDigit2TextMax2Integer() {
+        this.testDigit2TextMax2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER,
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER
+        );
+    }
+
+    @Test
+    public final void testDigit2TextMax2DecimalFirst() {
+        this.testDigit2TextMax2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL_FIRST,
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL
+        );
+
+    }
+
+    @Test
+    public final void testDigit2TextMax2Decimal() {
+        this.testDigit2TextMax2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL,
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL
+        );
+    }
+
+    @Test
+    public final void testDigit2TextMax2ExponentOrSign() {
+        this.testDigit2TextMax2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT_OR_SIGN,
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT
+        );
+    }
+
+    @Test
+    public final void testDigit2TextMax2Exponent() {
+        this.testDigit2TextMax2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT,
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT
+        );
+    }
+
+    private void testDigit2TextMax2(final SpreadsheetNumberParsePatternsComponentDigitMode mode,
+                                         final SpreadsheetNumberParsePatternsComponentDigitMode expectedMode) {
+        final String text = TEXT5 + TEXT6;
+        this.parseAndCheck3(
+                2,
+                mode,
+                text,
+                "!",
+                expectedMode,
+                NEXT_CALLED,
+                SpreadsheetParserToken.digits(text, text)
+        );
+    }
+
+    // plus, digits, text max=2..................................................................................................
+
+    @Test
+    public final void testPlusDigit1TextMax2IntegerOrSign() {
+        this.testPlusDigit1TextMax2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER_OR_SIGN,
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER
+        );
+
+    }
+
+    @Test
+    public final void testPlusDigit1TextMax2Integer() {
+        this.testPlusDigit1TextMax2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER,
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER
+        );
+    }
+
+    @Test
+    public final void testPlusDigit1TextMax2DecimalFirst() {
+        this.testPlusDigit1TextMax2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL_FIRST,
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL
+        );
+
+    }
+
+    @Test
+    public final void testPlusDigit1TextMax2Decimal() {
+        this.testPlusDigit1TextMax2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL,
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL
+        );
+    }
+
+    @Test
+    public final void testPlusDigit1TextMax2ExponentOrSign() {
+        this.testPlusDigit1TextMax2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT_OR_SIGN,
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT
+        );
+    }
+
+    @Test
+    public final void testPlusDigit1TextMax2Exponent() {
+        this.testPlusDigit1TextMax2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT,
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT
+        );
+    }
+
+    private void testPlusDigit1TextMax2(final SpreadsheetNumberParsePatternsComponentDigitMode mode,
+                                        final SpreadsheetNumberParsePatternsComponentDigitMode expectedMode) {
+        final String text = TEXT5;
+        final String plusText = PLUS + text;
+
+        if(mode.isSign()) {
+            this.parseAndCheck3(
+                    2,
+                    mode,
+                    plusText,
+                    "",
+                    expectedMode,
+                    NEXT_CALLED,
+                    SpreadsheetParserToken.plusSymbol("" + PLUS, "" + PLUS),
+                    SpreadsheetParserToken.digits(text, text)
+            );
+        } else {
+            this.parseAndCheck3(
+                    2,
+                    mode,
+                    "",
+                    plusText,
+                    mode,
+                    NEXT_SKIPPED
+            );
+        }
+    }
+
+
+    // sign, digits, text max=2..................................................................................................
+
+    @Test
+    public final void testMinusDigit1TextMax2IntegerOrSign() {
+        this.testMinusDigit1TextMax2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER_OR_SIGN,
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER
+        );
+
+    }
+
+    @Test
+    public final void testMinusDigit1TextMax2Integer() {
+        this.testMinusDigit1TextMax2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER,
+                SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER
+        );
+    }
+
+    @Test
+    public final void testMinusDigit1TextMax2DecimalFirst() {
+        this.testMinusDigit1TextMax2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL_FIRST,
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL
+        );
+
+    }
+
+    @Test
+    public final void testMinusDigit1TextMax2Decimal() {
+        this.testMinusDigit1TextMax2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL,
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL
+        );
+    }
+
+    @Test
+    public final void testMinusDigit1TextMax2ExponentOrSign() {
+        this.testMinusDigit1TextMax2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT_OR_SIGN,
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT
+        );
+    }
+
+    @Test
+    public final void testMinusDigit1TextMax2Exponent() {
+        this.testMinusDigit1TextMax2(
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT,
+                SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT
+        );
+    }
+
+    private void testMinusDigit1TextMax2(final SpreadsheetNumberParsePatternsComponentDigitMode mode,
+                                         final SpreadsheetNumberParsePatternsComponentDigitMode expectedMode) {
+        final String text = TEXT5;
+        final String minusText = MINUS + text;
+
+        if(mode.isSign()) {
+            this.parseAndCheck3(
+                    2,
+                    mode,
+                    minusText,
+                    "",
+                    expectedMode,
+                    NEXT_CALLED,
+                    SpreadsheetParserToken.minusSymbol("" + MINUS, "" + MINUS),
+                    SpreadsheetParserToken.digits(text, text)
+            );
+        } else {
+            this.parseAndCheck3(
+                    2,
+                    mode,
+                    "",
+                    minusText,
+                    mode,
+                    NEXT_SKIPPED
+            );
+        }
+    }
+
+    // helpers...........................................................................................................
+
+    final void parseAndCheck3(final int max,
+                              final SpreadsheetNumberParsePatternsComponentDigitMode mode,
+                              final String text,
                               final String textAfter,
-                              final BigDecimal value,
-                              final Boolean negative) {
-        final SpreadsheetNumberParsePatternsRequest context = this.createRequest();
-        this.parseAndCheck(text,
-                context,
+                              final SpreadsheetNumberParsePatternsComponentDigitMode expectedMode,
+                              final boolean hasNext,
+                              final SpreadsheetParserToken... tokens) {
+        final SpreadsheetNumberParsePatternsRequest request = this.createRequest(hasNext);
+        request.digitMode = mode;
+
+        this.parseAndCheck2(
+                this.createComponent(mode, max),
+                text,
                 textAfter,
-                value,
-                NEXT_CALLED);
-        assertEquals(negative, context.negativeMantissa, "negativeMantissa");
-        this.checkMode(context, SpreadsheetNumberParsePatternsMode.INTEGER);
+                request,
+                hasNext,
+                tokens
+        );
+
+        assertEquals(
+                "",
+                request.digits.toString(),
+                () -> "digits\nrequest: " + request
+        );
+
+        assertEquals(
+                expectedMode,
+                request.digitMode,
+                () -> "mode\nrequest: " + request
+        );
     }
 
     @Override
     final C createComponent() {
-        return this.createComponent(3);
+        return this.createComponent(SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL_FIRST, 3);
     }
 
-    abstract C createComponent(final int max);
+    abstract C createComponent(final SpreadsheetNumberParsePatternsComponentDigitMode mode,
+                               final int max);
 }

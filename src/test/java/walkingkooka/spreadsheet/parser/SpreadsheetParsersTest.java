@@ -127,7 +127,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final String apostropheText = '\'' + text;
 
         this.parseAndCheck(
-                SpreadsheetParsers.valueOrExpression(Parsers.never()),
+                valueOrExpressionParser(),
                 apostropheText,
                 SpreadsheetTextParserToken.text(
                         Lists.of(
@@ -388,11 +388,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     @Test
-    public void testBigDecimal() {
-        final String text = "1.5";
+    public void testNumber() {
+        final String text = "1";
 
         this.parseExpressionAndCheck(text,
-                number(1.5),
+                number(1),
                 text);
     }
 
@@ -513,19 +513,19 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     @Test
     public void testExpressionNegativeBigDecimal() {
-        final String text = "-1.5";
+        final String text = "-1";
 
         this.parseExpressionAndCheck(text,
-                SpreadsheetParserToken.negative(Lists.of(minus(), number(1.5)), text),
+                SpreadsheetParserToken.negative(Lists.of(minus(), number(1)), text),
                 text);
     }
 
     @Test
     public void testExpressionNegativeWhitespaceBigDecimal() {
-        final String text = "-  1.5";
+        final String text = "-  1";
 
         this.parseExpressionAndCheck(text,
-                SpreadsheetParserToken.negative(Lists.of(minus(), whitespace(), number(1.5)), text),
+                SpreadsheetParserToken.negative(Lists.of(minus(), whitespace(), number(1)), text),
                 text);
     }
 
@@ -1914,7 +1914,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
         //+1 to the column number in the message
         this.parseThrows(
-                SpreadsheetParsers.valueOrExpression(Parsers.never()),
+                valueOrExpressionParser(),
                 "=" + text,
                 message.substring(0, at + 4) + (column+1) + message.substring(at2)
         );
@@ -1924,7 +1924,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                                          final ParserToken token,
                                          final String text) {
         this.parseAndCheck(
-                SpreadsheetParsers.expression(),
+                expressionParser(),
                 formula,
                 token,
                 text,
@@ -1933,7 +1933,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
         final String equalsFormula = "=" + formula;
         this.parseAndCheck(
-                SpreadsheetParsers.valueOrExpression(Parsers.never()),
+                valueOrExpressionParser(),
                 equalsFormula,
                 SpreadsheetParserToken.expression(
                         Lists.of(
@@ -1959,19 +1959,19 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     private void parseExpressionEvaluateAndCheck(final String formulaText,
                                                  final String expectedText) {
         this.parseExpressionEvaluateAndCheck0(
-                SpreadsheetParsers.expression(),
+                expressionParser(),
                 formulaText,
                 expectedText
         );
 
         this.parseExpressionEvaluateAndCheck0(
-                SpreadsheetParsers.valueOrExpression(Parsers.never()),
+                valueOrExpressionParser(),
                 "=" + formulaText,
                 expectedText
         );
 
         this.parseExpressionEvaluateAndCheck0(
-                SpreadsheetParsers.valueOrExpression(Parsers.never()),
+                valueOrExpressionParser(),
                 "= " + formulaText,
                 expectedText
         );
@@ -2021,6 +2021,23 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final Expression expression = maybeExpression.get();
         final String value = expression.toString(this.expressionEvaluationContext(kind));
         assertEquals(expectedText, value, () -> "expression " + CharSequences.quoteAndEscape(formulaText) + " as text is");
+    }
+
+    private static Parser<SpreadsheetParserContext> expressionParser() {
+        return SpreadsheetParsers.expression();
+    }
+
+    private static Parser<SpreadsheetParserContext> valueOrExpressionParser() {
+        return SpreadsheetParsers.valueOrExpression(
+                Parsers.alternatives(
+                        Lists.of(
+                                SpreadsheetParsePatterns.parseDateParsePatterns("yyyy/mm/dd").parser(),
+                                SpreadsheetParsePatterns.parseDateTimeParsePatterns("yyyy/mm/dd hh:mm").parser(),
+                                SpreadsheetParsePatterns.parseNumberParsePatterns("#;#.#").parser(),
+                                SpreadsheetParsePatterns.parseTimeParsePatterns("hh:mm").parser()
+                        )
+                )
+        );
     }
 
     private SpreadsheetParserToken parse(final Parser<SpreadsheetParserContext> parser,
@@ -2170,7 +2187,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     @Override
     public Parser<SpreadsheetParserContext> createParser() {
-        return SpreadsheetParsers.expression();
+        return expressionParser();
     }
 
     @Override
@@ -2269,9 +2286,13 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         };
     }
 
-    private SpreadsheetParserToken number(final double value) {
-        final ExpressionNumber expressionNumber = this.expressionNumberKind.create(value);
-        return SpreadsheetParserToken.number(expressionNumber, expressionNumber.toString());
+    private SpreadsheetNumberParserToken number(final int number) {
+        return SpreadsheetParserToken.number(
+                Lists.of(
+                        SpreadsheetParserToken.digits("" + number, "" + number)
+                ),
+                "1"
+        );
     }
 
     private SpreadsheetCellReferenceParserToken cell(final int column, final String columnText, final int row) {

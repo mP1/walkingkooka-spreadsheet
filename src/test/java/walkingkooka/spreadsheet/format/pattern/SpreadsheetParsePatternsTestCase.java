@@ -23,20 +23,28 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.ConverterContexts;
 import walkingkooka.convert.ConverterTesting;
 import walkingkooka.convert.Converters;
+import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.FakeDecimalNumberContext;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParentParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetAmPmParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetCurrencySymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDayNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetDecimalSeparatorSymbolParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetDigitsParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetExponentSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetHourParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMillisecondParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetMinusSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMinuteParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMonthNameAbbreviationParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMonthNameParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetMonthNumberParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParentParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetPlusSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetSecondsParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetTextLiteralParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetYearParserToken;
@@ -53,15 +61,25 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetParsePatterns<T>,
         T extends SpreadsheetFormatParentParserToken,
-        SPT extends SpreadsheetParserToken, // SpreadsheetParentParserToken
+        SPT extends SpreadsheetParentParserToken,
         V> extends SpreadsheetPatternTestCase<P, List<T>>
         implements ConverterTesting {
 
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     final static char VALUE_SEPARATOR = ',';
 
+    final static String CURRENCY = "NZ$";
+    final static char DECIMAL = 'd';
+    final static String EXPONENT = "XP";
+    final static char GROUPING = 'g';
+    final static char MINUS = 'm';
+    final static char PERCENT = 'q';
+    final static char PLUS = 'p';
+
     SpreadsheetParsePatternsTestCase() {
         super();
+        assertEquals(this.decimalNumberContext().currencySymbol(), currencyDollarSign().text(), "currencySymbol");
+        assertEquals(this.decimalNumberContext().exponentSymbol(), e().text(), "exponentSymbol");
     }
 
     @Test
@@ -242,6 +260,46 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
                 this.createPattern(Lists.of(parseFormatParserToken(patternText), parseFormatParserToken(patternText2))));
     }
 
+    @Override
+    public DecimalNumberContext decimalNumberContext() {
+        return new FakeDecimalNumberContext() {
+            @Override
+            public String currencySymbol() {
+                return CURRENCY;
+            }
+
+            @Override
+            public char decimalSeparator() {
+                return DECIMAL;
+            }
+
+            @Override
+            public String exponentSymbol() {
+                return EXPONENT;
+            }
+
+            @Override
+            public char groupingSeparator() {
+                return GROUPING;
+            }
+
+            @Override
+            public char negativeSign() {
+                return MINUS;
+            }
+
+            @Override
+            public char percentageSymbol() {
+                return PERCENT;
+            }
+
+            @Override
+            public char positiveSign() {
+                return PLUS;
+            }
+        };
+    }
+
     static SpreadsheetAmPmParserToken am() {
         return SpreadsheetParserToken.amPm(0, "AM");
     }
@@ -253,12 +311,48 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
         return textLiteral(",");
     }
 
+    static SpreadsheetCurrencySymbolParserToken currencyDollarSign() {
+        return SpreadsheetParserToken.currencySymbol(CURRENCY, CURRENCY);
+    }
+
     static SpreadsheetDayNumberParserToken day31() {
         return SpreadsheetParserToken.dayNumber(31, "31");
     }
 
     static SpreadsheetDecimalSeparatorSymbolParserToken decimalSeparator() {
-        return SpreadsheetParserToken.decimalSeparatorSymbol(".", ".");
+        return SpreadsheetParserToken.decimalSeparatorSymbol("" + DECIMAL, "" + DECIMAL);
+    }
+
+    static SpreadsheetDigitsParserToken digit0() {
+        return digits("0");
+    }
+
+    static SpreadsheetDigitsParserToken digit05() {
+        return digits("05");
+    }
+
+    static SpreadsheetDigitsParserToken digit075() {
+        return digits("075");
+    }
+
+    static SpreadsheetDigitsParserToken digit1() {
+        return digits("1");
+    }
+
+    static SpreadsheetDigitsParserToken digit12() {
+        return digits("12");
+    }
+
+    static SpreadsheetDigitsParserToken digit5() {
+        return digits("5");
+    }
+
+    private static SpreadsheetDigitsParserToken digits(final String text) {
+        return SpreadsheetParserToken.digits(text, text);
+    }
+
+    static SpreadsheetExponentSymbolParserToken e() {
+        return SpreadsheetParserToken.exponentSymbol("" + EXPONENT, "" + EXPONENT);
     }
 
     static SpreadsheetHourParserToken hour9() {
@@ -275,6 +369,10 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
 
     static SpreadsheetMillisecondParserToken milli(final int value, final String text) {
         return SpreadsheetParserToken.millisecond(value, text);
+    }
+
+    static SpreadsheetMinusSymbolParserToken minus() {
+        return SpreadsheetParserToken.minusSymbol("" + MINUS, "" + MINUS);
     }
 
     static SpreadsheetMinuteParserToken minute8() {
@@ -295,6 +393,10 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
 
     static SpreadsheetMonthNameParserToken monthDecember() {
         return SpreadsheetParserToken.monthName(12, "December");
+    }
+
+    static SpreadsheetPlusSymbolParserToken plus() {
+        return SpreadsheetParserToken.plusSymbol("" + PLUS, "" + PLUS);
     }
 
     static SpreadsheetAmPmParserToken pm() {

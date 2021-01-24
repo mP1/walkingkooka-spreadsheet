@@ -172,7 +172,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     public void testParseHourMinutesSecondsDecimal() {
         this.parseAndCheck2(
                 "hh:mm:ss.",
-                "9:58:59.",
+                "9:58:59" + DECIMAL,
                 hour9(),
                 colon(),
                 minute58(),
@@ -186,7 +186,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     public void testParseHourMinutesSecondsDecimal2() {
         this.parseAndCheck2(
                 "hh:mm:ss.",
-                "13:58:59.",
+                "13:58:59" + DECIMAL,
                 hour13(),
                 colon(),
                 minute58(),
@@ -200,7 +200,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     public void testParseHourMinutesSecondsDecimal1Millis() {
         this.parseAndCheck2(
                 "hh:mm:ss.0",
-                "11:58:59.1",
+                "11:58:59" + DECIMAL + "1",
                 hour11(),
                 colon(),
                 minute58(),
@@ -215,7 +215,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     public void testParseHourMinutesSecondsDecimal1Millis2() {
         this.parseAndCheck2(
                 "hh:mm:ss.0",
-                "11:58:59.",
+                "11:58:59" + DECIMAL,
                 hour11(),
                 colon(),
                 minute58(),
@@ -229,7 +229,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     public void testParseHourMinutesSecondsDecimal2Millis() {
         this.parseAndCheck2(
                 "hh:mm:ss.00",
-                "11:58:59.12",
+                "11:58:59" + DECIMAL + "12",
                 hour11(),
                 colon(),
                 minute58(),
@@ -244,7 +244,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     public void testParseHourMinutesSecondsDecimal3Millis() {
         this.parseAndCheck2(
                 "hh:mm:ss.000",
-                "11:58:59.123",
+                "11:58:59" + DECIMAL + "123",
                 hour11(),
                 colon(),
                 minute58(),
@@ -259,7 +259,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     public void testParseHourMinutesSecondsDecimal3Millis2() {
         this.parseAndCheck2(
                 "hh:mm:ss.000",
-                "11:58:59.12",
+                "11:58:59" + DECIMAL + "12",
                 hour11(),
                 colon(),
                 minute58(),
@@ -274,7 +274,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     public void testParseHourMinutesSecondsDecimal3Millis3() {
         this.parseAndCheck2(
                 "hh:mm:ss.000",
-                "11:58:59.1",
+                "11:58:59" + DECIMAL + "1",
                 hour11(),
                 colon(),
                 minute58(),
@@ -289,7 +289,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     public void testParseHourMinutesSecondsDecimal3Millis4() {
         this.parseAndCheck2(
                 "hh:mm:ss.000",
-                "11:58:59.",
+                "11:58:59" + DECIMAL,
                 hour11(),
                 colon(),
                 minute58(),
@@ -357,7 +357,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     public void testParseHourMinutesSecondsMillisAmpm() {
         this.parseAndCheck2(
                 "hh:mm:ss.0 AM/PM",
-                "11:58:59.1 PM",
+                "11:58:59" + DECIMAL + "1 PM",
                 hour11(),
                 colon(),
                 minute58(),
@@ -461,7 +461,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     public void testParseSecondsDecimalSeparator() {
         this.parseAndCheck2(
                 "s.",
-                "9.",
+                "9" + DECIMAL,
                 second9(),
                 decimalSeparator()
         );

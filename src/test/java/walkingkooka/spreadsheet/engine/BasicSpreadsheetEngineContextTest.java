@@ -252,10 +252,25 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testParseFormula() {
         this.parseFormulaAndCheck("1+2",
-                SpreadsheetParserToken.addition(Lists.of(SpreadsheetParserToken.number(this.number(1), "1"),
-                        SpreadsheetParserToken.plusSymbol("+", "+"),
-                        SpreadsheetParserToken.number(this.number(2), "2")),
-                        "1+2"));
+                SpreadsheetParserToken.addition(
+                        Lists.of(
+                                SpreadsheetParserToken.number(
+                                        Lists.of(
+                                                SpreadsheetParserToken.digits("1", "1")
+                                        ),
+                                        "1"
+                                ),
+                                SpreadsheetParserToken.plusSymbol("+", "+"),
+                                SpreadsheetParserToken.number(
+                                        Lists.of(
+                                                SpreadsheetParserToken.digits("2", "2")
+                                        ),
+                                        "2"
+                                )
+                        ),
+                        "1+2"
+                )
+        );
     }
 
     @Test

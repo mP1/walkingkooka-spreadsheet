@@ -70,21 +70,29 @@ public final class SpreadsheetNegativeParserTokenTest extends SpreadsheetUnaryPa
                 visited.add(t);
             }
 
+
             @Override
-            protected void visit(final SpreadsheetNumberParserToken t) {
+            protected Visiting startVisit(final SpreadsheetNumberParserToken t) {
                 b.append("5");
                 visited.add(t);
+                return Visiting.SKIP;
             }
 
             @Override
-            protected void visit(final SpreadsheetMinusSymbolParserToken t) {
+            protected void endVisit(final SpreadsheetNumberParserToken t) {
                 b.append("6");
                 visited.add(t);
             }
 
             @Override
-            protected Visiting startVisit(final ParserToken t) {
+            protected void visit(final SpreadsheetMinusSymbolParserToken t) {
                 b.append("7");
+                visited.add(t);
+            }
+
+            @Override
+            protected Visiting startVisit(final ParserToken t) {
+                b.append("8");
                 visited.add(t);
                 return Visiting.CONTINUE;
             }
@@ -95,10 +103,10 @@ public final class SpreadsheetNegativeParserTokenTest extends SpreadsheetUnaryPa
                 visited.add(t);
             }
         }.accept(unary);
-        assertEquals("7137162871528428", b.toString());
+        assertEquals("81381728815628428", b.toString());
         assertEquals(Lists.of(unary, unary, unary,
                 symbol, symbol, symbol, symbol, symbol,
-                parameter, parameter, parameter, parameter, parameter,
+                parameter, parameter, parameter, parameter, parameter, parameter,
                 unary, unary, unary),
                 visited,
                 "visited");
@@ -106,7 +114,11 @@ public final class SpreadsheetNegativeParserTokenTest extends SpreadsheetUnaryPa
 
     @Test
     public final void testToExpression() {
-        this.toExpressionAndCheck(Expression.negative(this.expressionNumberExpression()));
+        this.toExpressionAndCheck(
+                Expression.negative(
+                        expression1()
+                )
+        );
     }
 
     @Override

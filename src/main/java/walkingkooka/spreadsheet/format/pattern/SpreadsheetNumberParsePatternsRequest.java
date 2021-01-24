@@ -18,11 +18,15 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.Context;
+import walkingkooka.ToStringBuilder;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.parser.ParserToken;
 
-import java.math.BigDecimal;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * The {@link Context} which accompanies the parsing process and builds up the {@link Number}.
@@ -30,89 +34,88 @@ import java.util.Iterator;
 final class SpreadsheetNumberParsePatternsRequest {
 
     static SpreadsheetNumberParsePatternsRequest with(final Iterator<SpreadsheetNumberParsePatternsComponent> next,
+                                                      final SpreadsheetNumberParsePatternsMode mode,
                                                       final DecimalNumberContext context) {
-        return new SpreadsheetNumberParsePatternsRequest(next, context);
+        return new SpreadsheetNumberParsePatternsRequest(
+                next,
+                mode,
+                context
+        );
     }
 
     private SpreadsheetNumberParsePatternsRequest(final Iterator<SpreadsheetNumberParsePatternsComponent> next,
+                                                  final SpreadsheetNumberParsePatternsMode mode,
                                                   final DecimalNumberContext context) {
         super();
 
         this.next = next;
+        this.mode = mode;
         this.context = context;
     }
 
+    final SpreadsheetNumberParsePatternsMode mode;
+
+    void setDigitMode(final SpreadsheetNumberParsePatternsComponentDigitMode digitMode) {
+        if(digitMode != this.digitMode) {
+            this.digitMode = digitMode;
+        }
+    }
+
+    /**
+     * This will provide the source for a few locale sensitive characters such as the decimal point.
+     */
     final DecimalNumberContext context;
 
+    void add(final SpreadsheetParserToken token) {
+        this.addNumberIfNecessary();
+        this.add0(token);
+    }
+
+    private void add0(final SpreadsheetParserToken token) {
+        this.tokens.add(token);
+
+        this.digits.setLength(0); // StringBuilder is not shared, ok to reuse
+    }
+
+    /**
+     * The visitor will create the individual tokens during the parsing process.
+     */
+    final List<ParserToken> tokens = Lists.array();
+
+    boolean addNumberIfNecessary() {
+        final StringBuilder digits = this.digits;
+        final boolean added = digits.length() > 0;
+        if (added) {
+            final String text = digits.toString();
+            this.add0(
+                    SpreadsheetParserToken.digits(
+                            text,
+                            text
+                    )
+            );
+        }
+        return added;
+    }
+
+    /**
+     * Aggregates the digit characters, which may include grouping separators.
+     * This will become the text of any created {@link walkingkooka.spreadsheet.parser.SpreadsheetDigitsParserToken}.
+     */
+    final StringBuilder digits = new StringBuilder();;
+//
     /**
      * Controls what part of the number the next digit belongs.
      */
-    SpreadsheetNumberParsePatternsMode mode = SpreadsheetNumberParsePatternsMode.INTEGER;
-
-    /**
-     * Tri-state (using wrapper) used so that the first positive or negative sign is saved here, and all others must be unescaped symbols.
-     */
-    Boolean negativeMantissa = null;
-
-    /**
-     * The mantissa value.
-     */
-    BigDecimal mantissa = BigDecimal.ZERO;
-
-    /**
-     * When true the final value will be divided by 100.
-     */
-    boolean percentage = false;
-
-    /**
-     * When true the exponent value is negative.
-     */
-    boolean negativeExponent = false;
-
-    /**
-     * The exponent value.
-     */
-    int exponent = 0;
+    SpreadsheetNumberParsePatternsComponentDigitMode digitMode = SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER_OR_SIGN;
 
     /**
      * Calls the nextComponent component if one exists.
      */
-    void nextComponent(final TextCursor cursor) {
-        if (this.next.hasNext()) {
-            this.next.next().parse(cursor, this);
-        }
-    }
-
-    /**
-     * Computes the {@link BigDecimal} value from the parts which are present.
-     */
-    BigDecimal computeValue() {
-        final BigDecimal mantissa = this.mantissa;
-        final int exponent = this.exponent;
-
-        BigDecimal computed = mantissa;
-        if (Boolean.TRUE.equals(this.negativeMantissa)) {
-            computed = computed.negate(this.context.mathContext());
-        }
-
-        return computed.scaleByPowerOfTen((this.negativeExponent ?
-                -exponent :
-                +exponent) +
-                (this.percentage ? -2 : 0));
-    }
-
-    /**
-     * Returns true if ANY of the remaining components are {@link SpreadsheetNumberParsePatternsComponent#isRequired()}.
-     */
-    boolean isRequired() {
-        boolean required = false;
-
-        final Iterator<SpreadsheetNumberParsePatternsComponent> next = this.next;
-        while (false == required && next.hasNext()) {
-            required = next.next().isRequired();
-        }
-
-        return required;
+    boolean nextComponent(final TextCursor cursor) {
+        return this.next.hasNext() ?
+                this.next.next()
+                    .parse(cursor, this) :
+                true; // finished!
     }
 
     /**
@@ -122,6 +125,11 @@ final class SpreadsheetNumberParsePatternsRequest {
 
     @Override
     public String toString() {
-        return this.mode + " " + this.computeValue().toString();
+        return ToStringBuilder.empty()
+                .label("context").value(this.context)
+                .label("digitMode").value(this.digitMode)
+                .label("digits").value(this.digits)
+                .label("tokens").value(this.tokens)
+                .build();
     }
 }

@@ -19,15 +19,16 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.Either;
 import walkingkooka.convert.Converter;
-import walkingkooka.convert.ConverterContext;
 import walkingkooka.convert.Converters;
+import walkingkooka.math.Maths;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,16 +50,7 @@ final class SpreadsheetNumberParsePatternsConverter implements Converter<Express
     public boolean canConvert(final Object value,
                               final Class<?> type,
                               final ExpressionNumberConverterContext context) {
-        return value instanceof String &&
-                (Byte.class == type ||
-                        Short.class == type ||
-                        Integer.class == type ||
-                        Long.class == type ||
-                        Float.class == type ||
-                        Double.class == type ||
-                        BigDecimal.class == type ||
-                        BigInteger.class == type ||
-                        Number.class == type);
+        return value instanceof String && ExpressionNumber.isClass(type);
     }
 
     /**
@@ -79,19 +71,24 @@ final class SpreadsheetNumberParsePatternsConverter implements Converter<Express
 
     private <T> Either<T, String> convertString(final String value,
                                                 final Class<T> type,
-                                                final ConverterContext context) {
+                                                final ExpressionNumberConverterContext context) {
         Either<T, String> result = null;
 
         final TextCursor cursor = TextCursors.charSequence(value);
         final TextCursorSavePoint save = cursor.save();
 
         // try all patterns until success or return failure.
-        for (List<SpreadsheetNumberParsePatternsComponent> pattern : this.pattern.patterns) {
-            final SpreadsheetNumberParsePatternsRequest request = SpreadsheetNumberParsePatternsRequest.with(pattern.iterator(), context);
-            request.nextComponent(cursor);
-            if (cursor.isEmpty() && false == request.isRequired()) {
-                result = NUMBER.convert(request.computeValue(), type, context);
-                break; // conversion successful.
+        for (final List<SpreadsheetNumberParsePatternsComponent> pattern : this.pattern.patterns) {
+            final SpreadsheetNumberParsePatternsRequest request = SpreadsheetNumberParsePatternsRequest.with(
+                    pattern.iterator(),
+                    SpreadsheetNumberParsePatternsMode.VALUE,
+                    context
+            );
+            if (request.nextComponent(cursor) && cursor.isEmpty()) {
+                final List<ParserToken> tokens = request.tokens;
+                result = tokens.isEmpty() ?
+                        null :
+                        convertString0(save, tokens, type, context);
             }
             save.restore();
         }
@@ -104,9 +101,34 @@ final class SpreadsheetNumberParsePatternsConverter implements Converter<Express
     }
 
     /**
-     * A {@link Converter} that converts the parsed {@link BigDecimal} to the requested {@link Number}.
+     * First convert the {@link ParserToken} to a {@link walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken} and then a {@link ExpressionNumber}
+     * and then to the requested target type.
      */
-    private final static Converter<ConverterContext> NUMBER = Converters.numberNumber();
+    private <T> Either<T, String> convertString0(final TextCursorSavePoint save,
+                                                 final List<ParserToken> tokens,
+                                                 final Class<T> targetType,
+                                                 final ExpressionNumberConverterContext context) {
+        final ExpressionNumber number = SpreadsheetParserToken.number(
+                tokens,
+                save.textBetween().toString()
+        ).toNumber(SpreadsheetNumberParsePatternsConverterExpressionEvaluationContext.with(context));
+
+        // targetType will be either a Number or ExpressionNumber, the former requires a convert from ExpressionNumber.value
+        return Maths.isNumberClass(targetType) ?
+                NUMBER.convert(
+                        number,
+                        targetType,
+                        context
+                ).mapRight(old -> save.textBetween().toString()) :
+                ExpressionNumber.isClass(targetType) ?
+                        Either.left((T) number) :
+                        failConversion(save.textBetween().toString(), targetType);
+    }
+
+    /**
+     * A {@link Converter} that accepts a {@link ExpressionNumber} and converts it to a {@link Number}.
+     */
+    private final static Converter<ExpressionNumberConverterContext> NUMBER = ExpressionNumber.fromConverter(Converters.numberNumber());
 
     @Override
     public String toString() {

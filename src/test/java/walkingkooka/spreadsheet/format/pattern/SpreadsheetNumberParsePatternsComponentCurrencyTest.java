@@ -18,38 +18,89 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public final class SpreadsheetNumberParsePatternsComponentCurrencyTest extends SpreadsheetNumberParsePatternsComponentTestCase2<SpreadsheetNumberParsePatternsComponentCurrency> {
 
     @Test
     public void testIncomplete() {
-        this.parseFails(CURRENCY.substring(0, CURRENCY.length() - 1), "");
+        this.parseFails(CURRENCY.substring(0, 1));
     }
 
     @Test
-    public void testDifferentCase() {
-        assertNotEquals(CURRENCY, CURRENCY.toUpperCase(), "currency upper case should be different");
-        this.parseFails(CURRENCY.toUpperCase());
+    public void testIncomplete2() {
+        this.parseFails(CURRENCY.substring(0, 1) + "!");
     }
 
     @Test
-    public void testToken() {
-        this.parseAndCheck(CURRENCY,
-                "",
-                null,
-                true);
+    public void testIncomplete3() {
+        this.parseFails(CURRENCY.substring(0, 2));
+    }
+
+    @Test
+    public void testIncomplete4() {
+        this.parseFails(CURRENCY.substring(0, 2) + "!");
+    }
+
+    @Test
+    public void testToken1() {
+        assertEquals(CURRENCY.toUpperCase(), CURRENCY);
+
+        this.parseAndCheck2(
+                CURRENCY,
+                ""
+        );
     }
 
     @Test
     public void testToken2() {
-        final String after = "123";
+        assertEquals(CURRENCY.toUpperCase(), CURRENCY);
 
-        this.parseAndCheck(CURRENCY + after,
-                after,
-                null,
-                true);
+        this.parseAndCheck2(
+                CURRENCY,
+                "!"
+        );
+    }
+
+    @Test
+    public void testToken3() {
+        assertNotEquals(CURRENCY.toLowerCase(), CURRENCY);
+
+        this.parseAndCheck2(
+                CURRENCY.toLowerCase(),
+                ""
+        );
+    }
+
+    @Test
+    public void testToken4() {
+        assertNotEquals(CURRENCY.toLowerCase(), CURRENCY);
+
+        this.parseAndCheck2(
+                CURRENCY.toLowerCase(),
+                "!"
+        );
+    }
+
+    @Test
+    public void testCaseUnimportant() {
+        this.parseAndCheck2(
+                CURRENCY.toLowerCase().substring(0, 1) + CURRENCY.toUpperCase().substring(1),
+                ""
+        );
+    }
+
+    final void parseAndCheck2(final String text,
+                              final String textAfter) {
+        this.parseAndCheck2(
+                text,
+                textAfter,
+                NEXT_CALLED,
+                SpreadsheetParserToken.currencySymbol(text, text)
+        );
     }
 
     @Test
