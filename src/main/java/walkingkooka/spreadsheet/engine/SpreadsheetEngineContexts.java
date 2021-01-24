@@ -22,7 +22,9 @@ import walkingkooka.math.Fraction;
 import walkingkooka.reflect.PublicStaticHelper;
 import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 import walkingkooka.tree.expression.FunctionExpressionName;
@@ -38,7 +40,8 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetEngineContext}
      */
-    public static SpreadsheetEngineContext basic(final ExpressionNumberKind expressionNumberKind,
+    public static SpreadsheetEngineContext basic(final Parser<SpreadsheetParserContext> numberParser,
+                                                 final ExpressionNumberKind expressionNumberKind,
                                                  final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                                  final SpreadsheetEngine engine,
                                                  final SpreadsheetLabelStore labelStore,
@@ -48,7 +51,9 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final int width,
                                                  final Function<BigDecimal, Fraction> fractioner,
                                                  final SpreadsheetFormatter defaultSpreadsheetFormatter) {
-        return BasicSpreadsheetEngineContext.with(expressionNumberKind,
+        return BasicSpreadsheetEngineContext.with(
+                numberParser,
+                expressionNumberKind,
                 functions,
                 engine,
                 labelStore,
@@ -57,7 +62,8 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                 nameToColor,
                 width,
                 fractioner,
-                defaultSpreadsheetFormatter);
+                defaultSpreadsheetFormatter
+        );
     }
 
     /**
