@@ -58,6 +58,7 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
         implements ConverterTesting {
 
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
+    final static char VALUE_SEPARATOR = ',';
 
     SpreadsheetParsePatternsTestCase() {
         super();
@@ -393,9 +394,12 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
     }
 
     private SpreadsheetParserContext parserContext() {
-        return SpreadsheetParserContexts.basic(this.dateTimeContext(),
+        return SpreadsheetParserContexts.basic(
+                this.dateTimeContext(),
                 this.decimalNumberContext(),
-                EXPRESSION_NUMBER_KIND);
+                EXPRESSION_NUMBER_KIND,
+                VALUE_SEPARATOR
+        );
     }
 
     // ConverterTesting.................................................................................................

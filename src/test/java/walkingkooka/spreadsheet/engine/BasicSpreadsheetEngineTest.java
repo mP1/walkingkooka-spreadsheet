@@ -118,6 +118,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private final static MathContext MATH_CONTEXT = MathContext.DECIMAL32;
 
     private final static int TWO_DIGIT_YEAR = 20;
+    private final static char VALUE_SEPARATOR = ';';
 
     @Test
     public void testWithNullIdFails() {
@@ -4988,7 +4989,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
             public SpreadsheetParserToken parseFormula(final String formula) {
                 return Cast.to(SpreadsheetParsers.expression()
                         .orFailIfCursorNotEmpty(ParserReporters.basic())
-                        .parse(TextCursors.charSequence(formula), SpreadsheetParserContexts.basic(DateTimeContexts.fake(), converterContext(), this.expressionNumberKind()))
+                        .parse(
+                                TextCursors.charSequence(formula),
+                                SpreadsheetParserContexts.basic(
+                                        DateTimeContexts.fake(),
+                                        converterContext(),
+                                        this.expressionNumberKind(),
+                                        VALUE_SEPARATOR
+                                )
+                        )
                         .get());
             }
 
@@ -5224,7 +5233,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                 SpreadsheetParserContexts.basic(
                                     this.dateTimeContext(),
                                         this.decimalNumberContext(),
-                                        expressionNumberKind
+                                        expressionNumberKind,
+                                        VALUE_SEPARATOR
                                 )
                         ).orElseThrow(() -> new AssertionError("Failed to arseFormula " + CharSequences.quote(text)))
                         .cast(SpreadsheetParserToken.class);

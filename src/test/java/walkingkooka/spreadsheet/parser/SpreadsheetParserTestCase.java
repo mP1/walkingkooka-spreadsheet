@@ -31,6 +31,7 @@ public abstract class SpreadsheetParserTestCase<P extends Parser<SpreadsheetPars
         TypeNameTesting<P> {
 
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
+    final static char VALUE_SEPARATOR = ',';
 
     SpreadsheetParserTestCase() {
         super();
@@ -38,9 +39,12 @@ public abstract class SpreadsheetParserTestCase<P extends Parser<SpreadsheetPars
 
     @Override
     public final SpreadsheetParserContext createContext() {
-        return SpreadsheetParserContexts.basic(this.dateTimeContext(),
+        return SpreadsheetParserContexts.basic(
+                this.dateTimeContext(),
                 this.decimalNumberContext(),
-                EXPRESSION_NUMBER_KIND);
+                EXPRESSION_NUMBER_KIND,
+                VALUE_SEPARATOR
+        );
     }
 
     // TypeNameTesting .........................................................................................

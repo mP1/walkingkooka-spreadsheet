@@ -1117,7 +1117,8 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, 'P')
                 .set(SpreadsheetMetadataPropertyName.PRECISION, 10)
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.DOWN)
-                .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20);
+                .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20)
+                .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, ';');
 
         assertSame(metadata.parserContext(), metadata.parserContext());
     }
