@@ -695,13 +695,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * Only {@link SpreadsheetNumberParserToken} return true
-     */
-    public final boolean isExpressionNumber() {
-        return this instanceof SpreadsheetNumberParserToken;
-    }
-
-    /**
      * Only {@link SpreadsheetFunctionParserToken} returns true
      */
     public final boolean isFunction() {
@@ -753,7 +746,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     /**
      * Only {@link SpreadsheetGroupingSeparatorSymbolParserToken} return true
      */
-    public final boolean isGroupingSeparator() {
+    public final boolean isGroupingSeparatorSymbol() {
         return this instanceof SpreadsheetGroupingSeparatorSymbolParserToken;
     }
 
@@ -888,6 +881,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public final boolean isNotEqualsSymbol() {
         return this instanceof SpreadsheetNotEqualsSymbolParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetNumberParserToken} return true
+     */
+    public final boolean isNumber() {
+        return this instanceof SpreadsheetNumberParserToken;
     }
 
     /**
