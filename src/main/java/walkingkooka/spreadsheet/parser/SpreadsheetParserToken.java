@@ -142,7 +142,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     /**
      * {@see SpreadsheetDigitsParserToken}
      */
-    public static SpreadsheetDigitsParserToken digits(final BigInteger value, final String text) {
+    public static SpreadsheetDigitsParserToken digits(final String value, final String text) {
         return SpreadsheetDigitsParserToken.with(value, text);
     }
 
@@ -1262,7 +1262,7 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                                                          final JsonNodeUnmarshallContext context) {
         return unmarshallLeafParserToken(
                 node,
-                BigInteger.class,
+                String.class,
                 context,
                 SpreadsheetParserToken::digits
         );
