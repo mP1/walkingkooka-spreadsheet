@@ -234,6 +234,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitValueSeparator(final Character valueSeparator) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitViewportCell(final SpreadsheetCellReference cell) {
         throw new UnsupportedOperationException();
     }

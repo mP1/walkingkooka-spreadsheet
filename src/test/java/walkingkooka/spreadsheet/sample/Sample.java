@@ -139,6 +139,7 @@ public final class Sample {
                     .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetPattern.parseTimeFormatPattern("hh:mm"))
                     .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetPattern.parseTimeParsePatterns("hh:mmhh:mm:ss.000"))
                     .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 31)
+                    .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, ',')
                     .set(SpreadsheetMetadataPropertyName.WIDTH, 10);
 
             for (int i = 0; i < SpreadsheetMetadata.MAX_NUMBER_COLOR + 2; i++) {
