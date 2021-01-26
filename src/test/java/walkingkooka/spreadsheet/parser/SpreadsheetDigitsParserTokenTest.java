@@ -22,12 +22,10 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import walkingkooka.visit.Visiting;
 
-import java.math.BigInteger;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class SpreadsheetDigitsParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetDigitsParserToken, BigInteger> {
+public final class SpreadsheetDigitsParserTokenTest extends SpreadsheetNonSymbolParserTokenTestCase<SpreadsheetDigitsParserToken, String> {
 
     @Test
     public void testAccept() {
@@ -77,22 +75,22 @@ public final class SpreadsheetDigitsParserTokenTest extends SpreadsheetNonSymbol
 
     @Override
     public String text() {
-        return "" + this.value();
+        return this.value();
     }
 
     @Override
-    BigInteger value() {
-        return BigInteger.ONE;
+    String value() {
+        return "1";
     }
 
     @Override
-    SpreadsheetDigitsParserToken createToken(final BigInteger value, final String text) {
+    SpreadsheetDigitsParserToken createToken(final String value, final String text) {
         return SpreadsheetDigitsParserToken.with(value, text);
     }
 
     @Override
     public SpreadsheetDigitsParserToken createDifferentToken() {
-        return SpreadsheetDigitsParserToken.with(BigInteger.ZERO, "'different'");
+        return SpreadsheetDigitsParserToken.with("different", "'different'");
     }
 
     @Override

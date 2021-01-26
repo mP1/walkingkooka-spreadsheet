@@ -22,16 +22,16 @@ import java.util.Objects;
 /**
  * Represents a number or sequence of digits without a decimal point or sign.
  */
-public final class SpreadsheetDigitsParserToken extends SpreadsheetNonSymbolParserToken<BigInteger> {
+public final class SpreadsheetDigitsParserToken extends SpreadsheetNonSymbolParserToken<String> {
 
-    static SpreadsheetDigitsParserToken with(final BigInteger value, final String text) {
+    static SpreadsheetDigitsParserToken with(final String value, final String text) {
         checkValue(value);
         Objects.requireNonNull(text, "text");
 
         return new SpreadsheetDigitsParserToken(value, text);
     }
 
-    private SpreadsheetDigitsParserToken(final BigInteger value, final String text) {
+    private SpreadsheetDigitsParserToken(final String value, final String text) {
         super(value, text);
     }
 
