@@ -27,7 +27,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.text.cursor.parser.ParserTokens;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
@@ -101,7 +100,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
 
     @Test
     public void testParseHourMinutes() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm",
                 "11:58",
                 hour11(),
@@ -112,7 +111,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
 
     @Test
     public void testParseHourMinutesSeconds() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm:ss",
                 "11:58:59",
                 hour11(),
@@ -125,7 +124,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
 
     @Test
     public void testParseHourMinutesSecondsDecimal() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm:ss.",
                 "11:58:59.",
                 hour11(),
@@ -139,7 +138,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
 
     @Test
     public void testParseHourMinutesSecondsMillis() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm:ss.0",
                 "11:58:59.1",
                 hour11(),
@@ -148,13 +147,13 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
                 colon(),
                 second59(),
                 decimalSeparator(),
-                milli( 100 * 1000, "1")
+                milli(100 * 1000, "1")
         );
     }
 
     @Test
     public void testParseHourMinutesSeconds2Millis() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm:ss.00",
                 "11:58:59.12",
                 hour11(),
@@ -163,13 +162,13 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
                 colon(),
                 second59(),
                 decimalSeparator(),
-                milli( 120 * 1000, "12")
+                milli(120 * 1000, "12")
         );
     }
 
     @Test
     public void testParseHourMinutesSeconds3Millis() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm:ss.000",
                 "11:58:59.123",
                 hour11(),
@@ -178,13 +177,13 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
                 colon(),
                 second59(),
                 decimalSeparator(),
-                milli( 123 * 1000, "123")
+                milli(123 * 1000, "123")
         );
     }
 
     @Test
     public void testParseHourMinutesSeconds3Millis2() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm:ss.000",
                 "11:58:59.12",
                 hour11(),
@@ -193,13 +192,13 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
                 colon(),
                 second59(),
                 decimalSeparator(),
-                milli( 120 * 1000, "12")
+                milli(120 * 1000, "12")
         );
     }
 
     @Test
     public void testParseHourMinutesSeconds3Millis3() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm:ss.000",
                 "11:58:59.1",
                 hour11(),
@@ -208,13 +207,13 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
                 colon(),
                 second59(),
                 decimalSeparator(),
-                milli( 100 * 1000, "1")
+                milli(100 * 1000, "1")
         );
     }
 
     @Test
     public void testParseHourMinutesSeconds3Millis4() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm:ss.000",
                 "11:58:59.",
                 hour11(),
@@ -228,7 +227,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
 
     @Test
     public void testParseHourMinutesSecondsAmpm() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm:ss AM/PM",
                 "11:58:59 PM",
                 hour11(),
@@ -243,7 +242,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
 
     @Test
     public void testParseHourMinutesSecondsMillisAmpm() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm:ss.0 AM/PM",
                 "11:58:59.1 PM",
                 hour11(),
@@ -252,7 +251,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
                 colon(),
                 second59(),
                 decimalSeparator(),
-                milli( 100 * 1000, "1"),
+                milli(100 * 1000, "1"),
                 textLiteralWhitespace(),
                 pm()
         );
@@ -260,7 +259,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
 
     @Test
     public void testParseHourDefaultsMinutes() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh",
                 "11",
                 hour11()
@@ -269,7 +268,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
 
     @Test
     public void testParseDateTimeYearMonthDay() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "yyyymmdd",
                 "20001231",
                 year2000(),
@@ -280,7 +279,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
 
     @Test
     public void testParseDateTimeYear() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "yyyy",
                 "2000",
                 year2000()
@@ -289,7 +288,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
 
     @Test
     public void testParseDateTimeYearMonth() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "yyyymm",
                 "200012",
                 year2000(),
@@ -299,7 +298,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
 
     @Test
     public void testParseDateTrailingSeparator() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "yyyymm;",
                 "200012",
                 year2000(),
@@ -309,7 +308,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
 
     @Test
     public void testParseDateTimeMultiplePatterns() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "\"A\"ddmmyyyy hhmmss;\"B\"ddmmyyyy hhmmss",
                 "B31122000 115859",
                 textLiteral("B"),
@@ -325,7 +324,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
 
     @Test
     public void testParseDateTimeMultiplePatternsTrailingSeparator() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "\"A\"ddmmyyyy hhmmss;\"B\"ddmmyyyy hhmmss;",
                 "B31122000 115859",
                 textLiteral("B"),
@@ -341,7 +340,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
 
     @Test
     public void testParseDateTimeCommas() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "dd,mm,yyyy,hh,mm,ss",
                 "31,12,2000,11,58,59",
                 day31(),
@@ -360,7 +359,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
 
     @Test
     public void testParseDateBackslashEscaped() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "dd\\dmmm\\myyyy\\yhh\\hmm\\mss\\s",
                 "31dDecm2000y11h58m59s",
                 day31(),
@@ -467,11 +466,6 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
     SpreadsheetFormatDateTimeParserToken createFormatParserToken(final List<ParserToken> tokens,
                                                                  final String text) {
         return SpreadsheetFormatParserToken.dateTime(tokens, text);
-    }
-
-    @Override
-    ParserToken parserParserToken(final LocalDateTime value, final String text) {
-        return ParserTokens.localDateTime(value, text);
     }
 
     @Override

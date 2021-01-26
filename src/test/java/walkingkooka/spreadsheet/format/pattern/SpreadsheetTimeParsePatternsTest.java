@@ -27,7 +27,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.text.cursor.parser.ParserTokens;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
@@ -110,7 +109,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseHour9() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "h",
                 "9",
                 hour9()
@@ -119,7 +118,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseHourHour9() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh",
                 "9",
                 hour9()
@@ -128,7 +127,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseHour9Colon() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "h:",
                 "9:",
                 hour9(),
@@ -138,7 +137,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseHour11() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh",
                 "11",
                 hour11()
@@ -147,7 +146,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseHourMinutes() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm",
                 "11:58",
                 hour11(),
@@ -158,7 +157,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseHourMinutesSeconds() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm:ss",
                 "11:58:59",
                 hour11(),
@@ -171,7 +170,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseHourMinutesSecondsDecimal() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm:ss.",
                 "9:58:59.",
                 hour9(),
@@ -185,7 +184,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseHourMinutesSecondsDecimal2() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm:ss.",
                 "13:58:59.",
                 hour13(),
@@ -199,7 +198,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseHourMinutesSecondsDecimal1Millis() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm:ss.0",
                 "11:58:59.1",
                 hour11(),
@@ -214,7 +213,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseHourMinutesSecondsDecimal1Millis2() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm:ss.0",
                 "11:58:59.",
                 hour11(),
@@ -228,7 +227,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseHourMinutesSecondsDecimal2Millis() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm:ss.00",
                 "11:58:59.12",
                 hour11(),
@@ -237,13 +236,13 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
                 colon(),
                 second59(),
                 decimalSeparator(),
-                SpreadsheetParserToken.millisecond( 120 * 1000, "12")
+                SpreadsheetParserToken.millisecond(120 * 1000, "12")
         );
     }
 
     @Test
     public void testParseHourMinutesSecondsDecimal3Millis() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm:ss.000",
                 "11:58:59.123",
                 hour11(),
@@ -252,13 +251,13 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
                 colon(),
                 second59(),
                 decimalSeparator(),
-                SpreadsheetParserToken.millisecond( 123 * 1000, "123")
+                SpreadsheetParserToken.millisecond(123 * 1000, "123")
         );
     }
 
     @Test
     public void testParseHourMinutesSecondsDecimal3Millis2() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm:ss.000",
                 "11:58:59.12",
                 hour11(),
@@ -267,13 +266,13 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
                 colon(),
                 second59(),
                 decimalSeparator(),
-                SpreadsheetParserToken.millisecond( 120 * 1000, "12")
+                SpreadsheetParserToken.millisecond(120 * 1000, "12")
         );
     }
 
     @Test
     public void testParseHourMinutesSecondsDecimal3Millis3() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm:ss.000",
                 "11:58:59.1",
                 hour11(),
@@ -282,13 +281,13 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
                 colon(),
                 second59(),
                 decimalSeparator(),
-                SpreadsheetParserToken.millisecond( 100 * 1000, "1")
+                SpreadsheetParserToken.millisecond(100 * 1000, "1")
         );
     }
 
     @Test
     public void testParseHourMinutesSecondsDecimal3Millis4() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm:ss.000",
                 "11:58:59.",
                 hour11(),
@@ -302,7 +301,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseHourMinutesSecondsDecimal3Millis5() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm:ss.000",
                 "11:58:59",
                 hour11(),
@@ -315,7 +314,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseHourMinutesAm() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm AM/PM",
                 "11:58 AM",
                 hour11(),
@@ -328,7 +327,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseHourMinutesPm() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm AM/PM",
                 "11:58 PM",
                 hour11(),
@@ -341,7 +340,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseHourMinutesSecondsAmpm() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm:ss AM/PM",
                 "11:58:59 PM",
                 hour11(),
@@ -356,7 +355,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseHourMinutesSecondsMillisAmpm() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh:mm:ss.0 AM/PM",
                 "11:58:59.1 PM",
                 hour11(),
@@ -373,7 +372,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseHourDefaultsMinutes() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh",
                 "11",
                 hour11()
@@ -382,7 +381,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParsePatternTrailingSeparator() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh;",
                 "11",
                 hour11()
@@ -391,7 +390,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseHourMultiplePatterns() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "\"A\"hhmmss;\"B\"hhmmss",
                 "B115859",
                 textLiteral("B"),
@@ -403,7 +402,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseHourMultiplePatternsTrailingSeparator() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "\"A\"hhmmss;\"B\"hhmmss;",
                 "B115859",
                 textLiteral("B"),
@@ -415,7 +414,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseHourComma() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh,mm,ss;",
                 "11,58,59",
                 hour11(),
@@ -428,7 +427,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseHourBackslashEscaped() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "hh\\hmm\\mss\\s",
                 "11h58m59s",
                 hour11(),
@@ -442,7 +441,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseSeconds9() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "s",
                 "9",
                 second9()
@@ -451,7 +450,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseSeconds59() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "ss",
                 "59",
                 second59()
@@ -460,7 +459,7 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseSecondsDecimalSeparator() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "s.",
                 "9.",
                 second9(),
@@ -536,11 +535,6 @@ public final class SpreadsheetTimeParsePatternsTest extends SpreadsheetParsePatt
     SpreadsheetFormatTimeParserToken createFormatParserToken(final List<ParserToken> tokens,
                                                              final String text) {
         return SpreadsheetFormatParserToken.time(tokens, text);
-    }
-
-    @Override
-    ParserToken parserParserToken(final LocalTime value, final String text) {
-        return ParserTokens.localTime(value, text);
     }
 
     @Override

@@ -329,31 +329,8 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
 
     final void parseAndCheck2(final String pattern,
                               final String text,
-                              final V value) {
-        this.parseAndCheck2(pattern,
-                text,
-                value,
-                "");
-    }
-
-    final void parseAndCheck2(final String pattern,
-                              final String text,
-                              final V value,
-                              final String textAfter) {
-        this.parseAndCheck(this.parseString(pattern).parser(),
-                this.parserContext(),
-                text,
-                this.parserParserToken(value, text),
-                text,
-                textAfter);
-    }
-
-    abstract ParserToken parserParserToken(final V value, final String text);
-
-    final void parseAndCheck3(final String pattern,
-                              final String text,
-                              final SpreadsheetParserToken...tokens) {
-        this.parseAndCheck3(
+                              final SpreadsheetParserToken... tokens) {
+        this.parseAndCheck2(
                 pattern,
                 text,
                 "",
@@ -361,7 +338,7 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
         );
     }
 
-    final void parseAndCheck3(final String pattern,
+    final void parseAndCheck2(final String pattern,
                               final String text,
                               final String textAfter,
                               final SpreadsheetParserToken... tokens) {
@@ -393,7 +370,7 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
                 text);
     }
 
-    private SpreadsheetParserContext parserContext() {
+    final SpreadsheetParserContext parserContext() {
         return SpreadsheetParserContexts.basic(
                 this.dateTimeContext(),
                 this.decimalNumberContext(),
