@@ -245,6 +245,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
+     * {@see SpreadsheetGroupingSeparatorSymbolParserToken}
+     */
+    public static SpreadsheetGroupingSeparatorSymbolParserToken groupingSeparatorSymbol(final String value, final String text) {
+        return SpreadsheetGroupingSeparatorSymbolParserToken.with(value, text);
+    }
+
+    /**
      * {@see SpreadsheetHourParserToken}
      */
     public static SpreadsheetHourParserToken hour(final int value, final String text) {
@@ -741,6 +748,13 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public final boolean isGroup() {
         return this instanceof SpreadsheetGroupParserToken;
+    }
+
+    /**
+     * Only {@link SpreadsheetGroupingSeparatorSymbolParserToken} return true
+     */
+    public final boolean isGroupingSeparator() {
+        return this instanceof SpreadsheetGroupingSeparatorSymbolParserToken;
     }
 
     /**
@@ -1448,6 +1462,11 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerLeafParserToken(
+                SpreadsheetGroupingSeparatorSymbolParserToken.class,
+                SpreadsheetParserToken::unmarshallGroupingSeparatorSymbol
+        );
+
+        registerLeafParserToken(
                 SpreadsheetLessThanEqualsSymbolParserToken.class,
                 SpreadsheetParserToken::unmarshallLessThanEqualsSymbol
         );
@@ -1601,6 +1620,15 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 node,
                 context,
                 SpreadsheetParserToken::greaterThanSymbol
+        );
+    }
+
+    static SpreadsheetGroupingSeparatorSymbolParserToken unmarshallGroupingSeparatorSymbol(final JsonNode node,
+                                                                                           final JsonNodeUnmarshallContext context) {
+        return unmarshallSymbolParserToken(
+                node,
+                context,
+                SpreadsheetParserToken::groupingSeparatorSymbol
         );
     }
 
