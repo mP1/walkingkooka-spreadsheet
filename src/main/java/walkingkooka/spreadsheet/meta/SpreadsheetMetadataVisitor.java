@@ -230,6 +230,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitValueSeparator(final Character valueSeparator) {
+        // nop
+    }
+
     protected void visitViewportCell(final SpreadsheetCellReference cell) {
         // nop
     }

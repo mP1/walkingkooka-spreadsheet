@@ -240,6 +240,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     public final static SpreadsheetMetadataPropertyName<Integer> TWO_DIGIT_YEAR = registerConstant(SpreadsheetMetadataPropertyNameTwoYearDigit.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the <code>value-separator</code> {@link Character}
+     */
+    public final static SpreadsheetMetadataPropertyName<Character> VALUE_SEPARATOR = registerConstant(SpreadsheetMetadataPropertyNameValueSeparator.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>viewport-cell {@link SpreadsheetCoordinates}</code>
      */
     public final static SpreadsheetMetadataPropertyName<SpreadsheetCellReference> VIEWPORT_CELL = registerConstant(SpreadsheetMetadataPropertyNameViewportCell.instance());
