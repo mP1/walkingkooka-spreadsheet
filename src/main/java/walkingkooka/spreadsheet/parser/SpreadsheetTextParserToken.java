@@ -20,9 +20,6 @@ import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.visit.Visiting;
 
 import java.util.List;
-import java.util.Objects;
-
-import java.util.Objects;
 
 /**
  * Holds a text expression in both forms an apostrophe prefixed string literal and a double quoted string.

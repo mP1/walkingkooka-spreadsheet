@@ -17,7 +17,6 @@
 
 package walkingkooka.spreadsheet.engine;
 
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTokenVisitor;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTokenVisitorTesting;
 

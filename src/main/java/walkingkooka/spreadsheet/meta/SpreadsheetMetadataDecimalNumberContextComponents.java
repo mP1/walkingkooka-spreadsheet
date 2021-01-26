@@ -23,11 +23,8 @@ import walkingkooka.math.DecimalNumberContexts;
 
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.text.DecimalFormatSymbols;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
-import java.util.function.Function;
 
 /**
  * Handles building a {@link DecimalNumberContext} for {@link SpreadsheetMetadata#decimalNumberContext()}.

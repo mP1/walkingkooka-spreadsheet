@@ -16,7 +16,6 @@
  */
 package walkingkooka.spreadsheet.parser;
 
-import java.math.BigInteger;
 import java.util.Objects;
 
 /**

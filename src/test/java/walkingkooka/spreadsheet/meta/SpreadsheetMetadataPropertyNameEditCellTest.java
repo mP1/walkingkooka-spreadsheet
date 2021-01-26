@@ -18,9 +18,6 @@
 package walkingkooka.spreadsheet.meta;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
-
-import java.util.Locale;
 
 
 public final class SpreadsheetMetadataPropertyNameEditCellTest extends SpreadsheetMetadataPropertyNameSpreadsheetCellReferenceTestCase<SpreadsheetMetadataPropertyNameEditCell> {
