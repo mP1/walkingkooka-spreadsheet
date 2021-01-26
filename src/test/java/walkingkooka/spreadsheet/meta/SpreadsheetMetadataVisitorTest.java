@@ -432,6 +432,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitValueSeparator() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitValueSeparator(final Character c) {
+                this.visited = c;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, '.');
+    }
+
+    @Test
     public void testVisitViewportCell() {
         new TestSpreadsheetMetadataVisitor() {
             @Override
