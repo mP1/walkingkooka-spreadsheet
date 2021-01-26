@@ -17,16 +17,10 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.TypeNameTesting;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitorTesting;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.parser.ParserTesting2;
-
-import java.time.temporal.ChronoField;
 
 public abstract class SpreadsheetParsePatterns2ParserTestCase<P extends SpreadsheetParsePatterns2Parser>
         extends SpreadsheetParsePatterns2TestCase<P>

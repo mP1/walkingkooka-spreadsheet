@@ -17,8 +17,6 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import walkingkooka.collect.list.Lists;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatAmPmParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatCurrencyParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
@@ -33,9 +31,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatThousandsParserTo
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatTimeParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatYearParserToken;
 import walkingkooka.visit.Visiting;
-
-import java.time.temporal.ChronoField;
-import java.util.List;
 
 final class SpreadsheetTimeParsePatternsSpreadsheetFormatParserTokenVisitor extends SpreadsheetParsePatternsSpreadsheetFormatParserTokenVisitor<SpreadsheetFormatTimeParserToken> {
 

@@ -19,10 +19,7 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
-import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitor;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserTokenVisitorTesting;
-
-import java.time.temporal.ChronoField;
 
 public final class SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitorTest
         extends SpreadsheetParsePatterns2TestCase<SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor>
