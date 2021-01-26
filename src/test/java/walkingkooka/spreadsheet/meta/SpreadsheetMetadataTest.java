@@ -234,7 +234,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, '%')
                         .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, '+')
                         .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetPattern.parseTimeFormatPattern("H:mm:ss AM/PM"))
-                        .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetPattern.parseTimeParsePatterns("H:mm:ss AM/PM;H:mm:ss AM/PM;H:mm:ss AM/PM;H:mm AM/PM")),
+                        .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetPattern.parseTimeParsePatterns("H:mm:ss AM/PM;H:mm:ss AM/PM;H:mm:ss AM/PM;H:mm AM/PM"))
+                        .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, ','),
                 SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH).loadFromLocale());
     }
 
