@@ -139,42 +139,42 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
 
     @Test
     public void testParseNumber() {
-        this.parseAndCheck2("#.00",
+        this.parseAndCheck3("#.00",
                 "1.23",
                 BigDecimal.valueOf(1.23));
     }
 
     @Test
     public void testParseNumberWithCurrency() {
-        this.parseAndCheck2("$ #.00",
+        this.parseAndCheck3("$ #.00",
                 "$ 1.23",
                 BigDecimal.valueOf(1.23));
     }
 
     @Test
     public void testParseNumberTrailingSeparator() {
-        this.parseAndCheck2("#.00;",
+        this.parseAndCheck3("#.00;",
                 "1.23",
                 BigDecimal.valueOf(1.23));
     }
 
     @Test
     public void testParseNumberFirstPattern() {
-        this.parseAndCheck2("0;0.0%",
+        this.parseAndCheck3("0;0.0%",
                 "9",
                 BigDecimal.valueOf(9));
     }
 
     @Test
     public void testParseNumberSecondPattern() {
-        this.parseAndCheck2("0.0;0$",
+        this.parseAndCheck3("0.0;0$",
                 "9",
                 BigDecimal.valueOf(9));
     }
 
     @Test
     public void testParseNumberSecondPatternTrailingSeparator() {
-        this.parseAndCheck2("$0.00;0.00;",
+        this.parseAndCheck3("$0.00;0.00;",
                 "1.23",
                 BigDecimal.valueOf(1.23));
     }
@@ -206,9 +206,25 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
         return SpreadsheetFormatParserToken.number(tokens, text);
     }
 
-    @Override
-    ParserToken parserParserToken(final BigDecimal value, final String text) {
-        return ParserTokens.bigDecimal(value, text);
+    private void parseAndCheck3(final String pattern,
+                                final String text,
+                                final BigDecimal value) {
+        this.parseAndCheck3(pattern,
+                text,
+                value,
+                "");
+    }
+
+    private void parseAndCheck3(final String pattern,
+                                final String text,
+                                final BigDecimal value,
+                                final String textAfter) {
+        this.parseAndCheck(this.parseString(pattern).parser(),
+                this.parserContext(),
+                text,
+                ParserTokens.bigDecimal(value, text),
+                text,
+                textAfter);
     }
 
     @Override

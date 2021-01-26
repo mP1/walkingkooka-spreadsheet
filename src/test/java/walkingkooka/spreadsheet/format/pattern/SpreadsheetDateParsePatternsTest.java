@@ -27,7 +27,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.text.cursor.parser.ParserTokens;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
@@ -131,7 +130,7 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseDateOnlyPattern() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "dd/mm/yyyy",
                 "31/12/2000",
                 day31(),
@@ -144,7 +143,7 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseDateOnlyPatternSeparator() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "dd/mm/yyyy;",
                 "31/12/2000",
                 day31(),
@@ -157,7 +156,7 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseDateOnlyPatternTwoDigitYear() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "dd/mm/yy",
                 "31/12/20",
                 day31(),
@@ -170,7 +169,7 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseDateOnlyPatternDefaultsYear() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "dd/mm",
                 "31/12",
                 day31(),
@@ -181,7 +180,7 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseDateOnlyPatternDefaultsMonth() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "dd yyyy",
                 "31 2000",
                 day31(),
@@ -192,7 +191,7 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseDateOnlyPatternDefaultsDay() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "mm yyyy",
                 "12 2000",
                 month12(),
@@ -203,7 +202,7 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseDateFirstPattern() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "dd/mm/yyyy;yyyy/mm/dd",
                 "31/12/2000",
                 day31(),
@@ -216,7 +215,7 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseDateSecondPattern() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "dd/mm/yyyy;yyyy/mm/dd",
                 "2000/12/31",
                 year2000(),
@@ -229,7 +228,7 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseDateSecondPatternExtraSeparator() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "dd/mm/yyyy;yyyy/mm/dd;",
                 "2000/12/31",
                 year2000(),
@@ -242,7 +241,7 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseDateShortMonth() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "dd/mmm/yyy;yyyy/mm/dd",
                 "31/Dec/2000",
                 day31(),
@@ -255,7 +254,7 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseDateShortMonthCommas() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "dd,mmm,yyyy",
                 "31,Dec,2000",
                 day31(),
@@ -268,7 +267,7 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
 
     @Test
     public void testParseDateBackslashEscaped() {
-        this.parseAndCheck3(
+        this.parseAndCheck2(
                 "dd\\dmmm\\myyyy\\y",
                 "31dDecm2000y",
                 day31(),
@@ -383,11 +382,6 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
     SpreadsheetFormatDateParserToken createFormatParserToken(final List<ParserToken> tokens,
                                                              final String text) {
         return SpreadsheetFormatParserToken.date(tokens, text);
-    }
-
-    @Override
-    ParserToken parserParserToken(final LocalDate value, final String text) {
-        return ParserTokens.localDate(value, text);
     }
 
     @Override
