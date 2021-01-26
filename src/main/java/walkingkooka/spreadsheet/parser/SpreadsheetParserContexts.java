@@ -29,10 +29,14 @@ public final class SpreadsheetParserContexts implements PublicStaticHelper {
      */
     public static SpreadsheetParserContext basic(final DateTimeContext dateTimeContext,
                                                  final DecimalNumberContext decimalNumberContext,
-                                                 final ExpressionNumberKind expressionNumberKind) {
-        return BasicSpreadsheetParserContext.with(dateTimeContext,
+                                                 final ExpressionNumberKind expressionNumberKind,
+                                                 final char valueSeparator) {
+        return BasicSpreadsheetParserContext.with(
+                dateTimeContext,
                 decimalNumberContext,
-                expressionNumberKind);
+                expressionNumberKind,
+                valueSeparator
+        );
     }
 
     /**

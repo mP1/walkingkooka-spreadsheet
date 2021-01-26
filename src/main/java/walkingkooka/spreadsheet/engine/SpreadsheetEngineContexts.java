@@ -40,6 +40,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
      * {@see BasicSpreadsheetEngineContext}
      */
     public static SpreadsheetEngineContext basic(final Parser<SpreadsheetParserContext> numberParser,
+                                                 final char valueSeparator,
                                                  final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                                  final SpreadsheetEngine engine,
                                                  final SpreadsheetLabelStore labelStore,
@@ -51,6 +52,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final SpreadsheetFormatter defaultSpreadsheetFormatter) {
         return BasicSpreadsheetEngineContext.with(
                 numberParser,
+                valueSeparator,
                 functions,
                 engine,
                 labelStore,

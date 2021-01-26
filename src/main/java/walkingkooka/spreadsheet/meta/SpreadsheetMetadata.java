@@ -532,12 +532,16 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
         // ExpressionNumberKind
         components.getOrNull(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND);
 
+        // valueSeparator
+        final Character valueSeparator = components.getOrNull(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR);
+
         components.reportIfMissing();
 
         return SpreadsheetParserContexts.basic(
                 this.dateTimeContext(),
                 this.decimalNumberContext(),
-                this.expressionNumberKind()
+                this.expressionNumberKind(),
+                valueSeparator
         );
     }
 

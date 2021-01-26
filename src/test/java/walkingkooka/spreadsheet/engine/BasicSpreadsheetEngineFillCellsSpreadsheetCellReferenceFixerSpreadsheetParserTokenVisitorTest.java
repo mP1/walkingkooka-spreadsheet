@@ -33,13 +33,15 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 public final class BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitorTest extends BasicSpreadsheetEngineSpreadsheetParserTokenVisitorTestCase<BasicSpreadsheetEngineFillCellsSpreadsheetCellReferenceFixerSpreadsheetParserTokenVisitor> {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
+    private final static char VALUE_SEPARATOR = ',';
 
     @Test
     public void testZeroZeroOffset() {
         final SpreadsheetParserToken token = SpreadsheetParsers.cellReferences()
                 .parse(TextCursors.charSequence("$A$1"), SpreadsheetParserContexts.basic(DateTimeContexts.fake(),
                         DecimalNumberContexts.american(MathContext.DECIMAL32),
-                        EXPRESSION_NUMBER_KIND))
+                        EXPRESSION_NUMBER_KIND,
+                        VALUE_SEPARATOR))
                 .map(SpreadsheetParserToken.class::cast)
                 .orElseThrow(() -> new Error("Unable to parseFormula"));
         assertSame(token,

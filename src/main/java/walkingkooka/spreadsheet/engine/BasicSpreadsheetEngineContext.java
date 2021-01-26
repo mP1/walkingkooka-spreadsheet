@@ -64,6 +64,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
      * Creates a new {@link BasicSpreadsheetEngineContext}
      */
     static BasicSpreadsheetEngineContext with(final Parser<SpreadsheetParserContext> numberParser,
+                                              final char valueSeparator,
                                               final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                               final SpreadsheetEngine engine,
                                               final SpreadsheetLabelStore labelStore,
@@ -88,6 +89,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
         return new BasicSpreadsheetEngineContext(
                 numberParser,
+                valueSeparator,
                 functions,
                 engine,
                 labelStore,
@@ -104,6 +106,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
      * Private ctor use factory.
      */
     private BasicSpreadsheetEngineContext(final Parser<SpreadsheetParserContext> numberParser,
+                                          final char valueSeparator,
                                           final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                           final SpreadsheetEngine engine,
                                           final SpreadsheetLabelStore labelStore,
@@ -115,9 +118,12 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final SpreadsheetFormatter defaultSpreadsheetFormatter) {
         super();
         this.numberParser = numberParser;
-        this.parserContext = SpreadsheetParserContexts.basic(converterContext,
+        this.parserContext = SpreadsheetParserContexts.basic(
                 converterContext,
-                converterContext.expressionNumberKind());
+                converterContext,
+                converterContext.expressionNumberKind(),
+                valueSeparator
+        );
 
         this.functions = functions;
         this.function = SpreadsheetEngineExpressionEvaluationContextExpressionReferenceExpressionFunction.with(engine, labelStore, this);

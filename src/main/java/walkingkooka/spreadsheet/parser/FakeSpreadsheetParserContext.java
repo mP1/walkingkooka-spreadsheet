@@ -74,4 +74,9 @@ public class FakeSpreadsheetParserContext extends FakeDateTimeContext implements
     public ExpressionNumberKind expressionNumberKind() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public char valueSeparator() {
+        throw new UnsupportedOperationException();
+    }
 }

@@ -19,6 +19,7 @@ package walkingkooka.spreadsheet.parser;
 
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
 import java.math.MathContext;
@@ -36,14 +37,18 @@ final class BasicSpreadsheetParserContext implements SpreadsheetParserContext {
      */
     static BasicSpreadsheetParserContext with(final DateTimeContext dateTimeContext,
                                               final DecimalNumberContext decimalNumberContext,
-                                              final ExpressionNumberKind expressionNumberKind) {
+                                              final ExpressionNumberKind expressionNumberKind,
+                                              final char valueSeparator) {
         Objects.requireNonNull(dateTimeContext, "dateTimeContext");
         Objects.requireNonNull(decimalNumberContext, "decimalNumberContext");
         Objects.requireNonNull(expressionNumberKind, "expressionNumberKind");
 
-        return new BasicSpreadsheetParserContext(dateTimeContext,
+        return new BasicSpreadsheetParserContext(
+                dateTimeContext,
                 decimalNumberContext,
-                expressionNumberKind);
+                expressionNumberKind,
+                valueSeparator
+        );
     }
 
     /**
@@ -51,11 +56,13 @@ final class BasicSpreadsheetParserContext implements SpreadsheetParserContext {
      */
     private BasicSpreadsheetParserContext(final DateTimeContext dateTimeContext,
                                           final DecimalNumberContext decimalNumberContext,
-                                          final ExpressionNumberKind expressionNumberKind) {
+                                          final ExpressionNumberKind expressionNumberKind,
+                                          final char valueSeparator) {
         super();
         this.dateTimeContext = dateTimeContext;
         this.decimalNumberContext = decimalNumberContext;
         this.expressionNumberKind = expressionNumberKind;
+        this.valueSeparator = valueSeparator;
     }
 
     // DateTimeContext..................................................................................................
@@ -149,7 +156,14 @@ final class BasicSpreadsheetParserContext implements SpreadsheetParserContext {
     private final ExpressionNumberKind expressionNumberKind;
 
     @Override
+    public char valueSeparator() {
+        return this.valueSeparator;
+    }
+
+    private final char valueSeparator;
+
+    @Override
     public String toString() {
-        return this.dateTimeContext + " " + this.decimalNumberContext + " " + this.expressionNumberKind;
+        return this.dateTimeContext + " " + this.decimalNumberContext + " " + this.expressionNumberKind + " " + CharSequences.quoteIfChars(this.valueSeparator);
     }
 }

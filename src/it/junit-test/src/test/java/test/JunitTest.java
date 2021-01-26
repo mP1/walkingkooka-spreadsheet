@@ -186,7 +186,8 @@ public class JunitTest {
                         .orFailIfCursorNotEmpty(ParserReporters.basic())
                         .parse(TextCursors.charSequence(formula), SpreadsheetParserContexts.basic(DateTimeContexts.fake(),
                                 metadata.converterContext(),
-                                EXPRESSION_NUMBER_KIND)) // TODO should fetch from metadata prop
+                                EXPRESSION_NUMBER_KIND,
+                                ',')) // TODO should fetch from metadata prop
                         .get());
             }
 

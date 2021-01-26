@@ -30,6 +30,7 @@ import walkingkooka.tree.expression.ExpressionNumberKind;
 import java.math.MathContext;
 import java.util.Locale;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicSpreadsheetParserContextTest implements ClassTesting2<BasicSpreadsheetParserContext>,
@@ -59,13 +60,16 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
             MATH_CONTEXT);
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
+    private final static char VALUE_SEPARATOR = ',';
 
     @Test
     public void testWithNullDateTimeContextFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetParserContext.with(
                 null,
                 DECIMAL_NUMBER_CONTEXT,
-                EXPRESSION_NUMBER_KIND));
+                EXPRESSION_NUMBER_KIND,
+                VALUE_SEPARATOR)
+        );
     }
 
     @Test
@@ -73,7 +77,9 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetParserContext.with(
                 DATE_TIME_CONTEXT,
                 null,
-                EXPRESSION_NUMBER_KIND));
+                EXPRESSION_NUMBER_KIND,
+                VALUE_SEPARATOR)
+        );
     }
 
     @Test
@@ -81,7 +87,9 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetParserContext.with(
                 DATE_TIME_CONTEXT,
                 DECIMAL_NUMBER_CONTEXT,
-                null));
+                null,
+                VALUE_SEPARATOR)
+        );
     }
 
     @Test
@@ -90,8 +98,14 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
     }
 
     @Test
+    public void testValueSeparator() {
+        final BasicSpreadsheetParserContext context = this.createContext();
+        assertEquals(',', context.valueSeparator(), "valueSeparator");
+    }
+
+    @Test
     public void testToString() {
-        this.toStringAndCheck(this.createContext(), DATE_TIME_CONTEXT + " " + DECIMAL_NUMBER_CONTEXT + " " + EXPRESSION_NUMBER_KIND);
+        this.toStringAndCheck(this.createContext(), DATE_TIME_CONTEXT + " " + DECIMAL_NUMBER_CONTEXT + " " + EXPRESSION_NUMBER_KIND + " ','");
     }
 
     @Override
@@ -99,7 +113,9 @@ public final class BasicSpreadsheetParserContextTest implements ClassTesting2<Ba
         return BasicSpreadsheetParserContext.with(
                 DATE_TIME_CONTEXT,
                 DECIMAL_NUMBER_CONTEXT,
-                EXPRESSION_NUMBER_KIND);
+                EXPRESSION_NUMBER_KIND,
+                VALUE_SEPARATOR
+        );
     }
 
     @Override

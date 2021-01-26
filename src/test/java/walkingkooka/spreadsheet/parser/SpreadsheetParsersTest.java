@@ -83,6 +83,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private final static int TWO_DIGIT_YEAR = 20;
     private ExpressionNumberKind expressionNumberKind;
+    private final static char VALUE_SEPARATOR = ',';
 
     /**
      * The name of the test (test method) is important and is used to select a {@link ExpressionNumberKind}.
@@ -2259,6 +2260,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
             @Override
             public ExpressionNumberKind expressionNumberKind() {
                 return kind;
+            }
+
+            @Override
+            public char valueSeparator() {
+                return VALUE_SEPARATOR;
             }
         };
     }

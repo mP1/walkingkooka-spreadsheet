@@ -96,7 +96,8 @@ abstract class SpreadsheetParsePatterns2<F extends SpreadsheetFormatParserToken,
         return SpreadsheetParserContexts.basic(
                 context,
                 context,
-                ExpressionNumberKind.BIG_DECIMAL // ignored
+                ExpressionNumberKind.BIG_DECIMAL, // ignored
+                ',' // ignored
         );
     }
 

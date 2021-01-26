@@ -31,6 +31,8 @@ import java.math.BigDecimal;
 public final class SpreadsheetNumberParsePatternsParserTest extends SpreadsheetNumberParsePatternsTestCase2<SpreadsheetNumberParsePatternsParser>
         implements ParserTesting2<SpreadsheetNumberParsePatternsParser, SpreadsheetParserContext> {
 
+    private final static char VALUE_SEPARATOR = ';';
+
     @Test
     public void testHashInvalidFails() {
         this.parseAndFail2("#", "A");
@@ -513,7 +515,8 @@ public final class SpreadsheetNumberParsePatternsParserTest extends SpreadsheetN
         return SpreadsheetParserContexts.basic(
                 DateTimeContexts.fake(),
                 this.decimalNumberContext(),
-                ExpressionNumberKind.BIG_DECIMAL
+                ExpressionNumberKind.BIG_DECIMAL,
+                VALUE_SEPARATOR
         );
     }
 
