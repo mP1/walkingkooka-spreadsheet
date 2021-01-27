@@ -519,7 +519,7 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
                     .parse(grammarFile, EbnfParserContexts.basic())
                     .orElseThrow(() -> new IllegalStateException("Unable to parse format parsers grammar file."))
                     .cast(EbnfGrammarParserToken.class)
-                    .combinator(predefined, SpreadsheetFormatEbnfParserCombinatorSyntaxTreeTransformer.INSTANCE);
+                    .combinator(predefined, SpreadsheetFormatParsersEbnfParserCombinatorSyntaxTreeTransformer.INSTANCE);
 
 
             COLOR_PARSER = parsers.get(COLOR_IDENTIFIER).cast();
