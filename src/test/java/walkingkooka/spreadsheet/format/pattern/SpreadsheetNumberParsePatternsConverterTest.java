@@ -390,7 +390,7 @@ public final class SpreadsheetNumberParsePatternsConverterTest extends Spreadshe
         this.convertAndCheck2(
                 "%#",
                 PERCENT + "1",
-                BigDecimal.ONE
+                BigDecimal.valueOf(0.01)
         );
     }
 
@@ -398,8 +398,8 @@ public final class SpreadsheetNumberParsePatternsConverterTest extends Spreadshe
     public void testHashPercentBigDecimalDigitPercent() {
         this.convertAndCheck2(
                 "#%",
-                "1" + PERCENT,
-                BigDecimal.ONE
+                "12" + PERCENT,
+                BigDecimal.valueOf(0.12)
         );
     }
 
@@ -407,14 +407,14 @@ public final class SpreadsheetNumberParsePatternsConverterTest extends Spreadshe
     public void testHashPercentBigDecimalDigitDigitDigitPercent() {
         this.convertAndCheck2("#%",
                 "123" + PERCENT,
-                BigDecimal.valueOf(123));
+                BigDecimal.valueOf(1.23));
     }
 
     @Test
     public void testHashDecimalPercentBigDecimalDigitDigitDigitPercent() {
         this.convertAndCheck2("#.#%",
                 "45" + DECIMAL + "6" + PERCENT,
-                BigDecimal.valueOf(45.6));
+                BigDecimal.valueOf(0.456));
     }
 
     // several patterns.................................................................................................
