@@ -83,7 +83,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private final static int TWO_DIGIT_YEAR = 20;
     private ExpressionNumberKind expressionNumberKind;
-    private final static char VALUE_SEPARATOR = ',';
+    private final static char VALUE_SEPARATOR = ';'; // deliberate choice picking something different other than comma
 
     /**
      * The name of the test (test method) is important and is used to select a {@link ExpressionNumberKind}.
@@ -1391,7 +1391,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private void testFunctionWithTwoArguments() {
-        final String text = "xyz(123,456)";
+        final String text = "xyz(123;456)";
         final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), number(123), valueSeparator(), number(456), closeParenthesis()), text);
 
         this.functionParseAndCheck(text, f, text);
@@ -1408,7 +1408,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private void testFunctionWithFourArguments() {
-        final String text = "xyz(1,2,3,4)";
+        final String text = "xyz(1;2;3;4)";
         final SpreadsheetFunctionParserToken f = SpreadsheetParserToken.function(Lists.of(functionName("xyz"), openParenthesis(), number(1), valueSeparator(), number(2), valueSeparator(), number(3), valueSeparator(), number(4), closeParenthesis()), text);
 
         this.functionParseAndCheck(text, f, text);
@@ -2396,7 +2396,7 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     private SpreadsheetParserToken valueSeparator() {
-        return SpreadsheetParserToken.valueSeparatorSymbol(",", ",");
+        return SpreadsheetParserToken.valueSeparatorSymbol("" + VALUE_SEPARATOR, "" + VALUE_SEPARATOR);
     }
 
     // PublicStaticHelperTesting........................................................................................
