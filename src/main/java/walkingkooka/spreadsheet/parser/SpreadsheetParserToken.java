@@ -397,13 +397,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
     }
 
     /**
-     * {@see SpreadsheetPercentageParserToken}
-     */
-    public static SpreadsheetPercentageParserToken percentage(final List<ParserToken> value, final String text) {
-        return SpreadsheetPercentageParserToken.with(value, text);
-    }
-
-    /**
      * {@see SpreadsheetPercentSymbolParserToken}
      */
     public static SpreadsheetPercentSymbolParserToken percentSymbol(final String value, final String text) {
@@ -900,13 +893,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
      */
     public final boolean isParenthesisOpenSymbol() {
         return this instanceof SpreadsheetParenthesisOpenSymbolParserToken;
-    }
-
-    /**
-     * Only {@link SpreadsheetPercentageParserToken} return true
-     */
-    public final boolean isPercentage() {
-        return this instanceof SpreadsheetPercentageParserToken;
     }
 
     /**
@@ -1903,11 +1889,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
         );
 
         registerParentParserToken(
-                SpreadsheetPercentageParserToken.class,
-                SpreadsheetParserToken::unmarshallPercentage
-        );
-
-        registerParentParserToken(
                 SpreadsheetTextParserToken.class,
                 SpreadsheetParserToken::unmarshallText
         );
@@ -2108,15 +2089,6 @@ public abstract class SpreadsheetParserToken implements ParserToken {
                 node,
                 context,
                 SpreadsheetParserToken::negative
-        );
-    }
-
-    static SpreadsheetPercentageParserToken unmarshallPercentage(final JsonNode node,
-                                                                 final JsonNodeUnmarshallContext context) {
-        return unmarshallParentParserToken(
-                node,
-                context,
-                SpreadsheetParserToken::percentage
         );
     }
 

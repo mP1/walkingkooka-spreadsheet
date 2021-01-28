@@ -174,7 +174,7 @@ final class SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer implemen
 
     private static ParserToken percentage(final ParserToken token,
                                           final SpreadsheetParserContext context) {
-        return SpreadsheetParserToken.percentage(clean(token), token.text());
+        return SpreadsheetParserToken.number(clean(token), token.text());
     }
 
     private static List<ParserToken> clean(final ParserToken token) {

@@ -254,28 +254,6 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetPercentageParserToken token) {
-        return this.enter();
-    }
-
-    /**
-     * Replace the percentage and value with a multiply value by 100.
-     */
-    @Override
-    protected void endVisit(final SpreadsheetPercentageParserToken token) {
-        final Expression parameter = this.children.get(0);
-        this.exit();
-        this.add(
-                Expression.divide(
-                        parameter,
-                        Expression.expressionNumber(
-                                this.context.expressionNumberKind().create(100L)
-                        )
-                ),
-                token);
-    }
-
-    @Override
     protected Visiting startVisit(final SpreadsheetPowerParserToken token) {
         return this.enter();
     }

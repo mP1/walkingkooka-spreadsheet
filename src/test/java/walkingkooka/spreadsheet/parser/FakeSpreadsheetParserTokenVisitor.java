@@ -198,16 +198,6 @@ public class FakeSpreadsheetParserTokenVisitor extends SpreadsheetParserTokenVis
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetPercentageParserToken token) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected void endVisit(final SpreadsheetPercentageParserToken token) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     protected Visiting startVisit(final SpreadsheetPowerParserToken token) {
         throw new UnsupportedOperationException();
     }
