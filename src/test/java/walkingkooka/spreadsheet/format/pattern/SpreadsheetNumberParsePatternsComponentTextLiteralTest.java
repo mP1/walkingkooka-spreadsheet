@@ -19,53 +19,26 @@ package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
-
 public final class SpreadsheetNumberParsePatternsComponentTextLiteralTest extends SpreadsheetNumberParsePatternsComponentTestCase2<SpreadsheetNumberParsePatternsComponentTextLiteral> {
 
     private final static String TOKEN = "ghi";
 
     @Test
     public void testDifferentCase() {
-        this.parseFails(TOKEN.toUpperCase());
-    }
-
-    @Test
-    public void testIncomplete() {
-        this.parseAndCheck("gh1",
-                "1",
-                BigDecimal.ZERO,
-                false);
-    }
-
-    @Test
-    public void testToken() {
-        this.parseAndCheck(TOKEN,
+        this.parseAndCheck2(
                 "",
-                BigDecimal.ZERO,
-                true);
+                TOKEN.toUpperCase(),
+                NEXT_CALLED
+        );
     }
 
     @Test
-    public void testToken2() {
-        final String after = "123";
-
-        this.parseAndCheck(TOKEN + after,
-                after,
-                NEXT_CALLED);
-    }
-
-    @Test
-    public void testToken3() {
-        final String after = "123";
-        final String token = "A";
-
-        this.parseAndCheck(SpreadsheetNumberParsePatternsComponentTextLiteral.with(token),
-                token + after,
-                this.createRequest(),
-                after,
-                VALUE_WITHOUT,
-                NEXT_CALLED);
+    public void testMatchingCase() {
+        this.parseAndCheck2(
+                "",
+                TOKEN,
+                NEXT_CALLED
+        );
     }
 
     @Test

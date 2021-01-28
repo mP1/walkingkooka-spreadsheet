@@ -126,7 +126,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
     public void testParseHourMinutesSecondsDecimal() {
         this.parseAndCheck2(
                 "hh:mm:ss.",
-                "11:58:59.",
+                "11:58:59" + DECIMAL,
                 hour11(),
                 colon(),
                 minute58(),
@@ -140,7 +140,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
     public void testParseHourMinutesSecondsMillis() {
         this.parseAndCheck2(
                 "hh:mm:ss.0",
-                "11:58:59.1",
+                "11:58:59" + DECIMAL + "1",
                 hour11(),
                 colon(),
                 minute58(),
@@ -155,7 +155,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
     public void testParseHourMinutesSeconds2Millis() {
         this.parseAndCheck2(
                 "hh:mm:ss.00",
-                "11:58:59.12",
+                "11:58:59" + DECIMAL + "12",
                 hour11(),
                 colon(),
                 minute58(),
@@ -170,7 +170,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
     public void testParseHourMinutesSeconds3Millis() {
         this.parseAndCheck2(
                 "hh:mm:ss.000",
-                "11:58:59.123",
+                "11:58:59" + DECIMAL + "123",
                 hour11(),
                 colon(),
                 minute58(),
@@ -185,7 +185,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
     public void testParseHourMinutesSeconds3Millis2() {
         this.parseAndCheck2(
                 "hh:mm:ss.000",
-                "11:58:59.12",
+                "11:58:59" + DECIMAL + "12",
                 hour11(),
                 colon(),
                 minute58(),
@@ -200,7 +200,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
     public void testParseHourMinutesSeconds3Millis3() {
         this.parseAndCheck2(
                 "hh:mm:ss.000",
-                "11:58:59.1",
+                "11:58:59" + DECIMAL + "1",
                 hour11(),
                 colon(),
                 minute58(),
@@ -215,7 +215,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
     public void testParseHourMinutesSeconds3Millis4() {
         this.parseAndCheck2(
                 "hh:mm:ss.000",
-                "11:58:59.",
+                "11:58:59" + DECIMAL,
                 hour11(),
                 colon(),
                 minute58(),
@@ -244,7 +244,7 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
     public void testParseHourMinutesSecondsMillisAmpm() {
         this.parseAndCheck2(
                 "hh:mm:ss.0 AM/PM",
-                "11:58:59.1 PM",
+                "11:58:59" + DECIMAL + "1 PM",
                 hour11(),
                 colon(),
                 minute58(),

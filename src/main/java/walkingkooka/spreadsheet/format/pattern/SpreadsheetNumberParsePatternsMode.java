@@ -17,77 +17,25 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
+import walkingkooka.math.DecimalNumberContext;
 
 /**
- * Determines how individual digits with a number are handled.
+ * Internal enum that is used hen creating a {@link SpreadsheetNumberParsePatternsParser} to differentiate between
+ * a number that parses a value and numbers within an expression.
  */
 enum SpreadsheetNumberParsePatternsMode {
-
-    /**
-     * Digits before any decimal separator.
-     */
-    INTEGER {
+    EXPRESSION {
         @Override
-        void onDigit(final int digit,
-                     final SpreadsheetNumberParsePatternsRequest context) {
-            final MathContext mathContext = context.context.mathContext();
-
-            context.mantissa = context.mantissa.multiply(BigDecimal.TEN, mathContext)
-                    .add(BigDecimal.valueOf(digit), mathContext);
-        }
-
-        @Override
-        void onDecimalSeparator(final SpreadsheetNumberParsePatternsRequest context) {
-            context.mode = DECIMAL;
+        boolean isGroupSeparator(final char c, final DecimalNumberContext context) {
+            return false;
         }
     },
-
-    /**
-     * Digits after a decimal separator
-     */
-    DECIMAL {
+    VALUE{
         @Override
-        void onDigit(final int digit,
-                     final SpreadsheetNumberParsePatternsRequest context) {
-            final MathContext mathContext = context.context.mathContext();
-
-            context.mantissa = context.mantissa.multiply(BigDecimal.TEN, mathContext)
-                    .add(BigDecimal.valueOf(digit), mathContext);
-            context.exponent--;
-        }
-
-        @Override
-        void onDecimalSeparator(final SpreadsheetNumberParsePatternsRequest context) {
-            // ignored
-        }
-    },
-
-    /**
-     * Digits belong to an exponent.
-     */
-    EXPONENT {
-        @Override
-        void onDigit(final int digit,
-                     final SpreadsheetNumberParsePatternsRequest context) {
-            context.exponent = context.exponent * 10 + digit;
-        }
-
-        @Override
-        void onDecimalSeparator(final SpreadsheetNumberParsePatternsRequest context) {
-            // ignored
+        boolean isGroupSeparator(final char c, final DecimalNumberContext context) {
+            return c == context.groupingSeparator();
         }
     };
 
-    /**
-     * Handles a onDigit with a number
-     */
-    abstract void onDigit(final int digit,
-                          final SpreadsheetNumberParsePatternsRequest context);
-
-    /**
-     * Handles a decimal separator, possibly switching onDigit mode.
-     */
-    abstract void onDecimalSeparator(final SpreadsheetNumberParsePatternsRequest context);
+    abstract boolean isGroupSeparator(final char c, final DecimalNumberContext context);
 }

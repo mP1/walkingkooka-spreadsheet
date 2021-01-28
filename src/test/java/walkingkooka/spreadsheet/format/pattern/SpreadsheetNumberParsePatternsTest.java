@@ -23,20 +23,20 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContexts;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserReporters;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.text.cursor.parser.ParserTokens;
+import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePatternsTestCase<SpreadsheetNumberParsePatterns,
         SpreadsheetFormatNumberParserToken,
         SpreadsheetNumberParserToken,
-        BigDecimal> {
+        ExpressionNumber> {
 
     @Test
     public void testWithAmpmFails() {
@@ -99,28 +99,46 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
 
     @Test
     public void testConvertFails() {
-        this.convertFails2("#.00",
-                "abc123");
+        this.convertFails2(
+                "#.00",
+                "abc123"
+        );
     }
 
     @Test
     public void testConvertFails2() {
-        this.convertFails2("$ #.00",
-                "1.23");
+        this.convertFails2(
+                "$ #.00",
+                "1" + DECIMAL + "23"
+        );
     }
 
     @Test
     public void testConvertNumber() {
-        this.convertAndCheck2("#.00",
-                "1.23",
-                BigDecimal.valueOf(1.23));
+        this.convertAndCheck3(
+                "#.00",
+                "1" + DECIMAL + "23",
+                1.23
+        );
     }
 
     @Test
     public void testConvertNumberWithCurrency() {
-        this.convertAndCheck2("$ #.00",
-                "$ 1.23",
-                BigDecimal.valueOf(1.23));
+        this.convertAndCheck3(
+                "$#.00",
+                CURRENCY + "1" + DECIMAL + "23",
+                1.23
+        );
+    }
+
+    private void convertAndCheck3(final String pattern,
+                                 final String text,
+                                 final Number value) {
+        this.convertAndCheck2(
+                pattern,
+                text,
+                EXPRESSION_NUMBER_KIND.create(value)
+        );
     }
 
     // parser........................................................................................................
@@ -134,49 +152,225 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
     @Test
     public void testParseFails2() {
         this.parseFails2("$ #.00",
-                "1.23");
+                "1" + DECIMAL + "23");
     }
 
     @Test
-    public void testParseNumber() {
-        this.parseAndCheck3("#.00",
-                "1.23",
-                BigDecimal.valueOf(1.23));
+    public void testParseNumber0() {
+        this.parseAndCheck2(
+                "#",
+                "0",
+                digit0()
+        );
     }
 
     @Test
-    public void testParseNumberWithCurrency() {
-        this.parseAndCheck3("$ #.00",
-                "$ 1.23",
-                BigDecimal.valueOf(1.23));
+    public void testParseNumber1() {
+        this.parseAndCheck2(
+                "#",
+                "1",
+                digit1()
+        );
     }
 
     @Test
-    public void testParseNumberTrailingSeparator() {
-        this.parseAndCheck3("#.00;",
-                "1.23",
-                BigDecimal.valueOf(1.23));
+    public void testParseNumber12() {
+        this.parseAndCheck2(
+                "#",
+                "12",
+                digit12()
+        );
     }
 
     @Test
-    public void testParseNumberFirstPattern() {
-        this.parseAndCheck3("0;0.0%",
-                "9",
-                BigDecimal.valueOf(9));
+    public void testParseNumber0Decimal() {
+        this.parseAndCheck2(
+                "#.",
+                "0" + DECIMAL,
+                digit0(),
+                decimalSeparator()
+        );
     }
 
     @Test
-    public void testParseNumberSecondPattern() {
-        this.parseAndCheck3("0.0;0$",
-                "9",
-                BigDecimal.valueOf(9));
+    public void testParseNumber1Decimal() {
+        this.parseAndCheck2(
+                "#.",
+                "1" + DECIMAL,
+                digit1(),
+                decimalSeparator()
+        );
     }
 
     @Test
-    public void testParseNumberSecondPatternTrailingSeparator() {
-        this.parseAndCheck3("$0.00;0.00;",
-                "1.23",
-                BigDecimal.valueOf(1.23));
+    public void testParseNumber0DecimalFive() {
+        this.parseAndCheck2(
+                "#.#",
+                "0" + DECIMAL + "5",
+                digit0(),
+                decimalSeparator(),
+                digit5()
+        );
+    }
+
+    @Test
+    public void testParseNumber0DecimalZeroFive() {
+        this.parseAndCheck2(
+                "#.##",
+                "0" + DECIMAL + "05",
+                digit0(),
+                decimalSeparator(),
+                digit05()
+        );
+    }
+
+    @Test
+    public void testParseNumber0DecimalZeroSevenFive() {
+        this.parseAndCheck2(
+                "#.##",
+                "0" + DECIMAL + "075",
+                digit0(),
+                decimalSeparator(),
+                digit075()
+        );
+    }
+
+    @Test
+    public void testParsePlusNumber0() {
+        this.parseAndCheck2(
+                "#",
+                PLUS + "0",
+                plus(),
+                digit0()
+        );
+    }
+
+    @Test
+    public void testParsePlusNumber12() {
+        this.parseAndCheck2(
+                "#",
+                PLUS + "12",
+                plus(),
+                digit12()
+        );
+    }
+
+    @Test
+    public void testParseMinusNumber0() {
+        this.parseAndCheck2(
+                "#",
+                MINUS + "0",
+                minus(),
+                digit0()
+        );
+    }
+
+    @Test
+    public void testParseMinusNumber12() {
+        this.parseAndCheck2(
+                "#",
+                MINUS + "12",
+                minus(),
+                digit12()
+        );
+    }
+
+    @Test
+    public void testParseCurrencyNumber0() {
+        this.parseAndCheck2(
+                "$#",
+                CURRENCY + "0",
+                currencyDollarSign(),
+                digit0()
+        );
+    }
+
+    @Test
+    public void testParseCurrencyNumber12() {
+        this.parseAndCheck2(
+                "$#",
+                CURRENCY + "12",
+                currencyDollarSign(),
+                digit12()
+        );
+    }
+
+    @Test
+    public void testParseCurrencyNumber12Decimal() {
+        this.parseAndCheck2(
+                "$#.",
+                CURRENCY + "12" + DECIMAL,
+                currencyDollarSign(),
+                digit12(),
+                decimalSeparator()
+        );
+    }
+
+    @Test
+    public void testParseCurrencyNumber0Decimal075() {
+        this.parseAndCheck2(
+                "$#.#",
+                CURRENCY + "0" + DECIMAL + "075",
+                currencyDollarSign(),
+                digit0(),
+                decimalSeparator(),
+                digit075()
+        );
+    }
+
+    @Test
+    public void testParseNumberExponentNumber() {
+        this.parseAndCheck2(
+                "#E+#",
+                "0" + EXPONENT + "1",
+                digit0(),
+                e(),
+                digit1()
+        );
+    }
+
+    @Test
+    public void testParseNumberExponentPlusNumber() {
+        this.parseAndCheck2(
+                "#E+#",
+                "0" + EXPONENT + PLUS + "1",
+                digit0(),
+                e(),
+                plus(),
+                digit1()
+        );
+    }
+
+    @Test
+    public void testParseNumberExponentMinusNumber() {
+        this.parseAndCheck2(
+                "#E+#",
+                "0" + EXPONENT + MINUS + "1",
+                digit0(),
+                e(),
+                minus(),
+                digit1()
+        );
+    }
+
+    @Test
+    public void testParseNumberSeparator() {
+        this.parseAndCheck2(
+                "#;",
+                "1",
+                digit1()
+        );
+    }
+
+    @Test
+    public void testParseSecondPatternNumberDecimalNumber() {
+        this.parseAndCheck2(
+                "$#;#.#",
+                "1" + DECIMAL + "5",
+                digit1(),
+                decimalSeparator(),
+                digit5()
+        );
     }
 
     // helpers.........................................................................................................
@@ -206,36 +400,15 @@ public final class SpreadsheetNumberParsePatternsTest extends SpreadsheetParsePa
         return SpreadsheetFormatParserToken.number(tokens, text);
     }
 
-    private void parseAndCheck3(final String pattern,
-                                final String text,
-                                final BigDecimal value) {
-        this.parseAndCheck3(pattern,
-                text,
-                value,
-                "");
-    }
-
-    private void parseAndCheck3(final String pattern,
-                                final String text,
-                                final BigDecimal value,
-                                final String textAfter) {
-        this.parseAndCheck(this.parseString(pattern).parser(),
-                this.parserContext(),
-                text,
-                ParserTokens.bigDecimal(value, text),
-                text,
-                textAfter);
-    }
-
     @Override
     SpreadsheetNumberParserToken parent(final List<ParserToken> tokens,
                                         final String text) {
-        throw new UnsupportedOperationException();
+        return SpreadsheetParserToken.number(tokens, text);
     }
 
     @Override
-    Class<BigDecimal> targetType() {
-        return BigDecimal.class;
+    Class<ExpressionNumber> targetType() {
+        return ExpressionNumber.class;
     }
 
     // ClassTesting.....................................................................................................

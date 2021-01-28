@@ -18,7 +18,7 @@
 package walkingkooka.spreadsheet.parser;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.collect.list.Lists;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -26,7 +26,13 @@ public final class SpreadsheetParserTokenVisitorToExpressionTest extends Spreads
 
     @Test
     public void testNullExpressionNumberKindFails() {
-        assertThrows(NullPointerException.class, () -> SpreadsheetParserTokenVisitorToExpression.accept(SpreadsheetParserToken.number(ExpressionNumberKind.DEFAULT.create(1), "1"), null));
+        assertThrows(NullPointerException.class, () -> SpreadsheetParserTokenVisitorToExpression.accept(
+                SpreadsheetParserToken.number(
+                        Lists.of(
+                                SpreadsheetParserToken.digits("1", "1")
+                        ),
+                        "1"),
+                null));
     }
 
     @Override

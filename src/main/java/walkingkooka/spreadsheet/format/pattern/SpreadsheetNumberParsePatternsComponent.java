@@ -17,7 +17,12 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.TextCursorSavePoint;
+
+import java.util.function.BiFunction;
 
 /**
  * An individual component with a larger pattern. Each component parses one or more characters and possibly contributes values to the {@link Number}.
@@ -43,22 +48,25 @@ abstract class SpreadsheetNumberParsePatternsComponent {
     /**
      * {@see SpreadsheetNumberParsePatternsComponentDigitDigit}
      */
-    static SpreadsheetNumberParsePatternsComponent digit(final int max) {
-        return SpreadsheetNumberParsePatternsComponentDigitDigit.with(max);
+    static SpreadsheetNumberParsePatternsComponent digit(final SpreadsheetNumberParsePatternsComponentDigitMode mode,
+                                                         final int max) {
+        return SpreadsheetNumberParsePatternsComponentDigitDigit.with(mode,max);
     }
 
     /**
      * {@see SpreadsheetNumberParsePatternsComponentDigitSpace}
      */
-    static SpreadsheetNumberParsePatternsComponent digitSpace(final int max) {
-        return SpreadsheetNumberParsePatternsComponentDigitSpace.with(max);
+    static SpreadsheetNumberParsePatternsComponent digitSpace(final SpreadsheetNumberParsePatternsComponentDigitMode mode,
+                                                              final int max) {
+        return SpreadsheetNumberParsePatternsComponentDigitSpace.with(mode, max);
     }
 
     /**
      * {@see SpreadsheetNumberParsePatternsComponentDigitZero}
      */
-    static SpreadsheetNumberParsePatternsComponent digitZero(final int max) {
-        return SpreadsheetNumberParsePatternsComponentDigitZero.with(max);
+    static SpreadsheetNumberParsePatternsComponent digitZero(final SpreadsheetNumberParsePatternsComponentDigitMode mode,
+                                                             final int max) {
+        return SpreadsheetNumberParsePatternsComponentDigitZero.with(mode, max);
     }
 
     /**
@@ -100,44 +108,60 @@ abstract class SpreadsheetNumberParsePatternsComponent {
     }
 
     /**
-     * Called by {@link SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor}
+     * Called by {@link SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor}.
+     * Most digits only consume a single character, while the last will be greedy.
      */
-    abstract SpreadsheetNumberParsePatternsComponent lastDecimal();
+    abstract SpreadsheetNumberParsePatternsComponent lastDigit(final SpreadsheetNumberParsePatternsComponentDigitMode mode);
 
     /**
      * Each component in turn is asked to consume and possibly update the number value in the context.
+     * A return value of false indicates matching was completed.
      */
-    abstract void parse(final TextCursor cursor, final SpreadsheetNumberParsePatternsRequest request);
-
-    /**
-     * Some components must be matched in order, while the {@link SpreadsheetNumberParsePatternsComponentDigit} are optional.
-     */
-    abstract boolean isRequired();
+    abstract boolean parse(final TextCursor cursor,
+                        final SpreadsheetNumberParsePatternsRequest request);
 
     /**
      * Advances the cursor attempting to match the given token in full.
      */
-    final void parseToken(final TextCursor cursor,
+    final boolean parseToken(final TextCursor cursor,
                           final String token,
+                          final CaseSensitivity caseSensitivity,
+                          final BiFunction<String, String, SpreadsheetParserToken> factory,
+                          final SpreadsheetNumberParsePatternsComponentDigitMode mode,
                           final SpreadsheetNumberParsePatternsRequest request) {
         final int length = token.length();
+        final TextCursorSavePoint save = cursor.save();
 
         int i = 0;
+        boolean completed = false;
+
         for (; ; ) {
             if (cursor.isEmpty()) {
+                save.restore();
                 break;
             }
             // failed!
-            if (cursor.at() != token.charAt(i)) {
+            final char c = cursor.at();
+            if (!caseSensitivity.isEqual(c, token.charAt(i))) {
+                save.restore();
                 break;
             }
             cursor.next();
             i++;
             if (i == length) {
-                request.nextComponent(cursor);
+                final String text = save.textBetween().toString();
+                request.add(factory.apply(text, text));
+
+                if(null != mode) {
+                    request.setDigitMode(mode);
+                }
+
+                completed = request.nextComponent(cursor);
                 break;
             }
         }
+
+        return completed;
     }
 
     @Override

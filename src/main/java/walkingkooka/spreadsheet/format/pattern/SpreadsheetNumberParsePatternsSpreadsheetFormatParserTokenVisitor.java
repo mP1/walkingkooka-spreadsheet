@@ -56,18 +56,6 @@ final class SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor ex
     }
 
     @Override
-    protected Visiting startVisit(final SpreadsheetFormatNumberParserToken token) {
-        this.addToken(token);
-
-        this.components = Lists.array();
-        this.firstDigit = true;
-        this.decimal = false;
-        this.lastDecimal = -1;
-
-        return Visiting.CONTINUE;
-    }
-
-    @Override
     protected Visiting startVisit(final SpreadsheetFormatDateParserToken token) {
         return this.failInvalid(token);
     }
@@ -77,13 +65,28 @@ final class SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor ex
         return this.failInvalid(token);
     }
 
+
+    @Override
+    protected Visiting startVisit(final SpreadsheetFormatNumberParserToken token) {
+        this.addToken(token);
+
+        this.components = Lists.array();
+        this.lastDigit = -1;
+        this.mode = SpreadsheetNumberParsePatternsComponentDigitMode.INTEGER_OR_SIGN;
+
+        return Visiting.CONTINUE;
+    }
+
     @Override
     protected void endVisit(final SpreadsheetFormatNumberParserToken token) {
         final List<SpreadsheetNumberParsePatternsComponent> components = this.components;
 
-        final int lastDecimal = this.lastDecimal;
-        if (-1 != lastDecimal) {
-            components.set(lastDecimal, components.get(lastDecimal).lastDecimal());
+        final int lastDigit = this.lastDigit;
+        if (-1 != lastDigit) {
+            components.set(
+                    lastDigit,
+                    components.get(lastDigit).lastDigit(this.mode)
+            );
         }
 
         this.patterns.add(components);
@@ -122,8 +125,8 @@ final class SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor ex
     protected void visit(final SpreadsheetFormatDecimalPointParserToken token) {
         this.addComponent(SpreadsheetNumberParsePatternsComponent.decimalSeparator());
 
-        this.decimal = true;
-        this.lastDecimal = -1;
+        this.mode = SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL_FIRST;
+        this.lastDigit = -1;
     }
 
     /**
@@ -131,27 +134,42 @@ final class SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor ex
      */
     @Override
     protected void visit(final SpreadsheetFormatDigitParserToken token) {
-        this.addComponent(SpreadsheetNumberParsePatternsComponent.digit(this.digitMaxCount()));
-        this.maybeUpdateLastDecimal();
+        this.addComponent(
+                SpreadsheetNumberParsePatternsComponent.digit(
+                        this.mode,
+                        this.digitMaxCount()
+                )
+        );
+        this.nextDigit();
     }
 
     @Override
     protected void visit(final SpreadsheetFormatDigitSpaceParserToken token) {
-        this.addComponent(SpreadsheetNumberParsePatternsComponent.digitSpace(this.digitMaxCount()));
-        this.maybeUpdateLastDecimal();
+        this.addComponent(
+                SpreadsheetNumberParsePatternsComponent.digitSpace(
+                        this.mode,
+                        this.digitMaxCount()
+                )
+        );
+        this.nextDigit();
     }
 
     @Override
     protected void visit(final SpreadsheetFormatDigitZeroParserToken token) {
-        this.addComponent(SpreadsheetNumberParsePatternsComponent.digitZero(this.digitMaxCount()));
-        this.maybeUpdateLastDecimal();
+        this.addComponent(
+                SpreadsheetNumberParsePatternsComponent.digitZero(
+                        this.mode,
+                        this.digitMaxCount()
+                )
+        );
+        this.nextDigit();
     }
 
     @Override
     protected void visit(final SpreadsheetFormatExponentSymbolParserToken token) {
         this.addComponent(SpreadsheetNumberParsePatternsComponent.exponent());
 
-        this.firstDigit = true;
+        this.mode = SpreadsheetNumberParsePatternsComponentDigitMode.EXPONENT_OR_SIGN;
     }
 
     @Override
@@ -185,6 +203,11 @@ final class SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor ex
     }
 
     /**
+     * Tracks whether digits are the integer, decimal or exponent portion of a number
+     */
+    private SpreadsheetNumberParsePatternsComponentDigitMode mode;
+
+    /**
      * Adds a new {@link SpreadsheetNumberParsePatternsComponent} to the pattern being parsed.
      */
     private void addComponent(final SpreadsheetNumberParsePatternsComponent component) {
@@ -192,36 +215,26 @@ final class SpreadsheetNumberParsePatternsSpreadsheetFormatParserTokenVisitor ex
     }
 
     private int digitMaxCount() {
-        final boolean first = this.firstDigit;
-        this.firstDigit = false;
-        return first ?
+        return this.mode.isFirst() ?
                 Integer.MAX_VALUE :
                 1;
     }
 
-    /**
-     * True for prior to the first onDigit component.
-     */
-    private boolean firstDigit;
-
-    /**
-     * Will be true when accepting components of a the decimal portion of a number. This becomes true when a decimal separator is encountered.
-     */
-    private boolean decimal;
-
-    private void maybeUpdateLastDecimal() {
-        if (this.decimal) {
-            this.lastDecimal = this.components.size() - 1;
+    private void nextDigit() {
+        final SpreadsheetNumberParsePatternsComponentDigitMode mode = this.mode;
+        if (mode.isDecimal()) {
+            this.lastDigit = this.components.size() - 1;
         }
+        this.mode = mode.next();
     }
 
     /**
      * Holds the index of the last decimal digit in {@link #components}
      */
-    private int lastDecimal;
+    private int lastDigit;
 
     /**
      * Takes all the components for the pattern being visited.
      */
-    List<SpreadsheetNumberParsePatternsComponent> components;
+    private List<SpreadsheetNumberParsePatternsComponent> components;
 }

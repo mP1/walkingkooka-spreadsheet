@@ -26,16 +26,11 @@ abstract class SpreadsheetNumberParsePatternsComponent2 extends SpreadsheetNumbe
         super();
     }
 
-    @Override
-    final SpreadsheetNumberParsePatternsComponent lastDecimal() {
-        throw new UnsupportedOperationException();
-    }
-
     /**
-     * All non digit components are required.
+     * This method should never be invoked on non digit components.
      */
     @Override
-    final boolean isRequired() {
-        return true;
+    final SpreadsheetNumberParsePatternsComponent lastDigit(final SpreadsheetNumberParsePatternsComponentDigitMode mode) {
+        throw new UnsupportedOperationException();
     }
 }

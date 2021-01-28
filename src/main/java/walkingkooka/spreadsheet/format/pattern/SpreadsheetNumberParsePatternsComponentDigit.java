@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.TextCursor;
 
 /**
@@ -28,16 +29,34 @@ abstract class SpreadsheetNumberParsePatternsComponentDigit extends SpreadsheetN
     /**
      * Package private to limit sub classing.
      */
-    SpreadsheetNumberParsePatternsComponentDigit(final int max) {
+    SpreadsheetNumberParsePatternsComponentDigit(final SpreadsheetNumberParsePatternsComponentDigitMode mode,
+                                                 final int max) {
         super();
+        this.mode = mode;
         this.max = max;
     }
 
     @Override
-    final void parse(final TextCursor cursor,
+    final boolean parse(final TextCursor cursor,
                      final SpreadsheetNumberParsePatternsRequest request) {
+        boolean completed;
+
+        if(cursor.isEmpty()) {
+            completed = request.nextComponent(cursor);
+        } else {
+            request.digitMode.tryParseSign(cursor, request);
+            completed = this.parseDigits(cursor, request);
+        }
+        return completed;
+    }
+
+    /**
+     * Attempts to parse the requested number of digits.
+     */
+    private boolean parseDigits(final TextCursor cursor,
+                             final SpreadsheetNumberParsePatternsRequest request) {
         final DecimalNumberContext context = request.context;
-        final char groupingSeparator = context.groupingSeparator();
+        final SpreadsheetNumberParsePatternsMode mode = request.mode;
         final int max = this.max;
         int count = 0;
 
@@ -48,30 +67,34 @@ abstract class SpreadsheetNumberParsePatternsComponentDigit extends SpreadsheetN
 
             // grouping separators are skipped when digits are expected.
             final char c = cursor.at();
-            if (groupingSeparator == c) {
+            if (mode.isGroupSeparator(c, context)) {
+                request.addNumberIfNecessary();
+
+                final String groupingText = Character.toString(c);
+                request.add(SpreadsheetParserToken.groupingSeparatorSymbol(groupingText, groupingText));
+
                 cursor.next();
                 continue;
             }
 
-            // special case positive/negative sign if in INTEGER mode.
-            if (SpreadsheetNumberParsePatternsMode.INTEGER == request.mode && null == request.negativeMantissa) {
-                if (context.negativeSign() == c) {
-                    cursor.next();
-                    request.negativeMantissa = true;
-                    continue;
-                }
+            if(this.shouldHandleWhitespace() && Character.isWhitespace(c)) {
+                request.addNumberIfNecessary();
 
-                if (context.positiveSign() == c) {
-                    cursor.next();
-                    request.negativeMantissa = false;
-                    continue;
-                }
+                final String whitespaceText = Character.toString(c);
+                request.add(SpreadsheetParserToken.whitespace(whitespaceText, whitespaceText));
+
+                cursor.next();
+                continue;
             }
 
             // $c might be a digit or space
-            if (false == this.handle(c, request)) {
+            final int digit = Character.digit(c, 10);
+            if (-1 == digit) {
                 break;
             }
+
+            request.digits.append(c);
+
             cursor.next();
             count++;
             if (count == max) {
@@ -79,32 +102,17 @@ abstract class SpreadsheetNumberParsePatternsComponentDigit extends SpreadsheetN
             }
         }
 
-        request.nextComponent(cursor);
+        if(request.addNumberIfNecessary()) {
+            request.setDigitMode(request.digitMode.next());
+        }
+        return request.nextComponent(cursor);
     }
 
-    /**
-     * Called for each character found.
-     */
-    abstract boolean handle(final char c,
-                            final SpreadsheetNumberParsePatternsRequest request);
+    final SpreadsheetNumberParsePatternsComponentDigitMode mode;
 
-    final boolean handleDigit(final char c,
-                              final SpreadsheetNumberParsePatternsRequest request) {
-        final int digit = Character.digit(c, 10);
-        final boolean hasDigitValue = -1 != digit;
-        if (hasDigitValue) {
-            request.mode.onDigit(digit, request);
-        }
-        return hasDigitValue;
+    private boolean shouldHandleWhitespace() {
+        return this instanceof SpreadsheetNumberParsePatternsComponentDigitSpace;
     }
 
     private final int max;
-
-    /**
-     * All digit components are optional.
-     */
-    @Override
-    final boolean isRequired() {
-        return false;
-    }
 }

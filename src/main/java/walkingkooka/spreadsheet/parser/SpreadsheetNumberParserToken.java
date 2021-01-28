@@ -16,29 +16,44 @@
  */
 package walkingkooka.spreadsheet.parser;
 
+import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumber;
+import walkingkooka.visit.Visiting;
+
+import java.util.List;
 
 /**
- * Holds a single {@link ExpressionNumber} number.
+ * Holds a {@link walkingkooka.tree.expression.ExpressionNumber} value along with the components and original text.
  */
-public final class SpreadsheetNumberParserToken extends SpreadsheetNonSymbolParserToken<ExpressionNumber> {
+public final class SpreadsheetNumberParserToken extends SpreadsheetParentParserToken {
 
-    static SpreadsheetNumberParserToken with(final ExpressionNumber value, final String text) {
-        checkValueAndText(value, text);
-
-        return new SpreadsheetNumberParserToken(value, text);
+    static SpreadsheetNumberParserToken with(final List<ParserToken> value, final String text) {
+        return new SpreadsheetNumberParserToken(copyAndCheckTokens(value), checkText(text));
     }
 
-    private SpreadsheetNumberParserToken(final ExpressionNumber value, final String text) {
+    private SpreadsheetNumberParserToken(final List<ParserToken> value, final String text) {
         super(value, text);
+    }
+
+    /**
+     * Creates a {@link ExpressionNumber} from the components in this {@link SpreadsheetNumberParserToken}.
+     */
+    public ExpressionNumber toNumber(final ExpressionEvaluationContext context) {
+        return SpreadsheetParserTokenVisitorExpressionNumber.toExpressionNumber(this, context);
     }
 
     // SpreadsheetParserTokenVisitor....................................................................................
 
     @Override
     void accept(final SpreadsheetParserTokenVisitor visitor) {
-        visitor.visit(this);
+        if (Visiting.CONTINUE == visitor.startVisit(this)) {
+            this.acceptValues(visitor);
+        }
+        visitor.endVisit(this);
     }
+
+    // Object...........................................................................................................
 
     @Override
     boolean canBeEqual(final Object other) {

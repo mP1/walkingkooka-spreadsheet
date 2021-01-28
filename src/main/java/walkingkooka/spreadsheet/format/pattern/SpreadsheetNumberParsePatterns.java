@@ -18,6 +18,8 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
 
 import java.util.List;
@@ -74,7 +76,23 @@ public final class SpreadsheetNumberParsePatterns extends SpreadsheetParsePatter
 
     @Override
     SpreadsheetNumberParsePatternsParser createParser() {
-        return SpreadsheetNumberParsePatternsParser.with(this);
+        return SpreadsheetNumberParsePatternsParser.with(this, SpreadsheetNumberParsePatternsMode.VALUE);
+    }
+
+    /**
+     * Returns a {@link Parser} which will try all the patterns.
+     */
+    public Parser<SpreadsheetParserContext> expresionParser() {
+        if (null == this.expressionParser) {
+            this.expressionParser = this.createExpressionParser();
+        }
+        return this.expressionParser;
+    }
+
+    private Parser<SpreadsheetParserContext> expressionParser;
+
+    private SpreadsheetNumberParsePatternsParser createExpressionParser() {
+        return SpreadsheetNumberParsePatternsParser.with(this, SpreadsheetNumberParsePatternsMode.EXPRESSION);
     }
 
     /**

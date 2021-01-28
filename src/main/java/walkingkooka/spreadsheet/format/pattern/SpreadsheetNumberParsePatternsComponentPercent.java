@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 
 /**
@@ -34,15 +36,17 @@ final class SpreadsheetNumberParsePatternsComponentPercent extends SpreadsheetNu
     }
 
     @Override
-    void parse(final TextCursor cursor,
+    boolean parse(final TextCursor cursor,
                final SpreadsheetNumberParsePatternsRequest request) {
-        if (false == cursor.isEmpty()) {
-            if (request.context.percentageSymbol() == cursor.at()) {
-                request.percentage = true;
-                cursor.next();
-                request.nextComponent(cursor);
-            }
-        }
+        final char percentSymbol = request.context.percentageSymbol();
+        return this.parseToken(
+                cursor,
+                Character.toString(percentSymbol),
+                CaseSensitivity.SENSITIVE,
+                SpreadsheetParserToken::percentSymbol,
+                null, // dont update mode
+                request
+        );
     }
 
     @Override

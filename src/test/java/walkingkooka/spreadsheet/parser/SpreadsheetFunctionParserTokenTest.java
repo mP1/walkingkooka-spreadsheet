@@ -83,9 +83,14 @@ public final class SpreadsheetFunctionParserTokenTest extends SpreadsheetParentP
 
     @Test
     public void testToExpression() {
-        this.toExpressionAndCheck(Expression.function(
-                FunctionExpressionName.with(FUNCTION),
-                Lists.of(Expression.expressionNumber(this.expressionNumber(NUMBER1)))));
+        this.toExpressionAndCheck(
+                Expression.function(
+                        FunctionExpressionName.with(FUNCTION),
+                        Lists.of(
+                                Expression.expressionNumber(this.expressionNumber(NUMBER1))
+                        )
+                )
+        );
     }
 
     private void checkFunction(final SpreadsheetFunctionParserToken function, final SpreadsheetFunctionName name) {

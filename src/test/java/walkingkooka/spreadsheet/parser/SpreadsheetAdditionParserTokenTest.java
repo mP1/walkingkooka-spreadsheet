@@ -72,20 +72,27 @@ public final class SpreadsheetAdditionParserTokenTest extends SpreadsheetBinaryP
             }
 
             @Override
-            protected void visit(final SpreadsheetNumberParserToken t) {
+            protected Visiting startVisit(final SpreadsheetNumberParserToken t) {
                 b.append("5");
                 visited.add(t);
+                return Visiting.SKIP;
             }
 
             @Override
-            protected void visit(final SpreadsheetPlusSymbolParserToken t) {
+            protected void endVisit(final SpreadsheetNumberParserToken t) {
                 b.append("6");
                 visited.add(t);
             }
 
             @Override
-            protected Visiting startVisit(final ParserToken t) {
+            protected void visit(final SpreadsheetPlusSymbolParserToken t) {
                 b.append("7");
+                visited.add(t);
+            }
+
+            @Override
+            protected Visiting startVisit(final ParserToken t) {
+                b.append("8");
                 visited.add(t);
                 return Visiting.CONTINUE;
             }
@@ -96,11 +103,11 @@ public final class SpreadsheetAdditionParserTokenTest extends SpreadsheetBinaryP
                 visited.add(t);
             }
         }.accept(binary);
-        assertEquals("713715287162871528428", b.toString());
+        assertEquals("81381562881728815628428", b.toString());
         assertEquals(Lists.of(binary, binary, binary,
-                left, left, left, left, left,
+                left, left, left, left, left, left,
                 symbol, symbol, symbol, symbol, symbol,
-                right, right, right, right, right,
+                right, right, right, right, right, right,
                 binary, binary, binary),
                 visited,
                 "visited");

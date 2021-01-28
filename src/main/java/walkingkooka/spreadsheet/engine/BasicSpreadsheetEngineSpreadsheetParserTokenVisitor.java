@@ -270,6 +270,16 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     }
 
     @Override
+    protected final Visiting startVisit(final SpreadsheetNumberParserToken token) {
+        return this.enter();
+    }
+
+    @Override
+    protected final void endVisit(final SpreadsheetNumberParserToken token) {
+        this.exit(token, SpreadsheetParserToken::number);
+    }
+
+    @Override
     protected final Visiting startVisit(final SpreadsheetPercentageParserToken token) {
         return this.enter();
     }
@@ -485,11 +495,6 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
 
     @Override
     protected final void visit(final SpreadsheetNotEqualsSymbolParserToken token) {
-        this.leaf(token);
-    }
-
-    @Override
-    protected final void visit(final SpreadsheetNumberParserToken token) {
         this.leaf(token);
     }
 

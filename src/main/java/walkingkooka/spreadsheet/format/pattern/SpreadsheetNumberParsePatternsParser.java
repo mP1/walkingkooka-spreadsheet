@@ -17,46 +17,56 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
-import walkingkooka.text.cursor.parser.BigDecimalParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserToken;
-import walkingkooka.text.cursor.parser.ParserTokens;
 
 import java.util.List;
 import java.util.Optional;
 
 /**
- * The {@link Parser} returned by {@link SpreadsheetNumberParsePatterns#converter()}, that tries each pattern until a
- * {@link BigDecimalParserToken} is created.
+ * The {@link Parser} returned by {@link SpreadsheetNumberParsePatterns#converter()}.
  */
 final class SpreadsheetNumberParsePatternsParser implements Parser<SpreadsheetParserContext> {
 
-    static SpreadsheetNumberParsePatternsParser with(final SpreadsheetNumberParsePatterns pattern) {
-        return new SpreadsheetNumberParsePatternsParser(pattern);
+    static SpreadsheetNumberParsePatternsParser with(final SpreadsheetNumberParsePatterns pattern,
+                                                     final SpreadsheetNumberParsePatternsMode mode) {
+        return new SpreadsheetNumberParsePatternsParser(
+                pattern,
+                mode
+        );
     }
 
-    private SpreadsheetNumberParsePatternsParser(final SpreadsheetNumberParsePatterns pattern) {
+    private SpreadsheetNumberParsePatternsParser(final SpreadsheetNumberParsePatterns pattern,
+                                                 final SpreadsheetNumberParsePatternsMode mode) {
         super();
         this.pattern = pattern;
+        this.mode = mode;
     }
 
     @Override
     public Optional<ParserToken> parse(final TextCursor cursor,
                                        final SpreadsheetParserContext context) {
-        BigDecimalParserToken token = null;
+        SpreadsheetNumberParserToken token = null;
 
         final TextCursorSavePoint save = cursor.save();
 
-        for (List<SpreadsheetNumberParsePatternsComponent> pattern : this.pattern.patterns) {
-            final SpreadsheetNumberParsePatternsRequest request = SpreadsheetNumberParsePatternsRequest.with(pattern.iterator(), context);
-            request.nextComponent(cursor);
-            if (false == request.isRequired()) {
-                final CharSequence text = save.textBetween();
-                if (text.length() > 0) {
-                    token = ParserTokens.bigDecimal(request.computeValue(), text.toString());
+        for (final List<SpreadsheetNumberParsePatternsComponent> pattern : this.pattern.patterns) {
+            final SpreadsheetNumberParsePatternsRequest request = SpreadsheetNumberParsePatternsRequest.with(
+                    pattern.iterator(),
+                    this.mode,
+                    context
+            );
+            if (request.nextComponent(cursor)) {
+                final List<ParserToken> tokens = request.tokens;
+                if (!tokens.isEmpty()) {
+                    token = SpreadsheetNumberParserToken.number(
+                            tokens,
+                            save.textBetween().toString()
+                    );
                     break;
                 }
             }
@@ -65,6 +75,8 @@ final class SpreadsheetNumberParsePatternsParser implements Parser<SpreadsheetPa
 
         return Optional.ofNullable(token);
     }
+
+    private final SpreadsheetNumberParsePatternsMode mode;
 
     @Override
     public String toString() {

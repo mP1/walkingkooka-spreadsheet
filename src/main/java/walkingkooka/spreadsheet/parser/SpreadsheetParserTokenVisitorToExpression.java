@@ -240,6 +240,20 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     }
 
     @Override
+    protected Visiting startVisit(final SpreadsheetNumberParserToken token) {
+        return this.enter();
+    }
+
+    @Override
+    protected void endVisit(final SpreadsheetNumberParserToken token) {
+        this.exit();
+        this.add(
+                Expression.expressionNumber(token.toNumber(this.context)),
+                token
+        );
+    }
+
+    @Override
     protected Visiting startVisit(final SpreadsheetPercentageParserToken token) {
         return this.enter();
     }
@@ -333,11 +347,6 @@ final class SpreadsheetParserTokenVisitorToExpression extends SpreadsheetParserT
     @Override
     protected void visit(final SpreadsheetLabelNameParserToken token) {
         this.addReference(token.value(), token);
-    }
-
-    @Override
-    protected void visit(final SpreadsheetNumberParserToken token) {
-        this.add(Expression.expressionNumber(token.value()), token);
     }
 
     @Override

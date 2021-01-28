@@ -18,15 +18,26 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.spreadsheet.parser.SpreadsheetCurrencySymbolParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetDecimalSeparatorSymbolParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetDigitsParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetExponentSymbolParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetGroupingSeparatorSymbolParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetMinusSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetPercentSymbolParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetPlusSymbolParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetWhitespaceParserToken;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserTesting2;
-import walkingkooka.text.cursor.parser.ParserTokens;
+import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.ExpressionNumberKind;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 public final class SpreadsheetNumberParsePatternsParserTest extends SpreadsheetNumberParsePatternsTestCase2<SpreadsheetNumberParsePatternsParser>
         implements ParserTesting2<SpreadsheetNumberParsePatternsParser, SpreadsheetParserContext> {
@@ -41,462 +52,497 @@ public final class SpreadsheetNumberParsePatternsParserTest extends SpreadsheetN
     // integer values single digit pattern..............................................................................
 
     @Test
-    public void testHashBigDecimalZero() {
-        this.parseAndCheck2("#",
+    public void testHashZero() {
+        this.parseAndCheck2(
+                "#",
                 "0",
-                BigDecimal.valueOf(0));
+                digits(0)
+        );
     }
 
     @Test
-    public void testHashBigDecimalPlusInteger() {
-        this.parseAndCheck2("#",
-                "Q1",
-                BigDecimal.valueOf(1));
+    public void testHashPlusInteger() {
+        this.parseAndCheck2(
+                "#",
+                PLUS + "1",
+                plus(),
+                digits(1)
+        );
     }
 
     @Test
-    public void testHashBigDecimalPlusInteger2() {
-        this.parseAndCheck2("#",
-                "Q23",
-                BigDecimal.valueOf(23));
+    public void testHashPlusInteger2() {
+        this.parseAndCheck2(
+                "#",
+                PLUS + "23",
+                plus(),
+                digits(23)
+        );
     }
 
     @Test
-    public void testHashBigDecimalPlusInteger3() {
-        this.parseAndCheck2("#",
-                "Q456",
-                BigDecimal.valueOf(456));
+    public void testHashPlusInteger3() {
+        this.parseAndCheck2(
+                "#",
+                PLUS + "456",
+                plus(),
+                digits(456)
+        );
     }
 
     @Test
-    public void testHashBigDecimalMinusInteger() {
-        this.parseAndCheck2("#",
-                "N1",
-                BigDecimal.valueOf(-1));
+    public void testHashMinusInteger() {
+        this.parseAndCheck2(
+                "#",
+                MINUS + "1",
+                minus(),
+                digits(1)
+        );
     }
 
     @Test
-    public void testHashBigDecimalMinusInteger2() {
-        this.parseAndCheck2("#",
-                "N23",
-                BigDecimal.valueOf(-23));
+    public void testHashMinusInteger2() {
+        this.parseAndCheck2(
+                "#",
+                MINUS + "23",
+                minus(),
+                digits(23)
+        );
     }
 
     @Test
-    public void testHashBigDecimalMinusInteger3() {
-        this.parseAndCheck2("#",
-                "N456",
-                BigDecimal.valueOf(-456));
+    public void testHashMinusInteger3() {
+        this.parseAndCheck2(
+                "#",
+                MINUS + "456",
+                minus(),
+                digits(456)
+        );
     }
 
     @Test
-    public void testHashBigDecimalLeadingZeroInteger() {
-        this.parseAndCheck2("#",
-                "N0789",
-                BigDecimal.valueOf(-789));
+    public void testHashDecimalLeadingZeroInteger() {
+        this.parseAndCheck2(
+                "#",
+                "0789",
+                digits("0789")
+        );
     }
 
     @Test
-    public void testHashBigDecimalLeadingZeroInteger2() {
-        this.parseAndCheck2("#",
-                "N00789",
-                BigDecimal.valueOf(-789));
+    public void testHashDecimalLeadingZeroInteger2() {
+        this.parseAndCheck2(
+                "#",
+                "00789",
+                digits("00789")
+        );
     }
 
     @Test
-    public void testQuestionMarkBigDecimalLeadingZeroInteger2() {
-        this.parseAndCheck2("?",
-                "N00789",
-                BigDecimal.valueOf(-789));
+    public void testQuestionMarkDecimalLeadingZeroInteger2() {
+        this.parseAndCheck2(
+                "?",
+                "00789",
+                digits("00789")
+        );
     }
 
     @Test
-    public void testZeroBigDecimalLeadingZeroInteger2() {
-        this.parseAndCheck2("0",
-                "N00789",
-                BigDecimal.valueOf(-789));
+    public void testZeroDecimalLeadingZeroInteger2() {
+        this.parseAndCheck2(
+                "0",
+                "00789",
+                digits("00789")
+        );
     }
 
     @Test
-    public void testHashHashBigDecimal() {
-        this.parseAndCheck2("##",
+    public void testHashHashDecimal() {
+        this.parseAndCheck2(
+                "##",
                 "12",
-                BigDecimal.valueOf(12));
+                digits(12)
+        );
     }
 
     @Test
-    public void testQuestionQuestionQuestionBigDecimal() {
-        this.parseAndCheck2("???",
+    public void testQuestionQuestionQuestionDecimal() {
+        this.parseAndCheck2(
+                "???",
                 "123",
-                BigDecimal.valueOf(123));
+                digits(123)
+        );
     }
 
     @Test
-    public void testZeroZeroZeroZeroBigDecimal() {
-        this.parseAndCheck2("0000",
+    public void testZeroZeroZeroZeroDecimal() {
+        this.parseAndCheck2(
+                "0000",
                 "1234",
-                BigDecimal.valueOf(1234));
+                digits(1234)
+        );
     }
 
     @Test
-    public void testHashHashBigDecimalExtraPattern() {
-        this.parseAndCheck2("##",
+    public void testHashHashDecimalExtraPattern() {
+        this.parseAndCheck2(
+                "##",
                 "9",
-                BigDecimal.valueOf(9));
+                digits(9)
+        );
     }
 
     @Test
-    public void testQuestionQuestionQuestionBigDecimalExtraPattern() {
-        this.parseAndCheck2("???",
+    public void testQuestionQuestionQuestionDecimalExtraPattern() {
+        this.parseAndCheck2(
+                "???",
                 "78",
-                BigDecimal.valueOf(78));
+                digits(78)
+        );
     }
 
     @Test
-    public void testZeroZeroZeroZeroBigDecimalExtraPattern() {
-        this.parseAndCheck2("0000",
+    public void testZeroZeroZeroZeroDecimalExtraPattern() {
+        this.parseAndCheck2(
+                "0000",
                 "6",
-                BigDecimal.valueOf(6));
+                digits(6)
+        );
     }
 
     // fraction values .................................................................................................
 
     @Test
-    public void testHashBigDecimalFraction() {
+    public void testHashDecimalFraction() {
         final String text = "1";
-        final String after = "D5";
+        final String after = DECIMAL + "5";
 
-        this.parseAndCheck(this.createParser("#"),
+        this.parseAndCheck(
+                this.createParser("#"),
                 text + after,
-                ParserTokens.bigDecimal(BigDecimal.ONE, text),
+                SpreadsheetParserToken.number(
+                        Lists.of(
+                            SpreadsheetParserToken.digits("1", "1")
+                        ),
+                        text
+                ),
                 text,
-                after);
+                after
+        );
     }
 
     @Test
-    public void testHashDecimalHashBigDecimalFraction() {
-        this.parseAndCheck2("#.#",
-                "0D5",
-                BigDecimal.valueOf(0.5));
+    public void testHashDecimalHashDecimalFraction() {
+        this.parseAndCheck2(
+                "#.#",
+                "0" + DECIMAL + "5",
+                digits(0),
+                decimal(),
+                digits(5)
+        );
     }
 
     @Test
-    public void testQuestionDecimalQuestionBigDecimalFraction() {
-        this.parseAndCheck2("?.?",
-                "0D5",
-                BigDecimal.valueOf(0.5));
+    public void testQuestionDecimalQuestionDecimalFraction() {
+        this.parseAndCheck2(
+                "?.?",
+                "0" + DECIMAL + "5",
+                digits(0),
+                decimal(),
+                digits(5)
+        );
     }
 
     @Test
-    public void testZeroDecimalZeroBigDecimalFraction() {
-        this.parseAndCheck2("0.0",
-                "0D5",
-                BigDecimal.valueOf(0.5));
+    public void testZeroDecimalZeroDecimalFraction() {
+        this.parseAndCheck2(
+                "0.0",
+                "0" + DECIMAL + "5",
+                digits(0),
+                decimal(),
+                digits(5)
+        );
     }
 
     @Test
-    public void testZeroDecimalZeroBigDecimalFractionExtraPattern() {
-        this.parseAndCheck2("0.00",
-                "0D5",
-                BigDecimal.valueOf(0.5));
+    public void testZeroDecimalZeroDecimalFractionExtraPattern() {
+        this.parseAndCheck2(
+                "0.00",
+                "0" + DECIMAL + "5",
+                digits(0),
+                decimal(),
+                digits(5)
+        );
     }
 
     @Test
-    public void testZeroDecimalZeroBigDecimalFractionExtraPattern2() {
-        this.parseAndCheck2("0.000",
-                "0D5",
-                BigDecimal.valueOf(0.5));
+    public void testZeroDecimalZeroDecimalFractionExtraPattern2() {
+        this.parseAndCheck2(
+                "0.000",
+                "0" + DECIMAL + "5",
+                digits(0),
+                decimal(),
+                digits(5)
+        );
     }
 
     @Test
-    public void testZeroDecimalZeroZeroBigDecimalFraction() {
-        this.parseAndCheck2("0.00",
-                "0D56",
-                BigDecimal.valueOf(0.56));
+    public void testZeroDecimalZeroZeroDecimalFraction() {
+        this.parseAndCheck2(
+                "0.00",
+                "0" + DECIMAL + "56",
+                digits(0),
+                decimal(),
+                digits(56)
+        );
     }
 
     @Test
-    public void testZeroDecimalZeroZeroZeroBigDecimalFraction() {
-        this.parseAndCheck2("0.000",
-                "0D56",
-                BigDecimal.valueOf(0.56));
+    public void testZeroDecimalZeroZeroZeroDecimalFraction() {
+        this.parseAndCheck2(
+                "0.000",
+                "0" + DECIMAL + "56",
+                digits(0),
+                decimal(),
+                digits(56)
+        );
     }
 
     // mixed patterns...................................................................................................
 
     @Test
-    public void testHashQuestionZeroBigDecimalDigit() {
-        this.parseAndCheck2("#?0",
+    public void testHashQuestionZeroDecimalDigit() {
+        this.parseAndCheck2(
+                "#?0",
                 "1",
-                BigDecimal.valueOf(1));
+                digits(1)
+        );
     }
 
     @Test
-    public void testHashQuestionZeroBigDecimalSpaceDigit() {
-        this.parseAndCheck2("#?0",
-                " 1",
-                BigDecimal.valueOf(1));
+    public void testHashQuestionZeroDecimalSpaceDigit() {
+        this.parseAndCheck2(
+                "#?0",
+                "1 ",
+                digits(1),
+                whitespace()
+        );
     }
 
     @Test
-    public void testHashQuestionZeroBigDecimalDigitSpaceDigit() {
-        this.parseAndCheck2("#?0",
+    public void testHashQuestionZeroDecimalDigitSpaceDigit() {
+        this.parseAndCheck2(
+                "#?0",
                 "0 1",
-                BigDecimal.valueOf(1));
+                digits(0),
+                whitespace(),
+                digits(1)
+        );
     }
 
     @Test
-    public void testHashQuestionZeroBigDecimalDigitSpaceDigit2() {
-        this.parseAndCheck2("#?0",
+    public void testHashQuestionZeroDecimalDigitSpaceDigit2() {
+        this.parseAndCheck2(
+                "#?0",
                 "3 4",
-                BigDecimal.valueOf(34));
+                digits(3),
+                whitespace(),
+                digits(4)
+        );
     }
 
     // exponent.........................................................................................................
 
     @Test
-    public void testHashExponentPlusHashBigDecimalDigitExponentDigit() {
-        this.parseAndCheck2("#E+#",
-                "2XQ3",
-                BigDecimal.valueOf(2000));
+    public void testHashExponentPlusHashDecimalDigitExponentDigit() {
+        this.parseAndCheck2(
+                "#E+#",
+                "2" + EXPONENT + PLUS + "3",
+                digits(2),
+                exponent(),
+                plus(),
+                digits(3)
+        );
     }
 
     @Test
-    public void testHashExponentMinusHashBigDecimalDigitExponentDigit() {
-        this.parseAndCheck2("#E+#",
-                "2XQ3",
-                BigDecimal.valueOf(2000));
+    public void testHashExponentMinusHashDecimalDigitExponentDigit() {
+        this.parseAndCheck2(
+                "#E+#",
+                "2" + EXPONENT + MINUS + "3",
+                digits(2),
+                exponent(),
+                minus(),
+                digits(3)
+        );
     }
 
     @Test
-    public void testHashExponentPlusHashBigDecimalDigitExponentDigit2() {
-        this.parseAndCheck2("#E+#",
-                "2xQ3",
-                BigDecimal.valueOf(2000));
+    public void testHashExponentPlusHashDecimalDigitExponentDigit2() {
+        this.parseAndCheck2(
+                "#E+#",
+                "2" + EXPONENT + PLUS + "3",
+                digits(2),
+                exponent(),
+                plus(),
+                digits(3)
+        );
     }
 
     @Test
-    public void testHashExponentPlusHashBigDecimalDigitExponentPlusDigit() {
-        this.parseAndCheck2("#E+#",
-                "4XQ5",
-                new BigDecimal("4E+5"));
+    public void testHashExponentPlusHashDecimalDigitExponentPlusDigit() {
+        this.parseAndCheck2(
+                "#E+#",
+                4 + EXPONENT + PLUS + 5,
+                digits(4),
+                exponent(),
+                plus(),
+                digits(5)
+        );
     }
 
     @Test
-    public void testHashExponentPlusHashBigDecimalDigitExponentMinusDigit() {
-        this.parseAndCheck2("#E+#",
-                "6XN7",
-                new BigDecimal("6E-7"));
+    public void testHashExponentPlusHashDecimalDigitExponentMinusDigit() {
+        this.parseAndCheck2(
+                "#E+#",
+                6 + EXPONENT + MINUS + 7,
+                digits(6),
+                exponent(),
+                minus(),
+                digits(7)
+        );
     }
 
     @Test
-    public void testHashExponentPlusHashHashBigDecimalDigitExponentDigit() {
-        this.parseAndCheck2("#E+##",
-                "8X90",
-                new BigDecimal("8E+90"));
+    public void testHashExponentPlusHashHashDecimalDigitExponentDigit() {
+        this.parseAndCheck2(
+                "#E+##",
+                7 + EXPONENT  + 890,
+                digits(7),
+                exponent(),
+                digits("890")
+        );
     }
 
     @Test
-    public void testHashExponentPlusQuestionBigDecimalDigitExponentSpaceDigit() {
-        this.parseAndCheck2("#E+?",
-                "1X 2",
-                new BigDecimal("1E+2"));
+    public void testHashExponentPlusQuestionDecimalDigitExponentSpaceDigit() {
+        this.parseAndCheck2(
+                "#E+?",
+                1 + EXPONENT + PLUS + " 2",
+                digits(1),
+                exponent(),
+                plus(),
+                whitespace(),
+                digits(2)
+                );
     }
 
     // currency.........................................................................................................
 
     @Test
-    public void testCurrencyHashBigDecimal() {
-        this.parseAndCheck2("$#",
-                "aud1",
-                BigDecimal.valueOf(1));
+    public void testCurrencyHashDecimal() {
+        this.parseAndCheck2(
+                "$#",
+                CURRENCY + "1",
+                currency(),
+                digits(1)
+        );
     }
 
     @Test
-    public void testHashCurrencyBigDecimal() {
-        this.parseAndCheck2("#$",
-                "1aud",
-                BigDecimal.valueOf(1));
+    public void testHashCurrencyDecimal() {
+        this.parseAndCheck2(
+                "#$",
+                "1" + CURRENCY,
+                digits(1),
+                currency()
+        );
     }
 
     // percent..........................................................................................................
 
     @Test
-    public void testPercentHashBigDecimalPercentDigit() {
-        this.parseAndCheck2("%#",
-                "P1",
-                BigDecimal.valueOf(0.01));
+    public void testPercentHashDecimalPercentDigit() {
+        this.parseAndCheck2(
+                "%#",
+                PERCENT + "1",
+                percent(),
+                digits(1)
+        );
     }
 
     @Test
-    public void testHashPercentBigDecimalDigitPercent() {
-        this.parseAndCheck2("#%",
-                "1P",
-                BigDecimal.valueOf(0.01));
+    public void testHashPercentDecimalDigitPercent() {
+        this.parseAndCheck2(
+                "#%",
+                "1" + PERCENT,
+                digits(1),
+                percent()
+        );
     }
 
     @Test
-    public void testHashPercentBigDecimalDigitDigitDigitPercent() {
-        this.parseAndCheck2("#%",
-                "123P",
-                BigDecimal.valueOf(1.23));
+    public void testHashPercentDecimalDigitDigitDigitPercent() {
+        this.parseAndCheck2(
+                "#%",
+                "123" + PERCENT,
+                digits(123),
+                percent()
+        );
     }
 
     @Test
-    public void testHashDecimalPercentBigDecimalDigitDigitDigitPercent() {
-        this.parseAndCheck2("#.#%",
-                "45D6P",
-                BigDecimal.valueOf(0.456));
-    }
-
-    // escape.............................................................................................................
-
-    @Test
-    public void testEscapeHashBigDecimalTextDigit() {
-        this.parseAndCheck2("\\a#",
-                "a1",
-                BigDecimal.valueOf(1));
-    }
-
-    @Test
-    public void testEscapeHashEscapeHashBigDecimalTextDigitTextDigit() {
-        this.parseAndCheck2("\\a#\\b#",
-                "a2b3",
-                BigDecimal.valueOf(23));
-    }
-
-    // text.............................................................................................................
-
-    @Test
-    public void testTextHashBigDecimalTextDigit() {
-        this.parseAndCheck2("\"abc\"#",
-                "abc1",
-                BigDecimal.valueOf(1));
-    }
-
-    @Test
-    public void testTextHashBigDecimalTextDigitDigit() {
-        this.parseAndCheck2("\"abc\"#",
-                "abc23",
-                BigDecimal.valueOf(23));
-    }
-
-    @Test
-    public void testHashTextBigDecimalTextDigit() {
-        this.parseAndCheck2("#\"abc\"",
-                "4abc",
-                BigDecimal.valueOf(4));
-    }
-
-    @Test
-    public void testTextDigitTextBigDecimalTextDigitTextDigitTextDigit() {
-        this.parseAndCheck2("\"a\"#\"b\"#\"c\"#",
-                "a5b6c7",
-                BigDecimal.valueOf(567));
-    }
-
-    @Test
-    public void testTextDigitTextBigDecimalTextMinusDigitTextDigitTextDigit() {
-        this.parseAndCheck2("\"a\"#\"b\"#\"c\"#",
-                "aN8b9c0",
-                BigDecimal.valueOf(-890));
-    }
-
-    // whitespace.......................................................................................................
-
-    @Test
-    public void testWhitespaceHashBigDecimalSpaceDigit() {
-        this.parseAndCheck2(" #",
-                " 1",
-                BigDecimal.valueOf(1));
-    }
-
-    @Test
-    public void testWhitespaceHashBigDecimalSpaceDigitDigitDigit() {
-        this.parseAndCheck2(" #",
-                " 234",
-                BigDecimal.valueOf(234));
-    }
-
-    @Test
-    public void testWhitespaceHashBigDecimalSpaceMinusDigit() {
-        this.parseAndCheck2(" #",
-                " N5",
-                BigDecimal.valueOf(-5));
-    }
-
-    @Test
-    public void testWhitespaceHashWhitespaceHashBigDecimal() {
-        this.parseAndCheck2(" # #",
-                " 6 7",
-                BigDecimal.valueOf(67));
-    }
-
-    @Test
-    public void testWhitespaceHashWhitespaceDecimalHashBigDecimal() {
-        this.parseAndCheck2(" # .#",
-                " 8 D9",
-                BigDecimal.valueOf(8.9));
+    public void testHashDecimalPercentDecimalDigitDigitDigitPercent() {
+        this.parseAndCheck2(
+                "#.#%",
+                "45" + DECIMAL + "6" + PERCENT,
+                digits(45),
+                decimal(),
+                digits(6),
+                percent()
+        );
     }
 
     // several patterns.................................................................................................
 
     @Test
     public void testFirstPatternMatches() {
-        this.parseAndCheck2("0;\"text-literal\"",
+        this.parseAndCheck2(
+                "0;$0",
                 "1",
-                BigDecimal.valueOf(1));
+                digits(1)
+        );
     }
 
     @Test
     public void testLastPatternMatches() {
-        this.parseAndCheck2("\"text-literal\";0",
+        this.parseAndCheck2(
+                "$0;0",
                 "2",
-                BigDecimal.valueOf(2));
-    }
-
-    // partial..........................................................................................................
-
-    @Test
-    public void testPartial() {
-        final String text = "123D45";
-        final String after = "abc";
-
-        this.parseAndCheck(this.createParser("#.#"),
-                text + after,
-                ParserTokens.bigDecimal(new BigDecimal("123.45"), text),
-                text,
-                after);
-    }
-
-    @Test
-    public void testTelephonePartial() {
-        final String text = "02-123-4567";
-        final String after = "abc";
-
-        this.parseAndCheck(this.createParser("00\\-000\\-0000"),
-                text + after,
-                ParserTokens.bigDecimal(new BigDecimal("21234567"), text),
-                text,
-                after);
+                digits(2));
     }
 
     // helpers..........................................................................................................
 
     private void parseAndFail2(final String pattern,
                                final String text) {
-        this.parseFailAndCheck(this.createParser(pattern),
-                text);
+        this.parseFailAndCheck(
+                this.createParser(pattern),
+                text
+        );
     }
 
     private void parseAndCheck2(final String pattern,
                                 final String text,
-                                final BigDecimal expected) {
-        this.parseAndCheck(this.createParser(pattern),
+                                final SpreadsheetParserToken ...tokens) {
+        final List<ParserToken> tokensList = Lists.of(tokens);
+        this.parseAndCheck(
+                this.createParser(pattern),
                 text,
-                ParserTokens.bigDecimal(expected, text),
+                SpreadsheetParserToken.number(tokensList, ParserToken.text(tokensList)),
                 text,
-                "");
+                ""
+        );
     }
 
     // ParserTesting....................................................................................................
@@ -518,6 +564,46 @@ public final class SpreadsheetNumberParsePatternsParserTest extends SpreadsheetN
                 ExpressionNumberKind.BIG_DECIMAL,
                 VALUE_SEPARATOR
         );
+    }
+
+    private SpreadsheetCurrencySymbolParserToken currency() {
+        return SpreadsheetParserToken.currencySymbol(CURRENCY, CURRENCY);
+    }
+
+    private SpreadsheetDecimalSeparatorSymbolParserToken decimal() {
+        return SpreadsheetParserToken.decimalSeparatorSymbol("" + DECIMAL, "" + DECIMAL);
+    }
+
+    private SpreadsheetDigitsParserToken digits(final int value) {
+        return digits("" + value);
+    }
+
+    private SpreadsheetDigitsParserToken digits(final String text) {
+        return SpreadsheetParserToken.digits(text, text);
+    }
+
+    private SpreadsheetExponentSymbolParserToken exponent() {
+        return SpreadsheetParserToken.exponentSymbol(EXPONENT, EXPONENT);
+    }
+
+    private SpreadsheetGroupingSeparatorSymbolParserToken group() {
+        return SpreadsheetParserToken.groupingSeparatorSymbol("" + GROUP, "" + GROUP);
+    }
+
+    private SpreadsheetMinusSymbolParserToken minus() {
+        return SpreadsheetParserToken.minusSymbol("" + MINUS, "" + MINUS);
+    }
+
+    private SpreadsheetPercentSymbolParserToken percent() {
+        return SpreadsheetParserToken.percentSymbol("" + PERCENT, "" + PERCENT);
+    }
+
+    private SpreadsheetPlusSymbolParserToken plus() {
+        return SpreadsheetParserToken.plusSymbol("" + PLUS, "" + PLUS);
+    }
+
+    private SpreadsheetWhitespaceParserToken whitespace() {
+        return SpreadsheetParserToken.whitespace(" ", " ");
     }
 
     @Override

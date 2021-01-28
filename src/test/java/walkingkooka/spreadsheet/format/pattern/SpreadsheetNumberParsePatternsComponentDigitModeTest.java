@@ -17,13 +17,13 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
-public final class SpreadsheetNumberParsePatternsModeTest extends SpreadsheetNumberParsePatternsTestCase2<SpreadsheetNumberParsePatternsMode> {
+public final class SpreadsheetNumberParsePatternsComponentDigitModeTest extends SpreadsheetNumberParsePatternsTestCase2<SpreadsheetNumberParsePatternsComponentDigitMode> {
 
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<SpreadsheetNumberParsePatternsMode> type() {
-        return SpreadsheetNumberParsePatternsMode.class;
+    public Class<SpreadsheetNumberParsePatternsComponentDigitMode> type() {
+        return SpreadsheetNumberParsePatternsComponentDigitMode.class;
     }
 
     // TypeNameTesting..................................................................................................

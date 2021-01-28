@@ -19,23 +19,19 @@ package walkingkooka.spreadsheet.format.pattern;
 
 final class SpreadsheetNumberParsePatternsComponentDigitZero extends SpreadsheetNumberParsePatternsComponentDigit {
 
-    static SpreadsheetNumberParsePatternsComponentDigitZero with(final int max) {
-        return new SpreadsheetNumberParsePatternsComponentDigitZero(max);
+    static SpreadsheetNumberParsePatternsComponentDigitZero with(final SpreadsheetNumberParsePatternsComponentDigitMode mode,
+                                                                 final int max) {
+        return new SpreadsheetNumberParsePatternsComponentDigitZero(mode, max);
     }
 
-    private SpreadsheetNumberParsePatternsComponentDigitZero(final int max) {
-        super(max);
-    }
-
-    @Override
-    SpreadsheetNumberParsePatternsComponent lastDecimal() {
-        return new SpreadsheetNumberParsePatternsComponentDigitZero(Integer.MAX_VALUE);
+    private SpreadsheetNumberParsePatternsComponentDigitZero(final SpreadsheetNumberParsePatternsComponentDigitMode mode,
+                                                             final int max) {
+        super(mode, max);
     }
 
     @Override
-    boolean handle(final char c,
-                   final SpreadsheetNumberParsePatternsRequest request) {
-        return this.handleDigit(c, request);
+    SpreadsheetNumberParsePatternsComponent lastDigit(final SpreadsheetNumberParsePatternsComponentDigitMode mode) {
+        return new SpreadsheetNumberParsePatternsComponentDigitZero(mode, Integer.MAX_VALUE);
     }
 
     @Override

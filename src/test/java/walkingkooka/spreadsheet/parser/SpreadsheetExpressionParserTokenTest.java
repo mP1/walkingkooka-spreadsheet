@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.parser.ParserToken;
 import walkingkooka.tree.expression.Expression;
-import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
@@ -36,7 +35,7 @@ public final class SpreadsheetExpressionParserTokenTest extends SpreadsheetParen
 
     @Test
     public void testWithTwoTokensFails() {
-        this.createToken(NUMBER1 + NUMBER2, this.number1(), this.number2());
+        this.createToken("" + NUMBER1 + NUMBER2, this.number1(), this.number2());
     }
 
     @Test
@@ -81,18 +80,15 @@ public final class SpreadsheetExpressionParserTokenTest extends SpreadsheetParen
 
     @Test
     public void testToExpressionAddition() {
-        final ExpressionNumber number1 = this.expressionNumber(1);
-        final ExpressionNumber number2 = this.expressionNumber(2);
-
         this.toExpressionAndCheck(
                 SpreadsheetExpressionParserToken.with(
                         Lists.of(
                                 equalsSymbol(),
                                 SpreadsheetParserToken.addition(
                                         Lists.of(
-                                                SpreadsheetParserToken.number(number1, "1"),
+                                                number1(),
                                                 SpreadsheetParserToken.plusSymbol("+", "+"),
-                                                SpreadsheetParserToken.number(number2, "2")
+                                                number2()
                                         ),
                                         "1+2"
                                 )
@@ -100,17 +96,14 @@ public final class SpreadsheetExpressionParserTokenTest extends SpreadsheetParen
                         "=1+2"
                 ),
                 Expression.add(
-                        Expression.expressionNumber(number1),
-                        Expression.expressionNumber(number2)
+                        Expression.expressionNumber(this.expressionNumber(NUMBER1)),
+                        Expression.expressionNumber(this.expressionNumber(NUMBER2))
                 )
         );
     }
 
     @Test
     public void testToExpressionWhitespaceAddition() {
-        final ExpressionNumber number1 = this.expressionNumber(1);
-        final ExpressionNumber number2 = this.expressionNumber(2);
-
         this.toExpressionAndCheck(
                 SpreadsheetExpressionParserToken.with(
                         Lists.of(
@@ -118,9 +111,9 @@ public final class SpreadsheetExpressionParserTokenTest extends SpreadsheetParen
                                 whitespace(),
                                 SpreadsheetParserToken.addition(
                                         Lists.of(
-                                                SpreadsheetParserToken.number(number1, "1"),
+                                                number1(),
                                                 SpreadsheetParserToken.plusSymbol("+", "+"),
-                                                SpreadsheetParserToken.number(number2, "2")
+                                                number2()
                                         ),
                                         "1+2"
                                 )
@@ -128,8 +121,8 @@ public final class SpreadsheetExpressionParserTokenTest extends SpreadsheetParen
                         "= 1+2"
                 ),
                 Expression.add(
-                        Expression.expressionNumber(number1),
-                        Expression.expressionNumber(number2)
+                        Expression.expressionNumber(this.expressionNumber(NUMBER1)),
+                        Expression.expressionNumber(this.expressionNumber(NUMBER2))
                 )
         );
     }

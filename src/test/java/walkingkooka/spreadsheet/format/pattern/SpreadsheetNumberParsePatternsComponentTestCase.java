@@ -18,23 +18,22 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import walkingkooka.ToStringTesting;
+import walkingkooka.collect.iterator.Iterators;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.ParserTesting;
 
-import java.math.BigDecimal;
 import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public abstract class SpreadsheetNumberParsePatternsComponentTestCase<C extends SpreadsheetNumberParsePatternsComponent> extends SpreadsheetNumberParsePatternsTestCase<C>
-        implements ToStringTesting<C> {
-
-    final static BigDecimal VALUE_WITHOUT = null;
-    final static Boolean NEXT_CALLED = true;
-    final static Boolean NEXT_SKIPPED = false;
+        implements ParserTesting,
+        ToStringTesting<C> {
 
     SpreadsheetNumberParsePatternsComponentTestCase() {
         super();
@@ -42,90 +41,156 @@ public abstract class SpreadsheetNumberParsePatternsComponentTestCase<C extends 
 
     abstract C createComponent();
 
-    final SpreadsheetNumberParsePatternsRequest createRequest() {
-        return this.createRequest(Lists.of(SpreadsheetNumberParsePatternsComponent.textLiteral("@")).iterator());
+    final SpreadsheetNumberParsePatternsRequest createRequest(final boolean next) {
+        return this.createRequest(
+                next ?
+                        Iterators.empty() :
+                        this.next()
+        );
     }
 
-
     final SpreadsheetNumberParsePatternsRequest createRequest(final Iterator<SpreadsheetNumberParsePatternsComponent> nextComponent) {
-        return SpreadsheetNumberParsePatternsRequest.with(nextComponent, this.decimalNumberContext());
+        return SpreadsheetNumberParsePatternsRequest.with(
+                nextComponent,
+                SpreadsheetNumberParsePatternsMode.VALUE,
+                this.decimalNumberContext()
+        );
+    }
+
+    private Iterator<SpreadsheetNumberParsePatternsComponent> next() {
+        return Iterators.one(
+                new SpreadsheetNumberParsePatternsComponent() {
+                    @Override
+                    SpreadsheetNumberParsePatternsComponent lastDigit(final SpreadsheetNumberParsePatternsComponentDigitMode mode) {
+                        throw new UnsupportedOperationException();
+                    }
+
+                    @Override
+                    boolean parse(final TextCursor cursor,
+                               final SpreadsheetNumberParsePatternsRequest request) {
+                        return true;
+                    }
+
+                    @Override
+                    public String toString() {
+                        return this.getClass().getSimpleName();
+                    }
+                }
+        );
     }
 
     final void parseFails(final String text) {
-        this.parseFails(text, text);
-    }
-
-    final void parseFails(final String text,
-                          final String textAfter) {
-        this.parseAndCheck(text,
-                textAfter,
-                NEXT_SKIPPED);
-    }
-
-    final void parseAndCheck(final String text,
-                             final String textAfter,
-                             final boolean next) {
-        this.parseAndCheck(text,
-                textAfter,
-                VALUE_WITHOUT,
-                next);
-    }
-
-    final void parseAndCheck(final String text,
-                             final String textAfter,
-                             final BigDecimal value,
-                             final boolean next) {
-        this.parseAndCheck(this.createComponent(),
-                text,
-                this.createRequest(),
-                textAfter,
-                value,
-                next);
-    }
-
-    final void parseAndCheck(final String text,
-                             final SpreadsheetNumberParsePatternsRequest context,
-                             final String textAfter,
-                             final BigDecimal value,
-                             final boolean next) {
-        this.parseAndCheck(this.createComponent(),
-                text,
-                context,
-                textAfter,
-                value,
-                next);
-    }
-
-    final void parseAndCheck(final SpreadsheetNumberParsePatternsComponent component,
-                             final String text,
-                             final SpreadsheetNumberParsePatternsRequest context,
-                             final String textAfter,
-                             final BigDecimal value,
-                             final boolean next) {
         final TextCursor cursor = TextCursors.charSequence(text);
 
-        component.parse(cursor, context);
+        final SpreadsheetNumberParsePatternsRequest request = this.createRequest(NEXT_SKIPPED);
+        assertEquals(
+                false,
+                this.createComponent()
+                        .parse(cursor, request),
+                () -> "parse of " + CharSequences.quoteAndEscape(text) + " should have returned false"
+        );
 
         final TextCursorSavePoint save = cursor.save();
         cursor.end();
 
-        assertEquals(textAfter,
+        assertEquals(text,
                 save.textBetween(),
                 () -> " text left after parsing text " + CharSequences.quoteAndEscape(text));
 
-        if (null != value) {
-            assertEquals(value.stripTrailingZeros(),
-                    context.computeValue().stripTrailingZeros(),
-                    () -> " computeValue after parsing text " + CharSequences.quoteAndEscape(text));
-        }
-        assertEquals(next,
-                !context.next.hasNext(),
-                () -> " next component called after parsing text " + CharSequences.quoteAndEscape(text));
+        assertEquals(
+                Lists.empty(),
+                request.tokens,
+                () -> "tokens\nrequest: " + request
+        );
     }
 
-    final void checkMode(final SpreadsheetNumberParsePatternsRequest context,
-                         final SpreadsheetNumberParsePatternsMode mode) {
-        assertEquals(mode, context.mode, "mode");
+    final void parseAndCheck2(final String text,
+                              final String textAfter,
+                              final boolean next,
+                              final SpreadsheetParserToken... tokens) {
+        this.parseAndCheck2(
+                text,
+                textAfter,
+                this.createRequest(next),
+                next,
+                tokens
+        );
+    }
+
+    final void parseAndCheck2(final String text,
+                              final String textAfter,
+                              final SpreadsheetNumberParsePatternsRequest request,
+                              final boolean next,
+                              final SpreadsheetParserToken... tokens) {
+        this.parseAndCheck2(
+                this.createComponent(),
+                text,
+                textAfter,
+                request,
+                next,
+                tokens
+        );
+    }
+
+    final void parseAndCheck2(final String text,
+                              final String textAfter,
+                              final SpreadsheetNumberParsePatternsComponentDigitMode mode,
+                              final boolean next,
+                              final SpreadsheetParserToken... tokens) {
+        final SpreadsheetNumberParsePatternsRequest request = this.createRequest(next);
+        this.parseAndCheck2(
+                this.createComponent(),
+                text,
+                textAfter,
+                request,
+                next,
+                tokens
+        );
+        assertEquals(
+                mode,
+                request.digitMode,
+                () -> "request: " + request
+        );
+    }
+
+    final void parseAndCheck2(final C component,
+                              final String text,
+                              final String textAfter,
+                              final SpreadsheetNumberParsePatternsRequest request,
+                              final boolean hasNext,
+                              final SpreadsheetParserToken... tokens) {
+        final TextCursor cursor = TextCursors.charSequence(text + textAfter);
+
+        assertEquals(
+                true, // !hasNext
+                component.parse(cursor, request),
+                () -> "parse " + CharSequences.quoteAndEscape(text) + " should have matched"
+        );
+
+        final TextCursorSavePoint save = cursor.save();
+        cursor.end();
+
+        assertEquals(
+                textAfter,
+                save.textBetween(),
+                () -> " text left after parsing text " + CharSequences.quoteAndEscape(text)
+        );
+
+        request.addNumberIfNecessary();
+
+        checkEquals(
+                Lists.of(tokens),
+                request.tokens,
+                () -> "tokens\nrequest: " + request
+        );
+
+        if(NEXT_CALLED == hasNext) {
+            assertEquals(
+                    hasNext, // if empty means nothing got consumed and next shouldnt be executed
+                    request.next.hasNext(),
+                    () -> " next component called after parsing text " + CharSequences.quoteAndEscape(text)
+            );
+        }
     }
 
     // TypeNameTesting..................................................................................................

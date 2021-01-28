@@ -17,6 +17,7 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.cursor.TextCursor;
 
 /**
@@ -34,15 +35,24 @@ final class SpreadsheetNumberParsePatternsComponentDecimalSeparator extends Spre
     }
 
     @Override
-    void parse(final TextCursor cursor,
+    boolean parse(final TextCursor cursor,
                final SpreadsheetNumberParsePatternsRequest request) {
+        boolean completed = false;
+
         if (false == cursor.isEmpty()) {
-            if (request.context.decimalSeparator() == cursor.at()) {
-                request.mode.onDecimalSeparator(request);
+            final char decimal = request.context.decimalSeparator();
+            if (decimal == cursor.at()) {
+                final String decimalString = Character.toString(decimal);
+                request.add(SpreadsheetParserToken.decimalSeparatorSymbol(decimalString, decimalString));
+
+                request.digitMode.onDecimalSeparator(request);
                 cursor.next();
-                request.nextComponent(cursor);
+
+                completed = request.nextComponent(cursor);
             }
         }
+
+        return completed;
     }
 
     @Override

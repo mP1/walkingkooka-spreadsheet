@@ -23,17 +23,30 @@ import walkingkooka.math.FakeDecimalNumberContext;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.TypeNameTesting;
+import walkingkooka.text.cursor.parser.ParserTesting;
 
 import java.math.MathContext;
 
 public abstract class SpreadsheetNumberParsePatternsTestCase<T> implements ClassTesting2<T>,
+        ParserTesting,
         TypeNameTesting<T> {
 
     SpreadsheetNumberParsePatternsTestCase() {
         super();
     }
 
-    final static String CURRENCY = "aud";
+    final static boolean NEXT_CALLED = false;
+    final static boolean NEXT_SKIPPED = true;
+
+    final static String CURRENCY = "NZ$";
+
+    final static char GROUP = 'g';
+    final static char PERCENT = 'q';
+    final static String EXPONENT = "XYZ";
+
+    final static char PLUS = 'p';
+    final static char MINUS = 'm';
+    final static char DECIMAL = 'd';
 
     public final DecimalNumberContext decimalNumberContext() {
         return new FakeDecimalNumberContext() {
@@ -44,32 +57,32 @@ public abstract class SpreadsheetNumberParsePatternsTestCase<T> implements Class
 
             @Override
             public char decimalSeparator() {
-                return 'D';
+                return DECIMAL;
             }
 
             @Override
             public String exponentSymbol() {
-                return "X";
+                return EXPONENT;
             }
 
             @Override
             public char groupingSeparator() {
-                return 'G';
+                return GROUP;
             }
 
             @Override
             public char negativeSign() {
-                return 'N';
+                return MINUS;
             }
 
             @Override
             public char percentageSymbol() {
-                return 'P';
+                return PERCENT;
             }
 
             @Override
             public char positiveSign() {
-                return 'Q';
+                return PLUS;
             }
 
             @Override

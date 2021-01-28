@@ -17,6 +17,8 @@
 
 package walkingkooka.spreadsheet.format.pattern;
 
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 
 /**
@@ -34,11 +36,16 @@ final class SpreadsheetNumberParsePatternsComponentCurrency extends SpreadsheetN
     }
 
     @Override
-    void parse(final TextCursor cursor,
+    boolean parse(final TextCursor cursor,
                final SpreadsheetNumberParsePatternsRequest request) {
-        this.parseToken(cursor,
+        return this.parseToken(
+                cursor,
                 request.context.currencySymbol(),
-                request);
+                CaseSensitivity.INSENSITIVE,
+                SpreadsheetParserToken::currencySymbol,
+                null, // dont update mode
+                request
+        );
     }
 
     @Override

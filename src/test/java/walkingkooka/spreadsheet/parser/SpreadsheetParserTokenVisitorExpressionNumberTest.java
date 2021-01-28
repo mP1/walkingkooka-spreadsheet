@@ -15,14 +15,17 @@
  *
  */
 
-package walkingkooka.spreadsheet.format.pattern;
+package walkingkooka.spreadsheet.parser;
 
-import walkingkooka.ToStringTesting;
+public final class SpreadsheetParserTokenVisitorExpressionNumberTest extends SpreadsheetParserTokenVisitorTestCase<SpreadsheetParserTokenVisitorExpressionNumber> {
 
-public abstract class SpreadsheetNumberParsePatternsComponentTestCase2<C extends SpreadsheetNumberParsePatternsComponent2> extends SpreadsheetNumberParsePatternsComponentTestCase<C>
-        implements ToStringTesting<C> {
+    @Override
+    public SpreadsheetParserTokenVisitorExpressionNumber createVisitor() {
+        return new SpreadsheetParserTokenVisitorExpressionNumber();
+    }
 
-    SpreadsheetNumberParsePatternsComponentTestCase2() {
-        super();
+    @Override
+    public Class<SpreadsheetParserTokenVisitorExpressionNumber> type() {
+        return SpreadsheetParserTokenVisitorExpressionNumber.class;
     }
 }

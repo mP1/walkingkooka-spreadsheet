@@ -18,6 +18,7 @@
 package walkingkooka.spreadsheet.format.pattern;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -25,26 +26,47 @@ public final class SpreadsheetNumberParsePatternsComponentDecimalSeparatorTest e
 
     @Test
     public void testDecimal() {
-        this.parseAndCheck2("D",
-                "");
+        assertEquals(DECIMAL, 'd');
+
+        this.parseAndCheck2(
+                DECIMAL,
+                ""
+        );
     }
 
     @Test
     public void testDecimalCharacter() {
-        this.parseAndCheck2("D!", "!");
+        this.parseAndCheck2(
+                DECIMAL ,
+                "!"
+        );
     }
 
-    final void parseAndCheck2(final String text,
+    @Test
+    public void testDecimalTwice() {
+        this.parseAndCheck2(
+                DECIMAL,
+                DECIMAL + ""
+        );
+    }
+
+    @Test
+    public void testDecimalTwiceCharacter() {
+        this.parseAndCheck2(
+                DECIMAL,
+                DECIMAL + "!"
+        );
+    }
+
+    final void parseAndCheck2(final char c,
                               final String textAfter) {
-        final SpreadsheetNumberParsePatternsRequest context = this.createRequest();
-        this.parseAndCheck(this.createComponent(),
+        final String text = "" + c;
+        this.parseAndCheck2(
                 text,
-                context,
                 textAfter,
-                VALUE_WITHOUT,
-                NEXT_CALLED);
-        this.checkMode(context, SpreadsheetNumberParsePatternsMode.DECIMAL);
-        assertEquals(false, context.percentage, "percentage");
+                SpreadsheetNumberParsePatternsComponentDigitMode.DECIMAL_FIRST,
+                NEXT_CALLED,
+                SpreadsheetParserToken.decimalSeparatorSymbol(text, text));
     }
 
     @Test

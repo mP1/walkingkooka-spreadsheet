@@ -24,7 +24,12 @@ public abstract class SpreadsheetBinaryParserTokenTestCase2<T extends Spreadshee
 
     @Test
     public final void testToExpression() {
-        this.toExpressionAndCheck(this.expressionNode(this.expressionNumberExpression1(), this.expressionNumberExpression2()));
+        this.toExpressionAndCheck(
+                this.expressionNode(
+                        this.expression1(),
+                        this.expression2()
+                )
+        );
     }
 
     abstract Expression expressionNode(final Expression left, final Expression right);
