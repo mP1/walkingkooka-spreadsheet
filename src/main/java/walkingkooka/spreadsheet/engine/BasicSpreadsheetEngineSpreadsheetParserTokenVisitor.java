@@ -74,7 +74,6 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParenthesisOpenSymbolParserTok
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserTokenVisitor;
 import walkingkooka.spreadsheet.parser.SpreadsheetPercentSymbolParserToken;
-import walkingkooka.spreadsheet.parser.SpreadsheetPercentageParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetPlusSymbolParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetPowerParserToken;
 import walkingkooka.spreadsheet.parser.SpreadsheetPowerSymbolParserToken;
@@ -277,16 +276,6 @@ abstract class BasicSpreadsheetEngineSpreadsheetParserTokenVisitor extends Sprea
     @Override
     protected final void endVisit(final SpreadsheetNumberParserToken token) {
         this.exit(token, SpreadsheetParserToken::number);
-    }
-
-    @Override
-    protected final Visiting startVisit(final SpreadsheetPercentageParserToken token) {
-        return this.enter();
-    }
-
-    @Override
-    protected final void endVisit(final SpreadsheetPercentageParserToken token) {
-        this.exit(token, SpreadsheetParserToken::percentage);
     }
 
     @Override

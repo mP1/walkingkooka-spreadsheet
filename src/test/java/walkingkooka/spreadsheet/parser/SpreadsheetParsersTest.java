@@ -589,7 +589,12 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
         final String text = "1%";
 
         this.parseExpressionAndCheck(text,
-                SpreadsheetParserToken.percentage(Lists.of(number(1), percent()), text),
+                SpreadsheetParserToken.number(
+                        Lists.of(
+                                number(1),
+                                percent()
+                        ),
+                        text),
                 text);
     }
 
@@ -605,7 +610,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
 
     private void testExpressionNegativeNumberPercentage() {
         final String text = "-1%";
-        final SpreadsheetParserToken percent = SpreadsheetParserToken.percentage(Lists.of(number(1), percent()), "1%");
+        final SpreadsheetParserToken percent = SpreadsheetParserToken.number(
+                Lists.of(number(1),
+                        percent()
+                ),
+                "1%");
 
         this.parseExpressionAndCheck(text,
                 SpreadsheetParserToken.negative(Lists.of(minus(), percent), text),

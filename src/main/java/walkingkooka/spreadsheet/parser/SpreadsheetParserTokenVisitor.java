@@ -193,16 +193,6 @@ public abstract class SpreadsheetParserTokenVisitor extends ParserTokenVisitor {
         // nop
     }
 
-    // SpreadsheetPercentageParserToken....................................................................................
-
-    protected Visiting startVisit(final SpreadsheetPercentageParserToken token) {
-        return Visiting.CONTINUE;
-    }
-
-    protected void endVisit(final SpreadsheetPercentageParserToken token) {
-        // nop
-    }
-
     // SpreadsheetPowerParserToken....................................................................................
 
     protected Visiting startVisit(final SpreadsheetPowerParserToken token) {
