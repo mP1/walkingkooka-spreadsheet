@@ -33,14 +33,20 @@ final class SpreadsheetParserTokenVisitorExpressionNumber extends SpreadsheetPar
     /**
      * Creates a {@link SpreadsheetParserTokenVisitorExpressionNumber}, that collects and translates symbols into a {@link String}
      * which is then parsed by {@link ExpressionNumberKind#parse(String)}.
+     * If the token includes a {@link SpreadsheetPercentSymbolParserToken} then the value will be divided by 100.
      */
-    static ExpressionNumber toExpressionNumber(final SpreadsheetParentParserToken token,
+    static ExpressionNumber toExpressionNumber(final SpreadsheetNumberParserToken token,
                                                final ExpressionEvaluationContext context) {
         Objects.requireNonNull(context, "context");
 
         final SpreadsheetParserTokenVisitorExpressionNumber visitor = new SpreadsheetParserTokenVisitorExpressionNumber();
         visitor.accept(token);
-        return context.expressionNumberKind().parse(visitor.number.toString());
+
+        final ExpressionNumberKind kind = context.expressionNumberKind();
+        final ExpressionNumber number = kind.parse(visitor.number.toString());
+        return visitor.percentage ?
+                number.divide(kind.create(100), context) :
+                number;
     }
 
     // @VisibleForTesting
@@ -75,6 +81,13 @@ final class SpreadsheetParserTokenVisitorExpressionNumber extends SpreadsheetPar
     protected void visit(final SpreadsheetPlusSymbolParserToken token) {
         this.number.append('+');
     }
+
+    @Override
+    protected void visit(final SpreadsheetPercentSymbolParserToken token) {
+        this.percentage = true;
+    }
+
+    private boolean percentage = false;
 
     /**
      * Aggregates all the number important characters digits, signs, exponent etc, this will be parsed by {@link BigDecimal}.

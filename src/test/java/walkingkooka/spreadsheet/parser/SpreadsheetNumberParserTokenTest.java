@@ -28,6 +28,7 @@ import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
+import java.math.MathContext;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -283,6 +284,52 @@ public final class SpreadsheetNumberParserTokenTest extends SpreadsheetParentPar
         );
     }
 
+    @Test
+    public void testToExpressionNumber0Percent() {
+        this.toExpressionAndCheck2(
+                0.0,
+                digit("0"),
+                percent()
+        );
+    }
+
+    @Test
+    public void testToExpressionNumber50Percent() {
+        this.toExpressionAndCheck2(
+                0.5,
+                digit("50"),
+                percent()
+        );
+    }
+
+    @Test
+    public void testToExpressionNumber200Percent() {
+        this.toExpressionAndCheck2(
+                2.0,
+                digit("200"),
+                percent()
+        );
+    }
+
+    @Test
+    public void testToExpressionNumberPercent300() {
+        this.toExpressionAndCheck2(
+                3.0,
+                digit("300"),
+                percent()
+        );
+    }
+
+    @Test
+    public void testToExpressionNumberMinusPercent400() {
+        this.toExpressionAndCheck2(
+                -4.0,
+                minus(),
+                digit("400"),
+                percent()
+        );
+    }
+
     private static SpreadsheetDigitsParserToken digit(final String text) {
         return SpreadsheetDigitsParserToken.digits(text, text);
     }
@@ -293,6 +340,10 @@ public final class SpreadsheetNumberParserTokenTest extends SpreadsheetParentPar
 
     private static SpreadsheetMinusSymbolParserToken minus() {
         return SpreadsheetDigitsParserToken.minusSymbol("-", "-");
+    }
+
+    private static SpreadsheetPercentSymbolParserToken percent() {
+        return SpreadsheetDigitsParserToken.percentSymbol("%", "%");
     }
 
     private static SpreadsheetPlusSymbolParserToken plus() {
@@ -341,6 +392,12 @@ public final class SpreadsheetNumberParserTokenTest extends SpreadsheetParentPar
 
     private ExpressionEvaluationContext expressionEvaluationContext(final ExpressionNumberKind kind) {
         return new FakeExpressionEvaluationContext() {
+
+            @Override
+            public MathContext mathContext() {
+                return MathContext.DECIMAL32;
+            }
+
             @Override
             public ExpressionNumberKind expressionNumberKind() {
                 return kind;
