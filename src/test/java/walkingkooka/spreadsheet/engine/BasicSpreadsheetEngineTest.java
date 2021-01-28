@@ -4987,7 +4987,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
             @Override
             public SpreadsheetParserToken parseFormula(final String formula) {
-                return Cast.to(SpreadsheetParsers.expression()
+                return SpreadsheetParsers.expression()
                         .orFailIfCursorNotEmpty(ParserReporters.basic())
                         .parse(
                                 TextCursors.charSequence(formula),
@@ -4998,7 +4998,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                                         VALUE_SEPARATOR
                                 )
                         )
-                        .get());
+                        .get()
+                        .cast(SpreadsheetParserToken.class);
             }
 
             @Override
