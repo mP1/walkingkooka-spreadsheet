@@ -39,6 +39,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyValueException;
@@ -87,6 +88,7 @@ import walkingkooka.tree.text.TextStylePropertyName;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -237,7 +239,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        cellStore.save(this.cell(cellReference, "1+2"));
+        cellStore.save(this.cell(cellReference, "=1+2"));
 
         this.loadCellAndCheckWithoutValueOrError(engine,
                 cellReference,
@@ -272,7 +274,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        cellStore.save(this.cell(cellReference, "1+2")
+        cellStore.save(this.cell(cellReference, "=1+2")
                 .setFormat(format));
 
         this.loadCellAndCheckFormatted2(engine,
@@ -290,7 +292,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        cellStore.save(this.cell(cellReference, "1+2"));
+        cellStore.save(this.cell(cellReference, "=1+2"));
 
         final SpreadsheetCell first = this.loadCellOrFail(engine,
                 cellReference,
@@ -311,7 +313,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        cellStore.save(this.cell(cellReference, "1+2+"));
+        cellStore.save(this.cell(cellReference, "=1+2+"));
 
         final SpreadsheetCell first = this.loadCellOrFail(engine,
                 cellReference,
@@ -330,14 +332,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference(1, 1);
-        cellStore.save(this.cell(a, "1"));
+        cellStore.save(this.cell(a, "=1"));
 
         final SpreadsheetCellReference b = this.cellReference(2, 2);
-        cellStore.save(this.cell(b, "" + a));
+        cellStore.save(this.cell(b, "=" + a));
 
         final SpreadsheetCell first = this.loadCellOrFail(engine, a, SpreadsheetEngineEvaluation.FORCE_RECOMPUTE, context);
 
-        cellStore.save(this.cell(a, "999"));
+        cellStore.save(this.cell(a, "=999"));
 
         final SpreadsheetCell second = this.loadCellOrFail(engine, a, SpreadsheetEngineEvaluation.FORCE_RECOMPUTE, context);
         assertNotSame(first, second, "different instances of SpreadsheetCell returned not cached");
@@ -353,7 +355,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference("A1");
-        final Set<SpreadsheetCell> saved = engine.saveCell(this.cell(a, "1+$B$2"), context)
+        final Set<SpreadsheetCell> saved = engine.saveCell(this.cell(a, "=1+$B$2"), context)
                 .cells();
 
         final SpreadsheetCell withError = saved.iterator().next();
@@ -362,7 +364,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 () -> "cell should have error because B2 reference is unknown=" + withError);
 
         final SpreadsheetCellReference b = this.cellReference("B2");
-        cellStore.save(this.cell(b, "99"));
+        cellStore.save(this.cell(b, "=99"));
 
         this.loadCellAndCheckValue(engine,
                 a,
@@ -378,7 +380,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
-        cellStore.save(this.cell(cellReference, "1+2"));
+        cellStore.save(this.cell(cellReference, "=1+2"));
 
         final SpreadsheetCell first = this.loadCellOrFail(engine,
                 cellReference,
@@ -402,9 +404,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b = this.cellReference(2, 1);
         final SpreadsheetCellReference c = this.cellReference(3, 1);
 
-        cellStore.save(this.cell(a, "1+2"));
-        cellStore.save(this.cell(b, "3+4"));
-        cellStore.save(this.cell(c, "5+6"));
+        cellStore.save(this.cell(a, "=1+2"));
+        cellStore.save(this.cell(b, "=3+4"));
+        cellStore.save(this.cell(c, "=5+6"));
 
         this.loadCellAndCheckFormatted2(engine,
                 a,
@@ -438,9 +440,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         this.counter = BigDecimal.ZERO;
 
-        engine.saveCell(this.cell(a, "1+2+BasicSpreadsheetEngineTestCounter()"), context);
-        engine.saveCell(this.cell(b, "3+4+" + a), context);
-        engine.saveCell(this.cell(c, "5+6+" + a), context);
+        engine.saveCell(this.cell(a, "=1+2+BasicSpreadsheetEngineTestCounter()"), context);
+        engine.saveCell(this.cell(b, "=3+4+" + a), context);
+        engine.saveCell(this.cell(c, "=5+6+" + a), context);
 
         // updating this counter results in $A having its value recomputed forcing a cascade update of $b and $c
         this.counter = number(100);
@@ -449,9 +451,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                formattedCellWithValue(a, "1+2+BasicSpreadsheetEngineTestCounter()", number(100 + 3)),
-                formattedCellWithValue(b, "3+4+" + a, number(3 + 4 + 103)),
-                formattedCellWithValue(c, "5+6+" + a, number(5 + 6 + 103)));
+                formattedCellWithValue(a, "=1+2+BasicSpreadsheetEngineTestCounter()", number(100 + 3)),
+                formattedCellWithValue(b, "=3+4+" + a, number(3 + 4 + 103)),
+                formattedCellWithValue(c, "=5+6+" + a, number(5 + 6 + 103)));
     }
 
     @Test
@@ -461,7 +463,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
-        cellStore.save(this.cell(a, "X99"));
+        cellStore.save(this.cell(a, "=X99"));
 
         this.loadCellAndCheckError(engine,
                 a,
@@ -478,7 +480,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
-        cellStore.save(this.cell(a, "INVALIDLABEL"));
+        cellStore.save(this.cell(a, "=INVALIDLABEL"));
 
         this.loadCellAndCheckError(engine,
                 a,
@@ -496,8 +498,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
         final SpreadsheetCellReference b = this.cellReference(1, 0); // B1
 
-        cellStore.save(this.cell(a, "B1"));
-        cellStore.save(this.cell(b, "3+4"));
+        cellStore.save(this.cell(a, "=B1"));
+        cellStore.save(this.cell(b, "=3+4"));
 
         // formula
         this.loadCellAndCheckFormatted2(engine,
@@ -526,8 +528,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
         final SpreadsheetCellReference b = this.cellReference(1, 0); // B1
 
-        cellStore.save(this.cell(a, LABEL.value()));
-        cellStore.save(this.cell(b, "3+4"));
+        cellStore.save(this.cell(a, "=" + LABEL.value()));
+        cellStore.save(this.cell(b, "=3+4"));
 
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, b));
 
@@ -579,7 +581,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 rules);
 
-        cellStore.save(this.cell(a, "3+4"));
+        cellStore.save(this.cell(a, "=3+4"));
 
         final SpreadsheetCell cell = this.loadCellAndCheckFormatted2(engine,
                 a,
@@ -649,7 +651,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 labelStore);
         final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
-        final SpreadsheetCell a1 = this.cell("a1", "1+2");
+        final SpreadsheetCell a1 = this.cell("a1", "=1+2");
         final SpreadsheetCell a1Formatted = this.formattedCellWithValue(a1, number(3));
         this.saveCellAndCheck(engine,
                 a1,
@@ -672,7 +674,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 labelStore);
         final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
-        final SpreadsheetCell a1 = this.cell("a1", "$B$2+99");
+        final SpreadsheetCell a1 = this.cell("a1", "=$B$2+99");
         final SpreadsheetCell a1Formatted = this.formattedCellWithError(a1, "Unknown cell reference $B$2");
         this.saveCellAndCheck(engine,
                 a1,
@@ -701,7 +703,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference cellReference = this.cellReference(1, 1);
 
         final SpreadsheetCell cell = this.cell(cellReference,
-                SpreadsheetFormula.with("1+2")
+                SpreadsheetFormula.with("=1+2")
                         .setError(Optional.of(SpreadsheetError.with("error!"))));
 
         this.saveCellAndCheck(engine,
@@ -722,7 +724,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
-        final SpreadsheetCell a1 = this.cell("$A$1", "1+2");
+        final SpreadsheetCell a1 = this.cell("$A$1", "=1+2");
         final SpreadsheetCell a1Formatted = this.formattedCellWithValue(a1, number(3));
 
         this.saveCellAndCheck(engine,
@@ -730,7 +732,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 a1Formatted);
 
-        final SpreadsheetCell b2 = this.cell("$B$2", "3+4");
+        final SpreadsheetCell b2 = this.cell("$B$2", "=3+4");
         final SpreadsheetCell b2Formatted = this.formattedCellWithValue(b2, number(7));
 
         this.saveCellAndCheck(engine,
@@ -738,7 +740,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 context,
                 b2Formatted);
 
-        final SpreadsheetCell c3 = this.cell("$C$3", "5+6");
+        final SpreadsheetCell c3 = this.cell("$C$3", "=5+6");
         final SpreadsheetCell c3Formatted = this.formattedCellWithValue(c3, number(11));
 
         this.saveCellAndCheck(engine,
@@ -775,7 +777,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetLabelName unknown = SpreadsheetExpressionReference.labelName("LABELXYZ");
 
-        final SpreadsheetCell a1 = this.cell("a1", "1+" + unknown);
+        final SpreadsheetCell a1 = this.cell("a1", "=1+" + unknown);
         final SpreadsheetCell a1Formatted = this.formattedCellWithError(a1, "Unknown label: " + unknown);
         this.saveCellAndCheck(engine,
                 a1,
@@ -800,11 +802,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 labelStore);
         final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
-        final SpreadsheetCell a1 = this.cell("$A$1", "1+2");
+        final SpreadsheetCell a1 = this.cell("$A$1", "=1+2");
         engine.saveCell(a1, context);
 
         final SpreadsheetCellReference a1Reference = SpreadsheetCellReference.parseCellReference("$A$1");
-        final SpreadsheetCell b2 = this.cell("$B$2", "5+" + a1Reference);
+        final SpreadsheetCell b2 = this.cell("$B$2", "=5+" + a1Reference);
 
         this.saveCellAndCheck(engine,
                 b2,
@@ -829,13 +831,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 labelStore);
         final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
-        final SpreadsheetCell a1 = this.cell("$A$1", "1+C3");
+        final SpreadsheetCell a1 = this.cell("$A$1", "=1+C3");
         engine.saveCell(a1, context);
 
-        final SpreadsheetCell b2 = this.cell("$B$2", "5+A1");
+        final SpreadsheetCell b2 = this.cell("$B$2", "=5+A1");
         engine.saveCell(b2, context);
 
-        final SpreadsheetCell c3 = this.cell("$C$3", "10");
+        final SpreadsheetCell c3 = this.cell("$C$3", "=10");
 
         this.saveCellAndCheck(engine,
                 c3,
@@ -856,10 +858,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 labelStore);
         final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
-        final SpreadsheetCell a1 = this.cell("$A$1", "1+2");
+        final SpreadsheetCell a1 = this.cell("$A$1", "=1+2");
         engine.saveCell(a1, context);
 
-        final SpreadsheetCell b2 = this.cell("$B$2", "5+$A$1");
+        final SpreadsheetCell b2 = this.cell("$B$2", "=5+$A$1");
         final SpreadsheetCell b2Formatted = this.formattedCellWithValue(b2, number(5 + 1 + 2));
 
         this.saveCellAndCheck(engine,
@@ -884,10 +886,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
         final SpreadsheetCellReference b2Reference = SpreadsheetCellReference.parseCellReference("$B2$2");
-        final SpreadsheetCell a1 = this.cell("$A$1", b2Reference + "+5");
+        final SpreadsheetCell a1 = this.cell("$A$1", "=" + b2Reference + "+5");
         engine.saveCell(a1, context);
 
-        final SpreadsheetCell b2 = this.cell("$B$2", "1+2");
+        final SpreadsheetCell b2 = this.cell("$B$2", "=1+2");
         this.saveCellAndCheck(engine,
                 b2,
                 context,
@@ -916,10 +918,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 labelReferencesStore);
         final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
-        final SpreadsheetCell a1 = this.cell("$A$1", "10");
+        final SpreadsheetCell a1 = this.cell("$A$1", "=10");
         engine.saveCell(a1, context);
 
-        final SpreadsheetCell b2 = this.cell("$B$2", "5+LABELA1");
+        final SpreadsheetCell b2 = this.cell("$B$2", "=5+LABELA1");
         this.saveCellAndCheck(engine,
                 b2,
                 context,
@@ -934,7 +936,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = this.labelReferencesStore();
 
         final SpreadsheetLabelName labelB2 = SpreadsheetExpressionReference.labelName("LABELB2");
-        final SpreadsheetCell b2 = this.cell("$B$2", "5");
+        final SpreadsheetCell b2 = this.cell("$B$2", "=5");
 
         labelStore.save(SpreadsheetLabelMapping.with(labelB2, b2.reference()));
 
@@ -944,7 +946,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 labelReferencesStore);
         final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
-        final SpreadsheetCell a1 = this.cell("$A$1", "10+" + labelB2);
+        final SpreadsheetCell a1 = this.cell("$A$1", "=10+" + labelB2);
         engine.saveCell(a1, context);
 
         this.loadReferencesAndCheck(cellReferenceStore, a1.reference());
@@ -973,15 +975,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 labelStore);
         final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
-        final SpreadsheetCell d4 = this.cell("$D$4", "20");
+        final SpreadsheetCell d4 = this.cell("$D$4", "=20");
         engine.saveCell(d4, context);
 
-        final SpreadsheetCell e5 = this.cell("$E$5", "30");
+        final SpreadsheetCell e5 = this.cell("$E$5", "=30");
         engine.saveCell(e5, context);
 
-        engine.saveCell(this.cell("$A$1", "10+" + d4.reference()), context);
+        engine.saveCell(this.cell("$A$1", "=10+" + d4.reference()), context);
 
-        final SpreadsheetCell a1 = this.cell("$A$1", "40+" + e5.reference());
+        final SpreadsheetCell a1 = this.cell("$A$1", "=40+" + e5.reference());
         this.saveCellAndCheck(engine,
                 a1,
                 context,
@@ -1013,12 +1015,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 labelReferencesStore);
         final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
-        final SpreadsheetCell d4 = this.cell("$D$4", "20");
+        final SpreadsheetCell d4 = this.cell("$D$4", "=20");
         engine.saveCell(d4, context);
 
-        engine.saveCell(this.cell("$A$1", "10+" + labelB2), context);
+        engine.saveCell(this.cell("$A$1", "=10+" + labelB2), context);
 
-        final SpreadsheetCell a1 = this.cell("$A$1", "40+" + labelD4);
+        final SpreadsheetCell a1 = this.cell("$A$1", "=40+" + labelD4);
         this.saveCellAndCheck(engine,
                 a1,
                 context,
@@ -1054,16 +1056,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 labelReferencesStore);
         final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
-        final SpreadsheetCell d4 = this.cell("$D$4", "20");
+        final SpreadsheetCell d4 = this.cell("$D$4", "=20");
         engine.saveCell(d4, context);
 
-        final SpreadsheetCell e5 = this.cell("$E$5", "30");
+        final SpreadsheetCell e5 = this.cell("$E$5", "=30");
         engine.saveCell(e5, context);
 
-        engine.saveCell(this.cell("$A$1", "10+" + labelB2 + "+C2"), context);
+        engine.saveCell(this.cell("$A$1", "=10+" + labelB2 + "+C2"), context);
 
         final SpreadsheetCellReference e5Reference = SpreadsheetCellReference.parseCellReference("$E$5");
-        final SpreadsheetCell a1 = this.cell("$A$1", "40+" + labelD4 + "+" + e5Reference);
+        final SpreadsheetCell a1 = this.cell("$A$1", "=40+" + labelD4 + "+" + e5Reference);
         this.saveCellAndCheck(engine,
                 a1,
                 context,
@@ -1095,7 +1097,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a1 = SpreadsheetExpressionReference.parseCellReference("$A$1");
         final SpreadsheetCellReference b2 = SpreadsheetExpressionReference.parseCellReference("$B$2");
 
-        engine.saveCell(this.cell(a1, "99+" + b2), context);
+        engine.saveCell(this.cell(a1, "=99+" + b2), context);
         this.deleteCellAndCheck(engine, a1, context);
 
         this.loadReferencesAndCheck(cellReferenceStore, a1);
@@ -1118,10 +1120,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference b2Reference = SpreadsheetCellReference.parseCellReference("$B$2");
 
-        final SpreadsheetCell a1 = this.cell("$A$1", "1+" + b2Reference);
+        final SpreadsheetCell a1 = this.cell("$A$1", "=1+" + b2Reference);
         engine.saveCell(a1, context);
 
-        final SpreadsheetCell b2 = this.cell("$B$2", "20");
+        final SpreadsheetCell b2 = this.cell("$B$2", "=20");
         engine.saveCell(b2, context);
 
         this.deleteCellAndCheck(engine,
@@ -1144,7 +1146,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = this.labelReferencesStore();
 
         final SpreadsheetLabelName labelB2 = SpreadsheetExpressionReference.labelName("LABELB2");
-        final SpreadsheetCell b2 = this.cell("$B$2", "20");
+        final SpreadsheetCell b2 = this.cell("$B$2", "=20");
         labelStore.save(SpreadsheetLabelMapping.with(labelB2, b2.reference()));
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
@@ -1153,7 +1155,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 labelReferencesStore);
         final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
-        final SpreadsheetCell a1 = this.cell("$A$1", "1+" + labelB2);
+        final SpreadsheetCell a1 = this.cell("$A$1", "=1+" + labelB2);
         engine.saveCell(a1, context);
 
         engine.saveCell(b2, context);
@@ -1179,7 +1181,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetExpressionReferenceStore<SpreadsheetLabelName> labelReferencesStore = this.labelReferencesStore();
 
         final SpreadsheetLabelName labelB2 = SpreadsheetExpressionReference.labelName("LABELB2");
-        final SpreadsheetCell b2 = this.cell("$B$2", "20");
+        final SpreadsheetCell b2 = this.cell("$B$2", "=20");
         labelStore.save(SpreadsheetLabelMapping.with(labelB2, b2.reference()));
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore,
@@ -1188,7 +1190,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 labelReferencesStore);
         final SpreadsheetEngineContext context = this.createContext(labelStore, engine);
 
-        final SpreadsheetCell a1 = this.cell("$A$1", "1+" + labelB2);
+        final SpreadsheetCell a1 = this.cell("$A$1", "=1+" + labelB2);
         engine.saveCell(a1, context);
 
         engine.saveCell(b2, context);
@@ -1218,7 +1220,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference reference = this.cellReference(99, 0); // A3
 
-        engine.saveCell(this.cell(reference, "99+0"), context);
+        engine.saveCell(this.cell(reference, "=99+0"), context);
 
         this.deleteColumnsAndCheck(engine,
                 reference.column(),
@@ -1239,9 +1241,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b = this.cellReference("B2"); // B2
         final SpreadsheetCellReference c = this.cellReference("C3"); // C3
 
-        engine.saveCell(this.cell(a, "1+2"), context);
-        engine.saveCell(this.cell(b, "3+4"), context);
-        engine.saveCell(this.cell(c, "5+6"), context);
+        engine.saveCell(this.cell(a, "=1+2"), context);
+        engine.saveCell(this.cell(b, "=3+4"), context);
+        engine.saveCell(this.cell(c, "=5+6"), context);
 
         this.deleteColumnsAndCheck(engine,
                 c.column(),
@@ -1262,137 +1264,137 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b = this.cellReference("B2"); // B2
         final SpreadsheetCellReference c = this.cellReference("C3"); // C3
 
-        engine.saveCell(this.cell(a, "1+2"), context);
-        engine.saveCell(this.cell(b, "3+4"), context); // deleted/replaced by $c
-        engine.saveCell(this.cell(c, "5+6"), context); // becomes b3
+        engine.saveCell(this.cell(a, "=1+2"), context);
+        engine.saveCell(this.cell(b, "=3+4"), context); // deleted/replaced by $c
+        engine.saveCell(this.cell(c, "=5+6"), context); // becomes b3
 
         this.deleteColumnsAndCheck(engine,
                 b.column(),
                 1,
                 context,
-                this.formattedCellWithValue("b3", "5+6", number(5 + 6)));
+                this.formattedCellWithValue("b3", "=5+6", number(5 + 6)));
 
         this.countAndCheck(cellStore, 2);
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedAddition() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("5+6", number(5 + 6));
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=5+6", number(5 + 6));
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedExpressionNumber() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("55.5", number(55.5));
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=55.5", number(55.5));
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedExpressionNumber2() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("55", number(55));
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=55", number(55));
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedDivision() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("9/3", number(9 / 3));
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=9/3", number(9 / 3));
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedEqualsTrue() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("8==8", true);
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8==8", true);
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedEqualsFalse() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("8==7", false);
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8==7", false);
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedFunction() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("BasicSpreadsheetEngineTestSum(1;99)", number(1 + 99));
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=BasicSpreadsheetEngineTestSum(1;99)", number(1 + 99));
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedGreaterThanTrue() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("8>7", true);
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8>7", true);
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedGreaterThanFalse() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("7>8", false);
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=7>8", false);
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedGreaterThanEqualsTrue() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("8>=7", true);
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8>=7", true);
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedGreaterThanEqualsFalse() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("7>=8", false);
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=7>=8", false);
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedGroup() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("(99)", number(99));
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=(99)", number(99));
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedLessThanTrue() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("8<9", true);
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8<9", true);
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedLessThanFalse() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("7<6", false);
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=7<6", false);
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedLessThanEqualsTrue() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("8<=8", true);
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8<=8", true);
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedLessThanEqualsFalse() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("8<=7", false);
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8<=7", false);
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedMultiplication() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("9*3", number(9 * 3));
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=9*3", number(9 * 3));
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedNegative() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("-99", number(-99));
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=-99", number(-99));
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedNotEqualsTrue() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("8!=7", true);
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8!=7", true);
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedNotEqualsFalse() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("8!=8", false);
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=8!=8", false);
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedPercentage() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("120%", number(1.2));
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=120%", number(1.2));
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedSubtraction() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("9-7", number(9 - 7));
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=9-7", number(9 - 7));
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedText() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("\"ABC123\"", "ABC123");
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=\"ABC123\"", "ABC123");
     }
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedAdditionWithWhitespace() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("1 + 2", number(1 + 2));
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("=1 + 2", number(1 + 2));
     }
 
     private void deleteColumnColumnsAfterCellsRefreshedAndCheck(final String formula,
@@ -1406,8 +1408,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b = this.cellReference("B2"); // B2
         final SpreadsheetCellReference c = this.cellReference("C3"); // C3
 
-        engine.saveCell(this.cell(a, "1+2"), context);
-        engine.saveCell(this.cell(b, "3+4"), context); // deleted/replaced by $c
+        engine.saveCell(this.cell(a, "=1+2"), context);
+        engine.saveCell(this.cell(b, "=3+4"), context); // deleted/replaced by $c
         engine.saveCell(this.cell(c, formula), context); // becomes b3
 
         this.deleteColumnsAndCheck(engine,
@@ -1431,18 +1433,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference c = this.cellReference("C3");
         final SpreadsheetCellReference d = this.cellReference("Z99");// B99 moved
 
-        engine.saveCell(this.cell(a, "1+2"), context);
-        engine.saveCell(this.cell(b, "3+4"), context);
-        engine.saveCell(this.cell(c, "5+6"), context);
-        engine.saveCell(this.cell(d, "7+8"), context);
+        engine.saveCell(this.cell(a, "=1+2"), context);
+        engine.saveCell(this.cell(b, "=3+4"), context);
+        engine.saveCell(this.cell(c, "=5+6"), context);
+        engine.saveCell(this.cell(d, "=7+8"), context);
 
         final int count = 1;
         this.deleteColumnsAndCheck(engine,
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithValue("B3", "5+6", number(5 + 6)),
-                this.formattedCellWithValue("Y99", "7+8", number(7 + 8)));
+                this.formattedCellWithValue("B3", "=5+6", number(5 + 6)),
+                this.formattedCellWithValue("Y99", "=7+8", number(7 + 8)));
 
         this.countAndCheck(cellStore, 3);
     }
@@ -1457,8 +1459,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a = SpreadsheetExpressionReference.parseCellReference("A1"); // A1
         final SpreadsheetCellReference b = SpreadsheetExpressionReference.parseCellReference("E2"); // E2
 
-        engine.saveCell(this.cell(a, "99+0"), context);
-        engine.saveCell(this.cell(b, "2+0+" + LABEL), context);
+        engine.saveCell(this.cell(a, "=99+0"), context);
+        engine.saveCell(this.cell(b, "=2+0+" + LABEL), context);
 
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, a));
 
@@ -1467,7 +1469,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.column().add(-1),
                 count,
                 context,
-                this.formattedCellWithValue(b.addColumn(-1), "2+0+" + LABEL, number(2 + 99)));
+                this.formattedCellWithValue(b.addColumn(-1), "=2+0+" + LABEL, number(2 + 99)));
 
         this.countAndCheck(cellStore, 2);
 
@@ -1487,11 +1489,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference d = this.cellReference(13, 8); // B8 moved
         final SpreadsheetCellReference e = this.cellReference(14, 9); // C9 moved LABEL=
 
-        engine.saveCell(this.cell(a, "1+" + LABEL), context);
-        engine.saveCell(this.cell(b, "2+0"), context);
-        engine.saveCell(this.cell(c, "3+0"), context);
-        engine.saveCell(this.cell(d, "4+" + LABEL), context);
-        engine.saveCell(this.cell(e, "99+0"), context); // LABEL=
+        engine.saveCell(this.cell(a, "=1+" + LABEL), context);
+        engine.saveCell(this.cell(b, "=2+0"), context);
+        engine.saveCell(this.cell(c, "=3+0"), context);
+        engine.saveCell(this.cell(d, "=4+" + LABEL), context);
+        engine.saveCell(this.cell(e, "=99+0"), context); // LABEL=
 
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, e));
 
@@ -1500,10 +1502,10 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithValue(a, "1+" + LABEL, number(1 + 99 + 0)),
-                this.formattedCellWithValue(c.addColumn(-count), "3+0", number(3 + 0)),
-                this.formattedCellWithValue(d.addColumn(-count), "4+" + LABEL, number(4 + 99 + 0)),
-                this.formattedCellWithValue(e.addColumn(-count), "99+0", number(99 + 0))); // old $b delete, $c,$d columns -1.
+                this.formattedCellWithValue(a, "=1+" + LABEL, number(1 + 99 + 0)),
+                this.formattedCellWithValue(c.addColumn(-count), "=3+0", number(3 + 0)),
+                this.formattedCellWithValue(d.addColumn(-count), "=4+" + LABEL, number(4 + 99 + 0)),
+                this.formattedCellWithValue(e.addColumn(-count), "=99+0", number(99 + 0))); // old $b delete, $c,$d columns -1.
 
         this.loadLabelAndCheck(labelStore, LABEL, e.addColumn(-count));
 
@@ -1520,7 +1522,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
         final SpreadsheetCellReference b = this.cellReference(1, 0); // A2
 
-        engine.saveCell(this.cell(a, "1+0"), context);
+        engine.saveCell(this.cell(a, "=1+0"), context);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, b));
 
         final int count = 1;
@@ -1547,20 +1549,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference d = this.cellReference(13, 8); // H13 moved
         final SpreadsheetCellReference e = this.cellReference(14, 9); // I14 moved
 
-        engine.saveCell(this.cell(a, "1+" + d), context);
-        engine.saveCell(this.cell(b, "2"), context);
-        engine.saveCell(this.cell(c, "3"), context);
-        engine.saveCell(this.cell(d, "4"), context);
-        engine.saveCell(this.cell(e, "5+" + b), context); // =5+2
+        engine.saveCell(this.cell(a, "=1+" + d), context);
+        engine.saveCell(this.cell(b, "=2"), context);
+        engine.saveCell(this.cell(c, "=3"), context);
+        engine.saveCell(this.cell(d, "=4"), context);
+        engine.saveCell(this.cell(e, "=5+" + b), context); // =5+2
 
         final int count = 1;
         this.deleteColumnsAndCheck(engine,
                 c.column(),
                 count,
                 context,
-                this.formattedCellWithValue(a, "1+" + d.addColumn(-count), number(1 + 4)),
-                this.formattedCellWithValue(d.addColumn(-count), "4", number(4)),
-                this.formattedCellWithValue(e.addColumn(-count), "5+" + b, number(5 + 2))); // $c delete
+                this.formattedCellWithValue(a, "=1+" + d.addColumn(-count), number(1 + 4)),
+                this.formattedCellWithValue(d.addColumn(-count), "=4", number(4)),
+                this.formattedCellWithValue(e.addColumn(-count), "=5+" + b, number(5 + 2))); // $c delete
 
         this.countAndCheck(cellStore, 4);
     }
@@ -1578,20 +1580,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference d = this.cellReference(13, 8); // H13 moved
         final SpreadsheetCellReference e = this.cellReference(14, 9); // I14 moved
 
-        engine.saveCell(this.cell(a, "1+" + d), context);
-        engine.saveCell(this.cell(b, "2"), context);
-        engine.saveCell(this.cell(c, "3"), context);
-        engine.saveCell(this.cell(d, "4"), context);
-        engine.saveCell(this.cell(e, "5+" + b), context); // =5+2
+        engine.saveCell(this.cell(a, "=1+" + d), context);
+        engine.saveCell(this.cell(b, "=2"), context);
+        engine.saveCell(this.cell(c, "=3"), context);
+        engine.saveCell(this.cell(d, "=4"), context);
+        engine.saveCell(this.cell(e, "=5+" + b), context); // =5+2
 
         final int count = 2;
         this.deleteColumnsAndCheck(engine,
                 c.column(),
                 count,
                 context,
-                this.formattedCellWithValue(a, "1+" + d.addColumn(-count), number(1 + 4)),
-                this.formattedCellWithValue(d.addColumn(-count), "4", number(4)),
-                this.formattedCellWithValue(e.addColumn(-count), "5+" + b, number(5 + 2))); // $c deleted, old-d & old-e refreshed
+                this.formattedCellWithValue(a, "=1+" + d.addColumn(-count), number(1 + 4)),
+                this.formattedCellWithValue(d.addColumn(-count), "=4", number(4)),
+                this.formattedCellWithValue(e.addColumn(-count), "=5+" + b, number(5 + 2))); // $c deleted, old-d & old-e refreshed
 
         this.countAndCheck(cellStore, 4);
     }
@@ -1606,15 +1608,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a = this.cellReference(0, 0); // A1
         final SpreadsheetCellReference b = this.cellReference(1, 0); // A2
 
-        engine.saveCell(this.cell(a, "1+" + b), context);
-        engine.saveCell(this.cell(b, "2"), context);
+        engine.saveCell(this.cell(a, "=1+" + b), context);
+        engine.saveCell(this.cell(b, "=2"), context);
 
         final int count = 1;
         this.deleteColumnsAndCheck(engine,
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithError(a, "1+InvalidCellReference(\"" + b + "\")", "Invalid cell reference: " + b)); // $b delete
+                this.formattedCellWithError(a, "=1+InvalidCellReference(\"" + b + "\")", "Invalid cell reference: " + b)); // $b delete
 
         this.countAndCheck(cellStore, 1);
     }
@@ -1633,21 +1635,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference e = this.cellReference(20, 3); // T3
         final SpreadsheetCellReference f = this.cellReference(21, 4); // U4
 
-        engine.saveCell(this.cell(a, "1"), context);
-        engine.saveCell(this.cell(b, "2"), context);
-        engine.saveCell(this.cell(c, "3"), context);
-        engine.saveCell(this.cell(d, "4"), context);
-        engine.saveCell(this.cell(e, "5"), context);
-        engine.saveCell(this.cell(f, "6"), context);
+        engine.saveCell(this.cell(a, "=1"), context);
+        engine.saveCell(this.cell(b, "=2"), context);
+        engine.saveCell(this.cell(c, "=3"), context);
+        engine.saveCell(this.cell(d, "=4"), context);
+        engine.saveCell(this.cell(e, "=5"), context);
+        engine.saveCell(this.cell(f, "=6"), context);
 
         final int count = 5;
         this.deleteColumnsAndCheck(engine,
                 this.column(7),
                 count,
                 context,
-                this.formattedCellWithValue(d.addColumn(-count), "4", number(4)),
-                this.formattedCellWithValue(e.addColumn(-count), "5", number(5)),
-                this.formattedCellWithValue(f.addColumn(-count), "6", number(6))); // $b & $c
+                this.formattedCellWithValue(d.addColumn(-count), "=4", number(4)),
+                this.formattedCellWithValue(e.addColumn(-count), "=5", number(5)),
+                this.formattedCellWithValue(f.addColumn(-count), "=6", number(6))); // $b & $c
 
         this.countAndCheck(cellStore, 4);
     }
@@ -1663,7 +1665,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference reference = this.cellReference(0, 1); // A2
 
-        engine.saveCell(this.cell(reference, "99+0"), context);
+        engine.saveCell(this.cell(reference, "=99+0"), context);
 
         this.deleteRowsAndCheck(engine,
                 reference.row(),
@@ -1684,15 +1686,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b = this.cellReference("A2");
         final SpreadsheetCellReference c = this.cellReference("A3");
 
-        engine.saveCell(this.cell(a, "1+2"), context);
-        engine.saveCell(this.cell(b, "3+4"), context);
-        engine.saveCell(this.cell(c, "5+6"), context);
+        engine.saveCell(this.cell(a, "=1+2"), context);
+        engine.saveCell(this.cell(b, "=3+4"), context);
+        engine.saveCell(this.cell(c, "=5+6"), context);
 
         this.deleteRowsAndCheck(engine,
                 b.row(),
                 1,
                 context,
-                this.formattedCellWithValue(c.addRow(-1), "5+6", number(5 + 6)));
+                this.formattedCellWithValue(c.addRow(-1), "=5+6", number(5 + 6)));
 
         this.countAndCheck(cellStore, 2);
 
@@ -1700,7 +1702,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 c.addRow(-1),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "5+6",
+                "=5+6",
                 number(5 + 6));
     }
 
@@ -1716,18 +1718,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference c = this.cellReference("A3"); // DELETED
         final SpreadsheetCellReference d = this.cellReference("B10"); // moved
 
-        engine.saveCell(this.cell(a, "1+2"), context);
-        engine.saveCell(this.cell(b, "3+4"), context);
-        engine.saveCell(this.cell(c, "5+6"), context);
-        engine.saveCell(this.cell(d, "7+8"), context);
+        engine.saveCell(this.cell(a, "=1+2"), context);
+        engine.saveCell(this.cell(b, "=3+4"), context);
+        engine.saveCell(this.cell(c, "=5+6"), context);
+        engine.saveCell(this.cell(d, "=7+8"), context);
 
         final int count = 1;
         this.deleteRowsAndCheck(engine,
                 b.row(),
                 count,
                 context,
-                this.formattedCellWithValue(c.addRow(-count), "5+6", number(5 + 6)),
-                this.formattedCellWithValue(d.addRow(-count), "7+8", number(7 + 8))); // $b delete
+                this.formattedCellWithValue(c.addRow(-count), "=5+6", number(5 + 6)),
+                this.formattedCellWithValue(d.addRow(-count), "=7+8", number(7 + 8))); // $b delete
 
         this.countAndCheck(cellStore, 3);
 
@@ -1735,7 +1737,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+2",
+                "=1+2",
                 number(1 + 2));
     }
 
@@ -1751,17 +1753,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference c = this.cellReference(0, 2); // DELETED
         final SpreadsheetCellReference d = this.cellReference(1, 9); // moved
 
-        engine.saveCell(this.cell(a, "1+2"), context);
-        engine.saveCell(this.cell(b, "3+4"), context);
-        engine.saveCell(this.cell(c, "5+6"), context);
-        engine.saveCell(this.cell(d, "7+8"), context);
+        engine.saveCell(this.cell(a, "=1+2"), context);
+        engine.saveCell(this.cell(b, "=3+4"), context);
+        engine.saveCell(this.cell(c, "=5+6"), context);
+        engine.saveCell(this.cell(d, "=7+8"), context);
 
         final int count = 2;
         this.deleteRowsAndCheck(engine,
                 b.row(),
                 count,
                 context,
-                this.formattedCellWithValue(d.addRow(-count), "7+8", number(7 + 8)));
+                this.formattedCellWithValue(d.addRow(-count), "=7+8", number(7 + 8)));
 
         this.countAndCheck(cellStore, 2);
 
@@ -1769,14 +1771,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+2",
+                "=1+2",
                 number(1 + 2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "7+8",
+                "=7+8",
                 number(7 + 8));
     }
 
@@ -1795,16 +1797,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, a));
 
-        engine.saveCell(this.cell(a, "1+0"), context);
-        engine.saveCell(this.cell(b, "20+0+" + LABEL), context);
-        engine.saveCell(this.cell(c, "99+0"), context);
+        engine.saveCell(this.cell(a, "=1+0"), context);
+        engine.saveCell(this.cell(b, "=20+0+" + LABEL), context);
+        engine.saveCell(this.cell(c, "=99+0"), context);
 
         final int count = 2;
         this.deleteRowsAndCheck(engine,
                 b.row().add(count),
                 count,
                 context,
-                this.formattedCellWithValue("$A$4", "99+0", number(99 + 0))); // $c moved, $b unmodified label refs $a also unmodified.
+                this.formattedCellWithValue("$A$4", "=99+0", number(99 + 0))); // $c moved, $b unmodified label refs $a also unmodified.
 
         this.countAndCheck(cellStore, 3);
 
@@ -1814,21 +1816,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+0",
+                "=1+0",
                 number(1));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "20+0+" + LABEL,
+                "=20+0+" + LABEL,
                 number(20 + 0 + 1));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "99+0",
+                "=99+0",
                 number(99));
     }
 
@@ -1844,16 +1846,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, b));
 
-        cellStore.save(this.cell(a, "1+0+" + LABEL));
-        cellStore.save(this.cell(b, "2+0"));
+        cellStore.save(this.cell(a, "=1+0+" + LABEL));
+        cellStore.save(this.cell(b, "=2+0"));
 
         final int count = 2;
         this.deleteRowsAndCheck(engine,
                 a.row().add(1),
                 count,
                 context,
-                this.formattedCellWithValue(a, "1+0+" + LABEL, number(1 + 0 + 2 + 0)),
-                this.formattedCellWithValue(b.addRow(-count), "2+0", number(2 + 0))); // $b moved
+                this.formattedCellWithValue(a, "=1+0+" + LABEL, number(1 + 0 + 2 + 0)),
+                this.formattedCellWithValue(b.addRow(-count), "=2+0", number(2 + 0))); // $b moved
 
         this.countAndCheck(cellStore, 2);
 
@@ -1863,14 +1865,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                "1+0+" + LABEL,
+                "=1+0+" + LABEL,
                 number(3));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b.addRow(-count),
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                "2+0",
+                "=2+0",
                 number(2));
     }
 
@@ -1884,14 +1886,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a = this.cellReference("$A$1");
         final SpreadsheetCellReference b = this.cellReference("$A$6");
 
-        engine.saveCell(this.cell(a, "1+" + b), context);
-        engine.saveCell(this.cell(b, "2+0"), context);
+        engine.saveCell(this.cell(a, "=1+" + b), context);
+        engine.saveCell(this.cell(b, "=2+0"), context);
 
         this.deleteRowsAndCheck(engine,
                 b.row(),
                 1,
                 context,
-                this.formattedCellWithError(a, "1+InvalidCellReference(\"" + b + "\")", "Invalid cell reference: $A$6"));
+                this.formattedCellWithError(a, "=1+InvalidCellReference(\"" + b + "\")", "Invalid cell reference: $A$6"));
 
         this.countAndCheck(cellStore, 1);
 
@@ -1899,7 +1901,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+InvalidCellReference(\"" + b + "\")",
+                "=1+InvalidCellReference(\"" + b + "\")",
                 "Invalid cell reference: " + b); // reference should have been fixed.
     }
 
@@ -1916,20 +1918,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference d = this.cellReference("$I$14"); // H13 moved
         final SpreadsheetCellReference e = this.cellReference("$J$15"); // I14 moved
 
-        engine.saveCell(this.cell(a, "1+" + d), context);
-        engine.saveCell(this.cell(b, "2"), context);
-        engine.saveCell(this.cell(c, "3"), context); // DELETED
-        engine.saveCell(this.cell(d, "4"), context); // REFRESHED
-        engine.saveCell(this.cell(e, "5+" + b), context); // REFRESHED =5+2
+        engine.saveCell(this.cell(a, "=1+" + d), context);
+        engine.saveCell(this.cell(b, "=2"), context);
+        engine.saveCell(this.cell(c, "=3"), context); // DELETED
+        engine.saveCell(this.cell(d, "=4"), context); // REFRESHED
+        engine.saveCell(this.cell(e, "=5+" + b), context); // REFRESHED =5+2
 
         final int count = 1;
         this.deleteRowsAndCheck(engine,
                 c.row(),
                 count,
                 context,
-                this.formattedCellWithValue("$A$1", "1+$I$13", number(1 + 4)),
-                this.formattedCellWithValue("$I$13", "4", number(4)),
-                this.formattedCellWithValue("$J$14", "5+$A$2", number(5 + 2))); // $c delete
+                this.formattedCellWithValue("$A$1", "=1+$I$13", number(1 + 4)),
+                this.formattedCellWithValue("$I$13", "=4", number(4)),
+                this.formattedCellWithValue("$J$14", "=5+$A$2", number(5 + 2))); // $c delete
 
         this.countAndCheck(cellStore, 4);
 
@@ -1937,7 +1939,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+" + d.addRow(-count),
+                "=1+" + d.addRow(-count),
                 number(1 + 4)); // reference should have been fixed.
 
         this.loadCellAndCheckFormatted2(engine,
@@ -1958,7 +1960,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 e.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "5+" + b,
+                "=5+" + b,
                 number(5 + 2));
     }
 
@@ -1975,20 +1977,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference d = this.cellReference("$I$14"); // MOVED
         final SpreadsheetCellReference e = this.cellReference("$J$15"); // MOVED
 
-        engine.saveCell(this.cell(a, "1+" + d), context);
-        engine.saveCell(this.cell(b, "2"), context);
-        engine.saveCell(this.cell(c, "3"), context);
-        engine.saveCell(this.cell(d, "4"), context);
-        engine.saveCell(this.cell(e, "5+" + b), context); // =5+2
+        engine.saveCell(this.cell(a, "=1+" + d), context);
+        engine.saveCell(this.cell(b, "=2"), context);
+        engine.saveCell(this.cell(c, "=3"), context);
+        engine.saveCell(this.cell(d, "=4"), context);
+        engine.saveCell(this.cell(e, "=5+" + b), context); // =5+2
 
         final int count = 2;
         this.deleteRowsAndCheck(engine,
                 c.row(),
                 count,
                 context,
-                this.formattedCellWithValue("$A$1", "1+$I$12", number(1 + 4)),
-                this.formattedCellWithValue("$I$12", "4", number(4)),
-                this.formattedCellWithValue("$J$13", "5+$A$2", number(5 + 2))); // $c delete
+                this.formattedCellWithValue("$A$1", "=1+$I$12", number(1 + 4)),
+                this.formattedCellWithValue("$I$12", "=4", number(4)),
+                this.formattedCellWithValue("$J$13", "=5+$A$2", number(5 + 2))); // $c delete
 
         this.countAndCheck(cellStore, 4);
 
@@ -1996,7 +1998,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+" + d.addRow(-count),
+                "=1+" + d.addRow(-count),
                 number(1 + 4)); // reference should have been fixed.
 
         this.loadCellAndCheckFormatted2(engine,
@@ -2017,7 +2019,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 e.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "5+" + b,
+                "=5+" + b,
                 number(5 + 2));
     }
 
@@ -2038,9 +2040,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetRange ab = a.spreadsheetRange(b);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, ab));
 
-        engine.saveCell(this.cell(a, "1+0"), context);
-        engine.saveCell(this.cell(c, "20+0+" + LABEL), context);
-        engine.saveCell(this.cell(d, "99+0"), context); // DELETED
+        engine.saveCell(this.cell(a, "=1+0"), context);
+        engine.saveCell(this.cell(c, "=20+0+" + LABEL), context);
+        engine.saveCell(this.cell(d, "=99+0"), context); // DELETED
 
         final int count = 2;
         this.deleteRowsAndCheck(engine,
@@ -2055,14 +2057,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+0",
+                "=1+0",
                 number(1));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "20+0+" + LABEL,
+                "=20+0+" + LABEL,
                 number(21));
 
         this.loadLabelAndCheck(labelStore, LABEL, ab);
@@ -2079,7 +2081,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b = this.cellReference(0, 5);
         final SpreadsheetCellReference c = this.cellReference(0, 10);
 
-        engine.saveCell(this.cell(a, "1+0"), context);
+        engine.saveCell(this.cell(a, "=1+0"), context);
 
         final SpreadsheetRange bc = b.spreadsheetRange(c);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, bc));
@@ -2097,7 +2099,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+0",
+                "=1+0",
                 number(1));
     }
 
@@ -2116,15 +2118,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetRange bc = b.spreadsheetRange(c);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, bc));
 
-        engine.saveCell(this.cell(a, "1+0"), context);
-        engine.saveCell(this.cell(d, "20+0"), context);
+        engine.saveCell(this.cell(a, "=1+0"), context);
+        engine.saveCell(this.cell(d, "=20+0"), context);
 
         final int count = c.row().value() - b.row().value() + 1;
         this.deleteRowsAndCheck(engine,
                 b.row(),
                 count,
                 context,
-                this.formattedCellWithValue(d.addRow(-count), "20+0", number(20 + 0))); // b..c deleted, d moved
+                this.formattedCellWithValue(d.addRow(-count), "=20+0", number(20 + 0))); // b..c deleted, d moved
 
         this.countAndCheck(cellStore, 2); // a&d
         this.countAndCheck(labelStore, 0);
@@ -2133,14 +2135,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+0",
+                "=1+0",
                 number(1));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "20+0",
+                "=20+0",
                 number(20));
     }
 
@@ -2158,15 +2160,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetRange bc = b.spreadsheetRange(c);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, bc));
 
-        engine.saveCell(this.cell(a, "1+0+" + LABEL), context);
-        engine.saveCell(this.cell(b, "20+0"), context);
+        engine.saveCell(this.cell(a, "=1+0+" + LABEL), context);
+        engine.saveCell(this.cell(b, "=20+0"), context);
 
         final int count = c.row().value() - b.row().value() + 1;
         this.deleteRowsAndCheck(engine,
                 b.row(),
                 count,
                 context,
-                formattedCellWithError(a, "1+0+" + LABEL, "Unknown label: " + LABEL)); // b..c deleted
+                formattedCellWithError(a, "=1+0+" + LABEL, "Unknown label: " + LABEL)); // b..c deleted
 
         this.countAndCheck(cellStore, 1); // a
         this.countAndCheck(labelStore, 0);
@@ -2175,7 +2177,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+0+" + LABEL,
+                "=1+0+" + LABEL,
                 "Unknown label: " + LABEL);
     }
 
@@ -2195,15 +2197,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetRange de = d.spreadsheetRange(e);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, de));
 
-        engine.saveCell(this.cell(a, "1+0+" + LABEL), context);
-        engine.saveCell(this.cell(d, "20+0"), context);
+        engine.saveCell(this.cell(a, "=1+0+" + LABEL), context);
+        engine.saveCell(this.cell(d, "=20+0"), context);
 
         final int count = c.row().value() - b.row().value() + 1;
         this.deleteRowsAndCheck(engine,
                 b.row(),
                 count,
                 context,
-                this.formattedCellWithValue(d.addRow(-count), "20+0", number(20 + 0))); // b..c deleted, d moved
+                this.formattedCellWithValue(d.addRow(-count), "=20+0", number(20 + 0))); // b..c deleted, d moved
 
         this.countAndCheck(cellStore, 2); // a&d
 
@@ -2211,14 +2213,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+0+" + LABEL,
+                "=1+0+" + LABEL,
                 number(1 + 20));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.addRow(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "20+0",
+                "=20+0",
                 number(20));
 
         this.countAndCheck(labelStore, 1);
@@ -2316,7 +2318,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference reference = this.cellReference(1, 0); // A2
 
-        engine.saveCell(this.cell(reference, "99+0"), context);
+        engine.saveCell(this.cell(reference, "=99+0"), context);
 
         engine.deleteColumns(reference.column(), 0, context);
 
@@ -2326,7 +2328,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 reference,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "99+0",
+                "=99+0",
                 number(99));
     }
 
@@ -2341,15 +2343,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b = this.cellReference(1, 0); // B1
         final SpreadsheetCellReference c = this.cellReference(2, 0); // C1
 
-        engine.saveCell(this.cell(a, "1+2"), context);
-        engine.saveCell(this.cell(b, "3+4"), context);
-        engine.saveCell(this.cell(c, "5+6"), context);
+        engine.saveCell(this.cell(a, "=1+2"), context);
+        engine.saveCell(this.cell(b, "=3+4"), context);
+        engine.saveCell(this.cell(c, "=5+6"), context);
 
         this.deleteColumnsAndCheck(engine,
                 b.column(),
                 1,
                 context,
-                this.formattedCellWithValue("$B$1", "5+6", number(5 + 6)));
+                this.formattedCellWithValue("$B$1", "=5+6", number(5 + 6)));
 
         this.countAndCheck(cellStore, 2);
 
@@ -2357,14 +2359,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+2",
+                "=1+2",
                 number(1 + 2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "5+6",
+                "=5+6",
                 number(5 + 6));
     }
 
@@ -2380,18 +2382,18 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference c = this.cellReference("$C$1"); // DELETED
         final SpreadsheetCellReference d = this.cellReference("$J$2"); // moved
 
-        engine.saveCell(this.cell(a, "1+2"), context);
-        engine.saveCell(this.cell(b, "3+4"), context); // DELETE
-        engine.saveCell(this.cell(c, "5+6"), context);
-        engine.saveCell(this.cell(d, "7+8"), context);
+        engine.saveCell(this.cell(a, "=1+2"), context);
+        engine.saveCell(this.cell(b, "=3+4"), context); // DELETE
+        engine.saveCell(this.cell(c, "=5+6"), context);
+        engine.saveCell(this.cell(d, "=7+8"), context);
 
         final int count = 1;
         this.deleteColumnsAndCheck(engine,
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithValue("$B$1", "5+6", number(5 + 6)),
-                this.formattedCellWithValue("$I$2", "7+8", number(7 + 8))); // $b delete
+                this.formattedCellWithValue("$B$1", "=5+6", number(5 + 6)),
+                this.formattedCellWithValue("$I$2", "=7+8", number(7 + 8))); // $b delete
 
         this.countAndCheck(cellStore, 3);
 
@@ -2399,21 +2401,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+2",
+                "=1+2",
                 number(1 + 2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "5+6",
+                "=5+6",
                 number(5 + 6));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "7+8",
+                "=7+8",
                 number(7 + 8));
     }
 
@@ -2429,17 +2431,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference c = this.cellReference("$C$1"); // DELETED
         final SpreadsheetCellReference d = this.cellReference("$J$2"); // MOVED
 
-        engine.saveCell(this.cell(a, "1+2"), context);
-        engine.saveCell(this.cell(b, "3+4"), context);
-        engine.saveCell(this.cell(c, "5+6"), context);
-        engine.saveCell(this.cell(d, "7+8"), context);
+        engine.saveCell(this.cell(a, "=1+2"), context);
+        engine.saveCell(this.cell(b, "=3+4"), context);
+        engine.saveCell(this.cell(c, "=5+6"), context);
+        engine.saveCell(this.cell(d, "=7+8"), context);
 
         final int count = 2;
         this.deleteColumnsAndCheck(engine,
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithValue("$H$2", "7+8", number(7 + 8))); // $b, $c deleted
+                this.formattedCellWithValue("$H$2", "=7+8", number(7 + 8))); // $b, $c deleted
 
         this.countAndCheck(cellStore, 2);
 
@@ -2447,14 +2449,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+2",
+                "=1+2",
                 number(1 + 2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "7+8",
+                "=7+8",
                 number(7 + 8));
     }
 
@@ -2473,16 +2475,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, a));
 
-        engine.saveCell(this.cell(a, "1+0"), context);
-        engine.saveCell(this.cell(b, "20+0+" + LABEL), context);
-        engine.saveCell(this.cell(c, "99+0"), context);
+        engine.saveCell(this.cell(a, "=1+0"), context);
+        engine.saveCell(this.cell(b, "=20+0+" + LABEL), context);
+        engine.saveCell(this.cell(c, "=99+0"), context);
 
         final int count = 2;
         this.deleteColumnsAndCheck(engine,
                 b.column().add(2),
                 count,
                 context,
-                this.formattedCellWithValue("$D$1", "99+0", number(99 + 0)));
+                this.formattedCellWithValue("$D$1", "=99+0", number(99 + 0)));
 
         this.countAndCheck(cellStore, 3);
 
@@ -2492,21 +2494,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+0",
+                "=1+0",
                 number(1));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "20+0+" + LABEL,
+                "=20+0+" + LABEL,
                 number(21));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "99+0",
+                "=99+0",
                 number(99));
     }
 
@@ -2522,15 +2524,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, b));
 
-        engine.saveCell(this.cell(a, "1+0+" + LABEL), context);
-        engine.saveCell(this.cell(b, "2+0"), context);
+        engine.saveCell(this.cell(a, "=1+0+" + LABEL), context);
+        engine.saveCell(this.cell(b, "=2+0"), context);
 
         final int count = 2;
         this.deleteColumnsAndCheck(engine,
                 a.column().add(1),
                 count,
                 context,
-                this.formattedCellWithValue("$C$1", "2+0", number(2 + 0))); // $b moved
+                this.formattedCellWithValue("$C$1", "=2+0", number(2 + 0))); // $b moved
 
         this.countAndCheck(cellStore, 2);
 
@@ -2540,14 +2542,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+0+" + LABEL,
+                "=1+0+" + LABEL,
                 number(3));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "2+0",
+                "=2+0",
                 number(2));
     }
 
@@ -2561,14 +2563,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a = this.cellReference("$A$1");
         final SpreadsheetCellReference b = this.cellReference("$E$1");
 
-        engine.saveCell(this.cell(a, "1+" + b), context);
-        engine.saveCell(this.cell(b, "2+0"), context);
+        engine.saveCell(this.cell(a, "=1+" + b), context);
+        engine.saveCell(this.cell(b, "=2+0"), context);
 
         this.deleteColumnsAndCheck(engine,
                 b.column(),
                 1,
                 context,
-                this.formattedCellWithError(a, "1+InvalidCellReference(\"" + b + "\")", "Invalid cell reference: $E$1")); // $v delete
+                this.formattedCellWithError(a, "=1+InvalidCellReference(\"" + b + "\")", "Invalid cell reference: $E$1")); // $v delete
 
         this.countAndCheck(cellStore, 1);
 
@@ -2576,7 +2578,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+InvalidCellReference(\"" + b + "\")",
+                "=1+InvalidCellReference(\"" + b + "\")",
                 "Invalid cell reference: " + b); // reference should have been fixed.
     }
 
@@ -2593,20 +2595,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference d = this.cellReference("$N$9"); // MOVED
         final SpreadsheetCellReference e = this.cellReference("$O$10"); // MOVED
 
-        engine.saveCell(this.cell(a, "1+" + d), context);
-        engine.saveCell(this.cell(b, "2"), context);
-        engine.saveCell(this.cell(c, "3"), context);
-        engine.saveCell(this.cell(d, "4"), context);
-        engine.saveCell(this.cell(e, "5+" + b), context); // =5+2
+        engine.saveCell(this.cell(a, "=1+" + d), context);
+        engine.saveCell(this.cell(b, "=2"), context);
+        engine.saveCell(this.cell(c, "=3"), context);
+        engine.saveCell(this.cell(d, "=4"), context);
+        engine.saveCell(this.cell(e, "=5+" + b), context); // =5+2
 
         final int count = 1;
         this.deleteColumnsAndCheck(engine,
                 c.column(),
                 count,
                 context,
-                this.formattedCellWithValue("$A$1", "1+$M$9", number(1 + 4)),
-                this.formattedCellWithValue("$M$9", "4", number(4)),
-                this.formattedCellWithValue("$N$10", "5+" + b, number(5 + 2))); // $c delete
+                this.formattedCellWithValue("$A$1", "=1+$M$9", number(1 + 4)),
+                this.formattedCellWithValue("$M$9", "=4", number(4)),
+                this.formattedCellWithValue("$N$10", "=5+" + b, number(5 + 2))); // $c delete
 
         this.countAndCheck(cellStore, 4);
 
@@ -2614,7 +2616,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+" + d.addColumn(-count),
+                "=1+" + d.addColumn(-count),
                 number(1 + 4)); // reference should have been fixed.
 
         this.loadCellAndCheckFormatted2(engine,
@@ -2635,7 +2637,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 e.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "5+" + b,
+                "=5+" + b,
                 number(5 + 2));
     }
 
@@ -2652,20 +2654,20 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference d = this.cellReference("$N$9"); // M8 moved
         final SpreadsheetCellReference e = this.cellReference("$O$10"); // N9 moved
 
-        engine.saveCell(this.cell(a, "1+" + d), context);
-        engine.saveCell(this.cell(b, "2"), context);
-        engine.saveCell(this.cell(c, "3"), context); // DELETED
-        engine.saveCell(this.cell(d, "4"), context); // MOVED
-        engine.saveCell(this.cell(e, "5+" + b), context); // MOVED
+        engine.saveCell(this.cell(a, "=1+" + d), context);
+        engine.saveCell(this.cell(b, "=2"), context);
+        engine.saveCell(this.cell(c, "=3"), context); // DELETED
+        engine.saveCell(this.cell(d, "=4"), context); // MOVED
+        engine.saveCell(this.cell(e, "=5+" + b), context); // MOVED
 
         final int count = 2;
         this.deleteColumnsAndCheck(engine,
                 c.column(),
                 count,
                 context,
-                this.formattedCellWithValue("$A$1", "1+$L$9", number(1 + 4)),
-                this.formattedCellWithValue("$L$9", "4", number(4)),
-                this.formattedCellWithValue("$M$10", "5+$B$1", number(5 + 2))); // $c delete
+                this.formattedCellWithValue("$A$1", "=1+$L$9", number(1 + 4)),
+                this.formattedCellWithValue("$L$9", "=4", number(4)),
+                this.formattedCellWithValue("$M$10", "=5+$B$1", number(5 + 2))); // $c delete
 
         this.countAndCheck(cellStore, 4);
 
@@ -2673,7 +2675,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+" + d.addColumn(-count),
+                "=1+" + d.addColumn(-count),
                 number(1 + 4)); // reference should have been fixed.
 
         this.loadCellAndCheckFormatted2(engine,
@@ -2694,7 +2696,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 e.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "5+" + b,
+                "=5+" + b,
                 number(5 + 2));
     }
 
@@ -2715,9 +2717,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetRange ab = a.spreadsheetRange(b);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, ab));
 
-        engine.saveCell(this.cell(a, "1+0"), context);
-        engine.saveCell(this.cell(c, "20+0+" + LABEL), context);
-        engine.saveCell(this.cell(d, "99+0"), context); // deleted!!!
+        engine.saveCell(this.cell(a, "=1+0"), context);
+        engine.saveCell(this.cell(c, "=20+0+" + LABEL), context);
+        engine.saveCell(this.cell(d, "=99+0"), context); // deleted!!!
 
         final int count = 2;
         this.deleteColumnsAndCheck(engine,
@@ -2732,14 +2734,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+0",
+                "=1+0",
                 number(1));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "20+0+" + LABEL,
+                "=20+0+" + LABEL,
                 number(21));
 
         this.loadLabelAndCheck(labelStore, LABEL, ab);
@@ -2759,7 +2761,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetRange bc = b.spreadsheetRange(c);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, bc));
 
-        engine.saveCell(this.cell(a, "1+0"), context);
+        engine.saveCell(this.cell(a, "=1+0"), context);
 
         final int count = c.column().value() - b.column().value() + 1;
         this.deleteColumnsAndCheck(engine,
@@ -2774,7 +2776,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+0",
+                "=1+0",
                 number(1));
     }
 
@@ -2793,15 +2795,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetRange bc = b.spreadsheetRange(c);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, bc));
 
-        engine.saveCell(this.cell(a, "1+0"), context);
-        engine.saveCell(this.cell(d, "20+0"), context);
+        engine.saveCell(this.cell(a, "=1+0"), context);
+        engine.saveCell(this.cell(d, "=20+0"), context);
 
         final int count = c.column().value() - b.column().value() + 1;
         this.deleteColumnsAndCheck(engine,
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithValue(d.addColumn(-count), "20+0", number(20 + 0))); // b..c deleted, d moved
+                this.formattedCellWithValue(d.addColumn(-count), "=20+0", number(20 + 0))); // b..c deleted, d moved
 
         this.countAndCheck(cellStore, 2); // a&d
         this.countAndCheck(labelStore, 0);
@@ -2810,7 +2812,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+0",
+                "=1+0",
                 number(1));
     }
 
@@ -2828,15 +2830,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetRange bc = b.spreadsheetRange(c);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, bc));
 
-        engine.saveCell(this.cell(a, "1+0+" + LABEL), context);
-        engine.saveCell(this.cell(b, "20+0"), context);
+        engine.saveCell(this.cell(a, "=1+0+" + LABEL), context);
+        engine.saveCell(this.cell(b, "=20+0"), context);
 
         final int count = c.column().value() - b.column().value() + 1;
         this.deleteColumnsAndCheck(engine,
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithError("$A$1", "1+0+" + LABEL, "Unknown label: " + LABEL)); // b..c deleted
+                this.formattedCellWithError("$A$1", "=1+0+" + LABEL, "Unknown label: " + LABEL)); // b..c deleted
 
         this.countAndCheck(cellStore, 1); // a
         this.countAndCheck(labelStore, 0);
@@ -2845,7 +2847,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+0+" + LABEL,
+                "=1+0+" + LABEL,
                 "Unknown label: " + LABEL);
     }
 
@@ -2865,15 +2867,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetRange de = d.spreadsheetRange(e);
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, de));
 
-        engine.saveCell(this.cell(a, "1+0+" + LABEL), context);
-        engine.saveCell(this.cell(d, "20+0"), context);
+        engine.saveCell(this.cell(a, "=1+0+" + LABEL), context);
+        engine.saveCell(this.cell(d, "=20+0"), context);
 
         final int count = c.column().value() - b.column().value() + 1;
         this.deleteColumnsAndCheck(engine,
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithValue(d.addColumn(-count), "20+0", number(20 + 0))); // b..c deleted, d moved
+                this.formattedCellWithValue(d.addColumn(-count), "=20+0", number(20 + 0))); // b..c deleted, d moved
 
         this.countAndCheck(cellStore, 2); // a&d
 
@@ -2881,14 +2883,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+0+" + LABEL,
+                "=1+0+" + LABEL,
                 number(1 + 20));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.addColumn(-count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "20+0",
+                "=20+0",
                 number(20));
 
         this.countAndCheck(labelStore, 1);
@@ -2986,7 +2988,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference reference = this.cellReference("$CV$1");
 
-        engine.saveCell(this.cell(reference, "99+0"),
+        engine.saveCell(this.cell(reference, "=99+0"),
                 context);
 
         this.insertColumnsAndCheck(engine,
@@ -3000,7 +3002,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 reference,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "99+0",
+                "=99+0",
                 number(99));
     }
 
@@ -3015,17 +3017,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b = this.cellReference("$B$1"); // MOVED
         final SpreadsheetCellReference c = this.cellReference("$C$1"); // MOVED
 
-        engine.saveCell(this.cell(a, "1+2"), context);
-        engine.saveCell(this.cell(b, "3+4"), context);
-        engine.saveCell(this.cell(c, "5+6"), context);
+        engine.saveCell(this.cell(a, "=1+2"), context);
+        engine.saveCell(this.cell(b, "=3+4"), context);
+        engine.saveCell(this.cell(c, "=5+6"), context);
 
         final int count = 1;
         this.insertColumnsAndCheck(engine,
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithValue("$C$1", "3+4", number(3 + 4)),
-                this.formattedCellWithValue("$D$1", "5+6", number(5 + 6)));
+                this.formattedCellWithValue("$C$1", "=3+4", number(3 + 4)),
+                this.formattedCellWithValue("$D$1", "=5+6", number(5 + 6)));
 
         this.countAndCheck(cellStore, 3);
 
@@ -3033,7 +3035,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+2",
+                "=1+2",
                 number(1 + 2));
     }
 
@@ -3048,17 +3050,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b = this.cellReference("$B$1"); // MOVED
         final SpreadsheetCellReference c = this.cellReference("$C$1"); // MOVED
 
-        engine.saveCell(this.cell(a, "1+2"), context);
-        engine.saveCell(this.cell(b, "3+4"), context);
-        engine.saveCell(this.cell(c, "5+6"), context);
+        engine.saveCell(this.cell(a, "=1+2"), context);
+        engine.saveCell(this.cell(b, "=3+4"), context);
+        engine.saveCell(this.cell(c, "=5+6"), context);
 
         final int count = 1;
         this.insertColumnsAndCheck(engine,
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithValue("$C$1", "3+4", number(3 + 4)),
-                this.formattedCellWithValue("$D$1", "5+6", number(5 + 6))); // $b insert
+                this.formattedCellWithValue("$C$1", "=3+4", number(3 + 4)),
+                this.formattedCellWithValue("$D$1", "=5+6", number(5 + 6))); // $b insert
 
         this.countAndCheck(cellStore, 3);
 
@@ -3066,21 +3068,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+2",
+                "=1+2",
                 number(1 + 2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "3+4",
+                "=3+4",
                 number(3 + 4));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "5+6",
+                "=5+6",
                 number(5 + 6));
     }
 
@@ -3096,15 +3098,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, a));
 
-        engine.saveCell(this.cell(a, "100"), context);
-        engine.saveCell(this.cell(b, "2+" + LABEL), context);
+        engine.saveCell(this.cell(a, "=100"), context);
+        engine.saveCell(this.cell(b, "=2+" + LABEL), context);
 
         final int count = 1;
         this.insertColumnsAndCheck(engine,
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithValue("$F$4", "2+" + LABEL, number(2 + 100))); // $b insert
+                this.formattedCellWithValue("$F$4", "=2+" + LABEL, number(2 + 100))); // $b insert
 
         this.loadLabelAndCheck(labelStore, LABEL, a);
 
@@ -3114,14 +3116,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "100",
+                "=100",
                 number(100));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "2+" + LABEL,
+                "=2+" + LABEL,
                 number(2 + 100));
     }
 
@@ -3139,19 +3141,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, d));
 
-        engine.saveCell(this.cell(a, "1+" + LABEL), context);
-        engine.saveCell(this.cell(b, "2+0"), context);
-        engine.saveCell(this.cell(c, "3+0+" + LABEL), context);
-        engine.saveCell(this.cell(d, "99+0"), context);
+        engine.saveCell(this.cell(a, "=1+" + LABEL), context);
+        engine.saveCell(this.cell(b, "=2+0"), context);
+        engine.saveCell(this.cell(c, "=3+0+" + LABEL), context);
+        engine.saveCell(this.cell(d, "=99+0"), context);
 
         final int count = 1;
         this.insertColumnsAndCheck(engine,
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithValue("$C$1", "2+0", number(2 + 0)),
-                this.formattedCellWithValue("$D$1", "3+0+" + LABEL, number(3 + 0 + 99 + 0)),
-                this.formattedCellWithValue("$O$9", "99+0", number(99 + 0))); // $b insert
+                this.formattedCellWithValue("$C$1", "=2+0", number(2 + 0)),
+                this.formattedCellWithValue("$D$1", "=3+0+" + LABEL, number(3 + 0 + 99 + 0)),
+                this.formattedCellWithValue("$O$9", "=99+0", number(99 + 0))); // $b insert
 
         this.loadLabelAndCheck(labelStore, LABEL, d.addColumn(count));
 
@@ -3161,28 +3163,28 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+" + LABEL,
+                "=1+" + LABEL,
                 number(1 + 99));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "2+0",
+                "=2+0",
                 number(2 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "3+0+" + LABEL,
+                "=3+0+" + LABEL,
                 number(3 + 99));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "99+0",
+                "=99+0",
                 number(99 + 0));
     }
 
@@ -3199,15 +3201,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetRange a1 = a.spreadsheetRange(a.add(1, 1));
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, a1));
 
-        engine.saveCell(this.cell(a, "99+0"), context);
-        engine.saveCell(this.cell(b, "2+0+" + LABEL), context);
+        engine.saveCell(this.cell(a, "=99+0"), context);
+        engine.saveCell(this.cell(b, "=2+0+" + LABEL), context);
 
         final int count = 1;
         this.insertColumnsAndCheck(engine,
                 b.column(),
                 count,
                 context,
-                this.formattedCellWithValue("$G$6", "2+0+" + LABEL, number(2 + 0 + 99 + 0))); // $b insert
+                this.formattedCellWithValue("$G$6", "=2+0+" + LABEL, number(2 + 0 + 99 + 0))); // $b insert
 
         this.countAndCheck(labelStore, 1);
 
@@ -3219,14 +3221,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "99+0",
+                "=99+0",
                 number(99 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "2+0+" + LABEL,
+                "=2+0+" + LABEL,
                 number(2 + 99));
     }
 
@@ -3245,14 +3247,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, c.spreadsheetRange(d)));
 
-        engine.saveCell(this.cell(a, "1+" + LABEL), context);
-        engine.saveCell(this.cell(c, "99+0"), context);
+        engine.saveCell(this.cell(a, "=1+" + LABEL), context);
+        engine.saveCell(this.cell(c, "=99+0"), context);
 
         this.insertColumnsAndCheck(engine,
                 b.column(),
                 c.column().value() - b.column().value(),
                 context,
-                this.formattedCellWithValue("$P$1", "99+0", number(99 + 0))); // $b insert
+                this.formattedCellWithValue("$P$1", "=99+0", number(99 + 0))); // $b insert
 
         this.countAndCheck(labelStore, 1);
         this.loadLabelAndCheck(labelStore, LABEL, d.spreadsheetRange(e));
@@ -3263,14 +3265,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+" + LABEL,
+                "=1+" + LABEL,
                 number(1 + 99));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "99+0",
+                "=99+0",
                 number(99 + 0));
     }
 
@@ -3286,19 +3288,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference c = this.cellReference("$K$1"); // moved
         final SpreadsheetCellReference d = this.cellReference("$N$9"); // moved
 
-        engine.saveCell(this.cell(a, "1+0+" + d), context);
-        engine.saveCell(this.cell(b, "2+0"), context);
-        engine.saveCell(this.cell(c, "3+0"), context);
-        engine.saveCell(this.cell(d, "4+0+" + b), context);
+        engine.saveCell(this.cell(a, "=1+0+" + d), context);
+        engine.saveCell(this.cell(b, "=2+0"), context);
+        engine.saveCell(this.cell(c, "=3+0"), context);
+        engine.saveCell(this.cell(d, "=4+0+" + b), context);
 
         final int count = 1;
         this.insertColumnsAndCheck(engine,
                 c.column(),
                 count,
                 context,
-                this.formattedCellWithValue("$A$1", "1+0+$O$9", number(1 + 0 + 4 + 0 + 2 + 0)),
-                this.formattedCellWithValue("$L$1", "3+0", number(3 + 0)),
-                this.formattedCellWithValue("$O$9", "4+0+" + b, number(4 + 0 + 2 + 0))); // $c insert
+                this.formattedCellWithValue("$A$1", "=1+0+$O$9", number(1 + 0 + 4 + 0 + 2 + 0)),
+                this.formattedCellWithValue("$L$1", "=3+0", number(3 + 0)),
+                this.formattedCellWithValue("$O$9", "=4+0+" + b, number(4 + 0 + 2 + 0))); // $c insert
 
         this.countAndCheck(cellStore, 4);
 
@@ -3306,28 +3308,28 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+0+" + d.addColumn(count),
+                "=1+0+" + d.addColumn(count),
                 number(1 + 0 + 4 + 2)); // reference should have been fixed.
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "2+0",
+                "=2+0",
                 number(2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "3+0",
+                "=3+0",
                 number(3));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "4+0+" + b,
+                "=4+0+" + b,
                 number(4 + 2));
     }
 
@@ -3343,19 +3345,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference c = this.cellReference("$K$1"); // moved
         final SpreadsheetCellReference d = this.cellReference("$N$9"); // moved
 
-        engine.saveCell(this.cell(a, "1+0+" + d), context);
-        engine.saveCell(this.cell(b, "2+0"), context);
-        engine.saveCell(this.cell(c, "3+0"), context);
-        engine.saveCell(this.cell(d, "4+0+" + b), context); // =5+2
+        engine.saveCell(this.cell(a, "=1+0+" + d), context);
+        engine.saveCell(this.cell(b, "=2+0"), context);
+        engine.saveCell(this.cell(c, "=3+0"), context);
+        engine.saveCell(this.cell(d, "=4+0+" + b), context); // =5+2
 
         final int count = 2;
         this.insertColumnsAndCheck(engine,
                 c.column(),
                 count,
                 context,
-                this.formattedCellWithValue("$A$1", "1+0+$P$9", number(1 + 0 + 4 + 0 + 2 + 0)),
-                this.formattedCellWithValue("$M$1", "3+0", number(3 + 0)),
-                this.formattedCellWithValue("$P$9", "4+0+" + b, number(4 + 0 + 2 + 0))); // $c insert
+                this.formattedCellWithValue("$A$1", "=1+0+$P$9", number(1 + 0 + 4 + 0 + 2 + 0)),
+                this.formattedCellWithValue("$M$1", "=3+0", number(3 + 0)),
+                this.formattedCellWithValue("$P$9", "=4+0+" + b, number(4 + 0 + 2 + 0))); // $c insert
 
         this.countAndCheck(cellStore, 4);
 
@@ -3363,28 +3365,28 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+0+" + d.addColumn(count),
+                "=1+0+" + d.addColumn(count),
                 number(1 + 0 + 4 + 2)); // reference should have been fixed.
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "2+0",
+                "=2+0",
                 number(2 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "3+0",
+                "=3+0",
                 number(3 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "4+0+" + b,
+                "=4+0+" + b,
                 number(4 + 0 + 2));
     }
 
@@ -3401,21 +3403,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference d = this.cellReference("$M$3"); // MOVED
         final SpreadsheetCellReference e = this.cellReference("$U$4"); // MOVED
 
-        engine.saveCell(this.cell(a, "1+0"), context);
-        engine.saveCell(this.cell(b, "2+0"), context);
-        engine.saveCell(this.cell(c, "3+0"), context);
-        engine.saveCell(this.cell(d, "4+0"), context);
-        engine.saveCell(this.cell(e, "5+0"), context);
+        engine.saveCell(this.cell(a, "=1+0"), context);
+        engine.saveCell(this.cell(b, "=2+0"), context);
+        engine.saveCell(this.cell(c, "=3+0"), context);
+        engine.saveCell(this.cell(d, "=4+0"), context);
+        engine.saveCell(this.cell(e, "=5+0"), context);
 
         final int count = 5;
         this.insertColumnsAndCheck(engine,
                 this.column(7),
                 count,
                 context,
-                this.formattedCellWithValue("$P$1", "2+0", number(2 + 0)),
-                this.formattedCellWithValue("$Q$1", "3+0", number(3 + 0)),
-                this.formattedCellWithValue("$R$3", "4+0", number(4 + 0)),
-                this.formattedCellWithValue("$Z$4", "5+0", number(5 + 0))); // $b & $c
+                this.formattedCellWithValue("$P$1", "=2+0", number(2 + 0)),
+                this.formattedCellWithValue("$Q$1", "=3+0", number(3 + 0)),
+                this.formattedCellWithValue("$R$3", "=4+0", number(4 + 0)),
+                this.formattedCellWithValue("$Z$4", "=5+0", number(5 + 0))); // $b & $c
 
         this.countAndCheck(cellStore, 5);
 
@@ -3423,35 +3425,35 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+0",
+                "=1+0",
                 number(1 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "2+0",
+                "=2+0",
                 number(2 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "3+0",
+                "=3+0",
                 number(3 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "4+0",
+                "=4+0",
                 number(4 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 e.addColumn(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "5+0",
+                "=5+0",
                 number(5 + 0));
     }
 
@@ -3466,7 +3468,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCellReference reference = this.cellReference("$A$100"); // A3
 
-        engine.saveCell(this.cell(reference, "99+0"), context);
+        engine.saveCell(this.cell(reference, "=99+0"), context);
 
         this.insertRowsAndCheck(engine,
                 reference.row(),
@@ -3479,7 +3481,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 reference,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "99+0",
+                "=99+0",
                 number(99));
     }
 
@@ -3494,17 +3496,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b = this.cellReference("$A$2"); // MOVED
         final SpreadsheetCellReference c = this.cellReference("$A$3"); // MOVED
 
-        engine.saveCell(this.cell(a, "1+2"), context);
-        engine.saveCell(this.cell(b, "3+4"), context);
-        engine.saveCell(this.cell(c, "5+6"), context);
+        engine.saveCell(this.cell(a, "=1+2"), context);
+        engine.saveCell(this.cell(b, "=3+4"), context);
+        engine.saveCell(this.cell(c, "=5+6"), context);
 
         final int count = 1;
         this.insertRowsAndCheck(engine,
                 b.row(),
                 count,
                 context,
-                this.formattedCellWithValue("$A$3", "3+4", number(3 + 4)),
-                this.formattedCellWithValue("$A$4", "5+6", number(5 + 6)));
+                this.formattedCellWithValue("$A$3", "=3+4", number(3 + 4)),
+                this.formattedCellWithValue("$A$4", "=5+6", number(5 + 6)));
 
         this.countAndCheck(cellStore, 3);
 
@@ -3512,21 +3514,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+2",
+                "=1+2",
                 number(1 + 2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b.addRow(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "3+4",
+                "=3+4",
                 number(3 + 4));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.addRow(count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "5+6",
+                "=5+6",
                 number(5 + 6));
     }
 
@@ -3541,17 +3543,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b = this.cellReference("$A$2"); // MOVED
         final SpreadsheetCellReference c = this.cellReference("$A$3"); // MOVED
 
-        engine.saveCell(this.cell(a, "1+2"), context);
-        engine.saveCell(this.cell(b, "3+4"), context);
-        engine.saveCell(this.cell(c, "5+6"), context);
+        engine.saveCell(this.cell(a, "=1+2"), context);
+        engine.saveCell(this.cell(b, "=3+4"), context);
+        engine.saveCell(this.cell(c, "=5+6"), context);
 
         final int count = 1;
         this.insertRowsAndCheck(engine,
                 b.row(),
                 count,
                 context,
-                this.formattedCellWithValue("$A$3", "3+4", number(3 + 4)),
-                this.formattedCellWithValue("$A$4", "5+6", number(5 + 6))); // $b insert
+                this.formattedCellWithValue("$A$3", "=3+4", number(3 + 4)),
+                this.formattedCellWithValue("$A$4", "=5+6", number(5 + 6))); // $b insert
 
         this.countAndCheck(cellStore, 3);
 
@@ -3559,21 +3561,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+2",
+                "=1+2",
                 number(1 + 2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "3+4",
+                "=3+4",
                 number(3 + 4));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "5+6",
+                "=5+6",
                 number(5 + 6));
     }
 
@@ -3589,15 +3591,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, a));
 
-        engine.saveCell(this.cell(a, "100"), context);
-        engine.saveCell(this.cell(b, "2+" + LABEL), context);
+        engine.saveCell(this.cell(a, "=100"), context);
+        engine.saveCell(this.cell(b, "=2+" + LABEL), context);
 
         final int count = 1;
         this.insertRowsAndCheck(engine,
                 b.row(),
                 count,
                 context,
-                this.formattedCellWithValue("$D$6", "2+" + LABEL, number(2 + 100))); // $b insert
+                this.formattedCellWithValue("$D$6", "=2+" + LABEL, number(2 + 100))); // $b insert
 
         this.loadLabelAndCheck(labelStore, LABEL, a);
 
@@ -3607,14 +3609,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "100",
+                "=100",
                 number(100));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "2+" + LABEL,
+                "=2+" + LABEL,
                 number(2 + 100));
     }
 
@@ -3632,19 +3634,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, d));
 
-        engine.saveCell(this.cell(a, "1+" + LABEL), context);
-        engine.saveCell(this.cell(b, "2+0"), context);
-        engine.saveCell(this.cell(c, "3+0+" + LABEL), context);
-        engine.saveCell(this.cell(d, "99+0"), context);
+        engine.saveCell(this.cell(a, "=1+" + LABEL), context);
+        engine.saveCell(this.cell(b, "=2+0"), context);
+        engine.saveCell(this.cell(c, "=3+0+" + LABEL), context);
+        engine.saveCell(this.cell(d, "=99+0"), context);
 
         final int count = 1;
         this.insertRowsAndCheck(engine,
                 b.row(),
                 count,
                 context,
-                this.formattedCellWithValue("$A$3", "2+0", number(2 + 0)),
-                this.formattedCellWithValue("$A$4", "3+0+" + LABEL, number(3 + 0 + 99)),
-                this.formattedCellWithValue("$I$15", "99+0", number(99 + 0))); // $b insert
+                this.formattedCellWithValue("$A$3", "=2+0", number(2 + 0)),
+                this.formattedCellWithValue("$A$4", "=3+0+" + LABEL, number(3 + 0 + 99)),
+                this.formattedCellWithValue("$I$15", "=99+0", number(99 + 0))); // $b insert
 
         this.loadLabelAndCheck(labelStore, LABEL, d.addRow(+count));
 
@@ -3654,28 +3656,28 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+" + LABEL,
+                "=1+" + LABEL,
                 number(1 + 99));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "2+0",
+                "=2+0",
                 number(2 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "3+0+" + LABEL,
+                "=3+0+" + LABEL,
                 number(3 + 99));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "99+0",
+                "=99+0",
                 number(99 + 0));
     }
 
@@ -3692,15 +3694,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetRange a1 = a.spreadsheetRange(a.add(1, 1));
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, a1));
 
-        engine.saveCell(this.cell(a, "99+0"), context);
-        engine.saveCell(this.cell(b, "2+0+" + LABEL), context);
+        engine.saveCell(this.cell(a, "=99+0"), context);
+        engine.saveCell(this.cell(b, "=2+0+" + LABEL), context);
 
         final int count = 1;
         this.insertRowsAndCheck(engine,
                 b.row(),
                 count,
                 context,
-                this.formattedCellWithValue("$F$7", "2+0+" + LABEL, number(2 + 0 + 99 + 0))); // $b insert
+                this.formattedCellWithValue("$F$7", "=2+0+" + LABEL, number(2 + 0 + 99 + 0))); // $b insert
 
         this.countAndCheck(labelStore, 1);
 
@@ -3712,14 +3714,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "99+0",
+                "=99+0",
                 number(99 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "2+0+" + LABEL,
+                "=2+0+" + LABEL,
                 number(2 + 99));
     }
 
@@ -3738,14 +3740,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         labelStore.save(SpreadsheetLabelMapping.with(LABEL, c.spreadsheetRange(d)));
 
-        engine.saveCell(this.cell(a, "1+" + LABEL), context);
-        engine.saveCell(this.cell(c, "99+0"), context);
+        engine.saveCell(this.cell(a, "=1+" + LABEL), context);
+        engine.saveCell(this.cell(c, "=99+0"), context);
 
         this.insertRowsAndCheck(engine,
                 b.row(),
                 c.row().value() - b.row().value(),
                 context,
-                this.formattedCellWithValue("$A$16", "99+0", number(99 + 0))); // $b insert
+                this.formattedCellWithValue("$A$16", "=99+0", number(99 + 0))); // $b insert
 
         this.countAndCheck(labelStore, 1);
         this.loadLabelAndCheck(labelStore, LABEL, d.spreadsheetRange(e));
@@ -3756,14 +3758,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+" + LABEL,
+                "=1+" + LABEL,
                 number(1 + 99));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "99+0",
+                "=99+0",
                 number(99 + 0));
     }
 
@@ -3779,19 +3781,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference c = this.cellReference("$A$11"); // moved
         final SpreadsheetCellReference d = this.cellReference("$I$14"); // moved
 
-        engine.saveCell(this.cell(a, "1+0+" + d), context);
-        engine.saveCell(this.cell(b, "2+0"), context);
-        engine.saveCell(this.cell(c, "3+0"), context);
-        engine.saveCell(this.cell(d, "4+0+" + b), context);
+        engine.saveCell(this.cell(a, "=1+0+" + d), context);
+        engine.saveCell(this.cell(b, "=2+0"), context);
+        engine.saveCell(this.cell(c, "=3+0"), context);
+        engine.saveCell(this.cell(d, "=4+0+" + b), context);
 
         final int count = 1;
         this.insertRowsAndCheck(engine,
                 c.row(),
                 count,
                 context,
-                this.formattedCellWithValue("$A$1", "1+0+$I$15", number(3 + 4)),
-                this.formattedCellWithValue("$A$12", "3+0", number(3 + 0)),
-                this.formattedCellWithValue("$I$15", "4+0+" + b, number(4 + 0 + 2 + 0))); // $c insert
+                this.formattedCellWithValue("$A$1", "=1+0+$I$15", number(3 + 4)),
+                this.formattedCellWithValue("$A$12", "=3+0", number(3 + 0)),
+                this.formattedCellWithValue("$I$15", "=4+0+" + b, number(4 + 0 + 2 + 0))); // $c insert
 
         this.countAndCheck(cellStore, 4);
 
@@ -3799,28 +3801,28 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+0+" + d.addRow(+count),
+                "=1+0+" + d.addRow(+count),
                 number(1 + 0 + 4 + 2)); // reference should have been fixed.
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "2+0",
+                "=2+0",
                 number(2));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "3+0",
+                "=3+0",
                 number(3));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "4+0+" + b,
+                "=4+0+" + b,
                 number(4 + 2));
     }
 
@@ -3836,19 +3838,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference c = this.cellReference("$A$11"); // moved
         final SpreadsheetCellReference d = this.cellReference("$I$14"); // moved
 
-        engine.saveCell(this.cell(a, "1+0+" + d), context);
-        engine.saveCell(this.cell(b, "2+0"), context);
-        engine.saveCell(this.cell(c, "3+0"), context);
-        engine.saveCell(this.cell(d, "4+0+" + b), context); // =5+2
+        engine.saveCell(this.cell(a, "=1+0+" + d), context);
+        engine.saveCell(this.cell(b, "=2+0"), context);
+        engine.saveCell(this.cell(c, "=3+0"), context);
+        engine.saveCell(this.cell(d, "=4+0+" + b), context); // =5+2
 
         final int count = 2;
         this.insertRowsAndCheck(engine,
                 c.row(),
                 count,
                 context,
-                this.formattedCellWithValue("$A$1", "1+0+$I$16", number(1 + 0 + 4 + 0 + 2 + 0)),
-                this.formattedCellWithValue("$A$13", "3+0", number(3 + 0)),
-                this.formattedCellWithValue("$I$16", "4+0+" + b, number(4 + 0 + 2 + 0))); // $c insert
+                this.formattedCellWithValue("$A$1", "=1+0+$I$16", number(1 + 0 + 4 + 0 + 2 + 0)),
+                this.formattedCellWithValue("$A$13", "=3+0", number(3 + 0)),
+                this.formattedCellWithValue("$I$16", "=4+0+" + b, number(4 + 0 + 2 + 0))); // $c insert
 
         this.countAndCheck(cellStore, 4);
 
@@ -3856,28 +3858,28 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+0+" + d.addRow(+count),
+                "=1+0+" + d.addRow(+count),
                 number(1 + 0 + 4 + 2)); // reference should have been fixed.
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "2+0",
+                "=2+0",
                 number(2 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "3+0",
+                "=3+0",
                 number(3 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "4+0+" + b,
+                "=4+0+" + b,
                 number(4 + 0 + 2));
     }
 
@@ -3894,21 +3896,21 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference d = this.cellReference("$C$13"); // MOVED
         final SpreadsheetCellReference e = this.cellReference("$D$21"); // MOVED
 
-        engine.saveCell(this.cell(a, "1+0"), context);
-        engine.saveCell(this.cell(b, "2+0"), context);
-        engine.saveCell(this.cell(c, "3+0"), context);
-        engine.saveCell(this.cell(d, "4+0"), context);
-        engine.saveCell(this.cell(e, "5+0"), context);
+        engine.saveCell(this.cell(a, "=1+0"), context);
+        engine.saveCell(this.cell(b, "=2+0"), context);
+        engine.saveCell(this.cell(c, "=3+0"), context);
+        engine.saveCell(this.cell(d, "=4+0"), context);
+        engine.saveCell(this.cell(e, "=5+0"), context);
 
         final int count = 5;
         this.insertRowsAndCheck(engine,
                 this.row(7),
                 count,
                 context,
-                this.formattedCellWithValue("$A$16", "2+0", number(2 + 0)),
-                this.formattedCellWithValue("$A$17", "3+0", number(3 + 0)),
-                this.formattedCellWithValue("$C$18", "4+0", number(4 + 0)),
-                this.formattedCellWithValue("$D$26", "5+0", number(5 + 0))); // $b & $c
+                this.formattedCellWithValue("$A$16", "=2+0", number(2 + 0)),
+                this.formattedCellWithValue("$A$17", "=3+0", number(3 + 0)),
+                this.formattedCellWithValue("$C$18", "=4+0", number(4 + 0)),
+                this.formattedCellWithValue("$D$26", "=5+0", number(5 + 0))); // $b & $c
 
         this.countAndCheck(cellStore, 5);
 
@@ -3916,35 +3918,35 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "1+0",
+                "=1+0",
                 number(1 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 b.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "2+0",
+                "=2+0",
                 number(2 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 c.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "3+0",
+                "=3+0",
                 number(3 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 d.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "4+0",
+                "=4+0",
                 number(4 + 0));
 
         this.loadCellAndCheckFormulaAndValue(engine,
                 e.addRow(+count),
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                "5+0",
+                "=5+0",
                 number(5 + 0));
     }
 
@@ -3959,7 +3961,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference(5, 5);
-        final SpreadsheetCell cellA = this.cell(a, "1+0");
+        final SpreadsheetCell cellA = this.cell(a, "=1+0");
 
         cellStore.save(cellA);
 
@@ -3981,11 +3983,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference(5, 5);
-        final SpreadsheetCell cellA = this.cell(a, "1+0");
+        final SpreadsheetCell cellA = this.cell(a, "=1+0");
         cellStore.save(cellA);
 
         final SpreadsheetCellReference b = this.cellReference(10, 10);
-        final SpreadsheetCell cellB = this.cell(b, "2+0");
+        final SpreadsheetCell cellB = this.cell(b, "=2+0");
         cellStore.save(cellB);
 
         final SpreadsheetRange rangeA = a.spreadsheetRange(a);
@@ -4002,7 +4004,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                this.formattedCellWithValue(b, "2+0", number(2)));
+                this.formattedCellWithValue(b, "=2+0", number(2)));
     }
 
     @Test
@@ -4012,11 +4014,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference(5, 5);
-        final SpreadsheetCell cellA = this.cell(a, "1+0");
+        final SpreadsheetCell cellA = this.cell(a, "=1+0");
         cellStore.save(cellA);
 
         final SpreadsheetCellReference b = this.cellReference(6, 6);
-        final SpreadsheetCell cellB = this.cell(b, "2+0");
+        final SpreadsheetCell cellB = this.cell(b, "=2+0");
         cellStore.save(cellB);
 
         final SpreadsheetRange rangeA = a.spreadsheetRange(b);
@@ -4037,17 +4039,17 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference a = this.cellReference(5, 5);
-        final SpreadsheetCell cellA = this.cell(a, "1+0");
+        final SpreadsheetCell cellA = this.cell(a, "=1+0");
         cellStore.save(cellA);
 
         final SpreadsheetCellReference b = this.cellReference(6, 6);
-        final SpreadsheetCell cellB = this.cell(b, "2+0");
+        final SpreadsheetCell cellB = this.cell(b, "=2+0");
         cellStore.save(cellB);
 
         final SpreadsheetRange rangeA = a.spreadsheetRange(b);
 
         final SpreadsheetCellReference c = this.cellReference(10, 10);
-        final SpreadsheetCell cellC = this.cell(c, "3+0");
+        final SpreadsheetCell cellC = this.cell(c, "=3+0");
         cellStore.save(cellC);
 
         this.fillCellsAndCheck(engine,
@@ -4062,7 +4064,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 c,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                this.formattedCellWithValue(c, "3+0", number(3)));
+                this.formattedCellWithValue(c, "=3+0", number(3)));
     }
 
     // fill save with missing cells......................................................................................
@@ -4076,8 +4078,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a = this.cellReference(1, 1);
         final SpreadsheetCellReference b = this.cellReference(2, 2);
 
-        final SpreadsheetCell cellA = this.cell(a, "1+0");
-        final SpreadsheetCell cellB = this.cell(b, "2+0");
+        final SpreadsheetCell cellA = this.cell(a, "=1+0");
+        final SpreadsheetCell cellB = this.cell(b, "=2+0");
 
         final SpreadsheetRange range = a.spreadsheetRange(b);
 
@@ -4086,8 +4088,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 range,
                 range,
                 context,
-                this.formattedCellWithValue(a, "1+0", number(1)),
-                this.formattedCellWithValue(b, "2+0", number(2)));
+                this.formattedCellWithValue(a, "=1+0", number(1)),
+                this.formattedCellWithValue(b, "=2+0", number(2)));
 
         this.countAndCheck(cellStore, 2); // a + b saved
 
@@ -4095,13 +4097,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                this.formattedCellWithValue(a, "1+0", number(1)));
+                this.formattedCellWithValue(a, "=1+0", number(1)));
 
         this.loadCellAndCheck(engine,
                 b,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                this.formattedCellWithValue(b, "2+0", number(2)));
+                this.formattedCellWithValue(b, "=2+0", number(2)));
     }
 
     @Test
@@ -4113,13 +4115,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a = this.cellReference(1, 1);
         final SpreadsheetCellReference b = this.cellReference(2, 2);
 
-        final SpreadsheetCell cellA = this.cell(a, "1+0");
-        final SpreadsheetCell cellB = this.cell(b, "2+0");
+        final SpreadsheetCell cellA = this.cell(a, "=1+0");
+        final SpreadsheetCell cellB = this.cell(b, "=2+0");
 
         final SpreadsheetRange range = a.spreadsheetRange(b);
 
         final SpreadsheetCellReference c = this.cellReference(10, 10);
-        final SpreadsheetCell cellC = this.cell(c, "3+0");
+        final SpreadsheetCell cellC = this.cell(c, "=3+0");
         cellStore.save(cellC);
 
         this.fillCellsAndCheck(engine,
@@ -4127,8 +4129,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 range,
                 range,
                 context,
-                this.formattedCellWithValue(a, "1+0", number(1)),
-                this.formattedCellWithValue(b, "2+0", number(2)));
+                this.formattedCellWithValue(a, "=1+0", number(1)),
+                this.formattedCellWithValue(b, "=2+0", number(2)));
 
         this.countAndCheck(cellStore, 3); // a + b saved + c
 
@@ -4136,13 +4138,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                this.formattedCellWithValue(a, "1+0", number(1))); // fill should have evaluated.
+                this.formattedCellWithValue(a, "=1+0", number(1))); // fill should have evaluated.
 
         this.loadCellAndCheck(engine,
                 b,
                 SpreadsheetEngineEvaluation.SKIP_EVALUATE,
                 context,
-                this.formattedCellWithValue(b, "2+0", number(2)));
+                this.formattedCellWithValue(b, "=2+0", number(2)));
 
         this.loadCellAndCheck(engine,
                 c,
@@ -4163,9 +4165,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b = this.cellReference(2, 1);
         final SpreadsheetCellReference c = this.cellReference(1, 2);
 
-        final SpreadsheetCell cellA = this.cell(a, "1+0");
-        final SpreadsheetCell cellB = this.cell(b, "2+0");
-        final SpreadsheetCell cellC = this.cell(c, "3+0");
+        final SpreadsheetCell cellA = this.cell(a, "=1+0");
+        final SpreadsheetCell cellB = this.cell(b, "=2+0");
+        final SpreadsheetCell cellC = this.cell(c, "=3+0");
 
         cellStore.save(cellA);
         cellStore.save(cellB);
@@ -4183,13 +4185,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 a,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                this.formattedCellWithValue(a, "1+0", number(1)));
+                this.formattedCellWithValue(a, "=1+0", number(1)));
 
         this.loadCellAndCheck(engine,
                 c,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                this.formattedCellWithValue(c, "3+0", number(3)));
+                this.formattedCellWithValue(c, "=3+0", number(3)));
     }
 
     @Test
@@ -4202,9 +4204,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b = this.cellReference(2, 1);
         final SpreadsheetCellReference c = this.cellReference(1, 2);
 
-        final SpreadsheetCell cellA = this.cell(a, "1+0");
-        final SpreadsheetCell cellB = this.cell(b, "2+0");
-        final SpreadsheetCell cellC = this.cell(c, "3+0");
+        final SpreadsheetCell cellA = this.cell(a, "=1+0");
+        final SpreadsheetCell cellB = this.cell(b, "=2+0");
+        final SpreadsheetCell cellC = this.cell(c, "=3+0");
 
         cellStore.save(cellA);
         cellStore.save(cellB);
@@ -4222,129 +4224,129 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 c,
                 SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
                 context,
-                this.formattedCellWithValue(c, "3+0", number(3)));
+                this.formattedCellWithValue(c, "=3+0", number(3)));
     }
 
     // fill moves 1 cell................................................................................................
 
     @Test
     public void testFillCellsAddition() {
-        this.fillCellsAndCheck("1+0", number(1 + 0));
+        this.fillCellsAndCheck("=1+0", number(1 + 0));
     }
 
     @Test
     public void testFillCellsExpressionNumber() {
-        this.fillCellsAndCheck("99.5", number(99.5));
+        this.fillCellsAndCheck("=99.5", number(99.5));
     }
 
     @Test
     public void testFillCellsExpressionNumber2() {
-        this.fillCellsAndCheck("99", number(99));
+        this.fillCellsAndCheck("=99", number(99));
     }
 
     @Test
     public void testFillCellsDivision() {
-        this.fillCellsAndCheck("10/5", number(10 / 5));
+        this.fillCellsAndCheck("=10/5", number(10 / 5));
     }
 
     @Test
     public void testFillCellsEqualsTrue() {
-        this.fillCellsAndCheck("10==10", true);
+        this.fillCellsAndCheck("=10==10", true);
     }
 
     @Test
     public void testFillCellsEqualsFalse() {
-        this.fillCellsAndCheck("10==9", false);
+        this.fillCellsAndCheck("=10==9", false);
     }
 
     @Test
     public void testFillCellsGreaterThanTrue() {
-        this.fillCellsAndCheck("10>9", true);
+        this.fillCellsAndCheck("=10>9", true);
     }
 
     @Test
     public void testFillCellsGreaterThanFalse() {
-        this.fillCellsAndCheck("10>11", false);
+        this.fillCellsAndCheck("=10>11", false);
     }
 
     @Test
     public void testFillCellsGreaterThanEqualsTrue() {
-        this.fillCellsAndCheck("10>=10", true);
+        this.fillCellsAndCheck("=10>=10", true);
     }
 
     @Test
     public void testFillCellsGreaterThanEqualsFalse() {
-        this.fillCellsAndCheck("10>=11", false);
+        this.fillCellsAndCheck("=10>=11", false);
     }
 
     @Test
     public void testFillCellsFunction() {
-        this.fillCellsAndCheck("BasicSpreadsheetEngineTestSum(1;99)", number(1 + 99));
+        this.fillCellsAndCheck("=BasicSpreadsheetEngineTestSum(1;99)", number(1 + 99));
     }
 
     @Test
     public void testFillCellsGroup() {
-        this.fillCellsAndCheck("(99)", number(99));
+        this.fillCellsAndCheck("=(99)", number(99));
     }
 
     @Test
     public void testFillCellsLessThanTrue() {
-        this.fillCellsAndCheck("10<11", true);
+        this.fillCellsAndCheck("=10<11", true);
     }
 
     @Test
     public void testFillCellsLessThanFalse() {
-        this.fillCellsAndCheck("10<9", false);
+        this.fillCellsAndCheck("=10<9", false);
     }
 
     @Test
     public void testFillCellsLessThanEqualsTrue() {
-        this.fillCellsAndCheck("10<=10", true);
+        this.fillCellsAndCheck("=10<=10", true);
     }
 
     @Test
     public void testFillCellsLessThanEqualsFalse() {
-        this.fillCellsAndCheck("10<=9", false);
+        this.fillCellsAndCheck("=10<=9", false);
     }
 
     @Test
     public void testFillCellsMultiplication() {
-        this.fillCellsAndCheck("6*7", number(6 * 7));
+        this.fillCellsAndCheck("=6*7", number(6 * 7));
     }
 
     @Test
     public void testFillCellsNegative() {
-        this.fillCellsAndCheck("-123", number(-123));
+        this.fillCellsAndCheck("=-123", number(-123));
     }
 
     @Test
     public void testFillCellsNotEqualsTrue() {
-        this.fillCellsAndCheck("10!=9", true);
+        this.fillCellsAndCheck("=10!=9", true);
     }
 
     @Test
     public void testFillCellsNotEqualsFalse() {
-        this.fillCellsAndCheck("10!=10", false);
+        this.fillCellsAndCheck("=10!=10", false);
     }
 
     @Test
     public void testFillCellsPercentage() {
-        this.fillCellsAndCheck("123.5%", number(123.5 / 100));
+        this.fillCellsAndCheck("=123.5%", number(123.5 / 100));
     }
 
     @Test
     public void testFillCellsSubtraction() {
-        this.fillCellsAndCheck("13-4", number(13 - 4));
+        this.fillCellsAndCheck("=13-4", number(13 - 4));
     }
 
     @Test
     public void testFillCellsText() {
-        this.fillCellsAndCheck("\"abc123\"", "abc123");
+        this.fillCellsAndCheck("=\"abc123\"", "abc123");
     }
 
     @Test
     public void testFillCellsAdditionWithWhitespace() {
-        this.fillCellsAndCheck("1 + 2", number(1 + 2));
+        this.fillCellsAndCheck("=1 + 2", number(1 + 2));
     }
 
     private void fillCellsAndCheck(final String formulaText, final Object expected) {
@@ -4359,8 +4361,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference c = this.cellReference(12, 22);
 
         final SpreadsheetCell cellA = this.cell(a, formulaText);
-        final SpreadsheetCell cellB = this.cell(b, "2+0");
-        final SpreadsheetCell cellC = this.cell(c, "3+0");
+        final SpreadsheetCell cellB = this.cell(b, "=2+0");
+        final SpreadsheetCell cellC = this.cell(c, "=3+0");
 
         cellStore.save(cellA);
         cellStore.save(cellB);
@@ -4388,9 +4390,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b = this.cellReference(11, 21);
         final SpreadsheetCellReference c = this.cellReference(12, 22);
 
-        final SpreadsheetCell cellA = this.cell(a, "1+0");
-        final SpreadsheetCell cellB = this.cell(b, "2+0");
-        final SpreadsheetCell cellC = this.cell(c, "3+0");
+        final SpreadsheetCell cellA = this.cell(a, "=1+0");
+        final SpreadsheetCell cellB = this.cell(b, "=2+0");
+        final SpreadsheetCell cellC = this.cell(c, "=3+0");
 
         cellStore.save(cellA);
         cellStore.save(cellB);
@@ -4403,8 +4405,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetRange.fromCells(Lists.of(a, b)),
                 d.spreadsheetRange(d.add(2, 2)),
                 context,
-                this.formattedCellWithValue(d, "1+0", number(1 + 0)),
-                this.formattedCellWithValue(d.add(1, 1), "2+0", number(2 + 0)));
+                this.formattedCellWithValue(d, "=1+0", number(1 + 0)),
+                this.formattedCellWithValue(d.add(1, 1), "=2+0", number(2 + 0)));
 
         this.countAndCheck(cellStore, 3 + 2);
     }
@@ -4419,9 +4421,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b = this.cellReference(11, 21);
         final SpreadsheetCellReference c = this.cellReference(12, 22);
 
-        final SpreadsheetCell cellA = this.cell(a, "1+0");
-        final SpreadsheetCell cellB = this.cell(b, "2+0");
-        final SpreadsheetCell cellC = this.cell(c, "3+0");
+        final SpreadsheetCell cellA = this.cell(a, "=1+0");
+        final SpreadsheetCell cellB = this.cell(b, "=2+0");
+        final SpreadsheetCell cellC = this.cell(c, "=3+0");
 
         cellStore.save(cellA);
         cellStore.save(cellB);
@@ -4434,8 +4436,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetRange.fromCells(Lists.of(a, b)),
                 d.spreadsheetRange(d.add(1, 1)),
                 context,
-                this.formattedCellWithValue(d, "1+0", number(1 + 0)),
-                this.formattedCellWithValue(d.add(1, 1), "2+0", number(2 + 0)));
+                this.formattedCellWithValue(d, "=1+0", number(1 + 0)),
+                this.formattedCellWithValue(d.add(1, 1), "=2+0", number(2 + 0)));
 
         this.countAndCheck(cellStore, 3 + 2);
     }
@@ -4450,9 +4452,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b = this.cellReference(11, 21);
         final SpreadsheetCellReference c = this.cellReference(12, 22);
 
-        final SpreadsheetCell cellA = this.cell(a, "1+0");
-        final SpreadsheetCell cellB = this.cell(b, "2+0");
-        final SpreadsheetCell cellC = this.cell(c, "3+0");
+        final SpreadsheetCell cellA = this.cell(a, "=1+0");
+        final SpreadsheetCell cellB = this.cell(b, "=2+0");
+        final SpreadsheetCell cellC = this.cell(c, "=3+0");
 
         cellStore.save(cellA);
         cellStore.save(cellB);
@@ -4466,8 +4468,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetRange.fromCells(Lists.of(a, b)),
                 d.spreadsheetRange(d.add(2, 2)),
                 context,
-                this.formattedCellWithValue(d, "1+0", number(1 + 0)),
-                this.formattedCellWithValue(d.add(1, 1), "2+0", number(2 + 0)));
+                this.formattedCellWithValue(d, "=1+0", number(1 + 0)),
+                this.formattedCellWithValue(d.add(1, 1), "=2+0", number(2 + 0)));
 
         this.countAndCheck(cellStore, 3 + 2);
     }
@@ -4482,9 +4484,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b = this.cellReference(11, 21);
         final SpreadsheetCellReference c = this.cellReference(12, 22);
 
-        final SpreadsheetCell cellA = this.cell(a, "1+0");
-        final SpreadsheetCell cellB = this.cell(b, "2+0");
-        final SpreadsheetCell cellC = this.cell(c, "3+0");
+        final SpreadsheetCell cellA = this.cell(a, "=1+0");
+        final SpreadsheetCell cellB = this.cell(b, "=2+0");
+        final SpreadsheetCell cellC = this.cell(c, "=3+0");
 
         cellStore.save(cellA);
         cellStore.save(cellB);
@@ -4497,12 +4499,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetRange.fromCells(Lists.of(a, b)),
                 d.spreadsheetRange(d.add(6, 1)),
                 context,
-                this.formattedCellWithValue(d, "1+0", number(1 + 0)),
-                this.formattedCellWithValue(d.add(1, 1), "2+0", number(2 + 0)),
-                this.formattedCellWithValue(d.add(2, 0), "1+0", number(1 + 0)),
-                this.formattedCellWithValue(d.add(3, 1), "2+0", number(2 + 0)),
-                this.formattedCellWithValue(d.add(4, 0), "1+0", number(1 + 0)),
-                this.formattedCellWithValue(d.add(5, 1), "2+0", number(2 + 0)));
+                this.formattedCellWithValue(d, "=1+0", number(1 + 0)),
+                this.formattedCellWithValue(d.add(1, 1), "=2+0", number(2 + 0)),
+                this.formattedCellWithValue(d.add(2, 0), "=1+0", number(1 + 0)),
+                this.formattedCellWithValue(d.add(3, 1), "=2+0", number(2 + 0)),
+                this.formattedCellWithValue(d.add(4, 0), "=1+0", number(1 + 0)),
+                this.formattedCellWithValue(d.add(5, 1), "=2+0", number(2 + 0)));
 
         this.countAndCheck(cellStore, 3 + 6);
     }
@@ -4517,9 +4519,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference b = this.cellReference(11, 21);
         final SpreadsheetCellReference c = this.cellReference(12, 22);
 
-        final SpreadsheetCell cellA = this.cell(a, "1+0");
-        final SpreadsheetCell cellB = this.cell(b, "2+0");
-        final SpreadsheetCell cellC = this.cell(c, "3+0");
+        final SpreadsheetCell cellA = this.cell(a, "=1+0");
+        final SpreadsheetCell cellB = this.cell(b, "=2+0");
+        final SpreadsheetCell cellC = this.cell(c, "=3+0");
 
         cellStore.save(cellA);
         cellStore.save(cellB);
@@ -4532,12 +4534,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetRange.fromCells(Lists.of(a, b)),
                 d.spreadsheetRange(d.add(1, 6)),
                 context,
-                this.formattedCellWithValue(d, "1+0", number(1 + 0)),
-                this.formattedCellWithValue(d.add(1, 1), "2+0", number(2 + 0)),
-                this.formattedCellWithValue(d.addRow(2), "1+0", number(1 + 0)),
-                this.formattedCellWithValue(d.add(1, 3), "2+0", number(2 + 0)),
-                this.formattedCellWithValue(d.addRow(4), "1+0", number(1 + 0)),
-                this.formattedCellWithValue(d.add(1, 5), "2+0", number(2 + 0)));
+                this.formattedCellWithValue(d, "=1+0", number(1 + 0)),
+                this.formattedCellWithValue(d.add(1, 1), "=2+0", number(2 + 0)),
+                this.formattedCellWithValue(d.addRow(2), "=1+0", number(1 + 0)),
+                this.formattedCellWithValue(d.add(1, 3), "=2+0", number(2 + 0)),
+                this.formattedCellWithValue(d.addRow(4), "=1+0", number(1 + 0)),
+                this.formattedCellWithValue(d.add(1, 5), "=2+0", number(2 + 0)));
 
         this.countAndCheck(cellStore, 3 + 6);
     }
@@ -4551,8 +4553,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetCellReference a = this.cellReference(10, 20);
         final SpreadsheetCellReference b = this.cellReference(11, 21);
 
-        final SpreadsheetCell cellA = this.cell(a, "1+0");
-        final SpreadsheetCell cellB = this.cell(b, "" + a);
+        final SpreadsheetCell cellA = this.cell(a, "=1+0");
+        final SpreadsheetCell cellB = this.cell(b, "=" + a);
 
         cellStore.save(cellA);
         cellStore.save(cellB);
@@ -4564,8 +4566,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.spreadsheetRange(b),
                 d.spreadsheetRange(d),
                 context,
-                this.formattedCellWithValue(a, "1+0", number(1 + 0)),
-                this.formattedCellWithValue(d, "" + a, number(1 + 0)));
+                this.formattedCellWithValue(a, "=1+0", number(1 + 0)),
+                this.formattedCellWithValue(d, "=" + a, number(1 + 0)));
 
         this.countAndCheck(cellStore, 2 + 1);
     }
@@ -4576,8 +4578,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCell cellB = this.cell("B2", "2");
-        final SpreadsheetCell cellC = this.cell("C3", "3+B2");
+        final SpreadsheetCell cellB = this.cell("B2", "=2");
+        final SpreadsheetCell cellC = this.cell("C3", "=3+B2");
 
         cellStore.save(cellB);
         cellStore.save(cellC);
@@ -4587,8 +4589,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 cellB.reference().spreadsheetRange(cellC.reference()),
                 SpreadsheetExpressionReference.parseRange("E5:F6"),
                 context,
-                this.formattedCellWithValue("E5", "2", number(2 + 0)),
-                this.formattedCellWithValue("F6", "3+E5", number(3 + 2)));
+                this.formattedCellWithValue("E5", "=2", number(2 + 0)),
+                this.formattedCellWithValue("F6", "=3+E5", number(3 + 2)));
 
         this.countAndCheck(cellStore, 2 + 2);
     }
@@ -4600,9 +4602,9 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetEngineContext context = this.createContext(engine);
 
         final SpreadsheetCellReference b = this.cellReference("b1");
-        final SpreadsheetCell cellB = this.cell(b, "2+0"); // copied to C1
+        final SpreadsheetCell cellB = this.cell(b, "=2+0"); // copied to C1
         final SpreadsheetCellReference c = this.cellReference("C1"); // fillCells dest...
-        final SpreadsheetCell cellA = this.cell("a1", "10+" + c);
+        final SpreadsheetCell cellA = this.cell("a1", "=10+" + c);
 
         engine.saveCell(cellA, context);
         engine.saveCell(cellB, context);
@@ -4612,8 +4614,8 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 b.spreadsheetRange(b),
                 c.spreadsheetRange(c),
                 context,
-                this.formattedCellWithValue(cellA.reference(), "10+" + c, number(10 + 2 + 0)), // external reference to copied
-                this.formattedCellWithValue(c, "2+0", number(2 + 0))); // copied
+                this.formattedCellWithValue(cellA.reference(), "=10+" + c, number(10 + 2 + 0)), // external reference to copied
+                this.formattedCellWithValue(c, "=2+0", number(2 + 0))); // copied
 
         this.countAndCheck(cellStore, 2 + 1);
     }
@@ -4688,7 +4690,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetExpressionReference.parseCellReference("B2"));
 
-        engine.saveCell(this.cell("B2", "99"), context);
+        engine.saveCell(this.cell("B2", "=99"), context);
 
         this.saveLabelAndCheck(engine,
                 mapping,
@@ -4707,13 +4709,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetExpressionReference.parseCellReference("B2"));
 
-        engine.saveCell(this.cell("A1", label + "+1"), context);
-        engine.saveCell(this.cell("B2", "99"), context);
+        engine.saveCell(this.cell("A1", "=" + label + "+1"), context);
+        engine.saveCell(this.cell("B2", "=99"), context);
 
         this.saveLabelAndCheck(engine,
                 mapping,
                 context,
-                this.formattedCellWithValue("A1", label + "+1", number(99 + 1)));
+                this.formattedCellWithValue("A1", "=" + label + "+1", number(99 + 1)));
     }
 
     //  removeLabel.......................................................................................................
@@ -4749,15 +4751,15 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetLabelName label = SpreadsheetExpressionReference.labelName("LABEL123");
         final SpreadsheetLabelMapping mapping = SpreadsheetLabelMapping.with(label, SpreadsheetExpressionReference.parseCellReference("B2"));
 
-        engine.saveCell(this.cell("A1", label + "+1"), context);
-        engine.saveCell(this.cell("B2", "99"), context);
+        engine.saveCell(this.cell("A1", "=" + label + "+1"), context);
+        engine.saveCell(this.cell("B2", "=99"), context);
 
         engine.saveLabel(mapping, context);
 
         this.removeLabelAndCheck(engine,
                 label,
                 context,
-                this.formattedCellWithError("A1", label + "+1", "Unknown label: " + label));
+                this.formattedCellWithError("A1", "=" + label + "+1", "Unknown label: " + label));
 
         this.loadLabelFailCheck(labelStore, label);
     }
@@ -4987,7 +4989,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
             @Override
             public SpreadsheetParserToken parseFormula(final String formula) {
-                return SpreadsheetParsers.expression()
+                return SpreadsheetParsers.valueOrExpression(BasicSpreadsheetEngineTest.this.metadata().parser())
                         .orFailIfCursorNotEmpty(ParserReporters.basic())
                         .parse(
                                 TextCursors.charSequence(formula),
@@ -5229,7 +5231,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         final SpreadsheetParserToken token =
                 text.isEmpty() ?
                 null :
-                SpreadsheetParsers.expression()
+                SpreadsheetParsers.valueOrExpression(BasicSpreadsheetEngineTest.this.metadata().parser())
                         .parse(TextCursors.charSequence(text),
                                 SpreadsheetParserContexts.basic(
                                     this.dateTimeContext(),
@@ -5299,7 +5301,13 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     private SpreadsheetMetadata metadata() {
-        return SpreadsheetMetadata.EMPTY;
+        return SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
+                .loadFromLocale()
+                .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS, SpreadsheetParsePatterns.parseDateParsePatterns("yyyy/mm/dd"))
+                .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetParsePatterns.parseDateTimeParsePatterns("yyyy/mm/dd hh:mm"))
+                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERNS, SpreadsheetParsePatterns.parseNumberParsePatterns("#.#"))
+                .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetParsePatterns.parseTimeParsePatterns("hh:mm"));
     }
 
     private SpreadsheetCellStore cellStore() {
