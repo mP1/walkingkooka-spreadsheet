@@ -1307,7 +1307,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testDeleteColumnColumnsAfterCellsRefreshedFunction() {
-        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("BasicSpreadsheetEngineTestSum(1,99)", number(1 + 99));
+        this.deleteColumnColumnsAfterCellsRefreshedAndCheck("BasicSpreadsheetEngineTestSum(1;99)", number(1 + 99));
     }
 
     @Test
@@ -4279,7 +4279,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     @Test
     public void testFillCellsFunction() {
-        this.fillCellsAndCheck("BasicSpreadsheetEngineTestSum(1,99)", number(1 + 99));
+        this.fillCellsAndCheck("BasicSpreadsheetEngineTestSum(1;99)", number(1 + 99));
     }
 
     @Test
