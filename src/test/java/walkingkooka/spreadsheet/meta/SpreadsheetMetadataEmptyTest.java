@@ -124,6 +124,17 @@ public final class SpreadsheetMetadataEmptyTest extends SpreadsheetMetadataTestC
                 "message");
     }
 
+    // HasParser........................................................................................................
+
+    @Test
+    public void testParserAllRequiredPropertiesAbsentFails() {
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> SpreadsheetMetadata.EMPTY
+                .parser());
+        assertEquals("Required properties \"date-parse-patterns\", \"date-time-parse-patterns\", \"number-parse-patterns\", \"time-parse-patterns\" missing.",
+                thrown.getMessage(),
+                "message");
+    }
+
     // HasParserContext.....................................................................................
 
     @Test

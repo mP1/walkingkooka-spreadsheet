@@ -28,6 +28,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetColorName;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.json.JsonObject;
@@ -319,6 +320,21 @@ final class SpreadsheetMetadataNonEmpty extends SpreadsheetMetadata {
      * Cached {@link SpreadsheetFormatter} which also uses the {@link #defaultFormatter} as the default formatter.
      */
     private SpreadsheetFormatterContext formatterContext;
+
+    // ParserContext....................................................................................................
+
+    @Override
+    public Parser<SpreadsheetParserContext> parser() {
+        if (null == this.parser) {
+            this.parser = this.createParser();
+        }
+
+        return this.parser;
+    }
+
+    private Parser<SpreadsheetParserContext> parser;
+
+    // ParserContext....................................................................................................
 
     @Override
     public SpreadsheetParserContext parserContext() {

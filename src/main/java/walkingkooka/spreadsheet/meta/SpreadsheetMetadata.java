@@ -56,7 +56,11 @@ import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeFormatPattern;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetTimeParsePatterns;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserContexts;
+import walkingkooka.spreadsheet.parser.SpreadsheetParsers;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
+import walkingkooka.text.cursor.parser.HasParser;
+import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberContexts;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
@@ -91,6 +95,7 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
         HasDecimalNumberContext,
         HasExpressionNumberKind,
         HasMathContext,
+        HasParser<SpreadsheetParserContext>,
         HasSpreadsheetFormatter,
         HasSpreadsheetFormatterContext,
         HateosResource<SpreadsheetId>,
@@ -508,6 +513,38 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
                 this.getOrFail(SpreadsheetMetadataPropertyName.WIDTH),
                 defaultFormatter,
                 this.converterContext());
+    }
+
+    // HasParsers.......................................................................................................
+
+    /**
+     * Returns a {@link Parser} that can be used to parse formulas.
+     */
+    public abstract Parser<SpreadsheetParserContext> parser();
+
+    /**
+     * Creates a {@link Parser} that may be used to parse formulas after verifying required properties.
+     */
+    final Parser<SpreadsheetParserContext> createParser() {
+        final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
+
+        final SpreadsheetDateParsePatterns date = components.getOrNull(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS);
+        final SpreadsheetDateTimeParsePatterns dateTime = components.getOrNull(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS);
+        final SpreadsheetNumberParsePatterns number = components.getOrNull(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERNS);
+        final SpreadsheetTimeParsePatterns time = components.getOrNull(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS);
+
+        components.reportIfMissing();
+
+        return SpreadsheetParsers.valueOrExpression(
+                Parsers.alternatives(
+                        Lists.of(
+                                date.parser().andEmptyTextCursor(),
+                                dateTime.parser().andEmptyTextCursor(),
+                                number.parser().andEmptyTextCursor(),
+                                time.parser().andEmptyTextCursor()
+                        )
+                )
+        );
     }
 
     // HasSpreadsheetParserContext......................................................................................
