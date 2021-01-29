@@ -177,6 +177,21 @@ public final class SpreadsheetTextFormatPatternTest extends SpreadsheetFormatPat
     // Parse............................................................................................................
 
     @Test
+    public void testParseStringEscapeMissingRepeatingCharacterFails() {
+        this.parseStringFails("\\", IllegalArgumentException.class);
+    }
+
+    @Test
+    public void testParseStringStarMissingRepeatingCharacterFails() {
+        this.parseStringFails("*", IllegalArgumentException.class);
+    }
+
+    @Test
+    public void testParseStringUnderscoreMissingRepeatingCharacterFails() {
+        this.parseStringFails("_", IllegalArgumentException.class);
+    }
+
+    @Test
     public void testParseStringDatePatternFails() {
         this.parseStringFails("ddmmyyyy", IllegalArgumentException.class);
     }

@@ -581,10 +581,13 @@ public final class SpreadsheetFormatParsers implements PublicStaticHelper {
                 .cast();
     }
 
+    /**
+     * This parser requires two characters, the second becomes the {@link Character} value of the {@link SpreadsheetFormatParserToken}
+     */
     private static Parser<SpreadsheetFormatParserContext> escapeStarOrUnderline(final char initial,
                                                                                 final BiFunction<Character, String, ParserToken> factory,
                                                                                 final Class<? extends SpreadsheetFormatLeafParserToken> tokenClass) {
-        return Parsers.stringInitialAndPartCharPredicate(CharPredicates.is(initial), CharPredicates.always(), 1, 2)
+        return Parsers.stringInitialAndPartCharPredicate(CharPredicates.is(initial), CharPredicates.always(), 2, 2)
                 .transform((stringParserToken, context) -> factory.apply(stringParserToken.cast(StringParserToken.class).value().charAt(1), stringParserToken.text()))
                 .setToString(snakeCaseParserClassSimpleName(tokenClass))
                 .cast();
