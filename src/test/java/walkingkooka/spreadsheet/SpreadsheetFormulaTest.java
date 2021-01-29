@@ -24,6 +24,7 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.JsonNodeException;
@@ -56,6 +57,11 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     }
 
     @Test
+    public void testWithNullMaxTextLengthFails() {
+        assertThrows(IllegalArgumentException.class, () -> SpreadsheetFormula.with(CharSequences.repeating(' ', 8192).toString()));
+    }
+
+    @Test
     public void testWith() {
         final SpreadsheetFormula formula = this.createObject();
         this.checkText(formula, TEXT);
@@ -76,6 +82,11 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     @Test
     public void testSetTextNullFails() {
         assertThrows(NullPointerException.class, () -> this.createObject().setText(null));
+    }
+
+    @Test
+    public void testSetTextMaxTextLengthFails() {
+        assertThrows(IllegalArgumentException.class, () -> this.createObject().setText(CharSequences.repeating(' ', 8192).toString()));
     }
 
     @Test

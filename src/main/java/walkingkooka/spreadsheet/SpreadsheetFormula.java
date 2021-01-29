@@ -128,7 +128,15 @@ public final class SpreadsheetFormula implements HasText,
 
     private static void checkText(final String text) {
         Objects.requireNonNull(text, "text");
+
+        final int length = text.length();
+        if (length >= MAX_FORMULA_TEXT_LENGTH) {
+            throw new IllegalArgumentException("Invalid text length " + length + ">= " + MAX_FORMULA_TEXT_LENGTH);
+        }
     }
+
+
+    public final static int MAX_FORMULA_TEXT_LENGTH = 8192;
 
     // token .............................................................................................
 
