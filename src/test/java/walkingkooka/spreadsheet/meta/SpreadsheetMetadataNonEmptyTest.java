@@ -44,14 +44,26 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterTesting;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
+import walkingkooka.spreadsheet.parser.SpreadsheetDateParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetDateTimeParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetNumberParserToken;
+import walkingkooka.spreadsheet.parser.SpreadsheetParserContext;
+import walkingkooka.spreadsheet.parser.SpreadsheetTimeParserToken;
 import walkingkooka.spreadsheet.reference.SpreadsheetCellReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetRange;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.ParserToken;
+import walkingkooka.tree.expression.ExpressionEvaluationContext;
 import walkingkooka.tree.expression.ExpressionNumberContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
 import walkingkooka.tree.expression.ExpressionNumberKind;
+import walkingkooka.tree.expression.FakeExpressionEvaluationContext;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -74,6 +86,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -1101,15 +1114,107 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         assertSame(metadata.mathContext(), metadata.mathContext());
     }
 
+    // HasParser........................................................................................................
+
+    @Test
+    public void testParserMissingProperties() {
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS, SpreadsheetParsePatterns.parseDateParsePatterns("yyyy/mm/dd"));
+        final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> metadata.parser());
+        assertEquals("Required properties \"date-time-parse-patterns\", \"number-parse-patterns\", \"time-parse-patterns\" missing.", thrown.getMessage());
+    }
+
+    @Test
+    public void testParser() {
+        final SpreadsheetMetadata metadata = this.metadataWithParser();
+        final Parser<SpreadsheetParserContext> parser = metadata.parser();
+        assertSame(metadata.parser(), parser, "parser");
+    }
+
+    @Test
+    public void testParserAndParseDate() {
+        this.metadataParserParseAndCheck(
+                "2000/12/31",
+                (t, c) -> t.cast(SpreadsheetDateParserToken.class).toLocalDate(c),
+                LocalDate.of(2000, 12, 31)
+        );
+    }
+
+    @Test
+    public void testParserAndParseDateTime() {
+        this.metadataParserParseAndCheck(
+                "2000/12/31 15:58",
+                (t, c) -> t.cast(SpreadsheetDateTimeParserToken.class).toLocalDateTime(c),
+                LocalDateTime.of(
+                        LocalDate.of(2000, 12, 31),
+                        LocalTime.of(15, 58)
+                )
+        );
+    }
+
+    @Test
+    public void testParserAndParseNumber() {
+        this.metadataParserParseAndCheck(
+                "1D5",
+                (t, c) -> t.cast(SpreadsheetNumberParserToken.class).toNumber(c),
+                EXPRESSION_NUMBER_KIND.create(1.5)
+        );
+    }
+
+    @Test
+    public void testParserAndParseTime() {
+        this.metadataParserParseAndCheck(
+                "15:58",
+                (t, c) -> t.cast(SpreadsheetTimeParserToken.class).toLocalTime(),
+                LocalTime.of(15, 58)
+        );
+    }
+
+    private SpreadsheetMetadata metadataWithParser() {
+        return SpreadsheetMetadata.EMPTY
+                .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS, SpreadsheetParsePatterns.parseDateParsePatterns("yyyy/mm/dd"))
+                .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetParsePatterns.parseDateTimeParsePatterns("yyyy/mm/dd hh:mm"))
+                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERNS, SpreadsheetParsePatterns.parseNumberParsePatterns("#.#"))
+                .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetParsePatterns.parseTimeParsePatterns("hh:mm"));
+    }
+
+    private <T> void metadataParserParseAndCheck(final String text,
+                                                 final BiFunction<ParserToken, ExpressionEvaluationContext, T> valueExtractor,
+                                                 final T expected) {
+        final TextCursor cursor = TextCursors.charSequence(text);
+
+        final ParserToken token = this.metadataWithParser().parser()
+                .parse(
+                        cursor,
+                        this.parserWithParserContext().parserContext()
+                ).orElseThrow(() -> new AssertionError("parser failed"));
+        assertEquals(true, cursor.isEmpty(), () -> cursor + " is not empty");
+
+        final ExpressionEvaluationContext expressionEvaluationContext = new FakeExpressionEvaluationContext() {
+            @Override
+            public ExpressionNumberKind expressionNumberKind() {
+                return EXPRESSION_NUMBER_KIND;
+            }
+        };
+
+        assertEquals(expected, valueExtractor.apply(token, expressionEvaluationContext), () -> text + "\n" + token);
+    }
+
     // HasParserContext.................................................................................................
 
     @Test
     public void testParserContext() {
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.EMPTY
+        final SpreadsheetMetadata metadata = this.parserWithParserContext();
+
+        assertSame(metadata.parserContext(), metadata.parserContext());
+    }
+
+    private SpreadsheetMetadata parserWithParserContext() {
+        return SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "C")
                 .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, 'D')
                 .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E")
-                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, ExpressionNumberKind.DOUBLE)
+                .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
                 .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, 'G')
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.NEGATIVE_SIGN, 'N')
@@ -1119,8 +1224,6 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.ROUNDING_MODE, RoundingMode.DOWN)
                 .set(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20)
                 .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, ';');
-
-        assertSame(metadata.parserContext(), metadata.parserContext());
     }
 
     // missingRequiredProperties.........................................................................................
