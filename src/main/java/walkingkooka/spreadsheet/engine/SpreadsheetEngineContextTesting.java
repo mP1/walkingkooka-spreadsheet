@@ -27,6 +27,7 @@ import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.cursor.parser.ParserTesting;
 import walkingkooka.tree.expression.Expression;
 
 import java.util.Optional;
@@ -36,6 +37,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineContext> extends ContextTesting<C>,
+        ParserTesting,
         HasLocaleTesting {
 
     // parseFormula......................................................................................................
@@ -55,7 +57,8 @@ public interface SpreadsheetEngineContextTesting<C extends SpreadsheetEngineCont
     default void parseFormulaAndCheck(final SpreadsheetEngineContext context,
                                       final String formula,
                                       final SpreadsheetParserToken expected) {
-        assertEquals(expected,
+        this.checkEquals(
+                expected,
                 context.parseFormula(formula),
                 () -> "parseFormula " + formula + " with context " + context);
     }

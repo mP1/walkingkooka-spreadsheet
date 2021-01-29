@@ -464,7 +464,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
                 EXPRESSION_NUMBER_KIND);
     }
 
-    private DateTimeContext dateTimeContext() {
+    @Override
+    public DateTimeContext dateTimeContext() {
         return new FakeDateTimeContext() {
             @Override
             public String toString() {
@@ -473,7 +474,8 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         };
     }
 
-    private DecimalNumberContext decimalNumberContext() {
+    @Override
+    public DecimalNumberContext decimalNumberContext() {
         return DecimalNumberContexts.basic("C",
                 'D',
                 "E",
