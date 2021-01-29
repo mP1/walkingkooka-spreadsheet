@@ -1081,6 +1081,26 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadReferencesAndCheck(labelReferencesStore, labelD4, a1.reference());
     }
 
+    // saveCell tests with non expression formula's.....................................................................
+
+    @Test
+    public void testSaveCellFormulaApostropheString() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1 = this.cell("a1", "'Hello");
+        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(a1, "Hello");
+        this.saveCellAndCheck(engine,
+                a1,
+                context,
+                a1Formatted);
+
+        this.loadCellStoreAndCheck(cellStore, a1Formatted);
+    }
+
     // deleteCell....................................................................................................
 
     @Test
