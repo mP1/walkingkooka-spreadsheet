@@ -440,14 +440,14 @@ public final class SpreadsheetParsers implements PublicStaticHelper {
                 NUMBER_IDENTIFIER,
                 SpreadsheetParsePatterns.parseNumberParsePatterns("#.#E+#;#.#;#").expresionParser() //
         );
-        predefined.put(DATE_DATETIME_TIME_IDENTIFIER, value.setToString(DATE_DATETIME_TIME_IDENTIFIER.toString()));
+        predefined.put(VALUE_IDENTIFIER, value.setToString(VALUE_IDENTIFIER.toString()));
 
         return GRAMMAR_PARSER_TOKEN
                 .combinator(predefined, SpreadsheetParsersEbnfParserCombinatorSyntaxTreeTransformer.INSTANCE);
     }
 
     private static final EbnfIdentifierName NUMBER_IDENTIFIER = EbnfIdentifierName.with("NUMBER");
-    private static final EbnfIdentifierName DATE_DATETIME_TIME_IDENTIFIER = EbnfIdentifierName.with("DATE_DATETIME_TIME");
+    private static final EbnfIdentifierName VALUE_IDENTIFIER = EbnfIdentifierName.with("VALUE");
 
     /*
      * Processes the grammar and sets all parsers that have static fields.

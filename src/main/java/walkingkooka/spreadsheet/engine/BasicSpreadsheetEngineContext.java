@@ -63,7 +63,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     /**
      * Creates a new {@link BasicSpreadsheetEngineContext}
      */
-    static BasicSpreadsheetEngineContext with(final Parser<SpreadsheetParserContext> numberParser,
+    static BasicSpreadsheetEngineContext with(final Parser<SpreadsheetParserContext> valueParser,
                                               final char valueSeparator,
                                               final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                               final SpreadsheetEngine engine,
@@ -74,7 +74,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                               final int width,
                                               final Function<BigDecimal, Fraction> fractioner,
                                               final SpreadsheetFormatter defaultSpreadsheetFormatter) {
-        Objects.requireNonNull(numberParser, "numberParser");
+        Objects.requireNonNull(valueParser, "valueParser");
         Objects.requireNonNull(functions, "functions");
         Objects.requireNonNull(engine, "engine");
         Objects.requireNonNull(labelStore, "labelStore");
@@ -88,7 +88,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
         Objects.requireNonNull(defaultSpreadsheetFormatter, "defaultSpreadsheetFormatter");
 
         return new BasicSpreadsheetEngineContext(
-                numberParser,
+                valueParser,
                 valueSeparator,
                 functions,
                 engine,
@@ -105,7 +105,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     /**
      * Private ctor use factory.
      */
-    private BasicSpreadsheetEngineContext(final Parser<SpreadsheetParserContext> numberParser,
+    private BasicSpreadsheetEngineContext(final Parser<SpreadsheetParserContext> valueParser,
                                           final char valueSeparator,
                                           final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                           final SpreadsheetEngine engine,
@@ -117,7 +117,7 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
                                           final Function<BigDecimal, Fraction> fractioner,
                                           final SpreadsheetFormatter defaultSpreadsheetFormatter) {
         super();
-        this.numberParser = numberParser;
+        this.valueParser = valueParser;
         this.parserContext = SpreadsheetParserContexts.basic(
                 converterContext,
                 converterContext,
@@ -143,13 +143,17 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
 
     @Override
     public SpreadsheetParserToken parseFormula(final String formula) {
-        return Cast.to(SpreadsheetParsers.expression()
+        return SpreadsheetParsers.valueOrExpression(this.valueParser)
                 .orFailIfCursorNotEmpty(ParserReporters.basic())
                 .parse(TextCursors.charSequence(formula), this.parserContext)
-                .get());
+                .get()
+                .cast(SpreadsheetParserToken.class);
     }
 
-    private final Parser<SpreadsheetParserContext> numberParser;
+    /**
+     * This parser is used to parse strings, date, date/time, time and numbers outside an expression but within a formula.
+     */
+    private final Parser<SpreadsheetParserContext> valueParser;
     private final SpreadsheetParserContext parserContext;
 
     @Override

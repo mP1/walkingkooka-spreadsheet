@@ -41,6 +41,7 @@ import walkingkooka.spreadsheet.parser.SpreadsheetParserToken;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStore;
 import walkingkooka.spreadsheet.reference.store.SpreadsheetLabelStores;
 import walkingkooka.text.cursor.parser.Parser;
+import walkingkooka.text.cursor.parser.Parsers;
 import walkingkooka.tree.expression.Expression;
 import walkingkooka.tree.expression.ExpressionNumber;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
@@ -88,7 +89,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testWithNullFunctionsFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
-                this.numberParser(),
+                this.valueParser(),
                 VALUE_SEPARATOR,
                 null,
                 this.engine(),
@@ -105,7 +106,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testWithNullEngineFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
-                this.numberParser(),
+                this.valueParser(),
                 VALUE_SEPARATOR,
                 this.functions(),
                 null,
@@ -122,7 +123,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testWithNullLabelStoreFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
-                this.numberParser(),
+                this.valueParser(),
                 VALUE_SEPARATOR,
                 this.functions(),
                 this.engine(),
@@ -139,7 +140,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testWithNullConverterContextFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
-                this.numberParser(),
+                this.valueParser(),
                 VALUE_SEPARATOR,
                 this.functions(),
                 this.engine(),
@@ -156,7 +157,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testWithNullNumberToColorFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
-                this.numberParser(),
+                this.valueParser(),
                 VALUE_SEPARATOR,
                 this.functions(),
                 this.engine(),
@@ -173,7 +174,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testWithNullNameToColorFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
-                this.numberParser(),
+                this.valueParser(),
                 VALUE_SEPARATOR,
                 this.functions(),
                 this.engine(),
@@ -190,7 +191,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testWithInvalidWidthFails() {
         assertThrows(IllegalArgumentException.class, () -> BasicSpreadsheetEngineContext.with(
-                this.numberParser(),
+                this.valueParser(),
                 VALUE_SEPARATOR,
                 this.functions(),
                 this.engine(),
@@ -207,7 +208,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testWithNullFractionFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
-                this.numberParser(),
+                this.valueParser(),
                 VALUE_SEPARATOR,
                 this.functions(),
                 this.engine(),
@@ -224,7 +225,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Test
     public void testWithNullDefaultSpreadsheetFormatterFails() {
         assertThrows(NullPointerException.class, () -> BasicSpreadsheetEngineContext.with(
-                this.numberParser(),
+                this.valueParser(),
                 VALUE_SEPARATOR,
                 this.functions(),
                 this.engine(),
@@ -250,25 +251,135 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     }
 
     @Test
-    public void testParseFormula() {
-        this.parseFormulaAndCheck("1+2",
-                SpreadsheetParserToken.addition(
+    public void testParseFormulaApostropheString() {
+        final String text = "abc123";
+        final String formula = "'" + text;
+        this.parseFormulaAndCheck(
+                formula,
+                SpreadsheetParserToken.text(
                         Lists.of(
-                                SpreadsheetParserToken.number(
+                                SpreadsheetParserToken.apostropheSymbol("\'", "\'"),
+                                SpreadsheetParserToken.textLiteral(text, text)
+                        ),
+                        formula
+                )
+        );
+    }
+
+    @Test
+    public void testParseFormulaDate() {
+        final String text = "31/12/2000";
+        this.parseFormulaAndCheck(
+                text,
+                SpreadsheetParserToken.date(
+                        Lists.of(
+                                SpreadsheetParserToken.dayNumber(31, "31"),
+                                SpreadsheetParserToken.textLiteral("/", "/"),
+                                SpreadsheetParserToken.monthNumber(12, "12"),
+                                SpreadsheetParserToken.textLiteral("/", "/"),
+                                SpreadsheetParserToken.year(2000, "2000")
+                        ),
+                        text
+                )
+        );
+    }
+
+    @Test
+    public void testParseFormulaDateTime() {
+        final String text = "31/12/2000 12:58";
+        this.parseFormulaAndCheck(
+                text,
+                SpreadsheetParserToken.dateTime(
+                        Lists.of(
+                                SpreadsheetParserToken.dayNumber(31, "31"),
+                                SpreadsheetParserToken.textLiteral("/", "/"),
+                                SpreadsheetParserToken.monthNumber(12, "12"),
+                                SpreadsheetParserToken.textLiteral("/", "/"),
+                                SpreadsheetParserToken.year(2000, "2000"),
+                                SpreadsheetParserToken.textLiteral(" ", " "),
+                                SpreadsheetParserToken.hour(12, "12"),
+                                SpreadsheetParserToken.textLiteral(":", ":"),
+                                SpreadsheetParserToken.minute(58, "58")
+                        ),
+                        text
+                )
+        );
+    }
+
+    @Test
+    public void testParseFormulaNumber() {
+        final String text = "123";
+        this.parseFormulaAndCheck(
+                text,
+                SpreadsheetParserToken.number(
+                        Lists.of(
+                                SpreadsheetParserToken.digits(text, text)
+                        ),
+                        text
+                )
+        );
+    }
+
+    @Test
+    public void testParseFormulaNumber2() {
+        final String text = "1" + DECIMAL + "5";
+        this.parseFormulaAndCheck(
+                text,
+                SpreadsheetParserToken.number(
+                        Lists.of(
+                                SpreadsheetParserToken.digits("1", "1"),
+                                SpreadsheetParserToken.decimalSeparatorSymbol("" + DECIMAL, "" + DECIMAL),
+                                SpreadsheetParserToken.digits("5", "5")
+                        ),
+                        text
+                )
+        );
+    }
+
+    @Test
+    public void testParseFormulaTime() {
+        final String text = "12:58";
+        this.parseFormulaAndCheck(
+                text,
+                SpreadsheetParserToken.time(
+                        Lists.of(
+                                SpreadsheetParserToken.hour(12, "12"),
+                                SpreadsheetParserToken.textLiteral(":", ":"),
+                                SpreadsheetParserToken.minute(58, "58")
+                        ),
+                        text
+                )
+        );
+    }
+
+    @Test
+    public void testParseFormulaExpression() {
+        final String text = "=1+2";
+        this.parseFormulaAndCheck(
+                text,
+                SpreadsheetParserToken.expression(
+                        Lists.of(
+                                SpreadsheetParserToken.equalsSymbol("=", "="),
+                                SpreadsheetParserToken.addition(
                                         Lists.of(
-                                                SpreadsheetParserToken.digits("1", "1")
+                                                SpreadsheetParserToken.number(
+                                                        Lists.of(
+                                                                SpreadsheetParserToken.digits("1", "1")
+                                                        ),
+                                                        "1"
+                                                ),
+                                                SpreadsheetParserToken.plusSymbol("+", "+"),
+                                                SpreadsheetParserToken.number(
+                                                        Lists.of(
+                                                                SpreadsheetParserToken.digits("2", "2")
+                                                        ),
+                                                        "2"
+                                                )
                                         ),
-                                        "1"
-                                ),
-                                SpreadsheetParserToken.plusSymbol("+", "+"),
-                                SpreadsheetParserToken.number(
-                                        Lists.of(
-                                                SpreadsheetParserToken.digits("2", "2")
-                                        ),
-                                        "2"
+                                        "1+2"
                                 )
                         ),
-                        "1+2"
+                        text
                 )
         );
     }
@@ -293,7 +404,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         this.parsePatternAndCheck("####.#",
                 BigDecimal.valueOf(-123.456),
                 this.spreadsheetFormatContext(),
-                Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, "N123D5")));
+                Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, MINUS + "123" + DECIMAL + "5")));
     }
 
     private SpreadsheetFormatterContext spreadsheetFormatContext() {
@@ -360,10 +471,13 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testFormat() {
-        // DecimalNumberContext returns 'D' for the decimal point character and 'M' for minus sign
-        this.formatAndCheck(BigDecimal.valueOf(-123.45),
+        this.formatAndCheck(
+                BigDecimal.valueOf(-123.45),
                 this.createContext().parsePattern("#.#\"Abc123\""),
-                Optional.of(SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, "N123D5Abc123")));
+                Optional.of(
+                        SpreadsheetText.with(SpreadsheetText.WITHOUT_COLOR, MINUS + "123" + DECIMAL + "5Abc123")
+                )
+        );
     }
 
     // hasLocale........................................................................................................
@@ -377,8 +491,10 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createContext(),
-                "converterContext=DateTimeContext123 \"C\" 'D' \"E\" 'G' 'N' 'P' 'L' fr_CA precision=7 roundingMode=HALF_EVEN DOUBLE fractioner=Fractioner123 defaultSpreadsheetFormatter=SpreadsheetFormatter123");
+        this.toStringAndCheck(
+                this.createContext(),
+                "converterContext=DateTimeContext123 \"C\" 'd' \"e\" 'g' 'n' 't' 'p' fr_CA precision=7 roundingMode=HALF_EVEN DOUBLE fractioner=Fractioner123 defaultSpreadsheetFormatter=SpreadsheetFormatter123"
+        );
     }
 
     @Override
@@ -388,7 +504,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
 
     private BasicSpreadsheetEngineContext createContext(final SpreadsheetFormatter defaultSpreadsheetFormatter) {
         return BasicSpreadsheetEngineContext.with(
-                this.numberParser(),
+                this.valueParser(),
                 VALUE_SEPARATOR,
                 this.functions(),
                 this.engine(),
@@ -402,8 +518,15 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         );
     }
 
-    private Parser<SpreadsheetParserContext> numberParser() {
-        return SpreadsheetParsePatterns.parseNumberParsePatterns("#;#.#").parser();
+    private Parser<SpreadsheetParserContext> valueParser() {
+        return Parsers.alternatives(
+                Lists.of(
+                        SpreadsheetParsePatterns.parseDateTimeParsePatterns("d/mm/yyyy hh:mm").parser(),
+                        SpreadsheetParsePatterns.parseDateParsePatterns("d/mm/yyyy").parser(),
+                        SpreadsheetParsePatterns.parseTimeParsePatterns("hh:mm").parser(),
+                        SpreadsheetParsePatterns.parseNumberParsePatterns("#.#;#").parser()
+                )
+        );
     }
 
     private ExpressionNumber number(final Number value) {
@@ -467,6 +590,7 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
     @Override
     public DateTimeContext dateTimeContext() {
         return new FakeDateTimeContext() {
+
             @Override
             public String toString() {
                 return "DateTimeContext123";
@@ -474,17 +598,27 @@ public final class BasicSpreadsheetEngineContextTest implements SpreadsheetEngin
         };
     }
 
+    final static String CURRENCY = "C";
+    final static char DECIMAL = 'd';
+    final static String EXPONENT = "e";
+    final static char GROUPING = 'g';
+    final static char MINUS = 'n';
+    final static char PERCENT = 't';
+    final static char PLUS = 'p';
+
     @Override
     public DecimalNumberContext decimalNumberContext() {
-        return DecimalNumberContexts.basic("C",
-                'D',
-                "E",
-                'G',
-                'N',
-                'P',
-                'L',
+        return DecimalNumberContexts.basic(
+                CURRENCY,
+                DECIMAL,
+                EXPONENT,
+                GROUPING,
+                MINUS,
+                PERCENT,
+                PLUS,
                 Locale.CANADA_FRENCH,
-                MathContext.DECIMAL32);
+                MathContext.DECIMAL32
+        );
     }
 
     private SpreadsheetFormatter defaultSpreadsheetFormatter() {

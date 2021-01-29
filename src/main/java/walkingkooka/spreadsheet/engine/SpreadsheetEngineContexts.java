@@ -39,7 +39,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
     /**
      * {@see BasicSpreadsheetEngineContext}
      */
-    public static SpreadsheetEngineContext basic(final Parser<SpreadsheetParserContext> numberParser,
+    public static SpreadsheetEngineContext basic(final Parser<SpreadsheetParserContext> valueParser,
                                                  final char valueSeparator,
                                                  final Function<FunctionExpressionName, ExpressionFunction<?, ExpressionFunctionContext>> functions,
                                                  final SpreadsheetEngine engine,
@@ -51,7 +51,7 @@ public final class SpreadsheetEngineContexts implements PublicStaticHelper {
                                                  final Function<BigDecimal, Fraction> fractioner,
                                                  final SpreadsheetFormatter defaultSpreadsheetFormatter) {
         return BasicSpreadsheetEngineContext.with(
-                numberParser,
+                valueParser,
                 valueSeparator,
                 functions,
                 engine,
