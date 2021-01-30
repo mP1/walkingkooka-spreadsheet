@@ -66,7 +66,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatterns extends 
 
     private static String simpleDateFormatParse(final int style,
                                                 final Locale locale) {
-        return simpleDateFormatPattern(DateFormat.getDateInstance(style, locale));
+        return toPattern(DateFormat.getDateInstance(style, locale));
     }
 
     @Override

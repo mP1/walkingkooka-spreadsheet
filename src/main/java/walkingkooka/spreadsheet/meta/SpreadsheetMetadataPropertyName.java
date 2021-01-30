@@ -383,13 +383,13 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     final Optional<T> extractLocaleSimpleDateFormat(final Locale locale,
                                                     final Function<Locale, DateFormat> localeToDateFormat,
                                                     final Function<String, T> patternParser) {
-        return Optional.of(patternParser.apply(simpleDateFormatPattern(localeToDateFormat.apply(locale))));
+        return Optional.of(patternParser.apply(toPattern(localeToDateFormat.apply(locale))));
     }
 
     /**
      * Casts and grabs the {@link SimpleDateFormat#toPattern()} and then converts the pattern using {@link SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor}.
      */
-    final static String simpleDateFormatPattern(final DateFormat dateFormat) {
+    final static String toPattern(final DateFormat dateFormat) {
         final SimpleDateFormat simpleDateFormat = (SimpleDateFormat) dateFormat;
         return SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor.pattern(simpleDateFormat.toPattern());
     }
