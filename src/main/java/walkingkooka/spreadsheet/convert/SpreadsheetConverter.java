@@ -155,7 +155,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
         final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> time = SpreadsheetConverterMapping.with(
                 toBoolean(LocalTime.class, timeFalse),
                 null, // time -> date invalid
-                Converters.localDateTimeLocalTime(),
+                Converters.localTimeLocalDateTime(),
                 ExpressionNumber.toConverter(Converters.localTimeNumber()),
                 timeFormatter.converter(),
                 Converters.simple()
