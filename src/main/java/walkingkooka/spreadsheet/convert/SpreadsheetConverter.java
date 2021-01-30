@@ -117,7 +117,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
         // LocalDate ->
         final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> date = SpreadsheetConverterMapping.with(
                 toBoolean(LocalDate.class, dateFalse),
-                null, // date -> date
+                Converters.simple(), // date -> date
                 Converters.localDateLocalDateTime(),
                 ExpressionNumber.toConverter(Converters.localDateNumber(dateOffset)),
                 dateFormatter.converter(),
@@ -127,7 +127,7 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
         final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> dateTime = SpreadsheetConverterMapping.with(
                 toBoolean(LocalDateTime.class, dateTimeFalse),
                 Converters.localDateTimeLocalDate(),
-                null, // dateTime -> dateTime
+                Converters.simple(), // dateTime -> dateTime
                 ExpressionNumber.toConverter(Converters.localDateTimeNumber(dateOffset)),
                 dateTimeFormatter.converter(),
                 Converters.localDateTimeLocalTime());
@@ -152,12 +152,14 @@ final class SpreadsheetConverter implements Converter<ExpressionNumberConverterC
         );
 
         // LocalTime ->
-        final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> time = SpreadsheetConverterMapping.with(toBoolean(LocalTime.class, timeFalse),
+        final SpreadsheetConverterMapping<Converter<ExpressionNumberConverterContext>> time = SpreadsheetConverterMapping.with(
+                toBoolean(LocalTime.class, timeFalse),
                 null, // time -> date invalid
                 Converters.localDateTimeLocalTime(),
-                ExpressionNumber.fromConverter(Converters.localTimeNumber()),
+                ExpressionNumber.toConverter(Converters.localTimeNumber()),
                 timeFormatter.converter(),
-                null); // time -> time
+                Converters.simple()
+        ); // time -> time
 
         this.mapping = SpreadsheetConverterMapping.with(booleanConverter,
                 date,
