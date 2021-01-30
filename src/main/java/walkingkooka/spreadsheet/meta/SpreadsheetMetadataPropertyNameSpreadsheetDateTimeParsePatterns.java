@@ -66,7 +66,7 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatterns exte
         for (final int dateStyle : styles) {
             for (final int timeStyle : styles) {
                 pattern.append(separator);
-                pattern.append(simpleDateFormatPattern(DateFormat.getDateTimeInstance(dateStyle, timeStyle, locale)));
+                pattern.append(toPattern(DateFormat.getDateTimeInstance(dateStyle, timeStyle, locale)));
                 separator = ";";
             }
     }
