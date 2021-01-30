@@ -84,7 +84,10 @@ public abstract class SpreadsheetParsePatterns<T extends SpreadsheetFormatParser
     // HasParser........................................................................................................
 
     /**
-     * Returns a {@link Parser} which will try all the patterns.
+     * Returns a {@link Parser} which will try all the patterns.<br>
+     * {@link java.time.LocalDate}, {@link java.time.LocalDateTime}, {@link java.time.LocalTime} will all fail to parse
+     * the if the value has extra trailing text. If this parse is for {@link walkingkooka.tree.expression.ExpressionNumber}
+     * and will be used to parse number literals the {@link Parser#andEmptyTextCursor()} must be called afterwards.
      */
     public final Parser<SpreadsheetParserContext> parser() {
         if (null == this.parser) {
