@@ -31,6 +31,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.PublicStaticHelperTesting;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.function.SpreadsheetFunctionName;
 import walkingkooka.spreadsheet.reference.SpreadsheetColumnOrRowReference;
 import walkingkooka.spreadsheet.reference.SpreadsheetExpressionReference;
@@ -145,6 +146,14 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     // date values.......................................................................................................
 
     @Test
+    public void testParseDateWithExtraTextFails() {
+        this.parseFailAndCheck(
+                SpreadsheetParsers.valueOrExpression(SpreadsheetPattern.parseDateParsePatterns("yyyy/mm/dd").parser()),
+                "2000/12/31 Extra"
+        );
+    }
+
+    @Test
     public void testDateDayMonthYear2000() {
         this.parseDateAndCheck(
                 "31/12/2000",
@@ -197,6 +206,14 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     // date/time values.................................................................................................
 
     @Test
+    public void testParseDateTimeWithExtraTextFails() {
+        this.parseFailAndCheck(
+                SpreadsheetParsers.valueOrExpression(SpreadsheetPattern.parseDateTimeParsePatterns("yyyy/mm/dd hh:m").parser()),
+                "2000/12/31 12:58 Extra"
+        );
+    }
+
+    @Test
     public void testDateTimeDayMonthYearHourMinutes() {
         this.parseDateTimeAndCheck(
                 "31/12/2000 11:58:59.123 pm",
@@ -231,6 +248,14 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
     }
 
     // time values.......................................................................................................
+
+    @Test
+    public void testParseTimeWithExtraTextFails() {
+        this.parseFailAndCheck(
+                SpreadsheetParsers.valueOrExpression(SpreadsheetPattern.parseTimeParsePatterns("hh:mm").parser()),
+                "12:58 Extra"
+        );
+    }
 
     @Test
     public void testTimeHourMinutes() {
@@ -385,6 +410,16 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
                         ),
                         text),
                 text);
+    }
+
+    // NUMBER...........................................................................................................
+
+    @Test
+    public void testParseNumberWithExtraTextFails() {
+        this.parseFailAndCheck(
+                SpreadsheetParsers.valueOrExpression(SpreadsheetPattern.parseNumberParsePatterns("#").parser().andEmptyTextCursor()),
+                "12 Extra"
+        );
     }
 
     @Test

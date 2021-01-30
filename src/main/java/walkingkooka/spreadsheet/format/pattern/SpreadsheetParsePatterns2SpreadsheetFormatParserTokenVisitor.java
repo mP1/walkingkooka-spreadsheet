@@ -80,6 +80,7 @@ final class SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor extends
 
         final Parser<SpreadsheetParserContext> parser = visitor.sequenceParserBuilder.build();
         return parser.transform(SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor::flat)
+                .andEmptyTextCursor()
                 .setToString(parser.toString());
     }
 

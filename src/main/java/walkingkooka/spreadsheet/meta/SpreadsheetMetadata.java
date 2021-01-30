@@ -538,10 +538,10 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
         return SpreadsheetParsers.valueOrExpression(
                 Parsers.alternatives(
                         Lists.of(
-                                date.parser().andEmptyTextCursor(),
-                                dateTime.parser().andEmptyTextCursor(),
+                                date.parser(),
+                                dateTime.parser(),
                                 number.parser().andEmptyTextCursor(),
-                                time.parser().andEmptyTextCursor()
+                                time.parser()
                         )
                 )
         );
