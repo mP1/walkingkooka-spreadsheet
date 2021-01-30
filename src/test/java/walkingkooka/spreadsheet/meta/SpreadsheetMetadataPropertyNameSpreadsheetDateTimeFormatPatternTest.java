@@ -27,6 +27,7 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateParsePatterns;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeFormatPattern;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 import walkingkooka.tree.expression.ExpressionNumberConverterContexts;
@@ -42,6 +43,14 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeFormatPatte
 
     @Test
     public void testExtractLocaleValue() {
+        this.extractLocaleValueAndCheck(
+                Locale.ENGLISH,
+                SpreadsheetDateParsePatterns.parseDateTimeFormatPattern("dddd, mmmm d, yyyy \\a\\t h:mm:ss AM/PM")
+        );
+    }
+
+    @Test
+    public void testExtractLocaleValueAndFormat() {
         final Locale locale = Locale.ENGLISH;
         final SpreadsheetDateTimeFormatPattern pattern = SpreadsheetMetadataPropertyNameSpreadsheetDateTimeFormatPattern.instance()
                 .extractLocaleValue(locale)

@@ -222,8 +222,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "¤")
                         .set(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetPattern.parseDateFormatPattern("dddd, mmmm d, yyyy"))
                         .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS, SpreadsheetPattern.parseDateParsePatterns("dddd, mmmm d, yyyy;mmmm d, yyyy;mmm d, yyyy;m/d/yy"))
-                        .set(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetPattern.parseDateTimeFormatPattern("dddd, mmmm d, yyyy \\a\\t H:mm:ss AM/PM"))
-                        .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetPattern.parseDateTimeParsePatterns("dddd, mmmm d, yyyy \\a\\t H:mm:ss AM/PM;dddd, mmmm d, yyyy \\a\\t H:mm:ss AM/PM;dddd, mmmm d, yyyy, H:mm:ss AM/PM;dddd, mmmm d, yyyy, H:mm AM/PM;mmmm d, yyyy \\a\\t H:mm:ss AM/PM;mmmm d, yyyy \\a\\t H:mm:ss AM/PM;mmmm d, yyyy, H:mm:ss AM/PM;mmmm d, yyyy, H:mm AM/PM;mmm d, yyyy, H:mm:ss AM/PM;mmm d, yyyy, H:mm:ss AM/PM;mmm d, yyyy, H:mm:ss AM/PM;mmm d, yyyy, H:mm AM/PM;m/d/yy, H:mm:ss AM/PM;m/d/yy, H:mm:ss AM/PM;m/d/yy, H:mm:ss AM/PM;m/d/yy, H:mm AM/PM"))
+                        .set(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetPattern.parseDateTimeFormatPattern("dddd, mmmm d, yyyy \\a\\t h:mm:ss AM/PM"))
+                        .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetPattern.parseDateTimeParsePatterns("dddd, mmmm d, yyyy \\a\\t h:mm:ss AM/PM;dddd, mmmm d, yyyy \\a\\t h:mm:ss AM/PM;dddd, mmmm d, yyyy, h:mm:ss AM/PM;dddd, mmmm d, yyyy, h:mm AM/PM;mmmm d, yyyy \\a\\t h:mm:ss AM/PM;mmmm d, yyyy \\a\\t h:mm:ss AM/PM;mmmm d, yyyy, h:mm:ss AM/PM;mmmm d, yyyy, h:mm AM/PM;mmm d, yyyy, h:mm:ss AM/PM;mmm d, yyyy, h:mm:ss AM/PM;mmm d, yyyy, h:mm:ss AM/PM;mmm d, yyyy, h:mm AM/PM;m/d/yy, h:mm:ss AM/PM;m/d/yy, h:mm:ss AM/PM;m/d/yy, h:mm:ss AM/PM;m/d/yy, h:mm AM/PM"))
                         .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, '.')
                         .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E")
                         .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, ',')
@@ -233,8 +233,8 @@ public final class SpreadsheetMetadataTest implements ClassTesting2<SpreadsheetM
                         .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERNS, SpreadsheetPattern.parseNumberParsePatterns("#,##0.###;#,##0"))
                         .set(SpreadsheetMetadataPropertyName.PERCENTAGE_SYMBOL, '%')
                         .set(SpreadsheetMetadataPropertyName.POSITIVE_SIGN, '+')
-                        .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetPattern.parseTimeFormatPattern("H:mm:ss AM/PM"))
-                        .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetPattern.parseTimeParsePatterns("H:mm:ss AM/PM;H:mm:ss AM/PM;H:mm:ss AM/PM;H:mm AM/PM"))
+                        .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetPattern.parseTimeFormatPattern("h:mm:ss AM/PM"))
+                        .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetPattern.parseTimeParsePatterns("h:mm:ss AM/PM;h:mm:ss AM/PM;h:mm:ss AM/PM;h:mm AM/PM"))
                         .set(SpreadsheetMetadataPropertyName.VALUE_SEPARATOR, ','),
                 SpreadsheetMetadata.EMPTY.set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH).loadFromLocale());
     }
