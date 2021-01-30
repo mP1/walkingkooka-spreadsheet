@@ -522,7 +522,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
 
     @Test
     public void testTimeDateTime() {
-        this.convertFails(TIME, LocalDateTime.class);
+        this.convertAndCheck2(TIME, LocalDateTime.of(DATE_FALSE, TIME));
     }
 
     @Test
