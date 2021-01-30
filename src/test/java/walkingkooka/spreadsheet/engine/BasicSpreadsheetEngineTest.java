@@ -24,6 +24,8 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.map.Maps;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.color.Color;
+import walkingkooka.convert.Converter;
+import walkingkooka.convert.Converters;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.spreadsheet.SpreadsheetCell;
 import walkingkooka.spreadsheet.SpreadsheetCellBox;
@@ -34,12 +36,14 @@ import walkingkooka.spreadsheet.SpreadsheetError;
 import walkingkooka.spreadsheet.SpreadsheetFormula;
 import walkingkooka.spreadsheet.SpreadsheetId;
 import walkingkooka.spreadsheet.conditionalformat.SpreadsheetConditionalFormattingRule;
+import walkingkooka.spreadsheet.format.FakeSpreadsheetFormatterContext;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatException;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatter;
 import walkingkooka.spreadsheet.format.SpreadsheetFormatterContext;
-import walkingkooka.spreadsheet.format.SpreadsheetFormatterContexts;
+import walkingkooka.spreadsheet.format.SpreadsheetFormatters;
 import walkingkooka.spreadsheet.format.SpreadsheetText;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadata;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyName;
 import walkingkooka.spreadsheet.meta.SpreadsheetMetadataPropertyValueException;
@@ -87,6 +91,7 @@ import walkingkooka.tree.text.TextStylePropertyName;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -110,12 +115,56 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private final static Optional<Color> COLOR = Optional.of(Color.BLACK);
 
-    private final static String PATTERN_DEFAULT = "$text+" + FORMATTED_DEFAULT_SUFFIX;
     private final static String PATTERN = "$text+" + FORMATTED_PATTERN_SUFFIX;
     private final static String PATTERN_COLOR = "$text+" + FORMATTED_PATTERN_SUFFIX + "+" + COLOR.get();
     private final static String PATTERN_FORMAT_FAIL = "<none>";
 
-    private final static SpreadsheetFormatterContext SPREADSHEET_TEXT_FORMAT_CONTEXT = SpreadsheetFormatterContexts.fake();
+    private final static String DATE_PATTERN = "yyyy/mm/dd";
+    private final static String TIME_PATTERN = "hh:mm";
+    private final static String DATETIME_PATTERN = DATE_PATTERN + " " + TIME_PATTERN;
+    private final static String NUMBER_PATTERN = "#";
+    private final static String TEXT_PATTERN = "@";
+
+    private final static SpreadsheetFormatterContext SPREADSHEET_TEXT_FORMAT_CONTEXT = new FakeSpreadsheetFormatterContext() {
+        @Override
+        public boolean canConvert(final Object value,
+                                  final Class<?> type) {
+            return this.converter.canConvert(value, type, this);
+        }
+
+        @Override
+        public <T> Either<T, String> convert(final Object value,
+                                             final Class<T> target) {
+            return this.converter.convert(value, target, this);
+        }
+
+        private final Converter converter = ExpressionNumber.fromConverter(
+            Converters.collection(
+                    Lists.of(
+                            Converters.simple(),
+                            Converters.localDateLocalDateTime(),
+                            Converters.localTimeLocalDateTime(),
+                            Converters.numberNumber(),
+                            Converters.objectString()
+                    )
+            )
+        );
+
+        @Override
+        public char decimalSeparator() {
+            return '.';
+        }
+
+        @Override
+        public char negativeSign() {
+            return '-';
+        }
+
+        @Override
+        public char positiveSign() {
+            return '+';
+        }
+    };
 
     private final static MathContext MATH_CONTEXT = MathContext.DECIMAL32;
 
@@ -1093,6 +1142,24 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCell a1 = this.cell("a1", "'Hello");
         final SpreadsheetCell a1Formatted = this.formattedCellWithValue(a1, "Hello");
+        this.saveCellAndCheck(engine,
+                a1,
+                context,
+                a1Formatted);
+
+        this.loadCellStoreAndCheck(cellStore, a1Formatted);
+    }
+
+    @Test
+    public void testSaveCellFormulaDate() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final SpreadsheetLabelStore labelStore = this.labelStore();
+
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCell a1 = this.cell("a1", "1999/12/31");
+        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(a1, LocalDate.of(1999, 12, 31));
         this.saveCellAndCheck(engine,
                 a1,
                 context,
@@ -5136,9 +5203,16 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     private Object counter;
 
     private SpreadsheetFormatter defaultSpreadsheetFormatter() {
-        return this.formatter(PATTERN_DEFAULT,
-                SpreadsheetText.WITHOUT_COLOR,
-                FORMATTED_DEFAULT_SUFFIX);
+        final String suffix = " \"" + FORMATTED_DEFAULT_SUFFIX + "\"";
+        return SpreadsheetFormatters.chain(
+                Lists.of(
+                        SpreadsheetPattern.parseDateFormatPattern(DATE_PATTERN + suffix).formatter(),
+                        SpreadsheetPattern.parseDateTimeFormatPattern(DATETIME_PATTERN + suffix).formatter(),
+                        SpreadsheetPattern.parseNumberFormatPattern(NUMBER_PATTERN + suffix).formatter(),
+                        SpreadsheetPattern.parseTimeFormatPattern(TIME_PATTERN + suffix).formatter(),
+                        SpreadsheetPattern.parseTextFormatPattern(TEXT_PATTERN + suffix).formatter()
+                )
+        );
     }
 
     private SpreadsheetFormatter formatter(final String pattern,
@@ -5321,13 +5395,19 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     private SpreadsheetMetadata metadata() {
+        final String suffix = " " + '"' + FORMATTED_PATTERN_SUFFIX + '"';
+
         return SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
                 .loadFromLocale()
-                .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS, SpreadsheetParsePatterns.parseDateParsePatterns("yyyy/mm/dd"))
-                .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetParsePatterns.parseDateTimeParsePatterns("yyyy/mm/dd hh:mm"))
-                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERNS, SpreadsheetParsePatterns.parseNumberParsePatterns("#.#"))
-                .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetParsePatterns.parseTimeParsePatterns("hh:mm"));
+                .set(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetParsePatterns.parseDateFormatPattern(DATE_PATTERN + suffix))
+                .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS, SpreadsheetParsePatterns.parseDateParsePatterns(DATE_PATTERN))
+                .set(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetParsePatterns.parseDateTimeFormatPattern(DATETIME_PATTERN + suffix))
+                .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetParsePatterns.parseDateTimeParsePatterns(DATETIME_PATTERN))
+                .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetParsePatterns.parseNumberFormatPattern(NUMBER_PATTERN + suffix))
+                .set(SpreadsheetMetadataPropertyName.NUMBER_PARSE_PATTERNS, SpreadsheetParsePatterns.parseNumberParsePatterns(NUMBER_PATTERN))
+                .set(SpreadsheetMetadataPropertyName.TIME_FORMAT_PATTERN, SpreadsheetParsePatterns.parseTimeFormatPattern(TIME_PATTERN + suffix))
+                .set(SpreadsheetMetadataPropertyName.TIME_PARSE_PATTERNS, SpreadsheetParsePatterns.parseTimeParsePatterns(TIME_PATTERN));
     }
 
     private SpreadsheetCellStore cellStore() {
