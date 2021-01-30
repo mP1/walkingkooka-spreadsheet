@@ -1143,6 +1143,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testSaveCellFormulaNumber() {
+        this.saveCellAndLoadAndFormattedCheck(
+                "123",
+                this.expressionNumberKind().create(123)
+        );
+    }
+
+    @Test
     public void testSaveCellFormulaDate() {
         this.saveCellAndLoadAndFormattedCheck(
                 "1999/12/31",
