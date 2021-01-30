@@ -92,6 +92,8 @@ import walkingkooka.tree.text.TextStylePropertyName;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -1130,36 +1132,47 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         this.loadReferencesAndCheck(labelReferencesStore, labelD4, a1.reference());
     }
 
-    // saveCell tests with non expression formula's.....................................................................
+    // saveCell tests with non expression formula's only value literals.................................................
 
     @Test
     public void testSaveCellFormulaApostropheString() {
-        final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
-
-        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
-        final SpreadsheetEngineContext context = this.createContext(engine);
-
-        final SpreadsheetCell a1 = this.cell("a1", "'Hello");
-        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(a1, "Hello");
-        this.saveCellAndCheck(engine,
-                a1,
-                context,
-                a1Formatted);
-
-        this.loadCellStoreAndCheck(cellStore, a1Formatted);
+        this.saveCellAndLoadAndFormattedCheck(
+                "'Hello",
+                "Hello"
+        );
     }
 
     @Test
     public void testSaveCellFormulaDate() {
+        this.saveCellAndLoadAndFormattedCheck(
+                "1999/12/31",
+                LocalDate.of(1999, 12, 31)
+        );
+    }
+
+    @Test
+    public void testSaveCellFormulaDateTime() {
+        this.saveCellAndLoadAndFormattedCheck(
+                "1999/12/31 12:34",
+                LocalDateTime.of(
+                        LocalDate.of(1999, 12, 31),
+                        LocalTime.of(12, 34)
+                )
+        );
+    }
+
+    private void saveCellAndLoadAndFormattedCheck(final String formula,
+                                                  final Object value) {
         final SpreadsheetCellStore cellStore = this.cellStore();
-        final SpreadsheetLabelStore labelStore = this.labelStore();
 
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
         final SpreadsheetEngineContext context = this.createContext(engine);
 
-        final SpreadsheetCell a1 = this.cell("a1", "1999/12/31");
-        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(a1, LocalDate.of(1999, 12, 31));
+        final SpreadsheetCell a1 = this.cell("a1", formula);
+        final SpreadsheetCell a1Formatted = this.formattedCellWithValue(
+                a1,
+                value
+        );
         this.saveCellAndCheck(engine,
                 a1,
                 context,
