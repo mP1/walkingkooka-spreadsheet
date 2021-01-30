@@ -1161,6 +1161,14 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         );
     }
 
+    @Test
+    public void testSaveCellFormulaTime() {
+        this.saveCellAndLoadAndFormattedCheck(
+                "12:34",
+                LocalTime.of(12, 34)
+        );
+    }
+
     private void saveCellAndLoadAndFormattedCheck(final String formula,
                                                   final Object value) {
         final SpreadsheetCellStore cellStore = this.cellStore();
