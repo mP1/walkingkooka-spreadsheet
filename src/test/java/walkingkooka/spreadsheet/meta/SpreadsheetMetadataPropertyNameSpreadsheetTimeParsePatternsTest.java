@@ -27,7 +27,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatternsTe
     @Test
     public void testExtractLocaleValue() {
         this.extractLocaleValueAndCheck(Locale.ENGLISH,
-                SpreadsheetTimeParsePatterns.parseTimeParsePatterns("H:mm:ss AM/PM;H:mm:ss AM/PM;H:mm:ss AM/PM;H:mm AM/PM"));
+                SpreadsheetTimeParsePatterns.parseTimeParsePatterns("h:mm:ss AM/PM;h:mm:ss AM/PM;h:mm:ss AM/PM;h:mm AM/PM"));
     }
 
     @Test

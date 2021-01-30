@@ -17,12 +17,15 @@
 
 package walkingkooka.spreadsheet.meta;
 
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatDateTimeParserToken;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.pattern.SpreadsheetDateTimeParsePatterns;
-import walkingkooka.spreadsheet.format.pattern.SpreadsheetParsePatterns;
+import walkingkooka.spreadsheet.format.pattern.SpreadsheetPattern;
 
 import java.text.DateFormat;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatterns extends SpreadsheetMetadataPropertyName<SpreadsheetDateTimeParsePatterns> {
 
@@ -69,12 +72,31 @@ final class SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatterns exte
                 pattern.append(toPattern(DateFormat.getDateTimeInstance(dateStyle, timeStyle, locale)));
                 separator = ";";
             }
+        }
+
+        return Optional.of(SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatterns.parseDateTimeParsePatterns(pattern.toString()));
     }
 
-        return Optional.of(SpreadsheetParsePatterns.parseDateTimeParsePatterns(pattern.toString()));
+    private final static int[] styles = new int[]{DateFormat.FULL, DateFormat.LONG, DateFormat.MEDIUM, DateFormat.SHORT};
+
+    private static SpreadsheetDateTimeParsePatterns parseDateTimeParsePatterns(final String text) {
+        final SpreadsheetDateTimeParsePatterns pattern = SpreadsheetPattern.parseDateTimeParsePatterns(text);
+
+        return SpreadsheetPattern.dateTimeParsePatterns(
+                pattern
+                        .value()
+                        .stream()
+                        .map(SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatterns::parseDateTimeParsePatterns0)
+                        .collect(Collectors.toList())
+        );
     }
 
-    private final static int[] styles = new int[]{ DateFormat.FULL, DateFormat.LONG, DateFormat.MEDIUM, DateFormat.SHORT};
+    private static SpreadsheetFormatDateTimeParserToken parseDateTimeParsePatterns0(final SpreadsheetFormatDateTimeParserToken token) {
+        return SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatternsSpreadsheetFormatParserTokenVisitor.fix(
+                token,
+                SpreadsheetFormatParserToken::dateTime
+        );
+    }
 
     @Override
     Class<SpreadsheetDateTimeParsePatterns> type() {
