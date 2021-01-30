@@ -22,7 +22,6 @@ import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken
 import walkingkooka.tree.expression.ExpressionNumber;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,23 +61,10 @@ final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsheet
         this.thousandsSeparator = visitor.thousandsSeparator;
     }
 
-    /**
-     * Only accepts any of the JDK {@link Number} types.
-     */
     @Override
     public boolean canFormat(final Object value,
                              final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
-        return (value instanceof BigDecimal || // TODO https://github.com/mP1/walkingkooka-tree/issues/175
-                value instanceof BigInteger ||
-                value instanceof Byte ||
-                value instanceof Double ||
-                value instanceof Float ||
-                value instanceof Integer ||
-                value instanceof Long ||
-                value instanceof Short ||
-                value instanceof ExpressionNumber) &&
-                context.canConvert(value, BigDecimal.class);
-
+        return ExpressionNumber.is(value) && context.canConvert(value, BigDecimal.class);
     }
 
     @Override
