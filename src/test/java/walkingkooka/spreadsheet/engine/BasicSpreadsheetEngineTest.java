@@ -5254,12 +5254,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 SpreadsheetParsers.valueOrExpression(BasicSpreadsheetEngineTest.this.metadata().parser())
                         .parse(TextCursors.charSequence(text),
                                 SpreadsheetParserContexts.basic(
-                                    this.dateTimeContext(),
+                                        this.dateTimeContext(),
                                         this.decimalNumberContext(),
                                         expressionNumberKind,
                                         VALUE_SEPARATOR
                                 )
-                        ).orElseThrow(() -> new AssertionError("Failed to arseFormula " + CharSequences.quote(text)))
+                        ).orElseThrow(() -> new AssertionError("Failed to parseFormula " + CharSequences.quote(text)))
                         .cast(SpreadsheetParserToken.class);
         return null == token ?
                 formula.setToken(BasicSpreadsheetEngine.EMPTY_TOKEN)
