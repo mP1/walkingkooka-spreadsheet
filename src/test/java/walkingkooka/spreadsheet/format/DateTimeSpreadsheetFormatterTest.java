@@ -34,6 +34,7 @@ import java.time.temporal.Temporal;
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter3TestCase<
@@ -48,6 +49,21 @@ public final class DateTimeSpreadsheetFormatterTest extends SpreadsheetFormatter
     }
 
     // tests.............................................................................................................
+
+    @Test
+    public void testConvertLocalDateTimeFails() {
+        final LocalTime time = LocalTime.now();
+
+        assertThrows(SpreadsheetFormatException.class, () -> this.createFormatter().format0(time, new FakeSpreadsheetFormatterContext() {
+            @Override
+            public <T> Either<T, String> convert(final Object value, final Class<T> target) {
+                assertSame(time, value, "value");
+                assertEquals(LocalDateTime.class, target, "target");
+
+                return this.failConversion(value, target);
+            }
+        }));
+    }
 
     @SuppressWarnings("unused")
     @Override

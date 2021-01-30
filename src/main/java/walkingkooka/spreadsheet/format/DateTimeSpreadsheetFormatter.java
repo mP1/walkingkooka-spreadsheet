@@ -68,9 +68,9 @@ final class DateTimeSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadshe
 
     @Override
     Optional<SpreadsheetText> format0(final Object value, final SpreadsheetFormatterContext context) {
-        return Optional.ofNullable(context.convert(value, LocalDateTime.class)
-                .mapLeft(v -> this.formatLocalDateTime(v, context))
-                .orElseLeft(null));
+        return Optional.of(
+                this.formatLocalDateTime(context.convertOrFail(value, LocalDateTime.class), context)
+        );
     }
 
     private SpreadsheetText formatLocalDateTime(final LocalDateTime dateTime,
