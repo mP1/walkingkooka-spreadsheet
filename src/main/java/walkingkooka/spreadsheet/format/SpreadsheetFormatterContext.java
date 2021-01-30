@@ -17,8 +17,8 @@
 
 package walkingkooka.spreadsheet.format;
 
-import walkingkooka.Either;
 import walkingkooka.color.Color;
+import walkingkooka.convert.CanConvert;
 import walkingkooka.tree.expression.ExpressionNumberConverterContext;
 
 import java.util.Optional;
@@ -26,7 +26,8 @@ import java.util.Optional;
 /**
  * A {@link }Context} that accompanies a value format, holding local sensitive attributes such as the decimal point character.
  */
-public interface SpreadsheetFormatterContext extends ExpressionNumberConverterContext {
+public interface SpreadsheetFormatterContext extends CanConvert,
+        ExpressionNumberConverterContext {
 
     /**
      * Returns the {@link Color} with the given number.
@@ -50,25 +51,10 @@ public interface SpreadsheetFormatterContext extends ExpressionNumberConverterCo
     Optional<SpreadsheetText> defaultFormatText(final Object value);
 
     /**
-     * Tests if the given value can be converted the requested target {@link Class type}.
+     * Creates a {@link SpreadsheetFormatException}
      */
-    boolean canConvert(final Object value, final Class<?> target);
-
-    /**
-     * Handles converting the given value to the target.
-     */
-    <T> Either<T, String> convert(final Object value, final Class<T> target);
-
-    /**
-     * Converts the given value to the {@link Class target type} or throws a {@link SpreadsheetFormatException}
-     */
-    default <T> T convertOrFail(final Object value,
-                                final Class<T> target) {
-        final Either<T, String> converted = this.convert(value, target);
-        if (converted.isRight()) {
-            throw new SpreadsheetFormatException(converted.rightValue());
-        }
-
-        return converted.leftValue();
+    @Override
+    default RuntimeException convertThrowable(final String message) {
+        return new SpreadsheetFormatException(message);
     }
 }
