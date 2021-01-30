@@ -28,6 +28,10 @@ import walkingkooka.text.CharSequences;
  */
 final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor extends SimpleDateFormatPatternVisitor {
 
+    private static final char DAY_IN_MONTH = 'd';
+    private static final char HOUR = 'H';
+    private static final char MONTH_OR_MINUTE = 'm';
+
     /**
      * Accepts a {@link java.text.SimpleDateFormat} pattern and returns its equivalent spreadsheet format pattern.
      */
@@ -72,7 +76,7 @@ final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor extend
     @Override
     protected void visitMonthInYearContextSensitive(final int width,
                                                     final SimpleDateFormatPatternComponentKind kind) {
-        this.add('m', width);
+        this.add(MONTH_OR_MINUTE, width);
     }
 
     @Override
@@ -88,18 +92,18 @@ final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor extend
 
     @Override
     protected void visitDayInMonth(final int width) {
-        this.add('d', width);
+        this.add(DAY_IN_MONTH, width);
     }
 
     @Override
     protected void visitDayOfWeekInMonth(final int width) {
-        this.add('d', width);
+        this.add(DAY_IN_MONTH, width);
     }
 
     @Override
     protected void visitDayNameInWeek(final int width,
                                       final SimpleDateFormatPatternComponentKind kind) {
-        this.add('d', width);
+        this.add(DAY_IN_MONTH, width);
     }
 
     @Override
@@ -114,27 +118,27 @@ final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor extend
 
     @Override
     protected void visitHourInDay23(final int width) {
-        this.add('H', width);
+        this.add(HOUR, width);
     }
 
     @Override
     protected void visitHourInDay24(final int width) {
-        this.add('H', width);
+        this.add(HOUR, width);
     }
 
     @Override
     protected void visitHourInAmPm11(final int width) {
-        this.add('H', width);
+        this.add(HOUR, width);
     }
 
     @Override
     protected void visitHourInAmPm12(final int width) {
-        this.add('H', width);
+        this.add(HOUR, width);
     }
 
     @Override
     protected void visitMinuteInHour(final int width) {
-        this.add('m', width);
+        this.add(MONTH_OR_MINUTE, width);
     }
 
     @Override
