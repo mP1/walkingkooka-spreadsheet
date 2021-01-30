@@ -59,12 +59,12 @@ import walkingkooka.text.cursor.parser.SequenceParserBuilder;
 import walkingkooka.text.cursor.parser.SequenceParserToken;
 import walkingkooka.text.cursor.parser.StringParserToken;
 
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
 import java.util.function.BiFunction;
 
 /**
- * A {@link SpreadsheetFormatParserTokenVisitor} that calls methods on a {@link DateTimeFormatterBuilder} and fails when invalid formats are present.
+ * A {@link SpreadsheetFormatParserTokenVisitor} that creates a parser, by mapping {@link SpreadsheetFormatParserToken}
+ * into a parser made up of multiple components.
  */
 final class SpreadsheetParsePatterns2SpreadsheetFormatParserTokenVisitor extends SpreadsheetFormatParserTokenVisitor {
 
