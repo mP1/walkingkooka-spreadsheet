@@ -220,6 +220,7 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
 
     private final static LocalDateTime DATE_TIME_TRUE = LocalDateTime.of(DATE_TRUE, LocalTime.MIDNIGHT);
     private final static LocalDateTime DATE_TIME_FALSE = LocalDateTime.of(DATE_FALSE, LocalTime.MIDNIGHT);
+    private final static LocalDateTime DATE_TIME = LocalDateTime.of(DATE, TIME);
 
     private final static String STRING_TRUE = "true";
 
@@ -298,6 +299,11 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     }
 
     @Test
+    public void testDateDate() {
+        this.convertAndCheck(LocalDate.of(2000, 12, 31));
+    }
+
+    @Test
     public void testDateTrueDateTime() {
         this.convertAndBackCheck(DATE_TRUE, LocalDateTime.of(DATE_TRUE, LocalTime.MIDNIGHT));
     }
@@ -318,8 +324,67 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     }
 
     @Test
+    public void testDateNumber() {
+        final int value = 100;
+        this.convertNumberAndCheck(LocalDate.ofEpochDay(value), value);
+    }
+
+    @Test
     public void testDateTrueString() {
         this.convertAndCheck2(DATE, "D 2000-12-31");
+    }
+
+    @Test
+    public void testDateTime() {
+        this.convertFails(DATE, LocalTime.class);
+    }
+
+    // DateTime.........................................................................................................
+
+    @Test
+    public void testDateTimeTrueBoolean() {
+        this.convertAndCheck2(DATE_TIME_TRUE, true);
+    }
+
+    @Test
+    public void testDateTimeFalseBoolean() {
+        this.convertAndCheck2(DATE_TIME_FALSE, false);
+    }
+
+    @Test
+    public void testDateTimeDate() {
+        this.convertAndCheck2(DATE_TIME, DATE);
+    }
+
+    @Test
+    public void testDateTimeDateTime() {
+        this.convertAndCheck(DATE_TIME);
+    }
+
+    @Test
+    public void testDateTimeTrueNumber() {
+        this.convertNumberAndCheck(DATE_TIME_TRUE, NUMBER_TRUE);
+    }
+
+    @Test
+    public void testDateTimeFalseNumber() {
+        this.convertNumberAndCheck(DATE_TIME_FALSE, NUMBER_FALSE);
+    }
+
+    @Test
+    public void testDateTimeNumber() {
+        final int value = 100;
+        this.convertNumberAndCheck(LocalDateTime.of(LocalDate.ofEpochDay(value), LocalTime.MIDNIGHT), value);
+    }
+
+    @Test
+    public void testDateTimeTrueString() {
+        this.convertAndCheck2(DATE_TIME, "DT 2000-12-31 12-58");
+    }
+
+    @Test
+    public void testDateTimeTime() {
+        this.convertAndCheck2(DATE_TIME, TIME);
     }
 
     // Number...........................................................................................................
@@ -436,6 +501,54 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
     public void testStringString() {
         final String text = "abc123";
         this.convertAndCheck2(text, text);
+    }
+
+    // Time.............................................................................................................
+
+    @Test
+    public void testTimeTrueBoolean() {
+        this.convertAndCheck2(TIME_TRUE, true);
+    }
+
+    @Test
+    public void testTimeFalseBoolean() {
+        this.convertAndCheck2(TIME_FALSE, false);
+    }
+
+    @Test
+    public void testTimeDate() {
+        this.convertFails(TIME, LocalDate.class);
+    }
+
+    @Test
+    public void testTimeDateTime() {
+        this.convertFails(TIME, LocalDateTime.class);
+    }
+
+    @Test
+    public void testTimeTrueNumber() {
+        this.convertNumberAndCheck(TIME_TRUE, NUMBER_TRUE);
+    }
+
+    @Test
+    public void testTimeFalseNumber() {
+        this.convertNumberAndCheck(TIME_FALSE, NUMBER_FALSE);
+    }
+
+    @Test
+    public void testTimeNumber() {
+        final int value = 123;
+        this.convertNumberAndCheck(LocalTime.ofSecondOfDay(value), value);
+    }
+
+    @Test
+    public void testTimeTrueString() {
+        this.convertAndCheck2(DATE, "D 2000-12-31");
+    }
+
+    @Test
+    public void testTimeTime() {
+        this.convertAndCheck(TIME);
     }
 
     // toString.........................................................................................................
