@@ -206,6 +206,16 @@ public final class SpreadsheetMetadataVisitorTest implements SpreadsheetMetadata
     }
 
     @Test
+    public void testVisitDefaultYear() {
+        new TestSpreadsheetMetadataVisitor() {
+            @Override
+            protected void visitDefaultYear(final int i) {
+                this.visited = i;
+            }
+        }.accept(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 1901);
+    }
+
+    @Test
     public void testVisitEditCell() {
         new TestSpreadsheetMetadataVisitor() {
             @Override

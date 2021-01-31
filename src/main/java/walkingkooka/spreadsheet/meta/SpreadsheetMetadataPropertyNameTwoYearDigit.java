@@ -35,8 +35,7 @@ final class SpreadsheetMetadataPropertyNameTwoYearDigit extends SpreadsheetMetad
 
     @Override
     Integer checkValue0(final Object value) {
-        final Integer integerValue = this.checkValueType(value,
-                v -> v instanceof Integer);
+        final Integer integerValue = this.checkValueTypeInteger(value);
         if (integerValue < 0 || integerValue > 99) {
             throw new SpreadsheetMetadataPropertyValueException("Expected int between 0 and including 99", this, integerValue);
         }

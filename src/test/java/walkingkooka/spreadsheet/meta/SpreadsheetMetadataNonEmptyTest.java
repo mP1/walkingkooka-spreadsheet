@@ -1347,6 +1347,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 "  \"date-time-offset\": \"0\",\n" +
                 "  \"date-time-parse-patterns\": \"DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM\",\n" +
                 "  \"decimal-separator\": \"D\",\n" +
+                "  \"default-year\": 1901,\n" +
                 "  \"exponent-symbol\": \"E\",\n" +
                 "  \"grouping-separator\": \"G\",\n" +
                 "  \"locale\": \"en\",\n" +
@@ -1383,6 +1384,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         properties.put(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetPattern.parseDateTimeFormatPattern("DD/MM/YYYY hh:mm"));
         properties.put(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetPattern.parseDateTimeParsePatterns("DD/MM/YYYY hh:mm;DDMMYYYYHHMM;DDMMYYYY HHMM"));
         properties.put(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, 'D');
+        properties.put(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, 1901);
         properties.put(SpreadsheetMetadataPropertyName.STYLE,
                 TextStyle.EMPTY
                         .set(TextStylePropertyName.FONT_FAMILY, FontFamily.with("MS Sans Serif"))

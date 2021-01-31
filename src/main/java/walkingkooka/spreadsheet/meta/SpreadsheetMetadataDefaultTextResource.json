@@ -1,5 +1,6 @@
 {
   "date-time-offset": -25569,
+  "default-year": 1900,
   "expression-number-kind": "BIG_DECIMAL",
   "precision": 10,
   "rounding-mode": "HALF_UP",

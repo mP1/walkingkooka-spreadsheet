@@ -29,6 +29,10 @@ abstract class SpreadsheetMetadataPropertyNameInteger extends SpreadsheetMetadat
         super(name);
     }
 
+    final Integer checkValueTypeInteger(final Object value) {
+        return this.checkValueType(value, v -> v instanceof Integer);
+    }
+
     @Override
     final String expected() {
         return "int";
