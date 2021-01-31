@@ -26,18 +26,20 @@ an example of the API usage.
 - Helpers (interfaces with default/defender methods) are provided for basically all interfaces, think mixins.
 - Helpers include numerous methods so tests concentrate on data, logic and not boilerplate.
 - Mocks and fakes are also provided for all interfaces.
-- Helpers include informative messages and asserts to ensure correctness.
+- Helpers include informative messages and asserts to ensure correctness, and pretty printed messages and context upon
+  failures
+- Since most interfaces are SAM or contain at most a few methods its quite simple to implement if necessary.
 
-
-
-## Global settings (Metadata)
+## Global settings ([Metadata](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadata.java))
 
 - All global like settings are captured and not hardcoded [SEE](https://github.com/mP1/walkingkooka-spreadsheet/blob/master/src/main/java/walkingkooka/spreadsheet/meta/SpreadsheetMetadata.java).
 - The user can change each and every one of these settings or values including the decimal point, locale and more and
   they are honoured.
-- The [react](https://github.com/mP1/walkingkooka-spreadsheet-react) include numerous cypress integration tests that
-  demonstrate updating of this global metadata and instant feedback such as cells being updated with new locale settings etc.  
-- User selectable support for `double` (fast, lower precision, less memory) or `java.math.BigDecimal` (slower, user selectable precision, more memory).
+- The [react web app](https://github.com/mP1/walkingkooka-spreadsheet-react) include numerous cypress integration tests
+  that demonstrate updating of this global metadata and instant feedback such as cells being updated with new locale
+  settings etc.
+- User selectable support for `double` (fast, lower precision, less memory) or `java.math.BigDecimal` (slower, user
+  selectable precision, more memory).
 - User selectable rounding, precision support.
 - The `SpreadsheetMetadata` class captures many properties/settings and makes for an interesting read to get a deeper understanding of internals.
 
@@ -46,8 +48,8 @@ an example of the API usage.
 ## Functions
 
 - About 30-40 functions are completed, into numerous projects, much work remains outstanding.
-- Basic number type functions: [numbers](https://github.com/mP1/walkingkooka-tree-expression-function-number)
-- Basic string type functions: [string](https://github.com/mP1/walkingkooka-tree-expression-function-string)
+- Dozens of basic number type functions: [numbers](https://github.com/mP1/walkingkooka-tree-expression-function-number)
+- Dozens of basic string type functions: [string](https://github.com/mP1/walkingkooka-tree-expression-function-string)
 - Work remains to create projects to host other categories of functions such as: banking/finance etc.
 - Ideas include the support of user/3rd party/open source functions which would execute within a sandbox.
 
