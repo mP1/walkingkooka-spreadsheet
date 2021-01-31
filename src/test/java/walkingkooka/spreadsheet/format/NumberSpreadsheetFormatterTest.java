@@ -19,9 +19,11 @@ package walkingkooka.spreadsheet.format;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Either;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.convert.Converters;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatNumberParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserContext;
+import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParserToken;
 import walkingkooka.spreadsheet.format.parser.SpreadsheetFormatParsers;
 import walkingkooka.text.cursor.parser.Parser;
 import walkingkooka.text.cursor.parser.ParserReporterException;
@@ -42,6 +44,29 @@ public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3T
         SpreadsheetFormatNumberParserToken> {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
+
+    @Test
+    public void testCanConvertBigDecimalFails() {
+        final NumberSpreadsheetFormatter formatter = NumberSpreadsheetFormatter.with(
+                SpreadsheetFormatParserToken.number(
+                        Lists.of(
+                                SpreadsheetFormatParserToken.digit("1", "1")
+                        ),
+                        "#"
+                )
+        );
+        assertThrows(SpreadsheetFormatException.class, () -> {
+            formatter.canFormat(
+                    BigDecimal.ZERO,
+                    new FakeSpreadsheetFormatterContext() {
+                        @Override
+                        public boolean canConvert(final Object value,
+                                                  final Class<?> type) {
+                            return false;
+                        }
+                    });
+        });
+    }
 
     // text-literal, escaped etc........................................................................................
 
