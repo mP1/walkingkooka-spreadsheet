@@ -114,6 +114,11 @@ public class FakeSpreadsheetMetadataVisitor extends SpreadsheetMetadataVisitor {
     }
 
     @Override
+    protected void visitDefaultYear(final int defaultYear) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     protected void visitEditCell(final SpreadsheetCellReference cell) {
         throw new UnsupportedOperationException();
     }

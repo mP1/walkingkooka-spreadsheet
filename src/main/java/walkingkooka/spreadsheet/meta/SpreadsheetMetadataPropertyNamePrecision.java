@@ -35,8 +35,7 @@ final class SpreadsheetMetadataPropertyNamePrecision extends SpreadsheetMetadata
 
     @Override
     Integer checkValue0(final Object value) {
-        final Integer integerValue = this.checkValueType(value,
-                v -> v instanceof Integer);
+        final Integer integerValue = this.checkValueTypeInteger(value);
         if (integerValue < 0) {
             throw new SpreadsheetMetadataPropertyValueException("Expected value >= 0", this, integerValue);
         }

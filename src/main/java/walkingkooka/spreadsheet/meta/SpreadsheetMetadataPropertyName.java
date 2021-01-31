@@ -130,6 +130,11 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
     public final static SpreadsheetMetadataPropertyName<Character> DECIMAL_SEPARATOR = registerConstant(SpreadsheetMetadataPropertyNameDecimalSeparator.instance());
 
     /**
+     * A {@link SpreadsheetMetadataPropertyName} holding the {@link Integer} <code>default-year</code>
+     */
+    public final static SpreadsheetMetadataPropertyName<Integer> DEFAULT_YEAR = registerConstant(SpreadsheetMetadataPropertyNameDefaultYear.instance());
+
+    /**
      * A {@link SpreadsheetMetadataPropertyName} holding the <code>edit-cell</code> {@link walkingkooka.spreadsheet.reference.SpreadsheetCellReference}.
      */
     public final static SpreadsheetMetadataPropertyName<SpreadsheetCellReference> EDIT_CELL = registerConstant(SpreadsheetMetadataPropertyNameEditCell.instance());

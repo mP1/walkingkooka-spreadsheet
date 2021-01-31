@@ -134,6 +134,10 @@ public abstract class SpreadsheetMetadataVisitor extends Visitor<SpreadsheetMeta
         // nop
     }
 
+    protected void visitDefaultYear(final int defaultYear) {
+        // nop
+    }
+
     protected void visitEditCell(final SpreadsheetCellReference cell) {
         // nop
     }

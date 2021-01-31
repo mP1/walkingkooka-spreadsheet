@@ -17,34 +17,30 @@
 
 package walkingkooka.spreadsheet.meta;
 
-final class SpreadsheetMetadataPropertyNameWidth extends SpreadsheetMetadataPropertyNameInteger {
+final class SpreadsheetMetadataPropertyNameDefaultYear extends SpreadsheetMetadataPropertyNameInteger {
 
     /**
      * Singleton
      */
-    final static SpreadsheetMetadataPropertyNameWidth instance() {
-        return new SpreadsheetMetadataPropertyNameWidth();
+    final static SpreadsheetMetadataPropertyNameDefaultYear instance() {
+        return new SpreadsheetMetadataPropertyNameDefaultYear();
     }
 
     /**
      * Private constructor use singleton.
      */
-    private SpreadsheetMetadataPropertyNameWidth() {
-        super("width");
+    private SpreadsheetMetadataPropertyNameDefaultYear() {
+        super("default-year");
     }
 
     @Override
     Integer checkValue0(final Object value) {
-        final Integer integerValue = this.checkValueTypeInteger(value);
-        if (integerValue < 0) {
-            throw new SpreadsheetMetadataPropertyValueException("Expected int > 0", this, integerValue);
-        }
-        return integerValue;
+        return this.checkValueTypeInteger(value);
     }
 
     @Override
     void accept(final Integer value,
                 final SpreadsheetMetadataVisitor visitor) {
-        visitor.visitWidth(value);
+        visitor.visitDefaultYear(value);
     }
 }
