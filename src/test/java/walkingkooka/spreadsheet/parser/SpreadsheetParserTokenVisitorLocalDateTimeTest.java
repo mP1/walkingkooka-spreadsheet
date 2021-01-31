@@ -21,7 +21,7 @@ public final class SpreadsheetParserTokenVisitorLocalDateTimeTest extends Spread
 
     @Override
     public SpreadsheetParserTokenVisitorLocalDateTime createVisitor() {
-        return new SpreadsheetParserTokenVisitorLocalDateTime();
+        return new SpreadsheetParserTokenVisitorLocalDateTime(0);
     }
 
     @Override

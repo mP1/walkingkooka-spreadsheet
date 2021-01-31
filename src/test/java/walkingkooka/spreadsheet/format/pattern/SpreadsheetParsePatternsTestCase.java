@@ -65,6 +65,7 @@ public abstract class SpreadsheetParsePatternsTestCase<P extends SpreadsheetPars
         V> extends SpreadsheetPatternTestCase<P, List<T>>
         implements ConverterTesting {
 
+    final static int DEFAULT_YEAR = 1900;
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     final static char VALUE_SEPARATOR = ',';
 

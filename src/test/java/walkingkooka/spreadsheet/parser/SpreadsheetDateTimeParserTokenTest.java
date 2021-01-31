@@ -122,7 +122,7 @@ public final class SpreadsheetDateTimeParserTokenTest extends SpreadsheetParentP
     @Test
     public void testToExpressionDayNumberMonthNumber() {
         this.toExpressionAndCheck2(
-                LocalDate.of(0, MONTH, DAY),
+                LocalDate.of(DEFAULT_YEAR, MONTH, DAY),
                 dayNumber(),
                 slashTextLiteral(),
                 monthNumber()
@@ -136,6 +136,16 @@ public final class SpreadsheetDateTimeParserTokenTest extends SpreadsheetParentP
                 dayNumber(),
                 slashTextLiteral(),
                 year()
+        );
+    }
+
+    @Test
+    public void testToExpressionDayNumber() {
+        this.toExpressionAndCheck2(
+                LocalDate.of(DEFAULT_YEAR, MONTH, DAY),
+                dayNumber(),
+                slashTextLiteral(),
+                monthName()
         );
     }
 
@@ -251,7 +261,7 @@ public final class SpreadsheetDateTimeParserTokenTest extends SpreadsheetParentP
     @Test
     public void testToExpressionMonthNumberYearBeforeTwoDigitYearBefore2() {
         this.toExpressionAndCheck2(
-                this.expressionEvaluationContext(50),
+                this.expressionEvaluationContext(DEFAULT_YEAR, 50),
                 LocalDate.of(2040, MONTH, 1),
                 monthNumber(),
                 slashTextLiteral(),
@@ -262,7 +272,7 @@ public final class SpreadsheetDateTimeParserTokenTest extends SpreadsheetParentP
     private void toExpressionAndCheck2(final LocalDate expected,
                                        final SpreadsheetParserToken... tokens) {
         this.toExpressionAndCheck2(
-                this.expressionEvaluationContext(20),
+                this.expressionEvaluationContext(DEFAULT_YEAR, 20),
                 LocalDateTime.of(
                         expected,
                         LocalTime.of(0, 0)
@@ -288,7 +298,7 @@ public final class SpreadsheetDateTimeParserTokenTest extends SpreadsheetParentP
                                        final SpreadsheetParserToken... tokens) {
         this.toExpressionAndCheck2(
                 LocalDateTime.of(
-                        LocalDate.of(0, 1, 1),
+                        LocalDate.of(DEFAULT_YEAR, 1, 1),
                         expected
                 ),
                 tokens
@@ -298,7 +308,7 @@ public final class SpreadsheetDateTimeParserTokenTest extends SpreadsheetParentP
     private void toExpressionAndCheck2(final LocalDateTime expected,
                                        final SpreadsheetParserToken... tokens) {
         this.toExpressionAndCheck2(
-                this.expressionEvaluationContext(20),
+                this.expressionEvaluationContext(DEFAULT_YEAR, 20),
                 expected,
                 tokens
         );

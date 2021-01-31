@@ -35,15 +35,17 @@ final class SpreadsheetParserTokenVisitorLocalDateTime extends SpreadsheetParser
      * Creates a {@link SpreadsheetParserTokenVisitorLocalDateTime}, visits the {@link SpreadsheetParentParserToken} and returns the visitor
      * which has methods to create one of {@link LocalDate}, {@link LocalDateTime} or {@link LocalTime}.
      */
-    static SpreadsheetParserTokenVisitorLocalDateTime acceptSpreadsheetParentParserToken(final SpreadsheetParentParserToken token) {
-        final SpreadsheetParserTokenVisitorLocalDateTime visitor = new SpreadsheetParserTokenVisitorLocalDateTime();
+    static SpreadsheetParserTokenVisitorLocalDateTime acceptSpreadsheetParentParserToken(final SpreadsheetParentParserToken token,
+                                                                                         final int defaultYear) {
+        final SpreadsheetParserTokenVisitorLocalDateTime visitor = new SpreadsheetParserTokenVisitorLocalDateTime(defaultYear);
         visitor.accept(token);
         return visitor;
     }
 
     // @VisibleForTesting
-    SpreadsheetParserTokenVisitorLocalDateTime() {
+    SpreadsheetParserTokenVisitorLocalDateTime(final int defaultYear) {
         super();
+        this.year = defaultYear;
     }
 
     // visit....................................................................................................
@@ -149,7 +151,7 @@ final class SpreadsheetParserTokenVisitorLocalDateTime extends SpreadsheetParser
 
     private int day = 1;
     private int month = 1;
-    private int year = 0; // https://github.com/mP1/walkingkooka-spreadsheet/issues/1309 Default year when parsing date or date/time
+    private int year;
     private boolean twoDigitYear = false;
 
     private int hour = 0;

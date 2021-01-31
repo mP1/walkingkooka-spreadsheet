@@ -235,8 +235,15 @@ public abstract class SpreadsheetParentParserTokenTestCase<T extends Spreadsheet
         return EXPRESSION_NUMBER_KIND.create(value);
     }
 
-    final ExpressionEvaluationContext expressionEvaluationContext(final int twoDigitYear) {
+    final ExpressionEvaluationContext expressionEvaluationContext(final int defaultYear,
+                                                                  final int twoDigitYear) {
         return new FakeExpressionEvaluationContext() {
+
+            @Override
+            public int defaultYear() {
+                return defaultYear;
+            }
+
             @Override
             public int twoDigitYear() {
                 return twoDigitYear;

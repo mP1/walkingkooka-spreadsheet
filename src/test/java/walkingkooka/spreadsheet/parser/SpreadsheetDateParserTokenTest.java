@@ -100,7 +100,7 @@ public final class SpreadsheetDateParserTokenTest extends SpreadsheetParentParse
     @Test
     public void testToExpressionDayNumberMonthNumber() {
         this.toExpressionAndCheck2(
-                LocalDate.of(0, MONTH, DAY),
+                LocalDate.of(DEFAULT_YEAR, MONTH, DAY),
                 dayNumber(),
                 slashTextLiteral(),
                 monthNumber()
@@ -160,7 +160,7 @@ public final class SpreadsheetDateParserTokenTest extends SpreadsheetParentParse
     private void toExpressionAndCheck2(final LocalDate expected,
                                        final SpreadsheetParserToken...tokens) {
         this.toExpressionAndCheck2(
-                this.expressionEvaluationContext(20),
+                this.expressionEvaluationContext(DEFAULT_YEAR, 20),
                 expected,
                 tokens
         );
