@@ -97,6 +97,11 @@ final class SpreadsheetFormatterConverterSpreadsheetFormatterContext implements 
     }
 
     @Override
+    public int defaultYear() {
+        return this.context.defaultYear();
+    }
+
+    @Override
     public String exponentSymbol() {
         return context.exponentSymbol();
     }

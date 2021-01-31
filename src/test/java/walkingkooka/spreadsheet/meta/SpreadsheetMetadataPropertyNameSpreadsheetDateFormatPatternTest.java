@@ -82,7 +82,11 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetDateFormatPatternTe
                                                                 return Either.left(type.cast(LocalDateTime.of(date, LocalTime.MIDNIGHT)));
                                                             }
                                                         },
-                        ConverterContexts.basic(Converters.fake(), DateTimeContexts.locale(Locale.ENGLISH, 20), DecimalNumberContexts.american(MathContext.DECIMAL32)),
+                        ConverterContexts.basic(
+                                Converters.fake(),
+                                DateTimeContexts.locale(Locale.ENGLISH, 1900, 20),
+                                DecimalNumberContexts.american(MathContext.DECIMAL32)
+                        ),
                         ExpressionNumberKind.DEFAULT
                 )
         );

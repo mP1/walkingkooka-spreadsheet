@@ -133,7 +133,11 @@ public final class SpreadsheetFormatterConverterSpreadsheetFormatterContextTest 
     }
 
     private DateTimeContext dateTimeContext() {
-        return DateTimeContexts.locale(this.locale(), 19);
+        return DateTimeContexts.locale(
+                this.locale(),
+                1900,
+                19
+        );
     }
 
     private DecimalNumberContext decimalNumberContext() {

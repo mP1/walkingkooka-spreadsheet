@@ -124,6 +124,11 @@ final class BasicSpreadsheetFormatterContext implements SpreadsheetFormatterCont
     }
 
     @Override
+    public int defaultYear() {
+        return this.converterContext.defaultYear();
+    }
+
+    @Override
     public List<String> monthNames() {
         return this.converterContext.monthNames();
     }

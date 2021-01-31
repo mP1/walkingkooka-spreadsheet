@@ -81,6 +81,11 @@ final class SpreadsheetParserPattern2ExpressionEvaluationContext implements Expr
     }
 
     @Override
+    public int defaultYear() {
+        return this.context.defaultYear();
+    }
+
+    @Override
     public int twoDigitYear() {
         return this.context.twoDigitYear();
     }

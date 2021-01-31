@@ -801,7 +801,11 @@ public interface SpreadsheetEngineTesting<E extends SpreadsheetEngine> extends C
     }
 
     default DateTimeContext dateTimeContext() {
-        return DateTimeContexts.locale(this.decimalNumberContext().locale(), 50);
+        return DateTimeContexts.locale(
+                this.decimalNumberContext().locale(),
+                1900,
+                50
+        );
     }
 
     default DecimalNumberContext decimalNumberContext() {

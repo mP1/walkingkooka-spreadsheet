@@ -240,6 +240,11 @@ final class BasicSpreadsheetEngineContext implements SpreadsheetEngineContext {
     // YearContext......................................................................................................
 
     @Override
+    public int defaultYear() {
+        return this.converterContext.defaultYear();
+    }
+
+    @Override
     public int twoToFourDigitYear(final int year) {
         return this.converterContext.twoToFourDigitYear(year);
     }

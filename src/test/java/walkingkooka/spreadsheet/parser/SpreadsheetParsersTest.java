@@ -2249,6 +2249,11 @@ public final class SpreadsheetParsersTest implements PublicStaticHelperTesting<S
             }
 
             @Override
+            public int defaultYear() {
+                return dateTimeContext.defaultYear();
+            }
+
+            @Override
             public List<String> monthNames() {
                 return dateTimeContext.monthNames();
             }

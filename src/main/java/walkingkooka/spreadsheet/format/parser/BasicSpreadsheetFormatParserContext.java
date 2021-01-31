@@ -52,6 +52,11 @@ final class BasicSpreadsheetFormatParserContext implements SpreadsheetFormatPars
     }
 
     @Override
+    public int defaultYear() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public String exponentSymbol() {
         return this.context.exponentSymbol();
     }

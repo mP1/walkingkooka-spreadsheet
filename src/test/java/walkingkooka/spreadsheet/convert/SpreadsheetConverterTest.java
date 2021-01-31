@@ -641,7 +641,11 @@ public final class SpreadsheetConverterTest extends SpreadsheetConverterTestCase
         return ExpressionNumberConverterContexts.basic(Converters.fake(),
                 ConverterContexts.basic(
                         Converters.fake(),
-                        DateTimeContexts.locale(Locale.ENGLISH, 20),
+                        DateTimeContexts.locale(
+                                Locale.ENGLISH,
+                                1900,
+                                20
+                        ),
                         DecimalNumberContexts.basic("C",
                                 'D',
                                 "E",
