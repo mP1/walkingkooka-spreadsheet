@@ -43,8 +43,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public final class NumberSpreadsheetFormatterTest extends SpreadsheetFormatter3TestCase<NumberSpreadsheetFormatter,
         SpreadsheetFormatNumberParserToken> {
 
-    private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
-
     @Test
     public void testCanConvertBigDecimalFails() {
         final NumberSpreadsheetFormatter formatter = NumberSpreadsheetFormatter.with(
