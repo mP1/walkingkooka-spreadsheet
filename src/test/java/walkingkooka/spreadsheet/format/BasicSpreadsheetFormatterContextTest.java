@@ -224,7 +224,11 @@ public final class BasicSpreadsheetFormatterContextTest implements SpreadsheetFo
     }
 
     private DateTimeContext dateTimeContext() {
-        return DateTimeContexts.locale(LOCALE, 50);
+        return DateTimeContexts.locale(
+                LOCALE,
+                1900,
+                50
+        );
     }
 
     private DecimalNumberContext decimalNumberContext() {

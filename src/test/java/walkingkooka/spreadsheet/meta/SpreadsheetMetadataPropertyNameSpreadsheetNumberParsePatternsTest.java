@@ -73,7 +73,7 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberParsePatterns
                                 Converters.fake(),
                                 ConverterContexts.basic(
                                         Converters.fake(),
-                                        DateTimeContexts.locale(locale, 20),
+                                        DateTimeContexts.locale(locale, 1900, 20),
                                         DecimalNumberContexts.american(MathContext.DECIMAL32)
                                 ),
                                 kind)

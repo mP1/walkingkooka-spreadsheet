@@ -79,6 +79,11 @@ final class BasicSpreadsheetEngineExpressionEvaluationContext implements Express
     }
 
     @Override
+    public int defaultYear() {
+        return this.context.defaultYear();
+    }
+
+    @Override
     public int twoDigitYear() {
         return this.context.twoDigitYear();
     }

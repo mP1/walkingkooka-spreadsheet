@@ -433,7 +433,11 @@ public final class SpreadsheetDateFormatPatternTest extends SpreadsheetFormatPat
             }
 
             private DateTimeContext dateTimeContext() {
-                return DateTimeContexts.locale(Locale.forLanguageTag("EN-AU"), 20);
+                return DateTimeContexts.locale(
+                        Locale.forLanguageTag("EN-AU"),
+                        1900,
+                        20
+                );
             }
         };
     }

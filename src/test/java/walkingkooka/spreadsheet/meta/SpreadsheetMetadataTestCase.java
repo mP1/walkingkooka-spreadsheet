@@ -244,7 +244,7 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     public final void testHasDateTimeContextRequiredPropertiesAbsentFails() {
         final IllegalStateException thrown = assertThrows(IllegalStateException.class, () -> this.createObject().dateTimeContext());
         checkMessage(thrown,
-                "Required properties \"locale\", \"two-digit-year\" missing.");
+                "Required properties \"default-year\", \"locale\", \"two-digit-year\" missing.");
     }
 
     // HasDecimalNumberContext..........................................................................................

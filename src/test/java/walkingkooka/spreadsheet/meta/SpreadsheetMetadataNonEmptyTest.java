@@ -102,6 +102,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         SpreadsheetFormatterTesting {
 
     private final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
+    private final static int DEFAULT_YEAR = 1900;
 
     @Test
     public void testWithSpreadsheetMetadataMap() {
@@ -641,9 +642,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 expected,
                 metadata.converter(),
                 ExpressionNumberConverterContexts.basic(Converters.fake(),
-                        ConverterContexts.basic(Converters.fake(),
-                                DateTimeContexts.locale(Locale.ENGLISH, 20),
-                                DecimalNumberContexts.american(MathContext.DECIMAL32)),
+                        ConverterContexts.basic(
+                                Converters.fake(),
+                                DateTimeContexts.locale(Locale.ENGLISH, DEFAULT_YEAR, 20),
+                                DecimalNumberContexts.american(MathContext.DECIMAL32)
+                        ),
                         metadata.expressionNumberKind())
         );
     }
@@ -661,6 +664,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
                 .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS, SpreadsheetPattern.parseDateParsePatterns("\"Date\" yyyy mm dd"))
                 .set(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetPattern.parseDateTimeFormatPattern("\"DateTime\" yyyy hh"))
                 .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetPattern.parseDateTimeParsePatterns("\"DateTime\" yyyy hh"))
+                .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH)
                 .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetPattern.parseNumberFormatPattern("\"Number\" 00.000"))
@@ -716,18 +720,23 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
     public void testDateTimeContext() {
         Arrays.stream(Locale.getAvailableLocales())
                 .forEach(l -> {
-                            final int twoDigitYear = 49;
-                            final SpreadsheetMetadata metadata = SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.LOCALE, l,
-                                    SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, twoDigitYear));
+                    final int twoDigitYear = 49;
+                    final SpreadsheetMetadata metadata = SpreadsheetMetadata.with(
+                            Maps.of(
+                                    SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR,
+                                    SpreadsheetMetadataPropertyName.LOCALE, l,
+                                    SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, twoDigitYear
+                            )
+                    );
 
-                            final DateFormatSymbols symbols = DateFormatSymbols.getInstance(l);
-                            final DateTimeContext context = metadata.dateTimeContext();
-                            this.amPmAndCheck(context, 13, symbols.getAmPmStrings()[1]);
-                            this.monthNameAndCheck(context, 2, symbols.getMonths()[2]);
-                            this.monthNameAbbreviationAndCheck(context, 3, symbols.getShortMonths()[3]);
-                            this.twoDigitYearAndCheck(context, twoDigitYear);
-                            this.weekDayNameAndCheck(context, 1, symbols.getWeekdays()[2]);
-                            this.weekDayNameAbbreviationAndCheck(context, 3, symbols.getShortWeekdays()[4]);
+                    final DateFormatSymbols symbols = DateFormatSymbols.getInstance(l);
+                    final DateTimeContext context = metadata.dateTimeContext();
+                    this.amPmAndCheck(context, 13, symbols.getAmPmStrings()[1]);
+                    this.monthNameAndCheck(context, 2, symbols.getMonths()[2]);
+                    this.monthNameAbbreviationAndCheck(context, 3, symbols.getShortMonths()[3]);
+                    this.twoDigitYearAndCheck(context, twoDigitYear);
+                    this.weekDayNameAndCheck(context, 1, symbols.getWeekdays()[2]);
+                    this.weekDayNameAbbreviationAndCheck(context, 3, symbols.getShortWeekdays()[4]);
 
                         }
                 );
@@ -735,8 +744,13 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
     @Test
     public void testDateTimeContextCached() {
-        final SpreadsheetMetadata metadata = SpreadsheetMetadata.with(Maps.of(SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH,
-                SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20));
+        final SpreadsheetMetadata metadata = SpreadsheetMetadata.with(
+                Maps.of(
+                        SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR,
+                        SpreadsheetMetadataPropertyName.LOCALE, Locale.ENGLISH,
+                        SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR, 20
+                )
+        );
         assertSame(metadata.dateTimeContext(), metadata.dateTimeContext());
     }
     
@@ -1213,6 +1227,7 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
         return SpreadsheetMetadata.EMPTY
                 .set(SpreadsheetMetadataPropertyName.CURRENCY_SYMBOL, "C")
                 .set(SpreadsheetMetadataPropertyName.DECIMAL_SEPARATOR, 'D')
+                .set(SpreadsheetMetadataPropertyName.DEFAULT_YEAR, DEFAULT_YEAR)
                 .set(SpreadsheetMetadataPropertyName.EXPONENT_SYMBOL, "E")
                 .set(SpreadsheetMetadataPropertyName.EXPRESSION_NUMBER_KIND, EXPRESSION_NUMBER_KIND)
                 .set(SpreadsheetMetadataPropertyName.GROUPING_SEPARATOR, 'G')

@@ -82,9 +82,11 @@ public final class SpreadsheetMetadataPropertyNameSpreadsheetNumberFormatPattern
                                 return Either.left(type.cast(value));
                             }
                         },
-                        ConverterContexts.basic(Converters.fake(),
-                                DateTimeContexts.locale(Locale.ENGLISH, 20),
-                                DecimalNumberContexts.american(MathContext.DECIMAL32)),
+                        ConverterContexts.basic(
+                                Converters.fake(),
+                                DateTimeContexts.locale(Locale.ENGLISH, 1900, 20),
+                                DecimalNumberContexts.american(MathContext.DECIMAL32)
+                        ),
                         ExpressionNumberKind.DEFAULT)
         );
     }

@@ -184,8 +184,10 @@ public final class SpreadsheetParsePatterns2ParserStringTest extends Spreadsheet
     }
 
     private List<String> monthNames() {
-        return DateTimeContexts.locale(Locale.forLanguageTag("EN-AU"), 20)
-                .monthNames();
+        return DateTimeContexts.locale(
+                Locale.forLanguageTag("EN-AU"),
+                1900,
+                20).monthNames();
     }
 
     @Override

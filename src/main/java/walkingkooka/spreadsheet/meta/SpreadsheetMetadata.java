@@ -367,11 +367,16 @@ public abstract class SpreadsheetMetadata implements HasConverter<ExpressionNumb
         final SpreadsheetMetadataComponents components = SpreadsheetMetadataComponents.with(this);
 
         final Locale locale = components.getOrNull(SpreadsheetMetadataPropertyName.LOCALE);
+        final Integer defaultYear = components.getOrNull(SpreadsheetMetadataPropertyName.DEFAULT_YEAR);
         final Integer twoYearDigit = components.getOrNull(SpreadsheetMetadataPropertyName.TWO_DIGIT_YEAR);
 
         components.reportIfMissing();
 
-        return DateTimeContexts.locale(locale, twoYearDigit);
+        return DateTimeContexts.locale(
+                locale,
+                defaultYear,
+                twoYearDigit
+        );
     }
 
     final static List<SpreadsheetMetadataPropertyName<?>> DATE_TIME_CONTEXT_REQUIRED = Lists.of(

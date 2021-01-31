@@ -73,6 +73,11 @@ final class BasicSpreadsheetParserContext implements SpreadsheetParserContext {
     }
 
     @Override
+    public int defaultYear() {
+        return this.dateTimeContext.defaultYear();
+    }
+
+    @Override
     public List<String> monthNames() {
         return this.dateTimeContext.monthNames();
     }
