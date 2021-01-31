@@ -64,7 +64,7 @@ final class NumberSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadsheet
     @Override
     public boolean canFormat(final Object value,
                              final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
-        return ExpressionNumber.is(value) && context.canConvert(value, BigDecimal.class);
+        return ExpressionNumber.is(value) && context.canConvertOrFail(value, BigDecimal.class);
     }
 
     @Override
