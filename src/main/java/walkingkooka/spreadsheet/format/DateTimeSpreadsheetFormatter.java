@@ -58,7 +58,7 @@ final class DateTimeSpreadsheetFormatter extends SpreadsheetFormatter3<Spreadshe
     @Override
     public boolean canFormat(final Object value,
                              final SpreadsheetFormatterContext context) throws SpreadsheetFormatException {
-        return this.typeTester.test(value) && context.canConvert(value, LocalDateTime.class);
+        return this.typeTester.test(value) && context.canConvertOrFail(value, LocalDateTime.class);
     }
 
     /**
