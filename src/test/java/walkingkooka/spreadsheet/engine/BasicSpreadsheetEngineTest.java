@@ -170,6 +170,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
     private final static MathContext MATH_CONTEXT = MathContext.DECIMAL32;
 
+    private final static int DEFAULT_YEAR = 1900;
     private final static int TWO_DIGIT_YEAR = 20;
     private final static char VALUE_SEPARATOR = ';';
 
@@ -5099,6 +5100,11 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return new FakeSpreadsheetEngineContext() {
 
             @Override
+            public int defaultYear() {
+                return DEFAULT_YEAR;
+            }
+
+            @Override
             public ExpressionNumberKind expressionNumberKind() {
                 return BasicSpreadsheetEngineTest.this.expressionNumberKind();
             }
@@ -5371,6 +5377,12 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .setExpression(
                         token.toExpression(
                                 new FakeExpressionEvaluationContext() {
+
+                                    @Override
+                                    public int defaultYear() {
+                                        return DEFAULT_YEAR;
+                                    }
+
                                     @Override
                                     public ExpressionNumberKind expressionNumberKind() {
                                         return expressionNumberKind;

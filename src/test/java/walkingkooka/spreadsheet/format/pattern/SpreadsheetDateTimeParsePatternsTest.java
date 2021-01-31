@@ -389,28 +389,28 @@ public final class SpreadsheetDateTimeParsePatternsTest extends SpreadsheetParse
     public void testConvertHourMinutesOnlyPattern() {
         this.convertAndCheck2("hh:mm",
                 "11:59",
-                LocalDateTime.of(0, 1, 1, 11, 59));
+                LocalDateTime.of(DEFAULT_YEAR, 1, 1, 11, 59));
     }
 
     @Test
     public void testConvertHourMinutesSecondsOnlyPattern() {
         this.convertAndCheck2("hh:mm:ss",
                 "11:58:59",
-                LocalDateTime.of(0, 1, 1, 11, 58, 59));
+                LocalDateTime.of(DEFAULT_YEAR, 1, 1, 11, 58, 59));
     }
 
     @Test
     public void testConvertHourMinutesSecondsAmpmOnlyPattern() {
         this.convertAndCheck2("hh:mm:ss AM/PM",
                 "11:58:59 PM",
-                LocalDateTime.of(0, 1, 1, 23, 58, 59));
+                LocalDateTime.of(DEFAULT_YEAR, 1, 1, 23, 58, 59));
     }
 
     @Test
     public void testConvertHourDefaultsMinutes() {
         this.convertAndCheck2("hh",
                 "11",
-                LocalDateTime.of(0, 1, 1, 11, 0, 0));
+                LocalDateTime.of(DEFAULT_YEAR, 1, 1, 11, 0, 0));
     }
 
     @Test

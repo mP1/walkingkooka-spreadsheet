@@ -1206,6 +1206,11 @@ public final class SpreadsheetMetadataNonEmptyTest extends SpreadsheetMetadataTe
 
         final ExpressionEvaluationContext expressionEvaluationContext = new FakeExpressionEvaluationContext() {
             @Override
+            public int defaultYear() {
+                return 1900;
+            }
+
+            @Override
             public ExpressionNumberKind expressionNumberKind() {
                 return EXPRESSION_NUMBER_KIND;
             }

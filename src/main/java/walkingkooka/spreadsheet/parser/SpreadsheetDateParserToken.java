@@ -40,7 +40,9 @@ public final class SpreadsheetDateParserToken extends SpreadsheetParentParserTok
      * Creates a {@link LocalDate} from the components in this {@link SpreadsheetDateParserToken}.
      */
     public LocalDate toLocalDate(final ExpressionEvaluationContext context) {
-        return SpreadsheetParserTokenVisitorLocalDateTime.acceptSpreadsheetParentParserToken(this)
+        return SpreadsheetParserTokenVisitorLocalDateTime.acceptSpreadsheetParentParserToken(
+                this,
+                context.defaultYear())
                 .toLocalDate(context);
     }
 

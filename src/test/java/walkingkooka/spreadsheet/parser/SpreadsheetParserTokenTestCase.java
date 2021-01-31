@@ -44,9 +44,16 @@ public abstract class SpreadsheetParserTokenTestCase<T extends SpreadsheetParser
         JsonNodeMarshallingTesting<T>,
         ParserTokenTesting<T> {
 
+    final static int DEFAULT_YEAR = 1900;
     final static ExpressionNumberKind EXPRESSION_NUMBER_KIND = ExpressionNumberKind.DEFAULT;
     final static int TWO_DIGIT_YEAR = 20;
     final static ExpressionEvaluationContext EXPRESSION_EVALUATION_CONTEXT = new FakeExpressionEvaluationContext() {
+
+        @Override
+        public int defaultYear() {
+            return DEFAULT_YEAR;
+        }
+
         @Override
         public ExpressionNumberKind expressionNumberKind() {
             return EXPRESSION_NUMBER_KIND;

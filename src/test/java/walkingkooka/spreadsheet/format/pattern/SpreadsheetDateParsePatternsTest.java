@@ -319,7 +319,7 @@ public final class SpreadsheetDateParsePatternsTest extends SpreadsheetParsePatt
     public void testConvertDateOnlyPatternDefaultsYear() {
         this.convertAndCheck2("dd/mm",
                 "31/12",
-                LocalDate.of(0, 12, 31));
+                LocalDate.of(DEFAULT_YEAR, 12, 31));
     }
 
     @Test
