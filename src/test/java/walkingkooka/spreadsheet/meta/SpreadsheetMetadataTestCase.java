@@ -322,11 +322,6 @@ public abstract class SpreadsheetMetadataTestCase<T extends SpreadsheetMetadata>
     }
 
     @Test
-    public final void testSetDefaultsIncludesDateTimeOffsetFails() {
-        this.setDefaultsWithInvalidFails(SpreadsheetMetadataPropertyName.DATETIME_OFFSET, 123L);
-    }
-
-    @Test
     public final void testSetDefaultsIncludesModifiedByFails() {
         this.setDefaultsWithInvalidFails(SpreadsheetMetadataPropertyName.MODIFIED_BY, EmailAddress.parse("modified@example.com"));
     }

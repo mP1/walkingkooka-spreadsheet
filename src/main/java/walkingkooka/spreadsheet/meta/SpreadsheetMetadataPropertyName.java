@@ -369,8 +369,7 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
      * Defaults must not include a spreadsheet-id, email address or timestamp.
      */
     final boolean isInvalidGenericProperty() {
-        return this instanceof SpreadsheetMetadataPropertyNameDateTimeOffset ||
-                this instanceof SpreadsheetMetadataPropertyNameEmailAddress ||
+        return this instanceof SpreadsheetMetadataPropertyNameEmailAddress ||
                 this instanceof SpreadsheetMetadataPropertyNameLocalDateTime ||
                 this instanceof SpreadsheetMetadataPropertyNameSpreadsheetId;
     }
