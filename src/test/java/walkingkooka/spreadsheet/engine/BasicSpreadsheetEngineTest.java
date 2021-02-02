@@ -359,6 +359,29 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
     }
 
     @Test
+    public void testLoadCellComputeIfNecessaryKeepsExpression() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a = this.cellReference(1, 1);
+        cellStore.save(this.cell(a, "1/2"));
+
+        final SpreadsheetCell first = this.loadCellOrFail(engine, a, SpreadsheetEngineEvaluation.FORCE_RECOMPUTE, context);
+        this.checkValueOrError(first, LocalDate.of(DEFAULT_YEAR, 2, 1));
+
+        final int defaultYear = DEFAULT_YEAR + 100;
+
+        final SpreadsheetCell second = this.loadCellOrFail(
+                engine,
+                a,
+                SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY,
+                this.createContext(defaultYear, engine));
+
+        assertSame(first, second, "same instances of SpreadsheetCell returned should have new expression and value");
+    }
+
+    @Test
     public void testLoadCellComputeIfNecessaryCachesCellWithInvalidFormulaAndErrorCached() {
         final SpreadsheetCellStore cellStore = this.cellStore();
         final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
@@ -375,6 +398,33 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
 
         final SpreadsheetCell second = this.loadCellOrFail(engine, cellReference, SpreadsheetEngineEvaluation.COMPUTE_IF_NECESSARY, context);
         assertSame(first, second, "different instances of SpreadsheetCell returned not cached");
+    }
+
+    @Test
+    public void testLoadCellForceRecomputeIgnoresExpression() {
+        final SpreadsheetCellStore cellStore = this.cellStore();
+        final BasicSpreadsheetEngine engine = this.createSpreadsheetEngine(cellStore);
+        final SpreadsheetEngineContext context = this.createContext(engine);
+
+        final SpreadsheetCellReference a = this.cellReference(1, 1);
+        cellStore.save(this.cell(a, "1/2"));
+
+        final SpreadsheetCell first = this.loadCellOrFail(engine, a, SpreadsheetEngineEvaluation.FORCE_RECOMPUTE, context);
+        this.checkValueOrError(first, LocalDate.of(DEFAULT_YEAR, 2, 1));
+
+        final int defaultYear = DEFAULT_YEAR + 100;
+
+        final SpreadsheetCell second = this.loadCellOrFail(
+                engine,
+                a,
+                SpreadsheetEngineEvaluation.FORCE_RECOMPUTE,
+                this.createContext(defaultYear, engine));
+
+        assertNotSame(first, second, "same instances of SpreadsheetCell returned should have new expression and value");
+        this.checkValueOrError(
+                second,
+                LocalDate.of(defaultYear, 2, 1)
+        );
     }
 
     @Test
@@ -5095,13 +5145,32 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
         return this.createContext(SpreadsheetLabelStores.fake(), engine);
     }
 
+    private SpreadsheetEngineContext createContext(final int defaultYear,
+                                                   final BasicSpreadsheetEngine engine) {
+        return this.createContext(
+                defaultYear,
+                SpreadsheetLabelStores.fake(),
+                engine
+        );
+    }
+
     private SpreadsheetEngineContext createContext(final SpreadsheetLabelStore labelStore,
+                                                   final BasicSpreadsheetEngine engine) {
+        return this.createContext(
+                DEFAULT_YEAR,
+                labelStore,
+                engine
+        );
+    }
+
+    private SpreadsheetEngineContext createContext(final int defaultYear,
+                                                   final SpreadsheetLabelStore labelStore,
                                                    final BasicSpreadsheetEngine engine) {
         return new FakeSpreadsheetEngineContext() {
 
             @Override
             public int defaultYear() {
-                return DEFAULT_YEAR;
+                return defaultYear;
             }
 
             @Override
@@ -5442,7 +5511,7 @@ public final class BasicSpreadsheetEngineTest extends BasicSpreadsheetEngineTest
                 .set(SpreadsheetMetadataPropertyName.LOCALE, Locale.forLanguageTag("EN-AU"))
                 .loadFromLocale()
                 .set(SpreadsheetMetadataPropertyName.DATE_FORMAT_PATTERN, SpreadsheetParsePatterns.parseDateFormatPattern(DATE_PATTERN + suffix))
-                .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS, SpreadsheetParsePatterns.parseDateParsePatterns(DATE_PATTERN))
+                .set(SpreadsheetMetadataPropertyName.DATE_PARSE_PATTERNS, SpreadsheetParsePatterns.parseDateParsePatterns(DATE_PATTERN + ";dd/mm"))
                 .set(SpreadsheetMetadataPropertyName.DATETIME_FORMAT_PATTERN, SpreadsheetParsePatterns.parseDateTimeFormatPattern(DATETIME_PATTERN + suffix))
                 .set(SpreadsheetMetadataPropertyName.DATETIME_PARSE_PATTERNS, SpreadsheetParsePatterns.parseDateTimeParsePatterns(DATETIME_PATTERN))
                 .set(SpreadsheetMetadataPropertyName.NUMBER_FORMAT_PATTERN, SpreadsheetParsePatterns.parseNumberFormatPattern(NUMBER_PATTERN + suffix))

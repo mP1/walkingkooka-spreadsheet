@@ -312,24 +312,61 @@ public final class SpreadsheetFormulaTest implements ClassTesting2<SpreadsheetFo
     // clear.......................................................................................................
 
     @Test
-    public void testClearWithoutValueAndError() {
-        this.checkClear(SpreadsheetFormula.with("1+99"));
+    public void testClearText() {
+        final SpreadsheetFormula formula = SpreadsheetFormula.with("1+99");
+        final SpreadsheetFormula cleared = formula.clear();
+        assertSame(formula, cleared);
+        this.checkClear(cleared);
     }
 
     @Test
-    public void testClearValue() {
-        this.checkClear(this.createObject().setValue(this.value()));
+    public void testClearTextAndToken() {
+        final SpreadsheetFormula formula = SpreadsheetFormula.with("1+99")
+                .setToken(this.token());
+        final SpreadsheetFormula cleared = formula.clear();
+        assertSame(formula, cleared);
+        this.checkClear(cleared);
     }
 
     @Test
-    public void testClearError() {
-        this.checkClear(this.createObject().setError(this.error()));
+    public void testClearTextTokenExpression() {
+        final SpreadsheetFormula formula = SpreadsheetFormula.with("1+99")
+                .setToken(this.token())
+                .setExpression(this.expression());
+        final SpreadsheetFormula cleared = formula.clear();
+        assertNotSame(formula, cleared);
+
+        this.checkClear(cleared);
+    }
+
+    @Test
+    public void testClearTextTokenExpressionValue() {
+        final SpreadsheetFormula formula = SpreadsheetFormula.with("1+99")
+                .setToken(this.token())
+                .setExpression(this.expression())
+                .setValue(this.value());
+        final SpreadsheetFormula cleared = formula.clear();
+        assertNotSame(formula, cleared);
+
+        this.checkClear(cleared);
+    }
+
+    @Test
+    public void testClearTextTokenExpressionError() {
+        final SpreadsheetFormula formula = SpreadsheetFormula.with("1+99")
+                .setToken(this.token())
+                .setExpression(this.expression())
+                .setError(this.error());
+        final SpreadsheetFormula cleared = formula.clear();
+        assertNotSame(formula, cleared);
+
+        this.checkClear(cleared);
     }
 
     private void checkClear(final SpreadsheetFormula formula) {
-        final SpreadsheetFormula cleared = formula.clear();
-        this.checkValueAbsent(cleared);
-        this.checkErrorAbsent(cleared);
+        this.checkExpressionAbsent(formula);
+        this.checkValueAbsent(formula);
+        this.checkErrorAbsent(formula);
     }
 
     // equals.......................................................................................................

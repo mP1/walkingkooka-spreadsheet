@@ -258,11 +258,13 @@ public final class SpreadsheetFormula implements HasText,
     // clear ....................................................................................................
 
     /**
-     * Clears the value or error or formatted.
+     * Clears the expression, value or error if any are present. The {@link SpreadsheetFormula} returned will only
+     * have text and possibly a token (if one already was presented)
      */
     public SpreadsheetFormula clear() {
-        return this.setValue(NO_VALUE)
-                .setError(NO_ERROR);
+        return this.expression().isPresent() || this.value().isPresent() || this.error().isPresent() ?
+                new SpreadsheetFormula(this.text, this.token, NO_EXPRESSION, NO_VALUE, NO_ERROR) :
+                this;
     }
 
     // internal factory .............................................................................................
