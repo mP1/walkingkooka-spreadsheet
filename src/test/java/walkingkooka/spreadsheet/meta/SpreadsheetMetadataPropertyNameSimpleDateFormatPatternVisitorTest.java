@@ -113,8 +113,9 @@ public final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor
                 assertNotEquals("",
                         SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor.pattern(
                                 pattern,
-                                false, // ignoreSeconds
-                                false // ignoreAmpm
+                                true,
+                                false, // include Seconds
+                                false // include Ampm
                         ),
                         () -> "" + locale);
             } catch (final UnsupportedOperationException cause) {
@@ -125,7 +126,11 @@ public final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor
 
     @Override
     public SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor createVisitor() {
-        return new SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor(false, false);
+        return new SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor(
+                false,
+                false,
+                false
+        );
     }
 
     @Override

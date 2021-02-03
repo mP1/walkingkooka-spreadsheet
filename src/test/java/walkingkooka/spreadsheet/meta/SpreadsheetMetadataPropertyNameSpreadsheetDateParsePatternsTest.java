@@ -25,9 +25,19 @@ import java.util.Locale;
 public final class SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatternsTest extends SpreadsheetMetadataPropertyNameTestCase<SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatterns, SpreadsheetDateParsePatterns> {
 
     @Test
-    public void testExtractLocaleValue() {
-        this.extractLocaleValueAndCheck(Locale.ENGLISH,
-                SpreadsheetDateParsePatterns.parseDateParsePatterns("dddd, mmmm d, yyyy;mmmm d, yyyy;mmm d, yyyy;m/d/yy"));
+    public void testExtractLocaleValueUS() {
+        this.extractLocaleValueAndCheck(
+                Locale.ENGLISH,
+                SpreadsheetDateParsePatterns.parseDateParsePatterns("dddd, mmmm d, yyyy;dddd, mmmm d;mmmm d, yyyy;mmmm d;mmm d, yyyy;mmm d;m/d/yy;m/d")
+        );
+    }
+
+    @Test
+    public void testExtractLocaleValueAu() {
+        this.extractLocaleValueAndCheck(
+                Locale.forLanguageTag("EN-AU"),
+                SpreadsheetDateParsePatterns.parseDateParsePatterns("dddd, d mmmm yyyy;dddd, d mmmm;d mmmm yyyy;d mmmm;d mmm yyyy;d mmm;d/m/yy;d/m")
+        );
     }
 
     @Test

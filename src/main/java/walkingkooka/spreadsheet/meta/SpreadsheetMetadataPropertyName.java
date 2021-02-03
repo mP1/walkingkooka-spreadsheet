@@ -405,13 +405,21 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
                                                     final Function<String, T> patternParser) {
         final Set<String> patterns = Sets.ordered();
 
-        for(final DateFormat dateFormat : dateFormats) {
+        final boolean date = this instanceof SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatterns ||
+                this instanceof SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatterns;
+
+        final boolean time = this instanceof SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatterns ||
+                this instanceof SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatterns;
+
+        for (final DateFormat dateFormat : dateFormats) {
             final SimpleDateFormat simpleDateFormat = (SimpleDateFormat) dateFormat;
             final String simpleDateFormatPattern = simpleDateFormat.toPattern();
 
+            // include all year, seconds, ampm
             {
                 final String pattern = SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor.pattern(
                         simpleDateFormatPattern,
+                        true,
                         true,
                         true
                 );
@@ -419,22 +427,27 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
                     patterns.add(pattern);
                 }
             }
-
-            // if a parse pattern want to create simplifications like hh:mm:ss -> hh:mm
-            if (this.isParsePatterns()) {
+            // if only date, try and make a pattern without year
+            if (date && !time) {
                 {
                     final String pattern = SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor.pattern(
                             simpleDateFormatPattern,
                             false,
+                            false, // only dates, seconds and ampm shouldnt appear anyway
                             false
                     );
                     if (!patterns.contains(pattern)) {
                         patterns.add(pattern);
                     }
                 }
+            }
+
+            // if a parse pattern want to create simplifications like hh:mm:ss -> hh:mm
+            if (time) {
                 {
                     final String pattern = SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor.pattern(
                             simpleDateFormatPattern,
+                            true,
                             true,
                             false
                     );
@@ -445,10 +458,22 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
                 {
                     final String pattern = SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor.pattern(
                             simpleDateFormatPattern,
+                            true,
                             false,
                             true
                     );
-                    if(!patterns.contains(pattern)) {
+                    if (!patterns.contains(pattern)) {
+                        patterns.add(pattern);
+                    }
+                }
+                {
+                    final String pattern = SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor.pattern(
+                            simpleDateFormatPattern,
+                            true,
+                            false,
+                            false
+                    );
+                    if (!patterns.contains(pattern)) {
                         patterns.add(pattern);
                     }
                 }
@@ -463,12 +488,6 @@ public abstract class SpreadsheetMetadataPropertyName<T> implements Name, Compar
                                 )
                 )
         );
-    }
-
-    private boolean isParsePatterns() {
-        return this instanceof SpreadsheetMetadataPropertyNameSpreadsheetDateParsePatterns ||
-                this instanceof SpreadsheetMetadataPropertyNameSpreadsheetDateTimeParsePatterns ||
-                this instanceof SpreadsheetMetadataPropertyNameSpreadsheetTimeParsePatterns;
     }
 
     final static int[] DATE_FORMAT_STYLES = new int[]{
