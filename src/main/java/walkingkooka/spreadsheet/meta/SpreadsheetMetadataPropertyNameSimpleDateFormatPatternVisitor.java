@@ -37,9 +37,11 @@ final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor extend
      * Accepts a {@link java.text.SimpleDateFormat} pattern and returns its equivalent spreadsheet format pattern.
      */
     static String pattern(final String pattern,
+                          final boolean year,
                           final boolean seconds,
                           final boolean ampm) {
         final SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor visitor = new SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor(
+                year,
                 seconds,
                 ampm
         );
@@ -61,9 +63,11 @@ final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor extend
     }
 
     // @VisibleForTesting.
-    SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor(final boolean seconds,
+    SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor(final boolean year,
+                                                                  final boolean seconds,
                                                                   final boolean ampm) {
         super();
+        this.year = year;
         this.seconds = seconds;
         this.ampm = ampm;
     }
@@ -75,8 +79,19 @@ final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor extend
 
     @Override
     protected void visitYear(final int width) {
-        this.add(YEAR, width == 2 ? 2 : 4);
+        // year can only be skipped after month
+        if (this.year) {
+            this.add(YEAR, width == 2 ? 2 : 4);
+        } else {
+            if (this.date) {
+                // dd/mm/yyyy after day or month so remove the text literal before to become dd/mm
+                this.removeTextLiteral();
+            }
+        }
+        this.date = true;
     }
+
+    private boolean year;
 
     @Override
     protected void visitWeekYear(int width) {
@@ -87,6 +102,7 @@ final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor extend
     protected void visitMonthInYearContextSensitive(final int width,
                                                     final SimpleDateFormatPatternComponentKind kind) {
         this.add(MONTH_OR_MINUTE, width);
+        this.date = true;
     }
 
     @Override
@@ -102,18 +118,23 @@ final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor extend
 
     @Override
     protected void visitDayInMonth(final int width) {
-        this.add(DAY_IN_MONTH, width);
+        this.addDay(width);
     }
 
     @Override
     protected void visitDayOfWeekInMonth(final int width) {
-        this.add(DAY_IN_MONTH, width);
+        this.addDay(width);
     }
 
     @Override
     protected void visitDayNameInWeek(final int width,
                                       final SimpleDateFormatPatternComponentKind kind) {
+        this.addDay(width);
+    }
+
+    private void addDay(final int width) {
         this.add(DAY_IN_MONTH, width);
+        this.date = true;
     }
 
     @Override
@@ -130,31 +151,39 @@ final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor extend
 
     @Override
     protected void visitHourInDay23(final int width) {
-        this.add(HOUR, width);
+        this.addHour(width);
     }
 
     @Override
     protected void visitHourInDay24(final int width) {
-        this.add(HOUR, width);
+        this.addHour(width);
     }
 
     @Override
     protected void visitHourInAmPm11(final int width) {
-        this.add(HOUR, width);
+        this.addHour(width);
     }
 
     @Override
     protected void visitHourInAmPm12(final int width) {
+        this.addHour(width);
+    }
+
+    private void addHour(final int width) {
         this.add(HOUR, width);
+        this.date = false;
     }
 
     @Override
     protected void visitMinuteInHour(final int width) {
         this.add(MONTH_OR_MINUTE, width);
+        this.date = false;
     }
 
     @Override
     protected void visitSecondInMinute(final int width) {
+        this.date = false;
+
         if (this.seconds) {
             this.add('s', width);
         } else {
@@ -164,6 +193,8 @@ final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor extend
 
     @Override
     protected void visitMillisecond(final int width) {
+        this.date = false;
+
         if (this.seconds) {
             this.add('.');
             this.add('0', width);
@@ -221,6 +252,12 @@ final class SpreadsheetMetadataPropertyNameSimpleDateFormatPatternVisitor extend
     protected void visitIllegal(final String component) {
         throw new UnsupportedOperationException(component);
     }
+
+    /**
+     * A date part of a pattern. This is used to determine if when years are skipped
+     * whether text literals before or after the year are skipped.
+     */
+    private boolean date = false;
 
     /**
      * When the seconds component will be included along with any preceding text literals
